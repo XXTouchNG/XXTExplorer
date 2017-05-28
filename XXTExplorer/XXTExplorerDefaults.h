@@ -22,20 +22,15 @@ typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortOrderDesc,
 } XXTExplorerViewEntryListSortOrder;
 
-// XXTExplorerViewEntryListSortFieldKey
-static NSString * const XXTExplorerViewEntryListSortFieldName = @"XXTExplorerViewEntryListSortFieldName";
-static NSString * const XXTExplorerViewEntryListSortFieldKind = @"XXTExplorerViewEntryListSortFieldKind";
-static NSString * const XXTExplorerViewEntryListSortFieldDateModified = @"XXTExplorerViewEntryListSortFieldDateModified";
-static NSString * const XXTExplorerViewEntryListSortFieldDateCreated = @"XXTExplorerViewEntryListSortFieldDateCreated";
-static NSString * const XXTExplorerViewEntryListSortFieldSize = @"XXTExplorerViewEntryListSortFieldSize";
-
 #pragma mark - Attributes
 
 // XXTExplorerViewEntryAttribute
+static NSString * const XXTExplorerViewEntryAttributeIconImage = @"XXTExplorerViewEntryAttributeIconImage";
 static NSString * const XXTExplorerViewEntryAttributeDisplayName = @"XXTExplorerViewEntryAttributeDisplayName";
 static NSString * const XXTExplorerViewEntryAttributeName = @"XXTExplorerViewEntryAttributeName";
 static NSString * const XXTExplorerViewEntryAttributePath = @"XXTExplorerViewEntryAttributePath";
-static NSString * const XXTExplorerViewEntryAttributeRealPath = @"XXTExplorerViewEntryAttributeRealPath";
+static NSString * const XXTExplorerViewEntryAttributeExtension = @"XXTExplorerViewEntryAttributeExtension";
+//static NSString * const XXTExplorerViewEntryAttributeRealPath = @"XXTExplorerViewEntryAttributeRealPath";
 static NSString * const XXTExplorerViewEntryAttributeType = @"XXTExplorerViewEntryAttributeType";
 static NSString * const XXTExplorerViewEntryAttributeRealType = @"XXTExplorerViewEntryAttributeRealType";
 static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate";

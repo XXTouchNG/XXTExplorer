@@ -27,7 +27,8 @@
     // Override point for customization after application launch.
     
     // Master - Explorer Controller
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
+//    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *documentPath = [[NSBundle mainBundle] bundlePath];
     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:documentPath];
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
     

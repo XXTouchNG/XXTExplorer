@@ -18,4 +18,6 @@
 #define XXTE_SYSTEM_9 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0)
 #define XXTE_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
 
+#define XXTE_COLOR ([UIColor colorWithRed:26.f/255.f green:161.f/255.f blue:230.f/255.f alpha:1.f])
+
 #endif /* XXTEPrefixHeader_pch */
