@@ -14,6 +14,24 @@
 
 @implementation XXTExplorerViewCell
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+    
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

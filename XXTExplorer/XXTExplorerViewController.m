@@ -7,13 +7,19 @@
 //
 
 #import <sys/stat.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
+#import "XXTExplorerEntryParser.h"
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerHeaderView.h"
 #import "XXTExplorerFooterView.h"
 #import "XXTExplorerViewCell.h"
+#import "XXTExplorerViewHomeCell.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerToolbar.h"
+#import "XXTENotificationCenterDefines.h"
 #import "UIView+XXTEToast.h"
+#import <LGAlertView/LGAlertView.h>
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -21,20 +27,19 @@ typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexMax
 } XXTExplorerViewSectionIndex;
 
-#define XXTEDefaultsBool(key) ([[self.explorerDefaults objectForKey:key] boolValue])
-#define XXTEDefaultsEnum(key) ([[self.explorerDefaults objectForKey:key] unsignedIntegerValue])
-#define XXTEDefaultsObject(key) ([self.explorerDefaults objectForKey:key])
-#define XXTEDefaultsSetBasic(key, value) ([self.explorerDefaults setObject:@(value) forKey:key])
-#define XXTEDefaultsSetObject(key, obj) ([self.explorerDefaults setObject:obj forKey:key])
+#define XXTEDefaultsBool(key) ([[self.class.explorerDefaults objectForKey:key] boolValue])
+#define XXTEDefaultsEnum(key) ([[self.class.explorerDefaults objectForKey:key] unsignedIntegerValue])
+#define XXTEDefaultsObject(key) ([self.class.explorerDefaults objectForKey:key])
+#define XXTEDefaultsSetBasic(key, value) ([self.class.explorerDefaults setObject:@(value) forKey:key])
+#define XXTEDefaultsSetObject(key, obj) ([self.class.explorerDefaults setObject:obj forKey:key])
+#define XXTEBuiltInDefaultsBool(key) ([[self.class.explorerBuiltInDefaults objectForKey:key] boolValue])
+#define XXTEBuiltInDefaultsEnum(key) ([[self.class.explorerBuiltInDefaults objectForKey:key] unsignedIntegerValue])
+#define XXTEBuiltInDefaultsObject(key) ([self.class.explorerBuiltInDefaults objectForKey:key])
 
-@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerToolbarDelegate>
+@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerToolbarDelegate, XXTESwipeTableCellDelegate, LGAlertViewDelegate>
 
-@property (nonatomic, strong, readonly) NSFileManager *explorerFileManager;
-@property (nonatomic, strong, readonly) NSDateFormatter *explorerDateFormatter;
-@property (nonatomic, assign, readonly) NSUserDefaults *explorerDefaults; // u can use NSDictionary instead.
-
-@property (nonatomic, copy, readonly) NSString *entryPath;
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
+@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
 
 @property (nonatomic, strong, readonly) XXTExplorerToolbar *toolbar;
 @property (nonatomic, strong, readonly) UITableView *tableView;
@@ -48,43 +53,135 @@ typedef enum : NSUInteger {
 + (NSMutableArray <NSDictionary *> *)explorerPasteboard {
     static NSMutableArray *explorerPasteboard = nil;
     if (!explorerPasteboard) {
-        explorerPasteboard = [[NSMutableArray alloc] init];
+        explorerPasteboard = ({
+            [[NSMutableArray alloc] init];
+        });
     }
     return explorerPasteboard;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
++ (NSString *)rootPath {
+    static NSString *rootPath = nil;
+    if (!rootPath) {
+        rootPath = ({
+            [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        });
+    }
+    return rootPath;
 }
 
-- (instancetype)initWithEntryPath:(NSString *)path {
-    if (self = [super init]) {
-        _entryPath = path;
-        _explorerFileManager = [[NSFileManager alloc] init];
-        _explorerDateFormatter = ({
++ (NSFileManager *)explorerFileManager {
+    static NSFileManager *explorerFileManager = nil;
+    if (!explorerFileManager) {
+        explorerFileManager = ({
+            [[NSFileManager alloc] init];
+        });
+    }
+    return explorerFileManager;
+}
+
++ (NSDateFormatter *)explorerDateFormatter {
+    static NSDateFormatter *explorerDateFormatter = nil;
+    if (!explorerDateFormatter) {
+        explorerDateFormatter = ({
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
             [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
             dateFormatter;
         });
-        _explorerDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *defaultSettingsPath = [[NSBundle mainBundle] pathForResource:@"XXTExplorerDefaults" ofType:@"plist"];
-        NSDictionary *defaultSettings = [[NSDictionary alloc] initWithContentsOfFile:defaultSettingsPath];
-        for (NSString *defaultKey in defaultSettings) {
-            if (![self.explorerDefaults objectForKey:defaultKey])
+    }
+    return explorerDateFormatter;
+}
+
++ (NSUserDefaults *)explorerDefaults {
+    static NSUserDefaults *explorerDefaults = nil;
+    if (!explorerDefaults) {
+        explorerDefaults = ({
+            [NSUserDefaults standardUserDefaults];
+        });
+    }
+    return explorerDefaults;
+}
+
++ (NSDictionary *)explorerBuiltInDefaults {
+    static NSDictionary *explorerBuiltInDefaults = nil;
+    if (!explorerBuiltInDefaults) {
+        explorerBuiltInDefaults = ({
+            NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTExplorerBuiltInDefaults" ofType:@"plist"];
+            [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
+        });
+    }
+    return explorerBuiltInDefaults;
+}
+
+#pragma mark - Rotation
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
+
+#pragma mark - UIViewController
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setupWithPath:nil];
+    }
+    return self;
+}
+
+- (instancetype)initWithEntryPath:(NSString *)path {
+    if (self = [super init]) {
+        [self setupWithPath:path];
+    }
+    return self;
+}
+
+- (void)setupWithPath:(NSString *)path {
+    {
+        NSString *defaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTExplorerDefaults" ofType:@"plist"];
+        NSDictionary *defaults = [[NSDictionary alloc] initWithContentsOfFile:defaultsPath];
+        for (NSString *defaultKey in defaults) {
+            if (![self.class.explorerDefaults objectForKey:defaultKey])
             {
-                [self.explorerDefaults setObject:defaultSettings[defaultKey] forKey:defaultKey];
+                [self.class.explorerDefaults setObject:defaults[defaultKey] forKey:defaultKey];
             }
         }
     }
-    return self;
+    {
+        if (!path) {
+            NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewInitialPath);
+            NSString *initialPath = [[[self class] rootPath] stringByAppendingPathComponent:initialRelativePath];
+            if (![self.class.explorerFileManager fileExistsAtPath:initialPath]) {
+                assert(mkdir([initialPath UTF8String], 0755) == 0);
+            }
+            path = initialPath;
+        }
+        _entryPath = path;
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = [self.entryPath lastPathComponent];
+    if (self == self.navigationController.viewControllers[0]) {
+        self.title = NSLocalizedString(@"My Scripts", nil);
+    } else {
+        self.title = [self.entryPath lastPathComponent];
+    }
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -103,6 +200,7 @@ typedef enum : NSUInteger {
         }
         XXTE_END_IGNORE_PARTIAL
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
         tableView;
     });
     
@@ -135,19 +233,33 @@ typedef enum : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
     [self updateToolbarButton:self.toolbar];
     [self updateToolbarStatus:self.toolbar];
-    [self reloadEntryListView];
+    [self loadEntryListData];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if ([self isEditing]) {
         [self setEditing:NO animated:YES];
     }
 }
 
-#pragma mark - Toolbar Status
+#pragma mark - UINotification
+
+- (void)handleApplicationNotification:(NSNotification *)aNotification {
+    NSDictionary *userInfo = aNotification.userInfo;
+    NSString *eventType = userInfo[XXTENotificationEventType];
+    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
+        [self loadEntryListData];
+        [self.tableView reloadData];
+    }
+}
+
+#pragma mark - XXTExplorerToolbar
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
     if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) == XXTExplorerViewEntryListSortOrderAsc)
@@ -162,130 +274,64 @@ typedef enum : NSUInteger {
 
 - (void)updateToolbarStatus:(XXTExplorerToolbar *)toolbar {
     if ([[self class] explorerPasteboard].count > 0) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste status:nil enabled:YES];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
     }
     else
     {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste status:nil enabled:NO];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
     }
     if ([self isEditing])
     {
         if (([self.tableView indexPathsForSelectedRows].count) > 0)
         {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare status:nil enabled:YES];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress status:nil enabled:YES];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash status:nil enabled:YES];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste status:nil enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
         }
         else
         {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare status:nil enabled:NO];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress status:nil enabled:NO];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash status:nil enabled:NO];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:NO];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:NO];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:NO];
         }
     }
     else
     {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan status:nil enabled:YES];
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem status:nil enabled:YES];
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:nil enabled:YES];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan enabled:YES];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
     }
 }
 
-#pragma mark - File Management
+#pragma mark - NSFileManager
 
-- (void)reloadEntryListDataWithError:(NSError **)error
+- (void)loadEntryListDataWithError:(NSError **)error
 {
+    {
+        if (XXTEDefaultsBool(XXTExplorerViewSectionHomeEnabledKey) &&
+            self == self.navigationController.viewControllers[0]) {
+            _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewSectionHomeSeriesKey);
+        }
+    }
+    
     _entryList = ({
         NSError *localError = nil;
-        NSArray <NSString *> *entrySubdirectoryPathList = [self.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
+        NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
         if (localError && error) *error = localError;
         NSMutableArray <NSDictionary *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
         NSMutableArray <NSDictionary *> *entryOtherAttributesList = [[NSMutableArray alloc] init];
         for (NSString *entrySubdirectoryName in entrySubdirectoryPathList)
         {
             NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
-            NSDictionary <NSString *, id> *entrySubdirectoryAttributes = [self.explorerFileManager attributesOfItemAtPath:entrySubdirectoryPath error:&localError];
+            NSDictionary *entryAttributes = [[XXTExplorerEntryParser sharedParser] entryOfPath:entrySubdirectoryPath withError:&localError];
             if (localError && error)
             {
                 *error = localError;
                 break;
             }
-            NSString *entryNSFileType = entrySubdirectoryAttributes[NSFileType];
-            NSString *entryBaseName = [entrySubdirectoryPath lastPathComponent];
-            NSString *entryBaseExtension = [entryBaseName pathExtension];
-            UIImage *entryIconImage = nil;
-            NSString *entryBaseType = nil;
-            if ([entryNSFileType isEqualToString:NSFileTypeRegular])
-            {
-                entryBaseType = XXTExplorerViewEntryAttributeTypeRegular;
-            }
-            else if ([entryNSFileType isEqualToString:NSFileTypeDirectory])
-            {
-                entryBaseType = XXTExplorerViewEntryAttributeTypeDirectory;
-            }
-            else if ([entryNSFileType isEqualToString:NSFileTypeSymbolicLink])
-            {
-                entryBaseType = XXTExplorerViewEntryAttributeTypeSymlink;
-            }
-            else {
-                entryBaseType = XXTExplorerViewEntryAttributeTypeUnsupported;
-            }
-            NSString *entryRealType = entryBaseType;
-            if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink])
-            {
-                const char *entrySubdirectoryPathCString = [entrySubdirectoryPath UTF8String];
-                struct stat entrySubdirectoryPathCStatStruct;
-                bzero(&entrySubdirectoryPathCStatStruct, sizeof(struct stat));
-                if (0 == stat(entrySubdirectoryPathCString, &entrySubdirectoryPathCStatStruct))
-                {
-                    if (S_ISDIR(entrySubdirectoryPathCStatStruct.st_mode))
-                    {
-                        entryRealType = XXTExplorerViewEntryAttributeTypeDirectory;
-                    }
-                    else if (S_ISREG(entrySubdirectoryPathCStatStruct.st_mode))
-                    {
-                        entryRealType = XXTExplorerViewEntryAttributeTypeRegular;
-                    }
-                    else
-                    {
-                        entryRealType = XXTExplorerViewEntryAttributeTypeUnsupported;
-                    }
-                }
-            }
-            if ([entryRealType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
-            {
-                entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeRegular];
-            }
-            else if ([entryRealType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
-            {
-                entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeDirectory];
-            }
-            else if ([entryRealType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink])
-            {
-                entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeSymlink];
-            }
-            else
-            {
-                entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeUnsupported];
-            }
-            NSDictionary *entryAttributes =
-                @{
-                  XXTExplorerViewEntryAttributeIconImage: entryIconImage,
-                  XXTExplorerViewEntryAttributeDisplayName: entryBaseName,
-                  XXTExplorerViewEntryAttributeName: entryBaseName,
-                  XXTExplorerViewEntryAttributePath: entrySubdirectoryPath,
-//                  XXTExplorerViewEntryAttributeRealPath: entrySubdirectoryPath,
-                  XXTExplorerViewEntryAttributeCreationDate: entrySubdirectoryAttributes[NSFileCreationDate],
-                  XXTExplorerViewEntryAttributeModificationDate: entrySubdirectoryAttributes[NSFileModificationDate],
-                  XXTExplorerViewEntryAttributeSize: entrySubdirectoryAttributes[NSFileSize],
-                  XXTExplorerViewEntryAttributeType: entryBaseType,
-                  XXTExplorerViewEntryAttributeRealType: entryRealType,
-                  XXTExplorerViewEntryAttributeExtension: entryBaseExtension
-                  };
-            // TODO: Parse bundle
             // TODO: Parse each entry using XXTExplorerEntryExtensions
-            if ([entryRealType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+            if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
             {
                 [entryDirectoryAttributesList addObject:entryAttributes];
             }
@@ -321,7 +367,7 @@ typedef enum : NSUInteger {
     }
     NSString *usageString = nil;
     NSError *usageError = nil;
-    NSDictionary *fileSystemAttributes = [self.explorerFileManager attributesOfFileSystemForPath:self.entryPath error:&usageError];
+    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:self.entryPath error:&usageError];
     if (!usageError) {
         NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
         if (deviceFreeSpace) {
@@ -332,23 +378,18 @@ typedef enum : NSUInteger {
     [self.footerView.footerLabel setText:finalFooterString];
 }
 
-- (void)loadEntryListView
+- (void)loadEntryListData
 {
     NSError *entryLoadError = nil;
-    [self reloadEntryListDataWithError:&entryLoadError];
+    [self loadEntryListDataWithError:&entryLoadError];
     if (entryLoadError) {
         [self.navigationController.view makeToast:[entryLoadError localizedDescription]];
     }
 }
 
-- (void)reloadEntryListView // (load + tableView reload)
-{
-    [self loadEntryListView];
-    [self.tableView reloadData];
-}
-
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
-    [self reloadEntryListView];
+    [self loadEntryListData];
+    [self.tableView reloadData];
     if ([refreshControl isRefreshing]) {
         [refreshControl endRefreshing];
     }
@@ -357,16 +398,22 @@ typedef enum : NSUInteger {
 #pragma mark - UITableViewDelegate
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (XXTExplorerViewSectionIndexList == indexPath.section)
-    {
-        return YES;
+    if (tableView == self.tableView) {
+        if (XXTExplorerViewSectionIndexList == indexPath.section)
+        {
+            return YES;
+        }
     }
     return NO;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    if (XXTExplorerViewSectionIndexList == indexPath.section) {
-        return indexPath;
+    if (tableView == self.tableView) {
+        if (XXTExplorerViewSectionIndexList == indexPath.section) {
+            return indexPath;
+        } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
+            return indexPath;
+        }
     }
     return nil;
 }
@@ -380,27 +427,33 @@ typedef enum : NSUInteger {
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([tableView isEditing]) {
-        [self updateToolbarStatus:self.toolbar];
+    if (tableView == self.tableView) {
+        if (XXTExplorerViewSectionIndexList == indexPath.section) {
+            if ([tableView isEditing]) {
+                [self updateToolbarStatus:self.toolbar];
+            }
+        }
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([tableView isEditing]) {
-        [self updateToolbarStatus:self.toolbar];
-    } else {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (tableView == self.tableView) {
-            if (XXTExplorerViewSectionIndexList == indexPath.section) {
+    if (tableView == self.tableView) {
+        if (XXTExplorerViewSectionIndexList == indexPath.section)
+        {
+            if ([tableView isEditing]) {
+                [self updateToolbarStatus:self.toolbar];
+            } else {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 NSDictionary *entryAttributes = self.entryList[indexPath.row];
-                if ([entryAttributes[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] ||
-                    ([entryAttributes[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-                     [entryAttributes[XXTExplorerViewEntryAttributeRealType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]))
+                if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeBundle]) {
+                    
+                }
+                else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
                 { // Directory or Symbolic Link Directory
                     NSString *directoryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
                     // We'd better try to access it before we enter it.
                     NSError *accessError = nil;
-                    [self.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
+                    [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                     if (accessError) {
                         [self.navigationController.view makeToast:[accessError localizedDescription]];
                     }
@@ -410,12 +463,40 @@ typedef enum : NSUInteger {
                     }
                 }
             }
-            // TODO: We have no actions for Home section
+        }
+        else if (XXTExplorerViewSectionIndexHome == indexPath.section)
+        {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            if ([tableView isEditing]) {
+                
+            } else {
+                NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
+                NSString *directoryRelativePath = entryAttributes[XXTExplorerViewSectionHomeSeriesDetailPathKey];
+                NSString *directoryPath = [[[self class] rootPath] stringByAppendingPathComponent:directoryRelativePath];
+                NSError *accessError = nil;
+                [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
+                if (accessError) {
+                    [self.navigationController.view makeToast:[accessError localizedDescription]];
+                }
+                else {
+                    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
+                    [self.navigationController pushViewController:explorerViewController animated:YES];
+                }
+            }
         }
     }
 }
 
-#pragma mark - UITableViewDataSource
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.tableView) {
+        if (![tableView isEditing]) {
+            if (XXTExplorerViewSectionIndexList == indexPath.section) {
+                XXTESwipeTableCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                [cell showSwipe:XXTESwipeDirectionLeftToRight animated:YES];
+            }
+        }
+    }
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -423,8 +504,7 @@ typedef enum : NSUInteger {
             return XXTExplorerViewCellHeight;
         }
         else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
-            // TODO: Home section may have different cell height.
-            return 0;
+            return XXTExplorerViewHomeCellHeight;
         }
     }
     return 0;
@@ -450,29 +530,6 @@ typedef enum : NSUInteger {
 }
 */
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (tableView == self.tableView) {
-        return XXTExplorerViewSectionIndexMax;
-    }
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.tableView) {
-        if (XXTExplorerViewSectionIndexHome == section) {
-            if (XXTEDefaultsBool(XXTExplorerViewSectionHomeEnabledKey)) {
-                // TODO: There might be serval shortcuts in Home section, more than 1.
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-        else if (XXTExplorerViewSectionIndexList == section) {
-            return self.entryList.count;
-        }
-    }
-    return 0;
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
@@ -481,7 +538,14 @@ typedef enum : NSUInteger {
             if (!entryHeaderView) {
                 entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
             }
-            [entryHeaderView.headerLabel setText:self.entryPath];
+            NSString *rootPath = [[self class] rootPath];
+            NSRange rootRange = [self.entryPath rangeOfString:rootPath];
+            if (rootRange.location == 0) {
+                NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
+                [entryHeaderView.headerLabel setText:tiledPath];
+            } else {
+                [entryHeaderView.headerLabel setText:self.entryPath];
+            }
             return entryHeaderView;
         } // Notice: assume that there will not be any headers for Home section
     }
@@ -523,6 +587,27 @@ typedef enum : NSUInteger {
 }
 */
 
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (tableView == self.tableView) {
+        return XXTExplorerViewSectionIndexMax;
+    }
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == self.tableView) {
+        if (XXTExplorerViewSectionIndexHome == section) {
+            return self.homeEntryList.count;
+        }
+        else if (XXTExplorerViewSectionIndexList == section) {
+            return self.entryList.count;
+        }
+    }
+    return 0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == indexPath.section) {
@@ -530,22 +615,32 @@ typedef enum : NSUInteger {
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
             }
+            entryCell.delegate = self;
+            entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             entryCell.entryIconImageView.image = self.entryList[indexPath.row][XXTExplorerViewEntryAttributeIconImage];
             entryCell.entryTitleLabel.text = self.entryList[indexPath.row][XXTExplorerViewEntryAttributeName];
-            entryCell.entrySubtitleLabel.text = [self.explorerDateFormatter stringFromDate:self.entryList[indexPath.row][XXTExplorerViewEntryAttributeCreationDate]];
+            entryCell.entrySubtitleLabel.text = [self.class.explorerDateFormatter stringFromDate:self.entryList[indexPath.row][XXTExplorerViewEntryAttributeCreationDate]];
             UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
             cellLongPressGesture.delegate = self;
             [entryCell addGestureRecognizer:cellLongPressGesture];
             return entryCell;
         }
         else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
-            // TODO: Home section may have different cell, with another style of subtitles and icons.
+            XXTExplorerViewHomeCell *entryCell = [tableView dequeueReusableCellWithIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
+            if (!entryCell) {
+                entryCell = [[XXTExplorerViewHomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
+            }
+            entryCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            entryCell.entryIconImageView.image = [UIImage imageNamed:self.homeEntryList[indexPath.row][XXTExplorerViewSectionHomeSeriesDetailIconKey]];
+            entryCell.entryTitleLabel.text = self.homeEntryList[indexPath.row][XXTExplorerViewSectionHomeSeriesDetailTitleKey];
+            entryCell.entrySubtitleLabel.text = self.homeEntryList[indexPath.row][XXTExplorerViewSectionHomeSeriesDetailSubtitleKey];
+            return entryCell;
         }
     }
     return [UITableViewCell new];
 }
 
-#pragma mark - Long Press Gesture
+#pragma mark - UILongPressGestureRecognizer
 
 - (void)entryCellDidLongPress:(UILongPressGestureRecognizer *)recognizer {
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateBegan) {
@@ -589,7 +684,8 @@ typedef enum : NSUInteger {
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeCreationDate);
             }
             [self updateToolbarButton:self.toolbar];
-            [self reloadEntryListView];
+            [self loadEntryListData];
+            [self.tableView reloadData];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste])
         {
@@ -605,12 +701,27 @@ typedef enum : NSUInteger {
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash])
         {
-            
+            NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+            NSString *formatString = nil;
+            if (selectedIndexPaths.count == 1) {
+                formatString = [NSString stringWithFormat:NSLocalizedString(@"Delete 1 item?\nThis operation cannot be revoked.", nil)];
+            } else {
+                formatString = [NSString stringWithFormat:NSLocalizedString(@"Delete %d items?\nThis operation cannot be revoked.", nil), selectedIndexPaths.count];
+            }
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
+                                                                message:formatString
+                                                                  style:LGAlertViewStyleActionSheet
+                                                           buttonTitles:@[  ]
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                 destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                               delegate:self];
+            objc_setAssociatedObject(alertView, @selector(removeEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_COPY_NONATOMIC);
+            [alertView showAnimated:YES completionHandler:nil];
         }
     }
 }
 
-#pragma mark - UIViewControllerEditing
+#pragma mark - UIViewController (UIViewControllerEditing)
 
 - (BOOL)isEditing {
     return [self.tableView isEditing];
@@ -627,6 +738,125 @@ typedef enum : NSUInteger {
         [self.toolbar updateStatus:XXTExplorerToolbarStatusDefault];
     }
     [self updateToolbarStatus:self.toolbar];
+}
+
+#pragma mark - XXTESwipeTableCellDelegate
+
+- (BOOL)swipeTableCell:(XXTESwipeTableCell *) cell canSwipe:(XXTESwipeDirection) direction fromPoint:(CGPoint) point {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary *entryDetail = self.entryList[indexPath.row];
+    if (entryDetail) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)swipeTableCell:(XXTESwipeTableCell *) cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary *entryDetail = self.entryList[indexPath.row];
+    if (direction == XXTESwipeDirectionLeftToRight)
+    {
+        
+    }
+    else if (direction == XXTESwipeDirectionRightToLeft)
+    {
+        NSString *formatString = [NSString stringWithFormat:NSLocalizedString(@"Delete %@?\nThis operation cannot be revoked.", nil), entryDetail[XXTExplorerViewEntryAttributeName]];
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
+                                                            message:formatString
+                                                              style:LGAlertViewStyleActionSheet
+                                                       buttonTitles:@[  ]
+                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                             destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                           delegate:self];
+        objc_setAssociatedObject(alertView, @selector(removeEntryCell:), cell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [alertView showAnimated:YES completionHandler:nil];
+    }
+    return NO;
+}
+
+- (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
+             swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary *entryDetail = self.entryList[indexPath.row];
+    if (direction == XXTESwipeDirectionLeftToRight)
+    {
+        NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
+        
+        if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionExecuteable])
+        {
+            XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconLaunch"]
+                                                                  backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
+                                                                           insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+            [swipeButtons addObject:swipeLaunchButton];
+        }
+        if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
+            && [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
+        {
+            XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconEdit"]
+                                                                backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
+                                                                         insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+            [swipeButtons addObject:swipeEditButton];
+        }
+        XXTESwipeButton *swipePropertyButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconProperty"]
+                                                                backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
+                                                                         insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+        [swipeButtons addObject:swipePropertyButton];
+        return swipeButtons;
+    }
+    else if (direction == XXTESwipeDirectionRightToLeft)
+    {
+        XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconTrash"]
+                                                             backgroundColor:XXTE_DANGER_COLOR
+                                                                      insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+        return @[ swipeTrashButton ];
+    }
+    return @[];
+}
+
+#pragma mark - LGAlertViewDelegate
+
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    SEL selectors[] = {
+        @selector(removeEntryCell:),
+        @selector(removeEntriesAtIndexPaths:),
+    };
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    for (int i = 0; i < sizeof(selectors) / sizeof(SEL); i++) {
+        SEL selector = selectors[i];
+        id obj = objc_getAssociatedObject(alertView, selector);
+        objc_setAssociatedObject(alertView, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (obj) {
+            [self performSelector:selector withObject:obj];
+            break;
+        }
+    }
+#pragma clang diagnostic pop
+}
+
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    objc_removeAssociatedObjects(alertView);
+}
+
+- (void)removeEntryCell:(UITableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary *entryDetail = self.entryList[indexPath.row];
+    NSError *removeError = nil;
+    BOOL result = [self.class.explorerFileManager removeItemAtPath:entryDetail[XXTExplorerViewEntryAttributePath] error:&removeError];
+    if (result) {
+        [self loadEntryListData];
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+    } else {
+        if (removeError) {
+            [self.navigationController.view makeToast:[removeError localizedDescription]];
+        }
+    }
+}
+
+- (void)removeEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
+    
 }
 
 @end

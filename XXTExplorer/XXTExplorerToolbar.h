@@ -37,6 +37,7 @@ static NSString * const XXTExplorerToolbarButtonStatusSelected = @"Selected";
 @property (nonatomic, strong, readonly) NSDictionary <NSString *, UIBarButtonItem *> *buttons;
 
 - (void)updateStatus:(NSString *)status;
+- (void)updateButtonType:(NSString *)buttonType enabled:(BOOL)enabled;
 - (void)updateButtonType:(NSString *)buttonType status:(NSString *)buttonStatus enabled:(BOOL)enabled;
 
 @end

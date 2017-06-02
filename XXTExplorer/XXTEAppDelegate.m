@@ -1,12 +1,12 @@
 //
-//  AppDelegate.m
+//  XXTEAppDelegate.m
 //  XXTExplorer
 //
 //  Created by Zheng on 25/05/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "XXTEAppDelegate.h"
 #import "XXTESplitViewController.h"
 #import "XXTENavigationController.h"
 #import "XXTExplorerNavigationController.h"
@@ -15,12 +15,13 @@
 #import "XXTExplorerViewController.h"
 #import "XXTEMoreViewController.h"
 #import "XXTEWorkspaceViewController.h"
+#import "XXTENotificationCenterDefines.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate>
+@interface XXTEAppDelegate () <UISplitViewControllerDelegate>
 
 @end
 
-@implementation AppDelegate
+@implementation XXTEAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -28,8 +29,8 @@
     
     // Master - Explorer Controller
 //    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *documentPath = [[NSBundle mainBundle] bundlePath];
-    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:documentPath];
+//    NSString *documentPath = [[NSBundle mainBundle] bundlePath];
+    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
     
     // Master - More Controller
@@ -89,6 +90,40 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - Open URL
+
+/*
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    if (XXTE_SYSTEM_9) {
+        return NO;
+    }
+    return [self application:application openURL:url];
+}
+*/
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(nullable NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [self application:application openURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(nonnull NSDictionary<NSString *,id> *)options
+{
+    return [self application:application openURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url {
+    if ([[url scheme] isEqualToString:@"xxt"]) {
+        
+    } else if ([[url scheme] isEqualToString:@"file"]) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+    }
+    return NO;
+}
 
 #pragma mark - Split view
 

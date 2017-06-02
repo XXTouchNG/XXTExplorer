@@ -48,7 +48,16 @@
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
         textLabel.textColor = XXTE_COLOR;
         textLabel.backgroundColor = [UIColor whiteColor];
-        textLabel.font = [UIFont systemFontOfSize:14.f];
+        XXTE_START_IGNORE_PARTIAL
+        if (XXTE_SYSTEM_9)
+        {
+            textLabel.font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
+        }
+        else
+        {
+            textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
+        }
+        XXTE_END_IGNORE_PARTIAL
         textLabel.edgeInsets = UIEdgeInsetsMake(0, 12.f, 0, 12.f);
         textLabel.numberOfLines = 1;
         textLabel.lineBreakMode = NSLineBreakByClipping;

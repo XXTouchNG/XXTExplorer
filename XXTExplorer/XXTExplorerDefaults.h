@@ -11,7 +11,10 @@
 
 #pragma mark - Defaults
 
+static NSString * const XXTExplorerViewInitialPath = @"XXTExplorerViewInitialPath";
+
 static NSString * const XXTExplorerViewSectionHomeEnabledKey = @"XXTExplorerViewSectionHomeEnabledKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesKey = @"XXTExplorerViewSectionHomeSeriesKey";
 static NSString * const XXTExplorerViewEntryListSortFieldKey = @"XXTExplorerViewEntryListSortFieldKey";
 static NSString * const XXTExplorerViewEntryListSortOrderKey = @"XXTExplorerViewEntryListSortOrderKey";
 static NSString * const XXTExplorerViewEntryListHideDotItemKey = @"XXTExplorerViewEntryListHideDotItemKey";
@@ -32,10 +35,11 @@ static NSString * const XXTExplorerViewEntryAttributePath = @"XXTExplorerViewEnt
 static NSString * const XXTExplorerViewEntryAttributeExtension = @"XXTExplorerViewEntryAttributeExtension";
 //static NSString * const XXTExplorerViewEntryAttributeRealPath = @"XXTExplorerViewEntryAttributeRealPath";
 static NSString * const XXTExplorerViewEntryAttributeType = @"XXTExplorerViewEntryAttributeType";
-static NSString * const XXTExplorerViewEntryAttributeRealType = @"XXTExplorerViewEntryAttributeRealType";
+static NSString * const XXTExplorerViewEntryAttributeMaskType = @"XXTExplorerViewEntryAttributeMaskType";
 static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate";
 static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExplorerViewEntryAttributeModificationDate";
 static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize";
+static NSString * const XXTExplorerViewEntryAttributePermission = @"XXTExplorerViewEntryAttributePermission"; // Dictionary
 
 // XXTExplorerViewEntryAttributeType
 static NSString * const XXTExplorerViewEntryAttributeTypeUnsupported = @"XXTExplorerViewEntryAttributeTypeUnsupported";
@@ -43,5 +47,17 @@ static NSString * const XXTExplorerViewEntryAttributeTypeRegular = @"XXTExplorer
 static NSString * const XXTExplorerViewEntryAttributeTypeDirectory = @"XXTExplorerViewEntryAttributeTypeDirectory";
 static NSString * const XXTExplorerViewEntryAttributeTypeBundle = @"XXTExplorerViewEntryAttributeTypeBundle";
 static NSString * const XXTExplorerViewEntryAttributeTypeSymlink = @"XXTExplorerViewEntryAttributeTypeSymlink";
+
+// XXTExplorerViewSectionHomeSeries
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailTitleKey = @"XXTExplorerViewSectionHomeSeriesDetailTitleKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailSubtitleKey = @"XXTExplorerViewSectionHomeSeriesDetailSubtitleKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailIconKey = @"XXTExplorerViewSectionHomeSeriesDetailIconKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailPathKey = @"XXTExplorerViewSectionHomeSeriesDetailPathKey";
+
+static NSString * const XXTExplorerViewEntryAttributePermissionViewable = @"XXTExplorerViewEntryAttributePermissionViewable";
+static NSString * const XXTExplorerViewEntryAttributePermissionEditable = @"XXTExplorerViewEntryAttributePermissionEditable";
+static NSString * const XXTExplorerViewEntryAttributePermissionExecuteable = @"XXTExplorerViewEntryAttributePermissionExecuteable";
+
+#pragma mark - Notifications
 
 #endif /* XXTExplorerDefaults_h */

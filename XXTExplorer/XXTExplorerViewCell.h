@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTESwipeTableCell.h"
 
 static NSString *XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";
 static CGFloat XXTExplorerViewCellHeight = 66.f;
 
-@interface XXTExplorerViewCell : UITableViewCell
+@interface XXTExplorerViewCell : XXTESwipeTableCell
 @property (weak, nonatomic) IBOutlet UIImageView *entryIconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *entryTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *entrySubtitleLabel;

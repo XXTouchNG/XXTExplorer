@@ -806,11 +806,11 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
 
 -(void) refreshContentView
 {
-    CGFloat currentOffset = _swipeOffset;
+//    CGFloat currentOffset = _swipeOffset;
     BOOL prevValue = _triggerStateChanges;
     _triggerStateChanges = NO;
     self.swipeOffset = 0;
-    self.swipeOffset = currentOffset;
+//    self.swipeOffset = currentOffset;
     _triggerStateChanges = prevValue;
 }
 
@@ -973,7 +973,7 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
     XXTESwipeButtonsView * activeButtons = sign < 0 ? _rightView : _leftView;
     XXTESwipeSettings * activeSettings = sign < 0 ? _rightSwipeSettings : _leftSwipeSettings;
   
-    if(activeSettings.enableSwipeBounces) {
+    if (activeSettings.enableSwipeBounces) {
         _swipeOffset = newOffset;
     }
     else {
@@ -983,7 +983,7 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
     CGFloat offset = fabs(_swipeOffset);
   
   
-    if (!activeButtons || offset == 0) {
+    if (!activeButtons || offset < 0.001) {
         if (_leftView)
             [_leftView endExpansionAnimated:NO];
         if (_rightView)

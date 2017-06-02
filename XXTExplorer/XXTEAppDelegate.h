@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  XXTEAppDelegate.h
 //  XXTExplorer
 //
 //  Created by Zheng on 25/05/2017.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface XXTEAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

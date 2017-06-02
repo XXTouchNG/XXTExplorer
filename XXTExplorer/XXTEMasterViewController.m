@@ -14,6 +14,14 @@
 
 @implementation XXTEMasterViewController
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.selectedViewController.preferredStatusBarStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.selectedViewController.prefersStatusBarHidden;
+}
+
 - (UIViewController *)childViewControllerForStatusBarStyle {
     return self.selectedViewController;
 }
@@ -26,6 +34,7 @@
     [super viewDidLoad];
     
     [[UITabBar appearanceWhenContainedIn:[self class], nil] setTintColor:XXTE_COLOR];
+
 }
 
 @end

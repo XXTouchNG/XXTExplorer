@@ -121,6 +121,10 @@
     [self setItems:self.statusSeries[status] animated:YES];
 }
 
+- (void)updateButtonType:(NSString *)buttonType enabled:(BOOL)enabled {
+    [self updateButtonType:buttonType status:nil enabled:enabled];
+}
+
 - (void)updateButtonType:(NSString *)buttonType status:(NSString *)buttonStatus enabled:(BOOL)enabled {
     if (buttonStatus) {
         UIImage *statusImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, buttonStatus]];

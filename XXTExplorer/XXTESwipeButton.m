@@ -70,6 +70,7 @@
     button.backgroundColor = color;
     button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     button.titleLabel.textAlignment = NSTextAlignmentCenter;
+    button.titleLabel.font = [UIFont systemFontOfSize:14.f];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setImage:icon forState:UIControlStateNormal];

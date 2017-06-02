@@ -14,6 +14,14 @@
 
 @implementation XXTENavigationController
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.topViewController.preferredStatusBarStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.topViewController.prefersStatusBarHidden;
+}
+
 - (UIViewController *)childViewControllerForStatusBarStyle {
     return self.topViewController;
 }
@@ -25,11 +33,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[UINavigationBar appearanceWhenContainedIn:[self class], nil] setTranslucent:NO];
-    [[UINavigationBar appearanceWhenContainedIn:[self class], nil] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearanceWhenContainedIn:[self class], nil] setBarTintColor:XXTE_COLOR];
-    [[UINavigationBar appearanceWhenContainedIn:[self class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
-    [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]} forState:UIControlStateNormal];
+    UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
+    [navigationBarAppearance setTranslucent:NO];
+    [navigationBarAppearance setTintColor:[UIColor whiteColor]];
+    [navigationBarAppearance setBarTintColor:XXTE_COLOR];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    
+    UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[self class], nil];
+    [barButtonItemAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]} forState:UIControlStateNormal];
+    
 }
 
 @end

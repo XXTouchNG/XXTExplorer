@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0806ACE7FC593E677A6EC42F /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D16DAFC6133A7F17D2F5EB88 /* libPods-XXTExplorer.a */; };
 		0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
+		0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */; };
 		0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
@@ -19,7 +19,7 @@
 		0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CB21ED8D95700E18BE2 /* XXTESwipeButton.m */; };
 		0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CB41ED8D95700E18BE2 /* XXTESwipeTableCell.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
-		0FA7ABF21ED641A3003EAD7D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* AppDelegate.m */; };
+		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
 		0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */; };
 		0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */; };
 		0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */; };
@@ -30,12 +30,18 @@
 		0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */; };
 		0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */; };
 		0FB1E53B1EDB1FFA0036F613 /* XXTExplorerDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FB1E53A1EDB1FFA0036F613 /* XXTExplorerDefaults.plist */; };
+		0FECB2231EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2221EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist */; };
+		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
+		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
+		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0F1482631EDABCC6007A777B /* XXTExplorerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerToolbar.h; sourceTree = "<group>"; };
 		0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerToolbar.m; sourceTree = "<group>"; };
+		0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryParser.h; sourceTree = "<group>"; };
+		0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryParser.m; sourceTree = "<group>"; };
 		0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController.h; sourceTree = "<group>"; };
 		0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESplitViewController.m; sourceTree = "<group>"; };
 		0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWorkspaceViewController.h; sourceTree = "<group>"; };
@@ -57,8 +63,8 @@
 		0F766CB41ED8D95700E18BE2 /* XXTESwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeTableCell.m; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA7ABEE1ED641A3003EAD7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0FA7ABF01ED641A3003EAD7D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		0FA7ABF11ED641A3003EAD7D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDelegate.h; sourceTree = "<group>"; };
+		0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEAppDelegate.m; sourceTree = "<group>"; };
 		0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		0FA7ABFE1ED641A3003EAD7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FA7AC081ED644FA003EAD7D /* XXTEPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEPrefixHeader.pch; sourceTree = "<group>"; };
@@ -78,9 +84,15 @@
 		0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewCell.m; sourceTree = "<group>"; };
 		0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewCell.xib; sourceTree = "<group>"; };
 		0FB1E53A1EDB1FFA0036F613 /* XXTExplorerDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTExplorerDefaults.plist; sourceTree = "<group>"; };
+		0FECB2221EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTExplorerBuiltInDefaults.plist; sourceTree = "<group>"; };
+		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
+		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
+		0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewHomeCell.xib; sourceTree = "<group>"; };
+		0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENotificationCenterDefines.h; sourceTree = "<group>"; };
+		0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDispatchDefines.h; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
-		D16DAFC6133A7F17D2F5EB88 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.debug.xcconfig"; sourceTree = "<group>"; };
+		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,13 +101,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0806ACE7FC593E677A6EC42F /* libPods-XXTExplorer.a in Frameworks */,
+				13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F4BB0B31EDB7D070072B7A3 /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */,
+				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
+			);
+			name = Entry;
+			sourceTree = "<group>";
+		};
 		0F61E1601ED78712003DCC78 /* Master */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,16 +140,11 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				0F4BB0B31EDB7D070072B7A3 /* Entry */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
 				0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */,
 				0FB1E53A1EDB1FFA0036F613 /* XXTExplorerDefaults.plist */,
-				0FAE0F081ED70F8700798B4B /* XXTExplorerHeaderView.h */,
-				0FAE0F091ED70F8700798B4B /* XXTExplorerHeaderView.m */,
-				0FAAB58B1EDA319700897680 /* XXTExplorerFooterView.h */,
-				0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */,
-				0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */,
-				0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */,
-				0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */,
+				0FECB2221EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist */,
 				0FAE0F001ED6FC0000798B4B /* XXTExplorerViewController.h */,
 				0FAE0F011ED6FC0000798B4B /* XXTExplorerViewController.m */,
 				0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */,
@@ -151,12 +167,12 @@
 		0F61E1641ED7875A003DCC78 /* Common Views */ = {
 			isa = PBXGroup;
 			children = (
-				0FAAB5911EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.h */,
-				0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */,
 				0FAE0F051ED70E4800798B4B /* XXTEInsetsLabel.h */,
 				0FAE0F061ED70E4800798B4B /* XXTEInsetsLabel.m */,
 				0F766CAE1ED8D7D700E18BE2 /* UIView+XXTEToast.h */,
 				0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */,
+				0FAAB5911EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.h */,
+				0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */,
 			);
 			name = "Common Views";
 			sourceTree = "<group>";
@@ -170,6 +186,16 @@
 				0F766CB41ED8D95700E18BE2 /* XXTESwipeTableCell.m */,
 				0F1482631EDABCC6007A777B /* XXTExplorerToolbar.h */,
 				0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */,
+				0FAE0F081ED70F8700798B4B /* XXTExplorerHeaderView.h */,
+				0FAE0F091ED70F8700798B4B /* XXTExplorerHeaderView.m */,
+				0FAAB58B1EDA319700897680 /* XXTExplorerFooterView.h */,
+				0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */,
+				0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */,
+				0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */,
+				0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */,
+				0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */,
+				0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */,
+				0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -196,12 +222,13 @@
 		0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */ = {
 			isa = PBXGroup;
 			children = (
-				0FA7ABF01ED641A3003EAD7D /* AppDelegate.h */,
-				0FA7ABF11ED641A3003EAD7D /* AppDelegate.m */,
+				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
+				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
+				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F61E1641ED7875A003DCC78 /* Common Views */,
 				0F61E1601ED78712003DCC78 /* Master */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
@@ -221,10 +248,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
+			isa = PBXGroup;
+			children = (
+				0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */,
+				0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */,
+			);
+			name = Defines;
+			sourceTree = "<group>";
+		};
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D16DAFC6133A7F17D2F5EB88 /* libPods-XXTExplorer.a */,
+				E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -305,6 +341,8 @@
 				0FB1E53B1EDB1FFA0036F613 /* XXTExplorerDefaults.plist in Resources */,
 				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
+				0FECB2231EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist in Resources */,
+				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,19 +405,21 @@
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
-				0FA7ABF21ED641A3003EAD7D /* AppDelegate.m in Sources */,
+				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
+				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
+				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
 			);
@@ -413,7 +453,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -425,7 +465,7 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -463,12 +503,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -487,6 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_PREFIX_HEADER = "${SRCROOT}/XXTExplorer/XXTEPrefixHeader.pch";
 				INFOPLIST_FILE = XXTExplorer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -504,6 +545,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_PREFIX_HEADER = "${SRCROOT}/XXTExplorer/XXTEPrefixHeader.pch";
 				INFOPLIST_FILE = XXTExplorer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
