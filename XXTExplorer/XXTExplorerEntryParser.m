@@ -19,14 +19,14 @@
     
 }
 
-+ (instancetype)sharedParser {
-    static XXTExplorerEntryParser *parser = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        parser = [[XXTExplorerEntryParser alloc] init];
-    });
-    return parser;
-}
+//+ (instancetype)sharedParser {
+//    static XXTExplorerEntryParser *parser = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        parser = [[XXTExplorerEntryParser alloc] init];
+//    });
+//    return parser;
+//}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -116,6 +116,7 @@
       XXTExplorerViewEntryAttributeType: entryBaseType,
       XXTExplorerViewEntryAttributeMaskType: entryMaskType,
       XXTExplorerViewEntryAttributeExtension: entryBaseExtension,
+      XXTExplorerViewEntryAttributeInternalExtension: entryBaseExtension,
       XXTExplorerViewEntryAttributePermission: @[]
       };
     entryAttributes = [self parseInternalEntry:entryAttributes];
@@ -129,6 +130,7 @@
     NSString *entryBaseExtension = entry[XXTExplorerViewEntryAttributeExtension];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
     {
+        // Executable
         if ([entryBaseExtension isEqualToString:@"lua"])
         {
             newEntry[XXTExplorerViewEntryAttributePermission] =
@@ -136,23 +138,32 @@
               XXTExplorerViewEntryAttributePermissionViewable,
               XXTExplorerViewEntryAttributePermissionEditable,
               ];
+            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
         }
         else if ([entryBaseExtension isEqualToString:@"xxt"])
         {
             newEntry[XXTExplorerViewEntryAttributePermission] =
             @[XXTExplorerViewEntryAttributePermissionExecuteable,
               ];
+            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
+        }
+        // Archive
+        else if ([entryBaseExtension isEqualToString:@"zip"])
+        {
+            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionArchive;
+            newEntry[XXTExplorerViewEntryAttributeIconImage] = [UIImage imageNamed:@"XXTExplorerViewEntryAttributeExtensionZIP"];
         }
     }
     else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
     {
-        
+        // Bundle
         if ([entryBaseExtension isEqualToString:@"xpp"])
         {
             newEntry[XXTExplorerViewEntryAttributePermission] =
             @[XXTExplorerViewEntryAttributePermissionExecuteable,
               ];
             newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeTypeBundle;
+            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
         }
     }
     return [[NSDictionary alloc] initWithDictionary:newEntry];

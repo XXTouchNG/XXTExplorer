@@ -13,7 +13,7 @@
 @property (nonatomic, copy, readonly) NSString *entryPath;
 //@property (nonatomic, strong, readonly) NSUserDefaults *explorerDefaults;
 //@property (nonatomic, copy, readonly) NSDictionary *explorerBuiltInDefaults;
-// @property (nonatomic, strong, readonly) NSFileManager *explorerFileManager;
+//@property (nonatomic, strong, readonly) NSFileManager *explorerFileManager;
 //@property (nonatomic, strong, readonly) NSDateFormatter *explorerDateFormatter;
 
 + (NSString *)rootPath;

@@ -10,7 +10,7 @@
 
 @interface XXTExplorerEntryParser : NSObject
 
-+ (instancetype)sharedParser;
+//+ (instancetype)sharedParser;
 
 - (NSDictionary *)entryOfPath:(NSString *)path withError:(NSError **)error;
 

@@ -101,6 +101,8 @@
 }
 */
 
+#pragma mark - UIApplicationDelegate
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(nullable NSString *)sourceApplication
