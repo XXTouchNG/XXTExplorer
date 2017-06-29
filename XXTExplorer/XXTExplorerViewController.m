@@ -283,13 +283,6 @@ typedef enum : NSUInteger {
 }
 
 - (void)updateToolbarStatus:(XXTExplorerToolbar *)toolbar {
-    if ([[[self class] explorerPasteboard] strings].count > 0) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
-    }
-    else
-    {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
-    }
     if ([self isEditing])
     {
         if (([self.tableView indexPathsForSelectedRows].count) > 0)
@@ -312,6 +305,13 @@ typedef enum : NSUInteger {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
+        if ([[[self class] explorerPasteboard] strings].count > 0) {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
+        }
+        else
+        {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
+        }
     }
 }
 
@@ -490,7 +490,7 @@ typedef enum : NSUInteger {
                     }
                     else
                     {
-                        
+                        // TODO: Open In Method
                     }
                 }
                 else

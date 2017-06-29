@@ -24,6 +24,14 @@
 		0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */; };
 		0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */; };
 		0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */; };
+		0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */; };
+		0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */; };
+		0FAD69221F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD69201F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m */; };
+		0FAD69231F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD69211F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib */; };
+		0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD69251F04039D00B2F0EC /* XXTEMoreSwitchCell.m */; };
+		0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD69261F04039D00B2F0EC /* XXTEMoreSwitchCell.xib */; };
+		0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD692A1F0403B000B2F0EC /* XXTEMoreLinkCell.m */; };
+		0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD692B1F0403B000B2F0EC /* XXTEMoreLinkCell.xib */; };
 		0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */; };
 		0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F011ED6FC0000798B4B /* XXTExplorerViewController.m */; };
 		0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F061ED70E4800798B4B /* XXTEInsetsLabel.m */; };
@@ -76,6 +84,19 @@
 		0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerFooterView.m; sourceTree = "<group>"; };
 		0FAAB5911EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+XXTEFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+XXTEFullscreenPopGesture.m"; sourceTree = "<group>"; };
+		0FAD691A1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRemoteSwitchCell.h; sourceTree = "<group>"; };
+		0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreRemoteSwitchCell.m; sourceTree = "<group>"; };
+		0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreRemoteSwitchCell.xib; sourceTree = "<group>"; };
+		0FAD691F1F04038600B2F0EC /* XXTEMoreRemoteAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRemoteAddressCell.h; sourceTree = "<group>"; };
+		0FAD69201F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreRemoteAddressCell.m; sourceTree = "<group>"; };
+		0FAD69211F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreRemoteAddressCell.xib; sourceTree = "<group>"; };
+		0FAD69241F04039D00B2F0EC /* XXTEMoreSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreSwitchCell.h; sourceTree = "<group>"; };
+		0FAD69251F04039D00B2F0EC /* XXTEMoreSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreSwitchCell.m; sourceTree = "<group>"; };
+		0FAD69261F04039D00B2F0EC /* XXTEMoreSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreSwitchCell.xib; sourceTree = "<group>"; };
+		0FAD69291F0403B000B2F0EC /* XXTEMoreLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLinkCell.h; sourceTree = "<group>"; };
+		0FAD692A1F0403B000B2F0EC /* XXTEMoreLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLinkCell.m; sourceTree = "<group>"; };
+		0FAD692B1F0403B000B2F0EC /* XXTEMoreLinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLinkCell.xib; sourceTree = "<group>"; };
+		0FAD692E1F040D0500B2F0EC /* XXTEMoreCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMoreCell.h; sourceTree = "<group>"; };
 		0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTENavigationController.h; sourceTree = "<group>"; };
 		0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTENavigationController.m; sourceTree = "<group>"; };
 		0FAE0F001ED6FC0000798B4B /* XXTExplorerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewController.h; sourceTree = "<group>"; };
@@ -171,6 +192,7 @@
 		0F61E1631ED7873F003DCC78 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				0FAD69191F04033300B2F0EC /* Cell */,
 				0F61E1681ED78899003DCC78 /* XXTEMoreViewController.h */,
 				0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */,
 				0F61E16C1ED78EA8003DCC78 /* XXTEMoreNavigationController.h */,
@@ -261,6 +283,26 @@
 				0FA7AC081ED644FA003EAD7D /* XXTEPrefixHeader.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0FAD69191F04033300B2F0EC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0FAD692E1F040D0500B2F0EC /* XXTEMoreCell.h */,
+				0FAD691A1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.h */,
+				0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */,
+				0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */,
+				0FAD691F1F04038600B2F0EC /* XXTEMoreRemoteAddressCell.h */,
+				0FAD69201F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m */,
+				0FAD69211F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib */,
+				0FAD69241F04039D00B2F0EC /* XXTEMoreSwitchCell.h */,
+				0FAD69251F04039D00B2F0EC /* XXTEMoreSwitchCell.m */,
+				0FAD69261F04039D00B2F0EC /* XXTEMoreSwitchCell.xib */,
+				0FAD69291F0403B000B2F0EC /* XXTEMoreLinkCell.h */,
+				0FAD692A1F0403B000B2F0EC /* XXTEMoreLinkCell.m */,
+				0FAD692B1F0403B000B2F0EC /* XXTEMoreLinkCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
@@ -354,10 +396,14 @@
 			files = (
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
 				0FB1E53B1EDB1FFA0036F613 /* XXTExplorerDefaults.plist in Resources */,
+				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
+				0FAD69231F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				0FECB2231EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist in Resources */,
+				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
+				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +437,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */ = {
@@ -417,8 +463,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
+				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
+				0FAD69221F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
@@ -438,6 +487,7 @@
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
+				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
