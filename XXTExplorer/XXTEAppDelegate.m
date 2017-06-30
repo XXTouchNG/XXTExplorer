@@ -21,7 +21,10 @@
 
 @end
 
-@implementation XXTEAppDelegate
+@implementation XXTEAppDelegate {
+    XXTEDaemonService *localDaemonService;
+    NSDictionary *localAppDefines;
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -55,6 +58,7 @@
     navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    mainWindow.tintColor = XXTE_COLOR;
     mainWindow.backgroundColor = [UIColor whiteColor];
     mainWindow.rootViewController = splitViewController;
     [mainWindow makeKeyAndVisible];
@@ -131,6 +135,24 @@
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
     return YES;
+}
+
+#pragma mark - Daemon Service
+
+- (XXTEDaemonService *)daemonService {
+    if (!localDaemonService) {
+        localDaemonService = [[XXTEDaemonService alloc] init];
+    }
+    return localDaemonService;
+}
+
+#pragma mark - App Defines
+
+- (NSDictionary *)appDefines {
+    if (!localAppDefines) {
+        localAppDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
+    }
+    return localAppDefines;
 }
 
 @end

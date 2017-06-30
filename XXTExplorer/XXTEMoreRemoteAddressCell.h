@@ -11,7 +11,6 @@
 static NSString * const XXTEMoreRemoteAddressCellReuseIdentifier = @"XXTEMoreRemoteAddressCellReuseIdentifier";
 
 @interface XXTEMoreRemoteAddressCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UITextView *addressLabel;
 
 @end

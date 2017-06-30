@@ -941,7 +941,7 @@ typedef enum : NSUInteger {
     else if (direction == XXTESwipeDirectionRightToLeft)
     {
         XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconTrash"]
-                                                             backgroundColor:XXTE_DANGER_COLOR
+                                                             backgroundColor:XXTE_COLOR_DANGER
                                                                       insets:UIEdgeInsetsMake(0, 24, 0, 24)];
         return @[ swipeTrashButton ];
     }

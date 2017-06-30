@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,23 +20,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CvM-Ry-mM0">
-                        <rect key="frame" x="8" y="8" width="32" height="32"/>
+                        <rect key="frame" x="16" y="8" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="nX0-BF-OVO"/>
                             <constraint firstAttribute="width" constant="32" id="tB3-Tf-Q5H"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About us" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1tP-R5-Pwv">
-                        <rect key="frame" x="52" y="14" width="68" height="21"/>
+                        <rect key="frame" x="64" y="14" width="68" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="1tP-R5-Pwv" firstAttribute="leading" secondItem="CvM-Ry-mM0" secondAttribute="trailing" constant="12" id="CZq-AL-b7Y"/>
+                    <constraint firstItem="1tP-R5-Pwv" firstAttribute="leading" secondItem="CvM-Ry-mM0" secondAttribute="trailing" constant="16" id="CZq-AL-b7Y"/>
                     <constraint firstItem="CvM-Ry-mM0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibb-iM-X7f"/>
-                    <constraint firstItem="CvM-Ry-mM0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="QPO-qG-GHd"/>
+                    <constraint firstItem="CvM-Ry-mM0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="QPO-qG-GHd"/>
                     <constraint firstItem="1tP-R5-Pwv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hmG-zu-gj5"/>
                 </constraints>
             </tableViewCellContentView>

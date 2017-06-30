@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>USER_FUNC</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>print()</string>
+			<key>udid</key>
+			<string>BCB1D74C-FC68-4EF0-A49C-5C4BC2ACAA76</string>
+			<key>code</key>
+			<string>print(@@)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>print.out()</string>
+			<key>udid</key>
+			<string>9926E718-8984-492C-BFA4-5E44881F9478</string>
+			<key>code</key>
+			<string>print.out()@@
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>sys.toast(&quot;&quot;)</string>
+			<key>udid</key>
+			<string>6515527F-5E48-4174-971C-F85B0D1997F4</string>
+			<key>code</key>
+			<string>sys.toast(&quot;@@&quot;)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>sys.alert(&quot;&quot;, 0)</string>
+			<key>udid</key>
+			<string>43BF4ABA-07B8-4167-910A-2A25907C0B70</string>
+			<key>code</key>
+			<string>sys.alert(&quot;@@&quot;, 0)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>if ... then ... end</string>
+			<key>udid</key>
+			<string>E62D9415-8B45-4253-B862-2E37CBC9439F</string>
+			<key>code</key>
+			<string>if () then
+	@@
+end
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>for i = 1, 10, 1 do ... end</string>
+			<key>udid</key>
+			<string>31F31346-29D7-43EE-B3C4-E71855C06286</string>
+			<key>code</key>
+			<string>for i = 1, 10, 1 do
+	@@
+end
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>while (true) do .. end</string>
+			<key>udid</key>
+			<string>6306B9BA-EFDA-43BC-AD4A-943D541D20E6</string>
+			<key>code</key>
+			<string>while (true) do
+	@@
+end
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>repeat ... until (false)</string>
+			<key>udid</key>
+			<string>B6E18730-E55E-4AFC-8CEE-D8AA1F5111A3</string>
+			<key>code</key>
+			<string>repeat
+	@@
+until (false)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>sys.msleep(1000)</string>
+			<key>udid</key>
+			<string>12F63FE5-4B75-46B1-9301-F1E55C60B6B3</string>
+			<key>code</key>
+			<string>sys.msleep(1000@@)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>touch.tap(x, y)</string>
+			<key>udid</key>
+			<string>F23F7BD2-006B-4C81-A9A5-F5485DF7D5C3</string>
+			<key>code</key>
+			<string>touch.tap(x, y)@@
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.input_text(&quot;&quot;)</string>
+			<key>udid</key>
+			<string>3F993527-5460-42CD-BE49-6B522F92E932</string>
+			<key>code</key>
+			<string>app.input_text(&quot;@@&quot;)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>accelerometer.shake()</string>
+			<key>udid</key>
+			<string>276333A0-0321-461B-99ED-401830BA77E4</string>
+			<key>code</key>
+			<string>accelerometer.shake()
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>r = sys.input_box(&quot;&quot;)</string>
+			<key>udid</key>
+			<string>5F067E85-3B0D-4581-BFB3-1B0968FAB7A5</string>
+			<key>code</key>
+			<string>r = sys.input_box(&quot;@@&quot;)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>pasteboard.write(&quot;&quot;)</string>
+			<key>udid</key>
+			<string>71BF1FD1-CE4B-4690-9772-320C76618088</string>
+			<key>code</key>
+			<string>pasteboard.write(&quot;@@&quot;)
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>r = pasteboard.read()</string>
+			<key>udid</key>
+			<string>93216AA4-3E16-4339-8407-652B5E33C635</string>
+			<key>code</key>
+			<string>r = pasteboard.read()
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>os.execute(&quot;&quot;)</string>
+			<key>udid</key>
+			<string>8C646ABB-5C17-49F2-88F3-754FD66E3324</string>
+			<key>code</key>
+			<string>os.execute(&quot;@@&quot;)
+</string>
+		</dict>
+	</array>
+	<key>INTERNAL_FUNC</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>touch.tap(x, y)</string>
+			<key>udid</key>
+			<string>09BCB566-4D45-4624-B8A9-C83F74409FC2</string>
+			<key>code</key>
+			<string>touch.tap(@pos@)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>touch.on(x, y):move(x1, y1)</string>
+			<key>udid</key>
+			<string>20C5B6D8-31AA-4D00-BD7E-C13DD6BFA813</string>
+			<key>code</key>
+			<string>touch.on(@pos@):move(@pos@):off()@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>screen.ocr_text(left, top, right, bottom)</string>
+			<key>udid</key>
+			<string>B87FB2D5-E40B-4249-9914-35F9308433EE</string>
+			<key>code</key>
+			<string>screen.ocr_text(@rect@@@)</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>screen.is_colors(colors, similarity)</string>
+			<key>udid</key>
+			<string>4A96843F-CBD2-42B9-BEF4-2F5D421FCB92</string>
+			<key>code</key>
+			<string>screen.is_colors(@poscolors@, 90)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>screen.find_color(colors, similarity, rect)</string>
+			<key>udid</key>
+			<string>A9B408B9-9EBA-4882-8BC1-46BD65FC0E0B</string>
+			<key>code</key>
+			<string>local x, y = screen.find_color(@poscolors@, 90, @rect@)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>key.press(key)</string>
+			<key>udid</key>
+			<string>E34AE792-95A5-4E77-91A5-8A694F2F98A3</string>
+			<key>code</key>
+			<string>key.press(&quot;@key@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>gps.fake(bid, latitude, longitude)</string>
+			<key>udid</key>
+			<string>B8D7252D-20BE-478E-B6B3-BE7B4CEA9674</string>
+			<key>code</key>
+			<string>gps.fake(&quot;@app@&quot;, @loc@)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>gps.clear([bid])</string>
+			<key>udid</key>
+			<string>D3B34C57-12C1-4708-8258-7A38D59525AC</string>
+			<key>code</key>
+			<string>gps.clear(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.run(bid)</string>
+			<key>udid</key>
+			<string>EE47529B-A9DD-40DB-A0FE-F10378D75B39</string>
+			<key>code</key>
+			<string>app.run(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.close(bid)</string>
+			<key>udid</key>
+			<string>43716157-ADAC-4783-87B6-847C1C8D6059</string>
+			<key>code</key>
+			<string>app.close(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.quit(bid)</string>
+			<key>udid</key>
+			<string>28398A61-6A9C-4FFB-9DFE-D372061693A6</string>
+			<key>code</key>
+			<string>app.quit(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.bundle_path(bid)</string>
+			<key>udid</key>
+			<string>0203BCFA-A03B-4CA0-BBF7-9820C043D1A2</string>
+			<key>code</key>
+			<string>app.bundle_path(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.data_path(bid)</string>
+			<key>udid</key>
+			<string>80D9B935-106A-4BD4-B54C-4C3215CA531D</string>
+			<key>code</key>
+			<string>app.data_path(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.is_running(bid)</string>
+			<key>udid</key>
+			<string>06BED8F9-3785-4FD8-AACA-3AD48AB2BD45</string>
+			<key>code</key>
+			<string>app.is_running(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.is_front(bid)</string>
+			<key>udid</key>
+			<string>FDD68978-2B3E-4162-9FA2-3A67195F1D59</string>
+			<key>code</key>
+			<string>app.front_bid()==&quot;@app@&quot;@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>app.uninstall(bid)</string>
+			<key>udid</key>
+			<string>02D1458D-A5E8-4BDC-AE1C-F6403AD651B7</string>
+			<key>code</key>
+			<string>app.uninstall(&quot;@app@&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>clear.keychain(bid)</string>
+			<key>udid</key>
+			<string>E0B40876-BF90-40A9-8A15-4AD56E53564A</string>
+			<key>code</key>
+			<string>clear.keychain(&quot;%@app@%&quot;)@@</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>clear.app_data(bid)</string>
+			<key>udid</key>
+			<string>2B04F068-B930-4DC0-9BE4-2D15429EB400</string>
+			<key>code</key>
+			<string>clear.app_data(&quot;@app@&quot;)@@</string>
+		</dict>
+	</array>
+	<key>CHANNEL_ID</key>
+	<string>Cydia</string>
+	<key>UMENG_KEY</key>
+	<string>5817f40375ca353017000ff7</string>
+	<key>ALIYUN_APPKEY</key>
+	<string>23559128</string>
+	<key>ALIYUN_APPSECRERT</key>
+	<string>5f3cadc6a99078eb0ef3b5dccec5fec7</string>
+	<key>APP_CONNECTION_TIMEOUT</key>
+	<real>10</real>
+	<key>XXTOUCH_APP_PATH</key>
+	<string>/Applications/XXTouchApp.app</string>
+	<key>SERVICE_EMAIL</key>
+	<string>bug@xxtouch.com</string>
+	<key>UPDATE_PACKAGE</key>
+	<string>com.1func.xxtouch.ios</string>
+	<key>REMOTE_API</key>
+	<string>http://%@:46952/</string>
+	<key>OFFICIAL_SITE</key>
+	<string>https://www.xxtouch.com</string>
+	<key>CYDIA_URL</key>
+	<string>cydia://url/https://cydia.saurik.com/api/share#?source=https://apt.xxtouch.com/&amp;package=com.1func.xxtouch.ios</string>
+	<key>FEVER_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/lua/scripts</string>
+	<key>MAIN_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/</string>
+	<key>RESPRING_CHECK_PATH</key>
+	<string>/private/var/tmp/1ferver_need_respring</string>
+	<key>AUTH_API</key>
+	<string>https://api.xxtouch.com/api/</string>
+	<key>CONTACT_URL</key>
+	<string>mqqapi://card/show_pslcard?src_type=internal&amp;version=1&amp;uin=40898074&amp;card_type=group&amp;source=external</string>
+	<key>DAEMON_VERSION</key>
+	<string>1.1.3-1</string>
+	<key>UPDATE_API</key>
+	<string>https://apt.xxtouch.com/Packages</string>
+	<key>ROOT_UI</key>
+	<string>bootstrap.xui</string>
+	<key>LOCAL_API</key>
+	<string>http://127.0.0.1:46952/</string>
+	<key>ADD1S_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
+</dict>
+</plist>

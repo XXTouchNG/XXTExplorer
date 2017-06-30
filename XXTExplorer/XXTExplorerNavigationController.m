@@ -18,6 +18,14 @@
 
 @implementation XXTExplorerNavigationController
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.topViewController;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

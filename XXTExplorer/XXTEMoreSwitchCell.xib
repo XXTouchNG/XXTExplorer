@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,14 +20,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2L8-jD-zNU">
-                        <rect key="frame" x="8" y="5" width="32" height="32"/>
+                        <rect key="frame" x="16" y="5" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="WuJ-Ss-n2E"/>
                             <constraint firstAttribute="width" constant="32" id="wF7-fh-loi"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restart Service" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJ4-B3-vdy">
-                        <rect key="frame" x="52" y="11" width="115" height="21"/>
+                        <rect key="frame" x="64" y="11" width="115" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -38,10 +38,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="2L8-jD-zNU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2KT-dS-ZcL"/>
-                    <constraint firstItem="2L8-jD-zNU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="4Dj-PD-cPH"/>
+                    <constraint firstItem="2L8-jD-zNU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="4Dj-PD-cPH"/>
                     <constraint firstItem="Yb9-M0-dh7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="F6t-ef-gKc"/>
                     <constraint firstItem="oJ4-B3-vdy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OPl-ab-dQT"/>
-                    <constraint firstItem="oJ4-B3-vdy" firstAttribute="leading" secondItem="2L8-jD-zNU" secondAttribute="trailing" constant="12" id="Sdu-qt-3NV"/>
+                    <constraint firstItem="oJ4-B3-vdy" firstAttribute="leading" secondItem="2L8-jD-zNU" secondAttribute="trailing" constant="16" id="Sdu-qt-3NV"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Yb9-M0-dh7" secondAttribute="trailing" constant="8" id="VGI-2O-Xhp"/>
                 </constraints>
             </tableViewCellContentView>
