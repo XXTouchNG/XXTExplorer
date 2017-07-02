@@ -6,6 +6,7 @@
 #include <objc/runtime.h>
 #import "XXTEMoreApplicationListController.h"
 #import "LSApplicationProxy.h"
+#import "LSApplicationWorkspace.h"
 #import "XXTEMoreApplicationCell.h"
 #import "XXTEMoreApplicationDetailController.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
@@ -31,9 +32,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         UIScrollViewDelegate,
         UISearchBarDelegate
         >
-@property(nonatomic, strong) NSArray <NSDictionary *> *allApplications;
-@property(nonatomic, strong) NSArray <NSDictionary *> *displayApplications;
-@property(nonatomic, strong) UISearchController *searchController;
+@property(nonatomic, strong, readonly) UITableView *tableView;
+@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *allApplications;
+@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *displayApplications;
+@property(nonatomic, strong, readonly) UISearchController *searchController;
+@property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
 @end
 
@@ -47,7 +50,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (void)setup {
-    self.hidesBottomBarWhenPushed = YES;
+//    self.hidesBottomBarWhenPushed = YES;
 }
 
 #pragma mark - Default Style
@@ -59,8 +62,15 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     return UIStatusBarStyleLightContent;
 }
 
+- (BOOL)xxte_prefersNavigationBarHidden {
+    if (self.searchController.active) {
+        return YES;
+    }
+    return NO;
+}
+
 - (NSString *)title {
-    return NSLocalizedString(@"Application List", nil);
+    return NSLocalizedString(@"Applications", nil);
 }
 
 #pragma mark - View
@@ -70,76 +80,109 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
-
-    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
-    SEL selector = NSSelectorFromString(@"defaultWorkspace");
-    NSObject *workspace = [LSApplicationWorkspace_class performSelector:selector];
-    SEL selectorAll = NSSelectorFromString(@"allApplications");
-    NSArray <LSApplicationProxy *> *allApplications = [workspace performSelector:selectorAll];
     
-    NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
-    NSSet <NSString *> *blacklistApplications = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
-    NSMutableArray <NSDictionary *> *filteredApplications = [NSMutableArray arrayWithCapacity:allApplications.count];
-    for (LSApplicationProxy *appProxy in allApplications) {
-        BOOL shouldAdd = YES;
-        for (NSString *appId in blacklistApplications) {
-            if ([appId isEqualToString:[appProxy applicationIdentifier]]) {
-                shouldAdd = NO;
+    _applicationWorkspace = ({
+        Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
+        SEL selector = NSSelectorFromString(@"defaultWorkspace");
+        LSApplicationWorkspace *applicationWorkspace = [LSApplicationWorkspace_class performSelector:selector];
+        applicationWorkspace;
+    });
+    
+    _allApplications = ({
+        SEL selectorAll = NSSelectorFromString(@"allApplications");
+        NSArray <LSApplicationProxy *> *allApplications = [self.applicationWorkspace performSelector:selectorAll];
+        NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
+        NSSet <NSString *> *blacklistApplications = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
+        NSMutableArray <NSDictionary *> *filteredApplications = [NSMutableArray arrayWithCapacity:allApplications.count];
+        for (LSApplicationProxy *appProxy in allApplications) {
+            BOOL shouldAdd = YES;
+            for (NSString *appId in blacklistApplications) {
+                if ([appId isEqualToString:[appProxy applicationIdentifier]]) {
+                    shouldAdd = NO;
+                }
+            }
+            if (shouldAdd) {
+                NSString *applicationBundleID = appProxy.applicationIdentifier;
+                NSString *applicationBundlePath = [appProxy.resourcesDirectoryURL path];
+                NSString *applicationContainerPath = nil;
+                NSString *applicationName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
+                if (!applicationName) {
+                    applicationName = appProxy.localizedName;
+                }
+                UIImage *applicationIconImage = [UIImage imageWithData:CFBridgingRelease(SBSCopyIconImagePNGDataForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)))];
+                if (XXTE_SYSTEM_8) {
+                    applicationContainerPath = [[appProxy dataContainerURL] path];
+                } else {
+                    applicationContainerPath = [[appProxy containerURL] path];
+                }
+                NSMutableDictionary *applicationDetail = [[NSMutableDictionary alloc] init];
+                if (applicationBundleID) {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] = applicationBundleID;
+                }
+                if (applicationName) {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyName] = applicationName;
+                }
+                if (applicationBundlePath) {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath] = applicationBundlePath;
+                }
+                if (applicationContainerPath) {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath] = applicationContainerPath;
+                }
+                if (applicationIconImage) {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyIconImage] = applicationIconImage;
+                }
+                [filteredApplications addObject:[applicationDetail copy]];
             }
         }
-        if (shouldAdd) {
-            NSString *applicationIdentifier = appProxy.applicationIdentifier;
-            NSString *applicationBundle = [appProxy.resourcesDirectoryURL path];
-            NSString *applicationContainer = nil;
-            NSString *applicationLocalizedName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationIdentifier)));
-            UIImage *applicationIconImage = [UIImage imageWithData:CFBridgingRelease(SBSCopyIconImagePNGDataForDisplayIdentifier((__bridge CFStringRef)(applicationIdentifier)))];
-            if (XXTE_SYSTEM_8) {
-                applicationContainer = [[appProxy dataContainerURL] path];
-            } else {
-                applicationContainer = [[appProxy containerURL] path];
-            }
-            if (applicationIdentifier && applicationBundle && applicationContainer && applicationLocalizedName && applicationIconImage) {
-                [filteredApplications addObject:@{@"applicationIdentifier": applicationIdentifier, @"applicationBundle": applicationBundle, @"applicationContainer": applicationContainer, @"applicationLocalizedName": applicationLocalizedName, @"applicationIconImage": applicationIconImage}];
-            }
+        filteredApplications;
+    });
+    
+    _tableView = ({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        [tableView registerNib:[UINib nibWithNibName:@"XXTEMoreApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTEMoreApplicationCellReuseIdentifier];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        XXTE_START_IGNORE_PARTIAL
+        if (XXTE_SYSTEM_9) {
+            tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
-    }
-    self.allApplications = filteredApplications;
-
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    [tableView registerNib:[UINib nibWithNibName:@"XXTEMoreApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTEMoreApplicationCellReuseIdentifier];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        XXTE_END_IGNORE_PARTIAL
+        [self.view addSubview:tableView];
+        tableView;
+    });
+    
+    _searchController = ({
+        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        searchController.searchResultsUpdater = self;
+        searchController.delegate = self;
+        searchController.dimsBackgroundDuringPresentation = NO;
+        searchController;
+    });
+    
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_9) {
-        tableView.cellLayoutMarginsFollowReadableWidth = NO;
+        [self.searchController loadViewIfNeeded];
     }
     XXTE_END_IGNORE_PARTIAL
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    
-    UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    searchController.searchResultsUpdater = self;
-    searchController.delegate = self;
-//    searchController.hidesNavigationBarDuringPresentation = NO;
-    searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController = searchController;
 
-    UISearchBar *searchBar = searchController.searchBar;
-    searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
-    searchBar.scopeButtonTitles = @[
-            NSLocalizedString(@"Name", nil),
-            NSLocalizedString(@"Bundle ID", nil)
-    ];
-    searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
-    searchBar.backgroundColor = [UIColor whiteColor];
-    searchBar.barTintColor = [UIColor whiteColor];
-    searchBar.tintColor = XXTE_COLOR;
-    searchBar.delegate = self;
-    tableView.tableHeaderView = searchBar;
+    self.tableView.tableHeaderView = ({
+        UISearchBar *searchBar = self.searchController.searchBar;
+        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
+        searchBar.scopeButtonTitles = @[
+                                        NSLocalizedString(@"Name", nil),
+                                        NSLocalizedString(@"Bundle ID", nil)
+                                        ];
+        searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+        searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
+        searchBar.backgroundColor = [UIColor whiteColor];
+        searchBar.barTintColor = [UIColor whiteColor];
+        searchBar.tintColor = XXTE_COLOR;
+        searchBar.delegate = self;
+        searchBar;
+    });
 }
 
 #pragma mark - Data Source
@@ -180,9 +223,9 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
             applicationDetail = self.displayApplications[(NSUInteger) indexPath.row];
         }
     }
-    [cell setApplicationName:applicationDetail[@"applicationLocalizedName"]];
-    [cell setApplicationBundleID:applicationDetail[@"applicationIdentifier"]];
-    [cell setApplicationIconImage:applicationDetail[@"applicationIconImage"]];
+    [cell setApplicationName:applicationDetail[kXXTEMoreApplicationDetailKeyName]];
+    [cell setApplicationBundleID:applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];
+    [cell setApplicationIconImage:applicationDetail[kXXTEMoreApplicationDetailKeyIconImage]];
     [cell setTintColor:XXTE_COLOR];
     return cell;
 }
@@ -209,8 +252,8 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #pragma mark - UISearchControllerDelegate
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = NO;
+//    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = NO;
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController {
@@ -218,8 +261,8 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (void)didDismissSearchController:(UISearchController *)searchController {
-    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = YES;
+//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -232,6 +275,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     [self reloadSearchByContent:searchBar.text andCategory:searchBar.selectedScopeButtonIndex];
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
+}
+
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self reloadSearchByContent:searchController.searchBar.text andCategory:searchController.searchBar.selectedScopeButtonIndex];
 }
@@ -239,12 +286,12 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 - (void)reloadSearchByContent:(NSString *)searchText andCategory:(NSUInteger)category {
     NSPredicate *predicate = nil;
     if (category == kXXTEMoreApplicationSearchTypeName) {
-        predicate = [NSPredicate predicateWithFormat:@"applicationLocalizedName CONTAINS[cd] %@", searchText];
+        predicate = [NSPredicate predicateWithFormat:@"kXXTEMoreApplicationDetailKeyName CONTAINS[cd] %@", searchText];
     } else if (category == kXXTEMoreApplicationSearchTypeBundleID) {
-        predicate = [NSPredicate predicateWithFormat:@"applicationIdentifier CONTAINS[cd] %@", searchText];
+        predicate = [NSPredicate predicateWithFormat:@"kXXTEMoreApplicationDetailKeyBundleID CONTAINS[cd] %@", searchText];
     }
     if (predicate) {
-        self.displayApplications = [[NSArray alloc] initWithArray:[self.allApplications filteredArrayUsingPredicate:predicate]];
+        _displayApplications = [[NSArray alloc] initWithArray:[self.allApplications filteredArrayUsingPredicate:predicate]];
     }
     [self.tableView reloadData];
 }
@@ -252,12 +299,17 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.searchController.searchBar resignFirstResponder];
+    if (self.searchController.searchBar.text.length == 0) {
+        [self.searchController setActive:NO];
+    } else {
+        [self.searchController.searchBar resignFirstResponder];
+    }
 }
 
 #pragma mark - Memory
 
 - (void)dealloc {
+    [self.searchController.view removeFromSuperview];
 #ifdef DEBUG
     NSLog(@"[XXTEMoreApplicationListController dealloc]");
 #endif

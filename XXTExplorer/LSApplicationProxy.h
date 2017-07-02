@@ -6,10 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#ifndef LSApplicationProxy_h
-#define LSApplicationProxy_h
-
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 @interface LSApplicationProxy : NSObject
 
@@ -24,5 +21,3 @@
 @property (nonatomic, readonly) NSString *applicationIdentifier;
 
 @end
-
-#endif /* LSApplicationProxy_h */

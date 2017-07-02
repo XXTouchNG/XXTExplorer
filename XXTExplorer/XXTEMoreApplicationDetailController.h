@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const kXXTEMoreApplicationDetailKeyName = @"kXXTEMoreApplicationDetailKeyName";
+static NSString * const kXXTEMoreApplicationDetailKeyBundleID = @"kXXTEMoreApplicationDetailKeyBundleID";
+static NSString * const kXXTEMoreApplicationDetailKeyBundlePath = @"kXXTEMoreApplicationDetailKeyBundlePath";
+static NSString * const kXXTEMoreApplicationDetailKeyContainerPath = @"kXXTEMoreApplicationDetailKeyContainerPath";
+static NSString * const kXXTEMoreApplicationDetailKeyIconImage = @"kXXTEMoreApplicationDetailKeyIconImage";
+
 @interface XXTEMoreApplicationDetailController : UITableViewController
 @property (nonatomic, copy) NSDictionary *applicationDetail;
 

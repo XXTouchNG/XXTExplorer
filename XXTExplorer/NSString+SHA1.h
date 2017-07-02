@@ -1,13 +1,14 @@
 //
-//  XXTEDaemonService.h
+//  NSString+SHA1.h
 //  XXTExplorer
 //
-//  Created by Zheng Wu on 30/06/2017.
+//  Created by Zheng on 02/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface XXTEDaemonService : NSObject
+@interface NSString (SHA1)
+- (NSString *)sha1String;
 
 @end

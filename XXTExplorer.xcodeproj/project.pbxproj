@@ -8,8 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		0F0654BC1EE483A0005B6C5F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
+		0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */; };
+		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
+		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
 		0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */; };
+		0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */; };
+		0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
+		0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
+		0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB51B1F08E0510016016A /* XXTECloudAppConfiguration.m */; };
+		0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB51D1F08E0510016016A /* XXTECloudApiSdk.m */; };
+		0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */; };
+		0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5291F0942B30016016A /* XXTEViewShaker.m */; };
 		0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
@@ -44,14 +54,13 @@
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
-		D629C2091F05DFB40030C6DA /* XXTEDaemonService.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2081F05DFB40030C6DA /* XXTEDaemonService.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
 		D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */; };
 		D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
 		D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */; };
 		D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2241F06362C0030C6DA /* XXTEMoreApplicationListController.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations -Wno-arc-performSelector-leaks"; }; };
-		D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2271F063AE20030C6DA /* XXTEMoreApplicationDetailController.m */; };
+		D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2271F063AE20030C6DA /* XXTEMoreApplicationDetailController.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations -Wno-arc-performSelector-leaks"; }; };
 		D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22A1F063B830030C6DA /* XXTEMoreTitleValueCell.m */; };
 		D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
 		D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22F1F063E270030C6DA /* XXTEMoreActionCell.m */; };
@@ -63,10 +72,32 @@
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		0F0654BB1EE483A0005B6C5F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		0F10A9191F07B444008BA792 /* LSApplicationWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationWorkspace.h; sourceTree = "<group>"; };
+		0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseController.h; sourceTree = "<group>"; };
+		0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseController.m; sourceTree = "<group>"; };
+		0F10A9211F07FC32008BA792 /* XXTEMoreLicenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseCell.h; sourceTree = "<group>"; };
+		0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseCell.m; sourceTree = "<group>"; };
+		0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLicenseCell.xib; sourceTree = "<group>"; };
 		0F1482631EDABCC6007A777B /* XXTExplorerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerToolbar.h; sourceTree = "<group>"; };
 		0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerToolbar.m; sourceTree = "<group>"; };
 		0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryParser.h; sourceTree = "<group>"; };
 		0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryParser.m; sourceTree = "<group>"; };
+		0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XQueryComponents.h"; sourceTree = "<group>"; };
+		0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XQueryComponents.m"; sourceTree = "<group>"; };
+		0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
+		0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SHA1.m"; sourceTree = "<group>"; };
+		0F5EB5111F08DE070016016A /* NSData+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA1.h"; sourceTree = "<group>"; };
+		0F5EB5121F08DE070016016A /* NSData+SHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA1.m"; sourceTree = "<group>"; };
+		0F5EB51A1F08E0510016016A /* XXTECloudAppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudAppConfiguration.h; sourceTree = "<group>"; };
+		0F5EB51B1F08E0510016016A /* XXTECloudAppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECloudAppConfiguration.m; sourceTree = "<group>"; };
+		0F5EB51C1F08E0510016016A /* XXTECloudApiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudApiSdk.h; sourceTree = "<group>"; };
+		0F5EB51D1F08E0510016016A /* XXTECloudApiSdk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECloudApiSdk.m; sourceTree = "<group>"; };
+		0F5EB51E1F08E0510016016A /* XXTECloudHttpConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudHttpConstant.h; sourceTree = "<group>"; };
+		0F5EB51F1F08E0510016016A /* XXTECloudSDKConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudSDKConstant.h; sourceTree = "<group>"; };
+		0F5EB5201F08E0510016016A /* XXTECloudSignUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudSignUtil.h; sourceTree = "<group>"; };
+		0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECloudSignUtil.m; sourceTree = "<group>"; };
+		0F5EB5281F0942B30016016A /* XXTEViewShaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEViewShaker.h; sourceTree = "<group>"; };
+		0F5EB5291F0942B30016016A /* XXTEViewShaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEViewShaker.m; sourceTree = "<group>"; };
 		0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController.h; sourceTree = "<group>"; };
 		0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESplitViewController.m; sourceTree = "<group>"; };
 		0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWorkspaceViewController.h; sourceTree = "<group>"; };
@@ -129,8 +160,6 @@
 		0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENotificationCenterDefines.h; sourceTree = "<group>"; };
 		0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDispatchDefines.h; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
-		D629C2071F05DFB40030C6DA /* XXTEDaemonService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonService.h; sourceTree = "<group>"; };
-		D629C2081F05DFB40030C6DA /* XXTEDaemonService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonService.m; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
 		D629C2191F061E690030C6DA /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
@@ -179,6 +208,26 @@
 			name = Zip;
 			sourceTree = "<group>";
 		};
+		0F10A91A1F07FB8A008BA792 /* License */ = {
+			isa = PBXGroup;
+			children = (
+				0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */,
+				0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */,
+				0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */,
+				0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */,
+				0F5EB5111F08DE070016016A /* NSData+SHA1.h */,
+				0F5EB5121F08DE070016016A /* NSData+SHA1.m */,
+				0F5EB5281F0942B30016016A /* XXTEViewShaker.h */,
+				0F5EB5291F0942B30016016A /* XXTEViewShaker.m */,
+				0F10A9211F07FC32008BA792 /* XXTEMoreLicenseCell.h */,
+				0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */,
+				0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */,
+				0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */,
+				0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */,
+			);
+			name = License;
+			sourceTree = "<group>";
+		};
 		0F4BB0B31EDB7D070072B7A3 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +235,21 @@
 				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
 			);
 			name = Entry;
+			sourceTree = "<group>";
+		};
+		0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */ = {
+			isa = PBXGroup;
+			children = (
+				0F5EB51A1F08E0510016016A /* XXTECloudAppConfiguration.h */,
+				0F5EB51B1F08E0510016016A /* XXTECloudAppConfiguration.m */,
+				0F5EB51C1F08E0510016016A /* XXTECloudApiSdk.h */,
+				0F5EB51D1F08E0510016016A /* XXTECloudApiSdk.m */,
+				0F5EB51E1F08E0510016016A /* XXTECloudHttpConstant.h */,
+				0F5EB51F1F08E0510016016A /* XXTECloudSDKConstant.h */,
+				0F5EB5201F08E0510016016A /* XXTECloudSignUtil.h */,
+				0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */,
+			);
+			name = XXTECloudApiSdk;
 			sourceTree = "<group>";
 		};
 		0F61E1601ED78712003DCC78 /* Master */ = {
@@ -230,6 +294,7 @@
 			children = (
 				0FAD69191F04033300B2F0EC /* Cell */,
 				D629C20F1F061D5F0030C6DA /* Application List */,
+				0F10A91A1F07FB8A008BA792 /* License */,
 				0F61E1681ED78899003DCC78 /* XXTEMoreViewController.h */,
 				0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */,
 				0F61E16C1ED78EA8003DCC78 /* XXTEMoreNavigationController.h */,
@@ -296,11 +361,10 @@
 		0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */,
 				D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
-				D629C2071F05DFB40030C6DA /* XXTEDaemonService.h */,
-				D629C2081F05DFB40030C6DA /* XXTEDaemonService.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
@@ -384,6 +448,7 @@
 				D629C21A1F061EF40030C6DA /* SpringBoardServices */,
 				D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */,
 				D629C2191F061E690030C6DA /* LSApplicationProxy.h */,
+				0F10A9191F07B444008BA792 /* LSApplicationWorkspace.h */,
 				D629C2201F0635F20030C6DA /* XXTEMoreApplicationCell.h */,
 				D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */,
 				D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */,
@@ -467,6 +532,7 @@
 				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */,
+				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
@@ -537,32 +603,40 @@
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
+				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
+				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m in Sources */,
+				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
+				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
-				D629C2091F05DFB40030C6DA /* XXTEDaemonService.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
+				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */,
+				0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
+				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
+				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
+				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,

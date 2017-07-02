@@ -6,6 +6,5 @@
 #import <UIKit/UIKit.h>
 
 @interface XXTEMoreApplicationListController : UIViewController
-@property(nonatomic, strong) UITableView *tableView;
 
 @end

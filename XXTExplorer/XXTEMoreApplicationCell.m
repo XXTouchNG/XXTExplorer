@@ -10,8 +10,8 @@
 
 @interface XXTEMoreApplicationCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UILabel *appLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bundleIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *applicationNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *applicationBundleIDLabel;
 
 @end
 
@@ -31,11 +31,11 @@
 }
 
 - (void)setApplicationName:(NSString *)name {
-    self.appLabel.text = name;
+    self.applicationNameLabel.text = name;
 }
 
 - (void)setApplicationBundleID:(NSString *)bundleID {
-    self.bundleIDLabel.text = bundleID;
+    self.applicationBundleIDLabel.text = bundleID;
 }
 
 - (void)setApplicationIconImage:(UIImage *)image {
@@ -43,7 +43,7 @@
 }
 
 - (NSString *)applicationBundleID {
-    return self.bundleIDLabel.text;
+    return self.applicationBundleIDLabel.text;
 }
 
 @end

@@ -11,15 +11,18 @@
 
 #import "XXTEAppDelegate.h"
 #import "UIView+XXTEToast.h"
+#import "NSString+XQueryComponents.h"
+#import "NSString+SHA1.h"
+#import "XXTECloudApiSdk.h"
 
-static id (^convertJsonString)(id obj) =
+static id (^convertJsonString)(id) =
 ^id (id obj) {
     if ([obj isKindOfClass:[NSString class]]) {
         NSString *jsonString = obj;
         NSError *serverError = nil;
         NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&serverError];
         if (serverError) {
-            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot connect to daemon: %@.", nil), [serverError localizedDescription]];
+            @throw [serverError localizedDescription];
         }
         return jsonDictionary;
     } else if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -29,8 +32,50 @@ static id (^convertJsonString)(id obj) =
     return @{};
 };
 
+static id (^sendCloudApiRequest)(NSArray *objs) =
+^(NSArray *objs) {
+    NSString *commandUrl = objs[0];
+    NSDictionary *sendDictionary = objs[1];
+    NSMutableDictionary *sendMutableDictionary = [[NSMutableDictionary alloc] initWithDictionary:sendDictionary];
+    NSString *signatureString = [[sendDictionary stringFromQueryComponents] sha1String];
+    sendMutableDictionary[@"sign"] = signatureString;
+    NSURL *sendUrl = [NSURL URLWithString:commandUrl];
+    NSURLRequest *request = [XXTECloudApiSdk buildRequest:[NSString stringWithFormat:@"%@://", [sendUrl scheme]]
+                                                   method:@"POST"
+                                                     host:[sendUrl host]
+                                                     path:[sendUrl path]
+                                               pathParams:nil
+                                              queryParams:nil
+                                               formParams:[sendMutableDictionary copy]
+                                                     body:nil
+                                       requestContentType:@"application/x-www-form-urlencoded"
+                                        acceptContentType:@"application/json"
+                                             headerParams:nil];
+    NSHTTPURLResponse *licenseResponse = nil;
+    NSError *licenseError = nil;
+    NSData *licenseReceived = [NSURLConnection sendSynchronousRequest:request returningResponse:&licenseResponse error:&licenseError];
+    if (licenseError) {
+        @throw [licenseError localizedDescription];
+    }
+    NSDictionary *returningHeadersDict = [licenseResponse allHeaderFields];
+    if (licenseResponse.statusCode != 200 &&
+        returningHeadersDict[@"X-Ca-Error-Message"])
+    {
+        @throw returningHeadersDict[@"X-Ca-Error-Message"];
+    }
+    NSDictionary *licenseDictionary = [NSJSONSerialization JSONObjectWithData:licenseReceived options:0 error:&licenseError];
+    if (licenseError) {
+        @throw [licenseError localizedDescription];
+    }
+    return licenseDictionary;
+};
+
 static inline NSString *uAppDaemonCommandUrl(NSString *command) {
     return ([((XXTEAppDelegate *)[[UIApplication sharedApplication] delegate]).appDefines[@"LOCAL_API"] stringByAppendingString:command]);
+}
+
+static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
+    return ([((XXTEAppDelegate *)[[UIApplication sharedApplication] delegate]).appDefines[@"AUTH_API"] stringByAppendingString:command]);
 }
 
 static inline void blockUserInteractions(UIView *viewToBlock, BOOL shouldBlock) {

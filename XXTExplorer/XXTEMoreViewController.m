@@ -6,26 +6,31 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <objc/runtime.h>
+#import <objc/message.h>
 #import "XXTEMoreCell.h"
 #import "XXTEMoreViewController.h"
+#import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
 #import "NSURLConnection+PromiseKit.h"
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 #import "XXTEMoreApplicationListController.h"
+#import "XXTEMoreLicenseController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
-    kXXTEMoreSectionIndexService,
-    kXXTEMoreSectionIndexAuthentication,
+    kXXTEMoreSectionIndexDaemon,
+    kXXTEMoreSectionIndexLicense,
     kXXTEMoreSectionIndexSettings,
     kXXTEMoreSectionIndexSystem,
     kXXTEMoreSectionIndexHelp,
     kXXTEMoreSectionIndexMax
 } kXXTEMoreSectionIndex;
 
-@interface XXTEMoreViewController ()
+@interface XXTEMoreViewController () <LGAlertViewDelegate>
 @property (weak, nonatomic) UISwitch *remoteAccessSwitch;
+@property (weak, nonatomic) UIActivityIndicatorView *remoteAccessIndicator;
 
 @end
 
@@ -35,6 +40,7 @@ typedef enum : NSUInteger {
     NSArray <NSNumber *> *staticSectionRowNum;
     NSString *webServerUrl;
     NSString *bonjourWebServerUrl;
+    BOOL isFetchingRemoteStatus;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -44,6 +50,7 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.clearsSelectionOnViewWillAppear = YES;
     self.title = NSLocalizedString(@"More", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -53,33 +60,47 @@ typedef enum : NSUInteger {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    blockUserInteractions(self.navigationController.view, YES);
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"is_remote_access_opened") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
-        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            BOOL remoteAccessStatus = [jsonDictionary[@"data"][@"opened"] boolValue];
-            if (remoteAccessStatus) {
-                webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
-                bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
-                if (webServerUrl.length == 0 || bonjourWebServerUrl.length == 0) {
-                    @throw NSLocalizedString(@"Please connected to Wi-fi network and try again later.", nil);
+//    blockUserInteractions(self.navigationController.view, YES);
+    if (!isFetchingRemoteStatus) {
+        isFetchingRemoteStatus = YES;
+        [self.remoteAccessSwitch setHidden:YES];
+        [self.remoteAccessIndicator startAnimating];
+        [NSURLConnection POST:uAppDaemonCommandUrl(@"is_remote_access_opened") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+            if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+                BOOL remoteAccessStatus = [jsonDictionary[@"data"][@"opened"] boolValue];
+                if (remoteAccessStatus) {
+                    webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
+                    bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
+                    if (webServerUrl.length == 0 || bonjourWebServerUrl.length == 0) {
+                        @throw NSLocalizedString(@"Please connected to Wi-fi network and try again later.", nil);
+                    }
+                } else {
+                    webServerUrl = nil;
+                    bonjourWebServerUrl = nil;
                 }
-            } else {
-                webServerUrl = nil;
-                bonjourWebServerUrl = nil;
+                [self reloadStaticTableViewData];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
+                if (self.remoteAccessSwitch.isOn != remoteAccessStatus) {
+                    [self.remoteAccessSwitch setOn:remoteAccessStatus animated:YES];
+                }
             }
-            [self reloadStaticTableViewData];
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
-            self.remoteAccessSwitch.on = remoteAccessStatus;
-        }
-    }).catch(^(NSError *serverError) {
-         showUserMessage(self.navigationController.view, [serverError localizedDescription]);
-    }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
-    });
+        }).catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            }
+        }).finally(^() {
+            [self.remoteAccessIndicator stopAnimating];
+            [self.remoteAccessSwitch setHidden:NO];
+            //        blockUserInteractions(self.navigationController.view, NO);
+            isFetchingRemoteStatus = NO;
+        });
+    }
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"Remote", @"Daemon", @"Authentication", @"Settings", @"System", @"Help" ];
+    staticSectionTitles = @[ @"Remote", @"Daemon", @"License", @"Settings", @"System", @"Help" ];
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Remote Access", nil);
@@ -87,16 +108,17 @@ typedef enum : NSUInteger {
     cell1.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRemoteAccess"];
     [cell1.optionSwitch addTarget:self action:@selector(remoteAccessOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.remoteAccessSwitch = cell1.optionSwitch;
+    self.remoteAccessIndicator = cell1.optionIndicator;
     
     XXTEMoreLinkCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
-    cell2.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRestartService"];
-    cell2.titleLabel.text = NSLocalizedString(@"Restart Service", nil);
+    cell2.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRestartDaemon"];
+    cell2.titleLabel.text = NSLocalizedString(@"Restart Daemon", nil);
     
     XXTEMoreLinkCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell3.imageView.image = [UIImage imageNamed:@"XXTEMoreIconAuthentication"];
-    cell3.titleLabel.text = NSLocalizedString(@"Authentication", nil);
+    cell3.imageView.image = [UIImage imageNamed:@"XXTEMoreIconLicense"];
+    cell3.titleLabel.text = NSLocalizedString(@"My License", nil);
     
     XXTEMoreLinkCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -145,7 +167,7 @@ typedef enum : NSUInteger {
     
     XXTEMoreLinkCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell13.accessoryType = UITableViewCellAccessoryNone;
-    cell13.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRestartDevice"];
+    cell13.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRebootDevice"];
     cell13.titleLabel.text = NSLocalizedString(@"Restart Device", nil);
     
     XXTEMoreLinkCell *cell14 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
@@ -235,10 +257,84 @@ typedef enum : NSUInteger {
                 }
             }
         }
+        else if (indexPath.section == kXXTEMoreSectionIndexDaemon) {
+            if (indexPath.row == 0) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Restart Daemon", nil)
+                                                                    message:NSLocalizedString(@"This operation will restart daemon, and wait until it launched.", nil)
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Restart Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:restartDaemon:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
+            }
+        }
+        else if (indexPath.section == kXXTEMoreSectionIndexLicense) {
+            if (indexPath.row == 0) {
+                XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:licenseController animated:YES];
+            }
+        }
         else if (indexPath.section == kXXTEMoreSectionIndexSystem) {
             if (indexPath.row == 0) {
                 XXTEMoreApplicationListController *applicationListController = [[XXTEMoreApplicationListController alloc] init];
                 [self.navigationController pushViewController:applicationListController animated:YES];
+            }
+            else if (indexPath.row == 1) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean GPS Caches", nil)
+                                                                    message:NSLocalizedString(@"This operation will reset system location caches.", nil)
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:cleanGPSCaches:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
+            }
+            else if (indexPath.row == 2) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean UI Caches", nil)
+                                                                    message:NSLocalizedString(@"This operation will kill all applications and reset icon caches, which may cause icons to disappear.", nil)
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:cleanUICaches:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
+            }
+            else if (indexPath.row == 3) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean All", nil)
+                                                                    message:NSLocalizedString(@"This operation will kill all user applications, and remove all the documents and caches of them.", nil)
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:cleanAll:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
+            }
+            else if (indexPath.row == 4) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Respring Device", nil)
+                                                                    message:NSLocalizedString(@"This operation will kill SpringBoard and all user applications.", nil)
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Respring Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:respringDevice:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
+            }
+            else if (indexPath.row == 5) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Reboot Device", nil)
+                                                                    message:NSLocalizedString(@"This operation will shut down the device and launch it again.", nil)
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Reboot Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:rebootDevice:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
             }
         }
     }
@@ -271,6 +367,8 @@ typedef enum : NSUInteger {
         else
             changeToCommand = @"close_remote_access";
         blockUserInteractions(self.navigationController.view, YES);
+        [self.remoteAccessSwitch setHidden:YES];
+        [self.remoteAccessIndicator startAnimating];
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
                 if (changeToStatus == YES) {
@@ -288,12 +386,213 @@ typedef enum : NSUInteger {
                 self.remoteAccessSwitch.on = changeToStatus;
             }
         }).catch(^(NSError *serverError) {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
-            sender.on = !changeToStatus;
+            if (serverError.code == -1004) {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            }
+            [self.remoteAccessSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
+            [self.remoteAccessIndicator stopAnimating];
+            [self.remoteAccessSwitch setHidden:NO];
             blockUserInteractions(self.navigationController.view, NO);
         });
     }
+}
+
+#pragma mark - LGAlertViewDelegate
+
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    SEL selectors[] = {
+        @selector(alertView:restartDaemon:),
+        @selector(alertView:cleanGPSCaches:),
+        @selector(alertView:cleanUICaches:),
+        @selector(alertView:cleanAll:),
+        @selector(alertView:respringDevice:),
+        @selector(alertView:rebootDevice:)
+    };
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    for (int i = 0; i < sizeof(selectors) / sizeof(SEL); i++) {
+        SEL selector = selectors[i];
+        id obj = objc_getAssociatedObject(alertView, selector);
+        if (obj) {
+            objc_setAssociatedObject(alertView, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [self performSelector:selector withObject:alertView withObject:obj];
+            break;
+        }
+    }
+    objc_removeAssociatedObjects(alertView);
+#pragma clang diagnostic pop
+}
+
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+}
+
+#pragma mark - LGAlertView Actions
+
+- (void)alertView:(LGAlertView *)alertView cleanGPSCaches:(id)obj {
+    [alertView dismissAnimated];
+    blockUserInteractions(self.navigationController.view, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    }).finally(^() {
+        blockUserInteractions(self.navigationController.view, NO);
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView cleanUICaches:(id)obj {
+    [alertView dismissAnimated];
+    blockUserInteractions(self.navigationController.view, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"uicache") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    }).finally(^() {
+        blockUserInteractions(self.navigationController.view, NO);
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView cleanAll:(id)obj {
+    [alertView dismissAnimated];
+    blockUserInteractions(self.navigationController.view, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_all") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    }).finally(^() {
+        blockUserInteractions(self.navigationController.view, NO);
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView respringDevice:(id)obj {
+    [alertView dismissAnimated];
+    blockUserInteractions(self.navigationController.view, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"respring") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    }).finally(^() {
+        blockUserInteractions(self.navigationController.view, NO);
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView rebootDevice:(id)obj {
+    [alertView dismissAnimated];
+    blockUserInteractions(self.navigationController.view, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"reboot2") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    }).finally(^() {
+        blockUserInteractions(self.navigationController.view, NO);
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView restartDaemon:(id)obj {
+//    [alertView dismissAnimated];
+    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Restart Daemon", nil)
+                                                                             message:NSLocalizedString(@"Restart daemon, please wait...", nil)
+                                                                               style:LGAlertViewStyleActionSheet
+                                                                   progressLabelText:nil
+                                                                        buttonTitles:nil
+                                                                   cancelButtonTitle:nil
+                                                              destructiveButtonTitle:nil
+                                                                            delegate:self];
+    if (alertView && alertView.isShowing) {
+        [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    }
+//    blockUserInteractions(self.navigationController.view, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"restart") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView1 afterDelay:1.f];
+        }
+    }).catch(^(NSError *serverError) {
+//        blockUserInteractions(self.navigationController.view, NO);
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    }).finally(^() {
+        
+    });
+}
+
+- (void)alertViewRestartDaemonCheckLaunched:(LGAlertView *)alertView {
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+            // finished
+//            blockUserInteractions(self.navigationController.view, NO);
+//            [alertView dismissAnimated];
+//            showUserMessage(self.navigationController.view, NSLocalizedString(@"The daemon has been restarted.", nil));
+            LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Daemon Restarted", nil)
+                                                                 message:NSLocalizedString(@"The daemon has been restarted.", nil)
+                                                                   style:LGAlertViewStyleActionSheet
+                                                            buttonTitles:@[  ]
+                                                       cancelButtonTitle:NSLocalizedString(@"Done", nil)
+                                                  destructiveButtonTitle:nil
+                                                                delegate:self];
+            if (alertView && alertView.isShowing) {
+                [alertView transitionToAlertView:alertView1 completionHandler:nil];
+            }
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004 || serverError.code == -1005) {
+            // wait until done
+            [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView afterDelay:3.f];
+        } else {
+            // unknown error, stop
+//            blockUserInteractions(self.navigationController.view, NO);
+//            [alertView dismissAnimated];
+//            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
+                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Cannot restart daemon: %@", nil), [serverError localizedDescription]]
+                                                                   style:LGAlertViewStyleActionSheet
+                                                            buttonTitles:@[  ]
+                                                       cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                  destructiveButtonTitle:nil
+                                                                delegate:self];
+            if (alertView && alertView.isShowing) {
+                [alertView transitionToAlertView:alertView2 completionHandler:nil];
+            }
+        }
+    }).finally(^() {
+        
+    });
 }
 
 @end

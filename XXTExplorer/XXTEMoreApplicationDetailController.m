@@ -6,9 +6,12 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#include <objc/runtime.h>
 #import "XXTEMoreApplicationDetailController.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
+#import "LSApplicationWorkspace.h"
+#import "NSURLConnection+PromiseKit.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreRemoteAddressCell.h"
 #import "XXTEMoreActionCell.h"
@@ -23,6 +26,7 @@ typedef enum : NSUInteger {
 } kXXTEMoreApplicationDetailSectionIndex;
 
 @interface XXTEMoreApplicationDetailController () <LGAlertViewDelegate>
+@property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
 @end
 
@@ -47,7 +51,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    self.hidesBottomBarWhenPushed = YES;
+//    self.hidesBottomBarWhenPushed = YES;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -57,7 +61,15 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = self.applicationDetail[@"applicationLocalizedName"];
+    _applicationWorkspace = ({
+        Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
+        SEL selector = NSSelectorFromString(@"defaultWorkspace");
+        LSApplicationWorkspace *applicationWorkspace = [LSApplicationWorkspace_class performSelector:selector];
+        applicationWorkspace;
+    });
+    
+    self.clearsSelectionOnViewWillAppear = YES;
+    self.title = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -69,23 +81,35 @@ typedef enum : NSUInteger {
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Name", nil);
-    cell1.valueLabel.text = self.applicationDetail[@"applicationLocalizedName"];
+    cell1.valueLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell2.titleLabel.text = NSLocalizedString(@"Bundle ID", nil);
-    cell2.valueLabel.text = self.applicationDetail[@"applicationIdentifier"];
+    cell2.valueLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID];
     
     XXTEMoreRemoteAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
-    cell3.addressLabel.text = self.applicationDetail[@"applicationBundle"];
+    cell3.addressLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath];
     
     XXTEMoreRemoteAddressCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
-    cell4.addressLabel.text = self.applicationDetail[@"applicationContainer"];
+    NSString *containerPath = self.applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath];
+    if (!containerPath || containerPath.length <= 0) {
+        containerPath = @"/private/var/mobile";
+    }
+    cell4.addressLabel.text = containerPath;
     
     XXTEMoreActionCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
-    cell5.actionNameLabel.textColor = XXTE_COLOR_DANGER;
-    cell5.actionNameLabel.text = NSLocalizedString(@"Clean Application Data", nil);
+    cell5.actionNameLabel.textColor = XXTE_COLOR_SUCCESS;
+    cell5.actionNameLabel.text = NSLocalizedString(@"Launch Application", nil);
     
-    staticSectionRowNum = @[ @2, @1, @1, @1 ];
+    XXTEMoreActionCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
+    cell6.actionNameLabel.textColor = XXTE_COLOR_DANGER;
+    cell6.actionNameLabel.text = NSLocalizedString(@"Clean GPS Caches", nil);
+    
+    XXTEMoreActionCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
+    cell7.actionNameLabel.textColor = XXTE_COLOR_DANGER;
+    cell7.actionNameLabel.text = NSLocalizedString(@"Clean Application Data", nil);
+    
+    staticSectionRowNum = @[ @2, @1, @1, @3 ];
     
     staticCells = @[
                     @[ cell1, cell2 ],
@@ -94,7 +118,7 @@ typedef enum : NSUInteger {
                     //
                     @[ cell4 ],
                     //
-                    @[ cell5 ]
+                    @[ cell5, cell6, cell7 ]
                     ];
 }
 
@@ -120,9 +144,7 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
-            return UITableViewAutomaticDimension;
-        }
+        return UITableViewAutomaticDimension;
     }
     return 44.f;
 }
@@ -150,13 +172,28 @@ typedef enum : NSUInteger {
             });
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexAction) {
             if (indexPath.row == 0) {
-                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean Confirm", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Clean all the data of the application \"%@\"?\nThis operation cannot be revoked.", nil), self.applicationDetail[@"applicationIdentifier"]]
+                [self.applicationWorkspace openApplicationWithBundleID:self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];
+            }
+            else if (indexPath.row == 1) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean GPS Caches", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Clean the GPS caches of the application \"%@\"?\nThis operation cannot be revoked.", nil), self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]]
                                                                       style:LGAlertViewStyleActionSheet
                                                                buttonTitles:@[  ]
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                     destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
                                                                    delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:cleanApplicationGPSCaches:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated:YES completionHandler:nil];
+            }
+            else if (indexPath.row == 2) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean Application Data", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Clean all the data of the application \"%@\"?\nThis operation cannot be revoked.", nil), self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]]
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[  ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:cleanApplicationData:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated:YES completionHandler:nil];
             }
         }
@@ -179,17 +216,80 @@ typedef enum : NSUInteger {
     return [UITableViewCell new];
 }
 
-
 #pragma mark - LGAlertViewDelegate
 
-- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
-    if (index == 0) {
-        
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    SEL selectors[] = {
+        @selector(alertView:cleanApplicationData:),
+        @selector(alertView:cleanApplicationGPSCaches:)
+    };
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    for (int i = 0; i < sizeof(selectors) / sizeof(SEL); i++) {
+        SEL selector = selectors[i];
+        id obj = objc_getAssociatedObject(alertView, selector);
+        if (obj) {
+            objc_setAssociatedObject(alertView, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [self performSelector:selector withObject:alertView withObject:obj];
+            break;
+        }
     }
+    objc_removeAssociatedObjects(alertView);
+#pragma clang diagnostic pop
+}
+
+- (void)alertView:(LGAlertView *)alertView cleanApplicationGPSCaches:(id)obj {
+    blockUserInteractions(self.navigationController.view, YES);
+    [alertView dismissAnimated:YES completionHandler:^{
+        [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+            if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+                showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
+            } else {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Clean failed: %@", nil), jsonDictionary[@"message"]];
+            }
+        }).catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            }
+        }).finally(^() {
+            blockUserInteractions(self.navigationController.view, NO);
+        });
+    }];
+}
+
+- (void)alertView:(LGAlertView *)alertView cleanApplicationData:(id)obj {
+    blockUserInteractions(self.navigationController.view, YES);
+    [alertView dismissAnimated:YES completionHandler:^{
+        [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_app_data") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+            if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+                showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
+            } else {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Clean failed: %@", nil), jsonDictionary[@"message"]];
+            }
+        }).catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            }
+        }).finally(^() {
+            blockUserInteractions(self.navigationController.view, NO);
+        });
+    }];
 }
 
 - (void)alertViewCancelled:(LGAlertView *)alertView {
     [alertView dismissAnimated];
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"[XXTEMoreApplicationDetailController dealloc]");
+#endif
 }
 
 @end

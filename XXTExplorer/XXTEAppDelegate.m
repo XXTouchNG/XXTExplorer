@@ -16,13 +16,13 @@
 #import "XXTEMoreViewController.h"
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XXTECloudApiSdk.h"
 
 @interface XXTEAppDelegate () <UISplitViewControllerDelegate>
 
 @end
 
 @implementation XXTEAppDelegate {
-    XXTEDaemonService *localDaemonService;
     NSDictionary *localAppDefines;
 }
 
@@ -137,20 +137,15 @@
     return YES;
 }
 
-#pragma mark - Daemon Service
-
-- (XXTEDaemonService *)daemonService {
-    if (!localDaemonService) {
-        localDaemonService = [[XXTEDaemonService alloc] init];
-    }
-    return localDaemonService;
-}
-
 #pragma mark - App Defines
 
 - (NSDictionary *)appDefines {
     if (!localAppDefines) {
-        localAppDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
+        NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
+        [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
+        [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
+        [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
+        localAppDefines = appDefines;
     }
     return localAppDefines;
 }

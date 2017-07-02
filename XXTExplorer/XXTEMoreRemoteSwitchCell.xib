@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -36,10 +36,15 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="b3U-9m-WvI">
+                        <rect key="frame" x="364" y="23" width="20" height="20"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="b3U-9m-WvI" firstAttribute="centerY" secondItem="KRN-Yj-m7h" secondAttribute="centerY" id="5Fz-vZ-ZL5"/>
                     <constraint firstItem="bz1-IT-GUT" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibf-g4-Z79"/>
                     <constraint firstItem="KRN-Yj-m7h" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-8" id="aNL-7j-STC"/>
+                    <constraint firstItem="b3U-9m-WvI" firstAttribute="centerX" secondItem="KRN-Yj-m7h" secondAttribute="centerX" id="cTv-af-Tfd"/>
                     <constraint firstItem="bz1-IT-GUT" firstAttribute="leading" secondItem="Qqh-sy-sRL" secondAttribute="trailing" constant="16" id="fI7-hz-Jk4"/>
                     <constraint firstItem="KRN-Yj-m7h" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mah-um-N5q"/>
                     <constraint firstItem="Qqh-sy-sRL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="q72-9a-cV8"/>
@@ -49,6 +54,7 @@
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="iconImageView" destination="Qqh-sy-sRL" id="yZL-i1-4sZ"/>
+                <outlet property="optionIndicator" destination="b3U-9m-WvI" id="tcz-Iv-8US"/>
                 <outlet property="optionSwitch" destination="KRN-Yj-m7h" id="gmI-4v-x7b"/>
                 <outlet property="titleLabel" destination="bz1-IT-GUT" id="cit-Zf-4Ng"/>
             </connections>

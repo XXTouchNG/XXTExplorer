@@ -14,5 +14,6 @@ static NSString * const XXTEMoreRemoteSwitchCellReuseIdentifier = @"XXTEMoreRemo
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *optionSwitch;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *optionIndicator;
 
 @end
