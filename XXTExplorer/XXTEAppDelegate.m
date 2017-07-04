@@ -54,8 +54,8 @@
     splitViewController.viewControllers = @[masterViewController, detailNavigationController];
     
     // Add Split Button
-    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
+//    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
+//    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     mainWindow.tintColor = XXTE_COLOR;
@@ -131,11 +131,37 @@
     return NO;
 }
 
-#pragma mark - Split view
+#pragma mark - UISplitViewDelegate
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    return YES;
+    if ([secondaryViewController isKindOfClass:[UINavigationController class]]
+        && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[XXTEWorkspaceViewController class]]
+        )
+    {
+        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+        return YES;
+    } else {
+        return NO;
+    }
 }
+
+//- (UISplitViewControllerDisplayMode)targetDisplayModeForActionInSplitViewController:(UISplitViewController *)svc {
+//    return UISplitViewControllerDisplayModePrimaryOverlay;
+//}
+
+//- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+//    {
+//        if (splitViewController.collapsed) {
+//            UITabBarController *master = (UITabBarController *)splitViewController.viewControllers[0];
+//            UINavigationController *masterNavigationController = (UINavigationController *)master.selectedViewController;
+//            UINavigationController *destinationNavigationController = (UINavigationController *)vc;
+//            [masterNavigationController pushViewController:[destinationNavigationController.viewControllers lastObject] animated:YES];
+//            return YES;
+//        }
+//    }
+//    return NO;
+//}
 
 #pragma mark - App Defines
 

@@ -63,7 +63,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = YES;
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     self.title = NSLocalizedString(@"My License", nil);
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -425,7 +425,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd\nHH:mm:ss"];
         NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
         UILabel *dateLabel = cell.valueLabel;
         dateLabel.text = expirationDateString;

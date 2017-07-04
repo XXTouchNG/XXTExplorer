@@ -68,7 +68,7 @@ typedef enum : NSUInteger {
         applicationWorkspace;
     });
     
-    self.clearsSelectionOnViewWillAppear = YES;
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     self.title = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

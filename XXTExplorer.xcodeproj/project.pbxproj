@@ -20,6 +20,13 @@
 		0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB51D1F08E0510016016A /* XXTECloudApiSdk.m */; };
 		0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */; };
 		0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5291F0942B30016016A /* XXTEViewShaker.m */; };
+		0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5301F0A85AE0016016A /* XXTEMoreAboutController.m */; };
+		0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5331F0A88600016016A /* XXTEMoreAboutCell.m */; };
+		0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5341F0A88600016016A /* XXTEMoreAboutCell.xib */; };
+		0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5381F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m */; };
+		0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5391F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib */; };
+		0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */; };
+		0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */; };
 		0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
@@ -98,6 +105,18 @@
 		0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECloudSignUtil.m; sourceTree = "<group>"; };
 		0F5EB5281F0942B30016016A /* XXTEViewShaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEViewShaker.h; sourceTree = "<group>"; };
 		0F5EB5291F0942B30016016A /* XXTEViewShaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEViewShaker.m; sourceTree = "<group>"; };
+		0F5EB52F1F0A85AE0016016A /* XXTEMoreAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreAboutController.h; sourceTree = "<group>"; };
+		0F5EB5301F0A85AE0016016A /* XXTEMoreAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreAboutController.m; sourceTree = "<group>"; };
+		0F5EB5321F0A88600016016A /* XXTEMoreAboutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreAboutCell.h; sourceTree = "<group>"; };
+		0F5EB5331F0A88600016016A /* XXTEMoreAboutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreAboutCell.m; sourceTree = "<group>"; };
+		0F5EB5341F0A88600016016A /* XXTEMoreAboutCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreAboutCell.xib; sourceTree = "<group>"; };
+		0F5EB5371F0A9DC50016016A /* XXTEMoreLinkNoIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLinkNoIconCell.h; sourceTree = "<group>"; };
+		0F5EB5381F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLinkNoIconCell.m; sourceTree = "<group>"; };
+		0F5EB5391F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLinkNoIconCell.xib; sourceTree = "<group>"; };
+		0F5EB53D1F0A9EF40016016A /* XXTECommonWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECommonWebViewController.h; sourceTree = "<group>"; };
+		0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECommonWebViewController.m; sourceTree = "<group>"; };
+		0F5EB5401F0AA2AE0016016A /* XXTECommonNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECommonNavigationController.h; sourceTree = "<group>"; };
+		0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECommonNavigationController.m; sourceTree = "<group>"; };
 		0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController.h; sourceTree = "<group>"; };
 		0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESplitViewController.m; sourceTree = "<group>"; };
 		0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWorkspaceViewController.h; sourceTree = "<group>"; };
@@ -252,6 +271,29 @@
 			name = XXTECloudApiSdk;
 			sourceTree = "<group>";
 		};
+		0F5EB52B1F0A854C0016016A /* About */ = {
+			isa = PBXGroup;
+			children = (
+				0F5EB5321F0A88600016016A /* XXTEMoreAboutCell.h */,
+				0F5EB5331F0A88600016016A /* XXTEMoreAboutCell.m */,
+				0F5EB5341F0A88600016016A /* XXTEMoreAboutCell.xib */,
+				0F5EB52F1F0A85AE0016016A /* XXTEMoreAboutController.h */,
+				0F5EB5301F0A85AE0016016A /* XXTEMoreAboutController.m */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		0F5EB53C1F0A9ED80016016A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0F5EB5401F0AA2AE0016016A /* XXTECommonNavigationController.h */,
+				0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */,
+				0F5EB53D1F0A9EF40016016A /* XXTECommonWebViewController.h */,
+				0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		0F61E1601ED78712003DCC78 /* Master */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +308,7 @@
 		0F61E1611ED7871F003DCC78 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				0F5EB53C1F0A9ED80016016A /* Common */,
 				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
 				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
 			);
@@ -293,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				0FAD69191F04033300B2F0EC /* Cell */,
+				0F5EB52B1F0A854C0016016A /* About */,
 				D629C20F1F061D5F0030C6DA /* Application List */,
 				0F10A91A1F07FB8A008BA792 /* License */,
 				0F61E1681ED78899003DCC78 /* XXTEMoreViewController.h */,
@@ -411,6 +455,9 @@
 				D629C22E1F063E270030C6DA /* XXTEMoreActionCell.h */,
 				D629C22F1F063E270030C6DA /* XXTEMoreActionCell.m */,
 				D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */,
+				0F5EB5371F0A9DC50016016A /* XXTEMoreLinkNoIconCell.h */,
+				0F5EB5381F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m */,
+				0F5EB5391F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -535,12 +582,14 @@
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreRemoteAddressCell.xib in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
+				0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				0FECB2231EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
+				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +656,7 @@
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
+				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m in Sources */,
 				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
@@ -615,8 +665,10 @@
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
+				0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
+				0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
@@ -634,7 +686,9 @@
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
+				0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
+				0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */,
 				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,

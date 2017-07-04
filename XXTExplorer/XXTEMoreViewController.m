@@ -17,6 +17,7 @@
 #import "XXTENetworkDefines.h"
 #import "XXTEMoreApplicationListController.h"
 #import "XXTEMoreLicenseController.h"
+#import "XXTEMoreAboutController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -50,7 +51,7 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = YES;
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     self.title = NSLocalizedString(@"More", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -335,6 +336,12 @@ typedef enum : NSUInteger {
                                                                    delegate:self];
                 objc_setAssociatedObject(alertView, @selector(alertView:rebootDevice:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated:YES completionHandler:nil];
+            }
+        }
+        else if (indexPath.section == kXXTEMoreSectionIndexHelp) {
+            if (indexPath.row == 1) {
+                XXTEMoreAboutController *aboutController = [[XXTEMoreAboutController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:aboutController animated:YES];
             }
         }
     }
