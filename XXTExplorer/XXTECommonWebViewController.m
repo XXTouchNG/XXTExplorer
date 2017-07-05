@@ -32,4 +32,12 @@
     
 }
 
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"[XXTECommonWebViewController dealloc]");
+#endif
+}
+
 @end

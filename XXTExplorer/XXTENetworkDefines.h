@@ -9,7 +9,7 @@
 #ifndef XXTENetworkDefines_h
 #define XXTENetworkDefines_h
 
-#import "XXTEAppDelegate.h"
+#import "XXTEAppDefines.h"
 #import "UIView+XXTEToast.h"
 #import "NSString+XQueryComponents.h"
 #import "NSString+SHA1.h"
@@ -71,11 +71,11 @@ static id (^sendCloudApiRequest)(NSArray *objs) =
 };
 
 static inline NSString *uAppDaemonCommandUrl(NSString *command) {
-    return ([((XXTEAppDelegate *)[[UIApplication sharedApplication] delegate]).appDefines[@"LOCAL_API"] stringByAppendingString:command]);
+    return ([uAppDefine(@"LOCAL_API") stringByAppendingString:command]);
 }
 
 static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
-    return ([((XXTEAppDelegate *)[[UIApplication sharedApplication] delegate]).appDefines[@"AUTH_API"] stringByAppendingString:command]);
+    return ([uAppDefine(@"AUTH_API") stringByAppendingString:command]);
 }
 
 static inline void blockUserInteractions(UIView *viewToBlock, BOOL shouldBlock) {

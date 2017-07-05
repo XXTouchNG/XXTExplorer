@@ -11,6 +11,9 @@
 #import "XXTEMoreAboutCell.h"
 #import "XXTECommonNavigationController.h"
 #import "XXTECommonWebViewController.h"
+#import "XXTEAppDefines.h"
+#import "UIView+XXTEToast.h"
+#import <MessageUI/MessageUI.h>
 
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
@@ -19,7 +22,7 @@ typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexMax
 } kXXTEMoreAboutSectionIndex;
 
-@interface XXTEMoreAboutController ()
+@interface XXTEMoreAboutController () <MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -133,14 +136,62 @@ typedef enum : NSUInteger {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreAboutSectionIndexHomepage) {
+            XXTEMoreLinkNoIconCell *cell = (XXTEMoreLinkNoIconCell *)staticCells[indexPath.section][indexPath.row];
+            NSString *titleString = cell.titleLabel.text;
+            NSURL *titleUrl = nil;
             if (indexPath.row == 0) {
-                XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURLString:@"https://www.xxtouch.com"];
-                webController.title = NSLocalizedString(@"Official Site", nil);
-                //    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-                [self.navigationController pushViewController:webController animated:YES];
+                titleUrl = [NSURL URLWithString:@"https://www.xxtouch.com"];
+            }
+            else if (indexPath.row == 1) {
+                titleUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/tos" ofType:@"html"]];
+            }
+            else if (indexPath.row == 2) {
+                titleUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/open" ofType:@"html"]];
+            }
+            XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
+            webController.title = titleString;
+            XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+            [self.splitViewController showDetailViewController:navigationController sender:self];
+        }
+        else if (indexPath.section == kXXTEMoreAboutSectionIndexFeedback) {
+            if (indexPath.row == 0) {
+                if ([MFMailComposeViewController canSendMail]) {
+                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+                    if (!picker) return;
+                    picker.view.tintColor = XXTE_COLOR;
+                    picker.mailComposeDelegate = self;
+                    [picker setSubject:[NSString stringWithFormat:@"[%@] %@\nV%@", NSLocalizedString(@"Feedback", nil), NSLocalizedString(@"XXTouch Pro", nil), uAppDefine(@"DAEMON_VERSION")]];
+                    NSArray *toRecipients = [NSArray arrayWithObject:uAppDefine(@"SERVICE_EMAIL")];
+                    [picker setToRecipients:toRecipients];
+                    [self presentViewController:picker animated:YES completion:nil];
+                } else {
+                    [self.navigationController.view makeToast:NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil)];
+                }
+            }
+            else if (indexPath.row == 1) {
+                NSString *cydiaStr = uAppDefine(@"CYDIA_URL");
+                if (cydiaStr) {
+                    NSURL *cydiaURL = [NSURL URLWithString:cydiaStr];
+                    if ([[UIApplication sharedApplication] canOpenURL:cydiaURL]) {
+                        [[UIApplication sharedApplication] openURL:cydiaURL];
+                    } else {
+                        [self.navigationController.view makeToast:NSLocalizedString(@"Cannot open Cydia.", nil)];
+                    }
+                }
+            }
+            else if (indexPath.row == 2) {
+                NSString *contactStr = uAppDefine(@"CONTACT_URL");
+                if (contactStr) {
+                    NSURL *qqURL = [NSURL URLWithString:contactStr];
+                    if ([[UIApplication sharedApplication] canOpenURL:qqURL]) {
+                        [[UIApplication sharedApplication] openURL:qqURL];
+                    } else {
+                        [self.navigationController.view makeToast:NSLocalizedString(@"Cannot open Mobile QQ.", nil)];
+                    }
+                }
             }
         }
     }
@@ -167,6 +218,23 @@ typedef enum : NSUInteger {
         return staticCells[indexPath.section][indexPath.row];
     }
     return [UITableViewCell new];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"[XXTEMoreAboutController dealloc]");
+#endif
 }
 
 @end

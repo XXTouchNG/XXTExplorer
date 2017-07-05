@@ -145,23 +145,24 @@
     }
 }
 
-//- (UISplitViewControllerDisplayMode)targetDisplayModeForActionInSplitViewController:(UISplitViewController *)svc {
-//    return UISplitViewControllerDisplayModePrimaryOverlay;
-//}
+- (UISplitViewControllerDisplayMode)targetDisplayModeForActionInSplitViewController:(UISplitViewController *)svc {
+    return UISplitViewControllerDisplayModePrimaryOverlay;
+}
 
-//- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-//    {
-//        if (splitViewController.collapsed) {
-//            UITabBarController *master = (UITabBarController *)splitViewController.viewControllers[0];
-//            UINavigationController *masterNavigationController = (UINavigationController *)master.selectedViewController;
-//            UINavigationController *destinationNavigationController = (UINavigationController *)vc;
-//            [masterNavigationController pushViewController:[destinationNavigationController.viewControllers lastObject] animated:YES];
-//            return YES;
-//        }
-//    }
-//    return NO;
-//}
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
+    UIUserInterfaceIdiom interfaceIdiom = [[UIDevice currentDevice] userInterfaceIdiom];
+    if (interfaceIdiom == UIUserInterfaceIdiomPhone)
+    {
+        if (splitViewController.collapsed) {
+            UITabBarController *tabbarController = (UITabBarController *)splitViewController.viewControllers[0];
+            UINavigationController *navController = (UINavigationController *)tabbarController.selectedViewController;
+            UINavigationController *destinationController = (UINavigationController *)vc;
+            [navController pushViewController:[destinationController.viewControllers lastObject] animated:YES];
+            return YES;
+        }
+    }
+    return NO;
+}
 
 #pragma mark - App Defines
 

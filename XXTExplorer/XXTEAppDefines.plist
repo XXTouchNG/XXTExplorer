@@ -346,5 +346,17 @@ until (false)
 	<string>http://127.0.0.1:46952/</string>
 	<key>ADD1S_PATH</key>
 	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
+	<key>DOCUMENT_USERS_GUIDE</key>
+	<string>https://www.zybuluo.com/xxtouch/note/378784</string>
+	<key>DOCUMENT_UPDATE_LOGS</key>
+	<string>https://www.zybuluo.com/xxtouch/note/386289</string>
+	<key>DOCUMENT_DEVELOPER_REFERENCE</key>
+	<string>https://www.zybuluo.com/xxtouch/note/370734</string>
+	<key>DOCUMENT_OPEN_API_REFERENCE</key>
+	<string>https://www.zybuluo.com/xxtouch/note/386268</string>
+	<key>DOCUMENT_CODE_SNIPPETS_REFERENCE</key>
+	<string>https://www.zybuluo.com/xxtouch/note/716784</string>
+	<key>DOCUMENT_DYNAMIC_XUI_REFERENCE</key>
+	<string>https://www.zybuluo.com/xxtouch/note/716787</string>
 </dict>
 </plist>

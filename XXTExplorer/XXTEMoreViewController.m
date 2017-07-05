@@ -18,6 +18,7 @@
 #import "XXTEMoreApplicationListController.h"
 #import "XXTEMoreLicenseController.h"
 #import "XXTEMoreAboutController.h"
+#import "XXTEMoreDocumentsController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -339,7 +340,11 @@ typedef enum : NSUInteger {
             }
         }
         else if (indexPath.section == kXXTEMoreSectionIndexHelp) {
-            if (indexPath.row == 1) {
+            if (indexPath.row == 0) {
+                XXTEMoreDocumentsController *documentsController = [[XXTEMoreDocumentsController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:documentsController animated:YES];
+            }
+            else if (indexPath.row == 1) {
                 XXTEMoreAboutController *aboutController = [[XXTEMoreAboutController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:aboutController animated:YES];
             }
@@ -549,10 +554,15 @@ typedef enum : NSUInteger {
         }
     }).catch(^(NSError *serverError) {
 //        blockUserInteractions(self.navigationController.view, NO);
-        if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
+                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Could not connect to the daemon: %@", nil), [serverError localizedDescription]]
+                                                               style:LGAlertViewStyleActionSheet
+                                                        buttonTitles:@[  ]
+                                                   cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                              destructiveButtonTitle:nil
+                                                            delegate:self];
+        if (alertView1 && alertView1.isShowing) {
+            [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
         }
     }).finally(^() {
         

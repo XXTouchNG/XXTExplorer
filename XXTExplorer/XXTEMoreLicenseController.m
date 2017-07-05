@@ -285,11 +285,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         NSString *toString = [fromString stringByReplacingCharactersInRange:range withString:string];
         NSString *trimedString = [toString stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSString *upperedString = [trimedString uppercaseString];
-        if (upperedString.length == 16) {
-            textField.textColor = XXTE_COLOR_SUCCESS;
-        } else {
-            textField.textColor = XXTE_COLOR;
-        }
         if (range.location == fromString.length - 1 && range.length == 1) {
             if ([[fromString substringWithRange:range] isEqualToString:@" "]) {
                 [textField deleteBackward];
@@ -314,6 +309,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             }
         }
         textField.text = [spacedString copy];
+        if (upperedString.length == 16) {
+            textField.textColor = XXTE_COLOR_SUCCESS;
+        } else {
+            textField.textColor = XXTE_COLOR;
+        }
         return NO;
     }
     return YES;
