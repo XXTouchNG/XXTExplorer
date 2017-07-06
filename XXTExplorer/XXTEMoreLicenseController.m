@@ -73,6 +73,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
+//    self.tableView.estimatedRowHeight = 44.f;
     
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewDataWithCompletion:nil];

@@ -75,6 +75,10 @@
 		D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22F1F063E270030C6DA /* XXTEMoreActionCell.m */; };
 		D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
 		D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */; };
+		D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */; };
+		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
+		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
+		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -205,6 +209,13 @@
 		D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreActionCell.xib; sourceTree = "<group>"; };
 		D629C2331F0651320030C6DA /* UISearchController+StatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchController+StatusBarStyle.h"; sourceTree = "<group>"; };
 		D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchController+StatusBarStyle.m"; sourceTree = "<group>"; };
+		D6FC2F2A1F0E3372000BAB42 /* XXTEMoreActivationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationController.h; sourceTree = "<group>"; };
+		D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreActivationController.m; sourceTree = "<group>"; };
+		D6FC2F351F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionCell.h; sourceTree = "<group>"; };
+		D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreTitleDescriptionCell.m; sourceTree = "<group>"; };
+		D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionCell.xib; sourceTree = "<group>"; };
+		D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationOperationController.h; sourceTree = "<group>"; };
+		D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreActivationOperationController.m; sourceTree = "<group>"; };
 		DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
@@ -342,6 +353,7 @@
 		0F61E1631ED7873F003DCC78 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				D6FC2F291F0E333C000BAB42 /* Activation */,
 				0F8455D11F0D45F20055F98B /* Documents */,
 				0FAD69191F04033300B2F0EC /* Cell */,
 				0F5EB52B1F0A854C0016016A /* About */,
@@ -475,6 +487,9 @@
 				0F5EB5371F0A9DC50016016A /* XXTEMoreLinkNoIconCell.h */,
 				0F5EB5381F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m */,
 				0F5EB5391F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib */,
+				D6FC2F351F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.h */,
+				D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */,
+				D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -525,6 +540,17 @@
 				D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */,
 			);
 			name = "Application List";
+			sourceTree = "<group>";
+		};
+		D6FC2F291F0E333C000BAB42 /* Activation */ = {
+			isa = PBXGroup;
+			children = (
+				D6FC2F2A1F0E3372000BAB42 /* XXTEMoreActivationController.h */,
+				D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */,
+				D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */,
+				D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */,
+			);
+			name = Activation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -608,6 +634,7 @@
 				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
+				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -668,6 +695,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
@@ -710,6 +738,8 @@
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
 				0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */,
 				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
+				D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */,
+				D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */,
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,

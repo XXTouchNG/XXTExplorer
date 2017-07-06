@@ -19,6 +19,7 @@
 #import "XXTEMoreLicenseController.h"
 #import "XXTEMoreAboutController.h"
 #import "XXTEMoreDocumentsController.h"
+#import "XXTEMoreActivationController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -276,6 +277,12 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:licenseController animated:YES];
+            }
+        }
+        else if (indexPath.section == kXXTEMoreSectionIndexSettings) {
+            if (indexPath.row == 0) {
+                XXTEMoreActivationController *activationController = [[XXTEMoreActivationController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:activationController animated:YES];
             }
         }
         else if (indexPath.section == kXXTEMoreSectionIndexSystem) {
