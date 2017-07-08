@@ -50,8 +50,8 @@
     alertAppearance.buttonsBackgroundColorHighlighted = XXTE_COLOR;
     alertAppearance.cancelButtonTitleColor = XXTE_COLOR;
     alertAppearance.cancelButtonBackgroundColorHighlighted = XXTE_COLOR;
-    alertAppearance.destructiveButtonTitleColor = XXTE_DANGER_COLOR;
-    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTE_DANGER_COLOR;
+    alertAppearance.destructiveButtonTitleColor = XXTE_COLOR_DANGER;
+    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTE_COLOR_DANGER;
     alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
     alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
     alertAppearance.dismissOnAction = NO;

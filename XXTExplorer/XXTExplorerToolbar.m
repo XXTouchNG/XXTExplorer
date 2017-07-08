@@ -116,7 +116,10 @@
 
 - (void)updateStatus:(NSString *)status {
     for (NSString *buttonItemName in self.buttons) {
-        [self.buttons[buttonItemName] setEnabled:NO];
+        UIBarButtonItem *button = self.buttons[buttonItemName];
+        if (button.enabled) {
+            [button setEnabled:NO];
+        }
     }
     [self setItems:self.statusSeries[status] animated:YES];
 }
@@ -126,11 +129,14 @@
 }
 
 - (void)updateButtonType:(NSString *)buttonType status:(NSString *)buttonStatus enabled:(BOOL)enabled {
+    UIBarButtonItem *button = self.buttons[buttonType];
     if (buttonStatus) {
         UIImage *statusImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, buttonStatus]];
-        if (statusImage) [self.buttons[buttonType] setImage:statusImage];
+        if (statusImage) [button setImage:statusImage];
     }
-    [self.buttons[buttonType] setEnabled:enabled];
+    if (button.enabled != enabled) {
+        [button setEnabled:enabled];
+    }
 }
 
 #pragma mark - Button Tapped

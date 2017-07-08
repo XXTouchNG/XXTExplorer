@@ -9,6 +9,10 @@
 #ifndef XXTExplorerDefaults_h
 #define XXTExplorerDefaults_h
 
+#pragma mark - Application Bundle
+
+static NSString * const XXTExplorerDefaults = @"XXTExplorerDefaults";
+
 #pragma mark - Defaults
 
 static NSUInteger const XXTExplorerMaximumEntryCount = 1000;
@@ -27,6 +31,12 @@ typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortOrderDesc,
 } XXTExplorerViewEntryListSortOrder;
 
+// XXTExplorerViewSectionHomeSeriesKey
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailTitleKey = @"XXTExplorerViewSectionHomeSeriesDetailTitleKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailSubtitleKey = @"XXTExplorerViewSectionHomeSeriesDetailSubtitleKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailIconKey = @"XXTExplorerViewSectionHomeSeriesDetailIconKey";
+static NSString * const XXTExplorerViewSectionHomeSeriesDetailPathKey = @"XXTExplorerViewSectionHomeSeriesDetailPathKey";
+
 #pragma mark - Attributes
 
 // XXTExplorerViewEntryAttribute
@@ -36,7 +46,6 @@ static NSString * const XXTExplorerViewEntryAttributeName = @"XXTExplorerViewEnt
 static NSString * const XXTExplorerViewEntryAttributePath = @"XXTExplorerViewEntryAttributePath";
 static NSString * const XXTExplorerViewEntryAttributeExtension = @"XXTExplorerViewEntryAttributeExtension";
 static NSString * const XXTExplorerViewEntryAttributeInternalExtension = @"XXTExplorerViewEntryAttributeInternalExtension";
-//static NSString * const XXTExplorerViewEntryAttributeRealPath = @"XXTExplorerViewEntryAttributeRealPath";
 static NSString * const XXTExplorerViewEntryAttributeType = @"XXTExplorerViewEntryAttributeType";
 static NSString * const XXTExplorerViewEntryAttributeMaskType = @"XXTExplorerViewEntryAttributeMaskType";
 static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate";
@@ -50,25 +59,20 @@ static NSString * const XXTExplorerViewEntryAttributeTypeRegular = @"XXTExplorer
 static NSString * const XXTExplorerViewEntryAttributeTypeDirectory = @"XXTExplorerViewEntryAttributeTypeDirectory";
 static NSString * const XXTExplorerViewEntryAttributeTypeBundle = @"XXTExplorerViewEntryAttributeTypeBundle"; // mask only
 static NSString * const XXTExplorerViewEntryAttributeTypeSymlink = @"XXTExplorerViewEntryAttributeTypeSymlink";
+static NSString * const XXTExplorerViewEntryAttributeTypeBrokenSymlink = @"XXTExplorerViewEntryAttributeTypeBrokenSymlink";
 
 // XXTExplorerViewEntryAttributeExtension
 static NSString * const XXTExplorerViewEntryAttributeInternalExtensionExecutable = @"XXTExplorerViewEntryAttributeInternalExtensionExecutable";
 static NSString * const XXTExplorerViewEntryAttributeInternalExtensionArchive = @"XXTExplorerViewEntryAttributeInternalExtensionArchive";
 
-// XXTExplorerViewSectionHomeSeries
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailTitleKey = @"XXTExplorerViewSectionHomeSeriesDetailTitleKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailSubtitleKey = @"XXTExplorerViewSectionHomeSeriesDetailSubtitleKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailIconKey = @"XXTExplorerViewSectionHomeSeriesDetailIconKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailPathKey = @"XXTExplorerViewSectionHomeSeriesDetailPathKey";
-
+// XXTExplorerViewEntryAttributePermission
 static NSString * const XXTExplorerViewEntryAttributePermissionViewable = @"XXTExplorerViewEntryAttributePermissionViewable";
 static NSString * const XXTExplorerViewEntryAttributePermissionEditable = @"XXTExplorerViewEntryAttributePermissionEditable";
 static NSString * const XXTExplorerViewEntryAttributePermissionExecuteable = @"XXTExplorerViewEntryAttributePermissionExecuteable";
 
-static NSString * const XXTExplorerPasteboardName = @"XXTExplorerPasteboardName";
+#pragma mark - AlertView Actions
 
 // XXTExplorerAlertViewAction
-
 static NSString * const XXTExplorerAlertViewAction = @"XXTExplorerAlertViewAction";
 static NSString * const XXTExplorerAlertViewActionPasteboardImport = @"XXTExplorerAlertViewActionPasteboardImport";
 static NSString * const XXTExplorerAlertViewActionPasteboardExport = @"XXTExplorerAlertViewActionPasteboardExport";
@@ -77,6 +81,17 @@ static NSString * const XXTExplorerAlertViewActionPasteboardExportCopy = @"XXTEx
 static NSString * const XXTExplorerAlertViewActionPasteboardExportLink = @"XXTExplorerAlertViewActionPasteboardExportLink";
 static NSString * const XXTExplorerAlertViewActionPasteboardExportPaste = @"XXTExplorerAlertViewActionPasteboardExportPaste";
 static NSString * const XXTExplorerAlertViewContext = @"XXTExplorerAlertViewContext";
+
+// XXTExplorerActionIcon
+static NSString * const XXTExplorerActionIconLaunch = @"XXTExplorerActionIconLaunch";
+static NSString * const XXTExplorerActionIconEdit = @"XXTExplorerActionIconEdit";
+static NSString * const XXTExplorerActionIconProperty = @"XXTExplorerActionIconProperty";
+static NSString * const XXTExplorerActionIconTrash = @"XXTExplorerActionIconTrash";
+
+#pragma mark - Pasteboard
+
+// XXTExplorerPasteboard
+static NSString * const XXTExplorerPasteboardName = @"XXTExplorerPasteboardName";
 
 #pragma mark - Notifications
 

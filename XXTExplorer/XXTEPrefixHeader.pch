@@ -19,7 +19,7 @@
 #define XXTE_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
 
 #define XXTE_COLOR ([UIColor colorWithRed:26.f/255.f green:161.f/255.f blue:230.f/255.f alpha:1.f])
-#define XXTE_DANGER_COLOR ([UIColor colorWithRed:231.f/255.f green:76.f/255.f blue:60.f/255.f alpha:1.f]) // rgb(231, 76, 60)
+#define XXTE_COLOR_DANGER ([UIColor colorWithRed:231.f/255.f green:76.f/255.f blue:60.f/255.f alpha:1.f]) // rgb(231, 76, 60)
 
 #ifndef weakify
     #if DEBUG

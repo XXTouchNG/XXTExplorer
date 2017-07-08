@@ -112,14 +112,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F0654B81EE48395005B6C5F /* Zip */ = {
+		0F0654B81EE48395005B6C5F /* Archive */ = {
 			isa = PBXGroup;
 			children = (
 				0F0654B91EE483A0005B6C5F /* miniz.h */,
 				0F0654BA1EE483A0005B6C5F /* zip.c */,
 				0F0654BB1EE483A0005B6C5F /* zip.h */,
 			);
-			name = Zip;
+			name = Archive;
 			sourceTree = "<group>";
 		};
 		0F4BB0B31EDB7D070072B7A3 /* Entry */ = {
@@ -154,7 +154,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
-				0F0654B81EE48395005B6C5F /* Zip */,
+				0F0654B81EE48395005B6C5F /* Archive */,
 				0F4BB0B31EDB7D070072B7A3 /* Entry */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
 				0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */,

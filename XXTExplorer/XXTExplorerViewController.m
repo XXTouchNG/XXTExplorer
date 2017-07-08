@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import "XXTExplorerEntryParser.h"
+//#import "XXTExplorerEntryService.h"
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerHeaderView.h"
 #import "XXTExplorerFooterView.h"
@@ -22,6 +23,8 @@
 #import <LGAlertView/LGAlertView.h>
 #import "XXTEDispatchDefines.h"
 #import "zip.h"
+//#import "XXTExplorerCreateItemViewController.h"
+//#import "XXTExplorerCreateItemNavigationController.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -50,7 +53,9 @@ typedef enum : NSUInteger {
 
 @end
 
-@implementation XXTExplorerViewController
+@implementation XXTExplorerViewController {
+    BOOL _entryLoaded;
+}
 
 + (UIPasteboard *)explorerPasteboard {
     static UIPasteboard *explorerPasteboard = nil;
@@ -124,6 +129,14 @@ typedef enum : NSUInteger {
     return explorerEntryParser;
 }
 
+//+ (XXTExplorerEntryService *)explorerEntryService {
+//    static XXTExplorerEntryService *explorerEntryService = nil;
+//    if (!explorerEntryService) {
+//        explorerEntryService = [[XXTExplorerEntryService alloc] init];
+//    }
+//    return explorerEntryService;
+//}
+
 #pragma mark - Rotation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -161,7 +174,7 @@ typedef enum : NSUInteger {
 
 - (void)setupWithPath:(NSString *)path {
     {
-        NSString *defaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTExplorerDefaults" ofType:@"plist"];
+        NSString *defaultsPath = [[NSBundle mainBundle] pathForResource:XXTExplorerDefaults ofType:@"plist"];
         NSDictionary *defaults = [[NSDictionary alloc] initWithContentsOfFile:defaultsPath];
         for (NSString *defaultKey in defaults) {
             if (![self.class.explorerDefaults objectForKey:defaultKey])
@@ -239,6 +252,8 @@ typedef enum : NSUInteger {
         entryFooterView;
     });
     [self.tableView setTableFooterView:self.footerView];
+    
+    [self loadEntryListData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -246,8 +261,17 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
     [self updateToolbarButton:self.toolbar];
     [self updateToolbarStatus:self.toolbar];
-    [self loadEntryListData];
-    [self.tableView reloadData];
+    if (_entryLoaded) {
+        [self loadEntryListData];
+        [self.tableView reloadData];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_entryLoaded) {
+        _entryLoaded = YES;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -460,24 +484,26 @@ typedef enum : NSUInteger {
             } else {
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 NSDictionary *entryAttributes = self.entryList[indexPath.row];
-                if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeBundle]) {
+                NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
+                NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
+                NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+                if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBundle]) {
                     
                 }
-                else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
                 { // Directory or Symbolic Link Directory
-                    NSString *directoryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
                     // We'd better try to access it before we enter it.
                     NSError *accessError = nil;
-                    [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
+                    [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                     if (accessError) {
                         [self.navigationController.view makeToast:[accessError localizedDescription]];
                     }
                     else {
-                        XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
+                        XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
                         [self.navigationController pushViewController:explorerViewController animated:YES];
                     }
                 }
-                else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
+                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
                 {
                     NSString *internalExt = entryAttributes[XXTExplorerViewEntryAttributeInternalExtension];
                     if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive])
@@ -490,8 +516,20 @@ typedef enum : NSUInteger {
                     }
                     else
                     {
-                        
+//                        if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes])
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                             TODO: Assign Open In Methods...
+//                            [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be opened because the file extension can't be recognized.", nil), entryName]];
+//                        }
                     }
+                }
+                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink])
+                {
+                    [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]];
                 }
                 else
                 {
@@ -567,18 +605,6 @@ typedef enum : NSUInteger {
     return 0;
 }
 
-/*
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (tableView == self.tableView) {
-        if (XXTExplorerViewSectionIndexList == section) {
-            return 48.f;
-        } // Notice: assume that there will not be any headers for Home section
-    }
-    return 0;
-}
-*/
-
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == section) {
@@ -599,41 +625,6 @@ typedef enum : NSUInteger {
     }
     return nil;
 }
-
-/*
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (tableView == self.tableView) {
-        if (XXTExplorerViewSectionIndexList == section) {
-            XXTExplorerFooterView *entryFooterView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:XXTExplorerEntryFooterViewReuseIdentifier];
-            if (!entryFooterView) {
-                entryFooterView = [[XXTExplorerFooterView alloc] initWithReuseIdentifier:XXTExplorerEntryFooterViewReuseIdentifier];
-            }
-            NSUInteger itemCount = self.entryList.count;
-            NSString *itemCountString = nil;
-            if (itemCount == 0) {
-                itemCountString = NSLocalizedString(@"No item", nil);
-            } else if (itemCount == 1) {
-                itemCountString = NSLocalizedString(@"1 item", nil);
-            } else  {
-                itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)itemCount];
-            }
-            NSString *usageString = nil;
-            NSError *usageError = nil;
-            NSDictionary *fileSystemAttributes = [self.explorerFileManager attributesOfFileSystemForPath:self.entryPath error:&usageError];
-            if (!usageError) {
-                NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
-                if (deviceFreeSpace) {
-                    usageString = [NSByteCountFormatter stringFromByteCount:[deviceFreeSpace unsignedLongLongValue] countStyle:NSByteCountFormatterCountStyleFile];
-                }
-            }
-            NSString *finalFooterString = [NSString stringWithFormat:NSLocalizedString(@"%@, %@ free", nil), itemCountString, usageString];
-            [entryFooterView.footerLabel setText:finalFooterString];
-            return entryFooterView;
-        } // Notice: assume that there will not be any footer for Home section
-    }
-    return nil;
-}
-*/
 
 #pragma mark - UITableViewDataSource
 
@@ -659,15 +650,25 @@ typedef enum : NSUInteger {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == indexPath.section) {
+            NSDictionary *entryDetail = self.entryList[indexPath.row];
             XXTExplorerViewCell *entryCell = [tableView dequeueReusableCellWithIdentifier:XXTExplorerViewCellReuseIdentifier];
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
             }
             entryCell.delegate = self;
             entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-            entryCell.entryIconImageView.image = self.entryList[indexPath.row][XXTExplorerViewEntryAttributeIconImage];
-            entryCell.entryTitleLabel.text = self.entryList[indexPath.row][XXTExplorerViewEntryAttributeName];
-            entryCell.entrySubtitleLabel.text = [self.class.explorerDateFormatter stringFromDate:self.entryList[indexPath.row][XXTExplorerViewEntryAttributeCreationDate]];
+            entryCell.entryIconImageView.image = entryDetail[XXTExplorerViewEntryAttributeIconImage];
+            entryCell.entryTitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeName];
+            if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink]) {
+                if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink]) {
+                    entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
+                } else {
+                    entryCell.entryTitleLabel.textColor = XXTE_COLOR;
+                }
+            } else {
+                entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+            }
+            entryCell.entrySubtitleLabel.text = [self.class.explorerDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeCreationDate]];
             UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
             cellLongPressGesture.delegate = self;
             [entryCell addGestureRecognizer:cellLongPressGesture];
@@ -697,7 +698,7 @@ typedef enum : NSUInteger {
         [self setEditing:YES animated:YES];
         if (self.tableView.delegate) {
             [self.tableView.delegate tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
         }
     }
@@ -717,7 +718,9 @@ typedef enum : NSUInteger {
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem])
         {
-            
+//            XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
+//            XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
+//            [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort])
         {
@@ -860,7 +863,7 @@ typedef enum : NSUInteger {
 #pragma mark - UIViewController (UIViewControllerEditing)
 
 - (BOOL)isEditing {
-    return [self.tableView isEditing];
+    return [super isEditing];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -878,7 +881,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - XXTESwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(XXTESwipeTableCell *) cell canSwipe:(XXTESwipeDirection) direction fromPoint:(CGPoint) point {
+- (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell canSwipe:(XXTESwipeDirection)direction fromPoint:(CGPoint)point {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     if (entryDetail) {
@@ -887,7 +890,7 @@ typedef enum : NSUInteger {
     return NO;
 }
 
-- (BOOL)swipeTableCell:(XXTESwipeTableCell *) cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
+- (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight)
@@ -919,7 +922,7 @@ typedef enum : NSUInteger {
         
         if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionExecuteable])
         {
-            XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconLaunch"]
+            XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
                                                                            insets:UIEdgeInsetsMake(0, 24, 0, 24)];
             [swipeButtons addObject:swipeLaunchButton];
@@ -927,12 +930,12 @@ typedef enum : NSUInteger {
         if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
             && [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
         {
-            XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconEdit"]
+            XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
             [swipeButtons addObject:swipeEditButton];
         }
-        XXTESwipeButton *swipePropertyButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconProperty"]
+        XXTESwipeButton *swipePropertyButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
         [swipeButtons addObject:swipePropertyButton];
@@ -940,8 +943,8 @@ typedef enum : NSUInteger {
     }
     else if (direction == XXTESwipeDirectionRightToLeft)
     {
-        XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:@"XXTExplorerActionIconTrash"]
-                                                             backgroundColor:XXTE_DANGER_COLOR
+        XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
+                                                             backgroundColor:XXTE_COLOR_DANGER
                                                                       insets:UIEdgeInsetsMake(0, 24, 0, 24)];
         return @[ swipeTrashButton ];
     }
@@ -959,49 +962,19 @@ typedef enum : NSUInteger {
         if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardImport])
         {
             if (index == 0)
-            {
                 [self alertView:alertView copyPasteboardItemsAtIndexPaths:obj];
-            }
         }
         else if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardExport])
         {
             if (index == 0)
-            {
                 [self alertView:alertView pastePasteboardItemsAtPath:obj];
-            }
             else if (index == 1)
-            {
                 [self alertView:alertView movePasteboardItemsAtPath:obj];
-            }
             else if (index == 2)
-            {
                 [self alertView:alertView symlinkPasteboardItemsAtPath:obj];
-            }
         }
     }
     objc_removeAssociatedObjects(alertView);
-}
-
-- (void)alertView:(LGAlertView *)alertView copyPasteboardItemsAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
-    NSMutableArray <NSString *> *selectedEntryPaths = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
-    for (NSIndexPath *indexPath in indexPaths) {
-        [selectedEntryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
-    }
-    [self.class.explorerPasteboard setStrings:[[NSArray alloc] initWithArray:selectedEntryPaths]];
-    [alertView dismissAnimated];
-    [self setEditing:NO animated:YES];
-}
-
-- (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path {
-    
-}
-
-- (void)alertView:(LGAlertView *)alertView pastePasteboardItemsAtPath:(NSString *)path {
-    
-}
-
-- (void)alertView:(LGAlertView *)alertView symlinkPasteboardItemsAtPath:(NSString *)path {
-    
 }
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
@@ -1032,12 +1005,348 @@ typedef enum : NSUInteger {
     [alertView dismissAnimated];
 }
 
+#pragma mark - AlertView Actions
+
+- (void)alertView:(LGAlertView *)alertView copyPasteboardItemsAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
+    NSMutableArray <NSString *> *selectedEntryPaths = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
+    for (NSIndexPath *indexPath in indexPaths) {
+        [selectedEntryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
+    }
+    [self.class.explorerPasteboard setStrings:[[NSArray alloc] initWithArray:selectedEntryPaths]];
+    [alertView dismissAnimated];
+    [self setEditing:NO animated:YES];
+}
+
+- (void)alertView:(LGAlertView *)alertView clearPasteboardEntriesStored:(NSArray <NSIndexPath *> *)indexPaths {
+    [self.class.explorerPasteboard setStrings:@[]];
+    [alertView dismissAnimated];
+    [self updateToolbarStatus:self.toolbar];
+}
+
+- (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path {
+    NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];
+    NSUInteger storedCount = storedPaths.count;
+    NSMutableArray <NSString *> *storedNames = [[NSMutableArray alloc] initWithCapacity:storedCount];
+    for (NSString *storedPath in storedPaths) {
+        [storedNames addObject:[storedPath lastPathComponent]];
+    }
+    NSString *storedDisplayName = nil;
+    if (storedCount == 1) {
+        storedDisplayName = [NSString stringWithFormat:@"\"%@\"", [storedPaths[0] lastPathComponent]];
+    } else {
+        storedDisplayName = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), storedCount];
+    }
+    NSString *destinationPath = path;
+    NSString *destinationName = [destinationPath lastPathComponent];
+    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Move", nil)
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Move %@ to \"%@\"", nil), storedDisplayName, destinationName]
+                                                                               style:LGAlertViewStyleActionSheet
+                                                                   progressLabelText:@"..."
+                                                                        buttonTitles:nil
+                                                                   cancelButtonTitle:nil
+                                                              destructiveButtonTitle:nil
+                                                                            delegate:self];
+    if (alertView && alertView.isShowing) {
+        [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    }
+    NSMutableArray <NSString *> *resultPaths = [[NSMutableArray alloc] initWithCapacity:storedCount];
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [self alertView:alertView1 clearPasteboardEntriesStored:nil];
+        [self loadEntryListData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        if (error) {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        } else {
+            [self setEditing:YES animated:YES];
+            for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                NSDictionary *entryDetail = self.entryList[i];
+                BOOL shouldSelect = NO;
+                for (NSString *resultPath in resultPaths) {
+                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                        shouldSelect = YES;
+                    }
+                }
+                if (shouldSelect) {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                }
+            }
+            [self updateToolbarStatus:self.toolbar];
+        }
+    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            NSError *error = nil;
+            NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:storedPaths];
+            NSMutableArray <NSString *> *recursiveSubnames = [[NSMutableArray alloc] initWithArray:storedNames];
+            while (recursiveSubnames.count != 0) {
+                if (error != nil) break;
+                NSString *enumPath = [recursiveSubpaths lastObject];
+                NSString *enumName = [recursiveSubnames lastObject];
+                dispatch_async_on_main_queue(^{
+                    callbackBlock(enumPath);
+                });
+                [recursiveSubpaths removeLastObject];
+                [recursiveSubnames removeLastObject];
+                NSString *targetPath = [destinationPath stringByAppendingPathComponent:enumName];
+                BOOL isDirectory = NO;
+                BOOL exists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (!exists) {
+                    // TODO: pause by non-exists error
+                    continue;
+                }
+                if (isDirectory) {
+                    NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                    if (groupSubnames.count != 0) {
+                        NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                        NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                        for (NSString *groupSubname in groupSubnames) {
+                            [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubname]];
+                            [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                        }
+                        BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
+                        if (!mkdirResult) {
+                            // TODO: pause by mkdir error
+                        }
+                        [recursiveSubpaths addObject:enumPath];
+                        [recursiveSubnames addObject:enumName];
+                        [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                        [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
+                    } else {
+                        BOOL rmdirResult = (rmdir([enumPath fileSystemRepresentation]) == 0);
+                        if (!rmdirResult) {
+                            // TODO: pause by rmdir error
+                        }
+                    }
+                    continue;
+                }
+                BOOL moveResult = [fileManager moveItemAtPath:enumPath toPath:targetPath error:&error];
+                if (!moveResult) {
+                    // TODO: pause by move error
+                    break;
+                }
+            }
+            for (NSString *storedName in storedNames) {
+                NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
+                BOOL isDirectory = NO;
+                BOOL exists = [fileManager fileExistsAtPath:targetPath isDirectory:&isDirectory];
+                if (exists) {
+                    [resultPaths addObject:targetPath];
+                }
+            }
+            BOOL result = (resultPaths.count != 0);
+            dispatch_async_on_main_queue(^{
+                completionBlock(result, error);
+            });
+        });
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView pastePasteboardItemsAtPath:(NSString *)path {
+    NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];
+    NSUInteger storedCount = storedPaths.count;
+    NSMutableArray <NSString *> *storedNames = [[NSMutableArray alloc] initWithCapacity:storedCount];
+    for (NSString *storedPath in storedPaths) {
+        [storedNames addObject:[storedPath lastPathComponent]];
+    }
+    NSString *storedDisplayName = nil;
+    if (storedCount == 1) {
+        storedDisplayName = [NSString stringWithFormat:@"\"%@\"", [storedPaths[0] lastPathComponent]];
+    } else {
+        storedDisplayName = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), storedCount];
+    }
+    NSString *destinationPath = path;
+    NSString *destinationName = [destinationPath lastPathComponent];
+    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Paste", nil)
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Paste %@ to \"%@\"", nil), storedDisplayName, destinationName]
+                                                                               style:LGAlertViewStyleActionSheet
+                                                                   progressLabelText:@"..."
+                                                                        buttonTitles:nil
+                                                                   cancelButtonTitle:nil
+                                                              destructiveButtonTitle:nil
+                                                                            delegate:self];
+    if (alertView && alertView.isShowing) {
+        [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    }
+    NSMutableArray <NSString *> *resultPaths = [[NSMutableArray alloc] initWithCapacity:storedCount];
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self loadEntryListData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        if (error) {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        } else {
+            [self setEditing:YES animated:YES];
+            for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                NSDictionary *entryDetail = self.entryList[i];
+                BOOL shouldSelect = NO;
+                for (NSString *resultPath in resultPaths) {
+                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                        shouldSelect = YES;
+                    }
+                }
+                if (shouldSelect) {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                }
+            }
+            [self updateToolbarStatus:self.toolbar];
+        }
+    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            NSError *error = nil;
+            NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:storedPaths];
+            NSMutableArray <NSString *> *recursiveSubnames = [[NSMutableArray alloc] initWithArray:storedNames];
+            while (recursiveSubnames.count != 0) {
+                if (error != nil) break;
+                NSString *enumPath = [recursiveSubpaths lastObject];
+                NSString *enumName = [recursiveSubnames lastObject];
+                dispatch_async_on_main_queue(^{
+                    callbackBlock(enumPath);
+                });
+                [recursiveSubpaths removeLastObject];
+                [recursiveSubnames removeLastObject];
+                NSString *targetPath = [destinationPath stringByAppendingPathComponent:enumName];
+                BOOL isDirectory = NO;
+                BOOL exists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (!exists) {
+                    // TODO: pause by non-exists error
+                    continue;
+                }
+                if (isDirectory) {
+                    NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                    NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                    NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                    for (NSString *groupSubname in groupSubnames) {
+                        [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubname]];
+                        [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                    }
+                    BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
+                    if (!mkdirResult) {
+                        // TODO: pause by mkdir error
+                    }
+                    [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                    [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
+                    continue;
+                }
+                BOOL copyResult = [fileManager copyItemAtPath:enumPath toPath:targetPath error:&error];
+                if (!copyResult) {
+                    // TODO: pause by copy error
+                    break;
+                }
+            }
+            for (NSString *storedName in storedNames) {
+                NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
+                BOOL isDirectory = NO;
+                BOOL exists = [fileManager fileExistsAtPath:targetPath isDirectory:&isDirectory];
+                if (exists) {
+                    [resultPaths addObject:targetPath];
+                }
+            }
+            BOOL result = (resultPaths.count != 0);
+            dispatch_async_on_main_queue(^{
+                completionBlock(result, error);
+            });
+        });
+    });
+}
+
+- (void)alertView:(LGAlertView *)alertView symlinkPasteboardItemsAtPath:(NSString *)path {
+    NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];
+    NSUInteger storedCount = storedPaths.count;
+//    NSMutableArray <NSString *> *storedNames = [[NSMutableArray alloc] initWithCapacity:storedCount];
+//    for (NSString *storedPath in storedPaths) {
+//        [storedNames addObject:[storedPath lastPathComponent]];
+//    }
+    NSString *storedDisplayName = nil;
+    if (storedCount == 1) {
+        storedDisplayName = [NSString stringWithFormat:@"\"%@\"", [storedPaths[0] lastPathComponent]];
+    } else {
+        storedDisplayName = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), storedCount];
+    }
+    NSString *destinationPath = path;
+    NSString *destinationName = [destinationPath lastPathComponent];
+    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Link", nil)
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Link %@ to \"%@\"", nil), storedDisplayName, destinationName]
+                                                                               style:LGAlertViewStyleActionSheet
+                                                                   progressLabelText:@"..."
+                                                                        buttonTitles:nil
+                                                                   cancelButtonTitle:nil
+                                                              destructiveButtonTitle:nil
+                                                                            delegate:self];
+    if (alertView && alertView.isShowing) {
+        [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    }
+    NSMutableArray <NSString *> *resultPaths = [[NSMutableArray alloc] initWithCapacity:storedCount];
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self loadEntryListData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        if (error) {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        } else {
+            [self setEditing:YES animated:YES];
+            for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                NSDictionary *entryDetail = self.entryList[i];
+                BOOL shouldSelect = NO;
+                for (NSString *resultPath in resultPaths) {
+                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                        shouldSelect = YES;
+                    }
+                }
+                if (shouldSelect) {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                }
+            }
+            [self updateToolbarStatus:self.toolbar];
+        }
+    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            NSError *error = nil;
+            for (NSString *storedPath in storedPaths) {
+                dispatch_async_on_main_queue(^{
+                    callbackBlock(storedPath);
+                });
+                NSString *storedName = [storedPath lastPathComponent];
+                NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
+//                BOOL linkResult = [fileManager linkItemAtPath:storedPath toPath:targetPath error:&error];
+                BOOL linkResult = [fileManager createSymbolicLinkAtPath:targetPath withDestinationPath:storedPath error:&error];
+                if (!linkResult) {
+                    // TODO: pause by link error
+                    break;
+                }
+                [resultPaths addObject:targetPath];
+            }
+            BOOL result = (resultPaths.count != 0);
+            dispatch_async_on_main_queue(^{
+                completionBlock(result, error);
+            });
+        });
+    });
+}
+
 - (void)alertView:(LGAlertView *)alertView removeEntryCell:(UITableViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
     NSUInteger entryCount = 1;
+    NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Delete", nil)
                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Deleting \"%@\"", nil), entryName]
                                                                               style:LGAlertViewStyleActionSheet
@@ -1049,53 +1358,55 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self setEditing:NO animated:YES];
+        if (error == nil) {
+            [self loadEntryListData];
+            [self.tableView beginUpdates];
+            [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+        } else {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        }
+    };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSError *error = nil;
             NSFileManager *fileManager = [[NSFileManager alloc] init];
+            NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithObjects:entryPath, nil];
             while (recursiveSubpaths.count != 0) {
-                if (error != nil) {
-                    break;
-                }
+                if (error != nil) break;
                 NSString *enumPath = [recursiveSubpaths lastObject];
                 dispatch_async_on_main_queue(^{
-                    alertView1.progressLabelText = enumPath;
+                    callbackBlock(enumPath);
                 });
                 [recursiveSubpaths removeLastObject];
                 BOOL isDirectory = NO;
-                if ([fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory]) {
-                    if (isDirectory) {
-                        NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                        if (groupSubpaths.count == 0) {
-                            
-                        } else {
-                            NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
-                            for (NSString *groupSubpath in groupSubpaths) {
-                                [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
-                            }
-                            [recursiveSubpaths addObject:enumPath];
-                            [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
-                            continue;
+                [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (isDirectory) {
+                    NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                    if (groupSubpaths.count != 0) {
+                        NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
+                        for (NSString *groupSubpath in groupSubpaths) {
+                            [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
                         }
+                        [recursiveSubpaths addObject:enumPath];
+                        [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                        continue;
                     }
-                    [fileManager removeItemAtPath:enumPath error:&error];
                 }
+                [fileManager removeItemAtPath:enumPath error:&error];
             }
-            NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];
             if ([fileManager fileExistsAtPath:entryPath] == NO) {
                 [deletedPaths addObject:indexPath];
             }
+            BOOL result = (deletedPaths.count != 0);
             dispatch_async_on_main_queue(^{
-                [alertView1 dismissAnimated];
-                if (error == nil) {
-                    [self loadEntryListData];
-                    [self.tableView beginUpdates];
-                    [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
-                    [self.tableView endUpdates];
-                } else {
-                    [self.navigationController.view makeToast:[error localizedDescription]];
-                }
+                completionBlock(result, error);
             });
         });
     });
@@ -1107,6 +1418,7 @@ typedef enum : NSUInteger {
         [entryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
     }
     NSUInteger entryCount = entryPaths.count;
+    NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];
     NSString *entryDisplayName = nil;
     if (entryCount == 1) {
         entryDisplayName = [NSString stringWithFormat:@"\"%@\"", [entryPaths[0] lastPathComponent]];
@@ -1124,56 +1436,58 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self setEditing:NO animated:YES];
+        if (error == nil) {
+            [self loadEntryListData];
+            [self.tableView beginUpdates];
+            [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+        } else {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        }
+    };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSError *error = nil;
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:entryPaths];
+            NSError *error = nil;
             while (recursiveSubpaths.count != 0) {
-                if (error != nil) {
-                    break;
-                }
+                if (error != nil) break;
                 NSString *enumPath = [recursiveSubpaths lastObject];
                 dispatch_async_on_main_queue(^{
-                    alertView1.progressLabelText = enumPath;
+                    callbackBlock(enumPath);
                 });
                 [recursiveSubpaths removeLastObject];
                 BOOL isDirectory = NO;
-                if ([fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory]) {
-                    if (isDirectory) {
-                        NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                        if (groupSubpaths.count == 0) {
-                            
-                        } else {
-                            NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
-                            for (NSString *groupSubpath in groupSubpaths) {
-                                [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
-                            }
-                            [recursiveSubpaths addObject:enumPath];
-                            [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
-                            continue;
+                [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (isDirectory) {
+                    NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                    if (groupSubpaths.count != 0) {
+                        NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
+                        for (NSString *groupSubpath in groupSubpaths) {
+                            [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
                         }
+                        [recursiveSubpaths addObject:enumPath];
+                        [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                        continue;
                     }
-                    [fileManager removeItemAtPath:enumPath error:&error];
                 }
+                [fileManager removeItemAtPath:enumPath error:&error];
             }
-            NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];
             for (NSUInteger i = 0; i < entryPaths.count; i++) {
                 NSString *entryPath = entryPaths[i];
                 if ([fileManager fileExistsAtPath:entryPath] == NO) {
                     [deletedPaths addObject:indexPaths[i]];
                 }
             }
+            BOOL result = (deletedPaths.count != 0);
             dispatch_async_on_main_queue(^{
-                [alertView1 dismissAnimated];
-                [self setEditing:NO animated:YES];
-                [self loadEntryListData];
-                [self.tableView beginUpdates];
-                [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
-                [self.tableView endUpdates];
-                if (error) {
-                    [self.navigationController.view makeToast:[error localizedDescription]];
-                }
+                completionBlock(result, error);
             });
         });
     });
@@ -1198,9 +1512,10 @@ typedef enum : NSUInteger {
     NSString *archiveNameWithExt = [NSString stringWithFormat:@"%@.zip", archiveName];
     NSString *archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
     NSUInteger archiveIndex = 2;
-    while ([self.class.explorerFileManager fileExistsAtPath:archivePath])
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    while ([fileManager fileExistsAtPath:archivePath])
     {
-        archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.zip", archiveName, archiveIndex];
+        archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.zip", archiveName, (unsigned long)archiveIndex];
         archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
         archiveIndex++;
     }
@@ -1215,60 +1530,72 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self loadEntryListData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        [self setEditing:YES animated:YES];
+        for (NSUInteger i = 0; i < self.entryList.count; i++) {
+            NSDictionary *entryDetail = self.entryList[i];
+            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:archivePath]) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+                break;
+            }
+        }
+        [self updateToolbarStatus:self.toolbar];
+        if (error) {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        }
+    };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSError *error = nil;
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
             struct zip_t *zip = zip_open([archivePath fileSystemRepresentation], ZIP_DEFAULT_COMPRESSION_LEVEL, 'w');
+            NSError *error = nil;
             BOOL result = (zip != NULL);
-            if (result) {
-                NSFileManager *fileManager = [[NSFileManager alloc] init];
-                NSMutableArray <NSString *> *recursiveSubnames = [[NSMutableArray alloc] initWithArray:entryNames];
-                while (recursiveSubnames.count != 0) {
-                    if (error != nil) {
-                        break;
-                    }
-                    NSString *enumName = [recursiveSubnames lastObject];
-                    NSString *enumPath = [currentPath stringByAppendingPathComponent:enumName];
-                    dispatch_async_on_main_queue(^{
-                        alertView1.progressLabelText = enumPath;
-                    });
-                    [recursiveSubnames removeLastObject];
-                    BOOL isDirectory = NO;
-                    if ([fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory]) {
-                        if (isDirectory) {
-                            NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                            if (groupSubnames.count == 0) {
-                                enumName = [enumName stringByAppendingString:@"/"];
-                            } else {
-                                NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
-                                for (NSString *groupSubname in groupSubnames) {
-                                    [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
-                                }
-                                [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
-                                continue;
-                            }
-                        }
-                        zip_entry_open(zip, [enumName fileSystemRepresentation]);
-                        {
-                            zip_entry_fwrite(zip, [enumPath fileSystemRepresentation]);
-                        }
-                        zip_entry_close(zip);
-                    }
-                }
-                zip_close(zip);
+            if (NO == result) {
+                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create archive file \"%@\".", nil), archivePath] }];
             }
             else
             {
-                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create archive file \"%@\".", nil), archivePath] }];
+                NSMutableArray <NSString *> *recursiveSubnames = [[NSMutableArray alloc] initWithArray:entryNames];
+                while (recursiveSubnames.count != 0) {
+                    if (error != nil) break;
+                    NSString *enumName = [recursiveSubnames lastObject];
+                    NSString *enumPath = [currentPath stringByAppendingPathComponent:enumName];
+                    dispatch_async_on_main_queue(^{
+                        callbackBlock(enumPath);
+                    });
+                    [recursiveSubnames removeLastObject];
+                    BOOL isDirectory = NO;
+                    [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                    if (isDirectory) {
+                        NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                        if (groupSubnames.count == 0) {
+                            enumName = [enumName stringByAppendingString:@"/"];
+                        } else {
+                            NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                            for (NSString *groupSubname in groupSubnames) {
+                                [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                            }
+                            [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
+                            continue;
+                        }
+                    }
+                    zip_entry_open(zip, [enumName fileSystemRepresentation]);
+                    {
+                        zip_entry_fwrite(zip, [enumPath fileSystemRepresentation]);
+                    }
+                    zip_entry_close(zip);
+                }
+                zip_close(zip);
             }
             dispatch_async_on_main_queue(^{
-                [alertView1 dismissAnimated];
-                [self setEditing:NO animated:YES];
-                [self loadEntryListData];
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
-                if (error) {
-                    [self.navigationController.view makeToast:[error localizedDescription]];
-                }
+                completionBlock(result, error);
             });
         });
     });
@@ -1281,9 +1608,10 @@ typedef enum : NSUInteger {
     NSString *destinationPath = [entryPath stringByDeletingPathExtension];
     NSString *destinationPathWithIndex = destinationPath;
     NSUInteger destinationIndex = 2;
-    while ([self.class.explorerFileManager fileExistsAtPath:destinationPathWithIndex])
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    while ([fileManager fileExistsAtPath:destinationPathWithIndex])
     {
-        destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, destinationIndex];
+        destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long)destinationIndex];
         destinationIndex++;
     }
     NSString *destinationName = [destinationPathWithIndex lastPathComponent];
@@ -1298,51 +1626,56 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
+    void (^callbackBlock)(NSString *) = ^(NSString *filename) {
+        alertView1.progressLabelText = filename;
+    };
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self loadEntryListData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        [self setEditing:YES animated:YES];
+        for (NSUInteger i = 0; i < self.entryList.count; i++) {
+            NSDictionary *entryDetail = self.entryList[i];
+            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:destinationPathWithIndex]) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+                break;
+            }
+        }
+        [self updateToolbarStatus:self.toolbar];
+        if (error) {
+            [self.navigationController.view makeToast:[error localizedDescription]];
+        }
+    };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            BOOL result = NO;
+            const char *extractFrom = [entryPath fileSystemRepresentation];
+            const char *extractTo = [destinationPathWithIndex fileSystemRepresentation];
             NSError *error = nil;
-            result = (mkdir([destinationPathWithIndex fileSystemRepresentation], 0755) == 0);
-            if (result) {
-                int (^extract_callback)(const char *, void *) = ^int (const char *filename, void *arg)
-                {
-                    dispatch_sync_on_main_queue(^{
-                        alertView1.progressLabelText = [NSString stringWithUTF8String:filename];
+            BOOL result = (mkdir(extractTo, 0755) == 0);
+            if (NO == result) {
+                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create destination directory \"%@\".", nil), destinationPathWithIndex] }];
+            }
+            else
+            {
+                int (^extract_callback)(const char *, void *) = ^int (const char *filename, void *arg) {
+                    dispatch_async_on_main_queue(^{
+                        callbackBlock([NSString stringWithUTF8String:filename]);
                     });
                     return 0;
                 };
                 int arg = 2;
-                int status = zip_extract([entryPath fileSystemRepresentation], [destinationPathWithIndex fileSystemRepresentation], extract_callback, &arg);
+                int status = zip_extract(extractFrom, extractTo, extract_callback, &arg);
                 result = (status == 0);
-                if (result) {
-                    
-                }
-                else
-                {
+                if (NO == result) {
                     error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath] }];
                 }
             }
-            else
-            {
-                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create destination directory \"%@\".", nil), destinationPathWithIndex] }];
-            }
             dispatch_async_on_main_queue(^{
-                [alertView1 dismissAnimated];
-                [self setEditing:NO animated:YES];
-                [self loadEntryListData];
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
-                if (error) {
-                    [self.navigationController.view makeToast:[error localizedDescription]];
-                }
+                completionBlock(result, error);
             });
         });
     });
-}
-
-- (void)alertView:(LGAlertView *)alertView clearPasteboardEntriesStored:(NSArray <NSIndexPath *> *)indexPaths {
-    [self.class.explorerPasteboard setStrings:@[]];
-    [alertView dismissAnimated];
-    [self updateToolbarStatus:self.toolbar];
 }
 
 #pragma mark - Memory

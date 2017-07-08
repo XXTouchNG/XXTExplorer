@@ -84,6 +84,11 @@
             {
                 entryMaskType = XXTExplorerViewEntryAttributeTypeUnsupported;
             }
+            // MaskType cannot be symlink
+        } else {
+            if (errno == ENOENT || errno == EMLINK) {
+                entryMaskType = XXTExplorerViewEntryAttributeTypeBrokenSymlink;
+            }
         }
     }
     if (!entryIconImage) {
@@ -98,6 +103,10 @@
         else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink])
         {
             entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeSymlink];
+        }
+        else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink])
+        {
+            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeBrokenSymlink];
         }
         else
         {
