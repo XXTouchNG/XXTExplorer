@@ -327,6 +327,8 @@ typedef enum : NSUInteger {
         if (XXTEDefaultsBool(XXTExplorerViewSectionHomeEnabledKey) &&
             self == self.navigationController.viewControllers[0]) {
             _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewSectionHomeSeriesKey);
+        } else {
+            _homeEntryList = nil;
         }
     }
     

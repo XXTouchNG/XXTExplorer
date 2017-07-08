@@ -13,7 +13,7 @@
 @protocol XXTEMoreUserDefaultsOperationControllerDelegate <NSObject>
 
 @optional
-- (void)userDefaultsOperationController:(XXTEMoreUserDefaultsOperationController *)controller operationSelectedWithIndex:(NSUInteger)index;
+- (void)userDefaultsOperationController:(XXTEMoreUserDefaultsOperationController *)controller operationSelectedWithIndex:(NSUInteger)index completion:(void (^)(BOOL))block;
 
 @end
 

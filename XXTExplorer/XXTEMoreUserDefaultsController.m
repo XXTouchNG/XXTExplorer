@@ -24,7 +24,7 @@ enum {
 @property (nonatomic, strong) NSDictionary *defaultsMeta;
 @property (nonatomic, strong) NSDictionary *displayDefaultsMeta;
 @property (nonatomic, strong) NSMutableDictionary *userDefaults;
-@property(nonatomic, strong, readonly) UISearchController *searchController;
+@property (nonatomic, strong, readonly) UISearchController *searchController;
 
 @end
 
@@ -147,14 +147,19 @@ enum {
 - (void)loadDynamicUserDefaults {
     blockUserInteractions(self.navigationController.view, YES);
     PMKPromise *localDefaultsPromise = [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
-        [[self.class.localDefaults dictionaryRepresentation] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            if ([obj isKindOfClass:[NSNumber class]]) {
-                self.userDefaults[key] = [NSNumber numberWithInteger:[obj integerValue]];
+        [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+        }];
+        [((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]) enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
+            id key = entry[@"key"];
+            id value = [self.class.localDefaults objectForKey:key];
+            if (value) {
+                self.userDefaults[key] = value;
             }
         }];
         resolve(nil);
     }];
-    PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"get_record_conf") JSON:@{}];
+    PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"get_user_conf") JSON:@{}];
     localDefaultsPromise.then(^() {
         return remoteDefaultsPromise;
     })
@@ -163,7 +168,7 @@ enum {
     })
     .then(^(NSDictionary *dataDictionary) {
         [dataDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
-            self.userDefaults[key] = [NSNumber numberWithInteger:[obj integerValue]];
+            self.userDefaults[key] = obj;
         }];
     })
     .catch(^(NSError *serverError) {
@@ -314,26 +319,29 @@ enum {
 
 #pragma mark - XXTEMoreUserDefaultsOperationControllerDelegate
 
-- (void)userDefaultsOperationController:(XXTEMoreUserDefaultsOperationController *)controller operationSelectedWithIndex:(NSUInteger)index {
+- (void)userDefaultsOperationController:(XXTEMoreUserDefaultsOperationController *)controller operationSelectedWithIndex:(NSUInteger)index completion:(void (^)(BOOL))block {
     NSString *modifyKey = controller.userDefaultsEntry[@"key"];
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
+//    editedUserDefaults[modifyKey] = (index != 0) ? @YES : @NO;
     editedUserDefaults[modifyKey] = @(index);
     blockUserInteractions(self.navigationController.view, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     PMKPromise *userDefaultsPromise = [PMKPromise promiseWithValue:editedUserDefaults];
     PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults];
-    userDefaultsPromise.then(^ (NSDictionary *saveDictionary) {
-        [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            [self.class.localDefaults setObject:obj forKey:key];
-        }];
-        return remoteDefaultsPromise;
-    }).then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+    remoteDefaultsPromise.then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
-            
+            block(YES);
+            self.userDefaults[modifyKey] = @(index);
         } else {
             @throw jsonDictionary[@"message"];
         }
+        return userDefaultsPromise;
+    }).then(^ (NSDictionary *saveDictionary) {
+        [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [self.class.localDefaults setObject:obj forKey:key];
+        }];
     }).catch(^(NSError *serverError) {
+        block(NO);
         if (serverError.code == -1004) {
             showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
@@ -342,9 +350,8 @@ enum {
     })
     .finally(^() {
         blockUserInteractions(self.navigationController.view, NO);
+        [self.tableView reloadData];
     });
-    self.userDefaults[modifyKey] = @(index);
-    [self.tableView reloadData];
 }
 
 #pragma mark - Memory

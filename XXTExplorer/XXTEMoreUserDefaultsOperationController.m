@@ -75,11 +75,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSUInteger selectedOperation = (NSUInteger)indexPath.row;
-    self.selectedOperation = selectedOperation;
-    if (_delegate && [_delegate respondsToSelector:@selector(userDefaultsOperationController:operationSelectedWithIndex:)]) {
-        [_delegate userDefaultsOperationController:self operationSelectedWithIndex:selectedOperation];
+    if (_delegate && [_delegate respondsToSelector:@selector(userDefaultsOperationController:operationSelectedWithIndex:completion:)]) {
+        [_delegate userDefaultsOperationController:self operationSelectedWithIndex:selectedOperation completion:^(BOOL succeed) {
+            if (succeed) {
+                self.selectedOperation = selectedOperation;
+                [self.tableView reloadData];
+            }
+        }];
     }
-    [self.tableView reloadData];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -25,7 +25,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewSectionHomeEnabledKey</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Show &quot;Home&quot; Entry</string>
 			<key>description</key>
@@ -66,7 +66,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryListHideDotItemKey</string>
 			<key>default</key>
-			<integer>1</integer>
+			<true/>
 			<key>title</key>
 			<string>Hide Dot Files</string>
 			<key>description</key>
@@ -86,7 +86,7 @@
 			<key>key</key>
 			<string>no_nosim_alert</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Hide &quot;No SIM&quot; Alert</string>
 			<key>description</key>
@@ -103,7 +103,7 @@
 			<key>key</key>
 			<string>no_low_power_alert</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Hide &quot;Low Power&quot; Alert</string>
 			<key>description</key>
@@ -120,7 +120,7 @@
 			<key>key</key>
 			<string>no_idle</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Insomnia Mode</string>
 			<key>description</key>
@@ -137,7 +137,7 @@
 			<key>key</key>
 			<string>script_on_daemon</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Daemon Mode</string>
 			<key>description</key>
@@ -154,7 +154,7 @@
 			<key>key</key>
 			<string>script_end_hint</string>
 			<key>default</key>
-			<integer>1</integer>
+			<true/>
 			<key>title</key>
 			<string>Script Stopped Toast</string>
 			<key>description</key>
@@ -171,7 +171,7 @@
 			<key>key</key>
 			<string>no_need_pushid_alert</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Hide &quot;Connect to iTunes...&quot; Alert</string>
 			<key>description</key>
@@ -188,7 +188,7 @@
 			<key>key</key>
 			<string>no_nosim_statusbar</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Hide &quot;No SIM&quot; on Status Bar</string>
 			<key>description</key>
@@ -205,7 +205,7 @@
 			<key>key</key>
 			<string>use_classic_control_alert</string>
 			<key>default</key>
-			<integer>0</integer>
+			<false/>
 			<key>title</key>
 			<string>Use Classical Alert View</string>
 			<key>description</key>

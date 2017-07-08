@@ -343,7 +343,7 @@ until (false)
 	<key>ROOT_UI</key>
 	<string>bootstrap.xui</string>
 	<key>LOCAL_API</key>
-	<string>http://127.0.0.1:46952/</string>
+	<string>http://192.168.123.101:46952/</string>
 	<key>ADD1S_PATH</key>
 	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
 	<key>DOCUMENT_USERS_GUIDE</key>

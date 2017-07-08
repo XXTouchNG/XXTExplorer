@@ -128,7 +128,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
-    cell9.valueLabel.text = @"";
+    cell9.valueLabel.text = @"\n";
     
     staticCells = @[
                     @[ cell1 ],
