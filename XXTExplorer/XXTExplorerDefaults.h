@@ -15,7 +15,7 @@ static NSString * const XXTExplorerDefaults = @"XXTExplorerDefaults";
 
 #pragma mark - Defaults
 
-static NSUInteger const XXTExplorerMaximumEntryCount = 1000;
+//static NSUInteger const XXTExplorerMaximumEntryCount = 1000;
 
 static NSString * const XXTExplorerViewInitialPath = @"XXTExplorerViewInitialPath";
 

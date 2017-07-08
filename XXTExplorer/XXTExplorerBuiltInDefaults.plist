@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>XXTExplorerViewInitialPath</key>
-	<string>lua</string>
+	<string>lua/scripts</string>
 	<key>XXTExplorerViewSectionHomeSeriesKey</key>
 	<array>
 		<dict>

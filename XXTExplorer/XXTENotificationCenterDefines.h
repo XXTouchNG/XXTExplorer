@@ -18,5 +18,6 @@ static NSString * const XXTENotificationEventType = @"XXTENotificationEventType"
 // Global - XXTENotificationEventType
 static NSString * const XXTENotificationEventTypeInbox = @"XXTENotificationEventTypeInbox";
 static NSString * const XXTENotificationEventTypeInboxMoved = @"XXTENotificationEventTypeInboxMoved";
+static NSString * const XXTENotificationEventTypeApplicationDidBecomeActive = @"XXTENotificationEventTypeApplicationDidBecomeActive";
 
 #endif /* XXTENotificationCenterDefines_h */

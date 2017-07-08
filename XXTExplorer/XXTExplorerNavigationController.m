@@ -18,6 +18,32 @@
 
 @implementation XXTExplorerNavigationController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
+    if (self = [super initWithRootViewController:rootViewController]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.topViewController;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -26,7 +52,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
 }
 
@@ -69,6 +94,10 @@
             });
         });
     }
+}
+
+- (void)dealloc {
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

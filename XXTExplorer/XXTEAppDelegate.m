@@ -16,12 +16,15 @@
 #import "XXTEMoreViewController.h"
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XXTECloudApiSdk.h"
 
 @interface XXTEAppDelegate () <UISplitViewControllerDelegate>
 
 @end
 
-@implementation XXTEAppDelegate
+@implementation XXTEAppDelegate {
+    NSDictionary *localAppDefines;
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -51,10 +54,11 @@
     splitViewController.viewControllers = @[masterViewController, detailNavigationController];
     
     // Add Split Button
-    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
+//    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
+//    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    mainWindow.tintColor = XXTE_COLOR;
     mainWindow.backgroundColor = [UIColor whiteColor];
     mainWindow.rootViewController = splitViewController;
     [mainWindow makeKeyAndVisible];
@@ -83,6 +87,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:application userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeApplicationDidBecomeActive}]];
 }
 
 
@@ -127,10 +132,50 @@
     return NO;
 }
 
-#pragma mark - Split view
+#pragma mark - UISplitViewDelegate
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    return YES;
+    if ([secondaryViewController isKindOfClass:[UINavigationController class]]
+        && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[XXTEWorkspaceViewController class]]
+        )
+    {
+        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (UISplitViewControllerDisplayMode)targetDisplayModeForActionInSplitViewController:(UISplitViewController *)svc {
+    return UISplitViewControllerDisplayModePrimaryOverlay;
+}
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
+    UIUserInterfaceIdiom interfaceIdiom = [[UIDevice currentDevice] userInterfaceIdiom];
+    if (interfaceIdiom == UIUserInterfaceIdiomPhone)
+    {
+        if (splitViewController.collapsed) {
+            UITabBarController *tabbarController = (UITabBarController *)splitViewController.viewControllers[0];
+            UINavigationController *navController = (UINavigationController *)tabbarController.selectedViewController;
+            UINavigationController *destinationController = (UINavigationController *)vc;
+            [navController pushViewController:[destinationController.viewControllers lastObject] animated:YES];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+#pragma mark - App Defines
+
+- (NSDictionary *)appDefines {
+    if (!localAppDefines) {
+        NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
+        [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
+        [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
+        [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
+        localAppDefines = appDefines;
+    }
+    return localAppDefines;
 }
 
 @end

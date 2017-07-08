@@ -14,10 +14,10 @@
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerHeaderView.h"
 #import "XXTExplorerFooterView.h"
+#import "XXTExplorerToolbar.h"
 #import "XXTExplorerViewCell.h"
 #import "XXTExplorerViewHomeCell.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTExplorerToolbar.h"
 #import "XXTENotificationCenterDefines.h"
 #import "UIView+XXTEToast.h"
 #import <LGAlertView/LGAlertView.h>
@@ -42,14 +42,6 @@ typedef enum : NSUInteger {
 #define XXTEBuiltInDefaultsObject(key) ([self.class.explorerBuiltInDefaults objectForKey:key])
 
 @interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerToolbarDelegate, XXTESwipeTableCellDelegate, LGAlertViewDelegate>
-
-@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
-@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
-
-@property (nonatomic, strong, readonly) XXTExplorerToolbar *toolbar;
-@property (nonatomic, strong, readonly) UITableView *tableView;
-@property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;
-@property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
 
 @end
 
@@ -174,12 +166,15 @@ typedef enum : NSUInteger {
 
 - (void)setupWithPath:(NSString *)path {
     {
-        NSString *defaultsPath = [[NSBundle mainBundle] pathForResource:XXTExplorerDefaults ofType:@"plist"];
-        NSDictionary *defaults = [[NSDictionary alloc] initWithContentsOfFile:defaultsPath];
-        for (NSString *defaultKey in defaults) {
+        NSString *userDefaultsPath = [[NSBundle mainBundle] pathForResource:XXTExplorerDefaults ofType:@"plist"];
+        NSDictionary *userDefaults = [[NSDictionary alloc] initWithContentsOfFile:userDefaultsPath];
+        NSArray *explorerUserDefaults = userDefaults[@"EXPLORER_USER_DEFAULTS"];
+        for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
+            NSString *defaultKey = explorerUserDefault[@"key"];
             if (![self.class.explorerDefaults objectForKey:defaultKey])
             {
-                [self.class.explorerDefaults setObject:defaults[defaultKey] forKey:defaultKey];
+                id defaultValue = explorerUserDefault[@"default"];
+                [self.class.explorerDefaults setObject:defaultValue forKey:defaultKey];
             }
         }
     }
@@ -188,12 +183,18 @@ typedef enum : NSUInteger {
             NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewInitialPath);
             NSString *initialPath = [[[self class] rootPath] stringByAppendingPathComponent:initialRelativePath];
             if (![self.class.explorerFileManager fileExistsAtPath:initialPath]) {
-                assert(mkdir([initialPath UTF8String], 0755) == 0);
+                NSError *createDirectoryError = nil;
+//                assert(mkdir([initialPath UTF8String], 0755) == 0);
+                BOOL createDirectoryResult = [self.class.explorerFileManager createDirectoryAtPath:initialPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError];
+                if (!createDirectoryResult) {
+
+                }
             }
             path = initialPath;
         }
         _entryPath = path;
     }
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
 }
 
 - (void)viewDidLoad {
@@ -252,7 +253,7 @@ typedef enum : NSUInteger {
         entryFooterView;
     });
     [self.tableView setTableFooterView:self.footerView];
-    
+
     [self loadEntryListData];
 }
 
@@ -287,7 +288,7 @@ typedef enum : NSUInteger {
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
+    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] || [eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -347,6 +348,8 @@ typedef enum : NSUInteger {
         if (XXTEDefaultsBool(XXTExplorerViewSectionHomeEnabledKey) &&
             self == self.navigationController.viewControllers[0]) {
             _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewSectionHomeSeriesKey);
+        } else {
+            _homeEntryList = nil;
         }
     }
     
@@ -434,7 +437,7 @@ typedef enum : NSUInteger {
     }
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -1681,6 +1684,7 @@ typedef enum : NSUInteger {
 #pragma mark - Memory
 
 - (void)dealloc {
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [XXTExplorerViewController dealloc]");
 #endif

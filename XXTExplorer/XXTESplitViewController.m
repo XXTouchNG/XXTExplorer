@@ -8,6 +8,7 @@
 
 #import "XXTESplitViewController.h"
 #import <LGAlertView/LGAlertView.h>
+#import "UIView+XXTEToast.h"
 
 @interface XXTESplitViewController ()
 
@@ -37,7 +38,7 @@
     LGAlertView *alertAppearance = [LGAlertView appearanceWhenContainedIn:[self class], nil];
     alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.25];
     alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    alertAppearance.coverAlpha = 0.75;
+    alertAppearance.coverAlpha = 0.85;
     alertAppearance.layerShadowColor = [UIColor colorWithWhite:0.0 alpha:0.3];
     alertAppearance.layerShadowRadius = 4.0;
     alertAppearance.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
@@ -57,6 +58,19 @@
     alertAppearance.dismissOnAction = NO;
     alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
     alertAppearance.buttonsTextAlignment = NSTextAlignmentLeft;
+    
+    [XXTEToastManager setTapToDismissEnabled:YES];
+    [XXTEToastManager setDefaultDuration:2.f];
+    [XXTEToastManager setQueueEnabled:NO];
+    [XXTEToastManager setDefaultPosition:XXTEToastPositionCenter];
+    
+    XXTEToastStyle *toastStyle = [XXTEToastManager sharedStyle];
+    toastStyle.backgroundColor = [UIColor colorWithWhite:0.f alpha:.6f];
+    toastStyle.titleFont = [UIFont boldSystemFontOfSize:14.f];
+    toastStyle.messageFont = [UIFont systemFontOfSize:14.f];
+    toastStyle.activitySize = CGSizeMake(80.f, 80.f);
+    toastStyle.verticalMargin = 16.f;
+    
 }
 
 @end

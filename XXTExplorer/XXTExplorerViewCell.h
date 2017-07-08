@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XXTESwipeTableCell.h"
 
-static NSString *XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";
+static NSString * const XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";
 static CGFloat XXTExplorerViewCellHeight = 66.f;
 
 @interface XXTExplorerViewCell : XXTESwipeTableCell
