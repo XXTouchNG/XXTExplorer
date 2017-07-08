@@ -197,7 +197,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     }];
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {
@@ -239,8 +239,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         }
     }
 }
-
-#pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {

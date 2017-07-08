@@ -414,7 +414,7 @@ typedef enum : NSUInteger {
     }
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -638,8 +638,6 @@ typedef enum : NSUInteger {
     return nil;
 }
 */
-
-#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {

@@ -19,7 +19,7 @@ enum {
     kXXTEMoreUserDefaultsSearchTypeDescription
 };
 
-@interface XXTEMoreUserDefaultsController () <UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
+@interface XXTEMoreUserDefaultsController () <UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate, XXTEMoreUserDefaultsOperationControllerDelegate>
 @property (nonatomic, strong) NSArray <NSDictionary *> *defaultsSectionMeta;
 @property (nonatomic, strong) NSDictionary *defaultsMeta;
 @property (nonatomic, strong) NSDictionary *displayDefaultsMeta;
@@ -146,11 +146,19 @@ enum {
 
 - (void)loadDynamicUserDefaults {
     blockUserInteractions(self.navigationController.view, YES);
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"get_record_conf") JSON:@{}]
-    .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+    PMKPromise *localDefaultsPromise = [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
         [[self.class.localDefaults dictionaryRepresentation] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            self.userDefaults[key] = [NSNumber numberWithInteger:[obj integerValue]];
+            if ([obj isKindOfClass:[NSNumber class]]) {
+                self.userDefaults[key] = [NSNumber numberWithInteger:[obj integerValue]];
+            }
         }];
+        resolve(nil);
+    }];
+    PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"get_record_conf") JSON:@{}];
+    localDefaultsPromise.then(^() {
+        return remoteDefaultsPromise;
+    })
+    .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         return jsonDictionary[@"data"];
     })
     .then(^(NSDictionary *dataDictionary) {
@@ -171,7 +179,7 @@ enum {
     });
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {
@@ -210,7 +218,11 @@ enum {
         rowDetail = self.displayDefaultsMeta[sectionKey][(NSUInteger) indexPath.row];
     }
     XXTEMoreUserDefaultsOperationController *operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleGrouped];
+    operationController.delegate = self;
     operationController.userDefaultsEntry = rowDetail;
+    NSNumber *defaultsValue = self.userDefaults[rowDetail[@"key"]];
+    NSInteger optionIndex = [defaultsValue integerValue];
+    operationController.selectedOperation = (NSUInteger) optionIndex;
     [self.navigationController pushViewController:operationController animated:YES];
 }
 
@@ -231,8 +243,6 @@ enum {
     cell.valueLabel.text = optionTitle;
     return cell;
 }
-
-#pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
@@ -300,6 +310,41 @@ enum {
     } else {
         [self.searchController.searchBar resignFirstResponder];
     }
+}
+
+#pragma mark - XXTEMoreUserDefaultsOperationControllerDelegate
+
+- (void)userDefaultsOperationController:(XXTEMoreUserDefaultsOperationController *)controller operationSelectedWithIndex:(NSUInteger)index {
+    NSString *modifyKey = controller.userDefaultsEntry[@"key"];
+    NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
+    editedUserDefaults[modifyKey] = @(index);
+    blockUserInteractions(self.navigationController.view, YES);
+    NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
+    PMKPromise *userDefaultsPromise = [PMKPromise promiseWithValue:editedUserDefaults];
+    PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults];
+    userDefaultsPromise.then(^ (NSDictionary *saveDictionary) {
+        [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [self.class.localDefaults setObject:obj forKey:key];
+        }];
+        return remoteDefaultsPromise;
+    }).then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+            
+        } else {
+            @throw jsonDictionary[@"message"];
+        }
+    }).catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+        }
+    })
+    .finally(^() {
+        blockUserInteractions(self.navigationController.view, NO);
+    });
+    self.userDefaults[modifyKey] = @(index);
+    [self.tableView reloadData];
 }
 
 #pragma mark - Memory

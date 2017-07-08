@@ -66,7 +66,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryListHideDotItemKey</string>
 			<key>default</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>title</key>
 			<string>Hide Dot Files</string>
 			<key>description</key>

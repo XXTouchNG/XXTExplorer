@@ -18,6 +18,7 @@
 @end
 
 @interface XXTEMoreUserDefaultsOperationController : UITableViewController
+@property (nonatomic, weak) id <XXTEMoreUserDefaultsOperationControllerDelegate> delegate;
 @property (nonatomic, copy) NSDictionary *userDefaultsEntry;
 @property (nonatomic, assign) NSUInteger selectedOperation;
 
