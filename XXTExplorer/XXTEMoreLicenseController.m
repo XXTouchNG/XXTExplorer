@@ -10,7 +10,7 @@
 #import "XXTEMoreLicenseController.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
-#import "NSURLConnection+PromiseKit.h"
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreLicenseCell.h"
 #import "XXTENetworkDefines.h"
@@ -32,6 +32,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 @end
 
 @implementation XXTEMoreLicenseController {
+    BOOL isFirstTimeLoaded;
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
@@ -80,6 +81,14 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     [self reloadDynamicTableViewDataWithCompletion:nil];
 }
 
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    if (isFirstTimeLoaded) {
+//        [self reloadDynamicTableViewDataWithCompletion:nil];
+//    }
+//    isFirstTimeLoaded = YES;
+//}
+
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[ @"New License", @"Current License", @"Device" ];
     staticSectionFooters = @[ @"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", @"", @"" ];
@@ -92,35 +101,35 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell2.titleLabel.text = NSLocalizedString(@"Expired At", nil);
-    cell2.valueLabel.text = @"...";
+    cell2.valueLabel.text = @"\n";
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Version", nil);
-    cell3.valueLabel.text = @"...";
+    cell3.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"iOS Version", nil);
-    cell4.valueLabel.text = @"...";
+    cell4.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Device Type", nil);
-    cell5.valueLabel.text = @"...";
+    cell5.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell6.titleLabel.text = NSLocalizedString(@"Device Name", nil);
-    cell6.valueLabel.text = @"...";
+    cell6.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell7.titleLabel.text = NSLocalizedString(@"Serial Number", nil);
-    cell7.valueLabel.text = @"...";
+    cell7.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell8.titleLabel.text = NSLocalizedString(@"MAC Address", nil);
-    cell8.valueLabel.text = @"...";
+    cell8.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
-    cell9.valueLabel.text = @"...";
+    cell9.valueLabel.text = @"";
     
     staticSectionRowNum = @[ @1, @1, @7 ];
     
@@ -292,15 +301,18 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
                 [textField deleteBackward];
             }
             [textField deleteBackward];
+            [self updateTextFieldTextColor];
             return NO;
         }
         if (range.location != fromString.length) {
+            [self updateTextFieldTextColor];
             return NO;
         }
         NSString *regex = @"^[3-9A-Z]{0,16}$";
         NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:NULL];
         if ([pattern numberOfMatchesInString:upperedString options:0 range:NSMakeRange(0, upperedString.length)] <= 0) {
             [self.licenseShaker shake];
+            [self updateTextFieldTextColor];
             return NO;
         }
         NSMutableString *spacedString = [[NSMutableString alloc] init];
@@ -311,14 +323,20 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             }
         }
         textField.text = [spacedString copy];
-        if (upperedString.length == 16) {
-            textField.textColor = XXTE_COLOR_SUCCESS;
-        } else {
-            textField.textColor = XXTE_COLOR;
-        }
+        [self updateTextFieldTextColor];
         return NO;
     }
     return YES;
+}
+
+- (void)updateTextFieldTextColor {
+    NSString *fromString = self.licenseField.text;
+    NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (trimedString.length == 16) {
+        self.licenseField.textColor = XXTE_COLOR_SUCCESS;
+    } else {
+        self.licenseField.textColor = XXTE_COLOR;
+    }
 }
 
 #pragma mark - LGAlertViewDelegate
@@ -437,6 +455,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         else {
             dateLabel.textColor = XXTE_COLOR;
         }
+        [self.tableView reloadData];
     }
 }
 

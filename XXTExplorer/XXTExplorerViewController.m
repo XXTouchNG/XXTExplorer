@@ -181,6 +181,7 @@ typedef enum : NSUInteger {
         }
         _entryPath = path;
     }
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
 }
 
 - (void)viewDidLoad {
@@ -263,7 +264,7 @@ typedef enum : NSUInteger {
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
+    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] || [eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -1348,6 +1349,7 @@ typedef enum : NSUInteger {
 #pragma mark - Memory
 
 - (void)dealloc {
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [XXTExplorerViewController dealloc]");
 #endif

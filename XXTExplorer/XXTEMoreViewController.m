@@ -12,7 +12,7 @@
 #import "XXTEMoreViewController.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
-#import "NSURLConnection+PromiseKit.h"
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 #import "XXTEMoreApplicationListController.h"
@@ -20,6 +20,8 @@
 #import "XXTEMoreAboutController.h"
 #import "XXTEMoreDocumentsController.h"
 #import "XXTEMoreActivationController.h"
+#import "XXTEMoreRecordingController.h"
+#import "XXTENotificationCenterDefines.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -38,12 +40,32 @@ typedef enum : NSUInteger {
 @end
 
 @implementation XXTEMoreViewController {
-    NSArray <NSArray <UITableViewCell *> *> *staticCells;
+    BOOL isFirstTimeLoaded;
+    NSArray <NSMutableArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
+    NSArray <NSString *> *staticSectionFooters;
     NSArray <NSNumber *> *staticSectionRowNum;
     NSString *webServerUrl;
     NSString *bonjourWebServerUrl;
     BOOL isFetchingRemoteStatus;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype) initWithStyle:(UITableViewStyle)style {
+    if (self = [super initWithStyle:style]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -59,10 +81,59 @@ typedef enum : NSUInteger {
     self.tableView.dataSource = self;
     
     [self reloadStaticTableViewData];
+    [self reloadDynamicTableViewData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if (isFirstTimeLoaded) {
+        [self reloadDynamicTableViewData];
+    }
+    isFirstTimeLoaded = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)updateRemoteAccessAddressDisplay {
+    XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
+    cell1.titleLabel.text = NSLocalizedString(@"Remote Access", nil);
+    cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell1.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRemoteAccess"];
+    [cell1.optionSwitch addTarget:self action:@selector(remoteAccessOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+    self.remoteAccessSwitch = cell1.optionSwitch;
+    self.remoteAccessIndicator = cell1.optionIndicator;
+    
+    XXTEMoreRemoteAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreRemoteAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    if (webServerUrl.length != 0) {
+        cellAddress1.addressLabel.textColor = [UIColor blackColor];
+        cellAddress1.addressLabel.text = webServerUrl;
+    } else {
+        cellAddress1.addressLabel.textColor = XXTE_COLOR_DANGER;
+        cellAddress1.addressLabel.text = NSLocalizedString(@"Connect to Wi-fi network.", nil);
+    }
+    cellAddress2.addressLabel.text = bonjourWebServerUrl ? bonjourWebServerUrl : @"N/A";
+    
+    staticCells[0][0] = cell1;
+    staticCells[0][1] = cellAddress1;
+    staticCells[0][2] = cellAddress2;
+    
+    if (webServerUrl && bonjourWebServerUrl) {
+        staticSectionRowNum = @[ @3, @1, @1, @4, @6, @2 ];
+    } else {
+        staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
+    }
+}
+
+- (void)reloadDynamicTableViewData {
 //    blockUserInteractions(self.navigationController.view, YES);
     if (!isFetchingRemoteStatus) {
         isFetchingRemoteStatus = YES;
@@ -74,17 +145,14 @@ typedef enum : NSUInteger {
                 if (remoteAccessStatus) {
                     webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
                     bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
-                    if (webServerUrl.length == 0 || bonjourWebServerUrl.length == 0) {
-                        @throw NSLocalizedString(@"Please connected to Wi-fi network and try again later.", nil);
-                    }
                 } else {
                     webServerUrl = nil;
                     bonjourWebServerUrl = nil;
                 }
-                [self reloadStaticTableViewData];
+                [self updateRemoteAccessAddressDisplay];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
                 if (self.remoteAccessSwitch.isOn != remoteAccessStatus) {
-                    [self.remoteAccessSwitch setOn:remoteAccessStatus animated:YES];
+                    [self.remoteAccessSwitch setOn:remoteAccessStatus];
                 }
             }
         }).catch(^(NSError *serverError) {
@@ -96,7 +164,7 @@ typedef enum : NSUInteger {
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-            //        blockUserInteractions(self.navigationController.view, NO);
+//        blockUserInteractions(self.navigationController.view, NO);
             isFetchingRemoteStatus = NO;
         });
     }
@@ -104,14 +172,9 @@ typedef enum : NSUInteger {
 
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[ @"Remote", @"Daemon", @"License", @"Settings", @"System", @"Help" ];
+    staticSectionFooters = @[ @"Turn on the switch: \n- Access the XXTouch Web Client. \n- Access the WebDAV server.", @"", @"", @"", @"", @"" ];
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
-    cell1.titleLabel.text = NSLocalizedString(@"Remote Access", nil);
-    cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell1.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRemoteAccess"];
-    [cell1.optionSwitch addTarget:self action:@selector(remoteAccessOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-    self.remoteAccessSwitch = cell1.optionSwitch;
-    self.remoteAccessIndicator = cell1.optionIndicator;
     
     XXTEMoreLinkCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
@@ -184,30 +247,24 @@ typedef enum : NSUInteger {
     cell15.titleLabel.text = NSLocalizedString(@"About", nil);
     
     XXTEMoreRemoteAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
-    cellAddress1.addressLabel.text = webServerUrl ? webServerUrl : @"N/A";
     
     XXTEMoreRemoteAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
-    cellAddress2.addressLabel.text = bonjourWebServerUrl ? bonjourWebServerUrl : @"N/A";
-    
-    if (webServerUrl && bonjourWebServerUrl) {
-        staticSectionRowNum = @[ @3, @1, @1, @4, @6, @2 ];
-    } else {
-        staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
-    }
     
     staticCells = @[
-                    @[ cell1, cellAddress1, cellAddress2 ],
+                    [@[ cell1, cellAddress1, cellAddress2 ] mutableCopy],
                     //
-                    @[ cell2 ],
+                    [@[ cell2 ] mutableCopy],
                     //
-                    @[ cell3 ],
+                    [@[ cell3 ] mutableCopy],
                     //
-                    @[ cell4, cell5, cell6, cell7 ],
+                    [@[ cell4, cell5, cell6, cell7 ] mutableCopy],
                     //
-                    @[ cell8, cell9, cell10, cell11, cell12, cell13 ],
+                    [@[ cell8, cell9, cell10, cell11, cell12, cell13 ] mutableCopy],
                     //
-                    @[ cell14, cell15 ],
+                    [@[ cell14, cell15 ] mutableCopy],
                     ];
+    
+    [self updateRemoteAccessAddressDisplay];
 }
 
 #pragma mark - UITableViewDelegate
@@ -248,7 +305,12 @@ typedef enum : NSUInteger {
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreSectionIndexRemote) {
             if (indexPath.row > 0) {
-                NSString *addressText = ((XXTEMoreRemoteAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
+                NSString *addressText = @"";
+                if (indexPath.row == 1) {
+                    addressText = webServerUrl;
+                } else if (indexPath.row == 2) {
+                    addressText = bonjourWebServerUrl;
+                }
                 if (addressText && addressText.length > 0) {
                     blockUserInteractions(self.navigationController.view, YES);
                     [PMKPromise promiseWithValue:@YES].then(^() {
@@ -283,6 +345,9 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 XXTEMoreActivationController *activationController = [[XXTEMoreActivationController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:activationController animated:YES];
+            } else if (indexPath.row == 1) {
+                XXTEMoreRecordingController *recordingController = [[XXTEMoreRecordingController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:recordingController animated:YES];
             }
         }
         else if (indexPath.section == kXXTEMoreSectionIndexSystem) {
@@ -368,6 +433,13 @@ typedef enum : NSUInteger {
     return @"";
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (tableView == self.tableView) {
+        return NSLocalizedString(staticSectionFooters[section], nil);
+    }
+    return @"";
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
         return staticCells[indexPath.section][indexPath.row];
@@ -393,16 +465,13 @@ typedef enum : NSUInteger {
                 if (changeToStatus == YES) {
                     webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
                     bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
-                    if (webServerUrl.length == 0 || bonjourWebServerUrl.length == 0) {
-                        @throw NSLocalizedString(@"Please connected to Wi-fi network and try again later.", nil);
-                    }
                 } else {
                     webServerUrl = nil;
                     bonjourWebServerUrl = nil;
                 }
-                [self reloadStaticTableViewData];
+                [self updateRemoteAccessAddressDisplay];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
-                self.remoteAccessSwitch.on = changeToStatus;
+                [self.remoteAccessSwitch setOn:changeToStatus animated:YES];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
@@ -617,6 +686,20 @@ typedef enum : NSUInteger {
     }).finally(^() {
         
     });
+}
+
+#pragma mark - Notifications
+
+- (void)handleApplicationNotification:(NSNotification *)aNotification {
+    NSDictionary *userInfo = aNotification.userInfo;
+    NSString *eventType = userInfo[XXTENotificationEventType];
+    if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+        [self reloadDynamicTableViewData];
+    }
+}
+
+- (void)dealloc {
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
