@@ -45,17 +45,19 @@ typedef enum : NSUInteger {
         if (XXTExplorerViewSectionIndexList == indexPath.section)
         {
             NSDictionary *entryAttributes = self.entryList[indexPath.row];
-            if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+            NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
+            NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
+            NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+            if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
             { // Directory or Symbolic Link Directory
-                NSString *directoryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
                 // We'd better try to access it before we enter it.
                 NSError *accessError = nil;
-                [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
+                [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                 if (accessError) {
                     [self.navigationController.view makeToast:[accessError localizedDescription]];
                 }
                 else {
-                    XXTEMoreBootScriptPicker *explorerViewController = [[XXTEMoreBootScriptPicker alloc] initWithEntryPath:directoryPath];
+                    XXTEMoreBootScriptPicker *explorerViewController = [[XXTEMoreBootScriptPicker alloc] initWithEntryPath:entryPath];
                     explorerViewController.delegate = self.delegate;
                     explorerViewController.allowedExtensions = self.allowedExtensions;
                     [self.navigationController pushViewController:explorerViewController animated:YES];
@@ -82,6 +84,10 @@ typedef enum : NSUInteger {
                 } else {
                     [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]];
                 }
+            }
+            else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink])
+            {
+                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]];
             }
             else
             {
