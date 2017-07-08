@@ -13,6 +13,7 @@
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 #import "XXTEMoreUserDefaultsOperationController.h"
+#import "XXTExplorerViewController.h"
 
 enum {
     kXXTEMoreUserDefaultsSearchTypeTitle = 0,
@@ -32,15 +33,15 @@ enum {
     BOOL isFirstTimeLoaded;
 }
 
-+ (NSUserDefaults *)localDefaults {
-    static NSUserDefaults *localDefaults = nil;
-    if (!localDefaults) {
-        localDefaults = ({
-            [NSUserDefaults standardUserDefaults];
-        });
-    }
-    return localDefaults;
-}
+//+ (NSUserDefaults *)localDefaults {
+//    static NSUserDefaults *localDefaults = nil;
+//    if (!localDefaults) {
+//        localDefaults = ({
+//            [NSUserDefaults standardUserDefaults];
+//        });
+//    }
+//    return localDefaults;
+//}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -152,7 +153,7 @@ enum {
         }];
         [((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]) enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
             id key = entry[@"key"];
-            id value = [self.class.localDefaults objectForKey:key];
+            id value = [XXTExplorerViewController.explorerDefaults objectForKey:key];
             if (value) {
                 self.userDefaults[key] = value;
             }
@@ -338,7 +339,7 @@ enum {
         return userDefaultsPromise;
     }).then(^ (NSDictionary *saveDictionary) {
         [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            [self.class.localDefaults setObject:obj forKey:key];
+            [XXTExplorerViewController.explorerDefaults setObject:obj forKey:key];
         }];
     }).catch(^(NSError *serverError) {
         block(NO);

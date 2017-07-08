@@ -127,7 +127,7 @@
 - (NSDictionary *)parseInternalEntry:(NSDictionary *)entry {
     NSMutableDictionary *newEntry = [entry mutableCopy];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryBaseExtension = entry[XXTExplorerViewEntryAttributeExtension];
+    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
     {
         // Executable
@@ -140,7 +140,7 @@
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
         }
-        else if ([entryBaseExtension isEqualToString:@"xxt"])
+        else if ([entryBaseExtension isEqualToString:@"luac"] || [entryBaseExtension isEqualToString:@"xxt"])
         {
             newEntry[XXTExplorerViewEntryAttributePermission] =
             @[XXTExplorerViewEntryAttributePermissionExecuteable,

@@ -20,6 +20,7 @@ enum {
     kXXTEMoreApplicationSearchTypeBundleID
 };
 
+CFArrayRef SBSCopyApplicationDisplayIdentifiers(bool onlyActive, bool debuggable);
 CFStringRef SBSCopyLocalizedApplicationNameForDisplayIdentifier(CFStringRef displayIdentifier);
 CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentifier);
 
@@ -89,8 +90,18 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     });
     
     _allApplications = ({
-        SEL selectorAll = NSSelectorFromString(@"allApplications");
-        NSArray <LSApplicationProxy *> *allApplications = [self.applicationWorkspace performSelector:selectorAll];
+        NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
+        NSMutableArray <LSApplicationProxy *> *allApplications = nil;
+        if (applicationIdentifiers) {
+            allApplications = [NSMutableArray arrayWithCapacity:applicationIdentifiers.count];
+            [applicationIdentifiers enumerateObjectsUsingBlock:^(NSString * _Nonnull bid, NSUInteger idx, BOOL * _Nonnull stop) {
+                LSApplicationProxy *proxy = [LSApplicationProxy applicationProxyForIdentifier:bid];
+                [allApplications addObject:proxy];
+            }];
+        } else {
+            SEL selectorAll = NSSelectorFromString(@"allApplications");
+            allApplications = [self.applicationWorkspace performSelector:selectorAll];
+        }
         NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
         NSSet <NSString *> *blacklistApplications = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
         NSMutableArray <NSDictionary *> *filteredApplications = [NSMutableArray arrayWithCapacity:allApplications.count];

@@ -8,8 +8,10 @@
 
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import "XXTEMoreCell.h"
 #import "XXTEMoreViewController.h"
+#import "XXTEMoreRemoteSwitchCell.h"
+#import "XXTEMoreRemoteAddressCell.h"
+#import "XXTEMoreLinkCell.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
@@ -23,6 +25,7 @@
 #import "XXTEMoreRecordingController.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTEMoreUserDefaultsController.h"
+#import "XXTEMoreBootScriptController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -199,8 +202,8 @@ typedef enum : NSUInteger {
     
     XXTEMoreLinkCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell6.imageView.image = [UIImage imageNamed:@"XXTEMoreIconBootConfig"];
-    cell6.titleLabel.text = NSLocalizedString(@"Boot Config", nil);
+    cell6.imageView.image = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
+    cell6.titleLabel.text = NSLocalizedString(@"Boot Script", nil);
     
     XXTEMoreLinkCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -350,7 +353,8 @@ typedef enum : NSUInteger {
                 XXTEMoreRecordingController *recordingController = [[XXTEMoreRecordingController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:recordingController animated:YES];
             } else if (indexPath.row == 2) {
-                
+                XXTEMoreBootScriptController *bootController = [[XXTEMoreBootScriptController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:bootController animated:YES];
             } else if (indexPath.row == 3) {
                 XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStylePlain];
                 [self.navigationController pushViewController:userDefaultsController animated:YES];

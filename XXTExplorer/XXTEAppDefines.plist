@@ -337,7 +337,7 @@ until (false)
 	<key>CONTACT_URL</key>
 	<string>mqqapi://card/show_pslcard?src_type=internal&amp;version=1&amp;uin=40898074&amp;card_type=group&amp;source=external</string>
 	<key>DAEMON_VERSION</key>
-	<string>1.1.3-1</string>
+	<string>1.2.0-1</string>
 	<key>UPDATE_API</key>
 	<string>https://apt.xxtouch.com/Packages</string>
 	<key>ROOT_UI</key>

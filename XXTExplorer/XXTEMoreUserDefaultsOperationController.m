@@ -103,4 +103,12 @@
     return @"";
 }
 
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"[XXTEMoreUserDefaultsOperationController dealloc]");
+#endif
+}
+
 @end

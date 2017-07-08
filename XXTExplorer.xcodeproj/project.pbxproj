@@ -33,6 +33,9 @@
 		0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5391F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib */; };
 		0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */; };
 		0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */; };
+		0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
+		0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */; };
+		0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DF1F1142E90087822E /* XXTEMoreBootScriptPicker.m */; };
 		0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
@@ -138,6 +141,11 @@
 		0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECommonWebViewController.m; sourceTree = "<group>"; };
 		0F5EB5401F0AA2AE0016016A /* XXTECommonNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECommonNavigationController.h; sourceTree = "<group>"; };
 		0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECommonNavigationController.m; sourceTree = "<group>"; };
+		0F6063D81F111E2E0087822E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		0F6063DB1F1129960087822E /* XXTEMoreBootScriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreBootScriptController.h; sourceTree = "<group>"; };
+		0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreBootScriptController.m; sourceTree = "<group>"; };
+		0F6063DE1F1142E90087822E /* XXTEMoreBootScriptPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreBootScriptPicker.h; sourceTree = "<group>"; };
+		0F6063DF1F1142E90087822E /* XXTEMoreBootScriptPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreBootScriptPicker.m; sourceTree = "<group>"; };
 		0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController.h; sourceTree = "<group>"; };
 		0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESplitViewController.m; sourceTree = "<group>"; };
 		0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWorkspaceViewController.h; sourceTree = "<group>"; };
@@ -184,7 +192,6 @@
 		0FAD69291F0403B000B2F0EC /* XXTEMoreLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLinkCell.h; sourceTree = "<group>"; };
 		0FAD692A1F0403B000B2F0EC /* XXTEMoreLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLinkCell.m; sourceTree = "<group>"; };
 		0FAD692B1F0403B000B2F0EC /* XXTEMoreLinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLinkCell.xib; sourceTree = "<group>"; };
-		0FAD692E1F040D0500B2F0EC /* XXTEMoreCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMoreCell.h; sourceTree = "<group>"; };
 		0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTENavigationController.h; sourceTree = "<group>"; };
 		0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTENavigationController.m; sourceTree = "<group>"; };
 		0FAE0F001ED6FC0000798B4B /* XXTExplorerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewController.h; sourceTree = "<group>"; };
@@ -240,6 +247,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */,
 				D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */,
 				13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */,
 			);
@@ -347,6 +355,17 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		0F6063DA1F11262E0087822E /* Boot */ = {
+			isa = PBXGroup;
+			children = (
+				0F6063DE1F1142E90087822E /* XXTEMoreBootScriptPicker.h */,
+				0F6063DF1F1142E90087822E /* XXTEMoreBootScriptPicker.m */,
+				0F6063DB1F1129960087822E /* XXTEMoreBootScriptController.h */,
+				0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */,
+			);
+			name = Boot;
+			sourceTree = "<group>";
+		};
 		0F61E1601ED78712003DCC78 /* Master */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +406,7 @@
 		0F61E1631ED7873F003DCC78 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				0F6063DA1F11262E0087822E /* Boot */,
 				0F35F2061F1068CC00B5B327 /* UserDefaults */,
 				0F2184BD1F0FBDB3001BD8BD /* Recording */,
 				D6FC2F291F0E333C000BAB42 /* Activation */,
@@ -501,7 +521,6 @@
 		0FAD69191F04033300B2F0EC /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				0FAD692E1F040D0500B2F0EC /* XXTEMoreCell.h */,
 				0FAD691A1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.h */,
 				0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */,
 				0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */,
@@ -547,6 +566,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F6063D81F111E2E0087822E /* MobileCoreServices.framework */,
 				E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */,
 			);
 			name = Frameworks;
@@ -743,6 +763,7 @@
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
+				0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreRemoteAddressCell.m in Sources */,
@@ -773,6 +794,7 @@
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
+				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,

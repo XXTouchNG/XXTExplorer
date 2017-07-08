@@ -13,10 +13,10 @@
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerHeaderView.h"
 #import "XXTExplorerFooterView.h"
+#import "XXTExplorerToolbar.h"
 #import "XXTExplorerViewCell.h"
 #import "XXTExplorerViewHomeCell.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTExplorerToolbar.h"
 #import "XXTENotificationCenterDefines.h"
 #import "UIView+XXTEToast.h"
 #import <LGAlertView/LGAlertView.h>
@@ -39,14 +39,6 @@ typedef enum : NSUInteger {
 #define XXTEBuiltInDefaultsObject(key) ([self.class.explorerBuiltInDefaults objectForKey:key])
 
 @interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerToolbarDelegate, XXTESwipeTableCellDelegate, LGAlertViewDelegate>
-
-@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
-@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
-
-@property (nonatomic, strong, readonly) XXTExplorerToolbar *toolbar;
-@property (nonatomic, strong, readonly) UITableView *tableView;
-@property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;
-@property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
 
 @end
 
@@ -178,7 +170,12 @@ typedef enum : NSUInteger {
             NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewInitialPath);
             NSString *initialPath = [[[self class] rootPath] stringByAppendingPathComponent:initialRelativePath];
             if (![self.class.explorerFileManager fileExistsAtPath:initialPath]) {
-                assert(mkdir([initialPath UTF8String], 0755) == 0);
+                NSError *createDirectoryError = nil;
+//                assert(mkdir([initialPath UTF8String], 0755) == 0);
+                BOOL createDirectoryResult = [self.class.explorerFileManager createDirectoryAtPath:initialPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError];
+                if (!createDirectoryResult) {
+                    
+                }
             }
             path = initialPath;
         }
