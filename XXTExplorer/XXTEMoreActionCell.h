@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const XXTEMoreActionCellReuseIdentifier = @"XXTEMoreActionCellReuseIdentifier";
+
 @interface XXTEMoreActionCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *actionNameLabel;
 

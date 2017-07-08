@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SECTION_META</key>
+	<array>
+		<dict>
+			<key>key</key>
+			<string>EXPLORER_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>Explorer Config</string>
+		</dict>
+		<dict>
+			<key>key</key>
+			<string>REMOTE_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>Daemon Config</string>
+		</dict>
+	</array>
+	<key>EXPLORER_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewSectionHomeEnabledKey</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Show &quot;Home&quot; Entry</string>
+			<key>description</key>
+			<string>Show &quot;Home&quot; entry at the top of file explorer.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<integer>0</integer>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortFieldKey</string>
+			<key>default</key>
+			<string>XXTExplorerViewEntryAttributeCreationDate</string>
+			<key>title</key>
+			<string></string>
+			<key>description</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortOrderKey</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string></string>
+			<key>New item</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListHideDotItemKey</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Hide Dot Files</string>
+			<key>description</key>
+			<string>Hide files whose name prefixed with a dot (&quot;.&quot;).</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+	</array>
+	<key>REMOTE_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>no_nosim_alert</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Hide &quot;No SIM&quot; Alert</string>
+			<key>description</key>
+			<string>Prevent &quot;No SIM&quot; alert from showing.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>no_low_power_alert</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Hide &quot;Low Power&quot; Alert</string>
+			<key>description</key>
+			<string>Prevent &quot;Low Power&quot; alert from showing.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>no_idle</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Insomnia Mode</string>
+			<key>description</key>
+			<string>Prevent device from real sleep (offline).</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>script_on_daemon</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Daemon Mode</string>
+			<key>description</key>
+			<string>Launch the last executed script again if the daemon quitted unexpectedly.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>script_end_hint</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Script Stopped Toast</string>
+			<key>description</key>
+			<string>Show &quot;Script Stopped&quot; hint toast.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>no_need_pushid_alert</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Hide &quot;Connect to iTunes...&quot; Alert</string>
+			<key>description</key>
+			<string>Prevent &quot;Connect to iTunes to Use Push Notifications&quot; alert from showing</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>no_nosim_statusbar</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Hide &quot;No SIM&quot; on Status Bar</string>
+			<key>description</key>
+			<string>Prevent &quot;No SIM&quot; text on status bar from displaying.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>use_classic_control_alert</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Use Classical Alert View</string>
+			<key>description</key>
+			<string>Use classical UIAlertController instead of animated SIAlertView.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

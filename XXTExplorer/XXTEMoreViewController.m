@@ -22,6 +22,7 @@
 #import "XXTEMoreActivationController.h"
 #import "XXTEMoreRecordingController.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XXTEMoreUserDefaultsController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -348,6 +349,11 @@ typedef enum : NSUInteger {
             } else if (indexPath.row == 1) {
                 XXTEMoreRecordingController *recordingController = [[XXTEMoreRecordingController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:recordingController animated:YES];
+            } else if (indexPath.row == 2) {
+                
+            } else if (indexPath.row == 3) {
+                XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStylePlain];
+                [self.navigationController pushViewController:userDefaultsController animated:YES];
             }
         }
         else if (indexPath.section == kXXTEMoreSectionIndexSystem) {

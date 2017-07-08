@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const XXTEMoreTitleDescriptionCellReuseIdentifier = @"XXTEMoreTitleDescriptionCellReuseIdentifier";
+
 @interface XXTEMoreTitleDescriptionCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;

@@ -161,12 +161,15 @@ typedef enum : NSUInteger {
 
 - (void)setupWithPath:(NSString *)path {
     {
-        NSString *defaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTExplorerDefaults" ofType:@"plist"];
-        NSDictionary *defaults = [[NSDictionary alloc] initWithContentsOfFile:defaultsPath];
-        for (NSString *defaultKey in defaults) {
+        NSString *userDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEUserDefaults" ofType:@"plist"];
+        NSDictionary *userDefaults = [[NSDictionary alloc] initWithContentsOfFile:userDefaultsPath];
+        NSArray *explorerUserDefaults = userDefaults[@"EXPLORER_USER_DEFAULTS"];
+        for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
+            NSString *defaultKey = explorerUserDefault[@"key"];
             if (![self.class.explorerDefaults objectForKey:defaultKey])
             {
-                [self.class.explorerDefaults setObject:defaults[defaultKey] forKey:defaultKey];
+                id defaultValue = explorerUserDefault[@"default"];
+                [self.class.explorerDefaults setObject:defaultValue forKey:defaultKey];
             }
         }
     }

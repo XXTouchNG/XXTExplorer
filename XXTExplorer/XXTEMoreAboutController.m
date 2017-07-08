@@ -30,7 +30,6 @@ typedef enum : NSUInteger {
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
 }
 
 - (instancetype)init {
@@ -97,8 +96,6 @@ typedef enum : NSUInteger {
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell7.titleLabel.text = NSLocalizedString(@"QQ Group (40898074)", nil);
     
-    staticSectionRowNum = @[ @1, @3, @3 ];
-    
     staticCells = @[
                     @[ cell1 ],
                     //
@@ -119,7 +116,7 @@ typedef enum : NSUInteger {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[section] integerValue];
+        return staticCells[(NSUInteger) section].count;
     }
     return 0;
 }

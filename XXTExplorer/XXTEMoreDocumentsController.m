@@ -20,7 +20,6 @@
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
 }
 
 - (instancetype)init {
@@ -85,8 +84,6 @@
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell6.titleLabel.text = NSLocalizedString(@"DynamicXUI (XUI) Reference", nil);
     
-    staticSectionRowNum = @[ @6 ];
-    
     staticCells = @[
                     @[ cell1, cell2, cell3, cell4, cell5, cell6 ]
                     ];
@@ -103,7 +100,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[section] integerValue];
+        return staticCells[(NSUInteger) section].count;
     }
     return 0;
 }

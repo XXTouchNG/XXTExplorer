@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const XXTEMoreLinkNoIconCellReuseIdentifier = @"XXTEMoreLinkNoIconCellReuseIdentifier";
+
 @interface XXTEMoreLinkNoIconCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 

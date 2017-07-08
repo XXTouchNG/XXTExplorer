@@ -33,7 +33,6 @@ typedef enum : NSUInteger {
 @implementation XXTEMoreApplicationDetailController {
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
-    NSArray <NSNumber *> *staticSectionRowNum;
 }
 
 - (instancetype)init {
@@ -109,8 +108,6 @@ typedef enum : NSUInteger {
     cell7.actionNameLabel.textColor = XXTE_COLOR_DANGER;
     cell7.actionNameLabel.text = NSLocalizedString(@"Clean Application Data", nil);
     
-    staticSectionRowNum = @[ @2, @1, @1, @3 ];
-    
     staticCells = @[
                     @[ cell1, cell2 ],
                     //
@@ -133,7 +130,7 @@ typedef enum : NSUInteger {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[section] integerValue];
+        return staticCells[(NSUInteger) section].count;
     }
     return 0;
 }

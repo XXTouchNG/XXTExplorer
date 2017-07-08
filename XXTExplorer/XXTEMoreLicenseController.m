@@ -36,7 +36,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
 }
 
 - (instancetype)init {
@@ -131,8 +130,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     cell9.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
     cell9.valueLabel.text = @"";
     
-    staticSectionRowNum = @[ @1, @1, @7 ];
-    
     staticCells = @[
                     @[ cell1 ],
                     //
@@ -211,7 +208,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[section] integerValue];
+        return staticCells[(NSUInteger) section].count;
     }
     return 0;
 }

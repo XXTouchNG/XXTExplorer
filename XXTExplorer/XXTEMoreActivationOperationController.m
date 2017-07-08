@@ -22,7 +22,6 @@
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
     NSArray <NSString *> *operationKeyNames;
 }
 
@@ -124,8 +123,6 @@
     cell3.titleLabel.text = NSLocalizedString(@"No Action", nil);
     cell3.descriptionLabel.text = NSLocalizedString(@"Nothing will be performed.", nil);
 
-    staticSectionRowNum = @[@3];
-
     staticCells = @[
             @[cell1, cell2, cell3],
     ];
@@ -142,7 +139,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[(NSUInteger) section] integerValue];
+        return staticCells[(NSUInteger) section].count;
     }
     return 0;
 }

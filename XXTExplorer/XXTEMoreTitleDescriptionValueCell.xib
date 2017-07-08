@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="0.0" reuseIdentifier="XXTEMoreTitleDescriptionValueCellReuseIdentifier" rowHeight="66" id="KGk-i7-Jjw" customClass="XXTEMoreTitleDescriptionValueCell">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="381" height="65.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Up Press" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eca-DR-IFZ">
+                        <rect key="frame" x="64" y="12" width="68" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Q30-3n-S2U"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Off" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fX3-ix-oP7">
+                        <rect key="frame" x="16" y="16.5" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="0H0-bI-gvL"/>
+                            <constraint firstAttribute="height" constant="32" id="mrz-NY-KcK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press &quot;Volume Up&quot; Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9t-FB-HBz">
+                        <rect key="frame" x="64" y="37.5" width="309" height="16"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                        <color key="textColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="I9t-FB-HBz" secondAttribute="trailing" constant="8" id="RoJ-cs-cRn"/>
+                    <constraint firstItem="fX3-ix-oP7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="W0H-Y4-8ZN"/>
+                    <constraint firstItem="I9t-FB-HBz" firstAttribute="leading" secondItem="fX3-ix-oP7" secondAttribute="trailing" constant="16" id="dLp-QW-8mO"/>
+                    <constraint firstItem="fX3-ix-oP7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="oPL-Xw-Ciw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="I9t-FB-HBz" secondAttribute="bottom" constant="4" id="uxU-Qt-hBO"/>
+                    <constraint firstItem="Eca-DR-IFZ" firstAttribute="leading" secondItem="fX3-ix-oP7" secondAttribute="trailing" constant="16" id="xun-H5-O72"/>
+                    <constraint firstItem="Eca-DR-IFZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="zlH-IK-Hec"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="I9t-FB-HBz" id="Hv8-23-csf"/>
+                <outlet property="titleLabel" destination="Eca-DR-IFZ" id="YHQ-mV-lQS"/>
+                <outlet property="valueLabel" destination="fX3-ix-oP7" id="WVx-2O-0gZ"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

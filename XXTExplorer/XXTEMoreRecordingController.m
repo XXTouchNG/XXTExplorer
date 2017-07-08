@@ -24,7 +24,6 @@
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
 }
 
 - (instancetype)init {
@@ -129,8 +128,6 @@
     cell4.titleLabel.text = NSLocalizedString(@"Off", nil);
     cell4.descriptionLabel.text = NSLocalizedString(@"Do not record \"Volume -\" action.", nil);
     
-    staticSectionRowNum = @[@2, @2];
-    
     staticCells = @[
                     @[cell1, cell2],
                     @[cell3, cell4],
@@ -148,7 +145,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[(NSUInteger) section] integerValue];
+        return staticCells[(NSUInteger) section].count;
     }
     return 0;
 }

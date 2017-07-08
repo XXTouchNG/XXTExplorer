@@ -14,7 +14,7 @@
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 
-@interface XXTEMoreActivationController ()
+@interface XXTEMoreActivationController () <XXTEMoreActivationOperationControllerDelegate>
 
 @end
 
@@ -23,7 +23,6 @@
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
     NSArray <NSString *> *operationKeyNames;
     NSMutableDictionary <NSString *, NSNumber *> *operationStatus;
 }
@@ -131,24 +130,22 @@
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell1.titleLabel.text = NSLocalizedString(@"Press \"Volume +\"", nil);
-    cell1.descriptionLabel.text = @"";
+    cell1.descriptionLabel.text = NSLocalizedString(@"No action", nil);
 
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell2.titleLabel.text = NSLocalizedString(@"Press \"Volume -\"", nil);
-    cell2.descriptionLabel.text = @"";
+    cell2.descriptionLabel.text = NSLocalizedString(@"No action", nil);
 
     XXTEMoreTitleDescriptionCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell3.titleLabel.text = NSLocalizedString(@"Press & Hold \"Volume +\"", nil);
-    cell3.descriptionLabel.text = @"";
+    cell3.descriptionLabel.text = NSLocalizedString(@"No action", nil);
 
     XXTEMoreTitleDescriptionCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell4.titleLabel.text = NSLocalizedString(@"Press & Hold \"Volume -\"", nil);
-    cell4.descriptionLabel.text = @"";
-
-    staticSectionRowNum = @[@4];
+    cell4.descriptionLabel.text = NSLocalizedString(@"No action", nil);
 
     staticCells = @[
             @[cell1, cell2, cell3, cell4],
@@ -166,7 +163,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return [staticSectionRowNum[section] integerValue];
+        return staticCells[section].count;
     }
     return 0;
 }
