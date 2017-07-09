@@ -87,7 +87,7 @@
             // MaskType cannot be symlink
         } else {
             if (errno == ENOENT || errno == EMLINK) {
-                entryMaskType = XXTExplorerViewEntryAttributeTypeBrokenSymlink;
+                entryMaskType = XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink;
             }
         }
     }
@@ -104,9 +104,9 @@
         {
             entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeSymlink];
         }
-        else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink])
+        else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
         {
-            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeBrokenSymlink];
+            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink];
         }
         else
         {
@@ -171,7 +171,7 @@
             newEntry[XXTExplorerViewEntryAttributePermission] =
             @[XXTExplorerViewEntryAttributePermissionExecuteable,
               ];
-            newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeTypeBundle;
+            newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
         }
     }

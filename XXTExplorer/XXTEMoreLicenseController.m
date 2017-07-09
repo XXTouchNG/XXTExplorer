@@ -229,13 +229,15 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
-            blockUserInteractions(self.navigationController.view, YES);
-            [PMKPromise promiseWithValue:@YES].then(^() {
-                [[UIPasteboard generalPasteboard] setString:detailText];
-            }).finally(^() {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                blockUserInteractions(self.navigationController.view, NO);
-            });
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self.navigationController.view, YES);
+                [PMKPromise promiseWithValue:@YES].then(^() {
+                    [[UIPasteboard generalPasteboard] setString:detailText];
+                }).finally(^() {
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockUserInteractions(self.navigationController.view, NO);
+                });
+            }
         }
     }
 }

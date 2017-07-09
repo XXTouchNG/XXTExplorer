@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,14 +25,24 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HEf-By-uFg">
                                 <rect key="frame" x="8" y="8" width="34" height="34"/>
                             </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ndE-c1-3JZ">
+                                <rect key="frame" x="25" y="25" width="17" height="17"/>
+                                <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="hNw-c1-5Xd"/>
+                                    <constraint firstAttribute="width" constant="17" id="ma1-ZF-1rk"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="HEf-By-uFg" firstAttribute="leading" secondItem="SNn-dR-AFH" secondAttribute="leading" constant="8" id="7uR-OQ-OmE"/>
                             <constraint firstAttribute="width" constant="50" id="OMG-Zv-apS"/>
+                            <constraint firstItem="ndE-c1-3JZ" firstAttribute="bottom" secondItem="SNn-dR-AFH" secondAttribute="bottomMargin" id="PBR-2z-kwu"/>
                             <constraint firstItem="HEf-By-uFg" firstAttribute="top" secondItem="SNn-dR-AFH" secondAttribute="top" constant="8" id="PFg-GD-b52"/>
                             <constraint firstAttribute="bottom" secondItem="HEf-By-uFg" secondAttribute="bottom" constant="8" id="SEA-jb-aqs"/>
                             <constraint firstAttribute="trailing" secondItem="HEf-By-uFg" secondAttribute="trailing" constant="8" id="gJP-YF-qaZ"/>
+                            <constraint firstItem="ndE-c1-3JZ" firstAttribute="trailing" secondItem="SNn-dR-AFH" secondAttribute="trailingMargin" id="p9H-dW-lCe"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRG-I1-Xlm">
@@ -81,6 +92,7 @@
                 <outlet property="entryIconImageView" destination="HEf-By-uFg" id="dWc-7A-d35"/>
                 <outlet property="entrySubtitleLabel" destination="1AQ-6d-5OW" id="68W-fE-CLM"/>
                 <outlet property="entryTitleLabel" destination="iCR-c0-zcG" id="o7s-iJ-IsI"/>
+                <outlet property="flagIconImageView" destination="ndE-c1-3JZ" id="ncg-mA-7ja"/>
             </connections>
         </tableViewCell>
     </objects>

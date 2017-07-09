@@ -43,4 +43,20 @@
     // Configure the view for the selected state
 }
 
+- (void)setFlagType:(XXTExplorerViewCellFlagType)flagType {
+    _flagType = flagType;
+    if (flagType == XXTExplorerViewCellFlagTypeSelected) {
+        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeForbidden) {
+        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {
+        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerBrokenFlag"];
+    }
+    if (flagType == XXTExplorerViewCellFlagTypeNone) {
+        self.flagIconImageView.hidden = YES;
+    } else {
+        self.flagIconImageView.hidden = NO;
+    }
+}
+
 @end

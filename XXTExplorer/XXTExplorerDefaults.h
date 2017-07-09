@@ -24,6 +24,7 @@ static NSString * const XXTExplorerViewSectionHomeSeriesKey = @"XXTExplorerViewS
 static NSString * const XXTExplorerViewEntryListSortFieldKey = @"XXTExplorerViewEntryListSortFieldKey";
 static NSString * const XXTExplorerViewEntryListSortOrderKey = @"XXTExplorerViewEntryListSortOrderKey";
 static NSString * const XXTExplorerViewEntryListHideDotItemKey = @"XXTExplorerViewEntryListHideDotItemKey";
+static NSString * const XXTExplorerViewSelectedScriptPathKey = @"XXTExplorerViewSelectedScriptPathKey";
 
 // XXTExplorerViewEntryListSortOrderKey
 typedef enum : NSUInteger {
@@ -57,9 +58,10 @@ static NSString * const XXTExplorerViewEntryAttributePermission = @"XXTExplorerV
 static NSString * const XXTExplorerViewEntryAttributeTypeUnsupported = @"XXTExplorerViewEntryAttributeTypeUnsupported";
 static NSString * const XXTExplorerViewEntryAttributeTypeRegular = @"XXTExplorerViewEntryAttributeTypeRegular";
 static NSString * const XXTExplorerViewEntryAttributeTypeDirectory = @"XXTExplorerViewEntryAttributeTypeDirectory";
-static NSString * const XXTExplorerViewEntryAttributeTypeBundle = @"XXTExplorerViewEntryAttributeTypeBundle"; // mask only
 static NSString * const XXTExplorerViewEntryAttributeTypeSymlink = @"XXTExplorerViewEntryAttributeTypeSymlink";
-static NSString * const XXTExplorerViewEntryAttributeTypeBrokenSymlink = @"XXTExplorerViewEntryAttributeTypeBrokenSymlink";
+
+static NSString * const XXTExplorerViewEntryAttributeMaskTypeBundle = @"XXTExplorerViewEntryAttributeMaskTypeBundle";
+static NSString * const XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink = @"XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink";
 
 // XXTExplorerViewEntryAttributeExtension
 static NSString * const XXTExplorerViewEntryAttributeInternalExtensionExecutable = @"XXTExplorerViewEntryAttributeInternalExtensionExecutable";

@@ -27,7 +27,9 @@
 //#import "XXTExplorerCreateItemNavigationController.h"
 #import "XXTEScanViewController.h"
 #import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTENetworkDefines.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -158,6 +160,10 @@ typedef enum : NSUInteger {
         [self setupWithPath:nil];
     }
     return self;
+}
+
++ (NSString *)selectedScriptPath {
+    return XXTEDefaultsObject(XXTExplorerViewSelectedScriptPathKey);
 }
 
 - (instancetype)initWithEntryPath:(NSString *)path {
@@ -493,10 +499,8 @@ typedef enum : NSUInteger {
                 NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
                 NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
                 NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
-                if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBundle]) {
-                    
-                }
-                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+                NSString *internalExt = entryAttributes[XXTExplorerViewEntryAttributeInternalExtension];
+                if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
                 { // Directory or Symbolic Link Directory
                     // We'd better try to access it before we enter it.
                     NSError *accessError = nil;
@@ -509,16 +513,38 @@ typedef enum : NSUInteger {
                         [self.navigationController pushViewController:explorerViewController animated:YES];
                     }
                 }
-                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
+                else if (
+                        [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
+                        [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
                 {
-                    NSString *internalExt = entryAttributes[XXTExplorerViewEntryAttributeInternalExtension];
                     if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive])
                     {
                         [self tableView:tableView archiveEntryTappedForRowWithIndexPath:indexPath];
                     }
                     else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable])
                     {
-                        // TODO: Server Select
+                        blockUserInteractions(self.navigationController.view, YES);
+                        [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath}]
+                                .then(convertJsonString)
+                                .then(^(NSDictionary *jsonDictionary) {
+                                    if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+                                        XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
+                                    } else {
+                                        @throw jsonDictionary[@"message"];
+                                    }
+                                })
+                                .catch(^(NSError *serverError) {
+                                    if (serverError.code == -1004) {
+                                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                                    } else {
+                                        showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                                    }
+                                })
+                                .finally(^() {
+                                    blockUserInteractions(self.navigationController.view, NO);
+                                    [self loadEntryListData];
+                                    [self.tableView reloadData];
+                                });
                     }
                     else
                     {
@@ -533,7 +559,7 @@ typedef enum : NSUInteger {
 //                        }
                     }
                 }
-                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink])
+                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
                 {
                     [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]];
                 }
@@ -669,14 +695,33 @@ typedef enum : NSUInteger {
             entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             entryCell.entryIconImageView.image = entryDetail[XXTExplorerViewEntryAttributeIconImage];
             entryCell.entryTitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeName];
-            if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink]) {
-                if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink]) {
-                    entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
-                } else {
-                    entryCell.entryTitleLabel.textColor = XXTE_COLOR;
-                }
-            } else {
+            if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
+                [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+                // broken symlink
+                entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
+                entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
+            }
+            else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
+                     ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+                // symlink
+                entryCell.entryTitleLabel.textColor = XXTE_COLOR;
+                entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
+            }
+            else {
                 entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+                entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
+            }
+            if (![entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+                [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+                // path itself
+                entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
+                entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
+            }
+            else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+                     [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+                // in path
+                entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
+                entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
             }
             entryCell.entrySubtitleLabel.text = [self.class.explorerDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeCreationDate]];
             UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
@@ -717,13 +762,15 @@ typedef enum : NSUInteger {
 - (void)addressLabelTapped:(UITapGestureRecognizer *)recognizer {
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
         NSString *detailText = ((XXTExplorerHeaderView *)recognizer.view).headerLabel.text;
-        blockUserInteractions(self.navigationController.view, YES);
-        [PMKPromise promiseWithValue:@YES].then(^() {
-            [[UIPasteboard generalPasteboard] setString:detailText];
-        }).finally(^() {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
-            blockUserInteractions(self.navigationController.view, NO);
-        });
+        if (detailText && detailText.length > 0) {
+            blockUserInteractions(self.navigationController.view, YES);
+            [PMKPromise promiseWithValue:@YES].then(^() {
+                [[UIPasteboard generalPasteboard] setString:detailText];
+            }).finally(^() {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
+                blockUserInteractions(self.navigationController.view, NO);
+            });
+        }
     }
 }
 
@@ -953,7 +1000,7 @@ typedef enum : NSUInteger {
             [swipeButtons addObject:swipeLaunchButton];
         }
         if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
-            && [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
+            && [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
         {
             XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
@@ -1119,35 +1166,40 @@ typedef enum : NSUInteger {
                 [recursiveSubnames removeLastObject];
                 NSString *targetPath = [destinationPath stringByAppendingPathComponent:enumName];
                 BOOL isDirectory = NO;
-                BOOL exists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
-                if (!exists) {
+                BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (!fileExists) {
                     // TODO: pause by non-exists error
                     continue;
                 }
-                if (isDirectory) {
-                    NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                    if (groupSubnames.count != 0) {
-                        NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
-                        NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
-                        for (NSString *groupSubname in groupSubnames) {
-                            [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubname]];
-                            [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
-                        }
-                        BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
-                        if (!mkdirResult) {
-                            // TODO: pause by mkdir error
-                        }
-                        [recursiveSubpaths addObject:enumPath];
-                        [recursiveSubnames addObject:enumName];
-                        [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
-                        [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
-                    } else {
-                        BOOL rmdirResult = (rmdir([enumPath fileSystemRepresentation]) == 0);
-                        if (!rmdirResult) {
-                            // TODO: pause by rmdir error
+                if (fileExists) {
+                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                        if (isDirectory) {
+                            NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                            if (groupSubnames.count != 0) {
+                                NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                                NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                                for (NSString *groupSubname in groupSubnames) {
+                                    [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubname]];
+                                    [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                                }
+                                BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
+                                if (!mkdirResult) {
+                                    // TODO: pause by mkdir error
+                                }
+                                [recursiveSubpaths addObject:enumPath];
+                                [recursiveSubnames addObject:enumName];
+                                [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                                [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
+                            } else {
+                                BOOL rmdirResult = (rmdir([enumPath fileSystemRepresentation]) == 0);
+                                if (!rmdirResult) {
+                                    // TODO: pause by rmdir error
+                                }
+                            }
+                            continue;
                         }
                     }
-                    continue;
                 }
                 BOOL moveResult = [fileManager moveItemAtPath:enumPath toPath:targetPath error:&error];
                 if (!moveResult) {
@@ -1242,26 +1294,31 @@ typedef enum : NSUInteger {
                 [recursiveSubnames removeLastObject];
                 NSString *targetPath = [destinationPath stringByAppendingPathComponent:enumName];
                 BOOL isDirectory = NO;
-                BOOL exists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
-                if (!exists) {
+                BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (!fileExists) {
                     // TODO: pause by non-exists error
                     continue;
                 }
-                if (isDirectory) {
-                    NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                    NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
-                    NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
-                    for (NSString *groupSubname in groupSubnames) {
-                        [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubname]];
-                        [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                if (fileExists) {
+                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                        if (isDirectory) {
+                            NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                            NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                            NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                            for (NSString *groupSubname in groupSubnames) {
+                                [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubname]];
+                                [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                            }
+                            BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
+                            if (!mkdirResult) {
+                                // TODO: pause by mkdir error
+                            }
+                            [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                            [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
+                            continue;
+                        }
                     }
-                    BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
-                    if (!mkdirResult) {
-                        // TODO: pause by mkdir error
-                    }
-                    [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
-                    [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
-                    continue;
                 }
                 BOOL copyResult = [fileManager copyItemAtPath:enumPath toPath:targetPath error:&error];
                 if (!copyResult) {
@@ -1411,17 +1468,22 @@ typedef enum : NSUInteger {
                 });
                 [recursiveSubpaths removeLastObject];
                 BOOL isDirectory = NO;
-                [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
-                if (isDirectory) {
-                    NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                    if (groupSubpaths.count != 0) {
-                        NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
-                        for (NSString *groupSubpath in groupSubpaths) {
-                            [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
+                BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (fileExists) {
+                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                        if (isDirectory) {
+                            NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                            if (groupSubpaths.count != 0) {
+                                NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
+                                for (NSString *groupSubpath in groupSubpaths) {
+                                    [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
+                                }
+                                [recursiveSubpaths addObject:enumPath];
+                                [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                                continue;
+                            }
                         }
-                        [recursiveSubpaths addObject:enumPath];
-                        [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
-                        continue;
                     }
                 }
                 [fileManager removeItemAtPath:enumPath error:&error];
@@ -1488,18 +1550,24 @@ typedef enum : NSUInteger {
                     callbackBlock(enumPath);
                 });
                 [recursiveSubpaths removeLastObject];
+                
                 BOOL isDirectory = NO;
-                [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
-                if (isDirectory) {
-                    NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                    if (groupSubpaths.count != 0) {
-                        NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
-                        for (NSString *groupSubpath in groupSubpaths) {
-                            [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
+                BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                if (fileExists) {
+                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                        if (isDirectory) {
+                            NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                            if (groupSubpaths.count != 0) {
+                                NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubpaths.count];
+                                for (NSString *groupSubpath in groupSubpaths) {
+                                    [groupSubpathsAppended addObject:[enumPath stringByAppendingPathComponent:groupSubpath]];
+                                }
+                                [recursiveSubpaths addObject:enumPath];
+                                [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
+                                continue;
+                            }
                         }
-                        [recursiveSubpaths addObject:enumPath];
-                        [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
-                        continue;
                     }
                 }
                 [fileManager removeItemAtPath:enumPath error:&error];
@@ -1597,18 +1665,23 @@ typedef enum : NSUInteger {
                     });
                     [recursiveSubnames removeLastObject];
                     BOOL isDirectory = NO;
-                    [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
-                    if (isDirectory) {
-                        NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
-                        if (groupSubnames.count == 0) {
-                            enumName = [enumName stringByAppendingString:@"/"];
-                        } else {
-                            NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
-                            for (NSString *groupSubname in groupSubnames) {
-                                [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                    BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                    if (fileExists) {
+                        NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                        if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                            if (isDirectory) {
+                                NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                                if (groupSubnames.count == 0) {
+                                    enumName = [enumName stringByAppendingString:@"/"];
+                                } else {
+                                    NSMutableArray <NSString *> *groupSubnamesAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
+                                    for (NSString *groupSubname in groupSubnames) {
+                                        [groupSubnamesAppended addObject:[enumName stringByAppendingPathComponent:groupSubname]];
+                                    }
+                                    [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
+                                    continue;
+                                }
                             }
-                            [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
-                            continue;
                         }
                     }
                     zip_entry_open(zip, [enumName fileSystemRepresentation]);

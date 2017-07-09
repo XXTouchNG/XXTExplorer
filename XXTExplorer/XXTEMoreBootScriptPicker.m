@@ -64,7 +64,7 @@ typedef enum : NSUInteger {
                 }
             }
             else if (
-                     [entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeBundle] ||
+                     [entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
                      [entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]
                      )
             { // Bundle or Regular
@@ -85,7 +85,7 @@ typedef enum : NSUInteger {
                     [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]];
                 }
             }
-            else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeBrokenSymlink])
+            else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
             {
                 [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]];
             }

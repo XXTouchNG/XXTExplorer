@@ -151,22 +151,26 @@ typedef enum : NSUInteger {
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexDetail) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
-            blockUserInteractions(self.navigationController.view, YES);
-            [PMKPromise promiseWithValue:@YES].then(^() {
-                [[UIPasteboard generalPasteboard] setString:detailText];
-            }).finally(^() {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                blockUserInteractions(self.navigationController.view, NO);
-            });
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self.navigationController.view, YES);
+                [PMKPromise promiseWithValue:@YES].then(^() {
+                    [[UIPasteboard generalPasteboard] setString:detailText];
+                }).finally(^() {
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockUserInteractions(self.navigationController.view, NO);
+                });
+            }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
             NSString *detailText = ((XXTEMoreRemoteAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
-            blockUserInteractions(self.navigationController.view, YES);
-            [PMKPromise promiseWithValue:@YES].then(^() {
-                [[UIPasteboard generalPasteboard] setString:detailText];
-            }).finally(^() {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                blockUserInteractions(self.navigationController.view, NO);
-            });
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self.navigationController.view, YES);
+                [PMKPromise promiseWithValue:@YES].then(^() {
+                    [[UIPasteboard generalPasteboard] setString:detailText];
+                }).finally(^() {
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockUserInteractions(self.navigationController.view, NO);
+                });
+            }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexAction) {
             if (indexPath.row == 0) {
                 [self.applicationWorkspace openApplicationWithBundleID:self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];

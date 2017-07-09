@@ -320,7 +320,7 @@
         resolve(@(status));
     }];
     id (^ displayPermissionBlock)(NSNumber *) = ^(NSNumber *status) {
-        AVAuthorizationStatus permissionStatus = [status integerValue];
+        AVAuthorizationStatus permissionStatus = (AVAuthorizationStatus) [status integerValue];
         if (permissionStatus == AVAuthorizationStatusAuthorized) {
             [self loadLayerFrame];
         } else if (permissionStatus == AVAuthorizationStatusDenied) {
@@ -362,7 +362,7 @@
     NSString *scannedResult = nil;
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{ CIDetectorAccuracy : CIDetectorAccuracyHigh }];
     NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
-    for (int index = 0; index < features.count; index ++) {
+    for (NSUInteger index = 0; index < features.count; index ++) {
         CIQRCodeFeature *feature = features[index];
         scannedResult = feature.messageString;
         if (scannedResult) {

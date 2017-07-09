@@ -31,6 +31,7 @@
 + (NSDateFormatter *)explorerDateFormatter;
 + (NSUserDefaults *)explorerDefaults;
 + (NSDictionary *)explorerBuiltInDefaults;
++ (NSString *)selectedScriptPath;
 
 - (instancetype)initWithEntryPath:(NSString *)path;
 

@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "XXTESwipeTableCell.h"
 
+typedef enum : NSUInteger {
+    XXTExplorerViewCellFlagTypeNone = 0,
+    XXTExplorerViewCellFlagTypeSelected,
+    XXTExplorerViewCellFlagTypeForbidden,
+    XXTExplorerViewCellFlagTypeBroken,
+} XXTExplorerViewCellFlagType;
+
 static NSString * const XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";
 static CGFloat XXTExplorerViewCellHeight = 66.f;
 
@@ -16,5 +23,8 @@ static CGFloat XXTExplorerViewCellHeight = 66.f;
 @property (weak, nonatomic) IBOutlet UIImageView *entryIconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *entryTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *entrySubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *flagIconImageView;
+
+@property (nonatomic, assign) XXTExplorerViewCellFlagType flagType;
 
 @end
