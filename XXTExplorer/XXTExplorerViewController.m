@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import "XXTExplorerEntryParser.h"
-//#import "XXTExplorerEntryService.h"
+#import "XXTExplorerEntryService.h"
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerHeaderView.h"
 #import "XXTExplorerFooterView.h"
@@ -23,8 +23,8 @@
 #import <LGAlertView/LGAlertView.h>
 #import "XXTEDispatchDefines.h"
 #import "zip.h"
-//#import "XXTExplorerCreateItemViewController.h"
-//#import "XXTExplorerCreateItemNavigationController.h"
+#import "XXTExplorerCreateItemViewController.h"
+#import "XXTExplorerCreateItemNavigationController.h"
 #import "XXTEScanViewController.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
@@ -128,13 +128,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     return explorerEntryParser;
 }
 
-//+ (XXTExplorerEntryService *)explorerEntryService {
-//    static XXTExplorerEntryService *explorerEntryService = nil;
-//    if (!explorerEntryService) {
-//        explorerEntryService = [[XXTExplorerEntryService alloc] init];
-//    }
-//    return explorerEntryService;
-//}
++ (XXTExplorerEntryService *)explorerEntryService {
+    static XXTExplorerEntryService *explorerEntryService = nil;
+    if (!explorerEntryService) {
+        explorerEntryService = [[XXTExplorerEntryService alloc] init];
+    }
+    return explorerEntryService;
+}
 
 + (BOOL)isFetchingSelectedScript {
     return _kXXTExplorerFetchingSelectedScript;
@@ -590,15 +590,15 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         }
                         else
                         {
-//                            if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes])
-//                            {
-//    
-//                            }
-//                            else
-//                            {
-//                                // TODO: Assign Open In Methods...
-//                                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be opened because the file extension can't be recognized.", nil), entryName]];
-//                            }
+                            if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes])
+                            {
+    
+                            }
+                            else
+                            {
+                                // TODO: Assign Open In Methods...
+                                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be opened because the file extension can't be recognized.", nil), entryName]];
+                            }
                         }
                     } else {
                         // TODO: not readable
@@ -835,9 +835,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem])
         {
-//            XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
-//            XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
-//            [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
+            XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
+            XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
+            [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort])
         {

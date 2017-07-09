@@ -11,6 +11,7 @@
 @interface XXTExplorerCreateItemViewController ()
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
+@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 
 @end
 
@@ -32,6 +33,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = NSLocalizedString(@"Create Item", nil);
+    
+    self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+}
+
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)closeButtonItem {
+    if (!_closeButtonItem) {
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
+        closeButtonItem.tintColor = [UIColor whiteColor];
+        _closeButtonItem = closeButtonItem;
+    }
+    return _closeButtonItem;
 }
 
 #pragma mark - UITableViewDataSource
@@ -42,6 +57,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 0;
+}
+
+#pragma mark - UIControl Actions
+
+- (void)dismissViewController:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
