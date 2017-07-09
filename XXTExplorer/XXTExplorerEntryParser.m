@@ -173,6 +173,7 @@
               ];
             newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
+            newEntry[XXTExplorerViewEntryAttributeIconImage] = [UIImage imageNamed:@"XXTExplorerViewEntryAttributeMaskTypeBundle"];
         }
     }
     return [[NSDictionary alloc] initWithDictionary:newEntry];
