@@ -10,10 +10,10 @@
 #define XXTENetworkDefines_h
 
 #import "XXTEAppDefines.h"
-#import "UIView+XXTEToast.h"
 #import "NSString+XQueryComponents.h"
 #import "NSString+SHA1.h"
 #import "XXTECloudApiSdk.h"
+#import "XXTEUserInterfaceDefines.h"
 
 static id (^convertJsonString)(id) =
 ^id (id obj) {
@@ -76,20 +76,6 @@ static inline NSString *uAppDaemonCommandUrl(NSString *command) {
 
 static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
     return ([uAppDefine(@"AUTH_API") stringByAppendingString:command]);
-}
-
-static inline void blockUserInteractions(UIView *viewToBlock, BOOL shouldBlock) {
-    if (shouldBlock) {
-        viewToBlock.userInteractionEnabled = NO;
-        [viewToBlock makeToastActivity:XXTEToastPositionCenter];
-    } else {
-        [viewToBlock hideToastActivity];
-        viewToBlock.userInteractionEnabled = YES;
-    }
-}
-
-static inline void showUserMessage(UIView *viewToShow, NSString *message) {
-    [viewToShow makeToast:message];
 }
 
 #endif /* XXTENetworkDefines_h */

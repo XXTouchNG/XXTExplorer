@@ -26,6 +26,8 @@
 //#import "XXTExplorerCreateItemViewController.h"
 //#import "XXTExplorerCreateItemNavigationController.h"
 #import "XXTEScanViewController.h"
+#import <PromiseKit/PromiseKit.h>
+#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -624,6 +626,10 @@ typedef enum : NSUInteger {
             } else {
                 [entryHeaderView.headerLabel setText:self.entryPath];
             }
+            entryHeaderView.userInteractionEnabled = YES;
+            UITapGestureRecognizer *addressTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressLabelTapped:)];
+            addressTapGestureRecognizer.delegate = self;
+            [entryHeaderView addGestureRecognizer:addressTapGestureRecognizer];
             return entryHeaderView;
         } // Notice: assume that there will not be any headers for Home section
     }
@@ -705,6 +711,19 @@ typedef enum : NSUInteger {
             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
         }
+    }
+}
+
+- (void)addressLabelTapped:(UITapGestureRecognizer *)recognizer {
+    if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
+        NSString *detailText = ((XXTExplorerHeaderView *)recognizer.view).headerLabel.text;
+        blockUserInteractions(self.navigationController.view, YES);
+        [PMKPromise promiseWithValue:@YES].then(^() {
+            [[UIPasteboard generalPasteboard] setString:detailText];
+        }).finally(^() {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
+            blockUserInteractions(self.navigationController.view, NO);
+        });
     }
 }
 

@@ -119,6 +119,7 @@
 		0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionValueCell.xib; sourceTree = "<group>"; };
 		0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryParser.h; sourceTree = "<group>"; };
 		0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryParser.m; sourceTree = "<group>"; };
+		0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEUserInterfaceDefines.h; sourceTree = "<group>"; };
 		0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XQueryComponents.h"; sourceTree = "<group>"; };
 		0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XQueryComponents.m"; sourceTree = "<group>"; };
 		0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
@@ -573,10 +574,11 @@
 		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
 			isa = PBXGroup;
 			children = (
+				0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */,
 				0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */,
 				D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */,
 				0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */,
-				0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */,
+				0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */,
 			);
 			name = Defines;
 			sourceTree = "<group>";

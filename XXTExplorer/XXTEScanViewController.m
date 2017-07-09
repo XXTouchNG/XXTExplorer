@@ -21,6 +21,7 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *scanLayer;
 
 @property (nonatomic, strong) UIBarButtonItem *dismissItem;
+@property (nonatomic, strong) UIBarButtonItem *albumItem;
 @property (nonatomic, strong) UIImage *maskImage;
 @property (nonatomic, strong) UIImageView *maskView;
 @property (nonatomic, assign) CGRect cropRect;
@@ -70,6 +71,7 @@
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
     self.navigationItem.leftBarButtonItem = self.dismissItem;
+    self.navigationItem.rightBarButtonItem = self.albumItem;
     
     [self fetchVideoPermission];
 }
@@ -185,6 +187,15 @@
     return _dismissItem;
 }
 
+- (UIBarButtonItem *)albumItem {
+    if (!_albumItem) {
+        UIBarButtonItem *albumItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Album", nil) style:UIBarButtonItemStylePlain target:self action:@selector(albumItemTapped:)];
+        albumItem.tintColor = [UIColor whiteColor];
+        _albumItem = albumItem;
+    }
+    return _albumItem;
+}
+
 - (UIImage *)maskImage {
     if (!_maskImage) {
         
@@ -289,6 +300,10 @@
         [self.scanSession stopRunning];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)albumItemTapped:(UIBarButtonItem *)sender {
+    
 }
 
 #pragma mark - Permission Request
