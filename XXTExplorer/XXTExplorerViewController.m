@@ -52,6 +52,7 @@ typedef enum : NSUInteger {
 
 @implementation XXTExplorerViewController {
     BOOL _entryLoaded;
+    BOOL isFetchingSelectedScript;
 }
 
 + (UIPasteboard *)explorerPasteboard {
@@ -272,8 +273,9 @@ typedef enum : NSUInteger {
     [self updateToolbarButton:self.toolbar];
     [self updateToolbarStatus:self.toolbar];
     if (_entryLoaded) {
-        [self loadEntryListData];
-        [self.tableView reloadData];
+//        [self loadEntryListData];
+//        [self.tableView reloadData];
+        [self refreshEntryListView:nil];
     }
 }
 
@@ -297,9 +299,11 @@ typedef enum : NSUInteger {
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] || [eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+    } else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+        [self refreshEntryListView:nil];
     }
 }
 
@@ -439,10 +443,39 @@ typedef enum : NSUInteger {
 }
 
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
-    [self loadEntryListData];
-    [self.tableView reloadData];
-    if ([refreshControl isRefreshing]) {
-        [refreshControl endRefreshing];
+    if (isFetchingSelectedScript == NO) {
+        isFetchingSelectedScript = YES;
+        [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{}]
+        .then(convertJsonString)
+        .then(^(NSDictionary *jsonDictionary) {
+            if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+                NSString *selectedScriptName = jsonDictionary[@"data"][@"filename"];
+                if (selectedScriptName) {
+                    NSString *selectedScriptPath = nil;
+                    if ([selectedScriptName isAbsolutePath]) {
+                        selectedScriptPath = selectedScriptName;
+                    } else {
+                        selectedScriptPath = [self.class.rootPath stringByAppendingPathComponent:selectedScriptName];
+                    }
+                    XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, selectedScriptPath);
+                }
+            }
+        })
+        .catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            }
+        })
+        .finally(^() {
+            [self loadEntryListData];
+            [self.tableView reloadData];
+            if (refreshControl && [refreshControl isRefreshing]) {
+                [refreshControl endRefreshing];
+            }
+            isFetchingSelectedScript = NO;
+        });
     }
 }
 
@@ -517,46 +550,50 @@ typedef enum : NSUInteger {
                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
                 {
-                    if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive])
-                    {
-                        [self tableView:tableView archiveEntryTappedForRowWithIndexPath:indexPath];
-                    }
-                    else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable])
-                    {
-                        blockUserInteractions(self.navigationController.view, YES);
-                        [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath}]
-                                .then(convertJsonString)
-                                .then(^(NSDictionary *jsonDictionary) {
-                                    if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
-                                        XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
-                                    } else {
-                                        @throw jsonDictionary[@"message"];
-                                    }
-                                })
-                                .catch(^(NSError *serverError) {
-                                    if (serverError.code == -1004) {
-                                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
-                                    } else {
-                                        showUserMessage(self.navigationController.view, [serverError localizedDescription]);
-                                    }
-                                })
-                                .finally(^() {
-                                    blockUserInteractions(self.navigationController.view, NO);
-                                    [self loadEntryListData];
-                                    [self.tableView reloadData];
-                                });
-                    }
-                    else
-                    {
-//                        if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes])
-//                        {
-//
-//                        }
-//                        else
-//                        {
-//                             TODO: Assign Open In Methods...
-//                            [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be opened because the file extension can't be recognized.", nil), entryName]];
-//                        }
+                    if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
+                        if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive])
+                        {
+                            [self tableView:tableView archiveEntryTappedForRowWithIndexPath:indexPath];
+                        }
+                        else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable])
+                        {
+                            blockUserInteractions(self.navigationController.view, YES);
+                            [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath}]
+                            .then(convertJsonString)
+                            .then(^(NSDictionary *jsonDictionary) {
+                                if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+                                    XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
+                                } else {
+                                    @throw jsonDictionary[@"message"];
+                                }
+                            })
+                            .catch(^(NSError *serverError) {
+                                if (serverError.code == -1004) {
+                                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                                } else {
+                                    showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                                }
+                            })
+                            .finally(^() {
+                                blockUserInteractions(self.navigationController.view, NO);
+                                [self loadEntryListData];
+                                [self.tableView reloadData];
+                            });
+                        }
+                        else
+                        {
+//                            if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes])
+//                            {
+//    
+//                            }
+//                            else
+//                            {
+//                                // TODO: Assign Open In Methods...
+//                                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be opened because the file extension can't be recognized.", nil), entryName]];
+//                            }
+                        }
+                    } else {
+                        // TODO: not readable
                     }
                 }
                 else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
@@ -969,7 +1006,7 @@ typedef enum : NSUInteger {
     {
         
     }
-    else if (direction == XXTESwipeDirectionRightToLeft)
+    else if (direction == XXTESwipeDirectionRightToLeft && index == 0)
     {
         LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Delete \"%@\"?\nThis operation cannot be revoked.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
