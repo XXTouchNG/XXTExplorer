@@ -10,6 +10,8 @@
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerDefaults.h"
 
+static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
+
 @interface XXTExplorerEntryParser ()
 @property (nonatomic, strong, readonly) NSFileManager *parserFileManager;
 
@@ -137,6 +139,7 @@
     NSMutableDictionary *newEntry = [entry mutableCopy];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+    BOOL isBundle = NO;
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
     {
         // Executable
@@ -148,22 +151,47 @@
               XXTExplorerViewEntryAttributePermissionEditable,
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
+            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-lua"];
+            if (iconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
+            }
         }
-        else if ([entryBaseExtension isEqualToString:@"luac"] || [entryBaseExtension isEqualToString:@"xxt"])
+        else if ([entryBaseExtension isEqualToString:@"xxt"])
         {
             newEntry[XXTExplorerViewEntryAttributePermission] =
             @[XXTExplorerViewEntryAttributePermissionExecuteable,
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
+            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-xxt"];
+            if (iconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
+            }
         }
         // Archive
         else if ([entryBaseExtension isEqualToString:@"zip"])
         {
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionArchive;
-            newEntry[XXTExplorerViewEntryAttributeIconImage] = [UIImage imageNamed:@"XXTExplorerViewEntryAttributeExtensionZIP"];
+            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-zip"];
+            if (iconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
+            }
+        }
+        else {
+            // Common Icon Images
+            UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
+            if (extensionIconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = extensionIconImage;
+            }
         }
     }
     else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+    {
+        if ([entryBaseExtension isEqualToString:@"xpp"])
+        {
+            isBundle = YES;
+        }
+    }
+    if (isBundle)
     {
         // Bundle
         if ([entryBaseExtension isEqualToString:@"xpp"])
@@ -173,14 +201,35 @@
               ];
             newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeIconImage] = [UIImage imageNamed:@"XXTExplorerViewEntryAttributeMaskTypeBundle"];
+            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-xpp"];
+            if (iconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
+            }
+        }
+        else
+        {
+            UIImage *bundleIconImage = [UIImage imageNamed:@"XXTExplorerViewEntryAttributeMaskTypeBundle"];
+            if (bundleIconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = bundleIconImage;
+            }
         }
     }
     return [[NSDictionary alloc] initWithDictionary:newEntry];
 }
 
 - (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {
-    return entry;
+    NSMutableDictionary *newEntry = [entry mutableCopy];
+    NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
+    {
+        // Regular Preview
+    }
+    else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+    {
+        // Bundle Preview
+    }
+    return [[NSDictionary alloc] initWithDictionary:newEntry];
 }
 
 @end

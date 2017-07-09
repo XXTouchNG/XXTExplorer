@@ -37,6 +37,8 @@ typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexMax
 } XXTExplorerViewSectionIndex;
 
+static BOOL _kXXTExplorerFetchingSelectedScript = NO;
+
 #define XXTEDefaultsBool(key) ([[self.class.explorerDefaults objectForKey:key] boolValue])
 #define XXTEDefaultsEnum(key) ([[self.class.explorerDefaults objectForKey:key] unsignedIntegerValue])
 #define XXTEDefaultsObject(key) ([self.class.explorerDefaults objectForKey:key])
@@ -52,7 +54,6 @@ typedef enum : NSUInteger {
 
 @implementation XXTExplorerViewController {
     BOOL _entryLoaded;
-    BOOL isFetchingSelectedScript;
 }
 
 + (UIPasteboard *)explorerPasteboard {
@@ -134,6 +135,14 @@ typedef enum : NSUInteger {
 //    }
 //    return explorerEntryService;
 //}
+
++ (BOOL)isFetchingSelectedScript {
+    return _kXXTExplorerFetchingSelectedScript;
+}
+
++ (void)setFetchingSelectedScript:(BOOL)fetching {
+    _kXXTExplorerFetchingSelectedScript = fetching;
+}
 
 #pragma mark - Rotation
 
@@ -273,9 +282,8 @@ typedef enum : NSUInteger {
     [self updateToolbarButton:self.toolbar];
     [self updateToolbarStatus:self.toolbar];
     if (_entryLoaded) {
-//        [self loadEntryListData];
-//        [self.tableView reloadData];
-        [self refreshEntryListView:nil];
+        [self loadEntryListData];
+        [self.tableView reloadData];
     }
 }
 
@@ -438,13 +446,13 @@ typedef enum : NSUInteger {
     NSError *entryLoadError = nil;
     [self loadEntryListDataWithError:&entryLoadError];
     if (entryLoadError) {
-        [self.navigationController.view makeToast:[entryLoadError localizedDescription]];
+        showUserMessage(self.navigationController.view, [entryLoadError localizedDescription]);
     }
 }
 
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
-    if (isFetchingSelectedScript == NO) {
-        isFetchingSelectedScript = YES;
+    if ([self.class isFetchingSelectedScript] == NO) {
+        [self.class setFetchingSelectedScript:YES];
         [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{}]
         .then(convertJsonString)
         .then(^(NSDictionary *jsonDictionary) {
@@ -474,7 +482,7 @@ typedef enum : NSUInteger {
             if (refreshControl && [refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }
-            isFetchingSelectedScript = NO;
+            [self.class setFetchingSelectedScript:NO];
         });
     }
 }
@@ -539,7 +547,7 @@ typedef enum : NSUInteger {
                     NSError *accessError = nil;
                     [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                     if (accessError) {
-                        [self.navigationController.view makeToast:[accessError localizedDescription]];
+                        showUserMessage(self.navigationController.view, [accessError localizedDescription]);
                     }
                     else {
                         XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
@@ -598,11 +606,11 @@ typedef enum : NSUInteger {
                 }
                 else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
                 {
-                    [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]];
+                    showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]);
                 }
                 else
                 {
-                    [self.navigationController.view makeToast:NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil)];
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
                 }
             }
         }
@@ -618,7 +626,7 @@ typedef enum : NSUInteger {
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
-                    [self.navigationController.view makeToast:[accessError localizedDescription]];
+                    showUserMessage(self.navigationController.view, [accessError localizedDescription]);
                 }
                 else {
                     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
@@ -1167,7 +1175,7 @@ typedef enum : NSUInteger {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         if (error) {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
             for (NSUInteger i = 0; i < self.entryList.count; i++) {
@@ -1295,7 +1303,7 @@ typedef enum : NSUInteger {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         if (error) {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
             for (NSUInteger i = 0; i < self.entryList.count; i++) {
@@ -1382,10 +1390,6 @@ typedef enum : NSUInteger {
 - (void)alertView:(LGAlertView *)alertView symlinkPasteboardItemsAtPath:(NSString *)path {
     NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];
     NSUInteger storedCount = storedPaths.count;
-//    NSMutableArray <NSString *> *storedNames = [[NSMutableArray alloc] initWithCapacity:storedCount];
-//    for (NSString *storedPath in storedPaths) {
-//        [storedNames addObject:[storedPath lastPathComponent]];
-//    }
     NSString *storedDisplayName = nil;
     if (storedCount == 1) {
         storedDisplayName = [NSString stringWithFormat:@"\"%@\"", [storedPaths[0] lastPathComponent]];
@@ -1414,7 +1418,7 @@ typedef enum : NSUInteger {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         if (error) {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
             for (NSUInteger i = 0; i < self.entryList.count; i++) {
@@ -1443,7 +1447,6 @@ typedef enum : NSUInteger {
                 });
                 NSString *storedName = [storedPath lastPathComponent];
                 NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
-//                BOOL linkResult = [fileManager linkItemAtPath:storedPath toPath:targetPath error:&error];
                 BOOL linkResult = [fileManager createSymbolicLinkAtPath:targetPath withDestinationPath:storedPath error:&error];
                 if (!linkResult) {
                     // TODO: pause by link error
@@ -1489,7 +1492,7 @@ typedef enum : NSUInteger {
             [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
         } else {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -1572,7 +1575,7 @@ typedef enum : NSUInteger {
             [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
         } else {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -1678,7 +1681,7 @@ typedef enum : NSUInteger {
         }
         [self updateToolbarStatus:self.toolbar];
         if (error) {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -1779,7 +1782,7 @@ typedef enum : NSUInteger {
         }
         [self updateToolbarStatus:self.toolbar];
         if (error) {
-            [self.navigationController.view makeToast:[error localizedDescription]];
+            showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -1803,7 +1806,7 @@ typedef enum : NSUInteger {
                 int status = zip_extract(extractFrom, extractTo, extract_callback, &arg);
                 result = (status == 0);
                 if (NO == result) {
-                    error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath] }];
+                    error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath] }];
                 }
             }
             dispatch_async_on_main_queue(^{

@@ -11,6 +11,7 @@
 #import "XXTExplorerToolbar.h"
 #import "XXTExplorerDefaults.h"
 #import "UIView+XXTEToast.h"
+#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -54,7 +55,7 @@ typedef enum : NSUInteger {
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                 if (accessError) {
-                    [self.navigationController.view makeToast:[accessError localizedDescription]];
+                    showUserMessage(self.navigationController.view, [accessError localizedDescription]);
                 }
                 else {
                     XXTEMoreBootScriptPicker *explorerViewController = [[XXTEMoreBootScriptPicker alloc] initWithEntryPath:entryPath];
@@ -82,16 +83,16 @@ typedef enum : NSUInteger {
                         [_delegate bootScriptPicker:self didSelectedBootScriptPath:selectedPath];
                     }
                 } else {
-                    [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]];
+                    showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]);
                 }
             }
             else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
             {
-                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]];
+                showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]);
             }
             else
             {
-                [self.navigationController.view makeToast:NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil)];
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
             }
         }
         else if (XXTExplorerViewSectionIndexHome == indexPath.section)
@@ -106,7 +107,7 @@ typedef enum : NSUInteger {
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
-                    [self.navigationController.view makeToast:[accessError localizedDescription]];
+                    showUserMessage(self.navigationController.view, [accessError localizedDescription]);
                 }
                 else {
                     XXTEMoreBootScriptPicker *explorerViewController = [[XXTEMoreBootScriptPicker alloc] initWithEntryPath:directoryPath];

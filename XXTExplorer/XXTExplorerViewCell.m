@@ -35,6 +35,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.flagIconImageView.layer.shadowOffset = CGSizeMake(0, 0);
+    self.flagIconImageView.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:1.f].CGColor;
+    self.flagIconImageView.layer.shadowOpacity = .3f;
+    self.flagIconImageView.layer.shadowRadius = 1.f;
+    self.flagIconImageView.layer.masksToBounds = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

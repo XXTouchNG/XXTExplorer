@@ -14,6 +14,7 @@
 #import "XXTEAppDefines.h"
 #import "UIView+XXTEToast.h"
 #import <MessageUI/MessageUI.h>
+#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
@@ -165,7 +166,7 @@ typedef enum : NSUInteger {
                     [picker setToRecipients:toRecipients];
                     [self presentViewController:picker animated:YES completion:nil];
                 } else {
-                    [self.navigationController.view makeToast:NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil)];
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil));
                 }
             }
             else if (indexPath.row == 1) {
@@ -175,7 +176,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:cydiaURL]) {
                         [[UIApplication sharedApplication] openURL:cydiaURL];
                     } else {
-                        [self.navigationController.view makeToast:NSLocalizedString(@"Cannot open Cydia.", nil)];
+                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Cannot open Cydia.", nil));
                     }
                 }
             }
@@ -186,7 +187,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:qqURL]) {
                         [[UIApplication sharedApplication] openURL:qqURL];
                     } else {
-                        [self.navigationController.view makeToast:NSLocalizedString(@"Cannot open Mobile QQ.", nil)];
+                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Cannot open Mobile QQ.", nil));
                     }
                 }
             }

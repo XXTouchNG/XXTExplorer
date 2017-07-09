@@ -32,6 +32,8 @@
 + (NSUserDefaults *)explorerDefaults;
 + (NSDictionary *)explorerBuiltInDefaults;
 + (NSString *)selectedScriptPath;
++ (BOOL)isFetchingSelectedScript;
++ (void)setFetchingSelectedScript:(BOOL)fetching;
 
 - (instancetype)initWithEntryPath:(NSString *)path;
 
