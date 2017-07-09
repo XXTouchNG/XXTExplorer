@@ -25,6 +25,7 @@
 #import "zip.h"
 //#import "XXTExplorerCreateItemViewController.h"
 //#import "XXTExplorerCreateItemNavigationController.h"
+#import "XXTEScanViewController.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -717,7 +718,9 @@ typedef enum : NSUInteger {
     if (toolbar == self.toolbar) {
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan])
         {
-            
+            XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
+            [self presentViewController:navController animated:YES completion:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem])
         {

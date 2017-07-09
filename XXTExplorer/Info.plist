@@ -152,5 +152,9 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>${PRODUCT_NAME} needs to access your camera to scan QR code.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} needs to access your album to fetch QR code.</string>
 </dict>
 </plist>

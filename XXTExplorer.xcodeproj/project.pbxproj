@@ -12,6 +12,8 @@
 		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
+		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
+		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
 		0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
@@ -101,6 +103,10 @@
 		0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLicenseCell.xib; sourceTree = "<group>"; };
 		0F1482631EDABCC6007A777B /* XXTExplorerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerToolbar.h; sourceTree = "<group>"; };
 		0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerToolbar.m; sourceTree = "<group>"; };
+		0F1DD1C11F11B6A700F1A66A /* XXTEScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanViewController.h; sourceTree = "<group>"; };
+		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanViewController.m; sourceTree = "<group>"; };
+		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
+		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
 		0F2184BE1F0FBE01001BD8BD /* XXTEMoreRecordingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRecordingController.h; sourceTree = "<group>"; };
 		0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreRecordingController.m; sourceTree = "<group>"; };
 		0F2916131F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsOperationController.h; sourceTree = "<group>"; };
@@ -286,6 +292,17 @@
 			name = License;
 			sourceTree = "<group>";
 		};
+		0F1DD1C01F11B68F00F1A66A /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */,
+				0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */,
+				0F1DD1C11F11B6A700F1A66A /* XXTEScanViewController.h */,
+				0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */,
+			);
+			name = Scan;
+			sourceTree = "<group>";
+		};
 		0F2184BD1F0FBDB3001BD8BD /* Recording */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +407,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				0F1DD1C01F11B68F00F1A66A /* Scan */,
 				0F0654B81EE48395005B6C5F /* Archive */,
 				0F4BB0B31EDB7D070072B7A3 /* Entry */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
@@ -729,7 +747,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */ = {
@@ -794,6 +812,7 @@
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
+				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
@@ -809,6 +828,7 @@
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
+				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

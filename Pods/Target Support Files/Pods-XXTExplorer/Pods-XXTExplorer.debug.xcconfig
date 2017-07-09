@@ -1,4 +1,3 @@
-ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Reveal-SDK/RevealServer-3/iOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1 $(inherited) PMK_CALAYER=1 $(inherited) PMK_NSNOTIFICATIONCENTER=1 $(inherited) PMK_NSURLCONNECTION=1 $(inherited) PMK_PAUSE=1 $(inherited) PMK_UIACTIONSHEET=1 $(inherited) PMK_UIALERTVIEW=1 $(inherited) PMK_UIVIEW=1 $(inherited) PMK_UIVIEWCONTROLLER=1 $(inherited) PMK_UNTIL=1 $(inherited) PMK_WHEN=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/LGAlertView" "${PODS_ROOT}/Headers/Public/OMGHTTPURLRQ" "${PODS_ROOT}/Headers/Public/PromiseKit" "${PODS_ROOT}/Headers/Public/Reveal-SDK" "${PODS_ROOT}/Headers/Public/TOWebViewController"
@@ -8,4 +7,5 @@ OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${P
 OTHER_LDFLAGS = $(inherited) -ObjC -l"LGAlertView" -l"OMGHTTPURLRQ" -l"PromiseKit" -l"TOWebViewController" -l"z" -framework "CFNetwork" -framework "CoreGraphics" -framework "Foundation" -framework "QuartzCore" -framework "RevealServer" -framework "UIKit" -weak_framework "AssetsLibrary" -weak_framework "MessageUI" -weak_framework "Twitter"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
