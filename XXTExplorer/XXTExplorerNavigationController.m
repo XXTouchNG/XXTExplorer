@@ -74,7 +74,7 @@
             NSError *err = nil;
             NSString *lastComponent = [inboxURL lastPathComponent];
             NSString *formerPath = [inboxURL path];
-            NSString *currentPath = [XXTExplorerViewController rootPath];
+            NSString *currentPath = XXTExplorerViewController.initialPath;
             UIViewController *topViewController = self.topViewController;
             if ([topViewController isKindOfClass:[XXTExplorerViewController class]])
             {

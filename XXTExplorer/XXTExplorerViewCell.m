@@ -57,6 +57,8 @@
         self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
     } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {
         self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerBrokenFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript) {
+        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedBootScriptFlag"];
     }
     if (flagType == XXTExplorerViewCellFlagTypeNone) {
         self.flagIconImageView.hidden = YES;

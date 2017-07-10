@@ -6,9 +6,9 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#include <pwd.h>
-#include <grp.h>
-#include <sys/stat.h>
+#import <pwd.h>
+#import <grp.h>
+#import <sys/stat.h>
 #import "XXTExplorerItemDetailViewController.h"
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionValueCell.h"
@@ -21,6 +21,7 @@
 #import "XXTEMoreLinkNoIconCell.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <PromiseKit/PromiseKit.h>
+#import "NSFileManager+DeepSize.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
@@ -32,6 +33,8 @@ typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexExtended,
     kXXTExplorerItemDetailViewSectionIndexMax
 } kXXTExplorerItemDetailViewSectionIndex;
+
+static int sizingCancelFlag = 0;
 
 @interface XXTExplorerItemDetailViewController () <UITextFieldDelegate>
 
@@ -96,7 +99,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    
+    sizingCancelFlag = 0;
 }
 
 #pragma mark - View Methods
@@ -115,9 +118,9 @@ typedef enum : NSUInteger {
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
     [self reloadStaticTableViewData];
-    [self reloadDynamicTableViewData];
+//    [self reloadDynamicTableViewData];
+    [self performSelector:@selector(reloadDynamicTableViewData) withObject:nil afterDelay:.2f];
 }
-
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -168,18 +171,19 @@ typedef enum : NSUInteger {
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Kind", nil);
+    cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
-    if ([detailManager isReadableFileAtPath:entry[XXTExplorerViewEntryAttributePath]]) {
+    if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entry[XXTExplorerViewEntryAttributePath]]) {
         NSString *mimeString = nil;
         CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
         CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
         CFRelease(UTI);
-        if (!MIMEType) {
+        if (MIMEType == NULL) {
             mimeString = @"application/octet-stream";
         } else {
             mimeString = (__bridge NSString *)(MIMEType);
+            CFRelease(MIMEType);
         }
-        CFRelease(MIMEType);
         cell3.valueLabel.text = [NSString stringWithFormat:@"%@ (%@)", NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil), mimeString];
     } else {
         cell3.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil);
@@ -187,13 +191,12 @@ typedef enum : NSUInteger {
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Size", nil);
-    
-    NSInteger byteCount = [entry[XXTExplorerViewEntryAttributeSize] integerValue];
-    NSString *readableSize = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
-    NSByteCountFormatter *countFormatter = [[NSByteCountFormatter alloc] init];
-    countFormatter.allowedUnits = NSByteCountFormatterUseBytes;
-    NSString *readableSizeInBytes = [countFormatter stringFromByteCount:byteCount];
-    cell4.valueLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ (%@ on disk)", nil), readableSizeInBytes, readableSize];
+    cell4.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    if (![entry[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+        cell4.valueLabel.text = [self formattedSizeLabelText:entry[XXTExplorerViewEntryAttributeSize]];
+    } else {
+        cell4.valueLabel.text = NSLocalizedString(@"Calculating...", nil);
+    }
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Created", nil);
@@ -209,27 +212,32 @@ typedef enum : NSUInteger {
     
     XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell7.titleLabel.text = NSLocalizedString(@"Owner", nil);
+    cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell8.titleLabel.text = NSLocalizedString(@"Group", nil);
+    cell8.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     // Perimssion
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Owner", nil);
+    cell9.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell10.titleLabel.text = NSLocalizedString(@"Group", nil);
+    cell10.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     XXTEMoreTitleValueCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell11.titleLabel.text = NSLocalizedString(@"Everyone", nil);
+    cell11.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     XXTEMoreLinkNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
     
     struct stat entryInfo;
-    if (stat([entry[XXTExplorerViewEntryAttributePath] UTF8String], &entryInfo) == 0) {
+    if (lstat([entry[XXTExplorerViewEntryAttributePath] UTF8String], &entryInfo) == 0) {
         struct passwd *pwInfo = getpwuid(entryInfo.st_uid);
         struct group *grInfo = getgrgid(entryInfo.st_gid);
         if (pwInfo != NULL && grInfo != NULL) {
@@ -258,6 +266,7 @@ typedef enum : NSUInteger {
     XXTEMoreTitleValueCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
+    cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell13.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeViewer], nil);
     
     staticCells = @[
@@ -272,7 +281,37 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadDynamicTableViewData {
-    // TODO: Load Directory Size
+    NSDictionary *entry = self.entry;
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    if ([entry[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+        XXTEMoreTitleValueCell *sizeCell = ((XXTEMoreTitleValueCell *)staticCells[kXXTExplorerItemDetailViewSectionIndexGeneral][1]);
+//        sizeCell.valueLabel.text = NSLocalizedString(@"Calculating...", nil);
+        [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+            NSError *sizingError = nil;
+            NSFileManager *sizingManager = [[NSFileManager alloc] init];
+            NSNumber *itemSize = [sizingManager sizeOfDirectoryAtPath:entryPath error:&sizingError cancelFlag:&sizingCancelFlag];
+            if (sizingError) {
+                reject(sizingError);
+            } else {
+                fulfill(itemSize);
+            }
+        }].then(^(NSNumber *itemSize) {
+            sizeCell.valueLabel.text = [self formattedSizeLabelText:itemSize];
+        }).catch(^(NSError *systemError) {
+            
+        }).finally(^() {
+            [self.tableView reloadData];
+        });
+    }
+}
+
+- (NSString *)formattedSizeLabelText:(NSNumber *)size {
+    NSInteger byteCount = [size integerValue];
+    NSString *readableSize = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
+    NSByteCountFormatter *countFormatter = [[NSByteCountFormatter alloc] init];
+    countFormatter.allowedUnits = NSByteCountFormatterUseBytes;
+    NSString *readableSizeInBytes = [countFormatter stringFromByteCount:byteCount];
+    return [NSString stringWithFormat:NSLocalizedString(@"%@ (%@ on disk)", nil), readableSizeInBytes, readableSize];
 }
 
 #pragma mark - UIView Getters
@@ -302,6 +341,7 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
+    sizingCancelFlag = 1;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -309,7 +349,50 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
-    
+    NSFileManager *renameManager = [[NSFileManager alloc] init];
+    NSDictionary *entry = self.entry;
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
+    if (entryParentPath.length == 0) {
+        return;
+    }
+    BOOL isDirectory = NO;
+    BOOL parentExists = [renameManager fileExistsAtPath:entryParentPath isDirectory:&isDirectory];
+    if (!parentExists || !isDirectory) {
+        return;
+    }
+    NSString *itemName = self.nameField.text;
+    if (itemName.length == 0 || [itemName containsString:@"/"] || [itemName containsString:@"\0"]) {
+        [self.itemNameShaker shake];
+        return;
+    }
+    struct stat itemStat;
+    NSString *itemPath = [entryParentPath stringByAppendingPathComponent:itemName];
+    if (/* [renameManager fileExistsAtPath:itemPath] */ 0 == lstat([itemPath UTF8String], &itemStat)) {
+        showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]);
+        [self.itemNameShaker shake];
+        return;
+    }
+    blockUserInteractions(self, YES);
+    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+        NSError *renameError = nil;
+        BOOL renameResult = [renameManager moveItemAtPath:entryPath toPath:itemPath error:&renameError];
+        if (!renameResult) {
+            if (renameError) {
+                reject(renameError);
+            }
+        } else {
+            fulfill(@(renameResult));
+        }
+    }].then(^(id renameResult) {
+        
+    }).catch(^(NSError *systemError) {
+        showUserMessage(self.navigationController.view, [systemError localizedDescription]);
+    }).finally(^() {
+        blockUserInteractions(self, NO);
+        sizingCancelFlag = 1;
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -348,9 +431,10 @@ typedef enum : NSUInteger {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
-                [PMKPromise promiseWithValue:@YES].then(^() {
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     [[UIPasteboard generalPasteboard] setString:detailText];
-                }).finally(^() {
+                    fulfill(nil);
+                }].finally(^() {
                     showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
@@ -360,9 +444,10 @@ typedef enum : NSUInteger {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
-                [PMKPromise promiseWithValue:@YES].then(^() {
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     [[UIPasteboard generalPasteboard] setString:detailText];
-                }).finally(^() {
+                    fulfill(nil);
+                }].finally(^() {
                     showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });

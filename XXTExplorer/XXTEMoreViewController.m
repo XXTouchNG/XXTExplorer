@@ -322,9 +322,9 @@ typedef enum : NSUInteger {
                 }
                 if (addressText && addressText.length > 0) {
                     blockUserInteractions(self, YES);
-                    [PMKPromise promiseWithValue:@YES].then(^() {
+                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         [[UIPasteboard generalPasteboard] setString:addressText];
-                    }).finally(^() {
+                    }].finally(^() {
                         showUserMessage(self.navigationController.view, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });

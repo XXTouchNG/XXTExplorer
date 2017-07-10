@@ -61,7 +61,7 @@ static id (^sendCloudApiRequest)(NSArray *objs) =
     if (licenseResponse.statusCode != 200 &&
         returningHeadersDict[@"X-Ca-Error-Message"])
     {
-        @throw returningHeadersDict[@"X-Ca-Error-Message"];
+        @throw [NSString stringWithFormat:NSLocalizedString(@"Aliyun gateway error: %@", nil), returningHeadersDict[@"X-Ca-Error-Message"]];
     }
     NSDictionary *licenseDictionary = [NSJSONSerialization JSONObjectWithData:licenseReceived options:0 error:&licenseError];
     if (licenseError) {

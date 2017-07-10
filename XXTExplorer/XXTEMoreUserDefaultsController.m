@@ -147,7 +147,7 @@ enum {
 
 - (void)loadDynamicUserDefaults {
     blockUserInteractions(self, YES);
-    PMKPromise *localDefaultsPromise = [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
+    PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
         }];
@@ -158,7 +158,7 @@ enum {
                 self.userDefaults[key] = value;
             }
         }];
-        resolve(nil);
+        fulfill(nil);
     }];
     PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"get_user_conf") JSON:@{}];
     localDefaultsPromise.then(^() {
@@ -327,16 +327,15 @@ enum {
     editedUserDefaults[modifyKey] = @(index);
     blockUserInteractions(self, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
-    PMKPromise *userDefaultsPromise = [PMKPromise promiseWithValue:editedUserDefaults];
-    PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults];
-    remoteDefaultsPromise.then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
+    .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
             block(YES);
             self.userDefaults[modifyKey] = @(index);
         } else {
-            @throw jsonDictionary[@"message"];
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot set user defaults: %@", nil), jsonDictionary[@"message"]];
         }
-        return userDefaultsPromise;
+        return [PMKPromise promiseWithValue:editedUserDefaults];
     }).then(^ (NSDictionary *saveDictionary) {
         [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             [XXTExplorerViewController.explorerDefaults setObject:obj forKey:key];

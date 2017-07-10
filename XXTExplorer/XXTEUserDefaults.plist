@@ -77,6 +77,23 @@
 				<string>On</string>
 			</array>
 		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerViewSelectLaunchedScriptKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Select Launched Script</string>
+			<key>description</key>
+			<string>Select the script after being launched once in XXTouch Explorer.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
 	</array>
 	<key>REMOTE_USER_DEFAULTS</key>
 	<array>

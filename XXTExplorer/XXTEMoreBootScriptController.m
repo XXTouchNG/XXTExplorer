@@ -122,7 +122,7 @@
                     if ([bootScriptName isAbsolutePath]) {
                         bootScriptPath = bootScriptName;
                     } else {
-                        bootScriptPath = [XXTExplorerViewController.rootPath stringByAppendingPathComponent:bootScriptName];
+                        bootScriptPath = [XXTExplorerViewController.initialPath stringByAppendingPathComponent:bootScriptName];
                     }
                 }
             }
@@ -188,9 +188,10 @@
                 NSString *addressText = bootScriptPath;
                 if (addressText && addressText.length > 0) {
                     blockUserInteractions(self, YES);
-                    [PMKPromise promiseWithValue:@YES].then(^() {
+                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         [[UIPasteboard generalPasteboard] setString:addressText];
-                    }).finally(^() {
+                        fulfill(nil);
+                    }].finally(^() {
                         showUserMessage(self.navigationController.view, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });
@@ -199,6 +200,7 @@
                 XXTEMoreBootScriptPicker *bootScriptPicker = [[XXTEMoreBootScriptPicker alloc] init];
                 bootScriptPicker.delegate = self;
                 bootScriptPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua", @"luac" ];
+                bootScriptPicker.selectedBootScriptPath = bootScriptPath;
                 [self.navigationController pushViewController:bootScriptPicker animated:YES];
             }
         }
@@ -248,7 +250,7 @@
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
                 [self.bootScriptSwitch setOn:changeToStatus animated:YES];
             } else {
-                @throw jsonDictionary[@"message"];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot switch boot script: %@", nil), jsonDictionary[@"message"]];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
@@ -273,7 +275,7 @@
             [self updateBootScriptDisplay];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         } else {
-            @throw jsonDictionary[@"message"];
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select boot script: %@", nil), jsonDictionary[@"message"]];
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {

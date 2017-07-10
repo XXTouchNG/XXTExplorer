@@ -14,6 +14,7 @@ typedef enum : NSUInteger {
     XXTExplorerViewCellFlagTypeSelected,
     XXTExplorerViewCellFlagTypeForbidden,
     XXTExplorerViewCellFlagTypeBroken,
+    XXTExplorerViewCellFlagTypeSelectedBootScript,
 } XXTExplorerViewCellFlagType;
 
 static NSString * const XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";

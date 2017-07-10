@@ -18,6 +18,9 @@
 @end
 
 @interface XXTEMoreBootScriptPicker : XXTExplorerViewController
+
+@property (nonatomic, strong) NSString *selectedBootScriptPath;
+
 @property (nonatomic, weak) id <XXTEMoreBootScriptPickerDelegate> delegate;
 @property (nonatomic, copy) NSArray <NSString *> *allowedExtensions;
 @property (nonatomic, assign, readonly) BOOL allowsMultipleSelection; // not implemented

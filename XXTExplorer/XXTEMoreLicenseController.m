@@ -233,9 +233,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
-                [PMKPromise promiseWithValue:@YES].then(^() {
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     [[UIPasteboard generalPasteboard] setString:detailText];
-                }).finally(^() {
+                    fulfill(nil);
+                }].finally(^() {
                     showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
@@ -415,7 +416,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
                 [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
             }
         } else {
-            @throw licenseDictionary[@"message"];
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot active license: %@", nil), licenseDictionary[@"message"]];
         }
     })
     .catch(^(NSError *serverError) {

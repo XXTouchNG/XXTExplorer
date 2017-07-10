@@ -12,6 +12,7 @@
 #import "XXTExplorerDefaults.h"
 #import "UIView+XXTEToast.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTExplorerViewCell.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -97,25 +98,7 @@ typedef enum : NSUInteger {
         }
         else if (XXTExplorerViewSectionIndexHome == indexPath.section)
         {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            if ([tableView isEditing]) {
-                
-            } else {
-                NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
-                NSString *directoryRelativePath = entryAttributes[XXTExplorerViewSectionHomeSeriesDetailPathKey];
-                NSString *directoryPath = [[[self class] rootPath] stringByAppendingPathComponent:directoryRelativePath];
-                NSError *accessError = nil;
-                [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
-                if (accessError) {
-                    showUserMessage(self.navigationController.view, [accessError localizedDescription]);
-                }
-                else {
-                    XXTEMoreBootScriptPicker *explorerViewController = [[XXTEMoreBootScriptPicker alloc] initWithEntryPath:directoryPath];
-                    explorerViewController.delegate = self.delegate;
-                    explorerViewController.allowedExtensions = self.allowedExtensions;
-                    [self.navigationController pushViewController:explorerViewController animated:YES];
-                }
-            }
+            // impossible
         }
     }
 }
@@ -125,9 +108,28 @@ typedef enum : NSUInteger {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    return cell;
+    if (tableView == self.tableView) {
+        if (indexPath.section == XXTExplorerViewSectionIndexList) {
+            XXTExplorerViewCell *cell = (XXTExplorerViewCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            NSDictionary *entryAttributes = self.entryList[indexPath.row];
+            NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+            if ([entryPath isEqualToString:self.selectedBootScriptPath]) {
+                cell.entryTitleLabel.textColor = XXTE_COLOR;
+                cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
+            } else {
+                cell.entryTitleLabel.textColor = [UIColor blackColor];
+                cell.flagType = XXTExplorerViewCellFlagTypeNone;
+            }
+            return cell;
+        }
+    }
+    return [UITableViewCell new];
+}
+
+- (void)setSelectedBootScriptPath:(NSString *)selectedBootScriptPath {
+    _selectedBootScriptPath = selectedBootScriptPath;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Prevent editing methods

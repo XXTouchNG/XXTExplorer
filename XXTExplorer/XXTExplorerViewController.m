@@ -78,6 +78,17 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     return rootPath;
 }
 
++ (NSString *)initialPath {
+    static NSString *initialPath = nil;
+    if (!initialPath) {
+        initialPath = ({
+            NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewInitialPath);
+            [self.class.rootPath stringByAppendingPathComponent:initialRelativePath];
+        });
+    }
+    return initialPath;
+}
+
 + (NSFileManager *)explorerFileManager {
     static NSFileManager *explorerFileManager = nil;
     if (!explorerFileManager) {
@@ -201,17 +212,15 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     {
         if (!path) {
-            NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewInitialPath);
-            NSString *initialPath = [[[self class] rootPath] stringByAppendingPathComponent:initialRelativePath];
-            if (![self.class.explorerFileManager fileExistsAtPath:initialPath]) {
+            if (![self.class.explorerFileManager fileExistsAtPath:self.class.initialPath]) {
                 NSError *createDirectoryError = nil;
 //                assert(mkdir([initialPath UTF8String], 0755) == 0);
-                BOOL createDirectoryResult = [self.class.explorerFileManager createDirectoryAtPath:initialPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError];
+                BOOL createDirectoryResult = [self.class.explorerFileManager createDirectoryAtPath:self.class.initialPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError];
                 if (!createDirectoryResult) {
 
                 }
             }
-            path = initialPath;
+            path = self.class.initialPath;
         }
         _entryPath = path;
     }
@@ -465,7 +474,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     if ([selectedScriptName isAbsolutePath]) {
                         selectedScriptPath = selectedScriptName;
                     } else {
-                        selectedScriptPath = [self.class.rootPath stringByAppendingPathComponent:selectedScriptName];
+                        selectedScriptPath = [self.class.initialPath stringByAppendingPathComponent:selectedScriptName];
                     }
                     XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, selectedScriptPath);
                 }
@@ -574,7 +583,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                 if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
                                     XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
                                 } else {
-                                    @throw jsonDictionary[@"message"];
+                                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDictionary[@"message"]];
                                 }
                             })
                             .catch(^(NSError *serverError) {
@@ -624,7 +633,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             } else {
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[XXTExplorerViewSectionHomeSeriesDetailPathKey];
-                NSString *directoryPath = [[[self class] rootPath] stringByAppendingPathComponent:directoryRelativePath];
+                NSString *directoryPath = [self.class.rootPath stringByAppendingPathComponent:directoryRelativePath];
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
@@ -691,7 +700,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             if (!entryHeaderView) {
                 entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
             }
-            NSString *rootPath = [[self class] rootPath];
+            NSString *rootPath = self.class.rootPath;
             NSRange rootRange = [self.entryPath rangeOfString:rootPath];
             if (rootRange.location == 0) {
                 NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
@@ -811,9 +820,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         NSString *detailText = ((XXTExplorerHeaderView *)recognizer.view).headerLabel.text;
         if (detailText && detailText.length > 0) {
             blockUserInteractions(self, YES);
-            [PMKPromise promiseWithValue:@YES].then(^() {
+            [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                 [[UIPasteboard generalPasteboard] setString:detailText];
-            }).finally(^() {
+                fulfill(nil);
+            }].finally(^() {
                 showUserMessage(self.navigationController.view, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
                 blockUserInteractions(self, NO);
             });
@@ -1013,10 +1023,54 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     static char * const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
+    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     if (direction == XXTESwipeDirectionLeftToRight)
     {
         NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
-        if ([buttonAction isEqualToString:@"Property"]) {
+        if ([buttonAction isEqualToString:@"Launch"]) {
+            BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewSelectLaunchedScriptKey);
+            blockUserInteractions(self, YES);
+            [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
+            .then(convertJsonString)
+            .then(^(NSDictionary *jsonDirectory) {
+                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                    return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{ @"filename": entryPath, @"envp": @{ @"XXTOUCH_LAUNCH_VIA": @"APPLICATION" } }];
+                } else {
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+                }
+            })
+            .then(convertJsonString)
+            .then(^(NSDictionary *jsonDirectory) {
+                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                    if (selectAfterLaunch) {
+                        return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath }];
+                    }
+                } else {
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+                }
+                return [PMKPromise promiseWithValue:@{}];
+            })
+            .then(convertJsonString)
+            .then(^(NSDictionary *jsonDirectory) {
+                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                    XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
+                    [self loadEntryListData];
+                    [self.tableView reloadData];
+                } else {
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+                }
+            })
+            .catch(^(NSError *serverError) {
+                if (serverError.code == -1004) {
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                } else {
+                    showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                }
+            })
+            .finally(^() {
+                blockUserInteractions(self, NO);
+            });
+        } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithEntry:entryDetail];
             XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];

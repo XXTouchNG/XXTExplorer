@@ -26,6 +26,7 @@
 @property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 @property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
 
++ (NSString *)initialPath;
 + (NSString *)rootPath;
 + (NSFileManager *)explorerFileManager;
 + (NSDateFormatter *)explorerDateFormatter;

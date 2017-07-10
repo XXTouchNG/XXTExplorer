@@ -6,6 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <sys/stat.h>
 #import "XXTExplorerCreateItemViewController.h"
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionValueCell.h"
@@ -235,9 +236,10 @@ typedef enum : NSUInteger {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
-                [PMKPromise promiseWithValue:@YES].then(^() {
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     [[UIPasteboard generalPasteboard] setString:detailText];
-                }).finally(^() {
+                    fulfill(nil);
+                }].finally(^() {
                     showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
@@ -307,8 +309,9 @@ typedef enum : NSUInteger {
     }
     NSString *itemExtension = [[itemName pathExtension] lowercaseString];
     NSFileManager *createItemManager = [[NSFileManager alloc] init];
+    struct stat itemStat;
     NSString *itemPath = [self.entryPath stringByAppendingPathComponent:itemName];
-    if ([createItemManager fileExistsAtPath:itemPath]) {
+    if (/* [createItemManager fileExistsAtPath:itemPath] */ 0 == lstat([itemPath UTF8String], &itemStat)) {
         showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]);
         [self.itemNameShaker shake];
         return;

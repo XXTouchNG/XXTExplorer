@@ -25,6 +25,7 @@ static NSString * const XXTExplorerViewEntryListSortFieldKey = @"XXTExplorerView
 static NSString * const XXTExplorerViewEntryListSortOrderKey = @"XXTExplorerViewEntryListSortOrderKey";
 static NSString * const XXTExplorerViewEntryListHideDotItemKey = @"XXTExplorerViewEntryListHideDotItemKey";
 static NSString * const XXTExplorerViewSelectedScriptPathKey = @"XXTExplorerViewSelectedScriptPathKey";
+static NSString * const XXTExplorerViewSelectLaunchedScriptKey = @"XXTExplorerViewSelectLaunchedScriptKey";
 
 // XXTExplorerViewEntryListSortOrderKey
 typedef enum : NSUInteger {
