@@ -112,7 +112,7 @@
 }
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_startup_conf") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             BOOL bootScriptEnabled = [jsonDictionary[@"data"][@"startup_run"] boolValue];
@@ -139,7 +139,7 @@
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
     });
 }
 
@@ -187,12 +187,12 @@
             if (indexPath.row == 0) {
                 NSString *addressText = bootScriptPath;
                 if (addressText && addressText.length > 0) {
-                    blockUserInteractions(self.navigationController.view, YES);
+                    blockUserInteractions(self, YES);
                     [PMKPromise promiseWithValue:@YES].then(^() {
                         [[UIPasteboard generalPasteboard] setString:addressText];
                     }).finally(^() {
                         showUserMessage(self.navigationController.view, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
-                        blockUserInteractions(self.navigationController.view, NO);
+                        blockUserInteractions(self, NO);
                     });
                 }
             } else if (indexPath.row == 1) {
@@ -236,7 +236,7 @@
             changeToCommand = @"set_startup_run_on";
         else
             changeToCommand = @"set_startup_run_off";
-        blockUserInteractions(self.navigationController.view, YES);
+        blockUserInteractions(self, YES);
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
                 if (changeToStatus == YES) {
@@ -258,7 +258,7 @@
             }
             [self.bootScriptSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
-            blockUserInteractions(self.navigationController.view, NO);
+            blockUserInteractions(self, NO);
         });
     }
 }
@@ -266,7 +266,7 @@
 #pragma mark - XXTEMoreBootScriptPickerDelegate
 
 - (void)bootScriptPicker:(XXTEMoreBootScriptPicker *)picker didSelectedBootScriptPath:(NSString *)path {
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_startup_script_file") JSON:@{ @"filename": path }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             bootScriptPath = path;
@@ -282,7 +282,7 @@
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
         [picker.navigationController popViewControllerAnimated:YES];
     });
 }

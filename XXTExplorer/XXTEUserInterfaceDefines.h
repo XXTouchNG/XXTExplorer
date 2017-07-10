@@ -11,7 +11,15 @@
 
 #import "UIView+XXTEToast.h"
 
-static inline void blockUserInteractions(UIView *viewToBlock, BOOL shouldBlock) {
+static inline void blockUserInteractions(UIViewController *viewController, BOOL shouldBlock) {
+    UIViewController *parentController = viewController.tabBarController;
+    if (!parentController) {
+        parentController = viewController.navigationController;
+    }
+    if (!parentController) {
+        parentController = viewController;
+    }
+    UIView *viewToBlock = parentController.view;
     if (shouldBlock) {
         viewToBlock.userInteractionEnabled = NO;
         [viewToBlock makeToastActivity:XXTEToastPositionCenter];

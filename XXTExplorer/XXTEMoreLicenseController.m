@@ -142,7 +142,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 }
 
 - (void)reloadDynamicTableViewDataWithCompletion:(XXTERefreshControlHandler)handler {
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDictionary) {
@@ -184,7 +184,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         }
     })
     .finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
         if (handler) {
             handler();
         }
@@ -232,12 +232,12 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self.navigationController.view, YES);
+                blockUserInteractions(self, YES);
                 [PMKPromise promiseWithValue:@YES].then(^() {
                     [[UIPasteboard generalPasteboard] setString:detailText];
                 }).finally(^() {
                     showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockUserInteractions(self.navigationController.view, NO);
+                    blockUserInteractions(self, NO);
                 });
             }
         }

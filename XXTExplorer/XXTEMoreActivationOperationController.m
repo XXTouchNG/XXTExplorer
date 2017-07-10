@@ -69,7 +69,7 @@
 //}
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
             .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
                 return jsonDictionary[@"data"];
@@ -91,7 +91,7 @@
                 }
             })
             .finally(^() {
-                blockUserInteractions(self.navigationController.view, NO);
+                blockUserInteractions(self, NO);
                 [self.tableView reloadData];
             });
 }
@@ -160,7 +160,7 @@
     if (tableView == self.tableView) {
         if (indexPath.section == 0) {
             NSUInteger operationIndex = (NSUInteger) indexPath.row;
-            blockUserInteractions(self.navigationController.view, YES);
+            blockUserInteractions(self, YES);
             NSString *commandUrl = [NSString stringWithFormat:uAppDaemonCommandUrl(@"set_%@_action"), operationKeyNames[self.actionIndex]];
             [NSURLConnection POST:commandUrl JSON:@{@"action": @(operationIndex)}]
                     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -180,7 +180,7 @@
                         }
                     })
                     .finally(^() {
-                        blockUserInteractions(self.navigationController.view, NO);
+                        blockUserInteractions(self, NO);
                     });
         }
     }

@@ -138,7 +138,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadDynamicTableViewData {
-//    blockUserInteractions(self.navigationController.view, YES);
+//    blockUserInteractions(self, YES);
     if (!isFetchingRemoteStatus) {
         isFetchingRemoteStatus = YES;
         [self.remoteAccessSwitch setHidden:YES];
@@ -168,7 +168,7 @@ typedef enum : NSUInteger {
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-//        blockUserInteractions(self.navigationController.view, NO);
+//        blockUserInteractions(self, NO);
             isFetchingRemoteStatus = NO;
         });
     }
@@ -321,12 +321,12 @@ typedef enum : NSUInteger {
                     addressText = bonjourWebServerUrl;
                 }
                 if (addressText && addressText.length > 0) {
-                    blockUserInteractions(self.navigationController.view, YES);
+                    blockUserInteractions(self, YES);
                     [PMKPromise promiseWithValue:@YES].then(^() {
                         [[UIPasteboard generalPasteboard] setString:addressText];
                     }).finally(^() {
                         showUserMessage(self.navigationController.view, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
-                        blockUserInteractions(self.navigationController.view, NO);
+                        blockUserInteractions(self, NO);
                     });
                 }
             }
@@ -470,7 +470,7 @@ typedef enum : NSUInteger {
             changeToCommand = @"open_remote_access";
         else
             changeToCommand = @"close_remote_access";
-        blockUserInteractions(self.navigationController.view, YES);
+        blockUserInteractions(self, YES);
         [self.remoteAccessSwitch setHidden:YES];
         [self.remoteAccessIndicator startAnimating];
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -496,7 +496,7 @@ typedef enum : NSUInteger {
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-            blockUserInteractions(self.navigationController.view, NO);
+            blockUserInteractions(self, NO);
         });
     }
 }
@@ -535,7 +535,7 @@ typedef enum : NSUInteger {
 
 - (void)alertView:(LGAlertView *)alertView cleanGPSCaches:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
@@ -547,13 +547,13 @@ typedef enum : NSUInteger {
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanUICaches:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"uicache") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
@@ -565,13 +565,13 @@ typedef enum : NSUInteger {
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanAll:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_all") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
@@ -583,13 +583,13 @@ typedef enum : NSUInteger {
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView respringDevice:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"respring") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
@@ -601,13 +601,13 @@ typedef enum : NSUInteger {
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView rebootDevice:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"reboot2") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
@@ -619,7 +619,7 @@ typedef enum : NSUInteger {
             showUserMessage(self.navigationController.view, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
     });
 }
 
@@ -636,13 +636,13 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
-//    blockUserInteractions(self.navigationController.view, YES);
+//    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"restart") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView1 afterDelay:1.f];
         }
     }).catch(^(NSError *serverError) {
-//        blockUserInteractions(self.navigationController.view, NO);
+//        blockUserInteractions(self, NO);
         LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Could not connect to the daemon: %@", nil), [serverError localizedDescription]]
                                                                style:LGAlertViewStyleActionSheet
@@ -662,7 +662,7 @@ typedef enum : NSUInteger {
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             // finished
-//            blockUserInteractions(self.navigationController.view, NO);
+//            blockUserInteractions(self, NO);
 //            [alertView dismissAnimated];
 //            showUserMessage(self.navigationController.view, NSLocalizedString(@"The daemon has been restarted.", nil));
             LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Daemon Restarted", nil)
@@ -682,7 +682,7 @@ typedef enum : NSUInteger {
             [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView afterDelay:3.f];
         } else {
             // unknown error, stop
-//            blockUserInteractions(self.navigationController.view, NO);
+//            blockUserInteractions(self, NO);
 //            [alertView dismissAnimated];
 //            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
             LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)

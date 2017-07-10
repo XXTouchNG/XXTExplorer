@@ -12,10 +12,13 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEViewShaker.h"
 #import "XXTEAppDefines.h"
+#import "XXTEMoreAddressCell.h"
+#import <PromiseKit/PromiseKit.h>
 
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,
     kXXTExplorerCreateItemViewSectionIndexType,
+    kXXTExplorerCreateItemViewSectionIndexLocation,
     kXXTExplorerCreateItemViewSectionIndexMax
 } kXXTExplorerCreateItemViewSectionIndex;
 
@@ -124,8 +127,11 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil), NSLocalizedString(@"Type", nil) ];
-    staticSectionFooters = @[ @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
+                             NSLocalizedString(@"Type", nil),
+                             NSLocalizedString(@"Location", nil)
+                             ];
+    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"", @"" ];
     
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
     cell1.nameField.delegate = self;
@@ -156,9 +162,13 @@ typedef enum : NSUInteger {
     cell5.descriptionLabel.text = NSLocalizedString(@"A directory with nothing inside.", nil);
     cell5.valueLabel.text = @"DIR";
     
+    XXTEMoreAddressCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
+    cell6.addressLabel.text = self.entryPath;
+    
     staticCells = @[
                     @[ cell1 ],
-                    @[ cell2, cell3, cell4, cell5 ]
+                    @[ cell2, cell3, cell4, cell5 ],
+                    @[ cell6 ]
                     ];
 }
 
@@ -208,6 +218,8 @@ typedef enum : NSUInteger {
             }
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             return 66.f;
+        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
+            return UITableViewAutomaticDimension;
         }
     }
     return 44.f;
@@ -219,6 +231,17 @@ typedef enum : NSUInteger {
         if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             self.selectedItemType = (NSUInteger) indexPath.row;
             [tableView reloadData];
+        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
+            NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self, YES);
+                [PMKPromise promiseWithValue:@YES].then(^() {
+                    [[UIPasteboard generalPasteboard] setString:detailText];
+                }).finally(^() {
+                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockUserInteractions(self, NO);
+                });
+            }
         }
     }
 }
@@ -274,11 +297,15 @@ typedef enum : NSUInteger {
         return;
     }
     if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeLUA) {
-        itemName = [itemName stringByAppendingPathExtension:@"lua"];
+        if (![[itemName pathExtension] isEqualToString:@"lua"]) {
+            itemName = [itemName stringByAppendingPathExtension:@"lua"];
+        }
     } else if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT) {
-        itemName = [itemName stringByAppendingPathExtension:@"txt"];
+        if (![[itemName pathExtension] isEqualToString:@"txt"]) {
+            itemName = [itemName stringByAppendingPathExtension:@"txt"];
+        }
     }
-    NSString *itemExtension = [itemName pathExtension];
+    NSString *itemExtension = [[itemName pathExtension] lowercaseString];
     NSFileManager *createItemManager = [[NSFileManager alloc] init];
     NSString *itemPath = [self.entryPath stringByAppendingPathComponent:itemName];
     if ([createItemManager fileExistsAtPath:itemPath]) {
@@ -337,27 +364,6 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - UITextFieldDelegate
-
-//- (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    if (textField == self.nameField) {
-//        if (textField.text.length == 0) {
-//            if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeLUA) {
-//                textField.text = @".lua";
-//                self.doneButtonItem.enabled = YES;
-//            }
-//            else if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT) {
-//                textField.text = @".txt";
-//                self.doneButtonItem.enabled = YES;
-//            }
-//            NSRange range = NSMakeRange(0, 0);
-//            UITextPosition *beginning = textField.beginningOfDocument;
-//            UITextPosition *start = [textField positionFromPosition:beginning offset:range.location];
-//            UITextPosition *end = [textField positionFromPosition:start offset:range.length];
-//            UITextRange *textRange = [textField textRangeFromPosition:start toPosition:end];
-//            [textField setSelectedTextRange:textRange];
-//        }
-//    }
-//}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.nameField) {

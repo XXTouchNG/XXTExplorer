@@ -146,7 +146,7 @@ enum {
 }
 
 - (void)loadDynamicUserDefaults {
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     PMKPromise *localDefaultsPromise = [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
         [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
@@ -180,7 +180,7 @@ enum {
         }
     })
     .finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
         [self.tableView reloadData];
     });
 }
@@ -325,7 +325,7 @@ enum {
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
 //    editedUserDefaults[modifyKey] = (index != 0) ? @YES : @NO;
     editedUserDefaults[modifyKey] = @(index);
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     PMKPromise *userDefaultsPromise = [PMKPromise promiseWithValue:editedUserDefaults];
     PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults];
@@ -350,7 +350,7 @@ enum {
         }
     })
     .finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
         [self.tableView reloadData];
     });
 }

@@ -70,7 +70,7 @@
 //}
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self.navigationController.view, YES);
+    blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_record_conf") JSON:@{}]
     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         return jsonDictionary[@"data"];
@@ -92,7 +92,7 @@
         }
     })
     .finally(^() {
-        blockUserInteractions(self.navigationController.view, NO);
+        blockUserInteractions(self, NO);
         [self.tableView reloadData];
     });
 }
@@ -166,7 +166,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         NSUInteger operationIndex = (NSUInteger) indexPath.row;
-        blockUserInteractions(self.navigationController.view, YES);
+        blockUserInteractions(self, YES);
         NSString *commandUrl = nil;
         if (indexPath.section == 0) {
             commandUrl = (indexPath.row == 0) ? uAppDaemonCommandUrl(@"set_record_volume_up_on") : uAppDaemonCommandUrl(@"set_record_volume_up_off");
@@ -193,7 +193,7 @@
             }
         })
         .finally(^() {
-            blockUserInteractions(self.navigationController.view, NO);
+            blockUserInteractions(self, NO);
         });
     }
 }

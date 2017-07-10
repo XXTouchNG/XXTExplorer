@@ -53,6 +53,8 @@ static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplore
 static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExplorerViewEntryAttributeModificationDate";
 static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize";
 static NSString * const XXTExplorerViewEntryAttributePermission = @"XXTExplorerViewEntryAttributePermission"; // Dictionary
+static NSString * const XXTExplorerViewEntryAttributeKind = @"XXTExplorerViewEntryAttributeKind";
+static NSString * const XXTExplorerViewEntryAttributeViewer = @"XXTExplorerViewEntryAttributeViewer";
 
 // XXTExplorerViewEntryAttributeType
 static NSString * const XXTExplorerViewEntryAttributeTypeUnsupported = @"XXTExplorerViewEntryAttributeTypeUnsupported";

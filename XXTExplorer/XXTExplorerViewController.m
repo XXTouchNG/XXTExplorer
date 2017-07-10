@@ -30,6 +30,8 @@
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENetworkDefines.h"
+#import "XXTExplorerItemDetailViewController.h"
+#import "XXTExplorerItemDetailNavigationController.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -565,7 +567,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         }
                         else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable])
                         {
-                            blockUserInteractions(self.navigationController.view, YES);
+                            blockUserInteractions(self, YES);
                             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath}]
                             .then(convertJsonString)
                             .then(^(NSDictionary *jsonDictionary) {
@@ -583,7 +585,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                 }
                             })
                             .finally(^() {
-                                blockUserInteractions(self.navigationController.view, NO);
+                                blockUserInteractions(self, NO);
                                 [self loadEntryListData];
                                 [self.tableView reloadData];
                             });
@@ -808,12 +810,12 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
         NSString *detailText = ((XXTExplorerHeaderView *)recognizer.view).headerLabel.text;
         if (detailText && detailText.length > 0) {
-            blockUserInteractions(self.navigationController.view, YES);
+            blockUserInteractions(self, YES);
             [PMKPromise promiseWithValue:@YES].then(^() {
                 [[UIPasteboard generalPasteboard] setString:detailText];
             }).finally(^() {
                 showUserMessage(self.navigationController.view, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
-                blockUserInteractions(self.navigationController.view, NO);
+                blockUserInteractions(self, NO);
             });
         }
     }
@@ -1008,29 +1010,39 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 }
 
 - (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
+    static char * const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight)
     {
-        
+        NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
+        if ([buttonAction isEqualToString:@"Property"]) {
+            XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithEntry:entryDetail];
+            XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
+            [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
+        }
     }
     else if (direction == XXTESwipeDirectionRightToLeft && index == 0)
     {
-        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
-                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Delete \"%@\"?\nThis operation cannot be revoked.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
-                                                              style:LGAlertViewStyleActionSheet
-                                                       buttonTitles:@[  ]
-                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                             destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
-                                                           delegate:self];
-        objc_setAssociatedObject(alertView, @selector(alertView:removeEntryCell:), cell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [alertView showAnimated:YES completionHandler:nil];
+        NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);
+        if ([buttonAction isEqualToString:@"Trash"]) {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Delete \"%@\"?\nThis operation cannot be revoked.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
+                                                                  style:LGAlertViewStyleActionSheet
+                                                           buttonTitles:@[  ]
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                 destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                               delegate:self];
+            objc_setAssociatedObject(alertView, @selector(alertView:removeEntryCell:), cell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [alertView showAnimated:YES completionHandler:nil];
+        }
     }
     return NO;
 }
 
 - (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
              swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+    static char * const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight)
@@ -1042,6 +1054,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
                                                                            insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+            objc_setAssociatedObject(swipeLaunchButton, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:swipeLaunchButton];
         }
         if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
@@ -1050,11 +1063,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+            objc_setAssociatedObject(swipeEditButton, XXTESwipeButtonAction, @"Edit", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:swipeEditButton];
         }
         XXTESwipeButton *swipePropertyButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+        objc_setAssociatedObject(swipePropertyButton, XXTESwipeButtonAction, @"Property", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [swipeButtons addObject:swipePropertyButton];
         return swipeButtons;
     }
@@ -1063,6 +1078,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
                                                              backgroundColor:XXTE_COLOR_DANGER
                                                                       insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+        objc_setAssociatedObject(swipeTrashButton, XXTESwipeButtonAction, @"Trash", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return @[ swipeTrashButton ];
     }
     return @[];
@@ -1074,8 +1090,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *action = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String]);
     id obj = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String]);
     if (action) {
-        objc_setAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String], nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        objc_setAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String], nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//        objc_setAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String], nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//        objc_setAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String], nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardImport])
         {
             if (index == 0)
@@ -1091,7 +1107,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 [self alertView:alertView symlinkPasteboardItemsAtPath:obj];
         }
     }
-    objc_removeAssociatedObjects(alertView);
+//    objc_removeAssociatedObjects(alertView);
 }
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
@@ -1108,17 +1124,17 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         SEL selector = selectors[i];
         id obj = objc_getAssociatedObject(alertView, selector);
         if (obj) {
-            objc_setAssociatedObject(alertView, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//            objc_setAssociatedObject(alertView, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [self performSelector:selector withObject:alertView withObject:obj];
             break;
         }
     }
-    objc_removeAssociatedObjects(alertView);
+//    objc_removeAssociatedObjects(alertView);
 #pragma clang diagnostic pop
 }
 
 - (void)alertViewCancelled:(LGAlertView *)alertView {
-    objc_removeAssociatedObjects(alertView);
+//    objc_removeAssociatedObjects(alertView);
     [alertView dismissAnimated];
 }
 
