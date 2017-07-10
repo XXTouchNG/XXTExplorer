@@ -9,7 +9,7 @@
 #import "XXTEMoreBootScriptController.h"
 #import "XXTEMoreLinkNoIconCell.h"
 #import "XXTEMoreSwitchCell.h"
-#import "XXTEMoreRemoteAddressCell.h"
+#import "XXTEMoreAddressCell.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "UIView+XXTEToast.h"
@@ -66,7 +66,7 @@
 }
 
 - (void)updateBootScriptDisplay {
-    XXTEMoreRemoteAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell2.addressLabel.text = bootScriptPath ? bootScriptPath : @"N/A";
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
@@ -77,7 +77,7 @@
     staticCells[1][1] = cell3;
     
     if (bootScriptPath) {
-        staticSectionTitles = @[ @"", @"Current Script" ];
+        staticSectionTitles = @[ @"", NSLocalizedString(@"Current Script", nil) ];
         staticSectionRowNum = @[ @1, @2 ];
     } else {
         staticSectionTitles = @[ @"", @"" ];
@@ -86,8 +86,8 @@
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"", @"Current Script" ];
-    staticSectionFooters = @[ @"Warning: Bootscript could leave system at a unpredictable state. You can hold \"Volume +\" before booting to stop vulnerable script from being launched.", @"" ];
+    staticSectionTitles = @[ @"", NSLocalizedString(@"Current Script", nil) ];
+    staticSectionFooters = @[ NSLocalizedString(@"Warning: Bootscript could leave system at a unpredictable state. You can hold \"Volume +\" before booting to stop vulnerable script from being launched.", nil), @"" ];
     
     XXTEMoreSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = @"Enable Boot Script";
@@ -95,7 +95,7 @@
     [cell1.optionSwitch addTarget:self action:@selector(bootScriptOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.bootScriptSwitch = cell1.optionSwitch;
     
-    XXTEMoreRemoteAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell2.addressLabel.text = bootScriptPath ? bootScriptPath : @"N/A";
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
@@ -207,14 +207,14 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionFooters[section], nil);
+        return staticSectionFooters[(NSUInteger) section];
     }
     return @"";
 }

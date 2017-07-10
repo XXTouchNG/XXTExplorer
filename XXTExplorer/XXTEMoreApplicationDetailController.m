@@ -13,7 +13,7 @@
 #import "LSApplicationWorkspace.h"
 #import "NSURLConnection+PromiseKit.h"
 #import "XXTEMoreTitleValueCell.h"
-#import "XXTEMoreRemoteAddressCell.h"
+#import "XXTEMoreAddressCell.h"
 #import "XXTEMoreActionCell.h"
 #import "XXTENetworkDefines.h"
 
@@ -76,7 +76,10 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"Detail", @"Bundle Path", @"Container Path", @"Actions" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Detail", nil),
+                             NSLocalizedString(@"Bundle Path", nil),
+                             NSLocalizedString(@"Container Path", nil),
+                             NSLocalizedString(@"Actions", nil) ];
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Name", nil);
@@ -86,10 +89,10 @@ typedef enum : NSUInteger {
     cell2.titleLabel.text = NSLocalizedString(@"Bundle ID", nil);
     cell2.valueLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID];
     
-    XXTEMoreRemoteAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell3.addressLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath];
     
-    XXTEMoreRemoteAddressCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     NSString *containerPath = self.applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath];
     if (!containerPath || containerPath.length <= 0) {
         containerPath = @"/private/var/mobile";
@@ -161,7 +164,7 @@ typedef enum : NSUInteger {
                 });
             }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
-            NSString *detailText = ((XXTEMoreRemoteAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
+            NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self.navigationController.view, YES);
                 [PMKPromise promiseWithValue:@YES].then(^() {
@@ -203,7 +206,7 @@ typedef enum : NSUInteger {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }

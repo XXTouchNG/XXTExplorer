@@ -10,7 +10,7 @@
 #import <objc/message.h>
 #import "XXTEMoreViewController.h"
 #import "XXTEMoreRemoteSwitchCell.h"
-#import "XXTEMoreRemoteAddressCell.h"
+#import "XXTEMoreAddressCell.h"
 #import "XXTEMoreLinkCell.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
@@ -115,8 +115,8 @@ typedef enum : NSUInteger {
     self.remoteAccessSwitch = cell1.optionSwitch;
     self.remoteAccessIndicator = cell1.optionIndicator;
     
-    XXTEMoreRemoteAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
-    XXTEMoreRemoteAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     if (webServerUrl.length != 0) {
         cellAddress1.addressLabel.textColor = [UIColor blackColor];
         cellAddress1.addressLabel.text = webServerUrl;
@@ -175,8 +175,13 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"Remote", @"Daemon", @"License", @"Settings", @"System", @"Help" ];
-    staticSectionFooters = @[ @"Turn on the switch: \n- Access the XXTouch Web Client. \n- Access the WebDAV server.", @"", @"", @"", @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Remote", nil),
+                             NSLocalizedString(@"Daemon", nil),
+                             NSLocalizedString(@"License", nil),
+                             NSLocalizedString(@"Settings", nil),
+                             NSLocalizedString(@"System", nil),
+                             NSLocalizedString(@"Help", nil)];
+    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the XXTouch Web Client. \n- Access the WebDAV server.", nil), @"", @"", @"", @"", @"" ];
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     
@@ -250,9 +255,9 @@ typedef enum : NSUInteger {
     cell15.imageView.image = [UIImage imageNamed:@"XXTEMoreIconAbout"];
     cell15.titleLabel.text = NSLocalizedString(@"About", nil);
     
-    XXTEMoreRemoteAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     
-    XXTEMoreRemoteAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteAddressCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     
     staticCells = @[
                     [@[ cell1, cellAddress1, cellAddress2 ] mutableCopy],
@@ -436,14 +441,14 @@ typedef enum : NSUInteger {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionFooters[section], nil);
+        return staticSectionFooters[(NSUInteger) section];
     }
     return @"";
 }

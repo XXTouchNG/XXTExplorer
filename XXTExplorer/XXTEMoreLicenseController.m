@@ -89,8 +89,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 //}
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"New License", @"Current License", @"Device" ];
-    staticSectionFooters = @[ @"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"New License", nil),
+                             NSLocalizedString(@"Current License", nil),
+                             NSLocalizedString(@"Device", nil) ];
+    staticSectionFooters = @[ NSLocalizedString(@"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", nil), @"", @"" ];
     
     XXTEMoreLicenseCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLicenseCell class]) owner:nil options:nil] lastObject];
     cell1.licenseField.text = @"";
@@ -244,14 +246,14 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionFooters[section], nil);
+        return staticSectionFooters[(NSUInteger) section];
     }
     return @"";
 }

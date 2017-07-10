@@ -1,14 +1,14 @@
 //
-//  XXTEMoreRemoteAddressCell.m
+//  XXTEMoreAddressCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 28/06/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTEMoreRemoteAddressCell.h"
+#import "XXTEMoreAddressCell.h"
 
-@implementation XXTEMoreRemoteAddressCell
+@implementation XXTEMoreAddressCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

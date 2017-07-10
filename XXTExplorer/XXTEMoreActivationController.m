@@ -193,14 +193,14 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[(NSUInteger) section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionFooters[(NSUInteger) section], nil);
+        return staticSectionFooters[(NSUInteger) section];
     }
     return @"";
 }

@@ -105,8 +105,9 @@
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[@"Should Record \"Volume +\"", @"Should Record \"Volume -\""];
-    staticSectionFooters = @[@"", @""];
+    staticSectionTitles = @[ NSLocalizedString(@"Should Record \"Volume +\"", nil),
+                             NSLocalizedString(@"Should Record \"Volume -\"", nil)];
+    staticSectionFooters = @[ @"", @"" ];
     
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell1.accessoryType = UITableViewCellAccessoryNone;
@@ -199,14 +200,14 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[(NSUInteger) section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionFooters[(NSUInteger) section], nil);
+        return staticSectionFooters[(NSUInteger) section];
     }
     return @"";
 }

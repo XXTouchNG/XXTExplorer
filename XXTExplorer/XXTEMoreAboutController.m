@@ -68,7 +68,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"", @"", @"Feedback" ];
+    staticSectionTitles = @[ @"", @"", NSLocalizedString(@"Feedback", nil) ];
     staticSectionFooters = @[ @"", @"", @"" ];
     
     XXTEMoreAboutCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAboutCell class]) owner:nil options:nil] lastObject];
@@ -197,14 +197,14 @@ typedef enum : NSUInteger {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionTitles[section], nil);
+        return staticSectionTitles[(NSUInteger) section];
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return NSLocalizedString(staticSectionFooters[section], nil);
+        return staticSectionFooters[(NSUInteger) section];
     }
     return @"";
 }

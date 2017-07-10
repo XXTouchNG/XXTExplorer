@@ -151,7 +151,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
               XXTExplorerViewEntryAttributePermissionEditable,
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-lua"];
+            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"lua"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
             }
@@ -162,7 +162,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
             @[XXTExplorerViewEntryAttributePermissionExecuteable,
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-xxt"];
+            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"xxt"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
             }
@@ -171,7 +171,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
         else if ([entryBaseExtension isEqualToString:@"zip"])
         {
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionArchive;
-            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-zip"];
+            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"zip"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
             }
@@ -201,7 +201,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
               ];
             newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            UIImage *iconImage = [UIImage imageNamed:@"XXTEFileType-xpp"];
+            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"xpp"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
             }

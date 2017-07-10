@@ -1,5 +1,5 @@
 //
-//  XXTEMoreRemoteAddressCell.h
+//  XXTEMoreAddressCell.h
 //  XXTExplorer
 //
 //  Created by Zheng on 28/06/2017.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString * const XXTEMoreRemoteAddressCellReuseIdentifier = @"XXTEMoreRemoteAddressCellReuseIdentifier";
+static NSString * const XXTEMoreAddressCellReuseIdentifier = @"XXTEMoreAddressCellReuseIdentifier";
 
-@interface XXTEMoreRemoteAddressCell : UITableViewCell
+@interface XXTEMoreAddressCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UITextView *addressLabel;
 
 @end
