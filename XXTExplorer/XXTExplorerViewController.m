@@ -55,7 +55,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 @end
 
 @implementation XXTExplorerViewController {
-    BOOL _entryLoaded;
+    BOOL firstTimeLoaded;
+    BOOL busyOperationProgressFlag;
 }
 
 + (UIPasteboard *)explorerPasteboard {
@@ -157,21 +158,6 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     _kXXTExplorerFetchingSelectedScript = fetching;
 }
 
-#pragma mark - Rotation
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
-         
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
-         
-     }];
-    
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-
 #pragma mark - UIViewController
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -214,7 +200,6 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if (!path) {
             if (![self.class.explorerFileManager fileExistsAtPath:self.class.initialPath]) {
                 NSError *createDirectoryError = nil;
-//                assert(mkdir([initialPath UTF8String], 0755) == 0);
                 BOOL createDirectoryResult = [self.class.explorerFileManager createDirectoryAtPath:self.class.initialPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError];
                 if (!createDirectoryResult) {
 
@@ -224,12 +209,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         }
         _entryPath = path;
     }
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     if (self == self.navigationController.viewControllers[0]) {
         self.title = NSLocalizedString(@"My Scripts", nil);
@@ -292,7 +275,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
     [self updateToolbarButton:self.toolbar];
     [self updateToolbarStatus:self.toolbar];
-    if (_entryLoaded) {
+    if (firstTimeLoaded) {
         [self loadEntryListData];
         [self.tableView reloadData];
     }
@@ -300,8 +283,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!_entryLoaded) {
-        _entryLoaded = YES;
+    if (!firstTimeLoaded) {
+        firstTimeLoaded = YES;
     }
 }
 
@@ -1144,8 +1127,6 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *action = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String]);
     id obj = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String]);
     if (action) {
-//        objc_setAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String], nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//        objc_setAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String], nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardImport])
         {
             if (index == 0)
@@ -1161,7 +1142,6 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 [self alertView:alertView symlinkPasteboardItemsAtPath:obj];
         }
     }
-//    objc_removeAssociatedObjects(alertView);
 }
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
@@ -1178,18 +1158,19 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         SEL selector = selectors[i];
         id obj = objc_getAssociatedObject(alertView, selector);
         if (obj) {
-//            objc_setAssociatedObject(alertView, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [self performSelector:selector withObject:alertView withObject:obj];
             break;
         }
     }
-//    objc_removeAssociatedObjects(alertView);
 #pragma clang diagnostic pop
 }
 
 - (void)alertViewCancelled:(LGAlertView *)alertView {
-//    objc_removeAssociatedObjects(alertView);
-    [alertView dismissAnimated];
+    if (busyOperationProgressFlag) {
+        busyOperationProgressFlag = NO;
+    } else {
+        [alertView dismissAnimated];
+    }
 }
 
 #pragma mark - AlertView Actions
@@ -1209,6 +1190,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     [alertView dismissAnimated];
     [self updateToolbarStatus:self.toolbar];
 }
+
+#pragma mark - Busy Operations
 
 - (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path {
     NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];
@@ -1230,7 +1213,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:@"..."
                                                                         buttonTitles:nil
-                                                                   cancelButtonTitle:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                               destructiveButtonTitle:nil
                                                                             delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1264,6 +1247,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             [self updateToolbarStatus:self.toolbar];
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -1321,6 +1308,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     // TODO: pause by move error
                     break;
                 }
+                if (!busyOperationProgressFlag) {
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Moving process terminated: User interrupt occurred.", nil) }];
+                    break;
+                }
             }
             for (NSString *storedName in storedNames) {
                 NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
@@ -1332,6 +1323,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             }
             BOOL result = (resultPaths.count != 0);
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1358,7 +1350,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:@"..."
                                                                         buttonTitles:nil
-                                                                   cancelButtonTitle:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                               destructiveButtonTitle:nil
                                                                             delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1392,6 +1384,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             [self updateToolbarStatus:self.toolbar];
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -1440,6 +1436,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     // TODO: pause by copy error
                     break;
                 }
+                if (!busyOperationProgressFlag) {
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Pasting process terminated: User interrupt occurred.", nil) }];
+                    break;
+                }
             }
             for (NSString *storedName in storedNames) {
                 NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
@@ -1451,6 +1451,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             }
             BOOL result = (resultPaths.count != 0);
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1473,7 +1474,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:@"..."
                                                                         buttonTitles:nil
-                                                                   cancelButtonTitle:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                               destructiveButtonTitle:nil
                                                                             delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1507,11 +1508,16 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             [self updateToolbarStatus:self.toolbar];
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             for (NSString *storedPath in storedPaths) {
+                if (error != nil) break;
                 dispatch_async_on_main_queue(^{
                     callbackBlock(storedPath);
                 });
@@ -1523,9 +1529,14 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     break;
                 }
                 [resultPaths addObject:targetPath];
+                if (!busyOperationProgressFlag) {
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Linking process terminated: User interrupt occurred.", nil) }];
+                    break;
+                }
             }
             BOOL result = (resultPaths.count != 0);
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1544,7 +1555,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                               style:LGAlertViewStyleActionSheet
                                                                   progressLabelText:entryPath
                                                                        buttonTitles:nil
-                                                                  cancelButtonTitle:nil
+                                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                              destructiveButtonTitle:nil
                                                                            delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1565,6 +1576,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -1596,13 +1611,21 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         }
                     }
                 }
-                [fileManager removeItemAtPath:enumPath error:&error];
+                BOOL removeResult = [fileManager removeItemAtPath:enumPath error:&error];
+                if (!removeResult) {
+                    // TODO: pause by remove error
+                }
+                if (!busyOperationProgressFlag) {
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil) }];
+                    break;
+                }
             }
             if ([fileManager fileExistsAtPath:entryPath] == NO) {
                 [deletedPaths addObject:indexPath];
             }
             BOOL result = (deletedPaths.count != 0);
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1627,7 +1650,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:@"..."
                                                                         buttonTitles:nil
-                                                                   cancelButtonTitle:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                               destructiveButtonTitle:nil
                                                                             delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1648,6 +1671,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -1680,7 +1707,14 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         }
                     }
                 }
-                [fileManager removeItemAtPath:enumPath error:&error];
+                BOOL removeResult = [fileManager removeItemAtPath:enumPath error:&error];
+                if (!removeResult) {
+                    // TODO: pause by remove error
+                }
+                if (!busyOperationProgressFlag) {
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil) }];
+                    break;
+                }
             }
             for (NSUInteger i = 0; i < entryPaths.count; i++) {
                 NSString *entryPath = entryPaths[i];
@@ -1690,6 +1724,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             }
             BOOL result = (deletedPaths.count != 0);
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1727,7 +1762,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:@"..."
                                                                         buttonTitles:nil
-                                                                   cancelButtonTitle:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                               destructiveButtonTitle:nil
                                                                             delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1754,6 +1789,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -1794,15 +1833,23 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                             }
                         }
                     }
-                    zip_entry_open(zip, [enumName fileSystemRepresentation]);
+                    int open_result = zip_entry_open(zip, [enumName fileSystemRepresentation]);
                     {
                         zip_entry_fwrite(zip, [enumPath fileSystemRepresentation]);
                     }
-                    zip_entry_close(zip);
+                    int close_result = zip_entry_close(zip);
+                    if (open_result != 0 || close_result != 0) {
+                        // TODO: pause by archive error
+                    }
+                    if (!busyOperationProgressFlag) {
+                        error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Archiving process terminated: User interrupt occurred.", nil) }];
+                        break;
+                    }
                 }
                 zip_close(zip);
             }
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1828,7 +1875,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:entryPath
                                                                         buttonTitles:nil
-                                                                   cancelButtonTitle:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                               destructiveButtonTitle:nil
                                                                             delegate:self];
     if (alertView && alertView.isShowing) {
@@ -1855,6 +1902,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             showUserMessage(self.navigationController.view, [error localizedDescription]);
         }
     };
+    if (busyOperationProgressFlag) {
+        return;
+    }
+    busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             const char *extractFrom = [entryPath fileSystemRepresentation];
@@ -1870,16 +1921,24 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     dispatch_async_on_main_queue(^{
                         callbackBlock([NSString stringWithUTF8String:filename]);
                     });
+                    if (!busyOperationProgressFlag) {
+                        return -1;
+                    }
                     return 0;
                 };
                 int arg = 2;
                 int status = zip_extract(extractFrom, extractTo, extract_callback, &arg);
                 result = (status == 0);
                 if (NO == result) {
-                    error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath] }];
+                    if (!busyOperationProgressFlag) {
+                        error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Unarchiving process terminated: User interrupt occurred.", nil) }];
+                    } else {
+                        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath] }];
+                    }
                 }
             }
             dispatch_async_on_main_queue(^{
+                busyOperationProgressFlag = NO;
                 completionBlock(result, error);
             });
         });
@@ -1889,7 +1948,6 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 #pragma mark - Memory
 
 - (void)dealloc {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [XXTExplorerViewController dealloc]");
 #endif

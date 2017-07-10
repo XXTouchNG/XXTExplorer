@@ -15,4 +15,6 @@ static inline id uAppDefine(NSString *key) {
     return ((XXTEAppDelegate *)[[UIApplication sharedApplication] delegate]).appDefines[key];
 }
 
+static NSString * const kXXTErrorDomain = @"com.darwindev.XXTExplorer.error";
+
 #endif /* XXTEAppDefines_h */
