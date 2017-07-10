@@ -10,6 +10,7 @@
 
 @interface XXTExplorerCreateItemViewController : UITableViewController
 
++ (NSDateFormatter *)itemTemplateDateFormatter;
 - (instancetype)initWithEntryPath:(NSString *)entryPath;
 
 @end

@@ -161,7 +161,7 @@ typedef enum : NSUInteger {
                     if (!picker) return;
                     picker.view.tintColor = XXTE_COLOR;
                     picker.mailComposeDelegate = self;
-                    [picker setSubject:[NSString stringWithFormat:@"[%@] %@\nV%@", NSLocalizedString(@"Feedback", nil), NSLocalizedString(@"XXTouch Pro", nil), uAppDefine(@"DAEMON_VERSION")]];
+                    [picker setSubject:[NSString stringWithFormat:@"[%@] %@\nV%@", NSLocalizedString(@"Feedback", nil), uAppDefine(@"PRODUCT_NAME"), uAppDefine(@"DAEMON_VERSION")]];
                     NSArray *toRecipients = [NSArray arrayWithObject:uAppDefine(@"SERVICE_EMAIL")];
                     [picker setToRecipients:toRecipients];
                     [self presentViewController:picker animated:YES completion:nil];

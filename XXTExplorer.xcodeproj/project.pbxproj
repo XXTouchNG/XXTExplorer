@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F0654BC1EE483A0005B6C5F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
+		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
 		0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */; };
 		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
@@ -100,6 +101,7 @@
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		0F0654BB1EE483A0005B6C5F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XXTEItemTemplate.lua; sourceTree = "<group>"; };
 		0F10A9191F07B444008BA792 /* LSApplicationWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationWorkspace.h; sourceTree = "<group>"; };
 		0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseController.h; sourceTree = "<group>"; };
 		0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseController.m; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 		0F4F66FD1F1268370042C449 /* Create */ = {
 			isa = PBXGroup;
 			children = (
+				0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */,
 				0F4F67041F1268970042C449 /* XXTExplorerCreateItemNavigationController.h */,
 				0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */,
 				0F4F67061F1268970042C449 /* XXTExplorerCreateItemViewController.h */,
@@ -785,6 +788,7 @@
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
 				0F8455CF1F0D37D90055F98B /* XXTEMoreReferences.bundle in Resources */,
+				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
 				0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				0F35F20B1F106E5700B5B327 /* XXTEUserDefaults.plist in Resources */,

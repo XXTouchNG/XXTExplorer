@@ -11,6 +11,7 @@
 #import "XXTEMoreTitleDescriptionValueCell.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEViewShaker.h"
+#import "XXTEAppDefines.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,
@@ -42,6 +43,19 @@ typedef enum : NSUInteger {
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
     NSArray <NSNumber *> *staticSectionRowNum;
+}
+
++ (NSDateFormatter *)itemTemplateDateFormatter {
+    static NSDateFormatter *itemTemplateDateFormatter = nil;
+    if (!itemTemplateDateFormatter) {
+        itemTemplateDateFormatter = ({
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+            [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+            dateFormatter;
+        });
+    }
+    return itemTemplateDateFormatter;
 }
 
 - (instancetype)init {
@@ -110,7 +124,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil), NSLocalizedString(@"Type", nil) ];
     staticSectionFooters = @[ @"", @"" ];
     
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
@@ -264,6 +278,7 @@ typedef enum : NSUInteger {
     } else if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT) {
         itemName = [itemName stringByAppendingPathExtension:@"txt"];
     }
+    NSString *itemExtension = [itemName pathExtension];
     NSFileManager *createItemManager = [[NSFileManager alloc] init];
     NSString *itemPath = [self.entryPath stringByAppendingPathComponent:itemName];
     if ([createItemManager fileExistsAtPath:itemPath]) {
@@ -280,7 +295,37 @@ typedef enum : NSUInteger {
             return;
         }
     } else {
+        
+        NSError *createError = nil;
         NSData *templateData = [NSData data];
+        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"XXTEItemTemplate" ofType:itemExtension];
+        
+        if ([createItemManager fileExistsAtPath:templatePath]) {
+            
+            NSMutableString *newTemplate = [[[NSString alloc] initWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:&createError] mutableCopy];
+            
+            if (createError) {
+                showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Cannot read template \"%@\".", nil), templatePath]);
+                return;
+            }
+            
+            NSString *deviceName = [[UIDevice currentDevice] name];
+            NSString *versionString = [NSString stringWithFormat:@"%@ V%@", uAppDefine(@"PRODUCT_NAME"), uAppDefine(@"DAEMON_VERSION")];
+            NSString *longDateString = [self.class.itemTemplateDateFormatter stringFromDate:[NSDate date]];
+            NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:[NSDate date]];
+            NSString *yearString = [@([dateComponents year]) stringValue];
+            
+            [newTemplate replaceOccurrencesOfString:@"{{FILENAME}}" withString:itemName options:0 range:NSMakeRange(0, newTemplate.length)];
+            [newTemplate replaceOccurrencesOfString:@"{{PRODUCT_STRING}}" withString:versionString options:0 range:NSMakeRange(0, newTemplate.length)];
+            [newTemplate replaceOccurrencesOfString:@"{{AUTHOR_NAME}}" withString:deviceName options:0 range:NSMakeRange(0, newTemplate.length)];
+            [newTemplate replaceOccurrencesOfString:@"{{CREATED_AT}}" withString:longDateString options:0 range:NSMakeRange(0, newTemplate.length)];
+            [newTemplate replaceOccurrencesOfString:@"{{COPYRIGHT_YEAR}}" withString:yearString options:0 range:NSMakeRange(0, newTemplate.length)];
+            [newTemplate replaceOccurrencesOfString:@"{{DEVICE_NAME}}" withString:deviceName options:0 range:NSMakeRange(0, newTemplate.length)];
+            
+            templateData = [newTemplate dataUsingEncoding:NSUTF8StringEncoding];
+            
+        }
+        
         BOOL createResult = [createItemManager createFileAtPath:itemPath contents:templateData attributes:nil];
         if (!createResult) {
             showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Cannot create file \"%@\".", nil), itemName]);
