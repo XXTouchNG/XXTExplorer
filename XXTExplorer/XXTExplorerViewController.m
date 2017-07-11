@@ -820,18 +820,24 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 #pragma mark - XXTExplorerToolbarDelegate
 
-- (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType {
+- (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem {
     if (toolbar == self.toolbar) {
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan])
         {
             XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
+            navController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
+            popoverController.barButtonItem = buttonItem;
+            popoverController.backgroundColor = [UIColor blackColor];
             [self presentViewController:navController animated:YES completion:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem])
         {
             XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
             XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
+            createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+            createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort])
@@ -1056,6 +1062,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithEntry:entryDetail];
             XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
+            detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+            detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
         }
     }

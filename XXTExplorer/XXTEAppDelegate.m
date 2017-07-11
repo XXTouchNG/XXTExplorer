@@ -53,10 +53,6 @@
     splitViewController.delegate = self;
     splitViewController.viewControllers = @[masterViewController, detailNavigationController];
     
-    // Add Split Button
-//    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-//    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
-    
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     mainWindow.tintColor = XXTE_COLOR;
     mainWindow.backgroundColor = [UIColor whiteColor];
@@ -146,18 +142,14 @@
     }
 }
 
-- (UISplitViewControllerDisplayMode)targetDisplayModeForActionInSplitViewController:(UISplitViewController *)svc {
-    return UISplitViewControllerDisplayModePrimaryOverlay;
-}
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)targetViewController sender:(id)sender {
     UIUserInterfaceIdiom interfaceIdiom = [[UIDevice currentDevice] userInterfaceIdiom];
     if (interfaceIdiom == UIUserInterfaceIdiomPhone)
     {
         if (splitViewController.collapsed) {
             UITabBarController *tabbarController = (UITabBarController *)splitViewController.viewControllers[0];
             UINavigationController *navController = (UINavigationController *)tabbarController.selectedViewController;
-            UINavigationController *destinationController = (UINavigationController *)vc;
+            UINavigationController *destinationController = (UINavigationController *)targetViewController;
             [navController pushViewController:[destinationController.viewControllers lastObject] animated:YES];
             return YES;
         }

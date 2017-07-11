@@ -76,6 +76,12 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 //    self.tableView.rowHeight = UITableViewAutomaticDimension;
 //    self.tableView.estimatedRowHeight = 44.f;
     
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_9) {
+        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewDataWithCompletion:nil];
 }

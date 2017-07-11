@@ -141,10 +141,10 @@
 
 #pragma mark - Button Tapped
 
-- (void)toolbarButtonTapped:(UIBarButtonItem *)item {
-    if (_tapDelegate && [_tapDelegate respondsToSelector:@selector(toolbar:buttonTypeTapped:)]) {
-        NSString *buttonType = [[self.buttons allKeysForObject:item] firstObject];
-        [_tapDelegate toolbar:self buttonTypeTapped:buttonType];
+- (void)toolbarButtonTapped:(UIBarButtonItem *)buttonItem {
+    if (_tapDelegate && [_tapDelegate respondsToSelector:@selector(toolbar:buttonTypeTapped:buttonItem:)]) {
+        NSString *buttonType = [[self.buttons allKeysForObject:buttonItem] firstObject];
+        [_tapDelegate toolbar:self buttonTypeTapped:buttonType buttonItem:buttonItem];
     }
 }
 

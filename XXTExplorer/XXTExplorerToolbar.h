@@ -27,7 +27,7 @@ static NSString * const XXTExplorerToolbarButtonStatusSelected = @"Selected";
 
 @protocol XXTExplorerToolbarDelegate <NSObject>
 
-- (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType;
+- (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem;
 
 @end
 

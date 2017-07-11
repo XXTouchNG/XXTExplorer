@@ -114,6 +114,12 @@ static int sizingCancelFlag = 0;
     self.tableView.dataSource = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_9) {
+        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
@@ -184,7 +190,7 @@ static int sizingCancelFlag = 0;
             mimeString = (__bridge NSString *)(MIMEType);
             CFRelease(MIMEType);
         }
-        cell3.valueLabel.text = [NSString stringWithFormat:@"%@ (%@)", NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil), mimeString];
+        cell3.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil), mimeString];
     } else {
         cell3.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil);
     }
@@ -195,7 +201,7 @@ static int sizingCancelFlag = 0;
     if (![entry[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
         cell4.valueLabel.text = [self formattedSizeLabelText:entry[XXTExplorerViewEntryAttributeSize]];
     } else {
-        cell4.valueLabel.text = NSLocalizedString(@"Calculating...", nil);
+        cell4.valueLabel.text = NSLocalizedString(@"Calculating...\n", nil);
     }
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -311,7 +317,7 @@ static int sizingCancelFlag = 0;
     NSByteCountFormatter *countFormatter = [[NSByteCountFormatter alloc] init];
     countFormatter.allowedUnits = NSByteCountFormatterUseBytes;
     NSString *readableSizeInBytes = [countFormatter stringFromByteCount:byteCount];
-    return [NSString stringWithFormat:NSLocalizedString(@"%@ (%@ on disk)", nil), readableSizeInBytes, readableSize];
+    return [NSString stringWithFormat:NSLocalizedString(@"%@\n(%@ on disk)", nil), readableSizeInBytes, readableSize];
 }
 
 #pragma mark - UIView Getters

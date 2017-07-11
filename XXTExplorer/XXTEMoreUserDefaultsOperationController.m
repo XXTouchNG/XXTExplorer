@@ -46,6 +46,13 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkNoIconCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkNoIconCellReuseIdentifier];
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_9) {
+        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource

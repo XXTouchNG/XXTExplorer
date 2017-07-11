@@ -64,6 +64,12 @@ typedef enum : NSUInteger {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_9) {
+        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     [self reloadStaticTableViewData];
 }
 

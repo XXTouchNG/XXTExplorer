@@ -12,8 +12,11 @@
 #import "XXTEDispatchDefines.h"
 #import <PromiseKit/PromiseKit.h>
 #import "UIView+XXTEToast.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "XXTEUserInterfaceDefines.h"
+#import <LGAlertView/LGAlertView.h>
 
-@interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate>
+@interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
 @property (nonatomic, strong) AVCaptureSession *scanSession;
 @property (nonatomic, strong) AVCaptureDevice *scanDevice;
 @property (nonatomic, strong) AVCaptureDeviceInput *scanInput;
@@ -99,18 +102,30 @@
 }
 
 - (void)continueScan {
+    [self startAnimation];
     if (self.scanSession && ![self.scanSession isRunning]) {
         [self.scanSession startRunning];
     }
 }
 
-- (void)loadLayerFrame {
+- (void)pauseScan {
+    [self stopAnimation];
+    if (self.scanSession && [self.scanSession isRunning]) {
+        [self.scanSession stopRunning];
+    }
+}
+
+- (BOOL)loadLayerFrame {
     if (!self.layerLoaded) {
+        if (!self.scanLayer) {
+            return NO;
+        }
         self.layerLoaded = YES;
         self.scanLayer.frame = self.view.layer.bounds;
         [self.view.layer insertSublayer:self.scanLayer atIndex:0];
         [self.scanSession startRunning];
     }
+    return YES;
 }
 
 #pragma mark - UIView Getters
@@ -123,9 +138,13 @@
         }
         if ([scanSession canAddInput:self.scanInput]) {
             [scanSession addInput:self.scanInput];
+        } else {
+            return nil;
         }
         if ([scanSession canAddOutput:self.scanOutput]) {
             [scanSession addOutput:self.scanOutput];
+        } else {
+            return nil;
         }
         if ([self.scanOutput.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeQRCode]) {
             self.scanOutput.metadataObjectTypes = @[ AVMetadataObjectTypeQRCode ];
@@ -153,7 +172,7 @@
         NSError *err = nil;
         AVCaptureDeviceInput *scanInput = [AVCaptureDeviceInput deviceInputWithDevice:self.scanDevice error:&err];
         if (!scanInput) {
-            // NSLocalizedString(@"Cannot connect to video device", nil);
+            
         }
         _scanInput = scanInput;
     }
@@ -171,6 +190,9 @@
 
 - (AVCaptureVideoPreviewLayer *)scanLayer {
     if (!_scanLayer) {
+        if (!self.scanSession) {
+            return nil;
+        }
         AVCaptureVideoPreviewLayer *scanLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.scanSession];
         scanLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         _scanLayer = scanLayer;
@@ -303,7 +325,22 @@
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
-    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        return;
+    }
+    [self pauseScan];
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.allowsEditing = NO;
+    imagePicker.mediaTypes = @[ (__bridge NSString *)kUTTypeImage ];
+    imagePicker.navigationBar.translucent = NO;
+    imagePicker.navigationBar.barTintColor = XXTE_COLOR;
+    imagePicker.navigationBar.tintColor = [UIColor whiteColor];
+    imagePicker.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
+    imagePicker.modalPresentationStyle = UIModalPresentationFormSheet;
+    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 #pragma mark - Permission Request
@@ -322,7 +359,10 @@
     id (^ displayPermissionBlock)(NSNumber *) = ^(NSNumber *status) {
         AVAuthorizationStatus permissionStatus = (AVAuthorizationStatus) [status integerValue];
         if (permissionStatus == AVAuthorizationStatusAuthorized) {
-            [self loadLayerFrame];
+            BOOL loadResult = [self loadLayerFrame];
+            if (!loadResult) {
+                @throw NSLocalizedString(@"Cannot connect to video device.", nil);
+            }
         } else if (permissionStatus == AVAuthorizationStatusDenied) {
             self.title = NSLocalizedString(@"Access Denied", nil);
         } else if (permissionStatus == AVAuthorizationStatusRestricted) {
@@ -349,9 +389,7 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     if (metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject * metadataObject = metadataObjects[0];
-        if (self.scanSession && [self.scanSession isRunning]) {
-            [self.scanSession stopRunning];
-        }
+        [self pauseScan];
         [self handleOutput:metadataObject.stringValue];
     }
 }
@@ -374,6 +412,75 @@
 
 - (void)handleOutput:(NSString *)output {
     if (!output) return;
+    blockUserInteractions(self, YES);
+    
+    // URL? (v2)
+    NSURL *url = [NSURL URLWithString:output];
+    if (url) {
+        blockUserInteractions(self, NO);
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            // TODO: recognize XXTouch URL
+        } else {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Cannot open url: \"%@\"", nil), output]
+                                                                  style:LGAlertViewStyleAlert
+                                                           buttonTitles:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                                 destructiveButtonTitle:nil
+                                                               delegate:self];
+            [alertView showAnimated];
+        }
+        return;
+    }
+    
+    // JSON? (v1)
+    
+    // PLAIN TEXT
+    
+}
+
+#pragma mark - LGAlertViewDelegate
+
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+    [self performSelector:@selector(continueScan) withObject:nil afterDelay:.6f];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self performSelector:@selector(continueScan) withObject:nil afterDelay:.6f];
+    }];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *, id> *)mediaInfo {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeImage])
+    {
+        UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
+        blockUserInteractions(self, YES);
+        [PMKPromise promiseWithValue:@(YES)].then(^() {
+            NSString *scannedResult = [self scanImage:originalImage];
+            if (!scannedResult) {
+                @throw NSLocalizedString(@"Cannot find QR Code in the image.", nil);
+            }
+            return scannedResult;
+        }).then(^(NSString *scannedResult) {
+            [self handleOutput:scannedResult];
+        }).catch(^(NSError *scanError) {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Scan Error", nil)
+                                                                message:[scanError localizedDescription]
+                                                                  style:LGAlertViewStyleAlert
+                                                           buttonTitles:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                                 destructiveButtonTitle:nil
+                                                               delegate:self];
+            [alertView showAnimated];
+        }).finally(^() {
+            blockUserInteractions(self, NO);
+        });
+    }
 }
 
 @end

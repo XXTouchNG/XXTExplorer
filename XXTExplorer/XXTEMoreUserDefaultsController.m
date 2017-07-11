@@ -101,6 +101,12 @@ enum {
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_9) {
+        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_9) {
         [self.searchController loadViewIfNeeded];
     }
     XXTE_END_IGNORE_PARTIAL

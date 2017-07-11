@@ -20,9 +20,21 @@ enum {
     kXXTEMoreApplicationSearchTypeBundleID
 };
 
+#if !(TARGET_OS_SIMULATOR)
 CFArrayRef SBSCopyApplicationDisplayIdentifiers(bool onlyActive, bool debuggable);
 CFStringRef SBSCopyLocalizedApplicationNameForDisplayIdentifier(CFStringRef displayIdentifier);
 CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentifier);
+#else
+CFArrayRef SBSCopyApplicationDisplayIdentifiers(bool onlyActive, bool debuggable) {
+    return (__bridge CFArrayRef)(@[]);
+}
+CFStringRef SBSCopyLocalizedApplicationNameForDisplayIdentifier(CFStringRef displayIdentifier) {
+    return (__bridge CFStringRef)@"";
+}
+CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentifier) {
+    return (__bridge CFDataRef)([NSData data]);
+}
+#endif
 
 @interface XXTEMoreApplicationListController ()
         <

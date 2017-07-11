@@ -21,11 +21,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.showLoadingBar = YES;
+    self.showUrlWhileLoading = NO;
     self.loadingBarTintColor = XXTE_COLOR_SUCCESS;
     self.hideWebViewBoundaries = YES;
     self.hidesBottomBarWhenPushed = YES;
     
     self.webView.opaque = NO;
+    
+    self.applicationLeftBarButtonItems = @[ self.splitViewController.displayModeButtonItem ];
+    
 }
 
 - (void)showPlaceholderTitle {

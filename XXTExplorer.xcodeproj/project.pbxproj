@@ -426,6 +426,7 @@
 		0F61E1601ED78712003DCC78 /* Master */ = {
 			isa = PBXGroup;
 			children = (
+				0FCC2AD81F145D1900C50A48 /* Common */,
 				0F61E1651ED787A7003DCC78 /* XXTEMasterViewController.h */,
 				0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */,
 				0F61E1621ED7872F003DCC78 /* Explorer */,
@@ -666,6 +667,13 @@
 				0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		0FCC2AD81F145D1900C50A48 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
