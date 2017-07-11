@@ -1046,7 +1046,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     [self loadEntryListData];
                     [self.tableView reloadData];
                 } else {
-                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+                    if (selectAfterLaunch) {
+                        @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+                    }
                 }
             })
             .catch(^(NSError *serverError) {

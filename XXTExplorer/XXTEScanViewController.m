@@ -6,6 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <objc/runtime.h>
+#import <objc/message.h>
 #import "XXTEScanViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "XXTEScanLineAnimation.h"
@@ -15,6 +17,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "XXTEUserInterfaceDefines.h"
 #import <LGAlertView/LGAlertView.h>
+#import "XXTEImagePickerController.h"
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
 @property (nonatomic, strong) AVCaptureSession *scanSession;
@@ -325,11 +328,11 @@
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+    if (![XXTEImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         return;
     }
     [self pauseScan];
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    XXTEImagePickerController *imagePicker = [[XXTEImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.allowsEditing = NO;
@@ -419,7 +422,21 @@
     if (url) {
         blockUserInteractions(self, NO);
         if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            // TODO: recognize XXTouch URL
+            if ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]) {
+                // Web browser
+                [self webViewControllerOpenURL:url];
+            }
+            else {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Will open url in 3rd party application: \"%@\", continue?", nil), output]
+                                                                      style:LGAlertViewStyleAlert
+                                                               buttonTitles:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Continue", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:openURL:), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated];
+            }
         } else {
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Cannot open url: \"%@\"", nil), output]
@@ -431,12 +448,32 @@
             [alertView showAnimated];
         }
         return;
-    }
+    } // url finished
     
     // JSON? (v1)
+    NSError *jsonError = nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:[output dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&jsonError];
+    if (!jsonError && jsonObject && [jsonObject isKindOfClass:[NSDictionary class]]) {
+        
+        return;
+    } // json finished
     
     // PLAIN TEXT
-    
+    {
+        NSString *detailText = output;
+        blockUserInteractions(self, NO);
+        if (detailText && detailText.length > 0) {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Content", nil)
+                                                                message:detailText
+                                                                  style:LGAlertViewStyleAlert
+                                                           buttonTitles:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                 destructiveButtonTitle:NSLocalizedString(@"Copy", nil)
+                                                               delegate:self];
+            objc_setAssociatedObject(alertView, @selector(alertView:copyString:), detailText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [alertView showAnimated];
+        }
+    } // plain finished
 }
 
 #pragma mark - LGAlertViewDelegate
@@ -444,6 +481,46 @@
 - (void)alertViewCancelled:(LGAlertView *)alertView {
     [alertView dismissAnimated];
     [self performSelector:@selector(continueScan) withObject:nil afterDelay:.6f];
+}
+
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    SEL selectors[] = {
+        @selector(alertView:openURL:)
+    };
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    for (int i = 0; i < sizeof(selectors) / sizeof(SEL); i++) {
+        SEL selector = selectors[i];
+        id obj = objc_getAssociatedObject(alertView, selector);
+        if (obj) {
+            [self performSelector:selector withObject:alertView withObject:obj];
+            break;
+        }
+    }
+#pragma clang diagnostic pop
+}
+
+#pragma mark - Ending Actions - Open URL in 3rd Apps
+
+- (void)alertView:(LGAlertView *)alertView openURL:(NSURL *)url {
+    if ([[UIApplication sharedApplication] openURL:url]) {
+        
+    }
+    [alertView dismissAnimated];
+    // TODO: Tell delegate to open url
+}
+
+#pragma mark - Ending Actions - XXTECommonWebViewController
+
+- (void)webViewControllerOpenURL:(NSURL *)url {
+    if (![[UIApplication sharedApplication] canOpenURL:url]) {
+        return;
+    }
+    // TODO: Tell delegate to open url
+}
+
+- (void)alertView:(LGAlertView *)alertView copyString:(NSString *)detailText {
+    // TODO: Tell delegate to copy string
 }
 
 #pragma mark - UIImagePickerControllerDelegate
