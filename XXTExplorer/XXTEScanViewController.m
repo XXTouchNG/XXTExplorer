@@ -20,20 +20,20 @@
 #import "XXTEImagePickerController.h"
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
-@property (nonatomic, strong) AVCaptureSession *scanSession;
-@property (nonatomic, strong) AVCaptureDevice *scanDevice;
-@property (nonatomic, strong) AVCaptureDeviceInput *scanInput;
-@property (nonatomic, strong) AVCaptureMetadataOutput *scanOutput;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer *scanLayer;
+@property(nonatomic, strong) AVCaptureSession *scanSession;
+@property(nonatomic, strong) AVCaptureDevice *scanDevice;
+@property(nonatomic, strong) AVCaptureDeviceInput *scanInput;
+@property(nonatomic, strong) AVCaptureMetadataOutput *scanOutput;
+@property(nonatomic, strong) AVCaptureVideoPreviewLayer *scanLayer;
 
-@property (nonatomic, strong) UIBarButtonItem *dismissItem;
-@property (nonatomic, strong) UIBarButtonItem *albumItem;
-@property (nonatomic, strong) UIImage *maskImage;
-@property (nonatomic, strong) UIImageView *maskView;
-@property (nonatomic, assign) CGRect cropRect;
-@property (nonatomic, strong) XXTEScanLineAnimation *scanLineAnimation;
+@property(nonatomic, strong) UIBarButtonItem *dismissItem;
+@property(nonatomic, strong) UIBarButtonItem *albumItem;
+@property(nonatomic, strong) UIImage *maskImage;
+@property(nonatomic, strong) UIImageView *maskView;
+@property(nonatomic, assign) CGRect cropRect;
+@property(nonatomic, strong) XXTEScanLineAnimation *scanLineAnimation;
 
-@property (nonatomic, assign) BOOL layerLoaded;
+@property(nonatomic, assign) BOOL layerLoaded;
 
 @end
 
@@ -60,21 +60,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.layerLoaded = NO;
-    
+
     self.title = NSLocalizedString(@"Scan", nil);
     self.view.backgroundColor = [UIColor blackColor];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.extendedLayoutIncludesOpaqueBars = YES;
-    
+
     self.maskView.image = self.maskImage;
     [self.view addSubview:self.maskView];
-    
+
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
     self.navigationItem.leftBarButtonItem = self.dismissItem;
     self.navigationItem.rightBarButtonItem = self.albumItem;
-    
+
     [self fetchVideoPermission];
 }
 
@@ -146,13 +146,13 @@
             return nil;
         }
         if ([self.scanOutput.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeQRCode]) {
-            self.scanOutput.metadataObjectTypes = @[ AVMetadataObjectTypeQRCode ];
+            self.scanOutput.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
         }
         CGSize viewSize = self.view.bounds.size;
         self.scanOutput.rectOfInterest = CGRectMake(self.cropRect.origin.y / viewSize.height,
-                                                    self.cropRect.origin.x / viewSize.width,
-                                                    self.cropRect.size.height / viewSize.height,
-                                                    self.cropRect.size.width / viewSize.width);
+                self.cropRect.origin.x / viewSize.width,
+                self.cropRect.size.height / viewSize.height,
+                self.cropRect.size.width / viewSize.width);
         _scanSession = scanSession;
     }
     return _scanSession;
@@ -171,7 +171,7 @@
         NSError *err = nil;
         AVCaptureDeviceInput *scanInput = [AVCaptureDeviceInput deviceInputWithDevice:self.scanDevice error:&err];
         if (!scanInput) {
-            
+
         }
         _scanInput = scanInput;
     }
@@ -219,35 +219,35 @@
 
 - (UIImage *)maskImage {
     if (!_maskImage) {
-        
+
         CGSize oldSize = self.view.bounds.size;
         CGFloat maxLength = MAX(oldSize.width, oldSize.height);
         CGFloat minLength = MIN(oldSize.width, oldSize.height);
         CGSize size = CGSizeMake(maxLength, maxLength);
         CGFloat rectWidth = minLength / 3 * 2;
-        
+
         CGPoint pA = CGPointMake(size.width / 2 - rectWidth / 2, size.height / 2 - rectWidth / 2);
         CGPoint pD = CGPointMake(size.width / 2 + rectWidth / 2, size.height / 2 + rectWidth / 2);
-        
+
         // Begin Context
         UIGraphicsBeginImageContextWithOptions(size, NO, [[UIScreen mainScreen] scale]);
         CGContextRef ctx = UIGraphicsGetCurrentContext();
-        
+
         // Fill Background
         CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.3f);
         CGRect drawRect = CGRectMake(0, 0, size.width, size.height);
         CGContextFillRect(ctx, drawRect);
-        
+
         // Clear Rect
         CGRect cropRect = CGRectMake(pA.x, pA.y, rectWidth, rectWidth);
         CGContextClearRect(ctx, cropRect);
-        
+
         // Draw Rect Lines
         CGContextSetLineWidth(ctx, 1.6f);
         CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
         CGContextAddRect(ctx, cropRect);
         CGContextStrokePath(ctx);
-        
+
         // Draw Rect Angles
         CGFloat lineWidthAngle = 8.f;
         CGFloat diffAngle = lineWidthAngle / 3;
@@ -257,10 +257,10 @@
         CGFloat topY = pA.y - diffAngle;
         CGFloat rightX = pD.x + diffAngle;
         CGFloat bottomY = pD.y + diffAngle;
-        
+
         CGContextSetLineWidth(ctx, lineWidthAngle);
         CGContextSetStrokeColorWithColor(ctx, XXTE_COLOR.CGColor);
-        
+
         CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
         CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
         CGContextMoveToPoint(ctx, leftX, topY - lineWidthAngle / 2);
@@ -278,11 +278,11 @@
         CGContextMoveToPoint(ctx, rightX, bottomY + lineWidthAngle / 2);
         CGContextAddLineToPoint(ctx, rightX, bottomY - hAngle);
         CGContextStrokePath(ctx);
-        
+
         // Generate Image
-        UIImage* returnImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        
+
         _maskImage = returnImage;
     }
     return _maskImage;
@@ -332,11 +332,11 @@
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.allowsEditing = NO;
-    imagePicker.mediaTypes = @[ (__bridge NSString *)kUTTypeImage ];
+    imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
     imagePicker.navigationBar.translucent = NO;
     imagePicker.navigationBar.barTintColor = XXTE_COLOR;
     imagePicker.navigationBar.tintColor = [UIColor whiteColor];
-    imagePicker.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
+    imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     imagePicker.modalPresentationStyle = UIModalPresentationFormSheet;
     imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
@@ -370,26 +370,29 @@
             return fetchPermissionPromise;
         }
         if (permissionStatus == AVAuthorizationStatusRestricted ||
-            permissionStatus == AVAuthorizationStatusDenied) {
+                permissionStatus == AVAuthorizationStatusDenied) {
             @throw NSLocalizedString(@"Turn to \"Settings > Privacy > Camera\" and enable XXTouch to use your camera.", nil);
         }
         return [PMKPromise promiseWithValue:status];
     };
     checkPermissionPromise.then(displayPermissionBlock).then(displayPermissionBlock)
-    .catch(^(NSError *error) {
-        [self.maskView setHidden:YES];
-        [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
-        [self.navigationController.view makeToast:[error localizedDescription] duration:CGFLOAT_MAX position:XXTEToastPositionCenter];
-    });
+            .catch(^(NSError *error) {
+                [self.maskView setHidden:YES];
+                [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
+                [self.navigationController.view makeToast:[error localizedDescription] duration:CGFLOAT_MAX position:XXTEToastPositionCenter];
+            });
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     if (metadataObjects.count > 0) {
-        AVMetadataMachineReadableCodeObject * metadataObject = metadataObjects[0];
-        [self pauseScan];
-        [self handleOutput:metadataObject.stringValue];
+        AVMetadataMachineReadableCodeObject *metadataObject = metadataObjects[0];
+        NSString *stringValue = metadataObject.stringValue;
+        if (stringValue.length > 0) {
+            [self pauseScan];
+            [self handleOutput:stringValue];
+        }
     }
 }
 
@@ -397,9 +400,9 @@
 
 - (NSString *)scanImage:(UIImage *)image {
     NSString *scannedResult = nil;
-    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{ CIDetectorAccuracy : CIDetectorAccuracyHigh }];
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
     NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
-    for (NSUInteger index = 0; index < features.count; index ++) {
+    for (NSUInteger index = 0; index < features.count; index++) {
         CIQRCodeFeature *feature = features[index];
         scannedResult = feature.messageString;
         if (scannedResult) {
@@ -411,121 +414,45 @@
 
 - (void)handleOutput:(NSString *)output {
     if (!output) return;
-    
+
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];
-    if (url) {
-        if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            if ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]) {
-                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Will open url in internal browser: \"%@\", continue?", nil), output]
-                                                                      style:LGAlertViewStyleAlert
-                                                               buttonTitles:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                     destructiveButtonTitle:NSLocalizedString(@"Continue", nil)
-                                                                   delegate:self];
-                objc_setAssociatedObject(alertView, @selector(alertView:openURL:), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                [alertView showAnimated];
-                return;
-            }
-            else {
-                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Will open url in 3rd party application: \"%@\", continue?", nil), output]
-                                                                      style:LGAlertViewStyleAlert
-                                                               buttonTitles:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                     destructiveButtonTitle:NSLocalizedString(@"Continue", nil)
-                                                                   delegate:self];
-                objc_setAssociatedObject(alertView, @selector(alertView:openURL:), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                [alertView showAnimated];
-                return;
-            }
-        } else {
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Cannot open url: \"%@\"", nil), output]
-                                                                  style:LGAlertViewStyleAlert
-                                                           buttonTitles:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
-                                                 destructiveButtonTitle:nil
-                                                               delegate:self];
-            [alertView showAnimated];
-            return;
-        }
+    if (url && [[UIApplication sharedApplication] canOpenURL:url]) {
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
+                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Will open url: \n\"%@\", continue?", nil), output]
+                                                              style:LGAlertViewStyleAlert
+                                                       buttonTitles:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                             destructiveButtonTitle:NSLocalizedString(@"Continue", nil)
+                                                           delegate:self];
+        objc_setAssociatedObject(alertView, @selector(alertView:openURL:), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [alertView showAnimated];
+        return;
     } // url finished
-    
+
     // JSON? (v1)
     NSError *jsonError = nil;
     id jsonObject = [NSJSONSerialization JSONObjectWithData:[output dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&jsonError];
     if (!jsonError && jsonObject && [jsonObject isKindOfClass:[NSDictionary class]]) {
-        NSString *jsonEvent = jsonObject[@"event"];
-        if (jsonEvent &&
-            [jsonEvent isKindOfClass:[NSString class]]) {
-            if ([jsonEvent isEqualToString:@"bind_code"]) {
-                if (jsonObject[@"code"] &&
-                    [jsonObject[@"code"] isKindOfClass:[NSString class]] &&
-                    [jsonObject[@"code"] length] != 0) {
-                    NSString *jsonCode = jsonObject[@"code"];
-                    [self activateLicenseWithCode:jsonCode];
-                    return;
-                }
-            } else if ([jsonEvent isEqualToString:@"down_script"]) {
-                if (jsonObject[@"path"] &&
-                    [jsonObject[@"path"] isKindOfClass:[NSString class]] &&
-                    [jsonObject[@"path"] length] != 0 &&
-                    jsonObject[@"url"] &&
-                    [jsonObject[@"url"] isKindOfClass:[NSString class]] &&
-                    [jsonObject[@"url"] length] != 0
-                    )
-                {
-                    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Deprecated Event", nil)
-                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Event \"down_script\" is not available.", nil), output]
-                                                                          style:LGAlertViewStyleAlert
-                                                                   buttonTitles:nil
-                                                              cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
-                                                         destructiveButtonTitle:nil
-                                                                       delegate:self];
-                    [alertView showAnimated];
-                    return;
-                }
-            }
-        } else {
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid JSON", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Cannot parse json: \"%@\"", nil), output]
-                                                                  style:LGAlertViewStyleAlert
-                                                           buttonTitles:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
-                                                 destructiveButtonTitle:nil
-                                                               delegate:self];
-            [alertView showAnimated];
-            return;
+        if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:jsonOperation:)]) {
+            [_delegate scanViewController:self jsonOperation:jsonObject];
         }
+        return;
     } // json finished
-    
+
     // PLAIN TEXT
     {
         NSString *detailText = output;
-        if (detailText && detailText.length > 0) {
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Text Content", nil)
-                                                                message:detailText
-                                                                  style:LGAlertViewStyleAlert
-                                                           buttonTitles:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                 destructiveButtonTitle:NSLocalizedString(@"Copy", nil)
-                                                               delegate:self];
-            objc_setAssociatedObject(alertView, @selector(alertView:copyString:), detailText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [alertView showAnimated];
-            return;
-        } else {
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Text", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Cannot parse plain text: \"%@\"", nil), output]
-                                                                  style:LGAlertViewStyleAlert
-                                                           buttonTitles:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
-                                                 destructiveButtonTitle:nil
-                                                               delegate:self];
-            [alertView showAnimated];
-            return;
-        }
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Text Content", nil)
+                                                            message:detailText
+                                                              style:LGAlertViewStyleAlert
+                                                       buttonTitles:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                             destructiveButtonTitle:NSLocalizedString(@"Copy", nil)
+                                                           delegate:self];
+        objc_setAssociatedObject(alertView, @selector(alertView:copyString:), detailText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [alertView showAnimated];
+        return;
     } // plain finished
 }
 
@@ -538,8 +465,8 @@
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     SEL selectors[] = {
-        @selector(alertView:openURL:),
-        @selector(alertView:copyString:)
+            @selector(alertView:openURL:),
+            @selector(alertView:copyString:)
     };
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -554,25 +481,19 @@
 #pragma clang diagnostic pop
 }
 
-#pragma mark - Ending Actions - Open URL in 3rd Apps
+#pragma mark - Ending Actions
 
 - (void)alertView:(LGAlertView *)alertView openURL:(NSURL *)url {
     [alertView dismissAnimated];
-    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:openURL:)]) {
-        [_delegate scanViewController:self openURL:url];
+    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:urlOperation:)]) {
+        [_delegate scanViewController:self urlOperation:url];
     }
 }
 
 - (void)alertView:(LGAlertView *)alertView copyString:(NSString *)detailText {
     [alertView dismissAnimated];
-    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:copyString:)]) {
-        [_delegate scanViewController:self copyString:detailText];
-    }
-}
-
-- (void)activateLicenseWithCode:(NSString *)jsonCode {
-    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:activateLicense:)]) {
-        [_delegate scanViewController:self activateLicense:jsonCode];
+    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:textOperation:)]) {
+        [_delegate scanViewController:self textOperation:detailText];
     }
 }
 
@@ -586,13 +507,12 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *, id> *)mediaInfo {
     [picker dismissViewControllerAnimated:YES completion:nil];
-    if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeImage])
-    {
+    if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *) kUTTypeImage]) {
         UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
         blockUserInteractions(self, YES);
         [PMKPromise promiseWithValue:@(YES)].then(^() {
             NSString *scannedResult = [self scanImage:originalImage];
-            if (!scannedResult) {
+            if (!scannedResult || scannedResult.length <= 0) {
                 @throw NSLocalizedString(@"Cannot find QR Code in the image.", nil);
             }
             return scannedResult;

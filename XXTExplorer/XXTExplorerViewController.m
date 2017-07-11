@@ -34,7 +34,10 @@
 #import "XXTExplorerItemDetailNavigationController.h"
 #import "XXTECommonNavigationController.h"
 #import "XXTECommonWebViewController.h"
+#import "XXTEMoreLicenseNavigationController.h"
 #import "XXTEMoreLicenseController.h"
+#import "XXTExplorerDownloadNavigationController.h"
+#import "XXTExplorerDownloadViewController.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -192,8 +195,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         NSArray *explorerUserDefaults = userDefaults[@"EXPLORER_USER_DEFAULTS"];
         for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
             NSString *defaultKey = explorerUserDefault[@"key"];
-            if (![self.class.explorerDefaults objectForKey:defaultKey])
-            {
+            if (![self.class.explorerDefaults objectForKey:defaultKey]) {
                 id defaultValue = explorerUserDefault[@"default"];
                 [self.class.explorerDefaults setObject:defaultValue forKey:defaultKey];
             }
@@ -216,15 +218,15 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     if (self == self.navigationController.viewControllers[0]) {
         self.title = NSLocalizedString(@"My Scripts", nil);
     } else {
         self.title = [self.entryPath lastPathComponent];
     }
-    
+
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44.f, self.view.bounds.size.width, self.view.bounds.size.height - 44.f) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -237,15 +239,14 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         XXTE_START_IGNORE_PARTIAL
         if (XXTE_SYSTEM_9) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
-        XXTE_END_IGNORE_PARTIAL
+        }XXTE_END_IGNORE_PARTIAL
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
         tableView;
     });
-    
+
     [self.view addSubview:self.tableView];
-    
+
     _toolbar = ({
         XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
         toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
@@ -253,7 +254,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         toolbar;
     });
     [self.view addSubview:self.toolbar];
-    
+
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     _refreshControl = ({
@@ -263,7 +264,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         refreshControl;
     });
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
-    
+
     _footerView = ({
         XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
         entryFooterView;
@@ -315,12 +316,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 #pragma mark - XXTExplorerToolbar
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
-    if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) == XXTExplorerViewEntryListSortOrderAsc)
-    {
+    if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) == XXTExplorerViewEntryListSortOrderAsc) {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:YES];
-    }
-    else
-    {
+    } else {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusSelected enabled:YES];
     }
 }
@@ -328,30 +326,22 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 - (void)updateToolbarStatus:(XXTExplorerToolbar *)toolbar {
     if ([[[self class] explorerPasteboard] strings].count > 0) {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
-    }
-    else
-    {
+    } else {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
     }
-    if ([self isEditing])
-    {
-        if (([self.tableView indexPathsForSelectedRows].count) > 0)
-        {
+    if ([self isEditing]) {
+        if (([self.tableView indexPathsForSelectedRows].count) > 0) {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:YES];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:YES];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:YES];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
-        }
-        else
-        {
+        } else {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:NO];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:NO];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:NO];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
         }
-    }
-    else
-    {
+    } else {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
@@ -360,17 +350,16 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 #pragma mark - NSFileManager
 
-- (void)loadEntryListDataWithError:(NSError **)error
-{
+- (void)loadEntryListDataWithError:(NSError **)error {
     {
         if (XXTEDefaultsBool(XXTExplorerViewSectionHomeEnabledKey) &&
-            self == self.navigationController.viewControllers[0]) {
+                self == self.navigationController.viewControllers[0]) {
             _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewSectionHomeSeriesKey);
         } else {
             _homeEntryList = nil;
         }
     }
-    
+
     _entryList = ({
         BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey);
         NSError *localError = nil;
@@ -378,52 +367,46 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if (localError && error) *error = localError;
         NSMutableArray <NSDictionary *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
         NSMutableArray <NSDictionary *> *entryOtherAttributesList = [[NSMutableArray alloc] init];
-        for (NSString *entrySubdirectoryName in entrySubdirectoryPathList)
-        {
+        for (NSString *entrySubdirectoryName in entrySubdirectoryPathList) {
             if (hidesDot && [entrySubdirectoryName hasPrefix:@"."]) {
                 continue;
             }
             NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
             NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
-            if (localError && error)
-            {
+            if (localError && error) {
                 *error = localError;
                 break;
             }
             // TODO: Parse each entry using XXTExplorerEntryExtensions
-            if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
-            {
+            if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
                 [entryDirectoryAttributesList addObject:entryAttributes];
-            }
-            else
-            {
+            } else {
                 [entryOtherAttributesList addObject:entryAttributes];
             }
         }
         NSString *sortField = XXTEDefaultsObject(XXTExplorerViewEntryListSortFieldKey);
         NSUInteger sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey);
-        NSComparator comparator = ^NSComparisonResult(NSDictionary * _Nonnull obj1, NSDictionary * _Nonnull obj2)
-        {
+        NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2) {
             return (sortOrder == XXTExplorerViewEntryListSortOrderAsc) ? [obj1[sortField] compare:obj2[sortField]] : [obj2[sortField] compare:obj1[sortField]];
         };
         [entryDirectoryAttributesList sortUsingComparator:comparator];
         [entryOtherAttributesList sortUsingComparator:comparator];
-        
+
         NSMutableArray <NSDictionary *> *entryAttributesList = [[NSMutableArray alloc] initWithCapacity:entrySubdirectoryPathList.count];
         [entryAttributesList addObjectsFromArray:entryDirectoryAttributesList];
         [entryAttributesList addObjectsFromArray:entryOtherAttributesList];
         entryAttributesList;
     });
     if (error && *error) _entryList = @[]; // clean entry list if error exists
-    
+
     NSUInteger itemCount = self.entryList.count;
     NSString *itemCountString = nil;
     if (itemCount == 0) {
         itemCountString = NSLocalizedString(@"No item", nil);
     } else if (itemCount == 1) {
         itemCountString = NSLocalizedString(@"1 item", nil);
-    } else  {
-        itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)itemCount];
+    } else {
+        itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long) itemCount];
     }
     NSString *usageString = nil;
     NSError *usageError = nil;
@@ -438,8 +421,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     [self.footerView.footerLabel setText:finalFooterString];
 }
 
-- (void)loadEntryListData
-{
+- (void)loadEntryListData {
     NSError *entryLoadError = nil;
     [self loadEntryListDataWithError:&entryLoadError];
     if (entryLoadError) {
@@ -451,36 +433,36 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if ([self.class isFetchingSelectedScript] == NO) {
         [self.class setFetchingSelectedScript:YES];
         [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{}]
-        .then(convertJsonString)
-        .then(^(NSDictionary *jsonDictionary) {
-            if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
-                NSString *selectedScriptName = jsonDictionary[@"data"][@"filename"];
-                if (selectedScriptName) {
-                    NSString *selectedScriptPath = nil;
-                    if ([selectedScriptName isAbsolutePath]) {
-                        selectedScriptPath = selectedScriptName;
-                    } else {
-                        selectedScriptPath = [self.class.initialPath stringByAppendingPathComponent:selectedScriptName];
+                .then(convertJsonString)
+                .then(^(NSDictionary *jsonDictionary) {
+                    if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+                        NSString *selectedScriptName = jsonDictionary[@"data"][@"filename"];
+                        if (selectedScriptName) {
+                            NSString *selectedScriptPath = nil;
+                            if ([selectedScriptName isAbsolutePath]) {
+                                selectedScriptPath = selectedScriptName;
+                            } else {
+                                selectedScriptPath = [self.class.initialPath stringByAppendingPathComponent:selectedScriptName];
+                            }
+                            XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, selectedScriptPath);
+                        }
                     }
-                    XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, selectedScriptPath);
-                }
-            }
-        })
-        .catch(^(NSError *serverError) {
-            if (serverError.code == -1004) {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
-            } else {
-                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
-            }
-        })
-        .finally(^() {
-            [self loadEntryListData];
-            [self.tableView reloadData];
-            if (refreshControl && [refreshControl isRefreshing]) {
-                [refreshControl endRefreshing];
-            }
-            [self.class setFetchingSelectedScript:NO];
-        });
+                })
+                .catch(^(NSError *serverError) {
+                    if (serverError.code == -1004) {
+                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                    } else {
+                        showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                    }
+                })
+                .finally(^() {
+                    [self loadEntryListData];
+                    [self.tableView reloadData];
+                    if (refreshControl && [refreshControl isRefreshing]) {
+                        [refreshControl endRefreshing];
+                    }
+                    [self.class setFetchingSelectedScript:NO];
+                });
     }
 }
 
@@ -488,8 +470,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (XXTExplorerViewSectionIndexList == indexPath.section)
-        {
+        if (XXTExplorerViewSectionIndexList == indexPath.section) {
             return YES;
         }
     }
@@ -527,8 +508,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (XXTExplorerViewSectionIndexList == indexPath.section)
-        {
+        if (XXTExplorerViewSectionIndexList == indexPath.section) {
             if ([tableView isEditing]) {
                 [self updateToolbarStatus:self.toolbar];
             } else {
@@ -538,61 +518,49 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
                 NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
                 NSString *internalExt = entryAttributes[XXTExplorerViewEntryAttributeInternalExtension];
-                if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
-                { // Directory or Symbolic Link Directory
+                if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) { // Directory or Symbolic Link Directory
                     // We'd better try to access it before we enter it.
                     NSError *accessError = nil;
                     [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                     if (accessError) {
                         showUserMessage(self.navigationController.view, [accessError localizedDescription]);
-                    }
-                    else {
+                    } else {
                         XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
                         [self.navigationController pushViewController:explorerViewController animated:YES];
                     }
-                }
-                else if (
+                } else if (
                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
-                        [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
-                {
+                                [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
                     if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
-                        if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive])
-                        {
+                        if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive]) {
                             [self tableView:tableView archiveEntryTappedForRowWithIndexPath:indexPath];
-                        }
-                        else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable])
-                        {
+                        } else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable]) {
                             blockUserInteractions(self, YES);
-                            [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath}]
-                            .then(convertJsonString)
-                            .then(^(NSDictionary *jsonDictionary) {
-                                if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
-                                    XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
-                                } else {
-                                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDictionary[@"message"]];
-                                }
-                            })
-                            .catch(^(NSError *serverError) {
-                                if (serverError.code == -1004) {
-                                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
-                                } else {
-                                    showUserMessage(self.navigationController.view, [serverError localizedDescription]);
-                                }
-                            })
-                            .finally(^() {
-                                blockUserInteractions(self, NO);
-                                [self loadEntryListData];
-                                [self.tableView reloadData];
-                            });
-                        }
-                        else
-                        {
-                            if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes])
-                            {
-    
-                            }
-                            else
-                            {
+                            [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}]
+                                    .then(convertJsonString)
+                                    .then(^(NSDictionary *jsonDictionary) {
+                                        if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+                                            XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
+                                        } else {
+                                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDictionary[@"message"]];
+                                        }
+                                    })
+                                    .catch(^(NSError *serverError) {
+                                        if (serverError.code == -1004) {
+                                            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                                        } else {
+                                            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                                        }
+                                    })
+                                    .finally(^() {
+                                        blockUserInteractions(self, NO);
+                                        [self loadEntryListData];
+                                        [self.tableView reloadData];
+                                    });
+                        } else {
+                            if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes]) {
+
+                            } else {
                                 // TODO: Assign Open In Methods...
                                 [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be opened because the file extension can't be recognized.", nil), entryName]];
                             }
@@ -600,22 +568,16 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     } else {
                         // TODO: not readable
                     }
-                }
-                else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
-                {
+                } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
                     showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]);
-                }
-                else
-                {
+                } else {
                     showUserMessage(self.navigationController.view, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
                 }
             }
-        }
-        else if (XXTExplorerViewSectionIndexHome == indexPath.section)
-        {
+        } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             if ([tableView isEditing]) {
-                
+
             } else {
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[XXTExplorerViewSectionHomeSeriesDetailPathKey];
@@ -624,8 +586,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
                     showUserMessage(self.navigationController.view, [accessError localizedDescription]);
-                }
-                else {
+                } else {
                     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
                     [self.navigationController pushViewController:explorerViewController animated:YES];
                 }
@@ -639,7 +600,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Unarchive Confirm", nil)
                                                         message:[NSString stringWithFormat:NSLocalizedString(@"Unarchive \"%@\" to current directory?", nil), entryAttributes[XXTExplorerViewEntryAttributeName]]
                                                           style:LGAlertViewStyleActionSheet
-                                                   buttonTitles:@[  ]
+                                                   buttonTitles:@[]
                                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                          destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                        delegate:self];
@@ -662,8 +623,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == indexPath.section) {
             return XXTExplorerViewCellHeight;
-        }
-        else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
+        } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             return XXTExplorerViewHomeCellHeight;
         }
     }
@@ -717,8 +677,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexHome == section) {
             return self.homeEntryList.count;
-        }
-        else if (XXTExplorerViewSectionIndexList == section) {
+        } else if (XXTExplorerViewSectionIndexList == section) {
             return self.entryList.count;
         }
     }
@@ -738,29 +697,26 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             entryCell.entryIconImageView.image = entryDetail[XXTExplorerViewEntryAttributeIconImage];
             entryCell.entryTitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeName];
             if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-                [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+                    [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
                 // broken symlink
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
                 entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
-            }
-            else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-                     ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+            } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
+                    ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
                 // symlink
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR;
                 entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
-            }
-            else {
+            } else {
                 entryCell.entryTitleLabel.textColor = [UIColor blackColor];
                 entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
             }
             if (![entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
-                [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+                    [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
                 // path itself
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
                 entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
-            }
-            else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
-                     [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+            } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+                    [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
                 // in path
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
                 entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
@@ -770,8 +726,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             cellLongPressGesture.delegate = self;
             [entryCell addGestureRecognizer:cellLongPressGesture];
             return entryCell;
-        }
-        else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
+        } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             XXTExplorerViewHomeCell *entryCell = [tableView dequeueReusableCellWithIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewHomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
@@ -803,7 +758,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (void)addressLabelTapped:(UITapGestureRecognizer *)recognizer {
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
-        NSString *detailText = ((XXTExplorerHeaderView *)recognizer.view).headerLabel.text;
+        NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
         if (detailText && detailText.length > 0) {
             blockUserInteractions(self, YES);
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
@@ -825,8 +780,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem {
     if (toolbar == self.toolbar) {
-        if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan])
-        {
+        if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan]) {
             XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
             scanViewController.delegate = self;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
@@ -835,33 +789,24 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             popoverController.barButtonItem = buttonItem;
             popoverController.backgroundColor = [UIColor blackColor];
             [self presentViewController:navController animated:YES completion:nil];
-        }
-        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem])
-        {
+        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
             XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
             XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
             createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
-        }
-        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort])
-        {
-            if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) != XXTExplorerViewEntryListSortOrderAsc)
-            {
+        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
+            if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeName);
-            }
-            else
-            {
+            } else {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeCreationDate);
             }
             [self updateToolbarButton:self.toolbar];
             [self loadEntryListData];
             [self.tableView reloadData];
-        }
-        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste])
-        {
+        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             if (!selectedIndexPaths) {
                 selectedIndexPaths = @[];
@@ -869,7 +814,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
-                NSDictionary *firstAttributes = self.entryList[firstIndexPath.row];
+                NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"\"%@\"", nil), firstAttributes[XXTExplorerViewEntryAttributeName]];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
@@ -878,13 +823,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             NSArray <NSString *> *pasteboardArray = [self.class.explorerPasteboard strings];
             NSUInteger pasteboardCount = pasteboardArray.count;
             NSString *pasteboardFormatString = nil;
-            if (pasteboardCount == 0)
-            {
+            if (pasteboardCount == 0) {
                 pasteboardFormatString = NSLocalizedString(@"No item", nil);
                 clearEnabled = NO;
-            }
-            else
-            {
+            } else {
                 if (pasteboardCount == 1) {
                     pasteboardFormatString = NSLocalizedString(@"1 item", nil);
                 } else {
@@ -892,54 +834,49 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 }
                 clearEnabled = YES;
             }
-            if ([self isEditing])
-            {
+            if ([self isEditing]) {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Pasteboard", nil)
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"%@ stored.", nil), pasteboardFormatString]
                                                                       style:LGAlertViewStyleActionSheet
                                                                buttonTitles:@[
-                                                                              [NSString stringWithFormat:@"Copy %@", formatString]
-                                                                              ]
+                                                                       [NSString stringWithFormat:@"Copy %@", formatString]
+                                                               ]
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                      destructiveButtonTitle:NSLocalizedString(@"Clear Pasteboard", nil)
                                                                    delegate:self];
                 alertView.destructiveButtonEnabled = clearEnabled;
-                alertView.buttonsIconImages = @[ [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportCopy] ];
+                alertView.buttonsIconImages = @[[UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportCopy]];
                 objc_setAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String], XXTExplorerAlertViewActionPasteboardImport, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 objc_setAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String], selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 objc_setAssociatedObject(alertView, @selector(alertView:clearPasteboardEntriesStored:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated];
-            }
-            else
-            {
+            } else {
                 NSString *entryName = [self.entryPath lastPathComponent];
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Pasteboard", nil)
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"%@ stored.", nil), pasteboardFormatString]
                                                                       style:LGAlertViewStyleActionSheet
                                                                buttonTitles:@[
-                                                                              [NSString stringWithFormat:@"Paste to \"%@\"", entryName],
-                                                                              [NSString stringWithFormat:@"Move to \"%@\"", entryName],
-                                                                              [NSString stringWithFormat:@"Create Link at \"%@\"", entryName]
-                                                                              ]
+                                                                       [NSString stringWithFormat:@"Paste to \"%@\"", entryName],
+                                                                       [NSString stringWithFormat:@"Move to \"%@\"", entryName],
+                                                                       [NSString stringWithFormat:@"Create Link at \"%@\"", entryName]
+                                                               ]
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                      destructiveButtonTitle:NSLocalizedString(@"Clear Pasteboard", nil)
                                                                    delegate:self];
                 alertView.destructiveButtonEnabled = clearEnabled;
                 alertView.buttonsEnabled = (pasteboardCount != 0);
-                alertView.buttonsIconImages = @[ [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportPaste], [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportCut], [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportLink] ];
+                alertView.buttonsIconImages = @[[UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportPaste], [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportCut], [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportLink]];
                 objc_setAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String], XXTExplorerAlertViewActionPasteboardExport, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 objc_setAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String], self.entryPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 objc_setAssociatedObject(alertView, @selector(alertView:clearPasteboardEntriesStored:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated];
             }
-        }
-        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeCompress])
-        {
+        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeCompress]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
-                NSDictionary *firstAttributes = self.entryList[firstIndexPath.row];
+                NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
                 formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes[XXTExplorerViewEntryAttributeName]];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
@@ -947,24 +884,20 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[  ]
+                                                           buttonTitles:@[]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
             objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated:YES completionHandler:nil];
-        }
-        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare])
-        {
-            
-        }
-        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash])
-        {
+        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
+
+        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
-                NSDictionary *firstAttributes = self.entryList[firstIndexPath.row];
+                NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
                 formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes[XXTExplorerViewEntryAttributeName]];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
@@ -972,7 +905,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Delete %@?\nThis operation cannot be revoked.", nil), formatString]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[  ]
+                                                           buttonTitles:@[]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
@@ -993,9 +926,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     [self.tableView setEditing:editing animated:animated];
     if (editing) {
         [self.toolbar updateStatus:XXTExplorerToolbarStatusEditing];
-    }
-    else
-    {
+    } else {
         [self.toolbar updateStatus:XXTExplorerToolbarStatusDefault];
     }
     [self updateToolbarStatus:self.toolbar];
@@ -1013,58 +944,57 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 }
 
 - (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
-    static char * const XXTESwipeButtonAction = "XXTESwipeButtonAction";
+    static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
-    if (direction == XXTESwipeDirectionLeftToRight)
-    {
+    if (direction == XXTESwipeDirectionLeftToRight) {
         NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
             BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewSelectLaunchedScriptKey);
             blockUserInteractions(self, YES);
             [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
-            .then(convertJsonString)
-            .then(^(NSDictionary *jsonDirectory) {
-                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-                    return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{ @"filename": entryPath, @"envp": @{ @"XXTOUCH_LAUNCH_VIA": @"APPLICATION" } }];
-                } else {
-                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
-                }
-            })
-            .then(convertJsonString)
-            .then(^(NSDictionary *jsonDirectory) {
-                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-                    if (selectAfterLaunch) {
-                        return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath }];
-                    }
-                } else {
-                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
-                }
-                return [PMKPromise promiseWithValue:@{}];
-            })
-            .then(convertJsonString)
-            .then(^(NSDictionary *jsonDirectory) {
-                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-                    XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
-                    [self loadEntryListData];
-                    [self.tableView reloadData];
-                } else {
-                    if (selectAfterLaunch) {
-                        @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
-                    }
-                }
-            })
-            .catch(^(NSError *serverError) {
-                if (serverError.code == -1004) {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
-                } else {
-                    showUserMessage(self.navigationController.view, [serverError localizedDescription]);
-                }
-            })
-            .finally(^() {
-                blockUserInteractions(self, NO);
-            });
+                    .then(convertJsonString)
+                    .then(^(NSDictionary *jsonDirectory) {
+                        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                            return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": @{@"XXTOUCH_LAUNCH_VIA": @"APPLICATION"}}];
+                        } else {
+                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+                        }
+                    })
+                    .then(convertJsonString)
+                    .then(^(NSDictionary *jsonDirectory) {
+                        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                            if (selectAfterLaunch) {
+                                return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}];
+                            }
+                        } else {
+                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+                        }
+                        return [PMKPromise promiseWithValue:@{}];
+                    })
+                    .then(convertJsonString)
+                    .then(^(NSDictionary *jsonDirectory) {
+                        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                            XXTEDefaultsSetObject(XXTExplorerViewSelectedScriptPathKey, entryPath);
+                            [self loadEntryListData];
+                            [self.tableView reloadData];
+                        } else {
+                            if (selectAfterLaunch) {
+                                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+                            }
+                        }
+                    })
+                    .catch(^(NSError *serverError) {
+                        if (serverError.code == -1004) {
+                            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                        } else {
+                            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                        }
+                    })
+                    .finally(^() {
+                        blockUserInteractions(self, NO);
+                    });
         } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithEntry:entryDetail];
             XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
@@ -1072,15 +1002,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
         }
-    }
-    else if (direction == XXTESwipeDirectionRightToLeft && index == 0)
-    {
+    } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {
         NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Trash"]) {
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Delete \"%@\"?\nThis operation cannot be revoked.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[  ]
+                                                           buttonTitles:@[]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
@@ -1092,16 +1020,14 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 }
 
 - (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
-             swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
-    static char * const XXTESwipeButtonAction = "XXTESwipeButtonAction";
+              swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+    static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
-    if (direction == XXTESwipeDirectionLeftToRight)
-    {
+    if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
-        
-        if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionExecuteable])
-        {
+
+        if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionExecuteable]) {
             XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
                                                                            insets:UIEdgeInsetsMake(0, 24, 0, 24)];
@@ -1109,8 +1035,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             [swipeButtons addObject:swipeLaunchButton];
         }
         if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
-            && [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
-        {
+                && [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
             XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
@@ -1123,14 +1048,12 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         objc_setAssociatedObject(swipePropertyButton, XXTESwipeButtonAction, @"Property", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [swipeButtons addObject:swipePropertyButton];
         return swipeButtons;
-    }
-    else if (direction == XXTESwipeDirectionRightToLeft)
-    {
+    } else if (direction == XXTESwipeDirectionRightToLeft) {
         XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
                                                              backgroundColor:XXTE_COLOR_DANGER
                                                                       insets:UIEdgeInsetsMake(0, 24, 0, 24)];
         objc_setAssociatedObject(swipeTrashButton, XXTESwipeButtonAction, @"Trash", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        return @[ swipeTrashButton ];
+        return @[swipeTrashButton];
     }
     return @[];
 }
@@ -1141,13 +1064,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *action = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String]);
     id obj = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String]);
     if (action) {
-        if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardImport])
-        {
+        if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardImport]) {
             if (index == 0)
                 [self alertView:alertView copyPasteboardItemsAtIndexPaths:obj];
-        }
-        else if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardExport])
-        {
+        } else if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardExport]) {
             if (index == 0)
                 [self alertView:alertView pastePasteboardItemsAtPath:obj];
             else if (index == 1)
@@ -1160,11 +1080,11 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     SEL selectors[] = {
-        @selector(alertView:removeEntryCell:),
-        @selector(alertView:removeEntriesAtIndexPaths:),
-        @selector(alertView:archiveEntriesAtIndexPaths:),
-        @selector(alertView:unarchiveEntryAtIndexPath:),
-        @selector(alertView:clearPasteboardEntriesStored:)
+            @selector(alertView:removeEntryCell:),
+            @selector(alertView:removeEntriesAtIndexPaths:),
+            @selector(alertView:archiveEntriesAtIndexPaths:),
+            @selector(alertView:unarchiveEntryAtIndexPath:),
+            @selector(alertView:clearPasteboardEntriesStored:)
     };
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -1265,7 +1185,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
@@ -1323,7 +1243,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     break;
                 }
                 if (!busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Moving process terminated: User interrupt occurred.", nil) }];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Moving process terminated: User interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -1402,7 +1322,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
@@ -1451,7 +1371,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     break;
                 }
                 if (!busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Pasting process terminated: User interrupt occurred.", nil) }];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Pasting process terminated: User interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -1526,7 +1446,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
@@ -1544,7 +1464,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 }
                 [resultPaths addObject:targetPath];
                 if (!busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Linking process terminated: User interrupt occurred.", nil) }];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Linking process terminated: User interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -1565,13 +1485,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSUInteger entryCount = 1;
     NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Delete", nil)
-                                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Deleting \"%@\"", nil), entryName]
-                                                                              style:LGAlertViewStyleActionSheet
-                                                                  progressLabelText:entryPath
-                                                                       buttonTitles:nil
-                                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                             destructiveButtonTitle:nil
-                                                                           delegate:self];
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Deleting \"%@\"", nil), entryName]
+                                                                               style:LGAlertViewStyleActionSheet
+                                                                   progressLabelText:entryPath
+                                                                        buttonTitles:nil
+                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                              destructiveButtonTitle:nil
+                                                                            delegate:self];
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
@@ -1594,11 +1514,11 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
-            NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithObjects:entryPath, nil];
+            NSMutableArray <NSString *> *recursiveSubpaths = [@[entryPath] mutableCopy];
             while (recursiveSubpaths.count != 0) {
                 if (error != nil) break;
                 NSString *enumPath = [recursiveSubpaths lastObject];
@@ -1630,7 +1550,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     // TODO: pause by remove error
                 }
                 if (!busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil) }];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -1689,7 +1609,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:entryPaths];
@@ -1701,7 +1621,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     callbackBlock(enumPath);
                 });
                 [recursiveSubpaths removeLastObject];
-                
+
                 BOOL isDirectory = NO;
                 BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
                 if (fileExists) {
@@ -1726,7 +1646,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     // TODO: pause by remove error
                 }
                 if (!busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil) }];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -1765,9 +1685,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
     NSUInteger archiveIndex = 2;
     NSFileManager *fileManager = [[NSFileManager alloc] init];
-    while ([fileManager fileExistsAtPath:archivePath])
-    {
-        archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.zip", archiveName, (unsigned long)archiveIndex];
+    while ([fileManager fileExistsAtPath:archivePath]) {
+        archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.zip", archiveName, (unsigned long) archiveIndex];
         archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
         archiveIndex++;
     }
@@ -1807,17 +1726,15 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            NSFileManager *fileManager1 = [[NSFileManager alloc] init];
             struct zip_t *zip = zip_open([archivePath fileSystemRepresentation], ZIP_DEFAULT_COMPRESSION_LEVEL, 'w');
             NSError *error = nil;
             BOOL result = (zip != NULL);
-            if (NO == result) {
-                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create archive file \"%@\".", nil), archivePath] }];
-            }
-            else
-            {
+            if (!result) {
+                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create archive file \"%@\".", nil), archivePath]}];
+            } else {
                 NSMutableArray <NSString *> *recursiveSubnames = [[NSMutableArray alloc] initWithArray:entryNames];
                 while (recursiveSubnames.count != 0) {
                     if (error != nil) break;
@@ -1828,12 +1745,12 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     });
                     [recursiveSubnames removeLastObject];
                     BOOL isDirectory = NO;
-                    BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
+                    BOOL fileExists = [fileManager1 fileExistsAtPath:enumPath isDirectory:&isDirectory];
                     if (fileExists) {
-                        NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                        NSDictionary *entryAttributes = [fileManager1 attributesOfItemAtPath:enumPath error:&error];
                         if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
                             if (isDirectory) {
-                                NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
+                                NSArray <NSString *> *groupSubnames = [fileManager1 contentsOfDirectoryAtPath:enumPath error:&error];
                                 if (groupSubnames.count == 0) {
                                     enumName = [enumName stringByAppendingString:@"/"];
                                 } else {
@@ -1856,7 +1773,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         // TODO: pause by archive error
                     }
                     if (!busyOperationProgressFlag) {
-                        error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Archiving process terminated: User interrupt occurred.", nil) }];
+                        error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Archiving process terminated: User interrupt occurred.", nil)}];
                         break;
                     }
                 }
@@ -1878,9 +1795,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *destinationPathWithIndex = destinationPath;
     NSUInteger destinationIndex = 2;
     NSFileManager *fileManager = [[NSFileManager alloc] init];
-    while ([fileManager fileExistsAtPath:destinationPathWithIndex])
-    {
-        destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long)destinationIndex];
+    while ([fileManager fileExistsAtPath:destinationPathWithIndex]) {
+        destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
         destinationIndex++;
     }
     NSString *destinationName = [destinationPathWithIndex lastPathComponent];
@@ -1920,18 +1836,16 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         return;
     }
     busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             const char *extractFrom = [entryPath fileSystemRepresentation];
             const char *extractTo = [destinationPathWithIndex fileSystemRepresentation];
             NSError *error = nil;
             BOOL result = (mkdir(extractTo, 0755) == 0);
             if (NO == result) {
-                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create destination directory \"%@\".", nil), destinationPathWithIndex] }];
-            }
-            else
-            {
-                int (^extract_callback)(const char *, void *) = ^int (const char *filename, void *arg) {
+                error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create destination directory \"%@\".", nil), destinationPathWithIndex]}];
+            } else {
+                int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
                     dispatch_async_on_main_queue(^{
                         callbackBlock([NSString stringWithUTF8String:filename]);
                     });
@@ -1945,9 +1859,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 result = (status == 0);
                 if (NO == result) {
                     if (!busyOperationProgressFlag) {
-                        error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"Unarchiving process terminated: User interrupt occurred.", nil) }];
+                        error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unarchiving process terminated: User interrupt occurred.", nil)}];
                     } else {
-                        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath] }];
+                        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath]}];
                     }
                 }
             }
@@ -1961,7 +1875,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 #pragma mark - XXTEScanViewControllerDelegate
 
-- (void)scanViewController:(XXTEScanViewController *)controller openURL:(NSURL *)url {
+- (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url {
     blockUserInteractions(self, YES);
     [controller dismissViewControllerAnimated:YES completion:^{
         blockUserInteractions(self, NO);
@@ -1979,7 +1893,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }];
 }
 
-- (void)scanViewController:(XXTEScanViewController *)controller copyString:(NSString *)string {
+- (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)string {
     blockUserInteractions(self, YES);
     [controller dismissViewControllerAnimated:YES completion:^{
         [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
@@ -1992,13 +1906,50 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }];
 }
 
-- (void)scanViewController:(XXTEScanViewController *)controller activateLicense:(NSString *)licenseCode {
-    blockUserInteractions(self, YES);
-    [controller dismissViewControllerAnimated:YES completion:^{
-        blockUserInteractions(self, NO);
-        XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
-        [self.navigationController pushViewController:licenseController animated:YES];
-    }];
+- (void)scanViewController:(XXTEScanViewController *)controller jsonOperation:(NSDictionary *)jsonDictionary {
+    NSString *jsonEvent = jsonDictionary[@"event"];
+    if ([jsonEvent isKindOfClass:[NSString class]]) {
+        if ([jsonEvent isEqualToString:@"bind_code"] || [jsonEvent isEqualToString:@"license"]) {
+            if ([jsonDictionary[@"code"] isKindOfClass:[NSString class]]) {
+                NSString *licenseCode = jsonDictionary[@"code"];
+                blockUserInteractions(self, YES);
+                [controller dismissViewControllerAnimated:YES completion:^{
+                    blockUserInteractions(self, NO);
+                    XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
+                    XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
+                    licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                    licenseNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                    [self.navigationController presentViewController:licenseNavigationController animated:YES completion:nil];
+                }];
+                return;
+            }
+        } else if ([jsonEvent isEqualToString:@"down_script"] || [jsonEvent isEqualToString:@"download"]) {
+            if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]] &&
+                    [jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
+                NSString *rawSourceURLString = jsonDictionary[@"url"];
+                NSURL *sourceURL = [NSURL URLWithString:[rawSourceURLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+                NSString *rawTargetPathString = jsonDictionary[@"path"];
+                NSString *targetPath = [rawTargetPathString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+                NSString *targetFullPath = nil;
+                if ([targetPath isAbsolutePath]) {
+                    targetFullPath = targetPath;
+                } else {
+                    targetFullPath = [self.entryPath stringByAppendingPathComponent:targetPath];
+                }
+                NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
+                blockUserInteractions(self, YES);
+                [controller dismissViewControllerAnimated:YES completion:^{
+                    blockUserInteractions(self, NO);
+                    XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
+                    XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
+                    downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                    downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                    [self.navigationController presentViewController:downloadNavigationController animated:YES completion:nil];
+                }];
+                return;
+            }
+        }
+    }
 }
 
 #pragma mark - Memory

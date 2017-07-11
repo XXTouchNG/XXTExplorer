@@ -13,11 +13,11 @@
 @protocol XXTEScanViewControllerDelegate <NSObject>
 
 @optional
-- (void)scanViewController:(XXTEScanViewController *)controller openURL:(NSURL *)url;
+- (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url;
 @optional
-- (void)scanViewController:(XXTEScanViewController *)controller copyString:(NSString *)string;
+- (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)string;
 @optional
-- (void)scanViewController:(XXTEScanViewController *)controller activateLicense:(NSString *)licenseCode;
+- (void)scanViewController:(XXTEScanViewController *)controller jsonOperation:(NSDictionary *)jsonDictionary;
 
 @end
 

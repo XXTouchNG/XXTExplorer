@@ -79,11 +79,14 @@
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
 		0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD51F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m */; };
+		0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */; };
 		0FECB2231EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2221EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
+		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
+		525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
 		D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */; };
@@ -241,6 +244,8 @@
 		0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemDetailViewController.m; sourceTree = "<group>"; };
 		0FCC2AD41F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemDetailNavigationController.h; sourceTree = "<group>"; };
 		0FCC2AD51F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemDetailNavigationController.m; sourceTree = "<group>"; };
+		0FD489091F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadNavigationController.h; sourceTree = "<group>"; };
+		0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadNavigationController.m; sourceTree = "<group>"; };
 		0FECB2221EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTExplorerBuiltInDefaults.plist; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
 		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
@@ -248,6 +253,10 @@
 		0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENotificationCenterDefines.h; sourceTree = "<group>"; };
 		0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDispatchDefines.h; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
+		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
+		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
+		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; };
+		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
 		D629C2191F061E690030C6DA /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
@@ -320,6 +329,8 @@
 				0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */,
 				0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */,
 				0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */,
+				525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */,
+				52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */,
 			);
 			name = License;
 			sourceTree = "<group>";
@@ -465,6 +476,7 @@
 				0F0654B81EE48395005B6C5F /* Archive */,
 				0F4BB0B31EDB7D070072B7A3 /* Entry */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
+				525120167AABAE46AFCDD933 /* Download */,
 				0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */,
 				0FECB2221EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist */,
 				0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */,
@@ -707,6 +719,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		525120167AABAE46AFCDD933 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				0FD489091F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.h */,
+				0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */,
+				52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */,
+				52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */,
+			);
+			name = Download;
+			sourceTree = "<group>";
+		};
 		59918F7D2218C7F23C834EB4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,6 +917,7 @@
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
+				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
@@ -958,6 +982,8 @@
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
+				525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */,
+				525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

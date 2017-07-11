@@ -29,6 +29,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 @property (nonatomic, weak) UITextField *licenseField;
 @property (nonatomic, strong) XXTEViewShaker *licenseShaker;
 @property (nonatomic, strong) NSString *licenseCode;
+@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
 
 @end
@@ -91,7 +92,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTE_END_IGNORE_PARTIAL
-    
+
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    }
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
     [self reloadStaticTableViewData];
@@ -219,6 +223,15 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 
 #pragma mark - UIView Getters
 
+- (UIBarButtonItem *)closeButtonItem {
+    if (!_closeButtonItem) {
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
+        closeButtonItem.tintColor = [UIColor whiteColor];
+        _closeButtonItem = closeButtonItem;
+    }
+    return _closeButtonItem;
+}
+
 - (UIBarButtonItem *)doneButtonItem {
     if (!_doneButtonItem) {
         UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitViewController:)];
@@ -235,6 +248,13 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     [self reloadDynamicTableViewDataWithCompletion:^{
         [refreshControl endRefreshing];
     }];
+}
+
+- (void)dismissViewController:(id)dismissViewController {
+    if ([self.licenseField isFirstResponder]) {
+        [self.licenseField resignFirstResponder];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)submitViewController:(id)sender {
@@ -291,7 +311,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
-            NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
+            NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
@@ -322,7 +342,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        return staticCells[indexPath.section][indexPath.row];
+        return staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
     }
     return [UITableViewCell new];
 }
@@ -349,7 +369,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             return NO;
         }
         NSString *toString = [fromString stringByReplacingCharactersInRange:range withString:string];
-        if (NO == [self isValidLicenseFormat:toString]) {
+        if (![self isValidLicenseFormat:toString]) {
             [self.licenseShaker shake];
             [self textFieldDidChange:textField];
             return NO;
@@ -385,10 +405,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     NSString *upperedString = [trimedString uppercaseString];
     NSString *regex = @"^[3-9A-Z]{0,16}$";
     NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:NULL];
-    if ([pattern numberOfMatchesInString:upperedString options:0 range:NSMakeRange(0, upperedString.length)] <= 0) {
-        return NO;
-    }
-    return YES;
+    return [pattern numberOfMatchesInString:upperedString options:0 range:NSMakeRange(0, upperedString.length)] > 0;
 }
 
 - (NSString *)formatLicense:(NSString *)licenseCode {
