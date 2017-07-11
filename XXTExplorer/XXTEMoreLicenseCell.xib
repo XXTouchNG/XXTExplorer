@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="65.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="AAAA BBBB CCCC DDDD" placeholder="License Key" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xri-SD-Vp0">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="AAAA BBBB CCCC DDDD" placeholder="License Key" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xri-SD-Vp0">
                         <rect key="frame" x="16" y="16" width="382" height="33.5"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="textColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -45,10 +45,6 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (UIModalTransitionStyle)modalTransitionStyle {
-    return UIModalTransitionStyleFlipHorizontal;
-}
-
 - (BOOL)shouldAutorotate {
     return NO;
 }
@@ -205,7 +201,7 @@
 
 - (UIBarButtonItem *)dismissItem {
     if (!_dismissItem) {
-        UIBarButtonItem *dismissItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEScanDismissItemImage"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissScanViewController:)];
+        UIBarButtonItem *dismissItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissScanViewController:)];
         dismissItem.tintColor = [UIColor whiteColor];
         _dismissItem = dismissItem;
     }
@@ -415,16 +411,22 @@
 
 - (void)handleOutput:(NSString *)output {
     if (!output) return;
-    blockUserInteractions(self, YES);
     
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];
     if (url) {
-        blockUserInteractions(self, NO);
         if ([[UIApplication sharedApplication] canOpenURL:url]) {
             if ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]) {
-                // Web browser
-                [self webViewControllerOpenURL:url];
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Will open url in internal browser: \"%@\", continue?", nil), output]
+                                                                      style:LGAlertViewStyleAlert
+                                                               buttonTitles:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Continue", nil)
+                                                                   delegate:self];
+                objc_setAssociatedObject(alertView, @selector(alertView:openURL:), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [alertView showAnimated];
+                return;
             }
             else {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
@@ -436,6 +438,7 @@
                                                                    delegate:self];
                 objc_setAssociatedObject(alertView, @selector(alertView:openURL:), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated];
+                return;
             }
         } else {
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL", nil)
@@ -446,24 +449,63 @@
                                                  destructiveButtonTitle:nil
                                                                delegate:self];
             [alertView showAnimated];
+            return;
         }
-        return;
     } // url finished
     
     // JSON? (v1)
     NSError *jsonError = nil;
     id jsonObject = [NSJSONSerialization JSONObjectWithData:[output dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&jsonError];
     if (!jsonError && jsonObject && [jsonObject isKindOfClass:[NSDictionary class]]) {
-        
-        return;
+        NSString *jsonEvent = jsonObject[@"event"];
+        if (jsonEvent &&
+            [jsonEvent isKindOfClass:[NSString class]]) {
+            if ([jsonEvent isEqualToString:@"bind_code"]) {
+                if (jsonObject[@"code"] &&
+                    [jsonObject[@"code"] isKindOfClass:[NSString class]] &&
+                    [jsonObject[@"code"] length] != 0) {
+                    NSString *jsonCode = jsonObject[@"code"];
+                    [self activateLicenseWithCode:jsonCode];
+                    return;
+                }
+            } else if ([jsonEvent isEqualToString:@"down_script"]) {
+                if (jsonObject[@"path"] &&
+                    [jsonObject[@"path"] isKindOfClass:[NSString class]] &&
+                    [jsonObject[@"path"] length] != 0 &&
+                    jsonObject[@"url"] &&
+                    [jsonObject[@"url"] isKindOfClass:[NSString class]] &&
+                    [jsonObject[@"url"] length] != 0
+                    )
+                {
+                    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Deprecated Event", nil)
+                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Event \"down_script\" is not available.", nil), output]
+                                                                          style:LGAlertViewStyleAlert
+                                                                   buttonTitles:nil
+                                                              cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                                         destructiveButtonTitle:nil
+                                                                       delegate:self];
+                    [alertView showAnimated];
+                    return;
+                }
+            }
+        } else {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid JSON", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Cannot parse json: \"%@\"", nil), output]
+                                                                  style:LGAlertViewStyleAlert
+                                                           buttonTitles:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                                 destructiveButtonTitle:nil
+                                                               delegate:self];
+            [alertView showAnimated];
+            return;
+        }
     } // json finished
     
     // PLAIN TEXT
     {
         NSString *detailText = output;
-        blockUserInteractions(self, NO);
         if (detailText && detailText.length > 0) {
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Content", nil)
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Text Content", nil)
                                                                 message:detailText
                                                                   style:LGAlertViewStyleAlert
                                                            buttonTitles:nil
@@ -472,6 +514,17 @@
                                                                delegate:self];
             objc_setAssociatedObject(alertView, @selector(alertView:copyString:), detailText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated];
+            return;
+        } else {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Text", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Cannot parse plain text: \"%@\"", nil), output]
+                                                                  style:LGAlertViewStyleAlert
+                                                           buttonTitles:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                                 destructiveButtonTitle:nil
+                                                               delegate:self];
+            [alertView showAnimated];
+            return;
         }
     } // plain finished
 }
@@ -485,7 +538,8 @@
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     SEL selectors[] = {
-        @selector(alertView:openURL:)
+        @selector(alertView:openURL:),
+        @selector(alertView:copyString:)
     };
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -503,24 +557,23 @@
 #pragma mark - Ending Actions - Open URL in 3rd Apps
 
 - (void)alertView:(LGAlertView *)alertView openURL:(NSURL *)url {
-    if ([[UIApplication sharedApplication] openURL:url]) {
-        
-    }
     [alertView dismissAnimated];
-    // TODO: Tell delegate to open url
-}
-
-#pragma mark - Ending Actions - XXTECommonWebViewController
-
-- (void)webViewControllerOpenURL:(NSURL *)url {
-    if (![[UIApplication sharedApplication] canOpenURL:url]) {
-        return;
+    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:openURL:)]) {
+        [_delegate scanViewController:self openURL:url];
     }
-    // TODO: Tell delegate to open url
 }
 
 - (void)alertView:(LGAlertView *)alertView copyString:(NSString *)detailText {
-    // TODO: Tell delegate to copy string
+    [alertView dismissAnimated];
+    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:copyString:)]) {
+        [_delegate scanViewController:self copyString:detailText];
+    }
+}
+
+- (void)activateLicenseWithCode:(NSString *)jsonCode {
+    if (_delegate && [_delegate respondsToSelector:@selector(scanViewController:activateLicense:)]) {
+        [_delegate scanViewController:self activateLicense:jsonCode];
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -558,6 +611,14 @@
             blockUserInteractions(self, NO);
         });
     }
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [XXTEScanViewController dealloc]");
+#endif
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface XXTEMoreLicenseController : UITableViewController
 
+- (instancetype)initWithLicenseCode:(NSString *)licenseCode;
+
 @end

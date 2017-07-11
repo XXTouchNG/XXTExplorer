@@ -32,6 +32,9 @@
 #import "XXTENetworkDefines.h"
 #import "XXTExplorerItemDetailViewController.h"
 #import "XXTExplorerItemDetailNavigationController.h"
+#import "XXTECommonNavigationController.h"
+#import "XXTECommonWebViewController.h"
+#import "XXTEMoreLicenseController.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -50,7 +53,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 #define XXTEBuiltInDefaultsEnum(key) ([[self.class.explorerBuiltInDefaults objectForKey:key] unsignedIntegerValue])
 #define XXTEBuiltInDefaultsObject(key) ([self.class.explorerBuiltInDefaults objectForKey:key])
 
-@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerToolbarDelegate, XXTESwipeTableCellDelegate, LGAlertViewDelegate>
+@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerToolbarDelegate, XXTESwipeTableCellDelegate, LGAlertViewDelegate, XXTEScanViewControllerDelegate>
 
 @end
 
@@ -825,6 +828,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan])
         {
             XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
+            scanViewController.delegate = self;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
             navController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
@@ -1953,6 +1957,48 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             });
         });
     });
+}
+
+#pragma mark - XXTEScanViewControllerDelegate
+
+- (void)scanViewController:(XXTEScanViewController *)controller openURL:(NSURL *)url {
+    blockUserInteractions(self, YES);
+    [controller dismissViewControllerAnimated:YES completion:^{
+        blockUserInteractions(self, NO);
+        BOOL internal = ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]);
+        if (internal) {
+            XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
+            webController.title = NSLocalizedString(@"Loading...", nil);
+            XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+            [self.splitViewController showDetailViewController:navigationController sender:self];
+        } else {
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }];
+}
+
+- (void)scanViewController:(XXTEScanViewController *)controller copyString:(NSString *)string {
+    blockUserInteractions(self, YES);
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+            [[UIPasteboard generalPasteboard] setString:string];
+            fulfill(nil);
+        }].finally(^() {
+            showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+            blockUserInteractions(self, NO);
+        });
+    }];
+}
+
+- (void)scanViewController:(XXTEScanViewController *)controller activateLicense:(NSString *)licenseCode {
+    blockUserInteractions(self, YES);
+    [controller dismissViewControllerAnimated:YES completion:^{
+        blockUserInteractions(self, NO);
+        XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
+        [self.navigationController pushViewController:licenseController animated:YES];
+    }];
 }
 
 #pragma mark - Memory

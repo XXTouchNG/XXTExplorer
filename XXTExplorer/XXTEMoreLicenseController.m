@@ -28,6 +28,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 @interface XXTEMoreLicenseController () <UITextFieldDelegate, LGAlertViewDelegate>
 @property (nonatomic, weak) UITextField *licenseField;
 @property (nonatomic, strong) XXTEViewShaker *licenseShaker;
+@property (nonatomic, strong) NSString *licenseCode;
+@property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
 
 @end
 
@@ -52,9 +54,19 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     return self;
 }
 
-- (void)setup {
-//    self.hidesBottomBarWhenPushed = YES;
+- (instancetype)initWithLicenseCode:(NSString *)licenseCode {
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
+        _licenseCode = licenseCode;
+        [self setup];
+    }
+    return self;
 }
+
+- (void)setup {
+    
+}
+
+#pragma mark - Default Style
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
@@ -73,8 +85,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-//    self.tableView.rowHeight = UITableViewAutomaticDimension;
-//    self.tableView.estimatedRowHeight = 44.f;
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_9) {
@@ -82,17 +92,21 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     }
     XXTE_END_IGNORE_PARTIAL
     
+    self.navigationItem.rightBarButtonItem = self.doneButtonItem;
+    
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewDataWithCompletion:nil];
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    if (isFirstTimeLoaded) {
-//        [self reloadDynamicTableViewDataWithCompletion:nil];
-//    }
-//    isFirstTimeLoaded = YES;
-//}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChangeWithNotificaton:) name:UITextFieldTextDidChangeNotification object:self.licenseField];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[ NSLocalizedString(@"New License", nil),
@@ -105,6 +119,12 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     cell1.licenseField.delegate = self;
     self.licenseField = cell1.licenseField;
     self.licenseShaker = [[XXTEViewShaker alloc] initWithView:self.licenseField];
+    
+    NSString *initialLicenseCode = self.licenseCode;
+    if (initialLicenseCode.length > 0) {
+        cell1.licenseField.text = [self formatLicense:initialLicenseCode];
+        [self textFieldDidChange:cell1.licenseField];
+    }
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell2.titleLabel.text = NSLocalizedString(@"Expired At", nil);
@@ -197,12 +217,47 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     });
 }
 
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)doneButtonItem {
+    if (!_doneButtonItem) {
+        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitViewController:)];
+        doneButtonItem.tintColor = [UIColor whiteColor];
+        doneButtonItem.enabled = NO;
+        _doneButtonItem = doneButtonItem;
+    }
+    return _doneButtonItem;
+}
+
 #pragma mark - UIControl Actions
 
 - (void)refreshControlDidChanged:(UIRefreshControl *)refreshControl {
     [self reloadDynamicTableViewDataWithCompletion:^{
         [refreshControl endRefreshing];
     }];
+}
+
+- (BOOL)submitViewController:(id)sender {
+    UITextField *textField = self.licenseField;
+    NSString *fromString = textField.text;
+    NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (trimedString.length != 16) {
+        [self.licenseShaker shake];
+        return NO;
+    }
+    if ([textField isFirstResponder]) {
+        [textField resignFirstResponder];
+    }
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"License Activation", nil)
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Activate license \"%@\" for this device?", nil), trimedString]
+                                                          style:LGAlertViewStyleActionSheet
+                                                   buttonTitles:@[  ]
+                                              cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                         destructiveButtonTitle:NSLocalizedString(@"Activate", nil)
+                                                       delegate:self];
+    objc_setAssociatedObject(alertView, @selector(alertView:activateLicense:), trimedString, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [alertView showAnimated:YES completionHandler:nil];
+    return YES;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -275,74 +330,78 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if ([textField isFirstResponder]) {
-        NSString *fromString = textField.text;
-        NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
-        if (trimedString.length != 16) {
-            [self.licenseShaker shake];
-            return NO;
-        }
-        [textField resignFirstResponder];
-        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"License Activation", nil)
-                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Activate license \"%@\" for this device?", nil), trimedString]
-                                                              style:LGAlertViewStyleActionSheet
-                                                       buttonTitles:@[  ]
-                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                             destructiveButtonTitle:NSLocalizedString(@"Activate", nil)
-                                                           delegate:self];
-        objc_setAssociatedObject(alertView, @selector(alertView:activateLicense:), trimedString, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [alertView showAnimated:YES completionHandler:nil];
-    }
-    return YES;
+    return [self submitViewController:textField];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.licenseField) {
         NSString *fromString = textField.text;
-        NSString *toString = [fromString stringByReplacingCharactersInRange:range withString:string];
-        NSString *trimedString = [toString stringByReplacingOccurrencesOfString:@" " withString:@""];
-        NSString *upperedString = [trimedString uppercaseString];
         if (range.location == fromString.length - 1 && range.length == 1) {
             if ([[fromString substringWithRange:range] isEqualToString:@" "]) {
                 [textField deleteBackward];
             }
             [textField deleteBackward];
-            [self updateTextFieldTextColor];
+            [self textFieldDidChange:textField];
             return NO;
         }
         if (range.location != fromString.length) {
-            [self updateTextFieldTextColor];
+            [self textFieldDidChange:textField];
             return NO;
         }
-        NSString *regex = @"^[3-9A-Z]{0,16}$";
-        NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:NULL];
-        if ([pattern numberOfMatchesInString:upperedString options:0 range:NSMakeRange(0, upperedString.length)] <= 0) {
+        NSString *toString = [fromString stringByReplacingCharactersInRange:range withString:string];
+        if (NO == [self isValidLicenseFormat:toString]) {
             [self.licenseShaker shake];
-            [self updateTextFieldTextColor];
+            [self textFieldDidChange:textField];
             return NO;
         }
-        NSMutableString *spacedString = [[NSMutableString alloc] init];
-        for (NSUInteger i = 0; i < upperedString.length; i++) {
-            [spacedString appendString:[upperedString substringWithRange:NSMakeRange(i, 1)]];
-            if ((i + 1) % 4 == 0 && i != 15) {
-                [spacedString appendString:@" "];
-            }
-        }
-        textField.text = [spacedString copy];
-        [self updateTextFieldTextColor];
+        textField.text = [self formatLicense:toString];
+        [self textFieldDidChange:textField];
         return NO;
     }
     return YES;
 }
 
-- (void)updateTextFieldTextColor {
-    NSString *fromString = self.licenseField.text;
+- (void)textFieldDidChangeWithNotificaton:(NSNotification *)aNotification {
+    UITextField *textField = (UITextField *)aNotification.object;
+    [self textFieldDidChange:textField];
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    NSString *fromString = textField.text;
     NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (trimedString.length == 16) {
-        self.licenseField.textColor = XXTE_COLOR_SUCCESS;
+        textField.textColor = XXTE_COLOR_SUCCESS;
+        self.doneButtonItem.enabled = YES;
     } else {
-        self.licenseField.textColor = XXTE_COLOR;
+        textField.textColor = XXTE_COLOR;
+        self.doneButtonItem.enabled = NO;
     }
+}
+
+#pragma mark - License Check
+
+- (BOOL)isValidLicenseFormat:(NSString *)licenseCode {
+    NSString *trimedString = [licenseCode stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *upperedString = [trimedString uppercaseString];
+    NSString *regex = @"^[3-9A-Z]{0,16}$";
+    NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:NULL];
+    if ([pattern numberOfMatchesInString:upperedString options:0 range:NSMakeRange(0, upperedString.length)] <= 0) {
+        return NO;
+    }
+    return YES;
+}
+
+- (NSString *)formatLicense:(NSString *)licenseCode {
+    NSString *trimedString = [licenseCode stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *upperedString = [trimedString uppercaseString];
+    NSMutableString *spacedString = [[NSMutableString alloc] init];
+    for (NSUInteger i = 0; i < upperedString.length; i++) {
+        [spacedString appendString:[upperedString substringWithRange:NSMakeRange(i, 1)]];
+        if ((i + 1) % 4 == 0 && i != 15) {
+            [spacedString appendString:@" "];
+        }
+    }
+    return [[NSString alloc] initWithString:spacedString];
 }
 
 #pragma mark - LGAlertViewDelegate

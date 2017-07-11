@@ -22,4 +22,12 @@
     [super viewDidLoad];
 }
 
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [XXTEImagePickerController dealloc]");
+#endif
+}
+
 @end
