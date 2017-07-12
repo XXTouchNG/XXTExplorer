@@ -12,6 +12,7 @@
 typedef enum : NSUInteger {
     XXTExplorerViewCellFlagTypeNone = 0,
     XXTExplorerViewCellFlagTypeSelected,
+    XXTExplorerViewCellFlagTypeSelectedInside,
     XXTExplorerViewCellFlagTypeForbidden,
     XXTExplorerViewCellFlagTypeBroken,
     XXTExplorerViewCellFlagTypeSelectedBootScript,

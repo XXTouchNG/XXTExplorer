@@ -53,6 +53,8 @@
     _flagType = flagType;
     if (flagType == XXTExplorerViewCellFlagTypeSelected) {
         self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
+        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptInsideFlag"];
     } else if (flagType == XXTExplorerViewCellFlagTypeForbidden) {
         self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
     } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {

@@ -6,28 +6,20 @@
   Copyright © 2017 Zheng. All rights reserved.
 */
 
-// XXT
-// static NSString * const kXXTEBundleIdentifier = @"BundleIdentifier";
-// static NSString * const kXXTEBundleVersion = @"BundleVersion";
-// static NSString * const kXXTEBundleName = @"BundleName";
-// static NSString * const kXXTEBundleDisplayName = @"BundleDisplayName";
-// static NSString * const kXXTEBundleIconFile = @"BundleIconFile";
-// static NSString * const kXXTEExecutable = @"Executable";
-// static NSString * const kXXTEBundleInfoDictionaryVersion = @"BundleInfoDictionaryVersion";
-// static NSString * const kXXTEMainInterfaceFile = @"MainInterfaceFile";
-// static NSString * const kXXTEMinimumSystemVersion = @"MinimumSystemVersion";
-// static NSString * const kXXTEMaximumSystemVersion = @"MaximumSystemVersion";
-// static NSString * const kXXTEMinimumXXTVersion = @"MinimumXXTVersion";
-// static NSString * const kXXTESupportedResolutions = @"SupportedResolutions";
-// static NSString * const kXXTESupportedDeviceTypes = @"SupportedDeviceTypes";
-// static NSString * const kXXTEPackageControl = @"PackageControl";
-// static NSString * const kXXTEPackageControlAuthorName = @"AuthorName";
-// static NSString * const kXXTEPackageControlAuthorEmail = @"AuthorEmail";
-// static NSString * const kXXTEPackageControlDescription = @"Description";
-// static NSString * const kXXTEPackageControlHomepage = @"Homepage";
-
 "BundleIdentifier" = "Identifier";
 "BundleVersion" = "Version";
 "BundleName" = "Name";
 "BundleDisplayName" = "Display Name";
-"BundleIconFile" = "Icon File";
+"BundleIconFile" = "Icon";
+"Executable" = "Executable";
+"MainInterfaceFile" = "Main Interface";
+"MinimumSystemVersion" = "Minimum System Version";
+"MaximumSystemVersion" = "Maximum System Version";
+"MinimumXXTVersion" = "Minimum XXTouch Version";
+"SupportedResolutions" = "Supported Resolutions";
+"SupportedDeviceTypes" = "Supported Device Types";
+"PackageControl" = "Package Control";
+"AuthorName" = "Author Name";
+"AuthorEmail" = "Author Email";
+"Description" = "Description";
+"Homepage" = "Homepage";

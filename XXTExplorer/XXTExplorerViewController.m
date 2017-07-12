@@ -720,16 +720,19 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 entryCell.entryTitleLabel.textColor = [UIColor blackColor];
                 entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
             }
-            if (![entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
-                    [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
-                // path itself
+            if (![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+                [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+                // selected script itself
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
                 entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
-            } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+            } else if ((
+                        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] ||
+                        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]
+                        ) &&
                     [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
-                // in path
+                // selected script in directory / bundle
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
-                entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
+                entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
             }
             entryCell.entrySubtitleLabel.text = [self.class.explorerDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeCreationDate]];
             UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
