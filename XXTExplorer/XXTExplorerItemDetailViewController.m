@@ -22,15 +22,16 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <PromiseKit/PromiseKit.h>
 #import "NSFileManager+DeepSize.h"
+#import "XXTExplorerEntryParser.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
     kXXTExplorerItemDetailViewSectionIndexWhere,
+    kXXTExplorerItemDetailViewSectionIndexExtended,
     kXXTExplorerItemDetailViewSectionIndexGeneral,
     kXXTExplorerItemDetailViewSectionIndexOwner,
     kXXTExplorerItemDetailViewSectionIndexPermission,
     kXXTExplorerItemDetailViewSectionIndexOpenWith,
-    kXXTExplorerItemDetailViewSectionIndexExtended,
     kXXTExplorerItemDetailViewSectionIndexMax
 } kXXTExplorerItemDetailViewSectionIndex;
 
@@ -148,13 +149,13 @@ static int sizingCancelFlag = 0;
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
                              NSLocalizedString(@"Where", nil),
+                             NSLocalizedString(@"Extended", nil),
                              NSLocalizedString(@"General", nil),
                              NSLocalizedString(@"Owner", nil),
                              NSLocalizedString(@"Permission", nil),
                              @"",
-                             NSLocalizedString(@"Extended", nil),
                              ];
-    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"", @"", @"", @"", NSLocalizedString(@"Use this viewer to open all documents like this one.", nil), @"" ];
+    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"", @"", @"", @"", @"", NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
     
     NSFileManager *detailManager = [[NSFileManager alloc] init];
     
@@ -172,6 +173,27 @@ static int sizingCancelFlag = 0;
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell2.addressLabel.text = entry[XXTExplorerViewEntryAttributePath];
+    
+    // Extended
+    NSDictionary *externalEntry = [XXTExplorerEntryParser externalEntryOfPath:self.entry[XXTExplorerViewEntryAttributePath]];
+    NSDictionary *extendedDictionary = externalEntry[XXTExplorerViewEntryAttributeMetaDictionary];
+    NSArray <NSString *> *displayExtendedKeys = externalEntry[XXTExplorerViewEntryAttributeMetaKeys];
+    NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
+    for (NSString *extendedKey in displayExtendedKeys) {
+        id extendedValue = extendedDictionary[extendedKey];
+        if ([extendedValue isKindOfClass:[NSString class]]) {
+            XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            extendedCell.titleLabel.text = [NSBundle.mainBundle localizedStringForKey:(extendedKey) value:@"" table:nil];
+            extendedCell.valueLabel.text = extendedValue;
+            [extendedCells addObject:extendedCell];
+        }
+        else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
+                 [extendedValue isKindOfClass:[NSArray class]]) {
+            XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+            extendedCell.titleLabel.text = [NSBundle.mainBundle localizedStringForKey:(extendedKey) value:@"" table:nil];
+            [extendedCells addObject:extendedCell];
+        }
+    }
     
     // General
     
@@ -278,11 +300,11 @@ static int sizingCancelFlag = 0;
     staticCells = @[
                     @[ cell1 ],
                     @[ cell2 ],
+                    extendedCells,
                     @[ cell3, cell4, cell5, cell6 ],
                     @[ cell7, cell8 ],
                     @[ cell9, cell10, cell11, cell12 ],
-                    @[ cell13 ],
-                    @[  ]
+                    @[ cell13 ]
                     ];
 }
 
@@ -446,17 +468,20 @@ static int sizingCancelFlag = 0;
                 });
             }
         }
-        else if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexGeneral) {
-            NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
-            if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES);
-                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    [[UIPasteboard generalPasteboard] setString:detailText];
-                    fulfill(nil);
-                }].finally(^() {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO);
-                });
+        else if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexGeneral || indexPath.section == kXXTExplorerItemDetailViewSectionIndexExtended) {
+            UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
+            if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
+                NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
+                if (detailText && detailText.length > 0) {
+                    blockUserInteractions(self, YES);
+                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    }].finally(^() {
+                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                        blockUserInteractions(self, NO);
+                    });
+                }
             }
         }
     }

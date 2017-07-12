@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Up Press" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eca-DR-IFZ">
-                        <rect key="frame" x="64" y="12" width="68" height="21"/>
+                        <rect key="frame" x="64" y="12" width="309" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Q30-3n-S2U"/>
                         </constraints>
@@ -49,6 +49,7 @@
                     <constraint firstAttribute="trailing" secondItem="I9t-FB-HBz" secondAttribute="trailing" constant="8" id="RoJ-cs-cRn"/>
                     <constraint firstItem="fX3-ix-oP7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="W0H-Y4-8ZN"/>
                     <constraint firstItem="I9t-FB-HBz" firstAttribute="leading" secondItem="fX3-ix-oP7" secondAttribute="trailing" constant="16" id="dLp-QW-8mO"/>
+                    <constraint firstAttribute="trailing" secondItem="Eca-DR-IFZ" secondAttribute="trailing" constant="8" id="f8M-KV-uq8"/>
                     <constraint firstItem="fX3-ix-oP7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="oPL-Xw-Ciw"/>
                     <constraint firstAttribute="bottomMargin" secondItem="I9t-FB-HBz" secondAttribute="bottom" constant="4" id="uxU-Qt-hBO"/>
                     <constraint firstItem="Eca-DR-IFZ" firstAttribute="leading" secondItem="fX3-ix-oP7" secondAttribute="trailing" constant="16" id="xun-H5-O72"/>

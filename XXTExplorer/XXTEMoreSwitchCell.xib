@@ -27,7 +27,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restart Service" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJ4-B3-vdy">
-                        <rect key="frame" x="64" y="11" width="115" height="21"/>
+                        <rect key="frame" x="64" y="11" width="269" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -44,6 +44,7 @@
                     <constraint firstItem="oJ4-B3-vdy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OPl-ab-dQT"/>
                     <constraint firstItem="oJ4-B3-vdy" firstAttribute="leading" secondItem="2L8-jD-zNU" secondAttribute="trailing" constant="16" id="Sdu-qt-3NV"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Yb9-M0-dh7" secondAttribute="trailing" constant="8" id="VGI-2O-Xhp"/>
+                    <constraint firstItem="Yb9-M0-dh7" firstAttribute="leading" secondItem="oJ4-B3-vdy" secondAttribute="trailing" constant="16" id="hDa-s4-ap3"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>

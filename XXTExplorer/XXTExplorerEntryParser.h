@@ -11,7 +11,7 @@
 @interface XXTExplorerEntryParser : NSObject
 
 //+ (instancetype)sharedParser;
-
++ (NSDictionary *)externalEntryOfPath:(NSString *)path;
 - (NSDictionary *)entryOfPath:(NSString *)path withError:(NSError **)error;
 
 @end

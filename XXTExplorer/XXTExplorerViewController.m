@@ -365,8 +365,11 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         NSError *localError = nil;
         NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
         if (localError && error) *error = localError;
+        
         NSMutableArray <NSDictionary *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
+        NSMutableArray <NSDictionary *> *entryBundleAttributesList = [[NSMutableArray alloc] init];
         NSMutableArray <NSDictionary *> *entryOtherAttributesList = [[NSMutableArray alloc] init];
+        
         for (NSString *entrySubdirectoryName in entrySubdirectoryPathList) {
             if (hidesDot && [entrySubdirectoryName hasPrefix:@"."]) {
                 continue;
@@ -377,24 +380,31 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 *error = localError;
                 break;
             }
-            // TODO: Parse each entry using XXTExplorerEntryExtensions
             if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
                 [entryDirectoryAttributesList addObject:entryAttributes];
+            } else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                [entryBundleAttributesList addObject:entryAttributes];
             } else {
                 [entryOtherAttributesList addObject:entryAttributes];
             }
         }
+        
         NSString *sortField = XXTEDefaultsObject(XXTExplorerViewEntryListSortFieldKey);
         NSUInteger sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey);
         NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2) {
             return (sortOrder == XXTExplorerViewEntryListSortOrderAsc) ? [obj1[sortField] compare:obj2[sortField]] : [obj2[sortField] compare:obj1[sortField]];
         };
+        
         [entryDirectoryAttributesList sortUsingComparator:comparator];
+        [entryBundleAttributesList sortUsingComparator:comparator];
         [entryOtherAttributesList sortUsingComparator:comparator];
 
         NSMutableArray <NSDictionary *> *entryAttributesList = [[NSMutableArray alloc] initWithCapacity:entrySubdirectoryPathList.count];
+        
         [entryAttributesList addObjectsFromArray:entryDirectoryAttributesList];
+        [entryAttributesList addObjectsFromArray:entryBundleAttributesList];
         [entryAttributesList addObjectsFromArray:entryOtherAttributesList];
+        
         entryAttributesList;
     });
     if (error && *error) _entryList = @[]; // clean entry list if error exists
@@ -695,7 +705,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             entryCell.delegate = self;
             entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             entryCell.entryIconImageView.image = entryDetail[XXTExplorerViewEntryAttributeIconImage];
-            entryCell.entryTitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeName];
+            entryCell.entryTitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
             if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
                     [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
                 // broken symlink

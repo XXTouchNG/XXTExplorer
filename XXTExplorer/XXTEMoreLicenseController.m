@@ -137,30 +137,37 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Version", nil);
     cell3.valueLabel.text = @"";
+    cell3.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"iOS Version", nil);
     cell4.valueLabel.text = @"";
+    cell4.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Device Type", nil);
     cell5.valueLabel.text = @"";
+    cell5.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell6.titleLabel.text = NSLocalizedString(@"Device Name", nil);
     cell6.valueLabel.text = @"";
+    cell6.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell7.titleLabel.text = NSLocalizedString(@"Serial Number", nil);
     cell7.valueLabel.text = @"";
+    cell7.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell8.titleLabel.text = NSLocalizedString(@"MAC Address", nil);
     cell8.valueLabel.text = @"";
+    cell8.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
     cell9.valueLabel.text = @"";
+    cell9.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     staticCells = @[
                     @[ cell1 ],

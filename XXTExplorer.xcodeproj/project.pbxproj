@@ -19,6 +19,8 @@
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
+		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
+		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
 		0F35F20B1F106E5700B5B327 /* XXTEUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20A1F106E5700B5B327 /* XXTEUserDefaults.plist */; };
 		0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
@@ -130,6 +132,12 @@
 		0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImagePickerController.m; sourceTree = "<group>"; };
 		0F2916131F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsOperationController.h; sourceTree = "<group>"; };
 		0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreUserDefaultsOperationController.m; sourceTree = "<group>"; };
+		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
+		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
+		0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryXPPReader.m; sourceTree = "<group>"; };
+		0F3508BD1F1640E0000403FD /* XXTExplorerEntryReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryReader.h; sourceTree = "<group>"; };
+		0F3508C11F166A69000403FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0F3508C31F166A7B000403FD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0F35F2071F1068E500B5B327 /* XXTEMoreUserDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsController.h; sourceTree = "<group>"; };
 		0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreUserDefaultsController.m; sourceTree = "<group>"; };
 		0F35F20A1F106E5700B5B327 /* XXTEUserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEUserDefaults.plist; sourceTree = "<group>"; };
@@ -359,6 +367,16 @@
 			name = Recording;
 			sourceTree = "<group>";
 		};
+		0F3508B91F163F60000403FD /* XPP */ = {
+			isa = PBXGroup;
+			children = (
+				0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */,
+				0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */,
+				0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */,
+			);
+			name = XPP;
+			sourceTree = "<group>";
+		};
 		0F35F2061F1068CC00B5B327 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +392,8 @@
 		0F4BB0B31EDB7D070072B7A3 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
+				0F3508BD1F1640E0000403FD /* XXTExplorerEntryReader.h */,
+				0F3508B91F163F60000403FD /* XPP */,
 				0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */,
 				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
 				0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */,
@@ -567,7 +587,6 @@
 		0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */ = {
 			isa = PBXGroup;
 			children = (
-				0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */,
 				D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
@@ -575,6 +594,7 @@
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
+				0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F61E1641ED7875A003DCC78 /* Views */,
 				0F61E1601ED78712003DCC78 /* Master */,
@@ -591,6 +611,7 @@
 			children = (
 				0FA7ABEE1ED641A3003EAD7D /* main.m */,
 				0FA7AC081ED644FA003EAD7D /* XXTEPrefixHeader.pch */,
+				0F3508C21F166A69000403FD /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -817,6 +838,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 0FA7ABE11ED641A3003EAD7D;
 			productRefGroup = 0FA7ABEB1ED641A3003EAD7D /* Products */;
@@ -846,6 +868,7 @@
 				0F8455CF1F0D37D90055F98B /* XXTEMoreReferences.bundle in Resources */,
 				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
 				0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */,
+				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				0F35F20B1F106E5700B5B327 /* XXTEUserDefaults.plist in Resources */,
 				0FECB2231EE0016D00E3B6F0 /* XXTExplorerBuiltInDefaults.plist in Resources */,
@@ -934,6 +957,7 @@
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
+				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
@@ -989,11 +1013,24 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		0F3508C21F166A69000403FD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F3508C11F166A69000403FD /* en */,
+				0F3508C31F166A7B000403FD /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		0FA7ABFF1ED641A3003EAD7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1049,6 +1086,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

@@ -9,6 +9,8 @@
 #import <sys/stat.h>
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerDefaults.h"
+#import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryXPPReader.h"
 
 static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 
@@ -29,6 +31,10 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 //    });
 //    return parser;
 //}
+
++ (NSArray <Class> *)registeredReaders {
+    return @[ [XXTExplorerEntryXPPReader class] ];
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -137,9 +143,19 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
       XXTExplorerViewEntryAttributeKind: entryBaseKind,
       XXTExplorerViewEntryAttributeViewer: @"None"
       };
-    entryAttributes = [self parseInternalEntry:entryAttributes];
-    entryAttributes = [self parseExternalEntry:entryAttributes];
-    return entryAttributes;
+    NSDictionary *newEntryAttributes = [self parseInternalEntry:entryAttributes];
+    
+    NSMutableDictionary *copyNewEntryAttributes = [[NSMutableDictionary alloc] initWithDictionary:newEntryAttributes];
+    NSDictionary *extraCopyNewEntryAttributes = [self parseExternalEntry:newEntryAttributes];
+    for (NSString *entryKey in newEntryAttributes)
+    {
+        if (extraCopyNewEntryAttributes[entryKey])
+        {
+            copyNewEntryAttributes[entryKey] = extraCopyNewEntryAttributes[entryKey];
+        }
+    }
+    
+    return [[NSDictionary alloc] initWithDictionary:copyNewEntryAttributes];
 }
 
 - (NSDictionary *)parseInternalEntry:(NSDictionary *)entry {
@@ -232,27 +248,50 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
     return [[NSDictionary alloc] initWithDictionary:newEntry];
 }
 
++ (NSDictionary *)externalEntryOfPath:(NSString *)path {
+    XXTExplorerEntryParser *parser = [[self alloc] init];
+    NSDictionary *entryDictionary = [parser entryOfPath:path withError:nil];
+    return [parser parseExternalEntry:entryDictionary];
+}
+
 - (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {
     NSMutableDictionary *newEntry = [entry mutableCopy];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
     {
         // Regular Preview
+        
     }
     else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
     {
         // Bundle Preview
-        
-        if ([entryBaseExtension isEqualToString:@"xpp"])
-        {
-            
-            NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-            
-            
-            
+        for (Class readerClass in self.class.registeredReaders) {
+            BOOL supported = NO;
+            for (NSString *supportedExtension in [readerClass supportedExtensions]) {
+                if ([supportedExtension isEqualToString:entryBaseExtension]) {
+                    supported = YES;
+                    break;
+                }
+            }
+            if (supported) {
+                id <XXTExplorerEntryReader> reader = [[readerClass alloc] initWithPath:entryPath];
+                if (reader.entryDisplayName) {
+                    newEntry[XXTExplorerViewEntryAttributeDisplayName] = reader.entryDisplayName;
+                }
+                if (reader.entryIconImage) {
+                    newEntry[XXTExplorerViewEntryAttributeIconImage] = reader.entryIconImage;
+                }
+                if (reader.displayMetaKeys) {
+                    newEntry[XXTExplorerViewEntryAttributeMetaKeys] = reader.displayMetaKeys;
+                }
+                if (reader.metaDictionary) {
+                    newEntry[XXTExplorerViewEntryAttributeMetaDictionary] = reader.metaDictionary;
+                }
+                break;
+            }
         }
-        
     }
     return [[NSDictionary alloc] initWithDictionary:newEntry];
 }
