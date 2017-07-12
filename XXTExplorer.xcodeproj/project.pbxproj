@@ -469,7 +469,6 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
-				0FCC2AC91F130BEE00C50A48 /* Cell */,
 				0FCC2AC31F13097100C50A48 /* Detail */,
 				0F4F66FD1F1268370042C449 /* Create */,
 				0F1DD1C01F11B68F00F1A66A /* Scan */,
@@ -522,6 +521,7 @@
 		0F766CB71ED8DD5D00E18BE2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0FCC2AC91F130BEE00C50A48 /* Cell */,
 				0F766CB11ED8D95700E18BE2 /* XXTESwipeButton.h */,
 				0F766CB21ED8D95700E18BE2 /* XXTESwipeButton.m */,
 				0F766CB31ED8D95700E18BE2 /* XXTESwipeTableCell.h */,
@@ -532,12 +532,6 @@
 				0FAE0F091ED70F8700798B4B /* XXTExplorerHeaderView.m */,
 				0FAAB58B1EDA319700897680 /* XXTExplorerFooterView.h */,
 				0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */,
-				0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */,
-				0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */,
-				0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */,
-				0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */,
-				0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */,
-				0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -625,6 +619,12 @@
 		0FCC2AC91F130BEE00C50A48 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */,
+				0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */,
+				0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */,
+				0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */,
+				0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */,
+				0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */,
 				0FCC2AC41F130BE600C50A48 /* XXTExplorerItemNameCell.h */,
 				0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */,
 				0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */,

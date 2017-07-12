@@ -7,6 +7,7 @@
 //
 
 #import "XXTEWorkspaceViewController.h"
+#import "XXTENotificationCenterDefines.h"
 
 @interface XXTEWorkspaceViewController ()
 @property (nonatomic, strong) UIImageView *arrowPlaceholderImageView;
@@ -15,6 +16,21 @@
 @end
 
 @implementation XXTEWorkspaceViewController
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,7 +54,6 @@
                                   attribute:NSLayoutAttributeCenterX
                                  multiplier:1
                                    constant:0]];
-    
     [self.view addConstraint:
      [NSLayoutConstraint constraintWithItem:self.logoPlaceholderImageView
                                   attribute:NSLayoutAttributeCenterY
@@ -88,6 +103,27 @@
         _logoPlaceholderImageView = logoPlaceholderImageView;
     }
     return _logoPlaceholderImageView;
+}
+
+#pragma mark - Notifications
+
+- (void)handleApplicationNotification:(NSNotification *)aNotification {
+    NSDictionary *userInfo = aNotification.userInfo;
+    NSString *eventType = userInfo[XXTENotificationEventType];
+    NSString *displayModeValue = userInfo[XXTENotificationDetailDisplayMode];
+    if ([eventType isEqualToString:XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode] && displayModeValue) {
+        UISplitViewControllerDisplayMode displayMode = [((NSNumber *)displayModeValue) integerValue];
+        self.arrowPlaceholderImageView.hidden = (displayMode == UISplitViewControllerDisplayModeAllVisible);
+    }
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+#ifdef DEBUG
+    NSLog(@"- [XXTEWorkspaceViewController dealloc]");
+#endif
 }
 
 @end

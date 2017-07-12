@@ -43,4 +43,8 @@
     // Configure the view for the selected state
 }
 
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 @end

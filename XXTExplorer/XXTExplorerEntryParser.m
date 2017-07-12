@@ -235,7 +235,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 - (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {
     NSMutableDictionary *newEntry = [entry mutableCopy];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
-//    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
     {
         // Regular Preview
@@ -243,6 +243,16 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
     else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
     {
         // Bundle Preview
+        
+        if ([entryBaseExtension isEqualToString:@"xpp"])
+        {
+            
+            NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+            
+            
+            
+        }
+        
     }
     return [[NSDictionary alloc] initWithDictionary:newEntry];
 }

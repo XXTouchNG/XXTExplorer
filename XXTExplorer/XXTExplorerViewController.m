@@ -735,6 +735,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             entryCell.entryIconImageView.image = [UIImage imageNamed:self.homeEntryList[indexPath.row][XXTExplorerViewSectionHomeSeriesDetailIconKey]];
             entryCell.entryTitleLabel.text = self.homeEntryList[indexPath.row][XXTExplorerViewSectionHomeSeriesDetailTitleKey];
             entryCell.entrySubtitleLabel.text = self.homeEntryList[indexPath.row][XXTExplorerViewSectionHomeSeriesDetailSubtitleKey];
+            UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
+            cellLongPressGesture.delegate = self;
+            [entryCell addGestureRecognizer:cellLongPressGesture];
             return entryCell;
         }
     }
@@ -747,11 +750,22 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateBegan) {
         CGPoint location = [recognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-        [self setEditing:YES animated:YES];
-        if (self.tableView.delegate) {
-            [self.tableView.delegate tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        if (indexPath.section == XXTExplorerViewSectionIndexHome &&
+            indexPath.row == 0) {
+            XXTExplorerViewHomeCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            [cell becomeFirstResponder];
+            UIMenuController *menuController = [UIMenuController sharedMenuController];
+            UIMenuItem *hideItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Hide", nil) action:@selector(hideHomeItemTapped:)];
+            [menuController setMenuItems:[NSArray arrayWithObjects:hideItem, nil]];
+            [menuController setTargetRect:[self.tableView rectForRowAtIndexPath:indexPath] inView:self.tableView];
+            [menuController setMenuVisible:YES animated:YES];
+        } else {
+            [self setEditing:YES animated:YES];
+            if (self.tableView.delegate) {
+                [self.tableView.delegate tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            }
         }
     }
 }
@@ -772,7 +786,22 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+- (void)hideHomeItemTapped:(id)sender {
+    XXTEDefaultsSetBasic(XXTExplorerViewSectionHomeEnabledKey, NO);
+    [self loadEntryListData];
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:XXTExplorerViewSectionIndexHome] ] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+    showUserMessage(self.navigationController.view, NSLocalizedString(@"\"Home Directory\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)recognizer {
+    CGPoint location = [recognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    if (indexPath.section == XXTExplorerViewSectionIndexList) {
+        XXTESwipeTableCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        return (cell.swipeState == XXTESwipeStateNone);
+    }
     return (!self.isEditing);
 }
 
@@ -1021,6 +1050,17 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
+        } else if ([buttonAction isEqualToString:@"Inside"]) {
+            if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                NSError *accessError = nil;
+                [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
+                if (accessError) {
+                    showUserMessage(self.navigationController.view, [accessError localizedDescription]);
+                } else {
+                    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
+                    [self.navigationController pushViewController:explorerViewController animated:YES];
+                }
+            }
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {
         NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);
@@ -1054,6 +1094,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             objc_setAssociatedObject(swipeLaunchButton, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:swipeLaunchButton];
         }
+        if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+            XXTESwipeButton *swipeConfigureButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
+                                                                  backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
+                                                                           insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+            objc_setAssociatedObject(swipeConfigureButton, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:swipeConfigureButton];
+        }
         if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
                 && [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
             XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
@@ -1061,6 +1108,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
             objc_setAssociatedObject(swipeEditButton, XXTESwipeButtonAction, @"Edit", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:swipeEditButton];
+        }
+        if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+            XXTESwipeButton *swipeInsideButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconInside]
+                                                                  backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
+                                                                           insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+            objc_setAssociatedObject(swipeInsideButton, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:swipeInsideButton];
         }
         XXTESwipeButton *swipePropertyButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
@@ -1689,7 +1743,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *currentPath = self.entryPath;
     NSMutableArray <NSString *> *entryNames = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
-        [entryNames addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributeName]];
+        NSDictionary *entryDetail = self.entryList[indexPath.row];
+        [entryNames addObject:entryDetail[XXTExplorerViewEntryAttributeName]];
     }
     NSUInteger entryCount = entryNames.count;
     NSString *entryDisplayName = nil;
@@ -1811,7 +1866,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSDictionary *entryAttributes = self.entryList[indexPath.row];
     NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
     NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
-    NSString *destinationPath = [entryPath stringByDeletingPathExtension];
+    NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
+    NSString *destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
     NSString *destinationPathWithIndex = destinationPath;
     NSUInteger destinationIndex = 2;
     NSFileManager *fileManager = [[NSFileManager alloc] init];

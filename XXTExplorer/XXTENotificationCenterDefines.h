@@ -14,10 +14,12 @@ static NSString * const XXTENotificationEvent = @"XXTENotificationEvent";
 // XXTENotificationEvent
 
 static NSString * const XXTENotificationEventType = @"XXTENotificationEventType";
+static NSString * const XXTENotificationDetailDisplayMode = @"XXTENotificationDetailDisplayMode"; // NSNumber
 
 // Global - XXTENotificationEventType
 static NSString * const XXTENotificationEventTypeInbox = @"XXTENotificationEventTypeInbox";
 static NSString * const XXTENotificationEventTypeInboxMoved = @"XXTENotificationEventTypeInboxMoved";
 static NSString * const XXTENotificationEventTypeApplicationDidBecomeActive = @"XXTENotificationEventTypeApplicationDidBecomeActive";
+static NSString * const XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode = @"XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode";
 
 #endif /* XXTENotificationCenterDefines_h */

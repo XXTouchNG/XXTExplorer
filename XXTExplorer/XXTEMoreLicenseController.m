@@ -476,7 +476,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     .then(sendCloudApiRequest)
     .then(^(NSDictionary *licenseDictionary) {
         if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
-            NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
+            NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
             NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
             [self updateTableViewCell:((XXTEMoreTitleValueCell *)staticCells[1][0])
                        expirationTime:expirationInterval
