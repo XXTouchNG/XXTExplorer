@@ -787,7 +787,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             navController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
             popoverController.barButtonItem = buttonItem;
-            popoverController.backgroundColor = [UIColor blackColor];
+            popoverController.backgroundColor = [UIColor whiteColor];
             [self presentViewController:navController animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
             XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
@@ -891,7 +891,27 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated:YES completionHandler:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
-
+            NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+            NSMutableArray <NSURL *> *shareUrls = [[NSMutableArray alloc] init];
+            for (NSIndexPath *indexPath in selectedIndexPaths) {
+                NSDictionary *entryDetail = self.entryList[indexPath.row];
+                if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+                    [shareUrls removeAllObjects];
+                    break;
+                } else {
+                    [shareUrls addObject:[NSURL fileURLWithPath:entryDetail[XXTExplorerViewEntryAttributePath]]];
+                }
+            }
+            if (shareUrls.count != 0) {
+                UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
+                activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+                UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+                popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+                popoverPresentationController.barButtonItem = buttonItem;
+                [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+            } else {
+                showUserMessage(self.navigationController.view, NSLocalizedString(@"You cannot share directory.", nil));
+            }
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSString *formatString = nil;
