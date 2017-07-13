@@ -35,9 +35,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"XXTouch", nil);
+    self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    
+    self.arrowPlaceholderImageView.hidden = (self.splitViewController.displayMode != UISplitViewControllerDisplayModePrimaryHidden);
     
     [self.view addSubview:self.arrowPlaceholderImageView];
     [self.view addSubview:self.logoPlaceholderImageView];

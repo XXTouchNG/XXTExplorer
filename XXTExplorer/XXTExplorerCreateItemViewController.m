@@ -15,6 +15,7 @@
 #import "XXTEAppDefines.h"
 #import "XXTEMoreAddressCell.h"
 #import <PromiseKit/PromiseKit.h>
+#import "XXTENotificationCenterDefines.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,
@@ -289,7 +290,9 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }];
 }
 
 - (void)submitViewController:(id)sender {
@@ -369,7 +372,9 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }];
 }
 
 #pragma mark - UITextFieldDelegate

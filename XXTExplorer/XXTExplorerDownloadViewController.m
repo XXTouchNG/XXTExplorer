@@ -13,6 +13,7 @@
 #import <PromiseKit/PromiseKit.h>
 #import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTENotificationCenterDefines.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexSource = 0,
@@ -237,7 +238,9 @@ typedef enum : NSUInteger {
 #pragma mark - UIControl Actions
 
 - (void)dismissViewController:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }];
 }
 
 - (void)confirmDownload:(id)sender {
@@ -294,7 +297,9 @@ typedef enum : NSUInteger {
 {
     if (index == 0) {
         [alertView dismissAnimated];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+        }];
     }
 }
 

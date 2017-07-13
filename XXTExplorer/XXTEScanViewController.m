@@ -18,6 +18,7 @@
 #import "XXTEUserInterfaceDefines.h"
 #import <LGAlertView/LGAlertView.h>
 #import "XXTEImagePickerController.h"
+#import "XXTENotificationCenterDefines.h"
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
 @property(nonatomic, strong) AVCaptureSession *scanSession;
@@ -45,18 +46,6 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (BOOL)shouldAutorotate {
-    return NO;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.layerLoaded = NO;
@@ -66,9 +55,8 @@
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.extendedLayoutIncludesOpaqueBars = YES;
 
-    self.maskView.image = self.maskImage;
     [self.view addSubview:self.maskView];
-
+    
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
@@ -80,12 +68,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self performSelector:@selector(startAnimation) withObject:nil afterDelay:0.2f];
+    {
+        self.maskView.image = self.maskImage;
+        [self performSelector:@selector(startAnimation) withObject:nil afterDelay:0.2f];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self stopAnimation];
+    {
+        self.maskView.image = nil;
+        [self stopAnimation];
+    }
 }
 
 - (void)startAnimation {
@@ -194,6 +188,9 @@
         }
         AVCaptureVideoPreviewLayer *scanLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.scanSession];
         scanLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        AVCaptureConnection *previewLayerConnection = scanLayer.connection;
+        if ([previewLayerConnection isVideoOrientationSupported])
+            [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIDevice currentDevice] orientation]];
         _scanLayer = scanLayer;
     }
     return _scanLayer;
@@ -259,7 +256,7 @@
         CGFloat bottomY = pD.y + diffAngle;
 
         CGContextSetLineWidth(ctx, lineWidthAngle);
-        CGContextSetStrokeColorWithColor(ctx, XXTE_COLOR.CGColor);
+        CGContextSetStrokeColorWithColor(ctx, [XXTE_COLOR colorWithAlphaComponent:.75f].CGColor);
 
         CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
         CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
@@ -519,18 +516,22 @@
         }).then(^(NSString *scannedResult) {
             [self handleOutput:scannedResult];
         }).catch(^(NSError *scanError) {
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Scan Error", nil)
-                                                                message:[scanError localizedDescription]
-                                                                  style:LGAlertViewStyleAlert
-                                                           buttonTitles:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
-                                                 destructiveButtonTitle:nil
-                                                               delegate:self];
-            [alertView showAnimated];
+            [self performSelector:@selector(showError:) withObject:scanError afterDelay:.2f];
         }).finally(^() {
             blockUserInteractions(self, NO);
         });
     }
+}
+
+- (void)showError:(NSError *)error {
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Scan Error", nil)
+                                                        message:[error localizedDescription]
+                                                          style:LGAlertViewStyleAlert
+                                                   buttonTitles:nil
+                                              cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                         destructiveButtonTitle:nil
+                                                       delegate:self];
+    [alertView showAnimated];
 }
 
 #pragma mark - Memory

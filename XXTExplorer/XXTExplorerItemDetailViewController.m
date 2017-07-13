@@ -23,6 +23,7 @@
 #import <PromiseKit/PromiseKit.h>
 #import "NSFileManager+DeepSize.h"
 #import "XXTExplorerEntryParser.h"
+#import "XXTENotificationCenterDefines.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
@@ -373,7 +374,9 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }];
 }
 
 - (void)submitViewController:(id)sender {
@@ -422,7 +425,9 @@ static int sizingCancelFlag = 0;
     }).finally(^() {
         blockUserInteractions(self, NO);
         sizingCancelFlag = 1;
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+        }];
     });
 }
 

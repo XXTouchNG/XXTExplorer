@@ -292,7 +292,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
+    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] ||
+        [eventType isEqualToString:XXTENotificationEventTypeFormSheetDismissed]
+        ) {
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
     } else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
