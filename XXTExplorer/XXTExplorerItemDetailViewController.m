@@ -177,6 +177,7 @@ static int sizingCancelFlag = 0;
     // Extended
     NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
     NSBundle *entryBundle = [NSBundle bundleWithPath:entryPath];
+    NSBundle *useBundle = entryBundle ? entryBundle : [NSBundle mainBundle];
     NSDictionary *externalEntry = [XXTExplorerEntryParser externalEntryOfPath:entryPath];
     NSDictionary *extendedDictionary = externalEntry[XXTExplorerViewEntryAttributeMetaDictionary];
     NSArray <NSString *> *displayExtendedKeys = externalEntry[XXTExplorerViewEntryAttributeMetaKeys];
@@ -185,14 +186,14 @@ static int sizingCancelFlag = 0;
         id extendedValue = extendedDictionary[extendedKey];
         if ([extendedValue isKindOfClass:[NSString class]]) {
             XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-            extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+            extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
             extendedCell.valueLabel.text = extendedValue;
             [extendedCells addObject:extendedCell];
         }
         else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
                  [extendedValue isKindOfClass:[NSArray class]]) {
             XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-            extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+            extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
             [extendedCells addObject:extendedCell];
         }
     }
