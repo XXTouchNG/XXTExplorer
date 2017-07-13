@@ -22,6 +22,8 @@
 @synthesize entryIconImage = _entryIconImage;
 @synthesize displayMetaKeys = _displayMetaKeys;
 @synthesize entryDescription = _entryDescription;
+@synthesize entryExtensionDescription = _entryExtensionDescription;
+@synthesize entryViewerDescription = _entryViewerDescription;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return @[ @"xpp" ];
@@ -77,6 +79,8 @@
                                      inBundle:pathBundle
                 compatibleWithTraitCollection:nil];
     }
+    _entryExtensionDescription = @"XXTouch Bundle";
+    _entryViewerDescription = @"Launcher";
     _metaDictionary = metaInfo;
 }
 

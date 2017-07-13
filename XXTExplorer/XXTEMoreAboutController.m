@@ -140,7 +140,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreAboutSectionIndexHomepage) {
             XXTEMoreLinkNoIconCell *cell = (XXTEMoreLinkNoIconCell *)staticCells[indexPath.section][indexPath.row];
@@ -157,8 +157,12 @@ typedef enum : NSUInteger {
             }
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;
-            XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-            [self.splitViewController showDetailViewController:navigationController sender:self];
+            if (XXTE_PAD) {
+                XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                [self.splitViewController showDetailViewController:navigationController sender:self];
+            } else {
+                [self.navigationController pushViewController:webController animated:YES];
+            }
         }
         else if (indexPath.section == kXXTEMoreAboutSectionIndexFeedback) {
             if (indexPath.row == 0) {
@@ -172,7 +176,7 @@ typedef enum : NSUInteger {
                     [picker setToRecipients:toRecipients];
                     [self presentViewController:picker animated:YES completion:nil];
                 } else {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil));
                 }
             }
             else if (indexPath.row == 1) {
@@ -182,7 +186,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:cydiaURL]) {
                         [[UIApplication sharedApplication] openURL:cydiaURL];
                     } else {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Cannot open Cydia.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Cannot open Cydia.", nil));
                     }
                 }
             }
@@ -193,7 +197,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:qqURL]) {
                         [[UIApplication sharedApplication] openURL:qqURL];
                     } else {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Cannot open Mobile QQ.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Cannot open Mobile QQ.", nil));
                     }
                 }
             }

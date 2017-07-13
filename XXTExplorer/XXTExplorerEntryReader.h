@@ -24,7 +24,8 @@
 @property (nonatomic, copy, readonly) NSString *entryDisplayName;
 @property (nonatomic, strong, readonly) UIImage *entryIconImage;
 @property (nonatomic, copy, readonly) NSString *entryDescription;
-
+@property (nonatomic, copy, readonly) NSString *entryExtensionDescription;
+@property (nonatomic, copy, readonly) NSString *entryViewerDescription;
 
 @end
 

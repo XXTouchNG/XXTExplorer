@@ -167,9 +167,9 @@ typedef enum : NSUInteger {
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                showUserMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
@@ -330,8 +330,9 @@ typedef enum : NSUInteger {
                     blockUserInteractions(self, YES);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         [[UIPasteboard generalPasteboard] setString:addressText];
+                        fulfill(nil);
                     }].finally(^() {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });
                 }
@@ -494,9 +495,9 @@ typedef enum : NSUInteger {
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                showUserMessage(self, [serverError localizedDescription]);
             }
             [self.remoteAccessSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
@@ -544,13 +545,13 @@ typedef enum : NSUInteger {
     blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
@@ -562,13 +563,13 @@ typedef enum : NSUInteger {
     blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"uicache") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
@@ -580,13 +581,13 @@ typedef enum : NSUInteger {
     blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_all") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
@@ -598,13 +599,13 @@ typedef enum : NSUInteger {
     blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"respring") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
@@ -616,13 +617,13 @@ typedef enum : NSUInteger {
     blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"reboot2") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self.navigationController.view, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
@@ -670,7 +671,7 @@ typedef enum : NSUInteger {
             // finished
 //            blockUserInteractions(self, NO);
 //            [alertView dismissAnimated];
-//            showUserMessage(self.navigationController.view, NSLocalizedString(@"The daemon has been restarted.", nil));
+//            showUserMessage(self, NSLocalizedString(@"The daemon has been restarted.", nil));
             LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Daemon Restarted", nil)
                                                                  message:NSLocalizedString(@"The daemon has been restarted.", nil)
                                                                    style:LGAlertViewStyleActionSheet
@@ -690,7 +691,7 @@ typedef enum : NSUInteger {
             // unknown error, stop
 //            blockUserInteractions(self, NO);
 //            [alertView dismissAnimated];
-//            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+//            showUserMessage(self, [serverError localizedDescription]);
             LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"Cannot restart daemon: %@", nil), [serverError localizedDescription]]
                                                                    style:LGAlertViewStyleActionSheet

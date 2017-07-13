@@ -13,7 +13,7 @@
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 #import "XXTEMoreUserDefaultsOperationController.h"
-#import "XXTExplorerViewController.h"
+#import "XXTEAppDefines.h"
 
 enum {
     kXXTEMoreUserDefaultsSearchTypeTitle = 0,
@@ -134,11 +134,18 @@ enum {
 }
 
 - (void)loadStaticUserDefaults {
-    NSString *userDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEUserDefaults" ofType:@"plist"];
-    NSDictionary *defaultsMeta = [[NSDictionary alloc] initWithContentsOfFile:userDefaultsPath];
-    self.defaultsSectionMeta = defaultsMeta[@"SECTION_META"];
+    
+    NSArray <NSDictionary *> *sectionMetas = XXTEBuiltInDefaultsObject(@"SECTION_META");
+    self.defaultsSectionMeta = sectionMetas;
+    
+    NSMutableArray <NSString *> *availableSectionKeys = [[NSMutableArray alloc] initWithCapacity:sectionMetas.count];
+    for (NSDictionary *sectionMeta in sectionMetas) {
+        [availableSectionKeys addObject:sectionMeta[@"key"]];
+    }
+    
     NSMutableDictionary *defaultsMutableMeta = [[NSMutableDictionary alloc] init];
-    [defaultsMeta enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray <NSDictionary *> * _Nonnull entryArray, BOOL * _Nonnull stop) {
+    [availableSectionKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull sectionKey, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray <NSDictionary *> *entryArray = XXTEBuiltInDefaultsObject(sectionKey);
         NSMutableArray <NSDictionary *> *entryMutableArray = [[NSMutableArray alloc] initWithCapacity:entryArray.count];
         [entryArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entryDetail, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([entryDetail[@"enabled"] boolValue]) {
@@ -146,8 +153,9 @@ enum {
                 [entryMutableArray addObject:entryDetail];
             }
         }];
-        defaultsMutableMeta[key] = [[NSArray alloc] initWithArray:entryMutableArray copyItems:YES];
+        defaultsMutableMeta[sectionKey] = [[NSArray alloc] initWithArray:entryMutableArray copyItems:YES];
     }];
+    
     self.defaultsMeta = [[NSDictionary alloc] initWithDictionary:defaultsMutableMeta];
 }
 
@@ -159,7 +167,7 @@ enum {
         }];
         [((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]) enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
             id key = entry[@"key"];
-            id value = [XXTExplorerViewController.explorerDefaults objectForKey:key];
+            id value = XXTEDefaultsObject(key);
             if (value) {
                 self.userDefaults[key] = value;
             }
@@ -180,9 +188,9 @@ enum {
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
@@ -344,14 +352,14 @@ enum {
         return [PMKPromise promiseWithValue:editedUserDefaults];
     }).then(^ (NSDictionary *saveDictionary) {
         [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            [XXTExplorerViewController.explorerDefaults setObject:obj forKey:key];
+            XXTEDefaultsSetObject(key, obj);
         }];
     }).catch(^(NSError *serverError) {
         block(NO);
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {

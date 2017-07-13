@@ -10,6 +10,8 @@
 
 @interface XXTEAppDelegate : UIResponder <UIApplicationDelegate>
 
+- (NSUserDefaults *)userDefaults;
+- (NSDictionary *)builtInDefaults;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic, readonly) NSDictionary *appDefines;
 

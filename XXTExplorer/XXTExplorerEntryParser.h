@@ -11,7 +11,6 @@
 @interface XXTExplorerEntryParser : NSObject
 
 + (NSDateFormatter *)entryDateFormatter;
-+ (NSDictionary *)externalEntryOfPath:(NSString *)path;
 - (NSDictionary *)entryOfPath:(NSString *)path withError:(NSError **)error;
 
 @end

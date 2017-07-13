@@ -24,6 +24,7 @@
 #import "NSFileManager+DeepSize.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XXTExplorerEntryReader.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
@@ -158,6 +159,9 @@ static int sizingCancelFlag = 0;
                              ];
     staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"", @"", @"", @"", @"", NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
     
+    NSDictionary *entry = self.entry;
+    id <XXTExplorerEntryReader> entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
+
     NSFileManager *detailManager = [[NSFileManager alloc] init];
     
     // Name
@@ -168,34 +172,34 @@ static int sizingCancelFlag = 0;
     self.nameField = cell1.nameField;
     self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
     
-    NSDictionary *entry = self.entry;
-    
     // Where
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell2.addressLabel.text = entry[XXTExplorerViewEntryAttributePath];
     
     // Extended
+    NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
+    
     NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
     NSBundle *entryBundle = [NSBundle bundleWithPath:entryPath];
     NSBundle *useBundle = entryBundle ? entryBundle : [NSBundle mainBundle];
-    NSDictionary *externalEntry = [XXTExplorerEntryParser externalEntryOfPath:entryPath];
-    NSDictionary *extendedDictionary = externalEntry[XXTExplorerViewEntryAttributeMetaDictionary];
-    NSArray <NSString *> *displayExtendedKeys = externalEntry[XXTExplorerViewEntryAttributeMetaKeys];
-    NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
-    for (NSString *extendedKey in displayExtendedKeys) {
-        id extendedValue = extendedDictionary[extendedKey];
-        if ([extendedValue isKindOfClass:[NSString class]]) {
-            XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-            extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-            extendedCell.valueLabel.text = extendedValue;
-            [extendedCells addObject:extendedCell];
-        }
-        else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
-                 [extendedValue isKindOfClass:[NSArray class]]) {
-            XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-            extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-            [extendedCells addObject:extendedCell];
+    if (entryReader && entryReader.metaDictionary && entryReader.displayMetaKeys) {
+        NSDictionary *extendedDictionary = entryReader.metaDictionary;
+        NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
+        for (NSString *extendedKey in displayExtendedKeys) {
+            id extendedValue = extendedDictionary[extendedKey];
+            if ([extendedValue isKindOfClass:[NSString class]]) {
+                XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                extendedCell.valueLabel.text = extendedValue;
+                [extendedCells addObject:extendedCell];
+            }
+            else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
+                     [extendedValue isKindOfClass:[NSArray class]]) {
+                XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                [extendedCells addObject:extendedCell];
+            }
         }
     }
     
@@ -204,7 +208,10 @@ static int sizingCancelFlag = 0;
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Kind", nil);
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
+    NSString *entryExtensionDescription = entry[XXTExplorerViewEntryAttributeExtensionDescription];
+    if (entryReader && entryReader.entryExtensionDescription) {
+        entryExtensionDescription = entryReader.entryExtensionDescription;
+    }
     if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entry[XXTExplorerViewEntryAttributePath]]) {
         NSString *mimeString = nil;
         CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
@@ -216,9 +223,9 @@ static int sizingCancelFlag = 0;
             mimeString = (__bridge NSString *)(MIMEType);
             CFRelease(MIMEType);
         }
-        cell3.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", NSLocalizedString(entry[XXTExplorerViewEntryAttributeExtensionDescription], nil), mimeString];
+        cell3.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", NSLocalizedString(entryExtensionDescription, nil), mimeString];
     } else {
-        cell3.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeExtensionDescription], nil);
+        cell3.valueLabel.text = NSLocalizedString(entryExtensionDescription, nil);
     }
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -299,7 +306,11 @@ static int sizingCancelFlag = 0;
     cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
     cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell13.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeViewerDescription], nil);
+    NSString *enteyViewerDescription = entry[XXTExplorerViewEntryAttributeViewerDescription];
+    if (entryReader.entryViewerDescription) {
+        enteyViewerDescription = entryReader.entryViewerDescription;
+    }
+    cell13.valueLabel.text = NSLocalizedString(enteyViewerDescription, nil);
     
     staticCells = @[
                     @[ cell1 ],
@@ -374,8 +385,11 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    [self dismissViewControllerAnimated:YES completion:^{
+    if (XXTE_PAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        
     }];
 }
 
@@ -403,7 +417,7 @@ static int sizingCancelFlag = 0;
     struct stat itemStat;
     NSString *itemPath = [entryParentPath stringByAppendingPathComponent:itemName];
     if (/* [renameManager fileExistsAtPath:itemPath] */ 0 == lstat([itemPath UTF8String], &itemStat)) {
-        showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]);
+        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]);
         [self.itemNameShaker shake];
         return;
     }
@@ -421,12 +435,15 @@ static int sizingCancelFlag = 0;
     }].then(^(id renameResult) {
         
     }).catch(^(NSError *systemError) {
-        showUserMessage(self.navigationController.view, [systemError localizedDescription]);
+        showUserMessage(self, [systemError localizedDescription]);
     }).finally(^() {
         blockUserInteractions(self, NO);
         sizingCancelFlag = 1;
-        [self dismissViewControllerAnimated:YES completion:^{
+        if (XXTE_PAD) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+        }
+        [self dismissViewControllerAnimated:YES completion:^{
+            
         }];
     });
 }
@@ -471,7 +488,7 @@ static int sizingCancelFlag = 0;
                     [[UIPasteboard generalPasteboard] setString:detailText];
                     fulfill(nil);
                 }].finally(^() {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
             }
@@ -486,7 +503,7 @@ static int sizingCancelFlag = 0;
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     }].finally(^() {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });
                 }

@@ -13,10 +13,6 @@
 @interface XXTExplorerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
-//@property (nonatomic, strong, readonly) NSUserDefaults *explorerDefaults;
-//@property (nonatomic, copy, readonly) NSDictionary *explorerBuiltInDefaults;
-//@property (nonatomic, strong, readonly) NSFileManager *explorerFileManager;
-//@property (nonatomic, strong, readonly) NSDateFormatter *explorerDateFormatter;
 
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
@@ -29,8 +25,6 @@
 + (NSString *)initialPath;
 + (NSString *)rootPath;
 + (NSFileManager *)explorerFileManager;
-+ (NSUserDefaults *)explorerDefaults;
-+ (NSDictionary *)explorerBuiltInDefaults;
 + (NSString *)selectedScriptPath;
 + (BOOL)isFetchingSelectedScript;
 + (void)setFetchingSelectedScript:(BOOL)fetching;

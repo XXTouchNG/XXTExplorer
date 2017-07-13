@@ -11,33 +11,25 @@
 
 #pragma mark - Application Bundle
 
-static NSString * const XXTExplorerDefaults = @"XXTExplorerDefaults";
-
 #pragma mark - Defaults
 
 //static NSUInteger const XXTExplorerMaximumEntryCount = 1000;
 
-static NSString * const XXTExplorerViewInitialPath = @"XXTExplorerViewInitialPath";
+static NSString * const XXTExplorerViewBuiltInitialPath = @"EXPLORER_INITIAL_PATH";
+static NSString * const XXTExplorerViewBuiltHomeSeries = @"EXPLORER_HOME_SERIES";
 
-static NSString * const XXTExplorerViewSectionHomeEnabledKey = @"XXTExplorerViewSectionHomeEnabledKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesKey = @"XXTExplorerViewSectionHomeSeriesKey";
+static NSString * const XXTExplorerViewEntryHomeEnabledKey = @"XXTExplorerViewEntryHomeEnabledKey";
 static NSString * const XXTExplorerViewEntryListSortFieldKey = @"XXTExplorerViewEntryListSortFieldKey";
 static NSString * const XXTExplorerViewEntryListSortOrderKey = @"XXTExplorerViewEntryListSortOrderKey";
 static NSString * const XXTExplorerViewEntryListHideDotItemKey = @"XXTExplorerViewEntryListHideDotItemKey";
-static NSString * const XXTExplorerViewSelectedScriptPathKey = @"XXTExplorerViewSelectedScriptPathKey";
-static NSString * const XXTExplorerViewSelectLaunchedScriptKey = @"XXTExplorerViewSelectLaunchedScriptKey";
+static NSString * const XXTExplorerViewEntrySelectedScriptPathKey = @"XXTExplorerViewEntrySelectedScriptPathKey";
+static NSString * const XXTExplorerViewEntrySelectLaunchedScriptKey = @"XXTExplorerViewEntrySelectLaunchedScriptKey";
 
 // XXTExplorerViewEntryListSortOrderKey
 typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortOrderAsc = 0,
     XXTExplorerViewEntryListSortOrderDesc,
 } XXTExplorerViewEntryListSortOrder;
-
-// XXTExplorerViewSectionHomeSeriesKey
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailTitleKey = @"XXTExplorerViewSectionHomeSeriesDetailTitleKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailSubtitleKey = @"XXTExplorerViewSectionHomeSeriesDetailSubtitleKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailIconKey = @"XXTExplorerViewSectionHomeSeriesDetailIconKey";
-static NSString * const XXTExplorerViewSectionHomeSeriesDetailPathKey = @"XXTExplorerViewSectionHomeSeriesDetailPathKey";
 
 #pragma mark - Attributes
 
@@ -55,11 +47,12 @@ static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExp
 static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize"; // NSNumber
 static NSString * const XXTExplorerViewEntryAttributePermission = @"XXTExplorerViewEntryAttributePermission"; // Dictionary
 
-static NSString * const XXTExplorerViewEntryAttributeDescription = @"XXTExplorerViewEntryAttributeDescription";
+static NSString * const XXTExplorerViewEntryAttributeEntryReader = @"XXTExplorerViewEntryAttributeEntryReader";
+static NSString * const XXTExplorerViewEntryAttributeDescription = @"XXTExplorerViewEntryAttributeDescription"; // NSString
 static NSString * const XXTExplorerViewEntryAttributeExtensionDescription = @"XXTExplorerViewEntryAttributeExtensionDescription"; // NSString - Description
-static NSString * const XXTExplorerViewEntryAttributeViewerDescription = @"XXTExplorerViewEntryAttributeViewerDescription";
-static NSString * const XXTExplorerViewEntryAttributeMetaKeys = @"XXTExplorerViewEntryAttributeMetaKeys";
-static NSString * const XXTExplorerViewEntryAttributeMetaDictionary = @"XXTExplorerViewEntryAttributeMetaDictionary";
+static NSString * const XXTExplorerViewEntryAttributeViewerDescription = @"XXTExplorerViewEntryAttributeViewerDescription"; // NSString
+//static NSString * const XXTExplorerViewEntryAttributeMetaKeys = @"XXTExplorerViewEntryAttributeMetaKeys"; // NSArray <NSString>
+//static NSString * const XXTExplorerViewEntryAttributeMetaDictionary = @"XXTExplorerViewEntryAttributeMetaDictionary"; // NSDictionary
 
 // XXTExplorerViewEntryAttributeType
 static NSString * const XXTExplorerViewEntryAttributeTypeUnsupported = @"XXTExplorerViewEntryAttributeTypeUnsupported";
@@ -104,6 +97,8 @@ static NSString * const XXTExplorerActionIconConfigure = @"XXTExplorerActionIcon
 // XXTExplorerPasteboard
 static NSString * const XXTExplorerPasteboardName = @"XXTExplorerPasteboardName";
 
-#pragma mark - Notifications
+#pragma mark - Bindings
+
+static NSString * const XXTExplorerViewEntryBindingKey = @"XXTExplorerViewEntryBindingKey";
 
 #endif /* XXTExplorerDefaults_h */

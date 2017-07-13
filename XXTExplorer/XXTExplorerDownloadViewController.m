@@ -189,7 +189,7 @@ typedef enum : NSUInteger {
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     }].finally(^() {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Source URL has been copied to the pasteboard.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Source URL has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });
                 }
@@ -204,7 +204,7 @@ typedef enum : NSUInteger {
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     }].finally(^() {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Target Path has been copied to the pasteboard.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Target Path has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });
                 }
@@ -238,8 +238,11 @@ typedef enum : NSUInteger {
 #pragma mark - UIControl Actions
 
 - (void)dismissViewController:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
+    if (XXTE_PAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        
     }];
 }
 
@@ -297,8 +300,11 @@ typedef enum : NSUInteger {
 {
     if (index == 0) {
         [alertView dismissAnimated];
-        [self dismissViewControllerAnimated:YES completion:^{
+        if (XXTE_PAD) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+        }
+        [self dismissViewControllerAnimated:YES completion:^{
+            
         }];
     }
 }

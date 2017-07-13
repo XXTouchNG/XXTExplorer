@@ -29,8 +29,8 @@ static inline void blockUserInteractions(UIViewController *viewController, BOOL 
     }
 }
 
-static inline void showUserMessage(UIView *viewToShow, NSString *message) {
-    [viewToShow makeToast:message];
+static inline void showUserMessage(UIViewController *viewController, NSString *message) {
+    [viewController.navigationController.view makeToast:message];
 }
 
 #endif /* XXTEUserInterfaceDefines_h */

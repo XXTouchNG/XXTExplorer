@@ -37,7 +37,10 @@
     
     self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    
+    if (XXTE_PAD) {
+        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    }
     
     self.arrowPlaceholderImageView.hidden = (self.splitViewController.displayMode != UISplitViewControllerDisplayModePrimaryHidden);
     

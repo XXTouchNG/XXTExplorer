@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AVAILABLE_VIEWER</key>
+	<array>
+		<string>XXTEMediaPlayerController</string>
+	</array>
+	<key>AVAILABLE_ENTRY_READER</key>
+	<array>
+		<string>XXTExplorerEntryXPPReader</string>
+		<string>XXTExplorerEntryMediaReader</string>
+	</array>
+	<key>EXPLORER_INITIAL_PATH</key>
+	<string>lua/scripts</string>
+	<key>EXPLORER_HOME_SERIES</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Home Directory</string>
+			<key>subtitle</key>
+			<string>XXTouch Runtime Home Directory</string>
+			<key>icon</key>
+			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
+			<key>path</key>
+			<string></string>
+		</dict>
+	</array>
 	<key>SECTION_META</key>
 	<array>
 		<dict>
@@ -23,7 +47,7 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
-			<string>XXTExplorerViewSectionHomeEnabledKey</string>
+			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
 			<false/>
 			<key>title</key>
@@ -38,7 +62,7 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
-			<integer>0</integer>
+			<false/>
 			<key>key</key>
 			<string>XXTExplorerViewEntryListSortFieldKey</string>
 			<key>default</key>
@@ -81,7 +105,7 @@
 			<key>enabled</key>
 			<string>YES</string>
 			<key>key</key>
-			<string>XXTExplorerViewSelectLaunchedScriptKey</string>
+			<string>XXTExplorerViewEntrySelectLaunchedScriptKey</string>
 			<key>default</key>
 			<false/>
 			<key>title</key>

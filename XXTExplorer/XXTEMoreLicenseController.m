@@ -215,9 +215,9 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
@@ -325,7 +325,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
                     [[UIPasteboard generalPasteboard] setString:detailText];
                     fulfill(nil);
                 }].finally(^() {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
             }

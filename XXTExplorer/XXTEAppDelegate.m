@@ -17,6 +17,7 @@
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTECloudApiSdk.h"
+#import "XXTECommonNavigationController.h"
 
 @interface XXTEAppDelegate () <UISplitViewControllerDelegate>
 
@@ -26,6 +27,7 @@
     NSDictionary *localAppDefines;
 }
 
+#pragma mark - Application
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -46,7 +48,7 @@
     
     // Detail Controller
     XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-    XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+    XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
     
     // Split Controller
     XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
@@ -142,21 +144,6 @@
     }
 }
 
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)targetViewController sender:(id)sender {
-    UIUserInterfaceIdiom interfaceIdiom = [[UIDevice currentDevice] userInterfaceIdiom];
-    if (interfaceIdiom == UIUserInterfaceIdiomPhone)
-    {
-        if (splitViewController.collapsed) {
-            UITabBarController *tabbarController = (UITabBarController *)splitViewController.viewControllers[0];
-            UINavigationController *navController = (UINavigationController *)tabbarController.selectedViewController;
-            UINavigationController *destinationController = (UINavigationController *)targetViewController;
-            [navController pushViewController:[destinationController.viewControllers lastObject] animated:YES];
-            return YES;
-        }
-    }
-    return NO;
-}
-
 - (void)splitViewController:(UISplitViewController *)svc willChangeToDisplayMode:(UISplitViewControllerDisplayMode)displayMode {
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:svc userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode, XXTENotificationDetailDisplayMode: @(displayMode)}]];
 }
@@ -172,6 +159,27 @@
         localAppDefines = appDefines;
     }
     return localAppDefines;
+}
+
+- (NSUserDefaults *)userDefaults {
+    static NSUserDefaults *userDefaults = nil;
+    if (!userDefaults) {
+        userDefaults = ({
+            [NSUserDefaults standardUserDefaults];
+        });
+    }
+    return userDefaults;
+}
+
+- (NSDictionary *)builtInDefaults {
+    static NSDictionary *builtInDefaults = nil;
+    if (!builtInDefaults) {
+        builtInDefaults = ({
+            NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults" ofType:@"plist"];
+            [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
+        });
+    }
+    return builtInDefaults;
 }
 
 @end

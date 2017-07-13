@@ -91,9 +91,9 @@
             })
             .catch(^(NSError *serverError) {
                 if (serverError.code == -1004) {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
                 } else {
-                    showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                    showUserMessage(self, [serverError localizedDescription]);
                 }
             })
             .finally(^() {
@@ -180,9 +180,9 @@
                     })
                     .catch(^(NSError *serverError) {
                         if (serverError.code == -1004) {
-                            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
                         } else {
-                            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                            showUserMessage(self, [serverError localizedDescription]);
                         }
                     })
                     .finally(^() {

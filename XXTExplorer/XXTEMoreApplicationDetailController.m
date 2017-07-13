@@ -166,7 +166,7 @@ typedef enum : NSUInteger {
                     [[UIPasteboard generalPasteboard] setString:detailText];
                     fulfill(nil);
                 }].finally(^() {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
             }
@@ -178,7 +178,7 @@ typedef enum : NSUInteger {
                     [[UIPasteboard generalPasteboard] setString:detailText];
                     fulfill(nil);
                 }].finally(^() {
-                    showUserMessage(self.navigationController.view, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
                 });
             }
@@ -253,15 +253,15 @@ typedef enum : NSUInteger {
     [alertView dismissAnimated:YES completionHandler:^{
         [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-                showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
+                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
             } else {
                 @throw [NSString stringWithFormat:NSLocalizedString(@"Clean failed: %@", nil), jsonDictionary[@"message"]];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                showUserMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
             blockUserInteractions(self, NO);
@@ -274,15 +274,15 @@ typedef enum : NSUInteger {
     [alertView dismissAnimated:YES completionHandler:^{
         [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_app_data") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-                showUserMessage(self.navigationController.view, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
+                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
             } else {
                 @throw [NSString stringWithFormat:NSLocalizedString(@"Clean failed: %@", nil), jsonDictionary[@"message"]];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                showUserMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
             blockUserInteractions(self, NO);

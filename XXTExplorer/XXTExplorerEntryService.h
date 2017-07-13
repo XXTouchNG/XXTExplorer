@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol XXTEViewer;
+
 @interface XXTExplorerEntryService : NSObject
 
 - (BOOL)hasDefaultViewControllerForEntry:(NSDictionary *)entry;
-- (UIViewController *)defaultViewControllerForEntry:(NSDictionary *)entry;
+- (UIViewController <XXTEViewer> *)viewControllerForEntry:(NSDictionary *)entry;
 - (UIViewController *)openInControllerForEntry:(NSDictionary *)entry;
 
 @end

@@ -102,7 +102,7 @@
     self.bootScriptSwitch = cell1.optionSwitch;
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = bootScriptPath ? bootScriptPath : @"N/A";
+    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : @"N/A";
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -140,9 +140,9 @@
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
@@ -198,7 +198,7 @@
                         [[UIPasteboard generalPasteboard] setString:addressText];
                         fulfill(nil);
                     }].finally(^() {
-                        showUserMessage(self.navigationController.view, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
+                        showUserMessage(self, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);
                     });
                 }
@@ -260,9 +260,9 @@
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+                showUserMessage(self, [serverError localizedDescription]);
             }
             [self.bootScriptSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
@@ -285,9 +285,9 @@
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self.navigationController.view, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self.navigationController.view, [serverError localizedDescription]);
+            showUserMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
         blockUserInteractions(self, NO);
