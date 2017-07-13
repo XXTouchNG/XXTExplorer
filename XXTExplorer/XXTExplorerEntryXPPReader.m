@@ -21,6 +21,7 @@
 @synthesize entryDisplayName = _entryDisplayName;
 @synthesize entryIconImage = _entryIconImage;
 @synthesize displayMetaKeys = _displayMetaKeys;
+@synthesize entryDescription = _entryDescription;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return @[ @"xpp" ];
@@ -39,24 +40,8 @@
                           kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
                           kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
                           kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
-    NSFileManager *previewFileManager = [[NSFileManager alloc] init];
-    NSString *entryPath = path;
-    NSString *metaName = @"Info.plist";
-    NSString *languageRegion = [[[NSBundle mainBundle] preferredLocalizations] firstObject];
-    NSString *languageRegionName = [NSString stringWithFormat:@"%@.lproj", languageRegion];
-    NSString *entryLocalizedPath = [entryPath stringByAppendingPathComponent:languageRegionName];
-    NSString *entryLocalizedMetaPath = [entryLocalizedPath stringByAppendingPathComponent:metaName];
-    NSString *entryMetaPath = [entryPath stringByAppendingPathComponent:metaName];
-    NSArray <NSString *> *metaPaths = @[ entryLocalizedMetaPath, entryMetaPath ];
-    NSString *existsMetaPath = nil;
-    for (NSString *metaPath in metaPaths) {
-        BOOL isDirectory = NO;
-        BOOL isMetaExists = [previewFileManager fileExistsAtPath:metaPath isDirectory:&isDirectory];
-        if (isMetaExists && !isDirectory) {
-            existsMetaPath = metaPath;
-            break;
-        }
-    }
+    NSBundle *pathBundle = [NSBundle bundleWithPath:path];
+    NSString *existsMetaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
     if (!existsMetaPath)
     {
         return;
@@ -67,30 +52,30 @@
         return;
     }
     if (!metaInfo[kXXTEBundleIdentifier] ||
+        ![metaInfo[kXXTEBundleIdentifier] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEBundleName] ||
+        ![metaInfo[kXXTEBundleName] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEExecutable] ||
+        ![metaInfo[kXXTEExecutable] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEBundleVersion] ||
-        !metaInfo[kXXTEBundleInfoDictionaryVersion]
+        ![metaInfo[kXXTEBundleVersion] isKindOfClass:[NSString class]] ||
+        !metaInfo[kXXTEBundleInfoDictionaryVersion] ||
+        ![metaInfo[kXXTEBundleInfoDictionaryVersion] isKindOfClass:[NSString class]]
         ) {
         return;
     }
     _entryName = metaInfo[kXXTEBundleName];
-    _entryDisplayName = metaInfo[kXXTEBundleDisplayName];
-    if (metaInfo[kXXTEBundleIconFile]) {
-        NSString *iconFileName = metaInfo[kXXTEBundleIconFile];
-        if (iconFileName) {
-            NSString *iconFileExtension = [iconFileName pathExtension];
-            if (iconFileExtension.length <= 0) {
-                iconFileName = [iconFileName stringByAppendingPathExtension:@"png"];
-            }
-            NSString *iconFilePath = [entryPath stringByAppendingPathComponent:iconFileName];
-            if ([previewFileManager fileExistsAtPath:iconFilePath]) {
-                UIImage *iconImage = [[UIImage alloc] initWithContentsOfFile:iconFilePath];
-                if (iconImage) {
-                    _entryIconImage = iconImage;
-                }
-            }
-        }
+    _entryDescription = [NSString stringWithFormat:[pathBundle localizedStringForKey:(@"Version %@") value:@"" table:(@"Meta")], metaInfo[kXXTEBundleVersion]];
+    if (metaInfo[kXXTEBundleDisplayName] &&
+        [metaInfo[kXXTEBundleDisplayName] isKindOfClass:[NSString class]]) {
+        _entryDisplayName = metaInfo[kXXTEBundleDisplayName];
+    }
+    if (metaInfo[kXXTEBundleIconFile] &&
+        [metaInfo[kXXTEBundleIconFile] isKindOfClass:[NSString class]])
+    {
+        _entryIconImage = [UIImage imageNamed:metaInfo[kXXTEBundleIconFile]
+                                     inBundle:pathBundle
+                compatibleWithTraitCollection:nil];
     }
     _metaDictionary = metaInfo;
 }

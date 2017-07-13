@@ -5,21 +5,3 @@
   Created by Zheng on 12/07/2017.
   Copyright © 2017 Zheng. All rights reserved.
 */
-
-"BundleIdentifier" = "Identifier";
-"BundleVersion" = "Version";
-"BundleName" = "Name";
-"BundleDisplayName" = "Display Name";
-"BundleIconFile" = "Icon";
-"Executable" = "Executable";
-"MainInterfaceFile" = "Main Interface";
-"MinimumSystemVersion" = "Minimum System Version";
-"MaximumSystemVersion" = "Maximum System Version";
-"MinimumXXTVersion" = "Minimum XXTouch Version";
-"SupportedResolutions" = "Supported Resolutions";
-"SupportedDeviceTypes" = "Supported Device Types";
-"PackageControl" = "Package Control";
-"AuthorName" = "Author Name";
-"AuthorEmail" = "Author Email";
-"Description" = "Description";
-"Homepage" = "Homepage";

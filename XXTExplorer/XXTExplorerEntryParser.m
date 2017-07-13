@@ -23,14 +23,18 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
     
 }
 
-//+ (instancetype)sharedParser {
-//    static XXTExplorerEntryParser *parser = nil;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        parser = [[XXTExplorerEntryParser alloc] init];
-//    });
-//    return parser;
-//}
++ (NSDateFormatter *)entryDateFormatter {
+    static NSDateFormatter *entryDateFormatter = nil;
+    if (!entryDateFormatter) {
+        entryDateFormatter = ({
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            dateFormatter;
+        });
+    }
+    return entryDateFormatter;
+}
 
 + (NSArray <Class> *)registeredReaders {
     return @[ [XXTExplorerEntryXPPReader class] ];
@@ -126,6 +130,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
             entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeUnsupported];
         }
     }
+    NSString *entryDescription = [self.class.entryDateFormatter stringFromDate:entrySubdirectoryAttributes[NSFileCreationDate]];
     NSDictionary *entryAttributes =
     @{
       XXTExplorerViewEntryAttributeIconImage: entryIconImage,
@@ -140,8 +145,9 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
       XXTExplorerViewEntryAttributeExtension: entryBaseExtension,
       XXTExplorerViewEntryAttributeInternalExtension: entryBaseExtension,
       XXTExplorerViewEntryAttributePermission: @[],
-      XXTExplorerViewEntryAttributeKind: entryBaseKind,
-      XXTExplorerViewEntryAttributeViewer: @"None"
+      XXTExplorerViewEntryAttributeDescription: entryDescription,
+      XXTExplorerViewEntryAttributeExtensionDescription: entryBaseKind,
+      XXTExplorerViewEntryAttributeViewerDescription: @"None"
       };
     NSDictionary *newEntryAttributes = [self parseInternalEntry:entryAttributes];
     
@@ -174,8 +180,8 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
               XXTExplorerViewEntryAttributePermissionEditable,
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeKind] = @"LUA Script File";
-            newEntry[XXTExplorerViewEntryAttributeViewer] = @"Launcher";
+            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"LUA Script File";
+            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Launcher";
             UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"lua"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
@@ -187,8 +193,8 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
             @[XXTExplorerViewEntryAttributePermissionExecuteable,
               ];
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeKind] = @"XXTouch Script File";
-            newEntry[XXTExplorerViewEntryAttributeViewer] = @"Launcher";
+            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"XXTouch Script File";
+            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Launcher";
             UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"xxt"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
@@ -198,8 +204,8 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
         else if ([entryBaseExtension isEqualToString:@"zip"])
         {
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionArchive;
-            newEntry[XXTExplorerViewEntryAttributeKind] = @"ZIP Archive";
-            newEntry[XXTExplorerViewEntryAttributeViewer] = @"Archiver";
+            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"ZIP Archive";
+            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Archiver";
             UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"zip"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
@@ -230,8 +236,8 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
               ];
             newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
             newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeKind] = @"XXTouch Bundle";
-            newEntry[XXTExplorerViewEntryAttributeViewer] = @"Launcher";
+            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"XXTouch Bundle";
+            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Launcher";
             UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"xpp"]];
             if (iconImage) {
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
@@ -277,17 +283,25 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
             }
             if (supported) {
                 id <XXTExplorerEntryReader> reader = [[readerClass alloc] initWithPath:entryPath];
-                if (reader.entryDisplayName) {
+                if (reader.entryDisplayName)
+                {
                     newEntry[XXTExplorerViewEntryAttributeDisplayName] = reader.entryDisplayName;
                 }
-                if (reader.entryIconImage) {
+                if (reader.entryIconImage)
+                {
                     newEntry[XXTExplorerViewEntryAttributeIconImage] = reader.entryIconImage;
                 }
-                if (reader.displayMetaKeys) {
+                if (reader.displayMetaKeys)
+                {
                     newEntry[XXTExplorerViewEntryAttributeMetaKeys] = reader.displayMetaKeys;
                 }
-                if (reader.metaDictionary) {
+                if (reader.metaDictionary)
+                {
                     newEntry[XXTExplorerViewEntryAttributeMetaDictionary] = reader.metaDictionary;
+                }
+                if (reader.entryDescription)
+                {
+                    newEntry[XXTExplorerViewEntryAttributeDescription] = reader.entryDescription;
                 }
                 break;
             }

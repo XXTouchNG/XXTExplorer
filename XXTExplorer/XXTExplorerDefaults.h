@@ -42,20 +42,22 @@ static NSString * const XXTExplorerViewSectionHomeSeriesDetailPathKey = @"XXTExp
 #pragma mark - Attributes
 
 // XXTExplorerViewEntryAttribute
-static NSString * const XXTExplorerViewEntryAttributeIconImage = @"XXTExplorerViewEntryAttributeIconImage";
-static NSString * const XXTExplorerViewEntryAttributeDisplayName = @"XXTExplorerViewEntryAttributeDisplayName";
-static NSString * const XXTExplorerViewEntryAttributeName = @"XXTExplorerViewEntryAttributeName";
-static NSString * const XXTExplorerViewEntryAttributePath = @"XXTExplorerViewEntryAttributePath";
-static NSString * const XXTExplorerViewEntryAttributeExtension = @"XXTExplorerViewEntryAttributeExtension";
-static NSString * const XXTExplorerViewEntryAttributeInternalExtension = @"XXTExplorerViewEntryAttributeInternalExtension";
-static NSString * const XXTExplorerViewEntryAttributeType = @"XXTExplorerViewEntryAttributeType";
-static NSString * const XXTExplorerViewEntryAttributeMaskType = @"XXTExplorerViewEntryAttributeMaskType";
-static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate";
-static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExplorerViewEntryAttributeModificationDate";
-static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize";
+static NSString * const XXTExplorerViewEntryAttributeIconImage = @"XXTExplorerViewEntryAttributeIconImage"; // UIImage
+static NSString * const XXTExplorerViewEntryAttributeDisplayName = @"XXTExplorerViewEntryAttributeDisplayName"; // NSString - Name
+static NSString * const XXTExplorerViewEntryAttributeName = @"XXTExplorerViewEntryAttributeName"; // NSString - Name
+static NSString * const XXTExplorerViewEntryAttributePath = @"XXTExplorerViewEntryAttributePath"; // NSString - Full Path
+static NSString * const XXTExplorerViewEntryAttributeExtension = @"XXTExplorerViewEntryAttributeExtension"; // NSString - Real Extension
+static NSString * const XXTExplorerViewEntryAttributeInternalExtension = @"XXTExplorerViewEntryAttributeInternalExtension"; // NSString - Internal Type
+static NSString * const XXTExplorerViewEntryAttributeType = @"XXTExplorerViewEntryAttributeType"; // NSString - Mask Type
+static NSString * const XXTExplorerViewEntryAttributeMaskType = @"XXTExplorerViewEntryAttributeMaskType"; // NSString - Mask Type
+static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate"; // NSDate
+static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExplorerViewEntryAttributeModificationDate"; // NSDate
+static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize"; // NSNumber
 static NSString * const XXTExplorerViewEntryAttributePermission = @"XXTExplorerViewEntryAttributePermission"; // Dictionary
-static NSString * const XXTExplorerViewEntryAttributeKind = @"XXTExplorerViewEntryAttributeKind";
-static NSString * const XXTExplorerViewEntryAttributeViewer = @"XXTExplorerViewEntryAttributeViewer";
+
+static NSString * const XXTExplorerViewEntryAttributeDescription = @"XXTExplorerViewEntryAttributeDescription";
+static NSString * const XXTExplorerViewEntryAttributeExtensionDescription = @"XXTExplorerViewEntryAttributeExtensionDescription"; // NSString - Description
+static NSString * const XXTExplorerViewEntryAttributeViewerDescription = @"XXTExplorerViewEntryAttributeViewerDescription";
 static NSString * const XXTExplorerViewEntryAttributeMetaKeys = @"XXTExplorerViewEntryAttributeMetaKeys";
 static NSString * const XXTExplorerViewEntryAttributeMetaDictionary = @"XXTExplorerViewEntryAttributeMetaDictionary";
 

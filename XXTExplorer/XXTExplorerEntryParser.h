@@ -10,7 +10,7 @@
 
 @interface XXTExplorerEntryParser : NSObject
 
-//+ (instancetype)sharedParser;
++ (NSDateFormatter *)entryDateFormatter;
 + (NSDictionary *)externalEntryOfPath:(NSString *)path;
 - (NSDictionary *)entryOfPath:(NSString *)path withError:(NSError **)error;
 

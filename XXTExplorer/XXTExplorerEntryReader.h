@@ -23,6 +23,7 @@
 @property (nonatomic, copy, readonly) NSString *entryName;
 @property (nonatomic, copy, readonly) NSString *entryDisplayName;
 @property (nonatomic, strong, readonly) UIImage *entryIconImage;
+@property (nonatomic, copy, readonly) NSString *entryDescription;
 
 
 @end

@@ -29,7 +29,6 @@
 + (NSString *)initialPath;
 + (NSString *)rootPath;
 + (NSFileManager *)explorerFileManager;
-+ (NSDateFormatter *)explorerDateFormatter;
 + (NSUserDefaults *)explorerDefaults;
 + (NSDictionary *)explorerBuiltInDefaults;
 + (NSString *)selectedScriptPath;

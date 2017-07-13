@@ -175,7 +175,9 @@ static int sizingCancelFlag = 0;
     cell2.addressLabel.text = entry[XXTExplorerViewEntryAttributePath];
     
     // Extended
-    NSDictionary *externalEntry = [XXTExplorerEntryParser externalEntryOfPath:self.entry[XXTExplorerViewEntryAttributePath]];
+    NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
+    NSBundle *entryBundle = [NSBundle bundleWithPath:entryPath];
+    NSDictionary *externalEntry = [XXTExplorerEntryParser externalEntryOfPath:entryPath];
     NSDictionary *extendedDictionary = externalEntry[XXTExplorerViewEntryAttributeMetaDictionary];
     NSArray <NSString *> *displayExtendedKeys = externalEntry[XXTExplorerViewEntryAttributeMetaKeys];
     NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
@@ -183,14 +185,14 @@ static int sizingCancelFlag = 0;
         id extendedValue = extendedDictionary[extendedKey];
         if ([extendedValue isKindOfClass:[NSString class]]) {
             XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-            extendedCell.titleLabel.text = [NSBundle.mainBundle localizedStringForKey:(extendedKey) value:@"" table:nil];
+            extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
             extendedCell.valueLabel.text = extendedValue;
             [extendedCells addObject:extendedCell];
         }
         else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
                  [extendedValue isKindOfClass:[NSArray class]]) {
             XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-            extendedCell.titleLabel.text = [NSBundle.mainBundle localizedStringForKey:(extendedKey) value:@"" table:nil];
+            extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
             [extendedCells addObject:extendedCell];
         }
     }
@@ -212,9 +214,9 @@ static int sizingCancelFlag = 0;
             mimeString = (__bridge NSString *)(MIMEType);
             CFRelease(MIMEType);
         }
-        cell3.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil), mimeString];
+        cell3.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", NSLocalizedString(entry[XXTExplorerViewEntryAttributeExtensionDescription], nil), mimeString];
     } else {
-        cell3.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeKind], nil);
+        cell3.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeExtensionDescription], nil);
     }
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -295,7 +297,7 @@ static int sizingCancelFlag = 0;
     cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
     cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell13.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeViewer], nil);
+    cell13.valueLabel.text = NSLocalizedString(entry[XXTExplorerViewEntryAttributeViewerDescription], nil);
     
     staticCells = @[
                     @[ cell1 ],

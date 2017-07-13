@@ -106,19 +106,6 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     return explorerFileManager;
 }
 
-+ (NSDateFormatter *)explorerDateFormatter {
-    static NSDateFormatter *explorerDateFormatter = nil;
-    if (!explorerDateFormatter) {
-        explorerDateFormatter = ({
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-            dateFormatter;
-        });
-    }
-    return explorerDateFormatter;
-}
-
 + (NSUserDefaults *)explorerDefaults {
     static NSUserDefaults *explorerDefaults = nil;
     if (!explorerDefaults) {
@@ -706,6 +693,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             entryCell.entryIconImageView.image = entryDetail[XXTExplorerViewEntryAttributeIconImage];
             entryCell.entryTitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
+            entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+            entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
             if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
                     [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
                 // broken symlink
@@ -734,7 +723,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
                 entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
             }
-            entryCell.entrySubtitleLabel.text = [self.class.explorerDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeCreationDate]];
+            entryCell.entrySubtitleLabel.text = entryDetail[XXTExplorerViewEntryAttributeDescription];
             UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
             cellLongPressGesture.delegate = self;
             [entryCell addGestureRecognizer:cellLongPressGesture];
