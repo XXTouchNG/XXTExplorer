@@ -14,6 +14,7 @@
 @interface XXTEMediaPlayerController ()
 
 @property (nonatomic, strong) MPMoviePlayerController *moviePlayer;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @end
 
@@ -26,7 +27,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"m4a", @"aac", @"m4v", @"m4r", @"mp3", @"mov", @"mp4", @"ogg", @"aif", @"wav", @"flv", @"mpg", @"avi" ];
+    return @[ @"m4a", @"m4v", @"mov", @"flv", @"fla", @"mp4", @"mp3", @"aac", @"wav" ];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -60,7 +61,17 @@
     if (XXTE_PAD) {
         self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     }
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.moviePlayer pause];
 }
 
 #pragma mark - Notifications
@@ -105,6 +116,30 @@
         _moviePlayer = moviePlayer;
     }
     return _moviePlayer;
+}
+
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
+        shareButtonItem.tintColor = [UIColor whiteColor];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
+}
+
+#pragma mark - Share
+
+- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
+    NSURL *shareURL = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareURL) {
+        return;
+    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
+    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+    UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+    popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    popoverPresentationController.barButtonItem = sender;
+    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - Memory

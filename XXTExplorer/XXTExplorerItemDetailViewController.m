@@ -321,25 +321,14 @@ static int sizingCancelFlag = 0;
     staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil),
                               @"", @"", @"", @"", @"",
                               NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
-    if (extendedCells.count == 0) {
-        staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
-                                 NSLocalizedString(@"Where", nil),
-                                 NSLocalizedString(@"General", nil),
-                                 @"",
-                                 NSLocalizedString(@"Owner", nil),
-                                 NSLocalizedString(@"Permission", nil),
-                                 @"",
-                                 ];
-    } else {
-        staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
-                                 NSLocalizedString(@"Where", nil),
-                                 NSLocalizedString(@"General", nil),
-                                 NSLocalizedString(@"Extended", nil),
-                                 NSLocalizedString(@"Owner", nil),
-                                 NSLocalizedString(@"Permission", nil),
-                                 @"",
-                                 ];
-    }
+    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
+                             NSLocalizedString(@"Where", nil),
+                             NSLocalizedString(@"General", nil),
+                             NSLocalizedString(@"Extended", nil),
+                             NSLocalizedString(@"Owner", nil),
+                             NSLocalizedString(@"Permission", nil),
+                             @"",
+                             ];
     
 }
 

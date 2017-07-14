@@ -33,3 +33,10 @@
 "Depth" = "深度";
 "Orientation" = "方向";
 "ProfileName" = "配置文件";
+
+"VideoMediaType" = "视频类型";
+"VideoNominalFrameRate" = "帧速率";
+"VideoEstimatedDataRate" = "数据速率";
+"VideoDuration" = "视频时长";
+"AudioMediaType" = "音频类型";
+"AudioDuration" = "音频时长";

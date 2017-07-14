@@ -70,6 +70,12 @@
     [super viewWillAppear:animated];
     {
         self.maskView.image = self.maskImage;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    {
         [self performSelector:@selector(startAnimation) withObject:nil afterDelay:0.2f];
     }
 }

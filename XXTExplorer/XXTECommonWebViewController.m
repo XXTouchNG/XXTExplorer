@@ -18,14 +18,29 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+- (instancetype)init {
+    if (self = [super init]) {
+        [self configure];
+    }
+    return self;
+}
+
+- (instancetype)initWithURL:(NSURL *)url {
+    if (self = [super initWithURL:url]) {
+        [self configure];
+    }
+    return self;
+}
+
+- (void)configure { // do not override [super setup]
+    self.loadingBarTintColor = XXTE_COLOR_SUCCESS;
     self.showLoadingBar = YES;
     self.showUrlWhileLoading = NO;
-    self.loadingBarTintColor = XXTE_COLOR_SUCCESS;
     self.hideWebViewBoundaries = YES;
-//    self.hidesBottomBarWhenPushed = YES;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
     self.webView.opaque = NO;
     

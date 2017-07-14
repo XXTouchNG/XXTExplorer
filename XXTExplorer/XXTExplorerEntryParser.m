@@ -211,13 +211,6 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
                 newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
             }
         }
-        else {
-            // Common Icon Images
-            UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
-            if (extensionIconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = extensionIconImage;
-            }
-        }
     }
     else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
     {
@@ -275,6 +268,13 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
                 id <XXTExplorerEntryReader> reader = [[readerClass alloc] initWithPath:entryPath];
                 newEntry[XXTExplorerViewEntryAttributeEntryReader] = reader;
                 break;
+            }
+        }
+        {
+            // Common Icon Images
+            UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
+            if (extensionIconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = extensionIconImage;
             }
         }
     }

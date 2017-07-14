@@ -87,6 +87,12 @@
 		0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */; };
 		0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4301F1887CE00055E02 /* XXTExplorerEntryImageReader.m */; };
 		0FE1E4341F189A1600055E02 /* Meta.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE1E4361F189A1600055E02 /* Meta.strings */; };
+		0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E43A1F18DFB300055E02 /* XXTEWebViewerController.m */; };
+		0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */; };
+		0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */; };
+		0FE1E4461F18EEA100055E02 /* NSString+HTMLEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4451F18EEA100055E02 /* NSString+HTMLEscape.m */; };
+		0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */; };
+		0FE1E44D1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
@@ -269,6 +275,18 @@
 		0FE1E4301F1887CE00055E02 /* XXTExplorerEntryImageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryImageReader.m; sourceTree = "<group>"; };
 		0FE1E4351F189A1600055E02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Meta.strings; sourceTree = "<group>"; };
 		0FE1E4371F189A1800055E02 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Meta.strings"; sourceTree = "<group>"; };
+		0FE1E4391F18DFB300055E02 /* XXTEWebViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWebViewerController.h; sourceTree = "<group>"; };
+		0FE1E43A1F18DFB300055E02 /* XXTEWebViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEWebViewerController.m; sourceTree = "<group>"; };
+		0FE1E43D1F18E41200055E02 /* XXTExplorerEntryWebReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryWebReader.h; sourceTree = "<group>"; };
+		0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryWebReader.m; sourceTree = "<group>"; };
+		0FE1E4411F18E9D800055E02 /* XXTECodeViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECodeViewerController.h; sourceTree = "<group>"; };
+		0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECodeViewerController.m; sourceTree = "<group>"; };
+		0FE1E4441F18EEA100055E02 /* NSString+HTMLEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTMLEscape.h"; sourceTree = "<group>"; };
+		0FE1E4451F18EEA100055E02 /* NSString+HTMLEscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTMLEscape.m"; sourceTree = "<group>"; };
+		0FE1E4481F18FD5000055E02 /* XXTExplorerEntryCodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryCodeReader.h; sourceTree = "<group>"; };
+		0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryCodeReader.m; sourceTree = "<group>"; };
+		0FE1E44B1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAssetTrack+CoreMediaExtensions.h"; sourceTree = "<group>"; };
+		0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAssetTrack+CoreMediaExtensions.m"; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
 		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
 		0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewHomeCell.xib; sourceTree = "<group>"; };
@@ -416,6 +434,8 @@
 			children = (
 				0F4419F71F17E14F00967980 /* XXTExplorerEntryMediaReader.h */,
 				0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */,
+				0FE1E44B1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.h */,
+				0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */,
 			);
 			name = Media;
 			sourceTree = "<group>";
@@ -427,6 +447,8 @@
 				0F3508B91F163F60000403FD /* XPP */,
 				0F4419F61F17E11F00967980 /* Media */,
 				0FE1E42E1F1887B800055E02 /* Image */,
+				0FE1E43C1F18E3DB00055E02 /* Web */,
+				0FE1E4471F18FC5D00055E02 /* Code */,
 				0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */,
 				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
 				0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */,
@@ -525,6 +547,9 @@
 				0F5EB53C1F0A9ED80016016A /* Common */,
 				0F4419EC1F17969000967980 /* Media */,
 				0F568FFE1F185AFE009AF9FE /* Image */,
+				0FE1E4381F18DF9200055E02 /* Web */,
+				0FE1E4401F18E9A400055E02 /* Code */,
+				0FE1E44E1F19226600055E02 /* Installer */,
 				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
 				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
 			);
@@ -774,6 +799,51 @@
 			name = Image;
 			sourceTree = "<group>";
 		};
+		0FE1E4381F18DF9200055E02 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				0FE1E4391F18DFB300055E02 /* XXTEWebViewerController.h */,
+				0FE1E43A1F18DFB300055E02 /* XXTEWebViewerController.m */,
+			);
+			name = Web;
+			sourceTree = "<group>";
+		};
+		0FE1E43C1F18E3DB00055E02 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				0FE1E43D1F18E41200055E02 /* XXTExplorerEntryWebReader.h */,
+				0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */,
+			);
+			name = Web;
+			sourceTree = "<group>";
+		};
+		0FE1E4401F18E9A400055E02 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				0FE1E4411F18E9D800055E02 /* XXTECodeViewerController.h */,
+				0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */,
+				0FE1E4441F18EEA100055E02 /* NSString+HTMLEscape.h */,
+				0FE1E4451F18EEA100055E02 /* NSString+HTMLEscape.m */,
+			);
+			name = Code;
+			sourceTree = "<group>";
+		};
+		0FE1E4471F18FC5D00055E02 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				0FE1E4481F18FD5000055E02 /* XXTExplorerEntryCodeReader.h */,
+				0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */,
+			);
+			name = Code;
+			sourceTree = "<group>";
+		};
+		0FE1E44E1F19226600055E02 /* Installer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Installer;
+			sourceTree = "<group>";
+		};
 		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
 			isa = PBXGroup;
 			children = (
@@ -1003,6 +1073,9 @@
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
+				0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */,
+				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
+				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
@@ -1015,6 +1088,7 @@
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
+				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
@@ -1045,10 +1119,12 @@
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
+				0FE1E4461F18EEA100055E02 /* NSString+HTMLEscape.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */,
+				0FE1E44D1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m in Sources */,
 				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F91E8F11F139DBA00D65BF7 /* NSFileManager+DeepSize.m in Sources */,

@@ -33,3 +33,10 @@
 "Depth" = "Depth";
 "Orientation" = "Orientation";
 "ProfileName" = "Profile";
+
+"VideoMediaType" = "Video Media Type";
+"VideoNominalFrameRate" = "Frame Rate";
+"VideoEstimatedDataRate" = "Data Rate";
+"VideoDuration" = "Video Duration";
+"AudioMediaType" = "Audio Media Type";
+"AudioDuration" = "Audio Duration";

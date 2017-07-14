@@ -6,12 +6,16 @@
 	<array>
 		<string>XXTEMediaPlayerController</string>
 		<string>XXTEImageViewerController</string>
+		<string>XXTEWebViewerController</string>
+		<string>XXTECodeViewerController</string>
 	</array>
 	<key>AVAILABLE_ENTRY_READER</key>
 	<array>
 		<string>XXTExplorerEntryXPPReader</string>
 		<string>XXTExplorerEntryMediaReader</string>
 		<string>XXTExplorerEntryImageReader</string>
+		<string>XXTExplorerEntryWebReader</string>
+		<string>XXTExplorerEntryCodeReader</string>
 	</array>
 	<key>EXPLORER_INITIAL_PATH</key>
 	<string>lua/scripts</string>

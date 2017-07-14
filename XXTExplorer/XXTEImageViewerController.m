@@ -8,10 +8,12 @@
 
 #import "XXTEImageViewerController.h"
 
-@interface XXTEImageViewerController () <UIScrollViewDelegate>
+@interface XXTEImageViewerController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
 
 @end
 
@@ -62,9 +64,12 @@
     [self.scrollView addSubview:self.imageView];
     [self.view addSubview:self.scrollView];
     
+    [self.scrollView addGestureRecognizer:self.doubleTapGestureRecognizer];
+    
     if (XXTE_PAD) {
         self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     }
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
 }
 
@@ -99,6 +104,25 @@
     return _imageView;
 }
 
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
+        shareButtonItem.tintColor = [UIColor whiteColor];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
+}
+
+- (UITapGestureRecognizer *)doubleTapGestureRecognizer {
+    if (!_doubleTapGestureRecognizer) {
+        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapRecognized:)];
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+        doubleTapGestureRecognizer.delegate = self;
+        _doubleTapGestureRecognizer = doubleTapGestureRecognizer;
+    }
+    return _doubleTapGestureRecognizer;
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -106,6 +130,46 @@
         return self.imageView;
     }
     return nil;
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (void)doubleTapRecognized:(UITapGestureRecognizer *)recognizer {
+    float newScale = [self.scrollView zoomScale] * 4.0;
+    if (self.scrollView.zoomScale > self.scrollView.minimumZoomScale)
+    {
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+    }
+    else
+    {
+        CGRect zoomRect = [self zoomRectForScale:newScale withCenter:[recognizer locationInView:recognizer.view]];
+        [self.scrollView zoomToRect:zoomRect animated:YES];
+    }
+}
+
+- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
+    CGRect zoomRect;
+    zoomRect.size.height = [self.imageView frame].size.height / scale;
+    zoomRect.size.width  = [self.imageView frame].size.width  / scale;
+    center = [self.imageView convertPoint:center fromView:self.scrollView];
+    zoomRect.origin.x = center.x - ((zoomRect.size.width / 2.0));
+    zoomRect.origin.y = center.y - ((zoomRect.size.height / 2.0));
+    return zoomRect;
+}
+
+#pragma mark - Share
+
+- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
+    NSURL *shareURL = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareURL) {
+        return;
+    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
+    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+    UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+    popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    popoverPresentationController.barButtonItem = sender;
+    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - Memory
