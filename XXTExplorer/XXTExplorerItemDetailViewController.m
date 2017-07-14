@@ -161,14 +161,20 @@ static int sizingCancelFlag = 0;
     
     NSDictionary *entry = self.entry;
     id <XXTExplorerEntryReader> entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
-
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    NSBundle *entryBundle = nil;
+    if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+    {
+        entryBundle = [NSBundle bundleWithPath:entryPath];
+    }
+    NSBundle *useBundle = entryBundle ? entryBundle : [NSBundle mainBundle];
     NSFileManager *detailManager = [[NSFileManager alloc] init];
     
     // Name
     
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
     cell1.nameField.delegate = self;
-    cell1.nameField.text = self.entry[XXTExplorerViewEntryAttributeName];
+    cell1.nameField.text = entry[XXTExplorerViewEntryAttributeName];
     self.nameField = cell1.nameField;
     self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
     
@@ -179,10 +185,6 @@ static int sizingCancelFlag = 0;
     
     // Extended
     NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
-    
-    NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
-    NSBundle *entryBundle = [NSBundle bundleWithPath:entryPath];
-    NSBundle *useBundle = entryBundle ? entryBundle : [NSBundle mainBundle];
     if (entryReader && entryReader.metaDictionary && entryReader.displayMetaKeys) {
         NSDictionary *extendedDictionary = entryReader.metaDictionary;
         NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
@@ -192,6 +194,12 @@ static int sizingCancelFlag = 0;
                 XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
                 extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
                 extendedCell.valueLabel.text = extendedValue;
+                [extendedCells addObject:extendedCell];
+            }
+            if ([extendedValue isKindOfClass:[NSNumber class]]) {
+                XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                extendedCell.valueLabel.text = [extendedValue stringValue];
                 [extendedCells addObject:extendedCell];
             }
             else if ([extendedValue isKindOfClass:[NSDictionary class]] ||

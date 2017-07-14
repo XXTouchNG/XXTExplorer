@@ -11,6 +11,7 @@
 	<array>
 		<string>XXTExplorerEntryXPPReader</string>
 		<string>XXTExplorerEntryMediaReader</string>
+		<string>XXTExplorerEntryImageReader</string>
 	</array>
 	<key>EXPLORER_INITIAL_PATH</key>
 	<string>lua/scripts</string>

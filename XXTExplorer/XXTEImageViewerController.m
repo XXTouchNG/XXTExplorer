@@ -24,7 +24,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"png", @"jpg", @"gif" ];
+    return @[ @"png", @"jpg", @"gif", @"jpeg" ];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -58,7 +58,7 @@
     } else {
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
-    self.scrollView.contentSize = self.imageView.bounds.size;
+//    self.scrollView.contentSize = self.imageView.bounds.size;
     [self.scrollView addSubview:self.imageView];
     [self.view addSubview:self.scrollView];
     
@@ -92,16 +92,11 @@
 
 - (UIImageView *)imageView {
     if (!_imageView) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height - [self statusBarHeight])];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height)];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _imageView = imageView;
     }
     return _imageView;
-}
-
-- (CGFloat)statusBarHeight {
-    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-    return MIN(statusBarSize.height, statusBarSize.width);
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -116,7 +111,6 @@
 #pragma mark - Memory
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [XXTEImageViewerController dealloc]");
 #endif
