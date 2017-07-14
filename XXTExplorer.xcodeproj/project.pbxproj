@@ -31,6 +31,7 @@
 		0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */; };
 		0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */; };
 		0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */; };
+		0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */; };
 		0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */; };
 		0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
 		0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
@@ -159,6 +160,8 @@
 		0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerCreateItemViewController.m; sourceTree = "<group>"; };
 		0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryService.h; sourceTree = "<group>"; };
 		0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryService.m; sourceTree = "<group>"; };
+		0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
+		0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
 		0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XQueryComponents.h"; sourceTree = "<group>"; };
 		0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XQueryComponents.m"; sourceTree = "<group>"; };
 		0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
@@ -437,6 +440,15 @@
 			name = Create;
 			sourceTree = "<group>";
 		};
+		0F568FFE1F185AFE009AF9FE /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */,
+				0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */,
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
 		0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +517,7 @@
 				0F4419F01F1797CF00967980 /* XXTEViewer.h */,
 				0F5EB53C1F0A9ED80016016A /* Common */,
 				0F4419EC1F17969000967980 /* Media */,
+				0F568FFE1F185AFE009AF9FE /* Image */,
 				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
 				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
 			);
@@ -973,6 +986,7 @@
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
+				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
 				0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,

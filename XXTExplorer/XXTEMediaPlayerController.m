@@ -14,8 +14,6 @@
 @interface XXTEMediaPlayerController ()
 
 @property (nonatomic, strong) MPMoviePlayerController *moviePlayer;
-@property (nonatomic, strong) UIBarButtonItem *closeItem;
-@property (nonatomic, strong) UIBarButtonItem *shareItem;
 
 @end
 

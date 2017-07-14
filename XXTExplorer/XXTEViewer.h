@@ -9,6 +9,8 @@
 #ifndef XXTEViewer_h
 #define XXTEViewer_h
 
+#import <UIKit/UIKit.h>
+
 @protocol XXTEViewer <NSObject>
 
 + (NSString *)viewerName;

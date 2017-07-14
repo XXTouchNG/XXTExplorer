@@ -5,6 +5,7 @@
 	<key>AVAILABLE_VIEWER</key>
 	<array>
 		<string>XXTEMediaPlayerController</string>
+		<string>XXTEImageViewerController</string>
 	</array>
 	<key>AVAILABLE_ENTRY_READER</key>
 	<array>

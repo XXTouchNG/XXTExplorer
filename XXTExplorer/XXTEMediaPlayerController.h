@@ -6,7 +6,6 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "XXTEViewer.h"
 
 @interface XXTEMediaPlayerController : UIViewController <XXTEViewer>

@@ -43,6 +43,7 @@
                           kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
                           kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
     NSBundle *pathBundle = [NSBundle bundleWithPath:path];
+//    NSLog(@"%@", [NSBundle preferredLocalizationsFromArray:[[NSBundle bundleWithPath:path] localizations] forPreferences:[NSLocale preferredLanguages]]);
     NSString *existsMetaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
     if (!existsMetaPath)
     {
