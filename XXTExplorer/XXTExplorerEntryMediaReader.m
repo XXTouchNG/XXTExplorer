@@ -8,6 +8,7 @@
 
 #import "XXTExplorerEntryMediaReader.h"
 #import "XXTEMediaPlayerController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation XXTExplorerEntryMediaReader
 
@@ -34,11 +35,17 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
-    _displayMetaKeys = @[ ];
     NSString *entryUpperedExtension = [[path pathExtension] uppercaseString];
     _entryIconImage = [UIImage imageNamed:@"XXTEFileReaderType-Media"];
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Media", entryUpperedExtension];
     _entryViewerDescription = [XXTEMediaPlayerController viewerName];
+}
+
+- (NSDictionary <NSString *, id> *)metaDictionary {
+    if (!_metaDictionary) {
+        // TODO: media meta (unnecessary)
+    }
+    return _metaDictionary;
 }
 
 @end

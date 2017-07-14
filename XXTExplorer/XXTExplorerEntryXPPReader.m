@@ -38,10 +38,6 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
-    _displayMetaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
-                          kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
-                          kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
-                          kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
     NSBundle *pathBundle = [NSBundle bundleWithPath:path];
 //    NSLog(@"%@", [NSBundle preferredLocalizationsFromArray:[[NSBundle bundleWithPath:path] localizations] forPreferences:[NSLocale preferredLanguages]]);
     NSString *existsMetaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
@@ -67,6 +63,7 @@
         ) {
         return;
     }
+    
     _entryName = metaInfo[kXXTEBundleName];
     _entryDescription = [NSString stringWithFormat:[pathBundle localizedStringForKey:(@"Version %@") value:@"" table:(@"Meta")], metaInfo[kXXTEBundleVersion]];
     if (metaInfo[kXXTEBundleDisplayName] &&
@@ -82,6 +79,11 @@
     }
     _entryExtensionDescription = @"XXTouch Bundle";
     _entryViewerDescription = @"Launcher";
+    
+    _displayMetaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
+                          kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
+                          kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
+                          kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
     _metaDictionary = metaInfo;
 }
 

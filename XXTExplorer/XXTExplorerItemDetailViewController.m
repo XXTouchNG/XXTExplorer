@@ -29,8 +29,8 @@
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
     kXXTExplorerItemDetailViewSectionIndexWhere,
-    kXXTExplorerItemDetailViewSectionIndexExtended,
     kXXTExplorerItemDetailViewSectionIndexGeneral,
+    kXXTExplorerItemDetailViewSectionIndexExtended,
     kXXTExplorerItemDetailViewSectionIndexOwner,
     kXXTExplorerItemDetailViewSectionIndexPermission,
     kXXTExplorerItemDetailViewSectionIndexOpenWith,
@@ -149,15 +149,7 @@ static int sizingCancelFlag = 0;
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
-                             NSLocalizedString(@"Where", nil),
-                             NSLocalizedString(@"Extended", nil),
-                             NSLocalizedString(@"General", nil),
-                             NSLocalizedString(@"Owner", nil),
-                             NSLocalizedString(@"Permission", nil),
-                             @"",
-                             ];
-    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"", @"", @"", @"", @"", NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
+    // Prepare
     
     NSDictionary *entry = self.entry;
     id <XXTExplorerEntryReader> entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
@@ -170,7 +162,7 @@ static int sizingCancelFlag = 0;
     NSBundle *useBundle = entryBundle ? entryBundle : [NSBundle mainBundle];
     NSFileManager *detailManager = [[NSFileManager alloc] init];
     
-    // Name
+    // #1 - Name
     
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
     cell1.nameField.delegate = self;
@@ -178,40 +170,12 @@ static int sizingCancelFlag = 0;
     self.nameField = cell1.nameField;
     self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
     
-    // Where
+    // #2 - Where
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = entry[XXTExplorerViewEntryAttributePath];
+    cell2.addressLabel.text = entryPath;
     
-    // Extended
-    NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
-    if (entryReader && entryReader.metaDictionary && entryReader.displayMetaKeys) {
-        NSDictionary *extendedDictionary = entryReader.metaDictionary;
-        NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
-        for (NSString *extendedKey in displayExtendedKeys) {
-            id extendedValue = extendedDictionary[extendedKey];
-            if ([extendedValue isKindOfClass:[NSString class]]) {
-                XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                extendedCell.valueLabel.text = extendedValue;
-                [extendedCells addObject:extendedCell];
-            }
-            if ([extendedValue isKindOfClass:[NSNumber class]]) {
-                XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                extendedCell.valueLabel.text = [extendedValue stringValue];
-                [extendedCells addObject:extendedCell];
-            }
-            else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
-                     [extendedValue isKindOfClass:[NSArray class]]) {
-                XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                [extendedCells addObject:extendedCell];
-            }
-        }
-    }
-    
-    // General
+    // #3 - General
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Kind", nil);
@@ -220,7 +184,7 @@ static int sizingCancelFlag = 0;
     if (entryReader && entryReader.entryExtensionDescription) {
         entryExtensionDescription = entryReader.entryExtensionDescription;
     }
-    if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entry[XXTExplorerViewEntryAttributePath]]) {
+    if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entryPath]) {
         NSString *mimeString = nil;
         CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
         CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
@@ -255,7 +219,32 @@ static int sizingCancelFlag = 0;
     cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell6.valueLabel.text = [self.class.itemDateFormatter stringFromDate:entry[XXTExplorerViewEntryAttributeModificationDate]];
     
-    // Owner
+    // #4 - Extended
+    
+    NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
+    if (entryReader && entryReader.metaDictionary && entryReader.displayMetaKeys) {
+        NSDictionary *extendedDictionary = entryReader.metaDictionary;
+        NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
+        for (NSString *extendedKey in displayExtendedKeys) {
+            id extendedValue = extendedDictionary[extendedKey];
+            BOOL isString = [extendedValue isKindOfClass:[NSString class]];
+            BOOL isNumber = [extendedValue isKindOfClass:[NSNumber class]];
+            if (isString || isNumber) {
+                XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                extendedCell.valueLabel.text = isString ? extendedValue : [extendedValue stringValue];
+                [extendedCells addObject:extendedCell];
+            }
+            else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
+                     [extendedValue isKindOfClass:[NSArray class]]) {
+                XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                [extendedCells addObject:extendedCell];
+            }
+        }
+    }
+    
+    // #5 - Owner
     
     XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell7.titleLabel.text = NSLocalizedString(@"Owner", nil);
@@ -265,7 +254,7 @@ static int sizingCancelFlag = 0;
     cell8.titleLabel.text = NSLocalizedString(@"Group", nil);
     cell8.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
-    // Perimssion
+    // #6 - Perimssion
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Owner", nil);
@@ -284,7 +273,7 @@ static int sizingCancelFlag = 0;
     cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
     
     struct stat entryInfo;
-    if (lstat([entry[XXTExplorerViewEntryAttributePath] UTF8String], &entryInfo) == 0) {
+    if (lstat([entryPath UTF8String], &entryInfo) == 0) {
         struct passwd *pwInfo = getpwuid(entryInfo.st_uid);
         struct group *grInfo = getgrgid(entryInfo.st_gid);
         if (pwInfo != NULL && grInfo != NULL) {
@@ -308,7 +297,7 @@ static int sizingCancelFlag = 0;
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
     }
     
-    // Open with
+    // #7 - Open with
     
     XXTEMoreTitleValueCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -323,12 +312,35 @@ static int sizingCancelFlag = 0;
     staticCells = @[
                     @[ cell1 ],
                     @[ cell2 ],
-                    extendedCells,
                     @[ cell3, cell4, cell5, cell6 ],
+                    extendedCells,
                     @[ cell7, cell8 ],
                     @[ cell9, cell10, cell11, cell12 ],
                     @[ cell13 ]
                     ];
+    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil),
+                              @"", @"", @"", @"", @"",
+                              NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
+    if (extendedCells.count == 0) {
+        staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
+                                 NSLocalizedString(@"Where", nil),
+                                 NSLocalizedString(@"General", nil),
+                                 @"",
+                                 NSLocalizedString(@"Owner", nil),
+                                 NSLocalizedString(@"Permission", nil),
+                                 @"",
+                                 ];
+    } else {
+        staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
+                                 NSLocalizedString(@"Where", nil),
+                                 NSLocalizedString(@"General", nil),
+                                 NSLocalizedString(@"Extended", nil),
+                                 NSLocalizedString(@"Owner", nil),
+                                 NSLocalizedString(@"Permission", nil),
+                                 @"",
+                                 ];
+    }
+    
 }
 
 - (void)reloadDynamicTableViewData {
