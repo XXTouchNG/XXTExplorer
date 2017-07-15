@@ -10,6 +10,8 @@
 
 @interface XXTExplorerEntryParser : NSObject
 
++ (NSArray <NSString *> *)internalLauncherExtensions;
++ (NSArray <NSString *> *)internalArchiverExtensions;
 + (NSDateFormatter *)entryDateFormatter;
 - (NSDictionary *)entryOfPath:(NSString *)path withError:(NSError **)error;
 

@@ -1,15 +1,14 @@
 //
-//  XXTExplorerEntryCodeReader.m
+//  XXTExplorerEntryLauncher.m
 //  XXTExplorer
 //
-//  Created by Zheng on 14/07/2017.
+//  Created by Zheng on 15/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTExplorerEntryCodeReader.h"
-#import "XXTECodeViewerController.h"
+#import "XXTExplorerEntryLauncher.h"
 
-@implementation XXTExplorerEntryCodeReader
+@implementation XXTExplorerEntryLauncher
 
 @synthesize metaDictionary = _metaDictionary;
 @synthesize entryPath = _entryPath;
@@ -22,11 +21,11 @@
 @synthesize entryViewerDescription = _entryViewerDescription;
 
 + (NSArray <NSString *> *)supportedExtensions {
-    return [XXTECodeViewerController suggestedExtensions];
+    return @[ @"lua", @"xxt", @"xpp" ];
 }
 
 + (UIImage *)defaultImage {
-    return [UIImage imageNamed:@"XXTEFileReaderType-Code"];
+    return [UIImage imageNamed:@"XXTEFileReaderType-Launcher"];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
@@ -39,17 +38,9 @@
 
 - (void)setupWithPath:(NSString *)path {
     NSString *entryExtension = [path pathExtension];
-    NSString *entryBaseExtension = [entryExtension lowercaseString];
-//    NSString *entryUpperedExtension = [entryExtension uppercaseString];
-    UIImage *iconImage = [self.class defaultImage];
-    {
-        UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
-        if (extensionIconImage) {
-            iconImage = extensionIconImage;
-        }
-    }
-    _entryIconImage = iconImage;
-    _entryViewerDescription = [XXTECodeViewerController viewerName];
+    _entryIconImage = [UIImage imageNamed:[NSString stringWithFormat:@"XXTEFileType-%@", [entryExtension lowercaseString]]];
+    _entryExtensionDescription = [NSString stringWithFormat:@"%@ Script", [entryExtension uppercaseString]];
+    _entryViewerDescription = @"Launcher";
 }
 
 @end

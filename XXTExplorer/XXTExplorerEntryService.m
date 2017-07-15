@@ -72,20 +72,24 @@
 }
 
 - (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName {
-    Class testClass = NSClassFromString(viewerName);
+    Class testClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
+    NSMutableDictionary *mutableBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:self.bindingDictionary];
     if (testClass) {
-        NSMutableDictionary *mutableBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:self.bindingDictionary];
         [mutableBindingDictionary setObject:viewerName forKey:extension];
-        NSDictionary *saveBindingDictionary = [[NSDictionary alloc] initWithDictionary:mutableBindingDictionary];
-        XXTEDefaultsSetObject(XXTExplorerViewEntryBindingKey, saveBindingDictionary);
-        _bindingDictionary = nil; // clear binding cache
+    } else {
+        [mutableBindingDictionary removeObjectForKey:extension];
     }
+    NSDictionary *saveBindingDictionary = [[NSDictionary alloc] initWithDictionary:mutableBindingDictionary];
+    XXTEDefaultsSetObject(XXTExplorerViewEntryBindingKey, saveBindingDictionary);
+    _bindingDictionary = nil; // clear binding cache
 }
 
 - (BOOL)hasViewerForEntry:(NSDictionary *)entry {
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
-    if (bindingDictionary[entryBaseExtension]) {
+    NSString *viewerName = bindingDictionary[entryBaseExtension];
+    Class testClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
+    if (testClass) {
         return YES;
     }
     return NO;
@@ -94,11 +98,13 @@
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    if (self.bindingDictionary[entryBaseExtension]) {
-        NSString *viewerClassName = self.bindingDictionary[entryBaseExtension];
-        Class viewerClass = NSClassFromString(viewerClassName);
-        UIViewController <XXTEViewer> *viewer = [[viewerClass alloc] initWithPath:entryPath];
-        return viewer;
+    NSString *viewerName = self.bindingDictionary[entryBaseExtension];
+    if (viewerName) {
+        Class viewerClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
+        if (viewerClass) {
+            UIViewController <XXTEViewer> *viewer = [[viewerClass alloc] initWithPath:entryPath];
+            return viewer;
+        }
     }
     return nil;
 }

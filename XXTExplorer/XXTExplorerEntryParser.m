@@ -14,8 +14,8 @@
 #import "XXTExplorerEntryXPPReader.h"
 #import "XXTExplorerEntryService.h"
 #import "XXTEViewer.h"
-
-static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
+#import "XXTExplorerEntryLauncher.h"
+#import "XXTExplorerEntryArchiver.h"
 
 @interface XXTExplorerEntryParser ()
 @property (nonatomic, strong, readonly) NSFileManager *parserFileManager;
@@ -60,6 +60,14 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
     return registeredReaders;
 }
 
++ (NSArray <NSString *> *)internalLauncherExtensions {
+    return @[ @"lua", @"xxt", @"xpp" ];
+}
+
++ (NSArray <NSString *> *)internalArchiverExtensions {
+    return @[ @"zip" ];
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         [self setup];
@@ -84,26 +92,21 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
     NSString *entryBaseExtension = [entryBaseName pathExtension];
     UIImage *entryIconImage = nil;
     NSString *entryBaseType = nil;
-    NSString *entryBaseKind = nil;
     if ([entryNSFileType isEqualToString:NSFileTypeRegular])
     {
         entryBaseType = XXTExplorerViewEntryAttributeTypeRegular;
-        entryBaseKind = @"Regular";
     }
     else if ([entryNSFileType isEqualToString:NSFileTypeDirectory])
     {
         entryBaseType = XXTExplorerViewEntryAttributeTypeDirectory;
-        entryBaseKind = @"Directory";
     }
     else if ([entryNSFileType isEqualToString:NSFileTypeSymbolicLink])
     {
         entryBaseType = XXTExplorerViewEntryAttributeTypeSymlink;
-        entryBaseKind = @"Symlink";
     }
     else
     {
         entryBaseType = XXTExplorerViewEntryAttributeTypeUnsupported;
-        entryBaseKind = @"Unknown";
     }
     NSString *entryMaskType = entryBaseType;
     if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink])
@@ -167,11 +170,8 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
       XXTExplorerViewEntryAttributeType: entryBaseType,
       XXTExplorerViewEntryAttributeMaskType: entryMaskType,
       XXTExplorerViewEntryAttributeExtension: entryBaseExtension,
-      XXTExplorerViewEntryAttributeInternalExtension: entryBaseExtension,
-      XXTExplorerViewEntryAttributePermission: @[],
+      XXTExplorerViewEntryAttributeAvailability: @[],
       XXTExplorerViewEntryAttributeDescription: entryDescription,
-      XXTExplorerViewEntryAttributeExtensionDescription: entryBaseKind,
-      XXTExplorerViewEntryAttributeViewerDescription: @"None"
       };
     NSDictionary *newEntryAttributes = [self parseInternalEntry:entryAttributes];
     NSDictionary *extraEntryAttributes = [self parseExternalEntry:newEntryAttributes];
@@ -180,6 +180,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 
 - (NSDictionary *)parseInternalEntry:(NSDictionary *)entry {
     NSMutableDictionary *newEntry = [entry mutableCopy];
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     BOOL isBundle = NO;
@@ -188,42 +189,25 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
         // Executable
         if ([entryBaseExtension isEqualToString:@"lua"])
         {
-            newEntry[XXTExplorerViewEntryAttributePermission] =
-            @[XXTExplorerViewEntryAttributePermissionExecuteable,
-              XXTExplorerViewEntryAttributePermissionViewable,
-              XXTExplorerViewEntryAttributePermissionEditable,
-              ];
-            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"LUA Script File";
-            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Launcher";
-            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"lua"]];
-            if (iconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
-            }
+            newEntry[XXTExplorerViewEntryAttributeAvailability] =
+            @[XXTExplorerViewEntryAttributeAvailabilityExecutable,
+              XXTExplorerViewEntryAttributeAvailabilityViewable,
+              XXTExplorerViewEntryAttributeAvailabilityEditable];
+            XXTExplorerEntryLauncher *launcher = [[XXTExplorerEntryLauncher alloc] initWithPath:entryPath];
+            newEntry[XXTExplorerViewEntryAttributeEntryReader] = launcher;
         }
         else if ([entryBaseExtension isEqualToString:@"xxt"])
         {
-            newEntry[XXTExplorerViewEntryAttributePermission] =
-            @[XXTExplorerViewEntryAttributePermissionExecuteable,
-              ];
-            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"XXTouch Script File";
-            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Launcher";
-            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"xxt"]];
-            if (iconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
-            }
+            newEntry[XXTExplorerViewEntryAttributeAvailability] =
+            @[XXTExplorerViewEntryAttributeAvailabilityExecutable];
+            XXTExplorerEntryLauncher *launcher = [[XXTExplorerEntryLauncher alloc] initWithPath:entryPath];
+            newEntry[XXTExplorerViewEntryAttributeEntryReader] = launcher;
         }
         // Archive
         else if ([entryBaseExtension isEqualToString:@"zip"])
         {
-            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionArchive;
-            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"ZIP Archive";
-            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Archiver";
-            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"zip"]];
-            if (iconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
-            }
+            XXTExplorerEntryArchiver *archiver = [[XXTExplorerEntryArchiver alloc] initWithPath:entryPath];
+            newEntry[XXTExplorerViewEntryAttributeEntryReader] = archiver;
         }
     }
     else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
@@ -238,17 +222,9 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
         // Bundle
         if ([entryBaseExtension isEqualToString:@"xpp"])
         {
-            newEntry[XXTExplorerViewEntryAttributePermission] =
-            @[XXTExplorerViewEntryAttributePermissionExecuteable,
-              ];
+            newEntry[XXTExplorerViewEntryAttributeAvailability] =
+            @[XXTExplorerViewEntryAttributeAvailabilityExecutable];
             newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
-            newEntry[XXTExplorerViewEntryAttributeInternalExtension] = XXTExplorerViewEntryAttributeInternalExtensionExecutable;
-            newEntry[XXTExplorerViewEntryAttributeExtensionDescription] = @"XXTouch Bundle";
-            newEntry[XXTExplorerViewEntryAttributeViewerDescription] = @"Launcher";
-            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, @"xpp"]];
-            if (iconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = iconImage;
-            }
         }
         else
         {
@@ -279,13 +255,6 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
                     id <XXTExplorerEntryReader> relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];
                     newEntry[XXTExplorerViewEntryAttributeEntryReader] = relatedReader;
                 }
-            }
-        }
-        {
-            // Common Icon Images
-            UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
-            if (extensionIconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = extensionIconImage;
             }
         }
     } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])

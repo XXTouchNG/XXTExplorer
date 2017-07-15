@@ -31,10 +31,10 @@
 
 static NSString * FourCCString(FourCharCode code) {
     NSString *result = [NSString stringWithFormat:@"%c%c%c%c",
-                        (code >> 24) & 0xff,
-                        (code >> 16) & 0xff,
-                        (code >> 8) & 0xff,
-                        code & 0xff];
+                        (char)(code >> 24) & 0xff,
+                        (char)(code >> 16) & 0xff,
+                        (char)(code >> 8) & 0xff,
+                        (char)code & 0xff];
     NSCharacterSet *characterSet = [NSCharacterSet whitespaceCharacterSet];
     return [result stringByTrimmingCharactersInSet:characterSet];
 }

@@ -29,6 +29,10 @@
     return @[ @"xpp" ];
 }
 
++ (UIImage *)defaultImage {
+    return [UIImage imageNamed:@"XXTEFileType-xpp"];
+}
+
 - (instancetype)initWithPath:(NSString *)filePath {
     if (self = [super init]) {
         _entryPath = filePath;
@@ -78,10 +82,11 @@
         _entryIconImage = [UIImage imageNamed:metaInfo[kXXTEBundleIconFile]
                                      inBundle:pathBundle
                 compatibleWithTraitCollection:nil];
+    } else {
+        _entryIconImage = [self.class defaultImage];
     }
     _entryExtensionDescription = @"XXTouch Bundle";
     _entryViewerDescription = @"Launcher";
-    
     _displayMetaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
                           kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
                           kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,

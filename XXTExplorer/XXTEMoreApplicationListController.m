@@ -234,10 +234,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         });
         dispatch_async_on_main_queue(^{
             [self.tableView reloadData];
-            blockUserInteractions(self, NO);
             if (refreshControl && [refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }
+            blockUserInteractions(self, NO);
         });
     });
 }

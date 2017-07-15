@@ -18,9 +18,9 @@
 
 @interface XXTExplorerEntryBindingViewController : UITableViewController
 
-@property (nonatomic, copy, readonly) NSString *extension;
+@property (nonatomic, copy, readonly) NSDictionary *entry;
 @property (nonatomic, weak) id <XXTExplorerEntryBindingViewControllerDelegate> delegate;
 
-- (instancetype)initWithExtension:(NSString *)extension;
+- (instancetype)initWithEntry:(NSDictionary *)entry;
 
 @end

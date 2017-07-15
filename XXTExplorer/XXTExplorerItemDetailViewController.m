@@ -26,6 +26,7 @@
 #import "XXTENotificationCenterDefines.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBindingViewController.h"
+#import "XXTExplorerViewController.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
@@ -34,8 +35,7 @@ typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexExtended,
     kXXTExplorerItemDetailViewSectionIndexOwner,
     kXXTExplorerItemDetailViewSectionIndexPermission,
-    kXXTExplorerItemDetailViewSectionIndexOpenWith,
-    kXXTExplorerItemDetailViewSectionIndexMax
+    kXXTExplorerItemDetailViewSectionIndexOpenWith
 } kXXTExplorerItemDetailViewSectionIndex;
 
 static int sizingCancelFlag = 0;
@@ -43,11 +43,14 @@ static int sizingCancelFlag = 0;
 @interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate>
 
 @property (nonatomic, strong) NSDictionary *entry;
+//@property (nonatomic, strong) NSString *entryPath;
 
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
 @property (nonatomic, strong) XXTEViewShaker *itemNameShaker;
+
+@property (nonatomic, strong) XXTExplorerEntryParser *entryParser;
 
 @end
 
@@ -94,9 +97,11 @@ static int sizingCancelFlag = 0;
     return self;
 }
 
-- (instancetype)initWithEntry:(NSDictionary *)entry {
+- (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
-        _entry = entry;
+        XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
+        _entryParser = entryParser;
+        _entry = [entryParser entryOfPath:path withError:nil];
         [self setup];
     }
     return self;
@@ -112,7 +117,7 @@ static int sizingCancelFlag = 0;
     [super viewDidLoad];
     
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    self.title = self.entry[XXTExplorerViewEntryAttributeName];
+    self.title = NSLocalizedString(@"Item Detail", nil);
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -153,10 +158,16 @@ static int sizingCancelFlag = 0;
     // Prepare
     
     NSDictionary *entry = self.entry;
+    if (!entry) {
+        return;
+    }
+    
     id <XXTExplorerEntryReader> entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    NSString *entryBaseType = entry[XXTExplorerViewEntryAttributeType];
+    NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
     NSBundle *entryBundle = nil;
-    if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
     {
         entryBundle = [NSBundle bundleWithPath:entryPath];
     }
@@ -181,11 +192,20 @@ static int sizingCancelFlag = 0;
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Kind", nil);
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    NSString *entryExtensionDescription = entry[XXTExplorerViewEntryAttributeExtensionDescription];
+    NSString *entryExtensionDescription = NSLocalizedString(@"Unknown", nil);
+    if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
+        entryExtensionDescription = NSLocalizedString(@"Regular File", nil);
+    }
+    else if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+        entryExtensionDescription = NSLocalizedString(@"Directory", nil);
+    }
+    else if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink]) {
+        entryExtensionDescription = NSLocalizedString(@"Symbolic Link", nil);
+    }
     if (entryReader && entryReader.entryExtensionDescription) {
         entryExtensionDescription = entryReader.entryExtensionDescription;
     }
-    if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entryPath]) {
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entryPath]) {
         NSString *mimeString = nil;
         CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
         CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
@@ -304,9 +324,11 @@ static int sizingCancelFlag = 0;
     cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
     cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    NSString *enteyViewerDescription = entry[XXTExplorerViewEntryAttributeViewerDescription];
+    NSString *enteyViewerDescription = nil;
     if (entryReader.entryViewerDescription) {
         enteyViewerDescription = entryReader.entryViewerDescription;
+    } else {
+        enteyViewerDescription = entryExtensionDescription;
     }
     cell13.valueLabel.text = NSLocalizedString(enteyViewerDescription, nil);
     
@@ -319,17 +341,17 @@ static int sizingCancelFlag = 0;
                     @[ cell9, cell10, cell11, cell12 ],
                     @[ cell13 ]
                     ];
-    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil),
-                              @"", @"", @"", @"", @"",
-                              NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
+    
     staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
                              NSLocalizedString(@"Where", nil),
                              NSLocalizedString(@"General", nil),
                              NSLocalizedString(@"Extended", nil),
                              NSLocalizedString(@"Owner", nil),
                              NSLocalizedString(@"Permission", nil),
-                             @"",
-                             ];
+                             @""];
+    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil),
+                              @"", @"", @"", @"", @"",
+                              NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
     
 }
 
@@ -371,7 +393,7 @@ static int sizingCancelFlag = 0;
 
 - (UIBarButtonItem *)closeButtonItem {
     if (!_closeButtonItem) {
-        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissViewController:)];
         closeButtonItem.tintColor = [UIColor whiteColor];
         _closeButtonItem = closeButtonItem;
     }
@@ -380,7 +402,7 @@ static int sizingCancelFlag = 0;
 
 - (UIBarButtonItem *)doneButtonItem {
     if (!_doneButtonItem) {
-        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitViewController:)];
+        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Rename", nil) style:UIBarButtonItemStyleDone target:self action:@selector(submitViewController:)];
         doneButtonItem.tintColor = [UIColor whiteColor];
         doneButtonItem.enabled = NO;
         _doneButtonItem = doneButtonItem;
@@ -461,7 +483,7 @@ static int sizingCancelFlag = 0;
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return kXXTExplorerItemDetailViewSectionIndexMax;
+    return staticCells.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -521,10 +543,13 @@ static int sizingCancelFlag = 0;
         }
         else if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexOpenWith) {
             if (indexPath.row == 0) {
-                NSString *entryBaseExtension = self.entry[XXTExplorerViewEntryAttributeExtension];
-                XXTExplorerEntryBindingViewController *bindingViewController = [[XXTExplorerEntryBindingViewController alloc] initWithExtension:entryBaseExtension];
-                bindingViewController.delegate = self;
-                [self.navigationController pushViewController:bindingViewController animated:YES];
+                NSDictionary *entry = self.entry;
+                if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
+                    [entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                    XXTExplorerEntryBindingViewController *bindingViewController = [[XXTExplorerEntryBindingViewController alloc] initWithEntry:entry];
+                    bindingViewController.delegate = self;
+                    [self.navigationController pushViewController:bindingViewController animated:YES];
+                }
             }
         }
     }
@@ -590,8 +615,12 @@ static int sizingCancelFlag = 0;
 
 #pragma mark - XXTExplorerEntryBindingViewControllerDelegate
 
-- (void)bindingViewController:(XXTExplorerEntryBindingViewController *)controller bindingDidChanged:(NSString *)controllerName {
-    
+- (void)bindingViewController:(XXTExplorerEntryBindingViewController *)controller
+            bindingDidChanged:(NSString *)controllerName {
+    NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
+    self.entry = [self.entryParser entryOfPath:entryPath withError:nil];
+    [self reloadStaticTableViewData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Memory

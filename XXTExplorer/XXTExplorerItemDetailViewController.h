@@ -11,6 +11,6 @@
 @interface XXTExplorerItemDetailViewController : UITableViewController
 
 + (NSDateFormatter *)itemDateFormatter;
-- (instancetype)initWithEntry:(NSDictionary *)entry;
+- (instancetype)initWithPath:(NSString *)path;
 
 @end

@@ -27,6 +27,10 @@
     return [XXTEImageViewerController suggestedExtensions];
 }
 
++ (UIImage *)defaultImage {
+    return [UIImage imageNamed:@"XXTEFileReaderType-Image"];
+}
+
 - (instancetype)initWithPath:(NSString *)filePath {
     if (self = [super init]) {
         _entryPath = filePath;
@@ -36,7 +40,17 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
-    NSString *entryUpperedExtension = [[path pathExtension] uppercaseString];
+    NSString *entryExtension = [path pathExtension];
+    NSString *entryBaseExtension = [entryExtension lowercaseString];
+    NSString *entryUpperedExtension = [entryExtension uppercaseString];
+    UIImage *iconImage = [self.class defaultImage];
+    {
+        UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
+        if (extensionIconImage) {
+            iconImage = extensionIconImage;
+        }
+    }
+    _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Image", entryUpperedExtension];
     _entryViewerDescription = [XXTEImageViewerController viewerName];
     

@@ -42,6 +42,8 @@
 #import "XXTEViewer.h"
 #import "XXTECommonNavigationController.h"
 #import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryLauncher.h"
+#import "XXTExplorerEntryArchiver.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -491,7 +493,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
                 NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
                 NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
-                NSString *internalExt = entryAttributes[XXTExplorerViewEntryAttributeInternalExtension];
+                NSString *entryReader = entryAttributes[XXTExplorerViewEntryAttributeEntryReader];
                 if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
                 { // Directory or Symbolic Link Directory
                     // We'd better try to access it before we enter it.
@@ -509,9 +511,9 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                            [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
                 {
                     if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
-                        if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionArchive]) {
+                        if ([entryReader isKindOfClass:[XXTExplorerEntryArchiver class]]) {
                             [self tableView:tableView archiveEntryTappedForRowWithIndexPath:indexPath];
-                        } else if ([internalExt isEqualToString:XXTExplorerViewEntryAttributeInternalExtensionExecutable]) {
+                        } else if ([entryReader isKindOfClass:[XXTExplorerEntryLauncher class]]) {
                             blockUserInteractions(self, YES);
                             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}]
                             .then(convertJsonString)
@@ -1055,7 +1057,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         blockUserInteractions(self, NO);
                     });
         } else if ([buttonAction isEqualToString:@"Property"]) {
-            XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithEntry:entryDetail];
+            XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
             XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
             detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1097,7 +1099,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
 
-        if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionExecuteable]) {
+        if (YES == [entryDetail[XXTExplorerViewEntryAttributeAvailability] containsObject:XXTExplorerViewEntryAttributeAvailabilityExecutable]) {
             XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
                                                                            insets:UIEdgeInsetsMake(0, 24, 0, 24)];
@@ -1111,7 +1113,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             objc_setAssociatedObject(swipeConfigureButton, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:swipeConfigureButton];
         }
-        if (YES == [entryDetail[XXTExplorerViewEntryAttributePermission] containsObject:XXTExplorerViewEntryAttributePermissionEditable]
+        if (YES == [entryDetail[XXTExplorerViewEntryAttributeAvailability] containsObject:XXTExplorerViewEntryAttributeAvailabilityEditable]
                 && [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
             XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]

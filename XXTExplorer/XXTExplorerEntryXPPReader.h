@@ -6,8 +6,9 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import "XXTExplorerEntryLauncher.h"
 #import "XXTExplorerEntryReader.h"
 
-@interface XXTExplorerEntryXPPReader : NSObject <XXTExplorerEntryReader>
+@interface XXTExplorerEntryXPPReader : XXTExplorerEntryLauncher <XXTExplorerEntryReader>
 
 @end

@@ -39,18 +39,18 @@ static NSString * const XXTExplorerViewEntryAttributeDisplayName = @"XXTExplorer
 static NSString * const XXTExplorerViewEntryAttributeName = @"XXTExplorerViewEntryAttributeName"; // NSString - Name
 static NSString * const XXTExplorerViewEntryAttributePath = @"XXTExplorerViewEntryAttributePath"; // NSString - Full Path
 static NSString * const XXTExplorerViewEntryAttributeExtension = @"XXTExplorerViewEntryAttributeExtension"; // NSString - Real Extension
-static NSString * const XXTExplorerViewEntryAttributeInternalExtension = @"XXTExplorerViewEntryAttributeInternalExtension"; // NSString - Internal Type
+//static NSString * const XXTExplorerViewEntryAttributeInternalExtension = @"XXTExplorerViewEntryAttributeInternalExtension"; // NSString - Internal Type
 static NSString * const XXTExplorerViewEntryAttributeType = @"XXTExplorerViewEntryAttributeType"; // NSString - Mask Type
 static NSString * const XXTExplorerViewEntryAttributeMaskType = @"XXTExplorerViewEntryAttributeMaskType"; // NSString - Mask Type
 static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate"; // NSDate
 static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExplorerViewEntryAttributeModificationDate"; // NSDate
 static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize"; // NSNumber
-static NSString * const XXTExplorerViewEntryAttributePermission = @"XXTExplorerViewEntryAttributePermission"; // Dictionary
+static NSString * const XXTExplorerViewEntryAttributeAvailability = @"XXTExplorerViewEntryAttributeAvailability"; // Dictionary
 
 static NSString * const XXTExplorerViewEntryAttributeEntryReader = @"XXTExplorerViewEntryAttributeEntryReader";
 static NSString * const XXTExplorerViewEntryAttributeDescription = @"XXTExplorerViewEntryAttributeDescription"; // NSString
-static NSString * const XXTExplorerViewEntryAttributeExtensionDescription = @"XXTExplorerViewEntryAttributeExtensionDescription"; // NSString - Description
-static NSString * const XXTExplorerViewEntryAttributeViewerDescription = @"XXTExplorerViewEntryAttributeViewerDescription"; // NSString
+//static NSString * const XXTExplorerViewEntryAttributeExtensionDescription = @"XXTExplorerViewEntryAttributeExtensionDescription"; // NSString - Description
+//static NSString * const XXTExplorerViewEntryAttributeViewerDescription = @"XXTExplorerViewEntryAttributeViewerDescription"; // NSString
 //static NSString * const XXTExplorerViewEntryAttributeMetaKeys = @"XXTExplorerViewEntryAttributeMetaKeys"; // NSArray <NSString>
 //static NSString * const XXTExplorerViewEntryAttributeMetaDictionary = @"XXTExplorerViewEntryAttributeMetaDictionary"; // NSDictionary
 
@@ -63,14 +63,10 @@ static NSString * const XXTExplorerViewEntryAttributeTypeSymlink = @"XXTExplorer
 static NSString * const XXTExplorerViewEntryAttributeMaskTypeBundle = @"XXTExplorerViewEntryAttributeMaskTypeBundle";
 static NSString * const XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink = @"XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink";
 
-// XXTExplorerViewEntryAttributeExtension
-static NSString * const XXTExplorerViewEntryAttributeInternalExtensionExecutable = @"XXTExplorerViewEntryAttributeInternalExtensionExecutable";
-static NSString * const XXTExplorerViewEntryAttributeInternalExtensionArchive = @"XXTExplorerViewEntryAttributeInternalExtensionArchive";
-
-// XXTExplorerViewEntryAttributePermission
-static NSString * const XXTExplorerViewEntryAttributePermissionViewable = @"XXTExplorerViewEntryAttributePermissionViewable";
-static NSString * const XXTExplorerViewEntryAttributePermissionEditable = @"XXTExplorerViewEntryAttributePermissionEditable";
-static NSString * const XXTExplorerViewEntryAttributePermissionExecuteable = @"XXTExplorerViewEntryAttributePermissionExecuteable";
+// XXTExplorerViewEntryAttributeAvailability
+static NSString * const XXTExplorerViewEntryAttributeAvailabilityViewable = @"XXTExplorerViewEntryAttributeAvailabilityViewable";
+static NSString * const XXTExplorerViewEntryAttributeAvailabilityEditable = @"XXTExplorerViewEntryAttributeAvailabilityEditable";
+static NSString * const XXTExplorerViewEntryAttributeAvailabilityExecutable = @"XXTExplorerViewEntryAttributeAvailabilityExecutable";
 
 #pragma mark - AlertView Actions
 
