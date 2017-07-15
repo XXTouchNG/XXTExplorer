@@ -63,11 +63,17 @@
                                                           &kCFTypeDictionaryKeyCallBacks,
                                                           &kCFTypeDictionaryValueCallBacks);
         
-        CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:self.entryPath], imageOptions);
+        CGImageSourceRef source = CGImageSourceCreateWithURL(CFBridgingRetain([NSURL fileURLWithPath:self.entryPath]), imageOptions);
         if (source) {
             CFDictionaryRef dictRef = CGImageSourceCopyPropertiesAtIndex(source, 0, imageOptions);
             NSDictionary* metadata = CFBridgingRelease(dictRef);
             _metaDictionary = metadata;
+        }
+        if (source) {
+            CFRelease(source);
+        }
+        if (imageOptions) {
+            CFRelease(imageOptions);
         }
     }
     return _metaDictionary;

@@ -112,7 +112,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 + (XXTExplorerEntryService *)explorerEntryService {
     static XXTExplorerEntryService *explorerEntryService = nil;
     if (!explorerEntryService) {
-        explorerEntryService = [[XXTExplorerEntryService alloc] init];
+        explorerEntryService = [XXTExplorerEntryService sharedInstance];
     }
     return explorerEntryService;
 }
@@ -332,21 +332,23 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         NSMutableArray <NSDictionary *> *entryOtherAttributesList = [[NSMutableArray alloc] init];
         
         for (NSString *entrySubdirectoryName in entrySubdirectoryPathList) {
-            if (hidesDot && [entrySubdirectoryName hasPrefix:@"."]) {
-                continue;
-            }
-            NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
-            NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
-            if (localError && error) {
-                *error = localError;
-                break;
-            }
-            if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
-                [entryDirectoryAttributesList addObject:entryAttributes];
-            } else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
-                [entryBundleAttributesList addObject:entryAttributes];
-            } else {
-                [entryOtherAttributesList addObject:entryAttributes];
+            @autoreleasepool {
+                if (hidesDot && [entrySubdirectoryName hasPrefix:@"."]) {
+                    continue;
+                }
+                NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
+                NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
+                if (localError && error) {
+                    *error = localError;
+                    break;
+                }
+                if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+                    [entryDirectoryAttributesList addObject:entryAttributes];
+                } else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                    [entryBundleAttributesList addObject:entryAttributes];
+                } else {
+                    [entryOtherAttributesList addObject:entryAttributes];
+                }
             }
         }
         
@@ -533,8 +535,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                                 [self.tableView reloadData];
                             });
                         } else {
-                            if ([self.class.explorerEntryService hasDefaultViewControllerForEntry:entryAttributes]) {
-                                UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewControllerForEntry:entryAttributes];
+                            if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
+                                UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
                                 if (XXTE_PAD) {
                                     XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
                                     [self.splitViewController showDetailViewController:navigationController sender:self];
@@ -1268,7 +1270,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:storedPaths];
@@ -1405,7 +1407,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:storedPaths];
@@ -1529,7 +1531,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             for (NSString *storedPath in storedPaths) {
@@ -1597,7 +1599,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [@[entryPath] mutableCopy];
@@ -1692,7 +1694,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:entryPaths];
             NSError *error = nil;
@@ -1810,7 +1812,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager1 = [[NSFileManager alloc] init];
             struct zip_t *zip = zip_open([archivePath fileSystemRepresentation], ZIP_DEFAULT_COMPRESSION_LEVEL, 'w');
             NSError *error = nil;
@@ -1921,7 +1923,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             const char *extractFrom = [entryPath fileSystemRepresentation];
             const char *extractTo = [destinationPathWithIndex fileSystemRepresentation];
             NSError *error = nil;

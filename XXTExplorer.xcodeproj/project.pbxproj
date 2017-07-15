@@ -32,6 +32,8 @@
 		0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */; };
 		0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */; };
 		0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */; };
+		0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */; };
+		0F5690081F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690071F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m */; };
 		0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */; };
 		0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
 		0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
@@ -170,6 +172,10 @@
 		0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryService.m; sourceTree = "<group>"; };
 		0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
 		0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
+		0F5690031F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryBindingViewController.h; sourceTree = "<group>"; };
+		0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryBindingViewController.m; sourceTree = "<group>"; };
+		0F5690061F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemDetailObjectViewController.h; sourceTree = "<group>"; };
+		0F5690071F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemDetailObjectViewController.m; sourceTree = "<group>"; };
 		0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XQueryComponents.h"; sourceTree = "<group>"; };
 		0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XQueryComponents.m"; sourceTree = "<group>"; };
 		0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
@@ -423,13 +429,14 @@
 		0F4419EC1F17969000967980 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				0F4419F61F17E11F00967980 /* Reader */,
 				0F4419ED1F17974D00967980 /* XXTEMediaPlayerController.h */,
 				0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */,
 			);
 			name = Media;
 			sourceTree = "<group>";
 		};
-		0F4419F61F17E11F00967980 /* Media */ = {
+		0F4419F61F17E11F00967980 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				0F4419F71F17E14F00967980 /* XXTExplorerEntryMediaReader.h */,
@@ -437,22 +444,18 @@
 				0FE1E44B1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.h */,
 				0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */,
 			);
-			name = Media;
+			name = Reader;
 			sourceTree = "<group>";
 		};
 		0F4BB0B31EDB7D070072B7A3 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
-				0F3508BD1F1640E0000403FD /* XXTExplorerEntryReader.h */,
-				0F3508B91F163F60000403FD /* XPP */,
-				0F4419F61F17E11F00967980 /* Media */,
-				0FE1E42E1F1887B800055E02 /* Image */,
-				0FE1E43C1F18E3DB00055E02 /* Web */,
-				0FE1E4471F18FC5D00055E02 /* Code */,
-				0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */,
-				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
 				0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */,
 				0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */,
+				0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */,
+				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
+				0F3508BD1F1640E0000403FD /* XXTExplorerEntryReader.h */,
+				0F5690091F19BD94009AF9FE /* BundleReader */,
 			);
 			name = Entry;
 			sourceTree = "<group>";
@@ -472,10 +475,28 @@
 		0F568FFE1F185AFE009AF9FE /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				0FE1E42E1F1887B800055E02 /* Reader */,
 				0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */,
 				0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */,
 			);
 			name = Image;
+			sourceTree = "<group>";
+		};
+		0F5690021F19B505009AF9FE /* Binding */ = {
+			isa = PBXGroup;
+			children = (
+				0F5690031F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.h */,
+				0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */,
+			);
+			name = Binding;
+			sourceTree = "<group>";
+		};
+		0F5690091F19BD94009AF9FE /* BundleReader */ = {
+			isa = PBXGroup;
+			children = (
+				0F3508B91F163F60000403FD /* XPP */,
+			);
+			name = BundleReader;
 			sourceTree = "<group>";
 		};
 		0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */ = {
@@ -698,12 +719,15 @@
 		0FCC2AC31F13097100C50A48 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				0F5690021F19B505009AF9FE /* Binding */,
 				0F91E8EF1F139DBA00D65BF7 /* NSFileManager+DeepSize.h */,
 				0F91E8F01F139DBA00D65BF7 /* NSFileManager+DeepSize.m */,
 				0FCC2AD41F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.h */,
 				0FCC2AD51F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m */,
 				0FCC2AD11F135AA100C50A48 /* XXTExplorerItemDetailViewController.h */,
 				0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */,
+				0F5690061F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.h */,
+				0F5690071F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -790,36 +814,38 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
-		0FE1E42E1F1887B800055E02 /* Image */ = {
+		0FE1E42E1F1887B800055E02 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				0FE1E42F1F1887CE00055E02 /* XXTExplorerEntryImageReader.h */,
 				0FE1E4301F1887CE00055E02 /* XXTExplorerEntryImageReader.m */,
 			);
-			name = Image;
+			name = Reader;
 			sourceTree = "<group>";
 		};
 		0FE1E4381F18DF9200055E02 /* Web */ = {
 			isa = PBXGroup;
 			children = (
+				0FE1E43C1F18E3DB00055E02 /* Reader */,
 				0FE1E4391F18DFB300055E02 /* XXTEWebViewerController.h */,
 				0FE1E43A1F18DFB300055E02 /* XXTEWebViewerController.m */,
 			);
 			name = Web;
 			sourceTree = "<group>";
 		};
-		0FE1E43C1F18E3DB00055E02 /* Web */ = {
+		0FE1E43C1F18E3DB00055E02 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				0FE1E43D1F18E41200055E02 /* XXTExplorerEntryWebReader.h */,
 				0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */,
 			);
-			name = Web;
+			name = Reader;
 			sourceTree = "<group>";
 		};
 		0FE1E4401F18E9A400055E02 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				0FE1E4471F18FC5D00055E02 /* Reader */,
 				0FE1E4411F18E9D800055E02 /* XXTECodeViewerController.h */,
 				0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */,
 				0FE1E4441F18EEA100055E02 /* NSString+HTMLEscape.h */,
@@ -828,13 +854,13 @@
 			name = Code;
 			sourceTree = "<group>";
 		};
-		0FE1E4471F18FC5D00055E02 /* Code */ = {
+		0FE1E4471F18FC5D00055E02 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				0FE1E4481F18FD5000055E02 /* XXTExplorerEntryCodeReader.h */,
 				0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */,
 			);
-			name = Code;
+			name = Reader;
 			sourceTree = "<group>";
 		};
 		0FE1E44E1F19226600055E02 /* Installer */ = {
@@ -1129,7 +1155,9 @@
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F91E8F11F139DBA00D65BF7 /* NSFileManager+DeepSize.m in Sources */,
 				0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */,
+				0F5690081F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
+				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
 				0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */,
 				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
 				D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */,

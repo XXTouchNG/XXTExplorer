@@ -39,7 +39,9 @@
 
 - (void)setupWithPath:(NSString *)path {
     NSBundle *pathBundle = [NSBundle bundleWithPath:path];
-//    NSLog(@"%@", [NSBundle preferredLocalizationsFromArray:[[NSBundle bundleWithPath:path] localizations] forPreferences:[NSLocale preferredLanguages]]);
+    if (!pathBundle) {
+        return;
+    }
     NSString *existsMetaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
     if (!existsMetaPath)
     {
@@ -63,9 +65,9 @@
         ) {
         return;
     }
-    
+    NSBundle *localizationBundle = pathBundle ? pathBundle : [NSBundle mainBundle];
     _entryName = metaInfo[kXXTEBundleName];
-    _entryDescription = [NSString stringWithFormat:[pathBundle localizedStringForKey:(@"Version %@") value:@"" table:(@"Meta")], metaInfo[kXXTEBundleVersion]];
+    _entryDescription = [NSString stringWithFormat:[localizationBundle localizedStringForKey:(@"Version %@") value:@"" table:(@"Meta")], metaInfo[kXXTEBundleVersion]];
     if (metaInfo[kXXTEBundleDisplayName] &&
         [metaInfo[kXXTEBundleDisplayName] isKindOfClass:[NSString class]]) {
         _entryDisplayName = metaInfo[kXXTEBundleDisplayName];

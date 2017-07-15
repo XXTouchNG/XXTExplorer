@@ -17,17 +17,13 @@
 
 @implementation XXTExplorerEntryService
 
-+ (NSArray <Class> *)registeredViewers {
-    static NSArray <Class> *registeredViewers = nil;
-    if (!registeredViewers) {
-        NSArray <NSString *> *registeredNames = XXTEBuiltInDefaultsObject(@"AVAILABLE_VIEWER");
-        NSMutableArray <Class> *registeredMutableViewers = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
-        for (NSString *className in registeredNames) {
-            [registeredMutableViewers addObject:NSClassFromString(className)];
-        }
-        registeredViewers = [[NSArray alloc] initWithArray:registeredMutableViewers];
-    }
-    return registeredViewers;
++ (instancetype)sharedInstance {
+    static XXTExplorerEntryService *sharedInstance = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
 }
 
 - (instancetype)init {
@@ -38,22 +34,55 @@
 }
 
 - (void)setup {
-    NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
-    NSMutableDictionary *newBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:bindingDictionary];
-    for (Class registeredViewerClass in self.class.registeredViewers) {
-        Class <XXTEViewer> viewerClass = registeredViewerClass;
-        NSArray <NSString *> *suggestedExtensions = [viewerClass suggestedExtensions];
-        for (NSString *suggestExtension in suggestedExtensions) {
-            if (!bindingDictionary[suggestExtension]) { // if no binding, set default binding
-                newBindingDictionary[suggestExtension] = NSStringFromClass(viewerClass);
-            }
-        }
-    }
-    NSDictionary *saveBindingDictionary = [[NSDictionary alloc] initWithDictionary:newBindingDictionary];
-    XXTEDefaultsSetObject(XXTExplorerViewEntryBindingKey, saveBindingDictionary);
+    
 }
 
-- (BOOL)hasDefaultViewControllerForEntry:(NSDictionary *)entry {
+- (NSArray <Class> *)registeredViewers {
+    if (!_registeredViewers) {
+        NSArray <NSString *> *registeredNames = XXTEBuiltInDefaultsObject(@"AVAILABLE_VIEWER");
+        NSMutableArray <Class> *registeredMutableViewers = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
+        for (NSString *className in registeredNames) {
+            [registeredMutableViewers addObject:NSClassFromString(className)];
+        }
+        _registeredViewers = [[NSArray alloc] initWithArray:registeredMutableViewers];
+    }
+    return _registeredViewers;
+}
+
+- (NSDictionary *)bindingDictionary {
+    if (!_bindingDictionary) {
+        // Auto-register binding
+        NSDictionary *originalBindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
+        NSMutableDictionary *newBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:originalBindingDictionary];
+        for (Class registeredViewerClass in self.registeredViewers) {
+            Class <XXTEViewer> viewerClass = registeredViewerClass;
+            NSArray <NSString *> *suggestedExtensions = [viewerClass suggestedExtensions];
+            for (NSString *suggestExtension in suggestedExtensions) {
+                if (!originalBindingDictionary[suggestExtension]) { // if no binding, set default binding
+                    newBindingDictionary[suggestExtension] = NSStringFromClass(viewerClass);
+                    continue;
+                }
+            }
+        }
+        NSDictionary *saveBindingDictionary = [[NSDictionary alloc] initWithDictionary:newBindingDictionary];
+        XXTEDefaultsSetObject(XXTExplorerViewEntryBindingKey, saveBindingDictionary);
+        _bindingDictionary = saveBindingDictionary;
+    }
+    return _bindingDictionary;
+}
+
+- (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName {
+    Class testClass = NSClassFromString(viewerName);
+    if (testClass) {
+        NSMutableDictionary *mutableBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:self.bindingDictionary];
+        [mutableBindingDictionary setObject:viewerName forKey:extension];
+        NSDictionary *saveBindingDictionary = [[NSDictionary alloc] initWithDictionary:mutableBindingDictionary];
+        XXTEDefaultsSetObject(XXTExplorerViewEntryBindingKey, saveBindingDictionary);
+        _bindingDictionary = nil; // clear binding cache
+    }
+}
+
+- (BOOL)hasViewerForEntry:(NSDictionary *)entry {
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
     if (bindingDictionary[entryBaseExtension]) {
@@ -62,12 +91,11 @@
     return NO;
 }
 
-- (UIViewController <XXTEViewer> *)viewControllerForEntry:(NSDictionary *)entry {
+- (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
-    if (bindingDictionary[entryBaseExtension]) {
-        NSString *viewerClassName = bindingDictionary[entryBaseExtension];
+    if (self.bindingDictionary[entryBaseExtension]) {
+        NSString *viewerClassName = self.bindingDictionary[entryBaseExtension];
         Class viewerClass = NSClassFromString(viewerClassName);
         UIViewController <XXTEViewer> *viewer = [[viewerClass alloc] initWithPath:entryPath];
         return viewer;
@@ -75,7 +103,7 @@
     return nil;
 }
 
-- (UIViewController *)openInControllerForEntry:(NSDictionary *)entry {
+- (UIViewController *)openWithControllerForEntry:(NSDictionary *)entry {
     return nil;
 }
 

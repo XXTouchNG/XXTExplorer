@@ -12,6 +12,8 @@
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryXPPReader.h"
+#import "XXTExplorerEntryService.h"
+#import "XXTEViewer.h"
 
 static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 
@@ -37,6 +39,14 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
     return entryDateFormatter;
 }
 
++ (XXTExplorerEntryService *)parserEntryService {
+    static XXTExplorerEntryService *parserEntryService = nil;
+    if (!parserEntryService) {
+        parserEntryService = [XXTExplorerEntryService sharedInstance];
+    }
+    return parserEntryService;
+}
+
 + (NSArray <Class> *)registeredReaders {
     static NSArray <Class> *registeredReaders = nil;
     if (!registeredReaders) {
@@ -52,9 +62,13 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 
 - (instancetype)init {
     if (self = [super init]) {
-        _parserFileManager = [[NSFileManager alloc] init];
+        [self setup];
     }
     return self;
+}
+
+- (void)setup {
+    _parserFileManager = [[NSFileManager alloc] init];
 }
 
 - (NSDictionary *)entryOfPath:(NSString *)entrySubdirectoryPath withError:(NSError *__autoreleasing *)error {
@@ -248,15 +262,35 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 }
 
 - (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {
+    NSDictionary *bindingDictionary = [self.class.parserEntryService bindingDictionary];
     NSMutableDictionary *newEntry = [entry mutableCopy];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
-             [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
     {
-        // Preview
-        for (Class readerClass in self.class.registeredReaders) {
+        // Find binded viewers
+        NSString *bindedViewerName = bindingDictionary[entryBaseExtension];
+        if (bindedViewerName) {
+            Class bindedViewerClass = NSClassFromString(bindedViewerName);
+            if (bindedViewerClass) {
+                Class relatedReaderClass = [((Class <XXTEViewer>)bindedViewerClass) relatedReader];
+                if (relatedReaderClass) {
+                    id <XXTExplorerEntryReader> relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];
+                    newEntry[XXTExplorerViewEntryAttributeEntryReader] = relatedReader;
+                }
+            }
+        }
+        {
+            // Common Icon Images
+            UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
+            if (extensionIconImage) {
+                newEntry[XXTExplorerViewEntryAttributeIconImage] = extensionIconImage;
+            }
+        }
+    } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+    {
+        for (Class readerClass in [self.class registeredReaders]) {
             BOOL supported = NO;
             for (NSString *supportedExtension in [readerClass supportedExtensions]) {
                 if ([supportedExtension isEqualToString:entryBaseExtension]) {
@@ -265,16 +299,9 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
                 }
             }
             if (supported) {
-                id <XXTExplorerEntryReader> reader = [[readerClass alloc] initWithPath:entryPath];
-                newEntry[XXTExplorerViewEntryAttributeEntryReader] = reader;
+                id <XXTExplorerEntryReader> bundleReader = [[readerClass alloc] initWithPath:entryPath];
+                newEntry[XXTExplorerViewEntryAttributeEntryReader] = bundleReader;
                 break;
-            }
-        }
-        {
-            // Common Icon Images
-            UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
-            if (extensionIconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = extensionIconImage;
             }
         }
     }

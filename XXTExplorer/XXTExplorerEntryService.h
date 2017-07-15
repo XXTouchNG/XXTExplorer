@@ -12,8 +12,13 @@
 
 @interface XXTExplorerEntryService : NSObject
 
-- (BOOL)hasDefaultViewControllerForEntry:(NSDictionary *)entry;
-- (UIViewController <XXTEViewer> *)viewControllerForEntry:(NSDictionary *)entry;
-- (UIViewController *)openInControllerForEntry:(NSDictionary *)entry;
+@property (nonatomic, strong) NSDictionary *bindingDictionary;
+@property (nonatomic, strong) NSArray <Class> *registeredViewers;
+
++ (instancetype)sharedInstance;
+- (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName;
+- (BOOL)hasViewerForEntry:(NSDictionary *)entry;
+- (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry;
+- (UIViewController *)openWithControllerForEntry:(NSDictionary *)entry;
 
 @end

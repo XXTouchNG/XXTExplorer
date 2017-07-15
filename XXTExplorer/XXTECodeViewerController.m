@@ -8,6 +8,7 @@
 
 #import "XXTECodeViewerController.h"
 #import "NSString+HTMLEscape.h"
+#import "XXTExplorerEntryCodeReader.h"
 
 @interface XXTECodeViewerController ()
 
@@ -42,6 +43,10 @@
               @"conf", // Nginx
               @"py", // Python
               ];
+}
+
++ (Class)relatedReader {
+    return [XXTExplorerEntryCodeReader class];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

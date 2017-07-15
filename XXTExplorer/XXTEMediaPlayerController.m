@@ -10,6 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEDispatchDefines.h"
+#import "XXTExplorerEntryMediaReader.h"
 
 @interface XXTEMediaPlayerController ()
 
@@ -28,6 +29,10 @@
 
 + (NSArray <NSString *> *)suggestedExtensions {
     return @[ @"m4a", @"m4v", @"mov", @"flv", @"fla", @"mp4", @"mp3", @"aac", @"wav" ];
+}
+
++ (Class)relatedReader {
+    return [XXTExplorerEntryMediaReader class];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

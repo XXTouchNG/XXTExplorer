@@ -7,6 +7,7 @@
 //
 
 #import "XXTEImageViewerController.h"
+#import "XXTExplorerEntryImageReader.h"
 
 @interface XXTEImageViewerController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
@@ -27,6 +28,10 @@
 
 + (NSArray <NSString *> *)suggestedExtensions {
     return @[ @"png", @"jpg", @"gif", @"jpeg" ];
+}
+
++ (Class)relatedReader {
+    return [XXTExplorerEntryImageReader class];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

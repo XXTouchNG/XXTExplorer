@@ -25,6 +25,7 @@
 #import "XXTExplorerEntryParser.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryBindingViewController.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerItemDetailViewSectionIndexName = 0,
@@ -39,7 +40,7 @@ typedef enum : NSUInteger {
 
 static int sizingCancelFlag = 0;
 
-@interface XXTExplorerItemDetailViewController () <UITextFieldDelegate>
+@interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate>
 
 @property (nonatomic, strong) NSDictionary *entry;
 
@@ -518,6 +519,14 @@ static int sizingCancelFlag = 0;
                 }
             }
         }
+        else if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexOpenWith) {
+            if (indexPath.row == 0) {
+                NSString *entryBaseExtension = self.entry[XXTExplorerViewEntryAttributeExtension];
+                XXTExplorerEntryBindingViewController *bindingViewController = [[XXTExplorerEntryBindingViewController alloc] initWithExtension:entryBaseExtension];
+                bindingViewController.delegate = self;
+                [self.navigationController pushViewController:bindingViewController animated:YES];
+            }
+        }
     }
 }
 
@@ -577,6 +586,12 @@ static int sizingCancelFlag = 0;
     } else {
         self.doneButtonItem.enabled = NO;
     }
+}
+
+#pragma mark - XXTExplorerEntryBindingViewControllerDelegate
+
+- (void)bindingViewController:(XXTExplorerEntryBindingViewController *)controller bindingDidChanged:(NSString *)controllerName {
+    
 }
 
 #pragma mark - Memory

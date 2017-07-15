@@ -15,6 +15,7 @@
 
 + (NSString *)viewerName;
 + (NSArray <NSString *> *)suggestedExtensions;
++ (Class)relatedReader;
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
 - (instancetype)initWithPath:(NSString *)path;

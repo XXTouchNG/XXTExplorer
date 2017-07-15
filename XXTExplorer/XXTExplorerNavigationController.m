@@ -69,7 +69,7 @@
         @weakify(self);
         self.view.userInteractionEnabled = NO;
         [self.view makeToastActivity:XXTEToastPositionCenter];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @strongify(self);
             NSError *err = nil;
             NSString *lastComponent = [inboxURL lastPathComponent];

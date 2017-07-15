@@ -7,6 +7,7 @@
 //
 
 #import "XXTEWebViewerController.h"
+#import "XXTExplorerEntryWebReader.h"
 
 @interface XXTEWebViewerController ()
 
@@ -22,6 +23,10 @@
 
 + (NSArray <NSString *> *)suggestedExtensions {
     return @[ @"html", @"pdf" ];
+}
+
++ (Class)relatedReader {
+    return [XXTExplorerEntryWebReader class];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
