@@ -4,12 +4,14 @@
 <dict>
 	<key>AVAILABLE_VIEWER</key>
 	<array>
-		<string>XXTEMediaPlayerController</string>
+		<string>XXTEExecutableViewer</string>
+		<string>XXTEArchiveViewer</string>
 		<string>XXTEImageViewerController</string>
+		<string>XXTEMediaPlayerController</string>
 		<string>XXTEWebViewerController</string>
 		<string>XXTECodeViewerController</string>
 	</array>
-	<key>AVAILABLE_ENTRY_READER</key>
+	<key>AVAILABLE_BUNDLE_READER</key>
 	<array>
 		<string>XXTExplorerEntryXPPReader</string>
 	</array>

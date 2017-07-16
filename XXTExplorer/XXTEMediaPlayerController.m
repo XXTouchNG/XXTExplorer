@@ -63,7 +63,7 @@
     [self moviePlayer];
     [self.view addSubview:self.moviePlayer.view];
     
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     }
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
@@ -106,7 +106,7 @@
     if (!_moviePlayer) {
         NSURL *urlString = [NSURL fileURLWithPath:self.entryPath];
         MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:urlString];
-        if (XXTE_PAD) {
+        if (XXTE_SPLIT_MODE) {
             moviePlayer.view.frame = self.view.bounds;
         } else {
             CGSize viewSize = self.view.bounds.size;

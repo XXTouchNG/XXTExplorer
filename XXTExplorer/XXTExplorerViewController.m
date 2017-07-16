@@ -42,6 +42,7 @@
 #import "XXTEViewer.h"
 #import "XXTECommonNavigationController.h"
 #import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryBundleReader.h"
 #import "XXTExplorerEntryLauncher.h"
 #import "XXTExplorerEntryArchiver.h"
 
@@ -539,7 +540,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         } else {
                             if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
                                 UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
-                                if (XXTE_PAD) {
+                                if (XXTE_SPLIT_MODE) {
                                     XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
                                     [self.splitViewController showDetailViewController:navigationController sender:self];
                                 } else {
@@ -788,8 +789,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if (detailText && detailText.length > 0) {
             blockUserInteractions(self, YES);
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                [[UIPasteboard generalPasteboard] setString:detailText];
-                fulfill(nil);
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    [[UIPasteboard generalPasteboard] setString:detailText];
+                    fulfill(nil);
+                });
             }].finally(^() {
                 showUserMessage(self, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
                 blockUserInteractions(self, NO);
@@ -1098,23 +1101,25 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
-
-        if (YES == [entryDetail[XXTExplorerViewEntryAttributeAvailability] containsObject:XXTExplorerViewEntryAttributeAvailabilityExecutable]) {
+        id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        if (entryReader.executable) {
             XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
                                                                            insets:UIEdgeInsetsMake(0, 24, 0, 24)];
             objc_setAssociatedObject(swipeLaunchButton, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:swipeLaunchButton];
         }
-        if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
-            XXTESwipeButton *swipeConfigureButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
-                                                                  backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
-                                                                           insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-            objc_setAssociatedObject(swipeConfigureButton, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [swipeButtons addObject:swipeConfigureButton];
+        if ([entryBundleReader respondsToSelector:@selector(configurable)]) {
+            if (entryBundleReader.configurable) {
+                XXTESwipeButton *swipeConfigureButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
+                                                                         backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
+                                                                                  insets:UIEdgeInsetsMake(0, 24, 0, 24)];
+                objc_setAssociatedObject(swipeConfigureButton, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [swipeButtons addObject:swipeConfigureButton];
+            }
         }
-        if (YES == [entryDetail[XXTExplorerViewEntryAttributeAvailability] containsObject:XXTExplorerViewEntryAttributeAvailabilityEditable]
-                && [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
+        if (entryReader.editable) {
             XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                                 backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
                                                                          insets:UIEdgeInsetsMake(0, 24, 0, 24)];
@@ -1971,7 +1976,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if (internal) {
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
             webController.title = NSLocalizedString(@"Loading...", nil);
-            if (XXTE_PAD) {
+            if (XXTE_SPLIT_MODE) {
                 XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
                 [self.splitViewController showDetailViewController:navigationController sender:self];
             } else {
@@ -1985,12 +1990,14 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }];
 }
 
-- (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)string {
+- (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)detailText {
     blockUserInteractions(self, YES);
     [controller dismissViewControllerAnimated:YES completion:^{
         [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-            [[UIPasteboard generalPasteboard] setString:string];
-            fulfill(nil);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                [[UIPasteboard generalPasteboard] setString:detailText];
+                fulfill(nil);
+            });
         }].finally(^() {
             showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
             blockUserInteractions(self, NO);

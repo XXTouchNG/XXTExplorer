@@ -195,8 +195,10 @@
                 if (addressText && addressText.length > 0) {
                     blockUserInteractions(self, YES);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                        [[UIPasteboard generalPasteboard] setString:addressText];
-                        fulfill(nil);
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            [[UIPasteboard generalPasteboard] setString:addressText];
+                            fulfill(nil);
+                        });
                     }].finally(^() {
                         showUserMessage(self, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
                         blockUserInteractions(self, NO);

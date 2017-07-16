@@ -244,8 +244,10 @@ typedef enum : NSUInteger {
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    [[UIPasteboard generalPasteboard] setString:detailText];
-                    fulfill(nil);
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
                 }].finally(^() {
                     showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
@@ -290,7 +292,7 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -375,7 +377,7 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{

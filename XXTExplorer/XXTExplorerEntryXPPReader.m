@@ -24,6 +24,9 @@
 @synthesize entryDescription = _entryDescription;
 @synthesize entryExtensionDescription = _entryExtensionDescription;
 @synthesize entryViewerDescription = _entryViewerDescription;
+@synthesize executable = _executable;
+@synthesize editable = _editable;
+@synthesize configurable = _configurable;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return @[ @"xpp" ];
@@ -31,6 +34,10 @@
 
 + (UIImage *)defaultImage {
     return [UIImage imageNamed:@"XXTEFileType-xpp"];
+}
+
++ (Class)configurationViewer {
+    return nil;
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
@@ -42,6 +49,9 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
+    _executable = YES;
+    _editable = NO;
+    _configurable = YES;
     NSBundle *pathBundle = [NSBundle bundleWithPath:path];
     if (!pathBundle) {
         return;

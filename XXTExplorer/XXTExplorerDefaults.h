@@ -45,7 +45,7 @@ static NSString * const XXTExplorerViewEntryAttributeMaskType = @"XXTExplorerVie
 static NSString * const XXTExplorerViewEntryAttributeCreationDate = @"XXTExplorerViewEntryAttributeCreationDate"; // NSDate
 static NSString * const XXTExplorerViewEntryAttributeModificationDate = @"XXTExplorerViewEntryAttributeModificationDate"; // NSDate
 static NSString * const XXTExplorerViewEntryAttributeSize = @"XXTExplorerViewEntryAttributeSize"; // NSNumber
-static NSString * const XXTExplorerViewEntryAttributeAvailability = @"XXTExplorerViewEntryAttributeAvailability"; // Dictionary
+//static NSString * const XXTExplorerViewEntryAttributeAvailability = @"XXTExplorerViewEntryAttributeAvailability"; // Dictionary
 
 static NSString * const XXTExplorerViewEntryAttributeEntryReader = @"XXTExplorerViewEntryAttributeEntryReader";
 static NSString * const XXTExplorerViewEntryAttributeDescription = @"XXTExplorerViewEntryAttributeDescription"; // NSString
@@ -64,9 +64,9 @@ static NSString * const XXTExplorerViewEntryAttributeMaskTypeBundle = @"XXTExplo
 static NSString * const XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink = @"XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink";
 
 // XXTExplorerViewEntryAttributeAvailability
-static NSString * const XXTExplorerViewEntryAttributeAvailabilityViewable = @"XXTExplorerViewEntryAttributeAvailabilityViewable";
-static NSString * const XXTExplorerViewEntryAttributeAvailabilityEditable = @"XXTExplorerViewEntryAttributeAvailabilityEditable";
-static NSString * const XXTExplorerViewEntryAttributeAvailabilityExecutable = @"XXTExplorerViewEntryAttributeAvailabilityExecutable";
+//static NSString * const XXTExplorerViewEntryAttributeAvailabilityViewable = @"XXTExplorerViewEntryAttributeAvailabilityViewable";
+//static NSString * const XXTExplorerViewEntryAttributeAvailabilityEditable = @"XXTExplorerViewEntryAttributeAvailabilityEditable";
+//static NSString * const XXTExplorerViewEntryAttributeAvailabilityExecutable = @"XXTExplorerViewEntryAttributeAvailabilityExecutable";
 
 #pragma mark - AlertView Actions
 

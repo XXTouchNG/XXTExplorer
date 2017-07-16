@@ -47,25 +47,17 @@
     return parserEntryService;
 }
 
-+ (NSArray <Class> *)registeredReaders {
-    static NSArray <Class> *registeredReaders = nil;
-    if (!registeredReaders) {
-        NSArray <NSString *> *registeredNames = XXTEBuiltInDefaultsObject(@"AVAILABLE_ENTRY_READER");
++ (NSArray <Class> *)bundleReaders {
+    static NSArray <Class> *bundleReaders = nil;
+    if (!bundleReaders) {
+        NSArray <NSString *> *registeredNames = XXTEBuiltInDefaultsObject(@"AVAILABLE_BUNDLE_READER");
         NSMutableArray <Class> *registeredMutableReaders = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
         for (NSString *className in registeredNames) {
             [registeredMutableReaders addObject:NSClassFromString(className)];
         }
-        registeredReaders = [[NSArray alloc] initWithArray:registeredMutableReaders];
+        bundleReaders = [[NSArray alloc] initWithArray:registeredMutableReaders];
     }
-    return registeredReaders;
-}
-
-+ (NSArray <NSString *> *)internalLauncherExtensions {
-    return @[ @"lua", @"xxt", @"xpp" ];
-}
-
-+ (NSArray <NSString *> *)internalArchiverExtensions {
-    return @[ @"zip" ];
+    return bundleReaders;
 }
 
 - (instancetype)init {
@@ -170,71 +162,10 @@
       XXTExplorerViewEntryAttributeType: entryBaseType,
       XXTExplorerViewEntryAttributeMaskType: entryMaskType,
       XXTExplorerViewEntryAttributeExtension: entryBaseExtension,
-      XXTExplorerViewEntryAttributeAvailability: @[],
       XXTExplorerViewEntryAttributeDescription: entryDescription,
       };
-    NSDictionary *newEntryAttributes = [self parseInternalEntry:entryAttributes];
-    NSDictionary *extraEntryAttributes = [self parseExternalEntry:newEntryAttributes];
+    NSDictionary *extraEntryAttributes = [self parseExternalEntry:entryAttributes];
     return extraEntryAttributes;
-}
-
-- (NSDictionary *)parseInternalEntry:(NSDictionary *)entry {
-    NSMutableDictionary *newEntry = [entry mutableCopy];
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    BOOL isBundle = NO;
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
-    {
-        // Executable
-        if ([entryBaseExtension isEqualToString:@"lua"])
-        {
-            newEntry[XXTExplorerViewEntryAttributeAvailability] =
-            @[XXTExplorerViewEntryAttributeAvailabilityExecutable,
-              XXTExplorerViewEntryAttributeAvailabilityViewable,
-              XXTExplorerViewEntryAttributeAvailabilityEditable];
-            XXTExplorerEntryLauncher *launcher = [[XXTExplorerEntryLauncher alloc] initWithPath:entryPath];
-            newEntry[XXTExplorerViewEntryAttributeEntryReader] = launcher;
-        }
-        else if ([entryBaseExtension isEqualToString:@"xxt"])
-        {
-            newEntry[XXTExplorerViewEntryAttributeAvailability] =
-            @[XXTExplorerViewEntryAttributeAvailabilityExecutable];
-            XXTExplorerEntryLauncher *launcher = [[XXTExplorerEntryLauncher alloc] initWithPath:entryPath];
-            newEntry[XXTExplorerViewEntryAttributeEntryReader] = launcher;
-        }
-        // Archive
-        else if ([entryBaseExtension isEqualToString:@"zip"])
-        {
-            XXTExplorerEntryArchiver *archiver = [[XXTExplorerEntryArchiver alloc] initWithPath:entryPath];
-            newEntry[XXTExplorerViewEntryAttributeEntryReader] = archiver;
-        }
-    }
-    else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
-    {
-        if ([entryBaseExtension isEqualToString:@"xpp"])
-        {
-            isBundle = YES;
-        }
-    }
-    if (isBundle)
-    {
-        // Bundle
-        if ([entryBaseExtension isEqualToString:@"xpp"])
-        {
-            newEntry[XXTExplorerViewEntryAttributeAvailability] =
-            @[XXTExplorerViewEntryAttributeAvailabilityExecutable];
-            newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
-        }
-        else
-        {
-            UIImage *bundleIconImage = [UIImage imageNamed:@"XXTExplorerViewEntryAttributeMaskTypeBundle"];
-            if (bundleIconImage) {
-                newEntry[XXTExplorerViewEntryAttributeIconImage] = bundleIconImage;
-            }
-        }
-    }
-    return [[NSDictionary alloc] initWithDictionary:newEntry];
 }
 
 - (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {
@@ -257,9 +188,10 @@
                 }
             }
         }
-    } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+    }
+    else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
     {
-        for (Class readerClass in [self.class registeredReaders]) {
+        for (Class readerClass in [self.class bundleReaders]) {
             BOOL supported = NO;
             for (NSString *supportedExtension in [readerClass supportedExtensions]) {
                 if ([supportedExtension isEqualToString:entryBaseExtension]) {
@@ -269,7 +201,12 @@
             }
             if (supported) {
                 id <XXTExplorerEntryReader> bundleReader = [[readerClass alloc] initWithPath:entryPath];
+                newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
                 newEntry[XXTExplorerViewEntryAttributeEntryReader] = bundleReader;
+                UIImage *bundleIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeMaskTypeBundle];
+                if (bundleIconImage) {
+                    newEntry[XXTExplorerViewEntryAttributeIconImage] = bundleIconImage;
+                }
                 break;
             }
         }

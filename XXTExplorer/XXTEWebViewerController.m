@@ -22,7 +22,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"html", @"pdf" ];
+    return @[ @"html", @"pdf", @"doc", @"docx", @"xls", @"xlsx", @"ppt", @"pptx", @"rtf" ];
 }
 
 + (Class)relatedReader {
@@ -40,6 +40,14 @@
         self.showActionButton = NO;
     }
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    NSString *entryPath = self.entryPath;
+    NSString *entryName = [entryPath lastPathComponent];
+    self.title = entryName;
 }
 
 #pragma mark - Memory

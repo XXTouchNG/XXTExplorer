@@ -38,7 +38,7 @@
     self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     }
     

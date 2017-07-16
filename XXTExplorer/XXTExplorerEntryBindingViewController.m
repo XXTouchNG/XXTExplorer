@@ -10,17 +10,14 @@
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryService.h"
-//#import "XXTEMoreTitleDescriptionCell.h"
 #import "XXTExplorerViewCell.h"
 #import "XXTEViewer.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerEntryLauncher.h"
-#import "XXTExplorerEntryArchiver.h"
 #import "XXTExplorerEntryReader.h"
 
 typedef enum : NSUInteger {
     kXXTEBindingSectionIndexNone = 0,
-    kXXTEBindingSectionIndexInternal,
     kXXTEBindingSectionIndexSuggested,
     kXXTEBindingSectionIndexOther,
     kXXTEBindingSectionIndexMax
@@ -93,20 +90,10 @@ typedef enum : NSUInteger {
         }
     }
     // Internal Types
-    id <XXTExplorerEntryReader> reader = self.entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader) {
-        if ([reader isKindOfClass:[XXTExplorerEntryLauncher class]]) {
-            selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:kXXTEBindingSectionIndexInternal];
-        }
-        else if ([reader isKindOfClass:[XXTExplorerEntryArchiver class]]) {
-            selectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:kXXTEBindingSectionIndexInternal];
-        }
-    }
-    if (selectedIndexPath == nil) {
+    if (selectedIndexPath == nil)
         _selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:kXXTEBindingSectionIndexNone];
-    } else {
+    else
         _selectedIndexPath = selectedIndexPath;
-    }
     _suggestedViewers = suggestedViewers;
     _otherViewers = otherViewers;
     _bindingDictionary = bindingDictionary;
@@ -133,10 +120,9 @@ typedef enum : NSUInteger {
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
     
     staticSectionTitles = @[ @"",
-                             NSLocalizedString(@"Internal", nil),
                              NSLocalizedString(@"Suggested", nil),
                              NSLocalizedString(@"Other", nil)];
-    staticSectionFooters = @[ @"", @"", @"", @"" ];
+    staticSectionFooters = @[ @"", @"", @"" ];
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -147,15 +133,12 @@ typedef enum : NSUInteger {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        if (section == kXXTEBindingSectionIndexSuggested) {
-            return self.suggestedViewers.count;
-        } else if (section == kXXTEBindingSectionIndexOther) {
-            return self.otherViewers.count;
-        } else if (section == kXXTEBindingSectionIndexNone) {
+        if (section == kXXTEBindingSectionIndexNone)
             return 1;
-        } else if (section == kXXTEBindingSectionIndexInternal) {
-            return 2;
-        }
+        else if (section == kXXTEBindingSectionIndexSuggested)
+            return self.suggestedViewers.count;
+        else if (section == kXXTEBindingSectionIndexOther)
+            return self.otherViewers.count;
     }
     return 0;
 }
@@ -176,11 +159,7 @@ typedef enum : NSUInteger {
     if (tableView == self.tableView) {
         NSString *entryBaseExtension = [self.entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
         NSString *bindToViewerName = nil;
-        if (self.selectedIndexPath.section == kXXTEBindingSectionIndexInternal ||
-            indexPath.section == kXXTEBindingSectionIndexInternal) {
-            showUserMessage(self, NSLocalizedString(@"You cannot switch from/to internal viewers by default.", nil));
-            return;
-        } else if (indexPath.section == kXXTEBindingSectionIndexSuggested) {
+        if (indexPath.section == kXXTEBindingSectionIndexSuggested) {
             bindToViewerName = NSStringFromClass(self.suggestedViewers[indexPath.row]);
         } else if (indexPath.section == kXXTEBindingSectionIndexOther) {
             bindToViewerName = NSStringFromClass(self.otherViewers[indexPath.row]);
@@ -189,12 +168,14 @@ typedef enum : NSUInteger {
         } else {
             return; // nothing will be done if internal
         }
-        [[XXTExplorerEntryService sharedInstance] bindExtension:entryBaseExtension toViewer:bindToViewerName];
-        self.selectedIndexPath = indexPath;
-        if (_delegate && [_delegate respondsToSelector:@selector(bindingViewController:bindingDidChanged:)]) {
-            [_delegate bindingViewController:self bindingDidChanged:bindToViewerName];
+        {
+            [[XXTExplorerEntryService sharedInstance] bindExtension:entryBaseExtension toViewer:bindToViewerName];
+            self.selectedIndexPath = indexPath;
+            if (_delegate && [_delegate respondsToSelector:@selector(bindingViewController:bindingDidChanged:)]) {
+                [_delegate bindingViewController:self bindingDidChanged:bindToViewerName];
+            }
+            [self.tableView reloadData];
         }
-        [self.tableView reloadData];
     }
 }
 
@@ -234,23 +215,11 @@ typedef enum : NSUInteger {
                 cell.entrySubtitleLabel.text = NSLocalizedString(@"Restore to default.", nil);
                 cell.entryIconImageView.image = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeRegular];
             }
-            else if (indexPath.section == kXXTEBindingSectionIndexInternal) {
-                if (indexPath.row == 0) {
-                    cell.entryTitleLabel.text = NSLocalizedString(@"Launcher", nil);
-                    cell.entrySubtitleLabel.text = [self openWithCellDescriptionFromExtensions:[XXTExplorerEntryLauncher supportedExtensions]];
-                    cell.entryIconImageView.image = [XXTExplorerEntryLauncher defaultImage];
-                } else if (indexPath.row == 1) {
-                    cell.entryTitleLabel.text = NSLocalizedString(@"Archiver", nil);
-                    cell.entrySubtitleLabel.text = [self openWithCellDescriptionFromExtensions:[XXTExplorerEntryArchiver supportedExtensions]];
-                    cell.entryIconImageView.image = [XXTExplorerEntryArchiver defaultImage];
-                }
-            }
         }
-        if ([indexPath isEqual:self.selectedIndexPath]) {
+        if ([indexPath isEqual:self.selectedIndexPath])
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        } else {
+        else
             cell.accessoryType = UITableViewCellAccessoryNone;
-        }
         return cell;
     }
     return [UITableViewCell new];
@@ -259,11 +228,10 @@ typedef enum : NSUInteger {
 - (NSString *)openWithCellDescriptionFromExtensions:(NSArray <NSString *> *)extensions {
     NSMutableString *mutableDescription = [@"" mutableCopy];
     [extensions enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx < extensions.count - 1) {
+        if (idx < extensions.count - 1)
             [mutableDescription appendFormat:@"%@, ", obj];
-        } else {
+        else
             [mutableDescription appendFormat:@"%@. ", obj];
-        }
     }];
     return [[NSString alloc] initWithString:mutableDescription];
 }

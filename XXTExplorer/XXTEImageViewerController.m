@@ -71,7 +71,7 @@
     
     [self.scrollView addGestureRecognizer:self.doubleTapGestureRecognizer];
     
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     }
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;

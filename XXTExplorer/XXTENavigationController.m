@@ -33,6 +33,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UINavigationBar *barAppearance = [UINavigationBar appearance];
+    [barAppearance setTintColor:[UIColor whiteColor]];
+    [barAppearance setBarTintColor:XXTE_COLOR];
+    [barAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
     [navigationBarAppearance setTranslucent:NO];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];

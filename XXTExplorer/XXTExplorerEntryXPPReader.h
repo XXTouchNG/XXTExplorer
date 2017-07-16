@@ -7,8 +7,8 @@
 //
 
 #import "XXTExplorerEntryLauncher.h"
-#import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryBundleReader.h"
 
-@interface XXTExplorerEntryXPPReader : XXTExplorerEntryLauncher <XXTExplorerEntryReader>
+@interface XXTExplorerEntryXPPReader : XXTExplorerEntryLauncher <XXTExplorerEntryBundleReader>
 
 @end

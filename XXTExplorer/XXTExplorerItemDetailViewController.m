@@ -27,23 +27,36 @@
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBindingViewController.h"
 #import "XXTExplorerViewController.h"
-
-typedef enum : NSUInteger {
-    kXXTExplorerItemDetailViewSectionIndexName = 0,
-    kXXTExplorerItemDetailViewSectionIndexWhere,
-    kXXTExplorerItemDetailViewSectionIndexGeneral,
-    kXXTExplorerItemDetailViewSectionIndexExtended,
-    kXXTExplorerItemDetailViewSectionIndexOwner,
-    kXXTExplorerItemDetailViewSectionIndexPermission,
-    kXXTExplorerItemDetailViewSectionIndexOpenWith
-} kXXTExplorerItemDetailViewSectionIndex;
+#import "XXTEDispatchDefines.h"
+#import "XXTExplorerItemDetailObjectViewController.h"
 
 static int sizingCancelFlag = 0;
+static NSString * const kXXTEDynamicSectionIdentifierSectionName = @"SectionName";
+static NSString * const kXXTEDynamicSectionIdentifierSectionWhere = @"SectionWhere";
+static NSString * const kXXTEDynamicSectionIdentifierSectionOriginal = @"SectionOriginal";
+static NSString * const kXXTEDynamicSectionIdentifierSectionGeneral = @"SectionGeneral";
+static NSString * const kXXTEDynamicSectionIdentifierSectionExtended = @"SectionExtended";
+static NSString * const kXXTEDynamicSectionIdentifierSectionOwner = @"SectionOwner";
+static NSString * const kXXTEDynamicSectionIdentifierSectionPermission = @"SectionPermission";
+static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"SectionOpenWith";
+
+
+@interface XXTExplorerDynamicSection : NSObject
+@property (nonatomic, strong) NSString *identifier;
+@property (nonatomic, strong) NSArray <UITableViewCell *> *cells;
+@property (nonatomic, strong) NSArray <NSNumber *> *cellHeights;
+@property (nonatomic, strong) NSArray *relatedObjects;
+@property (nonatomic, strong) NSString *sectionTitle;
+@property (nonatomic, strong) NSString *sectionFooter;
+@end
+
+@implementation XXTExplorerDynamicSection
+@end
 
 @interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate>
 
 @property (nonatomic, strong) NSDictionary *entry;
-//@property (nonatomic, strong) NSString *entryPath;
+@property (nonatomic, strong) NSBundle *entryBundle;
 
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
@@ -51,28 +64,12 @@ static int sizingCancelFlag = 0;
 @property (nonatomic, strong) XXTEViewShaker *itemNameShaker;
 
 @property (nonatomic, strong) XXTExplorerEntryParser *entryParser;
+@property (nonatomic, strong) NSArray <XXTExplorerDynamicSection *> *dynamicSections;
 
 @end
 
 @implementation XXTExplorerItemDetailViewController {
     BOOL isFirstTimeLoaded;
-    NSArray <NSMutableArray <UITableViewCell *> *> *staticCells;
-    NSArray <NSString *> *staticSectionTitles;
-    NSArray <NSString *> *staticSectionFooters;
-    NSArray <NSNumber *> *staticSectionRowNum;
-}
-
-+ (NSDateFormatter *)itemDateFormatter {
-    static NSDateFormatter *itemDateFormatter = nil;
-    if (!itemDateFormatter) {
-        itemDateFormatter = ({
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
-            [dateFormatter setDateStyle:NSDateFormatterFullStyle];
-            dateFormatter;
-        });
-    }
-    return itemDateFormatter;
 }
 
 #pragma mark - Default Style
@@ -133,15 +130,6 @@ static int sizingCancelFlag = 0;
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
     [self reloadStaticTableViewData];
-//    [self reloadDynamicTableViewData];
-    [self performSelector:@selector(reloadDynamicTableViewData) withObject:nil afterDelay:.2f];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-//    if (![self.nameField isFirstResponder]) {
-//        [self.nameField becomeFirstResponder];
-//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -156,228 +144,357 @@ static int sizingCancelFlag = 0;
 
 - (void)reloadStaticTableViewData {
     // Prepare
-    
     NSDictionary *entry = self.entry;
-    if (!entry) {
-        return;
-    }
+    if (!entry) return;
+    
+    NSFileManager *previewManager = [[NSFileManager alloc] init];
+    NSMutableArray <XXTExplorerDynamicSection *> *mutableDynamicSections = [[NSMutableArray alloc] init];
     
     id <XXTExplorerEntryReader> entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseType = entry[XXTExplorerViewEntryAttributeType];
+    BOOL entryReadable = [previewManager isReadableFileAtPath:entryPath];
+    BOOL entryRegular = [entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular];
+    BOOL entryDirectory = [entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
+    BOOL entrySymlink = [entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink];
     NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
+    BOOL entryMaskBundle = [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle];
+    BOOL entryMaskBrokenSymlink = [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink];
+    
     NSBundle *entryBundle = nil;
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
-    {
+    if (entryMaskBundle)
         entryBundle = [NSBundle bundleWithPath:entryPath];
+    entryBundle = (entryBundle != nil) ? entryBundle : [NSBundle mainBundle];
+    self.entryBundle = entryBundle;
+    
+    struct stat entryStat;
+    if (lstat([entryPath UTF8String], &entryStat) != 0) return;
+    
+    // #1 - Name (Required)
+    {
+        XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
+        cell1.nameField.delegate = self;
+        cell1.nameField.text = entry[XXTExplorerViewEntryAttributeName];
+        self.nameField = cell1.nameField;
+        self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
+        
+        XXTExplorerDynamicSection *section1 = [[XXTExplorerDynamicSection alloc] init];
+        section1.identifier = kXXTEDynamicSectionIdentifierSectionName;
+        section1.cells = @[ cell1 ];
+        section1.cellHeights = @[ @(50.f) ];
+        section1.sectionTitle = NSLocalizedString(@"Filename", nil);
+        section1.sectionFooter = NSLocalizedString(@"Tap to edit filename.", nil);
+        
+        [mutableDynamicSections addObject:section1];
     }
-    NSBundle *useBundle = entryBundle ? entryBundle : [NSBundle mainBundle];
-    NSFileManager *detailManager = [[NSFileManager alloc] init];
     
-    // #1 - Name
+    // #2.1 - Where (Required)
     
-    XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
-    cell1.nameField.delegate = self;
-    cell1.nameField.text = entry[XXTExplorerViewEntryAttributeName];
-    self.nameField = cell1.nameField;
-    self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
-    
-    // #2 - Where
-    
-    XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = entryPath;
-    
-    // #3 - General
-    
-    XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell3.titleLabel.text = NSLocalizedString(@"Kind", nil);
-    cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    NSString *entryExtensionDescription = NSLocalizedString(@"Unknown", nil);
-    if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
-        entryExtensionDescription = NSLocalizedString(@"Regular File", nil);
+    {
+        XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
+        cell2.addressLabel.text = entryPath;
+        
+        XXTExplorerDynamicSection *section2 = [[XXTExplorerDynamicSection alloc] init];
+        section2.identifier = kXXTEDynamicSectionIdentifierSectionWhere;
+        section2.cells = @[ cell2 ];
+        section2.cellHeights = @[ @(-1) ];
+        section2.sectionTitle = NSLocalizedString(@"Where", nil);
+        section2.sectionFooter = @"";
+        
+        [mutableDynamicSections addObject:section2];
     }
-    else if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
-        entryExtensionDescription = NSLocalizedString(@"Directory", nil);
-    }
-    else if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink]) {
-        entryExtensionDescription = NSLocalizedString(@"Symbolic Link", nil);
-    }
-    if (entryReader && entryReader.entryExtensionDescription) {
-        entryExtensionDescription = entryReader.entryExtensionDescription;
-    }
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] && [detailManager isReadableFileAtPath:entryPath]) {
-        NSString *mimeString = nil;
-        CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
-        CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
-        CFRelease(UTI);
-        if (MIMEType == NULL) {
-            mimeString = @"application/octet-stream";
-        } else {
-            mimeString = (__bridge NSString *)(MIMEType);
-            CFRelease(MIMEType);
+    
+    // #3 - Original (Correct Symbolic Link)
+    
+    if (entrySymlink && !entryMaskBrokenSymlink)
+    {
+        NSError *originalError = nil;
+        NSString *originalPath = [previewManager destinationOfSymbolicLinkAtPath:entryPath error:&originalError];
+        
+        if (originalPath) {
+            XXTEMoreAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
+            cell3.addressLabel.text = originalPath;
+            
+            XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
+            section3.identifier = kXXTEDynamicSectionIdentifierSectionOriginal;
+            section3.cells = @[ cell3 ];
+            section3.cellHeights = @[ @(-1) ];
+            section3.sectionTitle = NSLocalizedString(@"Original", nil);
+            section3.sectionFooter = @"";
+            
+            [mutableDynamicSections addObject:section3];
         }
-        cell3.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", NSLocalizedString(entryExtensionDescription, nil), mimeString];
-    } else {
-        cell3.valueLabel.text = NSLocalizedString(entryExtensionDescription, nil);
+        
     }
     
-    XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell4.titleLabel.text = NSLocalizedString(@"Size", nil);
-    cell4.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    if (![entry[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
-        cell4.valueLabel.text = [self formattedSizeLabelText:entry[XXTExplorerViewEntryAttributeSize]];
-    } else {
-        cell4.valueLabel.text = NSLocalizedString(@"Calculating...\n", nil);
-    }
+    // #4 - General (Required)
     
-    XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell5.titleLabel.text = NSLocalizedString(@"Created", nil);
-    cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell5.valueLabel.text = [self.class.itemDateFormatter stringFromDate:entry[XXTExplorerViewEntryAttributeCreationDate]];
-    
-    XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell6.titleLabel.text = NSLocalizedString(@"Modified", nil);
-    cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell6.valueLabel.text = [self.class.itemDateFormatter stringFromDate:entry[XXTExplorerViewEntryAttributeModificationDate]];
-    
-    // #4 - Extended
-    
-    NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
-    if (entryReader && entryReader.metaDictionary && entryReader.displayMetaKeys) {
-        NSDictionary *extendedDictionary = entryReader.metaDictionary;
-        NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
-        for (NSString *extendedKey in displayExtendedKeys) {
-            id extendedValue = extendedDictionary[extendedKey];
-            BOOL isString = [extendedValue isKindOfClass:[NSString class]];
-            BOOL isNumber = [extendedValue isKindOfClass:[NSNumber class]];
-            if (isString || isNumber) {
-                XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                extendedCell.valueLabel.text = isString ? extendedValue : [extendedValue stringValue];
-                [extendedCells addObject:extendedCell];
+    {
+        NSDateFormatter *previewFormatter = [[NSDateFormatter alloc] init];
+        [previewFormatter setTimeStyle:NSDateFormatterLongStyle];
+        [previewFormatter setDateStyle:NSDateFormatterFullStyle];
+        
+        NSMutableArray <UITableViewCell *> *sectionCells1 = [[NSMutableArray alloc] init];
+        NSMutableArray <NSNumber *> *sectionHeights1 = [[NSMutableArray alloc] init];
+        
+        {
+            XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell4.titleLabel.text = NSLocalizedString(@"Kind", nil);
+            cell4.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            NSString *entryExtensionDescription = nil;
+            if (entryRegular)
+                entryExtensionDescription = NSLocalizedString(@"Regular File", nil);
+            else if (entryDirectory)
+                entryExtensionDescription = NSLocalizedString(@"Directory", nil);
+            else if (entrySymlink)
+                entryExtensionDescription = NSLocalizedString(@"Symbolic Link", nil);
+            else
+                entryExtensionDescription = NSLocalizedString(@"Unknown", nil);
+            if (!entrySymlink && (entryRegular || entryMaskBundle) && [entryReader entryExtensionDescription])
+                entryExtensionDescription = NSLocalizedString(entryReader.entryExtensionDescription, nil);
+            
+            if (entryRegular && entryReadable)
+            {
+                NSString *MIMEString = @"application/octet-stream";
+                CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
+                CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
+                if (UTI) CFRelease(UTI);
+                if (MIMEType != NULL) {
+                    MIMEString = (__bridge NSString *)(MIMEType);
+                    CFRelease(MIMEType);
+                }
+                cell4.valueLabel.text = [NSString stringWithFormat:@"%@\n(%@)", entryExtensionDescription, MIMEString];
+            } else {
+                cell4.valueLabel.text = entryExtensionDescription;
             }
-            else if ([extendedValue isKindOfClass:[NSDictionary class]] ||
-                     [extendedValue isKindOfClass:[NSArray class]]) {
-                XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-                extendedCell.titleLabel.text = [useBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                [extendedCells addObject:extendedCell];
+            
+            [sectionCells1 addObject:cell4];
+            [sectionHeights1 addObject:@(-1)];
+        }
+        
+        {
+            XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell5.titleLabel.text = NSLocalizedString(@"Size", nil);
+            cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            if (entryDirectory)
+            { // Async Sizing
+                cell5.valueLabel.text = NSLocalizedString(@"Calculating...\n", nil);
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    NSError *sizingError = nil;
+                    NSFileManager *sizingManager = [[NSFileManager alloc] init];
+                    NSNumber *itemSize = [sizingManager sizeOfDirectoryAtPath:entryPath error:&sizingError cancelFlag:&sizingCancelFlag];
+                    dispatch_async_on_main_queue(^{
+                        if (!sizingError && itemSize) {
+                            cell5.valueLabel.text = [self formattedSizeLabelText:itemSize];
+                        }
+                        [self.tableView reloadData];
+                    });
+                });
             }
+            else
+            {
+                NSNumber *entrySize = entry[XXTExplorerViewEntryAttributeSize];
+                cell5.valueLabel.text = [self formattedSizeLabelText:entrySize];
+            }
+            
+            [sectionCells1 addObject:cell5];
+            [sectionHeights1 addObject:@(-1)];
+        }
+        
+        {
+            NSDate *entryCreationDate = entry[XXTExplorerViewEntryAttributeCreationDate];
+            XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell6.titleLabel.text = NSLocalizedString(@"Created", nil);
+            cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell6.valueLabel.text = [previewFormatter stringFromDate:entryCreationDate];
+            
+            [sectionCells1 addObject:cell6];
+            [sectionHeights1 addObject:@(-1)];
+        }
+        
+        {
+            NSDate *entryModificationDate = entry[XXTExplorerViewEntryAttributeModificationDate];
+            XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell7.titleLabel.text = NSLocalizedString(@"Modified", nil);
+            cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell7.valueLabel.text = [previewFormatter stringFromDate:entryModificationDate];
+            
+            [sectionCells1 addObject:cell7];
+            [sectionHeights1 addObject:@(-1)];
+        }
+    
+        XXTExplorerDynamicSection *section4 = [[XXTExplorerDynamicSection alloc] init];
+        section4.identifier = kXXTEDynamicSectionIdentifierSectionGeneral;
+        section4.cells = [[NSArray alloc] initWithArray:sectionCells1];
+        section4.cellHeights = [[NSArray alloc] initWithArray:sectionHeights1];
+        section4.sectionTitle = NSLocalizedString(@"General", nil);
+        section4.sectionFooter = @"";
+        
+        [mutableDynamicSections addObject:section4];
+        
+    }
+    
+    // #5 - Extended
+    if (!entrySymlink)
+    {
+        NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
+        NSMutableArray <NSNumber *> *extendedHeights = [[NSMutableArray alloc] init];
+        NSMutableArray *extendedObjects = [[NSMutableArray alloc] init];
+        if (entryReader &&
+            entryReader.metaDictionary &&
+            entryReader.displayMetaKeys) {
+            
+            NSDictionary *extendedDictionary = entryReader.metaDictionary;
+            NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
+            
+            for (NSString *extendedKey in displayExtendedKeys)
+            {
+                id extendedValue = extendedDictionary[extendedKey];
+                BOOL isString = [extendedValue isKindOfClass:[NSString class]];
+                BOOL isNumber = [extendedValue isKindOfClass:[NSNumber class]];
+                BOOL isDictionary = [extendedValue isKindOfClass:[NSDictionary class]];
+                BOOL isArray = [extendedValue isKindOfClass:[NSArray class]];
+                
+                if (isString || isNumber) {
+                    XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+                    extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                    extendedCell.valueLabel.text = isString ? extendedValue : [extendedValue stringValue];
+                    [extendedCells addObject:extendedCell];
+                    [extendedHeights addObject:@(-1)];
+                    [extendedObjects addObject:[NSNull null]];
+                }
+                else if (isDictionary || isArray) {
+                    XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                    extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                    [extendedCells addObject:extendedCell];
+                    [extendedHeights addObject:@(-1)];
+                    [extendedObjects addObject:extendedValue];
+                }
+            }
+        }
+        
+        if (extendedCells.count > 0) {
+            XXTExplorerDynamicSection *section5 = [[XXTExplorerDynamicSection alloc] init];
+            section5.identifier = kXXTEDynamicSectionIdentifierSectionExtended;
+            section5.cells = [[NSArray alloc] initWithArray:extendedCells];
+            section5.cellHeights = [[NSArray alloc] initWithArray:extendedHeights];
+            section5.relatedObjects = [[NSArray alloc] initWithArray:extendedObjects];
+            section5.sectionTitle = NSLocalizedString(@"Extended", nil);
+            section5.sectionFooter = @"";
+            
+            [mutableDynamicSections addObject:section5];
+        }
+        
+    }
+    
+    // #6 - Owner
+    
+    {
+        struct passwd *entryPWInfo = getpwuid(entryStat.st_uid);
+        struct group *entryGRInfo = getgrgid(entryStat.st_gid);
+        if (entryPWInfo != NULL && entryGRInfo != NULL) {
+            XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell7.titleLabel.text = NSLocalizedString(@"Owner", nil);
+            cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell7.valueLabel.text = [[NSString alloc] initWithUTF8String:entryPWInfo->pw_name];
+            
+            XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell8.titleLabel.text = NSLocalizedString(@"Group", nil);
+            cell8.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell8.valueLabel.text = [[NSString alloc] initWithUTF8String:entryGRInfo->gr_name];
+            
+            XXTExplorerDynamicSection *section6 = [[XXTExplorerDynamicSection alloc] init];
+            section6.identifier = kXXTEDynamicSectionIdentifierSectionOwner;
+            section6.cells = @[ cell7, cell8 ];
+            section6.cellHeights = @[ @(-1), @(-1) ];
+            section6.sectionTitle = NSLocalizedString(@"Owner", nil);
+            section6.sectionFooter = @"";
+            
+            [mutableDynamicSections addObject:section6];
         }
     }
     
-    // #5 - Owner
+    // #7 - Perimssion
     
-    XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell7.titleLabel.text = NSLocalizedString(@"Owner", nil);
-    cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell8.titleLabel.text = NSLocalizedString(@"Group", nil);
-    cell8.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    // #6 - Perimssion
-    
-    XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell9.titleLabel.text = NSLocalizedString(@"Owner", nil);
-    cell9.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell10.titleLabel.text = NSLocalizedString(@"Group", nil);
-    cell10.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    XXTEMoreTitleValueCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell11.titleLabel.text = NSLocalizedString(@"Everyone", nil);
-    cell11.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    XXTEMoreLinkNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-    cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
-    
-    struct stat entryInfo;
-    if (lstat([entryPath UTF8String], &entryInfo) == 0) {
-        struct passwd *pwInfo = getpwuid(entryInfo.st_uid);
-        struct group *grInfo = getgrgid(entryInfo.st_gid);
-        if (pwInfo != NULL && grInfo != NULL) {
-            cell7.valueLabel.text = [[NSString alloc] initWithUTF8String:pwInfo->pw_name];
-            cell8.valueLabel.text = [[NSString alloc] initWithUTF8String:grInfo->gr_name];
-        }
-        NSString *userReadFlag = (entryInfo.st_mode & S_IRUSR) ? @"r" : @"-";
-        NSString *userWriteFlag = (entryInfo.st_mode & S_IWUSR) ? @"w" : @"-";
-        NSString *userExecuteFlag = (entryInfo.st_mode & S_IXUSR) ? @"x" : @"-";
+    {
+        NSString *userReadFlag = (entryStat.st_mode & S_IRUSR) ? @"r" : @"-";
+        NSString *userWriteFlag = (entryStat.st_mode & S_IWUSR) ? @"w" : @"-";
+        NSString *userExecuteFlag = (entryStat.st_mode & S_IXUSR) ? @"x" : @"-";
+        
+        NSString *groupReadFlag = (entryStat.st_mode & S_IRGRP) ? @"r" : @"-";
+        NSString *groupWriteFlag = (entryStat.st_mode & S_IWGRP) ? @"w" : @"-";
+        NSString *groupExecuteFlag = (entryStat.st_mode & S_IXGRP) ? @"x" : @"-";
+        
+        NSString *otherReadFlag = (entryStat.st_mode & S_IROTH) ? @"r" : @"-";
+        NSString *otherWriteFlag = (entryStat.st_mode & S_IWOTH) ? @"w" : @"-";
+        NSString *otherExecuteFlag = (entryStat.st_mode & S_IXOTH) ? @"x" : @"-";
+        
+        XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+        cell9.titleLabel.text = NSLocalizedString(@"Owner", nil);
+        cell9.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell9.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell9.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", userReadFlag, userWriteFlag, userExecuteFlag];
-        NSString *groupReadFlag = (entryInfo.st_mode & S_IRGRP) ? @"r" : @"-";
-        NSString *groupWriteFlag = (entryInfo.st_mode & S_IWGRP) ? @"w" : @"-";
-        NSString *groupExecuteFlag = (entryInfo.st_mode & S_IXGRP) ? @"x" : @"-";
+        
+        XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+        cell10.titleLabel.text = NSLocalizedString(@"Group", nil);
+        cell10.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell10.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell10.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", groupReadFlag, groupWriteFlag, groupExecuteFlag];
-        NSString *otherReadFlag = (entryInfo.st_mode & S_IROTH) ? @"r" : @"-";
-        NSString *otherWriteFlag = (entryInfo.st_mode & S_IWOTH) ? @"w" : @"-";
-        NSString *otherExecuteFlag = (entryInfo.st_mode & S_IXOTH) ? @"x" : @"-";
+        
+        XXTEMoreTitleValueCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+        cell11.titleLabel.text = NSLocalizedString(@"Everyone", nil);
+        cell11.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell11.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
+        
+        XXTEMoreLinkNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+        cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
+        
+        XXTExplorerDynamicSection *section7 = [[XXTExplorerDynamicSection alloc] init];
+        section7.identifier = kXXTEDynamicSectionIdentifierSectionPermission;
+        section7.cells = @[ cell9, cell10, cell11, cell12 ];
+        section7.cellHeights = @[ @(-1), @(-1), @(-1), @(-1) ];
+        section7.sectionTitle = NSLocalizedString(@"Permission", nil);
+        section7.sectionFooter = @"";
+        
+        [mutableDynamicSections addObject:section7];
     }
     
-    // #7 - Open with
+    // #8 - Open with
     
-    XXTEMoreTitleValueCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
-    cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    NSString *enteyViewerDescription = nil;
-    if (entryReader.entryViewerDescription) {
-        enteyViewerDescription = entryReader.entryViewerDescription;
-    } else {
-        enteyViewerDescription = entryExtensionDescription;
-    }
-    cell13.valueLabel.text = NSLocalizedString(enteyViewerDescription, nil);
     
-    staticCells = @[
-                    @[ cell1 ],
-                    @[ cell2 ],
-                    @[ cell3, cell4, cell5, cell6 ],
-                    extendedCells,
-                    @[ cell7, cell8 ],
-                    @[ cell9, cell10, cell11, cell12 ],
-                    @[ cell13 ]
-                    ];
-    
-    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
-                             NSLocalizedString(@"Where", nil),
-                             NSLocalizedString(@"General", nil),
-                             NSLocalizedString(@"Extended", nil),
-                             NSLocalizedString(@"Owner", nil),
-                             NSLocalizedString(@"Permission", nil),
-                             @""];
-    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil),
-                              @"", @"", @"", @"", @"",
-                              NSLocalizedString(@"Use this viewer to open all documents like this one.", nil) ];
-    
-}
-
-- (void)reloadDynamicTableViewData {
-    NSDictionary *entry = self.entry;
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    if ([entry[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
-        XXTEMoreTitleValueCell *sizeCell = ((XXTEMoreTitleValueCell *)staticCells[kXXTExplorerItemDetailViewSectionIndexGeneral][1]);
-//        sizeCell.valueLabel.text = NSLocalizedString(@"Calculating...", nil);
-        [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-            NSError *sizingError = nil;
-            NSFileManager *sizingManager = [[NSFileManager alloc] init];
-            NSNumber *itemSize = [sizingManager sizeOfDirectoryAtPath:entryPath error:&sizingError cancelFlag:&sizingCancelFlag];
-            if (sizingError) {
-                reject(sizingError);
-            } else {
-                fulfill(itemSize);
-            }
-        }].then(^(NSNumber *itemSize) {
-            sizeCell.valueLabel.text = [self formattedSizeLabelText:itemSize];
-        }).catch(^(NSError *systemError) {
+    if (entryRegular)
+    {
+        NSString *entryExtension = entry[XXTExplorerViewEntryAttributeExtension];
+        if (entryExtension.length > 0) {
+            NSString *enteyViewerDescription = nil;
+            if (entryReader.entryViewerDescription)
+                enteyViewerDescription = NSLocalizedString(entryReader.entryViewerDescription, nil);
+            else
+                enteyViewerDescription = NSLocalizedString(@"None", nil);
             
-        }).finally(^() {
-            [self.tableView reloadData];
-        });
+            XXTEMoreTitleValueCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+            cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
+            cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell13.valueLabel.text = enteyViewerDescription;
+            
+            XXTExplorerDynamicSection *section8 = [[XXTExplorerDynamicSection alloc] init];
+            section8.identifier = kXXTEDynamicSectionIdentifierSectionOpenWith;
+            section8.cells = @[ cell13 ];
+            section8.cellHeights = @[ @(-1), @(-1), @(-1), @(-1) ];
+            section8.sectionTitle = NSLocalizedString(@"Open With", nil);
+            section8.sectionFooter = NSLocalizedString(@"Use this viewer to open all documents like this one.", nil);
+            
+            [mutableDynamicSections addObject:section8];
+        }
     }
+    
+    self.dynamicSections = [[NSArray alloc] initWithArray:mutableDynamicSections];
+    
 }
 
 - (NSString *)formattedSizeLabelText:(NSNumber *)size {
@@ -417,7 +534,7 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -455,15 +572,17 @@ static int sizingCancelFlag = 0;
     }
     blockUserInteractions(self, YES);
     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-        NSError *renameError = nil;
-        BOOL renameResult = [renameManager moveItemAtPath:entryPath toPath:itemPath error:&renameError];
-        if (!renameResult) {
-            if (renameError) {
-                reject(renameError);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSError *renameError = nil;
+            BOOL renameResult = [renameManager moveItemAtPath:entryPath toPath:itemPath error:&renameError];
+            if (!renameResult) {
+                if (renameError) {
+                    reject(renameError);
+                }
+            } else {
+                fulfill(@(renameResult));
             }
-        } else {
-            fulfill(@(renameResult));
-        }
+        });
     }].then(^(id renameResult) {
         
     }).catch(^(NSError *systemError) {
@@ -471,7 +590,7 @@ static int sizingCancelFlag = 0;
     }).finally(^() {
         blockUserInteractions(self, NO);
         sizingCancelFlag = 1;
-        if (XXTE_PAD) {
+        if (XXTE_SPLIT_MODE) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
         [self dismissViewControllerAnimated:YES completion:^{
@@ -483,12 +602,12 @@ static int sizingCancelFlag = 0;
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return staticCells.count;
+    return self.dynamicSections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return staticCells[(NSUInteger) section].count;
+        return self.dynamicSections[(NSUInteger) section].cells.count;
     }
     return 0;
 }
@@ -499,12 +618,10 @@ static int sizingCancelFlag = 0;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexName) {
-            if (indexPath.row == 0) {
-                return 52.f;
-            }
-        }
-        return UITableViewAutomaticDimension;
+        CGFloat storedHeight = [self.dynamicSections[indexPath.section].cellHeights[indexPath.row] floatValue];
+        if (storedHeight < 0)
+            storedHeight = UITableViewAutomaticDimension;
+        return storedHeight;
     }
     return 44.f;
 }
@@ -512,36 +629,9 @@ static int sizingCancelFlag = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexWhere) {
-            NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
-            if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES);
-                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    [[UIPasteboard generalPasteboard] setString:detailText];
-                    fulfill(nil);
-                }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO);
-                });
-            }
-        }
-        else if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexGeneral || indexPath.section == kXXTExplorerItemDetailViewSectionIndexExtended) {
-            UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-            if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
-                NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
-                if (detailText && detailText.length > 0) {
-                    blockUserInteractions(self, YES);
-                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                        [[UIPasteboard generalPasteboard] setString:detailText];
-                        fulfill(nil);
-                    }].finally(^() {
-                        showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                        blockUserInteractions(self, NO);
-                    });
-                }
-            }
-        }
-        else if (indexPath.section == kXXTExplorerItemDetailViewSectionIndexOpenWith) {
+        NSString *sectionIdentifier = self.dynamicSections[indexPath.section].identifier;
+        UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
+        if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOpenWith]) {
             if (indexPath.row == 0) {
                 NSDictionary *entry = self.entry;
                 if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
@@ -552,26 +642,64 @@ static int sizingCancelFlag = 0;
                 }
             }
         }
+        else if ([cell isKindOfClass:[XXTEMoreLinkNoIconCell class]] &&
+                 [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
+            id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
+            XXTExplorerItemDetailObjectViewController *objectViewController = [[XXTExplorerItemDetailObjectViewController alloc] initWithDetailObject:relatedObject];
+            objectViewController.entryBundle = self.entryBundle;
+            objectViewController.title = ((XXTEMoreLinkNoIconCell *)cell).titleLabel.text;
+            [self.navigationController pushViewController:objectViewController animated:YES];
+        }
+        else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
+            NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self, YES);
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
+                }].finally(^() {
+                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockUserInteractions(self, NO);
+                });
+            }
+        }
+        else if ([cell isKindOfClass:[XXTEMoreAddressCell class]]) {
+            NSString *detailText = ((XXTEMoreAddressCell *)cell).addressLabel.text;
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self, YES);
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
+                }].finally(^() {
+                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockUserInteractions(self, NO);
+                });
+            }
+        }
     }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return staticSectionTitles[(NSUInteger) section];
+        return self.dynamicSections[(NSUInteger) section].sectionTitle;
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return staticSectionFooters[(NSUInteger) section];
+        return self.dynamicSections[(NSUInteger) section].sectionFooter;
     }
     return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        UITableViewCell *cell = staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+        UITableViewCell *cell = self.dynamicSections[(NSUInteger) indexPath.section].cells[(NSUInteger) indexPath.row];
         return cell;
     }
     return [UITableViewCell new];

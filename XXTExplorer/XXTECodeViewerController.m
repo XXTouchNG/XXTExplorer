@@ -67,6 +67,8 @@
     
     NSString *entryPath = self.entryPath;
     NSString *entryName = [entryPath lastPathComponent];
+    self.title = entryName;
+    
     NSError *templateError = nil;
     NSMutableString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
     if (templateError) {
@@ -83,40 +85,12 @@
     }
     [htmlTemplate replaceOccurrencesOfString:@"{{ title }}" withString:entryName options:0 range:NSMakeRange(0, htmlTemplate.length)];
     [htmlTemplate replaceOccurrencesOfString:@"{{ code }}" withString:escapedString options:0 range:NSMakeRange(0, htmlTemplate.length)];
-//    NSString *writePath = [self pathForTemporaryFileWithPrefix:NSStringFromClass(self.class)];
-//    NSError *writeError = nil;
-//    [htmlTemplate writeToFile:writePath atomically:YES encoding:NSUTF8StringEncoding error:&writeError];
-//    if (writeError) {
-//        return;
-//    }
-//    NSURL *newFileUrl = [NSURL fileURLWithPath:writePath];
     [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
 }
 
 - (NSURL *)baseUrl {
     return [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"XXTEMoreReferences.bundle"];
 }
-
-//- (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix
-//{
-//    NSString *  result;
-//    CFUUIDRef   uuid;
-//    CFStringRef uuidStr;
-//    
-//    uuid = CFUUIDCreate(NULL);
-//    assert(uuid != NULL);
-//    
-//    uuidStr = CFUUIDCreateString(NULL, uuid);
-//    assert(uuidStr != NULL);
-//    
-//    result = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@.html", prefix, uuidStr]];
-//    assert(result != nil);
-//    
-//    CFRelease(uuidStr);
-//    CFRelease(uuid);
-//    
-//    return result;
-//}
 
 #pragma mark - Memory
 

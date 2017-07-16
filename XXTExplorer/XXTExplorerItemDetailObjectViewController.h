@@ -10,4 +10,8 @@
 
 @interface XXTExplorerItemDetailObjectViewController : UITableViewController
 
+@property (nonatomic, strong) NSBundle *entryBundle;
+@property (nonatomic, strong, readonly) id detailObject;
+- (instancetype)initWithDetailObject:(id)detailObject;
+
 @end

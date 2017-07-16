@@ -44,7 +44,7 @@
     
     self.webView.opaque = NO;
     
-    if (XXTE_PAD) {
+    if (XXTE_SPLIT_MODE) {
         self.applicationLeftBarButtonItems = @[ self.splitViewController.displayModeButtonItem ];
     }
     

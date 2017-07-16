@@ -36,6 +36,8 @@
 		0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */; };
 		0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */; };
 		0F5690081F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690071F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m */; };
+		0F56900E1F1B022E009AF9FE /* XXTEArchiveViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F56900D1F1B022E009AF9FE /* XXTEArchiveViewer.m */; };
+		0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */; };
 		0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */; };
 		0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
 		0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
@@ -182,6 +184,11 @@
 		0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryBindingViewController.m; sourceTree = "<group>"; };
 		0F5690061F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemDetailObjectViewController.h; sourceTree = "<group>"; };
 		0F5690071F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemDetailObjectViewController.m; sourceTree = "<group>"; };
+		0F56900C1F1B022E009AF9FE /* XXTEArchiveViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEArchiveViewer.h; sourceTree = "<group>"; };
+		0F56900D1F1B022E009AF9FE /* XXTEArchiveViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEArchiveViewer.m; sourceTree = "<group>"; };
+		0F5690141F1B09B5009AF9FE /* XXTEExecutableViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEExecutableViewer.h; sourceTree = "<group>"; };
+		0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEExecutableViewer.m; sourceTree = "<group>"; };
+		0F5690181F1B0CA8009AF9FE /* XXTExplorerEntryBundleReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryBundleReader.h; sourceTree = "<group>"; };
 		0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XQueryComponents.h"; sourceTree = "<group>"; };
 		0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XQueryComponents.m"; sourceTree = "<group>"; };
 		0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
@@ -411,14 +418,14 @@
 			name = Recording;
 			sourceTree = "<group>";
 		};
-		0F3508B91F163F60000403FD /* XPP */ = {
+		0F3508B91F163F60000403FD /* BundleReader */ = {
 			isa = PBXGroup;
 			children = (
 				0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */,
 				0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */,
 				0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */,
 			);
-			name = XPP;
+			name = BundleReader;
 			sourceTree = "<group>";
 		};
 		0F35F2061F1068CC00B5B327 /* UserDefaults */ = {
@@ -456,11 +463,13 @@
 		0F4BB0B31EDB7D070072B7A3 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
+				0F3508B91F163F60000403FD /* BundleReader */,
+				0F3508BD1F1640E0000403FD /* XXTExplorerEntryReader.h */,
+				0F5690181F1B0CA8009AF9FE /* XXTExplorerEntryBundleReader.h */,
 				0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */,
 				0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */,
 				0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */,
 				0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */,
-				0F5690091F19BD94009AF9FE /* InternalReader */,
 			);
 			name = Entry;
 			sourceTree = "<group>";
@@ -487,17 +496,42 @@
 			name = Image;
 			sourceTree = "<group>";
 		};
-		0F5690091F19BD94009AF9FE /* InternalReader */ = {
+		0F56900B1F1B01E5009AF9FE /* Archive */ = {
 			isa = PBXGroup;
 			children = (
-				0F3508BD1F1640E0000403FD /* XXTExplorerEntryReader.h */,
-				0F4D59881F19E48A00CCA383 /* XXTExplorerEntryLauncher.h */,
-				0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */,
+				0F56900F1F1B0482009AF9FE /* Reader */,
+				0F56900C1F1B022E009AF9FE /* XXTEArchiveViewer.h */,
+				0F56900D1F1B022E009AF9FE /* XXTEArchiveViewer.m */,
+			);
+			name = Archive;
+			sourceTree = "<group>";
+		};
+		0F56900F1F1B0482009AF9FE /* Reader */ = {
+			isa = PBXGroup;
+			children = (
 				0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.h */,
 				0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.m */,
-				0F3508B91F163F60000403FD /* XPP */,
 			);
-			name = InternalReader;
+			name = Reader;
+			sourceTree = "<group>";
+		};
+		0F5690101F1B097B009AF9FE /* Executable */ = {
+			isa = PBXGroup;
+			children = (
+				0F5690171F1B09F5009AF9FE /* Reader */,
+				0F5690141F1B09B5009AF9FE /* XXTEExecutableViewer.h */,
+				0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */,
+			);
+			name = Executable;
+			sourceTree = "<group>";
+		};
+		0F5690171F1B09F5009AF9FE /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				0F4D59881F19E48A00CCA383 /* XXTExplorerEntryLauncher.h */,
+				0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */,
+			);
+			name = Reader;
 			sourceTree = "<group>";
 		};
 		0F5EB5191F08E03B0016016A /* XXTECloudApiSdk */ = {
@@ -571,6 +605,8 @@
 				0FE1E4381F18DF9200055E02 /* Web */,
 				0FE1E4401F18E9A400055E02 /* Code */,
 				0FE1E44E1F19226600055E02 /* Installer */,
+				0F56900B1F1B01E5009AF9FE /* Archive */,
+				0F5690101F1B097B009AF9FE /* Executable */,
 				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
 				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
 			);
@@ -1114,6 +1150,7 @@
 				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
+				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
@@ -1149,6 +1186,7 @@
 				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
 				0FE1E4461F18EEA100055E02 /* NSString+HTMLEscape.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
+				0F56900E1F1B022E009AF9FE /* XXTEArchiveViewer.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */,

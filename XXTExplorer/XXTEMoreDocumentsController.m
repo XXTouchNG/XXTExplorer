@@ -149,7 +149,7 @@
             }
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;
-            if (XXTE_PAD) {
+            if (XXTE_SPLIT_MODE) {
                 XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
                 [self.splitViewController showDetailViewController:navigationController sender:self];
             } else {

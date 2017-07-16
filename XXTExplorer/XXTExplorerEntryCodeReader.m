@@ -20,6 +20,8 @@
 @synthesize entryDescription = _entryDescription;
 @synthesize entryExtensionDescription = _entryExtensionDescription;
 @synthesize entryViewerDescription = _entryViewerDescription;
+@synthesize executable = _executable;
+@synthesize editable = _editable;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return [XXTECodeViewerController suggestedExtensions];
@@ -27,6 +29,11 @@
 
 + (UIImage *)defaultImage {
     return [UIImage imageNamed:@"XXTEFileReaderType-Code"];
+}
+
++ (Class)relatedEditor {
+    // TODO: Code editor
+    return nil;
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
@@ -38,6 +45,8 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
+    _executable = NO;
+    _editable = YES;
     NSString *entryExtension = [path pathExtension];
     NSString *entryBaseExtension = [entryExtension lowercaseString];
 //    NSString *entryUpperedExtension = [entryExtension uppercaseString];

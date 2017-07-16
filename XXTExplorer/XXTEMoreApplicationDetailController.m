@@ -163,8 +163,10 @@ typedef enum : NSUInteger {
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    [[UIPasteboard generalPasteboard] setString:detailText];
-                    fulfill(nil);
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
                 }].finally(^() {
                     showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);
@@ -175,8 +177,10 @@ typedef enum : NSUInteger {
             if (detailText && detailText.length > 0) {
                 blockUserInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    [[UIPasteboard generalPasteboard] setString:detailText];
-                    fulfill(nil);
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
                 }].finally(^() {
                     showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
                     blockUserInteractions(self, NO);

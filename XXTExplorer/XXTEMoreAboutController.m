@@ -157,7 +157,7 @@ typedef enum : NSUInteger {
             }
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;
-            if (XXTE_PAD) {
+            if (XXTE_SPLIT_MODE) {
                 XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
                 [self.splitViewController showDetailViewController:navigationController sender:self];
             } else {
@@ -169,7 +169,6 @@ typedef enum : NSUInteger {
                 if ([MFMailComposeViewController canSendMail]) {
                     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
                     if (!picker) return;
-                    picker.view.tintColor = XXTE_COLOR;
                     picker.mailComposeDelegate = self;
                     [picker setSubject:[NSString stringWithFormat:@"[%@] %@\nV%@", NSLocalizedString(@"Feedback", nil), uAppDefine(@"PRODUCT_NAME"), uAppDefine(@"DAEMON_VERSION")]];
                     NSArray *toRecipients = [NSArray arrayWithObject:uAppDefine(@"SERVICE_EMAIL")];

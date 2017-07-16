@@ -20,6 +20,8 @@
 @synthesize entryDescription = _entryDescription;
 @synthesize entryExtensionDescription = _entryExtensionDescription;
 @synthesize entryViewerDescription = _entryViewerDescription;
+@synthesize executable = _executable;
+@synthesize editable = _editable;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return [XXTEWebViewerController suggestedExtensions];
@@ -27,6 +29,10 @@
 
 + (UIImage *)defaultImage {
     return [UIImage imageNamed:@"XXTEFileReaderType-Web"];
+}
+
++ (Class)relatedEditor {
+    return nil;
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
@@ -38,6 +44,8 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
+    _editable = NO;
+    _executable = NO;
     NSString *entryExtension = [path pathExtension];
     NSString *entryBaseExtension = [entryExtension lowercaseString];
     NSString *entryUpperedExtension = [entryExtension uppercaseString];
