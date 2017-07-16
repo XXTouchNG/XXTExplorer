@@ -23,6 +23,12 @@
 
 @implementation XXTExplorerItemDetailObjectViewController
 
+#pragma mark - Default Style
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (instancetype)initWithDetailObject:(id)detailObject {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         _detailObject = detailObject;

@@ -449,14 +449,14 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         cell11.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
         
-        XXTEMoreLinkNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-        cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
+//        XXTEMoreLinkNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+//        cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
         
         XXTExplorerDynamicSection *section7 = [[XXTExplorerDynamicSection alloc] init];
         section7.identifier = kXXTEDynamicSectionIdentifierSectionPermission;
-        section7.cells = @[ cell9, cell10, cell11, cell12 ];
-        section7.cellHeights = @[ @(-1), @(-1), @(-1), @(-1) ];
+        section7.cells = @[ cell9, cell10, cell11/*, cell12*/ ];
+        section7.cellHeights = @[ @(-1), @(-1), @(-1)/*, @(-1)*/ ];
         section7.sectionTitle = NSLocalizedString(@"Permission", nil);
         section7.sectionFooter = @"";
         
