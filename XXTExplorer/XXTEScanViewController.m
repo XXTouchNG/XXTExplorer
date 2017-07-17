@@ -421,6 +421,10 @@
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];
     if (url && [[UIApplication sharedApplication] canOpenURL:url]) {
+        if ([[url scheme] isEqualToString:@"xxt"]) {
+            [self alertView:nil openURL:url];
+            return;
+        }
         LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL", nil)
                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Will open url: \n\"%@\", continue?", nil), output]
                                                               style:LGAlertViewStyleAlert

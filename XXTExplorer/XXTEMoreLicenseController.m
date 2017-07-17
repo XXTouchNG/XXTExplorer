@@ -125,9 +125,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     self.licenseShaker = [[XXTEViewShaker alloc] initWithView:self.licenseField];
     
     NSString *initialLicenseCode = self.licenseCode;
-    if (initialLicenseCode.length > 0) {
+    if ([self isValidLicenseFormat:initialLicenseCode]) {
         cell1.licenseField.text = [self formatLicense:initialLicenseCode];
         [self textFieldDidChange:cell1.licenseField];
+    } else {
+        showUserMessage(self, NSLocalizedString(@"Cannot autofill license field: Invalid license code.", nil));
     }
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];

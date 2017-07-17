@@ -239,6 +239,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationShortcut object:nil];
     [self updateToolbarButton:self.toolbar];
     [self updateToolbarStatus:self.toolbar];
     if (firstTimeLoaded) {
@@ -265,15 +266,43 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 #pragma mark - UINotification
 
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
-    NSDictionary *userInfo = aNotification.userInfo;
-    NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] ||
-        [eventType isEqualToString:XXTENotificationEventTypeFormSheetDismissed]
-        ) {
-        [self loadEntryListData];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
-    } else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
-        [self refreshEntryListView:nil];
+    if ([aNotification.name isEqualToString:XXTENotificationEvent]) {
+        NSDictionary *userInfo = aNotification.userInfo;
+        NSString *eventType = userInfo[XXTENotificationEventType];
+        if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] ||
+            [eventType isEqualToString:XXTENotificationEventTypeFormSheetDismissed]
+            ) {
+            [self loadEntryListData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        } else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+            [self refreshEntryListView:nil];
+        }
+    }
+    else if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
+        NSDictionary *userInfo = aNotification.userInfo;
+        NSString *userDataString = userInfo[XXTENotificationShortcutUserData];
+        
+        NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
+        NSArray *urlQuery = [userDataString componentsSeparatedByString:@"&"];
+        for (NSString *keyValuePair in urlQuery)
+        {
+            NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+            NSString *key = [[pairComponents firstObject] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *value = [[pairComponents lastObject] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            if (key && value) {
+                [queryStringDictionary setObject:value forKey:key];
+            }
+        }
+        
+        NSDictionary <NSString *, NSString *> *userDataDictionary = [[NSDictionary alloc] initWithDictionary:queryStringDictionary];
+        NSMutableDictionary *mutableOperation = [@{ @"event": userInfo[XXTENotificationShortcutInterface] } mutableCopy];
+        
+        for (NSString *operationKey in userDataDictionary) {
+            mutableOperation[operationKey] = userDataDictionary[operationKey];
+        }
+        
+        NSDictionary *operationDictionary = [[NSDictionary alloc] initWithDictionary:mutableOperation];
+        [self performShortcut:aNotification.object jsonOperation:operationDictionary];
     }
 }
 
@@ -2006,25 +2035,34 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 }
 
 - (void)scanViewController:(XXTEScanViewController *)controller jsonOperation:(NSDictionary *)jsonDictionary {
+    [self performShortcut:controller jsonOperation:jsonDictionary];
+}
+
+- (void)performShortcut:(id)sender jsonOperation:(NSDictionary *)jsonDictionary {
     NSString *jsonEvent = jsonDictionary[@"event"];
     if ([jsonEvent isKindOfClass:[NSString class]]) {
         if ([jsonEvent isEqualToString:@"bind_code"] || [jsonEvent isEqualToString:@"license"]) {
             if ([jsonDictionary[@"code"] isKindOfClass:[NSString class]]) {
                 NSString *licenseCode = jsonDictionary[@"code"];
                 blockUserInteractions(self, YES);
-                [controller dismissViewControllerAnimated:YES completion:^{
+                void (^ completionBlock)(void) = ^() {
                     blockUserInteractions(self, NO);
                     XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
                     XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
                     licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                     licenseNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                     [self.navigationController presentViewController:licenseNavigationController animated:YES completion:nil];
-                }];
+                };
+                if (sender && [sender isKindOfClass:[UIViewController class]]) {
+                    UIViewController *controller = sender;
+                    [controller dismissViewControllerAnimated:YES completion:completionBlock];
+                }
+                completionBlock();
                 return;
             }
         } else if ([jsonEvent isEqualToString:@"down_script"] || [jsonEvent isEqualToString:@"download"]) {
             if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]] &&
-                    [jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
+                [jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
                 NSString *rawSourceURLString = jsonDictionary[@"url"];
                 NSURL *sourceURL = [NSURL URLWithString:[rawSourceURLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
                 NSString *rawTargetPathString = jsonDictionary[@"path"];
@@ -2037,14 +2075,19 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 }
                 NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
                 blockUserInteractions(self, YES);
-                [controller dismissViewControllerAnimated:YES completion:^{
+                void (^ completionBlock)(void) = ^() {
                     blockUserInteractions(self, NO);
                     XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
                     XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
                     downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                     downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                     [self.navigationController presentViewController:downloadNavigationController animated:YES completion:nil];
-                }];
+                };
+                if (sender && [sender isKindOfClass:[UIViewController class]]) {
+                    UIViewController *controller = sender;
+                    [controller dismissViewControllerAnimated:YES completion:completionBlock];
+                }
+                completionBlock();
                 return;
             }
         }

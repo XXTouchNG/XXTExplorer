@@ -111,21 +111,52 @@
   sourceApplication:(nullable NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return [self application:application openURL:url];
+    XXTE_START_IGNORE_PARTIAL
+    BOOL inApp = [sourceApplication isEqualToString:[[NSBundle mainBundle] bundleIdentifier]];
+    return [self application:application openURL:url withDelay:!inApp];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
             options:(nonnull NSDictionary<NSString *,id> *)options
 {
-    return [self application:application openURL:url];
+    XXTE_START_IGNORE_PARTIAL
+    BOOL inApp = [options[UIApplicationOpenURLOptionsSourceApplicationKey] isEqualToString:[[NSBundle mainBundle] bundleIdentifier]];
+    return [self application:application openURL:url withDelay:!inApp];
+    XXTE_END_IGNORE_PARTIAL
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url withDelay:(BOOL)delay {
     if ([[url scheme] isEqualToString:@"xxt"]) {
-        
+        NSURL *xxtCommandURL = url;
+        NSString *xxtCommandInterface = [xxtCommandURL host];
+        NSArray <NSString *> *xxtComponents = [xxtCommandURL pathComponents];
+        NSString *xxtUserData = [xxtCommandURL query];
+        if (xxtCommandInterface.length <= 0 ||
+            xxtComponents.count != 1 ||
+            ![xxtComponents[0] isEqualToString:@"/"] || 
+            xxtUserData.length <= 0) {
+            return NO;
+        }
+        NSDictionary *userInfo =
+        @{XXTENotificationShortcutInterface: xxtCommandInterface,
+          XXTENotificationShortcutUserData: xxtUserData};
+        if (delay) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
+            });
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
+        }
     } else if ([[url scheme] isEqualToString:@"file"]) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+        if (delay) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+            });
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+        }
     }
     return NO;
 }

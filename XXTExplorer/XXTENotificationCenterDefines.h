@@ -10,6 +10,7 @@
 #define XXTENotificationCenterDefines_h
 
 static NSString * const XXTENotificationEvent = @"XXTENotificationEvent";
+static NSString * const XXTENotificationShortcut = @"XXTENotificationShortcut";
 
 // XXTENotificationEvent
 
@@ -23,5 +24,14 @@ static NSString * const XXTENotificationEventTypeApplicationDidBecomeActive = @"
 static NSString * const XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode = @"XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode";
 //static NSString * const XXTENotificationEventTypePopoverDismissed = @"XXTENotificationEventTypePopoverDismissed";
 static NSString * const XXTENotificationEventTypeFormSheetDismissed = @"XXTENotificationEventTypeFormSheetDismissed";
+
+// XXTENotificationShortcut
+static NSString * const XXTENotificationShortcutInterface = @"XXTENotificationShortcutInterface";
+static NSString * const XXTENotificationShortcutInterfaceScan = @"XXTENotificationShortcutInterfaceScan";
+static NSString * const XXTENotificationShortcutInterfaceLicense = @"XXTENotificationShortcutInterfaceLicense";
+static NSString * const XXTENotificationShortcutInterfaceLauncher = @"XXTENotificationShortcutInterfaceLauncher";
+static NSString * const XXTENotificationShortcutInterfaceDownload = @"XXTENotificationShortcutInterfaceDownload";
+
+static NSString * const XXTENotificationShortcutUserData = @"XXTENotificationShortcutUserData";
 
 #endif /* XXTENotificationCenterDefines_h */
