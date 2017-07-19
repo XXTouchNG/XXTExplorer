@@ -10,4 +10,8 @@
 
 @implementation XUIConfigurationParser
 
++ (NSArray <NSDictionary *> *)entriesFromRootEntry:(NSDictionary *)rootEntry {
+    return nil;
+}
+
 @end

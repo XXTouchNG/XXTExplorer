@@ -1041,6 +1041,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
+    NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
@@ -1104,6 +1105,30 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
                     [self.navigationController pushViewController:explorerViewController animated:YES];
                 }
+            }
+        } else if ([buttonAction isEqualToString:@"Configure"]) {
+            if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
+                UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
+                if (XXTE_SPLIT_MODE) {
+                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
+                    [self.splitViewController showDetailViewController:navigationController sender:self];
+                } else {
+                    [self.navigationController pushViewController:configurator animated:YES];
+                }
+            } else {
+                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]];
+            }
+        } else if ([buttonAction isEqualToString:@"Edit"]) {
+            if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
+                UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
+                if (XXTE_SPLIT_MODE) {
+                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
+                    [self.splitViewController showDetailViewController:navigationController sender:self];
+                } else {
+                    [self.navigationController pushViewController:editor animated:YES];
+                }
+            } else {
+                [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]];
             }
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {

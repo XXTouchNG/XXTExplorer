@@ -17,8 +17,14 @@
 
 + (instancetype)sharedInstance;
 - (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName;
-- (BOOL)hasViewerForEntry:(NSDictionary *)entry;
-- (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry;
 - (UIViewController *)openWithControllerForEntry:(NSDictionary *)entry;
+
+- (BOOL)hasViewerForEntry:(NSDictionary *)entry;
+- (BOOL)hasEditorForEntry:(NSDictionary *)entry;
+- (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry;
+
+- (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry;
+- (UIViewController *)editorForEntry:(NSDictionary *)entry;
+- (UIViewController *)configuratorForEntry:(NSDictionary *)entry;
 
 @end

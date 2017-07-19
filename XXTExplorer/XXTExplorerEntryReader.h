@@ -27,12 +27,12 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 @property (nonatomic, assign, readonly) BOOL executable;
 @property (nonatomic, assign, readonly) BOOL editable;
 
-@property (nonatomic, copy, readonly) NSString *entryName;
-@property (nonatomic, copy, readonly) NSString *entryDisplayName;
-@property (nonatomic, strong, readonly) UIImage *entryIconImage;
-@property (nonatomic, copy, readonly) NSString *entryDescription;
-@property (nonatomic, copy, readonly) NSString *entryExtensionDescription;
-@property (nonatomic, copy, readonly) NSString *entryViewerDescription;
+@property (nonatomic, copy, readonly)   NSString *entryName;
+@property (nonatomic, copy, readonly)   NSString *entryDisplayName;
+@property (nonatomic, strong, readonly) UIImage  *entryIconImage;
+@property (nonatomic, copy, readonly)   NSString *entryDescription;
+@property (nonatomic, copy, readonly)   NSString *entryExtensionDescription;
+@property (nonatomic, copy, readonly)   NSString *entryViewerDescription;
 
 @end
 

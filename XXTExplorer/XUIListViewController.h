@@ -10,4 +10,7 @@
 
 @interface XUIListViewController : UITableViewController
 
+@property (nonatomic, copy, readonly) NSString *entryPath;
+- (instancetype)initWithRootEntry:(NSString *)entryPath;
+
 @end

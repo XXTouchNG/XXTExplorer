@@ -86,7 +86,6 @@
 		0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F091ED70F8700798B4B /* XXTExplorerHeaderView.m */; };
 		0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */; };
 		0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */; };
-		0FB6BB631F1C4A9500CADCEA /* XUINavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB621F1C4A9500CADCEA /* XUINavigationController.m */; };
 		0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */; };
 		0FB6BB6D1F1C4B4900CADCEA /* XUIObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XUIObjectViewController.m */; };
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
@@ -287,8 +286,6 @@
 		0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewCell.h; sourceTree = "<group>"; };
 		0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewCell.m; sourceTree = "<group>"; };
 		0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewCell.xib; sourceTree = "<group>"; };
-		0FB6BB611F1C4A9500CADCEA /* XUINavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUINavigationController.h; sourceTree = "<group>"; };
-		0FB6BB621F1C4A9500CADCEA /* XUINavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUINavigationController.m; sourceTree = "<group>"; };
 		0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListViewController.h; sourceTree = "<group>"; };
 		0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIListViewController.m; sourceTree = "<group>"; };
 		0FB6BB6B1F1C4B4900CADCEA /* XUIObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIObjectViewController.h; sourceTree = "<group>"; };
@@ -625,7 +622,7 @@
 				0FE1E44E1F19226600055E02 /* Installer */,
 				0F56900B1F1B01E5009AF9FE /* Archive */,
 				0F5690101F1B097B009AF9FE /* Executable */,
-				0FB6BB601F1C497900CADCEA /* UI */,
+				0FB6BB601F1C497900CADCEA /* XUI */,
 				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
 				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
 			);
@@ -772,14 +769,12 @@
 			name = Remote;
 			sourceTree = "<group>";
 		};
-		0FB6BB601F1C497900CADCEA /* UI */ = {
+		0FB6BB601F1C497900CADCEA /* XUI */ = {
 			isa = PBXGroup;
 			children = (
 				0FB6BB641F1C4ABA00CADCEA /* Cell */,
 				0FB6BB771F1C4C3000CADCEA /* XUIConfigurationParser.h */,
 				0FB6BB781F1C4C3000CADCEA /* XUIConfigurationParser.m */,
-				0FB6BB611F1C4A9500CADCEA /* XUINavigationController.h */,
-				0FB6BB621F1C4A9500CADCEA /* XUINavigationController.m */,
 				0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */,
 				0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */,
 				0FB6BB6B1F1C4B4900CADCEA /* XUIObjectViewController.h */,
@@ -789,7 +784,7 @@
 				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
 				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
 			);
-			name = UI;
+			name = XUI;
 			sourceTree = "<group>";
 		};
 		0FB6BB641F1C4ABA00CADCEA /* Cell */ = {
@@ -1188,7 +1183,6 @@
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */,
-				0FB6BB631F1C4A9500CADCEA /* XUINavigationController.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,

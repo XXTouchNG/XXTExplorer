@@ -27,6 +27,7 @@
 @synthesize executable = _executable;
 @synthesize editable = _editable;
 @synthesize configurable = _configurable;
+@synthesize configurationName = _configurationName;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return @[ @"xpp" ];
@@ -36,9 +37,9 @@
     return [UIImage imageNamed:@"XXTEFileType-xpp"];
 }
 
-+ (Class)configurationViewer {
-    return nil;
-}
+//+ (Class)configurationViewer {
+//    return NSClassFromString(@"XUIListViewController");
+//}
 
 - (instancetype)initWithPath:(NSString *)filePath {
     if (self = [super init]) {
@@ -97,6 +98,14 @@
     }
     _entryExtensionDescription = @"XXTouch Bundle";
     _entryViewerDescription = @"Launcher";
+    NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
+    if (interfaceFile) {
+        NSString *configurationName = [localizationBundle pathForResource:interfaceFile ofType:@"plist"];
+        if (!configurationName) {
+            configurationName = [localizationBundle pathForResource:interfaceFile ofType:@"json"];
+        }
+        _configurationName = configurationName;
+    }
     _displayMetaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
                           kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
                           kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,

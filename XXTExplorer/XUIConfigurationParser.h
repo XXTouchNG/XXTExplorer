@@ -10,4 +10,6 @@
 
 @interface XUIConfigurationParser : NSObject
 
++ (NSArray <NSDictionary *> *)entriesFromRootEntry:(NSDictionary *)rootEntry;
+
 @end

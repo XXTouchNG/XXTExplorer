@@ -10,6 +10,9 @@
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEViewer.h"
+#import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryBundleReader.h"
+#import "XUIListViewController.h"
 
 @interface XXTExplorerEntryService ()
 
@@ -95,6 +98,28 @@
     return NO;
 }
 
+- (BOOL)hasEditorForEntry:(NSDictionary *)entry {
+    id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && reader.editable) {
+        Class testClass = [[reader class] relatedEditor];
+        if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
+    id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && reader.configurable) {
+//        Class testClass = [[reader class] configurationViewer];
+//        if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
+            return YES;
+//        }
+    }
+    return NO;
+}
+
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
@@ -105,6 +130,28 @@
             UIViewController <XXTEViewer> *viewer = [[viewerClass alloc] initWithPath:entryPath];
             return viewer;
         }
+    }
+    return nil;
+}
+
+- (UIViewController *)editorForEntry:(NSDictionary *)entry {
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && reader.editable) {
+        Class editorClass = [[reader class] relatedEditor];
+        if (editorClass && [editorClass isSubclassOfClass:[UIViewController class]]) {
+            UIViewController *editor = [[editorClass alloc] initWithPath:entryPath];
+            return editor;
+        }
+    }
+    return nil;
+}
+
+- (UIViewController *)configuratorForEntry:(NSDictionary *)entry {
+    id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && reader.configurable) {
+        XUIListViewController *configutator = [[XUIListViewController alloc] initWithRootEntry:reader.configurationName];
+        return configutator;
     }
     return nil;
 }
