@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XUIListViewController : UITableViewController
+@interface XUIListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
 - (instancetype)initWithRootEntry:(NSString *)entryPath;

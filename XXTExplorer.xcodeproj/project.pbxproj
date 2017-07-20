@@ -106,6 +106,7 @@
 		0FE1E44D1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
+		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
@@ -326,6 +327,9 @@
 		0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewHomeCell.xib; sourceTree = "<group>"; };
 		0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENotificationCenterDefines.h; sourceTree = "<group>"; };
 		0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDispatchDefines.h; sourceTree = "<group>"; };
+		0FF3E8B31F211384006DED5A /* XUIListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListHeaderView.h; sourceTree = "<group>"; };
+		0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIListHeaderView.m; sourceTree = "<group>"; };
+		0FF3E8B61F2127E0006DED5A /* XUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUI.h; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
 		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
@@ -772,6 +776,7 @@
 		0FB6BB601F1C497900CADCEA /* XUI */ = {
 			isa = PBXGroup;
 			children = (
+				0FF3E8AF1F211300006DED5A /* View */,
 				0FB6BB641F1C4ABA00CADCEA /* Cell */,
 				0FB6BB771F1C4C3000CADCEA /* XUIConfigurationParser.h */,
 				0FB6BB781F1C4C3000CADCEA /* XUIConfigurationParser.m */,
@@ -783,6 +788,7 @@
 				0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */,
 				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
 				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
+				0FF3E8B61F2127E0006DED5A /* XUI.h */,
 			);
 			name = XUI;
 			sourceTree = "<group>";
@@ -959,6 +965,15 @@
 				0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */,
 			);
 			name = Defines;
+			sourceTree = "<group>";
+		};
+		0FF3E8AF1F211300006DED5A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0FF3E8B31F211384006DED5A /* XUIListHeaderView.h */,
+				0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
@@ -1168,6 +1183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,

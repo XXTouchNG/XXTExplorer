@@ -14,7 +14,7 @@
 @protocol XXTExplorerEntryBundleReader <XXTExplorerEntryReader>
 
 @property (nonatomic, assign, readonly) BOOL configurable;
-@property (nonatomic, assign, readonly) NSString *configurationName;
+@property (nonatomic, copy, readonly) NSString *configurationName;
 //+ (Class)configurationViewer;
 
 @end
