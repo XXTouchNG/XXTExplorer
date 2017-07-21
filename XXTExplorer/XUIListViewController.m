@@ -29,6 +29,9 @@
 
 - (instancetype)initWithRootEntry:(NSString *)entryPath {
     if (self = [super init]) {
+        if (!entryPath) {
+            return nil;
+        }
         _entryPath = entryPath;
     }
     return self;
@@ -50,7 +53,9 @@
         }
         if (!rootEntry) {
             NSData *jsonEntryData = [[NSData alloc] initWithContentsOfFile:self.entryPath];
-            rootEntry = [NSJSONSerialization JSONObjectWithData:jsonEntryData options:0 error:nil];
+            if (jsonEntryData) {
+                rootEntry = [NSJSONSerialization JSONObjectWithData:jsonEntryData options:0 error:nil];
+            }
         }
         if (!rootEntry) {
             return;

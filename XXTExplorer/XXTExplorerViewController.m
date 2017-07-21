@@ -569,11 +569,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                         } else {
                             if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
                                 UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
-                                if (XXTE_SPLIT_MODE) {
-                                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
-                                    [self.splitViewController showDetailViewController:navigationController sender:self];
-                                } else {
-                                    [self.navigationController pushViewController:viewer animated:YES];
+                                if (viewer) {
+                                    if (XXTE_SPLIT_MODE) {
+                                        XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
+                                        [self.splitViewController showDetailViewController:navigationController sender:self];
+                                    } else {
+                                        [self.navigationController pushViewController:viewer animated:YES];
+                                    }
                                 }
 //                                needsShowDetail = YES;
                             } else {
@@ -1109,11 +1111,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         } else if ([buttonAction isEqualToString:@"Configure"]) {
             if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
                 UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
-                if (XXTE_SPLIT_MODE) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
-                    [self.splitViewController showDetailViewController:navigationController sender:self];
-                } else {
-                    [self.navigationController pushViewController:configurator animated:YES];
+                if (configurator) {
+                    if (XXTE_SPLIT_MODE) {
+                        XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
+                        [self.splitViewController showDetailViewController:navigationController sender:self];
+                    } else {
+                        [self.navigationController pushViewController:configurator animated:YES];
+                    }
                 }
             } else {
                 [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]];
@@ -1121,11 +1125,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         } else if ([buttonAction isEqualToString:@"Edit"]) {
             if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
                 UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
-                if (XXTE_SPLIT_MODE) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
-                    [self.splitViewController showDetailViewController:navigationController sender:self];
-                } else {
-                    [self.navigationController pushViewController:editor animated:YES];
+                if (editor) {
+                    if (XXTE_SPLIT_MODE) {
+                        XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
+                        [self.splitViewController showDetailViewController:navigationController sender:self];
+                    } else {
+                        [self.navigationController pushViewController:editor animated:YES];
+                    }
                 }
             } else {
                 [self.navigationController.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]];
@@ -2030,11 +2036,13 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if (internal) {
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
             webController.title = NSLocalizedString(@"Loading...", nil);
-            if (XXTE_SPLIT_MODE) {
-                XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-                [self.splitViewController showDetailViewController:navigationController sender:self];
-            } else {
-                [self.navigationController pushViewController:webController animated:YES];
+            if (webController) {
+                if (XXTE_SPLIT_MODE) {
+                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                    [self.splitViewController showDetailViewController:navigationController sender:self];
+                } else {
+                    [self.navigationController pushViewController:webController animated:YES];
+                }
             }
         } else {
             if ([[UIApplication sharedApplication] canOpenURL:url]) {
