@@ -88,6 +88,13 @@
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    AVCaptureConnection *previewLayerConnection = self.scanLayer.connection;
+    if ([previewLayerConnection isVideoOrientationSupported])
+        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIDevice currentDevice] orientation]];
+}
+
 - (void)startAnimation {
     if (!self.scanLineAnimation.isAnimating) {
         [self.scanLineAnimation startAnimatingWithRect:self.cropRect parentView:self.maskView];
@@ -194,9 +201,6 @@
         }
         AVCaptureVideoPreviewLayer *scanLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.scanSession];
         scanLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        AVCaptureConnection *previewLayerConnection = scanLayer.connection;
-        if ([previewLayerConnection isVideoOrientationSupported])
-            [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIDevice currentDevice] orientation]];
         _scanLayer = scanLayer;
     }
     return _scanLayer;

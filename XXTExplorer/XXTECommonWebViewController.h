@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTEDetailViewController.h"
 #import <TOWebViewController/TOWebViewController.h>
 
-@interface XXTECommonWebViewController : TOWebViewController
+@interface XXTECommonWebViewController : TOWebViewController <XXTEDetailViewController>
 
 @end

@@ -166,6 +166,7 @@
 		0F35F20C1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionValueCell.h; sourceTree = "<group>"; };
 		0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreTitleDescriptionValueCell.m; sourceTree = "<group>"; };
 		0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionValueCell.xib; sourceTree = "<group>"; };
+		0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDetailViewController.h; sourceTree = "<group>"; };
 		0F4419ED1F17974D00967980 /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		0F4419F01F1797CF00967980 /* XXTEViewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEViewer.h; sourceTree = "<group>"; };
@@ -605,7 +606,6 @@
 		0F61E1601ED78712003DCC78 /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				0FCC2AD81F145D1900C50A48 /* Common */,
 				0F61E1651ED787A7003DCC78 /* XXTEMasterViewController.h */,
 				0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */,
 				0F61E1621ED7872F003DCC78 /* Explorer */,
@@ -618,6 +618,7 @@
 			isa = PBXGroup;
 			children = (
 				0F4419F01F1797CF00967980 /* XXTEViewer.h */,
+				0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */,
 				0F5EB53C1F0A9ED80016016A /* Common */,
 				0F4419EC1F17969000967980 /* Media */,
 				0F568FFE1F185AFE009AF9FE /* Image */,
@@ -890,13 +891,6 @@
 				0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */,
 			);
 			name = Cell;
-			sourceTree = "<group>";
-		};
-		0FCC2AD81F145D1900C50A48 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Common;
 			sourceTree = "<group>";
 		};
 		0FE1E42E1F1887B800055E02 /* Reader */ = {

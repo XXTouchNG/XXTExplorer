@@ -454,7 +454,7 @@
 - (BOOL)compactPresentation
 {
     if (SIZE_CLASSES) {
-        return (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+        return (self.splitViewController.isCollapsed == NO && self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
     }
     
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);

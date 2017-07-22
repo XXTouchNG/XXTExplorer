@@ -157,9 +157,9 @@ typedef enum : NSUInteger {
             }
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;
-            if (XXTE_SPLIT_MODE) {
+            if (XXTE_COLLAPSED) {
                 XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-                [self.splitViewController showDetailViewController:navigationController sender:self];
+                [self showDetailViewController:navigationController sender:self];
             } else {
                 [self.navigationController pushViewController:webController animated:YES];
             }

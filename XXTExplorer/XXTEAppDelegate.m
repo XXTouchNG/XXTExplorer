@@ -19,7 +19,7 @@
 #import "XXTECloudApiSdk.h"
 #import "XXTECommonNavigationController.h"
 
-@interface XXTEAppDelegate () <UISplitViewControllerDelegate>
+@interface XXTEAppDelegate ()
 
 @end
 
@@ -52,8 +52,8 @@
     
     // Split Controller
     XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
-    splitViewController.delegate = self;
     splitViewController.viewControllers = @[masterViewController, detailNavigationController];
+//    splitViewController.viewControllers = @[masterViewController];
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     mainWindow.tintColor = XXTE_COLOR;
@@ -92,6 +92,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 #pragma mark - Open URL
 
@@ -159,24 +160,6 @@
         }
     }
     return NO;
-}
-
-#pragma mark - UISplitViewDelegate
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]]
-        && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[XXTEWorkspaceViewController class]]
-        )
-    {
-        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (void)splitViewController:(UISplitViewController *)svc willChangeToDisplayMode:(UISplitViewControllerDisplayMode)displayMode {
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:svc userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode, XXTENotificationDetailDisplayMode: @(displayMode)}]];
 }
 
 #pragma mark - App Defines

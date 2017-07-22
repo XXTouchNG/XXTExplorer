@@ -38,16 +38,19 @@
     self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    if (XXTE_SPLIT_MODE) {
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    }
-    
     self.arrowPlaceholderImageView.hidden = (self.splitViewController.displayMode != UISplitViewControllerDisplayModePrimaryHidden);
     
     [self.view addSubview:self.arrowPlaceholderImageView];
     [self.view addSubview:self.logoPlaceholderImageView];
     
     [self makeViewConstraints];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (XXTE_COLLAPSED) {
+        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    }
 }
 
 - (void)makeViewConstraints {

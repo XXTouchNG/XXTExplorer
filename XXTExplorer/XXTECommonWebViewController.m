@@ -43,15 +43,25 @@
     [super viewDidLoad];
     
     self.webView.opaque = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
-    if (XXTE_SPLIT_MODE) {
+    if (XXTE_COLLAPSED) {
         self.applicationLeftBarButtonItems = @[ self.splitViewController.displayModeButtonItem ];
     }
-    
 }
 
 - (void)showPlaceholderTitle {
     
+}
+
+- (BOOL)compactPresentation {
+    if (XXTE_SYSTEM_8) {
+        return ((self.splitViewController && self.splitViewController.isCollapsed == NO) || self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+    }
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
 }
 
 #pragma mark - Memory

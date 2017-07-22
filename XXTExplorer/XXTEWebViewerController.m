@@ -50,6 +50,13 @@
     self.title = entryName;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (XXTE_COLLAPSED) {
+        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    }
+}
+
 #pragma mark - Memory
 
 - (void)dealloc {

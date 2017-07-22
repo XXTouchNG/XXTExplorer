@@ -10,8 +10,9 @@
 #define XXTEViewer_h
 
 #import <UIKit/UIKit.h>
+#import "XXTEDetailViewController.h"
 
-@protocol XXTEViewer <NSObject>
+@protocol XXTEViewer <XXTEDetailViewController>
 
 + (NSString *)viewerName;
 + (NSArray <NSString *> *)suggestedExtensions;

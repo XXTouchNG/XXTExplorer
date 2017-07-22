@@ -62,21 +62,30 @@
     
     [self moviePlayer];
     [self.view addSubview:self.moviePlayer.view];
-    
-    if (XXTE_SPLIT_MODE) {
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    }
-    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    if (XXTE_COLLAPSED) {
+        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    }
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.moviePlayer pause];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (XXTE_COLLAPSED) {
+        self.moviePlayer.view.frame = self.view.bounds;
+    } else {
+        CGSize viewSize = self.view.bounds.size;
+        self.moviePlayer.view.frame = CGRectMake(0, 0, viewSize.width, viewSize.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
+    }
 }
 
 #pragma mark - Notifications
@@ -106,12 +115,6 @@
     if (!_moviePlayer) {
         NSURL *urlString = [NSURL fileURLWithPath:self.entryPath];
         MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:urlString];
-        if (XXTE_SPLIT_MODE) {
-            moviePlayer.view.frame = self.view.bounds;
-        } else {
-            CGSize viewSize = self.view.bounds.size;
-            moviePlayer.view.frame = CGRectMake(0, 0, viewSize.width, viewSize.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
-        }
         moviePlayer.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         moviePlayer.view.backgroundColor = [UIColor whiteColor];
         moviePlayer.backgroundView.backgroundColor = [UIColor whiteColor];

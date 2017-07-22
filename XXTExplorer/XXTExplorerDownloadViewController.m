@@ -242,7 +242,7 @@ typedef enum : NSUInteger {
 #pragma mark - UIControl Actions
 
 - (void)dismissViewController:(id)sender {
-    if (XXTE_SPLIT_MODE) {
+    if (XXTE_COLLAPSED) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -304,7 +304,7 @@ typedef enum : NSUInteger {
 {
     if (index == 0) {
         [alertView dismissAnimated];
-        if (XXTE_SPLIT_MODE) {
+        if (XXTE_COLLAPSED) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
         [self dismissViewControllerAnimated:YES completion:^{

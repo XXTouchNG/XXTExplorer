@@ -111,7 +111,7 @@
 
 - (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && reader.configurable) {
+    if (reader && reader.configurable && reader.configurationName) {
 //        Class testClass = [[reader class] configurationViewer];
 //        if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
             return YES;
@@ -149,7 +149,7 @@
 
 - (UIViewController *)configuratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && reader.configurable) {
+    if (reader && reader.configurable && reader.configurationName) {
         XUIListViewController *configutator = [[XUIListViewController alloc] initWithRootEntry:reader.configurationName];
         return configutator;
     }

@@ -113,7 +113,6 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-700-Portrait~ipad.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"
@@ -121,7 +120,6 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "iPad_Landscape.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"

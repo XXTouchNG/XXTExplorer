@@ -570,7 +570,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                             if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
                                 UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
                                 if (viewer) {
-                                    if (XXTE_SPLIT_MODE) {
+                                    if (XXTE_COLLAPSED) {
                                         XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
                                         [self.splitViewController showDetailViewController:navigationController sender:self];
                                     } else {
@@ -1112,7 +1112,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
                 UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
                 if (configurator) {
-                    if (XXTE_SPLIT_MODE) {
+                    if (XXTE_COLLAPSED) {
                         XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
                         [self.splitViewController showDetailViewController:navigationController sender:self];
                     } else {
@@ -1126,7 +1126,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
                 UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
                 if (editor) {
-                    if (XXTE_SPLIT_MODE) {
+                    if (XXTE_COLLAPSED) {
                         XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
                         [self.splitViewController showDetailViewController:navigationController sender:self];
                     } else {
@@ -2037,7 +2037,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
             webController.title = NSLocalizedString(@"Loading...", nil);
             if (webController) {
-                if (XXTE_SPLIT_MODE) {
+                if (XXTE_COLLAPSED) {
                     XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
                     [self.splitViewController showDetailViewController:navigationController sender:self];
                 } else {

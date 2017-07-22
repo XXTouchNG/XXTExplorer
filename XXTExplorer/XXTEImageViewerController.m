@@ -65,17 +65,27 @@
     } else {
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
-//    self.scrollView.contentSize = self.imageView.bounds.size;
     [self.scrollView addSubview:self.imageView];
     [self.view addSubview:self.scrollView];
     
     [self.scrollView addGestureRecognizer:self.doubleTapGestureRecognizer];
-    
-    if (XXTE_SPLIT_MODE) {
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (XXTE_COLLAPSED) {
         self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     }
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
-    
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.scrollView setZoomScale:1.0 animated:NO];
+    [self.scrollView setContentOffset:CGPointZero animated:NO];
+    [self.imageView removeFromSuperview];
+    self.imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
+    [self.scrollView addSubview:self.imageView];
 }
 
 #pragma mark - UIView Getters
@@ -87,8 +97,6 @@
         scrollView.delegate = self;
         scrollView.scrollEnabled = YES;
         scrollView.bounces = YES;
-//        scrollView.alwaysBounceVertical = YES;
-//        scrollView.alwaysBounceHorizontal = YES;
         scrollView.bouncesZoom = YES;
         scrollView.minimumZoomScale = 1.0;
         scrollView.maximumZoomScale = 10.f;
@@ -102,7 +110,7 @@
 
 - (UIImageView *)imageView {
     if (!_imageView) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _imageView = imageView;
     }

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTEDetailViewController.h"
 
-@interface XXTEWorkspaceViewController : UIViewController
+@interface XXTEWorkspaceViewController : UIViewController <XXTEDetailViewController>
 
 @end

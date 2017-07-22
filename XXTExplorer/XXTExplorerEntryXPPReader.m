@@ -100,9 +100,17 @@
     _entryViewerDescription = @"Launcher";
     NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
     if (interfaceFile) {
-        NSString *configurationName = [localizationBundle pathForResource:interfaceFile ofType:@"plist"];
+        NSString *interfaceFileNoExt = [interfaceFile stringByDeletingPathExtension];
+        NSString *interfaceFileExt = [interfaceFile pathExtension];
+        NSString *configurationName = nil;
         if (!configurationName) {
-            configurationName = [localizationBundle pathForResource:interfaceFile ofType:@"json"];
+            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:interfaceFileExt];
+        }
+        if (!configurationName) {
+            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"plist"];
+        }
+        if (!configurationName) {
+            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"json"];
         }
         _configurationName = configurationName;
     }
