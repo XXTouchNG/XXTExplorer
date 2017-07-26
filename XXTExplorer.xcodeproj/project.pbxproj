@@ -111,6 +111,9 @@
 		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 		525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */; };
+		52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */; };
+		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
+		52512BD02B62F2E839374051 /* XUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512481E485AD2E09205EFB /* XUIViewController.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
 		D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */; };
@@ -331,10 +334,16 @@
 		0FF3E8B31F211384006DED5A /* XUIListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListHeaderView.h; sourceTree = "<group>"; };
 		0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIListHeaderView.m; sourceTree = "<group>"; };
 		0FF3E8B61F2127E0006DED5A /* XUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUI.h; sourceTree = "<group>"; };
+		525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
+		52512481E485AD2E09205EFB /* XUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIViewController.m; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
+		525126B545F29123B15E6B55 /* XUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewController.h; sourceTree = "<group>"; };
+		52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMailComposeViewController.h; sourceTree = "<group>"; };
 		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
+		52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMailComposeViewController.m; sourceTree = "<group>"; };
 		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; };
+		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
 		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
@@ -577,6 +586,8 @@
 				0F5EB5341F0A88600016016A /* XXTEMoreAboutCell.xib */,
 				0F5EB52F1F0A85AE0016016A /* XXTEMoreAboutController.h */,
 				0F5EB5301F0A85AE0016016A /* XXTEMoreAboutController.m */,
+				52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */,
+				52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */,
 			);
 			name = About;
 			sourceTree = "<group>";
@@ -790,6 +801,9 @@
 				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
 				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
 				0FF3E8B61F2127E0006DED5A /* XUI.h */,
+				52512481E485AD2E09205EFB /* XUIViewController.m */,
+				525126B545F29123B15E6B55 /* XUIViewController.h */,
+				525128D22C704E63FCDB99CD /* Reader */,
 			);
 			name = XUI;
 			sourceTree = "<group>";
@@ -988,6 +1002,15 @@
 				52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */,
 			);
 			name = Download;
+			sourceTree = "<group>";
+		};
+		525128D22C704E63FCDB99CD /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */,
+				52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */,
+			);
+			name = Reader;
 			sourceTree = "<group>";
 		};
 		59918F7D2218C7F23C834EB4 /* Pods */ = {
@@ -1269,6 +1292,9 @@
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
 				525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */,
 				525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */,
+				52512BD02B62F2E839374051 /* XUIViewController.m in Sources */,
+				52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */,
+				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

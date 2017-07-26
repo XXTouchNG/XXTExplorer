@@ -6,6 +6,7 @@
 	<array>
 		<string>XXTEExecutableViewer</string>
 		<string>XXTEArchiveViewer</string>
+		<string>XUIListViewController</string>
 		<string>XXTEImageViewerController</string>
 		<string>XXTEMediaPlayerController</string>
 		<string>XXTEWebViewerController</string>

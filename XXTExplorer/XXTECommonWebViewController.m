@@ -57,13 +57,6 @@
     
 }
 
-- (BOOL)compactPresentation {
-    if (XXTE_SYSTEM_8) {
-        return ((self.splitViewController && self.splitViewController.isCollapsed == NO) || self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
-    }
-    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
-}
-
 #pragma mark - Memory
 
 - (void)dealloc {

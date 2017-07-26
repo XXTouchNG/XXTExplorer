@@ -6,11 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "XUIViewController.h"
 
-@interface XUIListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-
-@property (nonatomic, copy, readonly) NSString *entryPath;
-- (instancetype)initWithRootEntry:(NSString *)entryPath;
+@interface XUIListViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

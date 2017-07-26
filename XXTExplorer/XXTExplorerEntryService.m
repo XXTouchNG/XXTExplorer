@@ -78,7 +78,7 @@
     Class testClass = (extension.length > 0 && viewerName.length > 0) ? NSClassFromString(viewerName) : nil;
     NSMutableDictionary *mutableBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:self.bindingDictionary];
     if (testClass) {
-        [mutableBindingDictionary setObject:viewerName forKey:extension];
+        mutableBindingDictionary[extension] = viewerName;
     } else { // remove binding
         [mutableBindingDictionary removeObjectForKey:extension];
     }
@@ -92,10 +92,7 @@
     NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
     NSString *viewerName = bindingDictionary[entryBaseExtension];
     Class testClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
-    if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
-        return YES;
-    }
-    return NO;
+    return testClass && [testClass isSubclassOfClass:[UIViewController class]];
 }
 
 - (BOOL)hasEditorForEntry:(NSDictionary *)entry {
@@ -111,13 +108,7 @@
 
 - (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && reader.configurable && reader.configurationName) {
-//        Class testClass = [[reader class] configurationViewer];
-//        if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
-            return YES;
-//        }
-    }
-    return NO;
+    return reader && reader.configurable && reader.configurationName;
 }
 
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {
@@ -150,7 +141,7 @@
 - (UIViewController *)configuratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
     if (reader && reader.configurable && reader.configurationName) {
-        XUIListViewController *configutator = [[XUIListViewController alloc] initWithRootEntry:reader.configurationName];
+        XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:reader.configurationName];
         return configutator;
     }
     return nil;

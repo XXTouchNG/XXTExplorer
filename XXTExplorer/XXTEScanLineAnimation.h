@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface XXTEScanLineAnimation : UIImageView
-
+@property (nonatomic, assign) CGRect animationRect;
 @property (nonatomic, assign) BOOL isAnimating;
 
 - (void)startAnimatingWithRect:(CGRect)animationRect

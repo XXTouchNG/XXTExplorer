@@ -29,16 +29,31 @@
 
 @property(nonatomic, strong) UIBarButtonItem *dismissItem;
 @property(nonatomic, strong) UIBarButtonItem *albumItem;
-@property(nonatomic, strong) UIImage *maskImage;
 @property(nonatomic, strong) UIImageView *maskView;
 @property(nonatomic, assign) CGRect cropRect;
 @property(nonatomic, strong) XXTEScanLineAnimation *scanLineAnimation;
+@property(nonatomic, strong) UIVisualEffectView *visualEffectView;
 
 @property(nonatomic, assign) BOOL layerLoaded;
 
 @end
 
-@implementation XXTEScanViewController
+@implementation XXTEScanViewController {
+    BOOL firstTimeLoaded;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         [self reloadCaptureSceneWithSize:size];
+         self.visualEffectView.alpha = 1.f;
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         self.visualEffectView.alpha = 0.f;
+     }];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
 
 #pragma mark - Styles
 
@@ -64,19 +79,93 @@
     self.navigationItem.rightBarButtonItem = self.albumItem;
 
     [self fetchVideoPermission];
+    [self reloadCaptureSceneWithSize:self.view.bounds.size];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    {
-        self.maskView.image = self.maskImage;
-    }
+- (void)reloadCaptureSceneWithSize:(CGSize)toSize {
+
+    CGFloat scale = [[UIScreen mainScreen] scale];
+
+    CGSize oldSize = toSize;
+    CGFloat maxLength = MAX(oldSize.width, oldSize.height);
+    CGFloat minLength = MIN(oldSize.width, oldSize.height);
+    CGSize size = CGSizeMake(maxLength, maxLength);
+    CGFloat rectWidth = minLength / 3 * 2;
+
+    CGPoint pA = CGPointMake(size.width / 2 - rectWidth / 2, size.height / 2 - rectWidth / 2);
+    CGPoint pD = CGPointMake(size.width / 2 + rectWidth / 2, size.height / 2 + rectWidth / 2);
+
+    // Begin Context
+    UIGraphicsBeginImageContextWithOptions(size, NO, scale);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+
+    // Fill Background
+    CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.3f);
+    CGRect drawRect = CGRectMake(0, 0, size.width, size.height);
+    CGContextFillRect(ctx, drawRect);
+
+    // Clear Rect
+    CGRect cropRect = CGRectMake(pA.x, pA.y, rectWidth, rectWidth);
+    CGContextClearRect(ctx, cropRect);
+
+    // Draw Rect Lines
+    CGContextSetLineWidth(ctx, 1.6f);
+    CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
+    CGContextAddRect(ctx, cropRect);
+    CGContextStrokePath(ctx);
+
+    // Draw Rect Angles
+    CGFloat lineWidthAngle = 8.f;
+    CGFloat diffAngle = lineWidthAngle / 3;
+    CGFloat wAngle = 24.f;
+    CGFloat hAngle = 24.f;
+    CGFloat leftX = pA.x - diffAngle;
+    CGFloat topY = pA.y - diffAngle;
+    CGFloat rightX = pD.x + diffAngle;
+    CGFloat bottomY = pD.y + diffAngle;
+
+    CGContextSetLineWidth(ctx, lineWidthAngle);
+    CGContextSetStrokeColorWithColor(ctx, [XXTE_COLOR colorWithAlphaComponent:.75f].CGColor);
+
+    CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
+    CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
+    CGContextMoveToPoint(ctx, leftX, topY - lineWidthAngle / 2);
+    CGContextAddLineToPoint(ctx, leftX, topY + hAngle);
+    CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, bottomY);
+    CGContextAddLineToPoint(ctx, leftX + wAngle, bottomY);
+    CGContextMoveToPoint(ctx, leftX, bottomY + lineWidthAngle / 2);
+    CGContextAddLineToPoint(ctx, leftX, bottomY - hAngle);
+    CGContextMoveToPoint(ctx, rightX + lineWidthAngle / 2, topY);
+    CGContextAddLineToPoint(ctx, rightX - wAngle, topY);
+    CGContextMoveToPoint(ctx, rightX, topY - lineWidthAngle / 2);
+    CGContextAddLineToPoint(ctx, rightX, topY + hAngle);
+    CGContextMoveToPoint(ctx, rightX + lineWidthAngle / 2, bottomY);
+    CGContextAddLineToPoint(ctx, rightX - wAngle, bottomY);
+    CGContextMoveToPoint(ctx, rightX, bottomY + lineWidthAngle / 2);
+    CGContextAddLineToPoint(ctx, rightX, bottomY - hAngle);
+    CGContextStrokePath(ctx);
+
+    // Generate Image
+    UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    self.maskView.image = returnImage;
+
+    AVCaptureConnection *previewLayerConnection = self.scanLayer.connection;
+    if ([previewLayerConnection isVideoOrientationSupported])
+        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIDevice currentDevice] orientation]];
+    self.scanLineAnimation.animationRect = self.cropRect;
+
+    self.scanLayer.frame = self.view.layer.bounds;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     {
         [self performSelector:@selector(startAnimation) withObject:nil afterDelay:0.2f];
+    }
+    if (!firstTimeLoaded) {
+        firstTimeLoaded = YES;
     }
 }
 
@@ -88,11 +177,11 @@
     }
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    AVCaptureConnection *previewLayerConnection = self.scanLayer.connection;
-    if ([previewLayerConnection isVideoOrientationSupported])
-        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIDevice currentDevice] orientation]];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (firstTimeLoaded) {
+        [self reloadCaptureSceneWithSize:self.view.bounds.size];
+    }
 }
 
 - (void)startAnimation {
@@ -224,77 +313,6 @@
     return _albumItem;
 }
 
-- (UIImage *)maskImage {
-    if (!_maskImage) {
-
-        CGSize oldSize = self.view.bounds.size;
-        CGFloat maxLength = MAX(oldSize.width, oldSize.height);
-        CGFloat minLength = MIN(oldSize.width, oldSize.height);
-        CGSize size = CGSizeMake(maxLength, maxLength);
-        CGFloat rectWidth = minLength / 3 * 2;
-
-        CGPoint pA = CGPointMake(size.width / 2 - rectWidth / 2, size.height / 2 - rectWidth / 2);
-        CGPoint pD = CGPointMake(size.width / 2 + rectWidth / 2, size.height / 2 + rectWidth / 2);
-
-        // Begin Context
-        UIGraphicsBeginImageContextWithOptions(size, NO, [[UIScreen mainScreen] scale]);
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-
-        // Fill Background
-        CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.3f);
-        CGRect drawRect = CGRectMake(0, 0, size.width, size.height);
-        CGContextFillRect(ctx, drawRect);
-
-        // Clear Rect
-        CGRect cropRect = CGRectMake(pA.x, pA.y, rectWidth, rectWidth);
-        CGContextClearRect(ctx, cropRect);
-
-        // Draw Rect Lines
-        CGContextSetLineWidth(ctx, 1.6f);
-        CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
-        CGContextAddRect(ctx, cropRect);
-        CGContextStrokePath(ctx);
-
-        // Draw Rect Angles
-        CGFloat lineWidthAngle = 8.f;
-        CGFloat diffAngle = lineWidthAngle / 3;
-        CGFloat wAngle = 24.f;
-        CGFloat hAngle = 24.f;
-        CGFloat leftX = pA.x - diffAngle;
-        CGFloat topY = pA.y - diffAngle;
-        CGFloat rightX = pD.x + diffAngle;
-        CGFloat bottomY = pD.y + diffAngle;
-
-        CGContextSetLineWidth(ctx, lineWidthAngle);
-        CGContextSetStrokeColorWithColor(ctx, [XXTE_COLOR colorWithAlphaComponent:.75f].CGColor);
-
-        CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
-        CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
-        CGContextMoveToPoint(ctx, leftX, topY - lineWidthAngle / 2);
-        CGContextAddLineToPoint(ctx, leftX, topY + hAngle);
-        CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, bottomY);
-        CGContextAddLineToPoint(ctx, leftX + wAngle, bottomY);
-        CGContextMoveToPoint(ctx, leftX, bottomY + lineWidthAngle / 2);
-        CGContextAddLineToPoint(ctx, leftX, bottomY - hAngle);
-        CGContextMoveToPoint(ctx, rightX + lineWidthAngle / 2, topY);
-        CGContextAddLineToPoint(ctx, rightX - wAngle, topY);
-        CGContextMoveToPoint(ctx, rightX, topY - lineWidthAngle / 2);
-        CGContextAddLineToPoint(ctx, rightX, topY + hAngle);
-        CGContextMoveToPoint(ctx, rightX + lineWidthAngle / 2, bottomY);
-        CGContextAddLineToPoint(ctx, rightX - wAngle, bottomY);
-        CGContextMoveToPoint(ctx, rightX, bottomY + lineWidthAngle / 2);
-        CGContextAddLineToPoint(ctx, rightX, bottomY - hAngle);
-        CGContextStrokePath(ctx);
-
-        // Generate Image
-        UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-
-        _maskImage = returnImage;
-    }
-    return _maskImage;
-}
-
 - (CGRect)cropRect {
     CGSize oldSize = self.view.bounds.size;
     CGFloat minLength = MIN(oldSize.width, oldSize.height);
@@ -320,6 +338,17 @@
     }
     return _scanLineAnimation;
 }
+
+- (UIVisualEffectView *)visualEffectView {
+    if (!_visualEffectView) {
+        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        effectView.alpha = 0.f;
+        _visualEffectView = effectView;
+    }
+    return _visualEffectView;
+}
+
 
 #pragma mark - UIControl Actions
 

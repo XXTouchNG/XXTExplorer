@@ -9,7 +9,6 @@
 #import "XXTEScanLineAnimation.h"
 
 @interface XXTEScanLineAnimation ()
-@property (nonatomic, assign) CGRect animationRect;
 
 @end
 

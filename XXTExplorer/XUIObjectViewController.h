@@ -6,7 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "XUIViewController.h"
 
 /**
  *
@@ -18,7 +18,7 @@
  * it will push another XUIObjectViewController and set its RootObject to the value of that cell.
  *
  **/
-@interface XUIObjectViewController : UITableViewController
+@interface XUIObjectViewController : XUIViewController
 
 @property (nonatomic, copy, readonly) id RootObject;
 

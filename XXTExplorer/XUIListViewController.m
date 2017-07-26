@@ -23,16 +23,18 @@
 
 @implementation XUIListViewController
 
+@synthesize entryPath = _entryPath;
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
-- (instancetype)initWithRootEntry:(NSString *)entryPath {
-    if (self = [super init]) {
-        if (!entryPath) {
+- (instancetype)initWithPath:(NSString *)path {
+    if (self = [super initWithPath:path]) {
+        if (!path) {
             return nil;
         }
-        _entryPath = entryPath;
+        _entryPath = path;
     }
     return self;
 }

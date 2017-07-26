@@ -6,8 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "XUIViewController.h"
 
-@interface XUIOptionViewController : UITableViewController
+@interface XUIOptionViewController : XUIViewController
 
 @end

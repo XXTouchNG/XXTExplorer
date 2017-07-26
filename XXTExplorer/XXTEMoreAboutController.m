@@ -15,6 +15,7 @@
 #import "UIView+XXTEToast.h"
 #import <MessageUI/MessageUI.h>
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTEMailComposeViewController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
@@ -166,13 +167,14 @@ typedef enum : NSUInteger {
         }
         else if (indexPath.section == kXXTEMoreAboutSectionIndexFeedback) {
             if (indexPath.row == 0) {
-                if ([MFMailComposeViewController canSendMail]) {
-                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+                if ([XXTEMailComposeViewController canSendMail]) {
+                    XXTEMailComposeViewController *picker = [[XXTEMailComposeViewController alloc] init];
                     if (!picker) return;
                     picker.mailComposeDelegate = self;
                     [picker setSubject:[NSString stringWithFormat:@"[%@] %@\nV%@", NSLocalizedString(@"Feedback", nil), uAppDefine(@"PRODUCT_NAME"), uAppDefine(@"DAEMON_VERSION")]];
-                    NSArray *toRecipients = [NSArray arrayWithObject:uAppDefine(@"SERVICE_EMAIL")];
+                    NSArray *toRecipients = @[uAppDefine(@"SERVICE_EMAIL")];
                     [picker setToRecipients:toRecipients];
+                    picker.modalPresentationStyle = UIModalPresentationFormSheet;
                     [self presentViewController:picker animated:YES completion:nil];
                 } else {
                     showUserMessage(self, NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil));
@@ -220,7 +222,7 @@ typedef enum : NSUInteger {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        return staticCells[indexPath.section][indexPath.row];
+        return staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
     }
     return [UITableViewCell new];
 }
