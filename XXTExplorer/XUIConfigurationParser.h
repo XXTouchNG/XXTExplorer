@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kXUIConfigurationParserErrorDomain;
+
 @interface XUIConfigurationParser : NSObject
 
-+ (NSArray <NSDictionary *> *)entriesFromRootEntry:(NSDictionary *)rootEntry;
+@property (nonatomic, strong, readonly) NSDictionary <NSString *, id> *rootEntry;
+@property (nonatomic, strong, readonly) NSError *error;
+- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry;
 
 @end

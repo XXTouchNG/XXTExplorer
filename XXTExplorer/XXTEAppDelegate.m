@@ -134,10 +134,10 @@
         NSString *xxtCommandInterface = [xxtCommandURL host];
         NSArray <NSString *> *xxtComponents = [xxtCommandURL pathComponents];
         NSString *xxtUserData = [xxtCommandURL query];
+        if (!xxtUserData) xxtUserData = @"";
         if (xxtCommandInterface.length <= 0 ||
             xxtComponents.count != 1 ||
-            ![xxtComponents[0] isEqualToString:@"/"] || 
-            xxtUserData.length <= 0) {
+            ![xxtComponents[0] isEqualToString:@"/"]) {
             return NO;
         }
         NSDictionary *userInfo =

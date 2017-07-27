@@ -14,8 +14,7 @@
 
 @interface XUIListViewController ()
 
-@property (nonatomic, strong) XUIConfigurationParser *configurationParser;
-@property (nonatomic, strong, readonly) NSArray <NSDictionary *> *entries;
+@property (nonatomic, strong, readonly) XUIConfigurationParser *parser;
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -34,6 +33,27 @@
         if (!path) {
             return nil;
         }
+        {
+            NSDictionary *rootEntry = nil;
+            if (!rootEntry) {
+                rootEntry = [[NSDictionary alloc] initWithContentsOfFile:path];
+            }
+            if (!rootEntry) {
+                NSData *jsonEntryData = [[NSData alloc] initWithContentsOfFile:path];
+                if (jsonEntryData) {
+                    rootEntry = [NSJSONSerialization JSONObjectWithData:jsonEntryData options:0 error:nil];
+                }
+            }
+            if (!rootEntry) {
+                return nil;
+            }
+            
+            XUIConfigurationParser *parser = [[XUIConfigurationParser alloc] initWithRootEntry:rootEntry];
+            if (!parser) {
+                return nil;
+            }
+            _parser = parser;
+        }
         _entryPath = path;
     }
     return self;
@@ -43,25 +63,13 @@
     [super viewDidLoad];
     
     self.title = [self.entryPath lastPathComponent];
-//    self.clearsSelectionOnViewWillAppear = YES;
     
     [self setupSubviews];
     [self makeConstraints];
     
     {
-        NSDictionary *rootEntry = nil;
-        if (!rootEntry) {
-            rootEntry = [[NSDictionary alloc] initWithContentsOfFile:self.entryPath];
-        }
-        if (!rootEntry) {
-            NSData *jsonEntryData = [[NSData alloc] initWithContentsOfFile:self.entryPath];
-            if (jsonEntryData) {
-                rootEntry = [NSJSONSerialization JSONObjectWithData:jsonEntryData options:0 error:nil];
-            }
-        }
-        if (!rootEntry) {
-            return;
-        }
+        NSString *entryName = [self.entryPath lastPathComponent];
+        NSDictionary <NSString *, id> *rootEntry = self.parser.rootEntry;
         
         NSString *listTitle = rootEntry[@"title"];
         if (listTitle) {
@@ -78,12 +86,19 @@
             self.headerView.subheaderLabel.text = listSubheader;
         }
         
-        NSArray <NSDictionary *> *entries = [XUIConfigurationParser entriesFromRootEntry:rootEntry];
-        if (!entries) {
-            return;
+        if (self.parser.error) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n[Parse Error]\n%@", nil), entryName, self.parser.error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self.navigationController presentViewController:alertController animated:YES completion:nil];
         }
     }
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (XXTE_COLLAPSED) {
+        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    }
 }
 
 - (void)setupSubviews {

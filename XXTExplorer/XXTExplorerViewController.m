@@ -2123,6 +2123,12 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
                 completionBlock();
                 return;
             }
+        } else if ([jsonEvent isEqualToString:@"scan"]) {
+            XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
+            scanViewController.delegate = self;
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
+            navController.modalPresentationStyle = UIModalPresentationFormSheet;
+            [self presentViewController:navController animated:YES completion:nil];
         }
     }
 }
