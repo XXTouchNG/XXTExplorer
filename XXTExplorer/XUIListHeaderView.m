@@ -67,6 +67,7 @@
         UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20.f, self.bounds.size.width, 80.f)];
         headerLabel.backgroundColor = UIColor.clearColor;
         headerLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:45.f];
+        headerLabel.textColor = [UIColor colorWithWhite:0.f alpha:.85f];
         headerLabel.textAlignment = NSTextAlignmentCenter;
         headerLabel.numberOfLines = 1;
         headerLabel.lineBreakMode = NSLineBreakByClipping;
@@ -80,6 +81,7 @@
         UILabel *subheaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20.f + 80.f + 12.f, self.bounds.size.width, 24.f)];
         subheaderLabel.backgroundColor = UIColor.clearColor;
         subheaderLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f];
+        subheaderLabel.textColor = [UIColor colorWithWhite:0.f alpha:.85f];
         subheaderLabel.textAlignment = NSTextAlignmentCenter;
         subheaderLabel.numberOfLines = 0;
         subheaderLabel.lineBreakMode = NSLineBreakByWordWrapping;

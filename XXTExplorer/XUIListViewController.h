@@ -10,4 +10,6 @@
 
 @interface XUIListViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource>
 
+- (instancetype)initWithPath:(NSString *)path withBundlePath:(NSString *)bundlePath;
+
 @end

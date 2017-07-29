@@ -8,6 +8,7 @@
 
 #import "XXTExplorerEntryXPPReader.h"
 #import "XXTExplorerEntryXPPMeta.h"
+#import "NSBundle+FlushCaches.h"
 
 @interface XXTExplorerEntryXPPReader ()
 
@@ -56,6 +57,8 @@
     NSBundle *pathBundle = [NSBundle bundleWithPath:path];
     if (!pathBundle) {
         return;
+    } else {
+        [pathBundle flushCaches];
     }
     NSString *existsMetaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
     if (!existsMetaPath)
@@ -111,6 +114,9 @@
         }
         if (!configurationName) {
             configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"json"];
+        }
+        if (!configurationName) {
+            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"xui"];
         }
         _configurationName = configurationName;
     }

@@ -6,7 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#include <objc/runtime.h>
+#import <sys/stat.h>
+#import <objc/runtime.h>
 #import "XXTEMoreLicenseController.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
@@ -15,6 +16,7 @@
 #import "XXTEMoreLicenseCell.h"
 #import "XXTENetworkDefines.h"
 #import "XXTEViewShaker.h"
+#import "XXTExplorerViewController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreLicenseSectionIndexNewLicense = 0,
@@ -512,8 +514,26 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             if (alertView1 && alertView1.isShowing) {
                 [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
             }
+            NSString *licenseLog = [NSString stringWithFormat:@"[%@] %@\n", NSStringFromClass([self class]), licenseDictionary];
+            return licenseLog;
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot active license: %@", nil), licenseDictionary[@"message"]];
+        }
+        return @"";
+    })
+    .then(^(NSString *licenseLog) {
+        if (licenseLog.length > 0) {
+            NSString *licenseLogPath = [[XXTExplorerViewController rootPath] stringByAppendingPathComponent:@"log/bind_code.log"];
+            struct stat licenseLogStat;
+            if (0 == lstat([licenseLogPath UTF8String], &licenseLogStat)) {
+                [[NSFileManager defaultManager] createFileAtPath:licenseLogPath
+                                                        contents:[NSData data]
+                                                      attributes:nil];
+            }
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:licenseLogPath];
+            [fileHandle seekToEndOfFile];
+            [fileHandle writeData:[licenseLog dataUsingEncoding:NSUTF8StringEncoding]];
+            [fileHandle closeFile];
         }
     })
     .catch(^(NSError *serverError) {

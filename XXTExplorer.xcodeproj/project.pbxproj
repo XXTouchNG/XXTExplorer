@@ -19,6 +19,28 @@
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
+		0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */; };
+		0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */; };
+		0F30D9291F2BAAA20001E10B /* XUIEditTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */; };
+		0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9281F2BAAA20001E10B /* XUIEditTextCell.xib */; };
+		0F30D92F1F2C7FB10001E10B /* XUISecureEditTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D92D1F2C7FB10001E10B /* XUISecureEditTextCell.m */; };
+		0F30D9301F2C7FB10001E10B /* XUISecureEditTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D92E1F2C7FB10001E10B /* XUISecureEditTextCell.xib */; };
+		0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9321F2C835A0001E10B /* XUIButtonCell.m */; };
+		0F30D9391F2C86450001E10B /* XUISliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9371F2C86450001E10B /* XUISliderCell.m */; };
+		0F30D93A1F2C86450001E10B /* XUISliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9381F2C86450001E10B /* XUISliderCell.xib */; };
+		0F30D93F1F2C8C620001E10B /* XUIStaticTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D93D1F2C8C620001E10B /* XUIStaticTextCell.m */; };
+		0F30D9401F2C8C620001E10B /* XUIStaticTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D93E1F2C8C620001E10B /* XUIStaticTextCell.xib */; };
+		0F30D9491F2CEF860001E10B /* XUIImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9471F2CEF860001E10B /* XUIImageCell.m */; };
+		0F30D94A1F2CEF860001E10B /* XUIImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9481F2CEF860001E10B /* XUIImageCell.xib */; };
+		0F30D94E1F2CF2300001E10B /* NSBundle+FlushCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D94D1F2CF2300001E10B /* NSBundle+FlushCaches.m */; };
+		0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9501F2CF4100001E10B /* XUILinkCell.m */; };
+		0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9551F2D000B0001E10B /* XUISegmentCell.m */; };
+		0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */; };
+		0F30D95B1F2D04030001E10B /* XUILinkListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D95A1F2D04030001E10B /* XUILinkListCell.m */; };
+		0F30D95E1F2D04DD0001E10B /* XUILinkMultipleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D95D1F2D04DD0001E10B /* XUILinkMultipleListCell.m */; };
+		0F30D9611F2D052C0001E10B /* XUILinkOrderedListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9601F2D052C0001E10B /* XUILinkOrderedListCell.m */; };
+		0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */; };
+		0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */; };
 		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
@@ -90,7 +112,7 @@
 		0FB6BB6D1F1C4B4900CADCEA /* XUIObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XUIObjectViewController.m */; };
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
 		0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */; };
-		0FB6BB791F1C4C3000CADCEA /* XUIConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB781F1C4C3000CADCEA /* XUIConfigurationParser.m */; };
+		0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
@@ -109,10 +131,12 @@
 		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
+		52512432C43B553660F98172 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 		525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */; };
 		52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */; };
 		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
+		525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512EB1AE32276E843CEC6C /* XUIBaseCell.m */; };
 		52512BD02B62F2E839374051 /* XUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512481E485AD2E09205EFB /* XUIViewController.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
@@ -157,6 +181,44 @@
 		0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImagePickerController.m; sourceTree = "<group>"; };
 		0F2916131F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsOperationController.h; sourceTree = "<group>"; };
 		0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreUserDefaultsOperationController.m; sourceTree = "<group>"; };
+		0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
+		0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
+		0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
+		0F30D9261F2BAAA20001E10B /* XUIEditTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEditTextCell.h; sourceTree = "<group>"; };
+		0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEditTextCell.m; sourceTree = "<group>"; };
+		0F30D9281F2BAAA20001E10B /* XUIEditTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIEditTextCell.xib; sourceTree = "<group>"; };
+		0F30D92B1F2C79720001E10B /* XUILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILogger.h; sourceTree = "<group>"; };
+		0F30D92C1F2C7FB10001E10B /* XUISecureEditTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISecureEditTextCell.h; sourceTree = "<group>"; };
+		0F30D92D1F2C7FB10001E10B /* XUISecureEditTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISecureEditTextCell.m; sourceTree = "<group>"; };
+		0F30D92E1F2C7FB10001E10B /* XUISecureEditTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISecureEditTextCell.xib; sourceTree = "<group>"; };
+		0F30D9311F2C835A0001E10B /* XUIButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIButtonCell.h; sourceTree = "<group>"; };
+		0F30D9321F2C835A0001E10B /* XUIButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIButtonCell.m; sourceTree = "<group>"; };
+		0F30D9361F2C86450001E10B /* XUISliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISliderCell.h; sourceTree = "<group>"; };
+		0F30D9371F2C86450001E10B /* XUISliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISliderCell.m; sourceTree = "<group>"; };
+		0F30D9381F2C86450001E10B /* XUISliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISliderCell.xib; sourceTree = "<group>"; };
+		0F30D93B1F2C8BC40001E10B /* XUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStyle.h; sourceTree = "<group>"; };
+		0F30D93C1F2C8C620001E10B /* XUIStaticTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStaticTextCell.h; sourceTree = "<group>"; };
+		0F30D93D1F2C8C620001E10B /* XUIStaticTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIStaticTextCell.m; sourceTree = "<group>"; };
+		0F30D93E1F2C8C620001E10B /* XUIStaticTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIStaticTextCell.xib; sourceTree = "<group>"; };
+		0F30D9461F2CEF860001E10B /* XUIImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIImageCell.h; sourceTree = "<group>"; };
+		0F30D9471F2CEF860001E10B /* XUIImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIImageCell.m; sourceTree = "<group>"; };
+		0F30D9481F2CEF860001E10B /* XUIImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIImageCell.xib; sourceTree = "<group>"; };
+		0F30D94C1F2CF2300001E10B /* NSBundle+FlushCaches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+FlushCaches.h"; sourceTree = "<group>"; };
+		0F30D94D1F2CF2300001E10B /* NSBundle+FlushCaches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+FlushCaches.m"; sourceTree = "<group>"; };
+		0F30D94F1F2CF4100001E10B /* XUILinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkCell.h; sourceTree = "<group>"; };
+		0F30D9501F2CF4100001E10B /* XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkCell.m; sourceTree = "<group>"; };
+		0F30D9541F2D000B0001E10B /* XUISegmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISegmentCell.h; sourceTree = "<group>"; };
+		0F30D9551F2D000B0001E10B /* XUISegmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISegmentCell.m; sourceTree = "<group>"; };
+		0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISegmentCell.xib; sourceTree = "<group>"; };
+		0F30D9591F2D04030001E10B /* XUILinkListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkListCell.h; sourceTree = "<group>"; };
+		0F30D95A1F2D04030001E10B /* XUILinkListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkListCell.m; sourceTree = "<group>"; };
+		0F30D95C1F2D04DD0001E10B /* XUILinkMultipleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkMultipleListCell.h; sourceTree = "<group>"; };
+		0F30D95D1F2D04DD0001E10B /* XUILinkMultipleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkMultipleListCell.m; sourceTree = "<group>"; };
+		0F30D95F1F2D052C0001E10B /* XUILinkOrderedListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkOrderedListCell.h; sourceTree = "<group>"; };
+		0F30D9601F2D052C0001E10B /* XUILinkOrderedListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkOrderedListCell.m; sourceTree = "<group>"; };
+		0F30D9621F2D06D00001E10B /* XUITitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITitleValueCell.h; sourceTree = "<group>"; };
+		0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITitleValueCell.m; sourceTree = "<group>"; };
+		0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITitleValueCell.xib; sourceTree = "<group>"; };
 		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
 		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
 		0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryXPPReader.m; sourceTree = "<group>"; };
@@ -299,8 +361,8 @@
 		0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOptionViewController.m; sourceTree = "<group>"; };
 		0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOrderedOptionViewController.h; sourceTree = "<group>"; };
 		0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOrderedOptionViewController.m; sourceTree = "<group>"; };
-		0FB6BB771F1C4C3000CADCEA /* XUIConfigurationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIConfigurationParser.h; sourceTree = "<group>"; };
-		0FB6BB781F1C4C3000CADCEA /* XUIConfigurationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIConfigurationParser.m; sourceTree = "<group>"; };
+		0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICellFactory.h; sourceTree = "<group>"; };
+		0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUICellFactory.m; sourceTree = "<group>"; };
 		0FCC2AC41F130BE600C50A48 /* XXTExplorerItemNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemNameCell.h; sourceTree = "<group>"; };
 		0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemNameCell.m; sourceTree = "<group>"; };
 		0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerItemNameCell.xib; sourceTree = "<group>"; };
@@ -335,16 +397,20 @@
 		0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIListHeaderView.m; sourceTree = "<group>"; };
 		0FF3E8B61F2127E0006DED5A /* XUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUI.h; sourceTree = "<group>"; };
 		525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
+		5251235021715EB2390B1658 /* XUIGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIGroupCell.h; sourceTree = "<group>"; };
 		52512481E485AD2E09205EFB /* XUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIViewController.m; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
 		525126B545F29123B15E6B55 /* XUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewController.h; sourceTree = "<group>"; };
+		525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIGroupCell.m; sourceTree = "<group>"; };
 		52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMailComposeViewController.h; sourceTree = "<group>"; };
 		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
 		52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMailComposeViewController.m; sourceTree = "<group>"; };
 		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; };
+		52512C344413AFCA2550E12D /* XUIBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIBaseCell.h; sourceTree = "<group>"; };
 		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
 		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
+		52512EB1AE32276E843CEC6C /* XUIBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIBaseCell.m; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
 		D629C2191F061E690030C6DA /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
@@ -450,6 +516,8 @@
 		0F3508B91F163F60000403FD /* BundleReader */ = {
 			isa = PBXGroup;
 			children = (
+				0F30D94C1F2CF2300001E10B /* NSBundle+FlushCaches.h */,
+				0F30D94D1F2CF2300001E10B /* NSBundle+FlushCaches.m */,
 				0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */,
 				0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */,
 				0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */,
@@ -788,10 +856,10 @@
 		0FB6BB601F1C497900CADCEA /* XUI */ = {
 			isa = PBXGroup;
 			children = (
+				0F30D93B1F2C8BC40001E10B /* XUIStyle.h */,
+				525128D22C704E63FCDB99CD /* Reader */,
 				0FF3E8AF1F211300006DED5A /* View */,
 				0FB6BB641F1C4ABA00CADCEA /* Cell */,
-				0FB6BB771F1C4C3000CADCEA /* XUIConfigurationParser.h */,
-				0FB6BB781F1C4C3000CADCEA /* XUIConfigurationParser.m */,
 				0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */,
 				0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */,
 				0FB6BB6B1F1C4B4900CADCEA /* XUIObjectViewController.h */,
@@ -803,7 +871,6 @@
 				0FF3E8B61F2127E0006DED5A /* XUI.h */,
 				52512481E485AD2E09205EFB /* XUIViewController.m */,
 				525126B545F29123B15E6B55 /* XUIViewController.h */,
-				525128D22C704E63FCDB99CD /* Reader */,
 			);
 			name = XUI;
 			sourceTree = "<group>";
@@ -811,6 +878,47 @@
 		0FB6BB641F1C4ABA00CADCEA /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				0F30D92B1F2C79720001E10B /* XUILogger.h */,
+				0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */,
+				0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */,
+				52512C344413AFCA2550E12D /* XUIBaseCell.h */,
+				52512EB1AE32276E843CEC6C /* XUIBaseCell.m */,
+				5251235021715EB2390B1658 /* XUIGroupCell.h */,
+				525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */,
+				0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */,
+				0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */,
+				0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */,
+				0F30D9261F2BAAA20001E10B /* XUIEditTextCell.h */,
+				0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */,
+				0F30D9281F2BAAA20001E10B /* XUIEditTextCell.xib */,
+				0F30D92C1F2C7FB10001E10B /* XUISecureEditTextCell.h */,
+				0F30D92D1F2C7FB10001E10B /* XUISecureEditTextCell.m */,
+				0F30D92E1F2C7FB10001E10B /* XUISecureEditTextCell.xib */,
+				0F30D9311F2C835A0001E10B /* XUIButtonCell.h */,
+				0F30D9321F2C835A0001E10B /* XUIButtonCell.m */,
+				0F30D9361F2C86450001E10B /* XUISliderCell.h */,
+				0F30D9371F2C86450001E10B /* XUISliderCell.m */,
+				0F30D9381F2C86450001E10B /* XUISliderCell.xib */,
+				0F30D93C1F2C8C620001E10B /* XUIStaticTextCell.h */,
+				0F30D93D1F2C8C620001E10B /* XUIStaticTextCell.m */,
+				0F30D93E1F2C8C620001E10B /* XUIStaticTextCell.xib */,
+				0F30D9461F2CEF860001E10B /* XUIImageCell.h */,
+				0F30D9471F2CEF860001E10B /* XUIImageCell.m */,
+				0F30D9481F2CEF860001E10B /* XUIImageCell.xib */,
+				0F30D94F1F2CF4100001E10B /* XUILinkCell.h */,
+				0F30D9501F2CF4100001E10B /* XUILinkCell.m */,
+				0F30D9541F2D000B0001E10B /* XUISegmentCell.h */,
+				0F30D9551F2D000B0001E10B /* XUISegmentCell.m */,
+				0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */,
+				0F30D9591F2D04030001E10B /* XUILinkListCell.h */,
+				0F30D95A1F2D04030001E10B /* XUILinkListCell.m */,
+				0F30D95C1F2D04DD0001E10B /* XUILinkMultipleListCell.h */,
+				0F30D95D1F2D04DD0001E10B /* XUILinkMultipleListCell.m */,
+				0F30D95F1F2D052C0001E10B /* XUILinkOrderedListCell.h */,
+				0F30D9601F2D052C0001E10B /* XUILinkOrderedListCell.m */,
+				0F30D9621F2D06D00001E10B /* XUITitleValueCell.h */,
+				0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */,
+				0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1007,8 +1115,8 @@
 		525128D22C704E63FCDB99CD /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */,
 				52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */,
+				525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */,
 			);
 			name = Reader;
 			sourceTree = "<group>";
@@ -1122,15 +1230,18 @@
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
 				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
+				0F30D93A1F2C86450001E10B /* XUISliderCell.xib in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */,
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
+				0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
 				0F8455CF1F0D37D90055F98B /* XXTEMoreReferences.bundle in Resources */,
 				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
 				0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */,
+				0F30D9401F2C8C620001E10B /* XUIStaticTextCell.xib in Resources */,
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				0F35F20B1F106E5700B5B327 /* XXTEBuiltInDefaults.plist in Resources */,
@@ -1138,9 +1249,14 @@
 				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
+				0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
+				0F30D94A1F2CEF860001E10B /* XUIImageCell.xib in Resources */,
+				0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */,
+				0F30D9301F2C7FB10001E10B /* XUISecureEditTextCell.xib in Resources */,
 				0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
 				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
+				0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1200,13 +1316,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				0F30D93F1F2C8C620001E10B /* XUIStaticTextCell.m in Sources */,
 				0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */,
+				0F30D95E1F2D04DD0001E10B /* XUILinkMultipleListCell.m in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
+				0F30D9491F2CEF860001E10B /* XUIImageCell.m in Sources */,
 				0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */,
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
@@ -1220,16 +1339,19 @@
 				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
 				0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */,
+				0F30D9291F2BAAA20001E10B /* XUIEditTextCell.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
-				0FB6BB791F1C4C3000CADCEA /* XUIConfigurationParser.m in Sources */,
+				0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */,
 				0FB6BB6D1F1C4B4900CADCEA /* XUIObjectViewController.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
 				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
+				0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
+				0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
@@ -1242,7 +1364,9 @@
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
 				0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
+				0F30D92F1F2C7FB10001E10B /* XUISecureEditTextCell.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
+				0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
 				0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */,
@@ -1263,16 +1387,19 @@
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
+				0F30D9611F2D052C0001E10B /* XUILinkOrderedListCell.m in Sources */,
 				0FE1E4461F18EEA100055E02 /* NSString+HTMLEscape.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F56900E1F1B022E009AF9FE /* XXTEArchiveViewer.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
+				0F30D94E1F2CF2300001E10B /* NSBundle+FlushCaches.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */,
 				0FE1E44D1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m in Sources */,
 				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F91E8F11F139DBA00D65BF7 /* NSFileManager+DeepSize.m in Sources */,
+				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,
 				0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */,
 				0F5690081F19B580009AF9FE /* XXTExplorerItemDetailObjectViewController.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
@@ -1288,13 +1415,18 @@
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
+				0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
+				0F30D95B1F2D04030001E10B /* XUILinkListCell.m in Sources */,
+				0F30D9391F2C86450001E10B /* XUISliderCell.m in Sources */,
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
 				525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */,
 				525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */,
 				52512BD02B62F2E839374051 /* XUIViewController.m in Sources */,
 				52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */,
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
+				52512432C43B553660F98172 /* XUIGroupCell.m in Sources */,
+				525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

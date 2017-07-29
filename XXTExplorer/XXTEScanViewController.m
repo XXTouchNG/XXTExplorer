@@ -32,7 +32,7 @@
 @property(nonatomic, strong) UIImageView *maskView;
 @property(nonatomic, assign) CGRect cropRect;
 @property(nonatomic, strong) XXTEScanLineAnimation *scanLineAnimation;
-@property(nonatomic, strong) UIVisualEffectView *visualEffectView;
+//@property(nonatomic, strong) UIVisualEffectView *visualEffectView;
 
 @property(nonatomic, assign) BOOL layerLoaded;
 
@@ -46,10 +46,10 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          [self reloadCaptureSceneWithSize:size];
-         self.visualEffectView.alpha = 1.f;
+//         self.visualEffectView.alpha = 1.f;
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-         self.visualEffectView.alpha = 0.f;
+//         self.visualEffectView.alpha = 0.f;
      }];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -339,16 +339,15 @@
     return _scanLineAnimation;
 }
 
-- (UIVisualEffectView *)visualEffectView {
-    if (!_visualEffectView) {
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        effectView.alpha = 0.f;
-        _visualEffectView = effectView;
-    }
-    return _visualEffectView;
-}
-
+//- (UIVisualEffectView *)visualEffectView {
+//    if (!_visualEffectView) {
+//        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+//        effectView.alpha = 0.f;
+//        _visualEffectView = effectView;
+//    }
+//    return _visualEffectView;
+//}
 
 #pragma mark - UIControl Actions
 

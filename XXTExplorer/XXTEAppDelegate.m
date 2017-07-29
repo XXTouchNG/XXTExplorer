@@ -19,6 +19,8 @@
 #import "XXTECloudApiSdk.h"
 #import "XXTECommonNavigationController.h"
 
+static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
+
 @interface XXTEAppDelegate ()
 
 @end
@@ -31,6 +33,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_9) {
+        UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
+        UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ XXTEShortcutAction: @"stop" }];
+        UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
+        UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ XXTEShortcutAction: @"launch" }];
+        UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
+        UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ XXTEShortcutAction : @"scan" }];
+        [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
+    }
+    XXTE_END_IGNORE_PARTIAL
     
     // Master - Explorer Controller
 //    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
@@ -160,6 +174,18 @@
         }
     }
     return NO;
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    if (shortcutItem.userInfo[XXTEShortcutAction]) {
+        NSString *shortcutAction = (NSString *)shortcutItem.userInfo[XXTEShortcutAction];
+        NSDictionary *userInfo =
+        @{XXTENotificationShortcutInterface: shortcutAction,
+          XXTENotificationShortcutUserData: @""};
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
+        });
+    }
 }
 
 #pragma mark - App Defines

@@ -77,7 +77,12 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     static NSString *rootPath = nil;
     if (!rootPath) {
         rootPath = ({
-            [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+            NSString *mainPath = uAppDefine(@"MAIN_PATH");
+            struct stat mainPathStat;
+            if (0 != lstat([mainPath UTF8String], &mainPathStat)) {
+                mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+            }
+            mainPath;
         });
     }
     return rootPath;
@@ -245,6 +250,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (firstTimeLoaded) {
         [self loadEntryListData];
         [self.tableView reloadData];
+    } else {
+        [self refreshEntryListView:nil];
     }
 }
 
@@ -274,7 +281,8 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             ) {
             [self loadEntryListData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
-        } else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+        }
+        else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
             [self refreshEntryListView:nil];
         }
     }
@@ -438,36 +446,36 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if ([self.class isFetchingSelectedScript] == NO) {
         [self.class setFetchingSelectedScript:YES];
         [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{}]
-                .then(convertJsonString)
-                .then(^(NSDictionary *jsonDictionary) {
-                    if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
-                        NSString *selectedScriptName = jsonDictionary[@"data"][@"filename"];
-                        if (selectedScriptName) {
-                            NSString *selectedScriptPath = nil;
-                            if ([selectedScriptName isAbsolutePath]) {
-                                selectedScriptPath = selectedScriptName;
-                            } else {
-                                selectedScriptPath = [self.class.initialPath stringByAppendingPathComponent:selectedScriptName];
-                            }
-                            XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, selectedScriptPath);
-                        }
-                    }
-                })
-                .catch(^(NSError *serverError) {
-                    if (serverError.code == -1004) {
-                        showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        .then(convertJsonString)
+        .then(^(NSDictionary *jsonDictionary) {
+            if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+                NSString *selectedScriptName = jsonDictionary[@"data"][@"filename"];
+                if (selectedScriptName) {
+                    NSString *selectedScriptPath = nil;
+                    if ([selectedScriptName isAbsolutePath]) {
+                        selectedScriptPath = selectedScriptName;
                     } else {
-                        showUserMessage(self, [serverError localizedDescription]);
+                        selectedScriptPath = [self.class.initialPath stringByAppendingPathComponent:selectedScriptName];
                     }
-                })
-                .finally(^() {
-                    [self loadEntryListData];
-                    [self.tableView reloadData];
-                    if (refreshControl && [refreshControl isRefreshing]) {
-                        [refreshControl endRefreshing];
-                    }
-                    [self.class setFetchingSelectedScript:NO];
-                });
+                    XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, selectedScriptPath);
+                }
+            }
+        })
+        .catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self, [serverError localizedDescription]);
+            }
+        })
+        .finally(^() {
+            [self loadEntryListData];
+            [self.tableView reloadData];
+            if (refreshControl && [refreshControl isRefreshing]) {
+                [refreshControl endRefreshing];
+            }
+            [self.class setFetchingSelectedScript:NO];
+        });
     }
 }
 
@@ -1045,52 +1053,10 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
     if (direction == XXTESwipeDirectionLeftToRight) {
+        XXTESwipeButton *button = cell.leftButtons[index];
         NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
-            BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey);
-            blockUserInteractions(self, YES);
-            [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
-                    .then(convertJsonString)
-                    .then(^(NSDictionary *jsonDirectory) {
-                        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-                            return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": @{@"XXTOUCH_LAUNCH_VIA": @"APPLICATION"}}];
-                        } else {
-                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
-                        }
-                    })
-                    .then(convertJsonString)
-                    .then(^(NSDictionary *jsonDirectory) {
-                        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-                            if (selectAfterLaunch) {
-                                return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}];
-                            }
-                        } else {
-                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
-                        }
-                        return [PMKPromise promiseWithValue:@{}];
-                    })
-                    .then(convertJsonString)
-                    .then(^(NSDictionary *jsonDirectory) {
-                        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-                            XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
-                            [self loadEntryListData];
-                            [self.tableView reloadData];
-                        } else {
-                            if (selectAfterLaunch) {
-                                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
-                            }
-                        }
-                    })
-                    .catch(^(NSError *serverError) {
-                        if (serverError.code == -1004) {
-                            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-                        } else {
-                            showUserMessage(self, [serverError localizedDescription]);
-                        }
-                    })
-                    .finally(^() {
-                        blockUserInteractions(self, NO);
-                    });
+            [self performAction:button launchScript:entryPath];
         } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
             XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
@@ -2129,8 +2095,86 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentViewController:navController animated:YES completion:nil];
+        } else if ([jsonEvent isEqualToString:@"launch"]) {
+            [self performAction:sender launchScript:self.class.selectedScriptPath];
+        } else if ([jsonEvent isEqualToString:@"stop"]) {
+            [self performAction:sender stopSelectedScript:self.class.selectedScriptPath];
         }
     }
+}
+
+#pragma mark - Button Actions
+
+- (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
+    if (!entryPath) return;
+    blockUserInteractions(self, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDirectory) {
+        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+            
+        } else {
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot stop script: %@", nil), jsonDirectory[@"message"]];
+        }
+    })
+    .catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self, [serverError localizedDescription]);
+        }
+    })
+    .finally(^() {
+        blockUserInteractions(self, NO);
+    });
+}
+
+- (void)performAction:(id)sender launchScript:(NSString *)entryPath {
+    if (!entryPath) return;
+    BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey);
+    blockUserInteractions(self, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDirectory) {
+        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+            return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": @{@"XXTOUCH_LAUNCH_VIA": @"APPLICATION"}}];
+        } else {
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+        }
+    })
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDirectory) {
+        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+            if (selectAfterLaunch) {
+                return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}];
+            }
+        } else {
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+        }
+        return [PMKPromise promiseWithValue:@{}];
+    })
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDirectory) {
+        if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+            XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
+            [self loadEntryListData];
+            [self.tableView reloadData];
+        } else {
+            if (selectAfterLaunch) {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+            }
+        }
+    })
+    .catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            showUserMessage(self, [serverError localizedDescription]);
+        }
+    })
+    .finally(^() {
+        blockUserInteractions(self, NO);
+    });
 }
 
 #pragma mark - Memory

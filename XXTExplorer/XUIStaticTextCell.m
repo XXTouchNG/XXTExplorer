@@ -1,0 +1,71 @@
+//
+//  XUIStaticTextCell.m
+//  XXTExplorer
+//
+//  Created by Zheng on 29/07/2017.
+//  Copyright © 2017 Zheng. All rights reserved.
+//
+
+#import "XUIStaticTextCell.h"
+
+@interface XUIStaticTextCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *xui_staticTextLabel;
+
+@end
+
+@implementation XUIStaticTextCell
+
++ (BOOL)xibBasedLayout {
+    return YES;
+}
+
++ (BOOL)layoutNeedsTextLabel {
+    return NO;
+}
+
++ (BOOL)layoutNeedsImageView {
+    return NO;
+}
+
++ (BOOL)layoutRequiresDynamicRowHeight {
+    return YES;
+}
+
++ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    return YES;
+}
+
+- (void)setupCell {
+    [super setupCell];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+}
+
+- (void)setXui_label:(NSString *)xui_label {
+    [super setXui_label:xui_label];
+    self.xui_staticTextLabel.text = xui_label;
+}
+
+- (void)setXui_alignment:(NSString *)xui_alignment {
+    _xui_alignment = xui_alignment;
+    if ([xui_alignment isEqualToString:@"left"]) {
+        self.xui_staticTextLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    else if ([xui_alignment isEqualToString:@"center"]) {
+        self.xui_staticTextLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    else if ([xui_alignment isEqualToString:@"right"]) {
+        self.xui_staticTextLabel.textAlignment = NSTextAlignmentRight;
+    }
+    else if ([xui_alignment isEqualToString:@"natural"]) {
+        self.xui_staticTextLabel.textAlignment = NSTextAlignmentNatural;
+    }
+    else if ([xui_alignment isEqualToString:@"justified"]) {
+        self.xui_staticTextLabel.textAlignment = NSTextAlignmentJustified;
+    }
+    else {
+        self.xui_staticTextLabel.textAlignment = NSTextAlignmentNatural;
+    }
+}
+
+@end

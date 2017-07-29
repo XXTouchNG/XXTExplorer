@@ -141,7 +141,7 @@
 - (UIViewController *)configuratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
     if (reader && reader.configurable && reader.configurationName) {
-        XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:reader.configurationName];
+        XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:reader.configurationName withBundlePath:reader.entryPath];
         return configutator;
     }
     return nil;
