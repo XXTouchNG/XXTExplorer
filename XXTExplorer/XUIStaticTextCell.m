@@ -7,6 +7,7 @@
 //
 
 #import "XUIStaticTextCell.h"
+#import "XUILogger.h"
 
 @interface XUIStaticTextCell ()
 
@@ -32,8 +33,35 @@
     return YES;
 }
 
++ (NSDictionary <NSString *, Class> *)entryValueTypes {
+    return
+    @{
+      @"alignment": [NSString class]
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    NSString *checkType = kXUICellFactoryErrorDomain;
+    @try {
+        NSString *alignmentString = cellEntry[@"alignment"];
+        if (alignmentString) {
+            NSArray <NSString *> *validAlignment = @[ @"left", @"right", @"center", @"natural", @"justified" ];
+            if (![validAlignment containsObject:alignmentString]) {
+                superResult = NO;
+                checkType = kXUICellFactoryErrorUnknownEnumDomain;
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"alignment\" (\"%@\") is invalid.", nil), alignmentString];
+            }
+        }
+    } @catch (NSString *exceptionReason) {
+        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
+        if (error) {
+            *error = exceptionError;
+        }
+    } @finally {
+        
+    }
+    return superResult;
 }
 
 - (void)setupCell {

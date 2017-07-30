@@ -48,7 +48,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (XXTE_COLLAPSED) {
+    if (XXTE_COLLAPSED && self == self.navigationController.viewControllers[0]) {
         self.applicationLeftBarButtonItems = @[ self.splitViewController.displayModeButtonItem ];
     }
 }

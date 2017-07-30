@@ -28,8 +28,16 @@
     return YES;
 }
 
++ (NSDictionary <NSString *, Class> *)entryValueTypes {
+    return
+    @{
+      @"negate": [NSNumber class]
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    return superResult;
 }
 
 - (void)setupCell {

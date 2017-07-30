@@ -409,6 +409,10 @@ typedef enum : NSUInteger {
     if (!busyOperationProgressFlag) {
         return;
     }
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    if (httpResponse.statusCode != 200) {
+        // TODO: not supported http response
+    }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     {
         [self.downloadFileHandle seekToFileOffset:0];

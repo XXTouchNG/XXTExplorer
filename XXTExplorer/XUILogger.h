@@ -11,27 +11,38 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kXUICellFactoryErrorDomain;
+extern NSString * const kXUICellFactoryErrorMissingEntryDomain;
+extern NSString * const kXUICellFactoryErrorInvalidTypeDomain;
+extern NSString * const kXUICellFactoryErrorEmptyWarningDomain;
+extern NSString * const kXUICellFactoryErrorUnknownEnumDomain;
+extern NSString * const kXUICellFactoryErrorUndefinedKeyDomain;
+extern NSString * const kXUICellFactoryErrorSizeDismatchDomain;
+
 static inline NSString * XUIParserErrorMissingEntry(NSString *path1) {
-    return [NSString stringWithFormat:NSLocalizedString(@"[Missing Entry]\nPath \"%@\" is missing.", nil), (path1)];
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"%@\" is missing.", nil), kXUICellFactoryErrorMissingEntryDomain, (path1)];
 }
 
 static inline NSString * XUIParserErrorInvalidType(NSString *path1, NSString *type1) {
-    return [NSString stringWithFormat:NSLocalizedString(@"[Invalid Type]\nPath \"%@\" should be %@.", nil), (path1), (type1)];
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@\nPath \"%@\" should be \"%@\".", nil), kXUICellFactoryErrorInvalidTypeDomain, (path1), (type1)];
 }
 
 static inline NSString * XUIParserErrorEmptyWarning(NSString *path1) {
-    return [NSString stringWithFormat:NSLocalizedString(@"[Empty Warning]\nPath \"%@\" (treated as array) is empty.", nil), (path1)];
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"%@\" (treated as \"NSArray\") is empty.", nil), kXUICellFactoryErrorEmptyWarningDomain, (path1)];
 }
 
 static inline NSString * XUIParserErrorUnknownEnum(NSString *path1, NSString *value1) {
-    return [NSString stringWithFormat:NSLocalizedString(@"[Unknown Enum]\nThe value of path \"%@\" (\"%@\") is invalid.", nil), (path1), (value1)];
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nThe value of path \"%@\" (\"%@\") is invalid.", nil), kXUICellFactoryErrorUnknownEnumDomain, (path1), (value1)];
 }
 
 static inline NSString * XUIParserErrorUndefinedKey(NSString *path1) {
-    return [NSString stringWithFormat:NSLocalizedString(@"[Undefined Key]\nThe key of path \"%@\" is undefined.", nil), (path1)];
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nThe key of path \"%@\" is undefined.", nil), kXUICellFactoryErrorUndefinedKeyDomain, (path1)];
 }
 
-NSString * const kXUICellFactoryErrorDomain = @"com.xxtouch.xui.parser.error";
+@interface XUILogger : NSObject
 
+- (void)logMessage:(NSString *)message;
+
+@end
 
 #endif /* XUILogger_h */

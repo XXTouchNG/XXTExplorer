@@ -7,6 +7,7 @@
 //
 
 #import "XUITitleValueCell.h"
+#import "XUI.h"
 
 @implementation XUITitleValueCell
 
@@ -27,12 +28,18 @@
 }
 
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    return superResult;
 }
 
 - (void)setupCell {
     [super setupCell];
-    self.selectionStyle = UITableViewCellSelectionStyleDefault;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    XUI_START_IGNORE_PARTIAL
+    if (XUI_SYSTEM_9) {
+        self.detailTextLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
+    }
+    XUI_END_IGNORE_PARTIAL
     self.detailTextLabel.textColor = UIColor.grayColor;
     self.detailTextLabel.text = nil;
 }

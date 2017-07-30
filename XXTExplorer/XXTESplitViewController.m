@@ -94,4 +94,9 @@
     return splitViewController.viewControllers[0];
 }
 
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
+    vc.navigationItem.leftBarButtonItem = self.displayModeButtonItem;
+    return NO;
+}
+
 @end

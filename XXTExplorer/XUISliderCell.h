@@ -13,7 +13,5 @@
 @property (nonatomic, strong) NSNumber *xui_min;
 @property (nonatomic, strong) NSNumber *xui_max;
 @property (nonatomic, strong) NSNumber *xui_showValue;
-@property (nonatomic, strong) NSNumber *xui_isSegmented;
-@property (nonatomic, strong) NSNumber *xui_segmentCount;
 
 @end

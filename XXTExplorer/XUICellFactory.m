@@ -13,6 +13,8 @@
 #import "XUILogger.h"
 
 @interface XUICellFactory ()
+
+@property (nonatomic, strong, readonly) XUILogger *logger;
 @property (nonatomic, strong, readonly) NSArray <NSDictionary *> *items;
 
 @end
@@ -22,6 +24,7 @@
 - (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry {
     if (self = [super init]) {
         _rootEntry = rootEntry;
+        _logger = [[XUILogger alloc] init];
     }
     return self;
 }
@@ -34,7 +37,7 @@
         if (!items)
             @throw XUIParserErrorMissingEntry(@"items");
         if (![items isKindOfClass:[NSArray class]])
-            @throw XUIParserErrorInvalidType(@"items", @"array");
+            @throw XUIParserErrorInvalidType(@"items", @"NSArray");
         NSUInteger itemCount = items.count;
         if (itemCount <= 0)
             @throw XUIParserErrorEmptyWarning(@"items");
@@ -43,16 +46,16 @@
             NSDictionary *itemDictionary = items[itemIdx];
             NSString *cellClassName = itemDictionary[@"cell"];
             if (!cellClassName) {
-                [self recordParserError:[NSString stringWithFormat:XUIParserErrorMissingEntry(@"items[%lu] -> cell"), itemIdx]];
+                [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorMissingEntry(@"items[%lu] -> cell"), itemIdx]];
                 continue;
             }
             if (![cellClassName isKindOfClass:[NSString class]]) {
-                [self recordParserError:[NSString stringWithFormat:XUIParserErrorInvalidType(@"items[%lu] -> cell", @"string"), itemIdx]];
+                [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorInvalidType(@"items[%lu] -> cell", @"NSString"), itemIdx]];
                 continue;
             }
             Class cellClass = NSClassFromString(cellClassName);
             if (!cellClass || ![cellClass isSubclassOfClass:[XUIBaseCell class]]) {
-                [self recordParserError:[NSString stringWithFormat:XUIParserErrorUnknownEnum(@"items[%lu] -> cell", cellClassName), itemIdx]];
+                [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUnknownEnum(@"items[%lu] -> cell", cellClassName), itemIdx]];
                 continue;
             }
             XUIBaseCell *cellInstance = nil;
@@ -64,7 +67,7 @@
             NSError *checkError = nil;
             BOOL checkResult = [[cellInstance class] checkEntry:itemDictionary withError:&checkError];
             if (!checkResult) {
-                [self recordParserError:checkError.localizedDescription];
+                [self.logger logMessage:[NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"items[%lu]\", %@", nil), checkError.domain, itemIdx, checkError.localizedDescription]];
                 continue;
             }
             cellInstance.bundle = self.bundle;
@@ -75,7 +78,7 @@
                 if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
                     [cellInstance setValue:itemDictionary[itemKey] forKey:propertyName];
                 } else {
-                    [self recordParserError:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
+                    [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
                 }
             }
             [cells addObject:cellInstance];
@@ -88,8 +91,9 @@
                 [groupCells addObject:groupCell];
             }
         }
+        NSUInteger cellCount = cells.count;
         NSUInteger groupCount = groupCells.count;
-        if (groupCount <= 0) {
+        if (groupCount <= 0 && cellCount > 0) {
             XUIGroupCell *groupCell1 = [[XUIGroupCell alloc] init];
             [groupCells addObject:groupCell1];
         } // default group cell
@@ -119,10 +123,6 @@
     } @finally {
         assert(self.sectionCells.count == self.otherCells.count);
     }
-}
-
-- (void)recordParserError:(NSString *)errorReason {
-    NSLog(@"[XUI] %@", errorReason);
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "XUISegmentCell.h"
+#import "XUILogger.h"
 
 @interface XUISegmentCell ()
 
@@ -32,8 +33,36 @@
     return NO;
 }
 
++ (NSDictionary <NSString *, Class> *)entryValueTypes {
+    return
+    @{
+      @"validTitles": [NSArray class],
+      @"validValues": [NSArray class],
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    NSString *checkType = kXUICellFactoryErrorDomain;
+    @try {
+        NSArray *validTitles = cellEntry[@"validTitles"];
+        NSArray *validValues = cellEntry[@"validValues"];
+        if (validTitles && validValues) {
+            if (validTitles.count != validValues.count) {
+                superResult = NO;
+                checkType = kXUICellFactoryErrorSizeDismatchDomain;
+                @throw [NSString stringWithFormat:NSLocalizedString(@"the size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
+            }
+        }
+    } @catch (NSString *exceptionReason) {
+        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
+        if (error) {
+            *error = exceptionError;
+        }
+    } @finally {
+        
+    }
+    return superResult;
 }
 
 - (void)setupCell {

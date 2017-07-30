@@ -30,8 +30,18 @@
     return NO;
 }
 
++ (NSDictionary <NSString *, Class> *)entryValueTypes {
+    return
+    @{
+      @"min": [NSNumber class],
+      @"max": [NSNumber class],
+      @"showValue": [NSNumber class]
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    return superResult;
 }
 
 - (void)setupCell {
@@ -71,10 +81,6 @@
     } else {
         self.xui_slider_valueLabel_width.constant = 0.f;
     }
-}
-
-- (void)setXui_isSegmented:(NSNumber *)xui_isSegmented {
-    _xui_isSegmented = xui_isSegmented;
 }
 
 - (IBAction)xuiSliderValueChanged:(UISlider *)sender {

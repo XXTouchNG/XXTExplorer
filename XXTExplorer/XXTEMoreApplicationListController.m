@@ -96,6 +96,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
     _applicationWorkspace = ({
         Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
@@ -304,22 +305,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     XXTEMoreApplicationDetailController *applicationDetailController = [[XXTEMoreApplicationDetailController alloc] initWithStyle:UITableViewStyleGrouped];
     applicationDetailController.applicationDetail = applicationDetail;
     [self.navigationController pushViewController:applicationDetailController animated:YES];
-}
-
-#pragma mark - UISearchControllerDelegate
-
-- (void)willPresentSearchController:(UISearchController *)searchController {
-//    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-//    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = NO;
-}
-
-- (void)willDismissSearchController:(UISearchController *)searchController {
-    
-}
-
-- (void)didDismissSearchController:(UISearchController *)searchController {
-//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-//    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - UISearchResultsUpdating

@@ -4,7 +4,8 @@
 //
 
 #import "XUIBaseCell.h"
-
+#import "XUILogger.h"
+#import "XUI.h"
 
 @implementation XUIBaseCell {
 
@@ -15,19 +16,55 @@
 }
 
 + (BOOL)layoutNeedsTextLabel {
-    return NO;
+    return YES;
 }
 
 + (BOOL)layoutNeedsImageView {
-    return NO;
+    return YES;
 }
 
 + (BOOL)layoutRequiresDynamicRowHeight {
     return NO;
 }
 
++ (NSDictionary <NSString *, NSString *> *)entryValueTypes {
+    return @{};
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    NSMutableDictionary *baseTypes =
+    [@{
+      @"cell": [NSString class],
+      @"label": [NSString class],
+      @"defaults": [NSString class],
+      @"key": [NSString class],
+      @"icon": [NSString class],
+      @"enabled": [NSNumber class],
+      @"height": [NSNumber class]
+      } mutableCopy];
+    [baseTypes addEntriesFromDictionary:[self.class entryValueTypes]];
+    BOOL checkResult = YES;
+    NSString *checkType = kXUICellFactoryErrorDomain;
+    @try {
+        for (NSString *pairKey in cellEntry.allKeys) {
+            Class pairClass = baseTypes[pairKey];
+            if (pairClass) {
+                if (![cellEntry[pairKey] isKindOfClass:pairClass]) {
+                    checkType = kXUICellFactoryErrorInvalidTypeDomain;
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"key \"%@\", should be \"%@\".", nil), pairKey, NSStringFromClass(pairClass)];
+                }
+            }
+        }
+    } @catch (NSString *exceptionReason) {
+        checkResult = NO;
+        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
+        if (error) {
+            *error = exceptionError;
+        }
+    } @finally {
+        
+    }
+    return checkResult;
 }
 
 - (NSString *)xui_cell {
@@ -61,6 +98,11 @@
         _xui_height = @44.f; // standard cell height
     }
     if ([self.class layoutNeedsTextLabel]) {
+        XUI_START_IGNORE_PARTIAL
+        if (XUI_SYSTEM_9) {
+            self.textLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
+        }
+        XUI_END_IGNORE_PARTIAL
         self.textLabel.text = nil;
     }
 }

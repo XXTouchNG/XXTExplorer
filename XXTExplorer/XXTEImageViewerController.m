@@ -55,11 +55,13 @@
     
     self.title = [self.entryPath lastPathComponent];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     UIImage *image = [UIImage imageWithContentsOfFile:self.entryPath];
     self.imageView.image = image;
     CGSize imageSize = image.size;
-    if (CGRectContainsRect(self.imageView.bounds, CGRectMake(0, 0, imageSize.width, imageSize.height)))
+    CGRect maxRect = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
+    if (CGRectContainsRect(maxRect, CGRectMake(0, 0, imageSize.width, imageSize.height)))
     {
         self.imageView.contentMode = UIViewContentModeCenter;
     } else {
@@ -69,14 +71,6 @@
     [self.view addSubview:self.scrollView];
     
     [self.scrollView addGestureRecognizer:self.doubleTapGestureRecognizer];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if (XXTE_COLLAPSED) {
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    }
-    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
 }
 
 - (void)viewDidLayoutSubviews {

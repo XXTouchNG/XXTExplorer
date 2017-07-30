@@ -5,6 +5,8 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifier";
+
 @interface XUIBaseCell : UITableViewCell
 
 @property (nonatomic, strong) NSString *xui_cell;
@@ -24,6 +26,7 @@
 + (BOOL)layoutNeedsTextLabel;
 + (BOOL)layoutNeedsImageView;
 + (BOOL)layoutRequiresDynamicRowHeight;
++ (NSDictionary <NSString *, Class> *)entryValueTypes;
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error;
 
 - (void)setupCell; // init cell

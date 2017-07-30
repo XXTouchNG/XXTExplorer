@@ -46,13 +46,6 @@
     [self makeViewConstraints];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if (XXTE_COLLAPSED) {
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    }
-}
-
 - (void)makeViewConstraints {
     [self.view addConstraint:
      [NSLayoutConstraint constraintWithItem:self.logoPlaceholderImageView

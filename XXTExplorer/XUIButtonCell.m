@@ -29,8 +29,17 @@
     return YES;
 }
 
++ (NSDictionary <NSString *, Class> *)entryValueTypes {
+    return
+    @{
+      @"action": [NSString class],
+      @"kwargs": [NSArray class]
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    return superResult;
 }
 
 - (void)setupCell {

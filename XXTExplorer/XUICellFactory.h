@@ -10,8 +10,6 @@
 
 @class XUIBaseCell, XUIGroupCell;
 
-extern NSString * const kXUICellFactoryErrorDomain;
-
 @class XUICellFactory;
 
 @protocol XUICellFactoryDelegate <NSObject>

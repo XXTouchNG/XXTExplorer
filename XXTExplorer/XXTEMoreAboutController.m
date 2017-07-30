@@ -177,7 +177,7 @@ typedef enum : NSUInteger {
                     picker.modalPresentationStyle = UIModalPresentationFormSheet;
                     [self presentViewController:picker animated:YES completion:nil];
                 } else {
-                    showUserMessage(self, NSLocalizedString(@"Please setup Mail client to send mail feedback directly.", nil));
+                    showUserMessage(self, NSLocalizedString(@"Please setup \"Mail\" to send mail feedback directly.", nil));
                 }
             }
             else if (indexPath.row == 1) {
@@ -187,7 +187,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:cydiaURL]) {
                         [[UIApplication sharedApplication] openURL:cydiaURL];
                     } else {
-                        showUserMessage(self, NSLocalizedString(@"Cannot open Cydia.", nil));
+                        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaStr]);
                     }
                 }
             }
@@ -198,7 +198,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:qqURL]) {
                         [[UIApplication sharedApplication] openURL:qqURL];
                     } else {
-                        showUserMessage(self, NSLocalizedString(@"Cannot open Mobile QQ.", nil));
+                        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), contactStr]);
                     }
                 }
             }

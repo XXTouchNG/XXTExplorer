@@ -13,10 +13,12 @@
 #import "XUIGroupCell.h"
 #import <Masonry/Masonry.h>
 #import "XUILinkCell.h"
+#import "XUILinkListCell.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
+#import "XUIOptionViewController.h"
 
-@interface XUIListViewController () <XUICellFactoryDelegate>
+@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate>
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
@@ -128,13 +130,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if (XXTE_COLLAPSED) {
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    }
-}
-
 - (void)setupSubviews {
     [self.view addSubview:self.tableView];
     if (self.headerView.headerLabel.text.length > 0 &&
@@ -235,7 +230,20 @@
         XUIBaseCell *cell = (XUIBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
         if ([cell isKindOfClass:[XUILinkCell class]]) {
             [self tableView:tableView performLinkCell:cell];
+        } else if ([cell isKindOfClass:[XUILinkListCell class]]) {
+            [self tableView:tableView performLinkListCell:cell];
         }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView performLinkListCell:(UITableViewCell *)cell {
+    XUILinkListCell *linkListCell = (XUILinkListCell *)cell;
+    if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
+    {
+        XUIOptionViewController *optionViewController = [[XUIOptionViewController alloc] initWithCell:linkListCell];
+        optionViewController.delegate = self;
+        optionViewController.title = linkListCell.xui_label;
+        [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
 
@@ -263,6 +271,7 @@
         }
     }
     if (detailController) {
+        detailController.title = linkCell.xui_label;
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }
@@ -282,6 +291,16 @@
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self.navigationController presentViewController:alertController animated:YES completion:nil];
     });
+}
+
+#pragma mark - XUIOptionViewControllerDelegate
+
+- (void)optionViewController:(XUIOptionViewController *)controller didSelectOption:(NSInteger)optionIndex {
+    NSArray <NSString *> *shortTitles = controller.cell.xui_shortTitles;
+    if (shortTitles && optionIndex < shortTitles.count) {
+        NSString *shortTitle = shortTitles[optionIndex];
+        controller.cell.detailTextLabel.text = shortTitle;
+    }
 }
 
 #pragma mark - Memory

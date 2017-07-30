@@ -7,6 +7,7 @@
 //
 
 #import "XUISecureEditTextCell.h"
+#import "XUILogger.h"
 
 @interface XUISecureEditTextCell () <UITextFieldDelegate>
 
@@ -30,8 +31,63 @@
     return NO;
 }
 
++ (NSDictionary <NSString *, Class> *)entryValueTypes {
+    return
+    @{
+      @"alignment": [NSString class],
+      @"keyboard": [NSString class],
+      @"autoCaps": [NSString class],
+      @"placeholder": [NSString class],
+      @"bestGuess": [NSString class],
+      @"noAutoCorrect": [NSNumber class],
+      @"isIP": [NSNumber class],
+      @"isURL": [NSNumber class],
+      @"isNumeric": [NSNumber class],
+      @"isDecimalPad": [NSNumber class],
+      @"isEmail": [NSNumber class],
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    return YES;
+    BOOL superResult = [super checkEntry:cellEntry withError:error];
+    NSString *checkType = kXUICellFactoryErrorDomain;
+    @try {
+        NSString *alignmentString = cellEntry[@"alignment"];
+        if (alignmentString) {
+            NSArray <NSString *> *validAlignment = @[ @"left", @"right", @"center", @"natural", @"justified" ];
+            if (![validAlignment containsObject:alignmentString]) {
+                superResult = NO;
+                checkType = kXUICellFactoryErrorUnknownEnumDomain;
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"alignment\" (\"%@\") is invalid.", nil), alignmentString];
+            }
+        }
+        NSString *keyboardString = cellEntry[@"keyboard"];
+        if (keyboardString) {
+            NSArray <NSString *> *validKeyboard = @[ @"numbers", @"phone", @"default" ];
+            if (![validKeyboard containsObject:keyboardString]) {
+                superResult = NO;
+                checkType = kXUICellFactoryErrorUnknownEnumDomain;
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"keyboard\" (\"%@\") is invalid.", nil), keyboardString];
+            }
+        }
+        NSString *autoCapsString = cellEntry[@"autoCaps"];
+        if (autoCapsString) {
+            NSArray <NSString *> *validAutoCaps = @[ @"sentences", @"words", @"all", @"none" ];
+            if (![validAutoCaps containsObject:autoCapsString]) {
+                superResult = NO;
+                checkType = kXUICellFactoryErrorUnknownEnumDomain;
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"autoCaps\" (\"%@\") is invalid.", nil), autoCapsString];
+            }
+        }
+    } @catch (NSString *exceptionReason) {
+        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
+        if (error) {
+            *error = exceptionError;
+        }
+    } @finally {
+        
+    }
+    return superResult;
 }
 
 - (void)setupCell {
