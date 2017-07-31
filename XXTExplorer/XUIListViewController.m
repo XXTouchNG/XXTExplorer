@@ -14,11 +14,16 @@
 #import <Masonry/Masonry.h>
 #import "XUILinkCell.h"
 #import "XUILinkListCell.h"
+#import "XUILinkMultipleListCell.h"
+#import "XUILinkOrderedListCell.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
 #import "XUIOptionViewController.h"
+#import "XUIMultipleOptionViewController.h"
+#import "XUIOrderedOptionViewController.h"
+#import "XXTECommonWebViewController.h"
 
-@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate>
+@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate>
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
@@ -232,7 +237,22 @@
             [self tableView:tableView performLinkCell:cell];
         } else if ([cell isKindOfClass:[XUILinkListCell class]]) {
             [self tableView:tableView performLinkListCell:cell];
+        } else if ([cell isKindOfClass:[XUILinkMultipleListCell class]]) {
+            [self tableView:tableView performLinkMultipleListCell:cell];
+        } else if ([cell isKindOfClass:[XUILinkOrderedListCell class]]) {
+            
         }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView performLinkMultipleListCell:(UITableViewCell *)cell {
+    XUILinkMultipleListCell *linkListCell = (XUILinkMultipleListCell *)cell;
+    if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
+    {
+        XUIMultipleOptionViewController *optionViewController = [[XUIMultipleOptionViewController alloc] initWithCell:linkListCell];
+        optionViewController.delegate = self;
+        optionViewController.title = linkListCell.xui_label;
+        [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
 
@@ -250,24 +270,31 @@
 - (void)tableView:(UITableView *)tableView performLinkCell:(UITableViewCell *)cell {
     XUILinkCell *linkCell = (XUILinkCell *)cell;
     NSString *detailPathName = linkCell.xui_path;
-    NSString *detailPathNameNoExt = [detailPathName stringByDeletingPathExtension];
-    NSString *detailPathNameExt = [detailPathName pathExtension];
-    NSString *detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:detailPathNameExt];
     UIViewController *detailController = nil;
-    if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
-        if (!detailPath)
-            detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"plist"];
-        if (!detailPath)
-            detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"json"];
-        if (!detailPath)
-            detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"xui"];
-        detailController = [[[self class] alloc] initWithPath:detailPath withBundlePath:[self.bundle bundlePath]];
+    NSURL *detailPathURL = [NSURL URLWithString:detailPathName];
+    if ([detailPathURL scheme]) {
+        XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:detailPathURL];
+        detailController = webController;
     } else {
-        NSError *entryError = nil;
-        NSDictionary *entryAttributes = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
-        if (!entryError && [self.class.entryService hasViewerForEntry:entryAttributes]) {
-            UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryAttributes];
-            detailController = viewer;
+        NSString *detailPathNameNoExt = [detailPathName stringByDeletingPathExtension];
+        NSString *detailPathNameExt = [detailPathName pathExtension];
+        NSString *detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:detailPathNameExt];
+        if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
+            if (!detailPath)
+                detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"plist"];
+            if (!detailPath)
+                detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"json"];
+            if (!detailPath)
+                detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"xui"];
+            detailController = [[[self class] alloc] initWithPath:detailPath withBundlePath:[self.bundle bundlePath]];
+        }
+        else {
+            NSError *entryError = nil;
+            NSDictionary *entryAttributes = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
+            if (!entryError && [self.class.entryService hasViewerForEntry:entryAttributes]) {
+                UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryAttributes];
+                detailController = viewer;
+            }
         }
     }
     if (detailController) {
@@ -301,6 +328,13 @@
         NSString *shortTitle = shortTitles[optionIndex];
         controller.cell.detailTextLabel.text = shortTitle;
     }
+}
+
+#pragma mark - XUIMultipleOptionViewControllerDelegate
+
+- (void)multipleOptionViewController:(XUIMultipleOptionViewController *)controller didSelectOption:(NSArray <NSNumber *> *)optionIndexes {
+    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionIndexes.count];
+    controller.cell.detailTextLabel.text = shortTitle;
 }
 
 #pragma mark - Memory

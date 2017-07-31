@@ -1,31 +1,29 @@
 //
-//  XUIOptionViewController.m
+//  XUIMultipleOptionViewController.m
 //  XXTExplorer
 //
-//  Created by Zheng on 17/07/2017.
+//  Created by Zheng on 31/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIOptionViewController.h"
+#import "XUIMultipleOptionViewController.h"
 #import "XUI.h"
 #import "XUIStyle.h"
 #import "XUIBaseCell.h"
 
-@interface XUIOptionViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface XUIMultipleOptionViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, assign) NSInteger selectedValue;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *selectedValues;
 
 @end
 
-@implementation XUIOptionViewController {
-    
-}
+@implementation XUIMultipleOptionViewController
 
-- (instancetype)initWithCell:(XUILinkListCell *)cell {
+- (instancetype)initWithCell:(XUILinkMultipleListCell *)cell {
     if (self = [super init]) {
         _cell = cell;
-        _selectedValue = [cell.xui_value integerValue];
+        _selectedValues = cell.xui_value ? [cell.xui_value mutableCopy] : [NSMutableArray array];
     }
     return self;
 }
@@ -89,11 +87,11 @@
         if (nil == cell)
         {
             cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:XUIBaseCellReuseIdentifier];
+                                      reuseIdentifier:XUIBaseCellReuseIdentifier];
         }
         cell.tintColor = XUI_COLOR;
         cell.textLabel.text = self.cell.xui_validTitles[(NSUInteger) indexPath.row];
-        if (self.selectedValue == indexPath.row) {
+        if ([self.selectedValues containsObject:@(indexPath.row)]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -106,16 +104,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        self.selectedValue = indexPath.row;
-        for (UITableViewCell *cell in tableView.visibleCells) {
+        NSNumber *selectedIndex = @(indexPath.row);
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if ([self.selectedValues containsObject:selectedIndex]) {
+            [self.selectedValues removeObject:selectedIndex];
             cell.accessoryType = UITableViewCellAccessoryNone;
+        } else {
+            [self.selectedValues addObject:selectedIndex];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
-        UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        // [self.tableView reloadData];
-        self.cell.xui_value = @(self.selectedValue);
-        if (_delegate && [_delegate respondsToSelector:@selector(optionViewController:didSelectOption:)]) {
-            [_delegate optionViewController:self didSelectOption:self.selectedValue];
+        self.cell.xui_value = self.selectedValues;
+        if (_delegate && [_delegate respondsToSelector:@selector(multipleOptionViewController:didSelectOption:)]) {
+            [_delegate multipleOptionViewController:self didSelectOption:self.selectedValues];
         }
     }
 }

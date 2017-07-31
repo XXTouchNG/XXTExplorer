@@ -92,6 +92,7 @@
 		0F8521511F2D979E00A912AC /* XUILinkMultipleListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85214F1F2D979E00A912AC /* XUILinkMultipleListCell.xib */; };
 		0F8521551F2D97AE00A912AC /* XUILinkOrderedListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8521531F2D97AE00A912AC /* XUILinkOrderedListCell.m */; };
 		0F8521561F2D97AE00A912AC /* XUILinkOrderedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8521541F2D97AE00A912AC /* XUILinkOrderedListCell.xib */; };
+		0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */; };
 		0F91E8F11F139DBA00D65BF7 /* NSFileManager+DeepSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F91E8F01F139DBA00D65BF7 /* NSFileManager+DeepSize.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
@@ -325,6 +326,8 @@
 		0F8521521F2D97AE00A912AC /* XUILinkOrderedListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkOrderedListCell.h; sourceTree = "<group>"; };
 		0F8521531F2D97AE00A912AC /* XUILinkOrderedListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkOrderedListCell.m; sourceTree = "<group>"; };
 		0F8521541F2D97AE00A912AC /* XUILinkOrderedListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUILinkOrderedListCell.xib; sourceTree = "<group>"; };
+		0F8AB9F81F2EFCA500E3C774 /* XUIMultipleOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIMultipleOptionViewController.h; sourceTree = "<group>"; };
+		0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIMultipleOptionViewController.m; sourceTree = "<group>"; };
 		0F91E8EF1F139DBA00D65BF7 /* NSFileManager+DeepSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DeepSize.h"; sourceTree = "<group>"; };
 		0F91E8F01F139DBA00D65BF7 /* NSFileManager+DeepSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DeepSize.m"; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -877,6 +880,8 @@
 				0FB6BB6C1F1C4B4900CADCEA /* XUIObjectViewController.m */,
 				0FB6BB711F1C4B8C00CADCEA /* XUIOptionViewController.h */,
 				0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */,
+				0F8AB9F81F2EFCA500E3C774 /* XUIMultipleOptionViewController.h */,
+				0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */,
 				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
 				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
 			);
@@ -1376,6 +1381,7 @@
 				0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */,
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				0F85214B1F2D978A00A912AC /* XUILinkListCell.m in Sources */,
+				0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				0F8521551F2D97AE00A912AC /* XUILinkOrderedListCell.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
