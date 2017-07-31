@@ -23,7 +23,7 @@
 #import "XUIOrderedOptionViewController.h"
 #import "XXTECommonWebViewController.h"
 
-@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate>
+@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate>
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
@@ -240,8 +240,19 @@
         } else if ([cell isKindOfClass:[XUILinkMultipleListCell class]]) {
             [self tableView:tableView performLinkMultipleListCell:cell];
         } else if ([cell isKindOfClass:[XUILinkOrderedListCell class]]) {
-            
+            [self tableView:tableView performLinkOrderedListCell:cell];
         }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView performLinkOrderedListCell:(UITableViewCell *)cell {
+    XUILinkOrderedListCell *linkListCell = (XUILinkOrderedListCell *)cell;
+    if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
+    {
+        XUIOrderedOptionViewController *optionViewController = [[XUIOrderedOptionViewController alloc] initWithCell:linkListCell];
+        optionViewController.delegate = self;
+        optionViewController.title = linkListCell.xui_label;
+        [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
 
@@ -314,7 +325,7 @@
 - (void)cellFactory:(XUICellFactory *)parser didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *entryName = [self.entryPath lastPathComponent];
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n[Parse Error]\n%@", nil), entryName, error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@", nil), entryName, error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self.navigationController presentViewController:alertController animated:YES completion:nil];
     });
@@ -333,6 +344,13 @@
 #pragma mark - XUIMultipleOptionViewControllerDelegate
 
 - (void)multipleOptionViewController:(XUIMultipleOptionViewController *)controller didSelectOption:(NSArray <NSNumber *> *)optionIndexes {
+    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionIndexes.count];
+    controller.cell.detailTextLabel.text = shortTitle;
+}
+
+#pragma mark - XUIOrderedOptionViewControllerDelegate
+
+- (void)orderedOptionViewController:(XUIOrderedOptionViewController *)controller didSelectOption:(NSArray<NSNumber *> *)optionIndexes {
     NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionIndexes.count];
     controller.cell.detailTextLabel.text = shortTitle;
 }

@@ -171,10 +171,14 @@ typedef enum : NSUInteger {
         {
             [[XXTExplorerEntryService sharedInstance] bindExtension:entryBaseExtension toViewer:bindToViewerName];
             self.selectedIndexPath = indexPath;
+            for (UITableViewCell *cell in tableView.visibleCells) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+            selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
             if (_delegate && [_delegate respondsToSelector:@selector(bindingViewController:bindingDidChanged:)]) {
                 [_delegate bindingViewController:self bindingDidChanged:bindToViewerName];
             }
-            [self.tableView reloadData];
         }
     }
 }

@@ -14,7 +14,7 @@
 @interface XUIOptionViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, assign) NSInteger selectedValue;
+@property (nonatomic, assign) NSInteger selectedIndex;
 
 @end
 
@@ -25,7 +25,13 @@
 - (instancetype)initWithCell:(XUILinkListCell *)cell {
     if (self = [super init]) {
         _cell = cell;
-        _selectedValue = [cell.xui_value integerValue];
+        id rawValue = cell.xui_value;
+        if (rawValue) {
+            NSUInteger rawIndex = [self.cell.xui_validValues indexOfObject:rawValue];
+            if ((rawIndex) != NSNotFound) {
+                _selectedIndex = rawIndex;
+            }
+        }
     }
     return self;
 }
@@ -93,7 +99,7 @@
         }
         cell.tintColor = XUI_COLOR;
         cell.textLabel.text = self.cell.xui_validTitles[(NSUInteger) indexPath.row];
-        if (self.selectedValue == indexPath.row) {
+        if (self.selectedIndex == indexPath.row) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -106,18 +112,28 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        self.selectedValue = indexPath.row;
+        self.selectedIndex = indexPath.row;
         for (UITableViewCell *cell in tableView.visibleCells) {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
         UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
         selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        // [self.tableView reloadData];
-        self.cell.xui_value = @(self.selectedValue);
+        id selectedValue = self.cell.xui_validValues[self.selectedIndex];
+        if (selectedValue) {
+            self.cell.xui_value = selectedValue;
+        }
         if (_delegate && [_delegate respondsToSelector:@selector(optionViewController:didSelectOption:)]) {
-            [_delegate optionViewController:self didSelectOption:self.selectedValue];
+            [_delegate optionViewController:self didSelectOption:self.selectedIndex];
         }
     }
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [XUIOptionViewController dealloc]");
+#endif
 }
 
 @end

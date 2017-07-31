@@ -14,7 +14,7 @@
 @interface XUIMultipleOptionViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *selectedValues;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *selectedIndexes;
 
 @end
 
@@ -23,7 +23,19 @@
 - (instancetype)initWithCell:(XUILinkMultipleListCell *)cell {
     if (self = [super init]) {
         _cell = cell;
-        _selectedValues = cell.xui_value ? [cell.xui_value mutableCopy] : [NSMutableArray array];
+        NSArray *rawValues = cell.xui_value;
+        if (rawValues && [rawValues isKindOfClass:[NSArray class]]) {
+            NSMutableArray <NSNumber *> *selectedIndexes = [[NSMutableArray alloc] initWithCapacity:rawValues.count];
+            for (id rawValue in rawValues) {
+                NSUInteger rawIndex = [cell.xui_validValues indexOfObject:rawValue];
+                if (rawIndex != NSNotFound) {
+                    [selectedIndexes addObject:@(rawIndex)];
+                }
+            }
+            _selectedIndexes = selectedIndexes;
+        } else {
+            _selectedIndexes = [[NSMutableArray alloc] init];
+        }
     }
     return self;
 }
@@ -91,7 +103,7 @@
         }
         cell.tintColor = XUI_COLOR;
         cell.textLabel.text = self.cell.xui_validTitles[(NSUInteger) indexPath.row];
-        if ([self.selectedValues containsObject:@(indexPath.row)]) {
+        if ([self.selectedIndexes containsObject:@(indexPath.row)]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -106,18 +118,39 @@
     if (indexPath.section == 0) {
         NSNumber *selectedIndex = @(indexPath.row);
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if ([self.selectedValues containsObject:selectedIndex]) {
-            [self.selectedValues removeObject:selectedIndex];
+        if ([self.selectedIndexes containsObject:selectedIndex]) {
+            [self.selectedIndexes removeObject:selectedIndex];
             cell.accessoryType = UITableViewCellAccessoryNone;
         } else {
-            [self.selectedValues addObject:selectedIndex];
+            NSNumber *maxCountObject = self.cell.xui_maxCount;
+            if (maxCountObject) {
+                NSUInteger maxCount = [maxCountObject unsignedIntegerValue];
+                if (self.selectedIndexes.count >= maxCount) {
+                    return;
+                }
+            }
+            [self.selectedIndexes addObject:selectedIndex];
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
-        self.cell.xui_value = self.selectedValues;
+        NSMutableArray *selectedValues = [[NSMutableArray alloc] initWithCapacity:self.selectedIndexes.count];
+        for (NSNumber *selectedIndex in self.selectedIndexes) {
+            NSUInteger selectedIndexValue = [selectedIndex unsignedIntegerValue];
+            id selectedValue = self.cell.xui_validValues[selectedIndexValue];
+            [selectedValues addObject:selectedValue];
+        }
+        self.cell.xui_value = [[NSArray alloc] initWithArray:selectedValues];
         if (_delegate && [_delegate respondsToSelector:@selector(multipleOptionViewController:didSelectOption:)]) {
-            [_delegate multipleOptionViewController:self didSelectOption:self.selectedValues];
+            [_delegate multipleOptionViewController:self didSelectOption:self.selectedIndexes];
         }
     }
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [XUIMultipleOptionViewController dealloc]");
+#endif
 }
 
 @end

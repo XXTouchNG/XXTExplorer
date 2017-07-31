@@ -238,7 +238,11 @@ typedef enum : NSUInteger {
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             self.selectedItemType = (NSUInteger) indexPath.row;
-            [tableView reloadData];
+            for (UITableViewCell *cell in tableView.visibleCells) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+            selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {

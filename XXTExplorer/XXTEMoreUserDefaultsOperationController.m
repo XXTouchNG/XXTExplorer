@@ -8,6 +8,7 @@
 
 #import "XXTEMoreUserDefaultsOperationController.h"
 #import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEDispatchDefines.h"
 
 @interface XXTEMoreUserDefaultsOperationController ()
 
@@ -83,10 +84,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSUInteger selectedOperation = (NSUInteger)indexPath.row;
     if (_delegate && [_delegate respondsToSelector:@selector(userDefaultsOperationController:operationSelectedWithIndex:completion:)]) {
+        @weakify(self);
         [_delegate userDefaultsOperationController:self operationSelectedWithIndex:selectedOperation completion:^(BOOL succeed) {
+            @strongify(self);
             if (succeed) {
                 self.selectedOperation = selectedOperation;
-                [self.tableView reloadData];
+                for (UITableViewCell *cell in tableView.visibleCells) {
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
+                UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+                selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
         }];
     }
