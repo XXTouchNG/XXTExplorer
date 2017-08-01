@@ -189,7 +189,11 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (self == self.navigationController.viewControllers[0]) {
         self.title = NSLocalizedString(@"My Scripts", nil);
     } else {
-        self.title = [self.entryPath lastPathComponent];
+        NSString *entryPath = self.entryPath;
+        if (entryPath) {
+            NSString *entryName = [entryPath lastPathComponent];
+            self.title = entryName;
+        }
     }
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;

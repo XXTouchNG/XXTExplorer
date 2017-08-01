@@ -108,7 +108,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = [self.entryPath lastPathComponent];
+    NSString *entryPath = self.entryPath;
+    if (entryPath) {
+        NSString *entryName = [entryPath lastPathComponent];
+        self.title = entryName;
+    }
+    
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     NSDictionary <NSString *, id> *rootEntry = self.parser.rootEntry;
@@ -206,7 +211,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        return [self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row].xui_height floatValue];
+        XUIBaseCell *cell = self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+        CGFloat cellHeight = [cell.xui_height floatValue];
+        return (cellHeight > 0) ? cellHeight : UITableViewAutomaticDimension;
     }
     return 0;
 }

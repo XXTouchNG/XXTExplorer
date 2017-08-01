@@ -61,7 +61,7 @@
             Class <XXTEViewer> viewerClass = registeredViewerClass;
             NSArray <NSString *> *suggestedExtensions = [viewerClass suggestedExtensions];
             for (NSString *suggestExtension in suggestedExtensions) {
-                if (!originalBindingDictionary[suggestExtension] && !newBindingDictionary[suggestedExtensions]) { // if no binding, set default binding
+                if (!originalBindingDictionary[suggestExtension] && !newBindingDictionary[suggestExtension]) { // if no binding, set default binding
                     newBindingDictionary[suggestExtension] = NSStringFromClass(viewerClass);
                     continue;
                 }

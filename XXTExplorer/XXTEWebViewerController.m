@@ -46,8 +46,10 @@
     [super viewDidLoad];
     
     NSString *entryPath = self.entryPath;
-    NSString *entryName = [entryPath lastPathComponent];
-    self.title = entryName;
+    if (entryPath) {
+        NSString *entryName = [entryPath lastPathComponent];
+        self.title = entryName;
+    }
 }
 
 #pragma mark - Memory

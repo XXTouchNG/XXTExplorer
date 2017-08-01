@@ -93,7 +93,7 @@
 - (void)setupCell {
     _xui_enabled = @YES;
     if ([self.class layoutRequiresDynamicRowHeight]) {
-        _xui_height = @(UITableViewAutomaticDimension);
+        _xui_height = @(-1);
     } else {
         _xui_height = @44.f; // standard cell height
     }

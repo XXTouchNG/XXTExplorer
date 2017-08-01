@@ -8,6 +8,8 @@
 
 #import "XUIBaseCell.h"
 
+static NSString * const XUILinkCellReuseIdentifier = @"XUILinkCellReuseIdentifier";
+
 @interface XUILinkCell : XUIBaseCell
 
 @property (nonatomic, strong) NSString *xui_path;

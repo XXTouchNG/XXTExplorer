@@ -6,11 +6,12 @@
 	<array>
 		<string>XXTEExecutableViewer</string>
 		<string>XXTEArchiveViewer</string>
-		<string>XUIListViewController</string>
+		<string>XXTEObjectViewController</string>
 		<string>XXTEImageViewerController</string>
 		<string>XXTEMediaPlayerController</string>
 		<string>XXTEWebViewerController</string>
 		<string>XXTECodeViewerController</string>
+		<string>XUIListViewController</string>
 	</array>
 	<key>AVAILABLE_BUNDLE_READER</key>
 	<array>

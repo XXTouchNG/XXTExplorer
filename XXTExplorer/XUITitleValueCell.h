@@ -8,6 +8,8 @@
 
 #import "XUIBaseCell.h"
 
+static NSString * const XUITitleValueCellReuseIdentifier = @"XUITitleValueCellReuseIdentifier";
+
 @interface XUITitleValueCell : XUIBaseCell
 
 @end

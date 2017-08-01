@@ -53,7 +53,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = [self.entryPath lastPathComponent];
+    NSString *entryPath = self.entryPath;
+    if (entryPath) {
+        NSString *entryName = [entryPath lastPathComponent];
+        self.title = entryName;
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     

@@ -6,12 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "XXTEObjectViewController.h"
 
-@interface XXTExplorerItemDetailObjectViewController : UITableViewController
-
-@property (nonatomic, strong) NSBundle *entryBundle;
-@property (nonatomic, strong, readonly) id detailObject;
-- (instancetype)initWithDetailObject:(id)detailObject;
+@interface XXTExplorerItemDetailObjectViewController : XXTEObjectViewController
 
 @end

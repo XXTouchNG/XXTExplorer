@@ -43,6 +43,7 @@
               @"conf", // Nginx
               @"py", // Python
               @"txt", // Plain Text
+              @"strings", // Strings
               ];
 }
 
@@ -67,7 +68,9 @@
     
     NSString *entryPath = self.entryPath;
     NSString *entryName = [entryPath lastPathComponent];
-    self.title = entryName;
+    if (entryName) {
+        self.title = entryName;
+    }
     
     NSError *templateError = nil;
     NSMutableString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];

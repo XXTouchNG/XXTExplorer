@@ -15,6 +15,8 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEViewShaker.h"
 #import "XXTEAppDefines.h"
+#import "XXTEDispatchDefines.h"
+
 #import "XXTExplorerDefaults.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreAddressCell.h"
@@ -27,8 +29,10 @@
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBindingViewController.h"
 #import "XXTExplorerViewController.h"
-#import "XXTEDispatchDefines.h"
+
+#import "XXTEBaseObjectViewController.h"
 #import "XXTExplorerItemDetailObjectViewController.h"
+#import "NSObject+StringValue.h"
 
 static int sizingCancelFlag = 0;
 static NSString * const kXXTEDynamicSectionIdentifierSectionName = @"SectionName";
@@ -346,32 +350,44 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             entryReader.metaDictionary &&
             entryReader.displayMetaKeys) {
             
+            NSArray <Class> *supportedTypes = [XXTEBaseObjectViewController supportedTypes];
             NSDictionary *extendedDictionary = entryReader.metaDictionary;
             NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
             
             for (NSString *extendedKey in displayExtendedKeys)
             {
                 id extendedValue = extendedDictionary[extendedKey];
-                BOOL isString = [extendedValue isKindOfClass:[NSString class]];
-                BOOL isNumber = [extendedValue isKindOfClass:[NSNumber class]];
-                BOOL isDictionary = [extendedValue isKindOfClass:[NSDictionary class]];
-                BOOL isArray = [extendedValue isKindOfClass:[NSArray class]];
                 
-                if (isString || isNumber) {
-                    XXTEMoreTitleValueCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-                    extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                    extendedCell.valueLabel.text = isString ? extendedValue : [extendedValue stringValue];
-                    [extendedCells addObject:extendedCell];
+                Class valueClass = [extendedValue class];
+                BOOL supportedValue = NO;
+                for (Class supportedType in supportedTypes) {
+                    if ([valueClass isSubclassOfClass:supportedType]) {
+                        supportedValue = YES;
+                        break;
+                    }
+                }
+                if (supportedValue)
+                {
+                    XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+                    cell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    cell.valueLabel.text = [extendedValue stringValue];
+                    
+                    [extendedCells addObject:cell];
                     [extendedHeights addObject:@(-1)];
                     [extendedObjects addObject:[NSNull null]];
                 }
-                else if (isDictionary || isArray) {
-                    XXTEMoreLinkNoIconCell *extendedCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-                    extendedCell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
-                    [extendedCells addObject:extendedCell];
+                else
+                {
+                    XXTEMoreLinkNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                    cell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    
+                    [extendedCells addObject:cell];
                     [extendedHeights addObject:@(-1)];
                     [extendedObjects addObject:extendedValue];
                 }
+                
             }
         }
         
@@ -448,10 +464,6 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         cell11.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell11.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
-        
-//        XXTEMoreLinkNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-//        cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        cell12.titleLabel.text = NSLocalizedString(@"Change Permission", nil);
         
         XXTExplorerDynamicSection *section7 = [[XXTExplorerDynamicSection alloc] init];
         section7.identifier = kXXTEDynamicSectionIdentifierSectionPermission;
@@ -645,7 +657,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         else if ([cell isKindOfClass:[XXTEMoreLinkNoIconCell class]] &&
                  [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
-            XXTExplorerItemDetailObjectViewController *objectViewController = [[XXTExplorerItemDetailObjectViewController alloc] initWithDetailObject:relatedObject];
+            XXTExplorerItemDetailObjectViewController *objectViewController = [[XXTExplorerItemDetailObjectViewController alloc] initWithRootObject:relatedObject];
             objectViewController.entryBundle = self.entryBundle;
             objectViewController.title = ((XXTEMoreLinkNoIconCell *)cell).titleLabel.text;
             [self.navigationController pushViewController:objectViewController animated:YES];
