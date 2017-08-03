@@ -16,6 +16,8 @@
 
 @implementation XUISwitchCell
 
+@synthesize xui_value = _xui_value;
+
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -31,7 +33,8 @@
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
     return
     @{
-      @"negate": [NSNumber class]
+      @"negate": [NSNumber class],
+      @"value": [NSNumber class]
       };
 }
 
@@ -47,7 +50,7 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    [super setXui_value:xui_value];
+    _xui_value = xui_value;
     BOOL value = [xui_value boolValue];
     self.xui_switch.on = self.xui_negate ? !value : value;
 }
@@ -67,7 +70,7 @@
 - (IBAction)xuiSwitchValueChanged:(UISwitch *)sender {
     if (sender == self.xui_switch) {
         self.xui_value = @(sender.on);
-        // TODO: save? sync? value
+        [self.defaultsService saveDefaultsFromCell:self];
     }
 }
 

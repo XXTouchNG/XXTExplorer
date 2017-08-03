@@ -7,7 +7,7 @@
 //
 
 #import "XUIViewController.h"
-#import "XUILinkOrderedListCell.h"
+#import "XUIOrderedOptionCell.h"
 
 @class XUIOrderedOptionViewController;
 
@@ -20,7 +20,7 @@
 @interface XUIOrderedOptionViewController : XUIViewController
 
 @property (nonatomic, weak) id <XUIOrderedOptionViewControllerDelegate> delegate;
-@property (nonatomic, strong, readonly) XUILinkOrderedListCell *cell;
-- (instancetype)initWithCell:(XUILinkOrderedListCell *)cell;
+@property (nonatomic, strong, readonly) XUIOrderedOptionCell *cell;
+- (instancetype)initWithCell:(XUIOrderedOptionCell *)cell;
 
 @end

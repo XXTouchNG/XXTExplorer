@@ -7,7 +7,7 @@
 //
 
 #import "XUIViewController.h"
-#import "XUILinkListCell.h"
+#import "XUIOptionCell.h"
 
 @class XUIOptionViewController;
 
@@ -20,7 +20,7 @@
 @interface XUIOptionViewController : XUIViewController
 
 @property (nonatomic, weak) id <XUIOptionViewControllerDelegate> delegate;
-@property (nonatomic, strong, readonly) XUILinkListCell *cell;
-- (instancetype)initWithCell:(XUILinkListCell *)cell;
+@property (nonatomic, strong, readonly) XUIOptionCell *cell;
+- (instancetype)initWithCell:(XUIOptionCell *)cell;
 
 @end

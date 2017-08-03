@@ -2141,7 +2141,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-            return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": @{@"XXTOUCH_LAUNCH_VIA": @"APPLICATION"}}];
+            return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": uAppConstEnvp()}];
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
         }

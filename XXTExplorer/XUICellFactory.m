@@ -11,20 +11,24 @@
 #import "XUIBaseCell.h"
 #import "XUIGroupCell.h"
 #import "XUILogger.h"
+#import "XUIDefaultsService.h"
 
 @interface XUICellFactory ()
 
 @property (nonatomic, strong, readonly) XUILogger *logger;
+@property (nonatomic, strong, readonly) XUIDefaultsService *defaultsService;
 @property (nonatomic, strong, readonly) NSArray <NSDictionary *> *items;
 
 @end
 
 @implementation XUICellFactory
 
-- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry {
+- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry withBundle:(NSBundle *)bundle {
     if (self = [super init]) {
         _rootEntry = rootEntry;
+        _bundle = bundle;
         _logger = [[XUILogger alloc] init];
+        _defaultsService = [[XUIDefaultsService alloc] init];
     }
     return self;
 }
@@ -71,6 +75,7 @@
                 continue;
             }
             cellInstance.bundle = self.bundle;
+            cellInstance.defaultsService = self.defaultsService;
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
             for (int keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
                 NSString *itemKey = itemAllKeys[(NSUInteger) keyIdx];
@@ -81,6 +86,7 @@
                     [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
                 }
             }
+            [self.defaultsService readDefaultsToCell:cellInstance];
             [cells addObject:cellInstance];
         }
         NSMutableArray <XUIGroupCell *> *groupCells = [[NSMutableArray alloc] init];

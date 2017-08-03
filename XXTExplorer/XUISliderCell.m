@@ -18,6 +18,8 @@
 
 @implementation XUISliderCell
 
+@synthesize xui_value = _xui_value;
+
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -35,7 +37,8 @@
     @{
       @"min": [NSNumber class],
       @"max": [NSNumber class],
-      @"showValue": [NSNumber class]
+      @"showValue": [NSNumber class],
+      @"value": [NSNumber class]
       };
 }
 
@@ -48,6 +51,7 @@
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.xui_slider addTarget:self action:@selector(xuiSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.xui_slider addTarget:self action:@selector(xuiSliderValueDidFinishChanging:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setXui_enabled:(NSNumber *)xui_enabled {
@@ -57,10 +61,10 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    [super setXui_value:xui_value];
+    _xui_value = xui_value;
     float value = [xui_value floatValue];
     self.xui_slider.value = value;
-    self.xui_slider_valueLabel.text = [@(value) stringValue];
+    self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", value];
 }
 
 - (void)setXui_min:(NSNumber *)xui_min {
@@ -85,9 +89,18 @@
 
 - (IBAction)xuiSliderValueChanged:(UISlider *)sender {
     if (sender == self.xui_slider) {
+//        self.xui_slider_valueLabel.text = [@(sender.value) stringValue];
+        self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
+    }
+}
+
+- (IBAction)xuiSliderValueDidFinishChanging:(UISlider *)sender {
+    if (sender == self.xui_slider) {
         self.xui_value = @(sender.value);
-        self.xui_slider_valueLabel.text = [@(sender.value) stringValue];
-        // TODO: save? sync? value
+        [self.defaultsService saveDefaultsFromCell:self];
+        
+//        self.xui_slider_valueLabel.text = [@(sender.value) stringValue];
+        self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
     }
 }
 

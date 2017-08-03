@@ -1,16 +1,16 @@
 //
-//  XUILinkListCell.m
+//  XUIOptionCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 30/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUILinkListCell.h"
+#import "XUIOptionCell.h"
 #import "XUI.h"
 #import "XUILogger.h"
 
-@implementation XUILinkListCell
+@implementation XUIOptionCell
 
 + (BOOL)xibBasedLayout {
     return YES;

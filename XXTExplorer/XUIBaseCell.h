@@ -4,6 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XUIDefaultsService.h"
 
 static NSString * const XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifier";
 
@@ -21,6 +22,7 @@ static NSString * const XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifie
 @property (nonatomic, strong) id xui_value;
 
 @property (nonatomic, strong) NSBundle *bundle;
+@property (nonatomic, strong) XUIDefaultsService *defaultsService;
 
 + (BOOL)xibBasedLayout;
 + (BOOL)layoutNeedsTextLabel;

@@ -31,7 +31,6 @@
 #import "XXTExplorerViewController.h"
 
 #import "XXTEBaseObjectViewController.h"
-#import "XXTExplorerItemDetailObjectViewController.h"
 #import "NSObject+StringValue.h"
 
 static int sizingCancelFlag = 0;
@@ -657,7 +656,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         else if ([cell isKindOfClass:[XXTEMoreLinkNoIconCell class]] &&
                  [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
-            XXTExplorerItemDetailObjectViewController *objectViewController = [[XXTExplorerItemDetailObjectViewController alloc] initWithRootObject:relatedObject];
+            XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
             objectViewController.entryBundle = self.entryBundle;
             objectViewController.title = ((XXTEMoreLinkNoIconCell *)cell).titleLabel.text;
             [self.navigationController pushViewController:objectViewController animated:YES];

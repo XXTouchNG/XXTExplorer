@@ -22,13 +22,13 @@
 @interface XUICellFactory : NSObject
 
 @property (nonatomic, weak) id <XUICellFactoryDelegate> delegate;
-@property (nonatomic, strong) NSBundle *bundle;
+@property (nonatomic, strong, readonly) NSBundle *bundle;
 @property (nonatomic, strong, readonly) NSDictionary <NSString *, id> *rootEntry;
 @property (nonatomic, strong, readonly) NSError *error;
 @property (nonatomic, strong, readonly) NSArray <XUIGroupCell *> *sectionCells;
 @property (nonatomic, strong, readonly) NSArray <NSArray <XUIBaseCell *> *> *otherCells;
 
-- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry;
+- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry withBundle:(NSBundle *)bundle;
 - (void)parse; // this method should run in main thread
 
 @end

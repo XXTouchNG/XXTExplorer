@@ -11,6 +11,8 @@
 //#import "XUIStaticTextCell.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "NSObject+StringValue.h"
+#import "XXTEUserInterfaceDefines.h"
+#import <PromiseKit/PromiseKit.h>
 
 @interface XXTEBaseObjectViewController ()
 
@@ -36,11 +38,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleValueCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
-    
     _singleValueCell = ({
         id Object = self.RootObject;
-        XXTEMoreTitleValueCell *cell = [[XXTEMoreTitleValueCell alloc] init];
+        XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell.titleLabel.text = [self.entryBundle localizedStringForKey:@"Value" value:nil table:@"Meta"];
         cell.valueLabel.text = [Object stringValue];
         cell;
@@ -65,6 +65,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (tableView == self.tableView) {
+        if (0 == indexPath.section) {
+            XXTEMoreTitleValueCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            NSString *detailText = cell.valueLabel.text;
+            if (detailText && detailText.length > 0) {
+                blockUserInteractions(self, YES);
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
+                }].finally(^() {
+                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockUserInteractions(self, NO);
+                });
+            }
+        }
+    }
 }
 
 @end

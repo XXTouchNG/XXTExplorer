@@ -1,16 +1,16 @@
 //
-//  XUILinkMultipleListCell.m
+//  XUIOrderedOptionCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 30/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUILinkMultipleListCell.h"
+#import "XUIOrderedOptionCell.h"
 #import "XUI.h"
 #import "XUILogger.h"
 
-@implementation XUILinkMultipleListCell
+@implementation XUIOrderedOptionCell
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -33,8 +33,10 @@
     @{
       @"validTitles": [NSArray class],
       @"validValues": [NSArray class],
+      @"minCount": [NSNumber class],
       @"maxCount": [NSNumber class],
-      @"staticTextMessage": [NSString class]
+      @"staticTextMessage": [NSString class],
+      @"value": [NSArray class]
       };
 }
 

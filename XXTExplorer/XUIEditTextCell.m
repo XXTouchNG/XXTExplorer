@@ -45,6 +45,7 @@
       @"isNumeric": [NSNumber class],
       @"isDecimalPad": [NSNumber class],
       @"isEmail": [NSNumber class],
+      @"value": [NSString class]
       };
 }
 
@@ -63,7 +64,7 @@
         }
         NSString *keyboardString = cellEntry[@"keyboard"];
         if (keyboardString) {
-            NSArray <NSString *> *validKeyboard = @[ @"numbers", @"phone", @"default" ];
+            NSArray <NSString *> *validKeyboard = @[ @"numbers", @"phone", @"ascii", @"default" ];
             if (![validKeyboard containsObject:keyboardString]) {
                 superResult = NO;
                 checkType = kXUICellFactoryErrorUnknownEnumDomain;
@@ -109,6 +110,9 @@
     }
     else if ([xui_keyboard isEqualToString:@"phone"]) {
         self.xui_textField.keyboardType = UIKeyboardTypePhonePad;
+    }
+    else if ([xui_keyboard isEqualToString:@"ascii"]) {
+        self.xui_textField.keyboardType = UIKeyboardTypeASCIICapable;
     }
     else {
         self.xui_textField.keyboardType = UIKeyboardTypeDefault;
@@ -201,6 +205,18 @@
     [super setXui_enabled:xui_enabled];
     BOOL enabled = [xui_enabled boolValue];
     self.xui_textField.enabled = enabled;
+}
+
+- (void)setXui_value:(id)xui_value {
+    _xui_value = xui_value;
+    self.xui_textField.text = xui_value;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.xui_value = textField.text;
+    [self.defaultsService saveDefaultsFromCell:self];
 }
 
 @end

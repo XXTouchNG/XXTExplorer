@@ -13,24 +13,24 @@
 #import "XUIGroupCell.h"
 #import <Masonry/Masonry.h>
 #import "XUILinkCell.h"
-#import "XUILinkListCell.h"
-#import "XUILinkMultipleListCell.h"
-#import "XUILinkOrderedListCell.h"
+#import "XUIOptionCell.h"
+#import "XUIMultipleOptionCell.h"
+#import "XUIOrderedOptionCell.h"
+#import "XUITitleValueCell.h"
+#import "XUIButtonCell.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
 #import "XUIOptionViewController.h"
 #import "XUIMultipleOptionViewController.h"
 #import "XUIOrderedOptionViewController.h"
 #import "XXTECommonWebViewController.h"
+#import "XXTEObjectViewController.h"
 
 @interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate>
 
-@property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
-
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
@@ -95,12 +95,11 @@
             return;
         }
         
-        XUICellFactory *parser = [[XUICellFactory alloc] initWithRootEntry:rootEntry];
+        XUICellFactory *parser = [[XUICellFactory alloc] initWithRootEntry:rootEntry withBundle:self.bundle];
         if (!parser) {
             return;
         }
         parser.delegate = self;
-        parser.bundle = self.bundle;
         _parser = parser;
     }
 }
@@ -233,7 +232,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+    XUIBaseCell *cell = self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+    if ([cell isKindOfClass:[XUIOptionCell class]]) {
+        [self updateLinkListCell:(XUIOptionCell *)cell];
+    }
+    else if ([cell isKindOfClass:[XUIMultipleOptionCell class]]) {
+        [self updateLinkMultipleListCell:(XUIMultipleOptionCell *)cell];
+    }
+    else if ([cell isKindOfClass:[XUIOrderedOptionCell class]]) {
+        [self updateLinkOrderedListCell:(XUIOrderedOptionCell *)cell];
+    }
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -242,18 +251,44 @@
         XUIBaseCell *cell = (XUIBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
         if ([cell isKindOfClass:[XUILinkCell class]]) {
             [self tableView:tableView performLinkCell:cell];
-        } else if ([cell isKindOfClass:[XUILinkListCell class]]) {
+        } else if ([cell isKindOfClass:[XUIOptionCell class]]) {
             [self tableView:tableView performLinkListCell:cell];
-        } else if ([cell isKindOfClass:[XUILinkMultipleListCell class]]) {
+        } else if ([cell isKindOfClass:[XUIMultipleOptionCell class]]) {
             [self tableView:tableView performLinkMultipleListCell:cell];
-        } else if ([cell isKindOfClass:[XUILinkOrderedListCell class]]) {
+        } else if ([cell isKindOfClass:[XUIOrderedOptionCell class]]) {
             [self tableView:tableView performLinkOrderedListCell:cell];
+        } else if ([cell isKindOfClass:[XUITitleValueCell class]]) {
+            [self tableView:tableView performTitleValueCell:cell];
+        } else if ([cell isKindOfClass:[XUIButtonCell class]]) {
+            [self tableView:tableView performButtonCell:cell];
         }
     }
 }
 
+- (void)tableView:(UITableView *)tableView performButtonCell:(UITableViewCell *)cell {
+    XUIButtonCell *buttonCell = (XUIButtonCell *)cell;
+    if (buttonCell.xui_action) {
+        NSString *selectorName = buttonCell.xui_action;
+        SEL actionSelector = NSSelectorFromString(selectorName);
+        if (actionSelector && [self respondsToSelector:actionSelector]) {
+            [self performSelector:actionSelector withObject:cell];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView performTitleValueCell:(UITableViewCell *)cell {
+    XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
+    if (titleValueCell.xui_value) {
+        id extendedValue = titleValueCell.xui_value;
+        XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
+        objectViewController.title = titleValueCell.textLabel.text;
+        objectViewController.entryBundle = self.bundle;
+        [self.navigationController pushViewController:objectViewController animated:YES];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView performLinkOrderedListCell:(UITableViewCell *)cell {
-    XUILinkOrderedListCell *linkListCell = (XUILinkOrderedListCell *)cell;
+    XUIOrderedOptionCell *linkListCell = (XUIOrderedOptionCell *)cell;
     if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
     {
         XUIOrderedOptionViewController *optionViewController = [[XUIOrderedOptionViewController alloc] initWithCell:linkListCell];
@@ -264,7 +299,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView performLinkMultipleListCell:(UITableViewCell *)cell {
-    XUILinkMultipleListCell *linkListCell = (XUILinkMultipleListCell *)cell;
+    XUIMultipleOptionCell *linkListCell = (XUIMultipleOptionCell *)cell;
     if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
     {
         XUIMultipleOptionViewController *optionViewController = [[XUIMultipleOptionViewController alloc] initWithCell:linkListCell];
@@ -275,7 +310,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView performLinkListCell:(UITableViewCell *)cell {
-    XUILinkListCell *linkListCell = (XUILinkListCell *)cell;
+    XUIOptionCell *linkListCell = (XUIOptionCell *)cell;
     if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
     {
         XUIOptionViewController *optionViewController = [[XUIOptionViewController alloc] initWithCell:linkListCell];
@@ -341,25 +376,50 @@
 #pragma mark - XUIOptionViewControllerDelegate
 
 - (void)optionViewController:(XUIOptionViewController *)controller didSelectOption:(NSInteger)optionIndex {
-    NSArray <NSString *> *shortTitles = controller.cell.xui_shortTitles;
+    [self updateLinkListCell:controller.cell];
+    [controller.cell.defaultsService saveDefaultsFromCell:controller.cell];
+}
+
+- (void)updateLinkListCell:(XUIOptionCell *)cell {
+    NSArray <NSString *> *shortTitles = cell.xui_shortTitles;
+    NSUInteger optionIndex = 0;
+    id rawValue = cell.xui_value;
+    if (rawValue) {
+        NSUInteger rawIndex = [cell.xui_validValues indexOfObject:rawValue];
+        if ((rawIndex) != NSNotFound) {
+            optionIndex = rawIndex;
+        }
+    }
     if (shortTitles && optionIndex < shortTitles.count) {
         NSString *shortTitle = shortTitles[optionIndex];
-        controller.cell.detailTextLabel.text = shortTitle;
+        cell.detailTextLabel.text = shortTitle;
     }
 }
 
 #pragma mark - XUIMultipleOptionViewControllerDelegate
 
 - (void)multipleOptionViewController:(XUIMultipleOptionViewController *)controller didSelectOption:(NSArray <NSNumber *> *)optionIndexes {
-    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionIndexes.count];
-    controller.cell.detailTextLabel.text = shortTitle;
+    [self updateLinkMultipleListCell:controller.cell];
+    [controller.cell.defaultsService saveDefaultsFromCell:controller.cell];
+}
+
+- (void)updateLinkMultipleListCell:(XUIMultipleOptionCell *)cell {
+    NSArray *optionValues = cell.xui_value;
+    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionValues.count];
+    cell.detailTextLabel.text = shortTitle;
 }
 
 #pragma mark - XUIOrderedOptionViewControllerDelegate
 
 - (void)orderedOptionViewController:(XUIOrderedOptionViewController *)controller didSelectOption:(NSArray<NSNumber *> *)optionIndexes {
-    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionIndexes.count];
-    controller.cell.detailTextLabel.text = shortTitle;
+    [self updateLinkOrderedListCell:controller.cell];
+    [controller.cell.defaultsService saveDefaultsFromCell:controller.cell];
+}
+
+- (void)updateLinkOrderedListCell:(XUIOrderedOptionCell *)cell {
+    NSArray *optionValues = cell.xui_value;
+    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionValues.count];
+    cell.detailTextLabel.text = shortTitle;
 }
 
 #pragma mark - Memory

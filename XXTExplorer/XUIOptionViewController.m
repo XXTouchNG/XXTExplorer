@@ -22,7 +22,7 @@
     
 }
 
-- (instancetype)initWithCell:(XUILinkListCell *)cell {
+- (instancetype)initWithCell:(XUIOptionCell *)cell {
     if (self = [super init]) {
         _cell = cell;
         id rawValue = cell.xui_value;

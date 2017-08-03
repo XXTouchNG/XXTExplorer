@@ -17,6 +17,8 @@
 
 @implementation XUISegmentCell
 
+@synthesize xui_value = _xui_value;
+
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -67,6 +69,8 @@
 
 - (void)setupCell {
     [super setupCell];
+    
+    [self.xui_segmentControl addTarget:self action:@selector(xuiSegmentValueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setXui_validTitles:(NSArray <NSString *> *)xui_validTitles {
@@ -84,10 +88,25 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    [super setXui_value:xui_value];
-    NSInteger selectedIdx = [xui_value integerValue];
-    if (self.xui_segmentControl.numberOfSegments > selectedIdx) {
-        [self.xui_segmentControl setSelectedSegmentIndex:selectedIdx];
+    _xui_value = xui_value;
+    if (xui_value) {
+        NSUInteger selectedIndex = [self.xui_validValues indexOfObject:xui_value];
+        if (selectedIndex != NSNotFound) {
+            if (self.xui_segmentControl.numberOfSegments > selectedIndex) {
+                [self.xui_segmentControl setSelectedSegmentIndex:selectedIndex];
+            }
+        }
+    }
+}
+
+- (IBAction)xuiSegmentValueChanged:(UISegmentedControl *)sender {
+    if (sender == self.xui_segmentControl) {
+        NSUInteger selectedIndex = sender.selectedSegmentIndex;
+        if (selectedIndex < self.xui_validValues.count) {
+            id selectedValue = self.xui_validValues[selectedIndex];
+            self.xui_value = selectedValue;
+            [self.defaultsService saveDefaultsFromCell:self];
+        }
     }
 }
 

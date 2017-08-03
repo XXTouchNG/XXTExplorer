@@ -1,5 +1,5 @@
 //
-//  XUILinkListCell.h
+//  XUIOptionCell.h
 //  XXTExplorer
 //
 //  Created by Zheng on 30/07/2017.
@@ -8,7 +8,7 @@
 
 #import "XUIBaseCell.h"
 
-@interface XUILinkListCell : XUIBaseCell
+@interface XUIOptionCell : XUIBaseCell
 
 @property (nonatomic, strong) NSArray <NSString *> *xui_validTitles;
 @property (nonatomic, strong) NSArray *xui_validValues;

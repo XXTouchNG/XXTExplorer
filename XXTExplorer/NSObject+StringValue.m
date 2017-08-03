@@ -30,7 +30,7 @@
         return @"N/A";
     }
     else if ([self isKindOfClass:[NSData class]]) {
-        return [NSString stringWithFormat:@"%lu Bytes", ((NSData *)self).length];
+        return [NSString stringWithFormat:@"%lu Bytes", (unsigned long)((NSData *)self).length];
     }
     return [self description];
 }

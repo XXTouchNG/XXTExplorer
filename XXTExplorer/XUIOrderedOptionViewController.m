@@ -21,7 +21,7 @@
 
 @implementation XUIOrderedOptionViewController
 
-- (instancetype)initWithCell:(XUILinkOrderedListCell *)cell {
+- (instancetype)initWithCell:(XUIOrderedOptionCell *)cell {
     if (self = [super init]) {
         _cell = cell;
         NSArray *validValues = cell.xui_validValues;

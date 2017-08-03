@@ -20,7 +20,7 @@
 
 @implementation XUIMultipleOptionViewController
 
-- (instancetype)initWithCell:(XUILinkMultipleListCell *)cell {
+- (instancetype)initWithCell:(XUIMultipleOptionCell *)cell {
     if (self = [super init]) {
         _cell = cell;
         NSArray *rawValues = cell.xui_value;

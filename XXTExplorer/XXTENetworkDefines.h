@@ -78,4 +78,8 @@ static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
     return ([uAppDefine(@"AUTH_API") stringByAppendingString:command]);
 }
 
+static inline NSDictionary *uAppConstEnvp() {
+    return @{@"XXTOUCH_LAUNCH_VIA": @"APPLICATION"};
+}
+
 #endif /* XXTENetworkDefines_h */

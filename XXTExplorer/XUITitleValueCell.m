@@ -8,8 +8,11 @@
 
 #import "XUITitleValueCell.h"
 #import "XUI.h"
+#import "NSObject+StringValue.h"
 
 @implementation XUITitleValueCell
+
+@synthesize xui_value = _xui_value;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -34,7 +37,7 @@
 
 - (void)setupCell {
     [super setupCell];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.selectionStyle = UITableViewCellSelectionStyleDefault;
     XUI_START_IGNORE_PARTIAL
     if (XUI_SYSTEM_9) {
         self.detailTextLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
@@ -45,8 +48,8 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    [super setXui_value:xui_value];
-    self.detailTextLabel.text = xui_value;
+    _xui_value = xui_value;
+    self.detailTextLabel.text = [xui_value stringValue];
 }
 
 @end
