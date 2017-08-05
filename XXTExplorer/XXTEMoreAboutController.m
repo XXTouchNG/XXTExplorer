@@ -102,7 +102,7 @@ typedef enum : NSUInteger {
     
     XXTEMoreLinkNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell7.titleLabel.text = NSLocalizedString(@"QQ Group (40898074)", nil);
+    cell7.titleLabel.text = NSLocalizedString(@"Official QQ Group", nil);
     
     staticCells = @[
                     @[ cell1 ],
@@ -148,7 +148,7 @@ typedef enum : NSUInteger {
             NSString *titleString = cell.titleLabel.text;
             NSURL *titleUrl = nil;
             if (indexPath.row == 0) {
-                titleUrl = [NSURL URLWithString:@"https://www.xxtouch.com"];
+                titleUrl = [NSURL URLWithString:uAppDefine(@"OFFICIAL_SITE")];
             }
             else if (indexPath.row == 1) {
                 titleUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/tos" ofType:@"html"]];

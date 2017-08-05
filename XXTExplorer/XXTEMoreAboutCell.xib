@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="219.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTEAboutIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-5Z-sX7">
@@ -60,6 +60,10 @@ All Rights Reserved.</string>
                     <constraint firstItem="lt6-7K-F9f" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="naF-X4-drK"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="subtitleLabel" destination="Bsl-8R-Tlu" id="Qm4-Of-Ru0"/>
+                <outlet property="titleLabel" destination="lt6-7K-F9f" id="PWA-n3-cXz"/>
+            </connections>
         </tableViewCell>
     </objects>
     <resources>

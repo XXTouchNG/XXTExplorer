@@ -23,7 +23,6 @@
 @property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
 
 + (NSString *)initialPath;
-+ (NSString *)rootPath;
 + (NSFileManager *)explorerFileManager;
 + (NSString *)selectedScriptPath;
 + (BOOL)isFetchingSelectedScript;

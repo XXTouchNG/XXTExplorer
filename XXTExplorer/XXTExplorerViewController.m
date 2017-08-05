@@ -73,27 +73,12 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     return explorerPasteboard;
 }
 
-+ (NSString *)rootPath {
-    static NSString *rootPath = nil;
-    if (!rootPath) {
-        rootPath = ({
-            NSString *mainPath = uAppDefine(@"MAIN_PATH");
-            struct stat mainPathStat;
-            if (0 != lstat([mainPath UTF8String], &mainPathStat)) {
-                mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-            }
-            mainPath;
-        });
-    }
-    return rootPath;
-}
-
 + (NSString *)initialPath {
     static NSString *initialPath = nil;
     if (!initialPath) {
         initialPath = ({
             NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltInitialPath);
-            [self.class.rootPath stringByAppendingPathComponent:initialRelativePath];
+            [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:initialRelativePath];
         });
     }
     return initialPath;
@@ -427,7 +412,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     }
     NSString *usageString = nil;
     NSError *usageError = nil;
-    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:self.class.rootPath error:&usageError];
+    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[sharedDelegate() sharedRootPath] error:&usageError];
     if (!usageError) {
         NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
         if (deviceFreeSpace) {
@@ -617,7 +602,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             } else {
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[@"path"];
-                NSString *directoryPath = [self.class.rootPath stringByAppendingPathComponent:directoryRelativePath];
+                NSString *directoryPath = [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
@@ -682,7 +667,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
             if (!entryHeaderView) {
                 entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
             }
-            NSString *rootPath = self.class.rootPath;
+            NSString *rootPath = [sharedDelegate() sharedRootPath];
             NSRange rootRange = [self.entryPath rangeOfString:rootPath];
             if (rootRange.location == 0) {
                 NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];

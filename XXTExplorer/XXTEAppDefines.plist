@@ -331,7 +331,7 @@ until (false)
 	<key>FEVER_PATH</key>
 	<string>/private/var/mobile/Media/1ferver/lua/scripts</string>
 	<key>MAIN_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/</string>
+	<string>/private/var/mobile/Media/1ferver</string>
 	<key>RESPRING_CHECK_PATH</key>
 	<string>/private/var/tmp/1ferver_need_respring</string>
 	<key>AUTH_API</key>
@@ -348,6 +348,9 @@ until (false)
 	<string>http://127.0.0.1:46952/</string>
 	<key>ADD1S_PATH</key>
 	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
+	<key>COPYRIGHT_STRING</key>
+	<string>2016-2017 © XXTouch Team.
+All Rights Reserved.</string>
 	<key>DOCUMENT_USERS_GUIDE</key>
 	<string>https://www.zybuluo.com/xxtouch/note/378784</string>
 	<key>DOCUMENT_UPDATE_LOGS</key>

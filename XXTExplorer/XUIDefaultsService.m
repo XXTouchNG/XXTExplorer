@@ -8,7 +8,7 @@
 
 #import "XUIDefaultsService.h"
 #import "XUIBaseCell.h"
-#import "XXTExplorerViewController.h"
+#import "XXTEAppDefines.h"
 
 @interface XUIDefaultsService ()
 
@@ -20,7 +20,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _defaultsPath = [[XXTExplorerViewController rootPath] stringByAppendingPathComponent:@"uicfg"];
+        _defaultsPath = [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:@"uicfg"];
     }
     return self;
 }

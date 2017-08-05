@@ -6,6 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <sys/stat.h>
 #import "XXTEAppDelegate.h"
 #import "XXTESplitViewController.h"
 #import "XXTENavigationController.h"
@@ -18,6 +19,7 @@
 #import "XXTENotificationCenterDefines.h"
 #import "XXTECloudApiSdk.h"
 #import "XXTECommonNavigationController.h"
+#import "XXTEAppDefines.h"
 
 static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 
@@ -220,6 +222,21 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
         });
     }
     return builtInDefaults;
+}
+
+- (NSString *)sharedRootPath {
+    static NSString *rootPath = nil;
+    if (!rootPath) {
+        rootPath = ({
+            NSString *mainPath = uAppDefine(@"MAIN_PATH");
+            struct stat mainPathStat;
+            if (0 != lstat([mainPath UTF8String], &mainPathStat)) {
+                mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+            }
+            mainPath;
+        });
+    }
+    return rootPath;
 }
 
 @end

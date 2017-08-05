@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0F0654BC1EE483A0005B6C5F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
+		0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */; };
+		0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */; };
+		0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */; };
 		0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */; };
 		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
@@ -173,6 +176,12 @@
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		0F0654BB1EE483A0005B6C5F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XXTEItemTemplate.lua; sourceTree = "<group>"; };
+		0F0F76261F361509006EA102 /* XXTEPackageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageViewerController.h; sourceTree = "<group>"; };
+		0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEPackageViewerController.m; sourceTree = "<group>"; };
+		0F0F762A1F3616D4006EA102 /* XXTExplorerEntryPackageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryPackageReader.h; sourceTree = "<group>"; };
+		0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryPackageReader.m; sourceTree = "<group>"; };
+		0F0F762E1F3617CF006EA102 /* XXTEPackageExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageExtractor.h; sourceTree = "<group>"; };
+		0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEPackageExtractor.m; sourceTree = "<group>"; };
 		0F10A9191F07B444008BA792 /* LSApplicationWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationWorkspace.h; sourceTree = "<group>"; };
 		0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseController.h; sourceTree = "<group>"; };
 		0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseController.m; sourceTree = "<group>"; };
@@ -499,6 +508,24 @@
 			name = Archive;
 			sourceTree = "<group>";
 		};
+		0F0F76291F36150F006EA102 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				0F0F762A1F3616D4006EA102 /* XXTExplorerEntryPackageReader.h */,
+				0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */,
+			);
+			name = Reader;
+			sourceTree = "<group>";
+		};
+		0F0F762D1F36178A006EA102 /* APT */ = {
+			isa = PBXGroup;
+			children = (
+				0F0F762E1F3617CF006EA102 /* XXTEPackageExtractor.h */,
+				0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */,
+			);
+			name = APT;
+			sourceTree = "<group>";
+		};
 		0F10A91A1F07FB8A008BA792 /* License */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,21 +651,21 @@
 			name = Create;
 			sourceTree = "<group>";
 		};
-		0F50AEA01F307A1E0098211C /* Helper */ = {
+		0F50AEA01F307A1E0098211C /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
-				0F50AEB11F3084790098211C /* NSObject+StringValue.h */,
-				0F50AEB21F3084790098211C /* NSObject+StringValue.m */,
 				0F50AEA11F307A510098211C /* UIViewController+StatusBar.h */,
 				0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */,
 			);
-			name = Helper;
+			name = Dictionary;
 			sourceTree = "<group>";
 		};
 		0F50AEA41F307BD80098211C /* Object */ = {
 			isa = PBXGroup;
 			children = (
 				0F50AEB81F30DB850098211C /* Reader */,
+				0F50AEB11F3084790098211C /* NSObject+StringValue.h */,
+				0F50AEB21F3084790098211C /* NSObject+StringValue.m */,
 				0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */,
 				0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */,
 				0F50AEA51F307C430098211C /* XXTEBaseObjectViewController.h */,
@@ -764,6 +791,7 @@
 			children = (
 				0F61E1651ED787A7003DCC78 /* XXTEMasterViewController.h */,
 				0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */,
+				0F50AEA01F307A1E0098211C /* Dictionary */,
 				0F61E1621ED7872F003DCC78 /* Explorer */,
 				0F61E1631ED7873F003DCC78 /* More */,
 			);
@@ -900,9 +928,8 @@
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
-				0F50AEA01F307A1E0098211C /* Helper */,
-				0F5EB5191F08E03B0016016A /* Aliyun */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
+				0F5EB5191F08E03B0016016A /* Aliyun */,
 				0F61E1641ED7875A003DCC78 /* Views */,
 				0F61E1601ED78712003DCC78 /* Master */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
@@ -1151,6 +1178,10 @@
 		0FE1E44E1F19226600055E02 /* Installer */ = {
 			isa = PBXGroup;
 			children = (
+				0F0F762D1F36178A006EA102 /* APT */,
+				0F0F76291F36150F006EA102 /* Reader */,
+				0F0F76261F361509006EA102 /* XXTEPackageViewerController.h */,
+				0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */,
 			);
 			name = Installer;
 			sourceTree = "<group>";
@@ -1442,7 +1473,9 @@
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */,
+				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
+				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
@@ -1459,6 +1492,7 @@
 				0F8521471F2D8A4600A912AC /* XUILogger.m in Sources */,
 				0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
+				0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */,
 				0F30D92F1F2C7FB10001E10B /* XUISecureEditTextCell.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
 				0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */,

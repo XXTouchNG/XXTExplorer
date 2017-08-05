@@ -11,6 +11,8 @@
 
 #import "XXTEAppDelegate.h"
 
+static const char * sharedEnvp[] = { "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL };
+
 static inline XXTEAppDelegate *sharedDelegate() {
     return ((XXTEAppDelegate *)[[UIApplication sharedApplication] delegate]);
 }

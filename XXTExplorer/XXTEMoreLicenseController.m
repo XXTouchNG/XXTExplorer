@@ -523,7 +523,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     })
     .then(^(NSString *licenseLog) {
         if (licenseLog.length > 0) {
-            NSString *licenseLogPath = [[XXTExplorerViewController rootPath] stringByAppendingPathComponent:@"log/bind_code.log"];
+            NSString *licenseLogPath = [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:@"log/bind_code.log"];
             struct stat licenseLogStat;
             if (0 == lstat([licenseLogPath UTF8String], &licenseLogStat)) {
                 [[NSFileManager defaultManager] createFileAtPath:licenseLogPath
