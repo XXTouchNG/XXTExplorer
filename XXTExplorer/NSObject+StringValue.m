@@ -27,7 +27,7 @@
         return [formatter stringFromDate:(NSDate *)self];
     }
     else if ([self isKindOfClass:[NSNull class]]) {
-        return @"N/A";
+        return @"(null)";
     }
     else if ([self isKindOfClass:[NSData class]]) {
         return [NSString stringWithFormat:@"%lu Bytes", (unsigned long)((NSData *)self).length];

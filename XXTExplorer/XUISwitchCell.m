@@ -69,7 +69,7 @@
 
 - (IBAction)xuiSwitchValueChanged:(UISwitch *)sender {
     if (sender == self.xui_switch) {
-        self.xui_value = @(sender.on);
+        self.xui_value = self.xui_negate ? @(!sender.on) : @(sender.on);
         [self.defaultsService saveDefaultsFromCell:self];
     }
 }

@@ -821,7 +821,7 @@
 				0F8455D11F0D45F20055F98B /* Documents */,
 				0FAD69191F04033300B2F0EC /* Remote */,
 				0F5EB52B1F0A854C0016016A /* About */,
-				D629C20F1F061D5F0030C6DA /* Application List */,
+				D629C20F1F061D5F0030C6DA /* Application */,
 				0F10A91A1F07FB8A008BA792 /* License */,
 				0F61E1681ED78899003DCC78 /* XXTEMoreViewController.h */,
 				0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */,
@@ -1214,7 +1214,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		D629C20F1F061D5F0030C6DA /* Application List */ = {
+		D629C20F1F061D5F0030C6DA /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				D629C21A1F061EF40030C6DA /* SpringBoardServices */,
@@ -1231,7 +1231,7 @@
 				D629C2331F0651320030C6DA /* UISearchController+StatusBarStyle.h */,
 				D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */,
 			);
-			name = "Application List";
+			name = Application;
 			sourceTree = "<group>";
 		};
 		D6FC2F291F0E333C000BAB42 /* Activation */ = {

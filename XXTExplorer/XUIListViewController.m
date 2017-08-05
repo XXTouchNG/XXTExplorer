@@ -266,6 +266,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView performButtonCell:(UITableViewCell *)cell {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     XUIButtonCell *buttonCell = (XUIButtonCell *)cell;
     if (buttonCell.xui_action) {
         NSString *selectorName = buttonCell.xui_action;
@@ -274,6 +276,7 @@
             [self performSelector:actionSelector withObject:cell];
         }
     }
+#pragma clang diagnostic pop
 }
 
 - (void)tableView:(UITableView *)tableView performTitleValueCell:(UITableViewCell *)cell {
