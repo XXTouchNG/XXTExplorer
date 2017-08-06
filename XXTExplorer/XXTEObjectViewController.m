@@ -71,26 +71,34 @@
 }
 
 - (instancetype)initWithRootObject:(id)RootObject {
-    NSArray <Class> *controllerClasses =
-    @[
-      [XXTEBaseObjectViewController class],
-      [XXTEArrayObjectViewController class],
-      [XXTEDictionaryObjectViewController class]
-      ];
-    Class ObjectClass = [RootObject class];
-    for (Class controllerClass in controllerClasses) {
-        NSArray <Class> *supportedTypes = [[controllerClass class] supportedTypes];
-        BOOL supported = NO;
-        for (Class supportedType in supportedTypes) {
-            if ([ObjectClass isSubclassOfClass:supportedType]) {
-                self = [[[controllerClass class] alloc] initWithRootObject:RootObject];
-                supported = YES;
+    id initObject = nil;
+    if (RootObject) {
+        NSArray <Class> *controllerClasses =
+        @[
+          [XXTEBaseObjectViewController class],
+          [XXTEArrayObjectViewController class],
+          [XXTEDictionaryObjectViewController class]
+          ];
+        Class ObjectClass = [RootObject class];
+        for (Class controllerClass in controllerClasses) {
+            NSArray <Class> *supportedTypes = [[controllerClass class] supportedTypes];
+            BOOL supported = NO;
+            for (Class supportedType in supportedTypes) {
+                if ([ObjectClass isSubclassOfClass:supportedType]) {
+                    initObject = [[[controllerClass class] alloc] initWithRootObject:RootObject];
+                    supported = YES;
+                    break;
+                }
+            }
+            if (supported) {
                 break;
             }
         }
-        if (supported) {
-            break;
-        }
+    }
+    if (initObject) {
+        self = initObject;
+    } else {
+        self = [super init];
     }
     if (self) {
         

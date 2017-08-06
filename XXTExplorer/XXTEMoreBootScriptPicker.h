@@ -6,7 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTExplorerViewController.h"
+#import "XXTExplorerViewController+SharedInstance.h"
 
 @class XXTEMoreBootScriptPicker;
 

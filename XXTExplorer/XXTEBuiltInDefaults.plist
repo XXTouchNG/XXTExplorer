@@ -6,13 +6,13 @@
 	<array>
 		<string>XXTEExecutableViewer</string>
 		<string>XXTEArchiveViewer</string>
-		<string>XXTEObjectViewController</string>
-		<string>XXTEPackageViewerController</string>
 		<string>XXTEImageViewerController</string>
 		<string>XXTEMediaPlayerController</string>
 		<string>XXTEWebViewerController</string>
 		<string>XXTECodeViewerController</string>
+		<string>XXTEObjectViewController</string>
 		<string>XUIListViewController</string>
+		<string>XXTEPackageViewerController</string>
 	</array>
 	<key>AVAILABLE_BUNDLE_READER</key>
 	<array>

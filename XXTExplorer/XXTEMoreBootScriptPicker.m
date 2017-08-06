@@ -14,12 +14,6 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerViewCell.h"
 
-typedef enum : NSUInteger {
-    XXTExplorerViewSectionIndexHome = 0,
-    XXTExplorerViewSectionIndexList,
-    XXTExplorerViewSectionIndexMax
-} XXTExplorerViewSectionIndex;
-
 @interface XXTEMoreBootScriptPicker () <XXTESwipeTableCellDelegate>
 
 @end

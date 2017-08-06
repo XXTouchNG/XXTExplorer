@@ -10,9 +10,11 @@
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEViewer.h"
+#import "XXTEEditor.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBundleReader.h"
 #import "XUIListViewController.h"
+#import "XXTExplorerEntryOpenWithViewController.h"
 
 @interface XXTExplorerEntryService ()
 
@@ -115,24 +117,19 @@
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
     NSString *viewerName = self.bindingDictionary[entryBaseExtension];
-    if (viewerName) {
-        Class viewerClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
-        if (viewerClass && [viewerClass isSubclassOfClass:[UIViewController class]]) {
-            UIViewController <XXTEViewer> *viewer = [[viewerClass alloc] initWithPath:entryPath];
-            return viewer;
-        }
-    }
-    return nil;
+    return [self viewerWithName:viewerName forEntryPath:entryPath];
 }
 
-- (UIViewController *)editorForEntry:(NSDictionary *)entry {
+- (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
     if (reader && reader.editable) {
         Class editorClass = [[reader class] relatedEditor];
         if (editorClass && [editorClass isSubclassOfClass:[UIViewController class]]) {
-            UIViewController *editor = [[editorClass alloc] initWithPath:entryPath];
-            return editor;
+            if ([editorClass instancesRespondToSelector:@selector(initWithPath:)]) {
+                UIViewController <XXTEEditor> *editor = [[editorClass alloc] initWithPath:entryPath];
+                return editor;
+            }
         }
     }
     return nil;
@@ -147,7 +144,16 @@
     return nil;
 }
 
-- (UIViewController *)openWithControllerForEntry:(NSDictionary *)entry {
+- (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)controllerName forEntryPath:(NSString *)entryPath {
+    if (controllerName) {
+        Class controllerClass = controllerName.length > 0 ? NSClassFromString(controllerName) : nil;
+        if (controllerClass && [controllerClass isSubclassOfClass:[UIViewController class]]) {
+            if ([controllerClass instancesRespondToSelector:@selector(initWithPath:)]) {
+                UIViewController <XXTEViewer> *viewer = [[controllerClass alloc] initWithPath:entryPath];
+                return viewer;
+            }
+        }
+    }
     return nil;
 }
 

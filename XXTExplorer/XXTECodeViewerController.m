@@ -42,7 +42,7 @@
               @"java", // Java
               @"conf", // Nginx
               @"py", // Python
-              @"txt", // Plain Text
+              @"txt", @"log", // Plain Text
               @"strings", // Strings
               ];
 }

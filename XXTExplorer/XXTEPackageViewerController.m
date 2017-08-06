@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, strong) UIBarButtonItem *installButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *respringButtonItem;
 @property (nonatomic, strong) XXTEPackageExtractor *extractor;
 
 @end
@@ -71,7 +72,6 @@
         [self.extractor extractMetaData];
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
-            [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         });
     });
 }
@@ -90,9 +90,21 @@
 - (UIBarButtonItem *)installButtonItem {
     if (!_installButtonItem) {
         UIBarButtonItem *installButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Install", nil) style:UIBarButtonItemStyleDone target:self action:@selector(installButtonItemTapped:)];
+        installButtonItem.enabled = NO;
+        installButtonItem.tintColor = [UIColor whiteColor];
         _installButtonItem = installButtonItem;
     }
     return _installButtonItem;
+}
+
+- (UIBarButtonItem *)respringButtonItem {
+    if (!_respringButtonItem) {
+        UIBarButtonItem *respringButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Respring", nil) style:UIBarButtonItemStyleDone target:self action:@selector(respringButtonItemTapped:)];
+        respringButtonItem.enabled = NO;
+        respringButtonItem.tintColor = [UIColor whiteColor];
+        _respringButtonItem = respringButtonItem;
+    }
+    return _respringButtonItem;
 }
 
 - (UITextView *)textView {
@@ -103,7 +115,7 @@
         textView.editable = NO;
         textView.autocorrectionType = UITextAutocorrectionTypeNo;
         textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        textView.textColor = [UIColor grayColor];
+        textView.textColor = [UIColor blackColor];
         textView.font = [UIFont fontWithName:@"CourierNewPSMT" size:14.f];
         textView.alwaysBounceVertical = YES;
         _textView = textView;
@@ -115,28 +127,39 @@
 
 - (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData {
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.installButtonItem.enabled = YES;
+        [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         NSString *metaString = [[NSString alloc] initWithData:metaData encoding:NSUTF8StringEncoding];
         [self.textView insertText:metaString];
-        [self.textView insertText:@"\nTap \"Install\" to continue..."];
+        [self.textView insertText:@"\nTap \"Install\" to continue...\n\n"];
     });
 }
 
 - (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailFetchingMetaDataWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.installButtonItem.enabled = NO;
+        [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         NSString *errorString = [error localizedDescription];
-        [self.textView insertText:errorString];
+        [self.textView insertText:[NSString stringWithFormat:@"[ERROR] %@", errorString]];
         [self.textView insertText:@"\n"];
     });
 }
 
 - (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishInstalling:(NSString *)outputLog {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.respringButtonItem.enabled = YES;
+        [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
+        [self.textView insertText:outputLog];
+        [self.textView insertText:@"\nTap \"Respring\" to continue...\n\n"];
+    });
 }
 
 - (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailInstallingWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.installButtonItem.enabled = YES;
+        [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         NSString *errorString = [error localizedDescription];
-        [self.textView insertText:errorString];
+        [self.textView insertText:[NSString stringWithFormat:@"[ERROR] %@", errorString]];
         [self.textView insertText:@"\n"];
     });
 }
@@ -145,12 +168,26 @@
 
 - (void)installButtonItemTapped:(UIBarButtonItem *)sender {
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:YES];
+    blockUserInteractions(self, YES);
     [self.activityIndicatorView startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.extractor installPackage];
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
-            [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
+            blockUserInteractions(self, NO);
+        });
+    });
+}
+
+- (void)respringButtonItemTapped:(UIBarButtonItem *)sender {
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:YES];
+    blockUserInteractions(self, YES);
+    [self.activityIndicatorView startAnimating];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self.extractor killBackboardd];
+        dispatch_async_on_main_queue(^{
+            [self.activityIndicatorView stopAnimating];
+            blockUserInteractions(self, NO);
         });
     });
 }

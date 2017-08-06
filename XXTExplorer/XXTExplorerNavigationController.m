@@ -10,7 +10,10 @@
 #import "XXTExplorerViewController.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTEDispatchDefines.h"
+
 #import "UIView+XXTEToast.h"
+
+#import "XXTExplorerViewController+SharedInstance.h"
 
 @interface XXTExplorerNavigationController ()
 

@@ -76,9 +76,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>${PRODUCT_NAME} needs to access your camera to scan QR code.</string>
+	<string>${PRODUCT_NAME} want to access your camera to scan QR code.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>${PRODUCT_NAME} needs to access your album to fetch QR code.</string>
+	<string>${PRODUCT_NAME} want to access your album to extract QR code.</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

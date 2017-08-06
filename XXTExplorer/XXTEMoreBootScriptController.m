@@ -14,7 +14,7 @@
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
-#import "XXTExplorerViewController.h"
+#import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTEMoreBootScriptPicker.h"
 
 @interface XXTEMoreBootScriptController () <XXTEMoreBootScriptPickerDelegate>
@@ -73,7 +73,7 @@
 
 - (void)updateBootScriptDisplay {
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = bootScriptPath ? bootScriptPath : @"N/A";
+    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : @"N/A";
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -249,8 +249,15 @@
         blockUserInteractions(self, YES);
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-                if (changeToStatus == YES) {
-                    bootScriptPath = jsonDictionary[@"data"][@"startup_script"];
+                if (changeToStatus) {
+                    NSString *bootScriptName = jsonDictionary[@"data"][@"startup_script"];
+                    if (bootScriptName) {
+                        if ([bootScriptName isAbsolutePath]) {
+                            bootScriptPath = bootScriptName;
+                        } else {
+                            bootScriptPath = [XXTExplorerViewController.initialPath stringByAppendingPathComponent:bootScriptName];
+                        }
+                    }
                 } else {
                     bootScriptPath = nil;
                 }

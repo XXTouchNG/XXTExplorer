@@ -8,6 +8,6 @@
 
 #import "XXTEViewer.h"
 
-@interface XXTEArchiveViewer : NSObject <XXTEViewer>
+@interface XXTEArchiveViewer : UIViewController <XXTEViewer>
 
 @end

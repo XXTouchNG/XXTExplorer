@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    XXTExplorerViewSectionIndexHome = 0,
+    XXTExplorerViewSectionIndexList,
+    XXTExplorerViewSectionIndexMax
+} XXTExplorerViewSectionIndex;
+
 @class XXTExplorerToolbar, XXTExplorerFooterView;
 
 @interface XXTExplorerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
@@ -17,17 +23,25 @@
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
 
-@property (nonatomic, strong, readonly) XXTExplorerToolbar *toolbar;
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 @property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
 
-+ (NSString *)initialPath;
-+ (NSFileManager *)explorerFileManager;
-+ (NSString *)selectedScriptPath;
-+ (BOOL)isFetchingSelectedScript;
-+ (void)setFetchingSelectedScript:(BOOL)fetching;
+#pragma mark - toolbar
+
+@property (nonatomic, strong) XXTExplorerToolbar *toolbar;
+
+#pragma mark - status
+
+@property (nonatomic, assign) BOOL busyOperationProgressFlag;
+
+#pragma mark - init
 
 - (instancetype)initWithEntryPath:(NSString *)path;
+
+#pragma mark - reload
+
+- (void)loadEntryListData;
+- (void)refreshEntryListView:(UIRefreshControl *)refreshControl;
 
 @end

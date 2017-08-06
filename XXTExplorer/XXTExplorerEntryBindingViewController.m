@@ -13,7 +13,6 @@
 #import "XXTExplorerViewCell.h"
 #import "XXTEViewer.h"
 #import "XXTEUserInterfaceDefines.h"
-#import "XXTExplorerEntryLauncher.h"
 #import "XXTExplorerEntryReader.h"
 
 typedef enum : NSUInteger {

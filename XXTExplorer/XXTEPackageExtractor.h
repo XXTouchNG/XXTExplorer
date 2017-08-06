@@ -28,5 +28,6 @@
 
 - (void)extractMetaData;
 - (void)installPackage;
+- (void)killBackboardd;
 
 @end
