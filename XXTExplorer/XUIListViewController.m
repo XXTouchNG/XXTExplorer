@@ -136,7 +136,10 @@
     
     [self setupSubviews];
     [self makeConstraints];
-    
+
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
 }
 
 - (void)setupSubviews {

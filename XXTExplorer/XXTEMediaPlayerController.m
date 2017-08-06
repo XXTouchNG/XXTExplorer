@@ -75,6 +75,10 @@
     }
     
     [self.view addSubview:self.moviePlayer.view];
+
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -74,6 +74,10 @@
             [self.activityIndicatorView stopAnimating];
         });
     });
+
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
 }
 
 #pragma mark - UIView Getters

@@ -76,6 +76,10 @@
     [self.view addSubview:self.scrollView];
     
     [self.scrollView addGestureRecognizer:self.doubleTapGestureRecognizer];
+
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
 }
 
 - (void)viewDidLayoutSubviews {

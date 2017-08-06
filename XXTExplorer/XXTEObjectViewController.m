@@ -85,7 +85,7 @@
             BOOL supported = NO;
             for (Class supportedType in supportedTypes) {
                 if ([ObjectClass isSubclassOfClass:supportedType]) {
-                    initObject = [[[controllerClass class] alloc] initWithRootObject:RootObject];
+                    initObject = [(XXTEObjectViewController *) [[controllerClass class] alloc] initWithRootObject:RootObject];
                     supported = YES;
                     break;
                 }
@@ -130,6 +130,10 @@
     });
     
     [self.view addSubview:self.tableView];
+
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
 }
 
 #pragma mark - UIView Getters

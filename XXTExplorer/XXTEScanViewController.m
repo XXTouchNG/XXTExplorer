@@ -153,7 +153,7 @@
 
     AVCaptureConnection *previewLayerConnection = self.scanLayer.connection;
     if ([previewLayerConnection isVideoOrientationSupported])
-        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIDevice currentDevice] orientation]];
+        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
     self.scanLineAnimation.animationRect = self.cropRect;
 
     self.scanLayer.frame = self.view.layer.bounds;
