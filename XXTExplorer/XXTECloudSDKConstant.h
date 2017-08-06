@@ -22,13 +22,13 @@
  */
 
 
-static NSString* const CLOUDAPI_USER_AGENT = @"ALIYUN-OBJECTC-DEMO";
+static NSString *const CLOUDAPI_USER_AGENT = @"ALIYUN-OBJECTC-DEMO";
 
 //换行符
 static char const CLOUDAPI_LF = '\n';
 
 //参与签名的系统Header前缀,只有指定前缀的Header才会参与到签名中
-static NSString* const CLOUDAPI_CA_HEADER_PREFIX = @"X-Ca-";
+static NSString *const CLOUDAPI_CA_HEADER_PREFIX = @"X-Ca-";
 
 static const NSString *CLOUDAPI_CA_VERSION = @"1";
 
@@ -39,19 +39,19 @@ static const NSString *CLOUDAPI_CA_VERSION = @"1";
  */
 
 //签名Header
-static NSString* const CLOUDAPI_X_CA_SIGNATURE = @"X-Ca-Signature";
+static NSString *const CLOUDAPI_X_CA_SIGNATURE = @"X-Ca-Signature";
 
 //所有参与签名的Header
-static NSString* const CLOUDAPI_X_CA_SIGNATURE_HEADERS = @"X-Ca-Signature-Headers";
+static NSString *const CLOUDAPI_X_CA_SIGNATURE_HEADERS = @"X-Ca-Signature-Headers";
 
 //请求时间戳
-static NSString* const CLOUDAPI_X_CA_TIMESTAMP =  @"X-Ca-Timestamp";
+static NSString *const CLOUDAPI_X_CA_TIMESTAMP = @"X-Ca-Timestamp";
 
 //请求放重放Nonce,15分钟内保持唯一,建议使用UUID
-static NSString* const CLOUDAPI_X_CA_NONCE = @"X-Ca-Nonce";
+static NSString *const CLOUDAPI_X_CA_NONCE = @"X-Ca-Nonce";
 
 //APP KEY
-static NSString* const CLOUDAPI_X_CA_KEY = @"X-Ca-Key";
+static NSString *const CLOUDAPI_X_CA_KEY = @"X-Ca-Key";
 
 //签名算法版本号
-static NSString* const CLOUDAPI_X_CA_VERSION =  @"X-Ca-Version";
+static NSString *const CLOUDAPI_X_CA_VERSION = @"X-Ca-Version";

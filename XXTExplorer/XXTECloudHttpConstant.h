@@ -23,10 +23,10 @@
 
 
 //HTTP
-static NSString* const CLOUDAPI_HTTP = @"http://";
+static NSString *const CLOUDAPI_HTTP = @"http://";
 
 //HTTPS
-static NSString* const CLOUDAPI_HTTPS = @"https://";
+static NSString *const CLOUDAPI_HTTPS = @"https://";
 
 
 /**
@@ -35,16 +35,16 @@ static NSString* const CLOUDAPI_HTTPS = @"https://";
 
 
 //GET
-static NSString* const CLOUDAPI_GET = @"GET";
+static NSString *const CLOUDAPI_GET = @"GET";
 
 //POST
-static NSString* const CLOUDAPI_POST = @"POST";
+static NSString *const CLOUDAPI_POST = @"POST";
 
 //PUT
-static NSString* const CLOUDAPI_PUT = @"PUT";
+static NSString *const CLOUDAPI_PUT = @"PUT";
 
 //DELETE
-static NSString* const CLOUDAPI_DELETE = @"DELETE";
+static NSString *const CLOUDAPI_DELETE = @"DELETE";
 
 
 /**
@@ -53,22 +53,22 @@ static NSString* const CLOUDAPI_DELETE = @"DELETE";
 
 
 //请求Header Accept
-static NSString* const CLOUDAPI_HTTP_HEADER_ACCEPT = @"Accept";
+static NSString *const CLOUDAPI_HTTP_HEADER_ACCEPT = @"Accept";
 
 //请求Body内容MD5 Header
-static NSString* const CLOUDAPI_HTTP_HEADER_CONTENT_MD5 = @"Content-MD5";
+static NSString *const CLOUDAPI_HTTP_HEADER_CONTENT_MD5 = @"Content-MD5";
 
 //请求Header Content-Type
-static NSString* const CLOUDAPI_HTTP_HEADER_CONTENT_TYPE = @"Content-Type";
+static NSString *const CLOUDAPI_HTTP_HEADER_CONTENT_TYPE = @"Content-Type";
 
 //请求Header UserAgent
-static NSString* const CLOUDAPI_HTTP_HEADER_USER_AGENT = @"User-Agent";
+static NSString *const CLOUDAPI_HTTP_HEADER_USER_AGENT = @"User-Agent";
 
 //请求Header Date
-static NSString* const CLOUDAPI_HTTP_HEADER_DATE = @"Date";
+static NSString *const CLOUDAPI_HTTP_HEADER_DATE = @"Date";
 
 //请求Header Host
-static NSString* const CLOUDAPI_HTTP_HEADER_HOST = @"Host";
+static NSString *const CLOUDAPI_HTTP_HEADER_HOST = @"Host";
 
 
 /**
@@ -77,19 +77,19 @@ static NSString* const CLOUDAPI_HTTP_HEADER_HOST = @"Host";
 
 
 //表单类型Content-Type
-static NSString* const CLOUDAPI_CONTENT_TYPE_FORM = @"application/x-www-form-urlencoded; charset=UTF-8";
+static NSString *const CLOUDAPI_CONTENT_TYPE_FORM = @"application/x-www-form-urlencoded; charset=UTF-8";
 
 //流类型Content-Type
-static NSString* const CLOUDAPI_CONTENT_TYPE_STREAM = @"application/octet-stream; charset=UTF-8";
+static NSString *const CLOUDAPI_CONTENT_TYPE_STREAM = @"application/octet-stream; charset=UTF-8";
 
 //JSON类型Content-Type
-static NSString* const CLOUDAPI_CONTENT_TYPE_JSON = @"application/json; charset=UTF-8";
+static NSString *const CLOUDAPI_CONTENT_TYPE_JSON = @"application/json; charset=UTF-8";
 
 //XML类型Content-Type
-static NSString* const CLOUDAPI_CONTENT_TYPE_XML = @"application/xml; charset=UTF-8";
+static NSString *const CLOUDAPI_CONTENT_TYPE_XML = @"application/xml; charset=UTF-8";
 
 //文本类型Content-Type
-static NSString* const CLOUDAPI_CONTENT_TYPE_TEXT = @"application/text; charset=UTF-8";
+static NSString *const CLOUDAPI_CONTENT_TYPE_TEXT = @"application/text; charset=UTF-8";
 
 
 

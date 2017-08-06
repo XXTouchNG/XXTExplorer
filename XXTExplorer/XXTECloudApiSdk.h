@@ -27,8 +27,9 @@
  */
 @interface XXTECloudApiSdk : NSObject
 
-@property (nonatomic, strong) NSURLSession *requestSession;
-+ (instancetype) instance;
+@property(nonatomic, strong) NSURLSession *requestSession;
+
++ (instancetype)instance;
 
 /**
  *
@@ -60,13 +61,13 @@
  *
  * @param completionBlock 回调函数
  */
--(void)       httpGet:(NSString *) httpSchema
-                 host:(NSString *) host
-                 path:(NSString *) path
-           pathParams:(NSDictionary *) pathParams
-          queryParams:(NSDictionary*) queryParams
-         headerParams:(NSMutableDictionary*) headerParams
-      completionBlock:(void (^)(NSData * , NSURLResponse * , NSError *))completionBlock;
+- (void)httpGet:(NSString *)httpSchema
+           host:(NSString *)host
+           path:(NSString *)path
+     pathParams:(NSDictionary *)pathParams
+    queryParams:(NSDictionary *)queryParams
+   headerParams:(NSMutableDictionary *)headerParams
+completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock;
 
 
 /**
@@ -103,15 +104,14 @@
  *
  * @param completionBlock 回调函数
  */
--(void)      httpPost:(NSString *) httpSchema
-                 host:(NSString *) host
-                 path:(NSString *) path
-           pathParams:(NSDictionary *) pathParams
-          queryParams:(NSDictionary*) queryParams
-           formParams:(NSDictionary *) formParams
-         headerParams:(NSMutableDictionary*) headerParams
-      completionBlock:(void (^)(NSData * , NSURLResponse * , NSError *))completionBlock;
-
+- (void)httpPost:(NSString *)httpSchema
+            host:(NSString *)host
+            path:(NSString *)path
+      pathParams:(NSDictionary *)pathParams
+     queryParams:(NSDictionary *)queryParams
+      formParams:(NSDictionary *)formParams
+    headerParams:(NSMutableDictionary *)headerParams
+ completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock;
 
 
 /**
@@ -148,16 +148,14 @@
  *
  * @param completionBlock 回调函数
  */
--(void)      httpPost:(NSString *) httpSchema
-                 host:(NSString *) host
-                 path:(NSString *) path
-           pathParams:(NSDictionary *) pathParams
-          queryParams:(NSDictionary*) queryParams
-                 body:(NSData *) body
-         headerParams:(NSMutableDictionary*) headerParams
-      completionBlock:(void (^)(NSData * , NSURLResponse * , NSError *))completionBlock;
-
-
+- (void)httpPost:(NSString *)httpSchema
+            host:(NSString *)host
+            path:(NSString *)path
+      pathParams:(NSDictionary *)pathParams
+     queryParams:(NSDictionary *)queryParams
+            body:(NSData *)body
+    headerParams:(NSMutableDictionary *)headerParams
+ completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock;
 
 
 /**
@@ -194,15 +192,14 @@
  *
  * @param completionBlock 回调函数
  */
--(void)      httpPut:(NSString *) httpSchema
-                host:(NSString *) host
-                path:(NSString *) path
-          pathParams:(NSDictionary *) pathParams
-         queryParams:(NSDictionary*) queryParams
-                body:(NSData *)  body
-        headerParams:(NSMutableDictionary*) headerParams
-     completionBlock:(void (^)(NSData * , NSURLResponse * , NSError *))completionBlock;
-
+- (void)httpPut:(NSString *)httpSchema
+           host:(NSString *)host
+           path:(NSString *)path
+     pathParams:(NSDictionary *)pathParams
+    queryParams:(NSDictionary *)queryParams
+           body:(NSData *)body
+   headerParams:(NSMutableDictionary *)headerParams
+completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock;
 
 
 /**
@@ -235,17 +232,15 @@
  *
  * @param completionBlock 回调函数
  */
--(void)    httpDelete:(NSString *) httpSchema
-                 host:(NSString *) host
-                 path:(NSString *) path
-           pathParams:(NSDictionary *) pathParams
-          queryParams:(NSDictionary*) queryParams
-         headerParams:(NSMutableDictionary*) headerParams
-      completionBlock:(void (^)(NSData * , NSURLResponse * , NSError *))completionBlock;
+- (void)httpDelete:(NSString *)httpSchema
+              host:(NSString *)host
+              path:(NSString *)path
+        pathParams:(NSDictionary *)pathParams
+       queryParams:(NSDictionary *)queryParams
+      headerParams:(NSMutableDictionary *)headerParams
+   completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock;
 
 @end
-
-
 
 
 @interface XXTECloudApiSdk (private)
@@ -281,31 +276,31 @@
  * @param body
  * 在body中传输的byte数组
  */
-+ (NSURLRequest *) buildRequest:(NSString *) protocol
-                         method:(NSString*) method
-                           host:(NSString*) host
-                           path:(NSString*) path
-                     pathParams:(NSDictionary *) pathParams
-                    queryParams:(NSDictionary*) queryParams
-                     formParams:(NSDictionary *) formParams
-                           body:(NSData *) body
-             requestContentType:(NSString *) requestContentType
-              acceptContentType:(NSString *) acceptContentType
-                   headerParams:(NSMutableDictionary*) headerParams;
++ (NSURLRequest *)buildRequest:(NSString *)protocol
+                        method:(NSString *)method
+                          host:(NSString *)host
+                          path:(NSString *)path
+                    pathParams:(NSDictionary *)pathParams
+                   queryParams:(NSDictionary *)queryParams
+                    formParams:(NSDictionary *)formParams
+                          body:(NSData *)body
+            requestContentType:(NSString *)requestContentType
+             acceptContentType:(NSString *)acceptContentType
+                  headerParams:(NSMutableDictionary *)headerParams;
 
 /**
  *  拼接参数串
  */
-+(NSString *) buildParamsString:(NSDictionary *) params;
++ (NSString *)buildParamsString:(NSDictionary *)params;
 
 /**
  *  将path中的参数用pathParams中的值替换
  */
-+(NSString *) combinePathParam: (NSString *) path
-pathParams: (NSDictionary *) pathParams;
++ (NSString *)combinePathParam:(NSString *)path
+                    pathParams:(NSDictionary *)pathParams;
 
 /**
  * 对BODY进行MD5加密
  **/
-+(NSString *) md5: (NSData *) data;
++ (NSString *)md5:(NSData *)data;
 @end

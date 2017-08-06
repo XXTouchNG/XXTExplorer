@@ -34,7 +34,7 @@ static inline NSUInteger XXTEDefaultsEnum(NSString *key) {
 }
 
 static inline id XXTEBuiltInDefaultsObject(NSString *key) {
-    return ([sharedDelegate().builtInDefaults objectForKey:key]);
+    return (sharedDelegate().builtInDefaults[key]);
 }
 
 static inline BOOL XXTEBuiltInDefaultsObjectBool(NSString *key) {

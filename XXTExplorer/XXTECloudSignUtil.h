@@ -35,16 +35,15 @@
 @interface XXTECloudSignUtil : NSObject
 
 
-
 /**
  *  签名方法
  *  本方法将Request中的httpMethod、headers、path、queryParam、formParam合成一个字符串用hmacSha256算法双向加密进行签名
  */
-+(NSString *) sign:(NSString *) httpMethod
-           headers:(NSDictionary *) headers
-              path:(NSString *) path
-        queryParam:(NSDictionary *) queryParam
-         formParam:(NSDictionary *) formParam;
++ (NSString *)sign:(NSString *)httpMethod
+           headers:(NSDictionary *)headers
+              path:(NSString *)path
+        queryParam:(NSDictionary *)queryParam
+         formParam:(NSDictionary *)formParam;
 
 @end
 
@@ -53,27 +52,27 @@
 /**
  * 将Request中的httpMethod、headers、path、queryParam、formParam合成一个字符串
  */
-+(NSString *) buildStringToSign:(NSDictionary *) headers
-path:(NSString *) path
-queryParam:(NSDictionary *) queryParam
-formParam:(NSDictionary *) formParam
-method:(NSString *) method;
++ (NSString *)buildStringToSign:(NSDictionary *)headers
+                           path:(NSString *)path
+                     queryParam:(NSDictionary *)queryParam
+                      formParam:(NSDictionary *)formParam
+                         method:(NSString *)method;
 
 /**
  * 将headers合成一个字符串
  */
-+(NSString *) buildHeaders:(NSDictionary *) headers;
++ (NSString *)buildHeaders:(NSDictionary *)headers;
 
 
 /**
  * 将path、queryParam、formParam合成一个字符串
  */
-+(NSString *) buildResource:(NSString *) path queryParam:(NSDictionary *) queryParam formParam:(NSDictionary *) formParam;
++ (NSString *)buildResource:(NSString *)path queryParam:(NSDictionary *)queryParam formParam:(NSDictionary *)formParam;
 
 
 /**
  *  对字符串进行hmacSha256加密，然后再进行BASE64编码
  */
-+(NSString *) hmacSha256:(NSString *)key data:(NSString *)data;
++ (NSString *)hmacSha256:(NSString *)key data:(NSString *)data;
 
 @end
