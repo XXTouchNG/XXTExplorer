@@ -14,6 +14,17 @@
 
 @implementation XXTEMasterViewController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setupAppearance];
+    }
+    return self;
+}
+
+- (void)setupAppearance {
+    [[UITabBar appearanceWhenContainedIn:[self class], nil] setTintColor:XXTE_COLOR];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return self.selectedViewController.preferredStatusBarStyle;
 }
@@ -32,9 +43,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[UITabBar appearanceWhenContainedIn:[self class], nil] setTintColor:XXTE_COLOR];
-
 }
 
 @end

@@ -9,12 +9,13 @@
 #import "XXTESplitViewController.h"
 #import <LGAlertView/LGAlertView.h>
 #import "UIView+XXTEToast.h"
-#import "XXTECommonNavigationController.h"
-#import "XXTEWorkspaceViewController.h"
 #import "XXTENotificationCenterDefines.h"
-#import "XXTEDetailViewController.h"
+#import "XXTEAPTHelper.h"
+#import "XXTEAppDefines.h"
 
-@interface XXTESplitViewController () <UISplitViewControllerDelegate>
+@interface XXTESplitViewController () <UISplitViewControllerDelegate, XXTEAPTHelperDelegate>
+
+@property (nonatomic, strong, readonly) XXTEAPTHelper *aptHelper;
 
 @end
 
@@ -23,29 +24,17 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.delegate = self;
+        NSString *repositoryURLString = uAppDefine(@"UPDATE_API");
+        NSURL *repositoryURL = [NSURL URLWithString:repositoryURLString];
+        XXTEAPTHelper *aptHelper = [[XXTEAPTHelper alloc] initWithRepositoryURL:repositoryURL];
+        aptHelper.delegate = self;
+        _aptHelper = aptHelper;
+        [self setupAppearance];
     }
     return self;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.viewControllers[0].preferredStatusBarStyle;
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return self.viewControllers[0].prefersStatusBarHidden;
-}
-
-- (UIViewController *)childViewControllerForStatusBarStyle {
-    return self.viewControllers[0];
-}
-
-- (UIViewController *)childViewControllerForStatusBarHidden {
-    return self.viewControllers[0];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+- (void)setupAppearance {
     LGAlertView *alertAppearance = [LGAlertView appearanceWhenContainedIn:[self class], nil];
     alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.25];
     alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
@@ -69,19 +58,41 @@
     alertAppearance.dismissOnAction = NO;
     alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
     alertAppearance.buttonsTextAlignment = NSTextAlignmentLeft;
-    
+
     [XXTEToastManager setTapToDismissEnabled:YES];
     [XXTEToastManager setDefaultDuration:2.f];
     [XXTEToastManager setQueueEnabled:NO];
     [XXTEToastManager setDefaultPosition:XXTEToastPositionCenter];
-    
+
     XXTEToastStyle *toastStyle = [XXTEToastManager sharedStyle];
     toastStyle.backgroundColor = [UIColor colorWithWhite:0.f alpha:.6f];
     toastStyle.titleFont = [UIFont boldSystemFontOfSize:14.f];
     toastStyle.messageFont = [UIFont systemFontOfSize:14.f];
     toastStyle.activitySize = CGSizeMake(80.f, 80.f);
     toastStyle.verticalMargin = 16.f;
-    
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.viewControllers[0].preferredStatusBarStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.viewControllers[0].prefersStatusBarHidden;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.viewControllers[0];
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+    return self.viewControllers[0];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self.aptHelper sync];
+    });
 }
 
 #pragma mark - UISplitViewDelegate
@@ -92,6 +103,12 @@
 
 - (UIViewController *)primaryViewControllerForCollapsingSplitViewController:(UISplitViewController *)splitViewController {
     return splitViewController.viewControllers[0];
+}
+
+#pragma mark - XXTEAPTHelperDelegate
+
+- (void)aptHelperDidSyncReady:(XXTEAPTHelper *)helper {
+
 }
 
 @end

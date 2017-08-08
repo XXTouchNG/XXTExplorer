@@ -158,6 +158,7 @@
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
+		525121BFC991CE80D96821A4 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DB099E80F97BCFF0826 /* XXTEAPTHelper.m */; };
 		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
 		52512432C43B553660F98172 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
@@ -165,6 +166,7 @@
 		52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */; };
 		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
 		525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512EB1AE32276E843CEC6C /* XUIBaseCell.m */; };
+		52512BA9193ACC1F07FDBC93 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BCA1CAAD206D6BAE270 /* XXTEAPTPackage.m */; };
 		52512BD02B62F2E839374051 /* XUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512481E485AD2E09205EFB /* XUIViewController.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
@@ -483,14 +485,18 @@
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
 		525126B545F29123B15E6B55 /* XUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewController.h; sourceTree = "<group>"; };
+		52512774CB9D83BEEE3D65FB /* XXTEAPTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTHelper.h; sourceTree = "<group>"; };
 		525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIGroupCell.m; sourceTree = "<group>"; };
 		52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMailComposeViewController.h; sourceTree = "<group>"; };
+		525129E70213451FF93AFE2F /* XXTEAPTPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTPackage.h; sourceTree = "<group>"; };
 		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
 		52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMailComposeViewController.m; sourceTree = "<group>"; };
+		52512BCA1CAAD206D6BAE270 /* XXTEAPTPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTPackage.m; sourceTree = "<group>"; };
 		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; };
 		52512C344413AFCA2550E12D /* XUIBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIBaseCell.h; sourceTree = "<group>"; };
 		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
 		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
+		52512DB099E80F97BCFF0826 /* XXTEAPTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTHelper.m; sourceTree = "<group>"; };
 		52512EB1AE32276E843CEC6C /* XUIBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIBaseCell.m; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
@@ -990,6 +996,7 @@
 				0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */,
 				0FA7ABFE1ED641A3003EAD7D /* Info.plist */,
 				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
+				52512FCC977212D8FEE87F0F /* APT */,
 			);
 			path = XXTExplorer;
 			sourceTree = "<group>";
@@ -1317,6 +1324,17 @@
 				525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */,
 			);
 			name = Reader;
+			sourceTree = "<group>";
+		};
+		52512FCC977212D8FEE87F0F /* APT */ = {
+			isa = PBXGroup;
+			children = (
+				52512DB099E80F97BCFF0826 /* XXTEAPTHelper.m */,
+				52512774CB9D83BEEE3D65FB /* XXTEAPTHelper.h */,
+				52512BCA1CAAD206D6BAE270 /* XXTEAPTPackage.m */,
+				525129E70213451FF93AFE2F /* XXTEAPTPackage.h */,
+			);
+			path = APT;
 			sourceTree = "<group>";
 		};
 		59918F7D2218C7F23C834EB4 /* Pods */ = {
@@ -1653,6 +1671,8 @@
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
 				52512432C43B553660F98172 /* XUIGroupCell.m in Sources */,
 				525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */,
+				525121BFC991CE80D96821A4 /* XXTEAPTHelper.m in Sources */,
+				52512BA9193ACC1F07FDBC93 /* XXTEAPTPackage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
