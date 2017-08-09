@@ -11,6 +11,7 @@
 @protocol XXTEAPTHelperDelegate <NSObject>
 
 - (void)aptHelperDidSyncReady:(XXTEAPTHelper *)helper;
+- (void)aptHelper:(XXTEAPTHelper *)helper didSyncFailWithError:(NSError *)error;
 
 @end
 

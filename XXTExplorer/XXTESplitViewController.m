@@ -10,12 +10,13 @@
 #import <LGAlertView/LGAlertView.h>
 #import "UIView+XXTEToast.h"
 #import "XXTENotificationCenterDefines.h"
-#import "XXTEAPTHelper.h"
+#import "XXTESplitViewController_APTUpdate.h"
+
 #import "XXTEAppDefines.h"
+#import "XXTEUserInterfaceDefines.h"
 
-@interface XXTESplitViewController () <UISplitViewControllerDelegate, XXTEAPTHelperDelegate>
+@interface XXTESplitViewController () <UISplitViewControllerDelegate>
 
-@property (nonatomic, strong, readonly) XXTEAPTHelper *aptHelper;
 
 @end
 
@@ -24,11 +25,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.delegate = self;
-        NSString *repositoryURLString = uAppDefine(@"UPDATE_API");
-        NSURL *repositoryURL = [NSURL URLWithString:repositoryURLString];
-        XXTEAPTHelper *aptHelper = [[XXTEAPTHelper alloc] initWithRepositoryURL:repositoryURL];
-        aptHelper.delegate = self;
-        _aptHelper = aptHelper;
+        [self setupAPT];
         [self setupAppearance];
     }
     return self;
@@ -90,9 +87,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self.aptHelper sync];
-    });
+    [self checkUpdate];
 }
 
 #pragma mark - UISplitViewDelegate
@@ -105,10 +100,95 @@
     return splitViewController.viewControllers[0];
 }
 
+#pragma mark - APTUpdate
+
+- (void)setupAPT {
+    NSString *packageIdentifier = uAppDefine(@"UPDATE_PACKAGE");
+    self.packageIdentifier = packageIdentifier;
+    
+    NSString *repositoryURLString = uAppDefine(@"UPDATE_API");
+    NSURL *repositoryURL = [NSURL URLWithString:repositoryURLString];
+    
+    XXTEAPTHelper *aptHelper = [[XXTEAPTHelper alloc] initWithRepositoryURL:repositoryURL];
+    aptHelper.delegate = self;
+    self.aptHelper = aptHelper;
+    
+    XXTEUpdateReminder *updateReminder = [[XXTEUpdateReminder alloc] initWithBundleIdentifier:packageIdentifier];
+    updateReminder.delegate = self;
+    self.updateReminder = updateReminder;
+}
+
 #pragma mark - XXTEAPTHelperDelegate
 
 - (void)aptHelperDidSyncReady:(XXTEAPTHelper *)helper {
-
+    NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
+    NSString *packageIdentifier = self.packageIdentifier;
+    XXTEAPTPackage *packageModel = helper.packageMap[packageIdentifier];
+    NSString *packageVersion = packageModel.apt_Version;
+    if ([currentVersion isEqualToString:packageVersion]) {
+        [self.updateReminder ignoreThisDay];
+        return;
+    }
+    BOOL shouldRemind = [self.updateReminder shouldRemindWithVersion:packageVersion];
+    if (shouldRemind) {
+        NSString *channelId = uAppDefine(@"CHANNEL_ID");
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"New Version", nil)
+                                                            message:[NSString stringWithFormat:NSLocalizedString(@"New version found: v%@\nCurrent version: v%@", nil), packageVersion, currentVersion]
+                                                              style:LGAlertViewStyleActionSheet
+                                                       buttonTitles:@[ [NSString stringWithFormat:NSLocalizedString(@"Install via %@", nil), channelId], NSLocalizedString(@"Only Download", nil), NSLocalizedString(@"Remind me tomorrow", nil) ]
+                                                  cancelButtonTitle:NSLocalizedString(@"Remind me later", nil)
+                                             destructiveButtonTitle:NSLocalizedString(@"Ignore this version", nil) delegate:self];
+        alertView.buttonsTextAlignment = NSTextAlignmentCenter;
+        [alertView showAnimated];
+    }
 }
+
+- (void)aptHelper:(XXTEAPTHelper *)helper didSyncFailWithError:(NSError *)error {
+    
+}
+
+#pragma mark - LGAlertViewDelegate
+
+- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
+    if (index == 0) {
+        NSString *cydiaUrlString = uAppDefine(@"CYDIA_URL");
+        NSURL *cydiaUrl = [NSURL URLWithString:cydiaUrlString];
+        if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl]) {
+            [[UIApplication sharedApplication] openURL:cydiaUrl];
+        } else {
+            showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaUrlString]);
+        }
+    }
+    else if (index == 1) {
+        showUserMessage(self, NSLocalizedString(@"Not implemented.", nil));
+    }
+    else if (index == 2) {
+        [self.updateReminder ignoreThisDay];
+    }
+    [alertView dismissAnimated];
+}
+
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+    NSString *packageIdentifier = self.packageIdentifier;
+    XXTEAPTHelper *helper = self.aptHelper;
+    XXTEAPTPackage *packageModel = helper.packageMap[packageIdentifier];
+    NSString *packageVersion = packageModel.apt_Version;
+    [self.updateReminder ignoreVersion:packageVersion];
+    [self.updateReminder ignoreThisDay];
+}
+
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+}
+
+- (void)checkUpdate {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self.aptHelper sync];
+    });
+}
+
+// TODO: server respring test
+// TODO: server connection test
 
 @end

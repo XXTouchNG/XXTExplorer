@@ -22,11 +22,11 @@
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _packagePath = path;
-        NSString *temporarilyLocation = [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:@"caches"];
+        NSString *temporarilyLocation = [[[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEPackageExtractor"];
         struct stat temporarilyLocationStat;
         if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
-            if (0 != mkdir([temporarilyLocation UTF8String], 0644))
-                @throw [NSString stringWithFormat:@"Cannot create temporarily directory \"%@\".", temporarilyLocation];
+            if (0 != mkdir([temporarilyLocation UTF8String], 0755))
+                NSLog(@"%@", [NSString stringWithFormat:@"Cannot create temporarily directory \"%@\".", temporarilyLocation]);
         _temporarilyLocation = temporarilyLocation;
     }
     return self;

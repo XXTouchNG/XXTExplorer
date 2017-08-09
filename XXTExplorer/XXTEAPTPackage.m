@@ -22,7 +22,7 @@
         _apt_Version = dictionary[@"Version"];
         _apt_Architecture = dictionary[@"Architecture"];
         _apt_Filename = dictionary[@"Filename"];
-        _apt_Size = dictionary[@"Size"];
+        _apt_Size = @([dictionary[@"Size"] integerValue]);
         _apt_MD5sum = dictionary[@"MD5sum"];
         _apt_Name = dictionary[@"Name"];
     }
@@ -36,7 +36,18 @@
     {
         return NO;
     }
-    return [dictionary[@"Architecture"] isEqualToString:@"iphoneos-arm"];
+    for (NSString *dictKey in dictionary.allKeys) {
+        if (![dictionary[dictKey] isKindOfClass:[NSString class]]) {
+            return NO;
+        }
+    }
+    if (![dictionary[@"Architecture"] isEqualToString:@"iphoneos-arm"]) {
+        return NO;
+    }
+    if (![dictionary[@"Size"] integerValue]) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

@@ -307,7 +307,7 @@ until (false)
 		</dict>
 	</array>
 	<key>CHANNEL_ID</key>
-	<string>Cydia</string>
+	<string>Cydia™</string>
 	<key>UMENG_KEY</key>
 	<string>5817f40375ca353017000ff7</string>
 	<key>ALIYUN_APPKEY</key>
@@ -341,7 +341,7 @@ until (false)
 	<key>DAEMON_VERSION</key>
 	<string>1.2.0-1</string>
 	<key>UPDATE_API</key>
-	<string>https://apt.xxtouch.com/Packages</string>
+	<string>https://apt.xxtouch.com/Packages.gz</string>
 	<key>ROOT_UI</key>
 	<string>bootstrap.xui</string>
 	<key>LOCAL_API</key>
@@ -363,5 +363,17 @@ All Rights Reserved.</string>
 	<string>https://www.zybuluo.com/xxtouch/note/716784</string>
 	<key>DOCUMENT_DYNAMIC_XUI_REFERENCE</key>
 	<string>https://www.zybuluo.com/xxtouch/note/716787</string>
+	<key>REQUIRED_SUBDIRECTORIES</key>
+	<array>
+		<string>caches</string>
+		<string>log</string>
+		<string>uicfg</string>
+		<string>lib</string>
+		<string>web</string>
+		<string>res</string>
+		<string>bin</string>
+		<string>lua</string>
+		<string>lua/scripts</string>
+	</array>
 </dict>
 </plist>

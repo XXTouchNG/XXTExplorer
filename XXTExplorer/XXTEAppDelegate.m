@@ -21,6 +21,8 @@
 #import "XXTECommonNavigationController.h"
 #import "XXTEAppDefines.h"
 
+#import <unistd.h>
+
 static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 
 @interface XXTEAppDelegate ()
@@ -47,6 +49,18 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
         [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
     }
     XXTE_END_IGNORE_PARTIAL
+    
+    // Create required subdirectories
+    NSString *sharedRootPath = [sharedDelegate() sharedRootPath];
+    NSArray <NSString *> *requiredSubdirectories = uAppDefine(@"REQUIRED_SUBDIRECTORIES");
+    for (NSString *requiredSubdirectory in requiredSubdirectories) {
+        NSString *directoryPath = [sharedRootPath stringByAppendingPathComponent:requiredSubdirectory];
+        const char *directoryPathCStr = [directoryPath UTF8String];
+        struct stat subdirectoryStat;
+        if (0 != lstat(directoryPathCStr, &subdirectoryStat))
+            if (0 != mkdir(directoryPathCStr, 0755))
+                continue;
+    }
     
     // Master - Explorer Controller
 //    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
@@ -228,9 +242,13 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     static NSString *rootPath = nil;
     if (!rootPath) {
         rootPath = ({
+#ifndef DEBUG
             NSString *mainPath = uAppDefine(@"MAIN_PATH");
-            struct stat mainPathStat;
-            if (0 != lstat([mainPath UTF8String], &mainPathStat)) {
+#else
+            NSString *mainPath = nil;
+#endif
+            const char *mainPathCStr = [mainPath UTF8String];
+            if (!mainPath || 0 != access(mainPathCStr, R_OK | W_OK)) {
                 mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
             }
             mainPath;

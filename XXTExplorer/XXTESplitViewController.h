@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXTEAPTHelper, XXTEUpdateReminder;
+
 @interface XXTESplitViewController : UISplitViewController
 
 @end

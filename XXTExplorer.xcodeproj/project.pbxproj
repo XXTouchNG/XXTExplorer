@@ -23,6 +23,9 @@
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
+		0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */; };
+		0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */; };
+		0F2CD3591F3B5CAB00110772 /* XXTEUpdateReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3561F3B5CAB00110772 /* XXTEUpdateReminder.m */; };
 		0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */; };
 		0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */; };
 		0F30D9291F2BAAA20001E10B /* XUIEditTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */; };
@@ -158,7 +161,6 @@
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
-		525121BFC991CE80D96821A4 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DB099E80F97BCFF0826 /* XXTEAPTHelper.m */; };
 		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
 		52512432C43B553660F98172 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
@@ -166,7 +168,6 @@
 		52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */; };
 		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
 		525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512EB1AE32276E843CEC6C /* XUIBaseCell.m */; };
-		52512BA9193ACC1F07FDBC93 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BCA1CAAD206D6BAE270 /* XXTEAPTPackage.m */; };
 		52512BD02B62F2E839374051 /* XUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512481E485AD2E09205EFB /* XUIViewController.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
@@ -219,6 +220,13 @@
 		0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImagePickerController.m; sourceTree = "<group>"; };
 		0F2916131F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsOperationController.h; sourceTree = "<group>"; };
 		0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreUserDefaultsOperationController.m; sourceTree = "<group>"; };
+		0F2CD3511F3B5CAB00110772 /* XXTEAPTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTHelper.h; sourceTree = "<group>"; };
+		0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTHelper.m; sourceTree = "<group>"; };
+		0F2CD3531F3B5CAB00110772 /* XXTEAPTPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTPackage.h; sourceTree = "<group>"; };
+		0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTPackage.m; sourceTree = "<group>"; };
+		0F2CD3551F3B5CAB00110772 /* XXTEUpdateReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEUpdateReminder.h; sourceTree = "<group>"; };
+		0F2CD3561F3B5CAB00110772 /* XXTEUpdateReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdateReminder.m; sourceTree = "<group>"; };
+		0F2CD35A1F3B689000110772 /* XXTESplitViewController_APTUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController_APTUpdate.h; sourceTree = "<group>"; };
 		0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
 		0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
 		0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
@@ -485,18 +493,14 @@
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
 		525126B545F29123B15E6B55 /* XUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewController.h; sourceTree = "<group>"; };
-		52512774CB9D83BEEE3D65FB /* XXTEAPTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTHelper.h; sourceTree = "<group>"; };
 		525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIGroupCell.m; sourceTree = "<group>"; };
 		52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMailComposeViewController.h; sourceTree = "<group>"; };
-		525129E70213451FF93AFE2F /* XXTEAPTPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTPackage.h; sourceTree = "<group>"; };
 		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
 		52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMailComposeViewController.m; sourceTree = "<group>"; };
-		52512BCA1CAAD206D6BAE270 /* XXTEAPTPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTPackage.m; sourceTree = "<group>"; };
 		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; };
 		52512C344413AFCA2550E12D /* XUIBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIBaseCell.h; sourceTree = "<group>"; };
 		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
 		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
-		52512DB099E80F97BCFF0826 /* XXTEAPTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTHelper.m; sourceTree = "<group>"; };
 		52512EB1AE32276E843CEC6C /* XUIBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIBaseCell.m; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
@@ -625,6 +629,19 @@
 				0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */,
 			);
 			name = Recording;
+			sourceTree = "<group>";
+		};
+		0F2CD3501F3B5C9D00110772 /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				0F2CD3511F3B5CAB00110772 /* XXTEAPTHelper.h */,
+				0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */,
+				0F2CD3531F3B5CAB00110772 /* XXTEAPTPackage.h */,
+				0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */,
+				0F2CD3551F3B5CAB00110772 /* XXTEUpdateReminder.h */,
+				0F2CD3561F3B5CAB00110772 /* XXTEUpdateReminder.m */,
+			);
+			name = Update;
 			sourceTree = "<group>";
 		};
 		0F3508B91F163F60000403FD /* BundleReader */ = {
@@ -985,9 +1002,11 @@
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
+				0F2CD35A1F3B689000110772 /* XXTESplitViewController_APTUpdate.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
+				0F2CD3501F3B5C9D00110772 /* Update */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
 				0F61E1641ED7875A003DCC78 /* Views */,
@@ -996,7 +1015,6 @@
 				0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */,
 				0FA7ABFE1ED641A3003EAD7D /* Info.plist */,
 				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
-				52512FCC977212D8FEE87F0F /* APT */,
 			);
 			path = XXTExplorer;
 			sourceTree = "<group>";
@@ -1326,17 +1344,6 @@
 			name = Reader;
 			sourceTree = "<group>";
 		};
-		52512FCC977212D8FEE87F0F /* APT */ = {
-			isa = PBXGroup;
-			children = (
-				52512DB099E80F97BCFF0826 /* XXTEAPTHelper.m */,
-				52512774CB9D83BEEE3D65FB /* XXTEAPTHelper.h */,
-				52512BCA1CAAD206D6BAE270 /* XXTEAPTPackage.m */,
-				525129E70213451FF93AFE2F /* XXTEAPTPackage.h */,
-			);
-			path = APT;
-			sourceTree = "<group>";
-		};
 		59918F7D2218C7F23C834EB4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1618,6 +1625,7 @@
 				0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
+				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
@@ -1640,6 +1648,7 @@
 				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
+				0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */,
 				0F91E8F11F139DBA00D65BF7 /* NSFileManager+DeepSize.m in Sources */,
 				0F50AEA31F307A510098211C /* UIViewController+StatusBar.m in Sources */,
 				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,
@@ -1665,14 +1674,13 @@
 				0F6AEA841F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.m in Sources */,
 				525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */,
 				525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */,
+				0F2CD3591F3B5CAB00110772 /* XXTEUpdateReminder.m in Sources */,
 				0F6AEA8A1F374E4C0017BE7C /* XXTExplorerViewController+Shortcuts.m in Sources */,
 				52512BD02B62F2E839374051 /* XUIViewController.m in Sources */,
 				52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */,
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
 				52512432C43B553660F98172 /* XUIGroupCell.m in Sources */,
 				525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */,
-				525121BFC991CE80D96821A4 /* XXTEAPTHelper.m in Sources */,
-				52512BA9193ACC1F07FDBC93 /* XXTEAPTPackage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

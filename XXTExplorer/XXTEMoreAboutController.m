@@ -96,9 +96,10 @@ typedef enum : NSUInteger {
     cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell5.titleLabel.text = NSLocalizedString(@"Mail Feedback", nil);
     
+    NSString *channelId = uAppDefine(@"CHANNEL_ID");
     XXTEMoreLinkNoIconCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell6.titleLabel.text = NSLocalizedString(@"Online Update (Cydia)", nil);
+    cell6.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Online Update (%@)", nil), channelId];
     
     XXTEMoreLinkNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
