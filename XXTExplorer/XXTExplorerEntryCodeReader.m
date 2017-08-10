@@ -8,6 +8,7 @@
 
 #import "XXTExplorerEntryCodeReader.h"
 #import "XXTECodeViewerController.h"
+#import "XXTETextEditorController.h"
 
 @implementation XXTExplorerEntryCodeReader
 
@@ -32,8 +33,7 @@
 }
 
 + (Class)relatedEditor {
-    // TODO: Code editor
-    return nil;
+    return [XXTETextEditorController class];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {

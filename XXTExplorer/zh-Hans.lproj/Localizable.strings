@@ -603,7 +603,7 @@
 "Object Viewer" = "对象查看器";
 
 /* No comment provided by engineer. */
-"Off" = "Off";
+"Off" = "❌";
 
 /* No comment provided by engineer. */
 "Official QQ Group" = "官方 QQ 群";
@@ -615,7 +615,7 @@
 "OK" = "好";
 
 /* No comment provided by engineer. */
-"On" = "On";
+"On" = "⭕️";
 
 /* No comment provided by engineer. */
 "Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
@@ -956,3 +956,9 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
+
+/* No comment provided by engineer. */
+"Lua Code Editor" = "";
+
+/* No comment provided by engineer. */
+"Text Editor" = "";

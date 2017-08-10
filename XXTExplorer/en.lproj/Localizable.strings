@@ -952,3 +952,9 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "Your version v%@ is up-to-date with remote.";
+
+/* No comment provided by engineer. */
+"Lua Code Editor" = "";
+
+/* No comment provided by engineer. */
+"Text Editor" = "";

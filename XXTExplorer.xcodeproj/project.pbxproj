@@ -181,6 +181,7 @@
 		D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22F1F063E270030C6DA /* XXTEMoreActionCell.m */; };
 		D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
 		D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */; };
+		D66085671F3C691100E87B3C /* XXTETextEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTETextEditorController.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -527,6 +528,16 @@
 		D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreActionCell.xib; sourceTree = "<group>"; };
 		D629C2331F0651320030C6DA /* UISearchController+StatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchController+StatusBarStyle.h"; sourceTree = "<group>"; };
 		D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchController+StatusBarStyle.m"; sourceTree = "<group>"; };
+		D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Bold.ttf"; sourceTree = "<group>"; };
+		D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-BoldItalic.ttf"; sourceTree = "<group>"; };
+		D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Italic.ttf"; sourceTree = "<group>"; };
+		D66085601F3C666700E87B3C /* CamingoCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Regular.ttf"; sourceTree = "<group>"; };
+		D66085611F3C666700E87B3C /* SourceCodePro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Bold.otf"; sourceTree = "<group>"; };
+		D66085621F3C666700E87B3C /* SourceCodePro-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-BoldIt.otf"; sourceTree = "<group>"; };
+		D66085631F3C666700E87B3C /* SourceCodePro-It.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-It.otf"; sourceTree = "<group>"; };
+		D66085641F3C666700E87B3C /* SourceCodePro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.otf"; sourceTree = "<group>"; };
+		D66085651F3C691100E87B3C /* XXTETextEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETextEditorController.h; sourceTree = "<group>"; };
+		D66085661F3C691100E87B3C /* XXTETextEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETextEditorController.m; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -881,6 +892,7 @@
 				0F4419EC1F17969000967980 /* Media */,
 				0F568FFE1F185AFE009AF9FE /* Image */,
 				0FE1E4381F18DF9200055E02 /* Web */,
+				D66085581F3C65F900E87B3C /* Editor */,
 				0FE1E4401F18E9A400055E02 /* Code */,
 				0FE1E44E1F19226600055E02 /* Installer */,
 				0F56900B1F1B01E5009AF9FE /* Archive */,
@@ -1392,6 +1404,31 @@
 			name = Daemon;
 			sourceTree = "<group>";
 		};
+		D66085581F3C65F900E87B3C /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				D660855C1F3C663E00E87B3C /* Fonts */,
+				D66085651F3C691100E87B3C /* XXTETextEditorController.h */,
+				D66085661F3C691100E87B3C /* XXTETextEditorController.m */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		D660855C1F3C663E00E87B3C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */,
+				D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */,
+				D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */,
+				D66085601F3C666700E87B3C /* CamingoCode-Regular.ttf */,
+				D66085611F3C666700E87B3C /* SourceCodePro-Bold.otf */,
+				D66085621F3C666700E87B3C /* SourceCodePro-BoldIt.otf */,
+				D66085631F3C666700E87B3C /* SourceCodePro-It.otf */,
+				D66085641F3C666700E87B3C /* SourceCodePro-Regular.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		D66D552F1F3C332200BFA077 /* Update */ = {
 			isa = PBXGroup;
 			children = (
@@ -1642,6 +1679,7 @@
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
+				D66085671F3C691100E87B3C /* XXTETextEditorController.m in Sources */,
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
