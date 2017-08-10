@@ -629,7 +629,7 @@
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:XXTExplorerViewSectionIndexHome] ] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-    showUserMessage(self, NSLocalizedString(@"\"Home Directory\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+    showUserMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)recognizer {

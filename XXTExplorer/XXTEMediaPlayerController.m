@@ -24,7 +24,7 @@
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return @"Movie Player";
+    return NSLocalizedString(@"Movie Player", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {

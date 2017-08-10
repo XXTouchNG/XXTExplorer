@@ -1,5 +1,5 @@
 //
-//  XXTExplorerEntryArchiver.h
+//  XXTExplorerEntryUnarchiver.h
 //  XXTExplorer
 //
 //  Created by Zheng on 15/07/2017.
@@ -8,6 +8,6 @@
 
 #import "XXTExplorerEntryReader.h"
 
-@interface XXTExplorerEntryArchiver : NSObject <XXTExplorerEntryReader>
+@interface XXTExplorerEntryUnarchiver : NSObject <XXTExplorerEntryReader>
 
 @end

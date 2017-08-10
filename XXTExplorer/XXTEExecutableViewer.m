@@ -14,7 +14,7 @@
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return @"Launcher";
+    return NSLocalizedString(@"Launcher", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {

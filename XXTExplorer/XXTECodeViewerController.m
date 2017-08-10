@@ -19,7 +19,7 @@
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return @"Code Viewer";
+    return NSLocalizedString(@"Code Viewer", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {

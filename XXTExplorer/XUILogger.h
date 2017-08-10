@@ -24,7 +24,7 @@ static inline NSString * XUIParserErrorMissingEntry(NSString *path1) {
 }
 
 static inline NSString * XUIParserErrorInvalidType(NSString *path1, NSString *type1) {
-    return [NSString stringWithFormat:NSLocalizedString(@"[%@\nPath \"%@\" should be \"%@\".", nil), kXUICellFactoryErrorInvalidTypeDomain, (path1), (type1)];
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"%@\" should be \"%@\".", nil), kXUICellFactoryErrorInvalidTypeDomain, (path1), (type1)];
 }
 
 static inline NSString * XUIParserErrorEmptyWarning(NSString *path1) {

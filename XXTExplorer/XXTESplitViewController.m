@@ -220,7 +220,7 @@
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Cannot check update: %@", nil), error.localizedDescription]
                                                                   style:LGAlertViewStyleActionSheet
                                                            buttonTitles:@[]
-                                                      cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                      cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                  destructiveButtonTitle:nil
                                                                delegate:self];
             if (self.alertView && self.alertView.isShowing) {

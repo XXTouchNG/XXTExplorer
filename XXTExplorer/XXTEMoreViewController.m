@@ -187,7 +187,7 @@ typedef enum : NSUInteger {
                              NSLocalizedString(@"Settings", nil),
                              NSLocalizedString(@"System", nil),
                              NSLocalizedString(@"Help", nil)];
-    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the XXTouch Web Client. \n- Access the WebDAV server.", nil), @"", @"", @"", @"", @"" ];
+    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web Client. \n- Access the WebDAV server.", nil), @"", @"", @"", @"", @"" ];
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     
@@ -656,7 +656,7 @@ typedef enum : NSUInteger {
                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Could not connect to the daemon: %@", nil), [serverError localizedDescription]]
                                                                style:LGAlertViewStyleActionSheet
                                                         buttonTitles:@[  ]
-                                                   cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                   cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                               destructiveButtonTitle:nil
                                                             delegate:self];
         if (alertView1 && alertView1.isShowing) {
@@ -698,7 +698,7 @@ typedef enum : NSUInteger {
                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"Cannot restart daemon: %@", nil), [serverError localizedDescription]]
                                                                    style:LGAlertViewStyleActionSheet
                                                             buttonTitles:@[  ]
-                                                       cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                       cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                   destructiveButtonTitle:nil
                                                                 delegate:self];
             if (alertView && alertView.isShowing) {

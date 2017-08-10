@@ -1,15 +1,15 @@
 //
-//  XXTExplorerEntryArchiver.m
+//  XXTExplorerEntryUnarchiver.m
 //  XXTExplorer
 //
 //  Created by Zheng on 15/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTExplorerEntryArchiver.h"
+#import "XXTExplorerEntryUnarchiver.h"
 #import "XXTEArchiveViewer.h"
 
-@implementation XXTExplorerEntryArchiver
+@implementation XXTExplorerEntryUnarchiver
 
 @synthesize metaDictionary = _metaDictionary;
 @synthesize entryPath = _entryPath;
@@ -28,7 +28,7 @@
 }
 
 + (UIImage *)defaultImage {
-    return [UIImage imageNamed:@"XXTEFileReaderType-Archiver"];
+    return [UIImage imageNamed:@"XXTEFileReaderType-Unarchiver"];
 }
 
 + (Class)relatedEditor {
@@ -58,7 +58,7 @@
     }
     _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Archive", entryUpperedExtension];
-    _entryViewerDescription = @"Archiver";
+    _entryViewerDescription = [XXTEArchiveViewer viewerName];
 }
 
 @end

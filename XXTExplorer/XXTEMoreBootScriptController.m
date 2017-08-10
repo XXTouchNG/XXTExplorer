@@ -96,7 +96,7 @@
     staticSectionFooters = @[ NSLocalizedString(@"Warning: Bootscript could leave system at a unpredictable state. You can hold \"Volume +\" before booting to stop vulnerable script from being launched.", nil), @"" ];
     
     XXTEMoreSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
-    cell1.titleLabel.text = @"Enable Boot Script";
+    cell1.titleLabel.text = NSLocalizedString(@"Enable Boot Script", nil);
     cell1.iconImageView.image = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
     [cell1.optionSwitch addTarget:self action:@selector(bootScriptOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.bootScriptSwitch = cell1.optionSwitch;

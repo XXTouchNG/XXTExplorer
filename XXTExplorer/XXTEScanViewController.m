@@ -19,6 +19,7 @@
 #import <LGAlertView/LGAlertView.h>
 #import "XXTEImagePickerController.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XXTEAppDefines.h"
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
 @property(nonatomic, strong) AVCaptureSession *scanSession;
@@ -406,7 +407,8 @@
         }
         if (permissionStatus == AVAuthorizationStatusRestricted ||
                 permissionStatus == AVAuthorizationStatusDenied) {
-            @throw NSLocalizedString(@"Turn to \"Settings > Privacy > Camera\" and enable XXTouch to use your camera.", nil);
+            NSString *productName = uAppDefine(@"PRODUCT_NAME");
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Turn to \"Settings > Privacy > Camera\" and enable %@ to use your camera.", nil), productName];
         }
         return [PMKPromise promiseWithValue:status];
     };
@@ -570,7 +572,7 @@
                                                         message:[error localizedDescription]
                                                           style:LGAlertViewStyleAlert
                                                    buttonTitles:nil
-                                              cancelButtonTitle:NSLocalizedString(@"Try Again", nil)
+                                              cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                          destructiveButtonTitle:nil
                                                        delegate:self];
     [alertView showAnimated];

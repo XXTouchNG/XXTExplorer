@@ -326,7 +326,7 @@ typedef enum : NSUInteger {
                                                                       message:[NSString stringWithFormat:NSLocalizedString(@"Cannot overwrite file \"%@\".\n%@", nil), targetName, [removeError localizedDescription]]
                                                                         style:LGAlertViewStyleActionSheet
                                                                  buttonTitles:nil
-                                                            cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                            cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                        destructiveButtonTitle:nil
                                                                      delegate:self];
             if (alertView && alertView.isShowing) {
@@ -346,7 +346,7 @@ typedef enum : NSUInteger {
                                                                       message:[NSString stringWithFormat:NSLocalizedString(@"Cannot open file \"%@\" for writing.", nil), targetName]
                                                                         style:LGAlertViewStyleActionSheet
                                                                  buttonTitles:nil
-                                                            cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                            cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                        destructiveButtonTitle:nil
                                                                      delegate:self];
             if (alertView && alertView.isShowing) {
@@ -395,7 +395,7 @@ typedef enum : NSUInteger {
     NSURL *sourceURL = self.sourceURL;
     NSString *sourceURLString = [sourceURL absoluteString];
     { // fail with error
-        LGAlertView *downloadFailedAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Failed", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Cannot download from url \"%@\".\n%@", nil), sourceURLString, [error localizedDescription]] style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil) destructiveButtonTitle:nil delegate:self];
+        LGAlertView *downloadFailedAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Failed", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Cannot download from url \"%@\".\n%@", nil), sourceURLString, [error localizedDescription]] style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Retry", nil) destructiveButtonTitle:nil delegate:self];
         if (self.currentAlertView && self.currentAlertView.isShowing) {
             [self.currentAlertView transitionToAlertView:downloadFailedAlertView completionHandler:nil];
         } else {

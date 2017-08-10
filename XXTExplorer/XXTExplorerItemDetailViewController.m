@@ -309,7 +309,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         {
             NSDate *entryCreationDate = entry[XXTExplorerViewEntryAttributeCreationDate];
             XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-            cell6.titleLabel.text = NSLocalizedString(@"Created", nil);
+            cell6.titleLabel.text = NSLocalizedString(@"Created At", nil);
             cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell6.valueLabel.text = [previewFormatter stringFromDate:entryCreationDate];
             
@@ -320,7 +320,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         {
             NSDate *entryModificationDate = entry[XXTExplorerViewEntryAttributeModificationDate];
             XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-            cell7.titleLabel.text = NSLocalizedString(@"Modified", nil);
+            cell7.titleLabel.text = NSLocalizedString(@"Modified At", nil);
             cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell7.valueLabel.text = [previewFormatter stringFromDate:entryModificationDate];
             

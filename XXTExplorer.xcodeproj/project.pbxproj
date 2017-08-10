@@ -48,14 +48,13 @@
 		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
-		0F35F20B1F106E5700B5B327 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20A1F106E5700B5B327 /* XXTEBuiltInDefaults.plist */; };
 		0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
 		0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */; };
 		0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
 		0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */; };
 		0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */; };
-		0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.m */; };
+		0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m */; };
 		0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */; };
 		0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */; };
 		0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */; };
@@ -183,6 +182,8 @@
 		D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
 		D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
+		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
+		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */; };
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
@@ -268,7 +269,6 @@
 		0F3508C31F166A7B000403FD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0F35F2071F1068E500B5B327 /* XXTEMoreUserDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsController.h; sourceTree = "<group>"; };
 		0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreUserDefaultsController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F35F20A1F106E5700B5B327 /* XXTEBuiltInDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEBuiltInDefaults.plist; sourceTree = "<group>"; };
 		0F35F20C1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionValueCell.h; sourceTree = "<group>"; };
 		0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreTitleDescriptionValueCell.m; sourceTree = "<group>"; };
 		0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionValueCell.xib; sourceTree = "<group>"; };
@@ -282,8 +282,8 @@
 		0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryParser.m; sourceTree = "<group>"; };
 		0F4D59881F19E48A00CCA383 /* XXTExplorerEntryLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryLauncher.h; sourceTree = "<group>"; };
 		0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryLauncher.m; sourceTree = "<group>"; };
-		0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryArchiver.h; sourceTree = "<group>"; };
-		0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryArchiver.m; sourceTree = "<group>"; };
+		0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryUnarchiver.h; sourceTree = "<group>"; };
+		0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryUnarchiver.m; sourceTree = "<group>"; };
 		0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEUserInterfaceDefines.h; sourceTree = "<group>"; };
 		0F4F67041F1268970042C449 /* XXTExplorerCreateItemNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerCreateItemNavigationController.h; sourceTree = "<group>"; };
 		0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerCreateItemNavigationController.m; sourceTree = "<group>"; };
@@ -529,6 +529,9 @@
 		D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchController+StatusBarStyle.m"; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
+		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
+		D6DBD48C1F3C4CA7002D5561 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/XXTEBuiltInDefaults.plist; sourceTree = "<group>"; };
+		D6DBD48E1F3C5B5C002D5561 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D6FC2F2A1F0E3372000BAB42 /* XXTEMoreActivationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationController.h; sourceTree = "<group>"; };
 		D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D6FC2F351F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionCell.h; sourceTree = "<group>"; };
@@ -546,6 +549,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */,
 				0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */,
 				D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */,
 				13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */,
@@ -779,8 +783,8 @@
 		0F56900F1F1B0482009AF9FE /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.h */,
-				0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.m */,
+				0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.h */,
+				0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m */,
 			);
 			name = Reader;
 			sourceTree = "<group>";
@@ -1004,7 +1008,7 @@
 			isa = PBXGroup;
 			children = (
 				D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */,
-				0F35F20A1F106E5700B5B327 /* XXTEBuiltInDefaults.plist */,
+				D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
@@ -1323,6 +1327,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6DBD48E1F3C5B5C002D5561 /* libz.tbd */,
 				0F6063D81F111E2E0087822E /* MobileCoreServices.framework */,
 				E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */,
 			);
@@ -1433,6 +1438,7 @@
 				0FA7ABE81ED641A3003EAD7D /* Resources */,
 				6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
+				D6DBD48D1F3C52D9002D5561 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1503,7 +1509,7 @@
 				0F30D9401F2C8C620001E10B /* XUIStaticTextCell.xib in Resources */,
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
-				0F35F20B1F106E5700B5B327 /* XXTEBuiltInDefaults.plist in Resources */,
+				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
@@ -1569,6 +1575,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D6DBD48D1F3C52D9002D5561 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which bartycrouch > /dev/null; then\n# Incrementally update all Storyboards/XIBs strings files\nbartycrouch interfaces -p \"$PROJECT_DIR\"\n\n# Add new keys to Localizable.strings files from NSLocalizedString in code\nbartycrouch code -p \"$PROJECT_DIR\" -l \"$PROJECT_DIR\" -a -s\nelse\necho \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1698,7 +1717,7 @@
 				D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */,
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */,
-				0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryArchiver.m in Sources */,
+				0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m in Sources */,
 				0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
@@ -1741,6 +1760,15 @@
 				0FE1E4371F189A1800055E02 /* zh-Hans */,
 			);
 			name = Meta.strings;
+			sourceTree = "<group>";
+		};
+		D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6DBD48A1F3C4CA1002D5561 /* zh-Hans */,
+				D6DBD48C1F3C4CA7002D5561 /* en */,
+			);
+			name = XXTEBuiltInDefaults.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

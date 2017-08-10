@@ -53,7 +53,7 @@
             if (validTitles.count != validValues.count) {
                 superResult = NO;
                 checkType = kXUICellFactoryErrorSizeDismatchDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"the size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"The size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
             }
         }
     } @catch (NSString *exceptionReason) {

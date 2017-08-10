@@ -145,7 +145,7 @@
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"%@ stored.", nil), pasteboardFormatString]
                                                                       style:LGAlertViewStyleActionSheet
                                                                buttonTitles:@[
-                                                                              [NSString stringWithFormat:@"Copy %@", formatString]
+                                                                              [NSString stringWithFormat:NSLocalizedString(@"Copy %@", nil), formatString]
                                                                               ]
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                      destructiveButtonTitle:NSLocalizedString(@"Clear Pasteboard", nil)
@@ -162,9 +162,9 @@
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"%@ stored.", nil), pasteboardFormatString]
                                                                       style:LGAlertViewStyleActionSheet
                                                                buttonTitles:@[
-                                                                              [NSString stringWithFormat:@"Paste to \"%@\"", entryName],
-                                                                              [NSString stringWithFormat:@"Move to \"%@\"", entryName],
-                                                                              [NSString stringWithFormat:@"Create Link at \"%@\"", entryName]
+                                                                              [NSString stringWithFormat:NSLocalizedString(@"Paste to \"%@\"", nil), entryName],
+                                                                              [NSString stringWithFormat:NSLocalizedString(@"Move to \"%@\"", nil), entryName],
+                                                                              [NSString stringWithFormat:NSLocalizedString(@"Create Link at \"%@\"", nil), entryName]
                                                                               ]
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                      destructiveButtonTitle:NSLocalizedString(@"Clear Pasteboard", nil)

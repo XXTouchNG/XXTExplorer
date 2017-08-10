@@ -18,7 +18,7 @@
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return @"Web Viewer";
+    return NSLocalizedString(@"Web Browser", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {

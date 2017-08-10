@@ -64,7 +64,7 @@
                 strm.zalloc = Z_NULL;
                 strm.zfree = Z_NULL;
                 
-                if (inflateInit2(&strm, (15 + 32)) != Z_OK) @throw NSLocalizedString(@"Cannot deflate raw data.", nil);
+                if (inflateInit2(&strm, (15 + 32)) != Z_OK) @throw NSLocalizedString(@"Cannot decompress raw data.", nil);
                 while (!done)
                 {
                     // Make sure we have enough room and reset the lengths.
@@ -78,7 +78,7 @@
                     if (status == Z_STREAM_END) done = YES;
                     else if (status != Z_OK) break;
                 }
-                if (inflateEnd (&strm) != Z_OK) @throw NSLocalizedString(@"Cannot deflate data.", nil);
+                if (inflateEnd (&strm) != Z_OK) @throw NSLocalizedString(@"Cannot decompress data.", nil);
                 
                 // Set real length.
                 if (done)
@@ -91,7 +91,7 @@
                     }
                 }
                 else {
-                    @throw NSLocalizedString(@"Deflating terminated unexpectedly.", nil);
+                    @throw NSLocalizedString(@"Decompressing terminated unexpectedly.", nil);
                 }
             }
         }

@@ -149,7 +149,7 @@ typedef enum : NSUInteger {
     XXTEMoreTitleDescriptionValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.titleLabel.text = NSLocalizedString(@"Regular Lua File", nil);
-    cell2.descriptionLabel.text = NSLocalizedString(@"A regular lua file from XXTouch template. (text/lua)", nil);
+    cell2.descriptionLabel.text = NSLocalizedString(@"A regular lua file from template. (text/lua)", nil);
     cell2.valueLabel.text = @"LUA";
     
     XXTEMoreTitleDescriptionValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];

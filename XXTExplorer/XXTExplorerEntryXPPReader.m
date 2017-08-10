@@ -9,6 +9,7 @@
 #import "XXTExplorerEntryXPPReader.h"
 #import "XXTExplorerEntryXPPMeta.h"
 #import "NSBundle+FlushCaches.h"
+#import "XXTEExecutableViewer.h"
 
 @interface XXTExplorerEntryXPPReader ()
 
@@ -100,7 +101,7 @@
         _entryIconImage = [self.class defaultImage];
     }
     _entryExtensionDescription = @"XXTouch Bundle";
-    _entryViewerDescription = @"Launcher";
+    _entryViewerDescription = [XXTEExecutableViewer viewerName];
     NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
     if (interfaceFile) {
         NSString *interfaceFileNoExt = [interfaceFile stringByDeletingPathExtension];

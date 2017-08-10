@@ -15,7 +15,7 @@
 #import "XXTExplorerEntryService.h"
 #import "XXTEViewer.h"
 #import "XXTExplorerEntryLauncher.h"
-#import "XXTExplorerEntryArchiver.h"
+#import "XXTExplorerEntryUnarchiver.h"
 
 @interface XXTExplorerEntryParser ()
 @property (nonatomic, strong, readonly) NSFileManager *parserFileManager;

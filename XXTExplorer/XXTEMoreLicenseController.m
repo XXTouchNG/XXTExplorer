@@ -541,7 +541,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Failed to activate license \"%@\": %@", nil), licenseCode, [serverError localizedDescription]]
                                                                style:LGAlertViewStyleActionSheet
                                                         buttonTitles:@[  ]
-                                                   cancelButtonTitle:NSLocalizedString(@"Try Again Later", nil)
+                                                   cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                               destructiveButtonTitle:nil
                                                             delegate:self];
         if (alertView1 && alertView1.isShowing) {

@@ -58,7 +58,7 @@
     }
     _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Script", entryUpperedExtension];
-    _entryViewerDescription = @"Launcher";
+    _entryViewerDescription = [XXTEExecutableViewer viewerName];
 }
 
 @end

@@ -7,14 +7,14 @@
 //
 
 #import "XXTEArchiveViewer.h"
-#import "XXTExplorerEntryArchiver.h"
+#import "XXTExplorerEntryUnarchiver.h"
 
 @implementation XXTEArchiveViewer
 
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return @"Archiver";
+    return NSLocalizedString(@"Unarchiver", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
@@ -22,7 +22,7 @@
 }
 
 + (Class)relatedReader {
-    return [XXTExplorerEntryArchiver class];
+    return [XXTExplorerEntryUnarchiver class];
 }
 
 - (instancetype)initWithPath:(NSString *)path {
