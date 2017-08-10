@@ -1,7 +1,824 @@
-/* 
-  Localizable.strings
-  XXTExplorer
+/*
+ * ./XXTEAppDelegate.m
+ */
 
-  Created by Zheng on 12/07/2017.
-  Copyright © 2017 Zheng. All rights reserved.
-*/
+"Stop" = "Stop";
+
+"Launch" = "Launch";
+
+"QR Scan" = "QR Scan";
+
+
+
+
+
+
+
+/*
+ * ./XUIOrderedOptionViewController.m
+ */
+
+"Selected" = "Selected";
+
+"Others" = "Others";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreBootScriptController.m
+ */
+
+"Select Boot Script" = "Select Boot Script";
+
+"Current Script" = "Current Script";
+
+"Boot script path has been copied to the pasteboard." = "Boot script path has been copied to the pasteboard.";
+
+"Cannot switch boot script: %@" = "Cannot switch boot script: %@";
+
+"Cannot select boot script: %@" = "Cannot select boot script: %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTEWorkspaceViewController.m
+ */
+
+"Workspace" = "Workspace";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerCreateItemViewController.m
+ */
+
+"Create Item" = "Create Item";
+
+"Type" = "Type";
+
+"Location" = "Location";
+
+"Regular Lua File" = "Regular Lua File";
+
+"A regular lua file from XXTouch template. (text/lua)" = "A regular lua file from XXTouch template. (text/lua)";
+
+"Regular Text File" = "Regular Text File";
+
+"An empty regular text file. (text/plain)" = "An empty regular text file. (text/plain)";
+
+"An empty regular file." = "An empty regular file.";
+
+"A directory with nothing inside." = "A directory with nothing inside.";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreActivationController.m
+ */
+
+"No action" = "No action";
+
+
+
+
+
+
+
+/*
+ * ./XUIViewController.m
+ */
+
+"Interface Viewer" = "Interface Viewer";
+
+
+
+
+
+
+
+/*
+ * ./XUIListViewController.m
+ */
+
+"XUI Error" = "XUI Error";
+
+"%@\n%@" = "%@\n%@";
+
+"OK" = "OK";
+
+"%lu Selected" = "%lu Selected";
+
+
+
+
+
+
+
+/*
+ * ./XXTESplitViewController.m
+ */
+
+"Needs Respring" = "Needs Respring";
+
+"You should respring your device to continue using this application." = "You should respring your device to continue using this application.";
+
+"Latest Version" = "Latest Version";
+
+"Your version v%@ is up-to-date with remote." = "Your version v%@ is up-to-date with remote.";
+
+"Dismiss" = "Dismiss";
+
+"New Version" = "New Version";
+
+"New version found: v%@\nCurrent version: v%@" = "New version found: v%@\nCurrent version: v%@";
+
+"Install via %@" = "Install via %@";
+
+"Remind me tomorrow" = "Remind me tomorrow";
+
+"Remind me later" = "Remind me later";
+
+"Ignore this version" = "Ignore this version";
+
+"Cannot check update: %@" = "Cannot check update: %@";
+
+"Connect to the APT server..." = "Connect to the APT server...";
+
+"Sync Failed" = "Sync Failed";
+
+"Cannot sync with daemon: %@" = "Cannot sync with daemon: %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTEAPTHelper.m
+ */
+
+"Empty response." = "Empty response.";
+
+"Cannot deflate raw data." = "Cannot deflate raw data.";
+
+"Cannot deflate data." = "Cannot deflate data.";
+
+"Deflating terminated unexpectedly." = "Deflating terminated unexpectedly.";
+
+"Invalid package data." = "Invalid package data.";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreViewController.m
+ */
+
+"Remote Access" = "Remote Access";
+
+"Connect to Wi-fi network." = "Connect to Wi-fi network.";
+
+"Remote" = "Remote";
+
+"Daemon" = "Daemon";
+
+"License" = "License";
+
+"Settings" = "Settings";
+
+"System" = "System";
+
+"Help" = "Help";
+
+"Turn on the switch: \n- Access the XXTouch Web Client. \n- Access the WebDAV server." = "Turn on the switch: \n- Access the XXTouch Web Client. \n- Access the WebDAV server.";
+
+"Restart Daemon" = "Restart Daemon";
+
+"Application List" = "Application List";
+
+"Clean UI Caches" = "Clean UI Caches";
+
+"Clean All" = "Clean All";
+
+"Respring Device" = "Respring Device";
+
+"Restart Device" = "Restart Device";
+
+"Documents (Online)" = "Documents (Online)";
+
+"Remote address has been copied to the pasteboard." = "Remote address has been copied to the pasteboard.";
+
+"This operation will restart daemon, and wait until it launched." = "This operation will restart daemon, and wait until it launched.";
+
+"Restart Now" = "Restart Now";
+
+"This operation will reset system location caches." = "This operation will reset system location caches.";
+
+"This operation will kill all applications and reset icon caches, which may cause icons to disappear." = "This operation will kill all applications and reset icon caches, which may cause icons to disappear.";
+
+"This operation will kill all user applications, and remove all the documents and caches of them." = "This operation will kill all user applications, and remove all the documents and caches of them.";
+
+"This operation will kill SpringBoard and all user applications." = "This operation will kill SpringBoard and all user applications.";
+
+"Reboot Device" = "Reboot Device";
+
+"This operation will shut down the device and launch it again." = "This operation will shut down the device and launch it again.";
+
+"Reboot Now" = "Reboot Now";
+
+"Restart daemon, please wait..." = "Restart daemon, please wait...";
+
+"Could not connect to the daemon: %@" = "Could not connect to the daemon: %@";
+
+"The daemon has been restarted." = "The daemon has been restarted.";
+
+"Daemon Restarted" = "Daemon Restarted";
+
+"Cannot restart daemon: %@" = "Cannot restart daemon: %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreLicenseController.m
+ */
+
+"New License" = "New License";
+
+"Current License" = "Current License";
+
+"Device" = "Device";
+
+"Cannot autofill license field: Invalid license code." = "Cannot autofill license field: Invalid license code.";
+
+"Expired At" = "Expired At";
+
+"Version" = "Version";
+
+"iOS Version" = "iOS Version";
+
+"Device Type" = "Device Type";
+
+"Device Name" = "Device Name";
+
+"Serial Number" = "Serial Number";
+
+"MAC Address" = "MAC Address";
+
+"Unique ID" = "Unique ID";
+
+"License Activation" = "License Activation";
+
+"Activate" = "Activate";
+
+"Activating" = "Activating";
+
+"License Activated" = "License Activated";
+
+"%@\nActivated At: %@\nExpired At: %@" = "%@\nActivated At: %@\nExpired At: %@";
+
+"Cannot active license: %@" = "Cannot active license: %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreDocumentsController.m
+ */
+
+"Documents" = "Documents";
+
+"User's Guide" = "User's Guide";
+
+"Update Logs" = "Update Logs";
+
+"Developer Reference" = "Developer Reference";
+
+"Open API Reference" = "Open API Reference";
+
+"Code Snippet Reference" = "Code Snippet Reference";
+
+"DynamicXUI (XUI) Reference" = "DynamicXUI (XUI) Reference";
+
+
+
+
+
+
+
+/*
+ * ./XXTEPackageViewerController.m
+ */
+
+"Install" = "Install";
+
+"Respring" = "Respring";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreRecordingController.m
+ */
+
+"On" = "On";
+
+"Off" = "Off";
+
+
+
+
+
+
+
+/*
+ * ./XXTEArrayObjectViewController.m
+ */
+
+"Item %lu" = "Item %lu";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreBootScriptPicker.m
+ */
+
+"Allowed file extensions: %@." = "Allowed file extensions: %@.";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreApplicationListController.m
+ */
+
+"Applications" = "Applications";
+
+"Search Application" = "Search Application";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerViewController+Shortcuts.m
+ */
+
+"Cannot stop script: %@" = "Cannot stop script: %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerItemDetailViewController.m
+ */
+
+"Item Detail" = "Item Detail";
+
+"Where" = "Where";
+
+"Original" = "Original";
+
+"Kind" = "Kind";
+
+"Symbolic Link" = "Symbolic Link";
+
+"Unknown" = "Unknown";
+
+"Size" = "Size";
+
+"Calculating...\n" = "Calculating...\n";
+
+"Created" = "Created";
+
+"Modified" = "Modified";
+
+"General" = "General";
+
+"Extended" = "Extended";
+
+"Owner" = "Owner";
+
+"Group" = "Group";
+
+"Everyone" = "Everyone";
+
+"Permission" = "Permission";
+
+"Open With" = "Open With";
+
+"Use this viewer to open all documents like this one." = "Use this viewer to open all documents like this one.";
+
+"%@\n(%@ on disk)" = "%@\n(%@ on disk)";
+
+"Close" = "Close";
+
+"Rename" = "Rename";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerViewController+XXTEScanViewControllerDelegate.m
+ */
+
+"Loading..." = "Loading...";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreActivationOperationController.m
+ */
+
+"Ask you for a choice." = "Ask you for a choice.";
+
+"Launch or stop the selected script directly." = "Launch or stop the selected script directly.";
+
+"Nothing will be performed." = "Nothing will be performed.";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerDownloadViewController.m
+ */
+
+"Download" = "Download";
+
+"Source URL" = "Source URL";
+
+"Target Path" = "Target Path";
+
+"Source URL has been copied to the pasteboard." = "Source URL has been copied to the pasteboard.";
+
+"Target Path has been copied to the pasteboard." = "Target Path has been copied to the pasteboard.";
+
+"Overwrite Confirm" = "Overwrite Confirm";
+
+"Yes" = "Yes";
+
+"Download terminated: User interrupt occurred." = "Download terminated: User interrupt occurred.";
+
+"Overwrite Failed" = "Overwrite Failed";
+
+"Creation Failed" = "Creation Failed";
+
+"Download Failed" = "Download Failed";
+
+"Download Finished" = "Download Finished";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerViewController.m
+ */
+
+"%@, %@ free" = "%@, %@ free";
+
+"Hide" = "Hide";
+
+"Current path has been copied to the pasteboard." = "Current path has been copied to the pasteboard.";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerViewController+FileOperations.m
+ */
+
+"Move" = "Move";
+
+"Moving process terminated: User interrupt occurred." = "Moving process terminated: User interrupt occurred.";
+
+"Paste" = "Paste";
+
+"Pasting process terminated: User interrupt occurred." = "Pasting process terminated: User interrupt occurred.";
+
+"Link" = "Link";
+
+"Linking process terminated: User interrupt occurred." = "Linking process terminated: User interrupt occurred.";
+
+"Delete" = "Delete";
+
+"Removing process terminated: User interrupt occurred." = "Removing process terminated: User interrupt occurred.";
+
+"Deleting %@" = "Deleting %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerViewController+XXTExplorerToolbarDelegate.m
+ */
+
+"%d items" = "%d items";
+
+"Pasteboard" = "Pasteboard";
+
+"%@ stored." = "%@ stored.";
+
+"Clear Pasteboard" = "Clear Pasteboard";
+
+"Archive Confirm" = "Archive Confirm";
+
+"Archive %@?" = "Archive %@?";
+
+"You cannot share directory." = "You cannot share directory.";
+
+"Delete %@?\nThis operation cannot be revoked." = "Delete %@?\nThis operation cannot be revoked.";
+
+
+
+
+
+
+
+/*
+ * ./XXTEScanViewController.m
+ */
+
+"Scan" = "Scan";
+
+"Album" = "Album";
+
+"Cannot connect to video device." = "Cannot connect to video device.";
+
+"Access Denied" = "Access Denied";
+
+"Access Restricted" = "Access Restricted";
+
+"Open URL" = "Open URL";
+
+"Continue" = "Continue";
+
+"Text Content" = "Text Content";
+
+"Copy" = "Copy";
+
+"Cannot find QR Code in the image." = "Cannot find QR Code in the image.";
+
+"Scan Error" = "Scan Error";
+
+"Try Again" = "Try Again";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreAboutController.m
+ */
+
+"Feedback" = "Feedback";
+
+"Official Site" = "Official Site";
+
+"User Agreement" = "User Agreement";
+
+"Third Party Credits" = "Third Party Credits";
+
+"Mail Feedback" = "Mail Feedback";
+
+"Official QQ Group" = "Official QQ Group";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerEntryBindingViewController.m
+ */
+
+"Restore to default." = "Restore to default.";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreUserDefaultsController.m
+ */
+
+"Search User Defaults" = "Search User Defaults";
+
+"Title" = "Title";
+
+"Description" = "Description";
+
+"Cannot set user defaults: %@" = "Cannot set user defaults: %@";
+
+
+
+
+
+
+
+/*
+ * ./XXTExplorerViewController+ArchiverOperations.m
+ */
+
+"Unarchive Confirm" = "Unarchive Confirm";
+
+"Archive" = "Archive";
+
+"Archiving process terminated: User interrupt occurred." = "Archiving process terminated: User interrupt occurred.";
+
+"Unarchive" = "Unarchive";
+
+"Unarchiving process terminated: User interrupt occurred." = "Unarchiving process terminated: User interrupt occurred.";
+
+
+
+
+
+
+
+/*
+ * ./XXTEMoreApplicationDetailController.m
+ */
+
+"Detail" = "Detail";
+
+"Bundle Path" = "Bundle Path";
+
+"Container Path" = "Container Path";
+
+"Actions" = "Actions";
+
+"Launch Application" = "Launch Application";
+
+"Clean GPS Caches" = "Clean GPS Caches";
+
+"Clean Application Data" = "Clean Application Data";
+
+"Cancel" = "Cancel";
+
+"Clean Now" = "Clean Now";
+
+"Clean succeed: %@" = "Clean succeed: %@";
+
+"Clean failed: %@" = "Clean failed: %@";
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * SHARED STRINGS
+ */
+
+"Cannot launch script: %@" = "Cannot launch script: %@";
+
+"Could not connect to the daemon." = "Could not connect to the daemon.";
+
+"Copied to the pasteboard." = "Copied to the pasteboard.";
+
+"About" = "About";
+
+"Check Update" = "Check Update";
+
+"Activation Config" = "Activation Config";
+
+"Pop-up Menu" = "Pop-up Menu";
+
+"Launch / Stop Selected Script" = "Launch / Stop Selected Script";
+
+"No Action" = "No Action";
+
+"Name" = "Name";
+
+"Bundle ID" = "Bundle ID";
+
+"Path has been copied to the pasteboard." = "Path has been copied to the pasteboard.";
+
+"Boot Script" = "Boot Script";
+
+"Only regular file, directory and symbolic link are supported." = "Only regular file, directory and symbolic link are supported.";
+
+"My License" = "My License";
+
+"Cancel" = "Cancel";
+
+"Done" = "Done";
+
+"Operation Failed" = "Operation Failed";
+
+"Try Again Later" = "Try Again Later";
+
+"More" = "More";
+
+"Recording Config" = "Recording Config";
+
+"User Defaults" = "User Defaults";
+
+"Clean GPS Caches" = "Clean GPS Caches";
+
+"Clean Now" = "Clean Now";
+
+"Respring Now" = "Respring Now";
+
+"Filename" = "Filename";
+
+"Tap to edit filename." = "Tap to edit filename.";
+
+"Regular File" = "Regular File";
+
+"Directory" = "Directory";
+
+"Open with..." = "Open with...";
+
+"Suggested" = "Suggested";
+
+"Other" = "Other";
+
+"None" = "None";
+
+"My Scripts" = "My Scripts";
+
+"Confirm" = "Confirm";
+
+"%lu items" = "%lu items";
+
+"Cannot select script: %@" = "Cannot select script: %@";
+
+"Delete Confirm" = "Delete Confirm";
+
+"No item" = "No item";
+
+"1 item" = "1 item";
+
