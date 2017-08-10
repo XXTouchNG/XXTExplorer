@@ -16,6 +16,9 @@
 #import <MessageUI/MessageUI.h>
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEMailComposeViewController.h"
+#import "XXTESplitViewController.h"
+#import "XXTEDispatchDefines.h"
+#import "XXTESplitViewController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
@@ -95,11 +98,10 @@ typedef enum : NSUInteger {
     XXTEMoreLinkNoIconCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell5.titleLabel.text = NSLocalizedString(@"Mail Feedback", nil);
-    
-    NSString *channelId = uAppDefine(@"CHANNEL_ID");
+
     XXTEMoreLinkNoIconCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell6.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Online Update (%@)", nil), channelId];
+    cell6.titleLabel.text = NSLocalizedString(@"Check Update", nil);
     
     XXTEMoreLinkNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -182,15 +184,8 @@ typedef enum : NSUInteger {
                 }
             }
             else if (indexPath.row == 1) {
-                NSString *cydiaStr = uAppDefine(@"CYDIA_URL");
-                if (cydiaStr) {
-                    NSURL *cydiaURL = [NSURL URLWithString:cydiaStr];
-                    if ([[UIApplication sharedApplication] canOpenURL:cydiaURL]) {
-                        [[UIApplication sharedApplication] openURL:cydiaURL];
-                    } else {
-                        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaStr]);
-                    }
-                }
+                XXTESplitViewController *splitViewController1 = (XXTESplitViewController *) self.splitViewController;
+                [splitViewController1 checkUpdate];
             }
             else if (indexPath.row == 2) {
                 NSString *contactStr = uAppDefine(@"CONTACT_URL");
