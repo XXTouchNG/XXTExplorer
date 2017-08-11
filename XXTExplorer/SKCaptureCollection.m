@@ -22,7 +22,7 @@
     [keys sortUsingComparator:^NSComparisonResult(NSNumber *  _Nonnull obj1, NSNumber *  _Nonnull obj2) {
         return [obj1 compare:obj2]; // ?
     }];
-    return [[NSArray alloc] initWithArray:keys];
+    return keys;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary1 {
