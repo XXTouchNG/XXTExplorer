@@ -7,10 +7,14 @@
 //
 
 #import "SKHelper.h"
-#import "SKLanguage.h"
-#import "SKTheme.h"
-#import "SKParser.h"
-#import "SKAttributedParser.h"
+#import "XXTExplorer-Swift.h"
+
+@class Language;
+
+//#import "SKLanguage.h"
+//#import "SKTheme.h"
+//#import "SKParser.h"
+//#import "SKAttributedParser.h"
 
 @implementation SKHelper
 
@@ -35,7 +39,7 @@
     assert(path);
     NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
     if (plist) {
-        return [[SKLanguage alloc] initWithDictionary:plist];
+        return [[Language alloc] initWithDictionary:plist];
     }
     return nil;
 }

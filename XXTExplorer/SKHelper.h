@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class SKLanguage, SKTheme;
-
 @interface SKHelper : NSObject
 
 @property (nonatomic, strong, readonly) NSBundle *bundle;
