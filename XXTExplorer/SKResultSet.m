@@ -27,7 +27,7 @@
 }
 
 - (BOOL)isEmpty {
-    return _results.count > 0;
+    return _results.count == 0;
 }
 
 - (void)addResult:(SKResult *)result {

@@ -18,6 +18,14 @@
 
 @implementation SKPattern
 
+- (SKPattern *)superPattern {
+    return self.parent;
+}
+
+- (NSArray <SKPattern *> *)subPatterns {
+    return self.patterns;
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
                             parent:(SKPattern *)superPattern {
     if (self = [super init]) {
@@ -57,14 +65,6 @@
         _patterns = patterns;
     }
     return self;
-}
-
-- (SKPattern *)superPattern {
-    return self.parent;
-}
-
-- (NSArray <SKPattern *> *)subPatterns {
-    return self.patterns;
 }
 
 @end

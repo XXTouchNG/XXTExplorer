@@ -40,7 +40,7 @@
                 // TODO: caret, invisibles, lightHighlight, selection, font style
                 for (NSString *scope in [scopes componentsSeparatedByString:@","]) {
                     NSString *key = [scope stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                    attributes[key] = settings;
+                    attributes[key] = newSettings;
                 }
             }
         }

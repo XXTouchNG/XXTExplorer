@@ -31,7 +31,7 @@
         if (![dictionary isKindOfClass:[NSDictionary class]]) {
             return nil;
         }
-        NSMutableDictionary <NSNumber *, SKCapture *> *captures = [@[] mutableCopy];
+        NSMutableDictionary <NSNumber *, SKCapture *> *captures = [@{} mutableCopy];
         for (NSString *keyString in dictionary.allKeys) {
             NSDictionary *value = dictionary[keyString];
             if (![value isKindOfClass:[NSDictionary class]]) {
@@ -50,7 +50,7 @@
     return self;
 }
 
-- (SKCapture *)subscriptWithIndex:(NSNumber *)index {
+- (SKCapture *)objectForKeyedSubscript:(NSNumber *)index {
     return self.captures[index];
 }
 

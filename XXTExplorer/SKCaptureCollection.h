@@ -14,6 +14,6 @@
 
 @property (nonatomic, strong, readonly) NSArray <NSNumber *> *captureIndexes;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (SKCapture *)subscriptWithIndex:(NSNumber *)index;
+- (SKCapture *)objectForKeyedSubscript:(NSNumber *)idx;
 
 @end
