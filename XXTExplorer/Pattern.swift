@@ -55,15 +55,15 @@ internal class Pattern: NSObject {
         _name = dictionary["name"] as? String
 
         if let matchExpr = dictionary["match"] as? String {
-            _match = try? NSRegularExpression(pattern: matchExpr, options: [.anchorsMatchLines])
+            _match = try? NSRegularExpression(pattern: matchExpr, options: [.anchorsMatchLines, .allowCommentsAndWhitespace])
         }
 
         if let beginExpr = dictionary["begin"] as? String {
-            _begin = try? NSRegularExpression(pattern: beginExpr, options: [.anchorsMatchLines])
+            _begin = try? NSRegularExpression(pattern: beginExpr, options: [.anchorsMatchLines, .allowCommentsAndWhitespace])
         }
 
         if let endExpr = dictionary["end"] as? String {
-            _end = try? NSRegularExpression(pattern: endExpr, options: [.anchorsMatchLines])
+            _end = try? NSRegularExpression(pattern: endExpr, options: [.anchorsMatchLines, .allowCommentsAndWhitespace])
         }
 
         _applyEndPatternLast = dictionary["applyEndPatternLast"] as? Bool ?? false

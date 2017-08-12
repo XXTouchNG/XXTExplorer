@@ -36,17 +36,15 @@ open class SKHelper : NSObject {
     internal func getBundleManager() -> BundleManager {
         return BundleManager { identifier, kind in
             let components = identifier._split(separator: ".")
-            if kind == .language {
-                if components.count > 1 {
-                    let name = components[1]
-                    let ext = ".tmLanguage"
-                    return self.config.bundle.url(forResource: name.capitalized, withExtension: ext) ?? URL(fileURLWithPath: "")
-                }
+            if kind == .language && components.count > 1 {
+                let name = components[1]
+                let ext = ".tmLanguage"
+                return self.config.bundle.url(forResource: name, withExtension: ext) ?? URL(fileURLWithPath: "")
             }
             else if kind == .theme {
                 let name = identifier
                 let ext = ".tmTheme"
-                return self.config.bundle.url(forResource: name.capitalized, withExtension: ext) ?? URL(fileURLWithPath: "")
+                return self.config.bundle.url(forResource: name, withExtension: ext) ?? URL(fileURLWithPath: "")
             }
             return URL(fileURLWithPath: "")
         }

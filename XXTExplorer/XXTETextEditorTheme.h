@@ -14,7 +14,7 @@
 @property (nonatomic, strong) UIColor *foregroundColor;
 @property (nonatomic, strong) UIColor *selectionColor;
 @property (nonatomic, strong) UIColor *caretColor;
-
+@property (nonatomic, strong, readonly) NSString *identifier;
 - (instancetype)initWithIdentifier:(NSString *)identifier;
 
 @end

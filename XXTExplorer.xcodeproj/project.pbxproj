@@ -156,6 +156,9 @@
 		0FE1E4461F18EEA100055E02 /* NSString+HTMLEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4451F18EEA100055E02 /* NSString+HTMLEscape.m */; };
 		0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */; };
 		0FE1E44D1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */; };
+		0FEB74501F3EB78D00B58A4F /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB744F1F3EB78D00B58A4F /* lua.tmLanguage */; };
+		0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
+		0FEB74541F3EC7AB00B58A4F /* SKLanguage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74531F3EC7AB00B58A4F /* SKLanguage.plist */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
@@ -232,7 +235,6 @@
 		D62DD6891F3D7FE600A34850 /* ScopedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6791F3D7FE600A34850 /* ScopedString.swift */; };
 		D62DD68A1F3D7FE600A34850 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD67B1F3D7FE600A34850 /* Theme.swift */; };
 		D62DD68C1F3D831C00A34850 /* SKHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD68B1F3D831C00A34850 /* SKHelper.swift */; };
-		D62DD6921F3D95A100A34850 /* Lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D62DD6911F3D95A100A34850 /* Lua.tmLanguage */; };
 		D66085671F3C691100E87B3C /* XXTETextEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTETextEditorController.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
@@ -535,6 +537,9 @@
 		0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryCodeReader.m; sourceTree = "<group>"; };
 		0FE1E44B1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAssetTrack+CoreMediaExtensions.h"; sourceTree = "<group>"; };
 		0FE1E44C1F19017F00055E02 /* AVAssetTrack+CoreMediaExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAssetTrack+CoreMediaExtensions.m"; sourceTree = "<group>"; };
+		0FEB744F1F3EB78D00B58A4F /* lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lua.tmLanguage; sourceTree = "<group>"; };
+		0FEB74511F3EB88400B58A4F /* json.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = json.tmLanguage; sourceTree = "<group>"; };
+		0FEB74531F3EC7AB00B58A4F /* SKLanguage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKLanguage.plist; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
 		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
 		0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewHomeCell.xib; sourceTree = "<group>"; };
@@ -629,7 +634,6 @@
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
 		D62DD67B1F3D7FE600A34850 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D62DD68B1F3D831C00A34850 /* SKHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKHelper.swift; sourceTree = "<group>"; };
-		D62DD6911F3D95A100A34850 /* Lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Lua.tmLanguage; sourceTree = "<group>"; };
 		D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Bold.ttf"; sourceTree = "<group>"; };
 		D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-BoldItalic.ttf"; sourceTree = "<group>"; };
 		D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Italic.ttf"; sourceTree = "<group>"; };
@@ -1362,6 +1366,7 @@
 				D62DD66B1F3D7FE600A34850 /* XXTExplorer-Bridging-Header.h */,
 				D62DD6241F3D52E900A34850 /* Theme */,
 				D62DD6231F3D52E000A34850 /* Language */,
+				D660855C1F3C663E00E87B3C /* Font */,
 				D62DD66C1F3D7FE600A34850 /* AttributedParser.swift */,
 				D62DD66D1F3D7FE600A34850 /* AttributedParsingOperation.swift */,
 				D62DD66E1F3D7FE600A34850 /* BundleManager.swift */,
@@ -1547,7 +1552,9 @@
 		D62DD6231F3D52E000A34850 /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				D62DD6911F3D95A100A34850 /* Lua.tmLanguage */,
+				0FEB74531F3EC7AB00B58A4F /* SKLanguage.plist */,
+				0FEB74511F3EB88400B58A4F /* json.tmLanguage */,
+				0FEB744F1F3EB78D00B58A4F /* lua.tmLanguage */,
 			);
 			name = Language;
 			sourceTree = "<group>";
@@ -1597,7 +1604,6 @@
 				D60A26A71F3DA82C00E013E2 /* Theme */,
 				0FE162A21F3C9370003064B2 /* Views */,
 				0FE162A11F3C9355003064B2 /* SyntaxKit */,
-				D660855C1F3C663E00E87B3C /* Font */,
 				D66085651F3C691100E87B3C /* XXTETextEditorController.h */,
 				D66085661F3C691100E87B3C /* XXTETextEditorController.m */,
 			);
@@ -1750,10 +1756,10 @@
 				D60A26C61F3DB7BE00E013E2 /* Espresso Libre.tmTheme in Resources */,
 				D60A26C81F3DB7BE00E013E2 /* iPlastic.tmTheme in Resources */,
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
+				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				D60A26BF1F3DB7BE00E013E2 /* Amy.tmTheme in Resources */,
-				D62DD6921F3D95A100A34850 /* Lua.tmLanguage in Resources */,
 				0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */,
 				D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
@@ -1768,6 +1774,7 @@
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
 				D60A26CB1F3DB7BE00E013E2 /* Pastels on Dark.tmTheme in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
+				0FEB74541F3EC7AB00B58A4F /* SKLanguage.plist in Resources */,
 				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
@@ -1786,6 +1793,7 @@
 				0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */,
 				0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
+				0FEB74501F3EB78D00B58A4F /* lua.tmLanguage in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

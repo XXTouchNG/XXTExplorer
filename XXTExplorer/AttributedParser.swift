@@ -11,6 +11,7 @@
 //
 
 import Foundation
+import UIKit
 
 open class AttributedParser: Parser {
 

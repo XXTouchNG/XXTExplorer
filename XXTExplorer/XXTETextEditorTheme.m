@@ -13,6 +13,7 @@
 
 - (instancetype)initWithIdentifier:(NSString *)identifier {
     if (self = [super init]) {
+        _identifier = identifier;
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;
         _caretColor = XXTE_COLOR;

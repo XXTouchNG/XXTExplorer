@@ -151,6 +151,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self restoreTheme];
     [super viewWillAppear:animated];
     [self registerNotifications];
     [self updateToolbarButton];
@@ -176,6 +177,20 @@
     if ([self isEditing]) {
         [self setEditing:NO animated:YES];
     }
+}
+
+- (void)restoreTheme {
+    UIColor *backgroundColor = XXTE_COLOR;
+    UIColor *foregroundColor = [UIColor whiteColor];
+    
+    // text color
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
+    
+    // navigation items and bar button items color
+    self.navigationController.navigationBar.tintColor = foregroundColor;
+    
+    // background color
+    self.navigationController.navigationBar.barTintColor = backgroundColor;
 }
 
 #pragma mark - NSFileManager

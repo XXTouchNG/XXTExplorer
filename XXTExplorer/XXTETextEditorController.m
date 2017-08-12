@@ -43,7 +43,27 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    if ([self isDarkNavigationBar]) {
+        return UIStatusBarStyleLightContent;
+    } else {
+        return UIStatusBarStyleDefault;
+    }
+}
+
+- (BOOL) isDarkNavigationBar
+{
+    UIColor *newColor = self.theme.backgroundColor;
+    if (!newColor) newColor = XXTE_COLOR;
+    const CGFloat *componentColors = CGColorGetComponents(newColor.CGColor);
+    CGFloat colorBrightness = ((componentColors[0] * 299) + (componentColors[1] * 587) + (componentColors[2] * 114)) / 1000;
+    if (colorBrightness < 0.5)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (instancetype)initWithPath:(NSString *)path {
@@ -56,6 +76,40 @@
 
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
+    
+    [self reloadTheme];
+    [self reloadHelper];
+}
+
+#pragma mark - Config Before Load
+
+- (void)reloadTheme {
+    NSString *themeIdentifier = @"Monokai";
+    
+    XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
+    _theme = theme;
+}
+
+- (void)reloadHelper {
+    SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
+    helperConfig.bundle = [NSBundle mainBundle];
+    helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14];
+    helperConfig.color = self.theme.foregroundColor;
+    helperConfig.path = self.entryPath;
+    helperConfig.languageIdentifier = @"source.json";
+    helperConfig.themeIdentifier = self.theme.identifier;
+    _helperConfig = helperConfig;
+    
+    SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
+    helper.delegate = self;
+    _helper = helper;
+}
+
+#pragma mark - Config After Load
+
+- (void)reloadViewStyle {
+    self.textView.backgroundColor = self.theme.backgroundColor;
+    [self.textView setTintColor:self.theme.caretColor];
 }
 
 #pragma mark - Life Cycle
@@ -67,34 +121,21 @@
     [self configureSubviews];
     [self configureConstraints];
     
-    [self reloadTheme];
-    [self reloadHelper];
+    [self reloadViewStyle];
     
     [self asyncLoadContent];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self renderTheme];
     [super viewWillAppear:animated];
-    __block BOOL rendered = NO;
-    if (self.transitionCoordinator) {
-        [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-            [self renderTheme];
-            rendered = YES;
-        } completion:nil];
-    }
-    if (!rendered) [self renderTheme];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    __block BOOL rendered = NO;
-    if (self.transitionCoordinator) {
-        [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-            [self restoreTheme];
-            rendered = YES;
-        } completion:nil];
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if (parent == nil) {
+        [self restoreTheme];
     }
-    if (!rendered) [self restoreTheme];
+    [super willMoveToParentViewController:parent];
 }
 
 - (void)renderTheme {
@@ -152,34 +193,6 @@
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-}
-
-#pragma mark - Config
-
-- (void)reloadTheme {
-    NSString *themeIdentifier = @"Solarized (Dark)";
-    
-    XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
-    _theme = theme;
-    
-    self.textView.backgroundColor = self.theme.backgroundColor;
-}
-
-- (void)reloadHelper {
-    NSString *themeIdentifier = @"Solarized (Dark)";
-    
-    SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
-    helperConfig.bundle = [NSBundle mainBundle];
-    helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14];
-    helperConfig.color = self.theme.foregroundColor;
-    helperConfig.path = self.entryPath;
-    helperConfig.languageIdentifier = @"source.lua";
-    helperConfig.themeIdentifier = themeIdentifier;
-    _helperConfig = helperConfig;
-    
-    SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
-    helper.delegate = self;
-    _helper = helper;
 }
 
 #pragma mark - Content
