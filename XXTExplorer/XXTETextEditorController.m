@@ -18,18 +18,17 @@
 #import "XXTETextStorage.h"
 #import "XXTELayoutManager.h"
 
+#import "XXTEKeyboardRow.h"
+
 #import <Masonry/Masonry.h>
 
 #import "XXTExplorer-Swift.h"
 
-@interface XXTETextEditorController () <UITextViewDelegate, NSTextStorageDelegate, SKHelperDelegate>
-
-@property (nonatomic, strong, readonly) XXTETextEditorView *textView;
-
-//@property (nonatomic, strong) SKHelperConfig *helperConfig;
-//@property (nonatomic, strong) SKHelper *helper;
+@interface XXTETextEditorController () <UITextViewDelegate>
 
 @property (nonatomic, strong) XXTETextEditorTheme *theme;
+@property (nonatomic, strong, readonly) XXTETextEditorView *textView;
+@property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @end
 
@@ -60,51 +59,37 @@
     const CGFloat *componentColors = CGColorGetComponents(newColor.CGColor);
     CGFloat colorBrightness = ((componentColors[0] * 299) + (componentColors[1] * 587) + (componentColors[2] * 114)) / 1000;
     if (colorBrightness < 0.5)
-    {
         return YES;
-    }
     else
-    {
         return NO;
-    }
 }
 
 #pragma mark - Navigation Bar Color
 
 - (void)renderTheme {
+    if (XXTE_PAD) return;
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
     if (self.theme) {
-        if (self.theme.foregroundColor) {
+        if (self.theme.foregroundColor)
             foregroundColor = self.theme.foregroundColor;
-        }
-        if (self.theme.backgroundColor) {
+        if (self.theme.backgroundColor)
             backgroundColor = self.theme.backgroundColor;
-        }
     }
-    
-    // text color
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    
-    // navigation items and bar button items color
     self.navigationController.navigationBar.tintColor = foregroundColor;
-    
-    // background color
     self.navigationController.navigationBar.barTintColor = backgroundColor;
+    self.settingsButtonItem.tintColor = foregroundColor;
 }
 
 - (void)restoreTheme {
+    if (XXTE_PAD) return;
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
-    
-    // text color
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    
-    // navigation items and bar button items color
     self.navigationController.navigationBar.tintColor = foregroundColor;
-    
-    // background color
     self.navigationController.navigationBar.barTintColor = backgroundColor;
+    self.settingsButtonItem.tintColor = foregroundColor;
 }
 
 #pragma mark - Initializers
@@ -121,39 +106,32 @@
     self.hidesBottomBarWhenPushed = YES;
     
     [self reloadTheme];
-    [self reloadHelper];
+    [self registerForKeyboardNotifications];
 }
 
 - (void)reloadAll {
     [self reloadTheme];
-    [self reloadHelper];
     [self reloadView];
     [self reloadViewStyle];
-    [self asyncLoadContent];
+    [self reloadContent];
+}
+
+- (void)reloadStyleAndContent {
+    [self reloadViewStyle];
+    [self reloadContent];
 }
 
 #pragma mark - BEFORE -viewDidLoad
 
+- (void)reloadDefaults {
+    
+}
+
 - (void)reloadTheme {
-    NSString *themeIdentifier = @"Monokai"; // TODO: theme configuration
+    NSString *themeIdentifier = @"Solarized (Light)"; // config
     
     XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
     _theme = theme;
-}
-
-- (void)reloadHelper {
-//    SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
-//    helperConfig.bundle = [NSBundle mainBundle];
-//    helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // TODO: font configuration
-//    helperConfig.color = self.theme.foregroundColor;
-//    helperConfig.path = self.entryPath;
-//    helperConfig.languageIdentifier = @"source.lua"; // TODO: highlight bindings
-//    helperConfig.themeIdentifier = self.theme.identifier;
-//    _helperConfig = helperConfig;
-//    
-//    SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
-//    helper.delegate = self;
-//    _helper = helper;
 }
 
 #pragma mark - AFTER -viewDidLoad
@@ -162,10 +140,24 @@
     if (![self isViewLoaded]) return;
     [_textView removeFromSuperview];
     
+    BOOL isReadOnlyMode = NO;
     BOOL isLineNumberEnabled = YES; // config
+    BOOL isHighlightEnabled = YES; // config
+    BOOL isKeyboardRowEnabled = YES; // config
     
-    XXTETextStorage *textStorage = [[XXTETextStorage alloc] init];
-    textStorage.delegate = self;
+    NSTextStorage *textStorage = nil;
+    if (isHighlightEnabled) {
+        SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
+        helperConfig.bundle = [NSBundle mainBundle];
+        helperConfig.themeIdentifier = self.theme.identifier;
+        helperConfig.color = self.theme.foregroundColor;
+        helperConfig.languageIdentifier = @"source.lua"; // config
+        helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // config
+        
+        textStorage = [[XXTETextStorage alloc] initWithConfig:helperConfig];
+    } else {
+        textStorage = [[NSTextStorage alloc] init];
+    }
     
     NSLayoutManager *layoutManager = nil;
     if (isLineNumberEnabled) {
@@ -173,8 +165,6 @@
     } else {
         layoutManager = [[NSLayoutManager alloc] init];
     }
-    layoutManager.showsInvisibleCharacters = NO; // config
-    layoutManager.showsControlCharacters = NO; // config
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
     textContainer.lineBreakMode = NSLineBreakByWordWrapping;
@@ -187,20 +177,27 @@
     XXTETextEditorView *textView = [[XXTETextEditorView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
     textView.delegate = self;
     textView.selectable = YES;
-    textView.editable = NO; // default is NO, config (readonly?)
+    if (isReadOnlyMode) {
+        textView.editable = NO;
+    } else {
+        textView.editable = YES;
+    }
     textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive; // config
-    textView.autocapitalizationType = UITextAutocapitalizationTypeNone; // config
-    textView.autocorrectionType = UITextAutocorrectionTypeNo; // config
-    textView.spellCheckingType = UITextSpellCheckingTypeNo; // config
-    textView.returnKeyType = UIReturnKeyDefault; // config
-    textView.dataDetectorTypes = UIDataDetectorTypeNone; // config
+    textView.returnKeyType = UIReturnKeyDefault;
+    textView.dataDetectorTypes = UIDataDetectorTypeNone;
     
     textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
     
-    textView.vTextStorage = textStorage;
+    if (isHighlightEnabled) {
+        textView.vTextStorage = (XXTETextStorage *)textStorage;
+    }
     if (isLineNumberEnabled) {
         textView.vLayoutManager = (XXTELayoutManager *)layoutManager;
+    }
+    
+    if (isKeyboardRowEnabled && NO == isReadOnlyMode) {
+        XXTEKeyboardRow *keyboardRow = [[XXTEKeyboardRow alloc] initWithTextView:textView];
+        textView.inputAccessoryView = keyboardRow;
     }
     
     [self.view addSubview:textView];
@@ -214,17 +211,26 @@
 
 - (void)reloadViewStyle {
     if (![self isViewLoaded]) return;
-    self.textView.backgroundColor = self.theme.backgroundColor; // config
-    [self.textView setTintColor:self.theme.caretColor]; // config
-    [self.textView setFont:[UIFont fontWithName:@"SourceCodePro-Regular" size:14.f]]; // config
-    [self.textView setTextColor:self.theme.foregroundColor]; // config
-    [self.textView setLineNumberEnabled:YES]; // config
-    if (self.textView.vLayoutManager) {
-        [self.textView setGutterLineColor:self.theme.foregroundColor]; // config
-        [self.textView setGutterBackgroundColor:self.theme.backgroundColor]; // config
-        [self.textView.vLayoutManager setLineNumberFont:[UIFont fontWithName:@"CourierNewPSMT" size:10.f]]; // config
-        [self.textView.vLayoutManager setLineNumberColor:self.theme.foregroundColor]; // config
+    XXTETextEditorTheme *theme = self.theme;
+    XXTETextEditorView *textView = self.textView;
+    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive; // config
+    textView.autocapitalizationType = UITextAutocapitalizationTypeNone; // config
+    textView.autocorrectionType = UITextAutocorrectionTypeNo; // config
+    textView.spellCheckingType = UITextSpellCheckingTypeNo; // config
+    textView.backgroundColor = theme.backgroundColor; // config
+    [textView setTintColor:theme.caretColor]; // config
+    [textView setFont:[UIFont fontWithName:@"SourceCodePro-Regular" size:14.f]]; // config
+    [textView setTextColor:theme.foregroundColor]; // config
+    [textView setLineNumberEnabled:YES]; // config
+    if (textView.vLayoutManager) {
+        [textView setGutterLineColor:theme.foregroundColor]; // config
+        [textView setGutterBackgroundColor:theme.backgroundColor]; // config
+        [textView.vLayoutManager setLineNumberFont:[UIFont fontWithName:@"CourierNewPSMT" size:10.f]]; // config
+        [textView.vLayoutManager setLineNumberColor:theme.foregroundColor]; // config
     }
+    [UIView animateWithDuration:.2f animations:^{
+        [self renderTheme];
+    }];
 }
 
 #pragma mark - Life Cycle
@@ -239,7 +245,7 @@
     [self reloadView];
     [self reloadViewStyle];
     
-    [self asyncLoadContent];
+    [self reloadContent];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -263,6 +269,7 @@
         self.title = entryName;
     }
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = self.settingsButtonItem;
 }
 
 - (void)configureSubviews {
@@ -273,24 +280,34 @@
     
 }
 
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)settingsButtonItem {
+    if (!_settingsButtonItem) {
+        UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSettings"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonItemTapped:)];
+        _settingsButtonItem = settingsButtonItem;
+    }
+    return _settingsButtonItem;
+}
+
 #pragma mark - Content
 
-- (void)asyncLoadContent {
-    self.textView.editable = NO;
-    blockUserInteractions(self, YES);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        NSData *stringData = [[NSData alloc] initWithContentsOfFile:self.entryPath];
-        NSString *string = [[NSString alloc] initWithData:stringData encoding:NSUTF8StringEncoding];
-        dispatch_async_on_main_queue(^{
-            if (string) {
-                [self.textView setText:string];
-            } else {
-                
-            }
-            blockUserInteractions(self, NO);
-            self.textView.editable = YES;
-        });
-    });
+- (void)reloadContent {
+    NSError *readError = nil;
+    NSString *string = [NSString stringWithContentsOfFile:self.entryPath encoding:NSUTF8StringEncoding error:&readError];
+    if (readError) {
+        showUserMessage(self, [readError localizedDescription]);
+        return;
+    }
+    XXTETextEditorView *textView = self.textView;
+    textView.editable = NO;
+    [textView setText:string];
+    BOOL isReadOnlyMode = NO;
+    if (isReadOnlyMode) {
+        textView.editable = NO;
+    } else {
+        textView.editable = YES;
+    }
 }
 
 #pragma mark - SKHelperDelegate
@@ -303,9 +320,65 @@
     showUserMessage(self, error.localizedDescription);
 }
 
+#pragma mark - Keyboard
+
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.textView.contentInset = contentInsets;
+    self.textView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    
+    UITextView *textView = self.textView;
+    UITextRange * selectionRange = [textView selectedTextRange];
+    CGRect selectionStartRect = [textView caretRectForPosition:selectionRange.start];
+    CGRect selectionEndRect = [textView caretRectForPosition:selectionRange.end];
+    CGPoint selectionCenterPoint = (CGPoint){(selectionStartRect.origin.x + selectionEndRect.origin.x)/2,(selectionStartRect.origin.y + selectionStartRect.size.height / 2)};
+    
+    if (!CGRectContainsPoint(aRect, selectionCenterPoint) ) {
+        [textView scrollRectToVisible:CGRectMake(selectionStartRect.origin.x, selectionStartRect.origin.y, selectionEndRect.origin.x - selectionStartRect.origin.x, selectionStartRect.size.height) animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UITextView *textView = self.textView;
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    textView.contentInset = contentInsets;
+    textView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - Button Actions
+
+- (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
+    
+}
+
 #pragma mark - Memory
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [XXTETextEditorController dealloc]");
 #endif

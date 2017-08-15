@@ -11,5 +11,6 @@
 @interface XXTExplorerViewController (Notification)
 
 - (void)registerNotifications;
+- (void)removeNotifications;
 
 @end

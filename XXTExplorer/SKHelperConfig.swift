@@ -14,7 +14,7 @@ open class SKHelperConfig : NSObject {
     public var bundle: Bundle = Bundle.main
     public var font: UIFont = UIFont.systemFont(ofSize: 14)
     public var color: UIColor = UIColor.black
-    public var path: String = ""
+//    public var path: String = ""
     public var themeIdentifier: String = ""
     public var languageIdentifier: String = ""
 }

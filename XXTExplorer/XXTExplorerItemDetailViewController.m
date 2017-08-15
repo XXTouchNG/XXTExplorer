@@ -619,7 +619,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    if (XXTE_COLLAPSED) {
+    if (XXTE_PAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -675,7 +675,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     }).finally(^() {
         blockUserInteractions(self, NO);
         sizingCancelFlag = 1;
-        if (XXTE_COLLAPSED) {
+        if (XXTE_PAD) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
         [self dismissViewControllerAnimated:YES completion:^{

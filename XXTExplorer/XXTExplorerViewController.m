@@ -173,7 +173,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeNotifications];
     if ([self isEditing]) {
         [self setEditing:NO animated:YES];
     }

@@ -296,7 +296,7 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
-    if (XXTE_COLLAPSED) {
+    if (XXTE_PAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -381,7 +381,7 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    if (XXTE_COLLAPSED) {
+    if (XXTE_PAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{

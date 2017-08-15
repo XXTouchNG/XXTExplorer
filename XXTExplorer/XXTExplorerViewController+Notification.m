@@ -19,6 +19,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationShortcut object:nil];
 }
 
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - UINotification
 
 - (void)handleApplicationNotification:(NSNotification *)aNotification {

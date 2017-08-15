@@ -63,7 +63,7 @@ open class AttributedParsingOperation: Operation {
     ///
     /// The sender is passed in so it can be used to check if the operation was
     /// cancelled after the call.
-    public typealias OperationCallback = ([(range: NSRange, attributes: Attributes?)], AttributedParsingOperation) -> Void
+    public typealias OperationCallback = ([NSRange], [Attributes], AttributedParsingOperation) -> Void
 
     // MARK: - Properties
 
@@ -119,17 +119,19 @@ open class AttributedParsingOperation: Operation {
     // MARK: - NSOperation Implementation
 
     open override func main() {
-        var resultsArray: [(range: NSRange, attributes: Attributes?)] = []
+        var rangeArray: [NSRange] = []
+        var attributesArray: [Attributes] = []
         let callback = { (_: String, range: NSRange, attributes: Attributes?) in
             if let attributes = attributes {
-                resultsArray.append((range, attributes))
+                rangeArray.append(range)
+                attributesArray.append(attributes)
             }
         }
 
         parser.parseAttributedString(in: self.parsedRange, match: callback)
 
         if !parser.aborted {
-            operationCallback(resultsArray, self)
+            operationCallback(rangeArray, attributesArray, self)
         }
     }
 
