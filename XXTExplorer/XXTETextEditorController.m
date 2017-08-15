@@ -24,6 +24,10 @@
 
 #import "XXTExplorer-Swift.h"
 
+#ifdef DEBUG
+static NSUInteger testIdx = 0;
+#endif
+
 @interface XXTETextEditorController () <UITextViewDelegate>
 
 @property (nonatomic, strong) XXTETextEditorTheme *theme;
@@ -127,12 +131,16 @@
     
 }
 
+#ifdef DEBUG
 - (void)reloadTheme {
-    NSString *themeIdentifier = @"Solarized (Light)"; // config
+    NSArray <NSDictionary *> *testPair = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"]];
+    NSString *themeIdentifier = testPair[testIdx][@"name"];
+    if (++testIdx >= testPair.count) testIdx = 0;
     
     XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
     _theme = theme;
 }
+#endif
 
 #pragma mark - AFTER -viewDidLoad
 
@@ -338,7 +346,7 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
     self.textView.contentInset = contentInsets;

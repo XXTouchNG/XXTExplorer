@@ -53,7 +53,7 @@ public typealias Color = ColorType
 extension Color {
     @objc
     convenience init?(hex representation: String) {
-        var hex = representation as NSString
+        var hex = representation.lowercased() as NSString
 
         // Remove `#` and `0x`
         if hex.hasPrefix("#") {

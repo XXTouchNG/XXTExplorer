@@ -33,7 +33,6 @@
         _helper = helper;
         _attributedParser = parser;
         _highlightQueue = [NSOperationQueue mainQueue];
-        _highlightQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }

@@ -47,7 +47,6 @@ static CGFloat kMinimumGutterWidth = 42.f;
     _gutterWidth = kMinimumGutterWidth;
     
     _lineAreaInset = UIEdgeInsetsMake(0.0, 10.0, 0, 4.0);
-    
     _lineNumberColor = [UIColor grayColor];
     _lineNumberFont = [UIFont systemFontOfSize:10.0];
 }
@@ -154,7 +153,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
     [super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
     
     //  Draw line numbers.  Note that the background for line number gutter is drawn by the LineNumberTextView class.
-    NSDictionary* attrs = @{NSFontAttributeName: _lineNumberFont, NSForegroundColorAttributeName: _lineNumberColor};
+    NSDictionary* attrs = @{NSFontAttributeName: self.lineNumberFont, NSForegroundColorAttributeName: self.lineNumberColor};
     __block CGRect gutterRect = CGRectZero; __block NSUInteger paraNumber;
     [self enumerateLineFragmentsForGlyphRange:glyphsToShow
                                    usingBlock:^
@@ -163,7 +162,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
          NSRange charRange = [self characterRangeForGlyphRange:glyphRange actualGlyphRange:nil];
          NSRange paraRange = [self.textStorage.string paragraphRangeForRange:charRange];
          
-         //   Only draw line numbers for the paragraph's first line fragment.  Subsequent fragments are wrapped portions of the paragraph and don't get the line number.
+         //   Only draw line numbers for the paragraph's first line fragment. Subsequent fragments are wrapped portions of the paragraph and don't get the line number.
          if (charRange.location == paraRange.location) {
              gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self->_gutterWidth, rect.size.height), origin.x, origin.y);
              paraNumber = [self _paraNumberForRange:charRange];

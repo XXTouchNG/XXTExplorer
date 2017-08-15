@@ -193,32 +193,6 @@
 				</dict>
 			</array>
 		</dict>
-
-<!--		<dict>-->
-<!--			<key>begin</key>-->
-<!--			<string>(?&lt;!--)\[(=*)\[</string>-->
-<!--			<key>beginCaptures</key>-->
-<!--			<dict>-->
-<!--				<key>0</key>-->
-<!--				<dict>-->
-<!--					<key>name</key>-->
-<!--					<string>punctuation.definition.string.begin.lua</string>-->
-<!--				</dict>-->
-<!--			</dict>-->
-<!--			<key>end</key>-->
-<!--			<string>\]\1\]</string>-->
-<!--			<key>endCaptures</key>-->
-<!--			<dict>-->
-<!--				<key>0</key>-->
-<!--				<dict>-->
-<!--					<key>name</key>-->
-<!--					<string>punctuation.definition.string.end.lua</string>-->
-<!--				</dict>-->
-<!--			</dict>-->
-<!--			<key>name</key>-->
-<!--			<string>string.quoted.other.multiline.lua</string>-->
-<!--		</dict>-->
-
         <dict>
             <key>begin</key>
             <string>(?&lt;!--)\[\[</string>
@@ -243,7 +217,6 @@
             <key>name</key>
             <string>string.quoted.other.multiline.lua</string>
         </dict>
-
 		<dict>
 			<key>captures</key>
 			<dict>
@@ -258,74 +231,6 @@
 			<key>name</key>
 			<string>comment.line.shebang.lua</string>
 		</dict>
-        
-<!--		<dict>-->
-<!--			<key>begin</key>-->
-<!--			<string>(^[ \t]+)?(?=--)</string>-->
-<!--			<key>beginCaptures</key>-->
-<!--			<dict>-->
-<!--				<key>1</key>-->
-<!--				<dict>-->
-<!--					<key>name</key>-->
-<!--					<string>punctuation.whitespace.comment.leading.lua</string>-->
-<!--				</dict>-->
-<!--			</dict>-->
-<!--			<key>end</key>-->
-<!--			<string>(?!\G)((?!^)[ \t]+\n)?</string>-->
-<!--			<key>endCaptures</key>-->
-<!--			<dict>-->
-<!--				<key>1</key>-->
-<!--				<dict>-->
-<!--					<key>name</key>-->
-<!--					<string>punctuation.whitespace.comment.trailing.lua</string>-->
-<!--				</dict>-->
-<!--			</dict>-->
-<!--			<key>patterns</key>-->
-<!--			<array>-->
-<!--				<dict>-->
-<!--					<key>begin</key>-->
-<!--					<string>--\[(=*)\[</string>-->
-<!--					<key>beginCaptures</key>-->
-<!--					<dict>-->
-<!--						<key>0</key>-->
-<!--						<dict>-->
-<!--							<key>name</key>-->
-<!--							<string>punctuation.definition.comment.begin.lua</string>-->
-<!--						</dict>-->
-<!--					</dict>-->
-<!--					<key>end</key>-->
-<!--					<string>\]\1\]</string>-->
-<!--					<key>endCaptures</key>-->
-<!--					<dict>-->
-<!--						<key>0</key>-->
-<!--						<dict>-->
-<!--							<key>name</key>-->
-<!--							<string>punctuation.definition.comment.end.lua</string>-->
-<!--						</dict>-->
-<!--					</dict>-->
-<!--					<key>name</key>-->
-<!--					<string>comment.block.lua</string>-->
-<!--				</dict>-->
-<!--				<dict>-->
-<!--					<key>begin</key>-->
-<!--					<string>--</string>-->
-<!--					<key>beginCaptures</key>-->
-<!--					<dict>-->
-<!--						<key>0</key>-->
-<!--						<dict>-->
-<!--							<key>name</key>-->
-<!--							<string>punctuation.definition.comment.lua</string>-->
-<!--						</dict>-->
-<!--					</dict>-->
-<!--					<key>end</key>-->
-<!--					<string>\n</string>-->
-<!--					<key>name</key>-->
-<!--					<string>comment.line.double-dash.lua</string>-->
-<!--				</dict>-->
-<!--			</array>-->
-<!--		</dict>-->
-
-<!-- TEMPORARY SOLUTION START -->
         <dict>
             <key>begin</key>
             <string>--\[\[</string>
@@ -366,8 +271,6 @@
             <key>name</key>
             <string>comment.line.double-dash.lua</string>
         </dict>
-<!-- TEMPORARY SOLUTION END -->
-
 		<dict>
 			<key>captures</key>
 			<dict>

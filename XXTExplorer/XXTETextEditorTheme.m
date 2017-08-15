@@ -40,27 +40,10 @@
 }
 
 - (void)setupWithDictionary:(NSDictionary *)dictionary {
-    self.backgroundColor = [self colorFromHexString:dictionary[@"background"]];
-    self.foregroundColor = [self colorFromHexString:dictionary[@"foreground"]];
-    self.caretColor = [self colorFromHexString:dictionary[@"caret"]];
-    self.selectionColor = [self colorFromHexString:dictionary[@"selection"]];
-}
-
-- (UIColor *)colorFromHexString:(NSString *)hexString {
-    if ([hexString hasPrefix:@"#"]) {
-        unsigned rgbValue = 0;
-        NSScanner *colorScanner = [NSScanner scannerWithString:hexString];
-        colorScanner.charactersToBeSkipped = [NSCharacterSet characterSetWithCharactersInString:@"#"];
-        [colorScanner scanHexInt:&rgbValue];
-        return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16) / 255.f green:((rgbValue & 0xFF00) >> 8) / 255.f blue:(rgbValue & 0xFF) / 255.f alpha:1.f];
-    } else if ([hexString hasPrefix:@"rgb"]) {
-        NSScanner *colorScanner = [NSScanner scannerWithString:[hexString substringFromIndex:3]];
-        colorScanner.charactersToBeSkipped = [NSCharacterSet characterSetWithCharactersInString:@"(,)"];
-        int r = 0, g = 0, b = 0;
-        [colorScanner scanInt:&r]; [colorScanner scanInt:&g]; [colorScanner scanInt:&b];
-        return [UIColor colorWithRed:((r) >> 16) / 255.f green:((g) >> 8) / 255.f blue:(b) / 255.f alpha:1.f];
-    }
-    return [UIColor blackColor];
+    self.backgroundColor = [[UIColor alloc] initWithHex:dictionary[@"background"]];
+    self.foregroundColor = [[UIColor alloc] initWithHex:dictionary[@"foreground"]];
+    self.caretColor = [[UIColor alloc] initWithHex:dictionary[@"caret"]];
+    self.selectionColor = [[UIColor alloc] initWithHex:dictionary[@"selection"]];
 }
 
 @end

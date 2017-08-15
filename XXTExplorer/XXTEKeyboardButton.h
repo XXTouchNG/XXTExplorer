@@ -17,12 +17,12 @@ typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonPosition) {
 };
 
 @interface XXTEKeyboardButton : UIControl
-@property (nonatomic, assign) XXTEKeyboardButtonStyle style;
-@property (nonatomic, readonly) XXTEKeyboardButtonPosition position;
-@property (nonatomic, copy) NSString *input;
-@property (nonatomic, copy) NSString *output;
-@property (nonatomic, weak) id<UITextInput> textInput;
-@property (nonatomic, assign) BOOL selecting;
-@property (nonatomic, copy) NSString *tabString;
+@property(nonatomic, assign) XXTEKeyboardButtonStyle style;
+@property(nonatomic, readonly) XXTEKeyboardButtonPosition position;
+@property(nonatomic, copy) NSString *input;
+@property(nonatomic, copy) NSString *output;
+@property(nonatomic, weak) id <UITextInput> textInput;
+@property(nonatomic, assign) BOOL selecting;
+@property(nonatomic, copy) NSString *tabString;
 
 @end

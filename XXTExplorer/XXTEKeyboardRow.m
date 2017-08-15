@@ -11,17 +11,16 @@
 
 @interface XXTEKeyboardRow ()
 
-@property (nonatomic, strong) UITextView *textView;
-@property (nonatomic, assign) CGRect startLocation;
-@property (nonatomic, assign) NSUInteger buttonCount;
-@property (nonatomic, assign) CGFloat barWidth;
-@property (nonatomic, assign) CGFloat barHeight;
-@property (nonatomic, assign) CGFloat buttonHeight;
-@property (nonatomic, assign) CGFloat leftMargin;
-@property (nonatomic, assign) CGFloat topMargin;
-@property (nonatomic, assign) CGFloat buttonSpacing;
-@property (nonatomic, assign) CGFloat buttonWidth;
-@property (nonatomic, strong) NSMutableArray <XXTEKeyboardButton *> *buttons;
+@property(nonatomic, strong) UITextView *textView;
+@property(nonatomic, assign) NSUInteger buttonCount;
+@property(nonatomic, assign) CGFloat barWidth;
+@property(nonatomic, assign) CGFloat barHeight;
+@property(nonatomic, assign) CGFloat buttonHeight;
+@property(nonatomic, assign) CGFloat leftMargin;
+@property(nonatomic, assign) CGFloat topMargin;
+@property(nonatomic, assign) CGFloat buttonSpacing;
+@property(nonatomic, assign) CGFloat buttonWidth;
+@property(nonatomic, strong) NSMutableArray <XXTEKeyboardButton *> *buttons;
 
 @end
 
@@ -30,7 +29,7 @@
 - (instancetype)initWithTextView:(UITextView *)textView {
     if (self = [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard]) {
         _textView = textView;
-        
+
         [self setup];
     }
     return self;
@@ -41,15 +40,13 @@
         case UIUserInterfaceIdiomPhone:
             _style = XXTEKeyboardButtonStylePhone;
             break;
-            
         case UIUserInterfaceIdiomPad:
             _style = XXTEKeyboardButtonStyleTablet;
             break;
-            
         default:
             break;
     }
-    
+
     NSString *keys = nil;
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     _barWidth = MIN(screenSize.width, screenSize.height);
@@ -72,7 +69,7 @@
         _buttonWidth = 57.f;
         keys = @"TTTTT()\"[]{}'<>\\/$´`~^|€£◉◉◉◉◉-+=%*!?#@&_:;,.1203467589";
     }
-    
+
     self.frame = CGRectMake(0, 0, _barWidth, _barHeight);
     self.backgroundColor = [UIColor clearColor];
     self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -81,7 +78,7 @@
     for (int i = 0; i < _buttonCount; i++) {
         XXTEKeyboardButton *keyboardButton = [[XXTEKeyboardButton alloc] initWithFrame:CGRectMake(_leftMargin + i * (_buttonSpacing + _buttonWidth), _topMargin + (_barHeight - _buttonHeight) / 2, _buttonWidth, _buttonHeight)];
         keyboardButton.style = self.style;
-        keyboardButton.input = [keys substringWithRange:NSMakeRange(i * 5, 5)];
+        keyboardButton.input = [keys substringWithRange:NSMakeRange((NSUInteger) (i * 5), 5)];
         keyboardButton.textInput = _textView;
         keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
         keyboardButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;

@@ -14,8 +14,9 @@ typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonStyle) {
 };
 
 @interface XXTEKeyboardRow : UIInputView
-@property (nonatomic, assign) XXTEKeyboardButtonStyle style;
-@property (nonatomic, copy) NSString *tabString;
+
+@property(nonatomic, assign) XXTEKeyboardButtonStyle style;
+@property(nonatomic, copy) NSString *tabString;
 
 - (instancetype)initWithTextView:(UITextView *)textView;
 @end
