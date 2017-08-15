@@ -12,7 +12,8 @@
 
 import Foundation
 
-open class Parser {
+@objc(SKParser)
+open class Parser : NSObject {
 
     // MARK: - Types
 

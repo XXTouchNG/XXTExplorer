@@ -92,7 +92,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>'</string>
+			<string>&apos;</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>0</key>
@@ -102,7 +102,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>'</string>
+			<string>&apos;</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>0</key>
@@ -123,7 +123,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>"</string>
+			<string>&quot;</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>0</key>
@@ -133,7 +133,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>"</string>
+			<string>&quot;</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>0</key>
@@ -231,71 +231,116 @@
 			<key>name</key>
 			<string>comment.line.shebang.lua</string>
 		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(^[ \t]+)?(?=--)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.whitespace.comment.leading.lua</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>(?!\G)((?!^)[ \t]+\n)?</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.whitespace.comment.trailing.lua</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>--\[(=*)\[</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.begin.lua</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\]\1\]</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.end.lua</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>comment.block.lua</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>--</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.lua</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\n</string>
-					<key>name</key>
-					<string>comment.line.double-dash.lua</string>
-				</dict>
-			</array>
-		</dict>
+        
+<!--		<dict>-->
+<!--			<key>begin</key>-->
+<!--			<string>(^[ \t]+)?(?=--)</string>-->
+<!--			<key>beginCaptures</key>-->
+<!--			<dict>-->
+<!--				<key>1</key>-->
+<!--				<dict>-->
+<!--					<key>name</key>-->
+<!--					<string>punctuation.whitespace.comment.leading.lua</string>-->
+<!--				</dict>-->
+<!--			</dict>-->
+<!--			<key>end</key>-->
+<!--			<string>(?!\G)((?!^)[ \t]+\n)?</string>-->
+<!--			<key>endCaptures</key>-->
+<!--			<dict>-->
+<!--				<key>1</key>-->
+<!--				<dict>-->
+<!--					<key>name</key>-->
+<!--					<string>punctuation.whitespace.comment.trailing.lua</string>-->
+<!--				</dict>-->
+<!--			</dict>-->
+<!--			<key>patterns</key>-->
+<!--			<array>-->
+<!--				<dict>-->
+<!--					<key>begin</key>-->
+<!--					<string>--\[(=*)\[</string>-->
+<!--					<key>beginCaptures</key>-->
+<!--					<dict>-->
+<!--						<key>0</key>-->
+<!--						<dict>-->
+<!--							<key>name</key>-->
+<!--							<string>punctuation.definition.comment.begin.lua</string>-->
+<!--						</dict>-->
+<!--					</dict>-->
+<!--					<key>end</key>-->
+<!--					<string>\]\1\]</string>-->
+<!--					<key>endCaptures</key>-->
+<!--					<dict>-->
+<!--						<key>0</key>-->
+<!--						<dict>-->
+<!--							<key>name</key>-->
+<!--							<string>punctuation.definition.comment.end.lua</string>-->
+<!--						</dict>-->
+<!--					</dict>-->
+<!--					<key>name</key>-->
+<!--					<string>comment.block.lua</string>-->
+<!--				</dict>-->
+<!--				<dict>-->
+<!--					<key>begin</key>-->
+<!--					<string>--</string>-->
+<!--					<key>beginCaptures</key>-->
+<!--					<dict>-->
+<!--						<key>0</key>-->
+<!--						<dict>-->
+<!--							<key>name</key>-->
+<!--							<string>punctuation.definition.comment.lua</string>-->
+<!--						</dict>-->
+<!--					</dict>-->
+<!--					<key>end</key>-->
+<!--					<string>\n</string>-->
+<!--					<key>name</key>-->
+<!--					<string>comment.line.double-dash.lua</string>-->
+<!--				</dict>-->
+<!--			</array>-->
+<!--		</dict>-->
+
+<!-- TEMPORARY SOLUTION START -->
+        <dict>
+            <key>begin</key>
+            <string>--\[\[</string>
+            <key>beginCaptures</key>
+            <dict>
+                <key>0</key>
+                <dict>
+                    <key>name</key>
+                    <string>punctuation.definition.comment.begin.lua</string>
+                </dict>
+            </dict>
+            <key>end</key>
+            <string>\]\]</string>
+            <key>endCaptures</key>
+            <dict>
+                <key>0</key>
+                <dict>
+                    <key>name</key>
+                    <string>punctuation.definition.comment.end.lua</string>
+                </dict>
+            </dict>
+            <key>name</key>
+            <string>comment.block.lua</string>
+        </dict>
+        <dict>
+            <key>begin</key>
+            <string>--</string>
+            <key>beginCaptures</key>
+            <dict>
+                <key>0</key>
+                <dict>
+                    <key>name</key>
+                    <string>punctuation.definition.comment.lua</string>
+                </dict>
+            </dict>
+            <key>end</key>
+            <string>\n</string>
+            <key>name</key>
+            <string>comment.line.double-dash.lua</string>
+        </dict>
+<!-- TEMPORARY SOLUTION END -->
+
 		<dict>
 			<key>captures</key>
 			<dict>
@@ -352,13 +397,13 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>(?&lt;![^.]\.|:)\b(assert|collectgarbage|dofile|error|getfenv|getmetatable|ipairs|loadfile|loadstring|module|next|pairs|pcall|print|rawequal|rawget|rawset|require|select|setfenv|setmetatable|tonumber|tostring|type|unpack|xpcall)\b(?=\s*(?:[({"']|\[\[))</string>
+			<string>(?&lt;![^.]\.|:)\b(assert|collectgarbage|dofile|error|getfenv|getmetatable|ipairs|loadfile|loadstring|module|next|pairs|pcall|print|rawequal|rawget|rawset|require|select|setfenv|setmetatable|tonumber|tostring|type|unpack|xpcall)\b(?=\s*(?:[({&quot;&apos;]|\[\[))</string>
 			<key>name</key>
 			<string>support.function.lua</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>(?&lt;![^.]\.|:)\b(coroutine\.(create|resume|running|status|wrap|yield)|string\.(byte|char|dump|find|format|gmatch|gsub|len|lower|match|rep|reverse|sub|upper)|table\.(concat|insert|maxn|remove|sort)|math\.(abs|acos|asin|atan2?|ceil|cosh?|deg|exp|floor|fmod|frexp|ldexp|log|log10|max|min|modf|pow|rad|random|randomseed|sinh?|sqrt|tanh?)|io\.(close|flush|input|lines|open|output|popen|read|tmpfile|type|write)|os\.(clock|date|difftime|execute|exit|getenv|remove|rename|setlocale|time|tmpname)|package\.(cpath|loaded|loadlib|path|preload|seeall)|debug\.(debug|[gs]etfenv|[gs]ethook|getinfo|[gs]etlocal|[gs]etmetatable|getregistry|[gs]etupvalue|traceback))\b(?=\s*(?:[({"']|\[\[))</string>
+			<string>(?&lt;![^.]\.|:)\b(coroutine\.(create|resume|running|status|wrap|yield)|string\.(byte|char|dump|find|format|gmatch|gsub|len|lower|match|rep|reverse|sub|upper)|table\.(concat|insert|maxn|remove|sort)|math\.(abs|acos|asin|atan2?|ceil|cosh?|deg|exp|floor|fmod|frexp|ldexp|log|log10|max|min|modf|pow|rad|random|randomseed|sinh?|sqrt|tanh?)|io\.(close|flush|input|lines|open|output|popen|read|tmpfile|type|write)|os\.(clock|date|difftime|execute|exit|getenv|remove|rename|setlocale|time|tmpname)|package\.(cpath|loaded|loadlib|path|preload|seeall)|debug\.(debug|[gs]etfenv|[gs]ethook|getinfo|[gs]etlocal|[gs]etmetatable|getregistry|[gs]etupvalue|traceback))\b(?=\s*(?:[({&quot;&apos;]|\[\[))</string>
 			<key>name</key>
 			<string>support.function.library.lua</string>
 		</dict>
@@ -370,7 +415,7 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b([a-zA-Z_][a-zA-Z0-9_]*)\b(?=\s*(?:[({"']|\[\[))</string>
+			<string>\b([a-zA-Z_][a-zA-Z0-9_]*)\b(?=\s*(?:[({&quot;&apos;]|\[\[))</string>
 			<key>name</key>
 			<string>support.function.any-method.lua</string>
 		</dict>
@@ -395,7 +440,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\\[abfnrtvz\\"'\n]</string>
+					<string>\\[abfnrtvz\\&quot;&apos;\n]</string>
 					<key>name</key>
 					<string>constant.character.escape.lua</string>
 				</dict>

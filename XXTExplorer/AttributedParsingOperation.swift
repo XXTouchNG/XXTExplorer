@@ -54,6 +54,7 @@ internal struct Diff {
     }
 }
 
+@objc(SKAttributedParsingOperation)
 open class AttributedParsingOperation: Operation {
 
     // MARK: - Types
@@ -125,7 +126,7 @@ open class AttributedParsingOperation: Operation {
             }
         }
 
-        parser.parse(in: self.parsedRange, match: callback)
+        parser.parseAttributedString(in: self.parsedRange, match: callback)
 
         if !parser.aborted {
             operationCallback(resultsArray, self)

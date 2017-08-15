@@ -10,7 +10,8 @@
 
 import Foundation
 
-internal class ResultSet {
+@objc(SKResultSet)
+internal class ResultSet : NSObject {
 
     // MARK: - Properties
 

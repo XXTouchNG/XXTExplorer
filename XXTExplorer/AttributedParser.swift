@@ -13,6 +13,7 @@
 import Foundation
 import UIKit
 
+@objc(SKAttributedParser)
 open class AttributedParser: Parser {
 
     // MARK: - Types
@@ -32,13 +33,13 @@ open class AttributedParser: Parser {
 
     // MARK: - Parsing
 
-    open func parse(_ string: String, match callback: AttributedCallback) {
+    open func parseAttributedString(_ string: String, match callback: AttributedCallback) {
         parse(string) { scope, range in
             callback(scope, range, self.attributes(forScope: scope))
         }
     }
 
-    func parse(in range: NSRange?, match callback: AttributedCallback) {
+    func parseAttributedString(in range: NSRange?, match callback: AttributedCallback) {
         parse(in: range) { scope, range in
             callback(scope, range, self.attributes(forScope: scope))
         }
@@ -47,7 +48,7 @@ open class AttributedParser: Parser {
     open func attributedString(for string: String, base: Attributes? = nil) -> NSAttributedString {
         let output = NSMutableAttributedString(string: string, attributes: base)
         output.beginEditing()
-        parse(string) { _, range, attributes in
+        parseAttributedString(string) { _, range, attributes in
             if let attributes = attributes {
                 output.addAttributes(attributes, range: range)
             }

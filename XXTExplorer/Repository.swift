@@ -11,7 +11,8 @@
 
 import Foundation
 
-internal class Repository {
+@objc(SKRepository)
+internal class Repository : NSObject {
 
     // MARK: - Properties
 
@@ -21,6 +22,7 @@ internal class Repository {
     // MARK: - Initializers
 
     init(repo: [String: [AnyHashable: Any]], inParent parent: Repository?, with manager: ReferenceManager) {
+        super.init()
         self.parentRepository = parent
 
         for (key, value) in repo {

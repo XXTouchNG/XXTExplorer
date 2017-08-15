@@ -16,7 +16,8 @@
 
 import Foundation
 
-internal class ReferenceManager {
+@objc(SKReferenceManager)
+internal class ReferenceManager : NSObject {
 
     // MARK: - Properties
 

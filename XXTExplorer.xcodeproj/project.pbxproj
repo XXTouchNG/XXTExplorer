@@ -159,9 +159,7 @@
 		0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */; };
 		0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */; };
 		0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */; };
-		0FEB74501F3EB78D00B58A4F /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB744F1F3EB78D00B58A4F /* lua.tmLanguage */; };
 		0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
-		0FEB74541F3EC7AB00B58A4F /* SKLanguage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74531F3EC7AB00B58A4F /* SKLanguage.plist */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
@@ -238,7 +236,10 @@
 		D62DD6891F3D7FE600A34850 /* ScopedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6791F3D7FE600A34850 /* ScopedString.swift */; };
 		D62DD68A1F3D7FE600A34850 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD67B1F3D7FE600A34850 /* Theme.swift */; };
 		D62DD68C1F3D831C00A34850 /* SKHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD68B1F3D831C00A34850 /* SKHelper.swift */; };
+		D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
+		D645F9D71F42A77A00E3247B /* XXTETextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D645F9D61F42A77A00E3247B /* XXTETextStorage.m */; };
 		D66085671F3C691100E87B3C /* XXTETextEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTETextEditorController.m */; };
+		D689F5A61F42AA3D002BB59E /* XXTELayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTELayoutManager.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -246,6 +247,7 @@
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
 		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
+		D6FD36C51F42C85700910D91 /* XXTESyntaxKitHighlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36C41F42C85700910D91 /* XXTESyntaxKitHighlighter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -545,9 +547,7 @@
 		0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECodeViewerController.m; sourceTree = "<group>"; };
 		0FE1E4481F18FD5000055E02 /* XXTExplorerEntryCodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryCodeReader.h; sourceTree = "<group>"; };
 		0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryCodeReader.m; sourceTree = "<group>"; };
-		0FEB744F1F3EB78D00B58A4F /* lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lua.tmLanguage; sourceTree = "<group>"; };
 		0FEB74511F3EB88400B58A4F /* json.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = json.tmLanguage; sourceTree = "<group>"; };
-		0FEB74531F3EC7AB00B58A4F /* SKLanguage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKLanguage.plist; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
 		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
 		0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewHomeCell.xib; sourceTree = "<group>"; };
@@ -642,6 +642,9 @@
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
 		D62DD67B1F3D7FE600A34850 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D62DD68B1F3D831C00A34850 /* SKHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKHelper.swift; sourceTree = "<group>"; };
+		D645F9D31F42A68C00E3247B /* lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lua.tmLanguage; sourceTree = "<group>"; };
+		D645F9D51F42A77A00E3247B /* XXTETextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETextStorage.h; sourceTree = "<group>"; };
+		D645F9D61F42A77A00E3247B /* XXTETextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETextStorage.m; sourceTree = "<group>"; };
 		D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Bold.ttf"; sourceTree = "<group>"; };
 		D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-BoldItalic.ttf"; sourceTree = "<group>"; };
 		D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Italic.ttf"; sourceTree = "<group>"; };
@@ -652,6 +655,8 @@
 		D66085641F3C666700E87B3C /* SourceCodePro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.otf"; sourceTree = "<group>"; };
 		D66085651F3C691100E87B3C /* XXTETextEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETextEditorController.h; sourceTree = "<group>"; };
 		D66085661F3C691100E87B3C /* XXTETextEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETextEditorController.m; sourceTree = "<group>"; };
+		D689F5A41F42AA3D002BB59E /* XXTELayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTELayoutManager.h; sourceTree = "<group>"; };
+		D689F5A51F42AA3D002BB59E /* XXTELayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTELayoutManager.m; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -664,6 +669,8 @@
 		D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionCell.xib; sourceTree = "<group>"; };
 		D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationOperationController.h; sourceTree = "<group>"; };
 		D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationOperationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D6FD36C31F42C85700910D91 /* XXTESyntaxKitHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESyntaxKitHighlighter.h; sourceTree = "<group>"; };
+		D6FD36C41F42C85700910D91 /* XXTESyntaxKitHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESyntaxKitHighlighter.m; sourceTree = "<group>"; };
 		DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
@@ -1406,6 +1413,10 @@
 		0FE162A21F3C9370003064B2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D689F5A41F42AA3D002BB59E /* XXTELayoutManager.h */,
+				D689F5A51F42AA3D002BB59E /* XXTELayoutManager.m */,
+				D645F9D51F42A77A00E3247B /* XXTETextStorage.h */,
+				D645F9D61F42A77A00E3247B /* XXTETextStorage.m */,
 				D62DD6651F3D740800A34850 /* XXTETextEditorView.h */,
 				D62DD6661F3D740800A34850 /* XXTETextEditorView.m */,
 			);
@@ -1564,9 +1575,8 @@
 		D62DD6231F3D52E000A34850 /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				0FEB74531F3EC7AB00B58A4F /* SKLanguage.plist */,
 				0FEB74511F3EB88400B58A4F /* json.tmLanguage */,
-				0FEB744F1F3EB78D00B58A4F /* lua.tmLanguage */,
+				D645F9D31F42A68C00E3247B /* lua.tmLanguage */,
 			);
 			name = Language;
 			sourceTree = "<group>";
@@ -1617,6 +1627,8 @@
 				D60A26A71F3DA82C00E013E2 /* Theme */,
 				0FE162A21F3C9370003064B2 /* Views */,
 				0FE162A11F3C9355003064B2 /* SyntaxKit */,
+				D6FD36C31F42C85700910D91 /* XXTESyntaxKitHighlighter.h */,
+				D6FD36C41F42C85700910D91 /* XXTESyntaxKitHighlighter.m */,
 				D66085651F3C691100E87B3C /* XXTETextEditorController.h */,
 				D66085661F3C691100E87B3C /* XXTETextEditorController.m */,
 			);
@@ -1788,7 +1800,6 @@
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
 				D60A26CB1F3DB7BE00E013E2 /* Pastels on Dark.tmTheme in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
-				0FEB74541F3EC7AB00B58A4F /* SKLanguage.plist in Resources */,
 				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
@@ -1804,10 +1815,10 @@
 				0F30D9301F2C7FB10001E10B /* XUISecureEditTextCell.xib in Resources */,
 				0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
 				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
+				D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */,
 				0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */,
 				0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
-				0FEB74501F3EB78D00B58A4F /* lua.tmLanguage in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1949,6 +1960,7 @@
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
 				0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */,
+				D645F9D71F42A77A00E3247B /* XXTETextStorage.m in Sources */,
 				0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				D62DD6851F3D7FE600A34850 /* ReferenceManager.swift in Sources */,
@@ -1980,11 +1992,13 @@
 				0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
+				D6FD36C51F42C85700910D91 /* XXTESyntaxKitHighlighter.m in Sources */,
 				D62DD67C1F3D7FE600A34850 /* AttributedParser.swift in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
 				D62DD68C1F3D831C00A34850 /* SKHelper.swift in Sources */,
+				D689F5A61F42AA3D002BB59E /* XXTELayoutManager.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
