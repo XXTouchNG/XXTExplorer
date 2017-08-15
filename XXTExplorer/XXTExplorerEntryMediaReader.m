@@ -9,7 +9,6 @@
 #import "XXTExplorerEntryMediaReader.h"
 #import "XXTEMediaPlayerController.h"
 #import <AVFoundation/AVFoundation.h>
-#import "AVAssetTrack+CoreMediaExtensions.h"
 
 @implementation XXTExplorerEntryMediaReader
 

@@ -19,7 +19,7 @@ import Foundation
 
 public typealias Attributes = [String: AnyObject]
 
-public enum FontStyle: String {
+fileprivate enum FontStyle: String {
     case regular = "regular"
     case underline = "underline"
     case bold = "bold"

@@ -81,6 +81,13 @@
     [self reloadHelper];
 }
 
+- (void)reloadAll {
+    [self reloadTheme];
+    [self reloadHelper];
+    [self reloadViewStyle];
+    [self asyncLoadContent];
+}
+
 #pragma mark - Config Before Load
 
 - (void)reloadTheme {
@@ -96,7 +103,7 @@
     helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14];
     helperConfig.color = self.theme.foregroundColor;
     helperConfig.path = self.entryPath;
-    helperConfig.languageIdentifier = @"source.json";
+    helperConfig.languageIdentifier = @"source.lua";
     helperConfig.themeIdentifier = self.theme.identifier;
     _helperConfig = helperConfig;
     
@@ -198,14 +205,18 @@
 #pragma mark - Content
 
 - (void)asyncLoadContent {
+    self.textView.editable = NO;
     blockUserInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSAttributedString *result = [self.helper initialLoad];
         dispatch_async_on_main_queue(^{
             if (result) {
                 self.textView.attributedText = result;
+            } else {
+                
             }
             blockUserInteractions(self, NO);
+            self.textView.editable = YES;
         });
     });
 }

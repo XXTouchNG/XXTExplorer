@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>Mac Classic</string>
+	<string>All Hallow&apos;s Eve</string>
+	<string>Amy</string>
+	<string>Blackboard</string>
+	<string>Brilliance Black</string>
+	<string>Brilliance Dull</string>
+	<string>Cobalt</string>
+	<string>Dawn</string>
+	<string>Eiffel</string>
+	<string>Espresso Libre</string>
+	<string>IDLE</string>
+	<string>iPlastic</string>
+	<string>LAZY</string>
+	<string>MagicWB (Amiga)</string>
+	<string>Pastels on Dark</string>
+	<string>Slush &amp; Poppies</string>
+	<string>SpaceCadat</string>
+	<string>Sunburst</string>
+	<string>Twilight</string>
+	<string>Zenburnesque</string>
+	<string>Monokai</string>
+	<string>Solarized (Dark)</string>
+	<string>Solarized (Light)</string>
+</array>
+</plist>

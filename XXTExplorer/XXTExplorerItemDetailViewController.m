@@ -23,7 +23,6 @@
 #import "XXTEMoreLinkNoIconCell.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <PromiseKit/PromiseKit.h>
-#import "NSFileManager+DeepSize.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTExplorerEntryReader.h"
@@ -34,6 +33,82 @@
 #import "NSObject+StringValue.h"
 
 static int sizingCancelFlag = 0;
+
+@interface NSFileManager (DeepSize)
+- (NSArray *)listItemsInDirectoryAtPath:(NSString *)path deep:(BOOL)deep cancelFlag:(int *)cancelFlag;
+- (NSNumber *)sizeOfDirectoryAtPath:(NSString *)path error:(NSError **)error cancelFlag:(int *)cancelFlag;
+- (NSNumber *)sizeOfItemAtPath:(NSString *)path error:(NSError **)error;
+
+@end
+
+@implementation NSFileManager (DeepSize)
+
+- (NSArray *)listItemsInDirectoryAtPath:(NSString *)path deep:(BOOL)deep cancelFlag:(int *)cancelFlag
+{
+    NSString *absolutePath = path;
+    NSArray *relativeSubpaths = (deep ? [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:absolutePath error:nil] : [[NSFileManager defaultManager] contentsOfDirectoryAtPath:absolutePath error:nil]);
+    
+    NSMutableArray *absoluteSubpaths = [[NSMutableArray alloc] init];
+    
+    for (NSString *relativeSubpath in relativeSubpaths)
+    {
+        NSString *absoluteSubpath = [absolutePath stringByAppendingPathComponent:relativeSubpath];
+        [absoluteSubpaths addObject:absoluteSubpath];
+        if (cancelFlag && *cancelFlag != 0) {
+            break;
+        }
+    }
+    
+    return [NSArray arrayWithArray:absoluteSubpaths];
+}
+
+- (NSNumber *)sizeOfDirectoryAtPath:(NSString *)path error:(NSError **)error cancelFlag:(int *)cancelFlag
+{
+    struct stat fileStat;
+    if (0 == lstat([path UTF8String], &fileStat) && S_ISDIR(fileStat.st_mode))
+    {
+        if ((error == nil) || ((*error) == nil))
+        {
+            NSNumber *size = [self sizeOfItemAtPath:path error:error];
+            double sizeValue = [size doubleValue];
+            
+            if ((error == nil) || ((*error) == nil))
+            {
+                NSArray *subpaths = [self listItemsInDirectoryAtPath:path deep:YES cancelFlag:cancelFlag];
+                NSUInteger subpathsCount = [subpaths count];
+                
+                for (NSUInteger i = 0; i < subpathsCount; i++)
+                {
+                    NSString *subpath = [subpaths objectAtIndex:i];
+                    NSNumber *subpathSize = [self sizeOfItemAtPath:subpath error:error];
+                    
+                    if ((error == nil) || ((*error) == nil))
+                    {
+                        sizeValue += [subpathSize doubleValue];
+                    }
+                    else {
+                        return nil;
+                    }
+                    
+                    if (cancelFlag && *cancelFlag != 0) {
+                        break;
+                    }
+                }
+                
+                return [NSNumber numberWithDouble:sizeValue];
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSNumber *)sizeOfItemAtPath:(NSString *)path error:(NSError **)error
+{
+    return (NSNumber *)[[self attributesOfItemAtPath:path error:error] objectForKey:NSFileSize];
+}
+
+@end
+
 static NSString * const kXXTEDynamicSectionIdentifierSectionName = @"SectionName";
 static NSString * const kXXTEDynamicSectionIdentifierSectionWhere = @"SectionWhere";
 static NSString * const kXXTEDynamicSectionIdentifierSectionOriginal = @"SectionOriginal";
@@ -42,7 +117,6 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionExtended = @"Section
 static NSString * const kXXTEDynamicSectionIdentifierSectionOwner = @"SectionOwner";
 static NSString * const kXXTEDynamicSectionIdentifierSectionPermission = @"SectionPermission";
 static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"SectionOpenWith";
-
 
 @interface XXTExplorerDynamicSection : NSObject
 @property (nonatomic, strong) NSString *identifier;

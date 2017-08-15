@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>json</key>
-	<string>source.json</string>
-	<key>lua</key>
-	<string>source.lua</string>
-</dict>
+<array>
+	<string>json</string>
+	<string>lua</string>
+</array>
 </plist>
