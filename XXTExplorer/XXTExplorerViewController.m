@@ -73,7 +73,7 @@
         NSArray *explorerUserDefaults = XXTEBuiltInDefaultsObject(@"EXPLORER_USER_DEFAULTS");
         for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
             NSString *defaultKey = explorerUserDefault[@"key"];
-            if (!XXTEDefaultsObject(defaultKey)) {
+            if (!XXTEDefaultsObject(defaultKey, nil)) {
                 id defaultValue = explorerUserDefault[@"default"];
                 XXTEDefaultsSetObject(defaultKey, defaultValue);
             }
@@ -197,7 +197,7 @@
 
 - (void)loadEntryListDataWithError:(NSError **)error {
     {
-        if (XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey) &&
+        if (XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO) &&
                 self == self.navigationController.viewControllers[0]) {
             _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
         } else {
@@ -206,7 +206,7 @@
     }
 
     _entryList = ({
-        BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey);
+        BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
         NSError *localError = nil;
         NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
         if (localError && error) *error = localError;
@@ -236,8 +236,8 @@
             }
         }
         
-        NSString *sortField = XXTEDefaultsObject(XXTExplorerViewEntryListSortFieldKey);
-        NSUInteger sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey);
+        NSString *sortField = XXTEDefaultsObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeName);
+        NSUInteger sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
         NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2) {
             return (sortOrder == XXTExplorerViewEntryListSortOrderAsc) ? [obj1[sortField] compare:obj2[sortField]] : [obj2[sortField] compare:obj1[sortField]];
         };

@@ -167,7 +167,7 @@ enum {
         }];
         [((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]) enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
             id key = entry[@"key"];
-            id value = XXTEDefaultsObject(key);
+            id value = XXTEDefaultsObject(key, nil);
             if (value) {
                 self.userDefaults[key] = value;
             }

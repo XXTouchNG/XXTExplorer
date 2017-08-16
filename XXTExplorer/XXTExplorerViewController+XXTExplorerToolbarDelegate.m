@@ -50,7 +50,7 @@
 }
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
-    if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) == XXTExplorerViewEntryListSortOrderAsc) {
+    if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) == XXTExplorerViewEntryListSortOrderAsc) {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:YES];
     } else {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusSelected enabled:YES];
@@ -102,7 +102,7 @@
             createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
-            if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey) != XXTExplorerViewEntryListSortOrderAsc) {
+            if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeName);
             } else {

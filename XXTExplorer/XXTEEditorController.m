@@ -9,6 +9,8 @@
 #import "XXTEEditorController.h"
 #import "XXTECodeViewerController.h"
 
+#import "XXTEAppDefines.h"
+#import "XXTEEditorDefaults.h"
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 
@@ -113,6 +115,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
+    self.rangesArray = [[NSMutableArray alloc] init];
+    self.attributesArray = [[NSMutableArray alloc] init];
     
     [self reloadTheme];
     [self reloadParser];
@@ -329,22 +333,15 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     XXTEEditorTextView *textView = self.textView;
     textView.editable = NO;
     [textView setText:string];
-    
-//    BOOL isReadOnlyMode = NO;
-//    if (isReadOnlyMode) {
-//        textView.editable = NO;
-//    } else {
-//        textView.editable = YES;
-//    }
+    textView.editable = YES;
 }
 
 #pragma mark - Attributes
 
 - (void)reloadAttributes {
-    self.rangesArray = [[NSMutableArray alloc] init];
-    self.attributesArray = [[NSMutableArray alloc] init];
     BOOL isHighlightEnabled = YES; // config
     if (isHighlightEnabled) {
+        [self invalidateSyntaxCaches];
         NSString *wholeString = self.textView.text;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             @weakify(self);
@@ -355,8 +352,67 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
                     [self.attributesArray addObject:attributes];
                 }
             }];
+            dispatch_async_on_main_queue(^{
+                [self renderSyntaxOnScreen];
+            });
         });
     }
+}
+
+#pragma mark - UITextViewDelegate
+
+#pragma mark - NSTextStorageDelegate
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self renderSyntaxOnScreen];
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+    [self renderSyntaxOnScreen];
+}
+
+#pragma mark - Render
+
+- (void)renderSyntaxOnScreen {
+    NSArray *rangesArray = self.rangesArray;
+    NSArray *attributesArray = self.attributesArray;
+    XXTEEditorTextView *textView = self.textView;
+    CGRect bounds = textView.bounds;
+    
+    UITextPosition *start = [textView characterRangeAtPoint:bounds.origin].start;
+    UITextPosition *end = [textView characterRangeAtPoint:CGPointMake(CGRectGetMaxX(bounds), CGRectGetMaxY(bounds))].end;
+    
+    NSInteger beginOffset = [textView offsetFromPosition:textView.beginningOfDocument toPosition:start];
+    beginOffset -= kXXTEEditorCachedRangeLength;
+    if (beginOffset < 0) beginOffset = 0;
+    NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
+    endLength += kXXTEEditorCachedRangeLength * 2;
+    
+    NSRange range = NSMakeRange(beginOffset, endLength);
+    
+    NSUInteger rangesArrayLength = rangesArray.count;
+    NSUInteger attributesArrayLength = attributesArray.count;
+    if (rangesArrayLength != attributesArrayLength) {
+        return;
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        for (NSUInteger idx = 0; idx < rangesArrayLength; idx++) {
+            NSValue *rangeValue = rangesArray[idx];
+            NSRange preparedRange = [rangeValue rangeValue];
+            if (NSIntersectionRange(range, preparedRange).length != 0 && preparedRange.length < kXXTEEditorCachedRangeLength) {
+                dispatch_async_on_main_queue(^{
+                    [textView.vTextStorage addAttributes:attributesArray[idx] range:preparedRange];
+                });
+            }
+        }
+    });
+}
+
+- (void)invalidateSyntaxCaches {
+    [self.rangesArray removeAllObjects];
+    [self.attributesArray removeAllObjects];
 }
 
 #pragma mark - Keyboard
@@ -412,56 +468,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
     
-}
-
-#pragma mark - UITextViewDelegate
-
-#pragma mark - NSTextStorageDelegate
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self renderSyntaxOnScreen];
-}
-
-- (void)renderSyntaxOnScreen {
-    NSArray *rangesArray = self.rangesArray;
-    NSArray *attributesArray = self.attributesArray;
-    XXTEEditorTextView *textView = self.textView;
-    CGRect bounds = textView.bounds;
-    
-    UITextPosition *start = [textView characterRangeAtPoint:bounds.origin].start;
-    UITextPosition *end = [textView characterRangeAtPoint:CGPointMake(CGRectGetMaxX(bounds), CGRectGetMaxY(bounds))].end;
-    
-    NSInteger beginOffset = [textView offsetFromPosition:textView.beginningOfDocument toPosition:start];
-    beginOffset -= kXXTEEditorCachedRangeLength;
-    if (beginOffset < 0) beginOffset = 0;
-    NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
-    endLength += kXXTEEditorCachedRangeLength * 2;
-    
-    NSRange range = NSMakeRange(beginOffset, endLength);
-    
-    NSUInteger rangesArrayLength = rangesArray.count;
-    NSUInteger attributesArrayLength = attributesArray.count;
-    if (rangesArrayLength != attributesArrayLength) {
-        return;
-    }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        for (NSUInteger idx = 0; idx < rangesArrayLength; idx++) {
-            NSValue *rangeValue = rangesArray[idx];
-            NSRange preparedRange = [rangeValue rangeValue];
-            if (NSIntersectionRange(range, preparedRange).length != 0 && preparedRange.length < kXXTEEditorCachedRangeLength) {
-                dispatch_async_on_main_queue(^{
-                    [textView.vTextStorage addAttributes:attributesArray[idx] range:preparedRange];
-                });
-            }
-        }
-    });
-}
-
-- (void)invalidateSyntaxCaches {
-    [self.rangesArray removeAllObjects];
-    [self.attributesArray removeAllObjects];
 }
 
 #pragma mark - Memory

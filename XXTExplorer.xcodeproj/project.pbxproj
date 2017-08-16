@@ -501,6 +501,7 @@
 		0FB0090D1F4364C300097E9C /* A.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = A.tmTheme; sourceTree = "<group>"; };
 		0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "OneHalf (Dark).tmTheme"; sourceTree = "<group>"; };
 		0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "OneHalf (Light).tmTheme"; sourceTree = "<group>"; };
+		0FB009131F44780B00097E9C /* XXTEEditorDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorDefaults.h; sourceTree = "<group>"; };
 		0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListViewController.h; sourceTree = "<group>"; };
 		0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEObjectViewController.h; sourceTree = "<group>"; };
@@ -1163,6 +1164,7 @@
 		0FB008EC1F43464500097E9C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0FB009131F44780B00097E9C /* XXTEEditorDefaults.h */,
 			);
 			name = Settings;
 			sourceTree = "<group>";

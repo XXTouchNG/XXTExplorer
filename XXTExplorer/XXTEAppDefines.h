@@ -21,16 +21,21 @@ static inline id uAppDefine(NSString *key) {
     return sharedDelegate().appDefines[key];
 }
 
-static inline id XXTEDefaultsObject(NSString *key) {
-    return ([sharedDelegate().userDefaults objectForKey:key]);
+static inline id XXTEDefaultsObject(NSString *key, id defaultValue) {
+    id value = [sharedDelegate().userDefaults objectForKey:key];
+    if (!value && defaultValue) {
+        [sharedDelegate().userDefaults setObject:defaultValue forKey:key];
+        value = defaultValue;
+    }
+    return (value);
 }
 
-static inline BOOL XXTEDefaultsBool(NSString *key) {
-    return ([XXTEDefaultsObject(key) boolValue]);
+static inline BOOL XXTEDefaultsBool(NSString *key, BOOL defaultValue) {
+    return ([XXTEDefaultsObject(key, @(defaultValue)) boolValue]);
 }
 
-static inline NSUInteger XXTEDefaultsEnum(NSString *key) {
-    return ([XXTEDefaultsObject(key) unsignedIntegerValue]);
+static inline NSUInteger XXTEDefaultsEnum(NSString *key, NSUInteger defaultValue) {
+    return ([XXTEDefaultsObject(key, @(defaultValue)) unsignedIntegerValue]);
 }
 
 static inline id XXTEBuiltInDefaultsObject(NSString *key) {

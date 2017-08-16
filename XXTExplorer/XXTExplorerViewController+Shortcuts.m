@@ -124,7 +124,7 @@
 
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
     if (!entryPath) return;
-    BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey);
+    BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
     blockUserInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
     .then(convertJsonString)

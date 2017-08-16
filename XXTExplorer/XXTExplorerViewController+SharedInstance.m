@@ -64,7 +64,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 }
 
 + (NSString *)selectedScriptPath {
-    return XXTEDefaultsObject(XXTExplorerViewEntrySelectedScriptPathKey);
+    return XXTEDefaultsObject(XXTExplorerViewEntrySelectedScriptPathKey, nil);
 }
 
 @end

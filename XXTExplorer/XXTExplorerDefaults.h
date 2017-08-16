@@ -9,6 +9,8 @@
 #ifndef XXTExplorerDefaults_h
 #define XXTExplorerDefaults_h
 
+#import <Foundation/Foundation.h>
+
 #pragma mark - Application Bundle
 
 #pragma mark - Defaults

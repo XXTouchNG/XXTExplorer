@@ -57,7 +57,7 @@
 - (NSDictionary *)bindingDictionary {
     if (!_bindingDictionary) {
         // Register binding
-        NSDictionary *originalBindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
+        NSDictionary *originalBindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey, nil);
         NSMutableDictionary *newBindingDictionary = [[NSMutableDictionary alloc] initWithDictionary:originalBindingDictionary];
         for (Class registeredViewerClass in self.registeredViewers) {
             Class <XXTEViewer> viewerClass = registeredViewerClass;
@@ -91,7 +91,7 @@
 
 - (BOOL)hasViewerForEntry:(NSDictionary *)entry {
     NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey);
+    NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey, nil);
     NSString *viewerName = bindingDictionary[entryBaseExtension];
     Class testClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
     return testClass && [testClass isSubclassOfClass:[UIViewController class]];
