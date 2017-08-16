@@ -8,7 +8,7 @@
 
 #import "XXTEKeyboardButtonView.h"
 #import "XXTEKeyboardButton.h"
-#import "TurtleBezierPath.h"
+#import "XXTETurtleBezierPath.h"
 
 @interface XXTEKeyboardButtonView ()
 
@@ -134,7 +134,7 @@
     CGFloat majorRadius = 10.f;
     CGFloat minorRadius = 4.f;
 
-    TurtleBezierPath *path = [TurtleBezierPath new];
+    XXTETurtleBezierPath *path = [XXTETurtleBezierPath new];
     [path home];
     path.lineWidth = 0;
     path.lineCapStyle = kCGLineCapRound;

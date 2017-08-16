@@ -1,5 +1,5 @@
 //
-//  XXTETextEditorView.h
+//  XXTEEditorTextView.h
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 11/08/2017.
@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTETextStorage, XXTELayoutManager;
+@class XXTEEditorTextStorage, XXTEEditorLayoutManager;
 
-@interface XXTETextEditorView : UITextView
+@interface XXTEEditorTextView : UITextView
 
 @property (nonatomic, assign, getter=isLineNumberEnabled) BOOL lineNumberEnabled;
 @property (nonatomic, strong) UIColor *gutterBackgroundColor;
 @property (nonatomic, strong) UIColor *gutterLineColor;
 
-@property (nonatomic, strong) XXTETextStorage *vTextStorage;
-@property (nonatomic, strong) XXTELayoutManager *vLayoutManager;
+@property (nonatomic, strong) XXTEEditorTextStorage *vTextStorage;
+@property (nonatomic, strong) XXTEEditorLayoutManager *vLayoutManager;
 
 @end

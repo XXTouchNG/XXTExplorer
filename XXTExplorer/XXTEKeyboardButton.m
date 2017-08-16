@@ -42,7 +42,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self commonInit];
+        [self setup];
     }
     return self;
 }
@@ -50,13 +50,14 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInit];
+        [self setup];
     }
     return self;
 }
 
-- (void)commonInit {
-    // Styling
+- (void)setup {
+    _tabString = @"\t";
+    
     self.backgroundColor = [UIColor clearColor];
     self.clipsToBounds = NO;
     self.layer.masksToBounds = NO;
@@ -433,13 +434,6 @@
     [color setFill];
     [roundedRectanglePath fill];
     CGContextRestoreGState(context);
-}
-
-- (NSString *)tabString {
-    if (!_tabString) {
-        _tabString = @"\t";
-    }
-    return _tabString;
 }
 
 @end

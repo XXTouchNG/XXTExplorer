@@ -8,7 +8,7 @@
 
 #import "XXTExplorerEntryLauncher.h"
 #import "XXTEExecutableViewer.h"
-#import "XXTETextEditorController.h"
+#import "XXTEEditorController.h"
 
 @implementation XXTExplorerEntryLauncher
 
@@ -33,7 +33,7 @@
 }
 
 + (Class)relatedEditor {
-    return [XXTETextEditorController class];
+    return [XXTEEditorController class];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {

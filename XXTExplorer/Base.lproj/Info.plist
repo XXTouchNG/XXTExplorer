@@ -59,7 +59,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>22</string>
+	<string>23</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -79,6 +79,17 @@
 	<string>${PRODUCT_NAME} want to access your camera to scan QR code.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>${PRODUCT_NAME} want to access your album to extract QR code.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceCodePro-Regular.otf</string>
+		<string>SourceCodePro-Bold.otf</string>
+		<string>SourceCodePro-It.otf</string>
+		<string>SourceCodePro-BoldIt.otf</string>
+		<string>CamingoCode-Regular.ttf</string>
+		<string>CamingoCode-Bold.ttf</string>
+		<string>CamingoCode-Italic.ttf</string>
+		<string>CamingoCode-BoldItalic.ttf</string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -160,17 +171,6 @@
 				<string>text/lua</string>
 			</dict>
 		</dict>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SourceCodePro-Regular.otf</string>
-		<string>SourceCodePro-Bold.otf</string>
-		<string>SourceCodePro-It.otf</string>
-		<string>SourceCodePro-BoldIt.otf</string>
-		<string>CamingoCode-Regular.ttf</string>
-		<string>CamingoCode-Bold.ttf</string>
-		<string>CamingoCode-Italic.ttf</string>
-		<string>CamingoCode-BoldItalic.ttf</string>
 	</array>
 </dict>
 </plist>

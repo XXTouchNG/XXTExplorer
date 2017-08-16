@@ -1,5 +1,5 @@
 //
-//  XXTETextEditorController.h
+//  XXTEEditorController.h
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 10/08/2017.
@@ -8,6 +8,6 @@
 
 #import "XXTEEditor.h"
 
-@interface XXTETextEditorController : UIViewController <XXTEEditor>
+@interface XXTEEditorController : UIViewController <XXTEEditor>
 
 @end

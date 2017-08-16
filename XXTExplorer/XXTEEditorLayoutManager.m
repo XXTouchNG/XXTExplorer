@@ -1,16 +1,16 @@
 //
-//  XXTELayoutManager.m
+//  XXTEEditorLayoutManager.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 15/08/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTELayoutManager.h"
+#import "XXTEEditorLayoutManager.h"
 
 static CGFloat kMinimumGutterWidth = 42.f;
 
-@interface XXTELayoutManager ()
+@interface XXTEEditorLayoutManager ()
 
 @property (nonatomic, assign) CGFloat gutterWidth;
 @property (nonatomic, assign) UIEdgeInsets lineAreaInset;
@@ -20,7 +20,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
 
 @end
 
-@implementation XXTELayoutManager
+@implementation XXTEEditorLayoutManager
 
 - (instancetype)init
 {

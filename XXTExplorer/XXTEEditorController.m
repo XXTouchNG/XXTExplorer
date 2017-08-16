@@ -1,12 +1,12 @@
 //
-//  XXTETextEditorController.m
+//  XXTEEditorController.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 10/08/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTETextEditorController.h"
+#import "XXTEEditorController.h"
 #import "XXTECodeViewerController.h"
 
 #import "XXTEDispatchDefines.h"
@@ -14,9 +14,9 @@
 
 #import "XXTETextEditorTheme.h"
 
-#import "XXTETextEditorView.h"
-#import "XXTETextStorage.h"
-#import "XXTELayoutManager.h"
+#import "XXTEEditorTextView.h"
+#import "XXTEEditorTextStorage.h"
+#import "XXTEEditorLayoutManager.h"
 
 #import "XXTEKeyboardRow.h"
 
@@ -24,19 +24,24 @@
 
 #import "XXTExplorer-Swift.h"
 
-#ifdef DEBUG
 static NSUInteger testIdx = 0;
-#endif
 
-@interface XXTETextEditorController () <UITextViewDelegate>
+static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
+
+@interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate>
 
 @property (nonatomic, strong) XXTETextEditorTheme *theme;
-@property (nonatomic, strong, readonly) XXTETextEditorView *textView;
+@property (nonatomic, strong, readonly) XXTEEditorTextView *textView;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
+
+@property (nonatomic, strong) SKHelper *helper;
+@property (nonatomic, strong) SKAttributedParser *parser;
+@property (atomic, strong) NSMutableArray <NSValue *> *rangesArray;
+@property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
 
 @end
 
-@implementation XXTETextEditorController
+@implementation XXTEEditorController
 
 @synthesize entryPath = _entryPath;
 
@@ -110,19 +115,23 @@ static NSUInteger testIdx = 0;
     self.hidesBottomBarWhenPushed = YES;
     
     [self reloadTheme];
+    [self reloadParser];
     [self registerForKeyboardNotifications];
 }
 
 - (void)reloadAll {
     [self reloadTheme];
+    [self reloadParser];
     [self reloadView];
     [self reloadViewStyle];
     [self reloadContent];
+    [self reloadAttributes];
 }
 
-- (void)reloadStyleAndContent {
+- (void)reloadStyle {
     [self reloadViewStyle];
     [self reloadContent];
+    [self reloadAttributes];
 }
 
 #pragma mark - BEFORE -viewDidLoad
@@ -131,7 +140,6 @@ static NSUInteger testIdx = 0;
     
 }
 
-#ifdef DEBUG
 - (void)reloadTheme {
     NSArray <NSDictionary *> *testPair = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"]];
     NSString *themeIdentifier = testPair[testIdx][@"name"];
@@ -140,7 +148,23 @@ static NSUInteger testIdx = 0;
     XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
     _theme = theme;
 }
-#endif
+
+#pragma mark - BEFORE -viewDidLoad
+
+- (void)reloadParser {
+    SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
+    helperConfig.bundle = [NSBundle mainBundle];
+    helperConfig.themeIdentifier = self.theme.identifier;
+    helperConfig.color = self.theme.foregroundColor;
+    helperConfig.languageIdentifier = @"source.lua"; // config
+    helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // config
+    
+    SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
+    SKAttributedParser *parser = [helper attributedParser];
+    
+    _helper = helper;
+    _parser = parser;
+}
 
 #pragma mark - AFTER -viewDidLoad
 
@@ -155,21 +179,15 @@ static NSUInteger testIdx = 0;
     
     NSTextStorage *textStorage = nil;
     if (isHighlightEnabled) {
-        SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
-        helperConfig.bundle = [NSBundle mainBundle];
-        helperConfig.themeIdentifier = self.theme.identifier;
-        helperConfig.color = self.theme.foregroundColor;
-        helperConfig.languageIdentifier = @"source.lua"; // config
-        helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // config
-        
-        textStorage = [[XXTETextStorage alloc] initWithConfig:helperConfig];
+        textStorage = [[XXTEEditorTextStorage alloc] init];
+        textStorage.delegate = self;
     } else {
         textStorage = [[NSTextStorage alloc] init];
     }
     
     NSLayoutManager *layoutManager = nil;
     if (isLineNumberEnabled) {
-        layoutManager = [[XXTELayoutManager alloc] init];
+        layoutManager = [[XXTEEditorLayoutManager alloc] init];
     } else {
         layoutManager = [[NSLayoutManager alloc] init];
     }
@@ -182,7 +200,7 @@ static NSUInteger testIdx = 0;
     [textStorage removeLayoutManager:textStorage.layoutManagers.firstObject];
     [textStorage addLayoutManager:layoutManager];
     
-    XXTETextEditorView *textView = [[XXTETextEditorView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
+    XXTEEditorTextView *textView = [[XXTEEditorTextView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
     textView.delegate = self;
     textView.selectable = YES;
     if (isReadOnlyMode) {
@@ -197,10 +215,10 @@ static NSUInteger testIdx = 0;
     textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
     
     if (isHighlightEnabled) {
-        textView.vTextStorage = (XXTETextStorage *)textStorage;
+        textView.vTextStorage = (XXTEEditorTextStorage *)textStorage;
     }
     if (isLineNumberEnabled) {
-        textView.vLayoutManager = (XXTELayoutManager *)layoutManager;
+        textView.vLayoutManager = (XXTEEditorLayoutManager *)layoutManager;
     }
     
     if (isKeyboardRowEnabled && NO == isReadOnlyMode) {
@@ -220,7 +238,7 @@ static NSUInteger testIdx = 0;
 - (void)reloadViewStyle {
     if (![self isViewLoaded]) return;
     XXTETextEditorTheme *theme = self.theme;
-    XXTETextEditorView *textView = self.textView;
+    XXTEEditorTextView *textView = self.textView;
     textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive; // config
     textView.autocapitalizationType = UITextAutocapitalizationTypeNone; // config
     textView.autocorrectionType = UITextAutocorrectionTypeNo; // config
@@ -254,6 +272,7 @@ static NSUInteger testIdx = 0;
     [self reloadViewStyle];
     
     [self reloadContent];
+    [self reloadAttributes];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -307,25 +326,37 @@ static NSUInteger testIdx = 0;
         showUserMessage(self, [readError localizedDescription]);
         return;
     }
-    XXTETextEditorView *textView = self.textView;
+    XXTEEditorTextView *textView = self.textView;
     textView.editable = NO;
     [textView setText:string];
-    BOOL isReadOnlyMode = NO;
-    if (isReadOnlyMode) {
-        textView.editable = NO;
-    } else {
-        textView.editable = YES;
-    }
-}
-
-#pragma mark - SKHelperDelegate
-
-- (void)helperDidFinishInitialLoadWithSender:(SKHelper *)sender result:(NSAttributedString *)result {
     
+//    BOOL isReadOnlyMode = NO;
+//    if (isReadOnlyMode) {
+//        textView.editable = NO;
+//    } else {
+//        textView.editable = YES;
+//    }
 }
 
-- (void)helperDidFailInitialLoadWithSender:(SKHelper *)sender error:(NSError *)error {
-    showUserMessage(self, error.localizedDescription);
+#pragma mark - Attributes
+
+- (void)reloadAttributes {
+    self.rangesArray = [[NSMutableArray alloc] init];
+    self.attributesArray = [[NSMutableArray alloc] init];
+    BOOL isHighlightEnabled = YES; // config
+    if (isHighlightEnabled) {
+        NSString *wholeString = self.textView.text;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            @weakify(self);
+            [self.parser parseAttributedString:wholeString match:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
+                @strongify(self);
+                if (attributes) {
+                    [self.rangesArray addObject:[NSValue valueWithRange:range]];
+                    [self.attributesArray addObject:attributes];
+                }
+            }];
+        });
+    }
 }
 
 #pragma mark - Keyboard
@@ -383,12 +414,62 @@ static NSUInteger testIdx = 0;
     
 }
 
+#pragma mark - UITextViewDelegate
+
+#pragma mark - NSTextStorageDelegate
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self renderSyntaxOnScreen];
+}
+
+- (void)renderSyntaxOnScreen {
+    NSArray *rangesArray = self.rangesArray;
+    NSArray *attributesArray = self.attributesArray;
+    XXTEEditorTextView *textView = self.textView;
+    CGRect bounds = textView.bounds;
+    
+    UITextPosition *start = [textView characterRangeAtPoint:bounds.origin].start;
+    UITextPosition *end = [textView characterRangeAtPoint:CGPointMake(CGRectGetMaxX(bounds), CGRectGetMaxY(bounds))].end;
+    
+    NSInteger beginOffset = [textView offsetFromPosition:textView.beginningOfDocument toPosition:start];
+    beginOffset -= kXXTEEditorCachedRangeLength;
+    if (beginOffset < 0) beginOffset = 0;
+    NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
+    endLength += kXXTEEditorCachedRangeLength * 2;
+    
+    NSRange range = NSMakeRange(beginOffset, endLength);
+    
+    NSUInteger rangesArrayLength = rangesArray.count;
+    NSUInteger attributesArrayLength = attributesArray.count;
+    if (rangesArrayLength != attributesArrayLength) {
+        return;
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        for (NSUInteger idx = 0; idx < rangesArrayLength; idx++) {
+            NSValue *rangeValue = rangesArray[idx];
+            NSRange preparedRange = [rangeValue rangeValue];
+            if (NSIntersectionRange(range, preparedRange).length != 0 && preparedRange.length < kXXTEEditorCachedRangeLength) {
+                dispatch_async_on_main_queue(^{
+                    [textView.vTextStorage addAttributes:attributesArray[idx] range:preparedRange];
+                });
+            }
+        }
+    });
+}
+
+- (void)invalidateSyntaxCaches {
+    [self.rangesArray removeAllObjects];
+    [self.attributesArray removeAllObjects];
+}
+
 #pragma mark - Memory
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
-    NSLog(@"- [XXTETextEditorController dealloc]");
+    NSLog(@"- [XXTEEditorController dealloc]");
 #endif
 }
 

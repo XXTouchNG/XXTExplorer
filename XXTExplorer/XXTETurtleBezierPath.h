@@ -1,6 +1,6 @@
 //
-//  TurtleBezierPath.h
-//  TurtleBezierPath demo
+//  XXTETurtleBezierPath.h
+//  XXTETurtleBezierPath
 //
 //  Created by Nigel Barber on 09/12/2013.
 //  Copyright (c) 2013 Nigel Barber. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TurtleBezierPath : UIBezierPath
+@interface XXTETurtleBezierPath : UIBezierPath
 
 @property (nonatomic, assign) CGFloat bearing;
 @property (nonatomic, assign) BOOL penUp;

@@ -9,6 +9,9 @@
 #import "XXTEKeyboardRow.h"
 #import "XXTEKeyboardButton.h"
 
+static NSString * const XXTEKeyboardRowPhoneSequence = @"TTTTT()\"[]{}'<>\\/$´`◉◉◉◉◉~^|€£-+=%*!?#@&_:;,.";
+static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^|€£◉◉◉◉◉-+=%*!?#@&_:;,.1203467589";
+
 @interface XXTEKeyboardRow ()
 
 @property(nonatomic, strong) UITextView *textView;
@@ -29,7 +32,6 @@
 - (instancetype)initWithTextView:(UITextView *)textView {
     if (self = [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard]) {
         _textView = textView;
-
         [self setup];
     }
     return self;
@@ -58,7 +60,7 @@
         _buttonWidth = (_barWidth - (_buttonSpacing * (_buttonCount - 1)) - (_leftMargin * 2)) / _buttonCount;
         _buttonHeight = _buttonWidth;
         _barHeight = _buttonHeight + _buttonSpacing * 2;
-        keys = @"TTTTT()\"[]{}'<>\\/$´`◉◉◉◉◉~^|€£-+=%*!?#@&_:;,.";
+        keys = XXTEKeyboardRowPhoneSequence;
     } else if (_style == XXTEKeyboardButtonStyleTablet) {
         _buttonCount = 11;
         _barHeight = 72.f;
@@ -67,7 +69,7 @@
         _topMargin = 1.f;
         _buttonSpacing = 13.f;
         _buttonWidth = 57.f;
-        keys = @"TTTTT()\"[]{}'<>\\/$´`~^|€£◉◉◉◉◉-+=%*!?#@&_:;,.1203467589";
+        keys = XXTEKeyboardRowPadSequence;
     }
 
     self.frame = CGRectMake(0, 0, _barWidth, _barHeight);

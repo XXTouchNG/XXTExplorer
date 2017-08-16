@@ -8,7 +8,7 @@
 
 #import "XXTExplorerEntryCodeReader.h"
 #import "XXTECodeViewerController.h"
-#import "XXTETextEditorController.h"
+#import "XXTEEditorController.h"
 
 @implementation XXTExplorerEntryCodeReader
 
@@ -33,7 +33,7 @@
 }
 
 + (Class)relatedEditor {
-    return [XXTETextEditorController class];
+    return [XXTEEditorController class];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {

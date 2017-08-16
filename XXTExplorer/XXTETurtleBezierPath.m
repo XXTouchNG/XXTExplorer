@@ -1,18 +1,18 @@
 //
-//  TurtleBezierPath.m
-//  TurtleBezierPath demo
+//  XXTETurtleBezierPath.m
+//  XXTETurtleBezierPath
 //
 //  Created by Nigel Barber on 09/12/2013.
 //  Copyright (c) 2013 Nigel Barber. All rights reserved.
 //
 
-#import "TurtleBezierPath.h"
+#import "XXTETurtleBezierPath.h"
 
 static inline CGFloat radians(CGFloat degrees) {
     return (CGFloat) (degrees * M_PI / 180.0);
 }
 
-@implementation TurtleBezierPath
+@implementation XXTETurtleBezierPath
 
 #pragma mark - NSCoding
 
@@ -36,7 +36,7 @@ static inline CGFloat radians(CGFloat degrees) {
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-    TurtleBezierPath *clone = [[TurtleBezierPath allocWithZone:zone] init];
+    XXTETurtleBezierPath *clone = [[XXTETurtleBezierPath allocWithZone:zone] init];
     clone.CGPath = self.CGPath;
     clone.lineCapStyle = self.lineCapStyle;
     clone.lineJoinStyle = self.lineJoinStyle;
@@ -97,7 +97,7 @@ static inline CGFloat radians(CGFloat degrees) {
     return CGRectMake(0.0f, 0.0f, maxWidth * 2.0f, maxHeight * 2.0f);
 }
 
-- (BOOL)isEqual:(TurtleBezierPath *)aPath {
+- (BOOL)isEqual:(XXTETurtleBezierPath *)aPath {
     return [[NSKeyedArchiver archivedDataWithRootObject:self] isEqualToData:[NSKeyedArchiver archivedDataWithRootObject:aPath]];
 }
 

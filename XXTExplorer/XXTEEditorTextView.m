@@ -1,21 +1,21 @@
 //
-//  XXTETextEditorView.m
+//  XXTEEditorTextView.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 11/08/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTETextEditorView.h"
+#import "XXTEEditorTextView.h"
 
-#import "XXTETextStorage.h"
-#import "XXTELayoutManager.h"
+#import "XXTEEditorTextStorage.h"
+#import "XXTEEditorLayoutManager.h"
 
-@interface XXTETextEditorView ()
+@interface XXTEEditorTextView ()
 
 @end
 
-@implementation XXTETextEditorView
+@implementation XXTEEditorTextView
 
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
     self = [super initWithFrame:frame textContainer:textContainer];
@@ -41,7 +41,7 @@
         return;
     }
     
-    XXTELayoutManager *manager = self.vLayoutManager;
+    XXTEEditorLayoutManager *manager = self.vLayoutManager;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGRect bounds = self.bounds;

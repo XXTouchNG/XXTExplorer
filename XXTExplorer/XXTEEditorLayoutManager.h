@@ -1,5 +1,5 @@
 //
-//  XXTELayoutManager.h
+//  XXTEEditorLayoutManager.h
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 15/08/2017.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XXTELayoutManager : NSLayoutManager
+@interface XXTEEditorLayoutManager : NSLayoutManager
 
 @property (nonatomic, strong) UIFont *lineNumberFont;
 @property (nonatomic, strong) UIColor *lineNumberColor;
