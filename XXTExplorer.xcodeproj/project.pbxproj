@@ -111,6 +111,7 @@
 		0F8521511F2D979E00A912AC /* XUIMultipleOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85214F1F2D979E00A912AC /* XUIMultipleOptionCell.xib */; };
 		0F8521551F2D97AE00A912AC /* XUIOrderedOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8521531F2D97AE00A912AC /* XUIOrderedOptionCell.m */; };
 		0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8521541F2D97AE00A912AC /* XUIOrderedOptionCell.xib */; };
+		0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */; };
 		0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */; };
 		0F8EEFE01F31CD3B00F08E13 /* XUIDefaultsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8EEFDF1F31CD3B00F08E13 /* XUIDefaultsService.m */; };
 		0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */; };
@@ -144,6 +145,8 @@
 		0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090D1F4364C300097E9C /* A.tmTheme */; };
 		0FB009111F43685E00097E9C /* OneHalf (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */; };
 		0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */; };
+		0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */; };
+		0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */; };
 		0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */; };
 		0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */; };
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
@@ -166,14 +169,30 @@
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
+		52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251209D280AFB66F3169F0C /* SKLanguage.m */; };
+		52512159F631F9582F89C858 /* SKRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124A0DCE70FECE2B114E7 /* SKRepository.m */; };
 		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
+		52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251251343C867D1BE381F9F /* SKTheme.m */; };
+		5251242F0537AF64E7895EDB /* SKResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512B97AF1A3C5F4F0A8EDA /* SKResult.m */; };
 		52512432C43B553660F98172 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */; };
+		52512440558639F0CA2A63C6 /* SKInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512D31FC610E7D9963A8EA /* SKInclude.m */; };
+		5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 525129847C45779842CAFB08 /* SKScopedString.m */; };
+		525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 		525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */; };
+		525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512024B32016196224ED51 /* SKResultSet.m */; };
+		5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 525121AA050C36B577A99998 /* SKCaptureCollection.m */; };
 		52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */; };
 		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
 		525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512EB1AE32276E843CEC6C /* XUIBaseCell.m */; };
+		52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */; };
+		52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */ = {isa = PBXBuildFile; fileRef = 5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */; };
 		52512BD02B62F2E839374051 /* XUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512481E485AD2E09205EFB /* XUIViewController.m */; };
+		52512CA06AA993671BB9E73B /* SKHelperConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 525123B304640D1C208339F0 /* SKHelperConfig.m */; };
+		52512CB22B66C2C399BAF27D /* SKCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251293D44AFD758EEA8E4B2 /* SKCapture.m */; };
+		52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 525126AA8416F9D88F2E89F7 /* SKBundleManager.m */; };
+		52512E40750E7BF6394042D8 /* SKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DF49CDDF706A91B90B2 /* SKParser.m */; };
+		52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512C7DA4E0285A9A9B9F92 /* SKPattern.m */; };
 		B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B031245EC670B5FA88B88215 /* XXTEMoreReferences.bundle */; };
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		D60A269E1F3D9FF800E013E2 /* SKHelperConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A269D1F3D9FF800E013E2 /* SKHelperConfig.swift */; };
@@ -449,6 +468,8 @@
 		0F8521521F2D97AE00A912AC /* XUIOrderedOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOrderedOptionCell.h; sourceTree = "<group>"; };
 		0F8521531F2D97AE00A912AC /* XUIOrderedOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOrderedOptionCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F8521541F2D97AE00A912AC /* XUIOrderedOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIOrderedOptionCell.xib; sourceTree = "<group>"; };
+		0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedParsingOperation.h; sourceTree = "<group>"; };
+		0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedParsingOperation.m; sourceTree = "<group>"; };
 		0F8AB9F81F2EFCA500E3C774 /* XUIMultipleOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIMultipleOptionViewController.h; sourceTree = "<group>"; };
 		0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIMultipleOptionViewController.m; sourceTree = "<group>"; };
 		0F8EEFDE1F31CD3B00F08E13 /* XUIDefaultsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIDefaultsService.h; sourceTree = "<group>"; };
@@ -492,16 +513,20 @@
 		0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewCell.h; sourceTree = "<group>"; };
 		0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewCell.m; sourceTree = "<group>"; };
 		0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewCell.xib; sourceTree = "<group>"; };
-		0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Ciapre.tmTheme; sourceTree = "<group>"; };
-		0FB009011F43573500097E9C /* Oceanic.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Oceanic.tmTheme; sourceTree = "<group>"; };
+		0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Ciapre.tmTheme; sourceTree = "<group>"; };
+		0FB009011F43573500097E9C /* Oceanic.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Oceanic.tmTheme; sourceTree = "<group>"; };
 		0FB009051F4359FF00097E9C /* SKTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKTheme.plist; sourceTree = "<group>"; };
-		0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Kimbie (Dark).tmTheme"; sourceTree = "<group>"; };
-		0FB009081F4364AF00097E9C /* Kimbie (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Kimbie (Light).tmTheme"; sourceTree = "<group>"; };
+		0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Kimbie (Dark).tmTheme"; sourceTree = "<group>"; };
+		0FB009081F4364AF00097E9C /* Kimbie (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Kimbie (Light).tmTheme"; sourceTree = "<group>"; };
 		0FB0090B1F4364B800097E9C /* Nothing.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Nothing.tmTheme; sourceTree = "<group>"; };
-		0FB0090D1F4364C300097E9C /* A.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = A.tmTheme; sourceTree = "<group>"; };
-		0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "OneHalf (Dark).tmTheme"; sourceTree = "<group>"; };
-		0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "OneHalf (Light).tmTheme"; sourceTree = "<group>"; };
+		0FB0090D1F4364C300097E9C /* A.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = A.tmTheme; sourceTree = "<group>"; };
+		0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "OneHalf (Dark).tmTheme"; sourceTree = "<group>"; };
+		0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "OneHalf (Light).tmTheme"; sourceTree = "<group>"; };
 		0FB009131F44780B00097E9C /* XXTEEditorDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorDefaults.h; sourceTree = "<group>"; };
+		0FB009151F45AC0A00097E9C /* XXTEEditorController+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+Keyboard.h"; sourceTree = "<group>"; };
+		0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+Keyboard.m"; sourceTree = "<group>"; };
+		0FB009181F45AF2000097E9C /* XXTEEditorController+Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+Settings.h"; sourceTree = "<group>"; };
+		0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+Settings.m"; sourceTree = "<group>"; };
 		0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListViewController.h; sourceTree = "<group>"; };
 		0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEObjectViewController.h; sourceTree = "<group>"; };
@@ -547,20 +572,50 @@
 		0FF3E8B31F211384006DED5A /* XUIListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListHeaderView.h; sourceTree = "<group>"; };
 		0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIListHeaderView.m; sourceTree = "<group>"; };
 		0FF3E8B61F2127E0006DED5A /* XUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUI.h; sourceTree = "<group>"; };
+		52512024B32016196224ED51 /* SKResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKResultSet.m; sourceTree = "<group>"; };
+		5251209D280AFB66F3169F0C /* SKLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLanguage.m; sourceTree = "<group>"; };
 		525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
+		525121AA050C36B577A99998 /* SKCaptureCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCaptureCollection.m; sourceTree = "<group>"; };
+		525121CE4F5030A8AA672FBF /* SKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKParser.h; sourceTree = "<group>"; };
 		5251235021715EB2390B1658 /* XUIGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIGroupCell.h; sourceTree = "<group>"; };
+		525123B304640D1C208339F0 /* SKHelperConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKHelperConfig.m; sourceTree = "<group>"; };
 		52512481E485AD2E09205EFB /* XUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		525124A0DCE70FECE2B114E7 /* SKRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKRepository.m; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
+		5251251343C867D1BE381F9F /* SKTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTheme.m; sourceTree = "<group>"; };
+		5251252B5911308B6BCA707F /* SKRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKRepository.h; sourceTree = "<group>"; };
+		525125513F9BC46CACEC6D53 /* SKResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKResultSet.h; sourceTree = "<group>"; };
+		525126AA8416F9D88F2E89F7 /* SKBundleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKBundleManager.m; sourceTree = "<group>"; };
 		525126B545F29123B15E6B55 /* XUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewController.h; sourceTree = "<group>"; };
+		525126CFC8733331EC16C78C /* SKInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKInclude.h; sourceTree = "<group>"; };
+		525126EC09B501AE61B5E535 /* SKScopedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKScopedString.h; sourceTree = "<group>"; };
+		5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCaptureCollection.h; sourceTree = "<group>"; };
+		5251277CF9F156FA35CC3946 /* SKLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKLanguage.h; sourceTree = "<group>"; };
 		525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIGroupCell.m; sourceTree = "<group>"; };
 		52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMailComposeViewController.h; sourceTree = "<group>"; };
+		5251293D44AFD758EEA8E4B2 /* SKCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCapture.m; sourceTree = "<group>"; };
+		5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedParser.m; sourceTree = "<group>"; };
+		525129847C45779842CAFB08 /* SKScopedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKScopedString.m; sourceTree = "<group>"; };
+		52512A4AD1D4FFBD3A3E3ABD /* SKReferenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKReferenceManager.h; sourceTree = "<group>"; };
+		52512A6759987E09CC5B47EF /* SKCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCapture.h; sourceTree = "<group>"; };
+		52512ACCCE996AF428023503 /* SKPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPattern.h; sourceTree = "<group>"; };
+		52512AD0FADE2F14C9AF1D0E /* SKResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKResult.h; sourceTree = "<group>"; };
+		52512AF038E324772AC61949 /* SKTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTheme.h; sourceTree = "<group>"; };
 		52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadViewController.h; sourceTree = "<group>"; };
+		52512B2C18D96DFB613EAD70 /* SKAttributedParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedParser.h; sourceTree = "<group>"; };
+		52512B97AF1A3C5F4F0A8EDA /* SKResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKResult.m; sourceTree = "<group>"; };
+		52512BABCD6104287DBA4074 /* SKBundleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKBundleManager.h; sourceTree = "<group>"; };
 		52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMailComposeViewController.m; sourceTree = "<group>"; };
 		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52512C344413AFCA2550E12D /* XUIBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIBaseCell.h; sourceTree = "<group>"; };
 		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
+		52512C7DA4E0285A9A9B9F92 /* SKPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPattern.m; sourceTree = "<group>"; };
+		52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKReferenceManager.m; sourceTree = "<group>"; };
 		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
+		52512D31FC610E7D9963A8EA /* SKInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKInclude.m; sourceTree = "<group>"; };
+		52512D88CF4B5159F33CEE5C /* SKHelperConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKHelperConfig.h; sourceTree = "<group>"; };
+		52512DF49CDDF706A91B90B2 /* SKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKParser.m; sourceTree = "<group>"; };
 		52512EB1AE32276E843CEC6C /* XUIBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIBaseCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B0312053639F332FD95415C7 /* XXTESplitViewController_Respring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController_Respring.h; sourceTree = "<group>"; };
 		B03120C9E16A3F457F292605 /* XXTERespringAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTERespringAgent.m; sourceTree = "<group>"; };
@@ -1169,6 +1224,17 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		0FB009141F45ABA000097E9C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0FB009151F45AC0A00097E9C /* XXTEEditorController+Keyboard.h */,
+				0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */,
+				0FB009181F45AF2000097E9C /* XXTEEditorController+Settings.h */,
+				0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		0FB6BB601F1C497900CADCEA /* XUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1388,6 +1454,38 @@
 				D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */,
 				D62DD68B1F3D831C00A34850 /* SKHelper.swift */,
 				D60A269D1F3D9FF800E013E2 /* SKHelperConfig.swift */,
+				5251293D44AFD758EEA8E4B2 /* SKCapture.m */,
+				525126EC09B501AE61B5E535 /* SKScopedString.h */,
+				525129847C45779842CAFB08 /* SKScopedString.m */,
+				52512AD0FADE2F14C9AF1D0E /* SKResult.h */,
+				52512AF038E324772AC61949 /* SKTheme.h */,
+				52512024B32016196224ED51 /* SKResultSet.m */,
+				52512B97AF1A3C5F4F0A8EDA /* SKResult.m */,
+				525125513F9BC46CACEC6D53 /* SKResultSet.h */,
+				525121AA050C36B577A99998 /* SKCaptureCollection.m */,
+				5251251343C867D1BE381F9F /* SKTheme.m */,
+				52512A6759987E09CC5B47EF /* SKCapture.h */,
+				5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */,
+				52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */,
+				52512A4AD1D4FFBD3A3E3ABD /* SKReferenceManager.h */,
+				52512C7DA4E0285A9A9B9F92 /* SKPattern.m */,
+				52512ACCCE996AF428023503 /* SKPattern.h */,
+				525124A0DCE70FECE2B114E7 /* SKRepository.m */,
+				5251252B5911308B6BCA707F /* SKRepository.h */,
+				5251209D280AFB66F3169F0C /* SKLanguage.m */,
+				5251277CF9F156FA35CC3946 /* SKLanguage.h */,
+				525126AA8416F9D88F2E89F7 /* SKBundleManager.m */,
+				52512BABCD6104287DBA4074 /* SKBundleManager.h */,
+				52512D31FC610E7D9963A8EA /* SKInclude.m */,
+				525126CFC8733331EC16C78C /* SKInclude.h */,
+				525123B304640D1C208339F0 /* SKHelperConfig.m */,
+				52512D88CF4B5159F33CEE5C /* SKHelperConfig.h */,
+				52512DF49CDDF706A91B90B2 /* SKParser.m */,
+				525121CE4F5030A8AA672FBF /* SKParser.h */,
+				5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */,
+				52512B2C18D96DFB613EAD70 /* SKAttributedParser.h */,
+				0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */,
+				0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */,
 			);
 			name = SyntaxKit;
 			sourceTree = "<group>";
@@ -1608,6 +1706,7 @@
 				D60A26A71F3DA82C00E013E2 /* Theme */,
 				0FE162A21F3C9370003064B2 /* Views */,
 				0FE162A11F3C9355003064B2 /* SyntaxKit */,
+				0FB009141F45ABA000097E9C /* Extensions */,
 				D66085651F3C691100E87B3C /* XXTEEditorController.h */,
 				D66085661F3C691100E87B3C /* XXTEEditorController.m */,
 			);
@@ -1810,6 +1909,7 @@
 				0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */,
 				0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
+				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1911,6 +2011,7 @@
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
 				0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */,
+				0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */,
 				0F30D9291F2BAAA20001E10B /* XUIEditTextCell.m in Sources */,
 				0F50AEB61F30C9A50098211C /* XXTEDictionaryObjectViewController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
@@ -1967,6 +2068,7 @@
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
 				D62DD6811F3D7FE600A34850 /* Color.swift in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
+				0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */,
 				0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */,
 				0F6AEA901F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */,
 				0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */,
@@ -2019,6 +2121,7 @@
 				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
 				D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */,
 				D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */,
+				0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */,
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */,
 				0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m in Sources */,
@@ -2045,6 +2148,21 @@
 				52512432C43B553660F98172 /* XUIGroupCell.m in Sources */,
 				525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */,
 				B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */,
+				52512CB22B66C2C399BAF27D /* SKCapture.m in Sources */,
+				5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */,
+				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
+				5251242F0537AF64E7895EDB /* SKResult.m in Sources */,
+				5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */,
+				52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */,
+				52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */,
+				52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */,
+				52512159F631F9582F89C858 /* SKRepository.m in Sources */,
+				52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */,
+				52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */,
+				52512440558639F0CA2A63C6 /* SKInclude.m in Sources */,
+				52512CA06AA993671BB9E73B /* SKHelperConfig.m in Sources */,
+				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
+				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

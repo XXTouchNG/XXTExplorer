@@ -8,6 +8,10 @@
 
 #import "XXTEEditor.h"
 
+@class XXTEEditorTextView;
+
 @interface XXTEEditorController : UIViewController <XXTEEditor>
+
+@property (nonatomic, strong, readonly) XXTEEditorTextView *textView;
 
 @end

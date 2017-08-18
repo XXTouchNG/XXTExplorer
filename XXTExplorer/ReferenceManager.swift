@@ -1,5 +1,5 @@
 //
-//  Patterns.swift
+//  ReferenceManager.swift
 //  SyntaxKit
 //
 //  A utility class to facilitate the creation of pattern arrays.

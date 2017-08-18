@@ -25,6 +25,8 @@
 #import <Masonry/Masonry.h>
 
 #import "XXTExplorer-Swift.h"
+#import "XXTEEditorController+Keyboard.h"
+#import "XXTEEditorController+Settings.h"
 
 static NSUInteger testIdx = 0;
 
@@ -33,7 +35,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 @interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate>
 
 @property (nonatomic, strong) XXTETextEditorTheme *theme;
-@property (nonatomic, strong, readonly) XXTEEditorTextView *textView;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @property (nonatomic, strong) SKHelper *helper;
@@ -77,30 +78,27 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 
 #pragma mark - Navigation Bar Color
 
-- (void)renderTheme {
+- (void)renderNavigationBarTheme:(BOOL)restore {
     if (XXTE_PAD) return;
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
-    if (self.theme) {
-        if (self.theme.foregroundColor)
-            foregroundColor = self.theme.foregroundColor;
-        if (self.theme.backgroundColor)
-            backgroundColor = self.theme.backgroundColor;
+    if (restore) {
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
+        self.navigationController.navigationBar.tintColor = foregroundColor;
+        self.navigationController.navigationBar.barTintColor = backgroundColor;
+        self.settingsButtonItem.tintColor = foregroundColor;
+    } else {
+        if (self.theme) {
+            if (self.theme.foregroundColor)
+                foregroundColor = self.theme.foregroundColor;
+            if (self.theme.backgroundColor)
+                backgroundColor = self.theme.backgroundColor;
+        }
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
+        self.navigationController.navigationBar.tintColor = foregroundColor;
+        self.navigationController.navigationBar.barTintColor = backgroundColor;
+        self.settingsButtonItem.tintColor = foregroundColor;
     }
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    self.navigationController.navigationBar.tintColor = foregroundColor;
-    self.navigationController.navigationBar.barTintColor = backgroundColor;
-    self.settingsButtonItem.tintColor = foregroundColor;
-}
-
-- (void)restoreTheme {
-    if (XXTE_PAD) return;
-    UIColor *backgroundColor = XXTE_COLOR;
-    UIColor *foregroundColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    self.navigationController.navigationBar.tintColor = foregroundColor;
-    self.navigationController.navigationBar.barTintColor = backgroundColor;
-    self.settingsButtonItem.tintColor = foregroundColor;
 }
 
 #pragma mark - Initializers
@@ -120,7 +118,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     
     [self reloadTheme];
     [self reloadParser];
-    [self registerForKeyboardNotifications];
+    [self registerKeyboardNotifications];
 }
 
 - (void)reloadAll {
@@ -259,7 +257,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
         [textView.vLayoutManager setLineNumberColor:theme.foregroundColor]; // config
     }
     [UIView animateWithDuration:.2f animations:^{
-        [self renderTheme];
+        [self renderNavigationBarTheme:NO];
     }];
 }
 
@@ -280,13 +278,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self renderTheme];
+    [self renderNavigationBarTheme:NO];
     [super viewWillAppear:animated];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
     if (parent == nil) {
-        [self restoreTheme];
+        [self renderNavigationBarTheme:YES];
     }
     [super willMoveToParentViewController:parent];
 }
@@ -343,6 +341,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     if (isHighlightEnabled) {
         [self invalidateSyntaxCaches];
         NSString *wholeString = self.textView.text;
+        blockUserInteractions(self, YES);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             @weakify(self);
             [self.parser parseAttributedString:wholeString match:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
@@ -354,6 +353,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
             }];
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxOnScreen];
+                blockUserInteractions(self, NO);
             });
         });
     }
@@ -390,7 +390,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
     endLength += kXXTEEditorCachedRangeLength * 2;
     
-    NSRange range = NSMakeRange(beginOffset, endLength);
+    NSRange range = NSMakeRange((NSUInteger) beginOffset, (NSUInteger) endLength);
     
     NSUInteger rangesArrayLength = rangesArray.count;
     NSUInteger attributesArrayLength = attributesArray.count;
@@ -415,65 +415,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     [self.attributesArray removeAllObjects];
 }
 
-#pragma mark - Keyboard
-
-// Call this method somewhere in your view controller setup code.
-- (void)registerForKeyboardNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-}
-
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
-{
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    self.textView.contentInset = contentInsets;
-    self.textView.scrollIndicatorInsets = contentInsets;
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-    
-    UITextView *textView = self.textView;
-    UITextRange * selectionRange = [textView selectedTextRange];
-    CGRect selectionStartRect = [textView caretRectForPosition:selectionRange.start];
-    CGRect selectionEndRect = [textView caretRectForPosition:selectionRange.end];
-    CGPoint selectionCenterPoint = (CGPoint){(selectionStartRect.origin.x + selectionEndRect.origin.x)/2,(selectionStartRect.origin.y + selectionStartRect.size.height / 2)};
-    
-    if (!CGRectContainsPoint(aRect, selectionCenterPoint) ) {
-        [textView scrollRectToVisible:CGRectMake(selectionStartRect.origin.x, selectionStartRect.origin.y, selectionEndRect.origin.x - selectionStartRect.origin.x, selectionStartRect.size.height) animated:YES];
-    }
-}
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    UITextView *textView = self.textView;
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    textView.contentInset = contentInsets;
-    textView.scrollIndicatorInsets = contentInsets;
-}
-
-#pragma mark - Button Actions
-
-- (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
-    
-}
-
 #pragma mark - Memory
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self dismissKeyboardNotifications];
 #ifdef DEBUG
     NSLog(@"- [XXTEEditorController dealloc]");
 #endif
