@@ -26,7 +26,7 @@
 // MARK: - Initializers
 
 - (instancetype)initWithBundleManager:(SKBundleManager *)bundleManager;
-- (NSArray <SKPattern *> *)patternsForPatterns:(NSArray <NSDictionary *> *)patterns
+- (NSMutableArray <SKPattern *> *)patternsForPatterns:(NSArray <NSDictionary *> *)patterns
                                   inRepository:(SKRepository *)repository
                                         caller:(SKPattern *)caller;
 

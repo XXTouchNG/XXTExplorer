@@ -6,15 +6,14 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@class SKHelperConfig;
+@class SKAttributedParser;
 
 @interface SKHelper : NSObject
 
-@property (nonatomic, strong, readonly) NSBundle *bundle;
-- (instancetype)initWithBundle:(NSBundle *)bundle;
-- (NSString *)fixtureWithName:(NSString *)name type:(NSString *)type;
-- (SKLanguage *)languageWithName:(NSString *)name;
-- (SKTheme *)themeWithName:(NSString *)name;
-+ (NSAttributedString *)test:(NSString *)path;
+- (instancetype)initWithConfig:(SKHelperConfig *)config;
+- (SKAttributedParser *)attributedParser;
 
 @end

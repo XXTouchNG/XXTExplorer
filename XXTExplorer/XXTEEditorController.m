@@ -24,13 +24,14 @@
 
 #import <Masonry/Masonry.h>
 
-#import "XXTExplorer-Swift.h"
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorController+Settings.h"
 
-static NSUInteger testIdx = 0;
+#import "SKHelper.h"
+#import "SKHelperConfig.h"
+#import "SKAttributedParser.h"
 
-static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
+static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate>
 
@@ -39,8 +40,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 
 @property (nonatomic, strong) SKHelper *helper;
 @property (nonatomic, strong) SKAttributedParser *parser;
-@property (atomic, strong) NSMutableArray <NSValue *> *rangesArray;
-@property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
+
+@property (nonatomic, strong) NSOperationQueue *syntaxQueue;
+@property (nonatomic, strong) NSMutableIndexSet *renderedSet;
+@property (nonatomic, strong) NSMutableArray <NSValue *> *rangesArray;
+@property (nonatomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
 
 @end
 
@@ -113,8 +117,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
+    NSOperationQueue *syntaxQueue = [[NSOperationQueue alloc] init];
+    syntaxQueue.maxConcurrentOperationCount = 1;
+    self.syntaxQueue = syntaxQueue;
+    
     self.rangesArray = [[NSMutableArray alloc] init];
     self.attributesArray = [[NSMutableArray alloc] init];
+    self.renderedSet = [[NSMutableIndexSet alloc] init];
     
     [self reloadTheme];
     [self reloadParser];
@@ -143,9 +152,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 }
 
 - (void)reloadTheme {
-    NSArray <NSDictionary *> *testPair = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"]];
-    NSString *themeIdentifier = testPair[testIdx][@"name"];
-    if (++testIdx >= testPair.count) testIdx = 0;
+    NSString *themeIdentifier = @"Monokai";
     
     XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
     _theme = theme;
@@ -289,6 +296,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     [super willMoveToParentViewController:parent];
 }
 
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+    if (parent == nil) {
+        self.parser.aborted = YES;
+    }
+    [super didMoveToParentViewController:parent];
+}
+
 #pragma mark - Layout
 
 - (void)configure {
@@ -342,9 +356,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
         [self invalidateSyntaxCaches];
         NSString *wholeString = self.textView.text;
         blockUserInteractions(self, YES);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @weakify(self);
-            [self.parser parseAttributedString:wholeString match:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
+            [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
                 @strongify(self);
                 if (attributes) {
                     [self.rangesArray addObject:[NSValue valueWithRange:range]];
@@ -363,6 +377,15 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 
 #pragma mark - NSTextStorageDelegate
 
+- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
+{
+    if (editedMask & NSTextStorageEditedCharacters) {
+//        [self.parser attributedParseStringInRange:editedRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
+//            NSLog(@"%@: (%lu, %lu)", scopeName, range.location, range.length);
+//        }];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -376,8 +399,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
 #pragma mark - Render
 
 - (void)renderSyntaxOnScreen {
+    if (self.parser.aborted) return;
+    
     NSArray *rangesArray = self.rangesArray;
     NSArray *attributesArray = self.attributesArray;
+    NSMutableIndexSet *renderedSet = self.renderedSet;
     XXTEEditorTextView *textView = self.textView;
     CGRect bounds = textView.bounds;
     
@@ -391,28 +417,61 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 5000;
     endLength += kXXTEEditorCachedRangeLength * 2;
     
     NSRange range = NSMakeRange((NSUInteger) beginOffset, (NSUInteger) endLength);
+    if ([renderedSet containsIndexesInRange:range]) return;
+    [renderedSet addIndexesInRange:range];
     
     NSUInteger rangesArrayLength = rangesArray.count;
     NSUInteger attributesArrayLength = attributesArray.count;
-    if (rangesArrayLength != attributesArrayLength) {
-        return;
-    }
+    if (rangesArrayLength != attributesArrayLength) return;
+    
+    // Single
+    static BOOL isRendering = NO;
+    if (isRendering) return;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        isRendering = YES;
+        
+        // Begin
+        dispatch_async_on_main_queue(^{
+            [textView.vTextStorage beginEditing];
+        });
+        
+        // Filter
+        NSMutableArray <NSNumber *> *renderIndexes = [[NSMutableArray alloc] init];
         for (NSUInteger idx = 0; idx < rangesArrayLength; idx++) {
             NSValue *rangeValue = rangesArray[idx];
             NSRange preparedRange = [rangeValue rangeValue];
-            if (NSIntersectionRange(range, preparedRange).length != 0 && preparedRange.length < kXXTEEditorCachedRangeLength) {
-                dispatch_async_on_main_queue(^{
-                    [textView.vTextStorage addAttributes:attributesArray[idx] range:preparedRange];
-                });
+            if (NSIntersectionRange(range, preparedRange).length != 0) {
+                [renderIndexes addObject:@(idx)];
             }
         }
+        
+        // Render
+        if (!self.parser.aborted) {
+            dispatch_async_on_main_queue(^{
+                NSUInteger renderLength = renderIndexes.count;
+                for (NSUInteger idx = 0; idx < renderLength; idx++) {
+                    NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
+                    NSValue *rangeValue = rangesArray[index];
+                    NSRange preparedRange = [rangeValue rangeValue];
+                    [textView.vTextStorage addAttributes:attributesArray[index] range:preparedRange];
+                }
+            });
+        }
+        
+        // End
+        dispatch_async_on_main_queue(^{
+            [textView.vTextStorage endEditing];
+        });
+        
+        isRendering = NO;
     });
 }
 
 - (void)invalidateSyntaxCaches {
     [self.rangesArray removeAllObjects];
     [self.attributesArray removeAllObjects];
+    [self.renderedSet removeAllIndexes];
 }
 
 #pragma mark - Memory

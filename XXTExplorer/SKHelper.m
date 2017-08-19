@@ -7,70 +7,43 @@
 //
 
 #import "SKHelper.h"
-#import "XXTExplorer-Swift.h"
+#import "SKHelperConfig.h"
+#import "SKAttributedParser.h"
+#import "SKBundleManager.h"
 
-@class Language;
+@interface SKHelper ()
 
-//#import "SKLanguage.h"
-//#import "SKTheme.h"
-//#import "SKParser.h"
-//#import "SKAttributedParser.h"
+@property (nonatomic, strong) SKLanguage *language;
+@property (nonatomic, strong) SKTheme *theme;
+
+@end
 
 @implementation SKHelper
 
-- (instancetype)initWithBundle:(NSBundle *)bundle {
-    if (self = [super init]) {
-        _bundle = bundle;
-        if (!bundle) {
-            _bundle = [NSBundle mainBundle];
-        }
+- (instancetype)initWithConfig:(SKHelperConfig *)config {
+    self = [super init];
+    if (self)
+    {
+        SKBundleManager *manager = [[SKBundleManager alloc] initWithCallback:^NSURL *(NSString *identifier, SKTextMateFileType kind) {
+            NSArray <NSString *> *components = [identifier componentsSeparatedByString:@"."];
+            NSURL *url = nil;
+            if (kind == SKTextMateFileTypeLanguage && components.count > 1) {
+                url = [config.bundle URLForResource:components[1] withExtension:@"tmLanguage"];
+            }
+            else if (kind == SKTextMateFileTypeTheme) {
+                url = [config.bundle URLForResource:identifier withExtension:@"tmTheme"];
+            }
+            return url ? url : [NSURL fileURLWithPath:@""];
+        }];
+        _language = [manager languageWithIdentifier:config.languageIdentifier];
+        _theme = [manager themeWithIdentifier:config.themeIdentifier font:config.font];
     }
     return self;
 }
 
-- (NSString *)fixtureWithName:(NSString *)name type:(NSString *)type {
-    NSString *path = [self.bundle pathForResource:name ofType:type];
-    assert(path);
-    return [[NSString alloc] initWithData:[[NSData alloc] initWithContentsOfFile:path] encoding:NSUTF8StringEncoding];
+- (SKAttributedParser *)attributedParser {
+    return [[SKAttributedParser alloc] initWithLanguage:self.language theme:self.theme];
 }
 
-- (SKLanguage *)languageWithName:(NSString *)name {
-    NSString *path = [self.bundle pathForResource:name ofType:@"tmLanguage"];
-    assert(path);
-    NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
-    if (plist) {
-        return [[Language alloc] initWithDictionary:plist];
-    }
-    return nil;
-}
-
-- (SKTheme *)themeWithName:(NSString *)name {
-    NSString *path = [self.bundle pathForResource:name ofType:@"tmTheme"];
-    assert(path);
-    NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
-    if (plist) {
-        return [[SKTheme alloc] initWithDictionary:plist];
-    }
-    return nil;
-}
-
-+ (NSAttributedString *)test:(NSString *)path {
-    SKHelper *helper = [[SKHelper alloc] initWithBundle:nil];
-    SKLanguage *luaLanguage = [helper languageWithName:@"Lua"];
-    SKTheme *theme = [helper themeWithName:@"Mac Classic"];
-    assert(luaLanguage);
-    assert(theme);
-//    SKParser *parser = [[SKParser alloc] initWithLanguage:luaLanguage];
-    SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:luaLanguage theme:theme];
-    assert(parser);
-//    NSString *input = [helper fixtureWithName:@"test" type:@"lua"];
-    NSString *input = [[NSString alloc] initWithData:[NSData dataWithContentsOfFile:path] encoding:NSUTF8StringEncoding];
-    assert(input);
-    [parser parseString:input matchCallback:^(NSString *scope, NSRange range, SKAttributes attributes) {
-        NSLog(@"content: %@, scope: %@, location: %lu, length: %lu, = %@", [input substringWithRange:range], scope, range.location, range.length, attributes);
-    }];
-    NSDictionary *baseAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:14.f] };
-    return [parser parseString:input baseAttributes:baseAttributes];
-}
 
 @end

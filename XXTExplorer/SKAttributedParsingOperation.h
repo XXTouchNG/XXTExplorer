@@ -58,6 +58,6 @@ typedef void (^SKAttributedParsingOperationCallback)(NSArray <NSValue *> *rangeA
 /// - parameter callback:           The callback to call with results.
 - (instancetype)initWithString:(NSString *)string previousOperation:(SKAttributedParsingOperation *)previousOperation changeIsInsertion:(BOOL)insertion changedRange:(NSRange)range newCallback:(SKAttributedParsingOperationCallback)callback;
 
-+ (NSRange)outdatedRangeIn:(NSString *)newString forChange:(SKDiff *)diff updatingPreviousResult:(SKScopedString **)previous;
++ (NSRange)outdatedRangeIn:(NSString *)newString forChange:(SKDiff *)diff updatingPreviousResult:(SKScopedString *)previous;
 
 @end

@@ -44,6 +44,7 @@
             SKPattern *pattern1 = [[SKPattern alloc] init];
             NSArray *subpatterns1 = [referenceManager1 patternsForPatterns:array inRepository:nil caller:nil];
             pattern1.subpatterns = [[NSMutableArray alloc] initWithArray:subpatterns1];
+            _pattern = pattern1;
             SKRepository *repository1 = [[SKRepository alloc] initWithRepo:repository inParent:nil withManager:referenceManager1];
             _repository = repository1;
             [referenceManager1 resolveInternalReferencesWithRepository:repository1 inLanguage:self];

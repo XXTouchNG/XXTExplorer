@@ -48,14 +48,14 @@ typedef SKResult SKScope;
 - (instancetype)initWithString:(NSString *)string;
 
 // MARK: - Interface
-- (NSInteger)numberOfScopes;
-- (NSInteger)numberOfLevels;
-- (BOOL)isInStringAtIndex:(NSInteger)index;
+- (NSUInteger)numberOfScopes;
+- (NSUInteger)numberOfLevels;
+- (BOOL)isInStringAtIndex:(NSUInteger)index;
 - (void)appendScopeAtTop:(SKScope *)scope;
 - (void)appendScopeAtBottom:(SKScope *)scope;
-- (SKScope *)topMostScopeAtIndex:(NSInteger)index;
-- (SKScope *)lowerScopeForScope:(SKScope *)scope atIndex:(NSInteger)index;
-- (NSInteger)levelForScope:(SKScope *)scope;
+- (SKScope *)topMostScopeAtIndex:(NSUInteger)index;
+- (SKScope *)lowerScopeForScope:(SKScope *)scope atIndex:(NSUInteger)index;
+- (NSUInteger)levelForScope:(SKScope *)scope;
 
 /// Removes all scopes that are entirely contained in the spcified range.
 - (void)removeScopesInRange:(NSRange)range; // mutating
@@ -63,7 +63,7 @@ typedef SKResult SKScope;
 /// Inserts the given string into the underlying string, stretching and
 /// shifting ranges as needed. If the range starts before and ends after the
 /// insertion point, it is stretched.
-- (void)insertString:(NSString *)string atIndex:(NSInteger)index;
+- (void)insertString:(NSString *)string atIndex:(NSUInteger)index;
 
 /// Deletes the characters from the underlying string, shrinking and
 /// deleting scopes as needed.
@@ -73,6 +73,8 @@ typedef SKResult SKScope;
 ///         (except for releases with breaking changes) so it can be used
 ///         for unit testing.
 /// - returns: A user-friendly description of the instance.
+#ifdef DEBUG
 - (NSString *)prettyRepresentation;
+#endif
 
 @end

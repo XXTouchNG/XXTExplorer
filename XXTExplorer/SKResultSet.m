@@ -26,6 +26,7 @@
     self = [super init];
     if (self) {
         _results = [[NSMutableArray alloc] init];
+        _range = NSMakeRange(0, 0);
     }
     return self;
 }

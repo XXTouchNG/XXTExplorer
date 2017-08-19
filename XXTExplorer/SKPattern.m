@@ -73,15 +73,15 @@
             _endCaptures = [[SKCaptureCollection alloc] initWithDictionary:dictionary3];
         }
         if (
-                dictionary[@"match"] != nil && _match == nil ||
-                dictionary[@"begin"] != nil && (_patternBegin == nil || _patternEnd == nil) ||
-                _match == nil && _patternBegin == nil && _patternEnd == nil && (dictionary[@"patterns"] == nil || [dictionary[@"patterns"] count] == 0))
+                (dictionary[@"match"] != nil && _match == nil) ||
+                        (dictionary[@"begin"] != nil && (_patternBegin == nil || _patternEnd == nil)) ||
+                        (_match == nil && _patternBegin == nil && _patternEnd == nil && (dictionary[@"patterns"] == nil || [dictionary[@"patterns"] count] == 0)))
         {
             return nil;
         }
         NSArray <NSDictionary *> *array = dictionary[@"patterns"];
         if ([array isKindOfClass:[NSArray class]]) {
-
+            _subpatterns = [manager patternsForPatterns:array inRepository:repository caller:self];
         }
     }
     return self;

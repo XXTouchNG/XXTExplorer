@@ -7,7 +7,7 @@
 //
 
 #import "XXTETextEditorTheme.h"
-#import "XXTExplorer-Swift.h"
+#import "UIColor+SKColor.h"
 
 @implementation XXTETextEditorTheme
 
@@ -40,10 +40,10 @@
 }
 
 - (void)setupWithDictionary:(NSDictionary *)dictionary {
-    self.backgroundColor = [[UIColor alloc] initWithHex:dictionary[@"background"]];
-    self.foregroundColor = [[UIColor alloc] initWithHex:dictionary[@"foreground"]];
-    self.caretColor = [[UIColor alloc] initWithHex:dictionary[@"caret"]];
-    self.selectionColor = [[UIColor alloc] initWithHex:dictionary[@"selection"]];
+    self.backgroundColor = [UIColor colorWithHex:dictionary[@"background"]];
+    self.foregroundColor = [UIColor colorWithHex:dictionary[@"foreground"]];
+    self.caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
+    self.selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
 }
 
 @end

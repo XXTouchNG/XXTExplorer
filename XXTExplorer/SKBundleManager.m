@@ -66,7 +66,7 @@ static SKBundleManager *defaultManager = nil;
         self.cachedLanguages[identifier] = rawLanguage;
     }
     [self.dependencies removeAllObjects];
-    return language;
+    return rawLanguage;
 }
 
 - (SKTheme *)themeWithIdentifier:(NSString *)identifier font:(UIFont *)font {

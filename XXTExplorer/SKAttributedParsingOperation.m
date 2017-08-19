@@ -106,7 +106,7 @@
             diff = [[SKDiff alloc] initWithChange:@"" range:range];
         }
         if ([diff representsChangesFrom:_parser.toParse.string to:string]) {
-            self.parsedRange = [SKAttributedParsingOperation outdatedRangeIn:string forChange:diff updatingPreviousResult:&self.parser.toParse];
+            self.parsedRange = [SKAttributedParsingOperation outdatedRangeIn:string forChange:diff updatingPreviousResult:self.parser.toParse];
         } else {
             self.parser.toParse = [[SKScopedString alloc] initWithString:string];
         }
@@ -136,20 +136,20 @@
     [super cancel];
 }
 
-+ (NSRange)outdatedRangeIn:(NSString *)newString forChange:(SKDiff *)diff updatingPreviousResult:(SKScopedString **)previous {
++ (NSRange)outdatedRangeIn:(NSString *)newString forChange:(SKDiff *)diff updatingPreviousResult:(SKScopedString *)previous {
     NSRange linesRange;
     NSRange range;
     if ([diff isInsertion]) {
         range = [diff rangeInNewString];
-        [(*previous) insertString:diff.change atIndex:range.location];
+        [previous insertString:diff.change atIndex:range.location];
         linesRange = [newString lineRangeForRange:range];
     } else {
         range = diff.range;
-        [(*previous) deleteCharactersInRange:range];
+        [previous deleteCharactersInRange:range];
         linesRange = [newString lineRangeForRange:NSMakeRange(range.location, 0)];
     }
-    SKScope *scopeAtIndex = [(*previous) topMostScopeAtIndex:NSMaxRange(linesRange) - 1];
-    if ([scopeAtIndex isEqual:(*previous).baseScope]) {
+    SKScope *scopeAtIndex = [previous topMostScopeAtIndex:NSMaxRange(linesRange) - 1];
+    if ([scopeAtIndex isEqual:previous.baseScope]) {
         return linesRange;
     } else {
         NSUInteger endOfCurrentScope = NSMaxRange(scopeAtIndex.range);

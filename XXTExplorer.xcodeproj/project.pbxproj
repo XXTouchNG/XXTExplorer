@@ -152,6 +152,7 @@
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
 		0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */; };
 		0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */; };
+		0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
@@ -178,6 +179,7 @@
 		52512440558639F0CA2A63C6 /* SKInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512D31FC610E7D9963A8EA /* SKInclude.m */; };
 		5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 525129847C45779842CAFB08 /* SKScopedString.m */; };
 		525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */; };
+		525125E034CBD7A372F16E07 /* SKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 525121D5B72C5D95D4C96723 /* SKHelper.m */; };
 		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 		525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */; };
 		525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512024B32016196224ED51 /* SKResultSet.m */; };
@@ -195,7 +197,6 @@
 		52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512C7DA4E0285A9A9B9F92 /* SKPattern.m */; };
 		B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B031245EC670B5FA88B88215 /* XXTEMoreReferences.bundle */; };
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
-		D60A269E1F3D9FF800E013E2 /* SKHelperConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A269D1F3D9FF800E013E2 /* SKHelperConfig.swift */; };
 		D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
 		D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
 		D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */; };
@@ -205,7 +206,6 @@
 		D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */ = {isa = PBXBuildFile; fileRef = D66085631F3C666700E87B3C /* SourceCodePro-It.otf */; };
 		D60A26A61F3DA24B00E013E2 /* SourceCodePro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D66085641F3C666700E87B3C /* SourceCodePro-Regular.otf */; };
 		D60A26AA1F3DA83D00E013E2 /* XXTETextEditorTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D60A26A91F3DA83D00E013E2 /* XXTETextEditorTheme.m */; };
-		D60A26BF1F3DB7BE00E013E2 /* Amy.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26AC1F3DB7BE00E013E2 /* Amy.tmTheme */; };
 		D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */; };
 		D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */; };
 		D60A26C41F3DB7BE00E013E2 /* Dawn.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */; };
@@ -230,22 +230,6 @@
 		D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */; };
 		D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */; };
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
-		D62DD67C1F3D7FE600A34850 /* AttributedParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD66C1F3D7FE600A34850 /* AttributedParser.swift */; };
-		D62DD67D1F3D7FE600A34850 /* AttributedParsingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD66D1F3D7FE600A34850 /* AttributedParsingOperation.swift */; };
-		D62DD67E1F3D7FE600A34850 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD66E1F3D7FE600A34850 /* BundleManager.swift */; };
-		D62DD67F1F3D7FE600A34850 /* Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD66F1F3D7FE600A34850 /* Capture.swift */; };
-		D62DD6801F3D7FE600A34850 /* CaptureCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6701F3D7FE600A34850 /* CaptureCollection.swift */; };
-		D62DD6811F3D7FE600A34850 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6711F3D7FE600A34850 /* Color.swift */; };
-		D62DD6821F3D7FE600A34850 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6721F3D7FE600A34850 /* Language.swift */; };
-		D62DD6831F3D7FE600A34850 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6731F3D7FE600A34850 /* Parser.swift */; };
-		D62DD6841F3D7FE600A34850 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6741F3D7FE600A34850 /* Pattern.swift */; };
-		D62DD6851F3D7FE600A34850 /* ReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6751F3D7FE600A34850 /* ReferenceManager.swift */; };
-		D62DD6861F3D7FE600A34850 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6761F3D7FE600A34850 /* Repository.swift */; };
-		D62DD6871F3D7FE600A34850 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6771F3D7FE600A34850 /* Result.swift */; };
-		D62DD6881F3D7FE600A34850 /* ResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6781F3D7FE600A34850 /* ResultSet.swift */; };
-		D62DD6891F3D7FE600A34850 /* ScopedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6791F3D7FE600A34850 /* ScopedString.swift */; };
-		D62DD68A1F3D7FE600A34850 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD67B1F3D7FE600A34850 /* Theme.swift */; };
-		D62DD68C1F3D831C00A34850 /* SKHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62DD68B1F3D831C00A34850 /* SKHelper.swift */; };
 		D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
 		D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */; };
 		D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
@@ -537,6 +521,8 @@
 		0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOrderedOptionViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICellFactory.h; sourceTree = "<group>"; };
 		0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUICellFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SKColor.h"; sourceTree = "<group>"; };
+		0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SKColor.m"; sourceTree = "<group>"; };
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
 		0FCC2AC41F130BE600C50A48 /* XXTExplorerItemNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemNameCell.h; sourceTree = "<group>"; };
 		0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemNameCell.m; sourceTree = "<group>"; };
@@ -575,8 +561,10 @@
 		52512024B32016196224ED51 /* SKResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKResultSet.m; sourceTree = "<group>"; };
 		5251209D280AFB66F3169F0C /* SKLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLanguage.m; sourceTree = "<group>"; };
 		525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
+		525120DB94DC846D7D5F6283 /* SKHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKHelper.h; sourceTree = "<group>"; };
 		525121AA050C36B577A99998 /* SKCaptureCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCaptureCollection.m; sourceTree = "<group>"; };
 		525121CE4F5030A8AA672FBF /* SKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKParser.h; sourceTree = "<group>"; };
+		525121D5B72C5D95D4C96723 /* SKHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKHelper.m; sourceTree = "<group>"; };
 		5251235021715EB2390B1658 /* XUIGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIGroupCell.h; sourceTree = "<group>"; };
 		525123B304640D1C208339F0 /* SKHelperConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKHelperConfig.m; sourceTree = "<group>"; };
 		52512481E485AD2E09205EFB /* XUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -622,10 +610,8 @@
 		B0312320215B9EB671DEF366 /* XXTERespringAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTERespringAgent.h; sourceTree = "<group>"; };
 		B031245EC670B5FA88B88215 /* XXTEMoreReferences.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = XXTEMoreReferences.bundle; sourceTree = "<group>"; };
 		B0312CD6DF654F108AB13164 /* XXTESplitViewController_Respring copy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTESplitViewController_Respring copy.h"; sourceTree = "<group>"; };
-		D60A269D1F3D9FF800E013E2 /* SKHelperConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKHelperConfig.swift; sourceTree = "<group>"; };
 		D60A26A81F3DA83D00E013E2 /* XXTETextEditorTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETextEditorTheme.h; sourceTree = "<group>"; };
 		D60A26A91F3DA83D00E013E2 /* XXTETextEditorTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETextEditorTheme.m; sourceTree = "<group>"; };
-		D60A26AC1F3DB7BE00E013E2 /* Amy.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Amy.tmTheme; sourceTree = "<group>"; };
 		D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Blackboard.tmTheme; sourceTree = "<group>"; };
 		D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Cobalt.tmTheme; sourceTree = "<group>"; };
 		D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Dawn.tmTheme; sourceTree = "<group>"; };
@@ -659,24 +645,7 @@
 		D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Mac Classic.tmTheme"; sourceTree = "<group>"; };
 		D62DD6651F3D740800A34850 /* XXTEEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextView.h; sourceTree = "<group>"; };
 		D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextView.m; sourceTree = "<group>"; };
-		D62DD66B1F3D7FE600A34850 /* XXTExplorer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTExplorer-Bridging-Header.h"; sourceTree = "<group>"; };
-		D62DD66C1F3D7FE600A34850 /* AttributedParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedParser.swift; sourceTree = "<group>"; };
-		D62DD66D1F3D7FE600A34850 /* AttributedParsingOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedParsingOperation.swift; sourceTree = "<group>"; };
-		D62DD66E1F3D7FE600A34850 /* BundleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
-		D62DD66F1F3D7FE600A34850 /* Capture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Capture.swift; sourceTree = "<group>"; };
-		D62DD6701F3D7FE600A34850 /* CaptureCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureCollection.swift; sourceTree = "<group>"; };
-		D62DD6711F3D7FE600A34850 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		D62DD6721F3D7FE600A34850 /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
-		D62DD6731F3D7FE600A34850 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		D62DD6741F3D7FE600A34850 /* Pattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pattern.swift; sourceTree = "<group>"; };
-		D62DD6751F3D7FE600A34850 /* ReferenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceManager.swift; sourceTree = "<group>"; };
-		D62DD6761F3D7FE600A34850 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		D62DD6771F3D7FE600A34850 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		D62DD6781F3D7FE600A34850 /* ResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultSet.swift; sourceTree = "<group>"; };
-		D62DD6791F3D7FE600A34850 /* ScopedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopedString.swift; sourceTree = "<group>"; };
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
-		D62DD67B1F3D7FE600A34850 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		D62DD68B1F3D831C00A34850 /* SKHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKHelper.swift; sourceTree = "<group>"; };
 		D645F9D31F42A68C00E3247B /* lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = lua.tmLanguage; sourceTree = "<group>"; };
 		D645F9D51F42A77A00E3247B /* XXTEEditorTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextStorage.h; sourceTree = "<group>"; };
 		D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextStorage.m; sourceTree = "<group>"; };
@@ -1432,60 +1401,46 @@
 		0FE162A11F3C9355003064B2 /* SyntaxKit */ = {
 			isa = PBXGroup;
 			children = (
-				D62DD66B1F3D7FE600A34850 /* XXTExplorer-Bridging-Header.h */,
 				D62DD6241F3D52E900A34850 /* Theme */,
 				D62DD6231F3D52E000A34850 /* Language */,
 				D660855C1F3C663E00E87B3C /* Font */,
-				D62DD66C1F3D7FE600A34850 /* AttributedParser.swift */,
-				D62DD66D1F3D7FE600A34850 /* AttributedParsingOperation.swift */,
-				D62DD66E1F3D7FE600A34850 /* BundleManager.swift */,
-				D62DD66F1F3D7FE600A34850 /* Capture.swift */,
-				D62DD6701F3D7FE600A34850 /* CaptureCollection.swift */,
-				D62DD6711F3D7FE600A34850 /* Color.swift */,
-				D62DD6721F3D7FE600A34850 /* Language.swift */,
-				D62DD6731F3D7FE600A34850 /* Parser.swift */,
-				D62DD6741F3D7FE600A34850 /* Pattern.swift */,
-				D62DD6751F3D7FE600A34850 /* ReferenceManager.swift */,
-				D62DD6761F3D7FE600A34850 /* Repository.swift */,
-				D62DD6771F3D7FE600A34850 /* Result.swift */,
-				D62DD6781F3D7FE600A34850 /* ResultSet.swift */,
-				D62DD6791F3D7FE600A34850 /* ScopedString.swift */,
-				D62DD67B1F3D7FE600A34850 /* Theme.swift */,
 				D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */,
-				D62DD68B1F3D831C00A34850 /* SKHelper.swift */,
-				D60A269D1F3D9FF800E013E2 /* SKHelperConfig.swift */,
+				52512A6759987E09CC5B47EF /* SKCapture.h */,
 				5251293D44AFD758EEA8E4B2 /* SKCapture.m */,
-				525126EC09B501AE61B5E535 /* SKScopedString.h */,
-				525129847C45779842CAFB08 /* SKScopedString.m */,
+				5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */,
+				525121AA050C36B577A99998 /* SKCaptureCollection.m */,
 				52512AD0FADE2F14C9AF1D0E /* SKResult.h */,
-				52512AF038E324772AC61949 /* SKTheme.h */,
-				52512024B32016196224ED51 /* SKResultSet.m */,
 				52512B97AF1A3C5F4F0A8EDA /* SKResult.m */,
 				525125513F9BC46CACEC6D53 /* SKResultSet.h */,
-				525121AA050C36B577A99998 /* SKCaptureCollection.m */,
+				52512024B32016196224ED51 /* SKResultSet.m */,
+				52512AF038E324772AC61949 /* SKTheme.h */,
 				5251251343C867D1BE381F9F /* SKTheme.m */,
-				52512A6759987E09CC5B47EF /* SKCapture.h */,
-				5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */,
-				52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */,
-				52512A4AD1D4FFBD3A3E3ABD /* SKReferenceManager.h */,
-				52512C7DA4E0285A9A9B9F92 /* SKPattern.m */,
-				52512ACCCE996AF428023503 /* SKPattern.h */,
-				525124A0DCE70FECE2B114E7 /* SKRepository.m */,
-				5251252B5911308B6BCA707F /* SKRepository.h */,
-				5251209D280AFB66F3169F0C /* SKLanguage.m */,
 				5251277CF9F156FA35CC3946 /* SKLanguage.h */,
-				525126AA8416F9D88F2E89F7 /* SKBundleManager.m */,
-				52512BABCD6104287DBA4074 /* SKBundleManager.h */,
-				52512D31FC610E7D9963A8EA /* SKInclude.m */,
+				5251209D280AFB66F3169F0C /* SKLanguage.m */,
+				525126EC09B501AE61B5E535 /* SKScopedString.h */,
+				525129847C45779842CAFB08 /* SKScopedString.m */,
+				52512ACCCE996AF428023503 /* SKPattern.h */,
+				52512C7DA4E0285A9A9B9F92 /* SKPattern.m */,
 				525126CFC8733331EC16C78C /* SKInclude.h */,
-				525123B304640D1C208339F0 /* SKHelperConfig.m */,
+				52512D31FC610E7D9963A8EA /* SKInclude.m */,
+				5251252B5911308B6BCA707F /* SKRepository.h */,
+				525124A0DCE70FECE2B114E7 /* SKRepository.m */,
+				52512A4AD1D4FFBD3A3E3ABD /* SKReferenceManager.h */,
+				52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */,
+				52512BABCD6104287DBA4074 /* SKBundleManager.h */,
+				525126AA8416F9D88F2E89F7 /* SKBundleManager.m */,
+				525120DB94DC846D7D5F6283 /* SKHelper.h */,
+				525121D5B72C5D95D4C96723 /* SKHelper.m */,
 				52512D88CF4B5159F33CEE5C /* SKHelperConfig.h */,
-				52512DF49CDDF706A91B90B2 /* SKParser.m */,
+				525123B304640D1C208339F0 /* SKHelperConfig.m */,
 				525121CE4F5030A8AA672FBF /* SKParser.h */,
-				5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */,
+				52512DF49CDDF706A91B90B2 /* SKParser.m */,
 				52512B2C18D96DFB613EAD70 /* SKAttributedParser.h */,
+				5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */,
 				0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */,
 				0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */,
+				0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */,
+				0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */,
 			);
 			name = SyntaxKit;
 			sourceTree = "<group>";
@@ -1666,7 +1621,6 @@
 			children = (
 				0FB009051F4359FF00097E9C /* SKTheme.plist */,
 				D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */,
-				D60A26AC1F3DB7BE00E013E2 /* Amy.tmTheme */,
 				D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */,
 				D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */,
 				D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */,
@@ -1872,7 +1826,6 @@
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				0FB009091F4364AF00097E9C /* Kimbie (Dark).tmTheme in Resources */,
-				D60A26BF1F3DB7BE00E013E2 /* Amy.tmTheme in Resources */,
 				0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */,
 				D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
@@ -1981,14 +1934,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D62DD6871F3D7FE600A34850 /* Result.swift in Sources */,
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
 				0F8EEFE01F31CD3B00F08E13 /* XUIDefaultsService.m in Sources */,
 				0F30D93F1F2C8C620001E10B /* XUIStaticTextCell.m in Sources */,
 				0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */,
 				0F50AEA71F307C430098211C /* XXTEBaseObjectViewController.m in Sources */,
 				D6FD36D41F42FDBF00910D91 /* XXTEKeyboardButton.m in Sources */,
-				D62DD6821F3D7FE600A34850 /* Language.swift in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,
@@ -2016,20 +1967,15 @@
 				0F50AEB61F30C9A50098211C /* XXTEDictionaryObjectViewController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */,
-				D62DD6831F3D7FE600A34850 /* Parser.swift in Sources */,
 				D6FD36D31F42FDBF00910D91 /* XXTEKeyboardRow.m in Sources */,
 				0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
 				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
-				D62DD67F1F3D7FE600A34850 /* Capture.swift in Sources */,
 				0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
-				D62DD6841F3D7FE600A34850 /* Pattern.swift in Sources */,
 				0F8521501F2D979E00A912AC /* XUIMultipleOptionCell.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
-				D62DD6801F3D7FE600A34850 /* CaptureCollection.swift in Sources */,
-				D62DD67E1F3D7FE600A34850 /* BundleManager.swift in Sources */,
 				0F6AEA8D1F3750880017BE7C /* XXTExplorerViewController+XXTEScanViewControllerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
@@ -2042,10 +1988,8 @@
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
-				D62DD68A1F3D7FE600A34850 /* Theme.swift in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
 				0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */,
-				D62DD67D1F3D7FE600A34850 /* AttributedParsingOperation.swift in Sources */,
 				0F16A7901F3222E300BA2868 /* XUIListViewController+LaunchScript.m in Sources */,
 				0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */,
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
@@ -2054,7 +1998,6 @@
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,
 				0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
-				D62DD6851F3D7FE600A34850 /* ReferenceManager.swift in Sources */,
 				0F8521551F2D97AE00A912AC /* XUIOrderedOptionCell.m in Sources */,
 				0F6AEA961F3753E20017BE7C /* XXTExplorerViewController+FileOperations.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
@@ -2066,7 +2009,6 @@
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
 				0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
-				D62DD6811F3D7FE600A34850 /* Color.swift in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
 				0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */,
 				0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */,
@@ -2083,11 +2025,9 @@
 				0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
-				D62DD67C1F3D7FE600A34850 /* AttributedParser.swift in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
-				D62DD68C1F3D831C00A34850 /* SKHelper.swift in Sources */,
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
@@ -2096,15 +2036,12 @@
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
 				0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
-				D62DD6861F3D7FE600A34850 /* Repository.swift in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F56900E1F1B022E009AF9FE /* XXTEArchiveViewer.m in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
-				D62DD6881F3D7FE600A34850 /* ResultSet.swift in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */,
 				0F50AEB31F3084790098211C /* NSObject+StringValue.m in Sources */,
-				D62DD6891F3D7FE600A34850 /* ScopedString.swift in Sources */,
 				0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F6AEA931F3752600017BE7C /* XXTExplorerViewController+ArchiverOperations.m in Sources */,
 				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
@@ -2115,11 +2052,11 @@
 				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,
 				0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
-				D60A269E1F3D9FF800E013E2 /* SKHelperConfig.swift in Sources */,
 				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
 				0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */,
 				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
 				D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */,
+				0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */,
 				D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */,
 				0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */,
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
@@ -2163,6 +2100,7 @@
 				52512CA06AA993671BB9E73B /* SKHelperConfig.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
 				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
+				525125E034CBD7A372F16E07 /* SKHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2344,7 +2282,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "XXTExplorer/XXTExplorer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "-Wpartial-availability";
@@ -2371,7 +2309,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "XXTExplorer/XXTExplorer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};

@@ -31,9 +31,9 @@
     return self;
 }
 
-- (NSArray <SKPattern *> *)patternsForPatterns:(NSArray <NSDictionary *> *)patterns inRepository:(SKRepository *)repository caller:(SKPattern *)caller {
+- (NSMutableArray <SKPattern *> *)patternsForPatterns:(NSArray <NSDictionary *> *)patterns inRepository:(SKRepository *)repository caller:(SKPattern *)caller {
     SKBundleManager *manager = self.bundleManager;
-    if (!manager) return @[];
+    if (!manager) return [@[] mutableCopy];
     NSMutableArray <SKPattern *> *results = [[NSMutableArray alloc] init];
     for (NSDictionary *rawPattern in patterns) {
         NSString *include = rawPattern[@"include"];

@@ -7,6 +7,8 @@
 //
 
 #import "SKTheme.h"
+#import "SKLanguage.h"
+#import "UIColor+SKColor.h"
 
 // SKThemeFontStyle
 static NSString * const SKThemeFontStyleRegular = @"regular";
@@ -29,45 +31,6 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
     id value = [self objectForKey:key];
     if (value) [self removeObjectForKey:key];
     return value;
-}
-
-@end
-
-// UIColor - Category
-
-@interface UIColor (Hex)
-
-+ (UIColor *)colorWithHex:(NSString *)hex;
-
-@end
-
-@implementation UIColor (Hex)
-
-+ (UIColor *)colorWithHex:(NSString *)representation {
-    NSString *hex = representation;
-    if ([hex hasPrefix:@"#"]) {
-        hex = [hex substringFromIndex:1];
-    } else if ([hex hasPrefix:@"0x"]) {
-        hex = [hex substringFromIndex:2];
-    }
-    NSUInteger length = hex.length;
-    if (length != 3 && length != 6 && length != 8)
-        return nil;
-    if (length == 3) {
-        NSString *r = [hex substringWithRange:NSMakeRange(0, 1)];
-        NSString *g = [hex substringWithRange:NSMakeRange(1, 1)];
-        NSString *b = [hex substringWithRange:NSMakeRange(2, 1)];
-        hex = [NSString stringWithFormat:@"%@%@%@%@%@%@ff", r, r, g, g, b, b];
-    } else if (length == 6) {
-        hex = [NSString stringWithFormat:@"%@ff", hex];
-    }
-    NSScanner *scanner = [NSScanner scannerWithString:hex];
-    unsigned int rgbaValue = 0;
-    [scanner scanHexInt:&rgbaValue];
-    return [self colorWithRed:((rgbaValue & 0xFF000000) >> 24) / 255.f
-                        green:((rgbaValue & 0xFF0000) >> 16) / 255.f
-                         blue:((rgbaValue & 0xFF00) >> 8) / 255.f
-                        alpha:((rgbaValue & 0xFF)) / 255.f];
 }
 
 @end
@@ -98,6 +61,10 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
     return self.globalAttributes[@"selection"];
 }
 
+- (NSDictionary <NSString *, id> *)globalAttributes {
+    return self.attributes[SKLanguageGlobalScope];
+}
+
 #pragma mark - Initializer
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *,id> *)dictionary font:(UIFont *)font {
@@ -126,7 +93,7 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
         NSMutableDictionary <NSString *, SKAttributes> *attributes = [[NSMutableDictionary alloc] init];
         for (NSDictionary <NSString *, id> *raw in rawSettings) {
             NSMutableDictionary <NSString *, id> *setting = [raw[@"settings"] mutableCopy];
-            if (![setting isKindOfClass:[NSMutableDictionary class]])
+            if (![setting isKindOfClass:[NSDictionary class]])
                 continue;
             NSString *value = nil;
             value = [setting removeValueForKey:@"foreground"];
@@ -157,12 +124,12 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
             }
             NSString *patternIdentifiers = raw[@"scope"];
             if ([patternIdentifiers isKindOfClass:[NSString class]]) {
-                for (NSString *patternIdentifier in [patternIdentifiers componentsSeparatedByString:@"."]) {
+                for (NSString *patternIdentifier in [patternIdentifiers componentsSeparatedByString:@","]) {
                     NSString *key = [patternIdentifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                     attributes[key]= setting;
                 }
             } else if (setting.count > 0) {
-                _globalAttributes = [self parseGlobalScopeAttributes:raw[@"settings"]];
+                attributes[SKLanguageGlobalScope] = [self parseGlobalScopeAttributes:raw[@"settings"]];
             }
         }
         _attributes = attributes;

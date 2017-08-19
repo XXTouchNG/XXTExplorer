@@ -27,6 +27,7 @@
     self = [super init];
     if (self)
     {
+        if (!pattern || !match) return nil;
         _pattern = pattern;
         _match = match;
     }
@@ -139,20 +140,25 @@
             NSRegularExpression *patternEnd = pattern.patternEnd;
             if (patternEnd) {
                 SKResultSet *endMatchResult = [self matchExpression:patternEnd inRange:range1 captures:pattern.endCaptures baseSelector:nil];
-                SKPatternMatch *middleMatch = bestMatchForMiddle;
-                if (middleMatch) {
-                    if (!pattern.applyEndPatternLast && endMatchResult.range.location <= middleMatch.match.range.location || endMatchResult.range.location < middleMatch.match.range.location) {
+                if (endMatchResult) {
+                    SKPatternMatch *middleMatch = bestMatchForMiddle;
+                    if (middleMatch) {
+                        if ((!pattern.applyEndPatternLast && endMatchResult.range.location <= middleMatch.match.range.location) || endMatchResult.range.location < middleMatch.match.range.location) {
+                            [result addResultSet:endMatchResult];
+                            return result;
+                        }
+                    } else {
                         [result addResultSet:endMatchResult];
                         return result;
                     }
-                } else {
-                    [result addResultSet:endMatchResult];
-                    return result;
                 }
             }
             SKPatternMatch *middleMatch = bestMatchForMiddle;
+            if (!middleMatch) {
+                break;
+            }
             SKResultSet *middleResult = middleMatch.pattern.match != nil ? middleMatch.match : [self matchAfterBeginOfPattern:middleMatch.pattern beginResults:middleMatch.match];
-            if (!middleMatch || !middleResult) {
+            if (!middleResult) {
                 break;
             }
             if (middleResult.range.length == 0) {
@@ -160,8 +166,8 @@
             }
             [result addResultSet:middleResult];
             NSUInteger newStart = NSMaxRange(middleResult.range);
-            range1 = NSMakeRange(newStart, MAX(0, range1.length - (newStart - range1.location)));
-            lineEnd = MAX(lineEnd, newStart);
+            range1 = NSMakeRange(newStart, MAX(0, (NSInteger)(range1.length - (newStart - range1.location))));
+            lineEnd = MAX((NSInteger)lineEnd, (NSInteger)newStart);
         }
         lineStart = lineEnd;
     }
@@ -221,6 +227,7 @@
         NSRegularExpression *begin = pattern.patternBegin;
         if (begin) {
             SKResultSet *beginResults = [self matchExpression:begin inRange:range captures:pattern.beginCaptures baseSelector:nil];
+            return [[SKPatternMatch alloc] initWithPattern:pattern match:beginResults];
         } else if (pattern.subpatterns.count >= 1) {
             return [self matchPatterns:pattern.subpatterns inRange:range];
         }
