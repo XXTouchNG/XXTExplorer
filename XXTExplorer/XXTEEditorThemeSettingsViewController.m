@@ -85,9 +85,9 @@
             cell.previewImageView.image = nil;
         }
         if ([themeName isEqualToString:self.selectedThemeName]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.titleLabel.textColor = XXTE_COLOR;
         } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.titleLabel.textColor = [UIColor blackColor];
         }
         return cell;
     }
@@ -101,11 +101,11 @@
         NSString *themeName = theme[@"name"];
         self.selectedThemeName = themeName;
         
-        for (UITableViewCell *cell in tableView.visibleCells) {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+        for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
+            cell.titleLabel.textColor = [UIColor blackColor];
         }
-        UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+        selectCell.titleLabel.textColor = XXTE_COLOR;
         
         if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {
             [_delegate themeSettingsViewControllerSettingsDidChanged:self];

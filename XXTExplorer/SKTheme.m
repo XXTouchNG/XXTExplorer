@@ -82,9 +82,23 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
         {
             return nil;
         }
-        UIFont *boldFont = [UIFont fontWithDescriptor:[font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:0];
-        UIFont *italicFont = [UIFont fontWithDescriptor:[font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic] size:0];
-        UIFont *boldItalicFont = [UIFont fontWithDescriptor:[font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic] size:0];
+        NSString *fontFamily = [font familyName];
+        CGFloat fontSize = [font pointSize];
+        UIFont *boldFont = [UIFont fontWithDescriptor:[UIFontDescriptor fontDescriptorWithFontAttributes:
+                                                       @{
+                                                         @"NSFontFamilyAttribute" : fontFamily,
+                                                         @"NSFontFaceAttribute" : @"Bold"
+                                                         }] size:fontSize];
+        UIFont *italicFont = [UIFont fontWithDescriptor:[UIFontDescriptor fontDescriptorWithFontAttributes:
+                                                         @{
+                                                           @"NSFontFamilyAttribute" : fontFamily,
+                                                           @"NSFontFaceAttribute" : @"Italic"
+                                                           }] size:fontSize];
+        UIFont *boldItalicFont = [UIFont fontWithDescriptor:[UIFontDescriptor fontDescriptorWithFontAttributes:
+                                                             @{
+                                                               @"NSFontFamilyAttribute" : fontFamily,
+                                                               @"NSFontFaceAttribute" : @"Bold Italic"
+                                                               }] size:fontSize];
         if (!boldFont || !italicFont || !boldItalicFont) {
             return nil;
         }

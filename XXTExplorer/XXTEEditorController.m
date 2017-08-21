@@ -262,13 +262,17 @@ typedef enum : NSUInteger {
 #pragma mark - AFTER -viewDidLoad
 
 - (void)reloadViewConstraints {
-    CGRect frame = CGRectNull;
-    if (NO == [self.navigationController isNavigationBarHidden]) frame = CGRectZero;
-    else frame = [[UIApplication sharedApplication] statusBarFrame];
-    [self.fakeStatusBar mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.leading.trailing.equalTo(self.view);
-        make.height.equalTo(@(frame.size.height));
-    }];
+    if (XXTE_PAD) {
+        
+    } else {
+        CGRect frame = CGRectNull;
+        if (NO == [self.navigationController isNavigationBarHidden]) frame = CGRectZero;
+        else frame = [[UIApplication sharedApplication] statusBarFrame];
+        [self.fakeStatusBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.leading.trailing.equalTo(self.view);
+            make.height.equalTo(@(frame.size.height));
+        }];
+    }
     [self updateViewConstraints]; // TODO: back gesture will break this method :-(
 }
 
@@ -346,6 +350,10 @@ typedef enum : NSUInteger {
     
     [self reloadContent];
     [self reloadAttributes];
+    
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -642,11 +650,6 @@ typedef enum : NSUInteger {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         self.isRendering = YES;
         
-        // Begin
-        dispatch_async_on_main_queue(^{
-            [textView.vTextStorage beginEditing];
-        });
-        
         // Filter
         NSMutableArray <NSNumber *> *renderIndexes = [[NSMutableArray alloc] init];
         for (NSUInteger idx = 0; idx < rangesArrayLength; idx++) {
@@ -660,20 +663,18 @@ typedef enum : NSUInteger {
         // Render
         if (!self.parser.aborted) {
             dispatch_async_on_main_queue(^{
+                [textView.vTextStorage beginEditing];
                 NSUInteger renderLength = renderIndexes.count;
                 for (NSUInteger idx = 0; idx < renderLength; idx++) {
                     NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
                     NSValue *rangeValue = rangesArray[index];
                     NSRange preparedRange = [rangeValue rangeValue];
+                    NSLog(@"%@", attributesArray[index]);
                     [textView.vTextStorage addAttributes:attributesArray[index] range:preparedRange];
                 }
+                [textView.vTextStorage endEditing];
             });
         }
-        
-        // End
-        dispatch_async_on_main_queue(^{
-            [textView.vTextStorage endEditing];
-        });
         
         self.isRendering = NO;
     });
