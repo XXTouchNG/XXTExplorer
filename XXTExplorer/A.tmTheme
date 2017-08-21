@@ -23,6 +23,8 @@
 				<string>#6A4DFF8C</string>
 				<key>findHighlightForeground</key>
 				<string>#FAFAFA</string>
+                <key>invisibles</key>
+                <string>#CFCFCF</string>
 				<key>bracketsOptions</key>
 				<string>underline</string>
 				<key>tagsOptions</key>

@@ -669,7 +669,6 @@ typedef enum : NSUInteger {
                     NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
                     NSValue *rangeValue = rangesArray[index];
                     NSRange preparedRange = [rangeValue rangeValue];
-                    NSLog(@"%@", attributesArray[index]);
                     [textView.vTextStorage addAttributes:attributesArray[index] range:preparedRange];
                 }
                 [textView.vTextStorage endEditing];
