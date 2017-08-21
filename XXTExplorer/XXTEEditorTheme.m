@@ -1,15 +1,15 @@
 //
-//  XXTETextEditorTheme.m
+//  XXTEEditorTheme.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 11/08/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTETextEditorTheme.h"
+#import "XXTEEditorTheme.h"
 #import "UIColor+SKColor.h"
 
-@implementation XXTETextEditorTheme
+@implementation XXTEEditorTheme
 
 - (instancetype)initWithIdentifier:(NSString *)identifier font:(UIFont *)font {
     if (self = [super init]) {
@@ -19,6 +19,7 @@
         _foregroundColor = UIColor.blackColor;
         _caretColor = XXTE_COLOR;
         _selectionColor = XXTE_COLOR;
+        _invisibleColor = UIColor.blackColor;
         NSString *themePath = [[NSBundle mainBundle] pathForResource:identifier ofType:@"tmTheme"];
         if (themePath) {
             NSDictionary *themeDictionary = [[NSDictionary alloc] initWithContentsOfFile:themePath];
@@ -45,6 +46,7 @@
     _foregroundColor = [UIColor colorWithHex:dictionary[@"foreground"]];
     _caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
     _selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
+    _invisibleColor = [UIColor colorWithHex:dictionary[@"invisibles"]];
 }
 
 - (NSDictionary *)defaultAttributes {

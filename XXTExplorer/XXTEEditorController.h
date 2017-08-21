@@ -8,10 +8,15 @@
 
 #import "XXTEEditor.h"
 
-@class XXTEEditorTextView;
+@class XXTEEditorTextView, XXTEEditorTheme;
 
 @interface XXTEEditorController : UIViewController <XXTEEditor>
 
-@property (nonatomic, strong, readonly) XXTEEditorTextView *textView;
+@property (nonatomic, strong) XXTEEditorTextView *textView;
+@property (nonatomic, strong) XXTEEditorTheme *theme;
+@property (nonatomic, assign) CGFloat tabWidthValue;
+- (void)renderNavigationBarTheme:(BOOL)restore;
+- (void)reloadViewStyle;
+- (void)reloadViewConstraints;
 
 @end

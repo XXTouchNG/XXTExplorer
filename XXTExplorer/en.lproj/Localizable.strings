@@ -123,6 +123,15 @@
 "Ask you for a choice." = "Ask you for a choice.";
 
 /* No comment provided by engineer. */
+"Auto Capitalization" = "Auto Capitalization";
+
+/* No comment provided by engineer. */
+"Auto Correction" = "Auto Correction";
+
+/* No comment provided by engineer. */
+"Auto Indent" = "Auto Indent";
+
+/* No comment provided by engineer. */
 "Boot Script" = "Boot Script";
 
 /* No comment provided by engineer. */
@@ -217,6 +226,9 @@
 
 /* No comment provided by engineer. */
 "Cannot sync with daemon: %@" = "Cannot sync with daemon: %@";
+
+/* No comment provided by engineer. */
+"Case Sensitive" = "Case Sensitive";
 
 /* No comment provided by engineer. */
 "Check Update" = "Check Update";
@@ -399,6 +411,9 @@
 "Empty response." = "Empty response.";
 
 /* No comment provided by engineer. */
+"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key." = "Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.";
+
+/* No comment provided by engineer. */
 "Enable Boot Script" = "Enable Boot Script";
 
 /* No comment provided by engineer. */
@@ -436,6 +451,15 @@
 
 /* No comment provided by engineer. */
 "Filename" = "Filename";
+
+/* No comment provided by engineer. */
+"Font" = "Font";
+
+/* No comment provided by engineer. */
+"Font Family" = "Font Family";
+
+/* No comment provided by engineer. */
+"Font Size" = "Font Size";
 
 /* No comment provided by engineer. */
 "General" = "General";
@@ -492,6 +516,9 @@
 "key \"keyboard\" (\"%@\") is invalid." = "key \"keyboard\" (\"%@\") is invalid.";
 
 /* No comment provided by engineer. */
+"Keyboard" = "Keyboard";
+
+/* No comment provided by engineer. */
 "Kind" = "Kind";
 
 /* No comment provided by engineer. */
@@ -513,6 +540,9 @@
 "Launcher" = "Launcher";
 
 /* No comment provided by engineer. */
+"Layout" = "Layout";
+
+/* No comment provided by engineer. */
 "License" = "License";
 
 /* No comment provided by engineer. */
@@ -520,6 +550,9 @@
 
 /* No comment provided by engineer. */
 "License Activation" = "License Activation";
+
+/* No comment provided by engineer. */
+"Line Numbers" = "Line Numbers";
 
 /* No comment provided by engineer. */
 "Link" = "Link";
@@ -535,6 +568,9 @@
 
 /* No comment provided by engineer. */
 "Location" = "Location";
+
+/* No comment provided by engineer. */
+"Lua Code Editor" = "Lua Code Editor";
 
 /* No comment provided by engineer. */
 "MAC Address" = "MAC Address";
@@ -696,7 +732,16 @@
 "Press \"Volume -\"" = "Press \"Volume -\"";
 
 /* No comment provided by engineer. */
+"Preview" = "Preview";
+
+/* No comment provided by engineer. */
+"pt" = "pt";
+
+/* No comment provided by engineer. */
 "QR Scan" = "QR Scan";
+
+/* No comment provided by engineer. */
+"Read Only" = "Read Only";
 
 /* No comment provided by engineer. */
 "Reboot Device" = "Reboot Device";
@@ -712,6 +757,9 @@
 
 /* No comment provided by engineer. */
 "Recording Config" = "Recording Config";
+
+/* No comment provided by engineer. */
+"Regular Expression" = "Regular Expression";
 
 /* No comment provided by engineer. */
 "Regular File" = "Regular File";
@@ -777,6 +825,9 @@
 "Scan Error" = "Scan Error";
 
 /* No comment provided by engineer. */
+"Search" = "Search";
+
+/* No comment provided by engineer. */
 "Search Application" = "Search Application";
 
 /* No comment provided by engineer. */
@@ -801,13 +852,22 @@
 "Should Record \"Volume -\"" = "Should Record \"Volume -\"";
 
 /* No comment provided by engineer. */
+"Show Invisible Characters" = "Show Invisible Characters";
+
+/* No comment provided by engineer. */
 "Size" = "Size";
+
+/* No comment provided by engineer. */
+"Soft Tabs" = "Soft Tabs";
 
 /* No comment provided by engineer. */
 "Source URL" = "Source URL";
 
 /* No comment provided by engineer. */
 "Source URL has been copied to the pasteboard." = "Source URL has been copied to the pasteboard.";
+
+/* No comment provided by engineer. */
+"Spell Checking" = "Spell Checking";
 
 /* No comment provided by engineer. */
 "Stop" = "Stop";
@@ -825,7 +885,13 @@
 "Sync Failed" = "Sync Failed";
 
 /* No comment provided by engineer. */
+"Syntax Highlight" = "Syntax Highlight";
+
+/* No comment provided by engineer. */
 "System" = "System";
+
+/* No comment provided by engineer. */
+"Tabs" = "Tabs";
 
 /* No comment provided by engineer. */
 "Tap to edit filename." = "Tap to edit filename.";
@@ -840,6 +906,9 @@
 "Text Content" = "Text Content";
 
 /* No comment provided by engineer. */
+"Text Editor" = "Text Editor";
+
+/* No comment provided by engineer. */
 "The alias \"%@\" can't be opened because the original item can't be found." = "The alias \"%@\" can't be opened because the original item can't be found.";
 
 /* No comment provided by engineer. */
@@ -847,6 +916,9 @@
 
 /* No comment provided by engineer. */
 "The size of \"%@\" and \"%@\" does not match." = "The size of \"%1$@\" and \"%2$@\" does not match.";
+
+/* No comment provided by engineer. */
+"Theme" = "Theme";
 
 /* No comment provided by engineer. */
 "Third Party Credits" = "Third Party Credits";
@@ -952,9 +1024,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "Your version v%@ is up-to-date with remote.";
-
-/* No comment provided by engineer. */
-"Lua Code Editor" = "";
-
-/* No comment provided by engineer. */
-"Text Editor" = "";

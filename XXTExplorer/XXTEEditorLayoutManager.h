@@ -10,6 +10,12 @@
 
 @interface XXTEEditorLayoutManager : NSLayoutManager
 
+@property (nonatomic, assign) BOOL lineNumberEnabled;
+
+@property (nonatomic, assign) BOOL showInvisibleCharacters;
+@property (nonatomic, strong) UIColor *invisibleColor;
+@property (nonatomic, strong) UIFont *invisibleFont;
+
 @property (nonatomic, strong) UIFont *lineNumberFont;
 @property (nonatomic, strong) UIColor *lineNumberColor;
 @property (nonatomic, assign, readonly) CGFloat gutterWidth;

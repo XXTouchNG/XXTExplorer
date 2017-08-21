@@ -30,6 +30,7 @@
     self.alwaysBounceVertical = YES;
     self.contentMode = UIViewContentModeRedraw;
     self.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    self.layoutManager.allowsNonContiguousLayout = NO;
     
     self.gutterBackgroundColor = [UIColor clearColor];
     self.gutterLineColor = [UIColor clearColor];
@@ -76,6 +77,7 @@
     UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth, 8, 0) :
     UIEdgeInsetsMake(8, 8, 8, 8);
     [self setTextContainerInset:insets];
+    [self.vLayoutManager setLineNumberEnabled:lineNumberEnabled];
 }
 
 @end

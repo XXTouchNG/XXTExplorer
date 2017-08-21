@@ -9,6 +9,9 @@
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorTextView.h"
 
+#import "XXTEEditorDefaults.h"
+#import "XXTEAppDefines.h"
+
 @implementation XXTEEditorController (Keyboard)
 
 #pragma mark - Keyboard
@@ -29,8 +32,14 @@
 }
 
 - (void)keyboardWillAppear:(NSNotification *)aNotification {
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self updateViewConstraints];
+    if (XXTE_PAD) {
+        
+    } else {
+        if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+        }
+        [self reloadViewConstraints];
+    }
 }
 
 // Called when the UIKeyboardDidShowNotification is sent.
@@ -62,8 +71,14 @@
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self updateViewConstraints];
+    if (XXTE_PAD) {
+        
+    } else {
+        if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
+            [self.navigationController setNavigationBarHidden:NO animated:YES];
+        }
+        [self reloadViewConstraints];
+    }
     
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;

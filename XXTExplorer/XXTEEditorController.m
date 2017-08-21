@@ -14,7 +14,7 @@
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 
-#import "XXTETextEditorTheme.h"
+#import "XXTEEditorTheme.h"
 
 #import "XXTEEditorTextView.h"
 #import "XXTEEditorTextStorage.h"
@@ -27,6 +27,7 @@
 
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorController+Settings.h"
+#import "XXTEEditorController+NSLayoutManagerDelegate.h"
 
 #import "SKHelper.h"
 #import "SKHelperConfig.h"
@@ -39,7 +40,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
 
-@property (nonatomic, strong) XXTETextEditorTheme *theme;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @property (nonatomic, strong) SKHelper *helper;
@@ -112,7 +112,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 - (BOOL)prefersNavigationBarHidden {
-    if (XXTE_PAD) {
+    if (XXTE_PAD || NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
         return NO;
     }
     return [self isEditing];
@@ -161,15 +161,16 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     self.attributesArray = [[NSMutableArray alloc] init];
     self.renderedSet = [[NSMutableIndexSet alloc] init];
     
+    [self reloadDefaults];
     [self reloadTheme];
     [self reloadParser];
     [self registerKeyboardNotifications];
 }
 
 - (void)reloadAll {
+    [self reloadDefaults];
     [self reloadTheme];
     [self reloadParser];
-    [self reloadView];
     [self reloadViewConstraints];
     [self reloadViewStyle];
     [self reloadContent];
@@ -189,144 +190,103 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 - (void)reloadTheme {
-    NSString *themeIdentifier = @"Monokai";
+    NSString *themeIdentifier = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
     
-    UIFont *font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // config
-    XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier font:font];
+    NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+    CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
+    UIFont *font = [UIFont fontWithName:fontName size:fontSize]; // config
+    XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithIdentifier:themeIdentifier font:font];
     _theme = theme;
+    
+    NSUInteger tabWidth = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
+    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidth withString:@"W" startingAtIndex:0];
+    _tabWidthValue = [tabWidthString sizeWithAttributes:theme.defaultAttributes].width;
 }
 
 #pragma mark - BEFORE -viewDidLoad
 
 - (void)reloadParser {
+    NSString *entryExtension = [self.entryPath pathExtension];
+    
     SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
     helperConfig.bundle = [NSBundle mainBundle];
     helperConfig.themeIdentifier = self.theme.identifier;
     helperConfig.color = self.theme.foregroundColor;
-    helperConfig.languageIdentifier = @"source.lua"; // config
+    helperConfig.languageIdentifier = [NSString stringWithFormat:@"source.%@", entryExtension];
     helperConfig.font = self.theme.font;
     
     SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
-    SKAttributedParser *parser = [helper attributedParser];
+    
+    if (helper.language)
+    {
+        SKAttributedParser *parser = [helper attributedParser];
+        _parser = parser;
+    }
     
     _helper = helper;
-    _parser = parser;
 }
 
 #pragma mark - AFTER -viewDidLoad
 
-- (void)reloadView {
-    if (![self isViewLoaded]) return;
-    [_textView removeFromSuperview];
-    
-    BOOL isReadOnlyMode = NO;
-    BOOL isLineNumberEnabled = YES; // config
-    BOOL isHighlightEnabled = YES; // config
-    BOOL isKeyboardRowEnabled = YES; // config
-    
-    NSTextStorage *textStorage = nil;
-    if (isHighlightEnabled) {
-        textStorage = [[XXTEEditorTextStorage alloc] init];
-        textStorage.delegate = self;
-    } else {
-        textStorage = [[NSTextStorage alloc] init];
-    }
-    
-    NSLayoutManager *layoutManager = nil;
-    if (isLineNumberEnabled) {
-        layoutManager = [[XXTEEditorLayoutManager alloc] init];
-    } else {
-        layoutManager = [[NSLayoutManager alloc] init];
-    }
-    
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-    textContainer.lineBreakMode = NSLineBreakByWordWrapping;
-    textContainer.widthTracksTextView = YES;
-    
-    [layoutManager addTextContainer:textContainer];
-    [textStorage removeLayoutManager:textStorage.layoutManagers.firstObject];
-    [textStorage addLayoutManager:layoutManager];
-    
-    XXTEEditorTextView *textView = [[XXTEEditorTextView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
-    textView.delegate = self;
-    textView.selectable = YES;
-    if (isReadOnlyMode) {
-        textView.editable = NO;
-    } else {
-        textView.editable = YES;
-    }
-    textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    textView.returnKeyType = UIReturnKeyDefault;
-    textView.dataDetectorTypes = UIDataDetectorTypeNone;
-    
-    textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
-    
-    if (isHighlightEnabled) {
-        textView.vTextStorage = (XXTEEditorTextStorage *)textStorage;
-    }
-    if (isLineNumberEnabled) {
-        textView.vLayoutManager = (XXTEEditorLayoutManager *)layoutManager;
-    }
-    
-    if (isKeyboardRowEnabled && NO == isReadOnlyMode) {
-        XXTEKeyboardRow *keyboardRow = [[XXTEKeyboardRow alloc] initWithTextView:textView];
-        textView.inputAccessoryView = keyboardRow;
-    }
-    
-    [self.view addSubview:textView];
-    
-    _textView = textView;
-}
-
 - (void)reloadViewConstraints {
-    [self updateViewConstraints];
-}
-
-- (void)updateViewConstraints {
     CGRect frame = CGRectNull;
-    if (NO == [self prefersNavigationBarHidden]) frame = CGRectZero;
+    if (NO == [self.navigationController isNavigationBarHidden]) frame = CGRectZero;
     else frame = [[UIApplication sharedApplication] statusBarFrame];
     [self.fakeStatusBar mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.leading.trailing.equalTo(self.view);
         make.height.equalTo(@(frame.size.height));
     }];
-    if (XXTE_PAD)
-    {
-        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
-    else
-    {
-        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.fakeStatusBar.mas_bottom);
-            make.leading.trailing.bottom.equalTo(self.view);
-        }];
-    }
-    [super updateViewConstraints];
+    [self updateViewConstraints]; // TODO: back gesture will break this method :-(
 }
 
 - (void)reloadViewStyle {
     if (![self isViewLoaded]) return;
-    XXTETextEditorTheme *theme = self.theme;
+    
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, NO); // config
+    BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, YES); // config
+    BOOL showInvisibleCharacters = XXTEDefaultsBool(XXTEEditorShowInvisibleCharacters, NO); // config
+    
+    XXTEEditorTheme *theme = self.theme;
     self.view.backgroundColor = theme.backgroundColor;
     self.view.tintColor = theme.foregroundColor;
+    
     XXTEEditorTextView *textView = self.textView;
-    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive; // config
-    textView.autocapitalizationType = UITextAutocapitalizationTypeNone; // config
-    textView.autocorrectionType = UITextAutocorrectionTypeNo; // config
-    textView.spellCheckingType = UITextSpellCheckingTypeNo; // config
-    textView.backgroundColor = theme.backgroundColor; // config
-    [textView setTintColor:theme.caretColor]; // config
-    [textView setFont:theme.font]; // config
-    [textView setTextColor:theme.foregroundColor]; // config
-    [textView setLineNumberEnabled:YES]; // config
+    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
+    textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
+    textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
+    textView.backgroundColor = theme.backgroundColor;
+    textView.editable = !isReadOnlyMode;
+    textView.tintColor = theme.caretColor;
+    textView.font = theme.font;
+    textView.textColor = theme.foregroundColor;
+    
+    [textView setLineNumberEnabled:isLineNumbersEnabled]; // config
+    
     if (textView.vLayoutManager) {
-        [textView setGutterLineColor:theme.foregroundColor]; // config
-        [textView setGutterBackgroundColor:theme.backgroundColor]; // config
-        [textView.vLayoutManager setLineNumberFont:[UIFont fontWithName:@"CourierNewPSMT" size:10.f]]; // config
-        [textView.vLayoutManager setLineNumberColor:theme.foregroundColor]; // config
+        [textView setGutterLineColor:theme.foregroundColor];
+        [textView setGutterBackgroundColor:theme.backgroundColor];
+        
+        [textView.vLayoutManager setLineNumberFont:[theme.font fontWithSize:10.f]];
+        [textView.vLayoutManager setLineNumberColor:theme.foregroundColor];
+        
+        [textView.vLayoutManager setShowInvisibleCharacters:showInvisibleCharacters];
+        [textView.vLayoutManager setInvisibleColor:theme.invisibleColor];
+        [textView.vLayoutManager setInvisibleFont:theme.font];
     }
+    
+    if (isKeyboardRowEnabled &&
+        NO == isReadOnlyMode)
+    {
+        XXTEKeyboardRow *keyboardRow = [[XXTEKeyboardRow alloc] initWithTextView:textView];
+        textView.inputAccessoryView = keyboardRow;
+    } else {
+        textView.inputAccessoryView = nil;
+    }
+    
+    [textView setNeedsDisplay];
+    
     [UIView animateWithDuration:.2f animations:^{
         [self renderNavigationBarTheme:NO];
     }];
@@ -339,8 +299,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     
     [self configure];
     [self configureSubviews];
+    [self configureConstraints];
     
-    [self reloadView];
     [self reloadViewConstraints];
     [self reloadViewStyle];
     
@@ -385,6 +345,23 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     } else {
         [self.view addSubview:self.fakeStatusBar];
     }
+    [self.view addSubview:self.textView];
+}
+
+- (void)configureConstraints {
+    if (XXTE_PAD)
+    {
+        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+    else
+    {
+        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.fakeStatusBar.mas_bottom);
+            make.leading.trailing.bottom.equalTo(self.view);
+        }];
+    }
 }
 
 #pragma mark - UIView Getters
@@ -408,6 +385,39 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     return _fakeStatusBar;
 }
 
+- (XXTEEditorTextView *)textView {
+    if (!_textView) {
+        NSTextStorage *textStorage = [[XXTEEditorTextStorage alloc] init];
+        textStorage.delegate = self;
+        
+        NSLayoutManager *layoutManager = [[XXTEEditorLayoutManager alloc] init];
+        layoutManager.delegate = self;
+        
+        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+        textContainer.widthTracksTextView = YES;
+        
+        [layoutManager addTextContainer:textContainer];
+        [textStorage removeLayoutManager:textStorage.layoutManagers.firstObject];
+        [textStorage addLayoutManager:layoutManager];
+        
+        XXTEEditorTextView *textView = [[XXTEEditorTextView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
+        textView.delegate = self;
+        textView.selectable = YES;
+        textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        textView.returnKeyType = UIReturnKeyDefault;
+        textView.dataDetectorTypes = UIDataDetectorTypeNone;
+        
+        textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
+        
+        textView.vTextStorage = (XXTEEditorTextStorage *)textStorage;
+        textView.vLayoutManager = (XXTEEditorLayoutManager *)layoutManager;
+        
+        _textView = textView;
+    }
+    return _textView;
+}
+
 #pragma mark - Getters
 
 - (BOOL)isEditing {
@@ -417,6 +427,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 #pragma mark - Content
 
 - (void)reloadContent {
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     NSError *readError = nil;
     NSString *string = [NSString stringWithContentsOfFile:self.entryPath encoding:NSUTF8StringEncoding error:&readError];
     if (readError) {
@@ -426,13 +437,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     XXTEEditorTextView *textView = self.textView;
     textView.editable = NO;
     [textView setText:string];
-    textView.editable = YES;
+    textView.editable = !isReadOnlyMode;
 }
 
 #pragma mark - Attributes
 
 - (void)reloadAttributes {
-    BOOL isHighlightEnabled = YES; // config
+    BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
         [self invalidateSyntaxCaches];
         NSString *wholeString = self.textView.text;
@@ -583,6 +594,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 #pragma mark - Memory
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [self invalidateSyntaxCaches];
+}
 
 - (void)dealloc {
     [self dismissKeyboardNotifications];

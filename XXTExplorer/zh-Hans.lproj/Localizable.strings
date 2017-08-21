@@ -123,6 +123,15 @@
 "Ask you for a choice." = "询问用户的选择.";
 
 /* No comment provided by engineer. */
+"Auto Capitalization" = "自动大写";
+
+/* No comment provided by engineer. */
+"Auto Correction" = "自动更正";
+
+/* No comment provided by engineer. */
+"Auto Indent" = "自动缩进";
+
+/* No comment provided by engineer. */
 "Boot Script" = "开机启动项";
 
 /* No comment provided by engineer. */
@@ -217,6 +226,9 @@
 
 /* No comment provided by engineer. */
 "Cannot sync with daemon: %@" = "无法与守护进程同步: %@";
+
+/* No comment provided by engineer. */
+"Case Sensitive" = "区分大小写";
 
 /* No comment provided by engineer. */
 "Check Update" = "检查更新";
@@ -399,6 +411,9 @@
 "Empty response." = "响应数据为空.";
 
 /* No comment provided by engineer. */
+"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key." = "启用 \"软缩进\" 将在按下 Tab 键时插入指定数量的空格而不是缩进符 (\\t)。";
+
+/* No comment provided by engineer. */
 "Enable Boot Script" = "启用开机启动项";
 
 /* No comment provided by engineer. */
@@ -436,6 +451,15 @@
 
 /* No comment provided by engineer. */
 "Filename" = "文件名";
+
+/* No comment provided by engineer. */
+"Font" = "字体";
+
+/* No comment provided by engineer. */
+"Font Family" = "字体";
+
+/* No comment provided by engineer. */
+"Font Size" = "字体尺寸";
 
 /* No comment provided by engineer. */
 "General" = "通用";
@@ -492,6 +516,9 @@
 "key \"keyboard\" (\"%@\") is invalid." = "键 \"keyboard\" (\"%@\") 无效.";
 
 /* No comment provided by engineer. */
+"Keyboard" = "键盘";
+
+/* No comment provided by engineer. */
 "Kind" = "类型";
 
 /* No comment provided by engineer. */
@@ -513,6 +540,9 @@
 "Launcher" = "启动器";
 
 /* No comment provided by engineer. */
+"Layout" = "布局";
+
+/* No comment provided by engineer. */
 "License" = "授权";
 
 /* No comment provided by engineer. */
@@ -520,6 +550,9 @@
 
 /* No comment provided by engineer. */
 "License Activation" = "授权激活";
+
+/* No comment provided by engineer. */
+"Line Numbers" = "行号";
 
 /* No comment provided by engineer. */
 "Link" = "链接";
@@ -696,7 +729,16 @@
 "Press \"Volume -\"" = "按下 \"音量 -\"";
 
 /* No comment provided by engineer. */
+"Preview" = "预览";
+
+/* No comment provided by engineer. */
+"pt" = "pt";
+
+/* No comment provided by engineer. */
 "QR Scan" = "扫描二维码";
+
+/* No comment provided by engineer. */
+"Read Only" = "只读模式";
 
 /* No comment provided by engineer. */
 "Reboot Device" = "重启设备";
@@ -712,6 +754,9 @@
 
 /* No comment provided by engineer. */
 "Recording Config" = "录制设置";
+
+/* No comment provided by engineer. */
+"Regular Expression" = "正则表达式";
 
 /* No comment provided by engineer. */
 "Regular File" = "常规文件";
@@ -777,6 +822,9 @@
 "Scan Error" = "扫描错误";
 
 /* No comment provided by engineer. */
+"Search" = "搜索";
+
+/* No comment provided by engineer. */
 "Search Application" = "搜索应用程序";
 
 /* No comment provided by engineer. */
@@ -801,13 +849,22 @@
 "Should Record \"Volume -\"" = "是否录制 \"音量 -\"";
 
 /* No comment provided by engineer. */
+"Show Invisible Characters" = "显示控制字符";
+
+/* No comment provided by engineer. */
 "Size" = "尺寸";
+
+/* No comment provided by engineer. */
+"Soft Tabs" = "软缩进";
 
 /* No comment provided by engineer. */
 "Source URL" = "源 URL";
 
 /* No comment provided by engineer. */
 "Source URL has been copied to the pasteboard." = "源 URL 已被复制到剪贴板.";
+
+/* No comment provided by engineer. */
+"Spell Checking" = "拼写检查";
 
 /*
  * ./XXTEAppDelegate.m
@@ -827,7 +884,13 @@
 "Sync Failed" = "同步失败";
 
 /* No comment provided by engineer. */
+"Syntax Highlight" = "语法高亮";
+
+/* No comment provided by engineer. */
 "System" = "系统";
+
+/* No comment provided by engineer. */
+"Tabs" = "缩进符";
 
 /* No comment provided by engineer. */
 "Tap to edit filename." = "轻按以修改文件名.";
@@ -842,6 +905,9 @@
 "Text Content" = "文本内容";
 
 /* No comment provided by engineer. */
+"Text Editor" = "文本编辑器";
+
+/* No comment provided by engineer. */
 "The alias \"%@\" can't be opened because the original item can't be found." = "替身 \"%@\" 无法打开，因为找不到其原身.";
 
 /* No comment provided by engineer. */
@@ -849,6 +915,9 @@
 
 /* No comment provided by engineer. */
 "The size of \"%@\" and \"%@\" does not match." = "\"%@\" 与 \"%@\" 的尺寸不匹配.";
+
+/* No comment provided by engineer. */
+"Theme" = "主题";
 
 /* No comment provided by engineer. */
 "Third Party Credits" = "第三方协议";
@@ -956,9 +1025,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"Lua Code Editor" = "";
-
-/* No comment provided by engineer. */
-"Text Editor" = "";

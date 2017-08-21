@@ -38,6 +38,10 @@ static inline NSUInteger XXTEDefaultsEnum(NSString *key, NSUInteger defaultValue
     return ([XXTEDefaultsObject(key, @(defaultValue)) unsignedIntegerValue]);
 }
 
+static inline double XXTEDefaultsDouble(NSString *key, double defaultValue) {
+    return ([XXTEDefaultsObject(key, @(defaultValue)) doubleValue]);
+}
+
 static inline id XXTEBuiltInDefaultsObject(NSString *key) {
     return (sharedDelegate().builtInDefaults[key]);
 }

@@ -20,7 +20,11 @@ static CGFloat kMinimumGutterWidth = 42.f;
 
 @end
 
-@implementation XXTEEditorLayoutManager
+@implementation XXTEEditorLayoutManager {
+    NSString *CRLF;
+    NSString *SPACE;
+    NSString *TAB;
+}
 
 - (instancetype)init
 {
@@ -44,11 +48,21 @@ static CGFloat kMinimumGutterWidth = 42.f;
 
 - (void)setup
 {
+    self.allowsNonContiguousLayout = NO;
     _gutterWidth = kMinimumGutterWidth;
     
     _lineAreaInset = UIEdgeInsetsMake(0.0, 10.0, 0, 4.0);
     _lineNumberColor = [UIColor grayColor];
     _lineNumberFont = [UIFont systemFontOfSize:10.0];
+    _invisibleColor = [UIColor lightGrayColor];
+    _invisibleFont = [UIFont systemFontOfSize:14.f];
+    
+    unichar crlf = 0x00B6;
+    CRLF = [[NSString alloc] initWithCharacters:&crlf length:1];
+    unichar space = 0x00B7;
+    SPACE = [[NSString alloc] initWithCharacters:&space length:1];
+    unichar tab = 0x25B8;
+    TAB = [[NSString alloc] initWithCharacters:&tab length:1];
 }
 
 #pragma mark - Convenience
@@ -135,6 +149,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
 - (void)processEditingForTextStorage:(NSTextStorage *)textStorage edited:(NSTextStorageEditActions)editMask range:(NSRange)newCharRange changeInLength:(NSInteger)delta invalidatedRange:(NSRange)invalidatedCharRange
 {
     [super processEditingForTextStorage:textStorage edited:editMask range:newCharRange changeInLength:delta invalidatedRange:invalidatedCharRange];
+    if (self.lineNumberEnabled == NO) return;
     
     if (invalidatedCharRange.location < self.lastParaLocation)
     {
@@ -151,6 +166,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
 - (void)drawBackgroundForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin
 {
     [super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
+    if (self.lineNumberEnabled == NO) return;
     
     //  Draw line numbers.  Note that the background for line number gutter is drawn by the LineNumberTextView class.
     NSDictionary* attrs = @{NSFontAttributeName: self.lineNumberFont, NSForegroundColorAttributeName: self.lineNumberColor};
@@ -166,7 +182,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
          if (charRange.location == paraRange.location) {
              gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self->_gutterWidth, rect.size.height), origin.x, origin.y);
              paraNumber = [self _paraNumberForRange:charRange];
-             NSString* lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 1];
+             NSString *lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 1];
              CGSize size = [lineNumber sizeWithAttributes:attrs];
              
              [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self->_lineAreaInset.right - size.width - self->_gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0)
@@ -174,6 +190,44 @@ static CGFloat kMinimumGutterWidth = 42.f;
          }
          
      }];
+}
+
+- (void)drawGlyphsForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin {
+    if (self.showInvisibleCharacters) {
+        NSString *docContents = [[self textStorage] string];
+        NSDictionary *attrs = @{ NSForegroundColorAttributeName: self.invisibleColor, NSFontAttributeName: self.invisibleFont };
+        for (NSUInteger i = glyphsToShow.location; i < NSMaxRange(glyphsToShow); i++)
+        {
+            NSString *glyph = nil;
+            switch ([docContents characterAtIndex:i])
+            {
+                case 0x20:
+                    glyph = SPACE;
+                    break;
+                case '\t':
+                    glyph = TAB;
+                    break;
+                case 0x2028:
+                case 0x2029:
+                case '\n':
+                case '\r':
+                    glyph = CRLF;
+                    break;
+                default:
+                    glyph = nil;
+                    break;
+            }
+            if (glyph)
+            {
+                CGRect glyphRect = [self lineFragmentRectForGlyphAtIndex:i effectiveRange:NULL];
+                CGPoint glyphPoint = [self locationForGlyphAtIndex:i];
+                CGPoint drawPoint = CGPointMake(glyphPoint.x + glyphRect.origin.x + origin.x, glyphRect.origin.y + origin.y);
+                
+                [glyph drawAtPoint:drawPoint withAttributes:attrs];
+            }
+        }
+    }
+    [super drawGlyphsForGlyphRange:glyphsToShow atPoint:origin];
 }
 
 @end
