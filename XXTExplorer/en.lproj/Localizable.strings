@@ -24,6 +24,9 @@
 "%lu Selected" = "%lu Selected";
 
 /* No comment provided by engineer. */
+"(Un)Comment" = "(Un)Comment";
+
+/* No comment provided by engineer. */
 "1 item" = "1 item";
 
 /* No comment provided by engineer. */
@@ -127,6 +130,9 @@
 
 /* No comment provided by engineer. */
 "Auto Correction" = "Auto Correction";
+
+/* No comment provided by engineer. */
+"Auto Fullscreen" = "Auto Fullscreen";
 
 /* No comment provided by engineer. */
 "Auto Indent" = "Auto Indent";
@@ -268,6 +274,9 @@
 
 /* No comment provided by engineer. */
 "Code Snippet Reference" = "Code Snippet Reference";
+
+/* No comment provided by engineer. */
+"Code Snippets" = "Code Snippets";
 
 /* No comment provided by engineer. */
 "Code Viewer" = "Code Viewer";
@@ -846,6 +855,12 @@
 "Settings" = "Settings";
 
 /* No comment provided by engineer. */
+"Shift Left" = "Shift Left";
+
+/* No comment provided by engineer. */
+"Shift Right" = "Shift Right";
+
+/* No comment provided by engineer. */
 "Should Record \"Volume +\"" = "Should Record \"Volume +\"";
 
 /* No comment provided by engineer. */
@@ -889,6 +904,9 @@
 
 /* No comment provided by engineer. */
 "System" = "System";
+
+/* No comment provided by engineer. */
+"Tab Width" = "Tab Width";
 
 /* No comment provided by engineer. */
 "Tabs" = "Tabs";

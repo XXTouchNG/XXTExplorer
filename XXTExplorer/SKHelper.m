@@ -21,6 +21,7 @@
     self = [super init];
     if (self)
     {
+        _config = config;
         SKBundleManager *manager = [[SKBundleManager alloc] initWithCallback:^NSURL *(NSString *identifier, SKTextMateFileType kind) {
             NSArray <NSString *> *components = [identifier componentsSeparatedByString:@"."];
             NSURL *url = nil;

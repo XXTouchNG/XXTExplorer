@@ -12,5 +12,6 @@
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) NSString *themeIdentifier;
 @property (nonatomic, strong) NSString *languageIdentifier;
+@property (nonatomic, strong) NSString *languageLineCommentSymbol;
 
 @end

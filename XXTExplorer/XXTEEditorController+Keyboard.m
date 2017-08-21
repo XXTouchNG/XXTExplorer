@@ -22,6 +22,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)dismissKeyboardNotifications
@@ -29,6 +30,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)keyboardWillAppear:(NSNotification *)aNotification {
@@ -84,6 +86,11 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)keyboardDidDisappear:(NSNotification *)aNotification
+{
+    [self saveDocumentIfNecessary];
 }
 
 @end

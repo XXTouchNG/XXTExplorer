@@ -38,6 +38,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="3r4-gn-loc" secondAttribute="trailing" constant="8" id="lcM-Ge-AZN"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="optionSwitch" destination="3r4-gn-loc" id="hyo-8y-lKZ"/>

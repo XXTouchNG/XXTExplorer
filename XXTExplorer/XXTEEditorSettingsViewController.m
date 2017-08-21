@@ -15,6 +15,7 @@
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreSwitchNoIconCell.h"
 #import "XXTEEditorFontSizeCell.h"
+#import "XXTEEditorTabWidthCell.h"
 
 #import "XXTEEditorDefaults.h"
 #import "XXTEAppDefines.h"
@@ -24,7 +25,7 @@
 
 #import "UIControl+BlockTarget.h"
 
-@interface XXTEEditorSettingsViewController () <XXTEEditorFontSizeViewDelegate, XXTEEditorFontSettingsViewControllerDelegate>
+@interface XXTEEditorSettingsViewController () <XXTEEditorFontSizeViewDelegate, XXTEEditorFontSettingsViewControllerDelegate, XXTEEditorThemeSettingsViewControllerDelegate>
 
 @end
 
@@ -94,7 +95,9 @@
     staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"" ];
     
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
-    UIFont *font = [UIFont fontWithName:fontName size:14.0];
+    double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
+    
+    UIFont *font = [UIFont fontWithName:fontName size:fontSize];
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Font Family", nil);
     cell1.valueLabel.text = font.familyName;
@@ -117,6 +120,7 @@
     [cell4.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorHighlightEnabled, optionSwitch.on);
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -125,6 +129,7 @@
     [cell5.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorLineNumbersEnabled, optionSwitch.on);
+        [self.editor setNeedsRefresh];
     }];
     
     XXTEMoreSwitchNoIconCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -133,6 +138,15 @@
     [cell6.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorShowInvisibleCharacters, optionSwitch.on);
+        [self.editor setNeedsRefresh];
+    }];
+    
+    XXTEMoreSwitchNoIconCell *fullScreenCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    fullScreenCell.titleLabel.text = NSLocalizedString(@"Auto Fullscreen", nil);
+    fullScreenCell.optionSwitch.on = XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO);
+    [fullScreenCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorFullScreenWhenEditing, optionSwitch.on);
     }];
     
     XXTEMoreSwitchNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -149,6 +163,51 @@
     [cell8.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorSoftTabs, optionSwitch.on);
+        [self.editor setNeedsReload];
+    }];
+    
+    XXTEEditorTabWidthCell *tabCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorTabWidthCell class]) owner:nil options:nil] lastObject];
+    tabCell.titleLabel.text = NSLocalizedString(@"Tab Width", nil);
+    XXTEEditorTabWidthValue widthValue = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
+    NSUInteger widthIndex = 2;
+    switch (widthValue) {
+        case XXTEEditorTabWidthValue_2:
+            widthIndex = 0;
+            break;
+        case XXTEEditorTabWidthValue_3:
+            widthIndex = 1;
+            break;
+        case XXTEEditorTabWidthValue_4:
+            widthIndex = 2;
+            break;
+        case XXTEEditorTabWidthValue_8:
+            widthIndex = 3;
+            break;
+        default:
+            break;
+    }
+    tabCell.segmentedControl.selectedSegmentIndex = widthIndex;
+    [tabCell.segmentedControl addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+        NSUInteger widthValue = XXTEEditorTabWidthValue_4;
+        switch (segmentedControl.selectedSegmentIndex) {
+            case 0:
+                widthValue = XXTEEditorTabWidthValue_2;
+                break;
+            case 1:
+                widthValue = XXTEEditorTabWidthValue_3;
+                break;
+            case 2:
+                widthValue = XXTEEditorTabWidthValue_4;
+                break;
+            case 3:
+                widthValue = XXTEEditorTabWidthValue_8;
+                break;
+            default:
+                break;
+        }
+        XXTEDefaultsSetBasic(XXTEEditorTabWidth, widthValue);
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -157,19 +216,35 @@
     [cell9.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorReadOnly, optionSwitch.on);
+        [self.editor setNeedsRefresh];
     }];
     
     XXTEMoreSwitchNoIconCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell10.titleLabel.text = NSLocalizedString(@"Auto Correction", nil);
     cell10.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo) != UITextAutocorrectionTypeNo;
+    [cell10.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorAutoCorrection, optionSwitch.on ? UITextAutocorrectionTypeYes : UITextAutocorrectionTypeNo);
+        [self.editor setNeedsRefresh];
+    }];
     
     XXTEMoreSwitchNoIconCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell11.titleLabel.text = NSLocalizedString(@"Auto Capitalization", nil);
     cell11.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone) != UITextAutocapitalizationTypeNone;
+    [cell11.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorAutoCapitalization, optionSwitch.on ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone);
+        [self.editor setNeedsRefresh];
+    }];
     
     XXTEMoreSwitchNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell12.titleLabel.text = NSLocalizedString(@"Spell Checking", nil);
     cell12.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo) != UITextSpellCheckingTypeNo;
+    [cell12.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorSpellChecking, optionSwitch.on ? UITextSpellCheckingTypeYes : UITextSpellCheckingTypeNo);
+        [self.editor setNeedsRefresh];
+    }];
     
     XXTEMoreSwitchNoIconCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell13.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
@@ -187,11 +262,18 @@
         XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
     }];
     
+    NSArray *layoutSection = nil;
+    if (XXTE_PAD) {
+        layoutSection = @[ cell5, cell6 ];
+    } else {
+        layoutSection = @[ fullScreenCell, cell5, cell6 ];
+    }
+    
     staticCells = @[
                     @[ cell1, cell2 ],
                     @[ cell3, cell4 ],
-                    @[ cell5, cell6 ],
-                    @[ cell7, cell8 ],
+                    layoutSection,
+                    @[ cell7, cell8, tabCell ],
                     @[ cell9, cell10, cell11, cell12 ],
                     @[ cell13, cell14 ],
                     ];
@@ -230,13 +312,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == 0 && indexPath.row == 0) {
-            XXTEEditorFontSettingsViewController *fontSettingsViewController = [[XXTEEditorFontSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            XXTEEditorFontSettingsViewController *fontSettingsViewController = [[XXTEEditorFontSettingsViewController alloc] initWithStyle:UITableViewStylePlain];
             fontSettingsViewController.delegate = self;
             fontSettingsViewController.selectedFontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
             [self.navigationController pushViewController:fontSettingsViewController animated:YES];
         }
         else if (indexPath.section == 1 && indexPath.row == 0) {
             XXTEEditorThemeSettingsViewController *themeSettingsViewController = [[XXTEEditorThemeSettingsViewController alloc] initWithStyle:UITableViewStylePlain];
+            themeSettingsViewController.delegate = self;
+            themeSettingsViewController.selectedThemeName = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
             [self.navigationController pushViewController:themeSettingsViewController animated:YES];
         }
     }
@@ -266,7 +350,8 @@
 #pragma mark - XXTEEditorFontSizeViewDelegate
 
 - (void)fontViewSizeDidChanged:(XXTEEditorFontSizeView *)view {
-    
+    XXTEDefaultsSetBasic(XXTEEditorFontSize, view.fontSize);
+    [self.editor setNeedsReload];
 }
 
 #pragma mark - XXTEEditorFontSettingsViewControllerDelegate
@@ -278,13 +363,22 @@
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.text = [font familyName];
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.font = font;
     }
+    [self.editor setNeedsReload];
+}
+
+#pragma mark - XXTEEditorThemeSettingsViewControllerDelegate
+
+- (void)themeSettingsViewControllerSettingsDidChanged:(XXTEEditorThemeSettingsViewController *)controller {
+    XXTEDefaultsSetObject(XXTEEditorThemeName, controller.selectedThemeName);
+    ((XXTEMoreTitleValueCell *)staticCells[1][0]).valueLabel.text = controller.selectedThemeName;
+    [self.editor setNeedsReload];
 }
 
 #pragma mark - Memory
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEEditorSettingsViewController dealloc]");
+    NSLog(@"- [XXTEEditorSettingsViewController dealloc]");
 #endif
 }
 

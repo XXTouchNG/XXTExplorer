@@ -63,7 +63,11 @@
     XXTE_END_IGNORE_PARTIAL
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDelegate / DataSource
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44.f;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -98,12 +102,25 @@
         UIFont *font = self.fonts[indexPath.row];
         NSString *fontName = [font fontName];
         self.selectedFontName = fontName;
-        [self.tableView reloadData];
+        
+        for (UITableViewCell *cell in tableView.visibleCells) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+        selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
         
         if (_delegate && [_delegate respondsToSelector:@selector(fontSettingsViewControllerSettingsDidChanged:)]) {
             [_delegate fontSettingsViewControllerSettingsDidChanged:self];
         }
     }
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [XXTEEditorFontSettingsViewController dealloc]");
+#endif
 }
 
 @end

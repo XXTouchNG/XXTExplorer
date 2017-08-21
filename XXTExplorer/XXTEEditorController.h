@@ -8,15 +8,25 @@
 
 #import "XXTEEditor.h"
 
-@class XXTEEditorTextView, XXTEEditorTheme;
+@class SKHelper, SKAttributedParser, XXTEEditorTextView, XXTEEditorTheme;
 
 @interface XXTEEditorController : UIViewController <XXTEEditor>
 
+@property (nonatomic, strong, readonly) SKHelper *helper;
+@property (nonatomic, strong, readonly) SKAttributedParser *parser;
+
 @property (nonatomic, strong) XXTEEditorTextView *textView;
 @property (nonatomic, strong) XXTEEditorTheme *theme;
+
 @property (nonatomic, assign) CGFloat tabWidthValue;
+
+- (void)setNeedsReload;
+- (void)setNeedsRefresh;
+
 - (void)renderNavigationBarTheme:(BOOL)restore;
-- (void)reloadViewStyle;
 - (void)reloadViewConstraints;
+
+- (void)saveDocumentIfNecessary;
+- (void)setNeedsSaveDocument;
 
 @end

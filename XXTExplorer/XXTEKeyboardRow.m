@@ -14,7 +14,6 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
 
 @interface XXTEKeyboardRow ()
 
-@property(nonatomic, strong) UITextView *textView;
 @property(nonatomic, assign) NSUInteger buttonCount;
 @property(nonatomic, assign) CGFloat barWidth;
 @property(nonatomic, assign) CGFloat barHeight;
@@ -29,9 +28,22 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
 
 @implementation XXTEKeyboardRow
 
-- (instancetype)initWithTextView:(UITextView *)textView {
+- (instancetype)init {
     if (self = [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard]) {
-        _textView = textView;
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame inputViewStyle:(UIInputViewStyle)inputViewStyle {
+    if (self = [super initWithFrame:frame inputViewStyle:inputViewStyle]) {
         [self setup];
     }
     return self;
@@ -81,7 +93,6 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
         XXTEKeyboardButton *keyboardButton = [[XXTEKeyboardButton alloc] initWithFrame:CGRectMake(_leftMargin + i * (_buttonSpacing + _buttonWidth), _topMargin + (_barHeight - _buttonHeight) / 2, _buttonWidth, _buttonHeight)];
         keyboardButton.style = self.style;
         keyboardButton.input = [keys substringWithRange:NSMakeRange((NSUInteger) (i * 5), 5)];
-        keyboardButton.textInput = _textView;
         keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
         keyboardButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self addSubview:keyboardButton];
@@ -93,6 +104,15 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
     _tabString = tabString;
     for (XXTEKeyboardButton *btn in self.buttons) {
         btn.tabString = tabString;
+    }
+}
+
+- (void)setTextView:(UITextView *)textView {
+    _textView = textView;
+    if (textView) {
+        for (XXTEKeyboardButton *button in self.buttons) {
+            button.textInput = textView;
+        }
     }
 }
 

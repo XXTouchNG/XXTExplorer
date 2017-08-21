@@ -15,6 +15,7 @@
 
 @interface SKHelper : NSObject
 
+@property (nonatomic, strong, readonly) SKHelperConfig *config;
 @property (nonatomic, strong, readonly) SKLanguage *language;
 @property (nonatomic, strong, readonly) SKTheme *theme;
 

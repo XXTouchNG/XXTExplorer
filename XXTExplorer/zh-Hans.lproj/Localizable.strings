@@ -24,6 +24,9 @@
 "%lu Selected" = "%lu 已选择";
 
 /* No comment provided by engineer. */
+"(Un)Comment" = "切换注释";
+
+/* No comment provided by engineer. */
 "1 item" = "1 项";
 
 /* No comment provided by engineer. */
@@ -127,6 +130,9 @@
 
 /* No comment provided by engineer. */
 "Auto Correction" = "自动更正";
+
+/* No comment provided by engineer. */
+"Auto Fullscreen" = "自动全屏";
 
 /* No comment provided by engineer. */
 "Auto Indent" = "自动缩进";
@@ -268,6 +274,9 @@
 
 /* No comment provided by engineer. */
 "Code Snippet Reference" = "代码片段参考文档";
+
+/* No comment provided by engineer. */
+"Code Snippets" = "代码片段";
 
 /* No comment provided by engineer. */
 "Code Viewer" = "代码查看器";
@@ -843,6 +852,12 @@
 "Settings" = "设置";
 
 /* No comment provided by engineer. */
+"Shift Left" = "减少缩进";
+
+/* No comment provided by engineer. */
+"Shift Right" = "增加缩进";
+
+/* No comment provided by engineer. */
 "Should Record \"Volume +\"" = "是否录制 \"音量 +\"";
 
 /* No comment provided by engineer. */
@@ -888,6 +903,9 @@
 
 /* No comment provided by engineer. */
 "System" = "系统";
+
+/* No comment provided by engineer. */
+"Tab Width" = "缩进符宽度";
 
 /* No comment provided by engineer. */
 "Tabs" = "缩进符";

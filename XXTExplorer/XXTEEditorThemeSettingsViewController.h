@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXTEEditorThemeSettingsViewController;
+
+@protocol XXTEEditorThemeSettingsViewControllerDelegate <NSObject>
+
+- (void)themeSettingsViewControllerSettingsDidChanged:(XXTEEditorThemeSettingsViewController *)controller;
+
+@end
+
 @interface XXTEEditorThemeSettingsViewController : UITableViewController
+
+@property (nonatomic, weak) id <XXTEEditorThemeSettingsViewControllerDelegate> delegate;
+@property (nonatomic, strong) NSString *selectedThemeName;
 
 @end

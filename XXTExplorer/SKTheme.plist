@@ -76,7 +76,19 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Ciapre (Black)</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Oceanic</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Oceanic (Eighties)</string>
 		<key>preview</key>
 		<string></string>
 	</dict>
@@ -113,6 +125,36 @@
 	<dict>
 		<key>name</key>
 		<string>OneHalf (Light)</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tomorrow</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tomorrow Night</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tomorrow Night (Blue)</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tomorrow Night (Bright)</string>
+		<key>preview</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tomorrow Night (Eighties)</string>
 		<key>preview</key>
 		<string></string>
 	</dict>
