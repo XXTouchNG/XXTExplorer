@@ -37,9 +37,18 @@
 
 @implementation XXTESplitViewController
 
+#pragma mark - Restore State
+
+- (NSString *)restorationIdentifier {
+    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
+}
+
+#pragma mark - Initializers
+
 - (instancetype)init {
     if (self = [super init]) {
         self.delegate = self;
+        [self setRestorationIdentifier:self.restorationIdentifier];
         [self setupAgents];
         [self setupAppearance];
     }
@@ -118,9 +127,9 @@
                                                       cancelHandler:nil
                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
                                                      [alertView dismissAnimated];
-                                                     blockUserInteractions(self, YES);
+                                                     blockUserInteractions(self, YES, 0.2);
                                                      [XXTERespringAgent performRespring];
-                                                     blockUserInteractions(self, NO);
+                                                     blockUserInteractions(self, NO, 0.2);
                                                  }];
         if (self.alertView && self.alertView.isShowing) {
             [self.alertView transitionToAlertView:alertView completionHandler:nil];

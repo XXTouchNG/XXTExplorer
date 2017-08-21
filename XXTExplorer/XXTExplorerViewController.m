@@ -48,6 +48,12 @@
     BOOL firstTimeLoaded;
 }
 
+//#pragma mark - Restore State
+//
+//- (NSString *)restorationIdentifier {
+//    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
+//}
+
 #pragma mark - UIViewController
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -69,6 +75,7 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
+//    [self setRestorationIdentifier:self.restorationIdentifier];
     {
         NSArray *explorerUserDefaults = XXTEBuiltInDefaultsObject(@"EXPLORER_USER_DEFAULTS");
         for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
@@ -624,7 +631,7 @@
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
         NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
         if (detailText && detailText.length > 0) {
-            blockUserInteractions(self, YES);
+            blockUserInteractions(self, YES, 0.2);
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     [[UIPasteboard generalPasteboard] setString:detailText];
@@ -632,7 +639,7 @@
                 });
             }].finally(^() {
                 showUserMessage(self, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
-                blockUserInteractions(self, NO);
+                blockUserInteractions(self, NO, 0.2);
             });
         }
     }

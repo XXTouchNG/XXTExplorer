@@ -23,6 +23,7 @@
 #import "XXTEKeyboardRow.h"
 
 #import <Masonry/Masonry.h>
+#import "UINavigationController+XXTEFullscreenPopGesture.h"
 
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorController+Settings.h"
@@ -30,27 +31,49 @@
 #import "SKHelper.h"
 #import "SKHelperConfig.h"
 #import "SKAttributedParser.h"
+#import "SKRange.h"
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate>
+
+@property (nonatomic, strong) UIView *fakeStatusBar;
 
 @property (nonatomic, strong) XXTETextEditorTheme *theme;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @property (nonatomic, strong) SKHelper *helper;
 @property (nonatomic, strong) SKAttributedParser *parser;
-
-@property (nonatomic, strong) NSOperationQueue *syntaxQueue;
-@property (nonatomic, strong) NSMutableIndexSet *renderedSet;
-@property (nonatomic, strong) NSMutableArray <NSValue *> *rangesArray;
-@property (nonatomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
+@property (nonatomic, assign) BOOL isRendering;
+@property (atomic, strong) NSMutableIndexSet *renderedSet;
+@property (atomic, strong) NSMutableArray <NSValue *> *rangesArray;
+@property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
 
 @end
 
 @implementation XXTEEditorController
 
 @synthesize entryPath = _entryPath;
+
+#pragma mark - Restore State
+
+- (NSString *)restorationIdentifier {
+    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+    if (_entryPath) {
+        [coder encodeObject:_entryPath forKey:@"entryPath"];
+    }
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+    _entryPath = [coder decodeObjectForKey:@"entryPath"];
+    [super decodeRestorableStateWithCoder:coder];
+}
+
+#pragma mark - Editor
 
 + (NSString *)editorName {
     return NSLocalizedString(@"Text Editor", nil);
@@ -78,6 +101,21 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         return YES;
     else
         return NO;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+- (BOOL)xxte_prefersNavigationBarHidden {
+    return [self prefersNavigationBarHidden];
+}
+
+- (BOOL)prefersNavigationBarHidden {
+    if (XXTE_PAD) {
+        return NO;
+    }
+    return [self isEditing];
 }
 
 #pragma mark - Navigation Bar Color
@@ -116,11 +154,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 - (void)setup {
+    [self setRestorationIdentifier:self.restorationIdentifier];
+        
     self.hidesBottomBarWhenPushed = YES;
-    NSOperationQueue *syntaxQueue = [[NSOperationQueue alloc] init];
-    syntaxQueue.maxConcurrentOperationCount = 1;
-    self.syntaxQueue = syntaxQueue;
-    
     self.rangesArray = [[NSMutableArray alloc] init];
     self.attributesArray = [[NSMutableArray alloc] init];
     self.renderedSet = [[NSMutableIndexSet alloc] init];
@@ -134,6 +170,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self reloadTheme];
     [self reloadParser];
     [self reloadView];
+    [self reloadViewConstraints];
     [self reloadViewStyle];
     [self reloadContent];
     [self reloadAttributes];
@@ -154,7 +191,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 - (void)reloadTheme {
     NSString *themeIdentifier = @"Monokai";
     
-    XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier];
+    UIFont *font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // config
+    XXTETextEditorTheme *theme = [[XXTETextEditorTheme alloc] initWithIdentifier:themeIdentifier font:font];
     _theme = theme;
 }
 
@@ -166,7 +204,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     helperConfig.themeIdentifier = self.theme.identifier;
     helperConfig.color = self.theme.foregroundColor;
     helperConfig.languageIdentifier = @"source.lua"; // config
-    helperConfig.font = [UIFont fontWithName:@"SourceCodePro-Regular" size:14]; // config
+    helperConfig.font = self.theme.font;
     
     SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
     SKAttributedParser *parser = [helper attributedParser];
@@ -237,16 +275,42 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     
     [self.view addSubview:textView];
     
-    [textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
     _textView = textView;
+}
+
+- (void)reloadViewConstraints {
+    [self updateViewConstraints];
+}
+
+- (void)updateViewConstraints {
+    CGRect frame = CGRectNull;
+    if (NO == [self prefersNavigationBarHidden]) frame = CGRectZero;
+    else frame = [[UIApplication sharedApplication] statusBarFrame];
+    [self.fakeStatusBar mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.equalTo(self.view);
+        make.height.equalTo(@(frame.size.height));
+    }];
+    if (XXTE_PAD)
+    {
+        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+    else
+    {
+        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.fakeStatusBar.mas_bottom);
+            make.leading.trailing.bottom.equalTo(self.view);
+        }];
+    }
+    [super updateViewConstraints];
 }
 
 - (void)reloadViewStyle {
     if (![self isViewLoaded]) return;
     XXTETextEditorTheme *theme = self.theme;
+    self.view.backgroundColor = theme.backgroundColor;
+    self.view.tintColor = theme.foregroundColor;
     XXTEEditorTextView *textView = self.textView;
     textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive; // config
     textView.autocapitalizationType = UITextAutocapitalizationTypeNone; // config
@@ -254,7 +318,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.spellCheckingType = UITextSpellCheckingTypeNo; // config
     textView.backgroundColor = theme.backgroundColor; // config
     [textView setTintColor:theme.caretColor]; // config
-    [textView setFont:[UIFont fontWithName:@"SourceCodePro-Regular" size:14.f]]; // config
+    [textView setFont:theme.font]; // config
     [textView setTextColor:theme.foregroundColor]; // config
     [textView setLineNumberEnabled:YES]; // config
     if (textView.vLayoutManager) {
@@ -275,9 +339,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     
     [self configure];
     [self configureSubviews];
-    [self configureConstraints];
     
     [self reloadView];
+    [self reloadViewConstraints];
     [self reloadViewStyle];
     
     [self reloadContent];
@@ -316,11 +380,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 - (void)configureSubviews {
-    
-}
-
-- (void)configureConstraints {
-    
+    if (XXTE_PAD) {
+        
+    } else {
+        [self.view addSubview:self.fakeStatusBar];
+    }
 }
 
 #pragma mark - UIView Getters
@@ -331,6 +395,23 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         _settingsButtonItem = settingsButtonItem;
     }
     return _settingsButtonItem;
+}
+
+- (UIView *)fakeStatusBar {
+    if (!_fakeStatusBar) {
+        CGRect frame = [[UIApplication sharedApplication] statusBarFrame];
+        UIView *fakeStatusBar = [[UIView alloc] initWithFrame:frame];
+        fakeStatusBar.backgroundColor = [UIColor clearColor];
+        fakeStatusBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        _fakeStatusBar = fakeStatusBar;
+    }
+    return _fakeStatusBar;
+}
+
+#pragma mark - Getters
+
+- (BOOL)isEditing {
+    return self.textView.isFirstResponder;
 }
 
 #pragma mark - Content
@@ -355,7 +436,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (isHighlightEnabled) {
         [self invalidateSyntaxCaches];
         NSString *wholeString = self.textView.text;
-        blockUserInteractions(self, YES);
+        blockUserInteractions(self, YES, 0.2);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @weakify(self);
             [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
@@ -367,7 +448,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
             }];
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxOnScreen];
-                blockUserInteractions(self, NO);
+                blockUserInteractions(self, NO, 0.2);
             });
         });
     }
@@ -375,15 +456,27 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 #pragma mark - UITextViewDelegate
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    
+}
+
 #pragma mark - NSTextStorageDelegate
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
-    if (editedMask & NSTextStorageEditedCharacters) {
-//        [self.parser attributedParseStringInRange:editedRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
-//            NSLog(@"%@: (%lu, %lu)", scopeName, range.location, range.length);
+//    if (editedMask & NSTextStorageEditedCharacters) {
+//        NSRange extendedRange = NSUnionRange(editedRange, [[textStorage string] lineRangeForRange:NSMakeRange(NSMaxRange(editedRange), 0)]);
+//        [textStorage setAttributes:self.theme.defaultAttributes range:extendedRange];
+//        [self.parser attributedParseString:textStorage.string inRange:extendedRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
+//            if (attributes && NSRangeEntirelyContains(extendedRange, range)) {
+//                [textStorage addAttributes:attributes range:range];
+//            }
 //        }];
-    }
+//    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -398,13 +491,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 #pragma mark - Render
 
-- (void)renderSyntaxOnScreen {
-    if (self.parser.aborted) return;
-    
-    NSArray *rangesArray = self.rangesArray;
-    NSArray *attributesArray = self.attributesArray;
-    NSMutableIndexSet *renderedSet = self.renderedSet;
+- (NSRange)rangeShouldRenderOnScreen {
     XXTEEditorTextView *textView = self.textView;
+//    NSUInteger textLength = textView.text.length;
+    
     CGRect bounds = textView.bounds;
     
     UITextPosition *start = [textView characterRangeAtPoint:bounds.origin].start;
@@ -415,8 +505,24 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (beginOffset < 0) beginOffset = 0;
     NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
     endLength += kXXTEEditorCachedRangeLength * 2;
+//    if (beginOffset + endLength > textLength) {
+//        endLength = textLength - beginOffset;
+//    }
     
     NSRange range = NSMakeRange((NSUInteger) beginOffset, (NSUInteger) endLength);
+    return range;
+}
+
+- (void)renderSyntaxOnScreen {
+    if (self.parser.aborted) return;
+    
+    NSArray *rangesArray = self.rangesArray;
+    NSArray *attributesArray = self.attributesArray;
+    NSMutableIndexSet *renderedSet = self.renderedSet;
+    XXTEEditorTextView *textView = self.textView;
+    
+    NSRange range = [self rangeShouldRenderOnScreen];
+    
     if ([renderedSet containsIndexesInRange:range]) return;
     [renderedSet addIndexesInRange:range];
     
@@ -425,11 +531,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (rangesArrayLength != attributesArrayLength) return;
     
     // Single
-    static BOOL isRendering = NO;
-    if (isRendering) return;
+    if (self.isRendering) return;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        isRendering = YES;
+        self.isRendering = YES;
         
         // Begin
         dispatch_async_on_main_queue(^{
@@ -464,7 +569,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
             [textView.vTextStorage endEditing];
         });
         
-        isRendering = NO;
+        self.isRendering = NO;
     });
 }
 
@@ -472,6 +577,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self.rangesArray removeAllObjects];
     [self.attributesArray removeAllObjects];
     [self.renderedSet removeAllIndexes];
+//    NSRange wholeRange = NSMakeRange(0, self.textView.text.length);
+//    [self.rangesArray addObject:[NSValue valueWithRange:wholeRange]];
+//    [self.attributesArray addObject:self.theme.defaultAttributes];
 }
 
 #pragma mark - Memory

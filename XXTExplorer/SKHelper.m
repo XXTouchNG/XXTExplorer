@@ -13,9 +13,6 @@
 
 @interface SKHelper ()
 
-@property (nonatomic, strong) SKLanguage *language;
-@property (nonatomic, strong) SKTheme *theme;
-
 @end
 
 @implementation SKHelper

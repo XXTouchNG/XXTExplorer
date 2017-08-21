@@ -30,6 +30,7 @@ typedef void (^SKAttributedParserCallback)(NSString *scopeName, NSRange range, S
 // MARK: - Parsing
 
 - (void)attributedParseString:(NSString *)string matchCallback:(SKAttributedParserCallback)callback;
+- (void)attributedParseString:(NSString *)string inRange:(NSRange)range matchCallback:(SKAttributedParserCallback)callback;
 - (void)attributedParseStringInRange:(NSRange)range matchCallback:(SKAttributedParserCallback)callback;
 - (NSAttributedString *)attributedStringForString:(NSString *)string baseAttributes:(NSDictionary *)baseAttributes;
 

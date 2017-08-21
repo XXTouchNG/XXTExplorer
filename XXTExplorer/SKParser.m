@@ -59,7 +59,11 @@
     [self parseInRange:NSMakeRange(0, string.length) matchCallback:callback];
 }
 
-// MARK: - Private
+- (void)parseString:(NSString *)string inRange:(NSRange)range matchCallback:(SKParserCallback)callback {
+    if (_aborted) return;
+    self.toParse = [[SKScopedString alloc] initWithString:string];
+    [self parseInRange:range matchCallback:callback];
+}
 
 /// Parses the string in toParse. Supports incremental parsing.
 ///
@@ -71,6 +75,7 @@
 /// - parameter match:  The callback to call on every match of a pattern
 ///                     identifier of the language.
 - (void)parseInRange:(NSRange)range matchCallback:(SKParserCallback)callback {
+    if (!self.toParse) return;
     NSRange bounds = range;
     assert((self.toParse.string).length >= NSMaxRange(bounds));
     SKScope *endScope = [self.toParse topMostScopeAtIndex:bounds.location];
@@ -105,6 +110,8 @@
     [self.toParse removeScopesInRange:allResults.range];
     [self applyResults:allResults callback:callback];
 }
+
+// MARK: - Private
 
 // Algorithmic notes:
 // A pattern expression can not match a substring spanning multiple lines

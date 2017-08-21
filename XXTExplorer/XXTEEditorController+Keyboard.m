@@ -16,18 +16,25 @@
 // Call this method somewhere in your view controller setup code.
 - (void)registerKeyboardNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)dismissKeyboardNotifications
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)keyboardWillAppear:(NSNotification *)aNotification {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self updateViewConstraints];
+}
+
 // Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardDidAppear:(NSNotification *)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
@@ -53,8 +60,11 @@
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+- (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self updateViewConstraints];
+    
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     textView.contentInset = contentInsets;

@@ -10,8 +10,13 @@
 
 @class SKHelperConfig;
 @class SKAttributedParser;
+@class SKLanguage;
+@class SKTheme;
 
 @interface SKHelper : NSObject
+
+@property (nonatomic, strong, readonly) SKLanguage *language;
+@property (nonatomic, strong, readonly) SKTheme *theme;
 
 - (instancetype)initWithConfig:(SKHelperConfig *)config;
 - (SKAttributedParser *)attributedParser;

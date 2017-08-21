@@ -246,7 +246,7 @@ typedef enum : NSUInteger {
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES);
+                blockUserInteractions(self, YES, 0.2);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -254,7 +254,7 @@ typedef enum : NSUInteger {
                     });
                 }].finally(^() {
                     showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO);
+                    blockUserInteractions(self, NO, 0.2);
                 });
             }
         }

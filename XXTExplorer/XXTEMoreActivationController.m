@@ -78,7 +78,7 @@
 //}
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self, YES);
+    blockUserInteractions(self, YES, 0.2);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
             .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
                 return jsonDictionary[@"data"];
@@ -102,7 +102,7 @@
                 }
             })
             .finally(^() {
-                blockUserInteractions(self, NO);
+                blockUserInteractions(self, NO, 0.2);
                 [self.tableView reloadData];
             });
 }

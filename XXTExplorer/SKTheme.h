@@ -19,6 +19,7 @@ typedef NSDictionary <NSString *, id> * SKAttributes;
 @property (nonatomic, strong, readonly) NSUUID *uuid;
 @property (nonatomic, strong, readonly) NSString *name;
 @property (nonatomic, strong, readonly) NSDictionary <NSString *, SKAttributes> *attributes;
+- (NSDictionary <NSString *, id> *)globalAttributes;
 
 // MARK: - Global Scope
 @property (nonatomic, strong, readonly, getter=getBackgroundColor) UIColor *backgroundColor;

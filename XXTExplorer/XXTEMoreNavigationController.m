@@ -14,6 +14,26 @@
 
 @implementation XXTEMoreNavigationController
 
+#pragma mark - Initializers
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
+    if (self = [super initWithRootViewController:rootViewController]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+    
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }

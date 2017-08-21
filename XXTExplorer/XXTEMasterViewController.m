@@ -14,8 +14,17 @@
 
 @implementation XXTEMasterViewController
 
+//#pragma mark - Restore State
+//
+//- (NSString *)restorationIdentifier {
+//    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
+//}
+
+#pragma mark - Initializers
+
 - (instancetype)init {
     if (self = [super init]) {
+//        [self setRestorationIdentifier:self.restorationIdentifier];
         [self setupAppearance];
     }
     return self;

@@ -10,11 +10,13 @@
 
 @interface XXTETextEditorTheme : NSObject
 
-@property (nonatomic, strong) UIColor *backgroundColor;
-@property (nonatomic, strong) UIColor *foregroundColor;
-@property (nonatomic, strong) UIColor *selectionColor;
-@property (nonatomic, strong) UIColor *caretColor;
+@property (nonatomic, strong, readonly) UIColor *backgroundColor;
+@property (nonatomic, strong, readonly) UIColor *foregroundColor;
+@property (nonatomic, strong, readonly) UIColor *selectionColor;
+@property (nonatomic, strong, readonly) UIColor *caretColor;
 @property (nonatomic, strong, readonly) NSString *identifier;
-- (instancetype)initWithIdentifier:(NSString *)identifier;
+@property (nonatomic, strong, readonly) UIFont *font;
+- (instancetype)initWithIdentifier:(NSString *)identifier font:(UIFont *)font;
+- (NSDictionary *)defaultAttributes;
 
 @end

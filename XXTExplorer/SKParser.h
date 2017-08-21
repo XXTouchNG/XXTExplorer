@@ -40,6 +40,7 @@ typedef void (^SKParserCallback)(NSString *scopeName, NSRange range);
 // MARK: - Public
 
 - (void)parseString:(NSString *)string matchCallback:(SKParserCallback)callback;
+- (void)parseString:(NSString *)string inRange:(NSRange)range matchCallback:(SKParserCallback)callback;
 - (void)parseInRange:(NSRange)range matchCallback:(SKParserCallback)callback;
 
 @end

@@ -11,8 +11,9 @@
 
 @implementation XXTETextEditorTheme
 
-- (instancetype)initWithIdentifier:(NSString *)identifier {
+- (instancetype)initWithIdentifier:(NSString *)identifier font:(UIFont *)font {
     if (self = [super init]) {
+        _font = font;
         _identifier = identifier;
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;
@@ -40,10 +41,14 @@
 }
 
 - (void)setupWithDictionary:(NSDictionary *)dictionary {
-    self.backgroundColor = [UIColor colorWithHex:dictionary[@"background"]];
-    self.foregroundColor = [UIColor colorWithHex:dictionary[@"foreground"]];
-    self.caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
-    self.selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
+    _backgroundColor = [UIColor colorWithHex:dictionary[@"background"]];
+    _foregroundColor = [UIColor colorWithHex:dictionary[@"foreground"]];
+    _caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
+    _selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
+}
+
+- (NSDictionary *)defaultAttributes {
+    return @{ NSForegroundColorAttributeName: self.foregroundColor, NSBackgroundColorAttributeName: self.backgroundColor, NSFontAttributeName: self.font };
 }
 
 @end

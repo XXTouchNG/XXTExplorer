@@ -17,6 +17,8 @@
 
 @implementation XXTEWorkspaceViewController
 
+#pragma mark - Initializers
+
 - (instancetype)init {
     if (self = [super init]) {
         [self setup];

@@ -21,6 +21,12 @@
 
 @implementation XXTExplorerNavigationController
 
+//#pragma mark - Restore State
+//
+//- (NSString *)restorationIdentifier {
+//    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
+//}
+
 - (instancetype)init {
     if (self = [super init]) {
         [self setup];
@@ -36,7 +42,7 @@
 }
 
 - (void)setup {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+//    [self setRestorationIdentifier:self.restorationIdentifier];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

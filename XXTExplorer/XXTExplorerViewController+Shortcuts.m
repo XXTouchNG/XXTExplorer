@@ -36,9 +36,9 @@
         if ([jsonEvent isEqualToString:@"bind_code"] || [jsonEvent isEqualToString:@"license"]) {
             if ([jsonDictionary[@"code"] isKindOfClass:[NSString class]]) {
                 NSString *licenseCode = jsonDictionary[@"code"];
-                blockUserInteractions(self, YES);
+                blockUserInteractions(self, YES, 0.2);
                 void (^ completionBlock)(void) = ^() {
-                    blockUserInteractions(self, NO);
+                    blockUserInteractions(self, NO, 0.2);
                     XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
                     XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
                     licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -66,9 +66,9 @@
                     targetFullPath = [self.entryPath stringByAppendingPathComponent:targetPath];
                 }
                 NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
-                blockUserInteractions(self, YES);
+                blockUserInteractions(self, YES, 0.2);
                 void (^ completionBlock)(void) = ^() {
-                    blockUserInteractions(self, NO);
+                    blockUserInteractions(self, NO, 0.2);
                     XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
                     XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
                     downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -100,7 +100,7 @@
 
 - (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
     if (!entryPath) return;
-    blockUserInteractions(self, YES);
+    blockUserInteractions(self, YES, 0.2);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -118,14 +118,14 @@
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO);
+        blockUserInteractions(self, NO, 0.2);
     });
 }
 
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
     if (!entryPath) return;
     BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
-    blockUserInteractions(self, YES);
+    blockUserInteractions(self, YES, 0.2);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -166,7 +166,7 @@
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO);
+        blockUserInteractions(self, NO, 0.2);
     });
 }
 

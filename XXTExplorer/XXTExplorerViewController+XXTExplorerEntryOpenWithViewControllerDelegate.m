@@ -40,7 +40,7 @@
 - (void)tableView:(UITableView *)tableView showDetailController:(UIViewController <XXTEViewer> *)viewer {
     if (viewer) {
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]]) {
-            blockUserInteractions(self, YES);
+            blockUserInteractions(self, YES, 0.2);
             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": viewer.entryPath}]
             .then(convertJsonString)
             .then(^(NSDictionary *jsonDictionary) {
@@ -58,7 +58,7 @@
                 }
             })
             .finally(^() {
-                blockUserInteractions(self, NO);
+                blockUserInteractions(self, NO, 0.2);
                 [self loadEntryListData];
                 [self.tableView reloadData];
             });

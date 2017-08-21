@@ -442,6 +442,7 @@
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8455D21F0D4D430055F98B /* XXTEMoreDocumentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreDocumentsController.h; sourceTree = "<group>"; };
 		0F8455D31F0D4D430055F98B /* XXTEMoreDocumentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreDocumentsController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
 		0F8521461F2D8A4600A912AC /* XUILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILogger.m; sourceTree = "<group>"; };
 		0F8521481F2D978A00A912AC /* XUIOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOptionCell.h; sourceTree = "<group>"; };
 		0F8521491F2D978A00A912AC /* XUIOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOptionCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1441,6 +1442,7 @@
 				0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */,
 				0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */,
 				0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */,
+				0F8485521F489778001D265D /* SKRange.h */,
 			);
 			name = SyntaxKit;
 			sourceTree = "<group>";

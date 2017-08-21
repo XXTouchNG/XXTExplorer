@@ -32,7 +32,7 @@
 ///
 /// The sender is passed in so it can be used to check if the operation was
 /// cancelled after the call.
-typedef void (^SKAttributedParsingOperationCallback)(NSArray <NSValue *> *rangeArray, NSArray <SKAttributes> *attributesArray, SKAttributedParsingOperation *operation);
+typedef void (^SKAttributedParsingOperationCallback)(NSArray <NSValue *> *rangesArray, NSArray <SKAttributes> *attributesArray, SKAttributedParsingOperation *operation);
 
 @interface SKAttributedParsingOperation : NSOperation
 

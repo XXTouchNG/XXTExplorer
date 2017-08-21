@@ -22,7 +22,7 @@
     }
     NSString *scriptName = kwargs[0];
     NSString *scriptPath = [self.bundle pathForResource:scriptName ofType:nil];
-    blockUserInteractions(self, YES);
+    blockUserInteractions(self, YES, 0.2);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": scriptPath, @"envp": uAppConstEnvp()}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -41,7 +41,7 @@
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO);
+        blockUserInteractions(self, NO, 0.2);
     });
 }
 

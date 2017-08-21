@@ -35,9 +35,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 
 #pragma mark - Application
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_9) {
         UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
@@ -63,8 +61,6 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     }
     
     // Master - Explorer Controller
-//    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-//    NSString *documentPath = [[NSBundle mainBundle] bundlePath];
     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
     
@@ -83,7 +79,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     // Split Controller
     XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
     splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-//    splitViewController.viewControllers = @[masterViewController];
+    //    splitViewController.viewControllers = @[masterViewController];
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     mainWindow.tintColor = XXTE_COLOR;
@@ -92,6 +88,12 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     [mainWindow makeKeyAndVisible];
     
     self.window = mainWindow;
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    
     return YES;
 }
 
@@ -105,6 +107,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    // TODO: save user data if necessary
 }
 
 
@@ -123,6 +126,19 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - Restoration
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(nonnull NSCoder *)coder {
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder {
+    return YES;
+}
+
+- (UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+    return nil;
+}
 
 #pragma mark - Open URL
 
