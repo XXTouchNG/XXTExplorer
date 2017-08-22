@@ -274,7 +274,7 @@
     }
     NSString *usageString = nil;
     NSError *usageError = nil;
-    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[sharedDelegate() sharedRootPath] error:&usageError];
+    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
     if (!usageError) {
         NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
         if (deviceFreeSpace) {
@@ -431,7 +431,7 @@
             } else {
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[@"path"];
-                NSString *directoryPath = [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
+                NSString *directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
@@ -483,7 +483,7 @@
             if (!entryHeaderView) {
                 entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
             }
-            NSString *rootPath = [sharedDelegate() sharedRootPath];
+            NSString *rootPath = [XXTEAppDelegate sharedRootPath];
             NSRange rootRange = [self.entryPath rangeOfString:rootPath];
             if (rootRange.location == 0) {
                 NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];

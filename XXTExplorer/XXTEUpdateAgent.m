@@ -26,7 +26,7 @@ static NSString * const XXTEUpdateAgentIgnoreDatePrefix = @"Date %@"; // +dateSt
 - (instancetype)initWithBundleIdentifier:(NSString *)bundleIdentifier {
     if (self = [super init]) {
         _bundleIdentifier = bundleIdentifier;
-        NSString *temporarilyLocation = [[[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateAgent"];
+        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateAgent"];
         struct stat temporarilyLocationStat;
         if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
             if (0 != mkdir([temporarilyLocation UTF8String], 0755))

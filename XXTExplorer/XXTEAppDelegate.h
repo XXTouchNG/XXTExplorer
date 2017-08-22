@@ -10,11 +10,12 @@
 
 @interface XXTEAppDelegate : UIResponder <UIApplicationDelegate>
 
-- (NSUserDefaults *)userDefaults;
-- (NSDictionary *)builtInDefaults;
-- (NSString *)sharedRootPath;
++ (NSDictionary *)appDefines;
++ (NSUserDefaults *)userDefaults;
++ (NSDictionary *)builtInDefaults;
++ (NSString *)sharedRootPath;
+
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic, readonly) NSDictionary *appDefines;
 
 @end
 

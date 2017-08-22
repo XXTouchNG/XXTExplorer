@@ -30,7 +30,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 @end
 
 @implementation XXTEAppDelegate {
-    NSDictionary *localAppDefines;
+    
 }
 
 #pragma mark - Application
@@ -49,7 +49,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     XXTE_END_IGNORE_PARTIAL
     
     // Create required subdirectories
-    NSString *sharedRootPath = [sharedDelegate() sharedRootPath];
+    NSString *sharedRootPath = [XXTEAppDelegate sharedRootPath];
     NSArray <NSString *> *requiredSubdirectories = uAppDefine(@"REQUIRED_SUBDIRECTORIES");
     for (NSString *requiredSubdirectory in requiredSubdirectories) {
         NSString *directoryPath = [sharedRootPath stringByAppendingPathComponent:requiredSubdirectory];
@@ -222,18 +222,21 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 
 #pragma mark - App Defines
 
-- (NSDictionary *)appDefines {
++ (NSDictionary *)appDefines {
+    static NSDictionary *localAppDefines = nil;
     if (!localAppDefines) {
-        NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
-        [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
-        [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
-        [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
-        localAppDefines = appDefines;
+        localAppDefines = ({
+            NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
+            [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
+            [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
+            [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
+            appDefines;
+        });
     }
     return localAppDefines;
 }
 
-- (NSUserDefaults *)userDefaults {
++ (NSUserDefaults *)userDefaults {
     static NSUserDefaults *userDefaults = nil;
     if (!userDefaults) {
         userDefaults = ({
@@ -243,7 +246,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     return userDefaults;
 }
 
-- (NSDictionary *)builtInDefaults {
++ (NSDictionary *)builtInDefaults {
     static NSDictionary *builtInDefaults = nil;
     if (!builtInDefaults) {
         builtInDefaults = ({
@@ -254,7 +257,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     return builtInDefaults;
 }
 
-- (NSString *)sharedRootPath {
++ (NSString *)sharedRootPath {
     static NSString *rootPath = nil;
     if (!rootPath) {
         rootPath = ({
@@ -264,8 +267,10 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
             NSString *mainPath = nil;
 #endif
             const char *mainPathCStr = [mainPath UTF8String];
-            if (!mainPath || 0 != access(mainPathCStr, R_OK | W_OK)) {
+            if (!mainPath) {
                 mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+            } else if (0 != access(mainPathCStr, F_OK)) {
+                mkdir(mainPathCStr, 0755);
             }
             mainPath;
         });

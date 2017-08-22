@@ -31,7 +31,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
     if (!initialPath) {
         initialPath = ({
             NSString *initialRelativePath = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltInitialPath);
-            [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:initialRelativePath];
+            [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:initialRelativePath];
         });
     }
     return initialPath;

@@ -20,7 +20,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _defaultsPath = [[sharedDelegate() sharedRootPath] stringByAppendingPathComponent:@"uicfg"];
+        _defaultsPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"uicfg"];
     }
     return self;
 }
