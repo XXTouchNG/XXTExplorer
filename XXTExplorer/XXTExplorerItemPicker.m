@@ -24,6 +24,8 @@
     
 }
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -34,6 +36,12 @@
     
     [self.toolbar updateStatus:XXTExplorerToolbarStatusReadonly];
 }
+
+- (BOOL)showsHomeSeries {
+    return NO;
+}
+
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -570,7 +570,6 @@ typedef enum : NSUInteger {
         }
         
         [textView insertText:[NSString stringWithFormat:@"\n%@", tabStr]];
-        [self setNeedsSaveDocument];
         return NO;
     }
     else if (text.length == 0 &&
@@ -578,7 +577,6 @@ typedef enum : NSUInteger {
     {
         // Auto backward? No...
     }
-    [self setNeedsSaveDocument];
     return YES;
 }
 
@@ -586,7 +584,7 @@ typedef enum : NSUInteger {
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
-//    if (editedMask & NSTextStorageEditedCharacters) {
+    if (editedMask & NSTextStorageEditedCharacters) {
 //        NSRange extendedRange = NSUnionRange(editedRange, [[textStorage string] lineRangeForRange:NSMakeRange(NSMaxRange(editedRange), 0)]);
 //        [textStorage setAttributes:self.theme.defaultAttributes range:extendedRange];
 //        [self.parser attributedParseString:textStorage.string inRange:extendedRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
@@ -594,7 +592,8 @@ typedef enum : NSUInteger {
 //                [textStorage addAttributes:attributes range:range];
 //            }
 //        }];
-//    }
+        [self setNeedsSaveDocument];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

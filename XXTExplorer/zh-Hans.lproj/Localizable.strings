@@ -66,6 +66,9 @@
 "Access Denied" = "访问被拒绝";
 
 /* No comment provided by engineer. */
+"Access denied." = "访问被拒绝.";
+
+/* No comment provided by engineer. */
 "Access Restricted" = "访问被限制";
 
 /* No comment provided by engineer. */

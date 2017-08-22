@@ -44,4 +44,8 @@ typedef enum : NSUInteger {
 - (void)loadEntryListData;
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl;
 
+#pragma mark - home series
+
+- (BOOL)showsHomeSeries;
+
 @end

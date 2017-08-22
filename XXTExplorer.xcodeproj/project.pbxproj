@@ -889,6 +889,17 @@
 			name = Agents;
 			sourceTree = "<group>";
 		};
+		0F2E49E51F4CA10600BD11AA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0F5EB5191F08E03B0016016A /* Aliyun */,
+				0F61E1641ED7875A003DCC78 /* Views */,
+				0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */,
+				0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		0F3508B91F163F60000403FD /* BundleReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,12 +1263,9 @@
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
-				0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */,
-				0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */,
-				0F5EB5191F08E03B0016016A /* Aliyun */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
+				0F2E49E51F4CA10600BD11AA /* Common */,
 				0F2CD3501F3B5C9D00110772 /* Agents */,
-				0F61E1641ED7875A003DCC78 /* Views */,
 				0F61E1601ED78712003DCC78 /* Master */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
 				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,

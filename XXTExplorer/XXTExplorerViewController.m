@@ -202,9 +202,14 @@
 
 #pragma mark - NSFileManager
 
+- (BOOL)showsHomeSeries {
+    return YES;
+}
+
 - (void)loadEntryListDataWithError:(NSError **)error {
     {
-        if (XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO) &&
+        if ([self showsHomeSeries] &&
+            XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO) &&
                 self == self.navigationController.viewControllers[0]) {
             _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
         } else {
@@ -216,7 +221,9 @@
         BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
         NSError *localError = nil;
         NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
-        if (localError && error) *error = localError;
+        if (localError && error) {
+            *error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: localError.localizedDescription}];
+        }
         
         NSMutableArray <NSDictionary *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
         NSMutableArray <NSDictionary *> *entryBundleAttributesList = [[NSMutableArray alloc] init];
@@ -230,8 +237,7 @@
                 NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
                 NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
                 if (localError && error) {
-                    *error = localError;
-                    break;
+                    continue;
                 }
                 if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
                     [entryDirectoryAttributesList addObject:entryAttributes];
@@ -414,6 +420,7 @@
                         }
                     } else {
                         // TODO: not readable, unlock?
+                        showUserMessage(self, NSLocalizedString(@"Access denied.", nil));
                     }
                 } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
                 { // broken symlink
