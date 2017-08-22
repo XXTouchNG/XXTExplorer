@@ -261,7 +261,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     static NSString *rootPath = nil;
     if (!rootPath) {
         rootPath = ({
-#ifdef DEBUG
+#ifndef DEBUG
             NSString *mainPath = uAppDefine(@"MAIN_PATH");
 #else
             NSString *mainPath = nil;

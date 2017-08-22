@@ -1,5 +1,5 @@
 //
-//  XXTEMoreBootScriptPicker.h
+//  XXTExplorerItemPicker.h
 //  XXTExplorer
 //
 //  Created by Zheng on 09/07/2017.
@@ -8,20 +8,20 @@
 
 #import "XXTExplorerViewController+SharedInstance.h"
 
-@class XXTEMoreBootScriptPicker;
+@class XXTExplorerItemPicker;
 
-@protocol XXTEMoreBootScriptPickerDelegate <NSObject>
+@protocol XXTExplorerItemPickerDelegate <NSObject>
 
 @optional
-- (void)bootScriptPicker:(XXTEMoreBootScriptPicker *)picker didSelectedBootScriptPath:(NSString *)path;
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path;
 
 @end
 
-@interface XXTEMoreBootScriptPicker : XXTExplorerViewController
+@interface XXTExplorerItemPicker : XXTExplorerViewController
 
 @property (nonatomic, strong) NSString *selectedBootScriptPath;
 
-@property (nonatomic, weak) id <XXTEMoreBootScriptPickerDelegate> delegate;
+@property (nonatomic, weak) id <XXTExplorerItemPickerDelegate> delegate;
 @property (nonatomic, copy) NSArray <NSString *> *allowedExtensions;
 @property (nonatomic, assign, readonly) BOOL allowsMultipleSelection; // not implemented
 

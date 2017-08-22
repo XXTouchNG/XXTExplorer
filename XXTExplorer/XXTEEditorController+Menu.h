@@ -8,7 +8,7 @@
 
 #import "XXTEEditorController.h"
 
-@interface XXTEEditorController (Menu)
+@interface XXTEEditorController (Menu) <XXTExplorerItemPickerDelegate>
 
 - (void)registerMenuActions;
 - (void)dismissMenuActions;

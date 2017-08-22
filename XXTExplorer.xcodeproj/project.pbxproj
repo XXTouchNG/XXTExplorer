@@ -83,13 +83,15 @@
 		0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */; };
 		0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
 		0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */; };
-		0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DF1F1142E90087822E /* XXTEMoreBootScriptPicker.m */; };
+		0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */; };
 		0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
 		0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */; };
 		0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */; };
 		0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
+		0F68F4191F4C6EC300EE1F41 /* XXTPickerCollection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0F68F41A1F4C6EDD00EE1F41 /* XXTPickerCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */; };
 		0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */; };
 		0F6AEA841F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA831F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.m */; };
 		0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA861F374D8B0017BE7C /* XXTExplorerViewController+Notification.m */; };
@@ -272,6 +274,36 @@
 		D6FD36D51F42FDBF00910D91 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36D01F42FDBF00910D91 /* XXTEKeyboardButtonView.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0F68F4151F4C6EB200EE1F41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0F7A80B51EA2B5B600A4AC11;
+			remoteInfo = XXTPickerCollection;
+		};
+		0F68F4171F4C6EBD00EE1F41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F7A80B41EA2B5B600A4AC11;
+			remoteInfo = XXTPickerCollection;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0FF18D5A1F4C6A540079B177 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0F68F4191F4C6EC300EE1F41 /* XXTPickerCollection.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
@@ -423,8 +455,8 @@
 		0F6063D81F111E2E0087822E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		0F6063DB1F1129960087822E /* XXTEMoreBootScriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreBootScriptController.h; sourceTree = "<group>"; };
 		0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreBootScriptController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F6063DE1F1142E90087822E /* XXTEMoreBootScriptPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreBootScriptPicker.h; sourceTree = "<group>"; };
-		0F6063DF1F1142E90087822E /* XXTEMoreBootScriptPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreBootScriptPicker.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemPicker.h; sourceTree = "<group>"; };
+		0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerItemPicker.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController.h; sourceTree = "<group>"; };
 		0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTESplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWorkspaceViewController.h; sourceTree = "<group>"; };
@@ -437,6 +469,7 @@
 		0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerNavigationController.h; sourceTree = "<group>"; };
 		0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = XXTPickerCollection.xcodeproj; sourceTree = "<group>"; };
 		0F6AEA7F1F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryOpenWithViewController.h; sourceTree = "<group>"; };
 		0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerEntryOpenWithViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F6AEA821F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryOpenWithNavigationController.h; sourceTree = "<group>"; };
@@ -752,6 +785,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F68F41A1F4C6EDD00EE1F41 /* XXTPickerCollection.framework in Frameworks */,
 				D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */,
 				0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */,
 				D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */,
@@ -1048,8 +1082,6 @@
 		0F6063DA1F11262E0087822E /* Boot */ = {
 			isa = PBXGroup;
 			children = (
-				0F6063DE1F1142E90087822E /* XXTEMoreBootScriptPicker.h */,
-				0F6063DF1F1142E90087822E /* XXTEMoreBootScriptPicker.m */,
 				0F6063DB1F1129960087822E /* XXTEMoreBootScriptController.h */,
 				0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */,
 			);
@@ -1135,13 +1167,19 @@
 		0F61E1641ED7875A003DCC78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0FAE0F051ED70E4800798B4B /* XXTEInsetsLabel.h */,
-				0FAE0F061ED70E4800798B4B /* XXTEInsetsLabel.m */,
 				0FCC2ACC1F13114300C50A48 /* Cell */,
 				0FCC2ACB1F13112C00C50A48 /* Gesture */,
 				0FCC2ACA1F13112200C50A48 /* Toast */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		0F68F4121F4C6EB200EE1F41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		0F6AEA7E1F372A450017BE7C /* OpenWith */ = {
@@ -1159,6 +1197,8 @@
 			isa = PBXGroup;
 			children = (
 				0FCC2AC91F130BEE00C50A48 /* Cell */,
+				0FAE0F051ED70E4800798B4B /* XXTEInsetsLabel.h */,
+				0FAE0F061ED70E4800798B4B /* XXTEInsetsLabel.m */,
 				0F766CB11ED8D95700E18BE2 /* XXTESwipeButton.h */,
 				0F766CB21ED8D95700E18BE2 /* XXTESwipeButton.m */,
 				0F766CB31ED8D95700E18BE2 /* XXTESwipeTableCell.h */,
@@ -1186,6 +1226,7 @@
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
+				0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */,
 				0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */,
 				0FA7ABEB1ED641A3003EAD7D /* Products */,
 				59918F7D2218C7F23C834EB4 /* Pods */,
@@ -1211,6 +1252,8 @@
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
+				0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */,
+				0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F2CD3501F3B5C9D00110772 /* Agents */,
@@ -1873,10 +1916,12 @@
 				6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
 				D6DBD48D1F3C52D9002D5561 /* ShellScript */,
+				0FF18D5A1F4C6A540079B177 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0F68F4181F4C6EBD00EE1F41 /* PBXTargetDependency */,
 			);
 			name = XXTExplorer;
 			productName = XXTExplorer;
@@ -1913,12 +1958,28 @@
 			mainGroup = 0FA7ABE11ED641A3003EAD7D;
 			productRefGroup = 0FA7ABEB1ED641A3003EAD7D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0F68F4121F4C6EB200EE1F41 /* Products */;
+					ProjectRef = 0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0FA7ABE91ED641A3003EAD7D /* XXTExplorer */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = XXTPickerCollection.framework;
+			remoteRef = 0F68F4151F4C6EB200EE1F41 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0FA7ABE81ED641A3003EAD7D /* Resources */ = {
@@ -2182,7 +2243,7 @@
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
-				0F6063E01F1142E90087822E /* XXTEMoreBootScriptPicker.m in Sources */,
+				0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */,
 				0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F56900E1F1B022E009AF9FE /* XXTEArchiveViewer.m in Sources */,
@@ -2259,6 +2320,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0F68F4181F4C6EBD00EE1F41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XXTPickerCollection;
+			targetProxy = 0F68F4171F4C6EBD00EE1F41 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0F3508C21F166A69000403FD /* Localizable.strings */ = {

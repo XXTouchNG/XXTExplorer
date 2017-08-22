@@ -7,10 +7,11 @@
 //
 
 #import "XXTEEditor.h"
+#import "XXTExplorerItemPicker.h"
 
 @class SKHelper, SKAttributedParser, XXTEEditorTextView, XXTEEditorTheme;
 
-@interface XXTEEditorController : UIViewController <XXTEEditor>
+@interface XXTEEditorController : UIViewController <XXTEEditor, XXTExplorerItemPickerDelegate>
 
 @property (nonatomic, strong, readonly) SKHelper *helper;
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;

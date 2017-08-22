@@ -164,7 +164,8 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         searchBar;
     });
     
-    [self asyncApplicationList:nil];
+    [self.refreshControl beginRefreshing];
+    [self asyncApplicationList:self.refreshControl];
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
@@ -235,6 +236,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         });
         dispatch_async_on_main_queue(^{
             [self.tableView reloadData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (refreshControl && [refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }

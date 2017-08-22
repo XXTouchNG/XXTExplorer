@@ -16,6 +16,9 @@
 #import "SKHelper.h"
 #import "SKHelperConfig.h"
 
+#import "XXTECommonNavigationController.h"
+#import <XXTPickerCollection/XXTPickerCollection.h>
+
 @implementation XXTEEditorController (Menu)
 
 - (void)registerMenuActions {
@@ -58,7 +61,13 @@
 }
 
 - (void)menuActionCodeBlocks:(UIMenuItem *)sender {
-    
+    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] init];
+    itemPicker.delegate = self;
+    itemPicker.allowedExtensions = @[ @"lua" ];
+    XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:itemPicker];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (NSRange)fixedSelectedTextRange {

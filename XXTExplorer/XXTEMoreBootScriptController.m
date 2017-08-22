@@ -15,9 +15,9 @@
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 #import "XXTExplorerViewController+SharedInstance.h"
-#import "XXTEMoreBootScriptPicker.h"
+#import "XXTExplorerItemPicker.h"
 
-@interface XXTEMoreBootScriptController () <XXTEMoreBootScriptPickerDelegate>
+@interface XXTEMoreBootScriptController () <XXTExplorerItemPickerDelegate>
 @property (nonatomic, strong) UISwitch *bootScriptSwitch;
 
 @end
@@ -205,11 +205,11 @@
                     });
                 }
             } else if (indexPath.row == 1) {
-                XXTEMoreBootScriptPicker *bootScriptPicker = [[XXTEMoreBootScriptPicker alloc] init];
-                bootScriptPicker.delegate = self;
-                bootScriptPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua", @"luac" ];
-                bootScriptPicker.selectedBootScriptPath = bootScriptPath;
-                [self.navigationController pushViewController:bootScriptPicker animated:YES];
+                XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] init];
+                itemPicker.delegate = self;
+                itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua", @"luac" ];
+                itemPicker.selectedBootScriptPath = bootScriptPath;
+                [self.navigationController pushViewController:itemPicker animated:YES];
             }
         }
     }
@@ -280,9 +280,9 @@
     }
 }
 
-#pragma mark - XXTEMoreBootScriptPickerDelegate
+#pragma mark - XXTExplorerItemPickerDelegate
 
-- (void)bootScriptPicker:(XXTEMoreBootScriptPicker *)picker didSelectedBootScriptPath:(NSString *)path {
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path {
     blockUserInteractions(self, YES, 0.2);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_startup_script_file") JSON:@{ @"filename": path }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {

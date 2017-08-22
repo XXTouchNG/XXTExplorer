@@ -1,12 +1,12 @@
 //
-//  XXTEMoreBootScriptPicker.m
+//  XXTExplorerItemPicker.m
 //  XXTExplorer
 //
 //  Created by Zheng on 09/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTEMoreBootScriptPicker.h"
+#import "XXTExplorerItemPicker.h"
 #import "XXTESwipeTableCell.h"
 #import "XXTExplorerToolbar.h"
 #import "XXTExplorerDefaults.h"
@@ -14,11 +14,13 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerViewCell.h"
 
-@interface XXTEMoreBootScriptPicker () <XXTESwipeTableCellDelegate>
+@interface XXTExplorerItemPicker () <XXTESwipeTableCellDelegate>
+
+@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 
 @end
 
-@implementation XXTEMoreBootScriptPicker {
+@implementation XXTExplorerItemPicker {
     
 }
 
@@ -26,13 +28,11 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = nil;
+    if (self == self.navigationController.viewControllers[0]) {
+        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    }
     
-    UIView *toolbarOverlayView = [[UIView alloc] initWithFrame:self.toolbar.bounds];
-    toolbarOverlayView.backgroundColor = [UIColor whiteColor];
-    toolbarOverlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    toolbarOverlayView.alpha = 0.65f;
-    toolbarOverlayView.userInteractionEnabled = NO;
-    [self.toolbar addSubview:toolbarOverlayView];
+    [self.toolbar updateStatus:XXTExplorerToolbarStatusReadonly];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,7 +53,7 @@
                     showUserMessage(self, [accessError localizedDescription]);
                 }
                 else {
-                    XXTEMoreBootScriptPicker *explorerViewController = [[XXTEMoreBootScriptPicker alloc] initWithEntryPath:entryPath];
+                    XXTExplorerItemPicker *explorerViewController = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
                     explorerViewController.delegate = self.delegate;
                     explorerViewController.allowedExtensions = self.allowedExtensions;
                     [self.navigationController pushViewController:explorerViewController animated:YES];
@@ -74,8 +74,8 @@
                 }
                 if (extensionPermitted) {
                     NSString *selectedPath = entryAttributes[XXTExplorerViewEntryAttributePath];
-                    if (_delegate && [_delegate respondsToSelector:@selector(bootScriptPicker:didSelectedBootScriptPath:)]) {
-                        [_delegate bootScriptPicker:self didSelectedBootScriptPath:selectedPath];
+                    if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectedItemAtPath:)]) {
+                        [_delegate itemPicker:self didSelectedItemAtPath:selectedPath];
                     }
                 } else {
                     showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]);
@@ -144,6 +144,22 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     // nothing to do
+}
+
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)closeButtonItem {
+    if (!_closeButtonItem) {
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeButtonItemTapped:)];
+        _closeButtonItem = closeButtonItem;
+    }
+    return _closeButtonItem;
+}
+
+#pragma mark - UIControl Actions
+
+- (void)closeButtonItemTapped:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
