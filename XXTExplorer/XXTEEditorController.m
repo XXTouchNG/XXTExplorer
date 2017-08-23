@@ -293,6 +293,7 @@ typedef enum : NSUInteger {
     self.view.tintColor = theme.foregroundColor;
     
     XXTEEditorTextView *textView = self.textView;
+    textView.keyboardType = UIKeyboardTypeDefault;
     textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
     textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
     textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
@@ -315,6 +316,20 @@ typedef enum : NSUInteger {
         [textView.vLayoutManager setShowInvisibleCharacters:showInvisibleCharacters];
         [textView.vLayoutManager setInvisibleColor:theme.invisibleColor];
         [textView.vLayoutManager setInvisibleFont:theme.font];
+    }
+    
+    if (NO == [self isDarkMode] || XXTE_PAD) {
+        textView.keyboardAppearance = UIKeyboardAppearanceLight;
+        self.keyboardRow.colorStyle = XXTEKeyboardButtonColorStyleLight;
+    } else {
+        textView.keyboardAppearance = UIKeyboardAppearanceDark;
+        self.keyboardRow.colorStyle = XXTEKeyboardButtonColorStyleDark;
+    }
+    
+    if (XXTE_PAD) {
+        self.keyboardRow.style = XXTEKeyboardButtonStyleTablet;
+    } else {
+        self.keyboardRow.style = XXTEKeyboardButtonStylePhone;
     }
     
     if (isKeyboardRowEnabled &&

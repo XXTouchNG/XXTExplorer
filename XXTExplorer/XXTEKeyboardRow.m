@@ -92,6 +92,7 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
     for (int i = 0; i < _buttonCount; i++) {
         XXTEKeyboardButton *keyboardButton = [[XXTEKeyboardButton alloc] initWithFrame:CGRectMake(_leftMargin + i * (_buttonSpacing + _buttonWidth), _topMargin + (_barHeight - _buttonHeight) / 2, _buttonWidth, _buttonHeight)];
         keyboardButton.style = self.style;
+        keyboardButton.colorStyle = self.colorStyle;
         keyboardButton.input = [keys substringWithRange:NSMakeRange((NSUInteger) (i * 5), 5)];
         keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
         keyboardButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -113,6 +114,13 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
         for (XXTEKeyboardButton *button in self.buttons) {
             button.textInput = textView;
         }
+    }
+}
+
+- (void)setColorStyle:(XXTEKeyboardButtonColorStyle)colorStyle {
+    _colorStyle = colorStyle;
+    for (XXTEKeyboardButton *button in self.buttons) {
+        button.colorStyle = colorStyle;
     }
 }
 

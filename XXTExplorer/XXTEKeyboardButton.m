@@ -84,57 +84,41 @@
     }
 
     self.labels = [[NSMutableArray alloc] init];
+    
+    UIColor *highlightColor = [UIColor redColor];
 
-    UIFont *f = [UIFont fontWithName:@"CourierNewPSMT" size:_fontSize];
-    UIFont *bf = [UIFont fontWithName:@"CourierNewPSMT" size:_bigFontSize];
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(_leftInset, _topInset, _labelWidth, _labelHeight)];
+    label1.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:label1];
+    [label1 setHighlightedTextColor:highlightColor];
+    [self.labels addObject:label1];
 
-    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(_leftInset, _topInset, _labelWidth, _labelHeight)];
-    l.textAlignment = NSTextAlignmentLeft;
-    l.text = @"1";
-    l.font = f;
-    [self addSubview:l];
-    [l setHighlightedTextColor:[UIColor whiteColor]];
-    l.backgroundColor = [UIColor clearColor];
-    [self.labels addObject:l];
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - _labelWidth - _rightInset, _topInset, _labelWidth, _labelHeight)];
+    label2.textAlignment = NSTextAlignmentRight;
+    label2.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    [self addSubview:label2];
+    [label2 setHighlightedTextColor:highlightColor];
+    [self.labels addObject:label2];
 
-    l = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - _labelWidth - _rightInset, _topInset, _labelWidth, _labelHeight)];
-    l.textAlignment = NSTextAlignmentRight;
-    l.text = @"2";
-    l.font = f;
-    l.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    [self addSubview:l];
-    [l setHighlightedTextColor:[UIColor whiteColor]];
-    l.backgroundColor = [UIColor clearColor];
-    [self.labels addObject:l];
+    UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake((self.frame.size.width - _labelWidth - _leftInset - _rightInset) / 2 + _leftInset, (self.frame.size.height - _labelHeight - _topInset - _bottomInset) / 2 + _topInset, _labelWidth, _labelHeight))];
+    label3.textAlignment = NSTextAlignmentCenter;
+    label3.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self addSubview:label3];
+    [label3 setHighlightedTextColor:highlightColor];
+    [self.labels addObject:label3];
 
-    l = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake((self.frame.size.width - _labelWidth - _leftInset - _rightInset) / 2 + _leftInset, (self.frame.size.height - _labelHeight - _topInset - _bottomInset) / 2 + _topInset, _labelWidth, _labelHeight))];
-    l.textAlignment = NSTextAlignmentCenter;
-    l.text = @"3";
-    l.font = bf;
-    l.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self addSubview:l];
-    [l setHighlightedTextColor:[UIColor whiteColor]];
-    l.backgroundColor = [UIColor clearColor];
-    [self.labels addObject:l];
+    UILabel *label4 = [[UILabel alloc] initWithFrame:CGRectMake(_leftInset, (self.frame.size.height - _labelHeight - _bottomInset), _labelWidth, _labelHeight)];
+    label4.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:label4];
+    [label4 setHighlightedTextColor:highlightColor];
+    [self.labels addObject:label4];
 
-    l = [[UILabel alloc] initWithFrame:CGRectMake(_leftInset, (self.frame.size.height - _labelHeight - _bottomInset), _labelWidth, _labelHeight)];
-    l.textAlignment = NSTextAlignmentLeft;
-    l.text = @"4";
-    l.font = f;
-    [self addSubview:l];
-    [l setHighlightedTextColor:[UIColor whiteColor]];
-    l.backgroundColor = [UIColor clearColor];
-    [self.labels addObject:l];
-
-    l = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - _labelWidth - _rightInset, (self.frame.size.height - _labelHeight - _bottomInset), _labelWidth, _labelHeight)];
-    l.textAlignment = NSTextAlignmentRight;
-    l.text = @"5";
-    l.font = f;
-    l.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    [self addSubview:l];
-    [l setHighlightedTextColor:[UIColor whiteColor]];
-    l.backgroundColor = [UIColor clearColor];
-    [self.labels addObject:l];
+    UILabel *label5 = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - _labelWidth - _rightInset, (self.frame.size.height - _labelHeight - _bottomInset), _labelWidth, _labelHeight)];
+    label5.textAlignment = NSTextAlignmentRight;
+    label5.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    [self addSubview:label5];
+    [label5 setHighlightedTextColor:highlightColor];
+    [self.labels addObject:label5];
 
     _firstTapDate = [[NSDate date] dateByAddingTimeInterval:-1];
 
@@ -153,7 +137,7 @@
 
 - (void)setInput:(NSString *)input {
     _input = input;
-
+    
     for (NSUInteger i = 0; i < MIN(input.length, 5); i++) {
         UILabel *currentLabel = self.labels[i];
         NSString *currentChar = [input substringWithRange:NSMakeRange(i, 1)];
@@ -171,7 +155,6 @@
             else {
                 [currentLabel setFont:[UIFont systemFontOfSize:self.bounds.size.width * .6f]];
                 if (self.trackPoint) {
-                    [currentLabel setTextColor:[UIColor redColor]];
                     [currentLabel setText:@"◉"];
                     [currentLabel setFrame:self.bounds];
                 } else {
@@ -182,7 +165,10 @@
         } else {
             if (i == 2) {
                 [currentLabel setFont:[UIFont systemFontOfSize:self.bigFontSize]];
+            } else {
+                [currentLabel setFont:[UIFont systemFontOfSize:self.fontSize]];
             }
+            [currentLabel setTextColor:[UIColor blackColor]];
         }
     }
 }
@@ -206,11 +192,22 @@
 #pragma mark - Internal - UI
 
 - (void)selectLabel:(int)idx {
+    if (self.style == XXTEKeyboardButtonStyleTablet) {
+        for (UILabel *label in self.labels) {
+            [label setHighlighted:NO];
+        }
+    }
     if (idx == -1) {
         self.output = nil;
     } else {
-        self.output = self.labels[(NSUInteger) idx].text;
-        [self.buttonView setNeedsDisplay];
+        if (idx < self.labels.count) {
+            UILabel *label = self.labels[(NSUInteger) idx];
+            if (self.style == XXTEKeyboardButtonStyleTablet) {
+                [label setHighlighted:YES];
+            }
+            self.output = label.text;
+            [self.buttonView setNeedsDisplay];
+        }
     }
 }
 
@@ -349,7 +346,10 @@
         [self trackPointStarted];
     }
 
-    [self showInputView];
+    if (self.style == XXTEKeyboardButtonStylePhone) {
+        [self showInputView];
+    }
+    
     [self selectLabel:2];
 }
 
@@ -404,26 +404,31 @@
 
     [self selectLabel:-1];
 
-    [self hideInputView];
+    if (self.style == XXTEKeyboardButtonStylePhone) {
+        [self hideInputView];
+    }
+    
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesCancelled:touches withEvent:event];
     [self selectLabel:-1];
-    [self hideInputView];
+    if (self.style == XXTEKeyboardButtonStylePhone) {
+        [self hideInputView];
+    }
 }
 
 #pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    UIColor *color = [UIColor whiteColor];
+    UIColor *color = [self isDarkMode] ? [UIColor colorWithWhite:1.f alpha:.3f] : [UIColor whiteColor];
 
     if (_style == XXTEKeyboardButtonStyleTablet && self.state == UIControlStateHighlighted) {
         color = [UIColor blackColor];
     }
 
-    UIColor *shadow = [UIColor colorWithRed:136.f / 255.f green:138.f / 255.f blue:142.f / 255.f alpha:1.f];
+    UIColor *shadow = [self isDarkMode] ? [UIColor clearColor] : [UIColor colorWithRed:136.f / 255.f green:138.f / 255.f blue:142.f / 255.f alpha:1.f];
     CGSize shadowOffset = CGSizeMake(0.1, 1.1);
     CGFloat shadowBlurRadius = 0;
 
@@ -434,6 +439,19 @@
     [color setFill];
     [roundedRectanglePath fill];
     CGContextRestoreGState(context);
+}
+
+- (void)setColorStyle:(XXTEKeyboardButtonColorStyle)colorStyle {
+    _colorStyle = colorStyle;
+    UIColor *textColor = (colorStyle == XXTEKeyboardButtonColorStyleDark) ? [UIColor whiteColor] : [UIColor blackColor];
+    for (UILabel *label in self.labels) {
+        [label setTextColor:textColor];
+    }
+    [self setNeedsDisplay];
+}
+
+- (BOOL)isDarkMode {
+    return (self.colorStyle == XXTEKeyboardButtonColorStyleDark);
 }
 
 @end

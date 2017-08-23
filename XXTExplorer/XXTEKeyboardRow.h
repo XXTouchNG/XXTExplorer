@@ -13,10 +13,17 @@ typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonStyle) {
     XXTEKeyboardButtonStyleTablet
 };
 
+typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonColorStyle) {
+    XXTEKeyboardButtonColorStyleLight,
+    XXTEKeyboardButtonColorStyleDark
+};
+
 @interface XXTEKeyboardRow : UIInputView
 
 @property(nonatomic, weak) UITextView *textView;
 @property(nonatomic, assign) XXTEKeyboardButtonStyle style;
 @property(nonatomic, copy) NSString *tabString;
+
+@property(nonatomic, assign) XXTEKeyboardButtonColorStyle colorStyle;
 
 @end

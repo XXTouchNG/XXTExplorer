@@ -14,6 +14,7 @@
 
 @property(nonatomic, weak) XXTEKeyboardButton *button;
 @property(nonatomic, assign) XXTEKeyboardButtonPosition expandedPosition;
+@property(nonatomic, assign) XXTEKeyboardButtonColorStyle colorStyle;
 
 @end
 
@@ -32,6 +33,7 @@
 
     if (self) {
         _button = button;
+        _colorStyle = button.colorStyle;
 
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
@@ -67,6 +69,7 @@
 
     // Overlay path & shadow
     {
+        UIColor *fillColor = [self isDarkMode] ? [UIColor colorWithWhite:1.f alpha:.3f] : [UIColor whiteColor];
         //// Shadow Declarations
         UIColor *shadow = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         CGSize shadowOffset = CGSizeMake(0, 0.5);
@@ -75,18 +78,19 @@
         //// Rounded Rectangle Drawing
         CGContextSaveGState(context);
         CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor);
-        [[UIColor whiteColor] setFill];
+        [fillColor setFill];
         [bezierPath fill];
         CGContextRestoreGState(context);
     }
 
     // Draw the key shadow sliver
     {
+        UIColor *shadowColor = [self isDarkMode] ? [UIColor clearColor] : [UIColor whiteColor];
         //// Color Declarations
-        UIColor *color = [UIColor whiteColor];
+        UIColor *color = shadowColor;
 
         //// Shadow Declarations
-        UIColor *shadow = [UIColor colorWithRed:136.f / 255.f green:138.f / 255.f blue:142.f / 255.f alpha:1.f];
+        UIColor *shadow = [self isDarkMode] ? [UIColor clearColor] : [UIColor colorWithRed:136.f / 255.f green:138.f / 255.f blue:142.f / 255.f alpha:1.f];
         CGSize shadowOffset = CGSizeMake(0.1, 1.1);
         CGFloat shadowBlurRadius = 0;
 
@@ -103,11 +107,13 @@
 
     // Text drawing
     {
+        UIColor *fillColor = [self isDarkMode] ? [UIColor whiteColor] : [UIColor blackColor];
+        
         UIColor *stringColor = nil;
         if (_button.selecting) {
             stringColor = [UIColor redColor];
         } else {
-            stringColor = [UIColor blackColor];
+            stringColor = fillColor;
         }
 
         CGRect stringRect = bezierPath.bounds;
@@ -217,6 +223,10 @@
             break;
     }
     return path;
+}
+
+- (BOOL)isDarkMode {
+    return (self.colorStyle == XXTEKeyboardButtonColorStyleDark);
 }
 
 @end
