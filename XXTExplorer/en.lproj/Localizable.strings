@@ -51,6 +51,12 @@
 "\"%@\"" = "\"%@\"";
 
 /* No comment provided by engineer. */
+"\"Activator\" is active, configure activation behaviours below." = "\"Activator\" is active, configure activation behaviours below.";
+
+/* No comment provided by engineer. */
+"\"Activator\" is active, configure activation behaviours here." = "\"Activator\" is active, configure activation behaviours here.";
+
+/* No comment provided by engineer. */
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".";
 
 /* No comment provided by engineer. */
@@ -88,6 +94,9 @@
 
 /* No comment provided by engineer. */
 "Activation Config" = "Activation Config";
+
+/* No comment provided by engineer. */
+"Activator" = "Activator";
 
 /* No comment provided by engineer. */
 "Album" = "Album";

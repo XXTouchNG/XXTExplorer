@@ -14,7 +14,22 @@
 #import "UIView+XXTEToast.h"
 #import "XXTENetworkDefines.h"
 
+#import <objc/runtime.h>
+#import "libactivator.h"
+#import <dlfcn.h>
+
+typedef enum : NSUInteger {
+    kXXTEActivatorListenerRunOrStopWithAlertIndex = 0,
+    kXXTEActivatorListenerRunOrStopIndex = 1,
+} kXXTEActivatorListenerIndex;
+
+static NSString * const kXXTEActivatorLibraryPath = @"/usr/lib/libactivator.dylib";
+static NSString * const kXXTEActivatorListenerRunOrStop = @"com.1func.xxtouch.run_or_stop";
+static NSString * const kXXTEActivatorListenerRunOrStopWithAlert = @"com.1func.xxtouch.run_or_stop_with_alert";
+static void * activatorHandler = nil;
+
 @interface XXTEMoreActivationController () <XXTEMoreActivationOperationControllerDelegate>
+@property (nonatomic, assign) BOOL activatorExists;
 
 @end
 
@@ -44,6 +59,24 @@
 - (void)setup {
     operationKeyNames = @[@"click_volume_up", @"click_volume_down", @"hold_volume_up", @"hold_volume_down"];
     operationStatus = [@{@"click_volume_up": @(0), @"click_volume_down": @(0), @"hold_volume_up": @(0), @"hold_volume_down": @(0)} mutableCopy];
+    
+    activatorHandler = NULL;
+    if (0 == access([kXXTEActivatorLibraryPath UTF8String], R_OK)) {
+        activatorHandler = dlopen([kXXTEActivatorLibraryPath UTF8String], RTLD_LAZY);
+        Class la = objc_getClass("LAActivator");
+        if (!la) {
+            fprintf(stderr, "%s\n", dlerror());
+            return;
+        }
+        dlerror();
+        LAActivator *sharedActivator = [la sharedInstance];
+        BOOL hasSeen = [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStop];
+        if (hasSeen) {
+            _activatorExists = YES;
+        }
+    } else {
+        _activatorExists = NO;
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -130,8 +163,8 @@
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[@""];
-    staticSectionFooters = @[@""];
+    staticSectionTitles = @[@"", NSLocalizedString(@"Activator", nil)];
+    staticSectionFooters = @[@"", NSLocalizedString(@"\"Activator\" is active, configure activation behaviours here.", nil)];
 
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -152,17 +185,34 @@
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell4.titleLabel.text = NSLocalizedString(@"Press & Hold \"Volume -\"", nil);
     cell4.descriptionLabel.text = NSLocalizedString(@"No action", nil);
-
-    staticCells = @[
-            @[cell1, cell2, cell3, cell4],
-    ];
+    
+    if (self.activatorExists) {
+        XXTEMoreTitleDescriptionCell *cellActivator1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
+        cellActivator1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cellActivator1.titleLabel.text = NSLocalizedString(@"Pop-up Menu", nil);
+        cellActivator1.descriptionLabel.text = NSLocalizedString(@"Ask you for a choice.", nil);
+        
+        XXTEMoreTitleDescriptionCell *cellActivator2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
+        cellActivator2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cellActivator2.titleLabel.text = NSLocalizedString(@"Launch / Stop Selected Script", nil);
+        cellActivator2.descriptionLabel.text = NSLocalizedString(@"Launch or stop the selected script directly.", nil);
+        
+        staticCells = @[
+                        @[ cell1, cell2, cell3, cell4 ],
+                        @[ cellActivator1, cellActivator2 ],
+                        ];
+    } else {
+        staticCells = @[
+                        @[cell1, cell2, cell3, cell4],
+                        ];
+    }
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {
-        return 1;
+        return staticCells.count;
     }
     return 0;
 }
@@ -188,12 +238,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        XXTEMoreTitleDescriptionCell *cell = (XXTEMoreTitleDescriptionCell *) staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
-        XXTEMoreActivationOperationController *operationController = [[XXTEMoreActivationOperationController alloc] initWithStyle:UITableViewStyleGrouped];
-        operationController.delegate = self;
-        operationController.actionIndex = (NSUInteger) indexPath.row;
-        operationController.title = cell.titleLabel.text;
-        [self.navigationController pushViewController:operationController animated:YES];
+        if (indexPath.section == 0) {
+            if (NO == self.activatorExists) {
+                XXTEMoreTitleDescriptionCell *cell = (XXTEMoreTitleDescriptionCell *) staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+                XXTEMoreActivationOperationController *operationController = [[XXTEMoreActivationOperationController alloc] initWithStyle:UITableViewStyleGrouped];
+                operationController.delegate = self;
+                operationController.actionIndex = (NSUInteger) indexPath.row;
+                operationController.title = cell.titleLabel.text;
+                [self.navigationController pushViewController:operationController animated:YES];
+            } else {
+                showUserMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
+            }
+        } else if (indexPath.section == 1) {
+            if (indexPath.row == kXXTEActivatorListenerRunOrStopWithAlertIndex) {
+                LAListenerSettingsViewController *vc = [objc_getClass("LAListenerSettingsViewController") new];
+                vc.listenerName = kXXTEActivatorListenerRunOrStopWithAlert;
+                vc.title = NSLocalizedString(@"Pop-up Menu", nil);
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if (indexPath.row == kXXTEActivatorListenerRunOrStopIndex) {
+                LAListenerSettingsViewController *vc = [objc_getClass("LAListenerSettingsViewController") new];
+                vc.listenerName = kXXTEActivatorListenerRunOrStop;
+                vc.title = NSLocalizedString(@"Launch / Stop Selected Script", nil);
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
     }
 }
 
@@ -229,6 +297,9 @@
 #pragma mark - Memory
 
 - (void)dealloc {
+    if (activatorHandler != NULL) {
+        dlclose(activatorHandler);
+    }
 #ifdef DEBUG
     NSLog(@"[XXTEMoreActivationController dealloc]");
 #endif

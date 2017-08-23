@@ -206,6 +206,10 @@
     return YES;
 }
 
+- (BOOL)shouldDisplayEntry:(NSDictionary *)entryAttributes {
+    return YES;
+}
+
 - (void)loadEntryListDataWithError:(NSError **)error {
     {
         if ([self showsHomeSeries] &&
@@ -237,6 +241,9 @@
                 NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
                 NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
                 if (localError && error) {
+                    continue;
+                }
+                if ([self shouldDisplayEntry:entryAttributes] == NO) {
                     continue;
                 }
                 if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
@@ -575,6 +582,11 @@
                 id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
                 if (entryReader.entryDisplayName) {
                     entryDisplayName = entryReader.entryDisplayName;
+                } else {
+                    if (XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES))
+                    {
+                        entryDisplayName = [entryDisplayName stringByDeletingPathExtension];
+                    }
                 }
                 if (entryReader.entryDescription) {
                     entryDescription = entryReader.entryDescription;

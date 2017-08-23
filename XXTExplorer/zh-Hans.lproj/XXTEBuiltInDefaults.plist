@@ -69,6 +69,23 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>隐藏已知文件的扩展名</string>
+			<key>description</key>
+			<string>在文件管理器中隐藏已知文件的扩展名, 如 &quot;.txt&quot;, &quot;.lua&quot; 等.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<false/>
 			<key>key</key>
 			<string>XXTExplorerViewEntryListSortFieldKey</string>

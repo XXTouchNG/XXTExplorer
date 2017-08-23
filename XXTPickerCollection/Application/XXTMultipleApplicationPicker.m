@@ -70,9 +70,9 @@ UISearchDisplayDelegate
 }
 
 - (NSString *)pickerResult {
-    NSMutableString *selectedReplacement = [[NSMutableString alloc] initWithString:@"["];
+    NSMutableString *selectedReplacement = [[NSMutableString alloc] initWithString:@"[\n"];
     for (NSDictionary *appDetail in self.selectedApplications) {
-        [selectedReplacement appendFormat:@"\"%@\", ", appDetail[kXXTApplicationDetailKeyBundleID]];
+        [selectedReplacement appendFormat:@"\"%@\",\n", appDetail[kXXTApplicationDetailKeyBundleID]];
     }
     [selectedReplacement appendString:@"]"];
     return selectedReplacement;
@@ -264,8 +264,11 @@ UISearchDisplayDelegate
 }
 
 - (void)tableView:(UITableView *)tableView reloadHeaderView:(UITableViewHeaderFooterView *)view forSection:(NSInteger)section {
-    
-    UILabel *label = view.textLabel;
+    [self tableView:tableView willDisplayHeaderView:view forSection:section];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UILabel *label = ((UITableViewHeaderFooterView *)view).textLabel;
     if (label) {
         NSMutableArray <NSDictionary *> *selectedApplications = nil;
         NSMutableArray <NSDictionary *> *unselectedApplications = nil;
@@ -277,28 +280,30 @@ UISearchDisplayDelegate
             unselectedApplications = self.displayUnselectedApplications;
         }
         
+        NSString *text = nil;
         if (section == kXXTApplicationPickerCellSectionSelected) {
-            label.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Selected Applications (%lu)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), (unsigned long)selectedApplications.count];
+            text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Selected Applications (%lu)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), (unsigned long)selectedApplications.count];
         } else if (section == kXXTApplicationPickerCellSectionUnselected) {
-            label.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Unselected Applications (%lu)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), (unsigned long)unselectedApplications.count];
+            text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Unselected Applications (%lu)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), (unsigned long)unselectedApplications.count];
+        }
+        if (text) {
+            NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:14.0] }];
+            label.attributedText = attributedText;
         }
         
-        CGSize newSize = [label sizeThatFits:CGSizeMake(0, 24)];
-        label.bounds = CGRectMake(0, 0, newSize.width, newSize.height);
+//        CGSize newSize = [label sizeThatFits:CGSizeMake(0, 24)];
+//        label.bounds = CGRectMake(0, 0, newSize.width, newSize.height);
+        [label sizeToFit];
     }
-    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *kMEWApplicationHeaderViewReuseIdentifier = @"kMEWApplicationHeaderViewReuseIdentifier";
     
-    
     UITableViewHeaderFooterView *applicationHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kMEWApplicationHeaderViewReuseIdentifier];
     if (!applicationHeaderView) {
         applicationHeaderView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:kMEWApplicationHeaderViewReuseIdentifier];
     }
-    
-    [self tableView:tableView reloadHeaderView:applicationHeaderView forSection:section];
     
     return applicationHeaderView;
 }

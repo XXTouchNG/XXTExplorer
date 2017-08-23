@@ -727,6 +727,14 @@
 		D643A24F1F4D18AA005B9A59 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D643A2531F4D18BE005B9A59 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D643A2561F4D1B39005B9A59 /* LAActivator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAActivator.h; sourceTree = "<group>"; };
+		D643A2571F4D1B39005B9A59 /* LAActivatorVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAActivatorVersion.h; sourceTree = "<group>"; };
+		D643A2581F4D1B39005B9A59 /* LAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAEvent.h; sourceTree = "<group>"; };
+		D643A2591F4D1B39005B9A59 /* LAEventDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAEventDataSource.h; sourceTree = "<group>"; };
+		D643A25A1F4D1B39005B9A59 /* LAListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAListener.h; sourceTree = "<group>"; };
+		D643A25B1F4D1B39005B9A59 /* LASettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LASettingsViewController.h; sourceTree = "<group>"; };
+		D643A25C1F4D1B39005B9A59 /* libactivator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libactivator.h; sourceTree = "<group>"; };
+		D643A25D1F4D1B39005B9A59 /* UIImageView+Activator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Activator.h"; sourceTree = "<group>"; };
 		D645F9D31F42A68C00E3247B /* lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = lua.tmLanguage; sourceTree = "<group>"; };
 		D645F9D51F42A77A00E3247B /* XXTEEditorTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextStorage.h; sourceTree = "<group>"; };
 		D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextStorage.m; sourceTree = "<group>"; };
@@ -1794,6 +1802,21 @@
 			name = Daemon;
 			sourceTree = "<group>";
 		};
+		D643A2551F4D1B39005B9A59 /* Activator */ = {
+			isa = PBXGroup;
+			children = (
+				D643A2561F4D1B39005B9A59 /* LAActivator.h */,
+				D643A2571F4D1B39005B9A59 /* LAActivatorVersion.h */,
+				D643A2581F4D1B39005B9A59 /* LAEvent.h */,
+				D643A2591F4D1B39005B9A59 /* LAEventDataSource.h */,
+				D643A25A1F4D1B39005B9A59 /* LAListener.h */,
+				D643A25B1F4D1B39005B9A59 /* LASettingsViewController.h */,
+				D643A25C1F4D1B39005B9A59 /* libactivator.h */,
+				D643A25D1F4D1B39005B9A59 /* UIImageView+Activator.h */,
+			);
+			path = Activator;
+			sourceTree = "<group>";
+		};
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1899,6 +1922,7 @@
 		D6FC2F291F0E333C000BAB42 /* Activation */ = {
 			isa = PBXGroup;
 			children = (
+				D643A2551F4D1B39005B9A59 /* Activator */,
 				D6FC2F2A1F0E3372000BAB42 /* XXTEMoreActivationController.h */,
 				D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */,
 				D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */,

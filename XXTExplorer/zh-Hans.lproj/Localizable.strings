@@ -51,6 +51,12 @@
 "\"%@\"" = "\"%@\"";
 
 /* No comment provided by engineer. */
+"\"Activator\" is active, configure activation behaviours below." = "\"Activator\" 已激活，请在下方配置激活行为。";
+
+/* No comment provided by engineer. */
+"\"Activator\" is active, configure activation behaviours here." = "\"Activator\" 已激活，请在此配置激活行为。";
+
+/* No comment provided by engineer. */
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" has been disabled, you can make it display again in \"More > User Defaults\".";
 
 /* No comment provided by engineer. */
@@ -88,6 +94,9 @@
 
 /* No comment provided by engineer. */
 "Activation Config" = "激活设置";
+
+/* No comment provided by engineer. */
+"Activator" = "Activator";
 
 /* No comment provided by engineer. */
 "Album" = "相册";

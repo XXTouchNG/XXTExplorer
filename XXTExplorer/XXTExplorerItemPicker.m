@@ -41,6 +41,18 @@
     return NO;
 }
 
+- (BOOL)shouldDisplayEntry:(NSDictionary *)entryAttributes {
+    NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryBaseExtension = [entryAttributes[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
+        [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
+        if ([self.allowedExtensions containsObject:entryBaseExtension] == NO) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -68,8 +80,8 @@
                 }
             }
             else if (
-                     [entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
-                     [entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]
+                     [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
+                     [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]
                      )
             { // Bundle or Regular
                 NSString *entryBaseExtension = [entryAttributes[XXTExplorerViewEntryAttributeExtension] lowercaseString];
