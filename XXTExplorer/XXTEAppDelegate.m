@@ -23,6 +23,8 @@
 
 #import <unistd.h>
 
+#import <Bugly/Bugly.h>
+
 static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 
 @interface XXTEAppDelegate ()
@@ -93,7 +95,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [Bugly startWithAppId:nil];
     return YES;
 }
 
@@ -261,7 +263,7 @@ static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
     static NSString *rootPath = nil;
     if (!rootPath) {
         rootPath = ({
-#ifdef DEBUG
+#ifndef DEBUG
             NSString *mainPath = uAppDefine(@"MAIN_PATH");
 #else
             NSString *mainPath = nil;
