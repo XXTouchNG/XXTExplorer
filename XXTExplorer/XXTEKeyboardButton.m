@@ -145,9 +145,9 @@
         [currentLabel setAdjustsFontSizeToFitWidth:YES];
 
         NSString *flag = [input substringToIndex:1];
-        if ([flag isEqualToString:@"◉"] || [flag isEqualToString:@"T"]) {
+        if ([flag isEqualToString:@"R"] || [flag isEqualToString:@"T"]) {
 
-            self.trackPoint = [flag isEqualToString:@"◉"];
+            self.trackPoint = [flag isEqualToString:@"R"];
             self.tabButton = [flag isEqualToString:@"T"];
 
             if (i != 2)
@@ -155,10 +155,16 @@
             else {
                 [currentLabel setFont:[UIFont systemFontOfSize:self.bounds.size.width * .6f]];
                 if (self.trackPoint) {
-                    [currentLabel setText:@"◉"];
+                    const unichar c = 0x25c9;
+                    [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
                 } else {
-                    [currentLabel setText:@"→"];
+//                    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+//                    attachment.image = [UIImage imageNamed:@"XXTEKeyboardButtonTab"];
+//                    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+//                    [currentLabel setAttributedText:attachmentString];
+                    const unichar c = 0x2192;
+                    [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
                 }
             }

@@ -59,7 +59,8 @@ typedef enum : NSUInteger {
 @property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
 
 @property (nonatomic, assign) XXTEEditorControllerReloadType reloadType;
-@property (nonatomic, assign) BOOL documentEdited;
+@property (nonatomic, assign) BOOL shouldSaveDocument;
+@property (nonatomic, assign) BOOL shouldFocusTextView;
 
 @property (nonatomic, strong) XXTPickerFactory *pickerFactory;
 
@@ -390,6 +391,10 @@ typedef enum : NSUInteger {
         self.reloadType = XXTEEditorControllerReloadTypeNone;
         [self reloadStyle];
     }
+    if (self.shouldFocusTextView) {
+        self.shouldFocusTextView = NO;
+        [self.textView becomeFirstResponder];
+    }
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -719,15 +724,15 @@ typedef enum : NSUInteger {
 #pragma mark - Save
 
 - (void)saveDocumentIfNecessary {
-    if (!self.documentEdited) return;
+    if (!self.shouldSaveDocument) return;
     NSString *documentString = self.textView.textStorage.string;
     NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
     [documentData writeToFile:self.entryPath atomically:YES];
-    self.documentEdited = NO;
+    self.shouldSaveDocument = NO;
 }
 
 - (void)setNeedsSaveDocument {
-    self.documentEdited = YES;
+    self.shouldSaveDocument = YES;
 }
 
 #pragma mark - XXTExplorerItemPickerDelegate
@@ -753,6 +758,7 @@ typedef enum : NSUInteger {
 
 - (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerTask *)task {
     [self replaceTextInputSelectedRangeWithTaskModel:task];
+    [self setNeedsFocusTextView];
     return YES;
 }
 
@@ -813,10 +819,10 @@ typedef enum : NSUInteger {
         UITextRange *curRange = [textInput textRangeFromPosition:curStart toPosition:curEnd];
         [textInput replaceRange:curRange withText:@""];
     }
-    
-    if (![textInput isFirstResponder]) {
-        [textInput becomeFirstResponder];
-    }
+}
+
+- (void)setNeedsFocusTextView {
+    self.shouldFocusTextView = YES;
 }
 
 #pragma mark - Memory

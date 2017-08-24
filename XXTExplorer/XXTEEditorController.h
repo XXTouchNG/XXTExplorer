@@ -23,6 +23,7 @@
 
 - (void)setNeedsReload;
 - (void)setNeedsRefresh;
+- (void)setNeedsFocusTextView;
 
 - (void)renderNavigationBarTheme:(BOOL)restore;
 - (void)reloadViewConstraints;

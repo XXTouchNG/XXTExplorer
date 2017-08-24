@@ -77,11 +77,12 @@
             cellInstance.bundle = self.bundle;
             cellInstance.defaultsService = self.defaultsService;
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
-            for (int keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
-                NSString *itemKey = itemAllKeys[(NSUInteger) keyIdx];
+            for (NSUInteger keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
+                NSString *itemKey = itemAllKeys[keyIdx];
+                id itemValue = itemDictionary[itemKey];
                 NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
                 if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
-                    [cellInstance setValue:itemDictionary[itemKey] forKey:propertyName];
+                    [cellInstance setValue:itemValue forKey:propertyName];
                 } else {
                     [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
                 }
@@ -112,7 +113,7 @@
             if ([otherCell isKindOfClass:[XUIGroupCell class]]) {
                 otherCellIdx++;
             } else if (otherCellIdx >= 0 && otherCellIdx < groupCount) {
-                [otherCells[(NSUInteger) otherCellIdx] addObject:otherCell];
+                [otherCells[otherCellIdx] addObject:otherCell];
             }
         }
         _sectionCells = groupCells;

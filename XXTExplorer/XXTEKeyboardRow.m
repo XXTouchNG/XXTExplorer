@@ -9,8 +9,8 @@
 #import "XXTEKeyboardRow.h"
 #import "XXTEKeyboardButton.h"
 
-static NSString * const XXTEKeyboardRowPhoneSequence = @"TTTTT()\"[]{}'<>\\/$´`◉◉◉◉◉~^|€£-+=%*!?#@&_:;,.";
-static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^|€£◉◉◉◉◉-+=%*!?#@&_:;,.1203467589";
+static NSString * const XXTEKeyboardRowPhoneSequence = @"TTTTT()\"[]{}'<>\\/$´`RRRRR~^|€£-+=%*!?#@&_:;,.";
+static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^|€£RRRRR-+=%*!?#@&_:;,.1203467589";
 
 @interface XXTEKeyboardRow ()
 

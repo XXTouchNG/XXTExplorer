@@ -16,8 +16,8 @@ static NSString * const XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifie
 @property (nonatomic, strong) NSString *xui_key;
 @property (nonatomic, strong) id xui_default;
 @property (nonatomic, strong) NSString *xui_icon;
-@property (nonatomic, assign) NSNumber *xui_enabled;
-@property (nonatomic, assign) NSNumber *xui_height;
+@property (nonatomic, strong) NSNumber *xui_enabled;
+@property (nonatomic, strong) NSNumber *xui_height;
 // @property (nonatomic, strong) NSString *xui_detail;
 @property (nonatomic, strong) id xui_value;
 
