@@ -264,6 +264,11 @@ enum {
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font = [UIFont systemFontOfSize:14.0];
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         return ((NSString *)self.defaultsSectionMeta[(NSUInteger) section][@"title"]);

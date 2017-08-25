@@ -128,7 +128,7 @@
     }
     [htmlTemplate replaceOccurrencesOfString:@"{{ title }}" withString:entryName options:0 range:NSMakeRange(0, htmlTemplate.length)];
     [htmlTemplate replaceOccurrencesOfString:@"{{ code }}" withString:escapedString options:0 range:NSMakeRange(0, htmlTemplate.length)];
-    [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
+    [self.wkWebView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
 
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];

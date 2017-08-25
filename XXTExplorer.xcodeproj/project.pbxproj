@@ -90,8 +90,6 @@
 		0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */; };
 		0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */; };
 		0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
-		0F68F4191F4C6EC300EE1F41 /* XXTPickerCollection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0F68F41A1F4C6EDD00EE1F41 /* XXTPickerCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */; };
 		0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */; };
 		0F6AEA841F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA831F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.m */; };
 		0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA861F374D8B0017BE7C /* XXTExplorerViewController+Notification.m */; };
@@ -233,8 +231,6 @@
 		D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */; };
 		D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
-		D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D629C21A1F061EF40030C6DA /* SpringBoardServices */; };
-		D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */; };
 		D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
 		D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */; };
 		D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2241F06362C0030C6DA /* XXTEMoreApplicationListController.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations -Wno-arc-performSelector-leaks"; }; };
@@ -306,6 +302,84 @@
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
+		D6E141151F5032AB00D78CB9 /* XXTApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409D1F5032AB00D78CB9 /* XXTApplicationCell.m */; };
+		D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409F1F5032AB00D78CB9 /* XXTApplicationPicker.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		D6E141181F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A41F5032AB00D78CB9 /* XXTPickerInsetsLabel.m */; };
+		D6E1411A1F5032AB00D78CB9 /* XXTImagePickerAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A71F5032AB00D78CB9 /* XXTImagePickerAlbumCell.m */; };
+		D6E1411B1F5032AB00D78CB9 /* XXTImagePickerAssetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A91F5032AB00D78CB9 /* XXTImagePickerAssetHelper.m */; };
+		D6E1411C1F5032AB00D78CB9 /* XXTImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140AB1F5032AB00D78CB9 /* XXTImagePickerController.m */; };
+		D6E1411D1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140AD1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.m */; };
+		D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B01F5032AB00D78CB9 /* XXTKeyEvent.m */; };
+		D6E1411F1F5032AB00D78CB9 /* XXTKeyEventPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B21F5032AB00D78CB9 /* XXTKeyEventPicker.m */; };
+		D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B51F5032AB00D78CB9 /* XXTLocationPicker.m */; };
+		D6E141211F5032AB00D78CB9 /* UIColor+hexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B81F5032AB00D78CB9 /* UIColor+hexValue.m */; };
+		D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140BA1F5032AB00D78CB9 /* UIColor+inverseColor.m */; };
+		D6E141231F5032AB00D78CB9 /* UIImage+XXTCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140BC1F5032AB00D78CB9 /* UIImage+XXTCrop.m */; };
+		D6E141241F5032AB00D78CB9 /* XXTColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140BE1F5032AB00D78CB9 /* XXTColorPicker.m */; };
+		D6E141251F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140C01F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m */; };
+		D6E141261F5032AB00D78CB9 /* XXTPixelColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140C21F5032AB00D78CB9 /* XXTPixelColor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D6E141271F5032AB00D78CB9 /* XXTPixelCropRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140C41F5032AB00D78CB9 /* XXTPixelCropRectView.m */; };
+		D6E141281F5032AB00D78CB9 /* XXTPixelCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140C61F5032AB00D78CB9 /* XXTPixelCropView.m */; };
+		D6E141291F5032AB00D78CB9 /* XXTPixelFlagView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140C81F5032AB00D78CB9 /* XXTPixelFlagView.m */; };
+		D6E1412A1F5032AB00D78CB9 /* XXTPixelImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140CA1F5032AB00D78CB9 /* XXTPixelImage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */; };
+		D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140CE1F5032AB00D78CB9 /* XXTPixelPreview.m */; };
+		D6E1412D1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D01F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m */; };
+		D6E1412E1F5032AB00D78CB9 /* XXTPixelResizeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D21F5032AB00D78CB9 /* XXTPixelResizeControl.m */; };
+		D6E1412F1F5032AB00D78CB9 /* XXTPositionColorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D41F5032AB00D78CB9 /* XXTPositionColorModel.m */; };
+		D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D61F5032AB00D78CB9 /* XXTPositionColorPicker.m */; };
+		D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */; };
+		D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */; };
+		D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
+		D6E141341F5032AB00D78CB9 /* xxt-add-box.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DE1F5032AB00D78CB9 /* xxt-add-box.png */; };
+		D6E141351F5032AB00D78CB9 /* xxt-add-box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DF1F5032AB00D78CB9 /* xxt-add-box@2x.png */; };
+		D6E141361F5032AB00D78CB9 /* xxt-add-box@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E01F5032AB00D78CB9 /* xxt-add-box@3x.png */; };
+		D6E141371F5032AB00D78CB9 /* xxt-clear.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E11F5032AB00D78CB9 /* xxt-clear.png */; };
+		D6E141381F5032AB00D78CB9 /* xxt-clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E21F5032AB00D78CB9 /* xxt-clear@2x.png */; };
+		D6E141391F5032AB00D78CB9 /* xxt-clear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E31F5032AB00D78CB9 /* xxt-clear@3x.png */; };
+		D6E1413A1F5032AB00D78CB9 /* xxt-crop-pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E41F5032AB00D78CB9 /* xxt-crop-pattern.png */; };
+		D6E1413B1F5032AB00D78CB9 /* xxt-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E51F5032AB00D78CB9 /* xxt-lock.png */; };
+		D6E1413C1F5032AB00D78CB9 /* xxt-lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E61F5032AB00D78CB9 /* xxt-lock@2x.png */; };
+		D6E1413D1F5032AB00D78CB9 /* xxt-lock@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E71F5032AB00D78CB9 /* xxt-lock@3x.png */; };
+		D6E1413E1F5032AB00D78CB9 /* xxt-marquee.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E81F5032AB00D78CB9 /* xxt-marquee.png */; };
+		D6E1413F1F5032AB00D78CB9 /* xxt-marquee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140E91F5032AB00D78CB9 /* xxt-marquee@2x.png */; };
+		D6E141401F5032AB00D78CB9 /* xxt-marquee@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140EA1F5032AB00D78CB9 /* xxt-marquee@3x.png */; };
+		D6E141411F5032AB00D78CB9 /* xxt-picker-border.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140EB1F5032AB00D78CB9 /* xxt-picker-border.png */; };
+		D6E141421F5032AB00D78CB9 /* xxt-picker-border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140EC1F5032AB00D78CB9 /* xxt-picker-border@2x.png */; };
+		D6E141431F5032AB00D78CB9 /* xxt-picker-check.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140ED1F5032AB00D78CB9 /* xxt-picker-check.png */; };
+		D6E141441F5032AB00D78CB9 /* xxt-picker-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140EE1F5032AB00D78CB9 /* xxt-picker-check@2x.png */; };
+		D6E141451F5032AB00D78CB9 /* xxt-picker-close.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140EF1F5032AB00D78CB9 /* xxt-picker-close.png */; };
+		D6E141461F5032AB00D78CB9 /* xxt-picker-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F01F5032AB00D78CB9 /* xxt-picker-close@2x.png */; };
+		D6E141471F5032AB00D78CB9 /* xxt-picker-down.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F11F5032AB00D78CB9 /* xxt-picker-down.png */; };
+		D6E141481F5032AB00D78CB9 /* xxt-picker-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F21F5032AB00D78CB9 /* xxt-picker-down@2x.png */; };
+		D6E141491F5032AB00D78CB9 /* xxt-picker-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F31F5032AB00D78CB9 /* xxt-picker-line@2x.png */; };
+		D6E1414A1F5032AB00D78CB9 /* xxt-picker-show.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F41F5032AB00D78CB9 /* xxt-picker-show.png */; };
+		D6E1414B1F5032AB00D78CB9 /* xxt-picker-show@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F51F5032AB00D78CB9 /* xxt-picker-show@2x.png */; };
+		D6E1414C1F5032AB00D78CB9 /* xxt-picker-up.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F61F5032AB00D78CB9 /* xxt-picker-up.png */; };
+		D6E1414D1F5032AB00D78CB9 /* xxt-picker-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F71F5032AB00D78CB9 /* xxt-picker-up@2x.png */; };
+		D6E1414E1F5032AB00D78CB9 /* xxt-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F81F5032AB00D78CB9 /* xxt-refresh.png */; };
+		D6E1414F1F5032AB00D78CB9 /* xxt-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140F91F5032AB00D78CB9 /* xxt-refresh@2x.png */; };
+		D6E141501F5032AB00D78CB9 /* xxt-refresh@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140FA1F5032AB00D78CB9 /* xxt-refresh@3x.png */; };
+		D6E141511F5032AB00D78CB9 /* xxt-rotate-left.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140FB1F5032AB00D78CB9 /* xxt-rotate-left.png */; };
+		D6E141521F5032AB00D78CB9 /* xxt-rotate-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140FC1F5032AB00D78CB9 /* xxt-rotate-left@2x.png */; };
+		D6E141531F5032AB00D78CB9 /* xxt-rotate-left@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140FD1F5032AB00D78CB9 /* xxt-rotate-left@3x.png */; };
+		D6E141541F5032AB00D78CB9 /* xxt-rotate-right.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140FE1F5032AB00D78CB9 /* xxt-rotate-right.png */; };
+		D6E141551F5032AB00D78CB9 /* xxt-rotate-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E140FF1F5032AB00D78CB9 /* xxt-rotate-right@2x.png */; };
+		D6E141561F5032AC00D78CB9 /* xxt-rotate-right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E141001F5032AB00D78CB9 /* xxt-rotate-right@3x.png */; };
+		D6E141571F5032AC00D78CB9 /* xxt-unlock.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E141011F5032AB00D78CB9 /* xxt-unlock.png */; };
+		D6E141581F5032AC00D78CB9 /* xxt-unlock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E141021F5032AB00D78CB9 /* xxt-unlock@2x.png */; };
+		D6E141591F5032AC00D78CB9 /* xxt-unlock@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E141031F5032AB00D78CB9 /* xxt-unlock@3x.png */; };
+		D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
+		D6E1415B1F5032AC00D78CB9 /* XXTImagePickerAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141051F5032AB00D78CB9 /* XXTImagePickerAlbumCell.xib */; };
+		D6E1415C1F5032AC00D78CB9 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141061F5032AB00D78CB9 /* XXTImagePickerController.xib */; };
+		D6E1415D1F5032AC00D78CB9 /* XXTImagePickerPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141071F5032AB00D78CB9 /* XXTImagePickerPhotoCell.xib */; };
+		D6E1415E1F5032AC00D78CB9 /* XXTPickerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1410D1F5032AB00D78CB9 /* XXTPickerFactory.m */; };
+		D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1410F1F5032AB00D78CB9 /* XXTPickerNavigationController.m */; };
+		D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */; };
+		D6E141611F5032AC00D78CB9 /* XXTPickerTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141131F5032AB00D78CB9 /* XXTPickerTask.m */; };
+		D6E141641F50330400D78CB9 /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E141621F50330400D78CB9 /* SpringBoardServices */; };
+		D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E141631F50330400D78CB9 /* xxte-white-icons.plist */; };
 		D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */; };
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
@@ -315,36 +389,6 @@
 		D6FD36D41F42FDBF00910D91 /* XXTEKeyboardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36CE1F42FDBF00910D91 /* XXTEKeyboardButton.m */; };
 		D6FD36D51F42FDBF00910D91 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36D01F42FDBF00910D91 /* XXTEKeyboardButtonView.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		0F68F4151F4C6EB200EE1F41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0F7A80B51EA2B5B600A4AC11;
-			remoteInfo = XXTPickerCollection;
-		};
-		0F68F4171F4C6EBD00EE1F41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0F7A80B41EA2B5B600A4AC11;
-			remoteInfo = XXTPickerCollection;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		0FF18D5A1F4C6A540079B177 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0F68F4191F4C6EC300EE1F41 /* XXTPickerCollection.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
@@ -357,7 +401,6 @@
 		0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryPackageReader.m; sourceTree = "<group>"; };
 		0F0F762E1F3617CF006EA102 /* XXTEPackageExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageExtractor.h; sourceTree = "<group>"; };
 		0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEPackageExtractor.m; sourceTree = "<group>"; };
-		0F10A9191F07B444008BA792 /* LSApplicationWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationWorkspace.h; sourceTree = "<group>"; };
 		0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseController.h; sourceTree = "<group>"; };
 		0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreLicenseController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F10A9211F07FC32008BA792 /* XXTEMoreLicenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseCell.h; sourceTree = "<group>"; };
@@ -511,7 +554,6 @@
 		0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerNavigationController.h; sourceTree = "<group>"; };
 		0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = XXTPickerCollection.xcodeproj; sourceTree = "<group>"; };
 		0F6AEA7F1F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryOpenWithViewController.h; sourceTree = "<group>"; };
 		0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerEntryOpenWithViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F6AEA821F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryOpenWithNavigationController.h; sourceTree = "<group>"; };
@@ -637,13 +679,13 @@
 		0FD973E41F4B122D00133162 /* XXTEEditorThemeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorThemeCell.h; sourceTree = "<group>"; };
 		0FD973E51F4B122D00133162 /* XXTEEditorThemeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorThemeCell.m; sourceTree = "<group>"; };
 		0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEEditorThemeCell.xib; sourceTree = "<group>"; };
-		0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow Night (Blue).tmTheme"; sourceTree = "<group>"; };
-		0FD973EA1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow Night (Bright).tmTheme"; sourceTree = "<group>"; };
-		0FD973EB1F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow Night (Eighties).tmTheme"; sourceTree = "<group>"; };
-		0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow Night.tmTheme"; sourceTree = "<group>"; };
-		0FD973ED1F4B1D3700133162 /* Tomorrow.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tomorrow.tmTheme; sourceTree = "<group>"; };
-		0FD973F31F4B1D7B00133162 /* Oceanic (Eighties).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Oceanic (Eighties).tmTheme"; sourceTree = "<group>"; };
-		0FD973F51F4B1D8B00133162 /* Ciapre (Black).tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Ciapre (Black).tmTheme"; sourceTree = "<group>"; };
+		0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Tomorrow Night (Blue).tmTheme"; sourceTree = "<group>"; };
+		0FD973EA1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Tomorrow Night (Bright).tmTheme"; sourceTree = "<group>"; };
+		0FD973EB1F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Tomorrow Night (Eighties).tmTheme"; sourceTree = "<group>"; };
+		0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Tomorrow Night.tmTheme"; sourceTree = "<group>"; };
+		0FD973ED1F4B1D3700133162 /* Tomorrow.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Tomorrow.tmTheme; sourceTree = "<group>"; };
+		0FD973F31F4B1D7B00133162 /* Oceanic (Eighties).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Oceanic (Eighties).tmTheme"; sourceTree = "<group>"; };
+		0FD973F51F4B1D8B00133162 /* Ciapre (Black).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Ciapre (Black).tmTheme"; sourceTree = "<group>"; };
 		0FD973F71F4B29E700133162 /* XXTEEditorController+State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+State.h"; sourceTree = "<group>"; };
 		0FD973F81F4B29E700133162 /* XXTEEditorController+State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+State.m"; sourceTree = "<group>"; };
 		0FD973FA1F4B2EC400133162 /* XXTEEditorTabWidthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTabWidthCell.h; sourceTree = "<group>"; };
@@ -741,9 +783,6 @@
 		D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Solarized (Light).tmTheme"; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
-		D629C2191F061E690030C6DA /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
-		D629C21A1F061EF40030C6DA /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
-		D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xxte-white-icons.plist"; sourceTree = "<group>"; };
 		D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreApplicationCell.xib; sourceTree = "<group>"; };
 		D629C2201F0635F20030C6DA /* XXTEMoreApplicationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreApplicationCell.h; sourceTree = "<group>"; };
 		D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreApplicationCell.m; sourceTree = "<group>"; };
@@ -883,6 +922,123 @@
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
 		D6DBD48C1F3C4CA7002D5561 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/XXTEBuiltInDefaults.plist; sourceTree = "<group>"; };
 		D6DBD48E1F3C5B5C002D5561 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		D6E140991F5032AB00D78CB9 /* LSApplicationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
+		D6E1409A1F5032AB00D78CB9 /* LSApplicationWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSApplicationWorkspace.h; sourceTree = "<group>"; };
+		D6E1409C1F5032AB00D78CB9 /* XXTApplicationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTApplicationCell.h; sourceTree = "<group>"; };
+		D6E1409D1F5032AB00D78CB9 /* XXTApplicationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTApplicationCell.m; sourceTree = "<group>"; };
+		D6E1409E1F5032AB00D78CB9 /* XXTApplicationPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTApplicationPicker.h; sourceTree = "<group>"; };
+		D6E1409F1F5032AB00D78CB9 /* XXTApplicationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTApplicationPicker.m; sourceTree = "<group>"; };
+		D6E140A11F5032AB00D78CB9 /* XXTMultipleApplicationPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTMultipleApplicationPicker.h; sourceTree = "<group>"; };
+		D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTMultipleApplicationPicker.m; sourceTree = "<group>"; };
+		D6E140A31F5032AB00D78CB9 /* XXTPickerInsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerInsetsLabel.h; sourceTree = "<group>"; };
+		D6E140A41F5032AB00D78CB9 /* XXTPickerInsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerInsetsLabel.m; sourceTree = "<group>"; };
+		D6E140A61F5032AB00D78CB9 /* XXTImagePickerAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerAlbumCell.h; sourceTree = "<group>"; };
+		D6E140A71F5032AB00D78CB9 /* XXTImagePickerAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerAlbumCell.m; sourceTree = "<group>"; };
+		D6E140A81F5032AB00D78CB9 /* XXTImagePickerAssetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerAssetHelper.h; sourceTree = "<group>"; };
+		D6E140A91F5032AB00D78CB9 /* XXTImagePickerAssetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerAssetHelper.m; sourceTree = "<group>"; };
+		D6E140AA1F5032AB00D78CB9 /* XXTImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerController.h; sourceTree = "<group>"; };
+		D6E140AB1F5032AB00D78CB9 /* XXTImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerController.m; sourceTree = "<group>"; };
+		D6E140AC1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerPhotoCell.h; sourceTree = "<group>"; };
+		D6E140AD1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerPhotoCell.m; sourceTree = "<group>"; };
+		D6E140AF1F5032AB00D78CB9 /* XXTKeyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTKeyEvent.h; sourceTree = "<group>"; };
+		D6E140B01F5032AB00D78CB9 /* XXTKeyEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTKeyEvent.m; sourceTree = "<group>"; };
+		D6E140B11F5032AB00D78CB9 /* XXTKeyEventPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTKeyEventPicker.h; sourceTree = "<group>"; };
+		D6E140B21F5032AB00D78CB9 /* XXTKeyEventPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTKeyEventPicker.m; sourceTree = "<group>"; };
+		D6E140B41F5032AB00D78CB9 /* XXTLocationPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTLocationPicker.h; sourceTree = "<group>"; };
+		D6E140B51F5032AB00D78CB9 /* XXTLocationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTLocationPicker.m; sourceTree = "<group>"; };
+		D6E140B71F5032AB00D78CB9 /* UIColor+hexValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+hexValue.h"; sourceTree = "<group>"; };
+		D6E140B81F5032AB00D78CB9 /* UIColor+hexValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+hexValue.m"; sourceTree = "<group>"; };
+		D6E140B91F5032AB00D78CB9 /* UIColor+inverseColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+inverseColor.h"; sourceTree = "<group>"; };
+		D6E140BA1F5032AB00D78CB9 /* UIColor+inverseColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+inverseColor.m"; sourceTree = "<group>"; };
+		D6E140BB1F5032AB00D78CB9 /* UIImage+XXTCrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+XXTCrop.h"; sourceTree = "<group>"; };
+		D6E140BC1F5032AB00D78CB9 /* UIImage+XXTCrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XXTCrop.m"; sourceTree = "<group>"; };
+		D6E140BD1F5032AB00D78CB9 /* XXTColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTColorPicker.h; sourceTree = "<group>"; };
+		D6E140BE1F5032AB00D78CB9 /* XXTColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTColorPicker.m; sourceTree = "<group>"; };
+		D6E140BF1F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTMultiplePositionColorPicker.h; sourceTree = "<group>"; };
+		D6E140C01F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTMultiplePositionColorPicker.m; sourceTree = "<group>"; };
+		D6E140C11F5032AB00D78CB9 /* XXTPixelColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelColor.h; sourceTree = "<group>"; };
+		D6E140C21F5032AB00D78CB9 /* XXTPixelColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelColor.m; sourceTree = "<group>"; };
+		D6E140C31F5032AB00D78CB9 /* XXTPixelCropRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelCropRectView.h; sourceTree = "<group>"; };
+		D6E140C41F5032AB00D78CB9 /* XXTPixelCropRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelCropRectView.m; sourceTree = "<group>"; };
+		D6E140C51F5032AB00D78CB9 /* XXTPixelCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelCropView.h; sourceTree = "<group>"; };
+		D6E140C61F5032AB00D78CB9 /* XXTPixelCropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelCropView.m; sourceTree = "<group>"; };
+		D6E140C71F5032AB00D78CB9 /* XXTPixelFlagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelFlagView.h; sourceTree = "<group>"; };
+		D6E140C81F5032AB00D78CB9 /* XXTPixelFlagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelFlagView.m; sourceTree = "<group>"; };
+		D6E140C91F5032AB00D78CB9 /* XXTPixelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelImage.h; sourceTree = "<group>"; };
+		D6E140CA1F5032AB00D78CB9 /* XXTPixelImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelImage.m; sourceTree = "<group>"; };
+		D6E140CB1F5032AB00D78CB9 /* XXTPixelPlaceholderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelPlaceholderView.h; sourceTree = "<group>"; };
+		D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelPlaceholderView.m; sourceTree = "<group>"; };
+		D6E140CD1F5032AB00D78CB9 /* XXTPixelPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelPreview.h; sourceTree = "<group>"; };
+		D6E140CE1F5032AB00D78CB9 /* XXTPixelPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelPreview.m; sourceTree = "<group>"; };
+		D6E140CF1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelPreviewRootViewController.h; sourceTree = "<group>"; };
+		D6E140D01F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelPreviewRootViewController.m; sourceTree = "<group>"; };
+		D6E140D11F5032AB00D78CB9 /* XXTPixelResizeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelResizeControl.h; sourceTree = "<group>"; };
+		D6E140D21F5032AB00D78CB9 /* XXTPixelResizeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPixelResizeControl.m; sourceTree = "<group>"; };
+		D6E140D31F5032AB00D78CB9 /* XXTPositionColorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPositionColorModel.h; sourceTree = "<group>"; };
+		D6E140D41F5032AB00D78CB9 /* XXTPositionColorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPositionColorModel.m; sourceTree = "<group>"; };
+		D6E140D51F5032AB00D78CB9 /* XXTPositionColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPositionColorPicker.h; sourceTree = "<group>"; };
+		D6E140D61F5032AB00D78CB9 /* XXTPositionColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPositionColorPicker.m; sourceTree = "<group>"; };
+		D6E140D71F5032AB00D78CB9 /* XXTPositionPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPositionPicker.h; sourceTree = "<group>"; };
+		D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPositionPicker.m; sourceTree = "<group>"; };
+		D6E140D91F5032AB00D78CB9 /* XXTRectanglePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTRectanglePicker.h; sourceTree = "<group>"; };
+		D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTRectanglePicker.m; sourceTree = "<group>"; };
+		D6E140DD1F5032AB00D78CB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/XXTPickerCollection.strings; sourceTree = "<group>"; };
+		D6E140DE1F5032AB00D78CB9 /* xxt-add-box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-add-box.png"; sourceTree = "<group>"; };
+		D6E140DF1F5032AB00D78CB9 /* xxt-add-box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-add-box@2x.png"; sourceTree = "<group>"; };
+		D6E140E01F5032AB00D78CB9 /* xxt-add-box@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-add-box@3x.png"; sourceTree = "<group>"; };
+		D6E140E11F5032AB00D78CB9 /* xxt-clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-clear.png"; sourceTree = "<group>"; };
+		D6E140E21F5032AB00D78CB9 /* xxt-clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-clear@2x.png"; sourceTree = "<group>"; };
+		D6E140E31F5032AB00D78CB9 /* xxt-clear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-clear@3x.png"; sourceTree = "<group>"; };
+		D6E140E41F5032AB00D78CB9 /* xxt-crop-pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-crop-pattern.png"; sourceTree = "<group>"; };
+		D6E140E51F5032AB00D78CB9 /* xxt-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-lock.png"; sourceTree = "<group>"; };
+		D6E140E61F5032AB00D78CB9 /* xxt-lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-lock@2x.png"; sourceTree = "<group>"; };
+		D6E140E71F5032AB00D78CB9 /* xxt-lock@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-lock@3x.png"; sourceTree = "<group>"; };
+		D6E140E81F5032AB00D78CB9 /* xxt-marquee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-marquee.png"; sourceTree = "<group>"; };
+		D6E140E91F5032AB00D78CB9 /* xxt-marquee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-marquee@2x.png"; sourceTree = "<group>"; };
+		D6E140EA1F5032AB00D78CB9 /* xxt-marquee@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-marquee@3x.png"; sourceTree = "<group>"; };
+		D6E140EB1F5032AB00D78CB9 /* xxt-picker-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-border.png"; sourceTree = "<group>"; };
+		D6E140EC1F5032AB00D78CB9 /* xxt-picker-border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-border@2x.png"; sourceTree = "<group>"; };
+		D6E140ED1F5032AB00D78CB9 /* xxt-picker-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-check.png"; sourceTree = "<group>"; };
+		D6E140EE1F5032AB00D78CB9 /* xxt-picker-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-check@2x.png"; sourceTree = "<group>"; };
+		D6E140EF1F5032AB00D78CB9 /* xxt-picker-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-close.png"; sourceTree = "<group>"; };
+		D6E140F01F5032AB00D78CB9 /* xxt-picker-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-close@2x.png"; sourceTree = "<group>"; };
+		D6E140F11F5032AB00D78CB9 /* xxt-picker-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-down.png"; sourceTree = "<group>"; };
+		D6E140F21F5032AB00D78CB9 /* xxt-picker-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-down@2x.png"; sourceTree = "<group>"; };
+		D6E140F31F5032AB00D78CB9 /* xxt-picker-line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-line@2x.png"; sourceTree = "<group>"; };
+		D6E140F41F5032AB00D78CB9 /* xxt-picker-show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-show.png"; sourceTree = "<group>"; };
+		D6E140F51F5032AB00D78CB9 /* xxt-picker-show@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-show@2x.png"; sourceTree = "<group>"; };
+		D6E140F61F5032AB00D78CB9 /* xxt-picker-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-up.png"; sourceTree = "<group>"; };
+		D6E140F71F5032AB00D78CB9 /* xxt-picker-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-picker-up@2x.png"; sourceTree = "<group>"; };
+		D6E140F81F5032AB00D78CB9 /* xxt-refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-refresh.png"; sourceTree = "<group>"; };
+		D6E140F91F5032AB00D78CB9 /* xxt-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-refresh@2x.png"; sourceTree = "<group>"; };
+		D6E140FA1F5032AB00D78CB9 /* xxt-refresh@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-refresh@3x.png"; sourceTree = "<group>"; };
+		D6E140FB1F5032AB00D78CB9 /* xxt-rotate-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-rotate-left.png"; sourceTree = "<group>"; };
+		D6E140FC1F5032AB00D78CB9 /* xxt-rotate-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-rotate-left@2x.png"; sourceTree = "<group>"; };
+		D6E140FD1F5032AB00D78CB9 /* xxt-rotate-left@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-rotate-left@3x.png"; sourceTree = "<group>"; };
+		D6E140FE1F5032AB00D78CB9 /* xxt-rotate-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-rotate-right.png"; sourceTree = "<group>"; };
+		D6E140FF1F5032AB00D78CB9 /* xxt-rotate-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-rotate-right@2x.png"; sourceTree = "<group>"; };
+		D6E141001F5032AB00D78CB9 /* xxt-rotate-right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-rotate-right@3x.png"; sourceTree = "<group>"; };
+		D6E141011F5032AB00D78CB9 /* xxt-unlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-unlock.png"; sourceTree = "<group>"; };
+		D6E141021F5032AB00D78CB9 /* xxt-unlock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-unlock@2x.png"; sourceTree = "<group>"; };
+		D6E141031F5032AB00D78CB9 /* xxt-unlock@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xxt-unlock@3x.png"; sourceTree = "<group>"; };
+		D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTApplicationCell.xib; sourceTree = "<group>"; };
+		D6E141051F5032AB00D78CB9 /* XXTImagePickerAlbumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTImagePickerAlbumCell.xib; sourceTree = "<group>"; };
+		D6E141061F5032AB00D78CB9 /* XXTImagePickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTImagePickerController.xib; sourceTree = "<group>"; };
+		D6E141071F5032AB00D78CB9 /* XXTImagePickerPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTImagePickerPhotoCell.xib; sourceTree = "<group>"; };
+		D6E141081F5032AB00D78CB9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/XXTPickerCollection.strings"; sourceTree = "<group>"; };
+		D6E141091F5032AB00D78CB9 /* XXTBasePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTBasePicker.h; sourceTree = "<group>"; };
+		D6E1410A1F5032AB00D78CB9 /* XXTPickerCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerCollection.h; sourceTree = "<group>"; };
+		D6E1410B1F5032AB00D78CB9 /* XXTPickerDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerDefine.h; sourceTree = "<group>"; };
+		D6E1410C1F5032AB00D78CB9 /* XXTPickerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerFactory.h; sourceTree = "<group>"; };
+		D6E1410D1F5032AB00D78CB9 /* XXTPickerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerFactory.m; sourceTree = "<group>"; };
+		D6E1410E1F5032AB00D78CB9 /* XXTPickerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerNavigationController.h; sourceTree = "<group>"; };
+		D6E1410F1F5032AB00D78CB9 /* XXTPickerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerNavigationController.m; sourceTree = "<group>"; };
+		D6E141101F5032AB00D78CB9 /* XXTPickerPreviewBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerPreviewBar.h; sourceTree = "<group>"; };
+		D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerPreviewBar.m; sourceTree = "<group>"; };
+		D6E141121F5032AB00D78CB9 /* XXTPickerTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerTask.h; sourceTree = "<group>"; };
+		D6E141131F5032AB00D78CB9 /* XXTPickerTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerTask.m; sourceTree = "<group>"; };
+		D6E141621F50330400D78CB9 /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
+		D6E141631F50330400D78CB9 /* xxte-white-icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xxte-white-icons.plist"; sourceTree = "<group>"; };
 		D6FC2F2A1F0E3372000BAB42 /* XXTEMoreActivationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationController.h; sourceTree = "<group>"; };
 		D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D6FC2F351F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionCell.h; sourceTree = "<group>"; };
@@ -911,10 +1067,9 @@
 				D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */,
 				D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */,
 				D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */,
-				0F68F41A1F4C6EDD00EE1F41 /* XXTPickerCollection.framework in Frameworks */,
+				D6E141641F50330400D78CB9 /* SpringBoardServices in Frameworks */,
 				D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */,
 				0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */,
-				D629C21B1F061EF40030C6DA /* SpringBoardServices in Frameworks */,
 				13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1313,14 +1468,6 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		0F68F4121F4C6EB200EE1F41 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		0F6AEA7E1F372A450017BE7C /* OpenWith */ = {
 			isa = PBXGroup;
 			children = (
@@ -1365,7 +1512,7 @@
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
-				0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */,
+				D6E140971F5032AB00D78CB9 /* XXTPickerCollection */,
 				0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */,
 				0FA7ABEB1ED641A3003EAD7D /* Products */,
 				59918F7D2218C7F23C834EB4 /* Pods */,
@@ -1843,10 +1990,6 @@
 		D629C20F1F061D5F0030C6DA /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				D629C21A1F061EF40030C6DA /* SpringBoardServices */,
-				D629C21C1F062EC80030C6DA /* xxte-white-icons.plist */,
-				D629C2191F061E690030C6DA /* LSApplicationProxy.h */,
-				0F10A9191F07B444008BA792 /* LSApplicationWorkspace.h */,
 				D629C2201F0635F20030C6DA /* XXTEMoreApplicationCell.h */,
 				D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */,
 				D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */,
@@ -2138,6 +2281,177 @@
 			name = Reader;
 			sourceTree = "<group>";
 		};
+		D6E140971F5032AB00D78CB9 /* XXTPickerCollection */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140981F5032AB00D78CB9 /* Application */,
+				D6E140A51F5032AB00D78CB9 /* Image */,
+				D6E140AE1F5032AB00D78CB9 /* KeyEvent */,
+				D6E140B31F5032AB00D78CB9 /* Location */,
+				D6E140B61F5032AB00D78CB9 /* Pixel */,
+				D6E140DB1F5032AB00D78CB9 /* Resources */,
+				D6E141091F5032AB00D78CB9 /* XXTBasePicker.h */,
+				D6E1410A1F5032AB00D78CB9 /* XXTPickerCollection.h */,
+				D6E1410B1F5032AB00D78CB9 /* XXTPickerDefine.h */,
+				D6E1410C1F5032AB00D78CB9 /* XXTPickerFactory.h */,
+				D6E1410D1F5032AB00D78CB9 /* XXTPickerFactory.m */,
+				D6E1410E1F5032AB00D78CB9 /* XXTPickerNavigationController.h */,
+				D6E1410F1F5032AB00D78CB9 /* XXTPickerNavigationController.m */,
+				D6E141101F5032AB00D78CB9 /* XXTPickerPreviewBar.h */,
+				D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */,
+				D6E141121F5032AB00D78CB9 /* XXTPickerTask.h */,
+				D6E141131F5032AB00D78CB9 /* XXTPickerTask.m */,
+			);
+			path = XXTPickerCollection;
+			sourceTree = "<group>";
+		};
+		D6E140981F5032AB00D78CB9 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				D6E141621F50330400D78CB9 /* SpringBoardServices */,
+				D6E141631F50330400D78CB9 /* xxte-white-icons.plist */,
+				D6E140991F5032AB00D78CB9 /* LSApplicationProxy.h */,
+				D6E1409A1F5032AB00D78CB9 /* LSApplicationWorkspace.h */,
+				D6E1409C1F5032AB00D78CB9 /* XXTApplicationCell.h */,
+				D6E1409D1F5032AB00D78CB9 /* XXTApplicationCell.m */,
+				D6E1409E1F5032AB00D78CB9 /* XXTApplicationPicker.h */,
+				D6E1409F1F5032AB00D78CB9 /* XXTApplicationPicker.m */,
+				D6E140A11F5032AB00D78CB9 /* XXTMultipleApplicationPicker.h */,
+				D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */,
+				D6E140A31F5032AB00D78CB9 /* XXTPickerInsetsLabel.h */,
+				D6E140A41F5032AB00D78CB9 /* XXTPickerInsetsLabel.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		D6E140A51F5032AB00D78CB9 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140A61F5032AB00D78CB9 /* XXTImagePickerAlbumCell.h */,
+				D6E140A71F5032AB00D78CB9 /* XXTImagePickerAlbumCell.m */,
+				D6E140A81F5032AB00D78CB9 /* XXTImagePickerAssetHelper.h */,
+				D6E140A91F5032AB00D78CB9 /* XXTImagePickerAssetHelper.m */,
+				D6E140AA1F5032AB00D78CB9 /* XXTImagePickerController.h */,
+				D6E140AB1F5032AB00D78CB9 /* XXTImagePickerController.m */,
+				D6E140AC1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.h */,
+				D6E140AD1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.m */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		D6E140AE1F5032AB00D78CB9 /* KeyEvent */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140AF1F5032AB00D78CB9 /* XXTKeyEvent.h */,
+				D6E140B01F5032AB00D78CB9 /* XXTKeyEvent.m */,
+				D6E140B11F5032AB00D78CB9 /* XXTKeyEventPicker.h */,
+				D6E140B21F5032AB00D78CB9 /* XXTKeyEventPicker.m */,
+			);
+			path = KeyEvent;
+			sourceTree = "<group>";
+		};
+		D6E140B31F5032AB00D78CB9 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140B41F5032AB00D78CB9 /* XXTLocationPicker.h */,
+				D6E140B51F5032AB00D78CB9 /* XXTLocationPicker.m */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		D6E140B61F5032AB00D78CB9 /* Pixel */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140B71F5032AB00D78CB9 /* UIColor+hexValue.h */,
+				D6E140B81F5032AB00D78CB9 /* UIColor+hexValue.m */,
+				D6E140B91F5032AB00D78CB9 /* UIColor+inverseColor.h */,
+				D6E140BA1F5032AB00D78CB9 /* UIColor+inverseColor.m */,
+				D6E140BB1F5032AB00D78CB9 /* UIImage+XXTCrop.h */,
+				D6E140BC1F5032AB00D78CB9 /* UIImage+XXTCrop.m */,
+				D6E140BD1F5032AB00D78CB9 /* XXTColorPicker.h */,
+				D6E140BE1F5032AB00D78CB9 /* XXTColorPicker.m */,
+				D6E140BF1F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.h */,
+				D6E140C01F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m */,
+				D6E140C11F5032AB00D78CB9 /* XXTPixelColor.h */,
+				D6E140C21F5032AB00D78CB9 /* XXTPixelColor.m */,
+				D6E140C31F5032AB00D78CB9 /* XXTPixelCropRectView.h */,
+				D6E140C41F5032AB00D78CB9 /* XXTPixelCropRectView.m */,
+				D6E140C51F5032AB00D78CB9 /* XXTPixelCropView.h */,
+				D6E140C61F5032AB00D78CB9 /* XXTPixelCropView.m */,
+				D6E140C71F5032AB00D78CB9 /* XXTPixelFlagView.h */,
+				D6E140C81F5032AB00D78CB9 /* XXTPixelFlagView.m */,
+				D6E140C91F5032AB00D78CB9 /* XXTPixelImage.h */,
+				D6E140CA1F5032AB00D78CB9 /* XXTPixelImage.m */,
+				D6E140CB1F5032AB00D78CB9 /* XXTPixelPlaceholderView.h */,
+				D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */,
+				D6E140CD1F5032AB00D78CB9 /* XXTPixelPreview.h */,
+				D6E140CE1F5032AB00D78CB9 /* XXTPixelPreview.m */,
+				D6E140CF1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.h */,
+				D6E140D01F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m */,
+				D6E140D11F5032AB00D78CB9 /* XXTPixelResizeControl.h */,
+				D6E140D21F5032AB00D78CB9 /* XXTPixelResizeControl.m */,
+				D6E140D31F5032AB00D78CB9 /* XXTPositionColorModel.h */,
+				D6E140D41F5032AB00D78CB9 /* XXTPositionColorModel.m */,
+				D6E140D51F5032AB00D78CB9 /* XXTPositionColorPicker.h */,
+				D6E140D61F5032AB00D78CB9 /* XXTPositionColorPicker.m */,
+				D6E140D71F5032AB00D78CB9 /* XXTPositionPicker.h */,
+				D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */,
+				D6E140D91F5032AB00D78CB9 /* XXTRectanglePicker.h */,
+				D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */,
+			);
+			path = Pixel;
+			sourceTree = "<group>";
+		};
+		D6E140DB1F5032AB00D78CB9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */,
+				D6E140DE1F5032AB00D78CB9 /* xxt-add-box.png */,
+				D6E140DF1F5032AB00D78CB9 /* xxt-add-box@2x.png */,
+				D6E140E01F5032AB00D78CB9 /* xxt-add-box@3x.png */,
+				D6E140E11F5032AB00D78CB9 /* xxt-clear.png */,
+				D6E140E21F5032AB00D78CB9 /* xxt-clear@2x.png */,
+				D6E140E31F5032AB00D78CB9 /* xxt-clear@3x.png */,
+				D6E140E41F5032AB00D78CB9 /* xxt-crop-pattern.png */,
+				D6E140E51F5032AB00D78CB9 /* xxt-lock.png */,
+				D6E140E61F5032AB00D78CB9 /* xxt-lock@2x.png */,
+				D6E140E71F5032AB00D78CB9 /* xxt-lock@3x.png */,
+				D6E140E81F5032AB00D78CB9 /* xxt-marquee.png */,
+				D6E140E91F5032AB00D78CB9 /* xxt-marquee@2x.png */,
+				D6E140EA1F5032AB00D78CB9 /* xxt-marquee@3x.png */,
+				D6E140EB1F5032AB00D78CB9 /* xxt-picker-border.png */,
+				D6E140EC1F5032AB00D78CB9 /* xxt-picker-border@2x.png */,
+				D6E140ED1F5032AB00D78CB9 /* xxt-picker-check.png */,
+				D6E140EE1F5032AB00D78CB9 /* xxt-picker-check@2x.png */,
+				D6E140EF1F5032AB00D78CB9 /* xxt-picker-close.png */,
+				D6E140F01F5032AB00D78CB9 /* xxt-picker-close@2x.png */,
+				D6E140F11F5032AB00D78CB9 /* xxt-picker-down.png */,
+				D6E140F21F5032AB00D78CB9 /* xxt-picker-down@2x.png */,
+				D6E140F31F5032AB00D78CB9 /* xxt-picker-line@2x.png */,
+				D6E140F41F5032AB00D78CB9 /* xxt-picker-show.png */,
+				D6E140F51F5032AB00D78CB9 /* xxt-picker-show@2x.png */,
+				D6E140F61F5032AB00D78CB9 /* xxt-picker-up.png */,
+				D6E140F71F5032AB00D78CB9 /* xxt-picker-up@2x.png */,
+				D6E140F81F5032AB00D78CB9 /* xxt-refresh.png */,
+				D6E140F91F5032AB00D78CB9 /* xxt-refresh@2x.png */,
+				D6E140FA1F5032AB00D78CB9 /* xxt-refresh@3x.png */,
+				D6E140FB1F5032AB00D78CB9 /* xxt-rotate-left.png */,
+				D6E140FC1F5032AB00D78CB9 /* xxt-rotate-left@2x.png */,
+				D6E140FD1F5032AB00D78CB9 /* xxt-rotate-left@3x.png */,
+				D6E140FE1F5032AB00D78CB9 /* xxt-rotate-right.png */,
+				D6E140FF1F5032AB00D78CB9 /* xxt-rotate-right@2x.png */,
+				D6E141001F5032AB00D78CB9 /* xxt-rotate-right@3x.png */,
+				D6E141011F5032AB00D78CB9 /* xxt-unlock.png */,
+				D6E141021F5032AB00D78CB9 /* xxt-unlock@2x.png */,
+				D6E141031F5032AB00D78CB9 /* xxt-unlock@3x.png */,
+				D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */,
+				D6E141051F5032AB00D78CB9 /* XXTImagePickerAlbumCell.xib */,
+				D6E141061F5032AB00D78CB9 /* XXTImagePickerController.xib */,
+				D6E141071F5032AB00D78CB9 /* XXTImagePickerPhotoCell.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D6FC2F291F0E333C000BAB42 /* Activation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2179,12 +2493,10 @@
 				6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
 				D6DBD48D1F3C52D9002D5561 /* ShellScript */,
-				0FF18D5A1F4C6A540079B177 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0F68F4181F4C6EBD00EE1F41 /* PBXTargetDependency */,
 			);
 			name = XXTExplorer;
 			productName = XXTExplorer;
@@ -2221,12 +2533,6 @@
 			mainGroup = 0FA7ABE11ED641A3003EAD7D;
 			productRefGroup = 0FA7ABEB1ED641A3003EAD7D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 0F68F4121F4C6EB200EE1F41 /* Products */;
-					ProjectRef = 0F68F4111F4C6EB200EE1F41 /* XXTPickerCollection.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				0FA7ABE91ED641A3003EAD7D /* XXTExplorer */,
@@ -2234,22 +2540,15 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		0F68F4161F4C6EB200EE1F41 /* XXTPickerCollection.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = XXTPickerCollection.framework;
-			remoteRef = 0F68F4151F4C6EB200EE1F41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		0FA7ABE81ED641A3003EAD7D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
+				D6E141421F5032AB00D78CB9 /* xxt-picker-border@2x.png in Resources */,
+				D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */,
+				D6E141541F5032AB00D78CB9 /* xxt-rotate-right.png in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */,
 				0FD973EF1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme in Resources */,
@@ -2257,32 +2556,48 @@
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
 				D60A26A41F3DA24B00E013E2 /* SourceCodePro-BoldIt.otf in Resources */,
 				D6686F381F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.xib in Resources */,
+				D6E141571F5032AC00D78CB9 /* xxt-unlock.png in Resources */,
 				D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */,
 				D60A26A61F3DA24B00E013E2 /* SourceCodePro-Regular.otf in Resources */,
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
+				D6E141351F5032AB00D78CB9 /* xxt-add-box@2x.png in Resources */,
 				0FD973F21F4B1D3700133162 /* Tomorrow.tmTheme in Resources */,
 				0FB0090A1F4364AF00097E9C /* Kimbie (Light).tmTheme in Resources */,
+				D6E141521F5032AB00D78CB9 /* xxt-rotate-left@2x.png in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
+				D6E141471F5032AB00D78CB9 /* xxt-picker-down.png in Resources */,
 				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
 				0F30D93A1F2C86450001E10B /* XUISliderCell.xib in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
+				D6E141381F5032AB00D78CB9 /* xxt-clear@2x.png in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F85214C1F2D978A00A912AC /* XUIOptionCell.xib in Resources */,
+				D6E1413C1F5032AB00D78CB9 /* xxt-lock@2x.png in Resources */,
 				D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */,
 				D60A26C71F3DB7BE00E013E2 /* IDLE.tmTheme in Resources */,
+				D6E141511F5032AB00D78CB9 /* xxt-rotate-left.png in Resources */,
 				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
+				D6E1414A1F5032AB00D78CB9 /* xxt-picker-show.png in Resources */,
+				D6E141491F5032AB00D78CB9 /* xxt-picker-line@2x.png in Resources */,
 				0FB0090C1F4364B800097E9C /* Nothing.tmTheme in Resources */,
+				D6E141391F5032AB00D78CB9 /* xxt-clear@3x.png in Resources */,
 				D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */,
 				D60A26C51F3DB7BE00E013E2 /* Eiffel.tmTheme in Resources */,
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
+				D6E141371F5032AB00D78CB9 /* xxt-clear.png in Resources */,
+				D6E141531F5032AB00D78CB9 /* xxt-rotate-left@3x.png in Resources */,
+				D6E141481F5032AB00D78CB9 /* xxt-picker-down@2x.png in Resources */,
 				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
+				D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */,
+				D6E1414D1F5032AB00D78CB9 /* xxt-picker-up@2x.png in Resources */,
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				0FB009091F4364AF00097E9C /* Kimbie (Dark).tmTheme in Resources */,
+				D6E141431F5032AB00D78CB9 /* xxt-picker-check.png in Resources */,
 				0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */,
 				D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */,
 				0FD973F61F4B1D8B00133162 /* Ciapre (Black).tmTheme in Resources */,
@@ -2294,27 +2609,48 @@
 				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
 				D60A26C41F3DB7BE00E013E2 /* Dawn.tmTheme in Resources */,
 				0F30D9401F2C8C620001E10B /* XUIStaticTextCell.xib in Resources */,
+				D6E141361F5032AB00D78CB9 /* xxt-add-box@3x.png in Resources */,
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
+				D6E1413E1F5032AB00D78CB9 /* xxt-marquee.png in Resources */,
+				D6E1415D1F5032AC00D78CB9 /* XXTImagePickerPhotoCell.xib in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
+				D6E141341F5032AB00D78CB9 /* xxt-add-box.png in Resources */,
 				D60A26CE1F3DB7BE00E013E2 /* Sunburst.tmTheme in Resources */,
+				D6E1415B1F5032AC00D78CB9 /* XXTImagePickerAlbumCell.xib in Resources */,
 				0FD973F01F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
+				D6E1413F1F5032AB00D78CB9 /* xxt-marquee@2x.png in Resources */,
 				0FD973F41F4B1D7B00133162 /* Oceanic (Eighties).tmTheme in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
-				D629C21D1F062EC80030C6DA /* xxte-white-icons.plist in Resources */,
+				D6E141501F5032AB00D78CB9 /* xxt-refresh@3x.png in Resources */,
+				D6E141591F5032AC00D78CB9 /* xxt-unlock@3x.png in Resources */,
+				D6E141451F5032AB00D78CB9 /* xxt-picker-close.png in Resources */,
+				D6E141461F5032AB00D78CB9 /* xxt-picker-close@2x.png in Resources */,
+				D6E1413B1F5032AB00D78CB9 /* xxt-lock.png in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
+				D6E141411F5032AB00D78CB9 /* xxt-picker-border.png in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
 				0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */,
+				D6E1414E1F5032AB00D78CB9 /* xxt-refresh.png in Resources */,
+				D6E141441F5032AB00D78CB9 /* xxt-picker-check@2x.png in Resources */,
 				0FB009021F43573500097E9C /* Oceanic.tmTheme in Resources */,
 				0FE1629E1F3C8FFC003064B2 /* InfoPlist.strings in Resources */,
+				D6E1413A1F5032AB00D78CB9 /* xxt-crop-pattern.png in Resources */,
+				D6E141581F5032AC00D78CB9 /* xxt-unlock@2x.png in Resources */,
 				D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */,
 				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
+				D6E1415C1F5032AC00D78CB9 /* XXTImagePickerController.xib in Resources */,
+				D6E1414C1F5032AB00D78CB9 /* xxt-picker-up.png in Resources */,
 				0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */,
+				D6E141401F5032AB00D78CB9 /* xxt-marquee@3x.png in Resources */,
 				0F30D94A1F2CEF860001E10B /* XUIImageCell.xib in Resources */,
 				0F8521511F2D979E00A912AC /* XUIMultipleOptionCell.xib in Resources */,
+				D6E1414F1F5032AB00D78CB9 /* xxt-refresh@2x.png in Resources */,
+				D6E141561F5032AC00D78CB9 /* xxt-rotate-right@3x.png in Resources */,
 				0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */,
+				D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */,
 				0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */,
 				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */,
@@ -2327,8 +2663,11 @@
 				0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */,
 				D6686F331F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
+				D6E141551F5032AB00D78CB9 /* xxt-rotate-right@2x.png in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
 				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
+				D6E1414B1F5032AB00D78CB9 /* xxt-picker-show@2x.png in Resources */,
+				D6E1413D1F5032AB00D78CB9 /* xxt-lock@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2404,6 +2743,7 @@
 				D677B0EC1F4FC7C200E741C2 /* ldump.c in Sources */,
 				D6686F3F1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				D6E141181F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m in Sources */,
 				0F8EEFE01F31CD3B00F08E13 /* XUIDefaultsService.m in Sources */,
 				D677B0E71F4FC7C200E741C2 /* lcorolib.c in Sources */,
 				0F30D93F1F2C8C620001E10B /* XUIStaticTextCell.m in Sources */,
@@ -2433,7 +2773,9 @@
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				D677B0E21F4FC7C200E741C2 /* lapi.c in Sources */,
+				D6E1412A1F5032AB00D78CB9 /* XXTPixelImage.m in Sources */,
 				0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */,
+				D6E141261F5032AB00D78CB9 /* XXTPixelColor.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
 				D677B0FE1F4FC7C300E741C2 /* ltm.c in Sources */,
@@ -2453,6 +2795,7 @@
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
 				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
 				0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */,
+				D6E141281F5032AB00D78CB9 /* XXTPixelCropView.m in Sources */,
 				D677B0F41F4FC7C200E741C2 /* loadlib.c in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0F8521501F2D979E00A912AC /* XUIMultipleOptionCell.m in Sources */,
@@ -2467,28 +2810,39 @@
 				D6FD36D51F42FDBF00910D91 /* XXTEKeyboardButtonView.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				D677B1091F4FE88B00E741C2 /* XXTELuaInterpreter.mm in Sources */,
+				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,
+				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
 				D677B1031F4FC7C300E741C2 /* lzio.c in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
+				D6E141251F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m in Sources */,
 				D677B0E81F4FC7C200E741C2 /* lctype.c in Sources */,
 				D677B0FD1F4FC7C300E741C2 /* ltablib.c in Sources */,
+				D6E1415E1F5032AC00D78CB9 /* XXTPickerFactory.m in Sources */,
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
 				0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */,
 				D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */,
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
+				D6E1412D1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m in Sources */,
 				0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */,
+				D6E1412E1F5032AB00D78CB9 /* XXTPixelResizeControl.m in Sources */,
 				0F16A7901F3222E300BA2868 /* XUIListViewController+LaunchScript.m in Sources */,
 				0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */,
+				D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */,
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
 				0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */,
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,
 				0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */,
+				D6E141271F5032AB00D78CB9 /* XXTPixelCropRectView.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				0F8521551F2D97AE00A912AC /* XUIOrderedOptionCell.m in Sources */,
 				0F6AEA961F3753E20017BE7C /* XXTExplorerViewController+FileOperations.m in Sources */,
+				D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */,
+				D6E1411C1F5032AB00D78CB9 /* XXTImagePickerController.m in Sources */,
 				D677B0FB1F4FC7C300E741C2 /* lstrlib.c in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
+				D6E1411B1F5032AB00D78CB9 /* XXTImagePickerAssetHelper.m in Sources */,
 				0F8521471F2D8A4600A912AC /* XUILogger.m in Sources */,
 				0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
@@ -2504,6 +2858,7 @@
 				0F6AEA901F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */,
 				0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */,
 				0F8455D41F0D4D430055F98B /* XXTEMoreDocumentsController.m in Sources */,
+				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
@@ -2516,13 +2871,18 @@
 				D677B0EF1F4FC7C200E741C2 /* linit.c in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				D6686F321F4ACEB6004403D0 /* XXTEEditorFontSizeCell.m in Sources */,
+				D6E141151F5032AB00D78CB9 /* XXTApplicationCell.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
+				D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
+				D6E1411D1F5032AB00D78CB9 /* XXTImagePickerPhotoCell.m in Sources */,
+				D6E141611F5032AC00D78CB9 /* XXTPickerTask.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
+				D6E1411A1F5032AB00D78CB9 /* XXTImagePickerAlbumCell.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
 				D677B0EA1F4FC7C200E741C2 /* ldebug.c in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
@@ -2542,12 +2902,16 @@
 				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
+				D6E141241F5032AB00D78CB9 /* XXTColorPicker.m in Sources */,
 				0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */,
 				0F50AEA31F307A510098211C /* UIViewController+StatusBar.m in Sources */,
+				D6E141231F5032AB00D78CB9 /* UIImage+XXTCrop.m in Sources */,
 				D677B0F61F4FC7C200E741C2 /* lopcodes.c in Sources */,
 				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,
 				D6686F2D1F4AC920004403D0 /* XXTEEditorFontSizeView.m in Sources */,
+				D6E1411F1F5032AB00D78CB9 /* XXTKeyEventPicker.m in Sources */,
 				0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */,
+				D6E141211F5032AB00D78CB9 /* UIColor+hexValue.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
 				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
 				0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */,
@@ -2583,21 +2947,26 @@
 				0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */,
 				0F6AEA8A1F374E4C0017BE7C /* XXTExplorerViewController+Shortcuts.m in Sources */,
 				52512BD02B62F2E839374051 /* XUIViewController.m in Sources */,
+				D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */,
 				D6686F371F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.m in Sources */,
+				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,
 				D677B0FF1F4FC7C300E741C2 /* lua.c in Sources */,
 				D677B0E51F4FC7C200E741C2 /* lbitlib.c in Sources */,
 				52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */,
+				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
 				D677B0F31F4FC7C200E741C2 /* lmem.c in Sources */,
 				D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */,
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
 				D677B0FC1F4FC7C300E741C2 /* ltable.c in Sources */,
 				52512432C43B553660F98172 /* XUIGroupCell.m in Sources */,
+				D6E1412F1F5032AB00D78CB9 /* XXTPositionColorModel.m in Sources */,
 				525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */,
 				D677B0F71F4FC7C200E741C2 /* loslib.c in Sources */,
 				B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */,
 				52512CB22B66C2C399BAF27D /* SKCapture.m in Sources */,
 				D677B0E41F4FC7C200E741C2 /* lbaselib.c in Sources */,
 				D677B0F01F4FC7C200E741C2 /* liolib.c in Sources */,
+				D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */,
 				5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
 				5251242F0537AF64E7895EDB /* SKResult.m in Sources */,
@@ -2605,6 +2974,7 @@
 				5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */,
 				52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */,
 				52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */,
+				D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */,
 				D677B0EB1F4FC7C200E741C2 /* ldo.c in Sources */,
 				52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */,
 				52512159F631F9582F89C858 /* SKRepository.m in Sources */,
@@ -2614,6 +2984,8 @@
 				52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */,
 				D6686F481F4AEF32004403D0 /* UIControl+BlockTarget.m in Sources */,
 				52512440558639F0CA2A63C6 /* SKInclude.m in Sources */,
+				D6E141291F5032AB00D78CB9 /* XXTPixelFlagView.m in Sources */,
+				D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */,
 				52512CA06AA993671BB9E73B /* SKHelperConfig.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
 				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
@@ -2622,14 +2994,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0F68F4181F4C6EBD00EE1F41 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = XXTPickerCollection;
-			targetProxy = 0F68F4171F4C6EBD00EE1F41 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0F3508C21F166A69000403FD /* Localizable.strings */ = {
@@ -2675,6 +3039,15 @@
 				D6DBD48C1F3C4CA7002D5561 /* en */,
 			);
 			name = XXTEBuiltInDefaults.plist;
+			sourceTree = "<group>";
+		};
+		D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6E140DD1F5032AB00D78CB9 /* en */,
+				D6E141081F5032AB00D78CB9 /* zh-Hans */,
+			);
+			name = XXTPickerCollection.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2808,6 +3181,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
+					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2839,6 +3213,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
+					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

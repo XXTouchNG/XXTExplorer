@@ -38,7 +38,7 @@
     static dispatch_once_t onceToken;
     static NSBundle *bundle = nil;
     dispatch_once(&onceToken, ^{
-        bundle = [NSBundle bundleWithIdentifier:@"com.darwindev.XXTPickerCollection"];
+        bundle = [NSBundle mainBundle];
     });
     return bundle;
 }

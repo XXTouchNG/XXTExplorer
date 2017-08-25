@@ -60,16 +60,16 @@
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" has been disabled, you can make it display again in \"More > User Defaults\".";
 
 /* No comment provided by engineer. */
-"\n\nTest finished.\n" = "\n\n测试结束.\n";
+"\n\nTest finished.\n" = "\n\n调试结束.\n";
 
 /* No comment provided by engineer. */
 "\nReady.\n" = "\n准备就绪.\n";
 
 /* No comment provided by engineer. */
-"\nSyntax check passed, testing...\n\n" = "\n语法检查通过, 测试中...\n\n";
+"\nSyntax check passed, testing...\n\n" = "\n语法检查通过, 调试中...\n\n";
 
 /* No comment provided by engineer. */
-"\nTesting %@...\n" = "\n测试 %@...\n";
+"\nTesting %@...\n" = "\n调试 %@...\n";
 
 /* No comment provided by engineer. */
 "A directory with nothing inside." = "空目录.";

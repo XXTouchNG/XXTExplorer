@@ -29,6 +29,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSString *entryPath = self.entryPath;
+    if (entryPath) {
+        NSString *entryName = [entryPath lastPathComponent];
+        self.title = entryName;
+    }
+    
     self.navigationItem.rightBarButtonItem = nil;
     if (self == self.navigationController.viewControllers[0]) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;

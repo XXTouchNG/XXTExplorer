@@ -17,6 +17,7 @@
 
 + (instancetype)taskWithTitle:(NSString *)title code:(NSString *)code;
 + (instancetype)taskWithTitle:(NSString *)title code:(NSString *)code udid:(NSString *)udid;
+
 - (Class)nextStepClass;
 - (void)nextStep;
 - (BOOL)taskFinished;
