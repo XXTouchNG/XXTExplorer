@@ -155,15 +155,15 @@
             else {
                 [currentLabel setFont:[UIFont systemFontOfSize:self.bounds.size.width * .6f]];
                 if (self.trackPoint) {
-                    const unichar c = 0x25c9;
+                    const unichar c = 0x25c9; // circle icon
                     [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
-                } else {
+                } else if (self.tabButton) {
 //                    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
 //                    attachment.image = [UIImage imageNamed:@"XXTEKeyboardButtonTab"];
 //                    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 //                    [currentLabel setAttributedText:attachmentString];
-                    const unichar c = 0x2192;
+                    const unichar c = 0x2192; // tab icon
                     [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
                 }

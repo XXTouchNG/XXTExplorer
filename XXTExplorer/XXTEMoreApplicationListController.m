@@ -169,7 +169,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
-    blockUserInteractions(self, YES, 0.2);
+    blockUserInteractions(self, YES, 2.0);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);
@@ -240,7 +240,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
             if (refreshControl && [refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }
-            blockUserInteractions(self, NO, 0.2);
+            blockUserInteractions(self, NO, 2.0);
         });
     });
 }

@@ -26,7 +26,7 @@ static inline void blockUserInteractions(UIViewController *viewController, BOOL 
     if (shouldBlock) {
         viewToBlock.userInteractionEnabled = NO;
         if (delay > 0) {
-            [viewToBlock performSelector:@selector(makeToastActivity:) withObject:XXTEToastPositionCenter afterDelay:.2f];
+            [viewToBlock performSelector:@selector(makeToastActivity:) withObject:XXTEToastPositionCenter afterDelay:delay];
         } else {
             [viewToBlock makeToastActivity:XXTEToastPositionCenter];
         }

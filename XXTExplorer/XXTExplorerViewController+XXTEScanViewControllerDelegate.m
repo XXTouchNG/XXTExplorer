@@ -21,9 +21,11 @@
 #pragma mark - XXTEScanViewControllerDelegate
 
 - (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url {
-    blockUserInteractions(self, YES, 0.2);
+    blockUserInteractions(self, YES, 0);
+    @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
-        blockUserInteractions(self, NO, 0.2);
+        @strongify(self);
+        blockUserInteractions(self, NO, 0);
         BOOL internal = ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]);
         if (internal) {
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
@@ -45,8 +47,10 @@
 }
 
 - (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)detailText {
-    blockUserInteractions(self, YES, 0.2);
+    blockUserInteractions(self, YES, 2.0);
+    @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
+        @strongify(self);
         [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [[UIPasteboard generalPasteboard] setString:detailText];
@@ -54,7 +58,7 @@
             });
         }].finally(^() {
             showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-            blockUserInteractions(self, NO, 0.2);
+            blockUserInteractions(self, NO, 2.0);
         });
     }];
 }

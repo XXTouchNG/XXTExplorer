@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.webView.opaque = NO;
+    self.wkWebView.opaque = NO;
 
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];

@@ -160,7 +160,7 @@ enum {
 }
 
 - (void)loadDynamicUserDefaults {
-    blockUserInteractions(self, YES, 0.2);
+    blockUserInteractions(self, YES, 2.0);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
@@ -194,7 +194,7 @@ enum {
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 0.2);
+        blockUserInteractions(self, NO, 2.0);
         [self.tableView reloadData];
     });
 }
@@ -339,7 +339,7 @@ enum {
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
 //    editedUserDefaults[modifyKey] = (index != 0) ? @YES : @NO;
     editedUserDefaults[modifyKey] = @(index);
-    blockUserInteractions(self, YES, 0.2);
+    blockUserInteractions(self, YES, 2.0);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -363,7 +363,7 @@ enum {
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 0.2);
+        blockUserInteractions(self, NO, 2.0);
         [self.tableView reloadData];
     });
 }

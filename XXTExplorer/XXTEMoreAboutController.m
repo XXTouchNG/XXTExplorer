@@ -11,19 +11,23 @@
 #import "XXTEMoreAboutCell.h"
 #import "XXTECommonNavigationController.h"
 #import "XXTECommonWebViewController.h"
-#import "XXTEAppDefines.h"
-#import "UIView+XXTEToast.h"
-#import <MessageUI/MessageUI.h>
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEMailComposeViewController.h"
 #import "XXTESplitViewController.h"
 #import "XXTEDispatchDefines.h"
 #import "XXTESplitViewController.h"
 
+#import <MessageUI/MessageUI.h>
+#import <LGAlertView/LGAlertView.h>
+
+#import "XXTEAppDefines.h"
+#import "XXTEUserInterfaceDefines.h"
+
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
     kXXTEMoreAboutSectionIndexHomepage,
     kXXTEMoreAboutSectionIndexFeedback,
+    kXXTEMoreAboutSectionIndexTool,
     kXXTEMoreAboutSectionIndexMax
 } kXXTEMoreAboutSectionIndex;
 
@@ -78,8 +82,8 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ @"", @"", NSLocalizedString(@"Feedback", nil) ];
-    staticSectionFooters = @[ @"", @"", @"" ];
+    staticSectionTitles = @[ @"", @"", @"", @"" ];
+    staticSectionFooters = @[ @"", @"", @"", @"" ];
     
     XXTEMoreAboutCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAboutCell class]) owner:nil options:nil] lastObject];
     
@@ -98,21 +102,27 @@ typedef enum : NSUInteger {
     XXTEMoreLinkNoIconCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell5.titleLabel.text = NSLocalizedString(@"Mail Feedback", nil);
-
+    
     XXTEMoreLinkNoIconCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell6.titleLabel.text = NSLocalizedString(@"Check Update", nil);
+    cell6.titleLabel.text = NSLocalizedString(@"Official QQ Group", nil);
     
     XXTEMoreLinkNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell7.titleLabel.text = NSLocalizedString(@"Official QQ Group", nil);
+    cell7.titleLabel.text = NSLocalizedString(@"Check Update", nil);
+    
+    XXTEMoreLinkNoIconCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+    cell8.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell8.titleLabel.text = NSLocalizedString(@"Reset Defaults", nil);
     
     staticCells = @[
                     @[ cell1 ],
                     //
                     @[ cell2, cell3, cell4 ],
                     //
-                    @[ cell5, cell6, cell7 ]
+                    @[ cell5, cell6 ],
+                    //
+                    @[ cell7, cell8 ]
                     ];
 }
 
@@ -184,10 +194,6 @@ typedef enum : NSUInteger {
                 }
             }
             else if (indexPath.row == 1) {
-                XXTESplitViewController *splitViewController1 = (XXTESplitViewController *) self.splitViewController;
-                [splitViewController1 checkUpdate];
-            }
-            else if (indexPath.row == 2) {
                 NSString *contactStr = uAppDefine(@"CONTACT_URL");
                 if (contactStr) {
                     NSURL *qqURL = [NSURL URLWithString:contactStr];
@@ -197,6 +203,22 @@ typedef enum : NSUInteger {
                         showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), contactStr]);
                     }
                 }
+            }
+        }
+        else if (indexPath.section == kXXTEMoreAboutSectionIndexTool) {
+            if (indexPath.row == 0) {
+                XXTESplitViewController *splitViewController1 = (XXTESplitViewController *) self.splitViewController;
+                [splitViewController1 checkUpdate];
+            }
+            else if (indexPath.row == 1) {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Reset Confirm", nil) message:NSLocalizedString(@"All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked.", nil) style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Reset", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                    [alertView dismissAnimated];
+                } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                    [NSUserDefaults resetStandardUserDefaults];
+                    showUserMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+                    [alertView dismissAnimated];
+                }];
+                [alertView showAnimated];
             }
         }
     }

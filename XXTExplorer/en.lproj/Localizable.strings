@@ -60,6 +60,18 @@
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".";
 
 /* No comment provided by engineer. */
+"\n\nTest finished.\n" = "\n\nTest finished.\n";
+
+/* No comment provided by engineer. */
+"\nReady.\n" = "\nReady.\n";
+
+/* No comment provided by engineer. */
+"\nSyntax check passed, testing...\n\n" = "\nSyntax check passed, testing...\n\n";
+
+/* No comment provided by engineer. */
+"\nTesting %@...\n" = "\nTesting %@...\n";
+
+/* No comment provided by engineer. */
 "A directory with nothing inside." = "A directory with nothing inside.";
 
 /* No comment provided by engineer. */
@@ -106,6 +118,9 @@
 
 /* No comment provided by engineer. */
 "Aliyun gateway error: %@" = "Aliyun gateway error: %@";
+
+/* No comment provided by engineer. */
+"All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked." = "All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked.";
 
 /* No comment provided by engineer. */
 "Allowed file extensions: %@." = "Allowed file extensions: %@.";
@@ -306,6 +321,9 @@
 "Connect to Wi-fi network." = "Connect to Wi-fi network.";
 
 /* No comment provided by engineer. */
+"Console" = "Console";
+
+/* No comment provided by engineer. */
 "Container Path" = "Container Path";
 
 /* No comment provided by engineer. */
@@ -352,6 +370,9 @@
 
 /* No comment provided by engineer. */
 "Daemon Restarted" = "Daemon Restarted";
+
+/* No comment provided by engineer. */
+"Debugger" = "Debugger";
 
 /* No comment provided by engineer. */
 "Decompressing terminated unexpectedly." = "Decompressing terminated unexpectedly.";
@@ -442,6 +463,9 @@
 
 /* No comment provided by engineer. */
 "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.";
+
+/* No comment provided by engineer. */
+"Error" = "Error";
 
 /* No comment provided by engineer. */
 "Everyone" = "Everyone";
@@ -591,6 +615,9 @@
 "Loading..." = "Loading...";
 
 /* No comment provided by engineer. */
+"Local Debugger" = "Local Debugger";
+
+/* No comment provided by engineer. */
 "Location" = "Location";
 
 /* No comment provided by engineer. */
@@ -694,6 +721,9 @@
 
 /* No comment provided by engineer. */
 "Operation Failed" = "Operation Failed";
+
+/* No comment provided by engineer. */
+"Operation succeed." = "Operation succeed.";
 
 /* No comment provided by engineer. */
 "Original" = "Original";
@@ -814,6 +844,15 @@
 
 /* No comment provided by engineer. */
 "Rename" = "Rename";
+
+/* No comment provided by engineer. */
+"Reset" = "Reset";
+
+/* No comment provided by engineer. */
+"Reset Confirm" = "Reset Confirm";
+
+/* No comment provided by engineer. */
+"Reset Defaults" = "Reset Defaults";
 
 /* No comment provided by engineer. */
 "Respring" = "Respring";
@@ -973,6 +1012,9 @@
 
 /* No comment provided by engineer. */
 "This operation will shut down the device and launch it again." = "This operation will shut down the device and launch it again.";
+
+/* No comment provided by engineer. */
+"Thread terminated." = "Thread terminated.";
 
 /* No comment provided by engineer. */
 "Title" = "Title";

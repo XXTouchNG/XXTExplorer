@@ -539,7 +539,7 @@ typedef enum : NSUInteger {
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
         NSString *wholeString = self.textView.text;
-        blockUserInteractions(self, YES, 0.2);
+        blockUserInteractions(self, YES, 0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @weakify(self);
             [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
@@ -551,7 +551,7 @@ typedef enum : NSUInteger {
             }];
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxOnScreen];
-                blockUserInteractions(self, NO, 0.2);
+                blockUserInteractions(self, NO, 0);
             });
         });
     }

@@ -21,8 +21,9 @@
 //  IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface TOWebViewController : UIViewController <UIWebViewDelegate>
+@interface TOWebViewController : UIViewController <WKNavigationDelegate>
 
 /**
  Initializes a new `TOWebViewController` object with the specified URL.
@@ -58,7 +59,7 @@
  
  @warning Usage of the web view's delegate property is reserved by this view controller. Do not set it to another object.
  */
-@property (nonatomic,readonly)  UIWebView *webView;
+@property (nonatomic,readonly)  WKWebView *wkWebView;
 
 /** 
  Shows a loading progress bar underneath the top navigation bar. 
@@ -166,12 +167,12 @@
  An optional block that when set, will have each incoming web load request forwarded to it, and can
  determine whether to let them proceed or not.
  */
-@property (nonatomic,copy)      BOOL (^shouldStartLoadRequestHandler)(NSURLRequest *request, UIWebViewNavigationType navigationType);
+@property (nonatomic,copy)      BOOL (^shouldStartLoadRequestHandler)(NSURLRequest *request, WKNavigationType navigationType);
 
 /**
 An optional block that when set, will be triggered each time the web view has finished a load operation.
 */
-@property (nonatomic,copy)      void (^didFinishLoadHandler)(UIWebView *webView);
+@property (nonatomic,copy)      void (^didFinishLoadHandler)(WKWebView *wkWebView);
 
 /** 
  This can be used to override the default tint color of the navigation button icons.

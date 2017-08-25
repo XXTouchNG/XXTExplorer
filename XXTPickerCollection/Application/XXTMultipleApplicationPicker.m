@@ -70,11 +70,11 @@ UISearchDisplayDelegate
 }
 
 - (NSString *)pickerResult {
-    NSMutableString *selectedReplacement = [[NSMutableString alloc] initWithString:@"[\n"];
+    NSMutableString *selectedReplacement = [[NSMutableString alloc] initWithString:@"{\n"];
     for (NSDictionary *appDetail in self.selectedApplications) {
         [selectedReplacement appendFormat:@"\"%@\",\n", appDetail[kXXTApplicationDetailKeyBundleID]];
     }
-    [selectedReplacement appendString:@"]"];
+    [selectedReplacement appendString:@"}"];
     return selectedReplacement;
 }
 

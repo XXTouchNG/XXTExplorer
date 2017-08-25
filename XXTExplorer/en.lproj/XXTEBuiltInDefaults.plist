@@ -13,6 +13,7 @@
 		<string>XXTEObjectViewController</string>
 		<string>XUIListViewController</string>
 		<string>XXTEPackageViewerController</string>
+		<string>XXTETerminalViewController</string>
 	</array>
 	<key>AVAILABLE_BUNDLE_READER</key>
 	<array>
@@ -136,6 +137,23 @@
 			<string>Select Launched Script</string>
 			<key>description</key>
 			<string>Select the script after being launched once in XXTouch Explorer.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerAllowOpenMethodKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Allow Open Method</string>
+			<key>description</key>
+			<string>Allow changing open method in &quot;Item Property&quot;.</string>
 			<key>options</key>
 			<array>
 				<string>Off</string>

@@ -60,6 +60,18 @@
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" has been disabled, you can make it display again in \"More > User Defaults\".";
 
 /* No comment provided by engineer. */
+"\n\nTest finished.\n" = "\n\n测试结束.\n";
+
+/* No comment provided by engineer. */
+"\nReady.\n" = "\n准备就绪.\n";
+
+/* No comment provided by engineer. */
+"\nSyntax check passed, testing...\n\n" = "\n语法检查通过, 测试中...\n\n";
+
+/* No comment provided by engineer. */
+"\nTesting %@...\n" = "\n测试 %@...\n";
+
+/* No comment provided by engineer. */
 "A directory with nothing inside." = "空目录.";
 
 /* No comment provided by engineer. */
@@ -106,6 +118,9 @@
 
 /* No comment provided by engineer. */
 "Aliyun gateway error: %@" = "阿里云网关错误: %@";
+
+/* No comment provided by engineer. */
+"All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked." = "所有应用程序配置将会被重置, 但用户文档及数据将不会被删除.\n该操作无法被撤销.";
 
 /* No comment provided by engineer. */
 "Allowed file extensions: %@." = "允许的文件扩展名: %@.";
@@ -306,6 +321,9 @@
 "Connect to Wi-fi network." = "请连接到无线局域网.";
 
 /* No comment provided by engineer. */
+"Console" = "终端";
+
+/* No comment provided by engineer. */
 "Container Path" = "容器路径";
 
 /* No comment provided by engineer. */
@@ -352,6 +370,9 @@
 
 /* No comment provided by engineer. */
 "Daemon Restarted" = "守护进程已重启";
+
+/* No comment provided by engineer. */
+"Debugger" = "调试器";
 
 /* No comment provided by engineer. */
 "Decompressing terminated unexpectedly." = "解压异常终止.";
@@ -442,6 +463,9 @@
 
 /* No comment provided by engineer. */
 "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "键入 16 位授权码, 轻按 \"完成\" 以激活授权, 并将授权绑定至当前设备.\n授权码中仅包含 3-9 和 A-Z, 不包含空格.";
+
+/* No comment provided by engineer. */
+"Error" = "错误";
 
 /* No comment provided by engineer. */
 "Everyone" = "任何人";
@@ -591,6 +615,9 @@
 "Loading..." = "载入中...";
 
 /* No comment provided by engineer. */
+"Local Debugger" = "本地调试器";
+
+/* No comment provided by engineer. */
 "Location" = "位置";
 
 /* No comment provided by engineer. */
@@ -660,7 +687,7 @@
 "Object Viewer" = "对象查看器";
 
 /* No comment provided by engineer. */
-"Off" = "❌";
+"Off" = "Off";
 
 /* No comment provided by engineer. */
 "Official QQ Group" = "官方 QQ 群";
@@ -672,7 +699,7 @@
 "OK" = "好";
 
 /* No comment provided by engineer. */
-"On" = "⭕️";
+"On" = "On";
 
 /* No comment provided by engineer. */
 "Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
@@ -691,6 +718,9 @@
 
 /* No comment provided by engineer. */
 "Operation Failed" = "操作失败";
+
+/* No comment provided by engineer. */
+"Operation succeed." = "操作成功.";
 
 /* No comment provided by engineer. */
 "Original" = "原身";
@@ -811,6 +841,15 @@
 
 /* No comment provided by engineer. */
 "Rename" = "重命名";
+
+/* No comment provided by engineer. */
+"Reset" = "重置";
+
+/* No comment provided by engineer. */
+"Reset Confirm" = "重置确认";
+
+/* No comment provided by engineer. */
+"Reset Defaults" = "恢复初始设置";
 
 /* No comment provided by engineer. */
 "Respring" = "注销";
@@ -972,6 +1011,9 @@
 
 /* No comment provided by engineer. */
 "This operation will shut down the device and launch it again." = "该操作将使设备关闭, 并重新启动它.";
+
+/* No comment provided by engineer. */
+"Thread terminated." = "线程终止";
 
 /* No comment provided by engineer. */
 "Title" = "标题";
