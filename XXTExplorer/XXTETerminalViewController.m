@@ -71,6 +71,17 @@
     [self loadProcess:self.runImmediately];
 }
 
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    [super willMoveToParentViewController:parent];
+    if (parent == nil) {
+        if (self.virtualModel.running) {
+            self.closeItem.enabled = NO;
+            [self shutdownVirtualMachine];
+            return;
+        }
+    }
+}
+
 - (void)dealloc {
     [self resetVirtualMachine];
 #ifdef DEBUG

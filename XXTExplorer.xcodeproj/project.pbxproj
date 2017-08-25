@@ -380,6 +380,11 @@
 		D6E141611F5032AC00D78CB9 /* XXTPickerTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141131F5032AB00D78CB9 /* XXTPickerTask.m */; };
 		D6E141641F50330400D78CB9 /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E141621F50330400D78CB9 /* SpringBoardServices */; };
 		D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E141631F50330400D78CB9 /* xxte-white-icons.plist */; };
+		D6E560431F50353200E0F997 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560421F50353200E0F997 /* MapKit.framework */; };
+		D6E560451F50353900E0F997 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560441F50353900E0F997 /* AVFoundation.framework */; };
+		D6E560471F50354400E0F997 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560461F50354400E0F997 /* MediaPlayer.framework */; };
+		D6E5604F1F50358B00E0F997 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E5604E1F50358B00E0F997 /* ImageIO.framework */; };
+		D6E560511F50359B00E0F997 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560501F50359B00E0F997 /* CoreMedia.framework */; };
 		D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */; };
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
@@ -1039,6 +1044,14 @@
 		D6E141131F5032AB00D78CB9 /* XXTPickerTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerTask.m; sourceTree = "<group>"; };
 		D6E141621F50330400D78CB9 /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
 		D6E141631F50330400D78CB9 /* xxte-white-icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xxte-white-icons.plist"; sourceTree = "<group>"; };
+		D6E560421F50353200E0F997 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D6E560441F50353900E0F997 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D6E560461F50354400E0F997 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		D6E560481F50354B00E0F997 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		D6E5604A1F50356A00E0F997 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		D6E5604C1F50357500E0F997 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D6E5604E1F50358B00E0F997 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		D6E560501F50359B00E0F997 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6FC2F2A1F0E3372000BAB42 /* XXTEMoreActivationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationController.h; sourceTree = "<group>"; };
 		D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D6FC2F351F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionCell.h; sourceTree = "<group>"; };
@@ -1064,6 +1077,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E560511F50359B00E0F997 /* CoreMedia.framework in Frameworks */,
+				D6E5604F1F50358B00E0F997 /* ImageIO.framework in Frameworks */,
+				D6E560471F50354400E0F997 /* MediaPlayer.framework in Frameworks */,
+				D6E560451F50353900E0F997 /* AVFoundation.framework in Frameworks */,
+				D6E560431F50353200E0F997 /* MapKit.framework in Frameworks */,
 				D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */,
 				D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */,
 				D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */,
@@ -1939,6 +1957,14 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6E560501F50359B00E0F997 /* CoreMedia.framework */,
+				D6E5604E1F50358B00E0F997 /* ImageIO.framework */,
+				D6E5604C1F50357500E0F997 /* CoreGraphics.framework */,
+				D6E5604A1F50356A00E0F997 /* CoreFoundation.framework */,
+				D6E560481F50354B00E0F997 /* CoreImage.framework */,
+				D6E560461F50354400E0F997 /* MediaPlayer.framework */,
+				D6E560441F50353900E0F997 /* AVFoundation.framework */,
+				D6E560421F50353200E0F997 /* MapKit.framework */,
 				D643A2531F4D18BE005B9A59 /* Security.framework */,
 				D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */,
 				D643A24F1F4D18AA005B9A59 /* Bugly.framework */,
@@ -3166,8 +3192,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3185,9 +3209,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Debug;
@@ -3198,8 +3219,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3217,8 +3236,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Release;
