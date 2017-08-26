@@ -37,7 +37,8 @@
 #import "SKAttributedParser.h"
 #import "SKRange.h"
 
-#import <XXTPickerCollection/XXTPickerCollection.h>
+#import "XXTPickerSnippet.h"
+#import "XXTPickerFactory.h"
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
@@ -47,7 +48,7 @@ typedef enum : NSUInteger {
     XXTEEditorControllerReloadTypeSoft
 } XXTEEditorControllerReloadType;
 
-@interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate, XXTPickerFactoryDelegate>
+@interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate>
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
@@ -61,8 +62,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) XXTEEditorControllerReloadType reloadType;
 @property (nonatomic, assign) BOOL shouldSaveDocument;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
-
-@property (nonatomic, strong) XXTPickerFactory *pickerFactory;
 
 @end
 
@@ -733,92 +732,6 @@ typedef enum : NSUInteger {
 
 - (void)setNeedsSaveDocument {
     self.shouldSaveDocument = YES;
-}
-
-#pragma mark - XXTExplorerItemPickerDelegate
-
-- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path {
-    NSString *entryName = [path lastPathComponent];
-    NSData *taskData = [[NSData alloc] initWithContentsOfFile:path];
-    if (taskData) {
-        NSString *taskString = [[NSString alloc] initWithData:taskData encoding:NSUTF8StringEncoding];
-        XXTPickerTask *pickerTask = [XXTPickerTask taskWithTitle:entryName code:taskString];
-        XXTPickerFactory *pickerFactory = [[XXTPickerFactory alloc] init];
-        pickerFactory.delegate = self;
-        [pickerFactory executeTask:pickerTask fromViewController:picker];
-        self.pickerFactory = pickerFactory; // you must hold the factory until its tasks are all finished.
-    }
-}
-
-#pragma mark - XXTPickerFactoryDelegate
-
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerTask *)task {
-    return YES;
-}
-
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerTask *)task {
-    [self replaceTextInputSelectedRangeWithTaskModel:task];
-    [self setNeedsFocusTextView];
-    return YES;
-}
-
-- (void)replaceTextInputSelectedRangeWithTaskModel:(XXTPickerTask *)model {
-    UITextView *textInput = self.textView;
-    NSRange selectedNSRange = textInput.selectedRange;
-    UITextRange *selectedRange = [textInput selectedTextRange];
-    
-    NSString *stringRef = textInput.text;
-    NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, selectedNSRange.location)];
-    
-    NSUInteger idx = lastBreak.location + 1;
-    
-    BOOL autoIndent = YES;
-    if (lastBreak.location == NSNotFound) {
-        idx = 0;
-    }
-    else if (lastBreak.location + lastBreak.length == selectedNSRange.location) {
-        autoIndent = NO;
-    }
-    
-    NSString *replaceCode = nil;
-    if (autoIndent) {
-        NSMutableString *tabStr = [NSMutableString new];
-        [tabStr appendString:@"\n"];
-        for (; idx < selectedNSRange.location; idx++) {
-            char thisChar = (char) [stringRef characterAtIndex:idx];
-            if (thisChar != ' ' && thisChar != '\t') break;
-            else [tabStr appendFormat:@"%c", (char)thisChar];
-        }
-        NSMutableString *mutableCode = [model.code mutableCopy];
-        [mutableCode replaceOccurrencesOfString:@"\n"
-                                     withString:tabStr
-                                        options:NSCaseInsensitiveSearch
-                                          range:NSMakeRange(0, mutableCode.length)];
-        replaceCode = [mutableCode copy];
-    } else {
-        replaceCode = [model.code copy];
-    }
-    [textInput replaceRange:selectedRange withText:replaceCode];
-    
-    NSRange modelCurPos = [replaceCode rangeOfString:@"@@"];
-    if (modelCurPos.location != NSNotFound) {
-        NSRange curPos = NSMakeRange(
-                                     selectedNSRange.location
-                                     + modelCurPos.location, 2
-                                     );
-        UITextPosition *insertPos = [textInput positionFromPosition:selectedRange.start offset:curPos.location];
-        
-        UITextPosition *beginPos = [textInput beginningOfDocument];
-        UITextPosition *startPos = [textInput positionFromPosition:beginPos offset:[textInput offsetFromPosition:beginPos toPosition:insertPos]];
-        UITextRange *textRange = [textInput textRangeFromPosition:startPos toPosition:startPos];
-        [textInput setSelectedTextRange:textRange];
-        
-        UITextPosition *curBegin = [textInput beginningOfDocument];
-        UITextPosition *curStart = [textInput positionFromPosition:curBegin offset:curPos.location];
-        UITextPosition *curEnd = [textInput positionFromPosition:curStart offset:curPos.length];
-        UITextRange *curRange = [textInput textRangeFromPosition:curStart toPosition:curEnd];
-        [textInput replaceRange:curRange withText:@""];
-    }
 }
 
 - (void)setNeedsFocusTextView {

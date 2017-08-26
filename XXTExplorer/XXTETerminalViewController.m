@@ -115,8 +115,6 @@
         textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
         textView.alwaysBounceVertical = YES;
         textView.delegate = self;
-//        textView.scrollIndicatorInsets =
-//        textView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.bounds.size.height, 0);
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.editable = NO;
         _textView = textView;
@@ -334,10 +332,6 @@
         
         newInsets.bottom = self.view.frame.size.height - keyboardFrame.origin.y;
     }
-    
-//    if (newInsets.bottom == 0) {
-//        newInsets.bottom = self.tabBarController.tabBar.bounds.size.height;
-//    }
     
     UITextView *textView = self.textView;
     textView.contentInset = newInsets;

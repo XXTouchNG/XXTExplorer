@@ -14,6 +14,7 @@
 #import "UIColor+hexValue.h"
 #import "UIColor+inverseColor.h"
 #import "XXTPositionColorModel.h"
+#import "XXTPickerSnippet.h"
 
 @interface XXTRectanglePicker () <XXTImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, XXTPixelCropViewDelegate>
 @property(nonatomic, strong) XXTPixelPlaceholderView *placeholderView;
@@ -25,9 +26,8 @@
 @end
 
 @implementation XXTRectanglePicker {
-    XXTPickerTask *_pickerTask;
     NSAttributedString *_pickerSubtitle;
-    NSString *_pickerResult;
+    id _pickerResult;
     UIImage *_selectedImage;
 }
 
@@ -67,7 +67,6 @@
     [self setSelectedImage:nil];
     [self loadImageFromCache];
 
-    [self.pickerTask nextStep];
     UIBarButtonItem *rightItem = NULL;
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
@@ -439,19 +438,19 @@
     return nil;
 }
 
-- (NSString *)pickerResult {
+- (id)pickerResult {
     if (!_pickerResult) {
         switch ([[self class] cropViewType]) {
             case XXTPixelPickerTypeRect:
-                return @"0, 0, 0, 0";
+                return @[ @(0), @(0), @(0), @(0), ]; // NSArray [4]
             case XXTPixelPickerTypePosition:
-                return @"0, 0";
+                return @[ @(0), @(0), ]; // NSArray [2]
             case XXTPixelPickerTypeColor:
-                return @"0x000000";
+                return @(0); // NSNumber
             case XXTPixelPickerTypePositionColor:
-                return @"0, 0, 0x000000";
+                return @[ @(0), @(0), @(0.0) ]; // NSArray [3]
             case XXTPixelPickerTypeMultiplePositionColor:
-                return @"{\n\t\n}";
+                return @[  ];
         }
     }
     return _pickerResult;
@@ -501,12 +500,10 @@
     if (type == kXXTPixelCropViewTypeRect) {
         NSAssert([selectedValue isKindOfClass:[NSValue class]], @"type == kXXTPixelCropViewTypeRect");
         CGRect cropRect = [selectedValue CGRectValue];
-        NSString *rectFormat = @"%d, %d, %d, %d";
-        _pickerResult = [NSString stringWithFormat:rectFormat,
-                                                   (int) cropRect.origin.x,
-                                                   (int) cropRect.origin.y,
-                                                   (int) cropRect.origin.x + (int) cropRect.size.width,
-                                                   (int) cropRect.origin.y + (int) cropRect.size.height];
+        _pickerResult = @[ @((int) cropRect.origin.x),
+                           @((int) cropRect.origin.y),
+                           @((int) cropRect.origin.x + (int) cropRect.size.width),
+                           @((int) cropRect.origin.y + (int) cropRect.size.height) ];
         NSString *previewFormat = @"(x1, y1), (x2, y2) = (%d, %d), (%d, %d)";
         NSString *previewString = [NSString stringWithFormat:previewFormat,
                                                              (int) cropRect.origin.x,
@@ -520,9 +517,8 @@
         if (!selectedColor) {
             selectedColor = [UIColor blackColor];
         }
-        NSString *colorFormat = @"0x%@";
         NSString *selectedHex = [selectedColor hexStringWithAlpha:NO];
-        _pickerResult = [NSString stringWithFormat:colorFormat, selectedHex];
+        _pickerResult = [selectedColor numberValue];
         NSString *previewFormat = @"(r%d, g%d, b%d) ";
         CGFloat r = 0, g = 0, b = 0, a = 0;
         [selectedColor getRed:&r green:&g blue:&b alpha:&a];
@@ -544,8 +540,7 @@
     } else if (type == kXXTPixelCropViewTypePosition) {
         NSAssert([selectedValue isKindOfClass:[NSValue class]], @"type == kXXTPixelCropViewTypePosition");
         CGPoint selectedPoint = [selectedValue CGPointValue];
-        NSString *pFormat = @"%d, %d";
-        _pickerResult = [NSString stringWithFormat:pFormat, (int) selectedPoint.x, (int) selectedPoint.y];
+        _pickerResult = @[ @((int) selectedPoint.x), @((int) selectedPoint.y) ];
         NSString *previewFormat = @"(x%d, y%d)";
         NSString *previewString = [NSString stringWithFormat:previewFormat, (int) selectedPoint.x, (int) selectedPoint.y];
         [self updateSubtitle:previewString];
@@ -556,8 +551,7 @@
             UIColor *selectedColor = model.color;
             NSString *selectedHex = [selectedColor hexStringWithAlpha:NO];
             if (type == kXXTPixelCropViewTypePositionColor) {
-                NSString *format = @"%d, %d, 0x%@";
-                _pickerResult = [NSString stringWithFormat:format, (int) selectedPoint.x, (int) selectedPoint.y, selectedHex];
+                _pickerResult = @[ @((int) selectedPoint.x), @((int) selectedPoint.y), [selectedColor numberValue] ];
             }
             NSString *previewFormat = @"(x%d, y%d) ";
             NSString *previewString = [NSString stringWithFormat:previewFormat, (int) selectedPoint.x, (int) selectedPoint.y];
@@ -576,18 +570,16 @@
             [attributedString appendAttributedString:colorAttributedPreview];
             [self updatedAttributedSubtitle:[attributedString copy]];
         } else if ([selectedValue isKindOfClass:[NSArray class]]) {
-            NSMutableString *mulString = [[NSMutableString alloc] initWithString:@"{\n"];
+            NSMutableArray <NSArray *> *mulArray = [[NSMutableArray alloc] init];
             NSUInteger index = 0;
             for (XXTPositionColorModel *poscolor in selectedValue) {
                 index++;
                 UIColor *c = [poscolor.color copy];
                 if (!c) c = [UIColor blackColor];
                 CGPoint p = poscolor.position;
-                [mulString appendFormat:@"\t{ %d, %d, 0x%@ }, -- %lu\n",
-                                        (int) p.x, (int) p.y,
-                                        [c hexStringWithAlpha:NO], (unsigned long) index];
+                [mulArray addObject: @[ @((int) p.x), @((int) p.y), [c numberValue] ]];
             }
-            _pickerResult = [mulString stringByAppendingString:@"}"];
+            _pickerResult = [mulArray copy];
         } else {
             NSAssert(YES, @"type == kXXTPixelCropViewTypePositionColor || type == kXXTPixelCropViewTypeMultiplePositionColor");
         }

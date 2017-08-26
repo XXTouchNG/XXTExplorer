@@ -10,6 +10,7 @@
 #import "XXTLocationPicker.h"
 #import "XXTPickerFactory.h"
 #import "XXTPickerDefine.h"
+#import "XXTPickerSnippet.h"
 
 static NSString * const kXXTCoordinateRegionLatitudeKey = @"kXXTCoordinateRegionLatitudeKey";
 static NSString * const kXXTCoordinateRegionLongitudeKey = @"kXXTCoordinateRegionLongitudeKey";
@@ -23,7 +24,6 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 @end
 
 @implementation XXTLocationPicker {
-    XXTPickerTask *_pickerTask;
     NSString *_pickerSubtitle;
 }
 
@@ -35,10 +35,8 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     return @"@loc@";
 }
 
-- (NSString *)pickerResult {
-    return [NSString stringWithFormat:@"%f, %f",
-            self.pointAnnotation.coordinate.latitude,
-            self.pointAnnotation.coordinate.longitude];
+- (NSDictionary <NSString *, NSNumber *> *)pickerResult {
+    return @{ @"latitude": @(self.pointAnnotation.coordinate.latitude), @"longitude": @(self.pointAnnotation.coordinate.longitude) };
 }
 
 #pragma mark - Default Style
@@ -95,7 +93,6 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     
     [self.view addSubview:mapView];
     
-    [self.pickerTask nextStep];
     UIBarButtonItem *rightItem = NULL;
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];

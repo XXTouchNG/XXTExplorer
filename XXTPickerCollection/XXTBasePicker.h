@@ -9,15 +9,16 @@
 #ifndef XXTBasePicker_h
 #define XXTBasePicker_h
 
-#import "XXTPickerTask.h"
-#import "XXTPickerFactory.h"
+#import <Foundation/Foundation.h>
+
+@class XXTPickerSnippet, XXTPickerFactory;
 
 @protocol XXTBasePicker <NSObject>
 @property (nonatomic, weak) XXTPickerFactory *pickerFactory;
-@property (nonatomic, strong) XXTPickerTask *pickerTask;
+@property (nonatomic, strong) XXTPickerSnippet *pickerTask;
 
 + (NSString *)pickerKeyword;
-- (NSString *)pickerResult;
+- (id)pickerResult;
 
 @optional
 - (NSString *)pickerSubtitle;

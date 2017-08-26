@@ -11,6 +11,7 @@
 #import "XXTApplicationCell.h"
 #import "XXTPickerNavigationController.h"
 #import "XXTPickerDefine.h"
+#import "XXTPickerSnippet.h"
 
 enum {
     kXXTApplicationPickerCellSection = 0,
@@ -53,7 +54,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 @end
 
 @implementation XXTApplicationPicker {
-    XXTPickerTask *_pickerTask;
     NSString *_pickerSubtitle;
     UISearchDisplayController *_searchDisplayController;
 }
@@ -144,7 +144,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     });
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
     
-    [self.pickerTask nextStep];
     UIBarButtonItem *rightItem = NULL;
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];

@@ -14,6 +14,7 @@
 		<string>XUIListViewController</string>
 		<string>XXTEPackageViewerController</string>
 		<string>XXTETerminalViewController</string>
+		<string>XXTESnippetViewerController</string>
 	</array>
 	<key>AVAILABLE_BUNDLE_READER</key>
 	<array>

@@ -10,6 +10,8 @@
 
 #import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
+#import "XXTEUserInterfaceDefines.h"
+#import "XXTEDispatchDefines.h"
 
 #import "XXTEEditorTextView.h"
 
@@ -17,7 +19,10 @@
 #import "SKHelperConfig.h"
 
 #import "XXTECommonNavigationController.h"
-#import <XXTPickerCollection/XXTPickerCollection.h>
+#import "XXTPickerFactory.h"
+#import "XXTPickerSnippet.h"
+
+#import "XXTPickerNavigationController.h"
 
 @implementation XXTEEditorController (Menu)
 
@@ -63,7 +68,7 @@
 - (void)menuActionCodeBlocks:(UIMenuItem *)sender {
     XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] init];
     itemPicker.delegate = self;
-    itemPicker.allowedExtensions = @[ @"lua" ];
+    itemPicker.allowedExtensions = @[ @"snippet" ];
     XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:itemPicker];
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -169,6 +174,99 @@
     }
     NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
     [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+}
+
+#pragma mark - XXTExplorerItemPickerDelegate
+
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path {
+    XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:path];
+    XXTPickerFactory *pickerFactory = [[XXTPickerFactory alloc] init];
+    pickerFactory.delegate = self;
+    [pickerFactory executeTask:snippet fromViewController:picker];
+    self.pickerFactory = pickerFactory; // you must hold the factory until its tasks are all finished.
+}
+
+#pragma mark - XXTPickerFactoryDelegate
+
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task {
+    return YES;
+}
+
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
+    blockUserInteractions(self, YES, 0);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSError *error = nil;
+        NSString *taskResult = [task generateWithError:&error];
+        dispatch_async_on_main_queue(^{
+            blockUserInteractions(self, NO, 0);
+            if (taskResult) {
+                [self replaceSelectedRangeInTextView:self.textView withString:taskResult];
+                [self setNeedsFocusTextView];
+            } else {
+                showUserMessage(self, [error localizedFailureReason]);
+            }
+        });
+    });
+    return YES;
+}
+
+- (void)replaceSelectedRangeInTextView:(UITextView *)textView withString:(NSString *)string {
+    UITextView *textInput = textView;
+    NSRange selectedNSRange = textInput.selectedRange;
+    UITextRange *selectedRange = [textInput selectedTextRange];
+    
+    NSString *stringRef = textInput.text;
+    NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, selectedNSRange.location)];
+    
+    NSUInteger idx = lastBreak.location + 1;
+    
+    BOOL autoIndent = YES;
+    if (lastBreak.location == NSNotFound) {
+        idx = 0;
+    }
+    else if (lastBreak.location + lastBreak.length == selectedNSRange.location) {
+        autoIndent = NO;
+    }
+    
+    NSString *replaceCode = nil;
+    if (autoIndent) {
+        NSMutableString *tabStr = [NSMutableString new];
+        [tabStr appendString:@"\n"];
+        for (; idx < selectedNSRange.location; idx++) {
+            char thisChar = (char) [stringRef characterAtIndex:idx];
+            if (thisChar != ' ' && thisChar != '\t') break;
+            else [tabStr appendFormat:@"%c", (char)thisChar];
+        }
+        NSMutableString *mutableCode = [string mutableCopy];
+        [mutableCode replaceOccurrencesOfString:@"\n"
+                                     withString:tabStr
+                                        options:NSCaseInsensitiveSearch
+                                          range:NSMakeRange(0, mutableCode.length)];
+        replaceCode = [mutableCode copy];
+    } else {
+        replaceCode = [string copy];
+    }
+    [textInput replaceRange:selectedRange withText:replaceCode];
+    
+    NSRange modelCurPos = [replaceCode rangeOfString:@"@@"];
+    if (modelCurPos.location != NSNotFound) {
+        NSRange curPos = NSMakeRange(
+                                     selectedNSRange.location
+                                     + modelCurPos.location, 2
+                                     );
+        UITextPosition *insertPos = [textInput positionFromPosition:selectedRange.start offset:curPos.location];
+        
+        UITextPosition *beginPos = [textInput beginningOfDocument];
+        UITextPosition *startPos = [textInput positionFromPosition:beginPos offset:[textInput offsetFromPosition:beginPos toPosition:insertPos]];
+        UITextRange *textRange = [textInput textRangeFromPosition:startPos toPosition:startPos];
+        [textInput setSelectedTextRange:textRange];
+        
+        UITextPosition *curBegin = [textInput beginningOfDocument];
+        UITextPosition *curStart = [textInput positionFromPosition:curBegin offset:curPos.location];
+        UITextPosition *curEnd = [textInput positionFromPosition:curStart offset:curPos.length];
+        UITextRange *curRange = [textInput textRangeFromPosition:curStart toPosition:curEnd];
+        [textInput replaceRange:curRange withText:@""];
+    }
 }
 
 @end

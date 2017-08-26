@@ -35,4 +35,22 @@
     return hex;
 }
 
+- (NSNumber *)numberValue {
+    CGColorRef colorRef = [self CGColor];
+    size_t componentsCount = CGColorGetNumberOfComponents(colorRef);
+    NSUInteger rgba = 0;
+    
+    if (componentsCount == 4) {
+        const CGFloat *components = CGColorGetComponents(colorRef);
+        rgba = 0;
+        for (int i = 0; i < 4; i++) {
+            rgba <<= 8;
+            rgba += (int) (components[i] * 255);
+        }
+        return [NSNumber numberWithUnsignedInteger:rgba];
+    }
+    else
+        return @(0);
+}
+
 @end

@@ -10,6 +10,7 @@
 #import "XXTKeyEvent.h"
 #import "XXTPickerFactory.h"
 #import "XXTPickerDefine.h"
+#import "XXTPickerSnippet.h"
 
 static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEventTableViewCellReuseIdentifier";
 
@@ -22,7 +23,6 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 @end
 
 @implementation XXTKeyEventPicker {
-    XXTPickerTask *_pickerTask;
     NSString *_pickerSubtitle;
 }
 
@@ -101,7 +101,6 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 
     [self.view addSubview:tableView1];
 
-    [self.pickerTask nextStep];
     UIBarButtonItem *rightItem = NULL;
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];

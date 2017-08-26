@@ -7,11 +7,10 @@
 //
 
 #import "XXTEEditor.h"
-#import "XXTExplorerItemPicker.h"
 
-@class SKHelper, SKAttributedParser, XXTEEditorTextView, XXTEEditorTheme;
+@class SKHelper, SKAttributedParser, XXTEEditorTextView, XXTEEditorTheme, XXTPickerFactory;
 
-@interface XXTEEditorController : UIViewController <XXTEEditor, XXTExplorerItemPickerDelegate>
+@interface XXTEEditorController : UIViewController <XXTEEditor>
 
 @property (nonatomic, strong, readonly) SKHelper *helper;
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
@@ -20,6 +19,8 @@
 @property (nonatomic, strong) XXTEEditorTheme *theme;
 
 @property (nonatomic, assign) CGFloat tabWidthValue;
+
+@property (nonatomic, strong) XXTPickerFactory *pickerFactory;
 
 - (void)setNeedsReload;
 - (void)setNeedsRefresh;

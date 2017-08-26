@@ -11,6 +11,7 @@
 #import "XXTPickerInsetsLabel.h"
 #import "XXTPickerFactory.h"
 #import "XXTPickerDefine.h"
+#import "XXTPickerSnippet.h"
 
 enum {
     kXXTApplicationPickerCellSectionSelected = 0,
@@ -56,7 +57,6 @@ UISearchDisplayDelegate
 @end
 
 @implementation XXTMultipleApplicationPicker {
-    XXTPickerTask *_pickerTask;
     NSString *_pickerSubtitle;
     UISearchDisplayController *_searchDisplayController;
 }
@@ -69,13 +69,12 @@ UISearchDisplayDelegate
     return @"@apps@";
 }
 
-- (NSString *)pickerResult {
-    NSMutableString *selectedReplacement = [[NSMutableString alloc] initWithString:@"{\n"];
+- (NSArray <NSString *> *)pickerResult {
+    NSMutableArray *selectedReplacements = [[NSMutableArray alloc] init];
     for (NSDictionary *appDetail in self.selectedApplications) {
-        [selectedReplacement appendFormat:@"\"%@\",\n", appDetail[kXXTApplicationDetailKeyBundleID]];
+        [selectedReplacements addObject:appDetail[kXXTApplicationDetailKeyBundleID]];
     }
-    [selectedReplacement appendString:@"}"];
-    return selectedReplacement;
+    return [selectedReplacements copy];
 }
 
 #pragma mark - Default Style
@@ -162,7 +161,6 @@ UISearchDisplayDelegate
     });
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
     
-    [self.pickerTask nextStep];
     UIBarButtonItem *rightItem = NULL;
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
