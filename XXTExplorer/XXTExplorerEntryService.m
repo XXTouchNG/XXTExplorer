@@ -44,7 +44,7 @@
 
 - (NSArray <Class> *)registeredViewers {
     if (!_registeredViewers) {
-        NSArray <NSString *> *registeredNames = XXTEBuiltInDefaultsObject(@"AVAILABLE_VIEWER");
+        NSArray <NSString *> *registeredNames = uAppDefine(@"AVAILABLE_VIEWER");
         NSMutableArray <Class> *registeredMutableViewers = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
         for (NSString *className in registeredNames) {
             [registeredMutableViewers addObject:NSClassFromString(className)];

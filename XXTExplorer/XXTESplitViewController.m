@@ -152,7 +152,7 @@
     return splitViewController.viewControllers[0];
 }
 
-#pragma mark - APTUpdate
+#pragma mark - Agents
 
 - (void)setupAgents {
     NSString *packageIdentifier = uAppDefine(@"UPDATE_PACKAGE");
@@ -242,6 +242,30 @@
     });
 }
 
+#pragma mark - XXTEDaemonAgentDelegate
+
+- (void)daemonAgentDidSyncReady:(XXTEDaemonAgent *)agent {
+    if (agent == self.daemonAgent) {
+        [self checkUpdateBackground];
+    }
+}
+
+- (void)daemonAgent:(XXTEDaemonAgent *)agent didFailWithError:(NSError *)error {
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Sync Failed", nil)
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Cannot sync with daemon: %@", nil), error.localizedDescription]
+                                                          style:LGAlertViewStyleActionSheet
+                                                   buttonTitles:@[]
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
+                                         destructiveButtonTitle:nil
+                                                       delegate:self];
+    if (self.alertView && self.alertView.isShowing) {
+        [self.alertView transitionToAlertView:alertView completionHandler:nil];
+    } else {
+        self.alertView = alertView;
+        [alertView showAnimated];
+    }
+}
+
 #pragma mark - LGAlertViewDelegate
 
 - (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
@@ -299,30 +323,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.aptHelper sync];
     });
-}
-
-#pragma mark - XXTEDaemonAgentDelegate
-
-- (void)daemonAgentDidSyncReady:(XXTEDaemonAgent *)agent {
-    if (agent == self.daemonAgent) {
-        [self checkUpdateBackground];
-    }
-}
-
-- (void)daemonAgent:(XXTEDaemonAgent *)agent didFailWithError:(NSError *)error {
-    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Sync Failed", nil)
-                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Cannot sync with daemon: %@", nil), error.localizedDescription]
-                                                          style:LGAlertViewStyleActionSheet
-                                                   buttonTitles:@[]
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
-                                         destructiveButtonTitle:nil
-                                                       delegate:self];
-    if (self.alertView && self.alertView.isShowing) {
-        [self.alertView transitionToAlertView:alertView completionHandler:nil];
-    } else {
-        self.alertView = alertView;
-        [alertView showAnimated];
-    }
 }
 
 @end

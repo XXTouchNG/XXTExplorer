@@ -2,26 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AVAILABLE_VIEWER</key>
-	<array>
-		<string>XXTEExecutableViewer</string>
-		<string>XXTEArchiveViewer</string>
-		<string>XXTEImageViewerController</string>
-		<string>XXTEMediaPlayerController</string>
-		<string>XXTEWebViewerController</string>
-		<string>XXTECodeViewerController</string>
-		<string>XXTEObjectViewController</string>
-		<string>XUIListViewController</string>
-		<string>XXTEPackageViewerController</string>
-		<string>XXTETerminalViewController</string>
-		<string>XXTESnippetViewerController</string>
-	</array>
-	<key>AVAILABLE_BUNDLE_READER</key>
-	<array>
-		<string>XXTExplorerEntryXPPReader</string>
-	</array>
-	<key>EXPLORER_INITIAL_PATH</key>
-	<string>lua/scripts</string>
 	<key>EXPLORER_HOME_SERIES</key>
 	<array>
 		<dict>
@@ -73,6 +53,23 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerViewEntryListHideDotItemKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Hide Dot Files</string>
+			<key>description</key>
+			<string>Hide files whose name prefixed with a dot (&quot;.&quot;).</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
 			<key>default</key>
 			<true/>
@@ -80,6 +77,40 @@
 			<string>Hide Common File Extensions</string>
 			<key>description</key>
 			<string>Hide common file extensions like &quot;.txt&quot;, &quot;.lua&quot;, etc.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerAllowOpenMethodKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Allow Open Method</string>
+			<key>description</key>
+			<string>Allow changing open method in &quot;Item Property&quot;.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerViewEntrySelectLaunchedScriptKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Select Launched Script</string>
+			<key>description</key>
+			<string>Select the script after being launched once in XXTouch Explorer.</string>
 			<key>options</key>
 			<array>
 				<string>Off</string>
@@ -109,57 +140,6 @@
 			<string></string>
 			<key>New item</key>
 			<string></string>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerViewEntryListHideDotItemKey</string>
-			<key>default</key>
-			<true/>
-			<key>title</key>
-			<string>Hide Dot Files</string>
-			<key>description</key>
-			<string>Hide files whose name prefixed with a dot (&quot;.&quot;).</string>
-			<key>options</key>
-			<array>
-				<string>Off</string>
-				<string>On</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<string>YES</string>
-			<key>key</key>
-			<string>XXTExplorerViewEntrySelectLaunchedScriptKey</string>
-			<key>default</key>
-			<false/>
-			<key>title</key>
-			<string>Select Launched Script</string>
-			<key>description</key>
-			<string>Select the script after being launched once in XXTouch Explorer.</string>
-			<key>options</key>
-			<array>
-				<string>Off</string>
-				<string>On</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerAllowOpenMethodKey</string>
-			<key>default</key>
-			<false/>
-			<key>title</key>
-			<string>Allow Open Method</string>
-			<key>description</key>
-			<string>Allow changing open method in &quot;Item Property&quot;.</string>
-			<key>options</key>
-			<array>
-				<string>Off</string>
-				<string>On</string>
-			</array>
 		</dict>
 	</array>
 	<key>REMOTE_USER_DEFAULTS</key>

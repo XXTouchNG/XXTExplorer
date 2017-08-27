@@ -183,6 +183,7 @@
 		0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */; };
 		0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */; };
 		0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */; };
+		0FE65E251F528EFB005F81FB /* 4DA338A3-9532-4090-B01A-BFB7023F14D8.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FE65E241F528EFB005F81FB /* 4DA338A3-9532-4090-B01A-BFB7023F14D8.zip */; };
 		0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
@@ -726,6 +727,7 @@
 		0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECodeViewerController.m; sourceTree = "<group>"; };
 		0FE1E4481F18FD5000055E02 /* XXTExplorerEntryCodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryCodeReader.h; sourceTree = "<group>"; };
 		0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryCodeReader.m; sourceTree = "<group>"; };
+		0FE65E241F528EFB005F81FB /* 4DA338A3-9532-4090-B01A-BFB7023F14D8.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "4DA338A3-9532-4090-B01A-BFB7023F14D8.zip"; sourceTree = "<group>"; };
 		0FEB74511F3EB88400B58A4F /* json.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = json.tmLanguage; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
 		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
@@ -1389,7 +1391,7 @@
 		0F5EB53C1F0A9ED80016016A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D677B0A31F4FC77600E741C2 /* VM */,
+				D677B0A41F4FC7C200E741C2 /* lua */,
 				0F5EB5401F0AA2AE0016016A /* XXTECommonNavigationController.h */,
 				0F5EB5411F0AA2AE0016016A /* XXTECommonNavigationController.m */,
 				0F5EB53D1F0A9EF40016016A /* XXTECommonWebViewController.h */,
@@ -1961,9 +1963,18 @@
 			name = Installer;
 			sourceTree = "<group>";
 		};
+		0FE65E231F528EF1005F81FB /* Initial */ = {
+			isa = PBXGroup;
+			children = (
+				0FE65E241F528EFB005F81FB /* 4DA338A3-9532-4090-B01A-BFB7023F14D8.zip */,
+			);
+			name = Initial;
+			sourceTree = "<group>";
+		};
 		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
 			isa = PBXGroup;
 			children = (
+				0FE65E231F528EF1005F81FB /* Initial */,
 				D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */,
 				D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */,
 				0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */,
@@ -2227,14 +2238,6 @@
 				B03120C9E16A3F457F292605 /* XXTERespringAgent.m */,
 			);
 			name = Respring;
-			sourceTree = "<group>";
-		};
-		D677B0A31F4FC77600E741C2 /* VM */ = {
-			isa = PBXGroup;
-			children = (
-				D677B0A41F4FC7C200E741C2 /* lua */,
-			);
-			name = VM;
 			sourceTree = "<group>";
 		};
 		D677B0A41F4FC7C200E741C2 /* lua */ = {
@@ -2648,6 +2651,7 @@
 				D6E141481F5032AB00D78CB9 /* xxt-picker-down@2x.png in Resources */,
 				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
 				D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */,
+				0FE65E251F528EFB005F81FB /* 4DA338A3-9532-4090-B01A-BFB7023F14D8.zip in Resources */,
 				D6E1414D1F5032AB00D78CB9 /* xxt-picker-up@2x.png in Resources */,
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,

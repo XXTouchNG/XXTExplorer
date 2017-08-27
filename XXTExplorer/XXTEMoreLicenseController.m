@@ -118,7 +118,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     staticSectionTitles = @[ NSLocalizedString(@"New License", nil),
                              NSLocalizedString(@"Current License", nil),
                              NSLocalizedString(@"Device", nil) ];
-    staticSectionFooters = @[ NSLocalizedString(@"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", nil), @"", @"" ];
+    staticSectionFooters = @[ NSLocalizedString(@"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase.", nil), @"", @"" ];
     
     XXTEMoreLicenseCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLicenseCell class]) owner:nil options:nil] lastObject];
     cell1.licenseField.text = @"";
@@ -493,44 +493,53 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     .then(sendCloudApiRequest)
     .then(^(NSDictionary *licenseDictionary) {
         if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
-            NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
-            NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
-            [self updateTableViewCell:((XXTEMoreTitleValueCell *)staticCells[1][0])
-                       expirationTime:expirationInterval
-                          nowInterval:nowInterval];
-            NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
-            NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-            NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
-            NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
-            LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"License Activated", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@\nExpired At: %@", nil), licenseDictionary[@"message"], nowDateString, expirationDateString]
-                                                                  style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[  ]
-                                                      cancelButtonTitle:NSLocalizedString(@"Done", nil)
-                                                 destructiveButtonTitle:nil
-                                                               delegate:self];
-            if (alertView1 && alertView1.isShowing) {
-                [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
-            }
-            NSString *licenseLog = [NSString stringWithFormat:@"[%@] %@\n", NSStringFromClass([self class]), licenseDictionary];
-            return licenseLog;
+            return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
+                [self saveLicenseScreenshot];
+                resolve(licenseDictionary);
+            }];
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot active license: %@", nil), licenseDictionary[@"message"]];
         }
-        return @"";
+        return [PMKPromise promiseWithValue:@{}];
+    })
+    .then(^(NSDictionary *licenseDictionary) {
+        NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
+        NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+        [self updateTableViewCell:((XXTEMoreTitleValueCell *)staticCells[1][0])
+                   expirationTime:expirationInterval
+                      nowInterval:nowInterval];
+        NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
+        NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
+        NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
+        LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"License Activated", nil)
+                                                             message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@\nExpired At: %@\nLicense code has been saved.", nil), licenseDictionary[@"message"], nowDateString, expirationDateString]
+                                                               style:LGAlertViewStyleActionSheet
+                                                        buttonTitles:@[  ]
+                                                   cancelButtonTitle:NSLocalizedString(@"Done", nil)
+                                              destructiveButtonTitle:nil
+                                                            delegate:self];
+        if (alertView1 && alertView1.isShowing) {
+            [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
+        } else {
+            [alertView2 showAnimated];
+        }
+        NSString *licenseLog = [NSString stringWithFormat:@"[%@] %@\n", NSStringFromClass([self class]), licenseDictionary];
+        return licenseLog;
     })
     .then(^(NSString *licenseLog) {
         if (licenseLog.length > 0) {
-            NSString *licenseLogPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"log/bind_code.log"];
+            NSString *licenseLogPath = uAppDefine(@"LICENSE_LOG_PATH");
+            NSString *licenseLogFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:licenseLogPath];
             struct stat licenseLogStat;
-            if (0 == lstat([licenseLogPath UTF8String], &licenseLogStat)) {
-                [[NSFileManager defaultManager] createFileAtPath:licenseLogPath
+            if (0 == lstat([licenseLogFullPath UTF8String], &licenseLogStat)) {
+                [[NSFileManager defaultManager] createFileAtPath:licenseLogFullPath
                                                         contents:[NSData data]
                                                       attributes:nil];
             }
-            NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:licenseLogPath];
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:licenseLogFullPath];
             [fileHandle seekToEndOfFile];
             [fileHandle writeData:[licenseLog dataUsingEncoding:NSUTF8StringEncoding]];
             [fileHandle closeFile];
@@ -546,6 +555,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
                                                             delegate:self];
         if (alertView1 && alertView1.isShowing) {
             [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
+        } else {
+            [alertView2 showAnimated];
         }
     })
     .finally(^() {
@@ -574,6 +585,36 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         }
         [self.tableView reloadData];
     }
+}
+
+- (void)saveLicenseScreenshot {
+    UIImage *screenshot = [self createImagefromUIScrollView:self.tableView];
+    NSData *screenshotData = UIImagePNGRepresentation(screenshot);
+    NSString *logPath = uAppDefine(@"LOG_PATH");
+    NSString *logFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:logPath];
+    NSString *uuidString = [[NSUUID UUID] UUIDString];
+    NSString *screenshotPath = [[logFullPath stringByAppendingPathComponent:uuidString] stringByAppendingPathExtension:@"png"];
+    [screenshotData writeToFile:screenshotPath atomically:YES];
+    UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (UIImage *)createImagefromUIScrollView:(UIScrollView *)scrollView {
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, YES, scale);
+    CGContextRef imageContext = UIGraphicsGetCurrentContext();
+    CGRect origSize = scrollView.frame;
+    CGRect newSize = origSize;
+    newSize.size = scrollView.contentSize;
+    [scrollView setFrame:newSize];
+    [scrollView.layer renderInContext:imageContext];
+    [scrollView setFrame:origSize];
+    UIImage *imageResult = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return imageResult;
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    
 }
 
 #pragma mark - Memory

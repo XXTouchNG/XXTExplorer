@@ -12,7 +12,7 @@
 "%@\n(%@ on disk)" = "%1$@\n(%2$@ on disk)";
 
 /* No comment provided by engineer. */
-"%@\nActivated At: %@\nExpired At: %@" = "%1$@\nActivated At: %2$@\nExpired At: %3$@";
+"%@\nActivated At: %@\nExpired At: %@\nLicense code has been saved." = "%1$@\nActivated At: %2$@\nExpired At: %3$@\nLicense code has been saved.";
 
 /* No comment provided by engineer. */
 "%d items" = "%d items";
@@ -462,7 +462,7 @@
 "Enable Boot Script" = "Enable Boot Script";
 
 /* No comment provided by engineer. */
-"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.";
+"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase." = "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase.";
 
 /* No comment provided by engineer. */
 "Error" = "Error";

@@ -50,7 +50,7 @@
 + (NSArray <Class> *)bundleReaders {
     static NSArray <Class> *bundleReaders = nil;
     if (!bundleReaders) {
-        NSArray <NSString *> *registeredNames = XXTEBuiltInDefaultsObject(@"AVAILABLE_BUNDLE_READER");
+        NSArray <NSString *> *registeredNames = uAppDefine(@"AVAILABLE_BUNDLE_READER");
         NSMutableArray <Class> *registeredMutableReaders = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
         for (NSString *className in registeredNames) {
             [registeredMutableReaders addObject:NSClassFromString(className)];

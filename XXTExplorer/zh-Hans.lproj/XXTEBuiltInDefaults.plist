@@ -2,26 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AVAILABLE_VIEWER</key>
-	<array>
-		<string>XXTEExecutableViewer</string>
-		<string>XXTEArchiveViewer</string>
-		<string>XXTEImageViewerController</string>
-		<string>XXTEMediaPlayerController</string>
-		<string>XXTEWebViewerController</string>
-		<string>XXTECodeViewerController</string>
-		<string>XXTEObjectViewController</string>
-		<string>XUIListViewController</string>
-		<string>XXTEPackageViewerController</string>
-		<string>XXTETerminalViewController</string>
-		<string>XXTESnippetViewerController</string>
-	</array>
-	<key>AVAILABLE_BUNDLE_READER</key>
-	<array>
-		<string>XXTExplorerEntryXPPReader</string>
-	</array>
-	<key>EXPLORER_INITIAL_PATH</key>
-	<string>lua/scripts</string>
 	<key>EXPLORER_HOME_SERIES</key>
 	<array>
 		<dict>
@@ -73,6 +53,23 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerViewEntryListHideDotItemKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>隐藏点符文件</string>
+			<key>description</key>
+			<string>隐藏文件名以句点 (&quot;.&quot;) 开头的文件.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
 			<key>default</key>
 			<true/>
@@ -80,6 +77,40 @@
 			<string>隐藏已知文件的扩展名</string>
 			<key>description</key>
 			<string>在文件管理器中隐藏已知文件的扩展名, 如 &quot;.txt&quot;, &quot;.lua&quot; 等.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerAllowOpenMethodKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>允许修改打开方式</string>
+			<key>description</key>
+			<string>允许在 &quot;项目属性&quot; 中修改打开方式.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerViewEntrySelectLaunchedScriptKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>选择启动的脚本</string>
+			<key>description</key>
+			<string>自动选中在文件管理器中启动过的脚本.</string>
 			<key>options</key>
 			<array>
 				<string>❌</string>
@@ -109,57 +140,6 @@
 			<string></string>
 			<key>New item</key>
 			<string></string>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerViewEntryListHideDotItemKey</string>
-			<key>default</key>
-			<true/>
-			<key>title</key>
-			<string>隐藏点符文件</string>
-			<key>description</key>
-			<string>隐藏文件名以句点 (&quot;.&quot;) 开头的文件.</string>
-			<key>options</key>
-			<array>
-				<string>❌</string>
-				<string>⭕️</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<string>YES</string>
-			<key>key</key>
-			<string>XXTExplorerViewEntrySelectLaunchedScriptKey</string>
-			<key>default</key>
-			<false/>
-			<key>title</key>
-			<string>选择启动的脚本</string>
-			<key>description</key>
-			<string>自动选中在文件管理器中启动过的脚本.</string>
-			<key>options</key>
-			<array>
-				<string>❌</string>
-				<string>⭕️</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerAllowOpenMethodKey</string>
-			<key>default</key>
-			<false/>
-			<key>title</key>
-			<string>允许修改打开方式</string>
-			<key>description</key>
-			<string>允许在 &quot;项目属性&quot; 中修改打开方式.</string>
-			<key>options</key>
-			<array>
-				<string>❌</string>
-				<string>⭕️</string>
-			</array>
 		</dict>
 	</array>
 	<key>REMOTE_USER_DEFAULTS</key>

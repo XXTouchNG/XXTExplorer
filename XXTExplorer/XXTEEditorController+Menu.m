@@ -66,7 +66,8 @@
 }
 
 - (void)menuActionCodeBlocks:(UIMenuItem *)sender {
-    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] init];
+    NSString *snippetPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"snippets"];
+    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:snippetPath];
     itemPicker.delegate = self;
     itemPicker.allowedExtensions = @[ @"snippet" ];
     XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:itemPicker];
