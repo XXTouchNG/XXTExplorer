@@ -12,7 +12,7 @@
 "%@\n(%@ on disk)" = "%1$@\n(%2$@ on disk)";
 
 /* No comment provided by engineer. */
-"%@\nActivated At: %@\nExpired At: %@\nLicense code has been saved." = "%1$@\nActivated At: %2$@\nExpired At: %3$@\nLicense code has been saved.";
+"%@\nActivated At: %@\nExpired At: %@" = "%1$@\nActivated At: %2$@\nExpired At: %3$@";
 
 /* No comment provided by engineer. */
 "%d items" = "%d items";
@@ -100,6 +100,9 @@
 
 /* No comment provided by engineer. */
 "Activate license \"%@\" for this device?" = "Activate license \"%@\" for this device?";
+
+/* No comment provided by engineer. */
+"Activated" = "Activated";
 
 /* No comment provided by engineer. */
 "Activating" = "Activating";
@@ -735,6 +738,9 @@
 "Others" = "Others";
 
 /* No comment provided by engineer. */
+"Outdated" = "Outdated";
+
+/* No comment provided by engineer. */
 "Overwrite Confirm" = "Overwrite Confirm";
 
 /* No comment provided by engineer. */
@@ -882,6 +888,9 @@
 "Retry" = "Retry";
 
 /* No comment provided by engineer. */
+"Save to Camera Roll" = "Save to Camera Roll";
+
+/* No comment provided by engineer. */
 "Scan" = "Scan";
 
 /* No comment provided by engineer. */
@@ -940,6 +949,9 @@
 
 /* No comment provided by engineer. */
 "Spell Checking" = "Spell Checking";
+
+/* No comment provided by engineer. */
+"Status" = "Status";
 
 /* No comment provided by engineer. */
 "Stop" = "Stop";

@@ -18,6 +18,8 @@
 #import "XXTEViewShaker.h"
 #import "XXTExplorerViewController.h"
 
+#import "XXTEShimmeringView.h"
+
 typedef enum : NSUInteger {
     kXXTEMoreLicenseSectionIndexNewLicense = 0,
     kXXTEMoreLicenseSectionIndexCurrentLicense,
@@ -137,50 +139,54 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     }
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell2.titleLabel.text = NSLocalizedString(@"Expired At", nil);
-    cell2.valueLabel.text = @"\n";
+    cell2.titleLabel.text = NSLocalizedString(@"Status", nil);
+    cell2.valueLabel.text = @"";
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell3.titleLabel.text = NSLocalizedString(@"Version", nil);
-    cell3.valueLabel.text = @"";
-    cell3.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    cell3.titleLabel.text = NSLocalizedString(@"Expired At", nil);
+    cell3.valueLabel.text = @"\n";
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell4.titleLabel.text = NSLocalizedString(@"iOS Version", nil);
+    cell4.titleLabel.text = NSLocalizedString(@"Version", nil);
     cell4.valueLabel.text = @"";
     cell4.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell5.titleLabel.text = NSLocalizedString(@"Device Type", nil);
+    cell5.titleLabel.text = NSLocalizedString(@"iOS Version", nil);
     cell5.valueLabel.text = @"";
     cell5.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell6.titleLabel.text = NSLocalizedString(@"Device Name", nil);
+    cell6.titleLabel.text = NSLocalizedString(@"Device Type", nil);
     cell6.valueLabel.text = @"";
     cell6.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell7.titleLabel.text = NSLocalizedString(@"Serial Number", nil);
+    cell7.titleLabel.text = NSLocalizedString(@"Device Name", nil);
     cell7.valueLabel.text = @"";
     cell7.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell8.titleLabel.text = NSLocalizedString(@"MAC Address", nil);
+    cell8.titleLabel.text = NSLocalizedString(@"Serial Number", nil);
     cell8.valueLabel.text = @"";
     cell8.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-    cell9.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
+    cell9.titleLabel.text = NSLocalizedString(@"MAC Address", nil);
     cell9.valueLabel.text = @"";
     cell9.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    
+    XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+    cell10.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
+    cell10.valueLabel.text = @"";
+    cell10.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     staticCells = @[
                     @[ cell1 ],
                     //
-                    @[ cell2 ],
+                    @[ cell2, cell3 ],
                     //
-                    @[ cell3, cell4, cell5, cell6, cell7, cell8, cell9 ]
+                    @[ cell4, cell5, cell6, cell7, cell8, cell9, cell10 ]
                     ];
 }
 
@@ -214,9 +220,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
             NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
             NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
-            [self updateTableViewCell:((XXTEMoreTitleValueCell *)staticCells[1][0])
-                       expirationTime:expirationInterval
-                          nowInterval:nowInterval];
+            [self updateCellExpirationTime:expirationInterval
+                               nowInterval:nowInterval];
         }
     })
     .catch(^(NSError *serverError) {
@@ -494,38 +499,83 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     .then(^(NSDictionary *licenseDictionary) {
         if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
             return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
-                [self saveLicenseScreenshot];
-                resolve(licenseDictionary);
+                UIImage *cardImage = [self generateCardImage];
+                if (cardImage) {
+                    resolve(@[ licenseDictionary, cardImage ]);
+                } else {
+                    resolve(@[ licenseDictionary, [UIImage new] ]);
+                }
             }];
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot active license: %@", nil), licenseDictionary[@"message"]];
         }
-        return [PMKPromise promiseWithValue:@{}];
+        return [PMKPromise promiseWithValue:@[ @{}, [UIImage new] ]];
     })
-    .then(^(NSDictionary *licenseDictionary) {
+    .then(^(NSArray *licenseData) {
+        
+        NSDictionary *licenseDictionary = licenseData[0];
+        UIImage *licenseImage = licenseData[1];
+        UIImageView *licenseImageView = [[UIImageView alloc] initWithImage:licenseImage];
+        [licenseImageView setContentMode:UIViewContentModeScaleAspectFit];
+        
         NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
         NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
-        [self updateTableViewCell:((XXTEMoreTitleValueCell *)staticCells[1][0])
-                   expirationTime:expirationInterval
-                      nowInterval:nowInterval];
+        
+        [self updateCellExpirationTime:expirationInterval
+                           nowInterval:nowInterval];
+        
         NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
         NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
         NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
-        LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"License Activated", nil)
-                                                             message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@\nExpired At: %@\nLicense code has been saved.", nil), licenseDictionary[@"message"], nowDateString, expirationDateString]
-                                                               style:LGAlertViewStyleActionSheet
-                                                        buttonTitles:@[  ]
-                                                   cancelButtonTitle:NSLocalizedString(@"Done", nil)
-                                              destructiveButtonTitle:nil
-                                                            delegate:self];
+        
+        // Add Animations
+        XXTEShimmeringView *shimmeringView = [[XXTEShimmeringView alloc] init];
+        
+        LGAlertViewActionHandler actionHandler = ^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+            shimmeringView.shimmering = NO;
+            if (index == 0) {
+                self.licenseField.text = @"";
+                [self textFieldDidChange:self.licenseField];
+                [alertView dismissAnimated];
+                UIImageWriteToSavedPhotosAlbum(licenseImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+            }
+        };
+        
+        LGAlertView *cardAlertView = [[LGAlertView alloc] initWithViewAndTitle:NSLocalizedString(@"License Activated", nil)
+                                                                       message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@\nExpired At: %@", nil), licenseDictionary[@"message"], nowDateString, expirationDateString]
+                                                                         style:LGAlertViewStyleActionSheet
+                                                                          view:shimmeringView
+                                                                  buttonTitles:@[ NSLocalizedString(@"Save to Camera Roll", nil) ]
+                                                             cancelButtonTitle:nil
+                                                        destructiveButtonTitle:nil
+                                                                 actionHandler:actionHandler
+                                                                 cancelHandler:nil
+                                                            destructiveHandler:nil];
+        
+        // Adjust Frame
+        CGFloat imageRatio = 284.f / 450.f;
+        CGFloat alertWidth = cardAlertView.width;
+        CGFloat imageHeight = alertWidth * imageRatio;
+        [licenseImageView setFrame:CGRectMake(0, 0, alertWidth, imageHeight)];
+        [shimmeringView setFrame:licenseImageView.bounds];
+        
+        // Start shimmering.
+        shimmeringView.shimmering = YES;
+        shimmeringView.shimmeringBeginFadeDuration = .2;
+        shimmeringView.shimmeringSpeed = 150.;
+        shimmeringView.shimmeringAnimationOpacity = .2;
+        shimmeringView.contentView = licenseImageView;
+        
         if (alertView1 && alertView1.isShowing) {
-            [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
+            [alertView1 transitionToAlertView:cardAlertView completionHandler:nil];
         } else {
-            [alertView2 showAnimated];
+            [cardAlertView showAnimated];
         }
+        
         NSString *licenseLog = [NSString stringWithFormat:@"[%@] %@\n", NSStringFromClass([self class]), licenseDictionary];
         return licenseLog;
     })
@@ -546,17 +596,17 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         }
     })
     .catch(^(NSError *serverError) {
-        LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
-                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Failed to activate license \"%@\": %@", nil), licenseCode, [serverError localizedDescription]]
-                                                               style:LGAlertViewStyleActionSheet
-                                                        buttonTitles:@[  ]
-                                                   cancelButtonTitle:NSLocalizedString(@"Retry", nil)
-                                              destructiveButtonTitle:nil
-                                                            delegate:self];
+        LGAlertView *errorAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
+                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Failed to activate license \"%@\": %@", nil), licenseCode, [serverError localizedDescription]]
+                                                                   style:LGAlertViewStyleActionSheet
+                                                            buttonTitles:@[  ]
+                                                       cancelButtonTitle:NSLocalizedString(@"Retry", nil)
+                                                  destructiveButtonTitle:nil
+                                                                delegate:self];
         if (alertView1 && alertView1.isShowing) {
-            [alertView1 transitionToAlertView:alertView2 completionHandler:nil];
+            [alertView1 transitionToAlertView:errorAlertView completionHandler:nil];
         } else {
-            [alertView2 showAnimated];
+            [errorAlertView showAnimated];
         }
     })
     .finally(^() {
@@ -566,36 +616,41 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 
 #pragma mark - Reusable UI Updater
 
-- (void)updateTableViewCell:(XXTEMoreTitleValueCell *)cell
-             expirationTime:(NSTimeInterval)expirationInterval
-                nowInterval:(NSTimeInterval)nowInterval {
+- (void)updateCellExpirationTime:(NSTimeInterval)expirationInterval nowInterval:(NSTimeInterval)nowInterval {
     if (expirationInterval > 0) {
+        XXTEMoreTitleValueCell *statusLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][0]);
+        XXTEMoreTitleValueCell *timeLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][1]);
         NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd\nHH:mm:ss"];
         NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
-        UILabel *dateLabel = cell.valueLabel;
+        UILabel *dateLabel = timeLabelCell.valueLabel;
         dateLabel.text = expirationDateString;
         if ([nowDate timeIntervalSinceDate:expirationDate] >= 0) {
+            statusLabelCell.valueLabel.text = NSLocalizedString(@"Outdated", nil);
             dateLabel.textColor = XXTE_COLOR_DANGER;
         }
         else {
+            statusLabelCell.valueLabel.text = NSLocalizedString(@"Activated", nil);
             dateLabel.textColor = XXTE_COLOR;
         }
         [self.tableView reloadData];
     }
 }
 
-- (void)saveLicenseScreenshot {
-    UIImage *screenshot = [self createImagefromUIScrollView:self.tableView];
-    NSData *screenshotData = UIImagePNGRepresentation(screenshot);
+- (UIImage *)generateCardImage {
     NSString *logPath = uAppDefine(@"LOG_PATH");
     NSString *logFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:logPath];
     NSString *uuidString = [[NSUUID UUID] UUIDString];
-    NSString *screenshotPath = [[logFullPath stringByAppendingPathComponent:uuidString] stringByAppendingPathExtension:@"png"];
-    [screenshotData writeToFile:screenshotPath atomically:YES];
-    UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    NSString *cardPath = [[logFullPath stringByAppendingPathComponent:uuidString] stringByAppendingPathExtension:@"pdf"];
+    [self createSignaturedPDFLicenseAtPath:cardPath];
+    UIImage *cardImage = [self imageFromPDFAtURL:[NSURL fileURLWithPath:cardPath] forPage:1];
+    return cardImage;
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    
 }
 
 - (UIImage *)createImagefromUIScrollView:(UIScrollView *)scrollView {
@@ -613,8 +668,90 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     return imageResult;
 }
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+- (void)createSignaturedPDFLicenseAtPath:(NSString *)cardPath
+{
+    NSURL *previewURL = [[NSBundle mainBundle] URLForResource:@"XXTEPremiumPreview" withExtension:@"pdf"];
     
+    CGFloat scale = 3.0;
+    
+    NSString *licenseCode = self.licenseField.text;
+    UIFont *licenseFont = [UIFont fontWithName:@"CamingoCode-Regular" size:36.0 * scale];
+    
+    NSString *deviceSN = ((XXTEMoreTitleValueCell *)staticCells[2][4]).valueLabel.text;
+    UIFont *deviceSNFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    
+    NSString *expirationString = [((XXTEMoreTitleValueCell *)staticCells[1][1]).valueLabel.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+    UIFont *expirationFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    
+    CGPDFDocumentRef pdf = CGPDFDocumentCreateWithURL((CFURLRef)previewURL);
+    const size_t numberOfPages = CGPDFDocumentGetNumberOfPages(pdf);
+    
+    NSMutableData *data = [NSMutableData data];
+    UIGraphicsBeginPDFContextToData(data, CGRectZero, nil);
+    
+    for (size_t page = 1; page <= numberOfPages; page++)
+    {
+        //	Get the current page and page frame
+        CGPDFPageRef pdfPage = CGPDFDocumentGetPage(pdf, page);
+        const CGRect pageFrame = CGPDFPageGetBoxRect(pdfPage, kCGPDFMediaBox);
+        
+        UIGraphicsBeginPDFPageWithInfo(pageFrame, nil);
+        
+        //	Draw the page (flipped)
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSaveGState(ctx);
+        CGContextScaleCTM(ctx, 1, -1);
+        CGContextTranslateCTM(ctx, 0, -pageFrame.size.height);
+        CGContextDrawPDFPage(ctx, pdfPage);
+        CGContextRestoreGState(ctx);
+        
+        // Drawing commands
+        [licenseCode drawAtPoint:CGPointMake(37.0 * scale, 197.0 * scale) withAttributes:@{ NSFontAttributeName: licenseFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:.92f alpha:1.f] }];
+        [deviceSN drawAtPoint:CGPointMake(345.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: deviceSNFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
+        [expirationString drawAtPoint:CGPointMake(12.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: expirationFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
+        
+    }
+    
+    UIGraphicsEndPDFContext();
+    
+    CGPDFDocumentRelease(pdf);
+    pdf = nil;
+    
+    [data writeToFile:cardPath atomically:YES];
+}
+
+- (UIImage *)imageFromPDFAtURL:(NSURL *)url forPage:(NSUInteger)page {
+    
+    CGPDFDocumentRef pdf = CGPDFDocumentCreateWithURL((CFURLRef)url);
+    const size_t numberOfPages = CGPDFDocumentGetNumberOfPages(pdf);
+    if (page > numberOfPages) return nil;
+    
+    CGFloat scale = 0.0;
+    
+    CGPDFPageRef pdfPageRef = CGPDFDocumentGetPage(pdf, page);
+    
+    CGRect pageRect = CGPDFPageGetBoxRect(pdfPageRef, kCGPDFMediaBox);
+    CGSize pageSize = pageRect.size;
+    
+    UIGraphicsBeginImageContextWithOptions(pageSize, NO, scale);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+    
+    CGContextTranslateCTM(context, 0.0, pageSize.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextSaveGState(context);
+    
+    CGAffineTransform pdfTransform = CGPDFPageGetDrawingTransform(pdfPageRef, kCGPDFCropBox, CGRectMake(0, 0, pageSize.width, pageSize.height), 0, true);
+    CGContextConcatCTM(context, pdfTransform);
+    
+    CGContextDrawPDFPage(context, pdfPageRef);
+    CGContextRestoreGState(context);
+    
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return resultingImage;
 }
 
 #pragma mark - Memory

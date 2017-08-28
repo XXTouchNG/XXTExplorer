@@ -12,7 +12,7 @@
 "%@\n(%@ on disk)" = "%@\n(%@ on disk)";
 
 /* No comment provided by engineer. */
-"%@\nActivated At: %@\nExpired At: %@\nLicense code has been saved." = "%@\n激活时间: %@\n过期时间: %@\n授权码已保存到相机胶卷.";
+"%@\nActivated At: %@\nExpired At: %@" = "%@\n激活时间: %@\n过期时间: %@";
 
 /* No comment provided by engineer. */
 "%d items" = "%d 项";
@@ -100,6 +100,9 @@
 
 /* No comment provided by engineer. */
 "Activate license \"%@\" for this device?" = "为此设备激活授权 \"%@\"?";
+
+/* No comment provided by engineer. */
+"Activated" = "已激活";
 
 /* No comment provided by engineer. */
 "Activating" = "激活中";
@@ -732,6 +735,9 @@
 "Others" = "其它";
 
 /* No comment provided by engineer. */
+"Outdated" = "已过期";
+
+/* No comment provided by engineer. */
 "Overwrite Confirm" = "替换确认";
 
 /* No comment provided by engineer. */
@@ -879,6 +885,9 @@
 "Retry" = "重试";
 
 /* No comment provided by engineer. */
+"Save to Camera Roll" = "保存到相机胶卷";
+
+/* No comment provided by engineer. */
 "Scan" = "扫描";
 
 /* No comment provided by engineer. */
@@ -937,6 +946,9 @@
 
 /* No comment provided by engineer. */
 "Spell Checking" = "拼写检查";
+
+/* No comment provided by engineer. */
+"Status" = "状态";
 
 /*
  * ./XXTEAppDelegate.m
