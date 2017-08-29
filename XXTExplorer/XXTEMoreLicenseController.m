@@ -584,7 +584,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             NSString *licenseLogPath = uAppDefine(@"LICENSE_LOG_PATH");
             NSString *licenseLogFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:licenseLogPath];
             struct stat licenseLogStat;
-            if (0 == lstat([licenseLogFullPath UTF8String], &licenseLogStat)) {
+            if (0 != lstat([licenseLogFullPath UTF8String], &licenseLogStat)) {
                 [[NSFileManager defaultManager] createFileAtPath:licenseLogFullPath
                                                         contents:[NSData data]
                                                       attributes:nil];
