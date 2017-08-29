@@ -565,7 +565,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         
         // Start shimmering.
         shimmeringView.shimmering = YES;
-        shimmeringView.shimmeringBeginFadeDuration = .2;
         shimmeringView.shimmeringSpeed = 150.;
         shimmeringView.shimmeringAnimationOpacity = .2;
         shimmeringView.contentView = licenseImageView;
