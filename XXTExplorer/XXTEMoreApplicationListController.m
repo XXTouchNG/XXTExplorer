@@ -164,7 +164,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         searchBar;
     });
     
-    [self.refreshControl beginRefreshing];
     [self asyncApplicationList:self.refreshControl];
 }
 
