@@ -12,7 +12,19 @@
 "%@\n(%@ on disk)" = "%1$@\n(%2$@ on disk)";
 
 /* No comment provided by engineer. */
-"%@\nActivated At: %@\nExpired At: %@" = "%1$@\nActivated At: %2$@\nExpired At: %3$@";
+"%@\nActivated At: %@" = "%@\nActivated At: %@";
+
+/* No comment provided by engineer. */
+"%d Day " = "%d Day ";
+
+/* No comment provided by engineer. */
+"%d Days " = "%d Days ";
+
+/* No comment provided by engineer. */
+"%d Hour " = "%d Hour ";
+
+/* No comment provided by engineer. */
+"%d Hours " = "%d Hours ";
 
 /* No comment provided by engineer. */
 "%d items" = "%d items";
@@ -465,7 +477,7 @@
 "Enable Boot Script" = "Enable Boot Script";
 
 /* No comment provided by engineer. */
-"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase." = "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase.";
+"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.";
 
 /* No comment provided by engineer. */
 "Error" = "Error";
@@ -658,6 +670,9 @@
 
 /* No comment provided by engineer. */
 "My Scripts" = "My Scripts";
+
+/* No comment provided by engineer. */
+"N/A\n(Not Available)" = "N/A\n(Not Available)";
 
 /* No comment provided by engineer. */
 "Name" = "Name";
@@ -990,6 +1005,9 @@
 "Target Path has been copied to the pasteboard." = "Target Path has been copied to the pasteboard.";
 
 /* No comment provided by engineer. */
+"Test" = "Test";
+
+/* No comment provided by engineer. */
 "Text Content" = "Text Content";
 
 /* No comment provided by engineer. */
@@ -997,6 +1015,9 @@
 
 /* No comment provided by engineer. */
 "The alias \"%@\" can't be opened because the original item can't be found." = "The alias \"%@\" can't be opened because the original item can't be found.";
+
+/* No comment provided by engineer. */
+"The content displayed in this page cannot be the proof of your purchase." = "The content displayed in this page cannot be the proof of your purchase.";
 
 /* No comment provided by engineer. */
 "The daemon has been restarted." = "The daemon has been restarted.";

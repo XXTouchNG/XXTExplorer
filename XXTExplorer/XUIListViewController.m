@@ -40,17 +40,23 @@
 
 + (XXTExplorerEntryParser *)entryParser {
     static XXTExplorerEntryParser *entryParser = nil;
-    if (!entryParser) {
-        entryParser = [[XXTExplorerEntryParser alloc] init];
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!entryParser) {
+            entryParser = [[XXTExplorerEntryParser alloc] init];
+        }
+    });
     return entryParser;
 }
 
 + (XXTExplorerEntryService *)entryService {
     static XXTExplorerEntryService *entryService = nil;
-    if (!entryService) {
-        entryService = [XXTExplorerEntryService sharedInstance];
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!entryService) {
+            entryService = [XXTExplorerEntryService sharedInstance];
+        }
+    });
     return entryService;
 }
 

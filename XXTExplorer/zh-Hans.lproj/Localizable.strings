@@ -12,7 +12,19 @@
 "%@\n(%@ on disk)" = "%@\n(%@ on disk)";
 
 /* No comment provided by engineer. */
-"%@\nActivated At: %@\nExpired At: %@" = "%@\n激活时间: %@\n过期时间: %@";
+"%@\nActivated At: %@" = "%1$@\n激活时间: %2$@";
+
+/* No comment provided by engineer. */
+"%d Day " = "%d 天 ";
+
+/* No comment provided by engineer. */
+"%d Days " = "%d 天 ";
+
+/* No comment provided by engineer. */
+"%d Hour " = "%d 时 ";
+
+/* No comment provided by engineer. */
+"%d Hours " = "%d 时 ";
 
 /* No comment provided by engineer. */
 "%d items" = "%d 项";
@@ -465,7 +477,7 @@
 "Enable Boot Script" = "启用开机启动项";
 
 /* No comment provided by engineer. */
-"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase." = "键入 16 位授权码, 轻按 \"完成\" 以激活授权, 并将授权绑定至当前设备.\n授权码中仅包含 3-9 和 A-Z, 不包含空格.\n该页面所显示内容不能作为您的购买凭据.";
+"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "键入 16 位授权码, 轻按 \"完成\" 以激活授权, 并将授权绑定至当前设备.\n授权码中仅包含 3-9 和 A-Z, 不包含空格.";
 
 /* No comment provided by engineer. */
 "Error" = "错误";
@@ -655,6 +667,9 @@
 
 /* No comment provided by engineer. */
 "My Scripts" = "我的脚本";
+
+/* No comment provided by engineer. */
+"N/A\n(Not Available)" = "N/A\n(不可用)";
 
 /* No comment provided by engineer. */
 "Name" = "名称";
@@ -989,6 +1004,9 @@
 "Target Path has been copied to the pasteboard." = "目标路径已被复制到剪贴板.";
 
 /* No comment provided by engineer. */
+"Test" = "测试";
+
+/* No comment provided by engineer. */
 "Text Content" = "文本内容";
 
 /* No comment provided by engineer. */
@@ -996,6 +1014,9 @@
 
 /* No comment provided by engineer. */
 "The alias \"%@\" can't be opened because the original item can't be found." = "替身 \"%@\" 无法打开，因为找不到其原身.";
+
+/* No comment provided by engineer. */
+"The content displayed in this page cannot be the proof of your purchase." = "该页面所显示内容不能作为您的购买凭据.";
 
 /* No comment provided by engineer. */
 "The daemon has been restarted." = "守护进程重启完成.";

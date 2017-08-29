@@ -28,38 +28,50 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
 
 + (NSString *)initialPath {
     static NSString *initialPath = nil;
-    if (!initialPath) {
-        initialPath = ({
-            NSString *initialRelativePath = uAppDefine(XXTExplorerViewBuiltInitialPath);
-            [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:initialRelativePath];
-        });
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!initialPath) {
+            initialPath = ({
+                NSString *initialRelativePath = uAppDefine(XXTExplorerViewBuiltInitialPath);
+                [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:initialRelativePath];
+            });
+        }
+    });
     return initialPath;
 }
 
 + (NSFileManager *)explorerFileManager {
     static NSFileManager *explorerFileManager = nil;
-    if (!explorerFileManager) {
-        explorerFileManager = ({
-            [[NSFileManager alloc] init];
-        });
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!explorerFileManager) {
+            explorerFileManager = ({
+                [[NSFileManager alloc] init];
+            });
+        }
+    });
     return explorerFileManager;
 }
 
 + (XXTExplorerEntryParser *)explorerEntryParser {
     static XXTExplorerEntryParser *explorerEntryParser = nil;
-    if (!explorerEntryParser) {
-        explorerEntryParser = [[XXTExplorerEntryParser alloc] init];
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!explorerEntryParser) {
+            explorerEntryParser = [[XXTExplorerEntryParser alloc] init];
+        }
+    });
     return explorerEntryParser;
 }
 
 + (XXTExplorerEntryService *)explorerEntryService {
     static XXTExplorerEntryService *explorerEntryService = nil;
-    if (!explorerEntryService) {
-        explorerEntryService = [XXTExplorerEntryService sharedInstance];
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!explorerEntryService) {
+            explorerEntryService = [XXTExplorerEntryService sharedInstance];
+        }
+    });
     return explorerEntryService;
 }
 

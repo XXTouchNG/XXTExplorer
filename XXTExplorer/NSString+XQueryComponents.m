@@ -55,12 +55,12 @@
 - (NSString *)stringFromQueryComponents
 {
     NSString *result = nil;
-    for(__strong NSString *key in [self allKeys])
+    for (__strong NSString *key in [self allKeys])
     {
         key = [key stringByEncodingURLFormat];
         NSArray *allValues = [self objectForKey:key];
         if([allValues isKindOfClass:[NSArray class]])
-            for(__strong NSString *value in allValues)
+            for (__strong NSString *value in allValues)
             {
                 value = [[value description] stringByEncodingURLFormat];
                 if(!result)

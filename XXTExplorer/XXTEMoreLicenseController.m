@@ -120,7 +120,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     staticSectionTitles = @[ NSLocalizedString(@"New License", nil),
                              NSLocalizedString(@"Current License", nil),
                              NSLocalizedString(@"Device", nil) ];
-    staticSectionFooters = @[ NSLocalizedString(@"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.\nThe content displayed in this page cannot be the proof of your purchase.", nil), @"", @"" ];
+    staticSectionFooters = @[ NSLocalizedString(@"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", nil), NSLocalizedString(@"The content displayed in this page cannot be the proof of your purchase.", nil), @"" ];
     
     XXTEMoreLicenseCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLicenseCell class]) owner:nil options:nil] lastObject];
     cell1.licenseField.text = @"";
@@ -499,7 +499,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     .then(^(NSDictionary *licenseDictionary) {
         if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
             return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
-                UIImage *cardImage = [self generateCardImage];
+                UIImage *cardImage = [self generateCardImageWithLicense:licenseDictionary];
                 if (cardImage) {
                     resolve(@[ licenseDictionary, cardImage ]);
                 } else {
@@ -518,18 +518,18 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         UIImageView *licenseImageView = [[UIImageView alloc] initWithImage:licenseImage];
         [licenseImageView setContentMode:UIViewContentModeScaleAspectFit];
         
-        NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
+        NSTimeInterval deviceExpirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
+        // !!! You cannot use expireDate here !!!
         NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
         
-        [self updateCellExpirationTime:expirationInterval
+        [self updateCellExpirationTime:deviceExpirationInterval
                            nowInterval:nowInterval];
         
         NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
-        NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
-        NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
         NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
         
         // Add Animations
@@ -546,7 +546,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         };
         
         LGAlertView *cardAlertView = [[LGAlertView alloc] initWithViewAndTitle:NSLocalizedString(@"License Activated", nil)
-                                                                       message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@\nExpired At: %@", nil), licenseDictionary[@"message"], nowDateString, expirationDateString]
+                                                                       message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@", nil), licenseDictionary[@"message"], nowDateString]
                                                                          style:LGAlertViewStyleActionSheet
                                                                           view:shimmeringView
                                                                   buttonTitles:@[ NSLocalizedString(@"Save to Camera Roll", nil) ]
@@ -583,7 +583,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
             NSString *licenseLogPath = uAppDefine(@"LICENSE_LOG_PATH");
             NSString *licenseLogFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:licenseLogPath];
             struct stat licenseLogStat;
-            if (0 == lstat([licenseLogFullPath UTF8String], &licenseLogStat)) {
+            if (0 != lstat([licenseLogFullPath UTF8String], &licenseLogStat)) {
                 [[NSFileManager defaultManager] createFileAtPath:licenseLogFullPath
                                                         contents:[NSData data]
                                                       attributes:nil];
@@ -616,34 +616,50 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 #pragma mark - Reusable UI Updater
 
 - (void)updateCellExpirationTime:(NSTimeInterval)expirationInterval nowInterval:(NSTimeInterval)nowInterval {
+    XXTEMoreTitleValueCell *statusLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][0]);
+    XXTEMoreTitleValueCell *timeLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][1]);
+    
+    int status = -1; // Activated
+    NSString *displayDateString = nil;
+    
     if (expirationInterval > 0) {
-        XXTEMoreTitleValueCell *statusLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][0]);
-        XXTEMoreTitleValueCell *timeLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][1]);
+        
         NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd\nHH:mm:ss"];
+        
         NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
-        UILabel *dateLabel = timeLabelCell.valueLabel;
-        dateLabel.text = expirationDateString;
-        if ([nowDate timeIntervalSinceDate:expirationDate] >= 0) {
-            statusLabelCell.valueLabel.text = NSLocalizedString(@"Outdated", nil);
-            dateLabel.textColor = XXTE_COLOR_DANGER;
-        }
-        else {
-            statusLabelCell.valueLabel.text = NSLocalizedString(@"Activated", nil);
-            dateLabel.textColor = XXTE_COLOR;
-        }
-        [self.tableView reloadData];
+        
+        NSTimeInterval interval = [nowDate timeIntervalSinceDate:expirationDate];
+        
+        status = interval;
+        displayDateString = expirationDateString;
+        
+    } else {
+        status = 0; // Outdated
+        displayDateString = NSLocalizedString(@"N/A\n(Not Available)", nil);
     }
+    UILabel *dateLabel = timeLabelCell.valueLabel;
+    dateLabel.text = displayDateString;
+    if (status >= 0) {
+        statusLabelCell.valueLabel.text = NSLocalizedString(@"Outdated", nil);
+        dateLabel.textColor = XXTE_COLOR_DANGER;
+    }
+    else {
+        statusLabelCell.valueLabel.text = NSLocalizedString(@"Activated", nil);
+        dateLabel.textColor = XXTE_COLOR;
+    }
+    [self.tableView reloadData];
 }
 
-- (UIImage *)generateCardImage {
+- (UIImage *)generateCardImageWithLicense:(NSDictionary *)licenseDictionary {
     NSString *logPath = uAppDefine(@"LOG_PATH");
     NSString *logFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:logPath];
     NSString *uuidString = [[NSUUID UUID] UUIDString];
     NSString *cardPath = [[logFullPath stringByAppendingPathComponent:uuidString] stringByAppendingPathExtension:@"pdf"];
-    [self createSignaturedPDFLicenseAtPath:cardPath];
+    [self createSignaturedPDFWithLicense:(NSDictionary *)licenseDictionary atPath:cardPath];
     UIImage *cardImage = [self imageFromPDFAtURL:[NSURL fileURLWithPath:cardPath] forPage:1];
     return cardImage;
 }
@@ -667,7 +683,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     return imageResult;
 }
 
-- (void)createSignaturedPDFLicenseAtPath:(NSString *)cardPath
+- (void)createSignaturedPDFWithLicense:(NSDictionary *)licenseDictionary atPath:(NSString *)cardPath
 {
     NSURL *previewURL = [[NSBundle mainBundle] URLForResource:@"XXTEPremiumPreview" withExtension:@"pdf"];
     
@@ -675,12 +691,45 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     
     NSString *licenseCode = self.licenseField.text;
     UIFont *licenseFont = [UIFont fontWithName:@"CamingoCode-Regular" size:36.0 * scale];
+    if (!licenseCode || !licenseFont) return;
     
-    NSString *deviceSN = ((XXTEMoreTitleValueCell *)staticCells[2][4]).valueLabel.text;
+    NSString *deviceSN = licenseDictionary[@"data"][@"deviceSerialNumber"];
     UIFont *deviceSNFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    if (!deviceSN || !deviceSNFont) return;
     
-    NSString *expirationString = [((XXTEMoreTitleValueCell *)staticCells[1][1]).valueLabel.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-    UIFont *expirationFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+    NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
+    
+    NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
+    NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
+    
+    NSTimeInterval interval = [expirationDate timeIntervalSinceDate:nowDate];
+    NSMutableString *intervalString = [[NSMutableString alloc] init];
+    int intervalDay = (int)floor(interval / 86400);
+    if (intervalDay > 1)
+    {
+        [intervalString appendFormat:NSLocalizedString(@"%d Days ", nil), intervalDay];
+    } else if (intervalDay == 1) {
+        [intervalString appendFormat:NSLocalizedString(@"%d Day ", nil), intervalDay];
+    }
+    int intervalHour = (int)floor((interval - intervalDay * 86400) / 3600);
+    if (intervalHour > 1) {
+        [intervalString appendFormat:NSLocalizedString(@"%d Hours ", nil), intervalHour];
+    } else if (intervalHour == 1) {
+        [intervalString appendFormat:NSLocalizedString(@"%d Hour ", nil), intervalHour];
+    }
+    if (intervalString.length == 0) {
+        [intervalString appendString:NSLocalizedString(@"Test", nil)];
+    }
+    
+    NSString *nowString = [NSString stringWithFormat:@"%@ %@", nowDateString, intervalString];
+    UIFont *nowFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    if (!nowString || !nowFont) return;
     
     CGPDFDocumentRef pdf = CGPDFDocumentCreateWithURL((CFURLRef)previewURL);
     const size_t numberOfPages = CGPDFDocumentGetNumberOfPages(pdf);
@@ -707,7 +756,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
         // Drawing commands
         [licenseCode drawAtPoint:CGPointMake(37.0 * scale, 197.0 * scale) withAttributes:@{ NSFontAttributeName: licenseFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:.92f alpha:1.f] }];
         [deviceSN drawAtPoint:CGPointMake(345.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: deviceSNFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
-        [expirationString drawAtPoint:CGPointMake(12.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: expirationFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
+        [nowString drawAtPoint:CGPointMake(12.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: nowFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
         
     }
     

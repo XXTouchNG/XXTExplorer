@@ -274,57 +274,69 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 
 + (NSDictionary *)appDefines {
     static NSDictionary *localAppDefines = nil;
-    if (!localAppDefines) {
-        localAppDefines = ({
-            NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
-            [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
-            [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
-            [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
-            appDefines;
-        });
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!localAppDefines) {
+            localAppDefines = ({
+                NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
+                [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
+                [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
+                [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
+                appDefines;
+            });
+        }
+    });
     return localAppDefines;
 }
 
 + (NSUserDefaults *)userDefaults {
     static NSUserDefaults *userDefaults = nil;
-    if (!userDefaults) {
-        userDefaults = ({
-            [NSUserDefaults standardUserDefaults];
-        });
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!userDefaults) {
+            userDefaults = ({
+                [NSUserDefaults standardUserDefaults];
+            });
+        }
+    });
     return userDefaults;
 }
 
 + (NSDictionary *)builtInDefaults {
     static NSDictionary *builtInDefaults = nil;
-    if (!builtInDefaults) {
-        builtInDefaults = ({
-            NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults" ofType:@"plist"];
-            [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
-        });
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!builtInDefaults) {
+            builtInDefaults = ({
+                NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults" ofType:@"plist"];
+                [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
+            });
+        }
+    });
     return builtInDefaults;
 }
 
 + (NSString *)sharedRootPath {
     static NSString *rootPath = nil;
-    if (!rootPath) {
-        rootPath = ({
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!rootPath) {
+            rootPath = ({
 #ifndef DEBUG
-            NSString *mainPath = uAppDefine(@"MAIN_PATH");
+                NSString *mainPath = uAppDefine(@"MAIN_PATH");
 #else
-            NSString *mainPath = nil;
+                NSString *mainPath = nil;
 #endif
-            const char *mainPathCStr = [mainPath UTF8String];
-            if (!mainPath) {
-                mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-            } else if (0 != access(mainPathCStr, F_OK)) {
-                mkdir(mainPathCStr, 0755);
-            }
-            mainPath;
-        });
-    }
+                const char *mainPathCStr = [mainPath UTF8String];
+                if (!mainPath) {
+                    mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+                } else if (0 != access(mainPathCStr, F_OK)) {
+                    mkdir(mainPathCStr, 0755);
+                }
+                mainPath;
+            });
+        }
+    });
     return rootPath;
 }
 
