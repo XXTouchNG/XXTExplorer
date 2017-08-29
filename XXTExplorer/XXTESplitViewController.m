@@ -203,7 +203,7 @@
             return;
         }
         BOOL shouldRemind = [self.updateAgent shouldRemindWithVersion:packageVersion];
-        if (shouldRemind) {
+        if (NO == self.checkUpdateInBackground || shouldRemind) {
             NSString *channelId = uAppDefine(@"CHANNEL_ID");
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"New Version", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"New version found: v%@\nCurrent version: v%@", nil), packageVersion, currentVersion]

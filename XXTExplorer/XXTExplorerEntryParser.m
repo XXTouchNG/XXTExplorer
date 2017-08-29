@@ -28,35 +28,44 @@
 
 + (NSDateFormatter *)entryDateFormatter {
     static NSDateFormatter *entryDateFormatter = nil;
-    if (!entryDateFormatter) {
-        entryDateFormatter = ({
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-            dateFormatter;
-        });
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!entryDateFormatter) {
+            entryDateFormatter = ({
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+                [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+                dateFormatter;
+            });
+        }
+    });
     return entryDateFormatter;
 }
 
 + (XXTExplorerEntryService *)parserEntryService {
     static XXTExplorerEntryService *parserEntryService = nil;
-    if (!parserEntryService) {
-        parserEntryService = [XXTExplorerEntryService sharedInstance];
-    }
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!parserEntryService) {
+            parserEntryService = [XXTExplorerEntryService sharedInstance];
+        }
+    });
     return parserEntryService;
 }
 
 + (NSArray <Class> *)bundleReaders {
     static NSArray <Class> *bundleReaders = nil;
-    if (!bundleReaders) {
-        NSArray <NSString *> *registeredNames = uAppDefine(@"AVAILABLE_BUNDLE_READER");
-        NSMutableArray <Class> *registeredMutableReaders = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
-        for (NSString *className in registeredNames) {
-            [registeredMutableReaders addObject:NSClassFromString(className)];
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!bundleReaders) {
+            NSArray <NSString *> *registeredNames = uAppDefine(@"AVAILABLE_BUNDLE_READER");
+            NSMutableArray <Class> *registeredMutableReaders = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
+            for (NSString *className in registeredNames) {
+                [registeredMutableReaders addObject:NSClassFromString(className)];
+            }
+            bundleReaders = [[NSArray alloc] initWithArray:registeredMutableReaders];
         }
-        bundleReaders = [[NSArray alloc] initWithArray:registeredMutableReaders];
-    }
+    });
     return bundleReaders;
 }
 
