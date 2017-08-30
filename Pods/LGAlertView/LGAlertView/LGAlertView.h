@@ -123,13 +123,17 @@ typedef NS_ENUM(NSUInteger, LGAlertViewWindowLevel) {
  */
 @property (strong, nonatomic, nullable) UIColor *coverColor UI_APPEARANCE_SELECTOR;
 /** Default is nil */
+_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
 @property (strong, nonatomic, nullable) UIBlurEffect *coverBlurEffect UI_APPEARANCE_SELECTOR;
+_Pragma("clang diagnostic pop")
 /** Default is 1.0 */
 @property (assign, nonatomic) CGFloat coverAlpha UI_APPEARANCE_SELECTOR;
 /** Default is UIColor.whiteColor */
 @property (strong, nonatomic, nullable) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 /** Default is nil */
+_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
 @property (strong, nonatomic, nullable) UIBlurEffect *backgroundBlurEffect UI_APPEARANCE_SELECTOR;
+_Pragma("clang diagnostic pop")
 /**
  Default:
  if (style == LGAlertViewStyleAlert || iOS < 9.0) then 44.0

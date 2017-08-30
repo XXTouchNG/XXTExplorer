@@ -47,7 +47,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     self.title = NSLocalizedString(@"Documents", nil);
     
     self.tableView.delegate = self;
@@ -150,8 +155,12 @@
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;
             if (XXTE_COLLAPSED) {
-                XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-                [self.splitViewController showDetailViewController:navigationController sender:self];
+                XXTE_START_IGNORE_PARTIAL
+                if (XXTE_SYSTEM_8) {
+                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                    [self.splitViewController showDetailViewController:navigationController sender:self];
+                }
+                XXTE_END_IGNORE_PARTIAL
             } else {
                 [self.navigationController pushViewController:webController animated:YES];
             }

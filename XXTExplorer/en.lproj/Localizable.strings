@@ -1032,6 +1032,9 @@
 "Third Party Credits" = "Third Party Credits";
 
 /* No comment provided by engineer. */
+"This feature is not supported." = "This feature is not supported.";
+
+/* No comment provided by engineer. */
 "This operation will kill all applications and reset icon caches, which may cause icons to disappear." = "This operation will kill all applications and reset icon caches, which may cause icons to disappear.";
 
 /* No comment provided by engineer. */

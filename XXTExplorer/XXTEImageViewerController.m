@@ -77,9 +77,11 @@
     
     [self.scrollView addGestureRecognizer:self.doubleTapGestureRecognizer];
 
+    XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)viewDidLayoutSubviews {
@@ -176,16 +178,20 @@
 #pragma mark - Share
 
 - (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
-    NSURL *shareURL = [NSURL fileURLWithPath:self.entryPath];
-    if (!shareURL) {
-        return;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        NSURL *shareURL = [NSURL fileURLWithPath:self.entryPath];
+        if (!shareURL) {
+            return;
+        }
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverPresentationController.barButtonItem = sender;
+        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
     }
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
-    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-    UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-    popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    popoverPresentationController.barButtonItem = sender;
-    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Memory

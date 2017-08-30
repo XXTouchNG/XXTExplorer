@@ -1,7 +1,7 @@
 //
 //  TOWebViewController.h
 //
-//  Copyright 2013-2016 Timothy Oliver. All rights reserved.
+//  Copyright 2013-2017 Timothy Oliver. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -23,7 +23,7 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
-@interface TOWebViewController : UIViewController <WKNavigationDelegate>
+@interface TOWebViewController : UIViewController <UIWebViewDelegate>
 
 /**
  Initializes a new `TOWebViewController` object with the specified URL.
@@ -37,7 +37,7 @@
 /**
  Initializes a new `TOWebViewController` object with the specified URL string.
  
- @param url The URL as a string, of the web page that the controller will initially display.
+ @param urlString The URL as a string, of the web page that the controller will initially display.
  
  @return The newly initialized `TOWebViewController` object.
  */
@@ -59,7 +59,10 @@
  
  @warning Usage of the web view's delegate property is reserved by this view controller. Do not set it to another object.
  */
+@property (nonatomic,readonly)  UIWebView *webView;
+_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
 @property (nonatomic,readonly)  WKWebView *wkWebView;
+_Pragma("clang diagnostic pop")
 
 /** 
  Shows a loading progress bar underneath the top navigation bar. 
@@ -167,12 +170,23 @@
  An optional block that when set, will have each incoming web load request forwarded to it, and can
  determine whether to let them proceed or not.
  */
-@property (nonatomic,copy)      BOOL (^shouldStartLoadRequestHandler)(NSURLRequest *request, WKNavigationType navigationType);
+@property (nonatomic,copy)      BOOL (^shouldStartLoadRequestHandler)(NSURLRequest *request, UIWebViewNavigationType navigationType);
 
 /**
 An optional block that when set, will be triggered each time the web view has finished a load operation.
 */
-@property (nonatomic,copy)      void (^didFinishLoadHandler)(WKWebView *wkWebView);
+@property (nonatomic,copy)      void (^didFinishLoadHandler)(UIWebView *webView);
+
+/**
+ An optional block that when set, will have each incoming web load request forwarded to it, and can
+ determine whether to let them proceed or not.
+ */
+@property (nonatomic,copy)      BOOL (^wk_shouldStartLoadRequestHandler)(NSURLRequest *request, WKNavigationType navigationType);
+
+/**
+ An optional block that when set, will be triggered each time the web view has finished a load operation.
+ */
+@property (nonatomic,copy)      void (^wk_didFinishLoadHandler)(WKWebView *webView);
 
 /** 
  This can be used to override the default tint color of the navigation button icons.

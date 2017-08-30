@@ -42,19 +42,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.wkWebView.opaque = NO;
+    self.webView.opaque = NO;
 
+    XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self == self.navigationController.viewControllers[0]) {
         self.applicationLeftBarButtonItems = @[ self.splitViewController.displayModeButtonItem ];
     }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)showPlaceholderTitle {

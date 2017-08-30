@@ -66,22 +66,32 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
     masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
     
-    // Detail Controller
-    XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-    XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
+    if (XXTE_SYSTEM_8) {
+        // Detail Controller
+        XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+        XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
+        
+        // Split Controller
+        XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
+        splitViewController.viewControllers = @[masterViewController, detailNavigationController];
+        
+        UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        mainWindow.tintColor = XXTE_COLOR;
+        mainWindow.backgroundColor = [UIColor whiteColor];
+        mainWindow.rootViewController = splitViewController;
+        [mainWindow makeKeyAndVisible];
+        
+        self.window = mainWindow;
+    } else {
+        UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        mainWindow.tintColor = XXTE_COLOR;
+        mainWindow.backgroundColor = [UIColor whiteColor];
+        mainWindow.rootViewController = masterViewController;
+        [mainWindow makeKeyAndVisible];
+        
+        self.window = mainWindow;
+    }
     
-    // Split Controller
-    XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
-    splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-    //    splitViewController.viewControllers = @[masterViewController];
-    
-    UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    mainWindow.tintColor = XXTE_COLOR;
-    mainWindow.backgroundColor = [UIColor whiteColor];
-    mainWindow.rootViewController = splitViewController;
-    [mainWindow makeKeyAndVisible];
-    
-    self.window = mainWindow;
     return YES;
 }
 

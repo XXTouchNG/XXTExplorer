@@ -13,7 +13,7 @@
 #import "XXTECommonWebViewController.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEMailComposeViewController.h"
-#import "XXTESplitViewController.h"
+#import "XXTEMasterViewController.h"
 #import "XXTEDispatchDefines.h"
 #import "XXTESplitViewController.h"
 
@@ -66,7 +66,12 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     self.title = NSLocalizedString(@"About", nil);
     
     self.tableView.delegate = self;
@@ -172,8 +177,12 @@ typedef enum : NSUInteger {
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;
             if (XXTE_COLLAPSED) {
-                XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-                [self showDetailViewController:navigationController sender:self];
+                XXTE_START_IGNORE_PARTIAL
+                if (XXTE_SYSTEM_8) {
+                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                    [self showDetailViewController:navigationController sender:self];
+                }
+                XXTE_END_IGNORE_PARTIAL
             } else {
                 [self.navigationController pushViewController:webController animated:YES];
             }
@@ -207,8 +216,8 @@ typedef enum : NSUInteger {
         }
         else if (indexPath.section == kXXTEMoreAboutSectionIndexTool) {
             if (indexPath.row == 0) {
-                XXTESplitViewController *splitViewController1 = (XXTESplitViewController *) self.splitViewController;
-                [splitViewController1 checkUpdate];
+                XXTEMasterViewController *tabbarController = (XXTEMasterViewController *) self.tabBarController;
+                [tabbarController checkUpdate];
             }
             else if (indexPath.row == 1) {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Reset Confirm", nil) message:NSLocalizedString(@"All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked.", nil) style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Reset", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {

@@ -19,7 +19,10 @@
 #define XXTE_SYSTEM_9 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0)
 #define XXTE_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
 #define XXTE_PAD ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone)
-#define XXTE_COLLAPSED (self.splitViewController && self.splitViewController.collapsed != YES)
+#define XXTE_COLLAPSED \
+XXTE_START_IGNORE_PARTIAL \
+(XXTE_SYSTEM_8 && self.splitViewController && self.splitViewController.collapsed != YES) \
+XXTE_END_IGNORE_PARTIAL
 
 #define XXTE_COLOR ([UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f]) // rgb(52, 152, 219)
 #define XXTE_COLOR_DANGER ([UIColor colorWithRed:231.f/255.f green:76.f/255.f blue:60.f/255.f alpha:1.f]) // rgb(231, 76, 60)

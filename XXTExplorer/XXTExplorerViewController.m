@@ -418,11 +418,15 @@
                             XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryAttributes];
                             openWithController.delegate = self;
                             XXTExplorerEntryOpenWithNavigationController *navController = [[XXTExplorerEntryOpenWithNavigationController alloc] initWithRootViewController:openWithController];
-                            navController.modalPresentationStyle = UIModalPresentationPopover;
-                            UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
-                            popoverController.sourceView = tableView;
-                            popoverController.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
-                            popoverController.backgroundColor = [UIColor whiteColor];
+                            XXTE_START_IGNORE_PARTIAL
+                            if (XXTE_SYSTEM_8) {
+                                navController.modalPresentationStyle = UIModalPresentationPopover;
+                                UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
+                                popoverController.sourceView = tableView;
+                                popoverController.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
+                                popoverController.backgroundColor = [UIColor whiteColor];
+                            }
+                            XXTE_END_IGNORE_PARTIAL
                             [self.navigationController presentViewController:navController animated:YES completion:nil];
                         }
                     } else {

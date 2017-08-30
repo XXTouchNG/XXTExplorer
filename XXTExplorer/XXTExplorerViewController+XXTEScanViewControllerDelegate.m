@@ -32,8 +32,12 @@
             webController.title = NSLocalizedString(@"Loading...", nil);
             if (webController) {
                 if (XXTE_COLLAPSED) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
-                    [self.splitViewController showDetailViewController:navigationController sender:self];
+                    XXTE_START_IGNORE_PARTIAL
+                    if (XXTE_SYSTEM_8) {
+                        XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                        [self.splitViewController showDetailViewController:navigationController sender:self];
+                    }
+                    XXTE_END_IGNORE_PARTIAL
                 } else {
                     [self.navigationController pushViewController:webController animated:YES];
                 }

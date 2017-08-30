@@ -51,8 +51,17 @@
 
 - (void)setXui_path:(NSString *)xui_path {
     _xui_path = xui_path;
-    UIImage *image = [UIImage imageNamed:xui_path inBundle:self.bundle compatibleWithTraitCollection:nil];
-    self.xui_imageView.image = image;
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        UIImage *image = [UIImage imageNamed:xui_path inBundle:self.bundle compatibleWithTraitCollection:nil];
+        self.xui_imageView.image = image;
+    } else {
+        NSString *imagePath = [self.bundle pathForResource:xui_path ofType:@"png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+        self.xui_imageView.image = image;
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 @end
