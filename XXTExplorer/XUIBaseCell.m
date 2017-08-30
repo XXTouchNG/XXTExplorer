@@ -119,7 +119,14 @@
     _xui_icon = xui_icon;
     if ([self.class layoutNeedsImageView]) {
         if (xui_icon) {
-            self.imageView.image = [UIImage imageNamed:xui_icon inBundle:self.bundle compatibleWithTraitCollection:nil];
+            XXTE_START_IGNORE_PARTIAL
+            if (XXTE_SYSTEM_8) {
+                self.imageView.image = [UIImage imageNamed:xui_icon inBundle:self.bundle compatibleWithTraitCollection:nil];
+            } else {
+                NSString *imagePath = [self.bundle pathForResource:xui_icon ofType:@"png"];
+                self.imageView.image = [UIImage imageWithContentsOfFile:imagePath];
+            }
+            XXTE_END_IGNORE_PARTIAL
         } else {
             self.imageView.image = nil;
         }

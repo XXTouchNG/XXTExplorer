@@ -72,7 +72,7 @@
     __weak UIWindow *weakWindow = window;
     NSString *windowClassName = NSStringFromClass([window class]);
 
-    if (![windowClassName containsString:@"Alert"]) {
+    if ([windowClassName rangeOfString:@"Alert"].location == NSNotFound) {
         return;
     }
 

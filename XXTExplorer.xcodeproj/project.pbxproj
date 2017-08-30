@@ -250,6 +250,7 @@
 		D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */; };
 		D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */; };
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
+		D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63B58DA1F56684F00D26475 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A24F1F4D18AA005B9A59 /* Bugly.framework */; };
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
@@ -829,6 +830,7 @@
 		D62DD6651F3D740800A34850 /* XXTEEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextView.h; sourceTree = "<group>"; };
 		D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextView.m; sourceTree = "<group>"; };
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
+		D63B58DA1F56684F00D26475 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D643A24F1F4D18AA005B9A59 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D643A2531F4D18BE005B9A59 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1096,6 +1098,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */,
 				D6E560511F50359B00E0F997 /* CoreMedia.framework in Frameworks */,
 				D6E5604F1F50358B00E0F997 /* ImageIO.framework in Frameworks */,
 				D6E560471F50354400E0F997 /* MediaPlayer.framework in Frameworks */,
@@ -1421,6 +1424,7 @@
 			children = (
 				0F61E1651ED787A7003DCC78 /* XXTEMasterViewController.h */,
 				0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */,
+				0F2CD3501F3B5C9D00110772 /* Agents */,
 				0F50AEA01F307A1E0098211C /* Dictionary */,
 				0F61E1621ED7872F003DCC78 /* Explorer */,
 				0F61E1631ED7873F003DCC78 /* More */,
@@ -1612,7 +1616,6 @@
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F2E49E51F4CA10600BD11AA /* Common */,
-				0F2CD3501F3B5C9D00110772 /* Agents */,
 				0F61E1601ED78712003DCC78 /* Master */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
 				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
@@ -2021,6 +2024,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D63B58DA1F56684F00D26475 /* WebKit.framework */,
 				D6E560501F50359B00E0F997 /* CoreMedia.framework */,
 				D6E5604E1F50358B00E0F997 /* ImageIO.framework */,
 				D6E5604C1F50357500E0F997 /* CoreGraphics.framework */,
@@ -3262,7 +3266,7 @@
 				);
 				GCC_PREFIX_HEADER = "${SRCROOT}/XXTExplorer/XXTEPrefixHeader.pch";
 				INFOPLIST_FILE = XXTExplorer/Base.lproj/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3289,7 +3293,7 @@
 				);
 				GCC_PREFIX_HEADER = "${SRCROOT}/XXTExplorer/XXTEPrefixHeader.pch";
 				INFOPLIST_FILE = XXTExplorer/Base.lproj/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

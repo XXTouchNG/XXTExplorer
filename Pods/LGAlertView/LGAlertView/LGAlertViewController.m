@@ -52,8 +52,9 @@
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
+_Pragma("clang diagnostic pop")
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:coordinator.transitionDuration animations:^{
             [self setNeedsStatusBarAppearanceUpdate];

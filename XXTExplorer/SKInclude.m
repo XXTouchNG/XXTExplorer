@@ -52,7 +52,7 @@ typedef enum : NSUInteger {
         {
             _type = SKIncludeReferenceTypeToBase;
         }
-        else if ([reference containsString:@"#"])
+        else if ([reference rangeOfString:@"#"].location != NSNotFound)
         {
             NSRange hashRange = [reference rangeOfString:@"#"];
             if (hashRange.location != NSNotFound) {

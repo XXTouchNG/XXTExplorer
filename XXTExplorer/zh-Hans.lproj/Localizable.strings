@@ -1031,6 +1031,9 @@
 "Third Party Credits" = "第三方协议";
 
 /* No comment provided by engineer. */
+"This feature is not supported." = "该功能暂不支持当前系统.";
+
+/* No comment provided by engineer. */
 "This operation will kill all applications and reset icon caches, which may cause icons to disappear." = "该操作将强行关闭所有应用程序并重置图标缓存, 这可能造成图标丢失.";
 
 /* No comment provided by engineer. */

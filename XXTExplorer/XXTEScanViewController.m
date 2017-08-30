@@ -33,7 +33,6 @@
 @property(nonatomic, strong) UIImageView *maskView;
 @property(nonatomic, assign) CGRect cropRect;
 @property(nonatomic, strong) XXTEScanLineAnimation *scanLineAnimation;
-//@property(nonatomic, strong) UIVisualEffectView *visualEffectView;
 
 @property(nonatomic, assign) BOOL layerLoaded;
 
@@ -53,7 +52,11 @@
 //         self.visualEffectView.alpha = 0.f;
      }];
     
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Styles
@@ -340,16 +343,6 @@
     return _scanLineAnimation;
 }
 
-//- (UIVisualEffectView *)visualEffectView {
-//    if (!_visualEffectView) {
-//        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-//        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-//        effectView.alpha = 0.f;
-//        _visualEffectView = effectView;
-//    }
-//    return _visualEffectView;
-//}
-
 #pragma mark - UIControl Actions
 
 - (void)dismissScanViewController:(UIBarButtonItem *)sender {
@@ -360,22 +353,26 @@
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
-    if (![XXTEImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        return;
+    if (XXTE_SYSTEM_8) {
+        if (![XXTEImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            return;
+        }
+        [self pauseScan];
+        XXTEImagePickerController *imagePicker = [[XXTEImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.allowsEditing = NO;
+        imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
+        imagePicker.navigationBar.translucent = NO;
+        imagePicker.navigationBar.barTintColor = XXTE_COLOR;
+        imagePicker.navigationBar.tintColor = [UIColor whiteColor];
+        imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+        imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
+        imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
+    } else {
+        showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
     }
-    [self pauseScan];
-    XXTEImagePickerController *imagePicker = [[XXTEImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePicker.allowsEditing = NO;
-    imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
-    imagePicker.navigationBar.translucent = NO;
-    imagePicker.navigationBar.barTintColor = XXTE_COLOR;
-    imagePicker.navigationBar.tintColor = [UIColor whiteColor];
-    imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 #pragma mark - Permission Request
@@ -436,17 +433,23 @@
 #pragma mark - Scan & Recognize
 
 - (NSString *)scanImage:(UIImage *)image {
-    NSString *scannedResult = nil;
-    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
-    NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
-    for (NSUInteger index = 0; index < features.count; index++) {
-        CIQRCodeFeature *feature = features[index];
-        scannedResult = feature.messageString;
-        if (scannedResult) {
-            break;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        NSString *scannedResult = nil;
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
+        NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+        for (NSUInteger index = 0; index < features.count; index++) {
+            CIQRCodeFeature *feature = features[index];
+            scannedResult = feature.messageString;
+            if (scannedResult) {
+                break;
+            }
         }
+        return scannedResult;
+    } else {
+        return nil;
     }
-    return scannedResult;
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)handleOutput:(NSString *)output {

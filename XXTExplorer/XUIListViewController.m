@@ -143,9 +143,11 @@
     [self setupSubviews];
     [self makeConstraints];
 
+    XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setupSubviews {
@@ -379,9 +381,16 @@
 - (void)cellFactory:(XUICellFactory *)parser didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *entryName = [self.entryPath lastPathComponent];
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@", nil), entryName, error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self.navigationController presentViewController:alertController animated:YES completion:nil];
+        XXTE_START_IGNORE_PARTIAL
+        if (XXTE_SYSTEM_8) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@", nil), entryName, error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self.navigationController presentViewController:alertController animated:YES completion:nil];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@", nil), entryName, error.localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            [alertView show];
+        }
+        XXTE_END_IGNORE_PARTIAL
     });
 }
 

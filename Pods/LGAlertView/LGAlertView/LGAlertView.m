@@ -90,13 +90,13 @@ LGAlertViewType;
 
 @property (strong, nonatomic) LGAlertViewController *viewController;
 
-@property (strong, nonatomic) UIVisualEffectView *backgroundView;
+@property (strong, nonatomic) UIView *backgroundView;
 
 @property (strong, nonatomic) LGAlertViewShadowView *shadowView;
 @property (strong, nonatomic) LGAlertViewShadowView *shadowCancelView;
 
-@property (strong, nonatomic) UIVisualEffectView *blurView;
-@property (strong, nonatomic) UIVisualEffectView *blurCancelView;
+@property (strong, nonatomic) UIView *blurView;
+@property (strong, nonatomic) UIView *blurCancelView;
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UITableView  *tableView;
@@ -1066,10 +1066,19 @@ LGAlertViewType;
     self.view.userInteractionEnabled = YES;
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:self.coverBlurEffect];
-    self.backgroundView.alpha = 0.0;
-    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.backgroundView];
+_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
+    if ([UIVisualEffectView class]) {
+        self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:self.coverBlurEffect];
+        self.backgroundView.alpha = 0.0;
+        self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:self.backgroundView];
+    } else {
+        self.backgroundView = [[UIView alloc] init];
+        self.backgroundView.alpha = 0.0;
+        self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:self.backgroundView];
+    }
+_Pragma("clang diagnostic pop")
 
     // -----
 
@@ -2052,7 +2061,6 @@ LGAlertViewType;
         self.exists = YES;
 
         self.backgroundView.backgroundColor = self.coverColor;
-        self.backgroundView.effect = self.coverBlurEffect;
 
         self.shadowView = [LGAlertViewShadowView new];
         self.shadowView.clipsToBounds = YES;
@@ -2065,14 +2073,32 @@ LGAlertViewType;
         self.shadowView.shadowOffset = self.layerShadowOffset;
         [self.view addSubview:self.shadowView];
 
-        self.blurView = [[UIVisualEffectView alloc] initWithEffect:self.backgroundBlurEffect];
-        self.blurView.contentView.backgroundColor = self.backgroundColor;
-        self.blurView.clipsToBounds = YES;
-        self.blurView.layer.cornerRadius = self.layerCornerRadius;
-        self.blurView.layer.borderWidth = self.layerBorderWidth;
-        self.blurView.layer.borderColor = self.layerBorderColor.CGColor;
-        self.blurView.userInteractionEnabled = NO;
-        [self.view addSubview:self.blurView];
+_Pragma("clang diagnostic push")
+_Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
+        if ([UIVisualEffectView class]) {
+            UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:self.backgroundBlurEffect];
+            blurView.contentView.backgroundColor = self.backgroundColor;
+            blurView.clipsToBounds = YES;
+            blurView.layer.cornerRadius = self.layerCornerRadius;
+            blurView.layer.borderWidth = self.layerBorderWidth;
+            blurView.layer.borderColor = self.layerBorderColor.CGColor;
+            blurView.userInteractionEnabled = NO;
+            _blurView = blurView;
+            [self.view addSubview:self.blurView];
+            
+            ((UIVisualEffectView *)self.backgroundView).effect = self.coverBlurEffect;
+        } else {
+            UIView *blurView = [[UIView alloc] init];
+            blurView.backgroundColor = self.backgroundColor;
+            blurView.clipsToBounds = YES;
+            blurView.layer.cornerRadius = self.layerCornerRadius;
+            blurView.layer.borderWidth = self.layerBorderWidth;
+            blurView.layer.borderColor = self.layerBorderColor.CGColor;
+            blurView.userInteractionEnabled = NO;
+            _blurView = blurView;
+            [self.view addSubview:self.blurView];
+        }
+_Pragma("clang diagnostic pop")
 
         self.scrollView = [UIScrollView new];
         self.scrollView.backgroundColor = UIColor.clearColor;
@@ -2319,14 +2345,29 @@ LGAlertViewType;
             self.shadowCancelView.shadowOffset = self.layerShadowOffset;
             [self.view insertSubview:self.shadowCancelView belowSubview:self.scrollView];
 
-            self.blurCancelView = [[UIVisualEffectView alloc] initWithEffect:self.backgroundBlurEffect];
-            self.blurCancelView.contentView.backgroundColor = self.backgroundColor;
-            self.blurCancelView.clipsToBounds = YES;
-            self.blurCancelView.layer.cornerRadius = self.layerCornerRadius;
-            self.blurCancelView.layer.borderWidth = self.layerBorderWidth;
-            self.blurCancelView.layer.borderColor = self.layerBorderColor.CGColor;
-            self.blurCancelView.userInteractionEnabled = NO;
-            [self.view insertSubview:self.blurCancelView aboveSubview:self.shadowCancelView];
+_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
+            if ([UIVisualEffectView class]) {
+                UIVisualEffectView *blurCancelView = [[UIVisualEffectView alloc] initWithEffect:self.backgroundBlurEffect];
+                blurCancelView.contentView.backgroundColor = self.backgroundColor;
+                blurCancelView.clipsToBounds = YES;
+                blurCancelView.layer.cornerRadius = self.layerCornerRadius;
+                blurCancelView.layer.borderWidth = self.layerBorderWidth;
+                blurCancelView.layer.borderColor = self.layerBorderColor.CGColor;
+                blurCancelView.userInteractionEnabled = NO;
+                _blurCancelView = blurCancelView;
+                [self.view insertSubview:self.blurCancelView aboveSubview:self.shadowCancelView];
+            } else {
+                UIView *blurCancelView = [[UIView alloc] init];
+                blurCancelView.backgroundColor = self.backgroundColor;
+                blurCancelView.clipsToBounds = YES;
+                blurCancelView.layer.cornerRadius = self.layerCornerRadius;
+                blurCancelView.layer.borderWidth = self.layerBorderWidth;
+                blurCancelView.layer.borderColor = self.layerBorderColor.CGColor;
+                blurCancelView.userInteractionEnabled = NO;
+                _blurCancelView = blurCancelView;
+                [self.view insertSubview:self.blurCancelView aboveSubview:self.shadowCancelView];
+            }
+_Pragma("clang diagnostic pop")
 
             [self cancelButtonInit];
             self.cancelButton.layer.masksToBounds = YES;

@@ -86,7 +86,12 @@ static void * activatorHandler = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     self.title = NSLocalizedString(@"Activation Config", nil);
 
     self.tableView.delegate = self;

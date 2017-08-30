@@ -90,10 +90,14 @@
             XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
             scanViewController.delegate = self;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
-            navController.modalPresentationStyle = UIModalPresentationPopover;
-            UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
-            popoverController.barButtonItem = buttonItem;
-            popoverController.backgroundColor = [UIColor whiteColor];
+            XXTE_START_IGNORE_PARTIAL
+            if (XXTE_SYSTEM_8) {
+                navController.modalPresentationStyle = UIModalPresentationPopover;
+                UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
+                popoverController.barButtonItem = buttonItem;
+                popoverController.backgroundColor = [UIColor whiteColor];
+            }
+            XXTE_END_IGNORE_PARTIAL
             [self.navigationController presentViewController:navController animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
             XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
@@ -209,12 +213,18 @@
                 }
             }
             if (shareUrls.count != 0) {
-                UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
-                activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-                UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-                popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-                popoverPresentationController.barButtonItem = buttonItem;
-                [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+                XXTE_START_IGNORE_PARTIAL
+                if (XXTE_SYSTEM_8) {
+                    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
+                    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+                    UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+                    popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+                    popoverPresentationController.barButtonItem = buttonItem;
+                    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+                } else {
+                    showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+                }
+                XXTE_END_IGNORE_PARTIAL
             } else {
                 showUserMessage(self, NSLocalizedString(@"You cannot share directory.", nil));
             }
