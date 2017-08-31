@@ -370,9 +370,11 @@ typedef enum : NSUInteger {
     [self reloadContent];
     [self reloadAttributesOnScreen];
     
+    XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)viewWillAppear:(BOOL)animated {

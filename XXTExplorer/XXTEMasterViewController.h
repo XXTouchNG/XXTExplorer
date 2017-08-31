@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXTEAPTHelper, XXTEUpdateAgent;
+
 @interface XXTEMasterViewController : UITabBarController
+
+- (void)checkUpdate;
 
 @end

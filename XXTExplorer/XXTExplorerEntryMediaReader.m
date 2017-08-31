@@ -104,9 +104,13 @@
                 }
                 mutableMetaDictionary[@"VideoNominalFrameRate"] = @(frameRate);
                 mutableMetaDictionary[@"VideoEstimatedDataRate"] = @(bps);
-                NSTimeInterval duration = CMTimeGetSeconds(videoTrack.timeRange.duration);
-                NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
-                mutableMetaDictionary[@"VideoDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
+                XXTE_START_IGNORE_PARTIAL
+                if (XXTE_SYSTEM_8) {
+                    NSTimeInterval duration = CMTimeGetSeconds(videoTrack.timeRange.duration);
+                    NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
+                    mutableMetaDictionary[@"VideoDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
+                }
+                XXTE_END_IGNORE_PARTIAL
             }
             
             AVAssetTrack *audioTrack = nil;
@@ -122,9 +126,13 @@
                 if (mediaType) {
                     mutableMetaDictionary[@"AudioMediaType"] = mediaType;
                 }
-                NSTimeInterval duration = CMTimeGetSeconds(audioTrack.timeRange.duration);
-                NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
-                mutableMetaDictionary[@"AudioDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
+                XXTE_START_IGNORE_PARTIAL
+                if (XXTE_SYSTEM_8) {
+                    NSTimeInterval duration = CMTimeGetSeconds(audioTrack.timeRange.duration);
+                    NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
+                    mutableMetaDictionary[@"AudioDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
+                }
+                XXTE_END_IGNORE_PARTIAL
             }
         }
         

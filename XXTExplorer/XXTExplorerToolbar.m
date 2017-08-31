@@ -53,10 +53,12 @@
     
     NSMutableDictionary <NSString *, UIBarButtonItem *> *buttons = [[NSMutableDictionary alloc] initWithCapacity:buttonTypes.count];
     for (NSString *buttonType in buttonTypes) {
-        UIBarButtonItem *newButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, XXTExplorerToolbarButtonStatusNormal]]
-                                                                          style:UIBarButtonItemStylePlain
-                                                                         target:self
-                                                                         action:@selector(toolbarButtonTapped:)];
+        UIImage *itemImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, XXTExplorerToolbarButtonStatusNormal]];
+        itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 26.0, 26.0)];
+        [newButton addTarget:self action:@selector(toolbarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [newButton setImage:itemImage forState:UIControlStateNormal];
+        UIBarButtonItem *newButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newButton];
         [buttons setObject:newButtonItem
                     forKey:buttonType];
     }
@@ -129,22 +131,33 @@
 }
 
 - (void)updateButtonType:(NSString *)buttonType status:(NSString *)buttonStatus enabled:(BOOL)enabled {
-    UIBarButtonItem *button = self.buttons[buttonType];
+    UIBarButtonItem *buttonItem = self.buttons[buttonType];
     if (buttonStatus) {
         UIImage *statusImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, buttonStatus]];
-        if (statusImage) [button setImage:statusImage];
+        statusImage = [statusImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        if (statusImage) {
+            UIButton *button = [buttonItem customView];
+            [button setImage:statusImage forState:UIControlStateNormal];
+        }
     }
-    if (button.enabled != enabled) {
-        [button setEnabled:enabled];
+    if (buttonItem.enabled != enabled) {
+        [buttonItem setEnabled:enabled];
     }
 }
 
 #pragma mark - Button Tapped
 
-- (void)toolbarButtonTapped:(UIBarButtonItem *)buttonItem {
+- (void)toolbarButtonTapped:(UIButton *)button {
     if (_tapDelegate && [_tapDelegate respondsToSelector:@selector(toolbar:buttonTypeTapped:buttonItem:)]) {
-        NSString *buttonType = [[self.buttons allKeysForObject:buttonItem] firstObject];
-        [_tapDelegate toolbar:self buttonTypeTapped:buttonType buttonItem:buttonItem];
+        NSString *buttonType = nil;
+        for (NSString *buttonKey in self.buttons) {
+            UIBarButtonItem *buttonItem = self.buttons[buttonKey];
+            if (buttonItem.customView == button) {
+                buttonType = buttonKey;
+                break;
+            }
+        }
+        [_tapDelegate toolbar:self buttonTypeTapped:buttonType buttonItem:self.buttons[buttonType]];
     }
 }
 

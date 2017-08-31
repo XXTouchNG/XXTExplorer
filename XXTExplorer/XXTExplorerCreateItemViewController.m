@@ -98,7 +98,12 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     self.title = NSLocalizedString(@"Create Item", nil);
     
     self.tableView.delegate = self;
@@ -312,7 +317,7 @@ typedef enum : NSUInteger {
         return;
     }
     NSString *itemName = self.nameField.text;
-    if (itemName.length == 0 || [itemName containsString:@"/"] || [itemName containsString:@"\0"]) {
+    if (itemName.length == 0 || [itemName rangeOfString:@"/"].location != NSNotFound || [itemName rangeOfString:@"\0"].location != NSNotFound) {
         [self.itemNameShaker shake];
         return;
     }
@@ -393,7 +398,7 @@ typedef enum : NSUInteger {
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.nameField) {
-        if ([string containsString:@"/"] || [string containsString:@"\0"]) {
+        if ([string rangeOfString:@"/"].location != NSNotFound || [string rangeOfString:@"\0"].location != NSNotFound) {
             [self.itemNameShaker shake];
             return NO;
         }

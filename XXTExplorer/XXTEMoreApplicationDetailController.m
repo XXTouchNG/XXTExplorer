@@ -67,7 +67,12 @@ typedef enum : NSUInteger {
         applicationWorkspace;
     });
     
-    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     self.title = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
