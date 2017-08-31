@@ -157,7 +157,7 @@
     [mutableString insertString:string atIndex:index];
     self.string = mutableString ? [mutableString copy] : @"";
     for (NSUInteger level = 0; level < self.levels.count; level++) {
-        for (NSUInteger scope = 0; self.levels[level].count; scope++) {
+        for (NSUInteger scope = 0; scope < self.levels[level].count; scope++) {
             self.levels[level][scope].range = NSRangeInsertIndexesFromRange(self.levels[level][scope].range, NSMakeRange(index, length));
         }
     }

@@ -155,7 +155,6 @@
         NSUInteger endOfCurrentScope = NSMaxRange(scopeAtIndex.range);
         return NSUnionRange(linesRange, NSMakeRange(range.location, endOfCurrentScope - range.location));
     }
-    return linesRange;
 }
 
 @end

@@ -41,7 +41,7 @@
 #import "XXTPickerSnippet.h"
 #import "XXTPickerFactory.h"
 
-static NSUInteger const kXXTEEditorCachedRangeLength = 3000;
+static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 typedef enum : NSUInteger {
     XXTEEditorControllerReloadTypeNone = 0,
@@ -174,7 +174,10 @@ typedef enum : NSUInteger {
         
     self.hidesBottomBarWhenPushed = YES;
     _renderedSet = [[NSMutableIndexSet alloc] init];
-    _renderQueue = [NSOperationQueue mainQueue];
+    
+    NSOperationQueue *renderQueue = [[NSOperationQueue alloc] init];
+    renderQueue.maxConcurrentOperationCount = 1;
+    _renderQueue = renderQueue;
     
     [self reloadDefaults];
     [self reloadTheme];
@@ -628,10 +631,10 @@ typedef enum : NSUInteger {
     NSIndexSet *renderedSet = self.renderedSet;
     if ([renderedSet containsIndexesInRange:range]) return;
     
-    [self reloadAttributesInRange:range];
+    [self reloadAttributesInRange:range isInsertion:YES];
 }
 
-- (void)reloadAttributesInRange:(NSRange)range {
+- (void)reloadAttributesInRange:(NSRange)range isInsertion:(BOOL)insertion {
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (!isHighlightEnabled) return;
     if (!self.helper.language) return;
@@ -639,17 +642,21 @@ typedef enum : NSUInteger {
     // Invalidate FIRST
     [self invalidateSyntaxCachesInRange:range];
     
-    NSString *wholeString = self.textView.text;
+    NSString *string = self.textView.text;
     
     SKAttributedParsingOperation *operation = nil;
     if (self.lastOperation == nil) {
-        operation = [[SKAttributedParsingOperation alloc] initWithString:wholeString language:self.helper.language theme:self.helper.theme callback:^(NSArray<NSValue *> *rangesArray, NSArray<SKAttributes> *attributesArray, SKAttributedParsingOperation *operation) {
+        @weakify(self);
+        operation = [[SKAttributedParsingOperation alloc] initWithString:string language:self.helper.language theme:self.helper.theme callback:^(NSArray<NSValue *> *rangesArray, NSArray<SKAttributes> *attributesArray, SKAttributedParsingOperation *operation) {
+            @strongify(self);
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxesWithRanges:rangesArray andAttributes:attributesArray InRange:range];
             });
         }];
     } else {
-        operation = [[SKAttributedParsingOperation alloc] initWithString:wholeString previousOperation:self.lastOperation changeIsInsertion:YES changedRange:range newCallback:^(NSArray<NSValue *> *rangesArray, NSArray<SKAttributes> *attributesArray, SKAttributedParsingOperation *operation) {
+        @weakify(self);
+        operation = [[SKAttributedParsingOperation alloc] initWithString:string previousOperation:self.lastOperation changeIsInsertion:insertion changedRange:range newCallback:^(NSArray<NSValue *> *rangesArray, NSArray<SKAttributes> *attributesArray, SKAttributedParsingOperation *operation) {
+            @strongify(self);
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxesWithRanges:rangesArray andAttributes:attributesArray InRange:range];
             });
@@ -683,6 +690,7 @@ typedef enum : NSUInteger {
     
     // Render
     [textView.vTextStorage beginEditing];
+    // Reset
     [textView.vTextStorage setAttributes:self.theme.defaultAttributes range:range];
     NSUInteger renderLength = renderIndexes.count;
     for (NSUInteger idx = 0; idx < renderLength; idx++) {

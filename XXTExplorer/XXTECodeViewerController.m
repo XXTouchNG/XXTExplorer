@@ -43,6 +43,7 @@
               @"java", // Java
               @"conf", // Nginx
               @"py", // Python
+              @"lua", // Lua
               @"txt", @"log", // Plain Text
               @"strings", // Strings
               ];
