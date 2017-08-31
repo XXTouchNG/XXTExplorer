@@ -67,6 +67,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
     
     if (XXTE_SYSTEM_8) {
+        
         // Detail Controller
         XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
         XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
@@ -82,7 +83,10 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         [mainWindow makeKeyAndVisible];
         
         self.window = mainWindow;
+        
     } else {
+        
+        // on iOS 7, UISplitViewController is unavailable.
         UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         mainWindow.tintColor = XXTE_COLOR;
         mainWindow.backgroundColor = [UIColor whiteColor];
@@ -90,6 +94,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         [mainWindow makeKeyAndVisible];
         
         self.window = mainWindow;
+        
     }
     
     return YES;
@@ -149,7 +154,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
         UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ XXTEShortcutAction: @"launch" }];
         UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
-        UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ XXTEShortcutAction : @"scan" }];
+        UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QRCode", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ XXTEShortcutAction : @"scan" }];
         [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
     }
     XXTE_END_IGNORE_PARTIAL

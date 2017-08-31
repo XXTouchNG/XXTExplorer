@@ -810,7 +810,7 @@
 "pt" = "pt";
 
 /* No comment provided by engineer. */
-"QR Scan" = "扫描二维码";
+"QRCode" = "二维码";
 
 /* No comment provided by engineer. */
 "Read Only" = "只读模式";
