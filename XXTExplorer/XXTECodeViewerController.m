@@ -89,7 +89,11 @@
     }
     [htmlTemplate replaceOccurrencesOfString:@"{{ title }}" withString:entryName options:0 range:NSMakeRange(0, htmlTemplate.length)];
     [htmlTemplate replaceOccurrencesOfString:@"{{ code }}" withString:escapedString options:0 range:NSMakeRange(0, htmlTemplate.length)];
-    [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
+    if (self.webView) {
+        [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
+    } else {
+        [self.wkWebView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
+    }
 
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {

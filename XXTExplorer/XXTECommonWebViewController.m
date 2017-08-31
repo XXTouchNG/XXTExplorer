@@ -42,7 +42,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.webView.opaque = NO;
+    if (self.webView) {
+        self.webView.opaque = NO;
+    } else {
+        self.wkWebView.opaque = NO;
+    }
 
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
