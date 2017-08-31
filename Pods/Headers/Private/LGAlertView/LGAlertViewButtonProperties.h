@@ -1,1 +1,0 @@
-../../../LGAlertView/LGAlertView/LGAlertViewButtonProperties.h

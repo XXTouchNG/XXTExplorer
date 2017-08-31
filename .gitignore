@@ -1,5 +1,6 @@
 .idea/
 Releases/
+Pods/
 
 ### macOS template
 *.DS_Store
