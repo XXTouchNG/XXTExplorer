@@ -58,6 +58,7 @@ typedef enum : NSUInteger {
 //@property (nonatomic, assign) BOOL isRendering;
 @property (atomic, strong) NSMutableIndexSet *renderedSet;
 @property (nonatomic, strong, readonly) NSOperationQueue *renderQueue;
+@property (nonatomic, strong) SKAttributedParsingOperation *lastOperation;
 
 @property (nonatomic, assign) XXTEEditorControllerReloadType reloadType;
 @property (nonatomic, assign) BOOL shouldSaveDocument;
@@ -255,11 +256,11 @@ typedef enum : NSUInteger {
     
     if (helper.language)
     {
-        SKAttributedParser *parser = [helper attributedParser];
-        _parser = parser;
+        
     }
     
     _helper = helper;
+    _lastOperation = nil;
 }
 
 #pragma mark - AFTER -viewDidLoad
@@ -404,7 +405,7 @@ typedef enum : NSUInteger {
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     if (parent == nil) {
-        self.parser.aborted = YES;
+        [self.renderQueue cancelAllOperations];
     }
     [super didMoveToParentViewController:parent];
 }
@@ -631,29 +632,32 @@ typedef enum : NSUInteger {
 - (void)reloadAttributesInRange:(NSRange)range {
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (!isHighlightEnabled) return;
+    if (!self.helper.language) return;
     
     // Invalidate FIRST
     [self invalidateSyntaxCachesInRange:range];
     
     NSString *wholeString = self.textView.text;
     
-    static SKAttributedParsingOperation *lastOperation = nil;
     SKAttributedParsingOperation *operation = nil;
-    if (lastOperation == nil) {
+    if (self.lastOperation == nil) {
         operation = [[SKAttributedParsingOperation alloc] initWithString:wholeString language:self.helper.language theme:self.helper.theme callback:^(NSArray<NSValue *> *rangesArray, NSArray<SKAttributes> *attributesArray, SKAttributedParsingOperation *operation) {
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxesWithRanges:rangesArray andAttributes:attributesArray InRange:range];
             });
         }];
     } else {
-        operation = [[SKAttributedParsingOperation alloc] initWithString:wholeString previousOperation:lastOperation changeIsInsertion:YES changedRange:range newCallback:nil];
+        operation = [[SKAttributedParsingOperation alloc] initWithString:wholeString previousOperation:self.lastOperation changeIsInsertion:YES changedRange:range newCallback:^(NSArray<NSValue *> *rangesArray, NSArray<SKAttributes> *attributesArray, SKAttributedParsingOperation *operation) {
+            dispatch_async_on_main_queue(^{
+                [self renderSyntaxesWithRanges:rangesArray andAttributes:attributesArray InRange:range];
+            });
+        }];
     }
-    lastOperation = operation;
+    self.lastOperation = operation;
     [self.renderQueue addOperation:operation];
 }
 
 - (void)renderSyntaxesWithRanges:(NSArray *)rangesArray andAttributes:(NSArray *)attributesArray InRange:(NSRange)range {
-    if (self.parser.aborted) return;
     
     NSMutableIndexSet *renderedSet = self.renderedSet;
     XXTEEditorTextView *textView = self.textView;
@@ -676,18 +680,16 @@ typedef enum : NSUInteger {
     }
     
     // Render
-    if (!self.parser.aborted)
-    {
-        [textView.vTextStorage beginEditing];
-        NSUInteger renderLength = renderIndexes.count;
-        for (NSUInteger idx = 0; idx < renderLength; idx++) {
-            NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
-            NSValue *rangeValue = rangesArray[index];
-            NSRange preparedRange = [rangeValue rangeValue];
-            [textView.vTextStorage addAttributes:attributesArray[index] range:preparedRange];
-        }
-        [textView.vTextStorage endEditing];
+    [textView.vTextStorage beginEditing];
+    [textView.vTextStorage setAttributes:self.theme.defaultAttributes range:range];
+    NSUInteger renderLength = renderIndexes.count;
+    for (NSUInteger idx = 0; idx < renderLength; idx++) {
+        NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
+        NSValue *rangeValue = rangesArray[index];
+        NSRange preparedRange = [rangeValue rangeValue];
+        [textView.vTextStorage addAttributes:attributesArray[index] range:preparedRange];
     }
+    [textView.vTextStorage endEditing];
 }
 
 - (void)invalidateSyntaxCachesInRange:(NSRange)range {

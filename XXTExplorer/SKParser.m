@@ -76,7 +76,7 @@
 ///                     identifier of the language.
 - (void)parseInRange:(NSRange)range matchCallback:(SKParserCallback)callback {
     if (!self.toParse) return;
-    NSRange bounds = range;
+    NSRange bounds = (range.location == 0 && range.length == 0) ? NSMakeRange(0, self.toParse.string.length) : range;
     assert((self.toParse.string).length >= NSMaxRange(bounds));
     SKScope *endScope = [self.toParse topMostScopeAtIndex:bounds.location];
     NSUInteger startIndex = bounds.location;
