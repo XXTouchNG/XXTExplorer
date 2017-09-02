@@ -182,8 +182,6 @@ typedef enum : NSUInteger {
     [self reloadDefaults];
     [self reloadTheme];
     [self reloadParser];
-    [self registerStateNotifications];
-    [self registerKeyboardNotifications];
 }
 
 - (void)reloadAll {
@@ -381,6 +379,8 @@ typedef enum : NSUInteger {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self registerStateNotifications];
+    [self registerKeyboardNotifications];
     [self renderNavigationBarTheme:NO];
     [super viewWillAppear:animated];
 }
@@ -399,6 +399,12 @@ typedef enum : NSUInteger {
         self.shouldFocusTextView = NO;
         [self.textView becomeFirstResponder];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self dismissKeyboardNotifications];
+    [self dismissStateNotifications];
+    [super viewWillDisappear:animated];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -746,8 +752,6 @@ typedef enum : NSUInteger {
 }
 
 - (void)dealloc {
-    [self dismissKeyboardNotifications];
-    [self dismissStateNotifications];
 #ifdef DEBUG
     NSLog(@"- [XXTEEditorController dealloc]");
 #endif

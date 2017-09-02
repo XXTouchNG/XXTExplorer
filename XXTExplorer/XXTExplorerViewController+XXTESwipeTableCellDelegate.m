@@ -45,6 +45,7 @@
 }
 
 - (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
+    [cell hideSwipeAnimated:YES];
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];

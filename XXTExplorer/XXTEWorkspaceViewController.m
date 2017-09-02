@@ -27,7 +27,7 @@
 }
 
 - (void)setup {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -56,6 +56,16 @@
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
     XXTE_END_IGNORE_PARTIAL
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
 }
 
 - (void)makeViewConstraints {
@@ -133,7 +143,6 @@
 #pragma mark - Memory
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [XXTEWorkspaceViewController dealloc]");
 #endif
