@@ -57,11 +57,15 @@
 - (void)performNextStep:(UIViewController *)viewController {
 
     if ([[viewController class] respondsToSelector:@selector(pickerKeyword)]) {
-        id pickerResult = [[viewController performSelector:@selector(pickerResult)] mutableCopy];
+        id pickerResult = [viewController performSelector:@selector(pickerResult)];
         if (!pickerResult) {
             return;
         }
-        XXTPickerSnippet *pickerTask = [[viewController performSelector:@selector(pickerTask)] mutableCopy];
+        id pickerTaskObj = [viewController performSelector:@selector(pickerTask)];
+        if (!pickerTaskObj) {
+            return;
+        }
+        XXTPickerSnippet *pickerTask = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:pickerTaskObj]];
         [pickerTask addResult:pickerResult];
         id nextPicker = [[pickerTask nextStepClass] new];
         if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerTask:)])
@@ -86,11 +90,15 @@
 - (void)performFinished:(UIViewController *)viewController {
     
     if ([viewController respondsToSelector:@selector(pickerResult)] && [viewController respondsToSelector:@selector(pickerTask)]) {
-        id pickerResult = [[viewController performSelector:@selector(pickerResult)] mutableCopy];
+        id pickerResult = [viewController performSelector:@selector(pickerResult)];
         if (!pickerResult) {
             return;
         }
-        XXTPickerSnippet *pickerTask = [[viewController performSelector:@selector(pickerTask)] mutableCopy];
+        id pickerTaskObj = [viewController performSelector:@selector(pickerTask)];
+        if (!pickerTaskObj) {
+            return;
+        }
+        XXTPickerSnippet *pickerTask = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:pickerTaskObj]];
         [pickerTask addResult:pickerResult];
         BOOL shouldFinish = YES;
         if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldFinished:)]) {

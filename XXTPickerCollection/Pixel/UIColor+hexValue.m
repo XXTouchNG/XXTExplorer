@@ -35,22 +35,19 @@
     return hex;
 }
 
-- (NSNumber *)numberValue {
-    CGColorRef colorRef = [self CGColor];
-    size_t componentsCount = CGColorGetNumberOfComponents(colorRef);
-    NSUInteger rgba = 0;
-    
-    if (componentsCount == 4) {
-        const CGFloat *components = CGColorGetComponents(colorRef);
-        rgba = 0;
-        for (int i = 0; i < 4; i++) {
-            rgba <<= 8;
-            rgba += (int) (components[i] * 255);
-        }
-        return [NSNumber numberWithUnsignedInteger:rgba];
+- (NSNumber *)RGBANumberValue {
+    CGFloat red, green, blue, alpha;
+    if (![self getRed:&red green:&green blue:&blue alpha:&alpha])
+    {
+        [self getWhite:&red alpha:&alpha];
+        green = red;
+        blue = red;
     }
-    else
-        return @(0);
+    red = roundf(red * 255.f);
+    green = roundf(green * 255.f);
+    blue = roundf(blue * 255.f);
+    alpha = roundf(alpha * 255.f);
+    return @(((uint)red << 24) | ((uint)green << 16) | ((uint)blue << 8) | ((uint)alpha));
 }
 
 @end
