@@ -7,7 +7,7 @@
 
 @interface UIImage (XXTCrop)
 
-- (UIImage *)rotatedImageWithtransform:(CGAffineTransform)rotation
+- (UIImage *)rotatedImageWithTransform:(CGAffineTransform)rotation
                          croppedToRect:(CGRect)rect;
 
 @end

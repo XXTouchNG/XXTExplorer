@@ -409,7 +409,7 @@ static const CGFloat MarginLeft = 37.f;
 #pragma mark - Crop Image
 
 - (UIImage *)croppedImage {
-    return [self.image rotatedImageWithtransform:self.rotation croppedToRect:self.zoomedCropRect];
+    return [self.image rotatedImageWithTransform:self.rotation croppedToRect:self.zoomedCropRect];
 }
 
 - (CGRect)cappedCropRectInImageRectWithCropRectView:(XXTPixelCropRectView *)cropRectView {

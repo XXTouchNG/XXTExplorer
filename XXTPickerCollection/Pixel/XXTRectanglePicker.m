@@ -518,7 +518,7 @@
             selectedColor = [UIColor blackColor];
         }
         NSString *selectedHex = [selectedColor hexStringWithAlpha:NO];
-        _pickerResult = [selectedColor RGBANumberValue];
+        _pickerResult = [selectedColor ARGBNumberValue];
         NSString *previewFormat = @"(r%d, g%d, b%d) ";
         CGFloat r = 0, g = 0, b = 0, a = 0;
         [selectedColor getRed:&r green:&g blue:&b alpha:&a];
@@ -551,7 +551,7 @@
             UIColor *selectedColor = model.color;
             NSString *selectedHex = [selectedColor hexStringWithAlpha:NO];
             if (type == kXXTPixelCropViewTypePositionColor) {
-                _pickerResult = @[ @((int) selectedPoint.x), @((int) selectedPoint.y), [selectedColor RGBANumberValue] ];
+                _pickerResult = @[ @((int) selectedPoint.x), @((int) selectedPoint.y), [selectedColor ARGBNumberValue] ];
             }
             NSString *previewFormat = @"(x%d, y%d) ";
             NSString *previewString = [NSString stringWithFormat:previewFormat, (int) selectedPoint.x, (int) selectedPoint.y];
@@ -577,7 +577,7 @@
                 UIColor *c = [poscolor.color copy];
                 if (!c) c = [UIColor blackColor];
                 CGPoint p = poscolor.position;
-                [mulArray addObject: @[ @((int) p.x), @((int) p.y), [c RGBANumberValue] ]];
+                [mulArray addObject: @[ @((int) p.x), @((int) p.y), [c ARGBNumberValue] ]];
             }
             _pickerResult = [mulArray copy];
         } else {
