@@ -53,20 +53,22 @@
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongTapForPreview:)];
     longTap.minimumPressDuration = 0.3;
     [self.view addGestureRecognizer:longTap];
+}
 
+- (void)viewWillAppear:(BOOL)animated {
     // add observer for refresh asset data
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [super viewDidDisappear:animated];
     if (_nResultType == XXT_PICKER_RESULT_UIIMAGE)
         [XXT_ASSET_HELPER clearData];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)handleEnterForeground:(NSNotification *)notification {
