@@ -16,6 +16,7 @@
 #import "XXTEMoreSwitchNoIconCell.h"
 #import "XXTEEditorFontSizeCell.h"
 #import "XXTEEditorTabWidthCell.h"
+#import "XXTEEditorWrapColumnCell.h"
 
 #import "XXTEEditorDefaults.h"
 #import "XXTEAppDefines.h"
@@ -91,8 +92,8 @@
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Search", nil) ];
-    staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Word Wrap", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Search", nil) ];
+    staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"" ];
     
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
     double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
@@ -211,62 +212,124 @@
     }];
     
     XXTEMoreSwitchNoIconCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell9.titleLabel.text = NSLocalizedString(@"Read Only", nil);
-    cell9.optionSwitch.on = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
+    cell9.titleLabel.text = NSLocalizedString(@"Indent Wrapped Lines", nil);
+    cell9.optionSwitch.on = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, NO);
     [cell9.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorIndentWrappedLines, optionSwitch.on);
+        [self.editor setNeedsRefresh];
+    }];
+    
+    XXTEMoreSwitchNoIconCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell10.titleLabel.text = NSLocalizedString(@"Auto Word Wrap", nil);
+    cell10.optionSwitch.on = XXTEDefaultsBool(XXTEEditorAutoWordWrap, YES);
+    [cell10.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorAutoWordWrap, optionSwitch.on);
+        [self.editor setNeedsRefresh];
+    }];
+    
+    XXTEEditorWrapColumnCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorWrapColumnCell class]) owner:nil options:nil] lastObject];
+    cell11.titleLabel.text = NSLocalizedString(@"Word Column", nil);
+    XXTEEditorWordColumnValue columnValue = XXTEDefaultsEnum(XXTEEditorWrapColumn, XXTEEditorWordColumnValue_160);
+    NSUInteger columnIndex = 2;
+    switch (columnValue) {
+        case XXTEEditorWordColumnValue_40:
+            columnIndex = 0;
+            break;
+        case XXTEEditorWordColumnValue_80:
+            columnIndex = 1;
+            break;
+        case XXTEEditorWordColumnValue_160:
+            columnIndex = 2;
+            break;
+        case XXTEEditorWordColumnValue_320:
+            columnIndex = 3;
+            break;
+        default:
+            break;
+    }
+    cell11.segmentedControl.selectedSegmentIndex = columnIndex;
+    [cell11.segmentedControl addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+        NSUInteger columnValue = XXTEEditorWordColumnValue_160;
+        switch (segmentedControl.selectedSegmentIndex) {
+            case 0:
+                columnValue = XXTEEditorWordColumnValue_40;
+                break;
+            case 1:
+                columnValue = XXTEEditorWordColumnValue_80;
+                break;
+            case 2:
+                columnValue = XXTEEditorWordColumnValue_160;
+                break;
+            case 3:
+                columnValue = XXTEEditorWordColumnValue_320;
+                break;
+            default:
+                break;
+        }
+        XXTEDefaultsSetBasic(XXTEEditorWrapColumn, widthValue);
+        [self.editor setNeedsReload];
+    }];
+    
+    XXTEMoreSwitchNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell12.titleLabel.text = NSLocalizedString(@"Read Only", nil);
+    cell12.optionSwitch.on = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
+    [cell12.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorReadOnly, optionSwitch.on);
         [self.editor setNeedsRefresh];
     }];
     
-    XXTEMoreSwitchNoIconCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell10.titleLabel.text = NSLocalizedString(@"Accessory Keyboard", nil);
-    cell10.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, NO);
-    [cell10.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+    XXTEMoreSwitchNoIconCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell13.titleLabel.text = NSLocalizedString(@"Accessory Keyboard", nil);
+    cell13.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, NO);
+    [cell13.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorKeyboardRowEnabled, optionSwitch.on);
         [self.editor setNeedsRefresh];
     }];
     
-    XXTEMoreSwitchNoIconCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell11.titleLabel.text = NSLocalizedString(@"Auto Correction", nil);
-    cell11.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo) != UITextAutocorrectionTypeNo;
-    [cell11.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+    XXTEMoreSwitchNoIconCell *cell14 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell14.titleLabel.text = NSLocalizedString(@"Auto Correction", nil);
+    cell14.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo) != UITextAutocorrectionTypeNo;
+    [cell14.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorAutoCorrection, optionSwitch.on ? UITextAutocorrectionTypeYes : UITextAutocorrectionTypeNo);
         [self.editor setNeedsRefresh];
     }];
     
-    XXTEMoreSwitchNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell12.titleLabel.text = NSLocalizedString(@"Auto Capitalization", nil);
-    cell12.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone) != UITextAutocapitalizationTypeNone;
-    [cell12.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+    XXTEMoreSwitchNoIconCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell15.titleLabel.text = NSLocalizedString(@"Auto Capitalization", nil);
+    cell15.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone) != UITextAutocapitalizationTypeNone;
+    [cell15.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorAutoCapitalization, optionSwitch.on ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone);
         [self.editor setNeedsRefresh];
     }];
     
-    XXTEMoreSwitchNoIconCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell13.titleLabel.text = NSLocalizedString(@"Spell Checking", nil);
-    cell13.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo) != UITextSpellCheckingTypeNo;
-    [cell13.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+    XXTEMoreSwitchNoIconCell *cell16 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell16.titleLabel.text = NSLocalizedString(@"Spell Checking", nil);
+    cell16.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo) != UITextSpellCheckingTypeNo;
+    [cell16.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorSpellChecking, optionSwitch.on ? UITextSpellCheckingTypeYes : UITextSpellCheckingTypeNo);
         [self.editor setNeedsRefresh];
     }];
     
-    XXTEMoreSwitchNoIconCell *cell14 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell14.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
-    cell14.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
-    [cell14.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+    XXTEMoreSwitchNoIconCell *cell17 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell17.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
+    cell17.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+    [cell17.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorSearchRegularExpression, optionSwitch.on);
     }];
     
-    XXTEMoreSwitchNoIconCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
-    cell15.titleLabel.text = NSLocalizedString(@"Case Sensitive", nil);
-    cell15.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
-    [cell15.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+    XXTEMoreSwitchNoIconCell *cell18 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    cell18.titleLabel.text = NSLocalizedString(@"Case Sensitive", nil);
+    cell18.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
+    [cell18.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
     }];
@@ -283,8 +346,9 @@
                     @[ cell3, cell4 ],
                     layoutSection,
                     @[ cell7, cell8, tabCell ],
-                    @[ cell9, cell10, cell11, cell12, cell13 ],
-                    @[ cell14, cell15 ],
+                    @[ cell9, cell10, cell11 ],
+                    @[ cell12, cell13, cell14, cell15, cell16 ],
+                    @[ cell17, cell18 ],
                     ];
 }
 

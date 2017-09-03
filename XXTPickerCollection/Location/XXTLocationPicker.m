@@ -28,6 +28,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - XXTBasePicker
 
@@ -46,7 +47,11 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 }
 
 - (NSString *)title {
-    return NSLocalizedStringFromTableInBundle(@"Location", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        return NSLocalizedStringFromTableInBundle(@"Location", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
 }
 
 #pragma mark - View
@@ -104,7 +109,13 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select a location by dragging 📌", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
+    } else {
+        subtitle = NSLocalizedStringFromTableInBundle(@"Select a location by dragging 📌", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
+    [self updateSubtitle:subtitle];
 }
 
 #pragma mark - Task Operations

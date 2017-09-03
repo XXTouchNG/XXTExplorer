@@ -21,6 +21,10 @@ static NSString * const XXTEEditorLineNumbersEnabled = @"XXTEEditorLineNumbersEn
 static NSString * const XXTEEditorKeyboardRowEnabled = @"XXTEEditorKeyboardRowEnabled"; // NSNumber - Bool
 static NSString * const XXTEEditorShowInvisibleCharacters = @"XXTEEditorShowInvisibleCharacters"; // NSNumber - Bool
 
+static NSString * const XXTEEditorIndentWrappedLines = @"XXTEEditorIndentWrappedLines"; // NSNumber - Bool
+static NSString * const XXTEEditorAutoWordWrap = @"XXTEEditorAutoWordWrap"; // NSNumber - Bool
+static NSString * const XXTEEditorWrapColumn = @"XXTEEditorWrapColumn"; // NSNumber - NSUInteger, min = 10
+
 static NSString * const XXTEEditorAutoCorrection = @"XXTEEditorAutoCorrection"; // NSNumber - Enum
 static NSString * const XXTEEditorSpellChecking = @"XXTEEditorSpellChecking"; // NSNumber - Enum
 static NSString * const XXTEEditorAutoCapitalization = @"XXTEEditorAutoCapitalization"; // NSNumber - Enum
@@ -42,5 +46,11 @@ typedef enum : NSUInteger {
     XXTEEditorTabWidthValue_8 = 8,
 } XXTEEditorTabWidthValue;
 
+typedef enum : NSUInteger {
+    XXTEEditorWordColumnValue_40 = 40,
+    XXTEEditorWordColumnValue_80 = 80,
+    XXTEEditorWordColumnValue_160 = 160,
+    XXTEEditorWordColumnValue_320 = 320,
+} XXTEEditorWordColumnValue;
 
 #endif /* XXTEEditorDefaults_h */

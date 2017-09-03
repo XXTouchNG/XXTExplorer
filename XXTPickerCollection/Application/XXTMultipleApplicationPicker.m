@@ -56,6 +56,7 @@ UISearchDisplayDelegate
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - XXTBasePicker
 
@@ -81,7 +82,11 @@ UISearchDisplayDelegate
 }
 
 - (NSString *)title {
-    return NSLocalizedStringFromTableInBundle(@"Applications", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        return NSLocalizedStringFromTableInBundle(@"Applications", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
 }
 
 #pragma mark - Initializers
@@ -169,7 +174,13 @@ UISearchDisplayDelegate
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select some applications.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
+    } else {
+        subtitle = NSLocalizedStringFromTableInBundle(@"Select some applications.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
+    [self updateSubtitle:subtitle];
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {

@@ -27,7 +27,7 @@
 }
 
 - (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController {
-    id nextPicker = [[pickerTask nextStepClass] new];
+    id nextPicker = [pickerTask nextPicker];
     if (nextPicker) {
         if ([nextPicker respondsToSelector:@selector(setPickerTask:)])
         {
@@ -67,7 +67,7 @@
         }
         XXTPickerSnippet *pickerTask = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:pickerTaskObj]];
         [pickerTask addResult:pickerResult];
-        id nextPicker = [[pickerTask nextStepClass] new];
+        id nextPicker = [pickerTask nextPicker];
         if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerTask:)])
         {
             [nextPicker performSelector:@selector(setPickerTask:) withObject:pickerTask];

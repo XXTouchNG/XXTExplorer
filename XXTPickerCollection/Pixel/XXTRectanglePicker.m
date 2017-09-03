@@ -32,6 +32,7 @@
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - Status Bar
 
@@ -218,25 +219,31 @@
 }
 
 - (void)updateTipsFromSelectedStatus {
-    if (!self.selectedImage) {
-        [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select an image from album.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
     } else {
-        switch ([[self class] cropViewType]) {
-            case XXTPixelPickerTypeRect:
-                [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select a rectangle area by dragging its corners.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
-                break;
-            case XXTPixelPickerTypePosition:
-            case XXTPixelPickerTypePositionColor:
-                [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select a position by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
-                break;
-            case XXTPixelPickerTypeColor:
-                [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select a color by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
-                break;
-            case XXTPixelPickerTypeMultiplePositionColor:
-                [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select several positions by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
-                break;
+        if (!self.selectedImage) {
+            subtitle = NSLocalizedStringFromTableInBundle(@"Select an image from album.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        } else {
+            switch ([[self class] cropViewType]) {
+                case XXTPixelPickerTypeRect:
+                    subtitle = NSLocalizedStringFromTableInBundle(@"Select a rectangle area by dragging its corners.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    break;
+                case XXTPixelPickerTypePosition:
+                case XXTPixelPickerTypePositionColor:
+                    subtitle = NSLocalizedStringFromTableInBundle(@"Select a position by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    break;
+                case XXTPixelPickerTypeColor:
+                    subtitle = NSLocalizedStringFromTableInBundle(@"Select a color by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    break;
+                case XXTPixelPickerTypeMultiplePositionColor:
+                    subtitle = NSLocalizedStringFromTableInBundle(@"Select several positions by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    break;
+            }
         }
     }
+    [self updateSubtitle:subtitle];
 }
 
 #pragma mark - Tap Gestures
@@ -407,19 +414,23 @@
 #pragma mark - XXTBasePicker
 
 - (NSString *)title {
-    switch ([[self class] cropViewType]) {
-        case XXTPixelPickerTypeRect:
-            return NSLocalizedStringFromTableInBundle(@"Rectangle", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
-        case XXTPixelPickerTypePosition:
-            return NSLocalizedStringFromTableInBundle(@"Position", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
-        case XXTPixelPickerTypeColor:
-            return NSLocalizedStringFromTableInBundle(@"Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
-        case XXTPixelPickerTypePositionColor:
-            return NSLocalizedStringFromTableInBundle(@"Position & Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
-        case XXTPixelPickerTypeMultiplePositionColor:
-            return NSLocalizedStringFromTableInBundle(@"Position & Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        switch ([[self class] cropViewType]) {
+            case XXTPixelPickerTypeRect:
+                return NSLocalizedStringFromTableInBundle(@"Rectangle", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+            case XXTPixelPickerTypePosition:
+                return NSLocalizedStringFromTableInBundle(@"Position", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+            case XXTPixelPickerTypeColor:
+                return NSLocalizedStringFromTableInBundle(@"Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+            case XXTPixelPickerTypePositionColor:
+                return NSLocalizedStringFromTableInBundle(@"Position & Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+            case XXTPixelPickerTypeMultiplePositionColor:
+                return NSLocalizedStringFromTableInBundle(@"Position & Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        }
+        return @"";
     }
-    return @"";
 }
 
 + (NSString *)pickerKeyword {

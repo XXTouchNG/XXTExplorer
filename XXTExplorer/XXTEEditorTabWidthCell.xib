@@ -20,21 +20,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tab Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXk-55-Hbn">
-                        <rect key="frame" x="16" y="11" width="171" height="21"/>
+                        <rect key="frame" x="16" y="11" width="141" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="d7X-2b-GLn">
-                        <rect key="frame" x="203" y="7" width="195" height="29"/>
+                        <rect key="frame" x="173" y="7" width="225" height="29"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="195" id="WKw-P1-i6U"/>
+                            <constraint firstAttribute="width" constant="225" id="WKw-P1-i6U"/>
                         </constraints>
                         <segments>
-                            <segment title="2" width="48"/>
-                            <segment title="3" width="48"/>
-                            <segment title="4" width="48"/>
-                            <segment title="8" width="48"/>
+                            <segment title="2"/>
+                            <segment title="3"/>
+                            <segment title="4"/>
+                            <segment title="8"/>
                         </segments>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </segmentedControl>

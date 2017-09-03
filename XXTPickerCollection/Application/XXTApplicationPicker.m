@@ -59,6 +59,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - XXTBasePicker
 
@@ -80,7 +81,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (NSString *)title {
-    return NSLocalizedStringFromTableInBundle(@"Application", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        return NSLocalizedStringFromTableInBundle(@"Application", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
 }
 
 #pragma mark - View
@@ -158,7 +163,13 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select an application.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
+    } else {
+        subtitle = NSLocalizedStringFromTableInBundle(@"Select an application.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
+    [self updateSubtitle:subtitle];
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {

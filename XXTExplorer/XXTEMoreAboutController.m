@@ -223,7 +223,8 @@ typedef enum : NSUInteger {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Reset Confirm", nil) message:NSLocalizedString(@"All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked.", nil) style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Reset", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
                     [alertView dismissAnimated];
                 } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-                    [NSUserDefaults resetStandardUserDefaults];
+                    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+                    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
                     showUserMessage(self, NSLocalizedString(@"Operation succeed.", nil));
                     [alertView dismissAnimated];
                 }];

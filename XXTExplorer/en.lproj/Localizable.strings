@@ -183,6 +183,9 @@
 "Auto Indent" = "Auto Indent";
 
 /* No comment provided by engineer. */
+"Auto Word Wrap" = "Auto Word Wrap";
+
+/* No comment provided by engineer. */
 "Boot Script" = "Boot Script";
 
 /* No comment provided by engineer. */
@@ -541,6 +544,9 @@
 
 /* No comment provided by engineer. */
 "Image Viewer" = "Image Viewer";
+
+/* No comment provided by engineer. */
+"Indent Wrapped Lines" = "Indent Wrapped Lines";
 
 /* No comment provided by engineer. */
 "Install" = "Install";
@@ -1120,6 +1126,12 @@
 
 /* No comment provided by engineer. */
 "Will open url: \n\"%@\", continue?" = "Will open url: \n\"%@\", continue?";
+
+/* No comment provided by engineer. */
+"Word Column" = "Word Column";
+
+/* No comment provided by engineer. */
+"Word Wrap" = "Word Wrap";
 
 /* No comment provided by engineer. */
 "Workspace" = "Workspace";

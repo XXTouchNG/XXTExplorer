@@ -27,6 +27,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - XXTBasePicker
 
@@ -45,7 +46,11 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 }
 
 - (NSString *)title {
-    return NSLocalizedStringFromTableInBundle(@"Key Event", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        return NSLocalizedStringFromTableInBundle(@"Key Event", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
 }
 
 - (void)viewDidLoad {
@@ -112,7 +117,13 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select a key event", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
+    } else {
+        subtitle = NSLocalizedStringFromTableInBundle(@"Select a key event", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    }
+    [self updateSubtitle:subtitle];
 }
 
 #pragma mark - Task Operations
