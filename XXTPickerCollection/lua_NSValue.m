@@ -179,7 +179,7 @@ NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray)
 #endif
 	}
 	lua_pushvalue(L, index);
-    size_t n = luaL_len(L, -1);
+    long long n = luaL_len(L, -1);
 	for (int i = 1; i <= n; ++i) {
 		lua_rawgeti(L, -1, i);
 		[resultarray addObject:lua_toNSValue(L, -1)];

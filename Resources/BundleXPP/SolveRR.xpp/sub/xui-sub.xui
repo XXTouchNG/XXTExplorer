@@ -1,0 +1,48 @@
+{
+    "items" : [
+        {
+            "label" : "Image",
+            "cell" : "XUIGroupCell"
+        },
+        {
+            "path" : "res\/bd_logo1_31bdc765.png",
+            "cell" : "XUIImageCell",
+            "height" : 128
+        },
+        {
+            "label" : "Switch",
+            "cell" : "XUIGroupCell"
+        },
+        {
+            "default" : true,
+            "defaults" : "com.yourcompany.yourscript",
+            "label" : "Sosh!",
+            "cell" : "XUISwitchCell",
+            "key" : "switch1"
+        },
+        {
+            "get" : "valueForSpecifier:",
+            "label" : "Version",
+            "value" : "1.1.3",
+            "cell" : "XUITitleValueCell"
+        },
+        {
+            "get" : "valueForSpecifier:",
+            "label" : "Dynamic",
+            "defaults" : "com.yourcompany.yourscript",
+            "cell" : "XUITitleValueCell",
+            "key" : "switch1"
+        },
+        {
+            "label" : "Actions",
+            "cell" : "XUIGroupCell"
+        },
+        {
+            "kwargs" : ["sub/xui-script.lua"],
+            "label" : "Launch a script",
+            "cell" : "XUIButtonCell",
+            "action" : "LaunchScript:"
+        }
+    ],
+    "title" : "Another Pane"
+}

@@ -22,6 +22,8 @@
 		0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
+		0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */; };
+		0F271CCA1F5D97C400E8FED5 /* XUIStepperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
 		0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */; };
 		0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */; };
@@ -436,6 +438,9 @@
 		0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+StatusBar.m"; sourceTree = "<group>"; };
 		0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImagePickerController.h; sourceTree = "<group>"; };
 		0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImagePickerController.m; sourceTree = "<group>"; };
+		0F271CC61F5D97C400E8FED5 /* XUIStepperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStepperCell.h; sourceTree = "<group>"; };
+		0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIStepperCell.m; sourceTree = "<group>"; };
+		0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIStepperCell.xib; sourceTree = "<group>"; };
 		0F2916131F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsOperationController.h; sourceTree = "<group>"; };
 		0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreUserDefaultsOperationController.m; sourceTree = "<group>"; };
 		0F2CD3511F3B5CAB00110772 /* XXTEAPTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTHelper.h; sourceTree = "<group>"; };
@@ -1756,6 +1761,9 @@
 				0F8521521F2D97AE00A912AC /* XUIOrderedOptionCell.h */,
 				0F8521531F2D97AE00A912AC /* XUIOrderedOptionCell.m */,
 				0F8521541F2D97AE00A912AC /* XUIOrderedOptionCell.xib */,
+				0F271CC61F5D97C400E8FED5 /* XUIStepperCell.h */,
+				0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */,
+				0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2662,6 +2670,7 @@
 				0FD973F21F4B1D3700133162 /* Tomorrow.tmTheme in Resources */,
 				0FB0090A1F4364AF00097E9C /* Kimbie (Light).tmTheme in Resources */,
 				D6E141521F5032AB00D78CB9 /* xxt-rotate-left@2x.png in Resources */,
+				0F271CCA1F5D97C400E8FED5 /* XUIStepperCell.xib in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
@@ -2914,6 +2923,7 @@
 				D6FD36D51F42FDBF00910D91 /* XXTEKeyboardButtonView.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				D677B1091F4FE88B00E741C2 /* XXTELuaInterpreter.mm in Sources */,
+				0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */,
 				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
 				D677B1031F4FC7C300E741C2 /* lzio.c in Sources */,

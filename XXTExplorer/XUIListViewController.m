@@ -31,6 +31,7 @@
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, assign) UIEdgeInsets defaultInsets;
 
 @end
 
@@ -119,7 +120,7 @@
         self.title = entryName;
     }
     
-    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
     NSDictionary <NSString *, id> *rootEntry = self.parser.rootEntry;
     
@@ -148,6 +149,18 @@
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
     XXTE_END_IGNORE_PARTIAL
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [super viewWillDisappear:animated];
 }
 
 - (void)setupSubviews {
@@ -441,6 +454,28 @@
     NSArray *optionValues = cell.xui_value;
     NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionValues.count];
     cell.detailTextLabel.text = shortTitle;
+}
+
+#pragma mark - Keyboard
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardDidAppear:(NSNotification *)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillDisappear:(NSNotification *)aNotification
+{
+    UITableView *tableView = self.tableView;
+    UIEdgeInsets contentInsets = XXTE_PAD ? UIEdgeInsetsZero : UIEdgeInsetsMake(0.0, 0.0, self.tabBarController.tabBar.bounds.size.height, 0.0);
+    tableView.contentInset = contentInsets;
+    tableView.scrollIndicatorInsets = contentInsets;
 }
 
 #pragma mark - Memory

@@ -414,6 +414,7 @@ typedef enum : NSUInteger {
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     if (parent == nil) {
         self.parser.aborted = YES;
+        [self saveDocumentIfNecessary];
     }
     [super didMoveToParentViewController:parent];
 }
@@ -571,7 +572,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    
+    [self saveDocumentIfNecessary];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

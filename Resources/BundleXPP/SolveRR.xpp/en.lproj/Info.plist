@@ -4,9 +4,9 @@
 	BundleName = SolveRR;
 	BundleDisplayName = "RedGame Helper";
 	BundleIconFile = appicon;
-	Executable = "main.lua";
+	Executable = main;
 	"BundleInfoDictionaryVersion" = "6.0";
-	MainInterfaceFile = "interface.json";
+	MainInterfaceFile = interface;
 	MinimumSystemVersion = "8.0";
 	MaximumSystemVersion = "10.2";
 	MinimumXXTVersion = "1.1.2";
