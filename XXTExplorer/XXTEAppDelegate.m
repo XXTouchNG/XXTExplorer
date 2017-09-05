@@ -42,6 +42,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 #pragma mark - Application
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     // Create required subdirectories
     NSString *sharedRootPath = [XXTEAppDelegate sharedRootPath];
     NSArray <NSString *> *requiredSubdirectories = uAppDefine(@"REQUIRED_SUBDIRECTORIES");

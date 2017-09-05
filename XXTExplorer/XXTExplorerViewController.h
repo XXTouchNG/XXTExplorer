@@ -43,6 +43,7 @@ typedef enum : NSUInteger {
 
 - (void)loadEntryListData;
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl;
+- (void)reconfigureCellAtIndexPath:(NSIndexPath *)indexPath;
 
 #pragma mark - picker
 

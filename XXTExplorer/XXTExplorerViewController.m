@@ -447,10 +447,10 @@
                 }
             }
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             if ([tableView isEditing]) {
 
             } else {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[@"path"];
                 NSString *directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
@@ -551,77 +551,15 @@
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
             }
-            entryCell.delegate = self;
-            entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-            entryCell.entryTitleLabel.textColor = [UIColor blackColor];
-            entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-            if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-                    [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
-                // broken symlink
-                entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
-                entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
-            } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-                    ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
-                // symlink
-                entryCell.entryTitleLabel.textColor = XXTE_COLOR;
-                entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
-            } else {
-                entryCell.entryTitleLabel.textColor = [UIColor blackColor];
-                entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
-            }
-            if (![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
-                [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
-                // selected script itself
-                entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
-                entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
-            } else if ((
-                        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] ||
-                        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]
-                        ) &&
-                    [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
-                // selected script in directory / bundle
-                entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
-                entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
-            }
-            NSString *entryDisplayName = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
-            NSString *entryDescription = entryDetail[XXTExplorerViewEntryAttributeDescription];
-            UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
-            if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
-                id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-                if (entryReader.entryDisplayName) {
-                    entryDisplayName = entryReader.entryDisplayName;
-                } else {
-                    if (XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES))
-                    {
-                        entryDisplayName = [entryDisplayName stringByDeletingPathExtension];
-                    }
-                }
-                if (entryReader.entryDescription) {
-                    entryDescription = entryReader.entryDescription;
-                }
-                if (entryReader.entryIconImage) {
-                    entryIconImage = entryReader.entryIconImage;
-                }
-            }
-            entryCell.entryTitleLabel.text = entryDisplayName;
-            entryCell.entrySubtitleLabel.text = entryDescription;
-            entryCell.entryIconImageView.image = entryIconImage;
-            UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
-            cellLongPressGesture.delegate = self;
-            [entryCell addGestureRecognizer:cellLongPressGesture];
+            [self configureCell:entryCell withEntry:entryDetail];
             return entryCell;
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
+            NSDictionary *entryDetail = self.homeEntryList[indexPath.row];
             XXTExplorerViewHomeCell *entryCell = [tableView dequeueReusableCellWithIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewHomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
             }
-            entryCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            entryCell.entryIconImageView.image = [UIImage imageNamed:self.homeEntryList[indexPath.row][@"icon"]];
-            entryCell.entryTitleLabel.text = self.homeEntryList[indexPath.row][@"title"];
-            entryCell.entrySubtitleLabel.text = self.homeEntryList[indexPath.row][@"subtitle"];
-            UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
-            cellLongPressGesture.delegate = self;
-            [entryCell addGestureRecognizer:cellLongPressGesture];
+            [self configureHomeCell:entryCell withEntry:entryDetail];
             return entryCell;
         }
     }
@@ -654,6 +592,99 @@
     }
 }
 
+#pragma mark - Cell Configuration
+
+- (void)reconfigureCellAtIndexPath:(NSIndexPath *)indexPath {
+    if (!indexPath) return;
+    if (indexPath.section == XXTExplorerViewSectionIndexList) {
+        if (indexPath.row < self.entryList.count) {
+            XXTExplorerViewCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            NSDictionary *entryDetail = self.entryList[indexPath.row];
+            [self configureCell:entryCell withEntry:entryDetail];
+        }
+    }
+    else if (indexPath.section == XXTExplorerViewSectionIndexHome) {
+        if (indexPath.row < self.homeEntryList.count) {
+            XXTExplorerViewHomeCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            NSDictionary *entryDetail = self.homeEntryList[indexPath.row];
+            [self configureHomeCell:entryCell withEntry:entryDetail];
+        }
+    }
+}
+
+- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(NSDictionary *)entryDetail {
+    entryCell.delegate = self;
+    entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+    entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+    if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
+        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+        // broken symlink
+        entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
+        entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
+    } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
+               ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+        // symlink
+        entryCell.entryTitleLabel.textColor = XXTE_COLOR;
+        entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
+    } else {
+        entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+        entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
+    }
+    if (![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+        [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+        // selected script itself
+        entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
+        entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
+    } else if ((
+                [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] ||
+                [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]
+                ) &&
+               [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+        // selected script in directory / bundle
+        entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
+        entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
+    }
+    NSString *entryDisplayName = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
+    NSString *entryDescription = entryDetail[XXTExplorerViewEntryAttributeDescription];
+    UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
+    if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
+        id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        if (entryReader.entryDisplayName) {
+            entryDisplayName = entryReader.entryDisplayName;
+        } else {
+            if (XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES))
+            {
+                entryDisplayName = [entryDisplayName stringByDeletingPathExtension];
+            }
+        }
+        if (entryReader.entryDescription) {
+            entryDescription = entryReader.entryDescription;
+        }
+        if (entryReader.entryIconImage) {
+            entryIconImage = entryReader.entryIconImage;
+        }
+    }
+    entryCell.entryTitleLabel.text = entryDisplayName;
+    entryCell.entrySubtitleLabel.text = entryDescription;
+    entryCell.entryIconImageView.image = entryIconImage;
+    UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
+    cellLongPressGesture.delegate = self;
+    [entryCell addGestureRecognizer:cellLongPressGesture];
+}
+
+- (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell withEntry:(NSDictionary *)entryDetail {
+    entryCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    entryCell.entryIconImageView.image = [UIImage imageNamed:entryDetail[@"icon"]];
+    entryCell.entryTitleLabel.text = entryDetail[@"title"];
+    entryCell.entrySubtitleLabel.text = entryDetail[@"subtitle"];
+    UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
+    cellLongPressGesture.delegate = self;
+    [entryCell addGestureRecognizer:cellLongPressGesture];
+}
+
+#pragma mark - View Attachments
+
 - (void)addressLabelTapped:(UITapGestureRecognizer *)recognizer {
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
         NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
@@ -680,6 +711,8 @@
     [self.tableView endUpdates];
     showUserMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
 }
+
+#pragma mark - Gesture Attachments
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:self.tableView];

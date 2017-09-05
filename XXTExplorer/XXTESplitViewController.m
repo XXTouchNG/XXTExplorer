@@ -36,7 +36,11 @@
 }
 
 - (void)setupAppearance {
-    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8 && XXTE_PAD) {
+        self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -23,6 +23,7 @@
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
 #import "XXTExplorerEntryService.h"
+#import "XXTExplorerViewCell.h"
 
 @implementation XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate)
 
@@ -60,7 +61,9 @@
             .finally(^() {
                 blockUserInteractions(self, NO, 2.0);
                 [self loadEntryListData];
-                [self.tableView reloadData];
+                for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+                    [self reconfigureCellAtIndexPath:indexPath];
+                }
             });
         } else if ([viewer isKindOfClass:[XXTEArchiveViewer class]]) {
             [self tableView:tableView archiveEntryCellTappedWithEntryPath:viewer.entryPath];
