@@ -27,16 +27,18 @@
 @class SKInclude;
 @class SKLanguage;
 
+typedef NSString NSRegularExpressionString;
+
 @interface SKPattern : NSObject
 
 // MARK: - Properties
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSRegularExpression *match;
+@property (nonatomic, strong) NSRegularExpressionString *match;
 @property (nonatomic, strong) SKCaptureCollection *captures;
-@property (nonatomic, strong) NSRegularExpression *patternBegin;
+@property (nonatomic, strong) NSRegularExpressionString *patternBegin;
 @property (nonatomic, strong) SKCaptureCollection *beginCaptures;
-@property (nonatomic, strong) NSRegularExpression *patternEnd;
+@property (nonatomic, strong) NSRegularExpressionString *patternEnd;
 @property (nonatomic, strong) SKCaptureCollection *endCaptures;
 @property (nonatomic, assign) BOOL applyEndPatternLast;
 @property (nonatomic, weak) SKPattern *parent;

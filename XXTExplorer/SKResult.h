@@ -15,10 +15,11 @@
 // MARK: - Properties
 @property (nonatomic, strong, readonly) NSString *patternIdentifier;
 @property (nonatomic, assign) NSRange range;
+@property (nonatomic, strong, readonly) NSTextCheckingResult *rawResult;
 @property (nonatomic, strong, readonly) id attribute;
 
 // MARK: - Initializers
-- (instancetype)initWithIdentifier:(NSString *)identifier range:(NSRange)range attribute:(id)attribute;
+- (instancetype)initWithIdentifier:(NSString *)identifier range:(NSRange)range rawResult:(NSTextCheckingResult *)rawResult attribute:(id)attribute;
 
 - (BOOL)isEqual:(SKResult *)scope;
 

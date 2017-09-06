@@ -105,6 +105,7 @@
 		0F6AEA961F3753E20017BE7C /* XXTExplorerViewController+FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA951F3753E20017BE7C /* XXTExplorerViewController+FileOperations.m */; };
 		0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA981F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m */; };
 		0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA9B1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m */; };
+		0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardRow.m */; };
 		0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
 		0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CB21ED8D95700E18BE2 /* XXTESwipeButton.m */; };
 		0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CB41ED8D95700E18BE2 /* XXTESwipeTableCell.m */; };
@@ -402,10 +403,6 @@
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
 		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
-		D6FD36D21F42FDBF00910D91 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36CA1F42FDBF00910D91 /* XXTETurtleBezierPath.m */; };
-		D6FD36D31F42FDBF00910D91 /* XXTEKeyboardRow.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36CC1F42FDBF00910D91 /* XXTEKeyboardRow.m */; };
-		D6FD36D41F42FDBF00910D91 /* XXTEKeyboardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36CE1F42FDBF00910D91 /* XXTEKeyboardButton.m */; };
-		D6FD36D51F42FDBF00910D91 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD36D01F42FDBF00910D91 /* XXTEKeyboardButtonView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -601,6 +598,8 @@
 		0F6AEA981F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+PasteboardOperations.m"; sourceTree = "<group>"; };
 		0F6AEA9A1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"; sourceTree = "<group>"; };
 		0F6AEA9B1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XXTExplorerViewController+XXTExplorerToolbarDelegate.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F6B6A4E1F5F9C8D0095A760 /* XXTEKeyboardRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardRow.h; sourceTree = "<group>"; };
+		0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardRow.m; sourceTree = "<group>"; };
 		0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDefaults.h; sourceTree = "<group>"; wrapsLines = 0; };
 		0F766CAE1ED8D7D700E18BE2 /* UIView+XXTEToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XXTEToast.h"; sourceTree = "<group>"; };
 		0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XXTEToast.m"; sourceTree = "<group>"; };
@@ -1093,14 +1092,6 @@
 		D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionCell.xib; sourceTree = "<group>"; };
 		D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationOperationController.h; sourceTree = "<group>"; };
 		D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationOperationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		D6FD36C91F42FDBF00910D91 /* XXTETurtleBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETurtleBezierPath.h; sourceTree = "<group>"; };
-		D6FD36CA1F42FDBF00910D91 /* XXTETurtleBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETurtleBezierPath.m; sourceTree = "<group>"; };
-		D6FD36CB1F42FDBF00910D91 /* XXTEKeyboardRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardRow.h; sourceTree = "<group>"; };
-		D6FD36CC1F42FDBF00910D91 /* XXTEKeyboardRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardRow.m; sourceTree = "<group>"; };
-		D6FD36CD1F42FDBF00910D91 /* XXTEKeyboardButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardButton.h; sourceTree = "<group>"; };
-		D6FD36CE1F42FDBF00910D91 /* XXTEKeyboardButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardButton.m; sourceTree = "<group>"; };
-		D6FD36CF1F42FDBF00910D91 /* XXTEKeyboardButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardButtonView.h; sourceTree = "<group>"; };
-		D6FD36D01F42FDBF00910D91 /* XXTEKeyboardButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardButtonView.m; sourceTree = "<group>"; };
 		DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
@@ -1549,6 +1540,15 @@
 				0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */,
 			);
 			name = OpenWith;
+			sourceTree = "<group>";
+		};
+		0F6B6A4D1F5F9C6C0095A760 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				0F6B6A4E1F5F9C8D0095A760 /* XXTEKeyboardRow.h */,
+				0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardRow.m */,
+			);
+			name = Keyboard;
 			sourceTree = "<group>";
 		};
 		0F766CB71ED8DD5D00E18BE2 /* Views */ = {
@@ -2184,11 +2184,11 @@
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				0F6B6A4D1F5F9C6C0095A760 /* Keyboard */,
 				D62DD6241F3D52E900A34850 /* Theme */,
 				D62DD6231F3D52E000A34850 /* Language */,
 				D660855C1F3C663E00E87B3C /* Font */,
 				0FB008EC1F43464500097E9C /* Settings */,
-				D6FD36C61F42FDA500910D91 /* Keyboard */,
 				D60A26A71F3DA82C00E013E2 /* Theme */,
 				0FE162A21F3C9370003064B2 /* Views */,
 				0FE162A11F3C9355003064B2 /* SyntaxKit */,
@@ -2570,21 +2570,6 @@
 			name = Activation;
 			sourceTree = "<group>";
 		};
-		D6FD36C61F42FDA500910D91 /* Keyboard */ = {
-			isa = PBXGroup;
-			children = (
-				D6FD36C91F42FDBF00910D91 /* XXTETurtleBezierPath.h */,
-				D6FD36CA1F42FDBF00910D91 /* XXTETurtleBezierPath.m */,
-				D6FD36CB1F42FDBF00910D91 /* XXTEKeyboardRow.h */,
-				D6FD36CC1F42FDBF00910D91 /* XXTEKeyboardRow.m */,
-				D6FD36CD1F42FDBF00910D91 /* XXTEKeyboardButton.h */,
-				D6FD36CE1F42FDBF00910D91 /* XXTEKeyboardButton.m */,
-				D6FD36CF1F42FDBF00910D91 /* XXTEKeyboardButtonView.h */,
-				D6FD36D01F42FDBF00910D91 /* XXTEKeyboardButtonView.m */,
-			);
-			name = Keyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2861,7 +2846,6 @@
 				D677B0F81F4FC7C300E741C2 /* lparser.c in Sources */,
 				0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */,
 				0F50AEA71F307C430098211C /* XXTEBaseObjectViewController.m in Sources */,
-				D6FD36D41F42FDBF00910D91 /* XXTEKeyboardButton.m in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D677B0F21F4FC7C200E741C2 /* lmathlib.c in Sources */,
@@ -2902,7 +2886,6 @@
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */,
 				0FD973E71F4B122D00133162 /* XXTEEditorThemeCell.m in Sources */,
-				D6FD36D31F42FDBF00910D91 /* XXTEKeyboardRow.m in Sources */,
 				0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
@@ -2920,7 +2903,6 @@
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				D677B0FA1F4FC7C300E741C2 /* lstring.c in Sources */,
-				D6FD36D51F42FDBF00910D91 /* XXTEKeyboardButtonView.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				D677B1091F4FE88B00E741C2 /* XXTELuaInterpreter.mm in Sources */,
 				0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */,
@@ -2946,6 +2928,7 @@
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
 				0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */,
+				0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardRow.m in Sources */,
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,
 				0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */,
 				D6E141271F5032AB00D78CB9 /* XXTPixelCropRectView.m in Sources */,
@@ -3050,7 +3033,6 @@
 				0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
 				0F30D9391F2C86450001E10B /* XUISliderCell.m in Sources */,
-				D6FD36D21F42FDBF00910D91 /* XXTETurtleBezierPath.m in Sources */,
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
 				0F50AEAA1F3080400098211C /* XXTEArrayObjectViewController.m in Sources */,
 				0F6AEA841F3730090017BE7C /* XXTExplorerEntryOpenWithNavigationController.m in Sources */,

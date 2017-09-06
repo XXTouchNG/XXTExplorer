@@ -20,7 +20,7 @@
 
 /// The inplicit scope at the base of each ScopedString
 - (SKScope *)getBaseScope {
-    return [[SKScope alloc] initWithIdentifier:@"BaseNameString" range:NSMakeRange(0, self.string.length) attribute:nil];
+    return [[SKScope alloc] initWithIdentifier:@"BaseNameString" range:NSMakeRange(0, self.string.length) rawResult:nil attribute:nil];
 }
 
 // MARK: - Initializers

@@ -1,29 +1,42 @@
 //
 //  XXTEKeyboardRow.h
-//  XXTouchApp
+//  XXTExplorer
 //
-//  Created by Zheng on 9/19/16.
-//  Copyright © 2016 Zheng. All rights reserved.
+//  Created by Zheng on 06/09/2017.
+//  Copyright © 2017 Zheng. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonStyle) {
-    XXTEKeyboardButtonStylePhone,
-    XXTEKeyboardButtonStyleTablet
-};
+typedef enum : NSUInteger {
+    XXTEKeyboardRowStyleLight = 0,
+    XXTEKeyboardRowStyleDark,
+} XXTEKeyboardRowStyle;
 
-typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonColorStyle) {
-    XXTEKeyboardButtonColorStyleLight,
-    XXTEKeyboardButtonColorStyleDark
-};
+typedef enum : NSUInteger {
+    XXTEKeyboardRowDevicePhone = 0,
+    XXTEKeyboardRowDeviceTablet,
+} XXTEKeyboardRowDevice;
+
+typedef enum : NSUInteger {
+    XXTEKeyboardRowButtonTab = 0,
+    XXTEKeyboardRowButtonUndo,
+    XXTEKeyboardRowButtonPicker,
+    XXTEKeyboardRowButtonRedo,
+    XXTEKeyboardRowButtonDismiss,
+} XXTEKeyboardRowButton;
+
+@class XXTEKeyboardRow;
+
+@protocol XXTEKeyboardRowDelegate <NSObject>
+- (void)keyboardRow:(XXTEKeyboardRow *)keyboardRow buttonTappedAtIndex:(NSUInteger)index;
+@end
 
 @interface XXTEKeyboardRow : UIInputView
 
-@property(nonatomic, weak) UITextView *textView;
-@property(nonatomic, assign) XXTEKeyboardButtonStyle style;
-@property(nonatomic, copy) NSString *tabString;
-
-@property(nonatomic, assign) XXTEKeyboardButtonColorStyle colorStyle;
+@property (nonatomic, strong) NSString *tabString;
+@property (nonatomic, assign, setter=setStyle:) XXTEKeyboardRowStyle style;
+@property (nonatomic, assign, readonly) XXTEKeyboardRowDevice device;
+@property (nonatomic, weak) id <UITextInput> textInput;
 
 @end

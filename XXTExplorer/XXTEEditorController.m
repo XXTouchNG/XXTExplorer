@@ -318,25 +318,19 @@ typedef enum : NSUInteger {
     
     if (NO == [self isDarkMode] || XXTE_PAD) {
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
-        self.keyboardRow.colorStyle = XXTEKeyboardButtonColorStyleLight;
+        self.keyboardRow.style = XXTEKeyboardRowStyleLight;
     } else {
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
-        self.keyboardRow.colorStyle = XXTEKeyboardButtonColorStyleDark;
-    }
-    
-    if (XXTE_PAD) {
-        self.keyboardRow.style = XXTEKeyboardButtonStyleTablet;
-    } else {
-        self.keyboardRow.style = XXTEKeyboardButtonStylePhone;
+        self.keyboardRow.style = XXTEKeyboardRowStyleDark;
     }
     
     if (isKeyboardRowEnabled &&
         NO == isReadOnlyMode)
     {
-        self.keyboardRow.textView = textView;
+        self.keyboardRow.textInput = textView;
         textView.inputAccessoryView = self.keyboardRow;
     } else {
-        self.keyboardRow.textView = nil;
+        self.keyboardRow.textInput = nil;
         textView.inputAccessoryView = nil;
     }
     
