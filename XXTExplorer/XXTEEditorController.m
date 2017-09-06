@@ -62,6 +62,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) XXTEEditorControllerReloadType reloadType;
 @property (nonatomic, assign) BOOL shouldSaveDocument;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
+@property (nonatomic, assign) BOOL shouldRefreshNagivationBar;
 
 @end
 
@@ -308,7 +309,7 @@ typedef enum : NSUInteger {
         [textView setGutterLineColor:theme.foregroundColor];
         [textView setGutterBackgroundColor:theme.backgroundColor];
         
-        [textView.vLayoutManager setLineNumberFont:[theme.font fontWithSize:10.f]];
+        [textView.vLayoutManager setLineNumberFont:theme.font];
         [textView.vLayoutManager setLineNumberColor:theme.foregroundColor];
         
         [textView.vLayoutManager setShowInvisibleCharacters:showInvisibleCharacters];
@@ -341,10 +342,7 @@ typedef enum : NSUInteger {
     }
     
     [textView setNeedsDisplay];
-    
-    [UIView animateWithDuration:.2f animations:^{
-        [self renderNavigationBarTheme:NO];
-    }];
+    [self setNeedsRefreshNavigationBar];
 }
 
 #pragma mark - Life Cycle
@@ -385,6 +383,14 @@ typedef enum : NSUInteger {
     else if (self.reloadType == XXTEEditorControllerReloadTypeSoft) {
         self.reloadType = XXTEEditorControllerReloadTypeNone;
         [self reloadStyle];
+    }
+    if (self.shouldRefreshNagivationBar) {
+        self.shouldRefreshNagivationBar = NO;
+        [UIView animateWithDuration:.4f delay:.2f options:0 animations:^{
+            [self renderNavigationBarTheme:NO];
+        } completion:^(BOOL finished) {
+            
+        }];
     }
     if (self.shouldFocusTextView) {
         self.shouldFocusTextView = NO;
@@ -741,6 +747,10 @@ typedef enum : NSUInteger {
 
 - (void)setNeedsFocusTextView {
     self.shouldFocusTextView = YES;
+}
+
+- (void)setNeedsRefreshNavigationBar {
+    self.shouldRefreshNagivationBar = YES;
 }
 
 #pragma mark - Memory

@@ -11,5 +11,5 @@ target 'XXTExplorer' do
     # pod 'LGAlertView', '~> 2.4.0'
     # pod 'LGAlertView', :path => '../LGAlertView'
     pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device'
-    pod 'Masonry'
+    pod 'Masonry', '~> 1.0.2'
 end

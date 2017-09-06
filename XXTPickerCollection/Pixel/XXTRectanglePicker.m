@@ -8,7 +8,7 @@
 
 #import "XXTPixelCropView.h"
 #import "XXTRectanglePicker.h"
-#import "XXTImagePickerController.h"
+#import "XXTEImagePickerController.h"
 #import "XXTPixelPlaceholderView.h"
 #import "XXTPickerFactory.h"
 #import "UIColor+hexValue.h"
@@ -16,7 +16,9 @@
 #import "XXTPositionColorModel.h"
 #import "XXTPickerSnippet.h"
 
-@interface XXTRectanglePicker () <XXTImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, XXTPixelCropViewDelegate>
+#import <MobileCoreServices/MobileCoreServices.h>
+
+@interface XXTRectanglePicker () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, XXTPixelCropViewDelegate>
 @property(nonatomic, strong) XXTPixelPlaceholderView *placeholderView;
 @property(nonatomic, assign) BOOL locked;
 @property(nonatomic, strong) UIButton *lockButton;
@@ -72,7 +74,7 @@
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Next", @"XXTPickerCollection", [XXTPickerFactory bundle], nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
 }
@@ -120,18 +122,18 @@
             if (image) {
                 [self setSelectedImage:image];
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                                    message:NSLocalizedStringFromTableInBundle(@"Cannot read image data, invalid image?", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
+                                                                    message:NSLocalizedStringFromTable(@"Cannot read image data, invalid image?", @"XXTPickerCollection", nil)
                                                                    delegate:self
-                                                          cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                                                          cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
                                                           otherButtonTitles:nil];
                 [alertView show];
             }
         } else if (err) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Cannot load image from cache: %@", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), [err localizedDescription]]
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Cannot load image from cache: %@", @"XXTPickerCollection", nil), [err localizedDescription]]
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                                                      cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
         }
@@ -172,18 +174,17 @@
         cropToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         cropToolbar.backgroundColor = [UIColor clearColor];
         [cropToolbar setBackgroundColor:[UIColor colorWithWhite:1.f alpha:.75f]];
-
-        NSBundle *frameworkBundle = [XXTPickerFactory bundle];
+        
         UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        UIBarButtonItem *graphBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-add-box" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(changeImageButtonTapped:)];
-        UIBarButtonItem *toLeftBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-rotate-left" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rotateToLeftButtonTapped:)];
-        UIBarButtonItem *toRightBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-rotate-right" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rotateToRightButtonTapped:)];
-        UIBarButtonItem *resetBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-refresh" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(resetButtonTapped:)];
-        UIBarButtonItem *trashBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-clear" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(trashButtonTapped:)];
+        UIBarButtonItem *graphBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"xxt-add-box"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(changeImageButtonTapped:)];
+        UIBarButtonItem *toLeftBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"xxt-rotate-left"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rotateToLeftButtonTapped:)];
+        UIBarButtonItem *toRightBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"xxt-rotate-right"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rotateToRightButtonTapped:)];
+        UIBarButtonItem *resetBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"xxt-refresh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(resetButtonTapped:)];
+        UIBarButtonItem *trashBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"xxt-clear"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(trashButtonTapped:)];
 
         UIButton *lockButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 30)];
-        [lockButton setImage:[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-lock" ofType:@"png"]] forState:UIControlStateNormal];
-        [lockButton setImage:[UIImage imageWithContentsOfFile:[frameworkBundle pathForResource:@"xxt-unlock" ofType:@"png"]] forState:UIControlStateSelected];
+        [lockButton setImage:[UIImage imageNamed:@"xxt-lock"] forState:UIControlStateNormal];
+        [lockButton setImage:[UIImage imageNamed:@"xxt-unlock"] forState:UIControlStateSelected];
         [lockButton addTarget:self
                        action:@selector(lockButtonTapped:)
              forControlEvents:UIControlEventTouchUpInside];
@@ -224,21 +225,21 @@
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
         if (!self.selectedImage) {
-            subtitle = NSLocalizedStringFromTableInBundle(@"Select an image from album.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+            subtitle = NSLocalizedStringFromTable(@"Select an image from album.", @"XXTPickerCollection", nil);
         } else {
             switch ([[self class] cropViewType]) {
                 case XXTPixelPickerTypeRect:
-                    subtitle = NSLocalizedStringFromTableInBundle(@"Select a rectangle area by dragging its corners.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    subtitle = NSLocalizedStringFromTable(@"Select a rectangle area by dragging its corners.", @"XXTPickerCollection", nil);
                     break;
                 case XXTPixelPickerTypePosition:
                 case XXTPixelPickerTypePositionColor:
-                    subtitle = NSLocalizedStringFromTableInBundle(@"Select a position by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    subtitle = NSLocalizedStringFromTable(@"Select a position by tapping on image.", @"XXTPickerCollection", nil);
                     break;
                 case XXTPixelPickerTypeColor:
-                    subtitle = NSLocalizedStringFromTableInBundle(@"Select a color by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    subtitle = NSLocalizedStringFromTable(@"Select a color by tapping on image.", @"XXTPickerCollection", nil);
                     break;
                 case XXTPixelPickerTypeMultiplePositionColor:
-                    subtitle = NSLocalizedStringFromTableInBundle(@"Select several positions by tapping on image.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                    subtitle = NSLocalizedStringFromTable(@"Select several positions by tapping on image.", @"XXTPickerCollection", nil);
                     break;
             }
         }
@@ -249,18 +250,15 @@
 #pragma mark - Tap Gestures
 
 - (void)placeholderViewTapped:(id)sender {
-    NSBundle *frameworkBundle = [XXTPickerFactory bundle];
-    XXTImagePickerController *imagePickerController = [[XXTImagePickerController alloc] initWithNibName:@"XXTImagePickerController" bundle:frameworkBundle];
+    XXTEImagePickerController *imagePickerController = [[XXTEImagePickerController alloc] init];
     imagePickerController.delegate = self;
-    imagePickerController.nResultType = XXT_PICKER_RESULT_UIIMAGE;
-    imagePickerController.nMaxCount = 1;
-    imagePickerController.nColumnCount = 4;
+    
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 - (void)tripleFingerTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Triple touches to enter/exit fullscreen.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+        [self updateSubtitle:NSLocalizedStringFromTable(@"Triple touches to enter/exit fullscreen.", @"XXTPickerCollection", nil)];
         [self setNavigationBarHidden:![self isNavigationBarHidden] animated:YES];
     }
 }
@@ -325,7 +323,7 @@
     if (!_selectedImage || self.locked) return;
     if ([self.cropView userHasModifiedCropArea]) {
         [self.cropView resetCropRectAnimated:NO];
-        [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Canvas reset.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+        [self updateSubtitle:NSLocalizedStringFromTable(@"Canvas reset.", @"XXTPickerCollection", nil)];
     }
 }
 
@@ -336,21 +334,21 @@
         self.locked = NO;
         self.cropView.allowsOperation = YES;
         self.lockButton.selected = NO;
-        [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Canvas unlocked.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+        [self updateSubtitle:NSLocalizedStringFromTable(@"Canvas unlocked.", @"XXTPickerCollection", nil)];
     } else {
         self.locked = YES;
         self.cropView.allowsOperation = NO;
         self.lockButton.selected = YES;
-        [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Canvas locked, it cannot be moved or zoomed.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+        [self updateSubtitle:NSLocalizedStringFromTable(@"Canvas locked, it cannot be moved or zoomed.", @"XXTPickerCollection", nil)];
     }
 }
 
 - (void)trashButtonTapped:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Confirm", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                        message:NSLocalizedStringFromTableInBundle(@"Discard all changes and reset the canvas?", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Confirm", @"XXTPickerCollection", nil)
+                                                        message:NSLocalizedStringFromTable(@"Discard all changes and reset the canvas?", @"XXTPickerCollection", nil)
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                              otherButtonTitles:NSLocalizedStringFromTableInBundle(@"Yes", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), nil];
+                                              cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
+                                              otherButtonTitles:NSLocalizedStringFromTable(@"Yes", @"XXTPickerCollection", nil), nil];
     [alertView show];
 }
 
@@ -367,34 +365,32 @@
 }
 
 #pragma mark - UIGestureRecognizerDelegate
-#pragma mark - XXImagePickerControllerDelegate
+#pragma mark - XXTEImagePickerControllerDelegate
 
-- (void)didCancelImagePickerController:(XXTImagePickerController *)picker {
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didSelectPhotosFromImagePickerController:(XXTImagePickerController *)picker
-                                          result:(NSArray *)aSelected {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)mediaInfo {
     [picker dismissViewControllerAnimated:YES completion:nil];
-    if (!aSelected || aSelected.count == 0) {
-        [self cleanCanvas];
-        return;
+    if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *) kUTTypeImage]) {
+        UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
+        NSError *err = nil;
+        NSData *imageData = UIImagePNGRepresentation(originalImage);
+        BOOL result = [imageData writeToFile:self.tempImagePath
+                                     options:NSDataWritingAtomic
+                                       error:&err];
+        if (!result) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
+                                                                message:[err localizedDescription]
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+        _pickerResult = nil;
+        [self setSelectedImage:originalImage];
     }
-    NSError *err = nil;
-    NSData *imageData = UIImagePNGRepresentation(aSelected[0]);
-    BOOL result = [imageData writeToFile:self.tempImagePath
-                                 options:NSDataWritingAtomic
-                                   error:&err];
-    if (!result) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                            message:[err localizedDescription]
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-    _pickerResult = nil;
-    [self setSelectedImage:aSelected[0]];
 }
 
 - (void)cleanCanvas {
@@ -402,10 +398,10 @@
     NSError *err = nil;
     BOOL result = [[NSFileManager defaultManager] removeItemAtPath:self.tempImagePath error:&err];
     if (!result) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
                                                             message:[err localizedDescription]
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                                                  cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
                                                   otherButtonTitles:nil];
         [alertView show];
     }
@@ -419,15 +415,15 @@
     } else {
         switch ([[self class] cropViewType]) {
             case XXTPixelPickerTypeRect:
-                return NSLocalizedStringFromTableInBundle(@"Rectangle", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                return NSLocalizedStringFromTable(@"Rectangle", @"XXTPickerCollection", nil);
             case XXTPixelPickerTypePosition:
-                return NSLocalizedStringFromTableInBundle(@"Position", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                return NSLocalizedStringFromTable(@"Position", @"XXTPickerCollection", nil);
             case XXTPixelPickerTypeColor:
-                return NSLocalizedStringFromTableInBundle(@"Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                return NSLocalizedStringFromTable(@"Color", @"XXTPickerCollection", nil);
             case XXTPixelPickerTypePositionColor:
-                return NSLocalizedStringFromTableInBundle(@"Position & Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                return NSLocalizedStringFromTable(@"Position & Color", @"XXTPickerCollection", nil);
             case XXTPixelPickerTypeMultiplePositionColor:
-                return NSLocalizedStringFromTableInBundle(@"Position & Color", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+                return NSLocalizedStringFromTable(@"Position & Color", @"XXTPickerCollection", nil);
         }
         return @"";
     }
@@ -498,7 +494,7 @@
 #pragma mark - XXTPixelCropViewDelegate
 
 - (void)cropView:(XXTPixelCropView *)crop shouldEnterFullscreen:(BOOL)fullscreen {
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Tap blank area to enter/exit fullscreen.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    [self updateSubtitle:NSLocalizedStringFromTable(@"Tap blank area to enter/exit fullscreen.", @"XXTPickerCollection", nil)];
     [self setNavigationBarHidden:fullscreen animated:YES];
 }
 

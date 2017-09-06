@@ -76,9 +76,7 @@
 - (void)setup {
     self.backgroundColor = [UIColor whiteColor];
 
-    NSBundle *frameworkBundle = [XXTPickerFactory bundle];
-    NSString *patternImagePath = [frameworkBundle pathForResource:@"xxt-marquee" ofType:@"png"];
-    UIImage *tintedImage = [UIImage imageWithContentsOfFile:patternImagePath];
+    UIImage *tintedImage = [UIImage imageNamed:@"xxt-marquee"];
     UIImageView *centerAddImage = [[UIImageView alloc] initWithImage:tintedImage];
     centerAddImage.frame = CGRectMake(0, 0, tintedImage.size.width, tintedImage.size.height);
 
@@ -88,7 +86,7 @@
     centerAddLabel.textAlignment = NSTextAlignmentCenter;
     centerAddLabel.numberOfLines = 2;
     centerAddLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    centerAddLabel.text = NSLocalizedStringFromTableInBundle(@"No image\nTap here to add", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    centerAddLabel.text = NSLocalizedStringFromTable(@"No image\nTap here to add", @"XXTPickerCollection", nil);
     [centerAddLabel sizeToFit];
 
     centerAddLabel.center = CGPointMake(centerAddImage.bounds.size.width / 2, centerAddImage.bounds.size.height + 20.f + centerAddLabel.bounds.size.height / 2);

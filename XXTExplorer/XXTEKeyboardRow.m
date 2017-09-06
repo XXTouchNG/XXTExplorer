@@ -8,6 +8,10 @@
 
 #import "XXTEKeyboardRow.h"
 
+@interface XXTEKeyboardRow ()
+
+@end
+
 @implementation XXTEKeyboardRow
 
 - (instancetype)init {
@@ -56,8 +60,6 @@
     self.frame = CGRectMake(0, 0, barWidth, barHeight);
     self.backgroundColor = [UIColor clearColor];
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    
 }
 
 @end
