@@ -73,4 +73,6 @@
     return splitViewController.viewControllers[0];
 }
 
+// DO NOT OVERRIDE preferredDisplayMode
+
 @end

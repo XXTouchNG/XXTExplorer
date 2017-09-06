@@ -579,7 +579,8 @@ typedef enum : NSUInteger {
 {
     if (text.length == 1 &&
         [text isEqualToString:@"\n"] &&
-        XXTEDefaultsBool(XXTEEditorAutoIndent, YES) == YES) {
+        XXTEDefaultsBool(XXTEEditorAutoIndent, YES) == YES)
+    {
         // Just like what Textastic do
         
         NSString *stringRef = textView.text;
@@ -591,7 +592,8 @@ typedef enum : NSUInteger {
         else if (lastBreak.location + lastBreak.length == range.location) return YES;
         
         NSMutableString *tabStr = [NSMutableString new];
-        for (; idx < range.location; idx++) {
+        for (; idx < range.location; idx++)
+        {
             char thisChar = (char) [stringRef characterAtIndex:idx];
             if (thisChar != ' ' && thisChar != '\t') break;
             else [tabStr appendFormat:@"%c", (char)thisChar];
