@@ -13,6 +13,8 @@
 
 @interface XXTEEditorTextView ()
 
+@property (nonatomic, assign) BOOL shouldReloadContainerInsets;
+
 @end
 
 @implementation XXTEEditorTextView
@@ -37,6 +39,8 @@
 }
 
 - (void)drawRect:(CGRect)rect {
+    [self reloadContainerInsetsIfNeeded];
+    
     if (!self.lineNumberEnabled) {
         [super drawRect:rect];
         return;
@@ -73,11 +77,26 @@
 
 - (void)setLineNumberEnabled:(BOOL)lineNumberEnabled {
     _lineNumberEnabled = lineNumberEnabled;
-    UIEdgeInsets insets = lineNumberEnabled ?
-    UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth, 8, 0) :
-    UIEdgeInsetsMake(8, 8, 8, 8);
-    [self setTextContainerInset:insets];
     [self.vLayoutManager setLineNumberEnabled:lineNumberEnabled];
+    [self setShouldReloadContainerInsets:YES];
+    [self setNeedsDisplay];
+}
+
+- (void)setNeedsReloadContainerInsets {
+    self.shouldReloadContainerInsets = YES;
+}
+
+- (void)reloadContainerInsetsIfNeeded {
+    if (self.shouldReloadContainerInsets) {
+        UIEdgeInsets insets = UIEdgeInsetsZero;
+        if (self.lineNumberEnabled) {
+            insets = UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth, 8, 8);
+        } else {
+            insets = UIEdgeInsetsMake(8, 8, 8, 8);
+        }
+        [self setTextContainerInset:insets];
+        self.shouldReloadContainerInsets = NO;
+    }
 }
 
 @end

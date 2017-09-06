@@ -48,7 +48,7 @@ PODS:
 
 DEPENDENCIES:
   - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
-  - Masonry
+  - Masonry (~> 1.0.2)
   - PromiseKit (~> 1.0)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
 
@@ -75,6 +75,6 @@ SPEC CHECKSUMS:
   PromiseKit: 102844c7b5ccff53f693e0710365c445d8df3871
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
 
-PODFILE CHECKSUM: c36a71ab9c90ef64105a2c47accb94346efa0828
+PODFILE CHECKSUM: 536af80291a9fdd727b1c4d518cf1748a5d61dfd
 
 COCOAPODS: 1.2.1

@@ -20,10 +20,9 @@ typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonColorStyle) {
 
 @interface XXTEKeyboardRow : UIInputView
 
-@property(nonatomic, weak) UITextView *textView;
-@property(nonatomic, assign) XXTEKeyboardButtonStyle style;
-@property(nonatomic, copy) NSString *tabString;
-
-@property(nonatomic, assign) XXTEKeyboardButtonColorStyle colorStyle;
+@property(nonatomic, weak) id <UITextInput> textInput;
+@property(nonatomic, assign, readonly) XXTEKeyboardButtonStyle style;
+@property(nonatomic, assign, setter=setColorStyle:) XXTEKeyboardButtonColorStyle colorStyle;
+@property(nonatomic, copy, setter=setTabString:) NSString *tabString;
 
 @end

@@ -17,15 +17,6 @@
 
 @implementation XXTPickerFactory
 
-+ (NSBundle *)bundle {
-    static dispatch_once_t onceToken;
-    static NSBundle *bundle = nil;
-    dispatch_once(&onceToken, ^{
-        bundle = [NSBundle mainBundle];
-    });
-    return bundle;
-}
-
 - (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController {
     id nextPicker = [pickerTask nextPicker];
     if (nextPicker) {

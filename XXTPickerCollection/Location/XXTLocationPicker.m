@@ -50,7 +50,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];
     } else {
-        return NSLocalizedStringFromTableInBundle(@"Location", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        return NSLocalizedStringFromTable(@"Location", @"XXTPickerCollection", nil);
     }
 }
 
@@ -89,7 +89,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     [mapView setRegion:region animated:YES];
     
     MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
-    pointAnnotation.title = NSLocalizedStringFromTableInBundle(@"Drag & Drop 📌", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    pointAnnotation.title = NSLocalizedStringFromTable(@"Drag & Drop 📌", @"XXTPickerCollection", nil);
     pointAnnotation.subtitle = [NSString stringWithFormat:NSLocalizedString(kXXTMapViewAnnotationFormat, nil), defaultCoordinate.latitude, defaultCoordinate.longitude];
     pointAnnotation.coordinate = defaultCoordinate;
     [mapView addAnnotation:pointAnnotation];
@@ -102,7 +102,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Next", @"XXTPickerCollection", [XXTPickerFactory bundle], nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
 }
@@ -113,7 +113,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     if (self.pickerMeta[@"subtitle"]) {
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
-        subtitle = NSLocalizedStringFromTableInBundle(@"Select a location by dragging 📌", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        subtitle = NSLocalizedStringFromTable(@"Select a location by dragging 📌", @"XXTPickerCollection", nil);
     }
     [self updateSubtitle:subtitle];
 }

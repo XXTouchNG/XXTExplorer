@@ -20,10 +20,15 @@ static CGFloat kMinimumGutterWidth = 42.f;
 
 @end
 
+@interface XXTEEditorLayoutManager ()
+
+@end
+
+
 @implementation XXTEEditorLayoutManager {
-    NSString *CRLF;
-    NSString *SPACE;
-    NSString *TAB;
+    NSString *char_CRLF;
+    NSString *char_SPACE;
+    NSString *char_TAB;
 }
 
 - (instancetype)init
@@ -51,18 +56,28 @@ static CGFloat kMinimumGutterWidth = 42.f;
     self.allowsNonContiguousLayout = NO;
     _gutterWidth = kMinimumGutterWidth;
     
-    _lineAreaInset = UIEdgeInsetsMake(0.0, 10.0, 0, 4.0);
+    _lineAreaInset = UIEdgeInsetsMake(0.0, 12.0, 0.0, 4.0);
     _lineNumberColor = [UIColor grayColor];
-    _lineNumberFont = [UIFont systemFontOfSize:10.0];
+    _lineNumberFont = [UIFont systemFontOfSize:14.0];
     _invisibleColor = [UIColor lightGrayColor];
     _invisibleFont = [UIFont systemFontOfSize:14.f];
     
     unichar crlf = 0x00B6;
-    CRLF = [[NSString alloc] initWithCharacters:&crlf length:1];
+    char_CRLF = [[NSString alloc] initWithCharacters:&crlf length:1];
     unichar space = 0x00B7;
-    SPACE = [[NSString alloc] initWithCharacters:&space length:1];
+    char_SPACE = [[NSString alloc] initWithCharacters:&space length:1];
     unichar tab = 0x25B8;
-    TAB = [[NSString alloc] initWithCharacters:&tab length:1];
+    char_TAB = [[NSString alloc] initWithCharacters:&tab length:1];
+}
+
+- (void)setLineNumberFont:(UIFont *)lineNumberFont {
+    _lineNumberFont = lineNumberFont;
+    [self reloadGutterWidth];
+}
+
+- (void)reloadGutterWidth {
+    CGFloat gutterWidth = [@"000000" sizeWithAttributes:@{ NSFontAttributeName: self.lineNumberFont }].width;
+    _gutterWidth = gutterWidth;
 }
 
 #pragma mark - Convenience
@@ -166,21 +181,23 @@ static CGFloat kMinimumGutterWidth = 42.f;
     __block CGRect gutterRect = CGRectZero;
     __block NSUInteger paraNumber;
     
+    @weakify(self);
     [self enumerateLineFragmentsForGlyphRange:glyphsToShow
                                    usingBlock:^
      (CGRect rect, CGRect usedRect, NSTextContainer *textContainer, NSRange glyphRange, BOOL *stop)
      {
+         @strongify(self);
          NSRange charRange = [self characterRangeForGlyphRange:glyphRange actualGlyphRange:nil];
          NSRange paraRange = [self.textStorage.string paragraphRangeForRange:charRange];
          
          //   Only draw line numbers for the paragraph's first line fragment. Subsequent fragments are wrapped portions of the paragraph and don't get the line number.
          if (charRange.location == paraRange.location) {
-             gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self->_gutterWidth, rect.size.height), origin.x, origin.y);
+             gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self.gutterWidth, rect.size.height), origin.x, origin.y);
              paraNumber = [self _paraNumberForRange:charRange];
              NSString *lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 1];
              CGSize size = [lineNumber sizeWithAttributes:attrs];
              
-             [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self->_lineAreaInset.right - size.width - self->_gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0)
+             [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0)
              withAttributes:attrs];
          }
          
@@ -208,16 +225,16 @@ static CGFloat kMinimumGutterWidth = 42.f;
             switch ([docContents characterAtIndex:i])
             {
                 case 0x20:
-                    glyph = SPACE;
+                    glyph = char_SPACE;
                     break;
                 case '\t':
-                    glyph = TAB;
+                    glyph = char_TAB;
                     break;
                 case 0x2028:
                 case 0x2029:
                 case '\n':
                 case '\r':
-                    glyph = CRLF;
+                    glyph = char_CRLF;
                     break;
                 default:
                     glyph = nil;

@@ -84,7 +84,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];
     } else {
-        return NSLocalizedStringFromTableInBundle(@"Application", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        return NSLocalizedStringFromTable(@"Application", @"XXTPickerCollection", nil);
     }
 }
 
@@ -105,10 +105,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     _allApplications = @[];
 
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-    searchBar.placeholder = NSLocalizedStringFromTableInBundle(@"Search Application", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    searchBar.placeholder = NSLocalizedStringFromTable(@"Search Application", @"XXTPickerCollection", nil);
     searchBar.scopeButtonTitles = @[
-            NSLocalizedStringFromTableInBundle(@"Name", @"XXTPickerCollection", [XXTPickerFactory bundle], nil),
-            NSLocalizedStringFromTableInBundle(@"Bundle ID", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+            NSLocalizedStringFromTable(@"Name", @"XXTPickerCollection", nil),
+            NSLocalizedStringFromTable(@"Bundle ID", @"XXTPickerCollection", nil)
     ];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -125,7 +125,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[XXTPickerFactory bundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -153,7 +153,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Next", @"XXTPickerCollection", [XXTPickerFactory bundle], nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -167,7 +167,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if (self.pickerMeta[@"subtitle"]) {
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
-        subtitle = NSLocalizedStringFromTableInBundle(@"Select an application.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        subtitle = NSLocalizedStringFromTable(@"Select an application.", @"XXTPickerCollection", nil);
     }
     [self updateSubtitle:subtitle];
 }
@@ -357,7 +357,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #pragma mark - UISearchDisplayDelegate
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
-    [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[XXTPickerFactory bundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
     XXTPickerNavigationController *navController = ((XXTPickerNavigationController *)self.navigationController);
     [navController.popupBar setHidden:YES];
 }
