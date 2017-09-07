@@ -17,6 +17,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextViewNotifications:) name:UITextViewTextDidBeginEditingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextViewNotifications:) name:UITextViewTextDidEndEditingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextViewNotifications:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)dismissStateNotifications
@@ -24,6 +25,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:XXTENotificationEvent object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidBeginEditingNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidEndEditingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
 }
 
 #pragma mark - Notifications
@@ -44,6 +46,9 @@
     } else if ([aNotification.name isEqualToString:UITextViewTextDidEndEditingNotification]) {
         // End
         [self saveDocumentIfNecessary];
+    } else if ([aNotification.name isEqualToString:UITextViewTextDidChangeNotification]) {
+        // Changed
+        [self setNeedsSaveDocument];
     }
 }
 

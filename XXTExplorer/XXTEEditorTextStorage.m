@@ -27,8 +27,14 @@
     return [_attributedString string];
 }
 
-- (void)setAttributedString:(NSAttributedString *)attrString {
+- (void)setAttributedString:(NSAttributedString *)attrString
+{
     _attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:attrString];
+}
+
+- (NSUInteger)length
+{
+    return [_attributedString length];
 }
 
 - (NSDictionary *)attributesAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range

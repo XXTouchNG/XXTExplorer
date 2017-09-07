@@ -204,15 +204,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     
     XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithName:themeName font:font];
     _theme = theme;
-    
-    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
-    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
-    
-    BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
-    if (softTabEnabled)
-        self.keyboardRow.tabString = tabWidthString;
-    else
-        self.keyboardRow.tabString = @"\t";
 }
 
 - (void)reloadLanguage {
@@ -270,8 +261,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.backgroundColor = theme.backgroundColor;
     textView.editable = !isReadOnlyMode;
     textView.tintColor = theme.caretColor;
-    textView.font = theme.font;
-    textView.textColor = theme.foregroundColor;
     
     // Layout Manager
     [textView setShowLineNumbers:isLineNumbersEnabled]; // config
@@ -293,23 +282,43 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.vTypeSetter.tabWidth = tabWidth;
     
     // Text Input
+    textView.vTextInput.language = self.language;
     textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
     
-    // Keyboard Appearance
-    if (NO == [self isDarkMode] || XXTE_PAD) {
-        textView.keyboardAppearance = UIKeyboardAppearanceLight;
-        self.keyboardRow.style = XXTEKeyboardRowStyleLight;
-    } else {
-        textView.keyboardAppearance = UIKeyboardAppearanceDark;
-        self.keyboardRow.style = XXTEKeyboardRowStyleDark;
-    }
-    if (isKeyboardRowEnabled &&
-        NO == isReadOnlyMode)
+    XXTEKeyboardRow *keyboardRow = self.keyboardRow;
+    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
+    
+    BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
+    if (softTabEnabled)
     {
-        self.keyboardRow.textInput = textView;
+        keyboardRow.tabString = tabWidthString;
+        textView.vTextInput.tabWidthString = tabWidthString;
+    }
+    else
+    {
+        keyboardRow.tabString = @"\t";
+        textView.vTextInput.tabWidthString = @"\t";
+    }
+    
+    // Keyboard Appearance
+    if (NO == [self isDarkMode] || XXTE_PAD)
+    {
+        textView.keyboardAppearance = UIKeyboardAppearanceLight;
+        keyboardRow.style = XXTEKeyboardRowStyleLight;
+    }
+    else
+    {
+        textView.keyboardAppearance = UIKeyboardAppearanceDark;
+        keyboardRow.style = XXTEKeyboardRowStyleDark;
+    }
+    if (isKeyboardRowEnabled && NO == isReadOnlyMode)
+    {
+        keyboardRow.textInput = textView;
         textView.inputAccessoryView = self.keyboardRow;
-    } else {
-        self.keyboardRow.textInput = nil;
+    }
+    else
+    {
+        keyboardRow.textInput = nil;
         textView.inputAccessoryView = nil;
     }
     
@@ -471,6 +480,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         [textStorage addLayoutManager:layoutManager];
         
         XXTEEditorTextInput *textInput = [[XXTEEditorTextInput alloc] init];
+        textInput.scrollViewDelegate = self;
+        
         XXTEEditorTextView *textView = [[XXTEEditorTextView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
         textView.delegate = textInput;
         textView.selectable = YES;
@@ -516,6 +527,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     }
     XXTEEditorTextView *textView = self.textView;
     textView.editable = NO;
+    [textView setFont:self.theme.font];
+    [textView setTextColor:self.theme.foregroundColor];
     [textView setText:string];
     textView.editable = !isReadOnlyMode;
 }
@@ -550,7 +563,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
     if (editedMask & NSTextStorageEditedCharacters) {
-        [self setNeedsSaveDocument];
+        
     }
 }
 
@@ -568,10 +581,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 - (NSRange)rangeShouldRenderOnScreen {
     XXTEEditorTextView *textView = self.textView;
-//    NSUInteger textLength = textView.text.length;
     
     CGRect bounds = textView.bounds;
-    
     UITextPosition *start = [textView characterRangeAtPoint:bounds.origin].start;
     UITextPosition *end = [textView characterRangeAtPoint:CGPointMake(CGRectGetMaxX(bounds), CGRectGetMaxY(bounds))].end;
     
@@ -580,9 +591,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (beginOffset < 0) beginOffset = 0;
     NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
     endLength += kXXTEEditorCachedRangeLength * 2;
-//    if (beginOffset + endLength > textLength) {
-//        endLength = textLength - beginOffset;
-//    }
     
     NSRange range = NSMakeRange((NSUInteger) beginOffset, (NSUInteger) endLength);
     return range;
@@ -644,9 +652,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self.rangesArray removeAllObjects];
     [self.attributesArray removeAllObjects];
     [self.renderedSet removeAllIndexes];
-//    NSRange wholeRange = NSMakeRange(0, self.textView.text.length);
-//    [self.rangesArray addObject:[NSValue valueWithRange:wholeRange]];
-//    [self.attributesArray addObject:self.theme.defaultAttributes];
 }
 
 #pragma mark - Lazy Flags

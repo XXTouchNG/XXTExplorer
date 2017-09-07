@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXTEEditorLanguage;
+
 @interface XXTEEditorTextInput : NSObject <UITextViewDelegate>
 
+@property (nonatomic, strong) XXTEEditorLanguage *language;
+
 @property (nonatomic, assign) BOOL autoIndent;
+@property (nonatomic, strong) NSString *tabWidthString;
+@property (nonatomic, weak) id <UIScrollViewDelegate> scrollViewDelegate;
 
 @end
