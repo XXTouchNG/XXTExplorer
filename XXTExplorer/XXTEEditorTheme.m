@@ -9,34 +9,52 @@
 #import "XXTEEditorTheme.h"
 #import "UIColor+SKColor.h"
 
+#import "SKTheme.h"
+
 @implementation XXTEEditorTheme
 
-- (instancetype)initWithIdentifier:(NSString *)identifier font:(UIFont *)font {
+- (instancetype)initWithName:(NSString *)name font:(UIFont *)font {
     if (self = [super init]) {
         _font = font;
-        _identifier = identifier;
+        _name = name;
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;
         _caretColor = XXTE_COLOR;
         _selectionColor = XXTE_COLOR;
         _invisibleColor = UIColor.blackColor;
-        NSString *themePath = [[NSBundle mainBundle] pathForResource:identifier ofType:@"tmTheme"];
-        if (themePath) {
-            NSDictionary *themeDictionary = [[NSDictionary alloc] initWithContentsOfFile:themePath];
-            if (themeDictionary) {
-                NSArray <NSDictionary *> *themeSettings = themeDictionary[@"settings"];
-                NSDictionary *globalTheme = nil;
-                for (NSDictionary *themeSetting in themeSettings) {
-                    if (!themeSetting[@"scope"]) {
-                        globalTheme = themeSetting[@"settings"];
-                        break;
-                    }
-                }
-                if (globalTheme) {
-                    [self setupWithDictionary:globalTheme];
-                }
+        
+        NSString *themeMetasPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
+        assert(themeMetasPath);
+        NSArray *themeMetas = [[NSArray alloc] initWithContentsOfFile:themeMetasPath];
+        assert([themeMetas isKindOfClass:[NSArray class]]);
+        BOOL registered = NO;
+        for (NSDictionary *themeMeta in themeMetas) {
+            if ([themeMeta[@"name"] isEqualToString:name]) {
+                registered = YES;
+                break;
             }
         }
+        assert(registered);
+        
+        NSString *themePath = [[NSBundle mainBundle] pathForResource:name ofType:@"tmTheme"];
+        assert(themePath);
+        NSDictionary *themeDictionary = [[NSDictionary alloc] initWithContentsOfFile:themePath];
+        assert([themeDictionary isKindOfClass:[NSDictionary class]]);
+        NSArray <NSDictionary *> *themeSettings = themeDictionary[@"settings"];
+        assert([themeSettings isKindOfClass:[NSArray class]]);
+        NSDictionary *globalTheme = nil;
+        for (NSDictionary *themeSetting in themeSettings) {
+            if (!themeSetting[@"scope"]) {
+                globalTheme = themeSetting[@"settings"];
+                break;
+            }
+        }
+        assert([globalTheme isKindOfClass:[NSDictionary class]]);
+        [self setupWithDictionary:globalTheme];
+        
+        SKTheme *rawTheme = [[SKTheme alloc] initWithDictionary:themeDictionary font:font];
+        assert(rawTheme);
+        _rawTheme = rawTheme;
     }
     return self;
 }
@@ -47,10 +65,15 @@
     _caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
     _selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
     _invisibleColor = [UIColor colorWithHex:dictionary[@"invisibles"]];
+    _tabWidth = [@" " sizeWithAttributes:self.defaultAttributes].width;
 }
 
 - (NSDictionary *)defaultAttributes {
-    return @{ NSForegroundColorAttributeName: self.foregroundColor, NSBackgroundColorAttributeName: self.backgroundColor, NSFontAttributeName: self.font };
+    return @{
+             NSForegroundColorAttributeName: self.foregroundColor,
+             NSBackgroundColorAttributeName: self.backgroundColor,
+             NSFontAttributeName: self.font
+             };
 }
 
 @end

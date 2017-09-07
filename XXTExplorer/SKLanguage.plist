@@ -1,22 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>lua</key>
+<array>
 	<dict>
+		<key>comments</key>
+		<dict>
+			<key>TM_COMMENT_START</key>
+			<string>--</string>
+			<key>TM_COMMENT_START_2</key>
+			<string>--[[</string>
+			<key>TM_COMMENT_END_2</key>
+			<string>]]</string>
+		</dict>
+		<key>indent</key>
+		<dict>
+			<key>decreaseIndentPattern</key>
+			<string>^\s*((\b(elseif|else|end|until)\b)|(\})|(\)))</string>
+			<key>increaseIndentPattern</key>
+			<string>^([^-]|-(?!-))*((\b(else|function|then|do|repeat)\b((?!\b(end|until)\b).)*)|(\{\s*))$</string>
+		</dict>
+		<key>folding</key>
+		<dict>
+			<key>foldingStartMarker</key>
+			<string>\b(function|local\s+function|then|do|repeat)\b|{[ \t]*$|\[\[</string>
+			<key>foldingStopMarker</key>
+			<string>\bend\b|^\s*}|\]\]</string>
+		</dict>
 		<key>identifier</key>
 		<string>source.lua</string>
 		<key>name</key>
-		<string>Lua (*.lua)</string>
-		<key>line-comment</key>
-		<string>--</string>
+		<string>lua</string>
+		<key>displayName</key>
+		<string>Lua (*.lua, *.snippet)</string>
+		<key>extensions</key>
+		<array>
+			<string>lua</string>
+			<string>snippet</string>
+		</array>
 	</dict>
-	<key>json</key>
 	<dict>
+		<key>indent</key>
+		<dict>
+			<key>decreaseIndentPattern</key>
+			<string>^\s*[}\]],?\s*$</string>
+			<key>increaseIndentPattern</key>
+			<string>^.*(\{[^}]*|\[[^\]]*)$</string>
+		</dict>
+		<key>folding</key>
+		<dict>
+			<key>foldingStartMarker</key>
+			<string>(?x:		  # turn on extended mode
+                            ^         # a line beginning with
+                            \s*       # some optional space
+                            [{\[]     # the start of an object or array
+                            (?!       # but not followed by
+                              .*      # whatever
+                              [}\]]   # and the close of an object or array
+                              ,?      # an optional comma
+                              \s*     # some optional space
+                              $       # at the end of the line
+                            )         
+                            |         # ...or...
+                            [{\[]     # the start of an object or array
+                            \s*       # some optional space
+                            $         # at the end of the line
+                          )</string>
+			<key>foldingStopMarker</key>
+			<string>(?x:        # turn on extended mode
+	                        ^        # a line beginning with
+	                        \s*      # some optional space
+	                        [}\]]    # and the close of an object or array
+	                      )</string>
+		</dict>
 		<key>identifier</key>
 		<string>source.json</string>
 		<key>name</key>
+		<string>json</string>
+		<key>displayName</key>
 		<string>JSON (*.json)</string>
+		<key>extensions</key>
+		<array>
+			<string>json</string>
+		</array>
 	</dict>
-</dict>
+</array>
 </plist>

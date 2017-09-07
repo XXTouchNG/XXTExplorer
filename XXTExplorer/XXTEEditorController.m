@@ -16,10 +16,13 @@
 #import "XXTENotificationCenterDefines.h"
 
 #import "XXTEEditorTheme.h"
+#import "XXTEEditorLanguage.h"
 
 #import "XXTEEditorTextView.h"
 #import "XXTEEditorTextStorage.h"
 #import "XXTEEditorLayoutManager.h"
+#import "XXTEEditorTypeSetter.h"
+#import "XXTEEditorTextInput.h"
 
 #import "XXTEKeyboardRow.h"
 
@@ -29,11 +32,8 @@
 #import "XXTEEditorController+State.h"
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorController+Settings.h"
-#import "XXTEEditorController+NSLayoutManagerDelegate.h"
 #import "XXTEEditorController+Menu.h"
 
-#import "SKHelper.h"
-#import "SKHelperConfig.h"
 #import "SKAttributedParser.h"
 #import "SKRange.h"
 
@@ -42,27 +42,22 @@
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
-typedef enum : NSUInteger {
-    XXTEEditorControllerReloadTypeNone = 0,
-    XXTEEditorControllerReloadTypeHard,
-    XXTEEditorControllerReloadTypeSoft
-} XXTEEditorControllerReloadType;
-
-@interface XXTEEditorController () <UITextViewDelegate, UIScrollViewDelegate, NSTextStorageDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 @property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
 
+@property (nonatomic, strong, readonly) SKAttributedParser *parser;
 @property (nonatomic, assign) BOOL isRendering;
 @property (atomic, strong) NSMutableIndexSet *renderedSet;
 @property (atomic, strong) NSMutableArray <NSValue *> *rangesArray;
 @property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
 
-@property (nonatomic, assign) XXTEEditorControllerReloadType reloadType;
 @property (nonatomic, assign) BOOL shouldSaveDocument;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
 @property (nonatomic, assign) BOOL shouldRefreshNagivationBar;
+@property (nonatomic, assign) BOOL shouldReloadAll;
 
 @end
 
@@ -179,20 +174,16 @@ typedef enum : NSUInteger {
     
     [self reloadDefaults];
     [self reloadTheme];
+    [self reloadLanguage];
     [self reloadParser];
 }
 
 - (void)reloadAll {
     [self reloadDefaults];
     [self reloadTheme];
+    [self reloadLanguage];
     [self reloadParser];
     [self reloadViewConstraints];
-    [self reloadViewStyle];
-    [self reloadContent];
-    [self reloadAttributes];
-}
-
-- (void)reloadStyle {
     [self reloadViewStyle];
     [self reloadContent];
     [self reloadAttributes];
@@ -205,61 +196,38 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadTheme {
-    NSString *themeIdentifier = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
+    NSString *themeName = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
     
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
     CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
     UIFont *font = [UIFont fontWithName:fontName size:fontSize]; // config
-    XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithIdentifier:themeIdentifier font:font];
+    
+    XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithName:themeName font:font];
     _theme = theme;
     
-    NSUInteger tabWidth = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
-    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidth withString:@" " startingAtIndex:0];
-    _tabWidthValue = [tabWidthString sizeWithAttributes:theme.defaultAttributes].width;
+    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
+    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
     
     BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
-    if (softTabEnabled) {
+    if (softTabEnabled)
         self.keyboardRow.tabString = tabWidthString;
-    } else {
+    else
         self.keyboardRow.tabString = @"\t";
-    }
 }
 
-#pragma mark - BEFORE -viewDidLoad
+- (void)reloadLanguage {
+    NSString *entryExtension = [self.entryPath pathExtension];
+    if (entryExtension.length == 0)
+        return;
+    XXTEEditorLanguage *language = [[XXTEEditorLanguage alloc] initWithExtension:entryExtension];
+    _language = language;
+}
 
 - (void)reloadParser {
-    NSString *entryBaseExtension = [[self.entryPath pathExtension] lowercaseString];
-    if (entryBaseExtension.length == 0) {
+    if (!self.language.rawLanguage || !self.theme.rawTheme)
         return;
-    }
-    
-    NSString *languageBindingsPath = [[NSBundle mainBundle] pathForResource:@"SKLanguage" ofType:@"plist"];
-    NSDictionary <NSString *, NSDictionary *> *languageBindings = [[NSDictionary alloc] initWithContentsOfFile:languageBindingsPath];
-    NSDictionary *languageBinding = languageBindings[entryBaseExtension];
-    if (!languageBinding) {
-        return;
-    }
-    
-    NSString *languageIdentifier = languageBinding[@"identifier"];
-    NSString *languageLineCommentSymbol = languageBinding[@"line-comment"];
-    
-    SKHelperConfig *helperConfig = [[SKHelperConfig alloc] init];
-    helperConfig.bundle = [NSBundle mainBundle];
-    helperConfig.themeIdentifier = self.theme.identifier;
-    helperConfig.color = self.theme.foregroundColor;
-    helperConfig.languageIdentifier = languageIdentifier;
-    helperConfig.font = self.theme.font;
-    helperConfig.languageLineCommentSymbol = languageLineCommentSymbol;
-    
-    SKHelper *helper = [[SKHelper alloc] initWithConfig:helperConfig];
-    
-    if (helper.language)
-    {
-        SKAttributedParser *parser = [helper attributedParser];
-        _parser = parser;
-    }
-    
-    _helper = helper;
+    SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.rawLanguage theme:self.theme.rawTheme];
+    _parser = parser;
 }
 
 #pragma mark - AFTER -viewDidLoad
@@ -282,11 +250,13 @@ typedef enum : NSUInteger {
 - (void)reloadViewStyle {
     if (![self isViewLoaded]) return;
     
+    // Config
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, NO); // config
     BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, YES); // config
     BOOL showInvisibleCharacters = XXTEDefaultsBool(XXTEEditorShowInvisibleCharacters, NO); // config
     
+    // Theme Appearance
     XXTEEditorTheme *theme = self.theme;
     self.view.backgroundColor = theme.backgroundColor;
     self.view.tintColor = theme.foregroundColor;
@@ -303,8 +273,8 @@ typedef enum : NSUInteger {
     textView.font = theme.font;
     textView.textColor = theme.foregroundColor;
     
-    [textView setLineNumberEnabled:isLineNumbersEnabled]; // config
-    
+    // Layout Manager
+    [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     if (textView.vLayoutManager) {
         [textView setGutterLineColor:theme.foregroundColor];
         [textView setGutterBackgroundColor:theme.backgroundColor];
@@ -317,6 +287,15 @@ typedef enum : NSUInteger {
         [textView.vLayoutManager setInvisibleFont:theme.font];
     }
     
+    // Type Setter
+    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
+    CGFloat tabWidth = tabWidthEnum * theme.tabWidth;
+    textView.vTypeSetter.tabWidth = tabWidth;
+    
+    // Text Input
+    textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
+    
+    // Keyboard Appearance
     if (NO == [self isDarkMode] || XXTE_PAD) {
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
         self.keyboardRow.style = XXTEKeyboardRowStyleLight;
@@ -324,7 +303,6 @@ typedef enum : NSUInteger {
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
         self.keyboardRow.style = XXTEKeyboardRowStyleDark;
     }
-    
     if (isKeyboardRowEnabled &&
         NO == isReadOnlyMode)
     {
@@ -335,12 +313,14 @@ typedef enum : NSUInteger {
         textView.inputAccessoryView = nil;
     }
     
-    if (NO == isReadOnlyMode && self.helper.language) {
+    // Shared Menu
+    if (NO == isReadOnlyMode && nil != self.language) {
         [self registerMenuActions];
     } else {
         [self dismissMenuActions];
     }
     
+    // Set Render Flags
     [textView setNeedsDisplay];
     [self setNeedsRefreshNavigationBar];
 }
@@ -376,13 +356,9 @@ typedef enum : NSUInteger {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.reloadType == XXTEEditorControllerReloadTypeHard) {
-        self.reloadType = XXTEEditorControllerReloadTypeNone;
+    if (self.shouldReloadAll) {
+        self.shouldReloadAll = NO;
         [self reloadAll];
-    }
-    else if (self.reloadType == XXTEEditorControllerReloadTypeSoft) {
-        self.reloadType = XXTEEditorControllerReloadTypeNone;
-        [self reloadStyle];
     }
     if (self.shouldRefreshNagivationBar) {
         self.shouldRefreshNagivationBar = NO;
@@ -479,11 +455,12 @@ typedef enum : NSUInteger {
 
 - (XXTEEditorTextView *)textView {
     if (!_textView) {
-        NSTextStorage *textStorage = [[XXTEEditorTextStorage alloc] init];
+        XXTEEditorTextStorage *textStorage = [[XXTEEditorTextStorage alloc] init];
         textStorage.delegate = self;
         
-        NSLayoutManager *layoutManager = [[XXTEEditorLayoutManager alloc] init];
-        layoutManager.delegate = self;
+        XXTEEditorTypeSetter *typeSetter = [[XXTEEditorTypeSetter alloc] init];
+        XXTEEditorLayoutManager *layoutManager = [[XXTEEditorLayoutManager alloc] init];
+        layoutManager.delegate = typeSetter;
         
         NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         textContainer.lineBreakMode = NSLineBreakByWordWrapping;
@@ -493,8 +470,9 @@ typedef enum : NSUInteger {
         [textStorage removeLayoutManager:textStorage.layoutManagers.firstObject];
         [textStorage addLayoutManager:layoutManager];
         
+        XXTEEditorTextInput *textInput = [[XXTEEditorTextInput alloc] init];
         XXTEEditorTextView *textView = [[XXTEEditorTextView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
-        textView.delegate = self;
+        textView.delegate = textInput;
         textView.selectable = YES;
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.returnKeyType = UIReturnKeyDefault;
@@ -502,8 +480,10 @@ typedef enum : NSUInteger {
         
         textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
         
-        textView.vTextStorage = (XXTEEditorTextStorage *)textStorage;
-        textView.vLayoutManager = (XXTEEditorLayoutManager *)layoutManager;
+        textView.vTextStorage = textStorage;
+        textView.vTypeSetter = typeSetter;
+        textView.vLayoutManager = layoutManager;
+        textView.vTextInput = textInput;
         
         _textView = textView;
     }
@@ -565,63 +545,11 @@ typedef enum : NSUInteger {
     }
 }
 
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    [self invalidateSyntaxCaches];
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    [self saveDocumentIfNecessary];
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if (text.length == 1 &&
-        [text isEqualToString:@"\n"] &&
-        XXTEDefaultsBool(XXTEEditorAutoIndent, YES) == YES)
-    {
-        // Just like what Textastic do
-        
-        NSString *stringRef = textView.text;
-        NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, range.location)];
-        
-        NSUInteger idx = lastBreak.location + 1;
-        
-        if (lastBreak.location == NSNotFound) idx = 0;
-        else if (lastBreak.location + lastBreak.length == range.location) return YES;
-        
-        NSMutableString *tabStr = [NSMutableString new];
-        for (; idx < range.location; idx++)
-        {
-            char thisChar = (char) [stringRef characterAtIndex:idx];
-            if (thisChar != ' ' && thisChar != '\t') break;
-            else [tabStr appendFormat:@"%c", (char)thisChar];
-        }
-        
-        [textView insertText:[NSString stringWithFormat:@"\n%@", tabStr]];
-        return NO;
-    }
-    else if (text.length == 0 &&
-             range.length == 1)
-    {
-        // Auto backward? No...
-    }
-    return YES;
-}
-
 #pragma mark - NSTextStorageDelegate
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
     if (editedMask & NSTextStorageEditedCharacters) {
-//        NSRange extendedRange = NSUnionRange(editedRange, [[textStorage string] lineRangeForRange:NSMakeRange(NSMaxRange(editedRange), 0)]);
-//        [textStorage setAttributes:self.theme.defaultAttributes range:extendedRange];
-//        [self.parser attributedParseString:textStorage.string inRange:extendedRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
-//            if (attributes && NSRangeEntirelyContains(extendedRange, range)) {
-//                [textStorage addAttributes:attributes range:range];
-//            }
-//        }];
         [self setNeedsSaveDocument];
     }
 }
@@ -636,7 +564,7 @@ typedef enum : NSUInteger {
     [self renderSyntaxOnScreen];
 }
 
-#pragma mark - Render
+#pragma mark - Render Engine
 
 - (NSRange)rangeShouldRenderOnScreen {
     XXTEEditorTextView *textView = self.textView;
@@ -721,24 +649,10 @@ typedef enum : NSUInteger {
 //    [self.attributesArray addObject:self.theme.defaultAttributes];
 }
 
-#pragma mark - Needs Reload
+#pragma mark - Lazy Flags
 
 - (void)setNeedsReload {
-    self.reloadType = XXTEEditorControllerReloadTypeHard;
-}
-
-- (void)setNeedsRefresh {
-    self.reloadType = XXTEEditorControllerReloadTypeSoft;
-}
-
-#pragma mark - Save
-
-- (void)saveDocumentIfNecessary {
-    if (!self.shouldSaveDocument) return;
-    NSString *documentString = self.textView.textStorage.string;
-    NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
-    [documentData writeToFile:self.entryPath atomically:YES];
-    self.shouldSaveDocument = NO;
+    self.shouldReloadAll = YES;
 }
 
 - (void)setNeedsSaveDocument {
@@ -751,6 +665,16 @@ typedef enum : NSUInteger {
 
 - (void)setNeedsRefreshNavigationBar {
     self.shouldRefreshNagivationBar = YES;
+}
+
+#pragma mark - Save Document
+
+- (void)saveDocumentIfNecessary {
+    if (!self.shouldSaveDocument) return;
+    NSString *documentString = self.textView.textStorage.string;
+    NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
+    [documentData writeToFile:self.entryPath atomically:YES];
+    self.shouldSaveDocument = NO;
 }
 
 #pragma mark - Memory

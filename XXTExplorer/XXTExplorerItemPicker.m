@@ -185,7 +185,9 @@
 #pragma mark - UIControl Actions
 
 - (void)closeButtonItemTapped:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (_delegate && [_delegate respondsToSelector:@selector(itemPickerDidCancelSelectingItem:)]) {
+        [_delegate itemPickerDidCancelSelectingItem:self];
+    }
 }
 
 @end

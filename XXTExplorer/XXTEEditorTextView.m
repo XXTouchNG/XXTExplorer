@@ -41,7 +41,7 @@
 - (void)drawRect:(CGRect)rect {
     [self reloadContainerInsetsIfNeeded];
     
-    if (!self.lineNumberEnabled) {
+    if (!self.showLineNumbers) {
         [super drawRect:rect];
         return;
     }
@@ -75,9 +75,9 @@
     [super replaceRange:range withText:text];
 }
 
-- (void)setLineNumberEnabled:(BOOL)lineNumberEnabled {
-    _lineNumberEnabled = lineNumberEnabled;
-    [self.vLayoutManager setLineNumberEnabled:lineNumberEnabled];
+- (void)setShowLineNumbers:(BOOL)showLineNumbers {
+    _showLineNumbers = showLineNumbers;
+    [self.vLayoutManager setShowLineNumbers:showLineNumbers];
     [self setShouldReloadContainerInsets:YES];
     [self setNeedsDisplay];
 }
@@ -89,7 +89,7 @@
 - (void)reloadContainerInsetsIfNeeded {
     if (self.shouldReloadContainerInsets) {
         UIEdgeInsets insets = UIEdgeInsetsZero;
-        if (self.lineNumberEnabled) {
+        if (self.showLineNumbers) {
             insets = UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth, 8, 8);
         } else {
             insets = UIEdgeInsetsMake(8, 8, 8, 8);

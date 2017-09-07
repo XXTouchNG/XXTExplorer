@@ -15,14 +15,13 @@
 
 #import "XXTEEditorTextView.h"
 
-#import "SKHelper.h"
-#import "SKHelperConfig.h"
-
 #import "XXTECommonNavigationController.h"
 #import "XXTPickerFactory.h"
 #import "XXTPickerSnippet.h"
 
 #import "XXTPickerNavigationController.h"
+
+#import "XXTEEditorLanguage.h"
 
 @implementation XXTEEditorController (Menu)
 
@@ -49,7 +48,7 @@
         action == @selector(menuActionShiftRight:) ||
         action == @selector(menuActionCodeBlocks:)
         ) {
-        if (YES == isReadOnlyMode || nil == self.helper.language) {
+        if (YES == isReadOnlyMode || nil == self.language) {
             return NO;
         }
     }
@@ -130,7 +129,7 @@
 }
 
 - (void)menuActionComment:(UIMenuItem *)sender {
-    NSString *symbol = self.helper.config.languageLineCommentSymbol;
+    NSString *symbol = self.language.comments[@"TM_COMMENT_START"];
     if (!symbol)
         return;
     
@@ -178,6 +177,12 @@
 }
 
 #pragma mark - XXTExplorerItemPickerDelegate
+
+- (void)itemPickerDidCancelSelectingItem:(XXTExplorerItemPicker *)picker {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self setNeedsFocusTextView];
+    }];
+}
 
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path {
     XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:path];

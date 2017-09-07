@@ -13,6 +13,7 @@
 @protocol XXTExplorerItemPickerDelegate <NSObject>
 
 @optional
+- (void)itemPickerDidCancelSelectingItem:(XXTExplorerItemPicker *)picker;
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path;
 
 @end

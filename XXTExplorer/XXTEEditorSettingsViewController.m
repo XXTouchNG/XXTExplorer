@@ -130,7 +130,7 @@
     [cell5.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorLineNumbersEnabled, optionSwitch.on);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -139,7 +139,7 @@
     [cell6.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorShowInvisibleCharacters, optionSwitch.on);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *fullScreenCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -148,6 +148,7 @@
     [fullScreenCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorFullScreenWhenEditing, optionSwitch.on);
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -156,6 +157,7 @@
     [cell7.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorAutoIndent, optionSwitch.on);
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -217,7 +219,7 @@
     [cell9.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorIndentWrappedLines, optionSwitch.on);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -226,7 +228,7 @@
     [cell10.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorAutoWordWrap, optionSwitch.on);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEEditorWrapColumnCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorWrapColumnCell class]) owner:nil options:nil] lastObject];
@@ -279,7 +281,7 @@
     [cell12.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorReadOnly, optionSwitch.on);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -288,7 +290,7 @@
     [cell13.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorKeyboardRowEnabled, optionSwitch.on);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell14 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -297,7 +299,7 @@
     [cell14.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorAutoCorrection, optionSwitch.on ? UITextAutocorrectionTypeYes : UITextAutocorrectionTypeNo);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -306,7 +308,7 @@
     [cell15.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorAutoCapitalization, optionSwitch.on ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell16 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -315,7 +317,7 @@
     [cell16.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorSpellChecking, optionSwitch.on ? UITextSpellCheckingTypeYes : UITextSpellCheckingTypeNo);
-        [self.editor setNeedsRefresh];
+        [self.editor setNeedsReload];
     }];
     
     XXTEMoreSwitchNoIconCell *cell17 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];

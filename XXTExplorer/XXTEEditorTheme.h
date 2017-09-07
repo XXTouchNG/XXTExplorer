@@ -8,16 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+@class SKTheme;
+
 @interface XXTEEditorTheme : NSObject
+
+@property (nonatomic, strong, readonly) SKTheme *rawTheme;
 
 @property (nonatomic, strong, readonly) UIColor *backgroundColor;
 @property (nonatomic, strong, readonly) UIColor *foregroundColor;
 @property (nonatomic, strong, readonly) UIColor *selectionColor;
 @property (nonatomic, strong, readonly) UIColor *invisibleColor;
 @property (nonatomic, strong, readonly) UIColor *caretColor;
-@property (nonatomic, strong, readonly) NSString *identifier;
+
+@property (nonatomic, strong, readonly) NSString *name;
 @property (nonatomic, strong, readonly) UIFont *font;
-- (instancetype)initWithIdentifier:(NSString *)identifier font:(UIFont *)font;
+
+@property (nonatomic, assign) CGFloat tabWidth;
+
+- (instancetype)initWithName:(NSString *)name font:(UIFont *)font;
 - (NSDictionary *)defaultAttributes;
 
 @end
