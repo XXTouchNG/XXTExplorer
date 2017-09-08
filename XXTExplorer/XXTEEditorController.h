@@ -22,7 +22,7 @@
 - (void)setNeedsSaveDocument;
 - (void)setNeedsFocusTextView;
 
-- (void)reloadViewConstraints;
+- (void)reloadConstraints;
 - (void)renderNavigationBarTheme:(BOOL)restore;
 
 - (void)invalidateSyntaxCaches;

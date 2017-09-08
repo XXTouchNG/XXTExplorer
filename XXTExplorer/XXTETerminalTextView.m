@@ -126,7 +126,6 @@
 
 - (void)appendString:(NSString *)text withAttributes:(NSDictionary *)attrs {
     [self.textStorage beginEditing];
-//    [self insertText:[NSString stringWithFormat:@"%@", text]];
     NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
     NSAttributedString *appendAttrString = [[NSAttributedString alloc] initWithString:text attributes:attrs];
     [mutableAttrString appendAttributedString:appendAttrString];

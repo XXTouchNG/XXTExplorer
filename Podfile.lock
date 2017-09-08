@@ -47,23 +47,19 @@ PODS:
   - TOWebViewController/Core (2.2.6)
 
 DEPENDENCIES:
-  - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
+  - LGAlertView (from `../LGAlertView`)
   - Masonry (~> 1.0.2)
   - PromiseKit (~> 1.0)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
 
 EXTERNAL SOURCES:
   LGAlertView:
-    :branch: old-device
-    :git: https://github.com/Lessica/LGAlertView.git
+    :path: ../LGAlertView
   TOWebViewController:
     :branch: WKWebView
     :git: https://github.com/Lessica/TOWebViewController.git
 
 CHECKOUT OPTIONS:
-  LGAlertView:
-    :commit: ee0e4294b4dcffdab829b4d0c5a6fa523a1c0c94
-    :git: https://github.com/Lessica/LGAlertView.git
   TOWebViewController:
     :commit: a88fb82ad1139933db981306d3fa2bf43c0e2e6e
     :git: https://github.com/Lessica/TOWebViewController.git
@@ -75,6 +71,6 @@ SPEC CHECKSUMS:
   PromiseKit: 102844c7b5ccff53f693e0710365c445d8df3871
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
 
-PODFILE CHECKSUM: 536af80291a9fdd727b1c4d518cf1748a5d61dfd
+PODFILE CHECKSUM: 0064a420350c1a075e6b0a0c65b98dc9cc77c7f0
 
 COCOAPODS: 1.2.1

@@ -19,7 +19,6 @@
 @property (nonatomic, strong) XXTELuaVModel *virtualModel;
 @property (nonatomic, strong) XXTETerminalTextView *textView;
 @property (nonatomic, strong) UIBarButtonItem *launchItem;
-@property (nonatomic, strong) UIBarButtonItem *closeItem;
 @property (nonatomic, strong) UIBarButtonItem *activityIndicatorItem;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
@@ -58,28 +57,27 @@
         self.title = NSLocalizedString(@"Console", nil);
     }
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    if (self == self.navigationController.viewControllers[0]) {
-        self.navigationItem.leftBarButtonItem = self.closeItem;
-    }
-    
     self.navigationItem.rightBarButtonItem = self.launchItem;
     
     [self.view addSubview:self.textView];
     [self updateViewConstraints];
-    
     [self loadProcess:self.runImmediately];
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-    [super willMoveToParentViewController:parent];
     if (parent == nil) {
         if (self.virtualModel.running) {
-            self.closeItem.enabled = NO;
             [self shutdownVirtualMachine];
             return;
         }
     }
+    [super willMoveToParentViewController:parent];
 }
 
 - (void)dealloc {
@@ -99,8 +97,6 @@
         if (run) {
             [self performSelector:@selector(executeScript) withObject:nil afterDelay:.6f];
         }
-    } else {
-        
     }
 }
 
@@ -120,15 +116,6 @@
         _textView = textView;
     }
     return _textView;
-}
-
-- (UIBarButtonItem *)closeItem {
-    if (!_closeItem) {
-        UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeItemTapped:)];
-        closeItem.tintColor = [UIColor whiteColor];
-        _closeItem = closeItem;
-    }
-    return _closeItem;
 }
 
 - (UIBarButtonItem *)launchItem {
@@ -228,6 +215,7 @@
     BOOL result = [self.virtualModel loadFileFromPath:self.entryPath error:&err];
     if (!result && err) {
         [self.textView appendError:[NSString stringWithFormat:@"\n%@\n", [err localizedFailureReason]]];
+        self.launchItem.enabled = YES;
         return;
     } else {
         [self.textView appendMessage:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil)];
@@ -248,20 +236,16 @@
 
 - (void)launchItemTapped:(UIBarButtonItem *)sender {
     if (self.virtualModel.running) return;
-    self.launchItem.enabled =
-    self.closeItem.enabled = NO;
+    self.launchItem.enabled = NO;
     [self loadProcess:YES];
 }
 
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
     if (self.virtualModel.running) {
-        self.closeItem.enabled = NO;
         [self shutdownVirtualMachine];
         return;
     }
-    [self dismissViewControllerAnimated:YES completion:^() {
-        
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextViewDelegate
@@ -298,13 +282,11 @@
 
 - (void)virtualMachineDidChangedState:(XXTELuaVModel *)vm {
     dispatch_sync_on_main_queue(^{
-        self.closeItem.enabled = YES;
         self.textView.editable = vm.running;
         self.launchItem.enabled = !vm.running;
         if (!vm.running) {
             [self.activityIndicator stopAnimating];
             [self.navigationItem setRightBarButtonItem:self.launchItem];
-            self.closeItem.title = NSLocalizedString(@"Close", nil);
             if ([self.textView isFirstResponder]) {
                 [self.textView resignFirstResponder];
             }
@@ -312,7 +294,6 @@
         } else {
             [self.navigationItem setRightBarButtonItem:self.activityIndicatorItem];
             [self.activityIndicator startAnimating];
-            self.closeItem.title = NSLocalizedString(@"Stop", nil);
         }
     });
 }
@@ -322,17 +303,13 @@
 - (void)updateTextViewInsetsWithKeyboardNotification:(NSNotification *)notification
 {
     UIEdgeInsets newInsets = UIEdgeInsetsZero;
-    
     if (notification)
     {
         CGRect keyboardFrame;
-        
         [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardFrame];
         keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
-        
         newInsets.bottom = self.view.frame.size.height - keyboardFrame.origin.y;
     }
-    
     UITextView *textView = self.textView;
     textView.contentInset = newInsets;
     textView.scrollIndicatorInsets = newInsets;

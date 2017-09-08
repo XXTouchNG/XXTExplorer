@@ -11,34 +11,18 @@
 
 @interface XUIListHeaderView ()
 
+@property (nonatomic, strong) UILabel *headerLabel;
+@property (nonatomic, strong) UILabel *subheaderLabel;
+
+@property (nonatomic, strong) NSDictionary *headerAttributes;
+@property (nonatomic, strong) NSDictionary *subheaderAttributes;
+
+@property (nonatomic, assign) CGFloat headerHeight;
+@property (nonatomic, assign) CGFloat subheaderHeight;
+
 @end
 
 @implementation XUIListHeaderView
-
-+ (BOOL)requiresConstraintBasedLayout {
-    return YES;
-}
-
-- (void)updateConstraints {
-    [super updateConstraints];
-}
-
-- (void)makeConstraints {
-    [self.headerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self).offset(20);
-        make.trailing.equalTo(self).offset(-20);
-        make.top.equalTo(self).offset(40);
-    }];
-    [self.subheaderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self.headerLabel);
-        make.trailing.equalTo(self.headerLabel);
-        make.top.equalTo(self.headerLabel.mas_bottom).offset(12);
-    }];
-    [self mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.leading.trailing.top.equalTo(self.superview);
-        make.bottom.equalTo(self.subheaderLabel.mas_bottom).offset(20);
-    }];
-}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -55,19 +39,31 @@
 }
 
 - (void)setup {
+    _headerAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:45.f],
+                           NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    _subheaderAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f],
+                              NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    
     [self addSubview:self.headerLabel];
     [self addSubview:self.subheaderLabel];
-    [self makeConstraints];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.headerLabel.frame = CGRectMake(20.f, 20.f, self.bounds.size.width - 40.f, self.headerHeight);
+    self.subheaderLabel.frame = CGRectMake(20.f, 20.f + self.headerHeight + 12.f, self.bounds.size.width - 40.f, self.subheaderHeight);
+}
+
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake(self.bounds.size.width, 20.f + CGRectGetHeight(self.headerLabel.bounds) + 12.f + CGRectGetHeight(self.subheaderLabel.bounds) + 20.f);
 }
 
 #pragma mark - UIView Getters
 
 - (UILabel *)headerLabel {
     if (!_headerLabel) {
-        UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20.f, self.bounds.size.width, 80.f)];
+        UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         headerLabel.backgroundColor = UIColor.clearColor;
-        headerLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:45.f];
-        headerLabel.textColor = [UIColor colorWithWhite:0.f alpha:.85f];
         headerLabel.textAlignment = NSTextAlignmentCenter;
         headerLabel.numberOfLines = 1;
         headerLabel.lineBreakMode = NSLineBreakByClipping;
@@ -78,16 +74,32 @@
 
 - (UILabel *)subheaderLabel {
     if (!_subheaderLabel) {
-        UILabel *subheaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20.f + 80.f + 12.f, self.bounds.size.width, 24.f)];
+        UILabel *subheaderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         subheaderLabel.backgroundColor = UIColor.clearColor;
-        subheaderLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f];
-        subheaderLabel.textColor = [UIColor colorWithWhite:0.f alpha:.85f];
         subheaderLabel.textAlignment = NSTextAlignmentCenter;
         subheaderLabel.numberOfLines = 0;
         subheaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _subheaderLabel = subheaderLabel;
     }
     return _subheaderLabel;
+}
+
+- (void)setHeaderText:(NSString *)headerText {
+    _headerText = headerText;
+    
+    NSAttributedString *attributedHeaderText = [[NSAttributedString alloc] initWithString:headerText attributes:self.headerAttributes];
+    [self.headerLabel setAttributedText:attributedHeaderText];
+    
+    self.headerHeight = [attributedHeaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - 40.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
+}
+
+- (void)setSubheaderText:(NSString *)subheaderText {
+    _subheaderText = subheaderText;
+    
+    NSAttributedString *attributedSubheaderText = [[NSAttributedString alloc] initWithString:subheaderText attributes:self.subheaderAttributes];
+    [self.subheaderLabel setAttributedText:attributedSubheaderText];
+    
+    self.subheaderHeight = [attributedSubheaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - 40.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
 }
 
 @end

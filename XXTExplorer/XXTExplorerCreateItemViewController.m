@@ -232,7 +232,20 @@ typedef enum : NSUInteger {
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             return 66.f;
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
-            return UITableViewAutomaticDimension;
+            if (XXTE_SYSTEM_8) {
+                return UITableViewAutomaticDimension;
+            } else {
+                UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
+                [cell setNeedsUpdateConstraints];
+                [cell updateConstraintsIfNeeded];
+                
+                cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+                [cell setNeedsLayout];
+                [cell layoutIfNeeded];
+                
+                CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                return (height > 0) ? (height + 1.0) : 44.f;
+            }
         }
     }
     return 44.f;

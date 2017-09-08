@@ -92,7 +92,7 @@
                 showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
             }
         } else if ([buttonAction isEqualToString:@"Edit"]) {
-            if (XXTE_SYSTEM_8) {
+//            if (XXTE_SYSTEM_8) {
                 if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
                     UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
                     if (editor) {
@@ -110,9 +110,9 @@
                 } else {
                     showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]);
                 }
-            } else {
-                showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
-            }
+//            } else {
+//                showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+//            }
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {
         NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);

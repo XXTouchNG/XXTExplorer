@@ -101,6 +101,8 @@
         XUI_START_IGNORE_PARTIAL
         if (XUI_SYSTEM_9) {
             self.textLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
+        } else {
+            self.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
         }
         XUI_END_IGNORE_PARTIAL
         self.textLabel.text = nil;

@@ -57,7 +57,7 @@
         UIImage *image = [UIImage imageNamed:xui_path inBundle:self.bundle compatibleWithTraitCollection:nil];
         self.xui_imageView.image = image;
     } else {
-        NSString *imagePath = [self.bundle pathForResource:xui_path ofType:@"png"];
+        NSString *imagePath = [self.bundle pathForResource:xui_path ofType:nil];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         self.xui_imageView.image = image;
     }

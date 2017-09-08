@@ -55,6 +55,26 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (XXTE_SYSTEM_8) {
+        return UITableViewAutomaticDimension;
+    } else {
+        XXTEMoreTitleValueCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
+        [self configureCell:cell forRowAtIndexPath:indexPath];
+        
+        [cell setNeedsUpdateConstraints];
+        [cell updateConstraintsIfNeeded];
+        
+        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
+        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        return (height > 0) ? (height + 1.0) : 44.f;
+    }
+    return 44.f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
     {
@@ -65,58 +85,62 @@
             cell = [[XXTEMoreTitleValueCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                  reuseIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
         }
-        cell.tintColor = XXTE_COLOR;
-        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        id pairKey = self.allKeys[indexPath.row];
-        Class keyClass = [pairKey class];
-        BOOL supportedKey = NO;
-        for (Class supportedType in supportedTypes) {
-            if ([keyClass isSubclassOfClass:supportedType]) {
-                supportedKey = YES;
-                break;
-            }
-        }
-        if (supportedKey)
-        {
-            if ([pairKey isKindOfClass:[NSString class]]) {
-                cell.titleLabel.text = [self.entryBundle localizedStringForKey:pairKey value:nil table:@"Meta"];
-            } else {
-                cell.titleLabel.text = [pairKey stringValue];
-            }
-        }
-        else
-        {
-            cell.titleLabel.text = nil;
-        }
-        
-        id pairValue = ((NSDictionary *)self.RootObject)[pairKey];
-        Class valueClass = [pairValue class];
-        BOOL supportedValue = NO;
-        for (Class supportedType in supportedTypes) {
-            if ([valueClass isSubclassOfClass:supportedType]) {
-                supportedValue = YES;
-                break;
-            }
-        }
-        if (supportedValue)
-        {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.valueLabel.textColor = [UIColor grayColor];
-            cell.valueLabel.text = [pairValue stringValue];
-        }
-        else
-        {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            if ([pairValue respondsToSelector:@selector(count)]) {
-                NSUInteger childCount = [pairValue count];
-                cell.valueLabel.textColor = XXTE_COLOR;
-                cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
-            }
-        }
+        [self configureCell:cell forRowAtIndexPath:indexPath];
         
         return cell;
     }
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+}
+
+- (void)configureCell:(XXTEMoreTitleValueCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.tintColor = XXTE_COLOR;
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    id pairKey = self.allKeys[indexPath.row];
+    Class keyClass = [pairKey class];
+    BOOL supportedKey = NO;
+    for (Class supportedType in supportedTypes) {
+        if ([keyClass isSubclassOfClass:supportedType]) {
+            supportedKey = YES;
+            break;
+        }
+    }
+    if (supportedKey)
+    {
+        if ([pairKey isKindOfClass:[NSString class]]) {
+            cell.titleLabel.text = [self.entryBundle localizedStringForKey:pairKey value:nil table:@"Meta"];
+        } else {
+            cell.titleLabel.text = [pairKey stringValue];
+        }
+    }
+    else
+    {
+        cell.titleLabel.text = nil;
+    }
+    
+    id pairValue = ((NSDictionary *)self.RootObject)[pairKey];
+    Class valueClass = [pairValue class];
+    BOOL supportedValue = NO;
+    for (Class supportedType in supportedTypes) {
+        if ([valueClass isSubclassOfClass:supportedType]) {
+            supportedValue = YES;
+            break;
+        }
+    }
+    if (supportedValue)
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.valueLabel.textColor = [UIColor grayColor];
+        cell.valueLabel.text = [pairValue stringValue];
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if ([pairValue respondsToSelector:@selector(count)]) {
+            NSUInteger childCount = [pairValue count];
+            cell.valueLabel.textColor = XXTE_COLOR;
+            cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

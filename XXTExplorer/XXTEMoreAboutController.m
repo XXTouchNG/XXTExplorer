@@ -153,7 +153,9 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        return UITableViewAutomaticDimension;
+        if (indexPath.section == kXXTEMoreAboutSectionIndexWell) {
+            return 220.f;
+        }
     }
     return 44.f;
 }

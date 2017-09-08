@@ -52,6 +52,28 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (XXTE_SYSTEM_8) {
+            return UITableViewAutomaticDimension;
+        } else {
+            XXTEMoreTitleValueCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
+            [self configureCell:cell forRowAtIndexPath:indexPath];
+            
+            [cell setNeedsUpdateConstraints];
+            [cell updateConstraintsIfNeeded];
+            
+            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+            [cell setNeedsLayout];
+            [cell layoutIfNeeded];
+            
+            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            return (height > 0) ? (height + 1.0) : 44.f;
+        }
+    }
+    return 44.f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
     {
@@ -62,36 +84,40 @@
             cell = [[XXTEMoreTitleValueCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                  reuseIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
         }
-        cell.tintColor = XXTE_COLOR;
-        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        cell.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Item %lu", nil), indexPath.row];
-        id elementValue = ((NSArray *)self.RootObject)[indexPath.row];
-        Class elementClass = [elementValue class];
-        BOOL supported = NO;
-        for (Class supportedType in supportedTypes) {
-            if ([elementClass isSubclassOfClass:supportedType]) {
-                supported = YES;
-                break;
-            }
-        }
-        if (supported)
-        {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.valueLabel.textColor = [UIColor grayColor];
-            cell.valueLabel.text = [elementValue stringValue];
-        }
-        else
-        {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            if ([elementValue respondsToSelector:@selector(count)]) {
-                NSUInteger childCount = [elementValue count];
-                cell.valueLabel.textColor = XXTE_COLOR;
-                cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
-            }
-        }
+        [self configureCell:cell forRowAtIndexPath:indexPath];
         return cell;
     }
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+}
+
+- (void)configureCell:(XXTEMoreTitleValueCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.tintColor = XXTE_COLOR;
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    cell.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Item %lu", nil), indexPath.row];
+    id elementValue = ((NSArray *)self.RootObject)[indexPath.row];
+    Class elementClass = [elementValue class];
+    BOOL supported = NO;
+    for (Class supportedType in supportedTypes) {
+        if ([elementClass isSubclassOfClass:supportedType]) {
+            supported = YES;
+            break;
+        }
+    }
+    if (supported)
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.valueLabel.textColor = [UIColor grayColor];
+        cell.valueLabel.text = [elementValue stringValue];
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if ([elementValue respondsToSelector:@selector(count)]) {
+            NSUInteger childCount = [elementValue count];
+            cell.valueLabel.textColor = XXTE_COLOR;
+            cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

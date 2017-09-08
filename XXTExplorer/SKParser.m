@@ -159,7 +159,7 @@
 
 - (BOOL)expressionStringHasBackReferences:(NSRegularExpressionString *)expressionString
 {
-    if (!expressionString) return nil;
+    if (!expressionString) return NO;
     BOOL escape = NO;
     const char *expressionBuffer = expressionString.UTF8String;
     for (unsigned long i = 0; i < strlen(expressionBuffer); i++) {

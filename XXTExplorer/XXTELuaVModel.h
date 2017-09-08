@@ -30,6 +30,5 @@
 - (BOOL)loadFileFromPath:(NSString *)path error:(NSError **)error;
 - (BOOL)loadBufferFromString:(NSString *)string error:(NSError **)error;
 - (BOOL)pcallWithError:(NSError **)error;
-//- (BOOL)interactiveModeWithError:(NSError **)error;
 
 @end

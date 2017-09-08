@@ -42,7 +42,7 @@
             self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
             [self.navigationController setNavigationBarHidden:YES animated:YES];
         }
-        [self reloadViewConstraints];
+        [self reloadConstraints];
     }
 }
 
@@ -82,7 +82,7 @@
             self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
             [self.navigationController setNavigationBarHidden:NO animated:YES];
         }
-        [self reloadViewConstraints];
+        [self reloadConstraints];
     }
     
     UITextView *textView = self.textView;

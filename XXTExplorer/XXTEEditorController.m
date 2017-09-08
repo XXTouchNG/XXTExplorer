@@ -65,24 +65,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @synthesize entryPath = _entryPath;
 
-#pragma mark - Restore State
-
-- (NSString *)restorationIdentifier {
-    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
-}
-
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
-    if (_entryPath) {
-        [coder encodeObject:_entryPath forKey:@"entryPath"];
-    }
-    [super encodeRestorableStateWithCoder:coder];
-}
-
-- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
-    _entryPath = [coder decodeObjectForKey:@"entryPath"];
-    [super decodeRestorableStateWithCoder:coder];
-}
-
 #pragma mark - Editor
 
 + (NSString *)editorName {
@@ -122,7 +104,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 - (BOOL)prefersNavigationBarHidden {
-    if (XXTE_PAD || NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
+    if (XXTE_PAD || NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO))
+    {
         return NO;
     }
     return [self isEditing];
@@ -159,71 +142,60 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
+        _rangesArray = [[NSMutableArray alloc] init];
+        _attributesArray = [[NSMutableArray alloc] init];
+        _renderedSet = [[NSMutableIndexSet alloc] init];
         [self setup];
     }
     return self;
 }
 
 - (void)setup {
-    [self setRestorationIdentifier:self.restorationIdentifier];
-        
     self.hidesBottomBarWhenPushed = YES;
-    self.rangesArray = [[NSMutableArray alloc] init];
-    self.attributesArray = [[NSMutableArray alloc] init];
-    self.renderedSet = [[NSMutableIndexSet alloc] init];
-    
-    [self reloadDefaults];
-    [self reloadTheme];
-    [self reloadLanguage];
-    [self reloadParser];
+    [self prepareForView];
 }
 
 - (void)reloadAll {
-    [self reloadDefaults];
-    [self reloadTheme];
-    [self reloadLanguage];
-    [self reloadParser];
-    [self reloadViewConstraints];
-    [self reloadViewStyle];
+    [self prepareForView];
+    [self reloadConstraints];
+    [self reloadTextView];
     [self reloadContent];
     [self reloadAttributes];
 }
 
 #pragma mark - BEFORE -viewDidLoad
 
-- (void)reloadDefaults {
-    
-}
-
-- (void)reloadTheme {
+- (void)prepareForView {
+    // Theme
     NSString *themeName = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
-    
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
     CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
     UIFont *font = [UIFont fontWithName:fontName size:fontSize]; // config
+    if (themeName && fontName && font)
+    {
+        XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithName:themeName font:font];
+        _theme = theme;
+    }
     
-    XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithName:themeName font:font];
-    _theme = theme;
-}
-
-- (void)reloadLanguage {
+    // Language
     NSString *entryExtension = [self.entryPath pathExtension];
-    if (entryExtension.length == 0)
-        return;
-    XXTEEditorLanguage *language = [[XXTEEditorLanguage alloc] initWithExtension:entryExtension];
-    _language = language;
-}
-
-- (void)reloadParser {
-    if (!self.language.rawLanguage || !self.theme.rawTheme)
-        return;
-    SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.rawLanguage theme:self.theme.rawTheme];
-    _parser = parser;
+    if (entryExtension.length > 0)
+    {
+        XXTEEditorLanguage *language = [[XXTEEditorLanguage alloc] initWithExtension:entryExtension];
+        _language = language;
+    }
+    
+    // Parser
+    if (self.language.rawLanguage && self.theme.rawTheme)
+    {
+        SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.rawLanguage theme:self.theme.rawTheme];
+        _parser = parser;
+    }
 }
 
 #pragma mark - AFTER -viewDidLoad
 
-- (void)reloadViewConstraints {
+- (void)reloadConstraints {
     if (XXTE_PAD) {
         
     } else {
@@ -238,7 +210,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self updateViewConstraints]; // TODO: back gesture will break this method :-(
 }
 
-- (void)reloadViewStyle {
+- (void)reloadTextView {
     if (![self isViewLoaded]) return;
     
     // Config
@@ -252,6 +224,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     self.view.backgroundColor = theme.backgroundColor;
     self.view.tintColor = theme.foregroundColor;
     
+    // TextView
     XXTEEditorTextView *textView = self.textView;
     textView.keyboardType = UIKeyboardTypeDefault;
     textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
@@ -285,9 +258,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.vTextInput.language = self.language;
     textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
     
+    // Keyboard Row
     XXTEKeyboardRow *keyboardRow = self.keyboardRow;
     NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
-    
     BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
     if (softTabEnabled)
     {
@@ -340,12 +313,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [super viewDidLoad];
     
     [self configure];
-    [self configureSubviews];
-    [self configureConstraints];
     
-    [self reloadViewConstraints];
-    [self reloadViewStyle];
-    
+    [self reloadConstraints];
+    [self reloadTextView];
     [self reloadContent];
     [self reloadAttributes];
     
@@ -414,18 +384,16 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     }
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = self.settingsButtonItem;
-}
-
-- (void)configureSubviews {
+    
+    // Subviews
     if (XXTE_PAD) {
         
     } else {
         [self.view addSubview:self.fakeStatusBar];
     }
     [self.view addSubview:self.textView];
-}
-
-- (void)configureConstraints {
+    
+    // Constraints
     if (XXTE_PAD)
     {
         [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {

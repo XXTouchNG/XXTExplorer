@@ -137,12 +137,11 @@
     NSString *listSubheader = rootEntry[@"subheader"];
     
     if (listHeader && listSubheader) {
-        self.headerView.headerLabel.text = listHeader;
-        self.headerView.subheaderLabel.text = listSubheader;
+        self.headerView.headerText = listHeader;
+        self.headerView.subheaderText = listSubheader;
     }
     
     [self setupSubviews];
-    [self makeConstraints];
 
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
@@ -165,23 +164,23 @@
 
 - (void)setupSubviews {
     [self.view addSubview:self.tableView];
-    if (self.headerView.headerLabel.text.length > 0 &&
-        self.headerView.subheaderLabel.text.length > 0) {
+    if (self.headerView.headerText.length > 0 &&
+        self.headerView.subheaderText.length > 0) {
         [self.tableView setTableHeaderView:self.headerView];
+        if (XXTE_SYSTEM_8) {
+            
+        } else {
+            [self.headerView setNeedsLayout];
+            [self.headerView layoutIfNeeded];
+            CGFloat height = [self.headerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            
+            // update the header's frame and set it again
+            CGRect headerFrame = self.headerView.frame;
+            headerFrame.size.height = height;
+            self.headerView.frame = headerFrame;
+            self.tableView.tableHeaderView = self.headerView;
+        }
     }
-}
-
-- (void)makeConstraints {
-    if (self.headerView.headerLabel.text.length > 0 &&
-        self.headerView.subheaderLabel.text.length > 0) {
-        [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.headerView.superview);
-            make.width.equalTo(self.tableView);
-        }];
-    }
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
 }
 
 #pragma mark - UIView Getters
@@ -199,6 +198,7 @@
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         tableView.dataSource = self;
         tableView.delegate = self;
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         XUI_START_IGNORE_PARTIAL
         if (XUI_SYSTEM_9) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
@@ -236,7 +236,23 @@
     if (tableView == self.tableView) {
         XUIBaseCell *cell = self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
         CGFloat cellHeight = [cell.xui_height floatValue];
-        return (cellHeight > 0) ? cellHeight : UITableViewAutomaticDimension;
+        if (cellHeight > 0) {
+            return cellHeight;
+        } else {
+            if (XXTE_SYSTEM_8) {
+                return UITableViewAutomaticDimension;
+            } else {
+                [cell setNeedsUpdateConstraints];
+                [cell updateConstraintsIfNeeded];
+                
+                cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+                [cell setNeedsLayout];
+                [cell layoutIfNeeded];
+                
+                CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                return (height > 0) ? (height + 1.0) : 44.f;
+            }
+        }
     }
     return 0;
 }

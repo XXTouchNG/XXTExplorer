@@ -14,13 +14,13 @@
 
 #import "XXTEAppDelegate.h"
 
+static NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
 static NSString * const kXXTerminalFakeHandlerStandardOutput = @"kXXTerminalFakeHandlerStandardOutput-%@.pipe";
 static NSString * const kXXTerminalFakeHandlerStandardError = @"kXXTerminalFakeHandlerStandardError-%@.pipe";
 static NSString * const kXXTerminalFakeHandlerStandardInput = @"kXXTerminalFakeHandlerStandardInput-%@.pipe";
 
 static jmp_buf buf;
 static BOOL _running = NO;
-static NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
 
 void luaL_setPath(lua_State* L, const char *key, const char *path)
 {
@@ -147,19 +147,6 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     NSString *cPath = [NSString stringWithFormat:@"%@", [dirPath stringByAppendingPathComponent:@"?.so"]];
     luaL_setPath(luaState, "path", sPath.UTF8String);
     luaL_setPath(luaState, "cpath", cPath.UTF8String);
-}
-
-#pragma mark - REPL
-
-- (BOOL)interactiveModeWithError:(NSError **)error {
-    NSString *rootPath = [XXTEAppDelegate sharedRootPath];
-    [self setCurrentPath:rootPath];
-    self.running = YES;
-    char *argv[2] = {(char *)[rootPath UTF8String], ""};
-    char **argv_p = argv;
-    int load_stat = interactive(1, argv_p);
-    self.running = NO;
-    return [self checkCode:load_stat error:error];
 }
 
 #pragma mark - load from file

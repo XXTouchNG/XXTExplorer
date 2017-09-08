@@ -10,7 +10,7 @@
 
 @interface XUIListHeaderView : UIView
 
-@property (nonatomic, strong) UILabel *headerLabel;
-@property (nonatomic, strong) UILabel *subheaderLabel;
+@property (nonatomic, strong) NSString *headerText;
+@property (nonatomic, strong) NSString *subheaderText;
 
 @end

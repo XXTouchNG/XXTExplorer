@@ -9,7 +9,7 @@ target 'XXTExplorer' do
     pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'
     pod 'PromiseKit', '~> 1.0'
     # pod 'LGAlertView', '~> 2.4.0'
-    # pod 'LGAlertView', :path => '../LGAlertView'
-    pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device'
+     pod 'LGAlertView', :path => '../LGAlertView'
+#    pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device'
     pod 'Masonry', '~> 1.0.2'
 end

@@ -63,6 +63,23 @@
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (XXTE_SYSTEM_8) {
+        return UITableViewAutomaticDimension;
+    } else {
+        UITableViewCell *cell = self.singleValueCell;
+        [cell setNeedsUpdateConstraints];
+        [cell updateConstraintsIfNeeded];
+        
+        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
+        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        return (height > 0) ? (height + 1.0) : 44.f;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {

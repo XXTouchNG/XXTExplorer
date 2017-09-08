@@ -169,14 +169,19 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTExplorerDownloadViewSectionIndexSource) {
-            if (indexPath.row == 0) {
-                return UITableViewAutomaticDimension;
-            }
-        } else if (indexPath.section == kXXTExplorerDownloadViewSectionIndexTarget) {
-            if (indexPath.row == 0) {
-                return UITableViewAutomaticDimension;
-            }
+        if (XXTE_SYSTEM_8) {
+            return UITableViewAutomaticDimension;
+        } else {
+            UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
+            [cell setNeedsUpdateConstraints];
+            [cell updateConstraintsIfNeeded];
+            
+            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+            [cell setNeedsLayout];
+            [cell layoutIfNeeded];
+            
+            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            return (height > 0) ? (height + 1.0) : 44.f;
         }
     }
     return 44.f;
