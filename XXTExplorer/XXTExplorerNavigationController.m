@@ -21,12 +21,6 @@
 
 @implementation XXTExplorerNavigationController
 
-//#pragma mark - Restore State
-//
-//- (NSString *)restorationIdentifier {
-//    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
-//}
-
 - (instancetype)init {
     if (self = [super init]) {
         [self setup];
@@ -42,7 +36,7 @@
 }
 
 - (void)setup {
-//    [self setRestorationIdentifier:self.restorationIdentifier];
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -55,6 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationBar.translucent = NO;
     
     self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"My Scripts", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];
 }

@@ -50,12 +50,12 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.headerLabel.frame = CGRectMake(20.f, 20.f, self.bounds.size.width - 40.f, self.headerHeight);
-    self.subheaderLabel.frame = CGRectMake(20.f, 20.f + self.headerHeight + 12.f, self.bounds.size.width - 40.f, self.subheaderHeight);
+    self.headerLabel.frame = CGRectMake(20.f, 40.f, self.bounds.size.width - 40.f, self.headerHeight);
+    self.subheaderLabel.frame = CGRectMake(20.f, 40.f + self.headerHeight + 12.f, self.bounds.size.width - 40.f, self.subheaderHeight);
 }
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(self.bounds.size.width, 20.f + CGRectGetHeight(self.headerLabel.bounds) + 12.f + CGRectGetHeight(self.subheaderLabel.bounds) + 20.f);
+    return CGSizeMake(self.bounds.size.width, 40.f + CGRectGetHeight(self.headerLabel.bounds) + 12.f + CGRectGetHeight(self.subheaderLabel.bounds) + 20.f);
 }
 
 #pragma mark - UIView Getters
