@@ -173,7 +173,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
 - (void)drawBackgroundForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin
 {
     [super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
-    if (self.lineNumberEnabled == NO) return;
+    if (self.showLineNumbers == NO) return;
     
     //  Draw line numbers.  Note that the background for line number gutter is drawn by the LineNumberTextView class.
     NSDictionary* attrs = @{NSFontAttributeName: self.lineNumberFont, NSForegroundColorAttributeName: self.lineNumberColor};

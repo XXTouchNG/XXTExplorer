@@ -32,27 +32,15 @@
         _name = dictionary[@"name"];
         NSString *matchExpr = dictionary[@"match"];
         if ([matchExpr isKindOfClass:[NSString class]]) {
-            _match = [[NSRegularExpression alloc] initWithPattern:matchExpr
-                                                          options:NSRegularExpressionAllowCommentsAndWhitespace |
-                                                                  NSRegularExpressionAnchorsMatchLines |
-                                                                  NSRegularExpressionUseUnixLineSeparators
-                                                            error:nil];
+            _match = matchExpr;
         }
         NSString *beginExpr = dictionary[@"begin"];
         if ([beginExpr isKindOfClass:[NSString class]]) {
-            _patternBegin = [[NSRegularExpression alloc] initWithPattern:beginExpr
-                                                                 options:NSRegularExpressionAllowCommentsAndWhitespace |
-                                                                         NSRegularExpressionAnchorsMatchLines |
-                                                                         NSRegularExpressionUseUnixLineSeparators
-                                                                   error:nil];
+            _patternBegin = beginExpr;
         }
         NSString *endExpr = dictionary[@"end"];
         if ([endExpr isKindOfClass:[NSString class]]) {
-            _patternEnd = [[NSRegularExpression alloc] initWithPattern:endExpr
-                                                               options:NSRegularExpressionAllowCommentsAndWhitespace |
-                                                                       NSRegularExpressionAnchorsMatchLines |
-                                                                       NSRegularExpressionUseUnixLineSeparators
-                                                                 error:nil];
+            _patternEnd = endExpr;
         }
         _applyEndPatternLast = [dictionary[@"applyEndPatternLast"] boolValue];
         NSDictionary *dictionary1 = dictionary[@"beginCaptures"];

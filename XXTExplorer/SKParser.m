@@ -36,6 +36,12 @@
 
 @end
 
+@interface SKParser ()
+
+@property (nonatomic, strong) NSMutableDictionary <NSRegularExpressionString *, NSRegularExpression *> *regularExpressionCaches;
+
+@end
+
 @implementation SKParser {
 
 }
@@ -47,6 +53,7 @@
     if (self)
     {
         _language = language;
+        _regularExpressionCaches = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -85,9 +92,9 @@
     while (startIndex < endIndex)
     {
         SKPattern *endPattern = endScope.attribute ? endScope.attribute : self.language.pattern;
-        SKResultSet *results = [self matchSubpatternsOfPattern:endPattern inRange:NSMakeRange(startIndex, endIndex - startIndex)];
+        SKResultSet *results = [self matchSubpatternsOfPattern:endPattern inRange:NSMakeRange(startIndex, endIndex - startIndex) beginResults:nil];
         if (!results) return;
-        [allResults addResult:[[SKResult alloc] initWithIdentifier:endScope.patternIdentifier range:results.range attribute:nil]];
+        [allResults addResult:[[SKResult alloc] initWithIdentifier:endScope.patternIdentifier range:results.range rawResult:nil attribute:nil]];
 
         if (results.range.length != 0)
         {
@@ -111,7 +118,95 @@
     [self applyResults:allResults callback:callback];
 }
 
-// MARK: - Private
+// MARK: - Expression Escape
+
+- (NSString *)escapedExpressionStringForString:(NSString *)string
+{
+    if (!string) return nil;
+    static char const* special = "\\|([{}]).?*+^$";
+    const char *stringBuffer = string.UTF8String;
+    NSMutableString *outString = [[NSMutableString alloc] init];
+    for (unsigned long i = 0; i < strlen(stringBuffer); i++)
+    {
+        const char ch = stringBuffer[i];
+        if (strchr(special, ch))
+        {
+            [outString appendString:@"\\"];
+        }
+        [outString appendFormat:@"%c", ch];
+    }
+    return [outString copy];
+}
+
+// MARK: - Expression Caches
+
+- (NSRegularExpression *)cachedExpressionForExpressionString:(NSRegularExpressionString *)expressionString
+{
+    if (!expressionString) return nil;
+    NSRegularExpression *cachedPattern = self.regularExpressionCaches[expressionString];
+    if (cachedPattern) {
+        
+    } else {
+        cachedPattern = [[NSRegularExpression alloc] initWithPattern:expressionString options:NSRegularExpressionAllowCommentsAndWhitespace | NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnixLineSeparators error:nil];
+        if (cachedPattern) {
+            self.regularExpressionCaches[expressionString] = cachedPattern;
+        }
+    }
+    return cachedPattern;
+}
+
+// MARK: - Back References
+
+- (BOOL)expressionStringHasBackReferences:(NSRegularExpressionString *)expressionString
+{
+    if (!expressionString) return nil;
+    BOOL escape = NO;
+    const char *expressionBuffer = expressionString.UTF8String;
+    for (unsigned long i = 0; i < strlen(expressionBuffer); i++) {
+        const char ch = expressionBuffer[i];
+        if (escape && isdigit(ch)) {
+            return YES;
+        }
+        escape = !escape && ch == '\\';
+    }
+    return NO;
+}
+
+- (NSString *)expandExpressionStringBackReferences:(NSRegularExpressionString *)expressionString
+                                  withPatternMatch:(SKPatternMatch *)patternMatch
+{
+    if (!expressionString) return nil;
+    NSTextCheckingResult *rawResult = [patternMatch.match.results.firstObject rawResult];
+    if (!rawResult) return nil;
+    BOOL escape = NO;
+    const char *expressionBuffer = expressionString.UTF8String;
+    NSMutableString *res = [[NSMutableString alloc] init];
+    for (unsigned long i = 0; i < strlen(expressionBuffer); i++) {
+        const char ch = expressionBuffer[i];
+        if (escape && isdigit(ch))
+        {
+            int i = digittoint(ch);
+            if (i <= rawResult.numberOfRanges - 1)
+            {
+                NSRange rawReferenceRange = [rawResult rangeAtIndex:i];
+                if (rawReferenceRange.location != NSNotFound)
+                {
+                    NSString *rawReference = [self.toParse.string substringWithRange:rawReferenceRange];
+                    NSString *escapedReference = [self escapedExpressionStringForString:rawReference];
+                    if (escapedReference)
+                        [res appendString:escapedReference];
+                }
+            }
+            escape = NO;
+            continue;
+        }
+        if (escape)
+            [res appendString:@"\\"];
+        if (!(escape = !escape && ch == '\\'))
+            [res appendFormat:@"%c", ch];
+    }
+    return [res copy];
+}
 
 // Algorithmic notes:
 // A pattern expression can not match a substring spanning multiple lines
@@ -133,7 +228,7 @@
 ///
 /// - returns:  The result set containing the lexical scope names with range
 ///             information or nil if aborted. May exceed range.
-- (SKResultSet *)matchSubpatternsOfPattern:(SKPattern *)pattern inRange:(NSRange)range {
+- (SKResultSet *)matchSubpatternsOfPattern:(SKPattern *)pattern inRange:(NSRange)range beginResults:(SKResultSet *)begin {
     NSUInteger stop = range.location + range.length;
     NSUInteger lineStart = range.location;
     NSUInteger lineEnd = range.location;
@@ -144,7 +239,16 @@
         while (range1.length > 0) {
             if (self.aborted) return nil;
             SKPatternMatch *bestMatchForMiddle = [self matchPatterns:pattern.subpatterns inRange:range1];
-            NSRegularExpression *patternEnd = pattern.patternEnd;
+            NSString *patternEndExpr = pattern.patternEnd;
+            NSRegularExpression *patternEnd = nil;
+            if ([self expressionStringHasBackReferences:patternEndExpr])
+            {
+                SKPatternMatch *beginMatch = [[SKPatternMatch alloc] initWithPattern:pattern match:begin];
+                NSString *expandedEndExpr = [self expandExpressionStringBackReferences:patternEndExpr withPatternMatch:beginMatch];
+                patternEnd = [self cachedExpressionForExpressionString:expandedEndExpr];
+            } else {
+                patternEnd = [self cachedExpressionForExpressionString:patternEndExpr];
+            }
             if (patternEnd) {
                 SKResultSet *endMatchResult = [self matchExpression:patternEnd inRange:range1 captures:pattern.endCaptures baseSelector:nil];
                 if (endMatchResult) {
@@ -224,14 +328,14 @@
 ///
 /// - returns: The matched pattern and the matching result. Nil on failure.
 - (SKPatternMatch *)firstMatchOfPattern:(SKPattern *)pattern inRange:(NSRange)range {
-    NSRegularExpression *expression = pattern.match;
+    NSRegularExpression *expression = [self cachedExpressionForExpressionString:pattern.match];
     if (expression) {
         SKResultSet *resultSet = [self matchExpression:expression inRange:range captures:pattern.captures baseSelector:pattern.name];
         if (resultSet.range.length != 0) {
             return [[SKPatternMatch alloc] initWithPattern:pattern match:resultSet];
         }
     } else {
-        NSRegularExpression *begin = pattern.patternBegin;
+        NSRegularExpression *begin = [self cachedExpressionForExpressionString:pattern.patternBegin];
         if (begin) {
             SKResultSet *beginResults = [self matchExpression:begin inRange:range captures:pattern.beginCaptures baseSelector:nil];
             return [[SKPatternMatch alloc] initWithPattern:pattern match:beginResults];
@@ -254,16 +358,17 @@
 /// - returns:  The result of matching the given pattern or nil on abortion.
 - (SKResultSet *)matchAfterBeginOfPattern:(SKPattern *)pattern beginResults:(SKResultSet *)begin {
     NSUInteger newLocation = NSMaxRange(begin.range);
-    SKResultSet *endResults = [self matchSubpatternsOfPattern:pattern inRange:NSMakeRange(newLocation, self.toParse.string.length - newLocation)];
+    SKResultSet *endResults = [self matchSubpatternsOfPattern:pattern inRange:NSMakeRange(newLocation, self.toParse.string.length - newLocation) beginResults:begin];
     if (!endResults) return nil;
     SKResultSet *result = [[SKResultSet alloc] initWithStartingRange:endResults.range];
     NSString *patternName = pattern.name;
     if (patternName) {
-        [result addResult:[[SKResult alloc] initWithIdentifier:patternName range:NSUnionRange(begin.range, endResults.range) attribute:nil]];
+        [result addResult:[[SKResult alloc] initWithIdentifier:patternName range:NSUnionRange(begin.range, endResults.range) rawResult:nil attribute:nil]];
     }
     [result addResult:[[SKScope alloc] initWithIdentifier:(patternName ? patternName : @"")
                                                     range:NSMakeRange(begin.range.location + begin.range.length,
                                                             NSUnionRange(begin.range, endResults.range).length - begin.range.length)
+                                                rawResult:nil
                                                 attribute:pattern]];
     [result addResultSet:begin];
     [result addResultSet:endResults];
@@ -293,7 +398,7 @@
     SKResultSet *resultSet = [[SKResultSet alloc] initWithStartingRange:result.range];
     NSString *base = baseSelector;
     if (base) {
-        [resultSet addResult:[[SKResult alloc] initWithIdentifier:base range:result.range attribute:nil]];
+        [resultSet addResult:[[SKResult alloc] initWithIdentifier:base range:result.range rawResult:result attribute:nil]];
     }
     if (captures) {
         for (NSNumber *index in captures.captureIndexes) {
@@ -307,7 +412,7 @@
             }
             NSString *scope = captures[index].name;
             if (scope) {
-                [resultSet addResult:[[SKResult alloc] initWithIdentifier:scope range:range1 attribute:nil]];
+                [resultSet addResult:[[SKResult alloc] initWithIdentifier:scope range:range1 rawResult:result attribute:nil]];
             }
         }
     }

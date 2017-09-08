@@ -16,6 +16,9 @@
 #pragma mark - Button Actions
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
+//    if ([self.textView isFirstResponder]) {
+//        [self setNeedsFocusTextView];
+//    }
     [self.textView resignFirstResponder];
     XXTEEditorSettingsViewController *settingsController = [[XXTEEditorSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     settingsController.editor = self;

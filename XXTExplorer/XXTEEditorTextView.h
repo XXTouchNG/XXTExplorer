@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTEEditorTextStorage, XXTEEditorLayoutManager;
+@class XXTEEditorTextStorage, XXTEEditorLayoutManager, XXTEEditorTypeSetter, XXTEEditorTextInput;
 
 @interface XXTEEditorTextView : UITextView
 
-@property (nonatomic, assign, getter=isLineNumberEnabled) BOOL lineNumberEnabled;
+@property (nonatomic, assign) BOOL showLineNumbers;
+
 @property (nonatomic, strong) UIColor *gutterBackgroundColor;
 @property (nonatomic, strong) UIColor *gutterLineColor;
 
 @property (nonatomic, strong) XXTEEditorTextStorage *vTextStorage;
 @property (nonatomic, strong) XXTEEditorLayoutManager *vLayoutManager;
+@property (nonatomic, strong) XXTEEditorTypeSetter *vTypeSetter;
+@property (nonatomic, strong) XXTEEditorTextInput *vTextInput;
 
 @end

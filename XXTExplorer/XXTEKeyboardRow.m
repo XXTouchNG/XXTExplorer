@@ -1,9 +1,9 @@
 //
 //  XXTEKeyboardRow.m
-//  XXTouchApp
+//  XXTExplorer
 //
-//  Created by Zheng on 9/19/16.
-//  Copyright © 2016 Zheng. All rights reserved.
+//  Created by Zheng on 06/09/2017.
+//  Copyright © 2017 Zheng. All rights reserved.
 //
 
 #import "XXTEKeyboardRow.h"
@@ -36,26 +36,27 @@
 }
 
 - (void)setup {
-    XXTEKeyboardButtonStyle style = XXTEKeyboardButtonStylePhone;
+    XXTEKeyboardRowDevice device = XXTEKeyboardRowDevicePhone;
     switch ([UIDevice currentDevice].userInterfaceIdiom) {
         case UIUserInterfaceIdiomPhone:
-            style = XXTEKeyboardButtonStylePhone;
+            device = XXTEKeyboardRowDevicePhone;
             break;
         case UIUserInterfaceIdiomPad:
-            style = XXTEKeyboardButtonStyleTablet;
+            device = XXTEKeyboardRowDeviceTablet;
             break;
         default:
             break;
     }
-    _style = style;
+    _device = device;
     
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     CGFloat barWidth = MIN(screenSize.width, screenSize.height);
     CGFloat barHeight = 44.f;
-    if (style == XXTEKeyboardButtonStyleTablet) {
+    if (device == XXTEKeyboardRowDeviceTablet)
+    {
         barHeight = 72.f;
     }
-
+    
     self.frame = CGRectMake(0, 0, barWidth, barHeight);
     self.backgroundColor = [UIColor clearColor];
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

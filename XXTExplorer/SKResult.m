@@ -10,12 +10,13 @@
 
 @implementation SKResult
 
-- (instancetype)initWithIdentifier:(NSString *)identifier range:(NSRange)range attribute:(id)attribute {
+- (instancetype)initWithIdentifier:(NSString *)identifier range:(NSRange)range rawResult:(NSTextCheckingResult *)rawResult attribute:(id)attribute {
     self = [super init];
     if (self)
     {
         _patternIdentifier = identifier;
         _range = range;
+        _rawResult = rawResult;
         _attribute = attribute;
     }
     return self;
