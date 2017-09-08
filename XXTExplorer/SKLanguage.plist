@@ -83,5 +83,24 @@
 			<string>json</string>
 		</array>
 	</dict>
+	<dict>
+		<key>comments</key>
+		<dict>
+			<key>TM_COMMENT_START_2</key>
+			<string>/*</string>
+			<key>TM_COMMENT_END_2</key>
+			<string>*/</string>
+		</dict>
+		<key>identifier</key>
+		<string>source.strings</string>
+		<key>name</key>
+		<string>strings</string>
+		<key>displayName</key>
+		<string>Strings File (*.strings)</string>
+		<key>extensions</key>
+		<array>
+			<string>strings</string>
+		</array>
+	</dict>
 </array>
 </plist>

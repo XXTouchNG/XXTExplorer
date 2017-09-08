@@ -46,6 +46,7 @@
 		0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */; };
 		0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */; };
 		0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */; };
+		0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F349BB21F62F474004143B7 /* strings.tmLanguage */; };
 		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
@@ -431,6 +432,7 @@
 		0F30D9621F2D06D00001E10B /* XUITitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITitleValueCell.h; sourceTree = "<group>"; };
 		0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITitleValueCell.m; sourceTree = "<group>"; };
 		0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITitleValueCell.xib; sourceTree = "<group>"; };
+		0F349BB21F62F474004143B7 /* strings.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = strings.tmLanguage; sourceTree = "<group>"; };
 		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
 		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
 		0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryXPPReader.m; sourceTree = "<group>"; };
@@ -2018,6 +2020,7 @@
 				0FD974021F4B3C3200133162 /* SKLanguage.plist */,
 				0FEB74511F3EB88400B58A4F /* json.tmLanguage */,
 				D645F9D31F42A68C00E3247B /* lua.tmLanguage */,
+				0F349BB21F62F474004143B7 /* strings.tmLanguage */,
 			);
 			name = Language;
 			sourceTree = "<group>";
@@ -2504,6 +2507,7 @@
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F85214C1F2D978A00A912AC /* XUIOptionCell.xib in Resources */,
+				0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */,
 				D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */,
 				D60A26C71F3DB7BE00E013E2 /* IDLE.tmTheme in Resources */,
 				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,

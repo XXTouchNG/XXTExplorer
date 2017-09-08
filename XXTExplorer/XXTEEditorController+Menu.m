@@ -43,23 +43,35 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
-    if (action == @selector(menuActionComment:) ||
-        action == @selector(menuActionShiftLeft:) ||
-        action == @selector(menuActionShiftRight:) ||
-        action == @selector(menuActionCodeBlocks:)
+    if (
+        action == @selector(menuActionComment:)
+        || action == @selector(menuActionShiftLeft:)
+        || action == @selector(menuActionShiftRight:)
+        || action == @selector(menuActionCodeBlocks:)
         ) {
-        if (YES == isReadOnlyMode || nil == self.language) {
+        if (YES == isReadOnlyMode
+            || nil == self.language) {
             return NO;
         }
     }
-    if (action == @selector(menuActionComment:) ||
-        action == @selector(menuActionShiftLeft:) ||
-        action == @selector(menuActionShiftRight:)
+    if (
+        action == @selector(menuActionComment:)
+        || action == @selector(menuActionShiftLeft:)
+        || action == @selector(menuActionShiftRight:)
         ) {
         NSRange selectedRange = [self.textView selectedRange];
         if (selectedRange.length == 0) {
             return NO;
         }
+    }
+    if (
+        action == @selector(menuActionComment:)
+        ) {
+        NSString *singleComment = self.language.comments[@"TM_COMMENT_START"];
+        NSString *doubleCommentStart = self.language.comments[@"TM_COMMENT_START_2"];
+        NSString *doubleCommentEnd = self.language.comments[@"TM_COMMENT_END_2"];
+        if (!singleComment && !doubleCommentStart && !doubleCommentEnd)
+            return NO;
     }
     return [super canPerformAction:action withSender:sender];
 }
@@ -78,13 +90,9 @@
 - (NSRange)fixedSelectedTextRange {
     NSRange selectedRange = [self.textView selectedRange];
     NSString *stringRef = self.textView.text;
-    NSRange prevBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, selectedRange.location)];
-    if (prevBreak.location == NSNotFound)
-    {
-        prevBreak = NSMakeRange(0, 0);
-    }
-    return NSMakeRange(prevBreak.location + prevBreak.length,
-                       selectedRange.location + selectedRange.length - prevBreak.location - prevBreak.length);
+    NSUInteger lineStart = 0, lineEnd = 0, contentsEnd = 0;
+    [stringRef getLineStart:&lineStart end:&lineEnd contentsEnd:&contentsEnd forRange:selectedRange];
+    return NSMakeRange(lineStart, contentsEnd - lineStart);
 }
 
 - (UITextRange *)textRangeFromNSRange:(NSRange)range {
@@ -129,51 +137,66 @@
 }
 
 - (void)menuActionComment:(UIMenuItem *)sender {
-    NSString *symbol = self.language.comments[@"TM_COMMENT_START"];
-    if (!symbol)
-        return;
-    
-    NSRange fixedRange = [self fixedSelectedTextRange];
-    NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
-    __block BOOL hasComment = NO;
-    [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
-        if (line.length != 0) {
-            hasComment = NO;
-            for (NSUInteger i = 0; i < line.length - symbol.length - 1; i++) {
-                char c1 = (char) [line characterAtIndex:i];
-                if (c1 == ' ' || c1 == '\t') {
-                    continue;
-                }
-                if ([line rangeOfString:symbol options:0 range:NSMakeRange(i, symbol.length)].location != NSNotFound) {
-                    hasComment = YES;
-                    break;
-                } else {
-                    hasComment = NO;
-                    *stop = YES;
+    NSString *singleComment = self.language.comments[@"TM_COMMENT_START"];
+    if (singleComment) {
+        NSRange fixedRange = [self fixedSelectedTextRange];
+        NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
+        __block BOOL hasComment = NO;
+        [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
+            if (line.length != 0) {
+                hasComment = NO;
+                for (NSUInteger i = 0; i < line.length - singleComment.length - 1; i++) {
+                    char c1 = (char) [line characterAtIndex:i];
+                    if (c1 == ' ' || c1 == '\t') {
+                        continue;
+                    }
+                    if ([line rangeOfString:singleComment options:0 range:NSMakeRange(i, singleComment.length)].location != NSNotFound) {
+                        hasComment = YES;
+                        break;
+                    } else {
+                        hasComment = NO;
+                        *stop = YES;
+                    }
                 }
             }
+        }];
+        NSMutableString *mutStr = [NSMutableString new];
+        if (hasComment) {
+            [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
+                NSString *testLine = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                BOOL commentFirst = ([testLine rangeOfString:singleComment].location == 0);
+                if (commentFirst) {
+                    NSRange firstCommentRange = [line rangeOfString:singleComment];
+                    if (firstCommentRange.location != NSNotFound) {
+                        line = [line stringByReplacingCharactersInRange:firstCommentRange withString:@""];
+                    }
+                }
+                [mutStr appendFormat:@"%@\n", line];
+            }];
+        } else {
+            [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
+                [mutStr appendFormat:@"%@%@\n", singleComment, line];
+            }];
         }
-    }];
-    NSMutableString *mutStr = [NSMutableString new];
-    if (hasComment) {
-        [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
-            NSString *testLine = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            BOOL commentFirst = ([testLine rangeOfString:symbol].location == 0);
-            if (commentFirst) {
-                NSRange firstCommentRange = [line rangeOfString:symbol];
-                if (firstCommentRange.location != NSNotFound) {
-                    line = [line stringByReplacingCharactersInRange:firstCommentRange withString:@""];
-                }
-            }
-            [mutStr appendFormat:@"%@\n", line];
-        }];
-    } else {
-        [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
-            [mutStr appendFormat:@"%@%@\n", symbol, line];
-        }];
+        NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
+        [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+        return;
     }
-    NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
-    [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+    
+    NSString *doubleCommentStart = self.language.comments[@"TM_COMMENT_START_2"];
+    NSString *doubleCommentEnd = self.language.comments[@"TM_COMMENT_END_2"];
+    if (doubleCommentStart && doubleCommentEnd) {
+        NSRange fixedRange = [self fixedSelectedTextRange];
+        NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
+        NSMutableString *mutStr = [NSMutableString new];
+        [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
+            [mutStr appendFormat:@"%@%@%@\n", doubleCommentStart, line, doubleCommentEnd];
+        }];
+        NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
+        [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+        return;
+    }
+    
 }
 
 #pragma mark - XXTExplorerItemPickerDelegate
