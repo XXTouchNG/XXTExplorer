@@ -262,12 +262,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         
         XXTExplorerDynamicSection *section1 = [[XXTExplorerDynamicSection alloc] init];
         section1.identifier = kXXTEDynamicSectionIdentifierSectionName;
-        section1.cells = @[ cell1 ];
+        if (cell1) section1.cells = @[ cell1 ];
         section1.cellHeights = @[ @(50.f) ];
         section1.sectionTitle = NSLocalizedString(@"Filename", nil);
         section1.sectionFooter = NSLocalizedString(@"Tap to edit filename.", nil);
         
-        [mutableDynamicSections addObject:section1];
+        if (section1) [mutableDynamicSections addObject:section1];
     }
     
     // #2.1 - Where (Required)
@@ -278,12 +278,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         
         XXTExplorerDynamicSection *section2 = [[XXTExplorerDynamicSection alloc] init];
         section2.identifier = kXXTEDynamicSectionIdentifierSectionWhere;
-        section2.cells = @[ cell2 ];
+        if (cell2) section2.cells = @[ cell2 ];
         section2.cellHeights = @[ @(-1) ];
         section2.sectionTitle = NSLocalizedString(@"Where", nil);
         section2.sectionFooter = @"";
         
-        [mutableDynamicSections addObject:section2];
+        if (section2) [mutableDynamicSections addObject:section2];
     }
     
     // #3 - Original (Correct Symbolic Link)
@@ -299,12 +299,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             
             XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
             section3.identifier = kXXTEDynamicSectionIdentifierSectionOriginal;
-            section3.cells = @[ cell3 ];
+            if (cell3) section3.cells = @[ cell3 ];
             section3.cellHeights = @[ @(-1) ];
             section3.sectionTitle = NSLocalizedString(@"Original", nil);
             section3.sectionFooter = @"";
             
-            [mutableDynamicSections addObject:section3];
+            if (section3) [mutableDynamicSections addObject:section3];
         }
         
     }
@@ -352,7 +352,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             }
             
             cell4.valueLabel.numberOfLines = 2;
-            [sectionCells1 addObject:cell4];
+            if (cell4) [sectionCells1 addObject:cell4];
             [sectionHeights1 addObject:@(66.f)];
         }
         
@@ -383,7 +383,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             
             cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell5.valueLabel.numberOfLines = 2;
-            [sectionCells1 addObject:cell5];
+            if (cell5) [sectionCells1 addObject:cell5];
             [sectionHeights1 addObject:@(66.f)];
         }
         
@@ -395,7 +395,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell6.valueLabel.numberOfLines = 2;
             
-            [sectionCells1 addObject:cell6];
+            if (cell6) [sectionCells1 addObject:cell6];
             [sectionHeights1 addObject:@(66.f)];
         }
         
@@ -407,7 +407,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell7.valueLabel.numberOfLines = 2;
             
-            [sectionCells1 addObject:cell7];
+            if (cell7) [sectionCells1 addObject:cell7];
             [sectionHeights1 addObject:@(66.f)];
         }
     
@@ -418,7 +418,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         section4.sectionTitle = NSLocalizedString(@"General", nil);
         section4.sectionFooter = @"";
         
-        [mutableDynamicSections addObject:section4];
+        if (section4) [mutableDynamicSections addObject:section4];
         
     }
     
@@ -430,15 +430,16 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         NSMutableArray *extendedObjects = [[NSMutableArray alloc] init];
         if (entryReader &&
             entryReader.metaDictionary &&
-            entryReader.displayMetaKeys) {
+            entryReader.metaKeys) {
             
             NSArray <Class> *supportedTypes = [XXTEBaseObjectViewController supportedTypes];
             NSDictionary *extendedDictionary = entryReader.metaDictionary;
-            NSArray <NSString *> *displayExtendedKeys = entryReader.displayMetaKeys;
+            NSArray <NSString *> *displayExtendedKeys = entryReader.metaKeys;
             
             for (NSString *extendedKey in displayExtendedKeys)
             {
                 id extendedValue = extendedDictionary[extendedKey];
+                if (!extendedValue) continue;
                 
                 Class valueClass = [extendedValue class];
                 BOOL supportedValue = NO;
@@ -455,7 +456,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     cell.valueLabel.text = [extendedValue stringValue];
                     
-                    [extendedCells addObject:cell];
+                    if (cell) [extendedCells addObject:cell];
                     [extendedHeights addObject:@(44.f)];
                     [extendedObjects addObject:[NSNull null]];
                 }
@@ -465,7 +466,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                     cell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     
-                    [extendedCells addObject:cell];
+                    if (cell) [extendedCells addObject:cell];
                     [extendedHeights addObject:@(44.f)];
                     [extendedObjects addObject:extendedValue];
                 }
@@ -482,7 +483,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             section5.sectionTitle = NSLocalizedString(@"Extended", nil);
             section5.sectionFooter = @"";
             
-            [mutableDynamicSections addObject:section5];
+            if (section5) [mutableDynamicSections addObject:section5];
         }
         
     }
@@ -503,12 +504,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             
             XXTExplorerDynamicSection *section6 = [[XXTExplorerDynamicSection alloc] init];
             section6.identifier = kXXTEDynamicSectionIdentifierSectionOwner;
-            section6.cells = @[ cell7, cell8 ];
+            if (cell7 && cell8) section6.cells = @[ cell7, cell8 ];
             section6.cellHeights = @[ @(44.f), @(44.f) ];
             section6.sectionTitle = NSLocalizedString(@"Owner", nil);
             section6.sectionFooter = @"";
             
-            [mutableDynamicSections addObject:section6];
+            if (section6) [mutableDynamicSections addObject:section6];
         }
     }
     
@@ -544,12 +545,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         
         XXTExplorerDynamicSection *section7 = [[XXTExplorerDynamicSection alloc] init];
         section7.identifier = kXXTEDynamicSectionIdentifierSectionPermission;
-        section7.cells = @[ cell9, cell10, cell11/*, cell12*/ ];
+        if (cell9 && cell10 && cell11) section7.cells = @[ cell9, cell10, cell11/*, cell12*/ ];
         section7.cellHeights = @[ @(44.f), @(44.f), @(44.f)/*, @(44.f)*/ ];
         section7.sectionTitle = NSLocalizedString(@"Permission", nil);
         section7.sectionFooter = @"";
         
-        [mutableDynamicSections addObject:section7];
+        if (section7) [mutableDynamicSections addObject:section7];
     }
     
     // #8 - Open with
@@ -572,12 +573,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             
             XXTExplorerDynamicSection *section8 = [[XXTExplorerDynamicSection alloc] init];
             section8.identifier = kXXTEDynamicSectionIdentifierSectionOpenWith;
-            section8.cells = @[ cell13 ];
+            if (cell13) section8.cells = @[ cell13 ];
             section8.cellHeights = @[ @(44.f) ];
             section8.sectionTitle = NSLocalizedString(@"Open With", nil);
             section8.sectionFooter = NSLocalizedString(@"Use this viewer to open all documents like this one.", nil);
             
-            [mutableDynamicSections addObject:section8];
+            if (section8) [mutableDynamicSections addObject:section8];
         }
     }
     

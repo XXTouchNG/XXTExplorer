@@ -16,7 +16,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 @protocol XXTExplorerEntryReader <NSObject>
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
-@property (nonatomic, copy, readonly) NSArray <NSString *> *displayMetaKeys;
+@property (nonatomic, copy, readonly) NSArray <NSString *> *metaKeys;
 @property (nonatomic, copy, readonly) NSDictionary <NSString *, id> *metaDictionary;
 
 + (UIImage *)defaultImage;

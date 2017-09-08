@@ -17,7 +17,7 @@
 @synthesize entryName = _entryName;
 @synthesize entryDisplayName = _entryDisplayName;
 @synthesize entryIconImage = _entryIconImage;
-@synthesize displayMetaKeys = _displayMetaKeys;
+@synthesize metaKeys = _metaKeys;
 @synthesize entryDescription = _entryDescription;
 @synthesize entryExtensionDescription = _entryExtensionDescription;
 @synthesize entryViewerDescription = _entryViewerDescription;
@@ -62,11 +62,11 @@
     _entryViewerDescription = [XXTEMediaPlayerController viewerName];
 }
 
-- (NSArray <NSString *> *)displayMetaKeys {
-    if (!_displayMetaKeys) {
-        _displayMetaKeys = @[ @"PixelWidth", @"PixelHeight", @"VideoDuration", @"VideoMediaType", @"VideoNominalFrameRate", @"VideoEstimatedDataRate", @"AudioMediaType", @"AudioDuration" ];
+- (NSArray <NSString *> *)metaKeys {
+    if (!_metaKeys) {
+        _metaKeys = @[ @"PixelWidth", @"PixelHeight", @"VideoDuration", @"VideoMediaType", @"VideoNominalFrameRate", @"VideoEstimatedDataRate", @"AudioMediaType", @"AudioDuration" ];
     }
-    return _displayMetaKeys;
+    return _metaKeys;
 }
 
 - (NSDictionary <NSString *, id> *)metaDictionary {

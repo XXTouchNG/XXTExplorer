@@ -48,7 +48,7 @@ __attribute__((weak_import));
 @synthesize entryName = _entryName;
 @synthesize entryDisplayName = _entryDisplayName;
 @synthesize entryIconImage = _entryIconImage;
-@synthesize displayMetaKeys = _displayMetaKeys;
+@synthesize metaKeys = _metaKeys;
 @synthesize entryDescription = _entryDescription;
 @synthesize entryExtensionDescription = _entryExtensionDescription;
 @synthesize entryViewerDescription = _entryViewerDescription;
@@ -154,10 +154,10 @@ __attribute__((weak_import));
         }
         _configurationName = configurationName;
     }
-    _displayMetaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
-                          kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
-                          kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
-                          kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
+    _metaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
+                   kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
+                   kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
+                   kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
     _metaDictionary = metaInfo;
 }
 

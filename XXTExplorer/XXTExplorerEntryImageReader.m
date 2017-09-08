@@ -18,7 +18,7 @@
 @synthesize entryName = _entryName;
 @synthesize entryDisplayName = _entryDisplayName;
 @synthesize entryIconImage = _entryIconImage;
-@synthesize displayMetaKeys = _displayMetaKeys;
+@synthesize metaKeys = _metaKeys;
 @synthesize entryDescription = _entryDescription;
 @synthesize entryExtensionDescription = _entryExtensionDescription;
 @synthesize entryViewerDescription = _entryViewerDescription;
@@ -65,11 +65,11 @@
     // Meta lazy loading mode
 }
 
-- (NSArray <NSString *> *)displayMetaKeys {
-    if (!_displayMetaKeys) {
-        _displayMetaKeys = @[ @"ColorModel", @"PixelWidth", @"PixelHeight", @"DPIHeight", @"DPIWidth", @"Depth", @"Orientation", @"ProfileName" ];
+- (NSArray <NSString *> *)metaKeys {
+    if (!_metaKeys) {
+        _metaKeys = @[ @"ColorModel", @"PixelWidth", @"PixelHeight", @"DPIHeight", @"DPIWidth", @"Depth", @"Orientation", @"ProfileName" ];
     }
-    return _displayMetaKeys;
+    return _metaKeys;
 }
 
 - (NSDictionary <NSString *, id> *)metaDictionary {
