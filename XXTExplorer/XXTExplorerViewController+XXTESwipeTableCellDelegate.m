@@ -45,7 +45,9 @@
 }
 
 - (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
-    [cell hideSwipeAnimated:YES];
+    if (XXTE_PAD) {
+        [cell hideSwipeAnimated:YES];
+    }
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
@@ -92,27 +94,23 @@
                 showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
             }
         } else if ([buttonAction isEqualToString:@"Edit"]) {
-//            if (XXTE_SYSTEM_8) {
-                if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
-                    UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
-                    if (editor) {
-                        if (XXTE_COLLAPSED) {
-                            XXTE_START_IGNORE_PARTIAL
-                            if (XXTE_SYSTEM_8) {
-                                XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
-                                [self.splitViewController showDetailViewController:navigationController sender:self];
-                            }
-                            XXTE_END_IGNORE_PARTIAL
-                        } else {
-                            [self.navigationController pushViewController:editor animated:YES];
+            if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
+                UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
+                if (editor) {
+                    if (XXTE_COLLAPSED) {
+                        XXTE_START_IGNORE_PARTIAL
+                        if (XXTE_SYSTEM_8) {
+                            XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
+                            [self.splitViewController showDetailViewController:navigationController sender:self];
                         }
+                        XXTE_END_IGNORE_PARTIAL
+                    } else {
+                        [self.navigationController pushViewController:editor animated:YES];
                     }
-                } else {
-                    showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]);
                 }
-//            } else {
-//                showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
-//            }
+            } else {
+                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]);
+            }
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {
         NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);

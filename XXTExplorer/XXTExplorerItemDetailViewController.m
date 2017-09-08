@@ -351,14 +351,14 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                 cell4.valueLabel.text = entryExtensionDescription;
             }
             
+            cell4.valueLabel.numberOfLines = 2;
             [sectionCells1 addObject:cell4];
-            [sectionHeights1 addObject:@(-1)];
+            [sectionHeights1 addObject:@(66.f)];
         }
         
         {
             XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell5.titleLabel.text = NSLocalizedString(@"Size", nil);
-            cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             
             if (entryDirectory)
             { // Async Sizing
@@ -381,30 +381,34 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                 cell5.valueLabel.text = [self formattedSizeLabelText:entrySize];
             }
             
+            cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell5.valueLabel.numberOfLines = 2;
             [sectionCells1 addObject:cell5];
-            [sectionHeights1 addObject:@(-1)];
+            [sectionHeights1 addObject:@(66.f)];
         }
         
         {
             NSDate *entryCreationDate = entry[XXTExplorerViewEntryAttributeCreationDate];
             XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell6.titleLabel.text = NSLocalizedString(@"Created At", nil);
-            cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell6.valueLabel.text = [previewFormatter stringFromDate:entryCreationDate];
+            cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell6.valueLabel.numberOfLines = 2;
             
             [sectionCells1 addObject:cell6];
-            [sectionHeights1 addObject:@(-1)];
+            [sectionHeights1 addObject:@(66.f)];
         }
         
         {
             NSDate *entryModificationDate = entry[XXTExplorerViewEntryAttributeModificationDate];
             XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell7.titleLabel.text = NSLocalizedString(@"Modified At", nil);
-            cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell7.valueLabel.text = [previewFormatter stringFromDate:entryModificationDate];
+            cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell7.valueLabel.numberOfLines = 2;
             
             [sectionCells1 addObject:cell7];
-            [sectionHeights1 addObject:@(-1)];
+            [sectionHeights1 addObject:@(66.f)];
         }
     
         XXTExplorerDynamicSection *section4 = [[XXTExplorerDynamicSection alloc] init];
@@ -452,7 +456,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                     cell.valueLabel.text = [extendedValue stringValue];
                     
                     [extendedCells addObject:cell];
-                    [extendedHeights addObject:@(-1)];
+                    [extendedHeights addObject:@(44.f)];
                     [extendedObjects addObject:[NSNull null]];
                 }
                 else
@@ -462,7 +466,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     
                     [extendedCells addObject:cell];
-                    [extendedHeights addObject:@(-1)];
+                    [extendedHeights addObject:@(44.f)];
                     [extendedObjects addObject:extendedValue];
                 }
                 
@@ -491,18 +495,16 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         if (entryPWInfo != NULL && entryGRInfo != NULL) {
             XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell7.titleLabel.text = NSLocalizedString(@"Owner", nil);
-            cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell7.valueLabel.text = [[NSString alloc] initWithUTF8String:entryPWInfo->pw_name];
             
             XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell8.titleLabel.text = NSLocalizedString(@"Group", nil);
-            cell8.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell8.valueLabel.text = [[NSString alloc] initWithUTF8String:entryGRInfo->gr_name];
             
             XXTExplorerDynamicSection *section6 = [[XXTExplorerDynamicSection alloc] init];
             section6.identifier = kXXTEDynamicSectionIdentifierSectionOwner;
             section6.cells = @[ cell7, cell8 ];
-            section6.cellHeights = @[ @(-1), @(-1) ];
+            section6.cellHeights = @[ @(44.f), @(44.f) ];
             section6.sectionTitle = NSLocalizedString(@"Owner", nil);
             section6.sectionFooter = @"";
             
@@ -527,26 +529,23 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         
         XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell9.titleLabel.text = NSLocalizedString(@"Owner", nil);
-        cell9.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell9.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell9.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", userReadFlag, userWriteFlag, userExecuteFlag];
         
         XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell10.titleLabel.text = NSLocalizedString(@"Group", nil);
-        cell10.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell10.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell10.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", groupReadFlag, groupWriteFlag, groupExecuteFlag];
         
         XXTEMoreTitleValueCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell11.titleLabel.text = NSLocalizedString(@"Everyone", nil);
-        cell11.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell11.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
         
         XXTExplorerDynamicSection *section7 = [[XXTExplorerDynamicSection alloc] init];
         section7.identifier = kXXTEDynamicSectionIdentifierSectionPermission;
         section7.cells = @[ cell9, cell10, cell11/*, cell12*/ ];
-        section7.cellHeights = @[ @(-1), @(-1), @(-1)/*, @(-1)*/ ];
+        section7.cellHeights = @[ @(44.f), @(44.f), @(44.f)/*, @(44.f)*/ ];
         section7.sectionTitle = NSLocalizedString(@"Permission", nil);
         section7.sectionFooter = @"";
         
@@ -569,13 +568,12 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             XXTEMoreTitleValueCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell13.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell13.titleLabel.text = NSLocalizedString(@"Open with...", nil);
-            cell13.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell13.valueLabel.text = enteyViewerDescription;
             
             XXTExplorerDynamicSection *section8 = [[XXTExplorerDynamicSection alloc] init];
             section8.identifier = kXXTEDynamicSectionIdentifierSectionOpenWith;
             section8.cells = @[ cell13 ];
-            section8.cellHeights = @[ @(-1), @(-1), @(-1), @(-1) ];
+            section8.cellHeights = @[ @(44.f) ];
             section8.sectionTitle = NSLocalizedString(@"Open With", nil);
             section8.sectionFooter = NSLocalizedString(@"Use this viewer to open all documents like this one.", nil);
             

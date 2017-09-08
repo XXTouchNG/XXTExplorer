@@ -7,8 +7,6 @@
 //
 
 #import "XXTEBaseObjectViewController.h"
-//#import "XUITitleValueCell.h"
-//#import "XUIStaticTextCell.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "NSObject+StringValue.h"
 #import "XXTEUserInterfaceDefines.h"
@@ -41,7 +39,7 @@
     _singleValueCell = ({
         id Object = self.RootObject;
         XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-        cell.titleLabel.text = [self.entryBundle localizedStringForKey:@"Value" value:nil table:@"Meta"];
+        cell.titleLabel.text = NSLocalizedString(@"Value", nil);
         cell.valueLabel.text = [Object stringValue];
         cell;
     });
@@ -64,20 +62,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (XXTE_SYSTEM_8) {
-        return UITableViewAutomaticDimension;
-    } else {
-        UITableViewCell *cell = self.singleValueCell;
-        [cell setNeedsUpdateConstraints];
-        [cell updateConstraintsIfNeeded];
-        
-        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-        
-        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        return (height > 0) ? (height + 1.0) : 44.f;
-    }
+    return 44.f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

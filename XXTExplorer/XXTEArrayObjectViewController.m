@@ -7,9 +7,6 @@
 //
 
 #import "XXTEArrayObjectViewController.h"
-//#import "XUITitleValueCell.h"
-//#import "XUI.h"
-//#import "XUIStyle.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEObjectViewController.h"
 #import "NSObject+StringValue.h"
@@ -53,24 +50,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (XXTE_SYSTEM_8) {
-            return UITableViewAutomaticDimension;
-        } else {
-            XXTEMoreTitleValueCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
-            [self configureCell:cell forRowAtIndexPath:indexPath];
-            
-            [cell setNeedsUpdateConstraints];
-            [cell updateConstraintsIfNeeded];
-            
-            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-            [cell setNeedsLayout];
-            [cell layoutIfNeeded];
-            
-            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            return (height > 0) ? (height + 1.0) : 44.f;
-        }
-    }
     return 44.f;
 }
 

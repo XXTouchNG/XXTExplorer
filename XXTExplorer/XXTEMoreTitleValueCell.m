@@ -21,9 +21,4 @@
     // Configure the view for the selected state
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.valueLabel.preferredMaxLayoutWidth = self.valueLabel.bounds.size.width;
-}
-
 @end

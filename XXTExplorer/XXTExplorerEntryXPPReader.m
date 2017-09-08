@@ -126,7 +126,7 @@ __attribute__((weak_import));
                                          inBundle:pathBundle
                     compatibleWithTraitCollection:nil];
         } else {
-            NSString *iconImagePath = [pathBundle pathForResource:metaInfo[kXXTEBundleIconFile] ofType:@"png"];
+            NSString *iconImagePath = [pathBundle pathForResource:metaInfo[kXXTEBundleIconFile] ofType:nil];
             _entryIconImage = [UIImage imageWithContentsOfFile:iconImagePath];
         }
         XXTE_END_IGNORE_PARTIAL

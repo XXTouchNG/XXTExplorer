@@ -149,42 +149,36 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Expired At", nil);
-    cell3.valueLabel.text = @"\n";
+    cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell3.valueLabel.numberOfLines = 2;
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Version", nil);
     cell4.valueLabel.text = @"";
-    cell4.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"iOS Version", nil);
     cell5.valueLabel.text = @"";
-    cell5.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell6.titleLabel.text = NSLocalizedString(@"Device Type", nil);
     cell6.valueLabel.text = @"";
-    cell6.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell7.titleLabel.text = NSLocalizedString(@"Device Name", nil);
     cell7.valueLabel.text = @"";
-    cell7.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell8.titleLabel.text = NSLocalizedString(@"Serial Number", nil);
     cell8.valueLabel.text = @"";
-    cell8.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"MAC Address", nil);
     cell9.valueLabel.text = @"";
-    cell9.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell10.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
     cell10.valueLabel.text = @"";
-    cell10.valueLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     staticCells = @[
                     @[ cell1 ],
@@ -325,23 +319,9 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (XXTE_SYSTEM_8) {
-            return UITableViewAutomaticDimension;
-        } else {
-            if (indexPath.section == kXXTEMoreLicenseSectionIndexNewLicense) {
-                return  66.f;
-            } else {
-                UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-                [cell setNeedsUpdateConstraints];
-                [cell updateConstraintsIfNeeded];
-                
-                cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-                [cell setNeedsLayout];
-                [cell layoutIfNeeded];
-                
-                CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
-            }
+        if (indexPath.section == kXXTEMoreLicenseSectionIndexNewLicense
+            || indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
+            return 66.f;
         }
     }
     return 44.f;

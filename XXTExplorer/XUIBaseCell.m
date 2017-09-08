@@ -125,7 +125,7 @@
             if (XXTE_SYSTEM_8) {
                 self.imageView.image = [UIImage imageNamed:xui_icon inBundle:self.bundle compatibleWithTraitCollection:nil];
             } else {
-                NSString *imagePath = [self.bundle pathForResource:xui_icon ofType:@"png"];
+                NSString *imagePath = [self.bundle pathForResource:xui_icon ofType:nil];
                 self.imageView.image = [UIImage imageWithContentsOfFile:imagePath];
             }
             XXTE_END_IGNORE_PARTIAL

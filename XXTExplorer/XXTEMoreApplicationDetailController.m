@@ -158,8 +158,7 @@ typedef enum : NSUInteger {
         if (XXTE_SYSTEM_8) {
             return UITableViewAutomaticDimension;
         } else {
-            if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexDetail
-                || indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath
+            if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath
                 || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
                 UITableViewCell *addressCell = staticCells[indexPath.section][indexPath.row];
                 [addressCell setNeedsUpdateConstraints];

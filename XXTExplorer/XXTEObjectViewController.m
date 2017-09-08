@@ -44,7 +44,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _entryBundle = [NSBundle mainBundle];
+        
     }
     return self;
 }

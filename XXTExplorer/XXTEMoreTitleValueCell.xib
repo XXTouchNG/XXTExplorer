@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,15 +19,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="65.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABH-Na-Td0">
-                        <rect key="frame" x="16" y="12" width="146" height="41.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABH-Na-Td0">
+                        <rect key="frame" x="16" y="12" width="324" height="41.5"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOX-0c-vsP">
-                        <rect key="frame" x="178" y="12" width="220" height="41.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOX-0c-vsP">
+                        <rect key="frame" x="356" y="12" width="42" height="41.5"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -40,10 +39,9 @@
                     <constraint firstItem="dOX-0c-vsP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="GVP-OX-TI5"/>
                     <constraint firstItem="ABH-Na-Td0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="HUF-pc-uev"/>
                     <constraint firstItem="ABH-Na-Td0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="IFX-pJ-PuY"/>
-                    <constraint firstItem="dOX-0c-vsP" firstAttribute="height" secondItem="ABH-Na-Td0" secondAttribute="height" id="erj-0r-cWA"/>
                     <constraint firstAttribute="trailingMargin" secondItem="dOX-0c-vsP" secondAttribute="trailing" constant="8" id="mSC-Iq-ToW"/>
                     <constraint firstAttribute="bottomMargin" secondItem="dOX-0c-vsP" secondAttribute="bottom" constant="4" id="pgj-A0-xoY"/>
-                    <constraint firstItem="dOX-0c-vsP" firstAttribute="width" secondItem="ABH-Na-Td0" secondAttribute="width" multiplier="1.5" constant="1" id="phJ-3H-S96"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="ABH-Na-Td0" secondAttribute="bottom" constant="4" id="qqF-BI-QV8"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

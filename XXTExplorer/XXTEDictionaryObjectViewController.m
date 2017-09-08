@@ -7,9 +7,6 @@
 //
 
 #import "XXTEDictionaryObjectViewController.h"
-//#import "XUITitleValueCell.h"
-//#import "XUI.h"
-//#import "XUIStyle.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEObjectViewController.h"
 #import "NSObject+StringValue.h"
@@ -56,22 +53,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (XXTE_SYSTEM_8) {
-        return UITableViewAutomaticDimension;
-    } else {
-        XXTEMoreTitleValueCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreTitleValueCellReuseIdentifier];
-        [self configureCell:cell forRowAtIndexPath:indexPath];
-        
-        [cell setNeedsUpdateConstraints];
-        [cell updateConstraintsIfNeeded];
-        
-        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-        
-        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        return (height > 0) ? (height + 1.0) : 44.f;
-    }
     return 44.f;
 }
 
@@ -106,7 +87,7 @@
     }
     if (supportedKey)
     {
-        if ([pairKey isKindOfClass:[NSString class]]) {
+        if (self.entryBundle && [pairKey isKindOfClass:[NSString class]]) {
             cell.titleLabel.text = [self.entryBundle localizedStringForKey:pairKey value:nil table:@"Meta"];
         } else {
             cell.titleLabel.text = [pairKey stringValue];

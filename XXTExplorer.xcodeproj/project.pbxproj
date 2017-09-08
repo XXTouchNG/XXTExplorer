@@ -51,7 +51,6 @@
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
 		0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
 		0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */; };
-		0F3E4C651F627C970068B257 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F3E4C641F627C970068B257 /* Reveal.framework */; };
 		0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
 		0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */; };
@@ -1017,7 +1016,6 @@
 				D6E560451F50353900E0F997 /* AVFoundation.framework in Frameworks */,
 				D6E560431F50353200E0F997 /* MapKit.framework in Frameworks */,
 				D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */,
-				0F3E4C651F627C970068B257 /* Reveal.framework in Frameworks */,
 				D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */,
 				D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */,
 				D6E141641F50330400D78CB9 /* SpringBoardServices in Frameworks */,
