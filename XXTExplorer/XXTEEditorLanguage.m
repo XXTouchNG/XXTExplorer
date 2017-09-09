@@ -11,6 +11,10 @@
 #import "SKLanguage.h"
 #import "SKBundleManager.h"
 
+NSString * const kTextMateCommentStart = @"TM_COMMENT_START";
+NSString * const kTextMateCommentMultilineStart = @"TM_COMMENT_START_2";
+NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
+
 @implementation XXTEEditorLanguage
 
 - (instancetype)initWithExtension:(NSString *)extension {

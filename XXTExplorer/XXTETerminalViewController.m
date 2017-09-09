@@ -9,7 +9,6 @@
 #import "XXTELuaVModel.h"
 #import "XXTETerminalViewController.h"
 #import "XXTETerminalTextView.h"
-#import <Masonry/Masonry.h>
 
 #import "XXTEDispatchDefines.h"
 #import "XXTExplorerEntryTerminalReader.h"

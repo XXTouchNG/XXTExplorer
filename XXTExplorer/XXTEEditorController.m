@@ -25,8 +25,6 @@
 #import "XXTEEditorTextInput.h"
 
 #import "XXTEKeyboardRow.h"
-
-#import <Masonry/Masonry.h>
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
 
 #import "XXTEEditorController+State.h"
@@ -43,6 +41,8 @@
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
+
+@property (nonatomic, strong) NSArray <NSLayoutConstraint *> *statusBarConstraints;
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
@@ -202,10 +202,22 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         CGRect frame = CGRectNull;
         if (NO == [self.navigationController isNavigationBarHidden]) frame = CGRectZero;
         else frame = [[UIApplication sharedApplication] statusBarFrame];
-        [self.fakeStatusBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.leading.trailing.equalTo(self.view);
-            make.height.equalTo(@(frame.size.height));
-        }];
+        
+        {
+            NSArray <NSLayoutConstraint *> *constraints =
+            @[
+              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:frame.size.height],
+              ];
+            if (self.statusBarConstraints) {
+                [self.view removeConstraints:self.statusBarConstraints];
+            }
+            [self.view addConstraints:constraints];
+            self.statusBarConstraints = constraints;
+        }
+        
     }
     [self updateViewConstraints]; // TODO: back gesture will break this method :-(
 }
@@ -396,16 +408,25 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     // Constraints
     if (XXTE_PAD)
     {
-        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          ];
+        [self.view addConstraints:constraints];
     }
     else
     {
-        [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.fakeStatusBar.mas_bottom);
-            make.leading.trailing.bottom.equalTo(self.view);
-        }];
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.fakeStatusBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          ];
+        [self.view addConstraints:constraints];
     }
 }
 
@@ -425,6 +446,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         UIView *fakeStatusBar = [[UIView alloc] initWithFrame:frame];
         fakeStatusBar.backgroundColor = [UIColor clearColor];
         fakeStatusBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        fakeStatusBar.translatesAutoresizingMaskIntoConstraints = NO;
         _fakeStatusBar = fakeStatusBar;
     }
     return _fakeStatusBar;
@@ -454,6 +476,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         textView.delegate = textInput;
         textView.selectable = YES;
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        textView.translatesAutoresizingMaskIntoConstraints = NO;
         textView.returnKeyType = UIReturnKeyDefault;
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
         

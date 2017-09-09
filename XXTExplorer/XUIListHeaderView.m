@@ -7,7 +7,6 @@
 //
 
 #import "XUIListHeaderView.h"
-#import <Masonry/Masonry.h>
 
 @interface XUIListHeaderView ()
 

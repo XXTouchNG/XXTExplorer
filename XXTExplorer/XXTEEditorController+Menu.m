@@ -67,9 +67,9 @@
     if (
         action == @selector(menuActionComment:)
         ) {
-        NSString *singleComment = self.language.comments[@"TM_COMMENT_START"];
-        NSString *doubleCommentStart = self.language.comments[@"TM_COMMENT_START_2"];
-        NSString *doubleCommentEnd = self.language.comments[@"TM_COMMENT_END_2"];
+        NSString *singleComment = self.language.comments[kTextMateCommentStart];
+        NSString *doubleCommentStart = self.language.comments[kTextMateCommentMultilineStart];
+        NSString *doubleCommentEnd = self.language.comments[kTextMateCommentMultilineEnd];
         if (!singleComment && !doubleCommentStart && !doubleCommentEnd)
             return NO;
     }
@@ -137,7 +137,7 @@
 }
 
 - (void)menuActionComment:(UIMenuItem *)sender {
-    NSString *singleComment = self.language.comments[@"TM_COMMENT_START"];
+    NSString *singleComment = self.language.comments[kTextMateCommentStart];
     if (singleComment) {
         NSRange fixedRange = [self fixedSelectedTextRange];
         NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
@@ -183,8 +183,8 @@
         return;
     }
     
-    NSString *doubleCommentStart = self.language.comments[@"TM_COMMENT_START_2"];
-    NSString *doubleCommentEnd = self.language.comments[@"TM_COMMENT_END_2"];
+    NSString *doubleCommentStart = self.language.comments[kTextMateCommentMultilineStart];
+    NSString *doubleCommentEnd = self.language.comments[kTextMateCommentMultilineEnd];
     if (doubleCommentStart && doubleCommentEnd) {
         NSRange fixedRange = [self fixedSelectedTextRange];
         NSString *selectedText = [self.textView.text substringWithRange:fixedRange];

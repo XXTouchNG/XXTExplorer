@@ -44,15 +44,17 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Create required subdirectories
-    NSString *sharedRootPath = [XXTEAppDelegate sharedRootPath];
-    NSArray <NSString *> *requiredSubdirectories = uAppDefine(@"REQUIRED_SUBDIRECTORIES");
-    for (NSString *requiredSubdirectory in requiredSubdirectories) {
-        NSString *directoryPath = [sharedRootPath stringByAppendingPathComponent:requiredSubdirectory];
-        const char *directoryPathCStr = [directoryPath UTF8String];
-        struct stat subdirectoryStat;
-        if (0 != lstat(directoryPathCStr, &subdirectoryStat))
-            if (0 != mkdir(directoryPathCStr, 0755))
-                continue;
+    {
+        NSString *sharedRootPath = [XXTEAppDelegate sharedRootPath];
+        NSArray <NSString *> *requiredSubdirectories = uAppDefine(@"REQUIRED_SUBDIRECTORIES");
+        for (NSString *requiredSubdirectory in requiredSubdirectories) {
+            NSString *directoryPath = [sharedRootPath stringByAppendingPathComponent:requiredSubdirectory];
+            const char *directoryPathCStr = [directoryPath UTF8String];
+            struct stat subdirectoryStat;
+            if (0 != lstat(directoryPathCStr, &subdirectoryStat))
+                if (0 != mkdir(directoryPathCStr, 0755))
+                    continue;
+        }
     }
     
     // Master - Explorer Controller
@@ -67,30 +69,32 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
     masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
     
-    if (XXTE_SYSTEM_8) {
-        // Detail Controller
-        XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-        XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
-        
-        // Split Controller
-        XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
-        splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-        
-        UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        mainWindow.tintColor = XXTE_COLOR;
-        mainWindow.backgroundColor = [UIColor whiteColor];
-        mainWindow.rootViewController = splitViewController;
-        [mainWindow makeKeyAndVisible];
-        
-        self.window = mainWindow;
-    } else {
-        UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        mainWindow.tintColor = XXTE_COLOR;
-        mainWindow.backgroundColor = [UIColor whiteColor];
-        mainWindow.rootViewController = masterViewController;
-        [mainWindow makeKeyAndVisible];
-        
-        self.window = mainWindow;
+    {
+        if (XXTE_SYSTEM_8) {
+            // Detail Controller
+            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+            XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
+            
+            // Split Controller
+            XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
+            splitViewController.viewControllers = @[masterViewController, detailNavigationController];
+            
+            UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            mainWindow.tintColor = XXTE_COLOR;
+            mainWindow.backgroundColor = [UIColor whiteColor];
+            mainWindow.rootViewController = splitViewController;
+            [mainWindow makeKeyAndVisible];
+            
+            self.window = mainWindow;
+        } else {
+            UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            mainWindow.tintColor = XXTE_COLOR;
+            mainWindow.backgroundColor = [UIColor whiteColor];
+            mainWindow.rootViewController = masterViewController;
+            [mainWindow makeKeyAndVisible];
+            
+            self.window = mainWindow;
+        }
     }
     
     return YES;
@@ -100,60 +104,68 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     // Override point for customization after application launch.
     
     // Setup Bugly
-    [Bugly startWithAppId:nil];
+    {
+        [Bugly startWithAppId:nil];
+    }
     
     // Setup Envp
-    NSDictionary *envp = uAppConstEnvp();
-    for (NSString *envpKey in envp) {
-        NSString *envpVal = envp[envpKey];
-        setenv(envpKey.UTF8String, envpVal.UTF8String, true);
+    {
+        NSDictionary *envp = uAppConstEnvp();
+        for (NSString *envpKey in envp) {
+            NSString *envpVal = envp[envpKey];
+            setenv(envpKey.UTF8String, envpVal.UTF8String, true);
+        }
     }
     
     // Copy Initial Resources
-    BOOL shouldCopyResources = NO;
-    NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
-    NSString *versionFlag = [NSString stringWithFormat:XXTELaunchedVersion, currentVersion];
-    if (XXTEDefaultsObject(versionFlag, nil) == nil) {
-        shouldCopyResources = YES;
-        XXTEDefaultsSetObject(versionFlag, @(YES));
-    }
-    if (shouldCopyResources)
     {
-        // Extract in Background
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSString *rootPath = [[self class] sharedRootPath];
-            NSArray <NSDictionary *> *copyResources = uAppDefine(@"INITIAL_RESOURCES");
-            for (NSDictionary *copyResource in copyResources) {
-                NSString *from = copyResource[@"from"];
-                NSString *fromPath = [[NSBundle mainBundle] pathForResource:from ofType:@"zip"];
-                NSString *to = copyResource[@"to"];
-                NSString *toPath = [rootPath stringByAppendingPathComponent:to];
-                int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
-                    NSLog(@"Extract \"%@\"...", [[NSString alloc] initWithUTF8String:filename]);
-                    return 0;
-                };
-                int arg = 2;
-                int status = zip_extract(fromPath.UTF8String, toPath.UTF8String, extract_callback, &arg);
-                BOOL result = (status == 0);
-                if (result) {
-                    
+        BOOL shouldCopyResources = NO;
+        NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
+        NSString *versionFlag = [NSString stringWithFormat:XXTELaunchedVersion, currentVersion];
+        if (XXTEDefaultsObject(versionFlag, nil) == nil) {
+            shouldCopyResources = YES;
+            XXTEDefaultsSetObject(versionFlag, @(YES));
+        }
+        if (shouldCopyResources)
+        {
+            // Extract in Background
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                NSString *rootPath = [[self class] sharedRootPath];
+                NSArray <NSDictionary *> *copyResources = uAppDefine(@"INITIAL_RESOURCES");
+                for (NSDictionary *copyResource in copyResources) {
+                    NSString *from = copyResource[@"from"];
+                    NSString *fromPath = [[NSBundle mainBundle] pathForResource:from ofType:@"zip"];
+                    NSString *to = copyResource[@"to"];
+                    NSString *toPath = [rootPath stringByAppendingPathComponent:to];
+                    int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
+                        NSLog(@"Extract \"%@\"...", [[NSString alloc] initWithUTF8String:filename]);
+                        return 0;
+                    };
+                    int arg = 2;
+                    int status = zip_extract(fromPath.UTF8String, toPath.UTF8String, extract_callback, &arg);
+                    BOOL result = (status == 0);
+                    if (result) {
+                        
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     
     // Setup Shortcut Actions
-    XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
-        UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
-        UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ XXTEShortcutAction: @"stop" }];
-        UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
-        UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ XXTEShortcutAction: @"launch" }];
-        UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
-        UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ XXTEShortcutAction : @"scan" }];
-        [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
+    {
+        XXTE_START_IGNORE_PARTIAL
+        if (XXTE_SYSTEM_9) {
+            UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
+            UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ XXTEShortcutAction: @"stop" }];
+            UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
+            UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ XXTEShortcutAction: @"launch" }];
+            UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
+            UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ XXTEShortcutAction : @"scan" }];
+            [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
+        }
+        XXTE_END_IGNORE_PARTIAL
     }
-    XXTE_END_IGNORE_PARTIAL
     
     return YES;
 }

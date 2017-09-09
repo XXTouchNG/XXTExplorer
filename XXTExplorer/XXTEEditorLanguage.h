@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kTextMateCommentStart;
+extern NSString * const kTextMateCommentMultilineStart;
+extern NSString * const kTextMateCommentMultilineEnd;
+
 @class SKLanguage;
 
 @interface XXTEEditorLanguage : NSObject

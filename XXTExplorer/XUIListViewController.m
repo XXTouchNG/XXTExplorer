@@ -11,7 +11,6 @@
 #import "XUICellFactory.h"
 #import "XUIListHeaderView.h"
 #import "XUIGroupCell.h"
-#import <Masonry/Masonry.h>
 #import "XUILinkCell.h"
 #import "XUIOptionCell.h"
 #import "XUIMultipleOptionCell.h"
