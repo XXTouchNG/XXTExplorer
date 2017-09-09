@@ -704,7 +704,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    return 44.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

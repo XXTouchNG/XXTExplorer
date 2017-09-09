@@ -171,7 +171,16 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    if (tableView == self.tableView) {
+        if (indexPath.section == 0) {
+            if (indexPath.row == 0) {
+                return 66.f;
+            }
+        } else if (indexPath.section == 1) {
+            return 44.f;
+        }
+    }
+    return 44.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

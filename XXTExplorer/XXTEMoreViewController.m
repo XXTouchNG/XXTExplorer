@@ -306,7 +306,14 @@ typedef enum : NSUInteger {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    if (tableView == self.tableView) {
+        if (indexPath.section == kXXTEMoreSectionIndexRemote) {
+            if (indexPath.row == 0) {
+                return 66.f;
+            }
+        }
+    }
+    return 44.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

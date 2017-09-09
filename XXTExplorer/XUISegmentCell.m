@@ -56,6 +56,13 @@
                 @throw [NSString stringWithFormat:NSLocalizedString(@"The size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
             }
         }
+        for (NSString *validTitle in validTitles) {
+            if (![validTitle isKindOfClass:[NSString class]]) {
+                superResult = NO;
+                checkType = kXUICellFactoryErrorInvalidTypeDomain;
+                @throw [NSString stringWithFormat:NSLocalizedString(@"The member type of \"%@\" should be \"%@\".", nil), @"validTitles", @"NSString"];
+            }
+        }
     } @catch (NSString *exceptionReason) {
         NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
         if (error) {

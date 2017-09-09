@@ -63,7 +63,7 @@ CHECKOUT OPTIONS:
     :commit: ee0e4294b4dcffdab829b4d0c5a6fa523a1c0c94
     :git: https://github.com/Lessica/LGAlertView.git
   TOWebViewController:
-    :commit: a88fb82ad1139933db981306d3fa2bf43c0e2e6e
+    :commit: 28038c8b6c490956378327e6714ea2f02b23d98b
     :git: https://github.com/Lessica/TOWebViewController.git
 
 SPEC CHECKSUMS:

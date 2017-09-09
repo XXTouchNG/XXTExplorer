@@ -77,7 +77,7 @@
 			],
 			"maxCount" : 2,
 			"defaults" : "com.yourcompany.yourscript",
-			"label" : "Multiple List of Options",
+			"label" : "List of Multiple Options",
 			"cell" : "XUIMultipleOptionCell",
 			"key" : "list-2",
 			"validTitles" : [
@@ -136,6 +136,34 @@
 				1,
 				2,
 				3
+			]
+		},
+		{
+			"default" : [
+				1,
+				2
+			],
+			"maxCount" : 2,
+			"defaults" : "com.yourcompany.yourscript",
+			"cell" : "XUICollectionCell",
+			"key" : "collection",
+			"validTitles" : [
+				"Red",
+				"Green",
+				"Blue",
+				"Yellow",
+				"Purple",
+				"Black",
+				"White"
+			],
+			"validValues" : [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
 			]
 		},
 		{

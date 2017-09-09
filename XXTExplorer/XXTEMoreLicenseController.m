@@ -149,6 +149,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Expired At", nil);
+    cell3.valueLabel.text = @"\n";
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell3.valueLabel.numberOfLines = 2;
     

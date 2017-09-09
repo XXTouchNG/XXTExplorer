@@ -159,6 +159,10 @@
 		0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */; };
 		0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */; };
 		0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */; };
+		0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */; };
+		0FB30ECD1F6425F2008517BF /* XUITextTagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */; };
+		0FB30ED11F64296B008517BF /* XUICollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECF1F64296B008517BF /* XUICollectionCell.m */; };
+		0FB30ED21F64296B008517BF /* XUICollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB30ED01F64296B008517BF /* XUICollectionCell.xib */; };
 		0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */; };
 		0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */; };
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
@@ -648,6 +652,13 @@
 		0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+Keyboard.m"; sourceTree = "<group>"; };
 		0FB009181F45AF2000097E9C /* XXTEEditorController+Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+Settings.h"; sourceTree = "<group>"; };
 		0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+Settings.m"; sourceTree = "<group>"; };
+		0FB30EC81F6425F2008517BF /* XUITagCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITagCollectionView.h; sourceTree = "<group>"; };
+		0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITagCollectionView.m; sourceTree = "<group>"; };
+		0FB30ECA1F6425F2008517BF /* XUITextTagCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextTagCollectionView.h; sourceTree = "<group>"; };
+		0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextTagCollectionView.m; sourceTree = "<group>"; };
+		0FB30ECE1F64296B008517BF /* XUICollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICollectionCell.h; sourceTree = "<group>"; };
+		0FB30ECF1F64296B008517BF /* XUICollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUICollectionCell.m; sourceTree = "<group>"; };
+		0FB30ED01F64296B008517BF /* XUICollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUICollectionCell.xib; sourceTree = "<group>"; };
 		0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListViewController.h; sourceTree = "<group>"; };
 		0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEObjectViewController.h; sourceTree = "<group>"; };
@@ -1667,6 +1678,9 @@
 				0F271CC61F5D97C400E8FED5 /* XUIStepperCell.h */,
 				0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */,
 				0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */,
+				0FB30ECE1F64296B008517BF /* XUICollectionCell.h */,
+				0FB30ECF1F64296B008517BF /* XUICollectionCell.m */,
+				0FB30ED01F64296B008517BF /* XUICollectionCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1936,6 +1950,10 @@
 			children = (
 				0FF3E8B31F211384006DED5A /* XUIListHeaderView.h */,
 				0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */,
+				0FB30EC81F6425F2008517BF /* XUITagCollectionView.h */,
+				0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */,
+				0FB30ECA1F6425F2008517BF /* XUITextTagCollectionView.h */,
+				0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2486,6 +2504,7 @@
 				D60A26A21F3DA24B00E013E2 /* CamingoCode-Regular.ttf in Resources */,
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
 				D60A26A41F3DA24B00E013E2 /* SourceCodePro-BoldIt.otf in Resources */,
+				0FB30ED21F64296B008517BF /* XUICollectionCell.xib in Resources */,
 				D6686F381F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.xib in Resources */,
 				D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */,
 				D60A26A61F3DA24B00E013E2 /* SourceCodePro-Regular.otf in Resources */,
@@ -2702,6 +2721,7 @@
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F6AEA8D1F3750880017BE7C /* XXTExplorerViewController+XXTEScanViewControllerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
+				0FB30ED11F64296B008517BF /* XUICollectionCell.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */,
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
@@ -2829,6 +2849,7 @@
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
+				0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
 				0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
@@ -2881,6 +2902,7 @@
 				D677B1161F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m in Sources */,
 				D677B0E61F4FC7C200E741C2 /* lcode.c in Sources */,
 				52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */,
+				0FB30ECD1F6425F2008517BF /* XUITextTagCollectionView.m in Sources */,
 				52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */,
 				D6686F481F4AEF32004403D0 /* UIControl+BlockTarget.m in Sources */,
 				52512440558639F0CA2A63C6 /* SKInclude.m in Sources */,
@@ -3046,11 +3068,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "${SRCROOT}/XXTExplorer/XXTEPrefixHeader.pch";
 				INFOPLIST_FILE = XXTExplorer/Base.lproj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -3098,6 +3122,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

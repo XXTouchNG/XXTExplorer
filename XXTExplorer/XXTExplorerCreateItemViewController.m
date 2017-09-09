@@ -220,7 +220,18 @@ typedef enum : NSUInteger {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    if (tableView == self.tableView) {
+        if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexName) {
+            if (indexPath.row == 0) {
+                return 52.f;
+            }
+        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
+            return 66.f;
+        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
+            
+        }
+    }
+    return 44.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
