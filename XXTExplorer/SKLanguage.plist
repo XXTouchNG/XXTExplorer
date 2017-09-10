@@ -36,6 +36,7 @@
 		<array>
 			<string>lua</string>
 			<string>snippet</string>
+			<string>xui</string>
 		</array>
 	</dict>
 	<dict>

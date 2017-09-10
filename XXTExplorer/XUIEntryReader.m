@@ -5,6 +5,7 @@
 
 #import "XUIEntryReader.h"
 #import "XUIListViewController.h"
+#import "XXTEEditorController.h"
 
 @implementation XUIEntryReader
 
@@ -29,7 +30,7 @@
 }
 
 + (Class)relatedEditor {
-    return nil;
+    return [XXTEEditorController class];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
@@ -41,7 +42,7 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
-    _editable = NO;
+    _editable = YES;
     _executable = NO;
     NSString *entryExtension = [path pathExtension];
     NSString *entryBaseExtension = [entryExtension lowercaseString];

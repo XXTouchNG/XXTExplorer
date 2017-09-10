@@ -75,15 +75,18 @@ id lua_generator(NSString *filename, NSArray *arguments, NSError **error)
 		L = luaL_newstate();
 		luaL_openlibs(L);
 	}
-	if (luaL_loadfile(L, [filename UTF8String]) == LUA_OK) {
-		if (lua_pcall(L, 0, 1, 0) == LUA_OK && lua_type(L, -1) == LUA_TTABLE) {
+    int result = LUA_OK;
+    result = luaL_loadfile(L, [filename UTF8String]);
+	if (checkCode(L, result, error)) {
+        result = lua_pcall(L, 0, 1, 0);
+		if (checkCode(L, result, error) && lua_type(L, -1) == LUA_TTABLE) {
 			lua_getfield(L, -1, "generator");
 			if (lua_type(L, -1) == LUA_TFUNCTION) {
 				id snippet_body = nil;
 				for (int i = 0; i < [arguments count]; ++i) {
 					lua_pushNSValue(L, [arguments objectAtIndex:i]);
 				}
-				int result = lua_pcall(L, (int)[arguments count], 1, 0);
+				result = lua_pcall(L, (int)[arguments count], 1, 0);
 				if (checkCode(L, result, error)) {
 					snippet_body = lua_toNSValue(L, -1);
 				}
@@ -92,8 +95,8 @@ id lua_generator(NSString *filename, NSArray *arguments, NSError **error)
 			}
 			lua_pop(L, 1);
 			lua_pop(L, 1);
-		}
-	}
+        }
+    }
 	return nil;
 }
 
