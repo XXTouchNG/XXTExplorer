@@ -1,21 +1,21 @@
 //
-//  XUIEditTextCell.m
+//  XUITextFieldCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 29/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIEditTextCell.h"
+#import "XUITextFieldCell.h"
 #import "XUILogger.h"
 
-@interface XUIEditTextCell () <UITextFieldDelegate>
+@interface XUITextFieldCell () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *xui_textField;
 
 @end
 
-@implementation XUIEditTextCell
+@implementation XUITextFieldCell
 
 @synthesize xui_value = _xui_value;
 

@@ -1156,4 +1156,7 @@
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
 
 /* No comment provided by engineer. */
+"[%@]\nThe selector \"%@\" is unknown." = "";
+
+/* No comment provided by engineer. */
 "The member type of \"%@\" should be \"%@\"." = "";

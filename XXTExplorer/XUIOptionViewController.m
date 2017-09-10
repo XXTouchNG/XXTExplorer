@@ -10,6 +10,7 @@
 #import "XUI.h"
 #import "XUIStyle.h"
 #import "XUIBaseCell.h"
+#import "XUIOptionCell.h"
 
 @interface XUIOptionViewController () <UITableViewDelegate, UITableViewDataSource>
 

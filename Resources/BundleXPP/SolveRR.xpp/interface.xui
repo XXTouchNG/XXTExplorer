@@ -19,18 +19,14 @@
 			"cell" : "XUIGroupCell"
 		},
 		{
-			"defaults" : "com.yourcompany.yourscript",
-			"label" : "Open 82Flex.com",
-			"cell" : "XUIButtonCell",
-			"action" : "openURL:",
-			"kwargs" : ["https:\/\/82flex.com"]
+			"path" : "https://www.xxtouch.com",
+			"label" : "Open XXTouch.com",
+			"cell" : "XUILinkCell"
 		},
 		{
-			"defaults" : "com.yourcompany.yourscript",
+			"path" : "mailto://i.82@me.com",
 			"label" : "Contact i.82@me.com",
-			"cell" : "XUIButtonCell",
-			"action" : "openURL:",
-			"kwargs" : ["mailto:\/\/i.82@me.com"]
+			"cell" : "XUILinkCell"
 		},
 		{
 			"label" : "Menu",
@@ -143,10 +139,10 @@
 				1,
 				2
 			],
-			"maxCount" : 2,
+			"maxCount" : 4,
 			"defaults" : "com.yourcompany.yourscript",
-			"cell" : "XUICollectionCell",
-			"key" : "collection",
+			"cell" : "XUICheckboxCell",
+			"key" : "checkbox",
 			"validTitles" : [
 				"Red",
 				"Green",
@@ -164,6 +160,28 @@
 				5,
 				6,
 				7
+			]
+		},
+		{
+			"default" : "fifth",
+			"defaults" : "com.yourcompany.yourscript",
+			"cell" : "XUIRadioCell",
+			"key" : "radio",
+			"validTitles" : [
+				"First",
+				"Second",
+				"Third",
+				"Fourth",
+				"Fifth, please!",
+				"Zero"
+			],
+			"validValues" : [
+				"first",
+				"second",
+				"third",
+				"fourth",
+				"fifth",
+				"sixth"
 			]
 		},
 		{
@@ -201,7 +219,7 @@
 			"default" : "",
 			"defaults" : "com.yourcompany.yourscript",
 			"label" : "Username",
-			"cell" : "XUIEditTextCell",
+			"cell" : "XUITextFieldCell",
 			"key" : "username",
 			"keyboard" : "default",
 			"noAutoCorrect" : true,
@@ -211,7 +229,7 @@
 			"default" : "",
 			"defaults" : "com.yourcompany.yourscript",
 			"label" : "Password",
-			"cell" : "XUISecureEditTextCell",
+			"cell" : "XUISecureTextFieldCell",
 			"key" : "password",
 			"keyboard" : "ascii",
 			"noAutoCorrect" : true,

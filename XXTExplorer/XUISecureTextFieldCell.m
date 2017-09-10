@@ -1,21 +1,21 @@
 //
-//  XUISecureEditTextCell.m
+//  XUISecureTextFieldCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 29/07/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUISecureEditTextCell.h"
+#import "XUISecureTextFieldCell.h"
 #import "XUILogger.h"
 
-@interface XUISecureEditTextCell () <UITextFieldDelegate>
+@interface XUISecureTextFieldCell () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *xui_secureTextField;
 
 @end
 
-@implementation XUISecureEditTextCell
+@implementation XUISecureTextFieldCell
 
 @synthesize xui_value = _xui_value;
 

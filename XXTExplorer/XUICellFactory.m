@@ -15,8 +15,6 @@
 
 @interface XUICellFactory ()
 
-@property (nonatomic, strong, readonly) XUILogger *logger;
-@property (nonatomic, strong, readonly) XUIDefaultsService *defaultsService;
 @property (nonatomic, strong, readonly) NSArray <NSDictionary *> *items;
 
 @end

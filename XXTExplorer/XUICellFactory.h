@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class XUIBaseCell, XUIGroupCell;
+@class XUIBaseCell, XUIGroupCell, XUILogger, XUIDefaultsService;
 
 @class XUICellFactory;
 
@@ -20,6 +20,9 @@
 @end
 
 @interface XUICellFactory : NSObject
+
+@property (nonatomic, strong, readonly) XUILogger *logger;
+@property (nonatomic, strong, readonly) XUIDefaultsService *defaultsService;
 
 @property (nonatomic, weak) id <XUICellFactoryDelegate> delegate;
 @property (nonatomic, strong, readonly) NSBundle *bundle;

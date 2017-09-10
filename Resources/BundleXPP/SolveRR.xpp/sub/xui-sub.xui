@@ -42,6 +42,17 @@
             "label" : "Launch a script",
             "cell" : "XUIButtonCell",
             "action" : "LaunchScript:"
+        },
+        {
+            "label" : "Textarea",
+            "cell" : "XUIGroupCell"
+        },
+        {
+            "default": "You can enter any text here...",
+            "defaults" : "com.yourcompany.yourscript",
+            "cell": "XUITextareaCell",
+            "label": "Textarea Cell",
+            "key" : "textarea"
         }
     ],
     "title" : "Another Pane"

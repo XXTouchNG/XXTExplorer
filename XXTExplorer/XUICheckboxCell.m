@@ -1,23 +1,24 @@
 //
-//  XUICollectionCell.m
+//  XUICheckboxCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 09/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUICollectionCell.h"
+#import "XUICheckboxCell.h"
 #import "XUITextTagCollectionView.h"
 #import "XUI.h"
 #import "XUILogger.h"
 
-@interface XUICollectionCell () <XUITextTagCollectionViewDelegate>
+@interface XUICheckboxCell () <XUITextTagCollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet XUITextTagCollectionView *tagView;
+//@property (assign, nonatomic) BOOL isRadio;
 
 @end
 
-@implementation XUICollectionCell
+@implementation XUICheckboxCell
 
 @synthesize xui_value = _xui_value;
 
@@ -95,6 +96,8 @@
     // Use manual calculate height
     self.tagView.manualCalculateHeight = YES;
     self.tagView.delegate = self;
+    
+//    self.isRadio = ([self.xui_minCount unsignedIntegerValue] == 1 && [self.xui_maxCount unsignedIntegerValue] == 1);
 }
 
 - (void)layoutSubviews {
@@ -160,6 +163,28 @@
     }
     self.xui_value = [selectedValues copy];
     [self.defaultsService saveDefaultsFromCell:self];
+}
+
+- (void)setXui_alignment:(NSString *)xui_alignment {
+    _xui_alignment = xui_alignment;
+    if ([xui_alignment isEqualToString:@"left"]) {
+        self.tagView.alignment = XUITagCollectionAlignmentLeft;
+    }
+    else if ([xui_alignment isEqualToString:@"center"]) {
+        self.tagView.alignment = XUITagCollectionAlignmentCenter;
+    }
+    else if ([xui_alignment isEqualToString:@"right"]) {
+        self.tagView.alignment = XUITagCollectionAlignmentRight;
+    }
+    else if ([xui_alignment isEqualToString:@"natural"]) {
+        self.tagView.alignment = XUITagCollectionAlignmentFillByExpandingSpace;
+    }
+    else if ([xui_alignment isEqualToString:@"justified"]) {
+        self.tagView.alignment = XUITagCollectionAlignmentFillByExpandingWidth;
+    }
+    else {
+        self.tagView.alignment = XUITagCollectionAlignmentLeft;
+    }
 }
 
 @end

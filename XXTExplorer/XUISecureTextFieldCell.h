@@ -1,5 +1,5 @@
 //
-//  XUIEditTextCell.h
+//  XUISecureTextFieldCell.h
 //  XXTExplorer
 //
 //  Created by Zheng on 29/07/2017.
@@ -8,7 +8,7 @@
 
 #import "XUIBaseCell.h"
 
-@interface XUIEditTextCell : XUIBaseCell
+@interface XUISecureTextFieldCell : XUIBaseCell
 
 @property (nonatomic, strong) NSString * xui_alignment;
 @property (nonatomic, strong) NSString * xui_keyboard;
@@ -21,5 +21,7 @@
 @property (nonatomic, strong) NSNumber * xui_isNumeric;
 @property (nonatomic, strong) NSNumber * xui_isDecimalPad;
 @property (nonatomic, strong) NSNumber * xui_isEmail;
+// Max length
+// Regex
 
 @end

@@ -7,9 +7,8 @@
 //
 
 #import "XUIViewController.h"
-#import "XUIOptionCell.h"
 
-@class XUIOptionViewController;
+@class XUIOptionViewController, XUIOptionCell;
 
 @protocol XUIOptionViewControllerDelegate <NSObject>
 

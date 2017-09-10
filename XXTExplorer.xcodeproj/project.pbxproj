@@ -17,8 +17,12 @@
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
 		0F16A7901F3222E300BA2868 /* XUIListViewController+LaunchScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */; };
+		0F1864FA1F64535A00A96230 /* XUIRadioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1864F71F64535A00A96230 /* XUIRadioCell.m */; };
+		0F1864FB1F64535A00A96230 /* XUIRadioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F1864F81F64535A00A96230 /* XUIRadioCell.xib */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
+		0F1EF7C61F64FABE00093984 /* XUITextareaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1EF7C51F64FABE00093984 /* XUITextareaCell.m */; };
+		0F1EF7C91F64FD0D00093984 /* XUITextareaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */; };
 		0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
@@ -30,10 +34,10 @@
 		0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */; };
 		0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */; };
 		0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */; };
-		0F30D9291F2BAAA20001E10B /* XUIEditTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */; };
-		0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9281F2BAAA20001E10B /* XUIEditTextCell.xib */; };
-		0F30D92F1F2C7FB10001E10B /* XUISecureEditTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D92D1F2C7FB10001E10B /* XUISecureEditTextCell.m */; };
-		0F30D9301F2C7FB10001E10B /* XUISecureEditTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D92E1F2C7FB10001E10B /* XUISecureEditTextCell.xib */; };
+		0F30D9291F2BAAA20001E10B /* XUITextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */; };
+		0F30D92A1F2BAAA20001E10B /* XUITextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9281F2BAAA20001E10B /* XUITextFieldCell.xib */; };
+		0F30D92F1F2C7FB10001E10B /* XUISecureTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D92D1F2C7FB10001E10B /* XUISecureTextFieldCell.m */; };
+		0F30D9301F2C7FB10001E10B /* XUISecureTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D92E1F2C7FB10001E10B /* XUISecureTextFieldCell.xib */; };
 		0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9321F2C835A0001E10B /* XUIButtonCell.m */; };
 		0F30D9391F2C86450001E10B /* XUISliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9371F2C86450001E10B /* XUISliderCell.m */; };
 		0F30D93A1F2C86450001E10B /* XUISliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9381F2C86450001E10B /* XUISliderCell.xib */; };
@@ -161,8 +165,8 @@
 		0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */; };
 		0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */; };
 		0FB30ECD1F6425F2008517BF /* XUITextTagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */; };
-		0FB30ED11F64296B008517BF /* XUICollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECF1F64296B008517BF /* XUICollectionCell.m */; };
-		0FB30ED21F64296B008517BF /* XUICollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB30ED01F64296B008517BF /* XUICollectionCell.xib */; };
+		0FB30ED11F64296B008517BF /* XUICheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECF1F64296B008517BF /* XUICheckboxCell.m */; };
+		0FB30ED21F64296B008517BF /* XUICheckboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB30ED01F64296B008517BF /* XUICheckboxCell.xib */; };
 		0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */; };
 		0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */; };
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
@@ -385,10 +389,17 @@
 		0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerToolbar.m; sourceTree = "<group>"; };
 		0F16A78E1F3222E300BA2868 /* XUIListViewController+LaunchScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+LaunchScript.h"; sourceTree = "<group>"; };
 		0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XUIListViewController+LaunchScript.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F1864F71F64535A00A96230 /* XUIRadioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIRadioCell.m; sourceTree = "<group>"; };
+		0F1864F81F64535A00A96230 /* XUIRadioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIRadioCell.xib; sourceTree = "<group>"; };
+		0F1864F91F64535A00A96230 /* XUIRadioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIRadioCell.h; sourceTree = "<group>"; };
 		0F1DD1C11F11B6A700F1A66A /* XXTEScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanViewController.h; sourceTree = "<group>"; };
 		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEScanViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
 		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
+		0F1EF7C41F64FABE00093984 /* XUITextareaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextareaCell.h; sourceTree = "<group>"; };
+		0F1EF7C51F64FABE00093984 /* XUITextareaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextareaCell.m; sourceTree = "<group>"; };
+		0F1EF7C71F64FD0D00093984 /* XUITextareaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextareaViewController.h; sourceTree = "<group>"; };
+		0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextareaViewController.m; sourceTree = "<group>"; };
 		0F2184BE1F0FBE01001BD8BD /* XXTEMoreRecordingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRecordingController.h; sourceTree = "<group>"; };
 		0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreRecordingController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBar.h"; sourceTree = "<group>"; };
@@ -409,13 +420,13 @@
 		0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
 		0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
 		0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
-		0F30D9261F2BAAA20001E10B /* XUIEditTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEditTextCell.h; sourceTree = "<group>"; };
-		0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIEditTextCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F30D9281F2BAAA20001E10B /* XUIEditTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIEditTextCell.xib; sourceTree = "<group>"; };
+		0F30D9261F2BAAA20001E10B /* XUITextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextFieldCell.h; sourceTree = "<group>"; };
+		0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUITextFieldCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F30D9281F2BAAA20001E10B /* XUITextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITextFieldCell.xib; sourceTree = "<group>"; };
 		0F30D92B1F2C79720001E10B /* XUILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILogger.h; sourceTree = "<group>"; };
-		0F30D92C1F2C7FB10001E10B /* XUISecureEditTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISecureEditTextCell.h; sourceTree = "<group>"; };
-		0F30D92D1F2C7FB10001E10B /* XUISecureEditTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUISecureEditTextCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F30D92E1F2C7FB10001E10B /* XUISecureEditTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISecureEditTextCell.xib; sourceTree = "<group>"; };
+		0F30D92C1F2C7FB10001E10B /* XUISecureTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISecureTextFieldCell.h; sourceTree = "<group>"; };
+		0F30D92D1F2C7FB10001E10B /* XUISecureTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUISecureTextFieldCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F30D92E1F2C7FB10001E10B /* XUISecureTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISecureTextFieldCell.xib; sourceTree = "<group>"; };
 		0F30D9311F2C835A0001E10B /* XUIButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIButtonCell.h; sourceTree = "<group>"; };
 		0F30D9321F2C835A0001E10B /* XUIButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIButtonCell.m; sourceTree = "<group>"; };
 		0F30D9361F2C86450001E10B /* XUISliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISliderCell.h; sourceTree = "<group>"; };
@@ -656,9 +667,9 @@
 		0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITagCollectionView.m; sourceTree = "<group>"; };
 		0FB30ECA1F6425F2008517BF /* XUITextTagCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextTagCollectionView.h; sourceTree = "<group>"; };
 		0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextTagCollectionView.m; sourceTree = "<group>"; };
-		0FB30ECE1F64296B008517BF /* XUICollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICollectionCell.h; sourceTree = "<group>"; };
-		0FB30ECF1F64296B008517BF /* XUICollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUICollectionCell.m; sourceTree = "<group>"; };
-		0FB30ED01F64296B008517BF /* XUICollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUICollectionCell.xib; sourceTree = "<group>"; };
+		0FB30ECE1F64296B008517BF /* XUICheckboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICheckboxCell.h; sourceTree = "<group>"; };
+		0FB30ECF1F64296B008517BF /* XUICheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUICheckboxCell.m; sourceTree = "<group>"; };
+		0FB30ED01F64296B008517BF /* XUICheckboxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUICheckboxCell.xib; sourceTree = "<group>"; };
 		0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListViewController.h; sourceTree = "<group>"; };
 		0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEObjectViewController.h; sourceTree = "<group>"; };
@@ -1623,6 +1634,8 @@
 				0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */,
 				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
 				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
+				0F1EF7C71F64FD0D00093984 /* XUITextareaViewController.h */,
+				0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */,
 			);
 			name = XUI;
 			sourceTree = "<group>";
@@ -1641,12 +1654,12 @@
 				0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */,
 				0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */,
 				0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */,
-				0F30D9261F2BAAA20001E10B /* XUIEditTextCell.h */,
-				0F30D9271F2BAAA20001E10B /* XUIEditTextCell.m */,
-				0F30D9281F2BAAA20001E10B /* XUIEditTextCell.xib */,
-				0F30D92C1F2C7FB10001E10B /* XUISecureEditTextCell.h */,
-				0F30D92D1F2C7FB10001E10B /* XUISecureEditTextCell.m */,
-				0F30D92E1F2C7FB10001E10B /* XUISecureEditTextCell.xib */,
+				0F30D9261F2BAAA20001E10B /* XUITextFieldCell.h */,
+				0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */,
+				0F30D9281F2BAAA20001E10B /* XUITextFieldCell.xib */,
+				0F30D92C1F2C7FB10001E10B /* XUISecureTextFieldCell.h */,
+				0F30D92D1F2C7FB10001E10B /* XUISecureTextFieldCell.m */,
+				0F30D92E1F2C7FB10001E10B /* XUISecureTextFieldCell.xib */,
 				0F30D9311F2C835A0001E10B /* XUIButtonCell.h */,
 				0F30D9321F2C835A0001E10B /* XUIButtonCell.m */,
 				0F30D9361F2C86450001E10B /* XUISliderCell.h */,
@@ -1660,6 +1673,8 @@
 				0F30D9481F2CEF860001E10B /* XUIImageCell.xib */,
 				0F30D94F1F2CF4100001E10B /* XUILinkCell.h */,
 				0F30D9501F2CF4100001E10B /* XUILinkCell.m */,
+				0F1EF7C41F64FABE00093984 /* XUITextareaCell.h */,
+				0F1EF7C51F64FABE00093984 /* XUITextareaCell.m */,
 				0F30D9541F2D000B0001E10B /* XUISegmentCell.h */,
 				0F30D9551F2D000B0001E10B /* XUISegmentCell.m */,
 				0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */,
@@ -1678,9 +1693,12 @@
 				0F271CC61F5D97C400E8FED5 /* XUIStepperCell.h */,
 				0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */,
 				0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */,
-				0FB30ECE1F64296B008517BF /* XUICollectionCell.h */,
-				0FB30ECF1F64296B008517BF /* XUICollectionCell.m */,
-				0FB30ED01F64296B008517BF /* XUICollectionCell.xib */,
+				0FB30ECE1F64296B008517BF /* XUICheckboxCell.h */,
+				0FB30ECF1F64296B008517BF /* XUICheckboxCell.m */,
+				0FB30ED01F64296B008517BF /* XUICheckboxCell.xib */,
+				0F1864F91F64535A00A96230 /* XUIRadioCell.h */,
+				0F1864F71F64535A00A96230 /* XUIRadioCell.m */,
+				0F1864F81F64535A00A96230 /* XUIRadioCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2504,7 +2522,7 @@
 				D60A26A21F3DA24B00E013E2 /* CamingoCode-Regular.ttf in Resources */,
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
 				D60A26A41F3DA24B00E013E2 /* SourceCodePro-BoldIt.otf in Resources */,
-				0FB30ED21F64296B008517BF /* XUICollectionCell.xib in Resources */,
+				0FB30ED21F64296B008517BF /* XUICheckboxCell.xib in Resources */,
 				D6686F381F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.xib in Resources */,
 				D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */,
 				D60A26A61F3DA24B00E013E2 /* SourceCodePro-Regular.otf in Resources */,
@@ -2524,6 +2542,7 @@
 				0F85214C1F2D978A00A912AC /* XUIOptionCell.xib in Resources */,
 				0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */,
 				D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */,
+				0F1864FB1F64535A00A96230 /* XUIRadioCell.xib in Resources */,
 				D60A26C71F3DB7BE00E013E2 /* IDLE.tmTheme in Resources */,
 				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
 				0FB0090C1F4364B800097E9C /* Nothing.tmTheme in Resources */,
@@ -2573,13 +2592,13 @@
 				0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */,
 				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */,
-				0F30D9301F2C7FB10001E10B /* XUISecureEditTextCell.xib in Resources */,
+				0F30D9301F2C7FB10001E10B /* XUISecureTextFieldCell.xib in Resources */,
 				0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
 				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
 				D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */,
 				0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */,
 				0FD973EE1F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme in Resources */,
-				0F30D92A1F2BAAA20001E10B /* XUIEditTextCell.xib in Resources */,
+				0F30D92A1F2BAAA20001E10B /* XUITextFieldCell.xib in Resources */,
 				D6686F331F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
@@ -2669,6 +2688,7 @@
 				0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */,
 				0F50AEA71F307C430098211C /* XXTEBaseObjectViewController.m in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
+				0F1864FA1F64535A00A96230 /* XUIRadioCell.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D677B0F21F4FC7C200E741C2 /* lmathlib.c in Sources */,
 				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,
@@ -2685,6 +2705,7 @@
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				0FD974011F4B37FE00133162 /* XXTEEditorController+Menu.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
+				0F1EF7C91F64FD0D00093984 /* XUITextareaViewController.m in Sources */,
 				D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */,
 				0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */,
 				0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */,
@@ -2703,7 +2724,7 @@
 				0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */,
 				0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */,
-				0F30D9291F2BAAA20001E10B /* XUIEditTextCell.m in Sources */,
+				0F30D9291F2BAAA20001E10B /* XUITextFieldCell.m in Sources */,
 				0F50AEB61F30C9A50098211C /* XXTEDictionaryObjectViewController.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */,
@@ -2721,7 +2742,7 @@
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F6AEA8D1F3750880017BE7C /* XXTExplorerViewController+XXTEScanViewControllerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
-				0FB30ED11F64296B008517BF /* XUICollectionCell.m in Sources */,
+				0FB30ED11F64296B008517BF /* XUICheckboxCell.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */,
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
@@ -2767,7 +2788,7 @@
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
 				D677B1021F4FC7C300E741C2 /* lvm.c in Sources */,
 				0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */,
-				0F30D92F1F2C7FB10001E10B /* XUISecureEditTextCell.m in Sources */,
+				0F30D92F1F2C7FB10001E10B /* XUISecureTextFieldCell.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
 				0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
@@ -2850,6 +2871,7 @@
 				D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
 				0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */,
+				0F1EF7C61F64FABE00093984 /* XUITextareaCell.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
 				0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,

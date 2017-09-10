@@ -18,6 +18,7 @@ extern NSString * const kXUICellFactoryErrorEmptyWarningDomain;
 extern NSString * const kXUICellFactoryErrorUnknownEnumDomain;
 extern NSString * const kXUICellFactoryErrorUndefinedKeyDomain;
 extern NSString * const kXUICellFactoryErrorSizeDismatchDomain;
+extern NSString * const kXUICellFactoryErrorUnknownSelectorDomain;
 
 static inline NSString * XUIParserErrorMissingEntry(NSString *path1) {
     return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"%@\" is missing.", nil), kXUICellFactoryErrorMissingEntryDomain, (path1)];
@@ -37,6 +38,10 @@ static inline NSString * XUIParserErrorUnknownEnum(NSString *path1, NSString *va
 
 static inline NSString * XUIParserErrorUndefinedKey(NSString *path1) {
     return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nThe key of path \"%@\" is undefined.", nil), kXUICellFactoryErrorUndefinedKeyDomain, (path1)];
+}
+
+static inline NSString * XUIParserErrorUndknownSelector(NSString *path1) {
+    return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nThe selector \"%@\" is unknown.", nil), kXUICellFactoryErrorUnknownSelectorDomain, (path1)];
 }
 
 @interface XUILogger : NSObject

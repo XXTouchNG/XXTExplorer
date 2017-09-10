@@ -10,6 +10,7 @@
 #import "XUIListViewController.h"
 #import "XUICellFactory.h"
 #import "XUIListHeaderView.h"
+
 #import "XUIGroupCell.h"
 #import "XUILinkCell.h"
 #import "XUIOptionCell.h"
@@ -17,15 +18,26 @@
 #import "XUIOrderedOptionCell.h"
 #import "XUITitleValueCell.h"
 #import "XUIButtonCell.h"
+#import "XUITextareaCell.h"
+
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
+
+#import "XUIDefaultsService.h"
+
 #import "XUIOptionViewController.h"
 #import "XUIMultipleOptionViewController.h"
 #import "XUIOrderedOptionViewController.h"
 #import "XXTECommonWebViewController.h"
 #import "XXTEObjectViewController.h"
+#import "XUITextareaViewController.h"
 
-@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate>
+#import "XUILogger.h"
+
+@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate>
+
+@property (nonatomic, strong) NSMutableArray <XUIBaseCell *> *cellsNeedStore;
+@property (nonatomic, assign) BOOL shouldStoreCells;
 
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
 @property (nonatomic, strong) XUIListHeaderView *headerView;
@@ -107,6 +119,8 @@
         }
         parser.delegate = self;
         _parser = parser;
+        
+        _cellsNeedStore = [[NSMutableArray alloc] init];
     }
 }
 
@@ -153,6 +167,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
     [super viewWillAppear:animated];
+    [self storeCellsIfNecessary];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -297,6 +312,8 @@
             [self tableView:tableView performTitleValueCell:cell];
         } else if ([cell isKindOfClass:[XUIButtonCell class]]) {
             [self tableView:tableView performButtonCell:cell];
+        } else if ([cell isKindOfClass:[XUITextareaCell class]]) {
+            [self tableView:tableView performTextareaCell:cell];
         }
     }
 }
@@ -310,6 +327,8 @@
         SEL actionSelector = NSSelectorFromString(selectorName);
         if (actionSelector && [self respondsToSelector:actionSelector]) {
             [self performSelector:actionSelector withObject:cell];
+        } else {
+            [self.parser.logger logMessage:XUIParserErrorUndknownSelector(NSStringFromSelector(actionSelector))];
         }
     }
 #pragma clang diagnostic pop
@@ -395,6 +414,14 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView performTextareaCell:(UITableViewCell *)cell {
+    XUITextareaCell *textareaCell = (XUITextareaCell *)cell;
+    XUITextareaViewController *textareaViewController = [[XUITextareaViewController alloc] initWithCell:textareaCell];
+    textareaViewController.delegate = self;
+    textareaViewController.title = textareaCell.xui_label;
+    [self.navigationController pushViewController:textareaViewController animated:YES];
+}
+
 #pragma mark - XUICellFactoryDelegate
 
 - (void)cellFactoryDidFinishParsing:(XUICellFactory *)parser {
@@ -466,6 +493,28 @@
     NSArray *optionValues = cell.xui_value;
     NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionValues.count];
     cell.detailTextLabel.text = shortTitle;
+}
+
+#pragma mark - XUITextareaViewControllerDelegate
+
+- (void)textareaViewControllerTextDidChanged:(XUITextareaViewController *)controller {
+    if (![self.cellsNeedStore containsObject:controller.cell]) {
+        [self.cellsNeedStore addObject:controller.cell];
+    }
+    if (self.shouldStoreCells == NO) {
+        self.shouldStoreCells = YES;
+    }
+}
+
+#pragma mark - Store
+
+- (void)storeCellsIfNecessary {
+    if (self.shouldStoreCells) {
+        self.shouldStoreCells = NO;
+        for (XUIBaseCell *cell in self.cellsNeedStore) {
+            [self.parser.defaultsService saveDefaultsFromCell:cell];
+        }
+    }
 }
 
 #pragma mark - Keyboard

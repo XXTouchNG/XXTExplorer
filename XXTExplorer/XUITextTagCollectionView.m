@@ -445,7 +445,7 @@
         if (self.alignment == XUITagCollectionAlignmentFillByExpandingWidth) {
             [self reload];
         } else {
-            [self updateStyleAndFrameForLabel:label];
+            [self updateStyleAndFrameForLabel:label animated:YES];
         }
         
         if ([_delegate respondsToSelector:@selector(textTagCollectionView:didTapTag:atIndex:selected:)]) {
@@ -558,16 +558,15 @@
 
 - (void)updateAllLabelStyleAndFrame {
     for (XUITextTagLabel *label in _tagLabels) {
-        [self updateStyleAndFrameForLabel:label];
+        [self updateStyleAndFrameForLabel:label animated:NO];
     }
 }
 
-- (void)updateStyleAndFrameForLabel:(XUITextTagLabel *)label {
+- (void)updateStyleAndFrameForLabel:(XUITextTagLabel *)label animated:(BOOL)animated {
     // Update style
     XUITextTagConfig *config = label.config;
     label.label.font = config.tagTextFont;
     label.label.textColor = label.selected ? config.tagSelectedTextColor : config.tagTextColor;
-    label.label.backgroundColor = label.selected ? config.tagSelectedBackgroundColor : config.tagBackgroundColor;
     label.label.layer.cornerRadius = label.selected ? config.tagSelectedCornerRadius : config.tagCornerRadius;
     label.label.layer.borderWidth = label.selected ? config.tagSelectedBorderWidth : config.tagBorderWidth;
     label.label.layer.borderColor = (label.selected && config.tagSelectedBorderColor) ? config.tagSelectedBorderColor.CGColor : config.tagBorderColor.CGColor;
@@ -593,13 +592,21 @@
     }
     
     label.frame = (CGRect){label.frame.origin, size};
+    
+    if (animated) {
+        [UIView animateWithDuration:.15f animations:^{
+            label.label.layer.backgroundColor = label.selected ? config.tagSelectedBackgroundColor.CGColor : config.tagBackgroundColor.CGColor;
+        }];
+    } else {
+        label.label.layer.backgroundColor = label.selected ? config.tagSelectedBackgroundColor.CGColor : config.tagBackgroundColor.CGColor;
+    }
 }
 
 - (XUITextTagLabel *)newLabelForTagText:(NSString *)tagText withConfig:(XUITextTagConfig *)config {
     XUITextTagLabel *label = [XUITextTagLabel new];
     label.label.text = tagText;
     label.config = config;
-    [self updateStyleAndFrameForLabel:label];
+    [self updateStyleAndFrameForLabel:label animated:NO];
     return label;
 }
 
