@@ -123,6 +123,7 @@
         textView.returnKeyType = UIReturnKeyDefault;
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
         textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+        textView.alwaysBounceVertical = YES;
         
         textView.textColor = UIColor.blackColor;
         textView.font = [UIFont systemFontOfSize:14.f];

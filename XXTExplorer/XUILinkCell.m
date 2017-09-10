@@ -29,7 +29,7 @@
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
     return
     @{
-      @"path": [NSString class]
+      @"url": [NSString class]
       };
 }
 
@@ -43,8 +43,8 @@
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
-- (void)setXui_path:(NSString *)xui_path {
-    _xui_path = xui_path;
+- (void)setXui_url:(NSString *)xui_url {
+    _xui_url = xui_url;
 }
 
 @end

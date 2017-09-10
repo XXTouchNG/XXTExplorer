@@ -102,7 +102,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.tagView.preferredMaxLayoutWidth = self.tagView.bounds.size.width;
+    self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - 16.f;
 }
 
 - (void)setXui_validTitles:(NSArray<NSString *> *)xui_validTitles {

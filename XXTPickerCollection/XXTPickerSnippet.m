@@ -24,7 +24,7 @@ static NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain"
 
 BOOL checkCode(lua_State *L, int code, NSError **error);
 
-NSString *snippet_get_name(NSString *filename)
+NSString *lua_get_name(NSString *filename)
 {
 	static lua_State *L = NULL;
 	if (L == NULL) {
@@ -46,7 +46,7 @@ NSString *snippet_get_name(NSString *filename)
 	return nil;
 }
 
-NSArray *snippet_get_arguments(NSString *filename)
+NSArray *lua_get_arguments(NSString *filename)
 {
 	static lua_State *L = NULL;
 	if (L == NULL) {
@@ -68,7 +68,7 @@ NSArray *snippet_get_arguments(NSString *filename)
 	return nil;
 }
 
-NSString *snippet_gen(NSString *filename, NSArray *arguments, NSError **error)
+id lua_generator(NSString *filename, NSArray *arguments, NSError **error)
 {
 	static lua_State *L = NULL;
 	if (L == NULL) {
@@ -79,15 +79,13 @@ NSString *snippet_gen(NSString *filename, NSArray *arguments, NSError **error)
 		if (lua_pcall(L, 0, 1, 0) == LUA_OK && lua_type(L, -1) == LUA_TTABLE) {
 			lua_getfield(L, -1, "generator");
 			if (lua_type(L, -1) == LUA_TFUNCTION) {
-				NSString *snippet_body = nil;
+				id snippet_body = nil;
 				for (int i = 0; i < [arguments count]; ++i) {
 					lua_pushNSValue(L, [arguments objectAtIndex:i]);
 				}
 				int result = lua_pcall(L, (int)[arguments count], 1, 0);
 				if (checkCode(L, result, error)) {
-					if (lua_type(L, -1) == LUA_TSTRING) {
-						snippet_body = [NSString stringWithUTF8String:lua_tostring(L, -1)];
-					}
+					snippet_body = lua_toNSValue(L, -1);
 				}
 				lua_pop(L, 1);
 				return snippet_body;
@@ -151,7 +149,7 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
 
 - (NSString *)name {
 	if (!_name) {
-		NSString *name = snippet_get_name(self.path);
+		NSString *name = lua_get_name(self.path);
 		if (!name) {
 			name = [self.path lastPathComponent];
 		}
@@ -162,13 +160,13 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
 
 - (NSArray <NSDictionary *> *)flags {
 	if (!_flags) {
-		_flags = snippet_get_arguments(self.path);
+		_flags = lua_get_arguments(self.path);
 	}
 	return _flags;
 }
 
-- (NSString *)generateWithError:(NSError **)error {
-	return snippet_gen(self.path, [self.results copy], error);
+- (id)generateWithError:(NSError **)error {
+	return lua_generator(self.path, [self.results copy], error);
 }
 
 #pragma mark - NSCoding

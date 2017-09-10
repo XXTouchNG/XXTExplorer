@@ -57,6 +57,9 @@
 "[%@]\nThe key of path \"%@\" is undefined." = "[%@]\n路径的键 \"%@\" 未定义.";
 
 /* No comment provided by engineer. */
+"[%@]\nThe selector \"%@\" is unknown." = "[%@]\n选择器 \"%@\" 是无效的.";
+
+/* No comment provided by engineer. */
 "[%@]\nThe value of path \"%@\" (\"%@\") is invalid." = "[%@]\n路径的值 \"%@\" (\"%@\") 无效.";
 
 /* No comment provided by engineer. */
@@ -502,6 +505,9 @@
 
 /* No comment provided by engineer. */
 "File \"%@\" already exists." = "文件 \"%@\" 已经存在.";
+
+/* No comment provided by engineer. */
+"File \"%@\" can't be configured because its configuration file can't be found or loaded." = "文件 \"%@\" 无法被配置, 因为无法定位并加载其配置文件.";
 
 /* No comment provided by engineer. */
 "File \"%@\" can't be configured because its configurator can't be found." = "文件 \"%@\" 无法被配置, 找不到它的配置器.";
@@ -1028,6 +1034,9 @@
 "The daemon has been restarted." = "守护进程重启完成.";
 
 /* No comment provided by engineer. */
+"The member type of \"%@\" should be \"%@\"." = "\"%@\" 的成员类型应该为 \"%@\".";
+
+/* No comment provided by engineer. */
 "The size of \"%@\" and \"%@\" does not match." = "\"%@\" 与 \"%@\" 的尺寸不匹配.";
 
 /* No comment provided by engineer. */
@@ -1154,9 +1163,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"[%@]\nThe selector \"%@\" is unknown." = "";
-
-/* No comment provided by engineer. */
-"The member type of \"%@\" should be \"%@\"." = "";

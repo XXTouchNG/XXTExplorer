@@ -89,6 +89,8 @@
                     } else {
                         [self.navigationController pushViewController:configurator animated:YES];
                     }
+                } else {
+                    showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]);
                 }
             } else {
                 showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);

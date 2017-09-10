@@ -225,7 +225,13 @@
     blockUserInteractions(self, YES, 0);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;
-        NSString *taskResult = [task generateWithError:&error];
+        NSString *taskResult = nil;
+        id result = [task generateWithError:&error];
+        if ([result isKindOfClass:[NSString class]]) {
+            taskResult = result;
+        } else if ([result respondsToSelector:@selector(description)]) {
+            taskResult = [result description];
+        }
         dispatch_async_on_main_queue(^{
             blockUserInteractions(self, NO, 0);
             if (taskResult) {

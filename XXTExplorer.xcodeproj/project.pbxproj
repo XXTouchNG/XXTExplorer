@@ -32,6 +32,8 @@
 		0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */; };
 		0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */; };
 		0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */; };
+		0F30B0AE1F652A5700B14DC9 /* XUIListViewController+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */; };
+		0F30B0B11F65A60600B14DC9 /* XUIListViewController+PresentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30B0B01F65A60600B14DC9 /* XUIListViewController+PresentPicker.m */; };
 		0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */; };
 		0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */; };
 		0F30D9291F2BAAA20001E10B /* XUITextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */; };
@@ -417,6 +419,10 @@
 		0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTPackage.m; sourceTree = "<group>"; };
 		0F2CD3551F3B5CAB00110772 /* XXTEUpdateAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEUpdateAgent.h; sourceTree = "<group>"; };
 		0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdateAgent.m; sourceTree = "<group>"; };
+		0F30B0AC1F652A5700B14DC9 /* XUIListViewController+OpenURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+OpenURL.h"; sourceTree = "<group>"; };
+		0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+OpenURL.m"; sourceTree = "<group>"; };
+		0F30B0AF1F65A60600B14DC9 /* XUIListViewController+PresentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+PresentPicker.h"; sourceTree = "<group>"; };
+		0F30B0B01F65A60600B14DC9 /* XUIListViewController+PresentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+PresentPicker.m"; sourceTree = "<group>"; };
 		0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
 		0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
 		0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
@@ -1097,8 +1103,12 @@
 		0F16A78A1F32221400BA2868 /* CellActions */ = {
 			isa = PBXGroup;
 			children = (
+				0F30B0AC1F652A5700B14DC9 /* XUIListViewController+OpenURL.h */,
+				0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */,
 				0F16A78E1F3222E300BA2868 /* XUIListViewController+LaunchScript.h */,
 				0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */,
+				0F30B0AF1F65A60600B14DC9 /* XUIListViewController+PresentPicker.h */,
+				0F30B0B01F65A60600B14DC9 /* XUIListViewController+PresentPicker.m */,
 			);
 			name = CellActions;
 			sourceTree = "<group>";
@@ -2756,6 +2766,7 @@
 				D677B1031F4FC7C300E741C2 /* lzio.c in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
+				0F30B0AE1F652A5700B14DC9 /* XUIListViewController+OpenURL.m in Sources */,
 				D6E141251F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m in Sources */,
 				D677B0E81F4FC7C200E741C2 /* lctype.c in Sources */,
 				D677B0FD1F4FC7C300E741C2 /* ltablib.c in Sources */,
@@ -2772,6 +2783,7 @@
 				D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */,
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
+				0F30B0B11F65A60600B14DC9 /* XUIListViewController+PresentPicker.m in Sources */,
 				0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */,
 				0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardRow.m in Sources */,
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,

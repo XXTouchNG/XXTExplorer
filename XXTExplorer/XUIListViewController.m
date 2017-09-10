@@ -33,6 +33,7 @@
 #import "XUITextareaViewController.h"
 
 #import "XUILogger.h"
+#import "XXTPickerSnippet.h"
 
 @interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate>
 
@@ -99,16 +100,36 @@
 
 - (void)setup {
     {
+        NSString *entryBaseExtension = [[self.entryPath pathExtension] lowercaseString];
         NSDictionary *rootEntry = nil;
-        if (!rootEntry) {
+        
+        // plist?
+        if ([entryBaseExtension isEqualToString:@"plist"]) {
             rootEntry = [[NSDictionary alloc] initWithContentsOfFile:self.entryPath];
         }
-        if (!rootEntry) {
+        
+        // json?
+        else if ([entryBaseExtension isEqualToString:@"json"]) {
             NSData *jsonEntryData = [[NSData alloc] initWithContentsOfFile:self.entryPath];
             if (jsonEntryData) {
                 rootEntry = [NSJSONSerialization JSONObjectWithData:jsonEntryData options:0 error:nil];
             }
         }
+        
+        // xui?
+        else if ([entryBaseExtension isEqualToString:@"xui"]) {
+            NSError *xuiError = nil;
+            NSDictionary *entry = lua_generator(self.entryPath, @[], &xuiError);
+            if (!xuiError) {
+                if ([entry isKindOfClass:[NSDictionary class]]) {
+                    rootEntry = entry;
+                }
+            } else {
+                
+            }
+        }
+        
+        // none
         if (!rootEntry) {
             return;
         }
@@ -380,15 +401,15 @@
 
 - (void)tableView:(UITableView *)tableView performLinkCell:(UITableViewCell *)cell {
     XUILinkCell *linkCell = (XUILinkCell *)cell;
-    NSString *detailPathName = linkCell.xui_path;
+    NSString *detailUrl = linkCell.xui_url;
     UIViewController *detailController = nil;
-    NSURL *detailPathURL = [NSURL URLWithString:detailPathName];
+    NSURL *detailPathURL = [NSURL URLWithString:detailUrl];
     if ([detailPathURL scheme]) {
         XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:detailPathURL];
         detailController = webController;
     } else {
-        NSString *detailPathNameNoExt = [detailPathName stringByDeletingPathExtension];
-        NSString *detailPathNameExt = [detailPathName pathExtension];
+        NSString *detailPathNameNoExt = [detailUrl stringByDeletingPathExtension];
+        NSString *detailPathNameExt = [detailUrl pathExtension];
         NSString *detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:detailPathNameExt];
         if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
             if (!detailPath)

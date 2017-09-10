@@ -110,7 +110,7 @@
 
 - (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    return reader && reader.configurable && reader.configurationName;
+    return reader && reader.configurable;
 }
 
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {

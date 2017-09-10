@@ -19,26 +19,27 @@
 			"cell" : "XUIGroupCell"
 		},
 		{
-			"path" : "https://www.xxtouch.com",
+			"url" : "https://www.xxtouch.com",
 			"label" : "Open XXTouch.com",
 			"cell" : "XUILinkCell"
 		},
 		{
-			"path" : "mailto://i.82@me.com",
+			"kwargs" : ["mailto://i.82@me.com"],
 			"label" : "Contact i.82@me.com",
-			"cell" : "XUILinkCell"
+			"cell" : "XUIButtonCell",
+			"action" : "OpenURL:"
 		},
 		{
 			"label" : "Menu",
 			"cell" : "XUIGroupCell"
 		},
 		{
-			"path" : "sub\/xui-sub.xui",
+			"url" : "sub\/xui-sub.json",
 			"label" : "Load another pane",
 			"cell" : "XUILinkCell"
 		},
 		{
-			"path" : "appicon.png",
+			"url" : "appicon.png",
 			"label" : "Open an image",
 			"cell" : "XUILinkCell"
 		},
@@ -93,7 +94,7 @@
 			],
 			"maxCount" : 2,
 			"defaults" : "com.yourcompany.yourscript",
-			"label" : "Ordered List of Options",
+			"label" : "List of Ordered Options",
 			"cell" : "XUIOrderedOptionCell",
 			"key" : "list-3",
 			"validTitles" : [

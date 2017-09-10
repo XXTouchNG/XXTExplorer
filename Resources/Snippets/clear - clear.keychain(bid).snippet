@@ -1,0 +1,14 @@
+local group, name
+
+group = '清理'
+name = 'clear.keychain(bid)'
+
+return {
+	name = string.format('%s - %s', group, name),
+	arguments = {
+		{type = '@app@'},
+	},
+	generator = function(bid)
+		return string.format('clear.keychain("%%%s%%")', bid)
+	end,
+}

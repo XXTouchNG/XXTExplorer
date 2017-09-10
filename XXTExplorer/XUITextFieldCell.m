@@ -38,7 +38,6 @@
       @"keyboard": [NSString class],
       @"autoCaps": [NSString class],
       @"placeholder": [NSString class],
-      @"bestGuess": [NSString class],
       @"noAutoCorrect": [NSNumber class],
       @"isIP": [NSNumber class],
       @"isURL": [NSNumber class],
@@ -141,11 +140,6 @@
 - (void)setXui_placeholder:(NSString *)xui_placeholder {
     _xui_placeholder = xui_placeholder;
     self.xui_textField.placeholder = xui_placeholder;
-}
-
-- (void)setXui_bestGuess:(NSString *)xui_bestGuess {
-    _xui_bestGuess = xui_bestGuess;
-    self.xui_textField.text = xui_bestGuess;
 }
 
 - (void)setXui_noAutoCorrect:(NSNumber *)xui_noAutoCorrect {

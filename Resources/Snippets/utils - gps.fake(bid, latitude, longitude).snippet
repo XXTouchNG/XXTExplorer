@@ -1,0 +1,15 @@
+local group, name
+
+group = '辅助'
+name = 'gps.fake(bid, latitude, longitude)'
+
+return {
+	name = string.format('%s - %s', group, name),
+	arguments = {
+		{type = '@app@', hint = '选择需要伪装的应用'},
+		{type = '@loc@', hint = '选择需要伪装的位置'},
+	},
+	generator = function(bid, loc)
+		return string.format('gps.fake(%q, %f, %f)', bid, loc.latitude, loc.longitude)
+	end,
+}

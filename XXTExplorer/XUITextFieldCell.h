@@ -14,7 +14,6 @@
 @property (nonatomic, strong) NSString * xui_keyboard;
 @property (nonatomic, strong) NSString * xui_autoCaps;
 @property (nonatomic, strong) NSString * xui_placeholder;
-@property (nonatomic, strong) NSString * xui_bestGuess;
 @property (nonatomic, strong) NSNumber * xui_noAutoCorrect;
 @property (nonatomic, strong) NSNumber * xui_isIP;
 @property (nonatomic, strong) NSNumber * xui_isURL;
