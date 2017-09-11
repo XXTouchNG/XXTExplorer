@@ -32,6 +32,26 @@
     else if ([self isKindOfClass:[NSData class]]) {
         return [NSString stringWithFormat:@"%lu Bytes", (unsigned long)((NSData *)self).length];
     }
+    else if ([self isKindOfClass:[NSArray class]]) {
+        NSUInteger count = [(NSArray *)self count];
+        if (count == 0) {
+            return @"No Item";
+        } else if (count == 1) {
+            return [NSString stringWithFormat:@"%lu Item", count];
+        } else {
+            return [NSString stringWithFormat:@"%lu Items", count];
+        }
+    }
+    else if ([self isKindOfClass:[NSDictionary class]]) {
+        NSUInteger count = [(NSDictionary *)self count];
+        if (count == 0) {
+            return @"No Item";
+        } else if (count == 1) {
+            return [NSString stringWithFormat:@"%lu Item", count];
+        } else {
+            return [NSString stringWithFormat:@"%lu Items", count];
+        }
+    }
     return [self description];
 }
 

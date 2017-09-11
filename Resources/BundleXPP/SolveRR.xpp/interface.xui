@@ -32,7 +32,7 @@ function xui_interface()
 				["cell"] = "XUIGroupCell",
 				["label"] = "Menu"
 			},{
-				["url"] = "sub/xui-sub.json",
+				["url"] = "sub/xui-sub.xui",
 				["cell"] = "XUILinkCell",
 				["label"] = "Load another pane"
 			},{

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0F00CAE01F66EECB00692913 /* UIImage+ColoredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */; };
+		0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
+		0F00CAF31F66F7A500692913 /* XXTEKeyboardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */; };
+		0F00CAF41F66F7A500692913 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
+		0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */; };
 		0F0654BC1EE483A0005B6C5F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
 		0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */; };
@@ -34,7 +38,6 @@
 		0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */; };
 		0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */; };
 		0F30B0AE1F652A5700B14DC9 /* XUIListViewController+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */; };
-		0F30B0B11F65A60600B14DC9 /* XUIListViewController+PresentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30B0B01F65A60600B14DC9 /* XUIListViewController+PresentPicker.m */; };
 		0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */; };
 		0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */; };
 		0F30D9291F2BAAA20001E10B /* XUITextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */; };
@@ -375,6 +378,14 @@
 /* Begin PBXFileReference section */
 		0F00CADE1F66EECB00692913 /* UIImage+ColoredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColoredImage.h"; sourceTree = "<group>"; };
 		0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColoredImage.m"; sourceTree = "<group>"; };
+		0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETurtleBezierPath.m; sourceTree = "<group>"; };
+		0F00CAE81F66F65100692913 /* XXTETurtleBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETurtleBezierPath.h; sourceTree = "<group>"; };
+		0F00CAED1F66F7A500692913 /* XXTEKeyboardButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardButton.h; sourceTree = "<group>"; };
+		0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardButton.m; sourceTree = "<group>"; };
+		0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardButtonView.h; sourceTree = "<group>"; };
+		0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardButtonView.m; sourceTree = "<group>"; };
+		0F00CAF11F66F7A500692913 /* XXTEKeyboardRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardRow.h; sourceTree = "<group>"; };
+		0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardRow.m; sourceTree = "<group>"; };
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		0F0654BB1EE483A0005B6C5F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
@@ -424,8 +435,6 @@
 		0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdateAgent.m; sourceTree = "<group>"; };
 		0F30B0AC1F652A5700B14DC9 /* XUIListViewController+OpenURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+OpenURL.h"; sourceTree = "<group>"; };
 		0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+OpenURL.m"; sourceTree = "<group>"; };
-		0F30B0AF1F65A60600B14DC9 /* XUIListViewController+PresentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+PresentPicker.h"; sourceTree = "<group>"; };
-		0F30B0B01F65A60600B14DC9 /* XUIListViewController+PresentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+PresentPicker.m"; sourceTree = "<group>"; };
 		0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
 		0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
 		0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
@@ -1057,6 +1066,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F00CAF61F66F8B300692913 /* Accessory */ = {
+			isa = PBXGroup;
+			children = (
+				0F00CAE81F66F65100692913 /* XXTETurtleBezierPath.h */,
+				0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */,
+				0F00CAF11F66F7A500692913 /* XXTEKeyboardRow.h */,
+				0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */,
+				0F00CAED1F66F7A500692913 /* XXTEKeyboardButton.h */,
+				0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */,
+				0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */,
+				0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */,
+			);
+			name = Accessory;
+			sourceTree = "<group>";
+		};
+		0F00CAF71F66F8C500692913 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				0F6B6A4E1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.h */,
+				0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m */,
+			);
+			name = Toolbar;
+			sourceTree = "<group>";
+		};
+		0F00CAF81F67161F00692913 /* Textarea */ = {
+			isa = PBXGroup;
+			children = (
+				0F1EF7C71F64FD0D00093984 /* XUITextareaViewController.h */,
+				0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */,
+			);
+			name = Textarea;
+			sourceTree = "<group>";
+		};
 		0F0654B81EE48395005B6C5F /* Archive */ = {
 			isa = PBXGroup;
 			children = (
@@ -1103,17 +1145,15 @@
 			name = License;
 			sourceTree = "<group>";
 		};
-		0F16A78A1F32221400BA2868 /* CellActions */ = {
+		0F16A78A1F32221400BA2868 /* ButtonCellActions */ = {
 			isa = PBXGroup;
 			children = (
 				0F30B0AC1F652A5700B14DC9 /* XUIListViewController+OpenURL.h */,
 				0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */,
 				0F16A78E1F3222E300BA2868 /* XUIListViewController+LaunchScript.h */,
 				0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */,
-				0F30B0AF1F65A60600B14DC9 /* XUIListViewController+PresentPicker.h */,
-				0F30B0B01F65A60600B14DC9 /* XUIListViewController+PresentPicker.m */,
 			);
-			name = CellActions;
+			name = ButtonCellActions;
 			sourceTree = "<group>";
 		};
 		0F1DD1C01F11B68F00F1A66A /* Scan */ = {
@@ -1485,8 +1525,8 @@
 		0F6B6A4D1F5F9C6C0095A760 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				0F6B6A4E1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.h */,
-				0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m */,
+				0F00CAF61F66F8B300692913 /* Accessory */,
+				0F00CAF71F66F8C500692913 /* Toolbar */,
 				0F00CADE1F66EECB00692913 /* UIImage+ColoredImage.h */,
 				0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */,
 			);
@@ -1638,7 +1678,8 @@
 				525128D22C704E63FCDB99CD /* Reader */,
 				0FF3E8AF1F211300006DED5A /* View */,
 				0FB6BB641F1C4ABA00CADCEA /* Cell */,
-				0F16A78A1F32221400BA2868 /* CellActions */,
+				0F16A78A1F32221400BA2868 /* ButtonCellActions */,
+				0F00CAF81F67161F00692913 /* Textarea */,
 				525126B545F29123B15E6B55 /* XUIViewController.h */,
 				52512481E485AD2E09205EFB /* XUIViewController.m */,
 				0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */,
@@ -1649,8 +1690,6 @@
 				0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */,
 				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
 				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
-				0F1EF7C71F64FD0D00093984 /* XUITextareaViewController.h */,
-				0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */,
 			);
 			name = XUI;
 			sourceTree = "<group>";
@@ -2693,6 +2732,7 @@
 				D677B0EC1F4FC7C200E741C2 /* ldump.c in Sources */,
 				D6686F3F1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				0F00CAF41F66F7A500692913 /* XXTEKeyboardButtonView.m in Sources */,
 				0F6679DE1F5162880072C177 /* XXTESnippetViewerController.m in Sources */,
 				D6E141181F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m in Sources */,
 				0F8EEFE01F31CD3B00F08E13 /* XUIDefaultsService.m in Sources */,
@@ -2768,6 +2808,7 @@
 				0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */,
 				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
+				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D677B1031F4FC7C300E741C2 /* lzio.c in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
@@ -2788,7 +2829,6 @@
 				D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */,
 				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
-				0F30B0B11F65A60600B14DC9 /* XUIListViewController+PresentPicker.m in Sources */,
 				0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */,
 				0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m in Sources */,
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,
@@ -2820,6 +2860,7 @@
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
 				0F50AEBB1F30DBAB0098211C /* XXTExplorerEntryObjectReader.m in Sources */,
+				0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */,
 				0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */,
@@ -2927,6 +2968,7 @@
 				0FFBC12C1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.m in Sources */,
 				D677B0E41F4FC7C200E741C2 /* lbaselib.c in Sources */,
 				D677B0F01F4FC7C200E741C2 /* liolib.c in Sources */,
+				0F00CAF31F66F7A500692913 /* XXTEKeyboardButton.m in Sources */,
 				D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */,
 				5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,

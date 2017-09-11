@@ -24,7 +24,7 @@
 #import "XXTEEditorTypeSetter.h"
 #import "XXTEEditorTextInput.h"
 
-#import "XXTEKeyboardToolbarRow.h"
+#import "XXTEKeyboardRow.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
 
 #import "XXTEEditorController+State.h"
@@ -35,9 +35,6 @@
 #import "SKAttributedParser.h"
 #import "SKRange.h"
 
-#import "XXTPickerSnippet.h"
-#import "XXTPickerFactory.h"
-
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
@@ -46,7 +43,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
-@property (nonatomic, strong) XXTEKeyboardToolbarRow *keyboardRow;
+@property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
 
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
 @property (nonatomic, assign) BOOL isRendering;
@@ -271,7 +268,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
     
     // Keyboard Row
-    XXTEKeyboardToolbarRow *keyboardRow = self.keyboardRow;
+    XXTEKeyboardRow *keyboardRow = self.keyboardRow;
     NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
     BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
     if (softTabEnabled)
@@ -289,12 +286,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
-        keyboardRow.style = XXTEKeyboardToolbarRowStyleLight;
+        keyboardRow.colorStyle = XXTEKeyboardRowStyleLight;
     }
     else
     {
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
-        keyboardRow.style = XXTEKeyboardToolbarRowStyleDark;
+        keyboardRow.colorStyle = XXTEKeyboardRowStyleDark;
     }
     if (isKeyboardRowEnabled && NO == isReadOnlyMode)
     {
@@ -492,9 +489,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     return _textView;
 }
 
-- (XXTEKeyboardToolbarRow *)keyboardRow {
+- (XXTEKeyboardRow *)keyboardRow {
     if (!_keyboardRow) {
-        XXTEKeyboardToolbarRow *keyboardRow = [[XXTEKeyboardToolbarRow alloc] init];
+        XXTEKeyboardRow *keyboardRow = [[XXTEKeyboardRow alloc] init];
         _keyboardRow = keyboardRow;
     }
     return _keyboardRow;

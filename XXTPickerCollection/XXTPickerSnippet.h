@@ -30,4 +30,6 @@ extern NSArray *lua_get_arguments(NSString *filename);
 - (NSUInteger)currentStep;
 - (NSUInteger)totalStep;
 
+- (NSArray *)getResults;
+
 @end

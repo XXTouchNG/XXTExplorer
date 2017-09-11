@@ -10,6 +10,8 @@
 #import "XUI.h"
 #import "NSObject+StringValue.h"
 
+#import "XXTEBaseObjectViewController.h"
+
 @implementation XUITitleValueCell
 
 @synthesize xui_value = _xui_value;
@@ -50,6 +52,19 @@
 - (void)setXui_value:(id)xui_value {
     _xui_value = xui_value;
     self.detailTextLabel.text = [xui_value stringValue];
+    
+    BOOL isBaseType = NO;
+    NSArray <Class> *baseTypes = [XXTEBaseObjectViewController supportedTypes];
+    for (Class baseType in baseTypes) {
+        if ([xui_value isKindOfClass:baseType]) {
+            isBaseType = YES;
+        }
+    }
+    if (isBaseType) {
+        self.accessoryType = UITableViewCellAccessoryNone;
+    } else {
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
 }
 
 @end

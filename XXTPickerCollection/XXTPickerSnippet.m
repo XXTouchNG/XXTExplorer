@@ -251,6 +251,12 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
 	return self.flags.count;
 }
 
+#pragma mark - Getters
+
+- (NSArray *)getResults {
+    return [self.results copy];
+}
+
 - (void)dealloc {
 //#ifdef DEBUG
 //    NSLog(@"- [XXTPickerSnippet dealloc]");
