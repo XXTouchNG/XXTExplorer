@@ -343,7 +343,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     XUIButtonCell *buttonCell = (XUIButtonCell *)cell;
-    if (buttonCell.xui_action) {
+    if ([buttonCell.xui_enabled boolValue] && buttonCell.xui_action) {
         NSString *selectorName = buttonCell.xui_action;
         SEL actionSelector = NSSelectorFromString(selectorName);
         if (actionSelector && [self respondsToSelector:actionSelector]) {

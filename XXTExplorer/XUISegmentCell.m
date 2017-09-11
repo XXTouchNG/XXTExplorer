@@ -106,6 +106,12 @@
     }
 }
 
+- (void)setXui_enabled:(NSNumber *)xui_enabled {
+    [super setXui_enabled:xui_enabled];
+    BOOL enabled = [xui_enabled boolValue];
+    self.xui_segmentControl.enabled = enabled;
+}
+
 - (IBAction)xuiSegmentValueChanged:(UISegmentedControl *)sender {
     if (sender == self.xui_segmentControl) {
         NSUInteger selectedIndex = sender.selectedSegmentIndex;

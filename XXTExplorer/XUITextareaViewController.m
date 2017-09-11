@@ -53,6 +53,63 @@
         self.textView.text = self.cell.xui_value;
     }
     
+    BOOL xui_enabled = [self.cell.xui_enabled boolValue];
+    self.textView.editable = xui_enabled;
+    
+    NSString *xui_alignment = self.cell.xui_alignment;
+    if ([xui_alignment isEqualToString:@"left"]) {
+        self.textView.textAlignment = NSTextAlignmentLeft;
+    }
+    else if ([xui_alignment isEqualToString:@"center"]) {
+        self.textView.textAlignment = NSTextAlignmentCenter;
+    }
+    else if ([xui_alignment isEqualToString:@"right"]) {
+        self.textView.textAlignment = NSTextAlignmentRight;
+    }
+    else if ([xui_alignment isEqualToString:@"natural"]) {
+        self.textView.textAlignment = NSTextAlignmentNatural;
+    }
+    else if ([xui_alignment isEqualToString:@"justified"]) {
+        self.textView.textAlignment = NSTextAlignmentJustified;
+    }
+    else {
+        self.textView.textAlignment = NSTextAlignmentNatural;
+    }
+    
+    NSString *xui_keyboard = self.cell.xui_keyboard;
+    if ([xui_keyboard isEqualToString:@"numbers"]) {
+        self.textView.keyboardType = UIKeyboardTypeNumberPad;
+    }
+    else if ([xui_keyboard isEqualToString:@"phone"]) {
+        self.textView.keyboardType = UIKeyboardTypePhonePad;
+    }
+    else if ([xui_keyboard isEqualToString:@"ascii"]) {
+        self.textView.keyboardType = UIKeyboardTypeASCIICapable;
+    }
+    else {
+        self.textView.keyboardType = UIKeyboardTypeDefault;
+    }
+    
+    BOOL xui_noAutoCorrect = [self.cell.xui_noAutoCorrect boolValue];
+    self.textView.autocorrectionType = xui_noAutoCorrect ? UITextAutocorrectionTypeNo : UITextAutocorrectionTypeYes;
+    
+    NSString *xui_autoCaps = self.cell.xui_autoCaps;
+    if ([xui_autoCaps isEqualToString:@"sentences"]) {
+        self.textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    }
+    else if ([xui_autoCaps isEqualToString:@"words"]) {
+        self.textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    }
+    else if ([xui_autoCaps isEqualToString:@"all"]) {
+        self.textView.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    }
+    else if ([xui_autoCaps isEqualToString:@"none"]) {
+        self.textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    }
+    else {
+        self.textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    }
+    
     [self setupSubviews];
 }
 
@@ -122,6 +179,8 @@
         textView.delegate = self;
         textView.returnKeyType = UIReturnKeyDefault;
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
+        textView.autocorrectionType = NO;
+        textView.autocapitalizationType = NO;
         textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
         textView.alwaysBounceVertical = YES;
         

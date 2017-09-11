@@ -177,4 +177,10 @@
     }
 }
 
+- (void)setXui_enabled:(NSNumber *)xui_enabled {
+    [super setXui_enabled:xui_enabled];
+    BOOL enabled = [xui_enabled boolValue];
+    self.tagView.enableTagSelection = enabled;
+}
+
 @end

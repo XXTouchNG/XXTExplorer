@@ -24,7 +24,7 @@
 #import "XXTEEditorTypeSetter.h"
 #import "XXTEEditorTextInput.h"
 
-#import "XXTEKeyboardRow.h"
+#import "XXTEKeyboardToolbarRow.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
 
 #import "XXTEEditorController+State.h"
@@ -46,7 +46,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
-@property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
+@property (nonatomic, strong) XXTEKeyboardToolbarRow *keyboardRow;
 
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
 @property (nonatomic, assign) BOOL isRendering;
@@ -271,7 +271,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
     
     // Keyboard Row
-    XXTEKeyboardRow *keyboardRow = self.keyboardRow;
+    XXTEKeyboardToolbarRow *keyboardRow = self.keyboardRow;
     NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
     BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
     if (softTabEnabled)
@@ -289,12 +289,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
-        keyboardRow.style = XXTEKeyboardRowStyleLight;
+        keyboardRow.style = XXTEKeyboardToolbarRowStyleLight;
     }
     else
     {
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
-        keyboardRow.style = XXTEKeyboardRowStyleDark;
+        keyboardRow.style = XXTEKeyboardToolbarRowStyleDark;
     }
     if (isKeyboardRowEnabled && NO == isReadOnlyMode)
     {
@@ -492,9 +492,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     return _textView;
 }
 
-- (XXTEKeyboardRow *)keyboardRow {
+- (XXTEKeyboardToolbarRow *)keyboardRow {
     if (!_keyboardRow) {
-        XXTEKeyboardRow *keyboardRow = [[XXTEKeyboardRow alloc] init];
+        XXTEKeyboardToolbarRow *keyboardRow = [[XXTEKeyboardToolbarRow alloc] init];
         _keyboardRow = keyboardRow;
     }
     return _keyboardRow;
