@@ -255,3 +255,125 @@ id lua_toNSValue(lua_State *L, int index)
 	}
 	return nil;
 }
+
+void lua_pushJSONObject(lua_State *L, NSData *jsonData)
+{
+	NSError *error = nil;
+	id value = [NSJSONSerialization JSONObjectWithData:jsonData
+		options:NSJSONReadingAllowFragments
+		error:&error];
+	lua_pushNSValue(L, value);
+}
+
+NSData *lua_toJSONData(lua_State *L, int index)
+{
+	id value = lua_toNSValue(L, index);
+	if (value != nil) {
+		NSError *error = nil;
+		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value
+		options:NSJSONWritingPrettyPrinted
+		error:&error];
+		if (jsonData != nil) {
+			return jsonData;
+		} else {
+			return nil;
+		}
+	} else {
+		return nil;
+	}
+}
+
+int l_fromJSON(lua_State *L)
+{
+	size_t l;
+	const char *json_cstr = luaL_checklstring(L, 1, &l);
+	@autoreleasepool {
+		NSData *jsonData = [NSData dataWithBytes:json_cstr length:l];
+		lua_pushJSONObject(L, jsonData);
+	}
+	return 1;
+}
+
+int l_toJSON(lua_State *L)
+{
+	@autoreleasepool {
+		NSData *jsonData = lua_toJSONData(L, 1);
+		if (jsonData != nil) {
+			lua_pushlstring(L, (const char *)[jsonData bytes], [jsonData length]);
+		} else {
+			lua_pushnil(L);
+		}
+	}
+	return 1;
+}
+
+int luaopen_json(lua_State *L)
+{
+	lua_createtable(L, 0, 2);
+	lua_pushcfunction(L, l_fromJSON);
+	lua_setfield(L, -2, "decode");
+	lua_pushcfunction(L, l_toJSON);
+	lua_setfield(L, -2, "encode");
+	lua_pushlightuserdata(L, (void *)NULL);
+	lua_setfield(L, -2, "null");
+	lua_pushliteral(L, "0.1");
+	lua_setfield(L, -2, "_VERSION");
+	return 1;
+}
+
+int l_fromPlist(lua_State *L)
+{
+	const char *filename_cstr = luaL_checkstring(L, 1);
+	@autoreleasepool {
+		NSString *filename = [NSString stringWithUTF8String:filename_cstr];
+		if (filename) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
+			if (dict) {
+				lua_pushNSDictionary(L, dict);
+			} else {
+				lua_pushnil(L);
+			}
+		} else {
+			lua_pushnil(L);
+		}
+	}
+	return 1;
+}
+
+int l_toPlist(lua_State *L)
+{
+	const char *filename_cstr = luaL_checkstring(L, 1);
+	luaL_checktype(L, 2, LUA_TTABLE);
+	@autoreleasepool {
+		NSDictionary *dict = lua_toNSDictionary(L, 2);
+		NSString *filename = [NSString stringWithUTF8String:filename_cstr];
+		if (dict != nil && filename != nil) {
+			lua_pushboolean(L, [dict writeToFile:filename atomically:YES]);
+		} else {
+			lua_pushboolean(L, NO);
+		}
+	}
+	return 1;
+}
+
+int luaopen_plist(lua_State *L)
+{
+	lua_createtable(L, 0, 2);
+	lua_pushcfunction(L, l_fromPlist);
+	lua_setfield(L, -2, "read");
+	lua_pushcfunction(L, l_toPlist);
+	lua_setfield(L, -2, "write");
+	lua_pushliteral(L, "0.1");
+	lua_setfield(L, -2, "_VERSION");
+	return 1;
+}
+
+void lua_openNSValueLibs(lua_State *L)
+{
+	luaL_requiref(L, "json", luaopen_json, YES);
+	lua_pop(L, 1);
+	luaL_requiref(L, "plist", luaopen_plist, YES);
+	lua_pop(L, 1);
+}
+
+

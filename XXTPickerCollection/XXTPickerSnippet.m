@@ -30,6 +30,7 @@ NSString *lua_get_name(NSString *filename)
 	if (L == NULL) {
 		L = luaL_newstate();
 		luaL_openlibs(L);
+		lua_openNSValueLibs(L);
 	}
 	if (luaL_loadfile(L, [filename UTF8String]) == LUA_OK) {
 		if (lua_pcall(L, 0, 1, 0) == LUA_OK && lua_type(L, -1) == LUA_TTABLE) {
@@ -52,6 +53,7 @@ NSArray *lua_get_arguments(NSString *filename)
 	if (L == NULL) {
 		L = luaL_newstate();
 		luaL_openlibs(L);
+		lua_openNSValueLibs(L);
 	}
 	if (luaL_loadfile(L, [filename UTF8String]) == LUA_OK) {
 		if (lua_pcall(L, 0, 1, 0) == LUA_OK && lua_type(L, -1) == LUA_TTABLE) {
@@ -74,6 +76,7 @@ id lua_generator(NSString *filename, NSArray *arguments, NSError **error)
 	if (L == NULL) {
 		L = luaL_newstate();
 		luaL_openlibs(L);
+		lua_openNSValueLibs(L);
 	}
     int result = LUA_OK;
     result = luaL_loadfile(L, [filename UTF8String]);
