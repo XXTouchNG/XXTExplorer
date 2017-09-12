@@ -1,6 +1,6 @@
 
-#ifndef LUA_OCVALUE_H
-#define LUA_OCVALUE_H
+#ifndef LUA_NSVALUE_H
+#define LUA_NSVALUE_H
 
 #import <Foundation/Foundation.h>
 
@@ -29,6 +29,10 @@ void lua_pushNSValue(lua_State *L, id value);
 NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *result);
 NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *result);
 id lua_toNSValue(lua_State *L, int index);
+
+int luaopen_json(lua_State *L);
+int luaopen_plist(lua_State *L);
+void lua_openNSValueLibs(lua_State *L);
 
 #ifdef __cplusplus
 	}
