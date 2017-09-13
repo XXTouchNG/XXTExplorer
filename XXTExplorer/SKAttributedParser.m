@@ -22,20 +22,20 @@
 
 // MARK: - Parsing
 - (void)attributedParseString:(NSString *)string matchCallback:(SKAttributedParserCallback)callback {
-    [super parseString:string matchCallback:^(NSString *scopeName, NSRange range) {
-        callback(scopeName, range, [self attributesForScope:scopeName]);
+    [super parseString:string matchCallback:^(NSString *scopeName, NSRange localRange) {
+        callback(scopeName, localRange, [self attributesForScope:scopeName]);
     }];
 }
 
 - (void)attributedParseString:(NSString *)string inRange:(NSRange)range matchCallback:(SKAttributedParserCallback)callback {
-    [super parseString:string inRange:(NSRange)range matchCallback:^(NSString *scopeName, NSRange range) {
-        callback(scopeName, range, [self attributesForScope:scopeName]);
+    [super parseString:string inRange:range matchCallback:^(NSString *scopeName, NSRange localRange) {
+        callback(scopeName, localRange, [self attributesForScope:scopeName]);
     }];
 }
 
 - (void)attributedParseStringInRange:(NSRange)range matchCallback:(SKAttributedParserCallback)callback {
-    [super parseInRange:range matchCallback:^(NSString *scopeName, NSRange range1) {
-        callback(scopeName, range1, [self attributesForScope:scopeName]);
+    [super parseInRange:range matchCallback:^(NSString *scopeName, NSRange localRange) {
+        callback(scopeName, localRange, [self attributesForScope:scopeName]);
     }];
 }
 
