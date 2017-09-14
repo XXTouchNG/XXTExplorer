@@ -37,9 +37,9 @@
         if (count == 0) {
             return @"No Item";
         } else if (count == 1) {
-            return [NSString stringWithFormat:@"%lu Item", count];
+            return [NSString stringWithFormat:@"%lu Item", (unsigned long)count];
         } else {
-            return [NSString stringWithFormat:@"%lu Items", count];
+            return [NSString stringWithFormat:@"%lu Items", (unsigned long)count];
         }
     }
     else if ([self isKindOfClass:[NSDictionary class]]) {
@@ -47,9 +47,9 @@
         if (count == 0) {
             return @"No Item";
         } else if (count == 1) {
-            return [NSString stringWithFormat:@"%lu Item", count];
+            return [NSString stringWithFormat:@"%lu Item", (unsigned long)count];
         } else {
-            return [NSString stringWithFormat:@"%lu Items", count];
+            return [NSString stringWithFormat:@"%lu Items", (unsigned long)count];
         }
     }
     return [self description];

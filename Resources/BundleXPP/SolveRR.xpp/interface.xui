@@ -1,274 +1,240 @@
 function xui_interface()
-	return {
-		["subheader"] = "Elegant App UI provided by XXTouchApp.",
-		["header"] = "Example",
-		["title"] = "Demo",
-		["items"] = {
-			{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Switch"
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = true,
-				["label"] = "Enabled",
-				["cell"] = "XUISwitchCell",
-				["key"] = "enabled",
-				["icon"] = "res/16.png"
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Button"
-			},{
-				["url"] = "https://www.xxtouch.com",
-				["cell"] = "XUILinkCell",
-				["label"] = "Open XXTouch.com"
-			},{
-				["cell"] = "XUIButtonCell",
-				["action"] = "OpenURL:",
-				["label"] = "Contact i.82@me.com",
-				["kwargs"] = {
-					"mailto://i.82@me.com"
-				}
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Menu"
-			},{
-				["url"] = "sub/xui-sub.xui",
-				["cell"] = "XUILinkCell",
-				["label"] = "Load another pane"
-			},{
-				["url"] = "appicon.png",
-				["cell"] = "XUILinkCell",
-				["label"] = "Open an image"
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = {
-					2
-				},
-				["label"] = "List of Options",
-				["cell"] = "XUIOptionCell",
-				["key"] = "list-1",
-				["options"] = {
-					{
-						["title"] = "Red",
-						["shortTitle"] = "Red",
-						["value"] = 1,
-					},
-					{
-						["title"] = "Green",
-						["shortTitle"] = "Green",
-						["value"] = 2,
-					},
-					{
-						["title"] = "Blue",
-						["shortTitle"] = "Blue",
-						["value"] = 3,
-					},
-				},
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = {
-					1,2
-				},
-				["label"] = "List of Multiple Options",
-				["cell"] = "XUIMultipleOptionCell",
-				["key"] = "list-2",
-				["maxCount"] = 2,
-				["options"] = {
-					{
-						["title"] = "Red",
-						["shortTitle"] = "Red",
-						["value"] = 1,
-					},
-					{
-						["title"] = "Green",
-						["shortTitle"] = "Green",
-						["value"] = 2,
-					},
-					{
-						["title"] = "Blue",
-						["shortTitle"] = "Blue",
-						["value"] = 3,
-					},
-				},
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = {
-					1
-				},
-				["label"] = "List of Ordered Options",
-				["cell"] = "XUIOrderedOptionCell",
-				["key"] = "list-3",
-				["maxCount"] = 2,
-				["minCount"] = 1,
-				["options"] = {
-					{
-						["title"] = "Red",
-						["shortTitle"] = "Red",
-						["value"] = 1,
-					},
-					{
-						["title"] = "Green",
-						["shortTitle"] = "Green",
-						["value"] = 2,
-					},
-					{
-						["title"] = "Blue",
-						["shortTitle"] = "Blue",
-						["value"] = 3,
-					},
-				},
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Segment"
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = 2,
-				["label"] = "List of Options",
-				["cell"] = "XUISegmentCell",
-				["key"] = "list-segment",
-				["options"] = {
-					{
-						["title"] = "Red",
-						["shortTitle"] = "Red",
-						["value"] = 1,
-					},
-					{
-						["title"] = "Green",
-						["shortTitle"] = "Green",
-						["value"] = 2,
-					},
-					{
-						["title"] = "Blue",
-						["shortTitle"] = "Blue",
-						["value"] = 3,
-					},
-				},
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = {
-					1,2
-				},
-				["cell"] = "XUICheckboxCell",
-				["key"] = "checkbox",
-				["maxCount"] = 4,
-				["options"] = {
-					{
-						["title"] = "Red",
-						["value"] = 1,
-					},
-					{
-						["title"] = "Green",
-						["value"] = 2,
-					},
-					{
-						["title"] = "Blue",
-						["value"] = 3,
-					},
-					{
-						["title"] = "Yellow",
-						["value"] = 4,
-					},
-					{
-						["title"] = "Purple",
-						["value"] = 5,
-					},
-					{
-						["title"] = "Black",
-						["value"] = 6,
-					},
-					{
-						["title"] = "White",
-						["value"] = 7,
-					},
-				},
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = "fifth",
-				["cell"] = "XUIRadioCell",
-				["key"] = "radio",
-				["options"] = {
-					{
-						["title"] = "First",
-						["value"] = "first",
-					},
-					{
-						["title"] = "Second",
-						["value"] = "second",
-					},
-					{
-						["title"] = "Third",
-						["value"] = "third",
-					},
-					{
-						["title"] = "Fourth",
-						["value"] = "fourth",
-					},
-					{
-						["title"] = "Fifth, please!",
-						["value"] = "fifth",
-					},
-					{
-						["title"] = "Zero",
-						["value"] = "zero",
-					},
-				},
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Number"
-			},{
-				["showValue"] = true,
-				["defaults"] = "com.yourcompany.yourscript",
-				["min"] = 1,
-				["default"] = 5,
-				["max"] = 10,
-				["label"] = "Slider",
-				["cell"] = "XUISliderCell",
-				["key"] = "slider",
-			},{
-				["defaults"] = "com.yourcompany.yourscript",
-				["min"] = 1,
-				["default"] = 5,
-				["max"] = 10,
-				["autoRepeat"] = true,
-				["label"] = "Stepper",
-				["cell"] = "XUIStepperCell",
-				["key"] = "stepper",
-				["isInteger"] = true
-			},{
-				["cell"] = "XUIGroupCell",
-				["footerText"] = "This is the footer text of this section.",
-				["label"] = "TextField"
-			},{
-				["noAutoCorrect"] = true,
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = "",
-				["label"] = "Username",
-				["cell"] = "XUITextFieldCell",
-				["key"] = "username",
-				["keyboard"] = "default",
-				["placeholder"] = "Enter the username"
-			},{
-				["noAutoCorrect"] = true,
-				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = "",
-				["label"] = "Password",
-				["cell"] = "XUISecureTextFieldCell",
-				["key"] = "password",
-				["keyboard"] = "ascii",
-				["placeholder"] = "Enter the password"
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "StaticText"
-			},{
-				["cell"] = "XUIStaticTextCell",
-				["label"] = "This specifier uses the label key as text content. Dynamic height of this cell is enabled."
-			}
-		}
-	}
+    return {
+        ["subheader"] = "Elegant App UI provided by XXTouchApp.",
+        ["header"] = "Example",
+        ["title"] = "Demo",
+        ["items"] = {
+    {
+        ["cell"] = "XUIGroupCell",
+        ["label"] = "Switch"
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = true,
+        ["label"] = "Enabled",
+        ["cell"] = "XUISwitchCell",
+        ["key"] = "enabled",
+        ["icon"] = "res/16.png"
+    },{
+        ["cell"] = "XUIGroupCell",
+        ["label"] = "Button"
+    },{
+        ["url"] = "https://www.xxtouch.com",
+        ["cell"] = "XUILinkCell",
+        ["label"] = "Open XXTouch.com"
+    },{
+        ["cell"] = "XUIButtonCell",
+        ["action"] = "OpenURL:",
+        ["label"] = "Contact i.82@me.com",
+        ["kwargs"] = {
+            "mailto://i.82@me.com"
+        }
+    },{
+        ["cell"] = "XUIGroupCell",
+        ["label"] = "Menu"
+    },{
+        ["url"] = "sub/xui-sub.xui",
+        ["cell"] = "XUILinkCell",
+        ["label"] = "Load another pane"
+    },{
+        ["url"] = "appicon.png",
+        ["cell"] = "XUILinkCell",
+        ["label"] = "Open an image"
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = {
+            "Green, it's green!"
+        },
+        ["label"] = "List of Options",
+        ["cell"] = "XUIOptionCell",
+        ["key"] = "list-1",
+        ["options"] = {
+            {
+                ["title"] = "Red, it's red!",
+                ["shortTitle"] = "Red"
+            },
+            {
+                ["title"] = "Green, it's green!",
+                ["shortTitle"] = "Green"
+            },
+            {
+                ["title"] = "Blue, great color!",
+                ["shortTitle"] = "Blue"
+            },
+        },
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = {
+            "Red, it's red!", "Green, it's green!"
+        },
+        ["label"] = "List of Multiple Options",
+        ["cell"] = "XUIMultipleOptionCell",
+        ["key"] = "list-2",
+        ["maxCount"] = 2,
+        ["options"] = {
+            {
+                ["title"] = "Red, it's red!"
+            },
+            {
+                ["title"] = "Green, it's green!"
+            },
+            {
+                ["title"] = "Blue, great color!"
+            },
+        },
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = {
+            "Red"
+        },
+        ["label"] = "List of Ordered Options",
+        ["cell"] = "XUIOrderedOptionCell",
+        ["key"] = "list-3",
+        ["maxCount"] = 2,
+        ["minCount"] = 1,
+        ["options"] = {
+            {
+                ["title"] = "Red"
+            },
+            {
+                ["title"] = "Green"
+            },
+            {
+                ["title"] = "Blue"
+            },
+        },
+    },{
+        ["cell"] = "XUIGroupCell",
+        ["label"] = "Segment"
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = "Green",
+        ["label"] = "List of Options",
+        ["cell"] = "XUISegmentCell",
+        ["key"] = "list-segment",
+        ["options"] = {
+            {
+                ["title"] = "Red"
+            },
+            {
+                ["title"] = "Green"
+            },
+            {
+                ["title"] = "Blue"
+            },
+        },
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = {
+            "Red", "Green"
+        },
+        ["cell"] = "XUICheckboxCell",
+        ["key"] = "checkbox",
+        ["maxCount"] = 4,
+        ["options"] = {
+            {
+                ["title"] = "Red"
+            },
+            {
+                ["title"] = "Green"
+            },
+            {
+                ["title"] = "Blue"
+            },
+            {
+                ["title"] = "Yellow"
+            },
+            {
+                ["title"] = "Purple"
+            },
+            {
+                ["title"] = "Black"
+            },
+            {
+                ["title"] = "White"
+            },
+        },
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = "Fifth, please!",
+        ["cell"] = "XUIRadioCell",
+        ["key"] = "radio",
+        ["options"] = {
+            {
+                ["title"] = "First"
+            },
+            {
+                ["title"] = "Second"
+            },
+            {
+                ["title"] = "Third"
+            },
+            {
+                ["title"] = "Fourth"
+            },
+            {
+                ["title"] = "Fifth, please!"
+            },
+            {
+                ["title"] = "Zero"
+            },
+        },
+    },{
+        ["cell"] = "XUIGroupCell",
+        ["label"] = "Number"
+    },{
+        ["showValue"] = true,
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["min"] = 1,
+        ["default"] = 5,
+        ["max"] = 10,
+        ["label"] = "Slider",
+        ["cell"] = "XUISliderCell",
+        ["key"] = "slider",
+    },{
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["min"] = 1,
+        ["default"] = 5,
+        ["max"] = 10,
+        ["autoRepeat"] = true,
+        ["label"] = "Stepper",
+        ["cell"] = "XUIStepperCell",
+        ["key"] = "stepper",
+        ["isInteger"] = true
+    },{
+        ["cell"] = "XUIGroupCell",
+        ["footerText"] = "This is the footer text of this section.",
+        ["label"] = "TextField"
+    },{
+        ["noAutoCorrect"] = true,
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = "",
+        ["label"] = "Username",
+        ["cell"] = "XUITextFieldCell",
+        ["key"] = "username",
+        ["keyboard"] = "default",
+        ["placeholder"] = "Enter the username"
+    },{
+        ["noAutoCorrect"] = true,
+        ["defaults"] = "com.yourcompany.yourscript",
+        ["default"] = "",
+        ["label"] = "Password",
+        ["cell"] = "XUISecureTextFieldCell",
+        ["key"] = "password",
+        ["keyboard"] = "ascii",
+        ["placeholder"] = "Enter the password"
+    },{
+        ["cell"] = "XUIGroupCell",
+        ["label"] = "StaticText"
+    },{
+        ["cell"] = "XUIStaticTextCell",
+        ["label"] = "This specifier uses the label key as text content. Dynamic height of this cell is enabled."
+    }
+        }
+    }
 end
 
 return {
-	name = "Example",
-	arguments = {},
-	generator = xui_interface,
+    name = "Example",
+    arguments = {},
+    generator = xui_interface,
 }
