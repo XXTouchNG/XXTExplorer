@@ -137,21 +137,7 @@ __attribute__((weak_import));
     _entryViewerDescription = [XXTEExecutableViewer viewerName];
     NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
     if (interfaceFile) {
-        NSString *interfaceFileNoExt = [interfaceFile stringByDeletingPathExtension];
-        NSString *interfaceFileExt = [interfaceFile pathExtension];
-        NSString *configurationName = nil;
-        if (!configurationName) {
-            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:interfaceFileExt];
-        }
-        if (!configurationName) {
-            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"plist"];
-        }
-        if (!configurationName) {
-            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"json"];
-        }
-        if (!configurationName) {
-            configurationName = [localizationBundle pathForResource:interfaceFileNoExt ofType:@"xui"];
-        }
+        NSString *configurationName = [localizationBundle pathForResource:interfaceFile ofType:nil];
         _configurationName = configurationName;
     }
     _metaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,

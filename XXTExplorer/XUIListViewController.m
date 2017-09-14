@@ -100,33 +100,16 @@
 
 - (void)setup {
     {
-        NSString *entryBaseExtension = [[self.entryPath pathExtension] lowercaseString];
         NSDictionary *rootEntry = nil;
         
-        // plist?
-        if ([entryBaseExtension isEqualToString:@"plist"]) {
-            rootEntry = [[NSDictionary alloc] initWithContentsOfFile:self.entryPath];
-        }
-        
-        // json?
-        else if ([entryBaseExtension isEqualToString:@"json"]) {
-            NSData *jsonEntryData = [[NSData alloc] initWithContentsOfFile:self.entryPath];
-            if (jsonEntryData) {
-                rootEntry = [NSJSONSerialization JSONObjectWithData:jsonEntryData options:0 error:nil];
+        NSError *xuiError = nil;
+        NSDictionary *entry = lua_generator(self.entryPath, @[], &xuiError);
+        if (!xuiError) {
+            if ([entry isKindOfClass:[NSDictionary class]]) {
+                rootEntry = entry;
             }
-        }
-        
-        // xui?
-        else if ([entryBaseExtension isEqualToString:@"xui"]) {
-            NSError *xuiError = nil;
-            NSDictionary *entry = lua_generator(self.entryPath, @[], &xuiError);
-            if (!xuiError) {
-                if ([entry isKindOfClass:[NSDictionary class]]) {
-                    rootEntry = entry;
-                }
-            } else {
-                [self presentErrorAlertController:xuiError];
-            }
+        } else {
+            [self presentErrorAlertController:xuiError];
         }
         
         // none
@@ -408,16 +391,9 @@
         XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:detailPathURL];
         detailController = webController;
     } else {
-        NSString *detailPathNameNoExt = [detailUrl stringByDeletingPathExtension];
-        NSString *detailPathNameExt = [detailUrl pathExtension];
-        NSString *detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:detailPathNameExt];
+        NSString *detailPathNameExt = [[detailUrl pathExtension] lowercaseString];
+        NSString *detailPath = [self.bundle pathForResource:detailUrl ofType:nil];
         if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
-            if (!detailPath)
-                detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"plist"];
-            if (!detailPath)
-                detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"json"];
-            if (!detailPath)
-                detailPath = [self.bundle pathForResource:detailPathNameNoExt ofType:@"xui"];
             detailController = [[[self class] alloc] initWithPath:detailPath withBundlePath:[self.bundle bundlePath]];
         }
         else {

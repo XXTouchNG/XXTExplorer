@@ -6,7 +6,7 @@
 	BundleIconFile = appicon;
 	Executable = main;
 	"BundleInfoDictionaryVersion" = "6.0";
-	MainInterfaceFile = interface;
+	MainInterfaceFile = "interface.xui";
 	MinimumSystemVersion = "8.0";
 	MaximumSystemVersion = "10.2";
 	MinimumXXTVersion = "1.1.2";

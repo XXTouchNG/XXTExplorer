@@ -33,7 +33,7 @@
     NSString *specPath = [self.defaultsPath stringByAppendingPathComponent:specComponent];
     NSString *specPathExt = [specPath stringByAppendingPathExtension:@"plist"];
     NSMutableDictionary *specDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:specPathExt];
-    if (!specDictionary) specDictionary = [@{} mutableCopy];
+    if (!specDictionary) specDictionary = [[NSMutableDictionary alloc] init];
     NSString *specKey = cell.xui_key;
     if (!specKey) return;
     assert ([specKey isKindOfClass:[NSString class]] && specKey.length > 0);
@@ -51,7 +51,7 @@
     NSString *specPath = [self.defaultsPath stringByAppendingPathComponent:specComponent];
     NSString *specPathExt = [specPath stringByAppendingPathExtension:@"plist"];
     NSDictionary *specDictionary = [[NSDictionary alloc] initWithContentsOfFile:specPathExt];
-    if (!specDictionary) specDictionary = @{};
+    if (!specDictionary) specDictionary = [[NSDictionary alloc] init];
     NSString *specKey = cell.xui_key;
     if (!specKey) return;
     assert ([specKey isKindOfClass:[NSString class]] && specKey.length > 0);
