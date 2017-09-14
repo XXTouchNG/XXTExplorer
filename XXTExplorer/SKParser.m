@@ -173,10 +173,10 @@
 }
 
 - (NSString *)expandExpressionStringBackReferences:(NSRegularExpressionString *)expressionString
-                                  withPatternMatch:(SKPatternMatch *)patternMatch
+                                     withResultSet:(SKResultSet *)resultSet
 {
     if (!expressionString) return nil;
-    NSTextCheckingResult *rawResult = [patternMatch.match.results.firstObject rawResult];
+    NSTextCheckingResult *rawResult = [resultSet.results.firstObject rawResult];
     if (!rawResult) return nil;
     BOOL escape = NO;
     const char *expressionBuffer = expressionString.UTF8String;
@@ -243,8 +243,7 @@
             NSRegularExpression *patternEnd = nil;
             if ([self expressionStringHasBackReferences:patternEndExpr])
             {
-                SKPatternMatch *beginMatch = [[SKPatternMatch alloc] initWithPattern:pattern match:begin];
-                NSString *expandedEndExpr = [self expandExpressionStringBackReferences:patternEndExpr withPatternMatch:beginMatch];
+                NSString *expandedEndExpr = [self expandExpressionStringBackReferences:patternEndExpr withResultSet:begin];
                 patternEnd = [self cachedExpressionForExpressionString:expandedEndExpr];
             } else {
                 patternEnd = [self cachedExpressionForExpressionString:patternEndExpr];

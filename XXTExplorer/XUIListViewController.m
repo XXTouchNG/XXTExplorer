@@ -265,7 +265,7 @@
                 [cell layoutIfNeeded];
                 
                 CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
+                return (height > 0) ? (height + 1.f) : 44.f;
             }
         }
     }
@@ -303,7 +303,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        XUIBaseCell *cell = (XUIBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
+        XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell isKindOfClass:[XUILinkCell class]]) {
             [self tableView:tableView performLinkCell:cell];
         } else if ([cell isKindOfClass:[XUIOptionCell class]]) {

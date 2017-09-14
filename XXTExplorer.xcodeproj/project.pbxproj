@@ -205,6 +205,7 @@
 		0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E43E1F18E41200055E02 /* XXTExplorerEntryWebReader.m */; };
 		0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */; };
 		0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */; };
+		0FE5B1281F6956CF00034424 /* SKAttributedRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE5B1271F6956CF00034424 /* SKAttributedRenderer.m */; };
 		0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */; };
 		0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
@@ -465,7 +466,7 @@
 		0F30D9621F2D06D00001E10B /* XUITitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITitleValueCell.h; sourceTree = "<group>"; };
 		0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITitleValueCell.m; sourceTree = "<group>"; };
 		0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITitleValueCell.xib; sourceTree = "<group>"; };
-		0F349BB21F62F474004143B7 /* strings.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = strings.tmLanguage; sourceTree = "<group>"; };
+		0F349BB21F62F474004143B7 /* strings.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = strings.tmLanguage; sourceTree = "<group>"; };
 		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
 		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
 		0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryXPPReader.m; sourceTree = "<group>"; };
@@ -741,6 +742,8 @@
 		0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECodeViewerController.m; sourceTree = "<group>"; };
 		0FE1E4481F18FD5000055E02 /* XXTExplorerEntryCodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryCodeReader.h; sourceTree = "<group>"; };
 		0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryCodeReader.m; sourceTree = "<group>"; };
+		0FE5B1261F6956CF00034424 /* SKAttributedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedRenderer.h; sourceTree = "<group>"; };
+		0FE5B1271F6956CF00034424 /* SKAttributedRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedRenderer.m; sourceTree = "<group>"; };
 		0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = XXTEPremiumPreview.pdf; sourceTree = "<group>"; };
 		0FEB74511F3EB88400B58A4F /* json.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = json.tmLanguage; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
@@ -1909,6 +1912,8 @@
 				52512DF49CDDF706A91B90B2 /* SKParser.m */,
 				52512B2C18D96DFB613EAD70 /* SKAttributedParser.h */,
 				5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */,
+				0FE5B1261F6956CF00034424 /* SKAttributedRenderer.h */,
+				0FE5B1271F6956CF00034424 /* SKAttributedRenderer.m */,
 				0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */,
 				0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */,
 				0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */,
@@ -2762,6 +2767,7 @@
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
 				0F1EF7C91F64FD0D00093984 /* XUITextareaViewController.m in Sources */,
 				D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */,
+				0FE5B1281F6956CF00034424 /* SKAttributedRenderer.m in Sources */,
 				0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */,
 				0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */,
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
