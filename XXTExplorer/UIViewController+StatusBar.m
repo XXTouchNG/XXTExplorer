@@ -7,10 +7,18 @@
 //
 
 #import "UIViewController+StatusBar.h"
+#import "UIColor+DarkColor.h"
 
 @implementation UIViewController (StatusBar)
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+    if (self.navigationController) {
+        if ([self.navigationController.navigationBar.tintColor isDarkColor]) {
+            return UIStatusBarStyleDefault;
+        } else {
+            return UIStatusBarStyleLightContent;
+        }
+    }
     return UIStatusBarStyleLightContent;
 }
 

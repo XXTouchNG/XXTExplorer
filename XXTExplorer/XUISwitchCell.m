@@ -16,7 +16,7 @@
 
 @implementation XUISwitchCell
 
-@synthesize xui_value = _xui_value;
+@synthesize xui_value = _xui_value, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -72,6 +72,12 @@
         self.xui_value = self.xui_negate ? @(!sender.on) : @(sender.on);
         [self.defaultsService saveDefaultsFromCell:self];
     }
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.textLabel.textColor = theme.labelColor;
+    self.xui_switch.onTintColor = theme.successColor;
 }
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "XUISliderCell.h"
+#import "XUI.h"
+#import "XUILogger.h"
 
 @interface XUISliderCell ()
 
@@ -18,7 +20,7 @@
 
 @implementation XUISliderCell
 
-@synthesize xui_value = _xui_value;
+@synthesize xui_value = _xui_value, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -61,8 +63,13 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    _xui_value = xui_value;
     float value = [xui_value floatValue];
+    float minValue = [self.xui_min floatValue];
+    float maxValue = [self.xui_max floatValue];
+    if (value > maxValue || value < minValue) {
+        return; // Invalid value, ignore
+    }
+    _xui_value = xui_value;
     self.xui_slider.value = value;
     self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", value];
 }
@@ -102,6 +109,12 @@
 //        self.xui_slider_valueLabel.text = [@(sender.value) stringValue];
         self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
     }
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.xui_slider_valueLabel.textColor = theme.valueColor;
+    self.xui_slider.minimumTrackTintColor = theme.successColor;
 }
 
 @end

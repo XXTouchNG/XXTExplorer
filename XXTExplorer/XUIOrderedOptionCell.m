@@ -12,6 +12,8 @@
 
 @implementation XUIOrderedOptionCell
 
+@synthesize xui_value = _xui_value, theme = _theme;
+
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -31,8 +33,7 @@
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
     return
     @{
-      @"validTitles": [NSArray class],
-      @"validValues": [NSArray class],
+      @"options": [NSArray class],
       @"minCount": [NSNumber class],
       @"maxCount": [NSNumber class],
       @"staticTextMessage": [NSString class],
@@ -40,27 +41,29 @@
       };
 }
 
++ (NSDictionary <NSString *, Class> *)optionValueTypes {
+    return
+    @{
+      XUIOptionCellTitleKey: [NSString class],
+      XUIOptionCellShortTitleKey: [NSString class],
+      XUIOptionCellIconKey: [NSString class],
+      };
+}
+
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
     BOOL superResult = [super checkEntry:cellEntry withError:error];
     NSString *checkType = kXUICellFactoryErrorDomain;
     @try {
-        NSArray *validTitles = cellEntry[@"validTitles"];
-        NSArray *validValues = cellEntry[@"validValues"];
-        if (validTitles && validValues) {
-            if (validTitles.count != validValues.count) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorSizeDismatchDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
-            }
-        }
-        for (NSString *validTitle in validTitles) {
-            if (![validTitle isKindOfClass:[NSString class]]) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorInvalidTypeDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The member type of \"%@\" should be \"%@\".", nil), @"validTitles", @"NSString"];
-            }
+        NSArray *validOptions = cellEntry[@"options"];
+        NSUInteger maxCount = [cellEntry[@"maxCount"] unsignedIntegerValue];
+        NSUInteger minCount = [cellEntry[@"minCount"] unsignedIntegerValue];
+        if (maxCount > validOptions.count || minCount > maxCount) {
+            superResult = NO;
+            checkType = kXUICellFactoryErrorInvalidValueDomain;
+            @throw [NSString stringWithFormat:NSLocalizedString(@"the value \"%@\" of key \"%@\" is invalid.", nil), cellEntry[@"maxCount"], @"maxCount"];
         }
     } @catch (NSString *exceptionReason) {
+        superResult = NO;
         NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
         if (error) {
             *error = exceptionError;
@@ -81,6 +84,36 @@
     XUI_END_IGNORE_PARTIAL
     self.detailTextLabel.textColor = UIColor.grayColor;
     self.detailTextLabel.text = nil;
+}
+
+- (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
+    for (NSDictionary *pair in xui_options) {
+        for (NSString *pairKey in pair.allKeys) {
+            Class pairClass = [[self class] optionValueTypes][pairKey];
+            if (pairClass) {
+                if (![pair[pairKey] isKindOfClass:pairClass]) {
+                    return; // invalid option, ignore
+                }
+            }
+        }
+    }
+    _xui_options = xui_options;
+}
+
+- (void)setXui_value:(id)xui_value {
+    NSArray *value = xui_value;
+    NSUInteger minCount = [self.xui_minCount unsignedIntegerValue];
+    NSUInteger maxCount = [self.xui_maxCount unsignedIntegerValue];
+    if (value.count > maxCount || value.count < minCount) {
+        return; // Invalid value, ignore
+    }
+    _xui_value = xui_value;
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.textLabel.textColor = theme.labelColor;
+    self.detailTextLabel.textColor = theme.valueColor;
 }
 
 @end

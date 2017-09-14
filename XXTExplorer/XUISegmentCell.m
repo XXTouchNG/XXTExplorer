@@ -17,7 +17,7 @@
 
 @implementation XUISegmentCell
 
-@synthesize xui_value = _xui_value;
+@synthesize xui_value = _xui_value, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -38,39 +38,21 @@
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
     return
     @{
-      @"validTitles": [NSArray class],
-      @"validValues": [NSArray class],
+      @"options": [NSArray class]
+      };
+}
+
++ (NSDictionary <NSString *, Class> *)optionValueTypes {
+    return
+    @{
+      XUIOptionCellTitleKey: [NSString class],
+      XUIOptionCellShortTitleKey: [NSString class],
+      XUIOptionCellIconKey: [NSString class],
       };
 }
 
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
     BOOL superResult = [super checkEntry:cellEntry withError:error];
-    NSString *checkType = kXUICellFactoryErrorDomain;
-    @try {
-        NSArray *validTitles = cellEntry[@"validTitles"];
-        NSArray *validValues = cellEntry[@"validValues"];
-        if (validTitles && validValues) {
-            if (validTitles.count != validValues.count) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorSizeDismatchDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
-            }
-        }
-        for (NSString *validTitle in validTitles) {
-            if (![validTitle isKindOfClass:[NSString class]]) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorInvalidTypeDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The member type of \"%@\" should be \"%@\".", nil), @"validTitles", @"NSString"];
-            }
-        }
-    } @catch (NSString *exceptionReason) {
-        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
-        if (error) {
-            *error = exceptionError;
-        }
-    } @finally {
-        
-    }
     return superResult;
 }
 
@@ -80,11 +62,22 @@
     [self.xui_segmentControl addTarget:self action:@selector(xuiSegmentValueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)setXui_validTitles:(NSArray <NSString *> *)xui_validTitles {
-    _xui_validTitles = xui_validTitles;
+- (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
+    for (NSDictionary *pair in xui_options) {
+        for (NSString *pairKey in pair.allKeys) {
+            Class pairClass = [[self class] optionValueTypes][pairKey];
+            if (pairClass) {
+                if (![pair[pairKey] isKindOfClass:pairClass]) {
+                    return; // invalid option, ignore
+                }
+            }
+        }
+    }
+    _xui_options = xui_options;
     [self.xui_segmentControl removeAllSegments];
     NSUInteger titleIdx = 0;
-    for (NSString *validTitle in xui_validTitles) {
+    for (NSDictionary *option in xui_options) {
+        NSString *validTitle = option[XUIOptionCellTitleKey];
         [self.xui_segmentControl insertSegmentWithTitle:validTitle atIndex:titleIdx animated:NO];
         titleIdx++;
     }
@@ -97,7 +90,12 @@
 - (void)setXui_value:(id)xui_value {
     _xui_value = xui_value;
     if (xui_value) {
-        NSUInteger selectedIndex = [self.xui_validValues indexOfObject:xui_value];
+        NSUInteger selectedIndex = [self.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([xui_value isEqual:obj[XUIOptionCellValueKey]]) {
+                return YES;
+            }
+            return NO;
+        }];
         if (selectedIndex != NSNotFound) {
             if (self.xui_segmentControl.numberOfSegments > selectedIndex) {
                 [self.xui_segmentControl setSelectedSegmentIndex:selectedIndex];
@@ -115,12 +113,17 @@
 - (IBAction)xuiSegmentValueChanged:(UISegmentedControl *)sender {
     if (sender == self.xui_segmentControl) {
         NSUInteger selectedIndex = sender.selectedSegmentIndex;
-        if (selectedIndex < self.xui_validValues.count) {
-            id selectedValue = self.xui_validValues[selectedIndex];
+        if (selectedIndex < self.xui_options.count) {
+            id selectedValue = self.xui_options[selectedIndex][XUIOptionCellValueKey];
             self.xui_value = selectedValue;
             [self.defaultsService saveDefaultsFromCell:self];
         }
     }
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.xui_segmentControl.tintColor = theme.tintColor;
 }
 
 @end

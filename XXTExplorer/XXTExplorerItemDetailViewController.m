@@ -149,12 +149,6 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     BOOL isFirstTimeLoaded;
 }
 
-#pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - Setup
 
 - (instancetype)init {

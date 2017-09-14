@@ -7,6 +7,13 @@
 #import "XUILogger.h"
 #import "XUI.h"
 
+NSString * XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifier";
+
+NSString * XUIOptionCellTitleKey = @"title";
+NSString * XUIOptionCellShortTitleKey = @"shortTitle";
+NSString * XUIOptionCellValueKey = @"value";
+NSString * XUIOptionCellIconKey = @"icon";
+
 @implementation XUIBaseCell {
 
 }

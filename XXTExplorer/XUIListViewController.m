@@ -34,6 +34,7 @@
 
 #import "XUILogger.h"
 #import "XXTPickerSnippet.h"
+#import "XUITheme.h"
 
 @interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate>
 
@@ -49,7 +50,7 @@
 
 @implementation XUIListViewController
 
-@synthesize entryPath = _entryPath;
+@synthesize theme = _theme;
 
 + (XXTExplorerEntryParser *)entryParser {
     static XXTExplorerEntryParser *entryParser = nil;
@@ -73,15 +74,10 @@
     return entryService;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithPath:path]) {
         if (!path)
             return nil;
-        _entryPath = path;
         [self setup];
     }
     return self;
@@ -91,7 +87,6 @@
     if (self = [super initWithPath:path]) {
         if (!path || !bundlePath)
             return nil;
-        _entryPath = path;
         _bundle = [NSBundle bundleWithPath:bundlePath];
         [self setup];
     }
@@ -123,6 +118,7 @@
         }
         parser.delegate = self;
         _parser = parser;
+        _theme = parser.theme;
         
         _cellsNeedStore = [[NSMutableArray alloc] init];
     }
@@ -351,33 +347,36 @@
 
 - (void)tableView:(UITableView *)tableView performLinkOrderedListCell:(UITableViewCell *)cell {
     XUIOrderedOptionCell *linkListCell = (XUIOrderedOptionCell *)cell;
-    if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
+    if (linkListCell.xui_options)
     {
         XUIOrderedOptionViewController *optionViewController = [[XUIOrderedOptionViewController alloc] initWithCell:linkListCell];
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
+        optionViewController.theme = self.parser.theme;
         [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
 
 - (void)tableView:(UITableView *)tableView performLinkMultipleListCell:(UITableViewCell *)cell {
     XUIMultipleOptionCell *linkListCell = (XUIMultipleOptionCell *)cell;
-    if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
+    if (linkListCell.xui_options)
     {
         XUIMultipleOptionViewController *optionViewController = [[XUIMultipleOptionViewController alloc] initWithCell:linkListCell];
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
+        optionViewController.theme = self.parser.theme;
         [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
 
 - (void)tableView:(UITableView *)tableView performLinkListCell:(UITableViewCell *)cell {
     XUIOptionCell *linkListCell = (XUIOptionCell *)cell;
-    if (linkListCell.xui_validTitles && linkListCell.xui_validValues)
+    if (linkListCell.xui_options)
     {
         XUIOptionViewController *optionViewController = [[XUIOptionViewController alloc] initWithCell:linkListCell];
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
+        optionViewController.theme = self.parser.theme;
         [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
@@ -432,7 +431,9 @@
 }
 
 - (void)presentErrorAlertController:(NSError *)error {
+    @weakify(self);
     dispatch_async(dispatch_get_main_queue(), ^{
+        @strongify(self);
         NSString *entryName = [self.entryPath lastPathComponent];
         XXTE_START_IGNORE_PARTIAL
         if (XXTE_SYSTEM_8) {
@@ -455,17 +456,21 @@
 }
 
 - (void)updateLinkListCell:(XUIOptionCell *)cell {
-    NSArray <NSString *> *shortTitles = cell.xui_shortTitles;
     NSUInteger optionIndex = 0;
     id rawValue = cell.xui_value;
     if (rawValue) {
-        NSUInteger rawIndex = [cell.xui_validValues indexOfObject:rawValue];
+        NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+                return YES;
+            }
+            return NO;
+        }];
         if ((rawIndex) != NSNotFound) {
             optionIndex = rawIndex;
         }
     }
-    if (shortTitles && optionIndex < shortTitles.count) {
-        NSString *shortTitle = shortTitles[optionIndex];
+    if (optionIndex < cell.xui_options.count) {
+        NSString *shortTitle = cell.xui_options[optionIndex][XUIOptionCellShortTitleKey];
         cell.detailTextLabel.text = shortTitle;
     }
 }

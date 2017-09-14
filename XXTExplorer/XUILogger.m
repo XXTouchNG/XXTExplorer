@@ -16,6 +16,7 @@ NSString * const kXUICellFactoryErrorUnknownEnumDomain = @"com.xxtouch.xui.unkno
 NSString * const kXUICellFactoryErrorUndefinedKeyDomain = @"com.xxtouch.xui.undefined-key";
 NSString * const kXUICellFactoryErrorSizeDismatchDomain = @"com.xxtouch.xui.size-dismatch";
 NSString * const kXUICellFactoryErrorUnknownSelectorDomain = @"com.xxtouch.xui.unknown-selector";
+NSString * const kXUICellFactoryErrorInvalidValueDomain = @"com.xxtouch.xui.invalid-value";
 
 @implementation XUILogger
 

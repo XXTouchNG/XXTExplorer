@@ -12,6 +12,8 @@
 
 @implementation XUIOptionCell
 
+@synthesize theme = _theme;
+
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -31,53 +33,22 @@
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
     return
     @{
-      @"validTitles": [NSArray class],
-      @"validValues": [NSArray class],
-      @"shortTitles": [NSArray class],
+      @"options": [NSArray class],
       @"staticTextMessage": [NSString class]
+      };
+}
+
++ (NSDictionary <NSString *, Class> *)optionValueTypes {
+    return
+    @{
+      XUIOptionCellTitleKey: [NSString class],
+      XUIOptionCellShortTitleKey: [NSString class],
+      XUIOptionCellIconKey: [NSString class],
       };
 }
 
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
     BOOL superResult = [super checkEntry:cellEntry withError:error];
-    NSString *checkType = kXUICellFactoryErrorDomain;
-    @try {
-        NSArray *validTitles = cellEntry[@"validTitles"];
-        NSArray *validValues = cellEntry[@"validValues"];
-        NSArray *shortTitles = cellEntry[@"shortTitles"];
-        if (validTitles && validValues) {
-            if (validTitles.count != validValues.count) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorSizeDismatchDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"validValues"];
-            } else if (validTitles.count != shortTitles.count) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorSizeDismatchDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The size of \"%@\" and \"%@\" does not match.", nil), @"validTitles", @"shortTitles"];
-            }
-        }
-        for (NSString *validTitle in validTitles) {
-            if (![validTitle isKindOfClass:[NSString class]]) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorInvalidTypeDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The member type of \"%@\" should be \"%@\".", nil), @"validTitles", @"NSString"];
-            }
-        }
-        for (NSString *shortTitle in shortTitles) {
-            if (![shortTitle isKindOfClass:[NSString class]]) {
-                superResult = NO;
-                checkType = kXUICellFactoryErrorInvalidTypeDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"The member type of \"%@\" should be \"%@\".", nil), @"shortTitles", @"NSString"];
-            }
-        }
-    } @catch (NSString *exceptionReason) {
-        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
-        if (error) {
-            *error = exceptionError;
-        }
-    } @finally {
-        
-    }
     return superResult;
 }
 
@@ -91,6 +62,26 @@
     XUI_END_IGNORE_PARTIAL
     self.detailTextLabel.textColor = UIColor.grayColor;
     self.detailTextLabel.text = nil;
+}
+
+- (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
+    for (NSDictionary *pair in xui_options) {
+        for (NSString *pairKey in pair.allKeys) {
+            Class pairClass = [[self class] optionValueTypes][pairKey];
+            if (pairClass) {
+                if (![pair[pairKey] isKindOfClass:pairClass]) {
+                    return; // invalid option, ignore
+                }
+            }
+        }
+    }
+    _xui_options = xui_options;
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.textLabel.textColor = theme.labelColor;
+    self.detailTextLabel.textColor = theme.valueColor;
 }
 
 @end

@@ -14,10 +14,6 @@
 
 @implementation XXTECommonWebViewController
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (instancetype)init {
     if (self = [super init]) {
         [self configure];

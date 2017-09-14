@@ -7,7 +7,7 @@
 //
 
 #import "XUIButtonCell.h"
-#import "XUIStyle.h"
+#import "XUITheme.h"
 
 @interface XUIButtonCell ()
 
@@ -16,6 +16,8 @@
 @end
 
 @implementation XUIButtonCell
+
+@synthesize theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return NO;
@@ -45,7 +47,12 @@
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
-    self.textLabel.textColor = XUI_COLOR;
+    self.textLabel.textColor = self.theme.tintColor;
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.xui_button_label.textColor = theme.tintColor;
 }
 
 @end

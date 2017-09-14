@@ -8,7 +8,7 @@
 
 #import "XUIMultipleOptionViewController.h"
 #import "XUI.h"
-#import "XUIStyle.h"
+#import "XUITheme.h"
 #import "XUIBaseCell.h"
 
 @interface XUIMultipleOptionViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -20,6 +20,8 @@
 
 @implementation XUIMultipleOptionViewController
 
+@synthesize theme = _theme;
+
 - (instancetype)initWithCell:(XUIMultipleOptionCell *)cell {
     if (self = [super init]) {
         _cell = cell;
@@ -27,7 +29,12 @@
         if (rawValues && [rawValues isKindOfClass:[NSArray class]]) {
             NSMutableArray <NSNumber *> *selectedIndexes = [[NSMutableArray alloc] initWithCapacity:rawValues.count];
             for (id rawValue in rawValues) {
-                NSUInteger rawIndex = [cell.xui_validValues indexOfObject:rawValue];
+                NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+                        return YES;
+                    }
+                    return NO;
+                }];
                 if (rawIndex != NSNotFound) {
                     [selectedIndexes addObject:@(rawIndex)];
                 }
@@ -38,11 +45,6 @@
         }
     }
     return self;
-}
-
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewDidLoad {
@@ -77,7 +79,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.cell.xui_validTitles.count;
+    return self.cell.xui_options.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,8 +103,8 @@
             cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:XUIBaseCellReuseIdentifier];
         }
-        cell.tintColor = XUI_COLOR;
-        cell.textLabel.text = self.cell.xui_validTitles[(NSUInteger) indexPath.row];
+        cell.tintColor = self.theme.tintColor;
+        cell.textLabel.text = self.cell.xui_options[(NSUInteger) indexPath.row][XUIOptionCellTitleKey];
         if ([self.selectedIndexes containsObject:@(indexPath.row)]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
@@ -135,7 +137,7 @@
         NSMutableArray *selectedValues = [[NSMutableArray alloc] initWithCapacity:self.selectedIndexes.count];
         for (NSNumber *selectedIndex in self.selectedIndexes) {
             NSUInteger selectedIndexValue = [selectedIndex unsignedIntegerValue];
-            id selectedValue = self.cell.xui_validValues[selectedIndexValue];
+            id selectedValue = self.cell.xui_options[selectedIndexValue][XUIOptionCellValueKey];
             [selectedValues addObject:selectedValue];
         }
         self.cell.xui_value = [[NSArray alloc] initWithArray:selectedValues];

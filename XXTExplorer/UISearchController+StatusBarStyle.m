@@ -14,7 +14,7 @@
     if (self.active) {
         return UIStatusBarStyleDefault;
     }
-    return UIStatusBarStyleLightContent;
+    return [super preferredStatusBarStyle];
 }
 
 @end

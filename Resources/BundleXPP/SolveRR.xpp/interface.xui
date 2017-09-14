@@ -40,96 +40,178 @@ function xui_interface()
 				["cell"] = "XUILinkCell",
 				["label"] = "Open an image"
 			},{
-				["validValues"] = {
-					1,2,3
-				},
 				["defaults"] = "com.yourcompany.yourscript",
 				["default"] = {
-					
-				},
-				["validTitles"] = {
-					"Red","Green","Blue"
+					2
 				},
 				["label"] = "List of Options",
 				["cell"] = "XUIOptionCell",
 				["key"] = "list-1",
-				["shortTitles"] = {
-					"Red","Green","Blue"
-				}
-			},{
-				["validValues"] = {
-					1,2,3
+				["options"] = {
+					{
+						["title"] = "Red",
+						["shortTitle"] = "Red",
+						["value"] = 1,
+					},
+					{
+						["title"] = "Green",
+						["shortTitle"] = "Green",
+						["value"] = 2,
+					},
+					{
+						["title"] = "Blue",
+						["shortTitle"] = "Blue",
+						["value"] = 3,
+					},
 				},
+			},{
 				["defaults"] = "com.yourcompany.yourscript",
 				["default"] = {
 					1,2
 				},
-				["validTitles"] = {
-					"Red","Green","Blue"
-				},
 				["label"] = "List of Multiple Options",
 				["cell"] = "XUIMultipleOptionCell",
 				["key"] = "list-2",
-				["maxCount"] = 2
-			},{
-				["validValues"] = {
-					1,2,3
+				["maxCount"] = 2,
+				["options"] = {
+					{
+						["title"] = "Red",
+						["shortTitle"] = "Red",
+						["value"] = 1,
+					},
+					{
+						["title"] = "Green",
+						["shortTitle"] = "Green",
+						["value"] = 2,
+					},
+					{
+						["title"] = "Blue",
+						["shortTitle"] = "Blue",
+						["value"] = 3,
+					},
 				},
+			},{
 				["defaults"] = "com.yourcompany.yourscript",
 				["default"] = {
 					1
-				},
-				["validTitles"] = {
-					"Red","Green","Blue"
 				},
 				["label"] = "List of Ordered Options",
 				["cell"] = "XUIOrderedOptionCell",
 				["key"] = "list-3",
 				["maxCount"] = 2,
-				["minCount"] = 1
+				["minCount"] = 1,
+				["options"] = {
+					{
+						["title"] = "Red",
+						["shortTitle"] = "Red",
+						["value"] = 1,
+					},
+					{
+						["title"] = "Green",
+						["shortTitle"] = "Green",
+						["value"] = 2,
+					},
+					{
+						["title"] = "Blue",
+						["shortTitle"] = "Blue",
+						["value"] = 3,
+					},
+				},
 			},{
 				["cell"] = "XUIGroupCell",
 				["label"] = "Segment"
 			},{
-				["validValues"] = {
-					1,2,3
-				},
 				["defaults"] = "com.yourcompany.yourscript",
-				["default"] = "",
-				["validTitles"] = {
-					"Red","Green","Blue"
-				},
+				["default"] = 2,
 				["label"] = "List of Options",
 				["cell"] = "XUISegmentCell",
 				["key"] = "list-segment",
-				["shortTitles"] = {
-					"Red","Green","Blue"
-				}
-			},{
-				["validValues"] = {
-					1,2,3,4,5,6,7
+				["options"] = {
+					{
+						["title"] = "Red",
+						["shortTitle"] = "Red",
+						["value"] = 1,
+					},
+					{
+						["title"] = "Green",
+						["shortTitle"] = "Green",
+						["value"] = 2,
+					},
+					{
+						["title"] = "Blue",
+						["shortTitle"] = "Blue",
+						["value"] = 3,
+					},
 				},
+			},{
 				["defaults"] = "com.yourcompany.yourscript",
 				["default"] = {
 					1,2
 				},
-				["validTitles"] = {
-					"Red","Green","Blue","Yellow","Purple","Black","White"
-				},
 				["cell"] = "XUICheckboxCell",
 				["key"] = "checkbox",
-				["maxCount"] = 4
-			},{
-				["validValues"] = {
-					"first","second","third","fourth","fifth","sixth"
+				["maxCount"] = 4,
+				["options"] = {
+					{
+						["title"] = "Red",
+						["value"] = 1,
+					},
+					{
+						["title"] = "Green",
+						["value"] = 2,
+					},
+					{
+						["title"] = "Blue",
+						["value"] = 3,
+					},
+					{
+						["title"] = "Yellow",
+						["value"] = 4,
+					},
+					{
+						["title"] = "Purple",
+						["value"] = 5,
+					},
+					{
+						["title"] = "Black",
+						["value"] = 6,
+					},
+					{
+						["title"] = "White",
+						["value"] = 7,
+					},
 				},
+			},{
 				["defaults"] = "com.yourcompany.yourscript",
 				["default"] = "fifth",
-				["validTitles"] = {
-					"First","Second","Third","Fourth","Fifth, please!","Zero"
-				},
 				["cell"] = "XUIRadioCell",
-				["key"] = "radio"
+				["key"] = "radio",
+				["options"] = {
+					{
+						["title"] = "First",
+						["value"] = "first",
+					},
+					{
+						["title"] = "Second",
+						["value"] = "second",
+					},
+					{
+						["title"] = "Third",
+						["value"] = "third",
+					},
+					{
+						["title"] = "Fourth",
+						["value"] = "fourth",
+					},
+					{
+						["title"] = "Fifth, please!",
+						["value"] = "fifth",
+					},
+					{
+						["title"] = "Zero",
+						["value"] = "zero",
+					},
+				},
 			},{
 				["cell"] = "XUIGroupCell",
 				["label"] = "Number"
@@ -142,7 +224,6 @@ function xui_interface()
 				["label"] = "Slider",
 				["cell"] = "XUISliderCell",
 				["key"] = "slider",
-				["isSegmented"] = true
 			},{
 				["defaults"] = "com.yourcompany.yourscript",
 				["min"] = 1,

@@ -67,7 +67,7 @@ enum {
     if (self.searchController.active) {
         return UIStatusBarStyleDefault;
     }
-    return UIStatusBarStyleLightContent;
+    return [super preferredStatusBarStyle];
 }
 
 - (BOOL)xxte_prefersNavigationBarHidden {

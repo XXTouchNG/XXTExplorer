@@ -14,7 +14,7 @@
 
 @implementation XUITitleValueCell
 
-@synthesize xui_value = _xui_value;
+@synthesize xui_value = _xui_value, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -65,6 +65,12 @@
     } else {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.textLabel.textColor = theme.labelColor;
+    self.detailTextLabel.textColor = theme.valueColor;
 }
 
 @end

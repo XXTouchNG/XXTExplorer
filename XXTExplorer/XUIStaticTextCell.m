@@ -17,6 +17,8 @@
 
 @implementation XUIStaticTextCell
 
+@synthesize theme = _theme;
+
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -94,6 +96,11 @@
     else {
         self.xui_staticTextLabel.textAlignment = NSTextAlignmentNatural;
     }
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.xui_staticTextLabel.textColor = theme.labelColor;
 }
 
 @end

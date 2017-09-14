@@ -8,7 +8,7 @@
 
 #import "XUIOptionViewController.h"
 #import "XUI.h"
-#import "XUIStyle.h"
+#import "XUITheme.h"
 #import "XUIBaseCell.h"
 #import "XUIOptionCell.h"
 
@@ -23,23 +23,25 @@
     
 }
 
+@synthesize theme = _theme;
+
 - (instancetype)initWithCell:(XUIOptionCell *)cell {
     if (self = [super init]) {
         _cell = cell;
         id rawValue = cell.xui_value;
         if (rawValue) {
-            NSUInteger rawIndex = [self.cell.xui_validValues indexOfObject:rawValue];
+            NSUInteger rawIndex = [self.cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+                    return YES;
+                }
+                return NO;
+            }];
             if ((rawIndex) != NSNotFound) {
                 _selectedIndex = rawIndex;
             }
         }
     }
     return self;
-}
-
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewDidLoad {
@@ -74,7 +76,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.cell.xui_validTitles.count;
+    return self.cell.xui_options.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -98,8 +100,8 @@
             cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:XUIBaseCellReuseIdentifier];
         }
-        cell.tintColor = XUI_COLOR;
-        cell.textLabel.text = self.cell.xui_validTitles[(NSUInteger) indexPath.row];
+        cell.tintColor = self.theme.tintColor;
+        cell.textLabel.text = self.cell.xui_options[(NSUInteger) indexPath.row][XUIOptionCellTitleKey];
         if (self.selectedIndex == indexPath.row) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
@@ -119,7 +121,7 @@
         }
         UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
         selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        id selectedValue = self.cell.xui_validValues[self.selectedIndex];
+        id selectedValue = self.cell.xui_options[self.selectedIndex][XUIOptionCellValueKey];
         if (selectedValue) {
             self.cell.xui_value = selectedValue;
         }

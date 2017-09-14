@@ -5,8 +5,14 @@
 
 #import <UIKit/UIKit.h>
 #import "XUIDefaultsService.h"
+#import "XUITheme.h"
 
-static NSString * const XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifier";
+extern NSString * XUIBaseCellReuseIdentifier;
+
+extern NSString * XUIOptionCellTitleKey;
+extern NSString * XUIOptionCellShortTitleKey;
+extern NSString * XUIOptionCellValueKey;
+extern NSString * XUIOptionCellIconKey;
 
 @interface XUIBaseCell : UITableViewCell
 
@@ -22,6 +28,7 @@ static NSString * const XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifie
 @property (nonatomic, strong) id xui_value;
 
 @property (nonatomic, strong) NSBundle *bundle;
+@property (nonatomic, strong) XUITheme *theme;
 @property (nonatomic, strong) XUIDefaultsService *defaultsService;
 
 + (BOOL)xibBasedLayout;

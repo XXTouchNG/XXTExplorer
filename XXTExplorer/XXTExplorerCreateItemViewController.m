@@ -89,10 +89,6 @@ typedef enum : NSUInteger {
     
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {

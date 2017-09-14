@@ -71,12 +71,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)();
     
 }
 
-#pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     

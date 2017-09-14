@@ -13,6 +13,8 @@
 #import "XUILogger.h"
 #import "XUIDefaultsService.h"
 
+#import "XUITheme.h"
+
 @interface XUICellFactory ()
 
 @property (nonatomic, strong, readonly) NSArray <NSDictionary *> *items;
@@ -27,6 +29,12 @@
         _bundle = bundle;
         _logger = [[XUILogger alloc] init];
         _defaultsService = [[XUIDefaultsService alloc] init];
+        
+        NSDictionary *themeDictionary = rootEntry[@"theme"];
+        if (!themeDictionary || ![themeDictionary isKindOfClass:[NSDictionary class]])
+            _theme = [[XUITheme alloc] init];
+        else
+            _theme = [[XUITheme alloc] initWithDictionary:themeDictionary];
     }
     return self;
 }
@@ -73,6 +81,7 @@
                 continue;
             }
             cellInstance.bundle = self.bundle;
+            cellInstance.theme = self.theme;
             cellInstance.defaultsService = self.defaultsService;
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
             for (NSUInteger keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {

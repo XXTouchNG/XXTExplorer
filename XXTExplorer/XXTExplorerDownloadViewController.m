@@ -78,10 +78,6 @@ typedef enum : NSUInteger {
     _downloadFileHandle = nil;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {

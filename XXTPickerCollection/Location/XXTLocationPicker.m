@@ -40,12 +40,6 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     return @{ @"latitude": @(self.pointAnnotation.coordinate.latitude), @"longitude": @(self.pointAnnotation.coordinate.longitude) };
 }
 
-#pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (NSString *)title {
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];

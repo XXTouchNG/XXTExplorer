@@ -19,7 +19,7 @@
 
 @implementation XUIStepperCell
 
-@synthesize xui_value = _xui_value;
+@synthesize xui_value = _xui_value, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -45,11 +45,29 @@
       @"step": [NSNumber class],
       @"value": [NSNumber class],
       @"autoRepeat": [NSNumber class],
+      @"isInteger": [NSNumber class]
       };
 }
 
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
     BOOL superResult = [super checkEntry:cellEntry withError:error];
+    NSString *checkType = kXUICellFactoryErrorDomain;
+    @try {
+        double minValue = [cellEntry[@"min"] doubleValue];
+        double maxValue = [cellEntry[@"max"] doubleValue];
+        if (minValue > maxValue) {
+            superResult = NO;
+            checkType = kXUICellFactoryErrorInvalidValueDomain;
+            @throw [NSString stringWithFormat:NSLocalizedString(@"the value \"%@\" of key \"%@\" is invalid.", nil), cellEntry[@"maxValue"], @"maxValue"];
+        }
+    } @catch (NSString *exceptionReason) {
+        NSError *exceptionError = [NSError errorWithDomain:checkType code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
+        if (error) {
+            *error = exceptionError;
+        }
+    } @finally {
+        
+    }
     return superResult;
 }
 
@@ -71,8 +89,13 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    _xui_value = xui_value;
     double value = [xui_value doubleValue];
+    double minValue = [self.xui_min doubleValue];
+    double maxValue = [self.xui_max doubleValue];
+    if (value > maxValue || value < minValue) {
+        return; // Invalid value, ignore
+    }
+    _xui_value = xui_value;
     self.xui_stepper.value = value;
     [self xuiSetDisplayValue:value];
 }
@@ -117,6 +140,12 @@
     } else {
         self.xui_numberLabel.text = [NSString stringWithFormat:@"%.2f", value];
     }
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.textLabel.textColor = theme.labelColor;
+    self.xui_stepper.tintColor = theme.tintColor;
 }
 
 @end

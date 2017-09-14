@@ -36,12 +36,6 @@ typedef enum : NSUInteger {
     NSArray <NSString *> *staticSectionFooters;
 }
 
-#pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - Setup
 
 - (instancetype)initWithEntry:(NSDictionary *)entry {

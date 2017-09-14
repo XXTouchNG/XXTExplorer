@@ -39,12 +39,6 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     return self.events[(NSUInteger) self.lastSelected.section][(NSUInteger) self.lastSelected.row].command;
 }
 
-#pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (NSString *)title {
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];

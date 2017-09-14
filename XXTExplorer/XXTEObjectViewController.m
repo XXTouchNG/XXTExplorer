@@ -7,12 +7,12 @@
 //
 
 #import "XXTEObjectViewController.h"
-//#import "XUI.h"
 #import "XXTEBaseObjectViewController.h"
 #import "XXTEArrayObjectViewController.h"
 #import "XXTEDictionaryObjectViewController.h"
 #import "XXTExplorerEntryObjectReader.h"
-//#import "XUIListViewController.h"
+
+#import "XUITheme.h"
 
 @interface XXTEObjectViewController ()
 
@@ -34,17 +34,13 @@
     return [XXTExplorerEntryObjectReader class];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 + (NSArray <Class> *)supportedTypes {
     return @[  ];
 }
 
 - (instancetype)init {
     if (self = [super init]) {
-        
+        [self setup];
     }
     return self;
 }
@@ -66,6 +62,7 @@
     self = [self initWithRootObject:RootObject];
     if (self) {
         _entryPath = path;
+        [self setup];
     }
     return self;
 }
@@ -101,9 +98,13 @@
         self = [super init];
     }
     if (self) {
-        
+        [self setup];
     }
     return self;
+}
+
+- (void)setup {
+    
 }
 
 - (void)viewDidLoad {

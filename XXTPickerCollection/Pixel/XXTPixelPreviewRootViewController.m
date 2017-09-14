@@ -11,10 +11,6 @@
 
 @implementation XXTPixelPreviewRootViewController
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (BOOL)prefersStatusBarHidden {
     return self.statusBarHidden;
 }

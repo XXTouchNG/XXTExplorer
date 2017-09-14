@@ -19,6 +19,7 @@ extern NSString * const kXUICellFactoryErrorUnknownEnumDomain;
 extern NSString * const kXUICellFactoryErrorUndefinedKeyDomain;
 extern NSString * const kXUICellFactoryErrorSizeDismatchDomain;
 extern NSString * const kXUICellFactoryErrorUnknownSelectorDomain;
+extern NSString * const kXUICellFactoryErrorInvalidValueDomain;
 
 static inline NSString * XUIParserErrorMissingEntry(NSString *path1) {
     return [NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"%@\" is missing.", nil), kXUICellFactoryErrorMissingEntryDomain, (path1)];

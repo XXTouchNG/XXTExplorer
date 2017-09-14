@@ -56,11 +56,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    //    self.hidesBottomBarWhenPushed = YES;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    
 }
 
 - (void)viewDidLoad {

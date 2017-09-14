@@ -48,18 +48,6 @@
     BOOL firstTimeLoaded;
 }
 
-//#pragma mark - Restore State
-//
-//- (NSString *)restorationIdentifier {
-//    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
-//}
-
-#pragma mark - UIViewController
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (instancetype)init {
     if (self = [super init]) {
         [self setupWithPath:nil];
@@ -189,15 +177,10 @@
 - (void)restoreTheme {
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
-    
-    // text color
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    
-    // navigation items and bar button items color
     self.navigationController.navigationBar.tintColor = foregroundColor;
-    
-    // background color
     self.navigationController.navigationBar.barTintColor = backgroundColor;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 #pragma mark - NSFileManager

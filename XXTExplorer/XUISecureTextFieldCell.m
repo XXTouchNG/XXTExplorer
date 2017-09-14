@@ -17,7 +17,7 @@
 
 @implementation XUISecureTextFieldCell
 
-@synthesize xui_value = _xui_value;
+@synthesize xui_value = _xui_value, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -208,6 +208,11 @@
 - (void)setXui_value:(id)xui_value {
     _xui_value = xui_value;
     self.xui_secureTextField.text = xui_value;
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.xui_secureTextField.tintColor = theme.tintColor;
 }
 
 #pragma mark - UITextFieldDelegate

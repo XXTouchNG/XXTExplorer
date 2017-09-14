@@ -29,10 +29,6 @@
     return [XXTExplorerEntryWebReader class];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (instancetype)initWithPath:(NSString *)path {
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     if (self = [super initWithURL:fileURL]) {

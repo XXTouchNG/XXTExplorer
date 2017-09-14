@@ -35,6 +35,8 @@
 #import "SKAttributedParser.h"
 #import "SKRange.h"
 
+#import "UIColor+DarkColor.h"
+
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
@@ -84,12 +86,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 {
     UIColor *newColor = self.theme.backgroundColor;
     if (!newColor) newColor = XXTE_COLOR;
-    const CGFloat *componentColors = CGColorGetComponents(newColor.CGColor);
-    CGFloat colorBrightness = ((componentColors[0] * 299) + (componentColors[1] * 587) + (componentColors[2] * 114)) / 1000;
-    if (colorBrightness < 0.5)
-        return YES;
-    else
-        return NO;
+    return [newColor isDarkColor];
 }
 
 - (BOOL)prefersStatusBarHidden {

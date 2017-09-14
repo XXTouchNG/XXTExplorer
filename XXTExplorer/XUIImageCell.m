@@ -51,7 +51,6 @@
 
 - (void)setXui_path:(NSString *)xui_path {
     _xui_path = xui_path;
-    
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_8) {
         UIImage *image = [UIImage imageNamed:xui_path inBundle:self.bundle compatibleWithTraitCollection:nil];

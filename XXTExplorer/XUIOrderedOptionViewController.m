@@ -8,7 +8,7 @@
 
 #import "XUIOrderedOptionViewController.h"
 #import "XUI.h"
-#import "XUIStyle.h"
+#import "XUITheme.h"
 #import "XUIBaseCell.h"
 
 @interface XUIOrderedOptionViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -21,39 +21,44 @@
 
 @implementation XUIOrderedOptionViewController
 
+@synthesize theme = _theme;
+
 - (instancetype)initWithCell:(XUIOrderedOptionCell *)cell {
     if (self = [super init]) {
         _cell = cell;
-        NSArray *validValues = cell.xui_validValues;
-        if (validValues && [validValues isKindOfClass:[NSArray class]]) {
-            NSMutableArray *unselectedIndexes = [[NSMutableArray alloc] initWithCapacity:validValues.count];
-            for (NSUInteger unselectedIndex = 0; unselectedIndex < validValues.count; unselectedIndex++) {
-                [unselectedIndexes addObject:@(unselectedIndex)];
+        NSMutableArray *validValues = [[NSMutableArray alloc] init];
+        [cell.xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj[XUIOptionCellValueKey]) {
+                [validValues addObject:obj[XUIOptionCellValueKey]];
             }
-            NSArray *rawValues = cell.xui_value;
-            if (rawValues && [rawValues isKindOfClass:[NSArray class]]) {
-                NSMutableArray <NSNumber *> *selectedIndexes = [[NSMutableArray alloc] initWithCapacity:rawValues.count];
-                for (id rawValue in rawValues) {
-                    NSUInteger rawIndex = [cell.xui_validValues indexOfObject:rawValue];
-                    if (rawIndex != NSNotFound) {
-                        NSNumber *rawIndexObject = @(rawIndex);
-                        [selectedIndexes addObject:rawIndexObject];
-                        [unselectedIndexes removeObject:rawIndexObject];
-                    }
-                }
-                _selectedIndexes = selectedIndexes;
-            } else {
-                _selectedIndexes = [[NSMutableArray alloc] init];
-            }
-            _unselectedIndexes = unselectedIndexes;
+        }];
+        NSMutableArray *unselectedIndexes = [[NSMutableArray alloc] initWithCapacity:validValues.count];
+        for (NSUInteger unselectedIndex = 0; unselectedIndex < validValues.count; unselectedIndex++) {
+            [unselectedIndexes addObject:@(unselectedIndex)];
         }
+        NSArray *rawValues = cell.xui_value;
+        if (rawValues && [rawValues isKindOfClass:[NSArray class]]) {
+            NSMutableArray <NSNumber *> *selectedIndexes = [[NSMutableArray alloc] initWithCapacity:rawValues.count];
+            for (id rawValue in rawValues) {
+                NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+                        return YES;
+                    }
+                    return NO;
+                }];
+                if (rawIndex != NSNotFound) {
+                    NSNumber *rawIndexObject = @(rawIndex);
+                    [selectedIndexes addObject:rawIndexObject];
+                    [unselectedIndexes removeObject:rawIndexObject];
+                }
+            }
+            _selectedIndexes = selectedIndexes;
+        } else {
+            _selectedIndexes = [[NSMutableArray alloc] init];
+        }
+        _unselectedIndexes = unselectedIndexes;
     }
     return self;
-}
-
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewDidLoad {
@@ -125,18 +130,18 @@
         cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:XUIBaseCellReuseIdentifier];
     }
-    cell.tintColor = XUI_COLOR;
+    cell.tintColor = self.theme.tintColor;
     cell.showsReorderControl = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0)
     {
         NSUInteger selectedIndex = [self.selectedIndexes[(NSUInteger) indexPath.row] unsignedIntegerValue];
-        cell.textLabel.text = self.cell.xui_validTitles[selectedIndex];
+        cell.textLabel.text = self.cell.xui_options[selectedIndex][XUIOptionCellTitleKey];
     }
     else if (indexPath.section == 1)
     {
         NSUInteger unselectedIndex = [self.unselectedIndexes[(NSUInteger) indexPath.row] unsignedIntegerValue];
-        cell.textLabel.text = self.cell.xui_validTitles[unselectedIndex];
+        cell.textLabel.text = self.cell.xui_options[unselectedIndex][XUIOptionCellTitleKey];
     }
     return cell;
 }
@@ -191,7 +196,7 @@
     NSMutableArray *selectedValues = [[NSMutableArray alloc] initWithCapacity:self.selectedIndexes.count];
     for (NSNumber *selectedIndex in self.selectedIndexes) {
         NSUInteger selectedIndexValue = [selectedIndex unsignedIntegerValue];
-        id selectedValue = self.cell.xui_validValues[selectedIndexValue];
+        id selectedValue = self.cell.xui_options[selectedIndexValue][XUIOptionCellValueKey];
         [selectedValues addObject:selectedValue];
     }
     self.cell.xui_value = [[NSArray alloc] initWithArray:selectedValues];

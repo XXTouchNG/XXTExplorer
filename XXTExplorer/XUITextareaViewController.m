@@ -31,10 +31,6 @@
     return self;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [self registerKeyboardNotifications];
     [super viewWillAppear:animated];
@@ -173,7 +169,7 @@
     if (!_textView) {
         UITextView *textView = [[UITextView alloc] initWithFrame:self.view.bounds];
         
-        textView.tintColor = XXTE_COLOR;
+        textView.tintColor = self.theme.tintColor;
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         textView.delegate = self;

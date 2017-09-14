@@ -10,8 +10,7 @@
 
 @interface XUICheckboxCell : XUIBaseCell
 
-@property (nonatomic, strong) NSArray <NSString *> *xui_validTitles;
-@property (nonatomic, strong) NSArray *xui_validValues;
+@property (nonatomic, strong) NSArray <NSDictionary *> *xui_options;
 @property (nonatomic, strong) NSNumber *xui_maxCount;
 @property (nonatomic, strong) NSNumber *xui_minCount;
 @property (nonatomic, strong) NSString *xui_alignment;
