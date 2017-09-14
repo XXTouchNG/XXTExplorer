@@ -178,7 +178,7 @@
         if (selectedValue) [selectedValues addObject:selectedValue];
     }
     self.xui_value = [selectedValues copy];
-    [self.defaultsService saveDefaultsFromCell:self];
+    [self.adapter saveDefaultsFromCell:self];
 }
 
 - (void)setXui_alignment:(NSString *)xui_alignment {

@@ -98,15 +98,6 @@
     _xui_options = xui_options;
 }
 
-- (void)setXui_value:(id)xui_value {
-    NSArray *value = xui_value;
-    NSUInteger maxCount = [self.xui_maxCount unsignedIntegerValue];
-    if (value.count > maxCount) {
-        return; // Invalid value, ignore
-    }
-    _xui_value = xui_value;
-}
-
 - (void)setTheme:(XUITheme *)theme {
     _theme = theme;
     self.textLabel.textColor = theme.labelColor;

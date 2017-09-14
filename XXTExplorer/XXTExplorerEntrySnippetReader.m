@@ -47,7 +47,7 @@
 - (instancetype)initWithPath:(NSString *)filePath {
     if (self = [super init]) {
         _entryPath = filePath;
-        _snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:filePath];
+        _snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:filePath Error:nil];
         [self setupWithPath:filePath];
     }
     return self;
@@ -66,7 +66,9 @@
             iconImage = extensionIconImage;
         }
     }
-    _entryDisplayName = self.snippet.name;
+    if (self.snippet) {
+        _entryDisplayName = self.snippet.name;
+    }
     _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Document", entryUpperedExtension];
     _entryViewerDescription = [XXTESnippetViewerController viewerName];

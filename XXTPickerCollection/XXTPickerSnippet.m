@@ -18,115 +18,15 @@
 #import "XXTApplicationPicker.h"
 #import "XXTMultipleApplicationPicker.h"
 
-#import "lua_NSValue.h"
-
-static NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
-
-BOOL checkCode(lua_State *L, int code, NSError **error);
-
-NSString *lua_get_name(NSString *filename)
-{
-	static lua_State *L = NULL;
-	if (L == NULL) {
-		L = luaL_newstate();
-		luaL_openlibs(L);
-		lua_openNSValueLibs(L);
-	}
-	if (luaL_loadfile(L, [filename UTF8String]) == LUA_OK) {
-		if (lua_pcall(L, 0, 1, 0) == LUA_OK && lua_type(L, -1) == LUA_TTABLE) {
-			NSString *snippet_name = nil;
-			lua_getfield(L, -1, "name");
-			if (lua_type(L, -1) == LUA_TSTRING) {
-				snippet_name = [NSString stringWithUTF8String:lua_tostring(L, -1)];
-			}
-			lua_pop(L, 1);
-			lua_pop(L, 1);
-			return snippet_name;
-		}
-	}
-	return nil;
-}
-
-NSArray *lua_get_arguments(NSString *filename)
-{
-	static lua_State *L = NULL;
-	if (L == NULL) {
-		L = luaL_newstate();
-		luaL_openlibs(L);
-		lua_openNSValueLibs(L);
-	}
-	if (luaL_loadfile(L, [filename UTF8String]) == LUA_OK) {
-		if (lua_pcall(L, 0, 1, 0) == LUA_OK && lua_type(L, -1) == LUA_TTABLE) {
-			NSArray *args_array = nil;
-				lua_getfield(L, -1, "arguments");
-					if (lua_type(L, -1) == LUA_TTABLE) {
-						args_array = lua_toNSArray(L, -1);
-					}
-				lua_pop(L, 1);
-			lua_pop(L, 1);
-			return args_array;
-		}
-	}
-	return nil;
-}
-
-id lua_generator(NSString *filename, NSArray *arguments, NSError **error)
-{
-	static lua_State *L = NULL;
-	if (L == NULL) {
-		L = luaL_newstate();
-		luaL_openlibs(L);
-		lua_openNSValueLibs(L);
-	}
-    int result = LUA_OK;
-    result = luaL_loadfile(L, [filename UTF8String]);
-	if (checkCode(L, result, error)) {
-        result = lua_pcall(L, 0, 1, 0);
-		if (checkCode(L, result, error) && lua_type(L, -1) == LUA_TTABLE) {
-			lua_getfield(L, -1, "generator");
-			if (lua_type(L, -1) == LUA_TFUNCTION) {
-				id snippet_body = nil;
-				for (int i = 0; i < [arguments count]; ++i) {
-					lua_pushNSValue(L, [arguments objectAtIndex:i]);
-				}
-				result = lua_pcall(L, (int)[arguments count], 1, 0);
-				if (checkCode(L, result, error)) {
-					snippet_body = lua_toNSValue(L, -1);
-				}
-				lua_pop(L, 1);
-				return snippet_body;
-			}
-			lua_pop(L, 1);
-			lua_pop(L, 1);
-        }
-    }
-	return nil;
-}
-
-BOOL checkCode(lua_State *L, int code, NSError **error) {
-	if (LUA_OK != code) {
-		const char *cErrString = lua_tostring(L, -1);
-		NSString *errString = [NSString stringWithUTF8String:cErrString];
-		NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Error", nil),
-										 NSLocalizedFailureReasonErrorKey: errString
-										 };
-		lua_pop(L, 1);
-		if (error != nil)
-			*error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain
-										 code:code
-									 userInfo:errDictionary];
-		return NO;
-	}
-	return YES;
-}
+#import "LuaNSValue.h"
 
 @interface XXTPickerSnippet ()
-
 @property (nonatomic, strong) NSMutableArray *results;
-
 @end
 
-@implementation XXTPickerSnippet
+@implementation XXTPickerSnippet {
+    lua_State *L;
+}
 
 + (NSArray <Class> *)pickers {
 	// Register Picker Here
@@ -143,36 +43,93 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
 	return availablePickers;
 }
 
-- (instancetype)initWithContentsOfFile:(NSString *)path {
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setupWithError:nil];
+    }
+    return self;
+}
+
+- (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr {
 	if (self = [super init]) {
 		_path = path;
-		[self name];
-		[self flags];
 		_results = [[NSMutableArray alloc] init];
+        if (![self setupWithError:errorPtr]) return nil;
 	}
 	return self;
 }
 
-- (NSString *)name {
-	if (!_name) {
-		NSString *name = lua_get_name(self.path);
-		if (!name) {
-			name = [self.path lastPathComponent];
-		}
-		_name = name;
-	}
-	return _name;
+- (BOOL)setupWithError:(NSError **)errorPtr {
+    NSString *path = self.path;
+    if (!path) return NO;
+    
+    if (!L) {
+        L = luaL_newstate();
+        NSAssert(L, @"not enough memory");
+        luaL_openlibs(L);
+        lua_openNSValueLibs(L);
+    }
+    
+    int luaResult = luaL_loadfile(L, [path UTF8String]);
+    if (NO == checkCode(L, luaResult, errorPtr))
+    {
+        return NO;
+    }
+    
+    int callResult = lua_pcall(L, 0, 1, 0);
+    if (NO == checkCode(L, callResult, errorPtr))
+    {
+        return NO;
+    }
+    
+    if (lua_type(L, -1) == LUA_TTABLE) {
+        NSString *snippet_name = nil;
+        lua_getfield(L, -1, "name");
+        if (lua_type(L, -1) == LUA_TSTRING) {
+            const char *name = lua_tostring(L, -1);
+            if (name)
+                snippet_name = [NSString stringWithUTF8String:name];
+        }
+        lua_pop(L, 1);
+        if (!snippet_name)
+            snippet_name = [self.path lastPathComponent];
+        _name = snippet_name;
+    }
+    
+    if (lua_type(L, -1) == LUA_TTABLE) {
+        NSArray *args_array = nil;
+        lua_getfield(L, -1, "arguments");
+        if (lua_type(L, -1) == LUA_TTABLE) {
+            args_array = lua_toNSArray(L, -1);
+        }
+        lua_pop(L, 1);
+        _flags = args_array;
+    }
+    
+    return YES;
 }
 
-- (NSArray <NSDictionary *> *)flags {
-	if (!_flags) {
-		_flags = lua_get_arguments(self.path);
-	}
-	return _flags;
-}
+#pragma mark - Getters
 
 - (id)generateWithError:(NSError **)error {
-	return lua_generator(self.path, [self.results copy], error);
+    if (!L) return nil;
+    NSArray *arguments = [self.results copy];
+    lua_getfield(L, -1, "generator");
+    if (lua_type(L, -1) == LUA_TFUNCTION) {
+        id snippet_body = nil;
+        for (int i = 0; i < [arguments count]; ++i) {
+            lua_pushNSValue(L, [arguments objectAtIndex:i]);
+        }
+        int argumentCount = (int)[arguments count];
+        int generateResult = lua_pcall(L, argumentCount, 1, 0);
+        if (checkCode(L, generateResult, error))
+        {
+            snippet_body = lua_toNSValue(L, -1);
+            lua_pop(L, 1);
+        }
+        return snippet_body;
+    }
+	return nil;
 }
 
 #pragma mark - NSCoding
@@ -184,6 +141,7 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
 		_name = [aDecoder decodeObjectForKey:@"name"];
 		_flags = [aDecoder decodeObjectForKey:@"flags"];
 		_results = [aDecoder decodeObjectForKey:@"results"];
+        [self setupWithError:nil];
 	}
 	return self;
 }
@@ -261,9 +219,11 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
 }
 
 - (void)dealloc {
-//#ifdef DEBUG
-//    NSLog(@"- [XXTPickerSnippet dealloc]");
-//#endif
+    if (L) {
+        lua_pop(L, 1);
+        lua_close(L);
+        L = NULL;
+    }
 }
 
 @end

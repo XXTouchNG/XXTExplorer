@@ -164,7 +164,7 @@
         }
         id selectedValue = validValues[selectedIndexValue];
         self.xui_value = selectedValue;
-        [self.defaultsService saveDefaultsFromCell:self];
+        [self.adapter saveDefaultsFromCell:self];
     }
 }
 

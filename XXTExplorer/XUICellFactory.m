@@ -11,8 +11,7 @@
 #import "XUIBaseCell.h"
 #import "XUIGroupCell.h"
 #import "XUILogger.h"
-#import "XUIDefaultsService.h"
-
+#import "XUIAdapter.h"
 #import "XUITheme.h"
 
 @interface XUICellFactory ()
@@ -23,12 +22,14 @@
 
 @implementation XUICellFactory
 
-- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry withBundle:(NSBundle *)bundle {
+- (instancetype)initWithAdapter:(XUIAdapter *)adapter Error:(NSError *__autoreleasing *)error {
     if (self = [super init]) {
-        _rootEntry = rootEntry;
-        _bundle = bundle;
+        _adapter = adapter;
         _logger = [[XUILogger alloc] init];
-        _defaultsService = [[XUIDefaultsService alloc] init];
+        
+        NSDictionary *rootEntry = [adapter rootEntryWithError:error];
+        if (!rootEntry) return nil;
+        _rootEntry = rootEntry;
         
         NSDictionary *themeDictionary = rootEntry[@"theme"];
         if (!themeDictionary || ![themeDictionary isKindOfClass:[NSDictionary class]])
@@ -80,13 +81,26 @@
                 [self.logger logMessage:[NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"items[%lu]\", %@", nil), checkError.domain, itemIdx, checkError.localizedDescription]];
                 continue;
             }
-            cellInstance.bundle = self.bundle;
+            cellInstance.adapter = self.adapter;
             cellInstance.theme = self.theme;
-            cellInstance.defaultsService = self.defaultsService;
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
             for (NSUInteger keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
                 NSString *itemKey = itemAllKeys[keyIdx];
-                id itemValue = itemDictionary[itemKey];
+                if ([itemKey isEqualToString:@"value"]) {
+                    
+                } else {
+                    id itemValue = itemDictionary[itemKey];
+                    NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
+                    if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
+                        [cellInstance setValue:itemValue forKey:propertyName];
+                    } else {
+                        [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
+                    }
+                }
+            }
+            NSString *itemKey = @"value";
+            id itemValue = itemDictionary[itemKey];
+            if (itemValue) {
                 NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
                 if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
                     [cellInstance setValue:itemValue forKey:propertyName];
@@ -94,7 +108,6 @@
                     [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
                 }
             }
-            [self.defaultsService readDefaultsToCell:cellInstance];
             [cells addObject:cellInstance];
         }
         NSMutableArray <XUIGroupCell *> *groupCells = [[NSMutableArray alloc] init];
@@ -133,7 +146,6 @@
         if (_delegate && [_delegate respondsToSelector:@selector(cellFactory:didFailWithError:)]) {
             [_delegate cellFactory:self didFailWithError:error];
         }
-        _error = error;
     } @finally {
         assert(self.sectionCells.count == self.otherCells.count);
     }

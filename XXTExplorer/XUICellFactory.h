@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class XUIBaseCell, XUIGroupCell, XUILogger, XUIDefaultsService, XUITheme;
+@class XUIBaseCell, XUIGroupCell, XUILogger, XUITheme, XUIAdapter;
 
 @class XUICellFactory;
 
@@ -22,18 +22,16 @@
 @interface XUICellFactory : NSObject
 
 @property (nonatomic, strong, readonly) XUILogger *logger;
-@property (nonatomic, strong, readonly) XUIDefaultsService *defaultsService;
+@property (nonatomic, strong, readonly) XUIAdapter *adapter;
 
 @property (nonatomic, weak) id <XUICellFactoryDelegate> delegate;
-@property (nonatomic, strong, readonly) NSBundle *bundle;
 @property (nonatomic, strong, readonly) NSDictionary <NSString *, id> *rootEntry;
-@property (nonatomic, strong, readonly) NSError *error;
 @property (nonatomic, strong, readonly) NSArray <XUIGroupCell *> *sectionCells;
 @property (nonatomic, strong, readonly) NSArray <NSArray <XUIBaseCell *> *> *otherCells;
 
 @property (nonatomic, strong, readonly) XUITheme *theme;
 
-- (instancetype)initWithRootEntry:(NSDictionary <NSString *, id> *)rootEntry withBundle:(NSBundle *)bundle;
+- (instancetype)initWithAdapter:(XUIAdapter *)adapter Error:(NSError **)error;
 - (void)parse; // this method should run in main thread
 
 @end

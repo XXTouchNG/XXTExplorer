@@ -158,7 +158,7 @@
 - (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
     UITextView *textView = self.textView;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.bounds), 0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
 }

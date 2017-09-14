@@ -4,8 +4,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XUIDefaultsService.h"
+#import "XUIAdapter.h"
 #import "XUITheme.h"
+
+@class XUIAdapter;
 
 extern NSString * XUIBaseCellReuseIdentifier;
 
@@ -24,12 +26,10 @@ extern NSString * XUIOptionCellIconKey;
 @property (nonatomic, strong) NSString *xui_icon;
 @property (nonatomic, strong) NSNumber *xui_enabled;
 @property (nonatomic, strong) NSNumber *xui_height;
-// @property (nonatomic, strong) NSString *xui_detail;
 @property (nonatomic, strong) id xui_value;
+@property (nonatomic, strong) XUIAdapter *adapter;
 
-@property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) XUITheme *theme;
-@property (nonatomic, strong) XUIDefaultsService *defaultsService;
 
 + (BOOL)xibBasedLayout;
 + (BOOL)layoutNeedsTextLabel;

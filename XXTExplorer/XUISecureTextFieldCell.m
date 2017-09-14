@@ -219,7 +219,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.xui_value = textField.text;
-    [self.defaultsService saveDefaultsFromCell:self];
+    [self.adapter saveDefaultsFromCell:self];
 }
 
 @end

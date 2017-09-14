@@ -12,6 +12,7 @@
 @interface XUISegmentCell ()
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *xui_segmentControl;
+@property (assign, nonatomic) BOOL shouldUpdateValue;
 
 @end
 
@@ -85,20 +86,34 @@
         NSInteger selectedIdx = [self.xui_value integerValue];
         [self.xui_segmentControl setSelectedSegmentIndex:selectedIdx];
     }
+    [self updateValueIfNeeded];
 }
 
 - (void)setXui_value:(id)xui_value {
     _xui_value = xui_value;
-    if (xui_value) {
-        NSUInteger selectedIndex = [self.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([xui_value isEqual:obj[XUIOptionCellValueKey]]) {
-                return YES;
-            }
-            return NO;
-        }];
-        if (selectedIndex != NSNotFound) {
-            if (self.xui_segmentControl.numberOfSegments > selectedIndex) {
-                [self.xui_segmentControl setSelectedSegmentIndex:selectedIndex];
+    [self setNeedsUpdateValue];
+    [self updateValueIfNeeded];
+}
+
+- (void)setNeedsUpdateValue {
+    self.shouldUpdateValue = YES;
+}
+
+- (void)updateValueIfNeeded {
+    if (self.shouldUpdateValue) {
+        self.shouldUpdateValue = NO;
+        id xui_value = self.xui_value;
+        if (xui_value) {
+            NSUInteger selectedIndex = [self.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([xui_value isEqual:obj[XUIOptionCellValueKey]]) {
+                    return YES;
+                }
+                return NO;
+            }];
+            if (selectedIndex != NSNotFound) {
+                if (self.xui_segmentControl.numberOfSegments > selectedIndex) {
+                    [self.xui_segmentControl setSelectedSegmentIndex:selectedIndex];
+                }
             }
         }
     }
@@ -116,7 +131,7 @@
         if (selectedIndex < self.xui_options.count) {
             id selectedValue = self.xui_options[selectedIndex][XUIOptionCellValueKey];
             self.xui_value = selectedValue;
-            [self.defaultsService saveDefaultsFromCell:self];
+            [self.adapter saveDefaultsFromCell:self];
         }
     }
 }

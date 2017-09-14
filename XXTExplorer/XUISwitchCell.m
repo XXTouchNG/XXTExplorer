@@ -11,6 +11,7 @@
 @interface XUISwitchCell ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *xui_switch;
+@property (assign, nonatomic) BOOL shouldUpdateValue;
 
 @end
 
@@ -51,8 +52,8 @@
 
 - (void)setXui_value:(id)xui_value {
     _xui_value = xui_value;
-    BOOL value = [xui_value boolValue];
-    self.xui_switch.on = self.xui_negate ? !value : value;
+    [self setNeedsUpdateValue];
+    [self updateValueIfNeeded];
 }
 
 - (void)setXui_enabled:(NSNumber *)xui_enabled {
@@ -63,14 +64,13 @@
 
 - (void)setXui_negate:(NSNumber *)xui_negate {
     _xui_negate = xui_negate;
-    BOOL value = [self.xui_value boolValue];
-    self.xui_switch.on = xui_negate ? !value : value;
+    [self updateValueIfNeeded];
 }
 
 - (IBAction)xuiSwitchValueChanged:(UISwitch *)sender {
     if (sender == self.xui_switch) {
-        self.xui_value = self.xui_negate ? @(!sender.on) : @(sender.on);
-        [self.defaultsService saveDefaultsFromCell:self];
+        self.xui_value = self.xui_negate ? @(!(BOOL)sender.on) : @((BOOL)sender.on);
+        [self.adapter saveDefaultsFromCell:self];
     }
 }
 
@@ -78,6 +78,18 @@
     _theme = theme;
     self.textLabel.textColor = theme.labelColor;
     self.xui_switch.onTintColor = theme.successColor;
+}
+
+- (void)setNeedsUpdateValue {
+    self.shouldUpdateValue = YES;
+}
+
+- (void)updateValueIfNeeded {
+    if (self.shouldUpdateValue) {
+        self.shouldUpdateValue = NO;
+        BOOL value = [self.xui_value boolValue];
+        self.xui_switch.on = self.xui_negate ? !value : value;
+    }
 }
 
 @end

@@ -23,7 +23,7 @@
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
 
-#import "XUIDefaultsService.h"
+#import "XUIAdapter.h"
 
 #import "XUIOptionViewController.h"
 #import "XUIMultipleOptionViewController.h"
@@ -42,6 +42,7 @@
 @property (nonatomic, assign) BOOL shouldStoreCells;
 
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
+
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) UIEdgeInsets defaultInsets;
@@ -95,32 +96,23 @@
 
 - (void)setup {
     {
-        NSDictionary *rootEntry = nil;
+        _cellsNeedStore = [[NSMutableArray alloc] init];
+        
+        XUIAdapter *adapter = [[XUIAdapter alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
+        if (!adapter) {
+            return;
+        }
         
         NSError *xuiError = nil;
-        NSDictionary *entry = lua_generator(self.entryPath, @[], &xuiError);
+        XUICellFactory *parser = [[XUICellFactory alloc] initWithAdapter:adapter Error:&xuiError];
         if (!xuiError) {
-            if ([entry isKindOfClass:[NSDictionary class]]) {
-                rootEntry = entry;
-            }
+            parser.delegate = self;
+            _parser = parser;
+            _theme = parser.theme;
         } else {
             [self presentErrorAlertController:xuiError];
         }
         
-        // none
-        if (!rootEntry) {
-            return;
-        }
-        
-        XUICellFactory *parser = [[XUICellFactory alloc] initWithRootEntry:rootEntry withBundle:self.bundle];
-        if (!parser) {
-            return;
-        }
-        parser.delegate = self;
-        _parser = parser;
-        _theme = parser.theme;
-        
-        _cellsNeedStore = [[NSMutableArray alloc] init];
     }
 }
 
@@ -452,7 +444,7 @@
 
 - (void)optionViewController:(XUIOptionViewController *)controller didSelectOption:(NSInteger)optionIndex {
     [self updateLinkListCell:controller.cell];
-    [controller.cell.defaultsService saveDefaultsFromCell:controller.cell];
+    [self.parser.adapter saveDefaultsFromCell:controller.cell];
 }
 
 - (void)updateLinkListCell:(XUIOptionCell *)cell {
@@ -479,7 +471,7 @@
 
 - (void)multipleOptionViewController:(XUIMultipleOptionViewController *)controller didSelectOption:(NSArray <NSNumber *> *)optionIndexes {
     [self updateLinkMultipleListCell:controller.cell];
-    [controller.cell.defaultsService saveDefaultsFromCell:controller.cell];
+    [self.parser.adapter saveDefaultsFromCell:controller.cell];
 }
 
 - (void)updateLinkMultipleListCell:(XUIMultipleOptionCell *)cell {
@@ -492,7 +484,7 @@
 
 - (void)orderedOptionViewController:(XUIOrderedOptionViewController *)controller didSelectOption:(NSArray<NSNumber *> *)optionIndexes {
     [self updateLinkOrderedListCell:controller.cell];
-    [controller.cell.defaultsService saveDefaultsFromCell:controller.cell];
+    [self.parser.adapter saveDefaultsFromCell:controller.cell];
 }
 
 - (void)updateLinkOrderedListCell:(XUIOrderedOptionCell *)cell {
@@ -518,7 +510,7 @@
     if (self.shouldStoreCells) {
         self.shouldStoreCells = NO;
         for (XUIBaseCell *cell in self.cellsNeedStore) {
-            [self.parser.defaultsService saveDefaultsFromCell:cell];
+            [self.parser.adapter saveDefaultsFromCell:cell];
         }
     }
 }

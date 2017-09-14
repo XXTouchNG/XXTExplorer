@@ -1,5 +1,7 @@
 
-#include "lua_NSValue.h"
+#include "LuaNSValue.h"
+
+NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
 
 void lua_pushNSArray(lua_State *L, NSArray *arr)
 {
@@ -16,7 +18,7 @@ void lua_pushNSArray(lua_State *L, NSArray *arr)
 			lua_rawseti(L, -2, i + 1);
 		} else if([[arr objectAtIndex:i] isKindOfClass:[NSNumber class]]) {
 			NSNumber *n = [arr objectAtIndex:i];
-			if (strcmp([n objCType], @encode(BOOL)) == 0) {
+			if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
 				lua_pushboolean(L, [n boolValue]);
 			} else if (strcmp([n objCType], @encode(int)) == 0) {
 				lua_pushinteger(L, [n intValue]);
@@ -60,7 +62,7 @@ void lua_pushNSDictionary(lua_State *L, NSDictionary *dict)
 			lua_setfield(L, -2, [k UTF8String]);
 		} else if([[dict valueForKey:k] isKindOfClass:[NSNumber class]]) {
 			NSNumber *n = [dict valueForKey:k];
-			if (strcmp([n objCType], @encode(BOOL)) == 0) {
+			if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
 				lua_pushboolean(L, [n boolValue]);
 			} else if (strcmp([n objCType], @encode(int)) == 0) {
 				lua_pushinteger(L, [n intValue]);
@@ -94,7 +96,7 @@ void lua_pushNSValue(lua_State *L, id value)
 	} else if ([value isKindOfClass:[NSData class]]) {
 		lua_pushlstring(L, (const char *)[value bytes], [value length]);
 	} else if ([value isKindOfClass:[NSNumber class]]) {
-		if (strcmp([value objCType], @encode(BOOL)) == 0) {
+		if (value == (void*)kCFBooleanFalse || value == (void*)kCFBooleanTrue) {
 			lua_pushboolean(L, [value boolValue]);
 		} else if (strcmp([value objCType], @encode(int)) == 0) {
 			lua_pushinteger(L, [value intValue]);
@@ -376,4 +378,19 @@ void lua_openNSValueLibs(lua_State *L)
 	lua_pop(L, 1);
 }
 
-
+BOOL checkCode(lua_State *L, int code, NSError **error) {
+    if (LUA_OK != code) {
+        const char *cErrString = lua_tostring(L, -1);
+        NSString *errString = [NSString stringWithUTF8String:cErrString];
+        NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Error", nil),
+                                         NSLocalizedFailureReasonErrorKey: errString
+                                         };
+        lua_pop(L, 1);
+        if (error != nil)
+            *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain
+                                         code:code
+                                     userInfo:errDictionary];
+        return NO;
+    }
+    return YES;
+}

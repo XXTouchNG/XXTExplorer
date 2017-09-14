@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *xui_slider;
 @property (weak, nonatomic) IBOutlet UILabel *xui_slider_valueLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *xui_slider_valueLabel_width;
+@property (assign, nonatomic) BOOL shouldUpdateValue;
 
 @end
 
@@ -63,25 +64,21 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    float value = [xui_value floatValue];
-    float minValue = [self.xui_min floatValue];
-    float maxValue = [self.xui_max floatValue];
-    if (value > maxValue || value < minValue) {
-        return; // Invalid value, ignore
-    }
     _xui_value = xui_value;
-    self.xui_slider.value = value;
-    self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", value];
+    [self setNeedsUpdateValue];
+    [self updateValueIfNeeded];
 }
 
 - (void)setXui_min:(NSNumber *)xui_min {
     _xui_min = xui_min;
     self.xui_slider.minimumValue = [xui_min floatValue];
+    [self updateValueIfNeeded];
 }
 
 - (void)setXui_max:(NSNumber *)xui_max {
     _xui_max = xui_max;
     self.xui_slider.maximumValue = [xui_max floatValue];
+    [self updateValueIfNeeded];
 }
 
 - (void)setXui_showValue:(NSNumber *)xui_showValue {
@@ -104,7 +101,7 @@
 - (IBAction)xuiSliderValueDidFinishChanging:(UISlider *)sender {
     if (sender == self.xui_slider) {
         self.xui_value = @(sender.value);
-        [self.defaultsService saveDefaultsFromCell:self];
+        [self.adapter saveDefaultsFromCell:self];
         
 //        self.xui_slider_valueLabel.text = [@(sender.value) stringValue];
         self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
@@ -115,6 +112,19 @@
     _theme = theme;
     self.xui_slider_valueLabel.textColor = theme.valueColor;
     self.xui_slider.minimumTrackTintColor = theme.successColor;
+}
+
+- (void)setNeedsUpdateValue {
+    self.shouldUpdateValue = YES;
+}
+
+- (void)updateValueIfNeeded {
+    if (self.shouldUpdateValue) {
+        self.shouldUpdateValue = NO;
+        float value = [self.xui_value floatValue];
+        self.xui_slider.value = value;
+        self.xui_slider_valueLabel.text = [NSString stringWithFormat:@"%.2f", value];
+    }
 }
 
 @end

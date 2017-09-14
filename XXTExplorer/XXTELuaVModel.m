@@ -10,11 +10,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <setjmp.h>
-#import "XXTELuaVModel.h"
 
+#import "XXTELuaVModel.h"
 #import "XXTEAppDelegate.h"
 
-static NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
 static NSString * const kXXTerminalFakeHandlerStandardOutput = @"kXXTerminalFakeHandlerStandardOutput-%@.pipe";
 static NSString * const kXXTerminalFakeHandlerStandardError = @"kXXTerminalFakeHandlerStandardError-%@.pipe";
 static NSString * const kXXTerminalFakeHandlerStandardInput = @"kXXTerminalFakeHandlerStandardInput-%@.pipe";
@@ -75,7 +74,8 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     
     NSString *stdinHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardInput, [NSUUID UUID]]];
     unlink(stdinHandlerPath.UTF8String);
-    if (mkfifo(stdinHandlerPath.UTF8String, S_IRWXU) >= 0) {
+    if (mkfifo(stdinHandlerPath.UTF8String, S_IRWXU) >= 0)
+    {
         self.stdinReadHandler = stdin;
         FILE *stdinReadHandler = NULL;
         if ((stdinReadHandler = fopen(stdinHandlerPath.UTF8String, "rb+")) != NULL) {
@@ -92,11 +92,10 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     fakeio(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
     
     if (!luaState) {
-        lua_State *L = luaL_newstate();
-        NSAssert(L, @"not enough memory");
-        lua_sethook(L, &luaL_terminate, LUA_MASKLINE, 1);
-        luaL_openlibs(L);
-        luaState = L;
+        luaState = luaL_newstate();
+        NSAssert(luaState, @"not enough memory");
+        lua_sethook(luaState, &luaL_terminate, LUA_MASKLINE, 1);
+        luaL_openlibs(luaState);
     }
     
 }
@@ -124,23 +123,6 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
 
 #pragma mark - check code and error
 
-- (BOOL)checkCode:(int)code error:(NSError **)error {
-    if (LUA_OK != code) {
-        const char *cErrString = lua_tostring(luaState, -1);
-        NSString *errString = [NSString stringWithUTF8String:cErrString];
-        NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Error", nil),
-                                         NSLocalizedFailureReasonErrorKey: errString
-                                         };
-        lua_pop(luaState, 1);
-        if (error != nil)
-            *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain
-                                         code:code
-                                     userInfo:errDictionary];
-        return NO;
-    }
-    return YES;
-}
-
 - (void)setCurrentPath:(NSString *)dirPath {
     chdir([dirPath UTF8String]);
     NSString *sPath = [NSString stringWithFormat:@"%@", [dirPath stringByAppendingPathComponent:@"?.lua"]];
@@ -156,7 +138,7 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     [self setCurrentPath:[path stringByDeletingLastPathComponent]];
     const char *cString = [path UTF8String];
     int load_stat = luaL_loadfile(luaState, cString);
-    return [self checkCode:load_stat error:error];
+    return checkCode(luaState, load_stat, error);
 }
 
 - (BOOL)loadBufferFromString:(NSString *)string
@@ -164,7 +146,7 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
 {
     const char *cString = [string UTF8String];
     int load_stat = luaL_loadbufferx(luaState, cString, strlen(cString), "", 0);
-    return [self checkCode:load_stat error:error];
+    return checkCode(luaState, load_stat, error);
 }
 
 #pragma mark - pcall
@@ -175,7 +157,7 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     if (!setjmp(buf)) {
         load_stat = lua_pcall(luaState, 0, 0, 0);
         self.running = NO;
-        return [self checkCode:load_stat error:error];
+        return checkCode(luaState, load_stat, error);
     } else {
         if (error != nil) {
             *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain code:-1 userInfo:@{ NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Thread terminated.", nil) }];

@@ -6,9 +6,7 @@
 //  Copyright © 2016 Zheng. All rights reserved.
 //
 
-#import "lua.h"
-#import "lualib.h"
-#import "lauxlib.h"
+#import "LuaNSValue.h"
 #import "XXTELuaInterpreter.h"
 #import <Foundation/Foundation.h>
 

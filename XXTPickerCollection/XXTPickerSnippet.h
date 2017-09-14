@@ -9,17 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "XXTBasePicker.h"
 
-extern id lua_generator(NSString *filename, NSArray *arguments, NSError **error);
-extern NSString *lua_get_name(NSString *filename);
-extern NSArray *lua_get_arguments(NSString *filename);
-
 @interface XXTPickerSnippet : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSArray <NSDictionary *> *flags;
 
-- (instancetype)initWithContentsOfFile:(NSString *)path;
+- (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr;
 - (id)generateWithError:(NSError **)error;
 
 - (void)addResult:(id)result;

@@ -1,9 +1,8 @@
-function xui_interface()
-    return {
-        ["subheader"] = "Elegant App UI provided by XXTouchApp.",
-        ["header"] = "Example",
-        ["title"] = "Demo",
-        ["items"] = {
+return {
+    ["subheader"] = "Elegant App UI provided by XXTouchApp.",
+    ["header"] = "Example",
+    ["title"] = "Demo",
+    ["items"] = {
     {
         ["cell"] = "XUIGroupCell",
         ["label"] = "Switch"
@@ -229,12 +228,5 @@ function xui_interface()
         ["cell"] = "XUIStaticTextCell",
         ["label"] = "This specifier uses the label key as text content. Dynamic height of this cell is enabled."
     }
-        }
     }
-end
-
-return {
-    name = "Example",
-    arguments = {},
-    generator = xui_interface,
 }

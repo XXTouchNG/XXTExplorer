@@ -89,13 +89,8 @@
 }
 
 - (void)setXui_value:(id)xui_value {
-    double value = [xui_value doubleValue];
-    double minValue = [self.xui_min doubleValue];
-    double maxValue = [self.xui_max doubleValue];
-    if (value > maxValue || value < minValue) {
-        return; // Invalid value, ignore
-    }
     _xui_value = xui_value;
+    double value = [xui_value doubleValue];
     self.xui_stepper.value = value;
     [self xuiSetDisplayValue:value];
 }
@@ -129,13 +124,13 @@
 - (IBAction)xuiStepperValueDidFinishChanging:(UIStepper *)sender {
     if (sender == self.xui_stepper) {
         self.xui_value = @(sender.value);
-        [self.defaultsService saveDefaultsFromCell:self];
+        [self.adapter saveDefaultsFromCell:self];
         [self xuiSetDisplayValue:sender.value];
     }
 }
 
 - (void)xuiSetDisplayValue:(double)value {
-    if (self.xui_isInteger) {
+    if ([self.xui_isInteger boolValue]) {
         self.xui_numberLabel.text = [NSString stringWithFormat:@"%d", (int)value];
     } else {
         self.xui_numberLabel.text = [NSString stringWithFormat:@"%.2f", value];

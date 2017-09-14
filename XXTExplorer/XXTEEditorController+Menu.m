@@ -208,7 +208,12 @@
 }
 
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path {
-    XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:path];
+    NSError *initError = nil;
+    XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:path Error:&initError];
+    if (initError) {
+        [self presentErrorAlertController:initError];
+        return;
+    }
     XXTPickerFactory *pickerFactory = [[XXTPickerFactory alloc] init];
     pickerFactory.delegate = self;
     [pickerFactory executeTask:snippet fromViewController:picker];
@@ -238,7 +243,7 @@
                 [self replaceSelectedRangeInTextView:self.textView withString:taskResult];
                 [self setNeedsFocusTextView];
             } else {
-                showUserMessage(self, [error localizedFailureReason]);
+                [self presentErrorAlertController:error];
             }
         });
     });
@@ -302,6 +307,26 @@
         UITextRange *curRange = [textInput textRangeFromPosition:curStart toPosition:curEnd];
         [textInput replaceRange:curRange withText:@""];
     }
+}
+
+#pragma mark - Snippet Error
+
+- (void)presentErrorAlertController:(NSError *)error {
+    @weakify(self);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @strongify(self);
+        NSString *entryName = [self.entryPath lastPathComponent];
+        XXTE_START_IGNORE_PARTIAL
+        if (XXTE_SYSTEM_8) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self.navigationController presentViewController:alertController animated:YES completion:nil];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            [alertView show];
+        }
+        XXTE_END_IGNORE_PARTIAL
+    });
 }
 
 @end

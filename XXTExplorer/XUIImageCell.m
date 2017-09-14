@@ -53,10 +53,10 @@
     _xui_path = xui_path;
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_8) {
-        UIImage *image = [UIImage imageNamed:xui_path inBundle:self.bundle compatibleWithTraitCollection:nil];
+        UIImage *image = [UIImage imageNamed:xui_path inBundle:self.adapter.bundle compatibleWithTraitCollection:nil];
         self.xui_imageView.image = image;
     } else {
-        NSString *imagePath = [self.bundle pathForResource:xui_path ofType:nil];
+        NSString *imagePath = [self.adapter.bundle pathForResource:xui_path ofType:nil];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         self.xui_imageView.image = image;
     }

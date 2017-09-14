@@ -1,66 +1,58 @@
-function xui_interface()
-	return {
-		["items"] = {
-			{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Image"
-			},{
-				["cell"] = "XUIImageCell",
-				["path"] = "res/bd_logo1_31bdc765.png",
-				["height"] = 128
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Switch"
-			},{
-				["default"] = true,
-				["cell"] = "XUISwitchCell",
-				["key"] = "switch1",
-				["defaults"] = "com.yourcompany.yourscript",
-				["label"] = "Sosh!"
-			},{
-				["cell"] = "XUITitleValueCell",
-				["label"] = "Version",
-				["value"] = "1.1.3",
-				["get"] = "valueForSpecifier:"
-			},{
-				["cell"] = "XUITitleValueCell",
-				["label"] = "Dynamic",
-				["key"] = "switch1",
-				["defaults"] = "com.yourcompany.yourscript",
-				["get"] = "valueForSpecifier:"
-			},{
-				["cell"] = "XUITitleValueCell",
-				["label"] = "Application",
-				["key"] = "picker1",
-				["defaults"] = "com.yourcompany.yourscript",
-				["snippet"] = "snippets/app.snippet"
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Actions"
-			},{
-				["cell"] = "XUIButtonCell",
-				["action"] = "LaunchScript:",
-				["label"] = "Launch a script",
-				["kwargs"] = {
-					"sub/xui-script.lua"
-				}
-			},{
-				["cell"] = "XUIGroupCell",
-				["label"] = "Textarea"
-			},{
-				["default"] = "You can enter any text here...",
-				["cell"] = "XUITextareaCell",
-				["key"] = "textarea",
-				["defaults"] = "com.yourcompany.yourscript",
-				["label"] = "Textarea Cell"
-			}
-		},
-		["title"] = "Another Pane"
-	}
-end
-
 return {
-	name = "Example Panel",
-	arguments = {},
-	generator = xui_interface,
+	["items"] = {
+	{
+		["cell"] = "XUIGroupCell",
+		["label"] = "Image"
+	},{
+		["cell"] = "XUIImageCell",
+		["path"] = "res/bd_logo1_31bdc765.png",
+		["height"] = 128
+	},{
+		["cell"] = "XUIGroupCell",
+		["label"] = "Switch"
+	},{
+		["default"] = true,
+		["cell"] = "XUISwitchCell",
+		["key"] = "switch1",
+		["defaults"] = "com.yourcompany.yourscript",
+		["label"] = "Sosh!"
+	},{
+		["cell"] = "XUITitleValueCell",
+		["label"] = "Version",
+		["value"] = "1.1.3",
+		["get"] = "valueForSpecifier:"
+	},{
+		["cell"] = "XUITitleValueCell",
+		["label"] = "Dynamic",
+		["key"] = "switch1",
+		["defaults"] = "com.yourcompany.yourscript",
+		["get"] = "valueForSpecifier:"
+	},{
+		["cell"] = "XUITitleValueCell",
+		["label"] = "Application",
+		["key"] = "picker1",
+		["defaults"] = "com.yourcompany.yourscript",
+		["snippet"] = "snippets/app.snippet"
+	},{
+		["cell"] = "XUIGroupCell",
+		["label"] = "Actions"
+	},{
+		["cell"] = "XUIButtonCell",
+		["action"] = "LaunchScript:",
+		["label"] = "Launch a script",
+		["kwargs"] = {
+			"sub/xui-script.lua"
+		}
+	},{
+		["cell"] = "XUIGroupCell",
+		["label"] = "Textarea"
+	},{
+		["default"] = "You can enter any text here...",
+		["cell"] = "XUITextareaCell",
+		["key"] = "textarea",
+		["defaults"] = "com.yourcompany.yourscript",
+		["label"] = "Textarea Cell"
+	}
+	},
+	["title"] = "Another Pane"
 }
