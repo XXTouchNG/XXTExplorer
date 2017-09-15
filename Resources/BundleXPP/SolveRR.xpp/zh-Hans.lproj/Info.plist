@@ -3,7 +3,7 @@
 	BundleVersion = "1.3.0";
 	BundleName = SolveRR;
 	BundleDisplayName = "\U5929\U5929\U7231\U6d88\U9664\U5237\U5206\U811a\U672c";
-	BundleIconFile = appicon;
+	BundleIconFile = "appicon.png";
 	Executable = "main.lua";
 	"BundleInfoDictionaryVersion" = "6.0";
 	MainInterfaceFile = "interface.xui";

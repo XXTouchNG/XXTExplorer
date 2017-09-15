@@ -12,4 +12,6 @@ static NSString * const XUITitleValueCellReuseIdentifier = @"XUITitleValueCellRe
 
 @interface XUITitleValueCell : XUIBaseCell
 
+@property (nonatomic, strong) NSString *xui_snippet;
+
 @end

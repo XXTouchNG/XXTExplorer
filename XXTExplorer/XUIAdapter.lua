@@ -1,3 +1,11 @@
+--
+--  XUIAdapter.lua
+--  XXTExplorer
+--
+--  Created by Soze on 14/09/2017.
+--  Copyright © 2017 Soze. All rights reserved.
+--
+
 -- opt = {
 -- 	event = 'load',
 -- 	bundlePath = 'xxx',
@@ -17,6 +25,7 @@
 
 local opt = ...
 
+local __G = _G
 local _ENV = {
 	math = {
 		floor = math.floor;
@@ -25,6 +34,7 @@ local _ENV = {
 	string = {
 		format = string.format;
 		match = string.match;
+		gsub = string.gsub;
 	};
 	plist = {
 		read = plist.read;
@@ -33,6 +43,9 @@ local _ENV = {
 	table = {
 		insert = table.insert;
 		remove = table.remove;
+	};
+	os = {
+		execute = os.execute;
 	};
 	error = error;
 	loadfile = loadfile;
@@ -115,7 +128,7 @@ local function removeValueInArrayIf(array, condition)
 	end
 end
 
-local XUITableBuilder, err = loadfile(opt.XUIPath, 't', {})
+local XUITableBuilder, err = loadfile(opt.XUIPath, 't', __G)
 
 if type(XUITableBuilder) ~= 'function' then
 	error(err)
@@ -124,7 +137,7 @@ end
 opt.XUITable = XUITableBuilder()
 
 if type(opt.XUITable) ~= 'table' then
-	error(string.format('bad XUI %q', XUIPath))
+	error(string.format('%q', XUIPath))
 end
 
 local function getDefaultsPath(defaults)
@@ -132,6 +145,16 @@ local function getDefaultsPath(defaults)
 end
 
 local DefaultsCaches = {}
+
+local function sh_escape(path)
+	path = string.gsub(path, "([ \\()<>'\"`#&*;?~$])", "\\%1")
+	return path
+end
+
+local function fixPermission(path)
+	os.execute(opt.rootPath..'/bin/add1s chmod -R 644 '..sh_escape(path))
+	os.execute(opt.rootPath..'/bin/add1s chown -R mobile:mobile '..sh_escape(path))
+end
 
 local function loadDefaultsAndCache(defaultsId)
 	if not DefaultsCaches[defaultsId] then
@@ -144,13 +167,14 @@ end
 local function saveCachedDefaults()
 	for defaultsId, defaultsCache in pairs(DefaultsCaches) do
 		local defaultsPath = getDefaultsPath(defaultsId)
+		fixPermission(defaultsPath)
 		plist.write(defaultsPath, defaultsCache)
 	end
 end
 
 local ValueCheckers = {}
 
-function ValueCheckers.XUISwitchCell(item, value)
+function ValueCheckers.XUISwitchCell(item, value, index)
 	if type(item.default) ~= 'boolean' then
 		item.default = false
 	end
@@ -161,7 +185,7 @@ function ValueCheckers.XUISwitchCell(item, value)
 	end
 end
 
-function ValueCheckers.XUITextareaCell(item, value)
+function ValueCheckers.XUITextareaCell(item, value, index)
 	if type(item.default) ~= 'string' then
 		item.default = ''
 	end
@@ -172,18 +196,18 @@ function ValueCheckers.XUITextareaCell(item, value)
 	end
 end
 
-function ValueCheckers.XUITitleValueCell(item, value)
-	if type(item.default) == 'nil' then
+function ValueCheckers.XUITitleValueCell(item, value, index)
+	if item.default == nil then
 		item.default = ''
 	end
-	if type(value) ~= 'nil' then
+	if value ~= nil then
 		return value
 	else
 		return item.default
 	end
 end
 
-function ValueCheckers.XUIOptionCell(item, value)
+function ValueCheckers.XUIOptionCell(item, value, index)
 	if type(item.options) ~= 'table' then
 		item.options = {isArray = true}
 	end
@@ -196,7 +220,7 @@ function ValueCheckers.XUIOptionCell(item, value)
 				if type(option.shortTitle) ~= 'string' then
 					option.shortTitle = option.title
 				end
-				if type(option.value) == 'nil' then
+				if option.value == nil then
 					option.value = option.title
 				end
 				table.insert(values, option.value)
@@ -224,7 +248,7 @@ function ValueCheckers.XUIOptionCell(item, value)
 	end
 end
 
-function ValueCheckers.XUIMultipleOptionCell(item, value)
+function ValueCheckers.XUIMultipleOptionCell(item, value, index)
 	if type(item.options) ~= 'table' then
 		item.options = {isArray = true}
 	end
@@ -237,7 +261,7 @@ function ValueCheckers.XUIMultipleOptionCell(item, value)
 				if type(option.shortTitle) ~= 'string' then
 					option.shortTitle = option.title
 				end
-				if type(option.value) == 'nil' then
+				if option.value == nil then
 					option.value = option.title
 				end
 				table.insert(values, option.value)
@@ -259,11 +283,11 @@ function ValueCheckers.XUIMultipleOptionCell(item, value)
 	end
 
 	if math.type(item.maxCount) ~= 'integer' then
-		error(string.format('bad XUI %q.%q."maxCount" (integer expected got %s)', opt.XUIPath, item.key, math.type(item.maxCount) or type(item.maxCount)))
+		error(string.format('%q: items[%d](%q).maxCount (integer expected got %s)', opt.XUIPath, index, item.key, math.type(item.maxCount) or type(item.maxCount)))
 	end
 
 	if item.maxCount < 1 then
-		error(string.format('bad XUI %q.%q."maxCount" (maxCount < 1)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).maxCount (maxCount < 1)', opt.XUIPath, index, item.key))
 	end
 
 	if type(item.default) ~= 'table' then
@@ -289,7 +313,7 @@ function ValueCheckers.XUIMultipleOptionCell(item, value)
 	return value
 end
 
-function ValueCheckers.XUIOrderedOptionCell(item, value)
+function ValueCheckers.XUIOrderedOptionCell(item, value, index)
 	if type(item.options) ~= 'table' then
 		item.options = {isArray = true}
 	end
@@ -302,7 +326,7 @@ function ValueCheckers.XUIOrderedOptionCell(item, value)
 				if type(option.shortTitle) ~= 'string' then
 					option.shortTitle = option.title
 				end
-				if type(option.value) == 'nil' then
+				if option.value == nil then
 					option.value = option.title
 				end
 				table.insert(values, option.value)
@@ -324,11 +348,11 @@ function ValueCheckers.XUIOrderedOptionCell(item, value)
 	end
 
 	if math.type(item.maxCount) ~= 'integer' then
-		error(string.format('bad XUI %q.%q."maxCount" (integer expected got %s)', opt.XUIPath, item.key, math.type(item.maxCount) or type(item.maxCount)))
+		error(string.format('%q: items[%d](%q).maxCount (integer expected got %s)', opt.XUIPath, index, item.key, math.type(item.maxCount) or type(item.maxCount)))
 	end
 
 	if item.maxCount < 1 then
-		error(string.format('bad XUI %q.%q."maxCount" (maxCount < 1)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).maxCount (maxCount < 1)', opt.XUIPath, index, item.key))
 	end
 
 	if item.minCount == nil then
@@ -336,11 +360,11 @@ function ValueCheckers.XUIOrderedOptionCell(item, value)
 	end
 
 	if math.type(item.minCount) ~= 'integer' then
-		error(string.format('bad XUI %q.%q."minCount" (integer expected got %s)', opt.XUIPath, item.key, math.type(item.minCount) or type(item.minCount)))
+		error(string.format('%q: items[%d](%q).minCount (integer expected got %s)', opt.XUIPath, index, item.key, math.type(item.minCount) or type(item.minCount)))
 	end
 
 	if item.minCount >= item.maxCount then
-		error(string.format('bad XUI %q.%q."minCount" (maxCount <= minCount)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).minCount (maxCount <= minCount)', opt.XUIPath, index, item.key))
 	end
 
 	if type(item.default) ~= 'table' then
@@ -370,27 +394,27 @@ ValueCheckers.XUICheckboxCell = ValueCheckers.XUIOrderedOptionCell
 ValueCheckers.XUIRadioCell = ValueCheckers.XUIOptionCell
 ValueCheckers.XUISegmentCell = ValueCheckers.XUIOptionCell
 
-function ValueCheckers.XUISliderCell(item, value)
+function ValueCheckers.XUISliderCell(item, value, index)
 	if type(item.min) ~= 'number' then
-		error(string.format('bad XUI %q.%q."min" (number expected got %s)', opt.XUIPath, item.key, type(item.min)))
+		error(string.format('%q: items[%d](%q).min (number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
 	end
 	if type(item.max) ~= 'number' then
-		error(string.format('bad XUI %q.%q."max" (number expected got %s)', opt.XUIPath, item.key, type(item.max)))
+		error(string.format('%q: items[%d](%q).max (number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
 	end
 	if item.max <= item.min then
-		error(string.format('bad XUI %q.%q."max" (max <= min)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).max (max <= min)', opt.XUIPath, index, item.key))
 	end
 	if item.default == nil then
 		item.default = item.min
 	end
 	if type(item.default) ~= 'number' then
-		error(string.format('bad XUI %q.%q."default" (opt.number expected got %s)', opt.XUIPath, item.key, type(item.default)))
+		error(string.format('%q: items[%d](%q).default (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
 	end
 	if item.default < item.min then
-		error(string.format('bad XUI %q.%q."default" (default < min)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).default (default < min)', opt.XUIPath, index, item.key))
 	end
 	if item.default > item.max then
-		error(string.format('bad XUI %q.%q."default" (default > max)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).default (default > max)', opt.XUIPath, index, item.key))
 	end
 	value = tonumber(value) or item.default
 	if value < item.min or value > item.max then
@@ -399,27 +423,36 @@ function ValueCheckers.XUISliderCell(item, value)
 	return value
 end
 
-function ValueCheckers.XUIStepperCell(item, value)
+function ValueCheckers.XUIStepperCell(item, value, index)
+	if item.step == nil then
+		item.step = 1
+	end
+	if type(item.step) ~= 'number' then
+		error(string.format('%q: items[%d](%q).step (number expected got %s)', opt.XUIPath, index, item.key, type(item.step)))
+	end
+	if item.step <= 0 then
+		error(string.format('%q: items[%d](%q).step (step <= 0)', opt.XUIPath, index, item.key))
+	end
 	if type(item.min) ~= 'number' then
-		error(string.format('bad XUI %q.%q."min" (number expected got %s)', opt.XUIPath, item.key, type(item.min)))
+		error(string.format('%q: items[%d](%q).min (number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
 	end
 	if type(item.max) ~= 'number' then
-		error(string.format('bad XUI %q.%q."max" (number expected got %s)', opt.XUIPath, item.key, type(item.max)))
+		error(string.format('%q: items[%d](%q).max (number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
 	end
-	if item.max <= item.min then
-		error(string.format('bad XUI %q.%q."max" (max <= min)', opt.XUIPath, item.key))
+	if item.max - item.step < item.min then
+		error(string.format('%q: items[%d](%q).max (max - step < min)', opt.XUIPath, index, item.key))
 	end
 	if item.default == nil then
 		item.default = item.min
 	end
 	if type(item.default) ~= 'number' then
-		error(string.format('bad XUI %q.%q."default" (opt.number expected got %s)', opt.XUIPath, item.key, type(item.default)))
+		error(string.format('%q: items[%d](%q).default (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
 	end
 	if item.default < item.min then
-		error(string.format('bad XUI %q.%q."default" (default < min)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).default (default < min)', opt.XUIPath, index, item.key))
 	end
 	if item.default > item.max then
-		error(string.format('bad XUI %q.%q."default" (default > max)', opt.XUIPath, item.key))
+		error(string.format('%q: items[%d](%q).default (default > max)', opt.XUIPath, index, item.key))
 	end
 	value = tonumber(value) or item.default
 	if value < item.min or value > item.max then
@@ -428,38 +461,38 @@ function ValueCheckers.XUIStepperCell(item, value)
 	return value
 end
 
-function ValueCheckers.XUITextFieldCell(item, value)
+function ValueCheckers.XUITextFieldCell(item, value, index)
 	if item.isNumeric then
 		if not isNumeric(item.default) then
-			error(string.format('bad XUI %q.%q."default" (integer expected got %s)', opt.XUIPath, item.key, math.type(item.default) or type(item.default)))
+			error(string.format('%q: items[%d](%q).default (integer expected got %s)', opt.XUIPath, index, item.key, math.type(item.default) or type(item.default)))
 		end
 		if not isNumeric(value) then
 			value = item.default
 		end
 	elseif item.isDecimalPad then
 		if not isDecimalPad(item.default) then
-			error(string.format('bad XUI %q.%q."default" (number expected got %s)', opt.XUIPath, item.key, type(item.default)))
+			error(string.format('%q: items[%d](%q).default (number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
 		end
 		if not isDecimalPad(value) then
 			value = item.default
 		end
 	elseif item.isIP then
 		if not isIP(item.default) then
-			error(string.format('bad XUI %q.%q."default" (IP expected)', opt.XUIPath, item.key))
+			error(string.format('%q: items[%d](%q).default (IP expected)', opt.XUIPath, index, item.key))
 		end
 		if not isIP(value) then
 			value = item.default
 		end
 	elseif item.isEmail then
 		if not isEmail(item.default) then
-			error(string.format('bad XUI %q.%q."default" (Email expected)', opt.XUIPath, item.key))
+			error(string.format('%q: items[%d](%q).default (Email expected)', opt.XUIPath, index, item.key))
 		end
 		if not isEmail(value) then
 			value = item.default
 		end
 	elseif item.isURL then
 		if not isURL(item.default) then
-			error(string.format('bad XUI %q.%q."default" (URL expected)', opt.XUIPath, item.key))
+			error(string.format('%q: items[%d](%q).default (URL expected)', opt.XUIPath, index, item.key))
 		end
 		if not isURL(value) then
 			value = item.default
@@ -479,10 +512,10 @@ end
 
 ValueCheckers.XUISecureTextFieldCell = ValueCheckers.XUITextFieldCell
 
-local function checkCellValue(item, value)
+local function checkCellValue(item, value, index)
 	local checker = ValueCheckers[tostring(item.cell)]
 	if type(checker) == 'function' then
-		return checker(item, value)
+		return checker(item, value, index)
 	else
 		return nil
 	end
@@ -496,10 +529,10 @@ function _loadDefaults(opt)
 		return XUITable
 	end
 	local globalDefaults = XUITable.defaults
-	removeValueInArrayIf(XUITable.items, function(item)
-		return type(item) ~= 'table'
-	end)
-	for _, item in ipairs(XUITable.items) do
+	for idx, item in ipairs(XUITable.items) do
+		if type(item) ~= 'table' then
+			error(string.format('%q: items (table expected got %s)', opt.XUIPath, type(item)))
+		end
 		local itemKey = item.key
 		local itemCell = item.cell
 		if type(itemKey) == 'string' and type(ValueCheckers[tostring(itemCell)]) == 'function' then
@@ -508,10 +541,10 @@ function _loadDefaults(opt)
 			if type(itemDefaultsId) == 'string' then
 				local defaultsTable = loadDefaultsAndCache(itemDefaultsId)
 				if type(defaultsTable) == 'table' then
-					if type(defaultsTable[itemKey]) == 'nil' then
+					if defaultsTable[itemKey] == nil then
 						defaultsTable[itemKey] = item.default
 					end
-					item.value = checkCellValue(item, defaultsTable[itemKey])
+					item.value = checkCellValue(item, defaultsTable[itemKey], idx)
 				end
 			end
 		end
@@ -535,5 +568,5 @@ end
 if type(events[opt.event]) == 'function' then
 	return events[opt.event](opt)
 else
-	error(string.format('bad event %q', opt.event))
+	error(string.format('Bad event %q', opt.event))
 end

@@ -6,7 +6,7 @@ xcodeproj 'XXTExplorer'
 target 'XXTExplorer' do
 #   pod 'TOWebViewController', '~> 2.2.6'
     pod 'TOWebViewController', :path => '../TOWebViewController'
-#    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'
+ #    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'
     pod 'PromiseKit', '~> 1.0'
 #    pod 'LGAlertView', '~> 2.4.0'
 #    pod 'LGAlertView', :path => '../LGAlertView'

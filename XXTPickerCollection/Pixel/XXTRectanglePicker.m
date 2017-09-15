@@ -42,7 +42,7 @@
     if ([self isNavigationBarHidden]) {
         return UIStatusBarStyleDefault;
     }
-    return [super preferredStatusBarStyle];
+    return UIStatusBarStyleLightContent;
 }
 
 - (BOOL)prefersStatusBarHidden {

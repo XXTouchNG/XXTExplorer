@@ -281,6 +281,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     return NO;
 }
 
+XXTE_START_IGNORE_PARTIAL
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     if (shortcutItem.userInfo[XXTEShortcutAction]) {
         NSString *shortcutAction = (NSString *)shortcutItem.userInfo[XXTEShortcutAction];
@@ -292,6 +293,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         });
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - App Defines
 

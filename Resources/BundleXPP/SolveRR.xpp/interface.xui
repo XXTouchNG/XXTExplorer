@@ -71,13 +71,16 @@ return {
         ["maxCount"] = 2,
         ["options"] = {
             {
-                ["title"] = "Red, it's red!"
+                ["title"] = "Red, it's red!",
+                ["icon"] = "res/red.png"
             },
             {
-                ["title"] = "Green, it's green!"
+                ["title"] = "Green, it's green!",
+                ["icon"] = "res/green.png"
             },
             {
-                ["title"] = "Blue, great color!"
+                ["title"] = "Blue, great color!",
+                ["icon"] = "res/blue.png"
             },
         },
     },{
@@ -92,13 +95,16 @@ return {
         ["minCount"] = 1,
         ["options"] = {
             {
-                ["title"] = "Red"
+                ["title"] = "Red",
+                ["icon"] = "res/red.png"
             },
             {
-                ["title"] = "Green"
+                ["title"] = "Green",
+                ["icon"] = "res/green.png"
             },
             {
-                ["title"] = "Blue"
+                ["title"] = "Blue",
+                ["icon"] = "res/blue.png"
             },
         },
     },{

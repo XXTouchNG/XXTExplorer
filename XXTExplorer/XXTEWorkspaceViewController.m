@@ -126,6 +126,7 @@
 
 #pragma mark - Notifications
 
+XXTE_START_IGNORE_PARTIAL
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
@@ -135,6 +136,7 @@
         self.arrowPlaceholderImageView.hidden = (displayMode == UISplitViewControllerDisplayModeAllVisible);
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

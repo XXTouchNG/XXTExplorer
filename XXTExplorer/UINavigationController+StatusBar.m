@@ -14,6 +14,18 @@
     return self.topViewController.preferredStatusBarStyle;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return self.topViewController.prefersStatusBarHidden;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.topViewController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+    return self.topViewController;
+}
+
 #pragma mark - View Style
 
 - (BOOL)shouldAutorotate {

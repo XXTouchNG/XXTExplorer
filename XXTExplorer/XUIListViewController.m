@@ -8,9 +8,8 @@
 
 #import "XUI.h"
 #import "XUIListViewController.h"
-#import "XUICellFactory.h"
-#import "XUIListHeaderView.h"
 
+#import "XUIListHeaderView.h"
 #import "XUIGroupCell.h"
 #import "XUILinkCell.h"
 #import "XUIOptionCell.h"
@@ -22,8 +21,8 @@
 
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
-
-#import "XUIAdapter.h"
+#import "XXTEUserInterfaceDefines.h"
+#import "XXTEDispatchDefines.h"
 
 #import "XUIOptionViewController.h"
 #import "XUIMultipleOptionViewController.h"
@@ -32,16 +31,23 @@
 #import "XXTEObjectViewController.h"
 #import "XUITextareaViewController.h"
 
+#import "XUICellFactory.h"
 #import "XUILogger.h"
-#import "XXTPickerSnippet.h"
 #import "XUITheme.h"
+#import "XUIAdapter.h"
 
-@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate>
+#import "XXTPickerSnippet.h"
+#import "XXTPickerFactory.h"
+
+@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate, XXTPickerFactoryDelegate>
 
 @property (nonatomic, strong) NSMutableArray <XUIBaseCell *> *cellsNeedStore;
 @property (nonatomic, assign) BOOL shouldStoreCells;
 
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
+
+@property (nonatomic, strong) XXTPickerFactory *pickerFactory;
+@property (nonatomic, strong) XUITitleValueCell *pickerCell;
 
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -51,7 +57,7 @@
 
 @implementation XUIListViewController
 
-@synthesize theme = _theme;
+@synthesize theme = _theme, adapter = _adapter;
 
 + (XXTExplorerEntryParser *)entryParser {
     static XXTExplorerEntryParser *entryParser = nil;
@@ -102,6 +108,7 @@
         if (!adapter) {
             return;
         }
+        _adapter = adapter;
         
         NSError *xuiError = nil;
         XUICellFactory *parser = [[XUICellFactory alloc] initWithAdapter:adapter Error:&xuiError];
@@ -328,7 +335,21 @@
 
 - (void)tableView:(UITableView *)tableView performTitleValueCell:(UITableViewCell *)cell {
     XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
-    if (titleValueCell.xui_value) {
+    if (titleValueCell.xui_snippet) {
+        NSString *snippetPath = [self.bundle pathForResource:titleValueCell.xui_snippet ofType:nil];
+        NSError *snippetError = nil;
+        XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:snippetPath Error:&snippetError];
+        if (snippetError) {
+            [self presentErrorAlertController:snippetError];
+            return;
+        }
+        XXTPickerFactory *factory = [[XXTPickerFactory alloc] init];
+        factory.delegate = self;
+        [factory executeTask:snippet fromViewController:self];
+        self.pickerCell = titleValueCell;
+        self.pickerFactory = factory;
+    }
+    else if (titleValueCell.xui_value) {
         id extendedValue = titleValueCell.xui_value;
         XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
         objectViewController.title = titleValueCell.textLabel.text;
@@ -342,6 +363,7 @@
     if (linkListCell.xui_options)
     {
         XUIOrderedOptionViewController *optionViewController = [[XUIOrderedOptionViewController alloc] initWithCell:linkListCell];
+        optionViewController.adapter = self.adapter;
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
         optionViewController.theme = self.parser.theme;
@@ -354,6 +376,7 @@
     if (linkListCell.xui_options)
     {
         XUIMultipleOptionViewController *optionViewController = [[XUIMultipleOptionViewController alloc] initWithCell:linkListCell];
+        optionViewController.adapter = self.adapter;
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
         optionViewController.theme = self.parser.theme;
@@ -366,6 +389,7 @@
     if (linkListCell.xui_options)
     {
         XUIOptionViewController *optionViewController = [[XUIOptionViewController alloc] initWithCell:linkListCell];
+        optionViewController.adapter = self.adapter;
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
         optionViewController.theme = self.parser.theme;
@@ -405,6 +429,7 @@
 - (void)tableView:(UITableView *)tableView performTextareaCell:(UITableViewCell *)cell {
     XUITextareaCell *textareaCell = (XUITextareaCell *)cell;
     XUITextareaViewController *textareaViewController = [[XUITextareaViewController alloc] initWithCell:textareaCell];
+    textareaViewController.adapter = self.adapter;
     textareaViewController.delegate = self;
     textareaViewController.title = textareaCell.xui_label;
     [self.navigationController pushViewController:textareaViewController animated:YES];
@@ -496,15 +521,51 @@
 #pragma mark - XUITextareaViewControllerDelegate
 
 - (void)textareaViewControllerTextDidChanged:(XUITextareaViewController *)controller {
-    if (![self.cellsNeedStore containsObject:controller.cell]) {
-        [self.cellsNeedStore addObject:controller.cell];
+    [self storeCellWhenNeeded:controller.cell];
+}
+
+#pragma mark - XXTPickerFactoryDelegate
+
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task {
+    return YES;
+}
+
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
+    blockUserInteractions(self, YES, 0);
+    @weakify(self);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        @strongify(self);
+        NSError *error = nil;
+        id result = [task generateWithError:&error];
+        dispatch_async_on_main_queue(^{
+            blockUserInteractions(self, NO, 0);
+            if (result) {
+                XUITitleValueCell *cell = self.pickerCell;
+                cell.xui_value = result;
+                [self storeCellWhenNeeded:cell];
+                [self storeCellsIfNecessary];
+            } else {
+                [self presentErrorAlertController:error];
+            }
+        });
+    });
+    return YES;
+}
+
+#pragma mark - Store
+
+- (void)storeCellWhenNeeded:(XUIBaseCell *)cell {
+    if (![self.cellsNeedStore containsObject:cell]) {
+        [self.cellsNeedStore addObject:cell];
     }
+    [self setNeedsStoreCells];
+}
+
+- (void)setNeedsStoreCells {
     if (self.shouldStoreCells == NO) {
         self.shouldStoreCells = YES;
     }
 }
-
-#pragma mark - Store
 
 - (void)storeCellsIfNecessary {
     if (self.shouldStoreCells) {

@@ -86,28 +86,15 @@
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
             for (NSUInteger keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
                 NSString *itemKey = itemAllKeys[keyIdx];
-                if ([itemKey isEqualToString:@"value"]) {
-                    
-                } else {
+                if (![itemKey isEqualToString:@"value"])
+                {
                     id itemValue = itemDictionary[itemKey];
-                    NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
-                    if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
-                        [cellInstance setValue:itemValue forKey:propertyName];
-                    } else {
-                        [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
-                    }
+                    [self setObject:itemValue forKey:itemKey forCellInstance:cellInstance atIndex:itemIdx];
                 }
             }
             NSString *itemKey = @"value";
             id itemValue = itemDictionary[itemKey];
-            if (itemValue) {
-                NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
-                if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
-                    [cellInstance setValue:itemValue forKey:propertyName];
-                } else {
-                    [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
-                }
-            }
+            [self setObject:itemValue forKey:itemKey forCellInstance:cellInstance atIndex:itemIdx];
             [cells addObject:cellInstance];
         }
         NSMutableArray <XUIGroupCell *> *groupCells = [[NSMutableArray alloc] init];
@@ -148,6 +135,16 @@
         }
     } @finally {
         assert(self.sectionCells.count == self.otherCells.count);
+    }
+}
+
+- (void)setObject:(id)itemValue forKey:(NSString *)itemKey forCellInstance:(XUIBaseCell *)cellInstance atIndex:(NSUInteger)itemIdx {
+    if (!itemValue || !itemKey || !cellInstance) return;
+    NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
+    if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
+        [cellInstance setValue:itemValue forKey:propertyName];
+    } else {
+        [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
     }
 }
 

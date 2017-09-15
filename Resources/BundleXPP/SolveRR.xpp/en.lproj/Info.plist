@@ -3,7 +3,7 @@
 	BundleVersion = "1.3.0";
 	BundleName = SolveRR;
 	BundleDisplayName = "RedGame Helper";
-	BundleIconFile = appicon;
+	BundleIconFile = "appicon.png";
 	Executable = main;
 	"BundleInfoDictionaryVersion" = "6.0";
 	MainInterfaceFile = "interface.xui";

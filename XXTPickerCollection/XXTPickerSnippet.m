@@ -63,47 +63,49 @@
     NSString *path = self.path;
     if (!path) return NO;
     
-    if (!L) {
-        L = luaL_newstate();
-        NSAssert(L, @"not enough memory");
-        luaL_openlibs(L);
-        lua_openNSValueLibs(L);
-    }
-    
-    int luaResult = luaL_loadfile(L, [path UTF8String]);
-    if (NO == checkCode(L, luaResult, errorPtr))
-    {
-        return NO;
-    }
-    
-    int callResult = lua_pcall(L, 0, 1, 0);
-    if (NO == checkCode(L, callResult, errorPtr))
-    {
-        return NO;
-    }
-    
-    if (lua_type(L, -1) == LUA_TTABLE) {
-        NSString *snippet_name = nil;
-        lua_getfield(L, -1, "name");
-        if (lua_type(L, -1) == LUA_TSTRING) {
-            const char *name = lua_tostring(L, -1);
-            if (name)
-                snippet_name = [NSString stringWithUTF8String:name];
+    @synchronized (self) {
+        if (!L) {
+            L = luaL_newstate();
+            NSAssert(L, @"not enough memory");
+            luaL_openlibs(L);
+            lua_openNSValueLibs(L);
         }
-        lua_pop(L, 1);
-        if (!snippet_name)
-            snippet_name = [self.path lastPathComponent];
-        _name = snippet_name;
-    }
-    
-    if (lua_type(L, -1) == LUA_TTABLE) {
-        NSArray *args_array = nil;
-        lua_getfield(L, -1, "arguments");
+        
+        int luaResult = luaL_loadfile(L, [path UTF8String]);
+        if (NO == checkCode(L, luaResult, errorPtr))
+        {
+            return NO;
+        }
+        
+        int callResult = lua_pcall(L, 0, 1, 0);
+        if (NO == checkCode(L, callResult, errorPtr))
+        {
+            return NO;
+        }
+        
         if (lua_type(L, -1) == LUA_TTABLE) {
-            args_array = lua_toNSArray(L, -1);
+            NSString *snippet_name = nil;
+            lua_getfield(L, -1, "name");
+            if (lua_type(L, -1) == LUA_TSTRING) {
+                const char *name = lua_tostring(L, -1);
+                if (name)
+                    snippet_name = [NSString stringWithUTF8String:name];
+            }
+            lua_pop(L, 1);
+            if (!snippet_name)
+                snippet_name = [self.path lastPathComponent];
+            _name = snippet_name;
         }
-        lua_pop(L, 1);
-        _flags = args_array;
+        
+        if (lua_type(L, -1) == LUA_TTABLE) {
+            NSArray *args_array = nil;
+            lua_getfield(L, -1, "arguments");
+            if (lua_type(L, -1) == LUA_TTABLE) {
+                args_array = lua_toNSArray(L, -1);
+            }
+            lua_pop(L, 1);
+            _flags = args_array;
+        }
     }
     
     return YES;
@@ -113,21 +115,23 @@
 
 - (id)generateWithError:(NSError **)error {
     if (!L) return nil;
-    NSArray *arguments = [self.results copy];
-    lua_getfield(L, -1, "generator");
-    if (lua_type(L, -1) == LUA_TFUNCTION) {
-        id snippet_body = nil;
-        for (int i = 0; i < [arguments count]; ++i) {
-            lua_pushNSValue(L, [arguments objectAtIndex:i]);
+    @synchronized (self) {
+        NSArray *arguments = [self.results copy];
+        lua_getfield(L, -1, "generator");
+        if (lua_type(L, -1) == LUA_TFUNCTION) {
+            id snippet_body = nil;
+            for (int i = 0; i < [arguments count]; ++i) {
+                lua_pushNSValue(L, [arguments objectAtIndex:i]);
+            }
+            int argumentCount = (int)[arguments count];
+            int generateResult = lua_pcall(L, argumentCount, 1, 0);
+            if (checkCode(L, generateResult, error))
+            {
+                snippet_body = lua_toNSValue(L, -1);
+                lua_pop(L, 1);
+            }
+            return snippet_body;
         }
-        int argumentCount = (int)[arguments count];
-        int generateResult = lua_pcall(L, argumentCount, 1, 0);
-        if (checkCode(L, generateResult, error))
-        {
-            snippet_body = lua_toNSValue(L, -1);
-            lua_pop(L, 1);
-        }
-        return snippet_body;
     }
 	return nil;
 }

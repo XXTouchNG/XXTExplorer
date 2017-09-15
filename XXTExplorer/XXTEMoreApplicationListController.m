@@ -45,7 +45,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 @property(nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 @property(nonatomic, strong, readonly) NSArray <NSDictionary *> *allApplications;
 @property(nonatomic, strong, readonly) NSArray <NSDictionary *> *displayApplications;
+
+XXTE_START_IGNORE_PARTIAL
 @property(nonatomic, strong, readonly) UISearchController *searchController;
+XXTE_END_IGNORE_PARTIAL
+
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
 @end
@@ -126,6 +130,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     });
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
     
+    XXTE_START_IGNORE_PARTIAL
     _searchController = ({
         UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
@@ -133,6 +138,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         searchController.dimsBackgroundDuringPresentation = NO;
         searchController;
     });
+    XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_SYSTEM_9) {
@@ -317,9 +323,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
 }
 
+XXTE_START_IGNORE_PARTIAL
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self reloadSearchByContent:searchController.searchBar.text andCategory:searchController.searchBar.selectedScopeButtonIndex];
 }
+XXTE_END_IGNORE_PARTIAL
 
 - (void)reloadSearchByContent:(NSString *)searchText andCategory:(NSUInteger)category {
     NSPredicate *predicate = nil;

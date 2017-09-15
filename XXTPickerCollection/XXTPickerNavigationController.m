@@ -16,12 +16,40 @@
 
 @implementation XXTPickerNavigationController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setupAppearance];
+    }
+    return self;
+}
+
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
     if (self = [super initWithRootViewController:rootViewController]) {
         self.delegate = self;
         rootViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+        [self setupAppearance];
     }
     return self;
+}
+
+- (void)setupAppearance {
+    UINavigationBar *barAppearance = [UINavigationBar appearance];
+    [barAppearance setTintColor:[UIColor whiteColor]];
+    [barAppearance setBarTintColor:XXTE_COLOR];
+    [barAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    
+    UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
+    [navigationBarAppearance setTintColor:[UIColor whiteColor]];
+    [navigationBarAppearance setBarTintColor:XXTE_COLOR];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_SYSTEM_8) {
+        [navigationBarAppearance setTranslucent:NO];
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
+    UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
+    [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
 }
 
 - (void)viewDidLoad {
@@ -32,7 +60,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
 }
 
 - (void)dismiss {

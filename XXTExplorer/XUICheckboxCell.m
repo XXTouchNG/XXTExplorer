@@ -143,7 +143,7 @@
 }
 
 - (NSNumber *)xui_height {
-    return @(self.tagView.contentSize.height + 16.f);
+    return @(self.tagView.contentSize.height + 24.f);
 }
 
 - (BOOL)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView canTapTag:(NSString *)tagText atIndex:(NSUInteger)index currentSelected:(BOOL)currentSelected {

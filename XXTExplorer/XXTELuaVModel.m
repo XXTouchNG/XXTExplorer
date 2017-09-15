@@ -60,44 +60,45 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
 }
 
 - (void)setup {
-    NSString *stdoutHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardOutput, [NSUUID UUID]]];
-    unlink(stdoutHandlerPath.UTF8String);
-    FILE *stdoutHandler = fopen(stdoutHandlerPath.UTF8String, "wb+");
-    NSAssert(stdoutHandler, @"Cannot create stdout handler");
-    self.stdoutHandler = stdoutHandler;
-    
-    NSString *stderrHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardError, [NSUUID UUID]]];
-    unlink(stderrHandlerPath.UTF8String);
-    FILE *stderrHandler = fopen(stderrHandlerPath.UTF8String, "wb+");
-    NSAssert(stderrHandler, @"Cannot create stderr handler");
-    self.stderrHandler = stderrHandler;
-    
-    NSString *stdinHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardInput, [NSUUID UUID]]];
-    unlink(stdinHandlerPath.UTF8String);
-    if (mkfifo(stdinHandlerPath.UTF8String, S_IRWXU) >= 0)
-    {
-        self.stdinReadHandler = stdin;
-        FILE *stdinReadHandler = NULL;
-        if ((stdinReadHandler = fopen(stdinHandlerPath.UTF8String, "rb+")) != NULL) {
-            self.stdinReadHandler = stdinReadHandler;
+    @synchronized (self) {
+        NSString *stdoutHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardOutput, [NSUUID UUID]]];
+        unlink(stdoutHandlerPath.UTF8String);
+        FILE *stdoutHandler = fopen(stdoutHandlerPath.UTF8String, "wb+");
+        NSAssert(stdoutHandler, @"Cannot create stdout handler");
+        self.stdoutHandler = stdoutHandler;
+        
+        NSString *stderrHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardError, [NSUUID UUID]]];
+        unlink(stderrHandlerPath.UTF8String);
+        FILE *stderrHandler = fopen(stderrHandlerPath.UTF8String, "wb+");
+        NSAssert(stderrHandler, @"Cannot create stderr handler");
+        self.stderrHandler = stderrHandler;
+        
+        NSString *stdinHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:kXXTerminalFakeHandlerStandardInput, [NSUUID UUID]]];
+        unlink(stdinHandlerPath.UTF8String);
+        if (mkfifo(stdinHandlerPath.UTF8String, S_IRWXU) >= 0)
+        {
+            self.stdinReadHandler = stdin;
+            FILE *stdinReadHandler = NULL;
+            if ((stdinReadHandler = fopen(stdinHandlerPath.UTF8String, "rb+")) != NULL) {
+                self.stdinReadHandler = stdinReadHandler;
+            }
+            
+            self.stdinWriteHandler = stdin;
+            FILE *stdinWriteHandler = NULL;
+            if ((stdinWriteHandler = fopen(stdinHandlerPath.UTF8String, "wb+")) != NULL) {
+                self.stdinWriteHandler = stdinWriteHandler;
+            }
         }
         
-        self.stdinWriteHandler = stdin;
-        FILE *stdinWriteHandler = NULL;
-        if ((stdinWriteHandler = fopen(stdinHandlerPath.UTF8String, "wb+")) != NULL) {
-            self.stdinWriteHandler = stdinWriteHandler;
+        fakeio(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
+        
+        if (!luaState) {
+            luaState = luaL_newstate();
+            NSAssert(luaState, @"not enough memory");
+            lua_sethook(luaState, &luaL_terminate, LUA_MASKLINE, 1);
+            luaL_openlibs(luaState);
         }
     }
-    
-    fakeio(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
-    
-    if (!luaState) {
-        luaState = luaL_newstate();
-        NSAssert(luaState, @"not enough memory");
-        lua_sethook(luaState, &luaL_terminate, LUA_MASKLINE, 1);
-        luaL_openlibs(luaState);
-    }
-    
 }
 
 #pragma mark - Setters
@@ -127,8 +128,10 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     chdir([dirPath UTF8String]);
     NSString *sPath = [NSString stringWithFormat:@"%@", [dirPath stringByAppendingPathComponent:@"?.lua"]];
     NSString *cPath = [NSString stringWithFormat:@"%@", [dirPath stringByAppendingPathComponent:@"?.so"]];
-    luaL_setPath(luaState, "path", sPath.UTF8String);
-    luaL_setPath(luaState, "cpath", cPath.UTF8String);
+    @synchronized (self) {
+        luaL_setPath(luaState, "path", sPath.UTF8String);
+        luaL_setPath(luaState, "cpath", cPath.UTF8String);
+    }
 }
 
 #pragma mark - load from file
@@ -157,7 +160,11 @@ void luaL_terminate(lua_State *L, lua_Debug *ar)
     if (!setjmp(buf)) {
         load_stat = lua_pcall(luaState, 0, 0, 0);
         self.running = NO;
-        return checkCode(luaState, load_stat, error);
+        BOOL loadResult = checkCode(luaState, load_stat, error);
+        if (loadResult) {
+            
+        }
+        return loadResult;
     } else {
         if (error != nil) {
             *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain code:-1 userInfo:@{ NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Thread terminated.", nil) }];

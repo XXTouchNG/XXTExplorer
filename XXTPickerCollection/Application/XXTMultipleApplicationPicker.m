@@ -78,7 +78,7 @@ UISearchDisplayDelegate
     if (self.searchDisplayController.active) {
         return UIStatusBarStyleDefault;
     }
-    return [super preferredStatusBarStyle];
+    return UIStatusBarStyleLightContent;
 }
 
 - (NSString *)title {

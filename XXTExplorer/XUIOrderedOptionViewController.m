@@ -123,25 +123,34 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell =
+    XUIBaseCell *cell =
     [tableView dequeueReusableCellWithIdentifier:XUIBaseCellReuseIdentifier];
     if (nil == cell)
     {
         cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:XUIBaseCellReuseIdentifier];
     }
-    cell.tintColor = self.theme.tintColor;
+    cell.adapter = self.adapter;
     cell.showsReorderControl = YES;
+    cell.tintColor = self.theme.tintColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0)
     {
         NSUInteger selectedIndex = [self.selectedIndexes[(NSUInteger) indexPath.row] unsignedIntegerValue];
-        cell.textLabel.text = self.cell.xui_options[selectedIndex][XUIOptionCellTitleKey];
+        NSDictionary *optionDictionary = self.cell.xui_options[selectedIndex];
+        cell.xui_icon = optionDictionary[XUIOptionCellIconKey];
+        cell.xui_label = optionDictionary[XUIOptionCellTitleKey];
     }
     else if (indexPath.section == 1)
     {
         NSUInteger unselectedIndex = [self.unselectedIndexes[(NSUInteger) indexPath.row] unsignedIntegerValue];
-        cell.textLabel.text = self.cell.xui_options[unselectedIndex][XUIOptionCellTitleKey];
+        NSDictionary *optionDictionary = self.cell.xui_options[unselectedIndex];
+        cell.xui_icon = optionDictionary[XUIOptionCellIconKey];
+        cell.xui_label = optionDictionary[XUIOptionCellTitleKey];
+    }
+    else {
+        cell.xui_label = nil;
+        cell.xui_icon = nil;
     }
     return cell;
 }
@@ -203,6 +212,10 @@
     if (_delegate && [_delegate respondsToSelector:@selector(orderedOptionViewController:didSelectOption:)]) {
         [_delegate orderedOptionViewController:self didSelectOption:self.selectedIndexes];
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 #pragma mark - Memory

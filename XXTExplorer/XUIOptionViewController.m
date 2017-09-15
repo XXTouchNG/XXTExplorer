@@ -93,15 +93,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
     {
-        UITableViewCell *cell =
+        XUIBaseCell *cell =
         [tableView dequeueReusableCellWithIdentifier:XUIBaseCellReuseIdentifier];
         if (nil == cell)
         {
             cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:XUIBaseCellReuseIdentifier];
         }
+        cell.adapter = self.adapter;
+        NSDictionary *optionDictionary = self.cell.xui_options[(NSUInteger) indexPath.row];
+        cell.xui_icon = optionDictionary[XUIOptionCellIconKey];
+        cell.xui_label = optionDictionary[XUIOptionCellTitleKey];
         cell.tintColor = self.theme.tintColor;
-        cell.textLabel.text = self.cell.xui_options[(NSUInteger) indexPath.row][XUIOptionCellTitleKey];
         if (self.selectedIndex == indexPath.row) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {

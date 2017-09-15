@@ -48,6 +48,10 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     }
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - View
 
 - (void)viewDidLoad {

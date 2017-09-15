@@ -26,8 +26,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Nbx-Fu-T3G" secondAttribute="trailing" constant="16" id="IlW-SG-lzI"/>
-                    <constraint firstItem="Nbx-Fu-T3G" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Qeg-7l-cxv"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Nbx-Fu-T3G" secondAttribute="bottom" id="RhL-vp-MVk"/>
+                    <constraint firstItem="Nbx-Fu-T3G" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="Qeg-7l-cxv"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Nbx-Fu-T3G" secondAttribute="bottom" constant="4" id="RhL-vp-MVk"/>
                     <constraint firstItem="Nbx-Fu-T3G" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="WSD-ez-8jC"/>
                 </constraints>
             </tableViewCellContentView>

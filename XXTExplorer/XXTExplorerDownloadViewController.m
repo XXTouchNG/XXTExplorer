@@ -39,7 +39,7 @@ typedef enum : NSUInteger {
 
 @implementation XXTExplorerDownloadViewController {
     BOOL isFirstTimeLoaded;
-    NSArray <NSMutableArray <UITableViewCell *> *> *staticCells;
+    NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
     NSArray <NSNumber *> *staticSectionRowNum;

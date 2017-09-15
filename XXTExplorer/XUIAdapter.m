@@ -20,23 +20,25 @@
     self = [super init];
     if (self) {
         _path = path;
-        _bundle = bundle;
+        _bundle = bundle ? bundle : [NSBundle mainBundle];
         [self setup];
     }
     return self;
 }
 
 - (void)setup {
-    if (!L) {
-        L = luaL_newstate();
-        NSAssert(L, @"not enough memory");
-        luaL_openlibs(L);
-        lua_openNSValueLibs(L);
-        NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter" ofType:@"lua"];
-        if (luaL_loadfile(L, adapterPath.UTF8String) == LUA_OK) {
-            lua_pushvalue(L, -1);
-            lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
-            lua_pop(L, 1);
+    @synchronized (self) {
+        if (!L) {
+            L = luaL_newstate();
+            NSAssert(L, @"not enough memory");
+            luaL_openlibs(L);
+            lua_openNSValueLibs(L);
+            NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter" ofType:@"lua"];
+            if (luaL_loadfile(L, adapterPath.UTF8String) == LUA_OK) {
+                lua_pushvalue(L, -1);
+                lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
+                lua_pop(L, 1);
+            }
         }
     }
 }
@@ -62,14 +64,15 @@
     if (!path || !bundle || !rootPath) return nil;
     id value = nil;
     
-    
-    lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
-    if (lua_type(L, -1) == LUA_TFUNCTION) {
-        lua_pushNSValue(L, @{ @"event": @"load", @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath });
-        int entryResult = lua_pcall(L, 1, 1, 0);
-        if (checkCode(L, entryResult, error)) {
-            value = lua_toNSValue(L, -1);
-            lua_pop(L, 1);
+    @synchronized (self) {
+        lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
+        if (lua_type(L, -1) == LUA_TFUNCTION) {
+            lua_pushNSValue(L, @{ @"event": @"load", @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath });
+            int entryResult = lua_pcall(L, 1, 1, 0);
+            if (checkCode(L, entryResult, error)) {
+                value = lua_toNSValue(L, -1);
+                lua_pop(L, 1);
+            }
         }
     }
     
@@ -92,13 +95,15 @@
     
     if (!path || !bundle || !rootPath) return;
     
-    lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
-    if (lua_type(L, -1) == LUA_TFUNCTION) {
-        lua_pushNSValue(L, @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": obj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath });
-        int entryResult = lua_pcall(L, 1, 1, 0);
-        NSError *saveError = nil;
-        if (checkCode(L, entryResult, &saveError)) {
-            
+    @synchronized (self) {
+        lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
+        if (lua_type(L, -1) == LUA_TFUNCTION) {
+            lua_pushNSValue(L, @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": obj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath });
+            int entryResult = lua_pcall(L, 1, 1, 0);
+            NSError *saveError = nil;
+            if (checkCode(L, entryResult, &saveError)) {
+                
+            }
         }
     }
     

@@ -3,7 +3,7 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#include <objc/runtime.h>
+#import <objc/runtime.h>
 #import "XXTApplicationPicker.h"
 #import "XXTPickerFactory.h"
 #import "LSApplicationProxy.h"
@@ -77,7 +77,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if (self.searchDisplayController.active) {
         return UIStatusBarStyleDefault;
     }
-    return [super preferredStatusBarStyle];
+    return UIStatusBarStyleLightContent;
 }
 
 - (NSString *)title {

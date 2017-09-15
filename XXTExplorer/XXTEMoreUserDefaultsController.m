@@ -25,7 +25,10 @@ enum {
 @property (nonatomic, strong) NSDictionary *defaultsMeta;
 @property (nonatomic, strong) NSDictionary *displayDefaultsMeta;
 @property (nonatomic, strong) NSMutableDictionary *userDefaults;
+
+XXTE_START_IGNORE_PARTIAL
 @property (nonatomic, strong, readonly) UISearchController *searchController;
+XXTE_END_IGNORE_PARTIAL
 
 @end
 
@@ -91,6 +94,7 @@ enum {
     
     self.title = NSLocalizedString(@"User Defaults", nil);
     
+    XXTE_START_IGNORE_PARTIAL
     _searchController = ({
         UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
@@ -98,6 +102,7 @@ enum {
         searchController.dimsBackgroundDuringPresentation = NO;
         searchController;
     });
+    XXTE_END_IGNORE_PARTIAL
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -279,9 +284,9 @@ enum {
 
 #pragma mark - UISearchControllerDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (void)willPresentSearchController:(UISearchController *)searchController {
-    //    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    //    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = NO;
+    
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController {
@@ -289,9 +294,9 @@ enum {
 }
 
 - (void)didDismissSearchController:(UISearchController *)searchController {
-    //    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    //    self.navigationController.xxte_fullscreenPopGestureRecognizer.enabled = YES;
+    
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - UISearchResultsUpdating
 
@@ -307,9 +312,11 @@ enum {
     [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
 }
 
+XXTE_START_IGNORE_PARTIAL
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self reloadSearchByContent:searchController.searchBar.text andCategory:searchController.searchBar.selectedScopeButtonIndex];
 }
+XXTE_END_IGNORE_PARTIAL
 
 - (void)reloadSearchByContent:(NSString *)searchText andCategory:(NSUInteger)category {
     NSPredicate *predicate = nil;

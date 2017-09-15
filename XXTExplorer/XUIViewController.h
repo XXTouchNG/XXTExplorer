@@ -6,10 +6,11 @@
 #import <UIKit/UIKit.h>
 #import "XXTEViewer.h"
 
-@class XUITheme;
+@class XUITheme, XUIAdapter;
 
 @interface XUIViewController : UIViewController <XXTEViewer>
 
 @property (nonatomic, strong) XUITheme *theme;
+@property (nonatomic, strong) XUIAdapter *adapter;
 
 @end
