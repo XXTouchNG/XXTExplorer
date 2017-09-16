@@ -124,18 +124,29 @@
 - (void)updateValueIfNeeded {
     if (self.shouldUpdateValue) {
         self.shouldUpdateValue = NO;
-        NSTimeInterval timestamp = [self.xui_value doubleValue];
-        NSDate *valueDate = [NSDate dateWithTimeIntervalSince1970:timestamp];
-        self.dateTimePicker.date = valueDate;
+        if ([self.xui_mode isEqualToString:@"interval"]) {
+            NSTimeInterval duration = [self.xui_value doubleValue];
+            self.dateTimePicker.countDownDuration = duration;
+        } else {
+            NSTimeInterval timestamp = [self.xui_value doubleValue];
+            NSDate *valueDate = [NSDate dateWithTimeIntervalSince1970:timestamp];
+            self.dateTimePicker.date = valueDate;
+        }
     }
 }
 
 - (IBAction)datePickerValueChanged:(UIDatePicker *)sender {
     if (sender == self.dateTimePicker) {
-        NSDate *toDate = sender.date;
-        NSTimeInterval toInterval = [toDate timeIntervalSince1970];
-        self.xui_value = @(toInterval);
-        [self.adapter saveDefaultsFromCell:self];
+        if ([self.xui_mode isEqualToString:@"interval"]) {
+            NSTimeInterval duration = sender.countDownDuration;
+            self.xui_value = @(duration);
+            [self.adapter saveDefaultsFromCell:self];
+        } else {
+            NSDate *toDate = sender.date;
+            NSTimeInterval toInterval = [toDate timeIntervalSince1970];
+            self.xui_value = @(toInterval);
+            [self.adapter saveDefaultsFromCell:self];
+        }
     }
 }
 

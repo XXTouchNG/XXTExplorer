@@ -12,6 +12,8 @@
 #import "XUIBaseCell.h"
 #import "LuaNSValue.h"
 
+#import "XUI.h"
+
 @implementation XUIAdapter {
     lua_State *L;
 }
@@ -54,6 +56,7 @@
     id specValue = cell.xui_value;
     if (!specValue) return;
     [self setObject:specValue forKey:specKey Defaults:specComponent];
+    [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventValueChanged object:cell userInfo:@{}];
 }
 
 - (NSDictionary *)rootEntryWithError:(NSError *__autoreleasing *)error {
