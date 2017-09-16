@@ -178,6 +178,8 @@
 		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
 		0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */; };
 		0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */; };
+		0FBAFF131F6D3A4B008B3189 /* XUIDateTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */; };
+		0FBAFF141F6D3A4B008B3189 /* XUIDateTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */; };
 		0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
@@ -702,6 +704,9 @@
 		0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOrderedOptionViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICellFactory.h; sourceTree = "<group>"; };
 		0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUICellFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0FBAFF101F6D3A4B008B3189 /* XUIDateTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIDateTimeCell.h; sourceTree = "<group>"; };
+		0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIDateTimeCell.m; sourceTree = "<group>"; };
+		0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIDateTimeCell.xib; sourceTree = "<group>"; };
 		0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SKColor.h"; sourceTree = "<group>"; };
 		0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SKColor.m"; sourceTree = "<group>"; };
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
@@ -1764,6 +1769,9 @@
 				0F1864F91F64535A00A96230 /* XUIRadioCell.h */,
 				0F1864F71F64535A00A96230 /* XUIRadioCell.m */,
 				0F1864F81F64535A00A96230 /* XUIRadioCell.xib */,
+				0FBAFF101F6D3A4B008B3189 /* XUIDateTimeCell.h */,
+				0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */,
+				0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2638,6 +2646,7 @@
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				D60A26CE1F3DB7BE00E013E2 /* Sunburst.tmTheme in Resources */,
+				0FBAFF141F6D3A4B008B3189 /* XUIDateTimeCell.xib in Resources */,
 				0FD973F01F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
@@ -2822,6 +2831,7 @@
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				D677B1091F4FE88B00E741C2 /* XXTELuaInterpreter.mm in Sources */,
 				0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */,
+				0FBAFF131F6D3A4B008B3189 /* XUIDateTimeCell.m in Sources */,
 				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,

@@ -35,6 +35,13 @@ return {
 		["snippet"] = "snippets/app.snippet"
 	},{
 		["cell"] = "XUIGroupCell",
+		["label"] = "Date"
+	},{
+		["cell"] = "XUIDateTimeCell",
+		["key"] = "datetime1",
+		["defaults"] = "com.yourcompany.yourscript"
+	},{
+		["cell"] = "XUIGroupCell",
 		["label"] = "Actions"
 	},{
 		["cell"] = "XUIButtonCell",
