@@ -515,13 +515,13 @@ ValueCheckers.XUISecureTextFieldCell = ValueCheckers.XUITextFieldCell
 
 function ValueCheckers.XUIDateTimeCell(item, value, index)
     if item.minuteInterval ~= nil and type(item.minuteInterval) ~= 'integer' then
-        error(string.format('%q: items[%d](%q).minuteInterval (integer expected got %s)', opt.XUIPath, index, item.key, type(item.minuteInterval)))
+        error(string.format('%q: items[%d](%q).minuteInterval (opt.integer expected got %s)', opt.XUIPath, index, item.key, type(item.minuteInterval)))
     end
     if item.min ~= nil and type(item.min) ~= 'number' then
-        error(string.format('%q: items[%d](%q).min (number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
+        error(string.format('%q: items[%d](%q).min (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
     end
     if item.max ~= nil and type(item.max) ~= 'number' then
-        error(string.format('%q: items[%d](%q).max (number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
+        error(string.format('%q: items[%d](%q).max (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
     end
     if item.default == nil then
         item.default = os.time()
