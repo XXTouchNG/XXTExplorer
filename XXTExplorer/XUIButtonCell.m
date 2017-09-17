@@ -17,8 +17,6 @@
 
 @implementation XUIButtonCell
 
-@synthesize theme = _theme;
-
 + (BOOL)xibBasedLayout {
     return NO;
 }
@@ -51,7 +49,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.xui_button_label.textColor = theme.tintColor;
 }
 

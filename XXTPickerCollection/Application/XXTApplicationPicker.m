@@ -53,6 +53,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 @end
 
+// type
+// title
+// subtitle
+// allowedExtensions
+
 @implementation XXTApplicationPicker {
     NSString *_pickerSubtitle;
     UISearchDisplayController *_searchDisplayController;
@@ -64,7 +69,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #pragma mark - XXTBasePicker
 
 + (NSString *)pickerKeyword {
-    return @"@app@";
+    return @"app";
 }
 
 - (NSString *)pickerResult {

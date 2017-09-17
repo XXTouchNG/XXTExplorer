@@ -20,7 +20,7 @@
 
 @implementation XUIRadioCell
 
-@synthesize xui_value = _xui_value, theme = _theme;
+@synthesize xui_value = _xui_value;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -197,7 +197,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.tagView.defaultConfig.tagBackgroundColor = theme.successColor;
     self.tagView.defaultConfig.tagSelectedBackgroundColor = theme.highlightColor;
     [self.tagView reload];

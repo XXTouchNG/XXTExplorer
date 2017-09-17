@@ -542,6 +542,17 @@ function ValueCheckers.XUIDateTimeCell(item, value, index)
     return value
 end
 
+function ValueCheckers.XUIFileCell(item, value, index)
+    if item.allowedExtensions and type(item.allowedExtensions) ~= 'table' then
+        item.allowedExtensions = {isArray = true}
+    end
+    if item.initialPath and type(item.initialPath) ~= 'string' then
+        item.initialPath = ''
+    end
+    value = value or item.default
+    return value
+end
+
 local function checkCellValue(item, value, index)
 	local checker = ValueCheckers[tostring(item.cell)]
 	if type(checker) == 'function' then

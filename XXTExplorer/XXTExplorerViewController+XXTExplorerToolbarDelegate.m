@@ -7,11 +7,16 @@
 //
 
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
+#import "XXTExplorerViewController+XXTEScanViewControllerDelegate.h"
+#import "XXTExplorerViewController+LGAlertViewDelegate.h"
 #import "XXTExplorerViewController+PasteboardOperations.h"
+#import "XXTExplorerViewController+UIDocumentMenuDelegate.h"
+#import "XXTExplorerViewController+XXTImagePickerControllerDelegate.h"
 
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTENotificationCenterDefines.h"
 
 #import "XXTEScanViewController.h"
 
@@ -23,7 +28,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
-@interface XXTExplorerViewController () <LGAlertViewDelegate, XXTEScanViewControllerDelegate>
+@interface XXTExplorerViewController ()
 
 @end
 
@@ -100,11 +105,29 @@
             XXTE_END_IGNORE_PARTIAL
             [self.navigationController presentViewController:navController animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
-            XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
-            XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
-            createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-            createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
+            UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+            controller.delegate = self;
+            [controller addOptionWithTitle:NSLocalizedString(@"New Document", nil)
+                                     image:nil
+                                     order:UIDocumentMenuOrderFirst
+                                   handler:^{
+                                       [self presentNewDocumentViewController];
+                                   }];
+            [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
+                                     image:nil
+                                     order:UIDocumentMenuOrderLast
+                                   handler:^{
+                                       [self presentImagePickerController];
+                                   }];
+            XXTE_START_IGNORE_PARTIAL
+            if (XXTE_SYSTEM_8) {
+                controller.modalPresentationStyle = UIModalPresentationPopover;
+                UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
+                popoverController.barButtonItem = buttonItem;
+                popoverController.backgroundColor = [UIColor whiteColor];
+            }
+            XXTE_END_IGNORE_PARTIAL
+            [self.navigationController presentViewController:controller animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
             if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
@@ -249,6 +272,14 @@
             [alertView showAnimated:YES completionHandler:nil];
         }
     }
+}
+
+- (void)presentNewDocumentViewController {
+    XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
+    XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
+    createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
 }
 
 @end

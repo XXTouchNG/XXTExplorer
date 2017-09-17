@@ -18,6 +18,7 @@
 #import "XUITitleValueCell.h"
 #import "XUIButtonCell.h"
 #import "XUITextareaCell.h"
+#import "XUIFileCell.h"
 
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
@@ -39,7 +40,9 @@
 #import "XXTPickerSnippet.h"
 #import "XXTPickerFactory.h"
 
-@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate, XXTPickerFactoryDelegate>
+#import "XXTExplorerItemPicker.h"
+
+@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate, XXTPickerFactoryDelegate, XXTExplorerItemPickerDelegate>
 
 @property (nonatomic, strong) NSMutableArray <XUIBaseCell *> *cellsNeedStore;
 @property (nonatomic, assign) BOOL shouldStoreCells;
@@ -47,11 +50,13 @@
 @property (nonatomic, strong, readonly) XUICellFactory *parser;
 
 @property (nonatomic, strong) XXTPickerFactory *pickerFactory;
-@property (nonatomic, strong) XUITitleValueCell *pickerCell;
+@property (nonatomic, strong) XUIBaseCell *pickerCell;
 
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) UIEdgeInsets defaultInsets;
+
+@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 
 @end
 
@@ -155,11 +160,9 @@
     
     [self setupSubviews];
 
-    XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
-        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     }
-    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -197,6 +200,15 @@
 }
 
 #pragma mark - UIView Getters
+
+- (UIBarButtonItem *)closeButtonItem {
+    if (!_closeButtonItem) {
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissViewController:)];
+        closeButtonItem.tintColor = [UIColor whiteColor];
+        _closeButtonItem = closeButtonItem;
+    }
+    return _closeButtonItem;
+}
 
 - (XUIListHeaderView *)headerView {
     if (!_headerView) {
@@ -313,8 +325,52 @@
             [self tableView:tableView performButtonCell:cell];
         } else if ([cell isKindOfClass:[XUITextareaCell class]]) {
             [self tableView:tableView performTextareaCell:cell];
+        } else if ([cell isKindOfClass:[XUIFileCell class]]) {
+            [self tableView:tableView performFileCell:cell];
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[XUITitleValueCell class]]) {
+        XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
+        if (titleValueCell.xui_snippet) {
+            NSString *snippetPath = [self.bundle pathForResource:titleValueCell.xui_snippet ofType:nil];
+            NSError *snippetError = nil;
+            XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:snippetPath Error:&snippetError];
+            if (snippetError) {
+                [self presentErrorAlertController:snippetError];
+                return;
+            }
+            XXTPickerFactory *factory = [[XXTPickerFactory alloc] init];
+            factory.delegate = self;
+            [factory executeTask:snippet fromViewController:self];
+            self.pickerCell = titleValueCell;
+            self.pickerFactory = factory;
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView performFileCell:(UITableViewCell *)cell {
+    XUIFileCell *fileCell = (XUIFileCell *)cell;
+    NSString *bundlePath = [self.bundle bundlePath];
+    NSString *initialPath = fileCell.xui_initialPath;
+    // NSString *filePath = fileCell.xui_value;
+    if (initialPath) {
+        if ([initialPath isAbsolutePath]) {
+            
+        } else {
+            initialPath = [bundlePath stringByAppendingPathComponent:initialPath];
+        }
+    } else {
+        initialPath = bundlePath;
+    }
+    self.pickerCell = fileCell;
+    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:initialPath];
+    itemPicker.delegate = self;
+    itemPicker.allowedExtensions = fileCell.xui_allowedExtensions;
+    [self.navigationController pushViewController:itemPicker animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView performButtonCell:(UITableViewCell *)cell {
@@ -335,21 +391,7 @@
 
 - (void)tableView:(UITableView *)tableView performTitleValueCell:(UITableViewCell *)cell {
     XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
-    if (titleValueCell.xui_snippet) {
-        NSString *snippetPath = [self.bundle pathForResource:titleValueCell.xui_snippet ofType:nil];
-        NSError *snippetError = nil;
-        XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:snippetPath Error:&snippetError];
-        if (snippetError) {
-            [self presentErrorAlertController:snippetError];
-            return;
-        }
-        XXTPickerFactory *factory = [[XXTPickerFactory alloc] init];
-        factory.delegate = self;
-        [factory executeTask:snippet fromViewController:self];
-        self.pickerCell = titleValueCell;
-        self.pickerFactory = factory;
-    }
-    else if (titleValueCell.xui_value) {
+    if (titleValueCell.xui_value) {
         id extendedValue = titleValueCell.xui_value;
         XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
         objectViewController.title = titleValueCell.textLabel.text;
@@ -540,16 +582,28 @@
         dispatch_async_on_main_queue(^{
             blockUserInteractions(self, NO, 0);
             if (result) {
-                XUITitleValueCell *cell = self.pickerCell;
-                cell.xui_value = result;
-                [self storeCellWhenNeeded:cell];
-                [self storeCellsIfNecessary];
+                if ([self.pickerCell isKindOfClass:[XUITitleValueCell class]]) {
+                    XUITitleValueCell *cell = (XUITitleValueCell *)self.pickerCell;
+                    cell.xui_value = result;
+                    [self storeCellWhenNeeded:cell];
+                    [self storeCellsIfNecessary];
+                }
             } else {
                 [self presentErrorAlertController:error];
             }
         });
     });
     return YES;
+}
+
+#pragma mark - XXTExplorerItemPickerDelegate
+
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
+    XUIFileCell *cell = (XUIFileCell *)self.pickerCell;
+    cell.xui_value = path;
+    [self storeCellWhenNeeded:cell];
+    [self storeCellsIfNecessary];
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 #pragma mark - Store
@@ -574,6 +628,12 @@
             [self.parser.adapter saveDefaultsFromCell:cell];
         }
     }
+}
+
+#pragma mark - UIControl Actions
+
+- (void)dismissViewController:(id)dismissViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Keyboard

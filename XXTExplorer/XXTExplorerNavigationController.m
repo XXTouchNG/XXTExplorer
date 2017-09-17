@@ -8,10 +8,10 @@
 
 #import "XXTExplorerNavigationController.h"
 #import "XXTExplorerViewController.h"
+
+#import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTEDispatchDefines.h"
-
-#import "UIView+XXTEToast.h"
 
 #import "XXTExplorerViewController+SharedInstance.h"
 
@@ -68,8 +68,7 @@
     {
         NSURL *inboxURL = aNotification.object;
         @weakify(self);
-        self.view.userInteractionEnabled = NO;
-        [self.view makeToastActivity:XXTEToastPositionCenter];
+        blockUserInteractions(self, YES, 0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @strongify(self);
             NSError *err = nil;
@@ -81,11 +80,19 @@
             {
                 currentPath = ((XXTExplorerViewController *)topViewController).entryPath;
             }
-            NSString *latterPath = [currentPath stringByAppendingPathComponent:lastComponent];
-            BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:latterPath error:&err];
+            NSString *lastComponentName = [lastComponent stringByDeletingPathExtension];
+            NSString *lastComponentExt = [lastComponent pathExtension];
+            NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+            NSUInteger testedIndex = 2;
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            while ([fileManager fileExistsAtPath:testedPath]) {
+                lastComponent = [[NSString stringWithFormat:@"%@-%lu", lastComponentName, (unsigned long)testedIndex] stringByAppendingPathExtension:lastComponentExt];
+                testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+                testedIndex++;
+            }
+            BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
             dispatch_async_on_main_queue(^{
-                [self.view hideToastActivity];
-                self.view.userInteractionEnabled = YES;
+                blockUserInteractions(self, NO, 0);
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:nil userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
                 if (result && err == nil) {
                     [self.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]];
@@ -96,6 +103,8 @@
         });
     }
 }
+
+
 
 - (void)dealloc {
 //    [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -78,10 +78,4 @@
     _xui_options = xui_options;
 }
 
-- (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
-    self.textLabel.textColor = theme.labelColor;
-    self.detailTextLabel.textColor = theme.valueColor;
-}
-
 @end

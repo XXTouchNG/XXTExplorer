@@ -50,6 +50,10 @@ UISearchDisplayDelegate
 
 @end
 
+// type
+// title
+// subtitle
+
 @implementation XXTMultipleApplicationPicker {
     NSString *_pickerSubtitle;
     UISearchDisplayController *_searchDisplayController;
@@ -61,7 +65,7 @@ UISearchDisplayDelegate
 #pragma mark - XXTBasePicker
 
 + (NSString *)pickerKeyword {
-    return @"@apps@";
+    return @"apps";
 }
 
 - (NSArray <NSString *> *)pickerResult {

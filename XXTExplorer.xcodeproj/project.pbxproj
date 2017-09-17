@@ -180,7 +180,21 @@
 		0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */; };
 		0FBAFF131F6D3A4B008B3189 /* XUIDateTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */; };
 		0FBAFF141F6D3A4B008B3189 /* XUIDateTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */; };
+		0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */; };
+		0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */; };
+		0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */; };
+		0FBAFF3E1F6E5378008B3189 /* XXTImagePickerAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF341F6E5378008B3189 /* XXTImagePickerAlbumCell.m */; };
+		0FBAFF3F1F6E5378008B3189 /* XXTImagePickerAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF351F6E5378008B3189 /* XXTImagePickerAlbumCell.xib */; };
+		0FBAFF401F6E5378008B3189 /* XXTImagePickerAssetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF371F6E5378008B3189 /* XXTImagePickerAssetHelper.m */; };
+		0FBAFF411F6E5378008B3189 /* XXTImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF391F6E5378008B3189 /* XXTImagePickerController.m */; };
+		0FBAFF421F6E5378008B3189 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */; };
+		0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3C1F6E5378008B3189 /* XXTImagePickerPhotoCell.m */; };
+		0FBAFF441F6E5378008B3189 /* XXTImagePickerPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3D1F6E5378008B3189 /* XXTImagePickerPhotoCell.xib */; };
+		0FBAFF4A1F6E701A008B3189 /* NSString+QueryItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */; };
 		0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */; };
+		0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
+		0FC043BB1F6ED31000730FAB /* XUIFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043B91F6ED31000730FAB /* XUIFileCell.m */; };
+		0FC043BC1F6ED31000730FAB /* XUIFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
@@ -217,7 +231,6 @@
 		0FFBC12D1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFBC12B1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib */; };
 		0FFBC1321F5C391300690C8F /* LuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* LuaNSValue.m */; };
 		0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */; };
-		0FFBC1371F5C487700690C8F /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FFBC1361F5C487700690C8F /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251209D280AFB66F3169F0C /* SKLanguage.m */; };
 		52512159F631F9582F89C858 /* SKRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124A0DCE70FECE2B114E7 /* SKRepository.m */; };
@@ -707,8 +720,32 @@
 		0FBAFF101F6D3A4B008B3189 /* XUIDateTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIDateTimeCell.h; sourceTree = "<group>"; };
 		0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIDateTimeCell.m; sourceTree = "<group>"; };
 		0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIDateTimeCell.xib; sourceTree = "<group>"; };
+		0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XXTExplorer.entitlements; sourceTree = "<group>"; };
+		0FBAFF161F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentMenuDelegate.h"; sourceTree = "<group>"; };
+		0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UIDocumentMenuDelegate.m"; sourceTree = "<group>"; };
+		0FBAFF191F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentPickerDelegate.h"; sourceTree = "<group>"; };
+		0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UIDocumentPickerDelegate.m"; sourceTree = "<group>"; };
+		0FBAFF1C1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+XXTImagePickerControllerDelegate.h"; sourceTree = "<group>"; };
+		0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+XXTImagePickerControllerDelegate.m"; sourceTree = "<group>"; };
+		0FBAFF331F6E5378008B3189 /* XXTImagePickerAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerAlbumCell.h; sourceTree = "<group>"; };
+		0FBAFF341F6E5378008B3189 /* XXTImagePickerAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerAlbumCell.m; sourceTree = "<group>"; };
+		0FBAFF351F6E5378008B3189 /* XXTImagePickerAlbumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTImagePickerAlbumCell.xib; sourceTree = "<group>"; };
+		0FBAFF361F6E5378008B3189 /* XXTImagePickerAssetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerAssetHelper.h; sourceTree = "<group>"; };
+		0FBAFF371F6E5378008B3189 /* XXTImagePickerAssetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerAssetHelper.m; sourceTree = "<group>"; };
+		0FBAFF381F6E5378008B3189 /* XXTImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerController.h; sourceTree = "<group>"; };
+		0FBAFF391F6E5378008B3189 /* XXTImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerController.m; sourceTree = "<group>"; };
+		0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTImagePickerController.xib; sourceTree = "<group>"; };
+		0FBAFF3B1F6E5378008B3189 /* XXTImagePickerPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTImagePickerPhotoCell.h; sourceTree = "<group>"; };
+		0FBAFF3C1F6E5378008B3189 /* XXTImagePickerPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTImagePickerPhotoCell.m; sourceTree = "<group>"; };
+		0FBAFF3D1F6E5378008B3189 /* XXTImagePickerPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTImagePickerPhotoCell.xib; sourceTree = "<group>"; };
+		0FBAFF481F6E701A008B3189 /* NSString+QueryItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QueryItems.h"; sourceTree = "<group>"; };
+		0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryItems.m"; sourceTree = "<group>"; };
 		0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SKColor.h"; sourceTree = "<group>"; };
 		0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SKColor.m"; sourceTree = "<group>"; };
+		0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "B4FDE60B-30B3-4035-B874-619C896626BE.zip"; sourceTree = "<group>"; };
+		0FC043B81F6ED31000730FAB /* XUIFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIFileCell.h; sourceTree = "<group>"; };
+		0FC043B91F6ED31000730FAB /* XUIFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIFileCell.m; sourceTree = "<group>"; };
+		0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIFileCell.xib; sourceTree = "<group>"; };
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
 		0FCC2AC41F130BE600C50A48 /* XXTExplorerItemNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemNameCell.h; sourceTree = "<group>"; };
 		0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemNameCell.m; sourceTree = "<group>"; };
@@ -769,7 +806,6 @@
 		0FFBC12F1F5C391300690C8F /* LuaNSValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LuaNSValue.m; sourceTree = "<group>"; };
 		0FFBC1301F5C391300690C8F /* XXTPickerSnippet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerSnippet.h; sourceTree = "<group>"; };
 		0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerSnippet.m; sourceTree = "<group>"; };
-		0FFBC1361F5C487700690C8F /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "B4FDE60B-30B3-4035-B874-619C896626BE.zip"; sourceTree = "<group>"; };
 		52512024B32016196224ED51 /* SKResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKResultSet.m; sourceTree = "<group>"; };
 		5251209D280AFB66F3169F0C /* SKLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLanguage.m; sourceTree = "<group>"; };
 		525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
@@ -1177,8 +1213,7 @@
 		0F1DD1C01F11B68F00F1A66A /* Scan */ = {
 			isa = PBXGroup;
 			children = (
-				0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */,
-				0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */,
+				0FBAFF1F1F6E4ACE008B3189 /* Image */,
 				0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */,
 				0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */,
 				0F1DD1C11F11B6A700F1A66A /* XXTEScanViewController.h */,
@@ -1213,10 +1248,6 @@
 				0F61E1641ED7875A003DCC78 /* Views */,
 				0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */,
 				0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */,
-				0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */,
-				0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */,
-				0F50AEA11F307A510098211C /* UIViewController+StatusBar.h */,
-				0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */,
 				D67FBBE11F6A7759000BDD3D /* UIViewController+PreviousViewController.h */,
 				D67FBBE21F6A7759000BDD3D /* UIViewController+PreviousViewController.m */,
 			);
@@ -1456,6 +1487,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				0FBAFF471F6E6FC6008B3189 /* Common */,
 				0F6AEA7E1F372A450017BE7C /* OpenWith */,
 				0FCC2AC31F13097100C50A48 /* Detail */,
 				0F4F66FD1F1268370042C449 /* Create */,
@@ -1497,11 +1529,10 @@
 		0F61E1641ED7875A003DCC78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0FBAFF451F6E6F58008B3189 /* StatusBar */,
 				0FCC2ACC1F13114300C50A48 /* Cell */,
 				0FCC2ACB1F13112C00C50A48 /* Gesture */,
 				0FCC2ACA1F13112200C50A48 /* Toast */,
-				D67FBBDE1F6A4C3F000BDD3D /* UIColor+DarkColor.h */,
-				D67FBBDF1F6A4C3F000BDD3D /* UIColor+DarkColor.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1617,6 +1648,7 @@
 		0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
@@ -1772,8 +1804,60 @@
 				0FBAFF101F6D3A4B008B3189 /* XUIDateTimeCell.h */,
 				0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */,
 				0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */,
+				0FC043B81F6ED31000730FAB /* XUIFileCell.h */,
+				0FC043B91F6ED31000730FAB /* XUIFileCell.m */,
+				0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		0FBAFF1F1F6E4ACE008B3189 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */,
+				0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */,
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
+		0FBAFF321F6E5378008B3189 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				0FBAFF331F6E5378008B3189 /* XXTImagePickerAlbumCell.h */,
+				0FBAFF341F6E5378008B3189 /* XXTImagePickerAlbumCell.m */,
+				0FBAFF351F6E5378008B3189 /* XXTImagePickerAlbumCell.xib */,
+				0FBAFF361F6E5378008B3189 /* XXTImagePickerAssetHelper.h */,
+				0FBAFF371F6E5378008B3189 /* XXTImagePickerAssetHelper.m */,
+				0FBAFF381F6E5378008B3189 /* XXTImagePickerController.h */,
+				0FBAFF391F6E5378008B3189 /* XXTImagePickerController.m */,
+				0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */,
+				0FBAFF3B1F6E5378008B3189 /* XXTImagePickerPhotoCell.h */,
+				0FBAFF3C1F6E5378008B3189 /* XXTImagePickerPhotoCell.m */,
+				0FBAFF3D1F6E5378008B3189 /* XXTImagePickerPhotoCell.xib */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		0FBAFF451F6E6F58008B3189 /* StatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				D67FBBDE1F6A4C3F000BDD3D /* UIColor+DarkColor.h */,
+				D67FBBDF1F6A4C3F000BDD3D /* UIColor+DarkColor.m */,
+				0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */,
+				0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */,
+				0F50AEA11F307A510098211C /* UIViewController+StatusBar.h */,
+				0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */,
+			);
+			name = StatusBar;
+			sourceTree = "<group>";
+		};
+		0FBAFF471F6E6FC6008B3189 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0FBAFF481F6E701A008B3189 /* NSString+QueryItems.h */,
+				0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		0FC4775A1F376DD500B8F28E /* Extensions */ = {
@@ -1801,6 +1885,12 @@
 				0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */,
 				0F9273241F375F7800109096 /* XXTExplorerViewController+SharedInstance.h */,
 				0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */,
+				0FBAFF161F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.h */,
+				0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */,
+				0FBAFF191F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.h */,
+				0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */,
+				0FBAFF1C1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.h */,
+				0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2017,8 +2107,8 @@
 		0FE65E231F528EF1005F81FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */,
 				0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */,
-				0FFBC1361F5C487700690C8F /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2399,6 +2489,7 @@
 		D6E140971F5032AB00D78CB9 /* XXTPickerCollection */ = {
 			isa = PBXGroup;
 			children = (
+				0FBAFF321F6E5378008B3189 /* Image */,
 				D6E140981F5032AB00D78CB9 /* Application */,
 				D6E140AE1F5032AB00D78CB9 /* KeyEvent */,
 				D6E140B31F5032AB00D78CB9 /* Location */,
@@ -2562,6 +2653,11 @@
 						DevelopmentTeam = GXZ23M5TP2;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -2606,6 +2702,7 @@
 				0FB0090A1F4364AF00097E9C /* Kimbie (Light).tmTheme in Resources */,
 				D6863AE41F6B9743003E1511 /* XUIAdapter.lua in Resources */,
 				0F271CCA1F5D97C400E8FED5 /* XUIStepperCell.xib in Resources */,
+				0FBAFF441F6E5378008B3189 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
@@ -2616,6 +2713,7 @@
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F85214C1F2D978A00A912AC /* XUIOptionCell.xib in Resources */,
+				0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
 				0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */,
 				D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */,
 				0F1864FB1F64535A00A96230 /* XUIRadioCell.xib in Resources */,
@@ -2628,6 +2726,7 @@
 				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
 				D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */,
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
+				0FC043BC1F6ED31000730FAB /* XUIFileCell.xib in Resources */,
 				0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				0FB009091F4364AF00097E9C /* Kimbie (Dark).tmTheme in Resources */,
@@ -2659,9 +2758,9 @@
 				0FE1629E1F3C8FFC003064B2 /* InfoPlist.strings in Resources */,
 				D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */,
 				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
+				0FBAFF3F1F6E5378008B3189 /* XXTImagePickerAlbumCell.xib in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */,
-				0FFBC1371F5C487700690C8F /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
 				0F30D94A1F2CEF860001E10B /* XUIImageCell.xib in Resources */,
 				0F8521511F2D979E00A912AC /* XUIMultipleOptionCell.xib in Resources */,
 				0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */,
@@ -2678,6 +2777,7 @@
 				0F30D92A1F2BAAA20001E10B /* XUITextFieldCell.xib in Resources */,
 				D6686F331F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
+				0FBAFF421F6E5378008B3189 /* XXTImagePickerController.xib in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
 				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
 			);
@@ -2770,6 +2870,8 @@
 				D677B0F21F4FC7C200E741C2 /* lmathlib.c in Sources */,
 				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,
 				D677B0EE1F4FC7C200E741C2 /* lgc.c in Sources */,
+				0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */,
+				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
@@ -2789,7 +2891,9 @@
 				0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */,
 				0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */,
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
+				0FBAFF411F6E5378008B3189 /* XXTImagePickerController.m in Sources */,
 				0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */,
+				0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
 				D67FBBE01F6A4C3F000BDD3D /* UIColor+DarkColor.m in Sources */,
 				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				D677B0E21F4FC7C200E741C2 /* lapi.c in Sources */,
@@ -2821,6 +2925,7 @@
 				0F8521501F2D979E00A912AC /* XUIMultipleOptionCell.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F6AEA8D1F3750880017BE7C /* XXTExplorerViewController+XXTEScanViewControllerDelegate.m in Sources */,
+				0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0FB30ED11F64296B008517BF /* XUICheckboxCell.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
@@ -2902,6 +3007,7 @@
 				D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
 				0F766CB51ED8D95700E18BE2 /* XXTESwipeButton.m in Sources */,
+				0FC043BB1F6ED31000730FAB /* XUIFileCell.m in Sources */,
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
@@ -2931,9 +3037,11 @@
 				D6E141231F5032AB00D78CB9 /* UIImage+XXTCrop.m in Sources */,
 				D677B0F61F4FC7C200E741C2 /* lopcodes.c in Sources */,
 				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,
+				0FBAFF401F6E5378008B3189 /* XXTImagePickerAssetHelper.m in Sources */,
 				D6686F2D1F4AC920004403D0 /* XXTEEditorFontSizeView.m in Sources */,
 				D6E1411F1F5032AB00D78CB9 /* XXTKeyEventPicker.m in Sources */,
 				0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */,
+				0FBAFF4A1F6E701A008B3189 /* NSString+QueryItems.m in Sources */,
 				D6E141211F5032AB00D78CB9 /* UIColor+hexValue.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
 				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
@@ -3018,6 +3126,7 @@
 				52512440558639F0CA2A63C6 /* SKInclude.m in Sources */,
 				D6E141291F5032AB00D78CB9 /* XXTPixelFlagView.m in Sources */,
 				D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */,
+				0FBAFF3E1F6E5378008B3189 /* XXTImagePickerAlbumCell.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
 				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
 			);
@@ -3177,6 +3286,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -3231,6 +3341,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;

@@ -32,71 +32,72 @@
 
 - (void)performShortcut:(id)sender jsonOperation:(NSDictionary *)jsonDictionary {
     NSString *jsonEvent = jsonDictionary[@"event"];
-    if ([jsonEvent isKindOfClass:[NSString class]]) {
-        if ([jsonEvent isEqualToString:@"bind_code"] || [jsonEvent isEqualToString:@"license"]) {
-            if ([jsonDictionary[@"code"] isKindOfClass:[NSString class]]) {
-                NSString *licenseCode = jsonDictionary[@"code"];
-                blockUserInteractions(self, YES, 0);
-                @weakify(self);
-                void (^ completionBlock)(void) = ^() {
-                    @strongify(self);
-                    blockUserInteractions(self, NO, 0);
-                    XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
-                    XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
-                    licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                    licenseNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-                    [self.navigationController presentViewController:licenseNavigationController animated:YES completion:nil];
-                };
-                if (sender && [sender isKindOfClass:[UIViewController class]]) {
-                    UIViewController *controller = sender;
-                    [controller dismissViewControllerAnimated:YES completion:completionBlock];
-                }
-                completionBlock();
-                return;
+    if (![jsonEvent isKindOfClass:[NSString class]]) {
+        return;
+    }
+    if ([jsonEvent isEqualToString:@"bind_code"] || [jsonEvent isEqualToString:@"license"]) {
+        if ([jsonDictionary[@"code"] isKindOfClass:[NSString class]]) {
+            NSString *licenseCode = jsonDictionary[@"code"];
+            blockUserInteractions(self, YES, 0);
+            @weakify(self);
+            void (^ completionBlock)(void) = ^() {
+                @strongify(self);
+                blockUserInteractions(self, NO, 0);
+                XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
+                XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
+                licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                licenseNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                [self.navigationController presentViewController:licenseNavigationController animated:YES completion:nil];
+            };
+            if (sender && [sender isKindOfClass:[UIViewController class]]) {
+                UIViewController *controller = sender;
+                [controller dismissViewControllerAnimated:YES completion:completionBlock];
             }
-        } else if ([jsonEvent isEqualToString:@"down_script"] || [jsonEvent isEqualToString:@"download"]) {
-            if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]] &&
-                [jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
-                NSString *rawSourceURLString = jsonDictionary[@"url"];
-                NSURL *sourceURL = [NSURL URLWithString:[rawSourceURLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-                NSString *rawTargetPathString = jsonDictionary[@"path"];
-                NSString *targetPath = [rawTargetPathString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
-                NSString *targetFullPath = nil;
-                if ([targetPath isAbsolutePath]) {
-                    targetFullPath = targetPath;
-                } else {
-                    targetFullPath = [self.entryPath stringByAppendingPathComponent:targetPath];
-                }
-                NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
-                blockUserInteractions(self, YES, 0);
-                @weakify(self);
-                void (^ completionBlock)(void) = ^() {
-                    @strongify(self);
-                    blockUserInteractions(self, NO, 0);
-                    XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
-                    XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
-                    downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                    downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-                    [self.navigationController presentViewController:downloadNavigationController animated:YES completion:nil];
-                };
-                if (sender && [sender isKindOfClass:[UIViewController class]]) {
-                    UIViewController *controller = sender;
-                    [controller dismissViewControllerAnimated:YES completion:completionBlock];
-                }
-                completionBlock();
-                return;
-            }
-        } else if ([jsonEvent isEqualToString:@"scan"]) {
-            XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
-            scanViewController.delegate = self;
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
-            navController.modalPresentationStyle = UIModalPresentationFormSheet;
-            [self.navigationController presentViewController:navController animated:YES completion:nil];
-        } else if ([jsonEvent isEqualToString:@"launch"]) {
-            [self performAction:sender launchScript:self.class.selectedScriptPath];
-        } else if ([jsonEvent isEqualToString:@"stop"]) {
-            [self performAction:sender stopSelectedScript:self.class.selectedScriptPath];
+            completionBlock();
+            return;
         }
+    } else if ([jsonEvent isEqualToString:@"down_script"] || [jsonEvent isEqualToString:@"download"]) {
+        if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]] &&
+            [jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
+            NSString *rawSourceURLString = jsonDictionary[@"url"];
+            NSURL *sourceURL = [NSURL URLWithString:[rawSourceURLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+            NSString *rawTargetPathString = jsonDictionary[@"path"];
+            NSString *targetPath = [rawTargetPathString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+            NSString *targetFullPath = nil;
+            if ([targetPath isAbsolutePath]) {
+                targetFullPath = targetPath;
+            } else {
+                targetFullPath = [self.entryPath stringByAppendingPathComponent:targetPath];
+            }
+            NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
+            blockUserInteractions(self, YES, 0);
+            @weakify(self);
+            void (^ completionBlock)(void) = ^() {
+                @strongify(self);
+                blockUserInteractions(self, NO, 0);
+                XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
+                XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
+                downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                [self.navigationController presentViewController:downloadNavigationController animated:YES completion:nil];
+            };
+            if (sender && [sender isKindOfClass:[UIViewController class]]) {
+                UIViewController *controller = sender;
+                [controller dismissViewControllerAnimated:YES completion:completionBlock];
+            }
+            completionBlock();
+            return;
+        }
+    } else if ([jsonEvent isEqualToString:@"scan"]) {
+        XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
+        scanViewController.delegate = self;
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self.navigationController presentViewController:navController animated:YES completion:nil];
+    } else if ([jsonEvent isEqualToString:@"launch"]) {
+        [self performAction:sender launchScript:self.class.selectedScriptPath];
+    } else if ([jsonEvent isEqualToString:@"stop"]) {
+        [self performAction:sender stopSelectedScript:self.class.selectedScriptPath];
     }
 }
 

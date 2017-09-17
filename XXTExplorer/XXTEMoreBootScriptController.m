@@ -228,11 +228,14 @@
                     });
                 }
             } else if (indexPath.row == 1) {
-                XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] init];
-                itemPicker.delegate = self;
-                itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua", @"luac" ];
-                itemPicker.selectedBootScriptPath = bootScriptPath;
-                [self.navigationController pushViewController:itemPicker animated:YES];
+                NSString *entryPath = [bootScriptPath stringByDeletingLastPathComponent];
+                if (entryPath) {
+                    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
+                    itemPicker.delegate = self;
+                    itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua" ];
+                    itemPicker.selectedBootScriptPath = bootScriptPath;
+                    [self.navigationController pushViewController:itemPicker animated:YES];
+                }
             }
         }
     }
@@ -305,7 +308,7 @@
 
 #pragma mark - XXTExplorerItemPickerDelegate
 
-- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectedItemAtPath:(NSString *)path {
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
     blockUserInteractions(self, YES, 2.0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_startup_script_file") JSON:@{ @"filename": path }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {

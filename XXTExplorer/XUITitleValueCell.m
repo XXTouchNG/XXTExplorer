@@ -12,9 +12,14 @@
 
 #import "XXTEBaseObjectViewController.h"
 
+@interface XUITitleValueCell ()
+@property (assign, nonatomic) BOOL shouldUpdateValue;
+
+@end
+
 @implementation XUITitleValueCell
 
-@synthesize xui_value = _xui_value, theme = _theme;
+@synthesize xui_value = _xui_value;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -46,31 +51,49 @@
     }
     XUI_END_IGNORE_PARTIAL
     self.detailTextLabel.textColor = UIColor.grayColor;
-    self.detailTextLabel.text = nil;
+    self.detailTextLabel.text = @"";
 }
 
 - (void)setXui_value:(id)xui_value {
     _xui_value = xui_value;
-    self.detailTextLabel.text = [xui_value stringValue];
-    
-    BOOL isBaseType = NO;
-    NSArray <Class> *baseTypes = [XXTEBaseObjectViewController supportedTypes];
-    for (Class baseType in baseTypes) {
-        if ([xui_value isKindOfClass:baseType]) {
-            isBaseType = YES;
-        }
-    }
-    if (isBaseType) {
-        self.accessoryType = UITableViewCellAccessoryNone;
-    } else {
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    [self setNeedsUpdateValue];
+    [self updateValueIfNeeded];
 }
 
-- (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
-    self.textLabel.textColor = theme.labelColor;
-    self.detailTextLabel.textColor = theme.valueColor;
+- (void)setXui_snippet:(NSString *)xui_snippet {
+    _xui_snippet = xui_snippet;
+    [self updateValueIfNeeded];
+}
+
+- (void)setNeedsUpdateValue {
+    self.shouldUpdateValue = YES;
+}
+
+- (void)updateValueIfNeeded {
+    if (self.shouldUpdateValue) {
+        self.shouldUpdateValue = NO;
+        self.detailTextLabel.text = [self.xui_value stringValue];
+        BOOL isBaseType = NO;
+        NSArray <Class> *baseTypes = [XXTEBaseObjectViewController supportedTypes];
+        for (Class baseType in baseTypes) {
+            if ([self.xui_value isKindOfClass:baseType]) {
+                isBaseType = YES;
+            }
+        }
+        if (self.xui_snippet) {
+            if (isBaseType) {
+                self.accessoryType = UITableViewCellAccessoryDetailButton;
+            } else {
+                self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+            }
+        } else {
+            if (isBaseType) {
+                self.accessoryType = UITableViewCellAccessoryNone;
+            } else {
+                self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+        }
+    }
 }
 
 @end

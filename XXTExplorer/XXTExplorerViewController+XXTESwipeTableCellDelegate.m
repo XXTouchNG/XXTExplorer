@@ -79,16 +79,10 @@
             if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
                 UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
                 if (configurator) {
-                    if (XXTE_COLLAPSED) {
-                        XXTE_START_IGNORE_PARTIAL
-                        if (XXTE_SYSTEM_8) {
-                            XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
-                            [self.splitViewController showDetailViewController:navigationController sender:self];
-                        }
-                        XXTE_END_IGNORE_PARTIAL
-                    } else {
-                        [self.navigationController pushViewController:configurator animated:YES];
-                    }
+                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
+                    navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+                    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                    [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
                 } else {
                     showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]);
                 }

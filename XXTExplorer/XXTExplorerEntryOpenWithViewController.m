@@ -85,7 +85,10 @@ typedef enum : NSUInteger {
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"Open with...", nil);
-    self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    }
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

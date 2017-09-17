@@ -10,8 +10,6 @@
 
 @implementation XUILinkCell
 
-@synthesize theme = _theme;
-
 + (BOOL)xibBasedLayout {
     return NO;
 }
@@ -47,11 +45,6 @@
 
 - (void)setXui_url:(NSString *)xui_url {
     _xui_url = xui_url;
-}
-
-- (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
-    self.textLabel.textColor = theme.labelColor;
 }
 
 @end

@@ -13,7 +13,6 @@
 #import "XXTEScanLineAnimation.h"
 #import "XXTEDispatchDefines.h"
 #import <PromiseKit/PromiseKit.h>
-#import "UIView+XXTEToast.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "XXTEUserInterfaceDefines.h"
 #import <LGAlertView/LGAlertView.h>
@@ -79,7 +78,10 @@
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
-    self.navigationItem.leftBarButtonItem = self.dismissItem;
+    
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        self.navigationItem.leftBarButtonItem = self.dismissItem;
+    }
     self.navigationItem.rightBarButtonItem = self.albumItem;
 
     [self fetchVideoPermission];

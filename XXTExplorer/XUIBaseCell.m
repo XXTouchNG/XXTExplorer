@@ -128,14 +128,8 @@ NSString * XUIOptionCellIconKey = @"icon";
     _xui_icon = xui_icon;
     if ([self.class layoutNeedsImageView]) {
         if (xui_icon) {
-            XXTE_START_IGNORE_PARTIAL
-            if (XXTE_SYSTEM_8) {
-                self.imageView.image = [UIImage imageNamed:xui_icon inBundle:self.adapter.bundle compatibleWithTraitCollection:nil];
-            } else {
-                NSString *imagePath = [self.adapter.bundle pathForResource:xui_icon ofType:nil];
-                self.imageView.image = [UIImage imageWithContentsOfFile:imagePath];
-            }
-            XXTE_END_IGNORE_PARTIAL
+            NSString *imagePath = [self.adapter.bundle pathForResource:xui_icon ofType:nil];
+            self.imageView.image = [UIImage imageWithContentsOfFile:imagePath];
         } else {
             self.imageView.image = nil;
         }
@@ -155,6 +149,7 @@ NSString * XUIOptionCellIconKey = @"icon";
 
 - (void)setTheme:(XUITheme *)theme {
     _theme = theme;
+    self.tintColor = theme.tintColor;
     self.textLabel.textColor = theme.labelColor;
     self.detailTextLabel.textColor = theme.valueColor;
 }

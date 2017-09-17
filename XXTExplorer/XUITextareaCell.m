@@ -12,8 +12,6 @@
 
 @implementation XUITextareaCell
 
-@synthesize theme = _theme;
-
 + (BOOL)xibBasedLayout {
     return NO;
 }
@@ -79,11 +77,6 @@
 - (void)setupCell {
     [super setupCell];
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-}
-
-- (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
-    self.textLabel.tintColor = theme.labelColor;
 }
 
 @end

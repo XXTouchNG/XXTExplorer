@@ -1,0 +1,16 @@
+//
+//  XUIFileCell.h
+//  XXTExplorer
+//
+//  Created by Zheng on 17/09/2017.
+//  Copyright © 2017 Zheng. All rights reserved.
+//
+
+#import "XUIBaseCell.h"
+
+@interface XUIFileCell : XUIBaseCell
+
+@property (nonatomic, strong) NSString *xui_initialPath;
+@property (nonatomic, strong) NSArray <NSString *> *xui_allowedExtensions;
+
+@end

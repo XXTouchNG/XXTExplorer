@@ -23,6 +23,10 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 
 @end
 
+// type
+// title
+// subtitle
+
 @implementation XXTLocationPicker {
     NSString *_pickerSubtitle;
 }
@@ -33,7 +37,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 #pragma mark - XXTBasePicker
 
 + (NSString *)pickerKeyword {
-    return @"@loc@";
+    return @"loc";
 }
 
 - (NSDictionary <NSString *, NSNumber *> *)pickerResult {

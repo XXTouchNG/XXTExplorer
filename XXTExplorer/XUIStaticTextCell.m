@@ -17,8 +17,6 @@
 
 @implementation XUIStaticTextCell
 
-@synthesize theme = _theme;
-
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -99,7 +97,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.xui_staticTextLabel.textColor = theme.labelColor;
 }
 

@@ -12,6 +12,7 @@
 #import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEDispatchDefines.h"
+#import "XXTENotificationCenterDefines.h"
 
 #import "XXTERespringAgent.h"
 #import "XXTEDaemonAgent.h"
@@ -19,6 +20,13 @@
 #import "XXTEAPTHelper.h"
 #import "XXTEAPTPackage.h"
 #import "XXTEUpdateAgent.h"
+
+#import "NSString+QueryItems.h"
+#import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTECommonNavigationController.h"
+#import "XXTExplorerDefaults.h"
+#import "XXTExplorerEntryParser.h"
+#import "XXTExplorerEntryService.h"
 
 @interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEAPTHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
 
@@ -112,11 +120,17 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationShortcut object:nil];
     [super viewWillAppear:animated];
     if (!firstTimeLoaded) {
         [self launchAgents];
         firstTimeLoaded = YES;
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Agents
@@ -319,6 +333,60 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.aptHelper sync];
     });
+}
+
+#pragma mark - Notifications
+
+- (void)handleApplicationNotification:(NSNotification *)aNotification {
+    NSDictionary *userInfo = aNotification.userInfo;
+    if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
+        NSString *userDataString = userInfo[XXTENotificationShortcutUserData];
+        NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
+        if (userDataString && shortcutInterface) {
+            NSDictionary *queryStringDictionary = [userDataString queryItems];
+            NSDictionary <NSString *, NSString *> *userDataDictionary = [[NSDictionary alloc] initWithDictionary:queryStringDictionary];
+            NSMutableDictionary *mutableOperation = [@{ @"event": shortcutInterface } mutableCopy];
+            for (NSString *operationKey in userDataDictionary)
+                mutableOperation[operationKey] = userDataDictionary[operationKey];
+            [self performShortcut:aNotification.object jsonOperation:[mutableOperation copy]];
+        }
+    }
+}
+
+- (void)performShortcut:(id)sender jsonOperation:(NSDictionary *)jsonDictionary {
+    NSString *jsonEvent = jsonDictionary[@"event"];
+    if (![jsonEvent isKindOfClass:[NSString class]]) {
+        return;
+    }
+    if ([jsonEvent isEqualToString:@"xui"]) {
+        if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]]) {
+            NSString *rawTargetPathString = jsonDictionary[@"path"];
+            [self performAction:sender presentConfiguratorForBundleAtPath:rawTargetPathString];
+        }
+    }
+}
+
+- (void)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath {
+    NSError *entryError = nil;
+    NSDictionary *entryDetail = [[XXTExplorerViewController explorerEntryParser] entryOfPath:bundlePath withError:&entryError];
+    if (entryError) {
+        showUserMessage(self, [entryError localizedDescription]);
+        return;
+    }
+    NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
+    if (![[XXTExplorerViewController explorerEntryService] hasConfiguratorForEntry:entryDetail]) {
+        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
+        return;
+    }
+    UIViewController *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail];
+    if (!configurator) {
+        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]);
+        return;
+    }
+    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
+    navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 @end

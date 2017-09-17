@@ -202,7 +202,9 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     }
     XXTE_END_IGNORE_PARTIAL
     
-    self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    }
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
     [self reloadStaticTableViewData];

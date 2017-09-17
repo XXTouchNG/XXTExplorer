@@ -21,7 +21,7 @@
 
 @implementation XUISliderCell
 
-@synthesize xui_value = _xui_value, theme = _theme;
+@synthesize xui_value = _xui_value;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -109,7 +109,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.xui_slider_valueLabel.textColor = theme.valueColor;
     self.xui_slider.minimumTrackTintColor = theme.successColor;
 }

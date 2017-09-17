@@ -14,6 +14,16 @@
 			<key>path</key>
 			<string></string>
 		</dict>
+		<dict>
+			<key>title</key>
+			<string>Root Directory</string>
+			<key>subtitle</key>
+			<string>iOS File System Root Directory</string>
+			<key>icon</key>
+			<string>XXTExplorerViewSectionHomeSeriesRootIcon</string>
+			<key>path</key>
+			<string>/</string>
+		</dict>
 	</array>
 	<key>SECTION_META</key>
 	<array>

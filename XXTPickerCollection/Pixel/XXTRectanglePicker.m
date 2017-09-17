@@ -27,6 +27,10 @@
 @property(nonatomic, strong) UIToolbar *cropToolbar;
 @end
 
+// type
+// title
+// subtitle
+
 @implementation XXTRectanglePicker {
     NSAttributedString *_pickerSubtitle;
     id _pickerResult;
@@ -432,15 +436,15 @@
 + (NSString *)pickerKeyword {
     switch ([[self class] cropViewType]) {
         case XXTPixelPickerTypeRect:
-            return @"@rect@";
+            return @"rect";
         case XXTPixelPickerTypePosition:
-            return @"@pos@";
+            return @"pos";
         case XXTPixelPickerTypeColor:
-            return @"@color@";
+            return @"color";
         case XXTPixelPickerTypePositionColor:
-            return @"@poscolor@";
+            return @"poscolor";
         case XXTPixelPickerTypeMultiplePositionColor:
-            return @"@poscolors@";
+            return @"poscolors";
     }
     return nil;
 }

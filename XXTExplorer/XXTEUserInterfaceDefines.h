@@ -37,7 +37,13 @@ static inline void blockUserInteractions(UIViewController *viewController, BOOL 
 }
 
 static inline void showUserMessage(UIViewController *viewController, NSString *message) {
-    [viewController.navigationController.view makeToast:message];
+    if (viewController.navigationController) {
+        [viewController.navigationController.view makeToast:message];
+    } else if (viewController.tabBarController) {
+        [viewController.tabBarController.view makeToast:message];
+    } else {
+        [viewController.view makeToast:message];
+    }
 }
 
 #endif /* XXTEUserInterfaceDefines_h */

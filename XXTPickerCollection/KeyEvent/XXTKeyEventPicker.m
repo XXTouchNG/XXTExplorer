@@ -22,6 +22,10 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 
 @end
 
+// type
+// title
+// subtitle
+
 @implementation XXTKeyEventPicker {
     NSString *_pickerSubtitle;
 }
@@ -32,7 +36,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 #pragma mark - XXTBasePicker
 
 + (NSString *)pickerKeyword {
-    return @"@key@";
+    return @"key";
 }
 
 - (NSString *)pickerResult {

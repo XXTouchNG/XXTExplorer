@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "XXTBasePicker.h"
+#import "XXTBasePicker.h"
 
 @interface XXTLocationPicker : UIViewController <XXTBasePicker>
 @property (nonatomic, weak) XXTPickerFactory *pickerFactory;

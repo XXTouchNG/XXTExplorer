@@ -33,6 +33,9 @@
 "%d items" = "%d 项";
 
 /* No comment provided by engineer. */
+"%lu image(s) imported." = "已导入 %lu 张图片.";
+
+/* No comment provided by engineer. */
 "%lu items" = "%lu 项";
 
 /* No comment provided by engineer. */
@@ -693,6 +696,9 @@
 "Needs Respring" = "需要注销";
 
 /* No comment provided by engineer. */
+"New Document" = "新文档";
+
+/* No comment provided by engineer. */
 "New License" = "新授权";
 
 /* No comment provided by engineer. */
@@ -702,10 +708,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -798,7 +804,13 @@
 "Permission" = "权限";
 
 /* No comment provided by engineer. */
+"Photos Library" = "照片图库";
+
+/* No comment provided by engineer. */
 "Please confirm these information.\n\nThe source is provided by third party script author.\nTap \"Download\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方脚本作者提供.\n如果你信任该数据源, 轻按 \"下载\" 以继续.";
+
+/* No comment provided by engineer. */
+"Please download this image from iCloud." = "请从 iCloud 下载该图片.";
 
 /* No comment provided by engineer. */
 "Please setup \"Mail\" to send mail feedback directly." = "请设置邮件客户端以直接发送电子邮件进行反馈.";
@@ -1172,3 +1184,6 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
+
+/* No comment provided by engineer. */
+"Tap here to add a file." = "";

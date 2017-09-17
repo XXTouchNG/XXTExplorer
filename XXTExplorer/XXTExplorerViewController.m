@@ -436,7 +436,12 @@
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[@"path"];
-                NSString *directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
+                NSString *directoryPath = nil;
+                if ([directoryRelativePath isAbsolutePath]) {
+                    directoryPath = directoryRelativePath;
+                } else {
+                    directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
+                }
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {

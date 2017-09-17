@@ -40,7 +40,9 @@
             shouldFinish = [_delegate pickerFactory:self taskShouldFinished:pickerTask];
         }
         if (shouldFinish) {
-            [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
+                    [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+            }
         }
     }
 }

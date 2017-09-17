@@ -12,6 +12,8 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTENotificationCenterDefines.h"
 
+#import "NSString+QueryItems.h"
+
 @implementation XXTExplorerViewController (Notification)
 
 - (void)registerNotifications {
@@ -42,28 +44,15 @@
     else if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
         NSDictionary *userInfo = aNotification.userInfo;
         NSString *userDataString = userInfo[XXTENotificationShortcutUserData];
-        
-        NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
-        NSArray *urlQuery = [userDataString componentsSeparatedByString:@"&"];
-        for (NSString *keyValuePair in urlQuery)
-        {
-            NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
-            NSString *key = [[pairComponents firstObject] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            NSString *value = [[pairComponents lastObject] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            if (key && value) {
-                [queryStringDictionary setObject:value forKey:key];
-            }
+        NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
+        if (userDataString && shortcutInterface) {
+            NSDictionary *queryStringDictionary = [userDataString queryItems];
+            NSDictionary <NSString *, NSString *> *userDataDictionary = [[NSDictionary alloc] initWithDictionary:queryStringDictionary];
+            NSMutableDictionary *mutableOperation = [@{ @"event": shortcutInterface } mutableCopy];
+            for (NSString *operationKey in userDataDictionary)
+                mutableOperation[operationKey] = userDataDictionary[operationKey];
+            [self performShortcut:aNotification.object jsonOperation:[mutableOperation copy]];
         }
-        
-        NSDictionary <NSString *, NSString *> *userDataDictionary = [[NSDictionary alloc] initWithDictionary:queryStringDictionary];
-        NSMutableDictionary *mutableOperation = [@{ @"event": userInfo[XXTENotificationShortcutInterface] } mutableCopy];
-        
-        for (NSString *operationKey in userDataDictionary) {
-            mutableOperation[operationKey] = userDataDictionary[operationKey];
-        }
-        
-        NSDictionary *operationDictionary = [[NSDictionary alloc] initWithDictionary:mutableOperation];
-        [self performShortcut:aNotification.object jsonOperation:operationDictionary];
     }
 }
 

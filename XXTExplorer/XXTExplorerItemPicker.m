@@ -7,11 +7,12 @@
 //
 
 #import "XXTExplorerItemPicker.h"
-#import "XXTESwipeTableCell.h"
-#import "XXTExplorerToolbar.h"
+
 #import "XXTExplorerDefaults.h"
-#import "UIView+XXTEToast.h"
 #import "XXTEUserInterfaceDefines.h"
+
+#import "XXTExplorerToolbar.h"
+#import "XXTESwipeTableCell.h"
 #import "XXTExplorerViewCell.h"
 
 @interface XXTExplorerItemPicker () <XXTESwipeTableCellDelegate>
@@ -36,7 +37,7 @@
     }
     
     self.navigationItem.rightBarButtonItem = nil;
-    if (self == self.navigationController.viewControllers[0]) {
+    if ([self.navigationController.viewControllers firstObject] == self) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     }
     
@@ -100,8 +101,8 @@
                 }
                 if (extensionPermitted) {
                     NSString *selectedPath = entryAttributes[XXTExplorerViewEntryAttributePath];
-                    if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectedItemAtPath:)]) {
-                        [_delegate itemPicker:self didSelectedItemAtPath:selectedPath];
+                    if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
+                        [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
                     }
                 } else {
                     showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]);
@@ -149,7 +150,9 @@
 
 - (void)setSelectedBootScriptPath:(NSString *)selectedBootScriptPath {
     _selectedBootScriptPath = selectedBootScriptPath;
-    [self.tableView reloadData];
+    if ([self isViewLoaded]) {
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Prevent editing methods

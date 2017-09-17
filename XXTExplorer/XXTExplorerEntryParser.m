@@ -83,9 +83,11 @@
 - (NSDictionary *)entryOfPath:(NSString *)entrySubdirectoryPath withError:(NSError *__autoreleasing *)error {
     NSError *localError = nil;
     NSDictionary <NSString *, id> *entrySubdirectoryAttributes = [self.parserFileManager attributesOfItemAtPath:entrySubdirectoryPath error:&localError];
-    if (localError && error)
+    if (localError)
     {
-        *error = localError;
+        if (error) {
+            *error = localError;
+        }
         return nil;
     }
     NSString *entryNSFileType = entrySubdirectoryAttributes[NSFileType];

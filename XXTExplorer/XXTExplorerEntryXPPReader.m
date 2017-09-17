@@ -120,16 +120,8 @@ __attribute__((weak_import));
     if (metaInfo[kXXTEBundleIconFile] &&
         [metaInfo[kXXTEBundleIconFile] isKindOfClass:[NSString class]])
     {
-        XXTE_START_IGNORE_PARTIAL
-        if (XXTE_SYSTEM_8) {
-            _entryIconImage = [UIImage imageNamed:metaInfo[kXXTEBundleIconFile]
-                                         inBundle:pathBundle
-                    compatibleWithTraitCollection:nil];
-        } else {
-            NSString *iconImagePath = [pathBundle pathForResource:metaInfo[kXXTEBundleIconFile] ofType:nil];
-            _entryIconImage = [UIImage imageWithContentsOfFile:iconImagePath];
-        }
-        XXTE_END_IGNORE_PARTIAL
+        NSString *iconImagePath = [pathBundle pathForResource:metaInfo[kXXTEBundleIconFile] ofType:nil];
+        _entryIconImage = [UIImage imageWithContentsOfFile:iconImagePath];
     } else {
         _entryIconImage = [self.class defaultImage];
     }
