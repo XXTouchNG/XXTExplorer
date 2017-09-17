@@ -195,6 +195,7 @@
 		0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
 		0FC043BB1F6ED31000730FAB /* XUIFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043B91F6ED31000730FAB /* XUIFileCell.m */; };
 		0FC043BC1F6ED31000730FAB /* XUIFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */; };
+		0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
@@ -746,6 +747,8 @@
 		0FC043B81F6ED31000730FAB /* XUIFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIFileCell.h; sourceTree = "<group>"; };
 		0FC043B91F6ED31000730FAB /* XUIFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIFileCell.m; sourceTree = "<group>"; };
 		0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIFileCell.xib; sourceTree = "<group>"; };
+		0FC043BD1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+StatusBar.h"; sourceTree = "<group>"; };
+		0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+StatusBar.m"; sourceTree = "<group>"; };
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
 		0FCC2AC41F130BE600C50A48 /* XXTExplorerItemNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemNameCell.h; sourceTree = "<group>"; };
 		0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemNameCell.m; sourceTree = "<group>"; };
@@ -1847,6 +1850,8 @@
 				0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */,
 				0F50AEA11F307A510098211C /* UIViewController+StatusBar.h */,
 				0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */,
+				0FC043BD1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.h */,
+				0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */,
 			);
 			name = StatusBar;
 			sourceTree = "<group>";
@@ -2873,6 +2878,7 @@
 				0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */,
 				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
+				0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F766CB61ED8D95700E18BE2 /* XXTESwipeTableCell.m in Sources */,
 				0F30D9491F2CEF860001E10B /* XUIImageCell.m in Sources */,

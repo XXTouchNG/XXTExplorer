@@ -369,7 +369,7 @@
         imagePicker.navigationBar.barTintColor = XXTE_COLOR;
         imagePicker.navigationBar.tintColor = [UIColor whiteColor];
         imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-        imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
+        imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;
         imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
     } else {
