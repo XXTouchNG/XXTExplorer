@@ -10,6 +10,7 @@
 #import "XXTExplorerViewController+Shortcuts.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
+#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEUserInterfaceDefines.h"
 
@@ -54,7 +55,7 @@
     NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
     if (direction == XXTESwipeDirectionLeftToRight) {
-        XXTESwipeButton *button = cell.leftButtons[index];
+        XXTESwipeButton *button = (XXTESwipeButton *)cell.leftButtons[index];
         NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
             [self performAction:button launchScript:entryPath];
@@ -127,6 +128,11 @@
 
 - (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
               swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+#ifdef DEBUG
+    BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, YES);
+#else
+    BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, NO);
+#endif
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
@@ -135,47 +141,95 @@
         id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         if (entryReader.executable) {
-            XXTESwipeButton *swipeLaunchButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
-                                                                  backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
-                                                                           insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-            objc_setAssociatedObject(swipeLaunchButton, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [swipeButtons addObject:swipeLaunchButton];
+            NSString *buttonTitle = nil;
+            if (!hidesLabel) {
+                buttonTitle = NSLocalizedString(@"Launch", nil);
+            }
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
+                                                       backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
+                                                                insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+            if (!hidesLabel) {
+                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+                [button centerIconOverText];
+            }
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:button];
         }
         if ([entryBundleReader respondsToSelector:@selector(configurable)]) {
             if (entryBundleReader.configurable) {
-                XXTESwipeButton *swipeConfigureButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
-                                                                         backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
-                                                                                  insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-                objc_setAssociatedObject(swipeConfigureButton, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                [swipeButtons addObject:swipeConfigureButton];
+                NSString *buttonTitle = nil;
+                if (!hidesLabel) {
+                    buttonTitle = NSLocalizedString(@"Configure", nil);
+                }
+                XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
+                                                           backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
+                                                                    insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                if (!hidesLabel) {
+                    button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+                    [button centerIconOverText];
+                }
+                objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [swipeButtons addObject:button];
             }
         }
         if (entryReader.editable) {
-            XXTESwipeButton *swipeEditButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
-                                                                backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
-                                                                         insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-            objc_setAssociatedObject(swipeEditButton, XXTESwipeButtonAction, @"Edit", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [swipeButtons addObject:swipeEditButton];
+            NSString *buttonTitle = nil;
+            if (!hidesLabel) {
+                buttonTitle = NSLocalizedString(@"Edit", nil);
+            }
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
+                                                       backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
+                                                                insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+            if (!hidesLabel) {
+                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+                [button centerIconOverText];
+            }
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Edit", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:button];
         }
         if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
-            XXTESwipeButton *swipeInsideButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconInside]
-                                                                  backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
-                                                                           insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-            objc_setAssociatedObject(swipeInsideButton, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [swipeButtons addObject:swipeInsideButton];
+            NSString *buttonTitle = nil;
+            if (!hidesLabel) {
+                buttonTitle = NSLocalizedString(@"Inside", nil);
+            }
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconInside]
+                                                       backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
+                                                                insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+            if (!hidesLabel) {
+                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+                [button centerIconOverText];
+            }
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:button];
         }
-        XXTESwipeButton *swipePropertyButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
-                                                                backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
-                                                                         insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-        objc_setAssociatedObject(swipePropertyButton, XXTESwipeButtonAction, @"Property", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [swipeButtons addObject:swipePropertyButton];
-        return swipeButtons;
+        NSString *buttonTitle = nil;
+        if (!hidesLabel) {
+            buttonTitle = NSLocalizedString(@"Property", nil);
+        }
+        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
+                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
+                                                            insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+        if (!hidesLabel) {
+            button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+            [button centerIconOverText];
+        }
+        objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Property", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [swipeButtons addObject:button];
+        return [swipeButtons copy];
     } else if (direction == XXTESwipeDirectionRightToLeft) {
-        XXTESwipeButton *swipeTrashButton = [XXTESwipeButton buttonWithTitle:nil icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
-                                                             backgroundColor:XXTE_COLOR_DANGER
-                                                                      insets:UIEdgeInsetsMake(0, 24, 0, 24)];
-        objc_setAssociatedObject(swipeTrashButton, XXTESwipeButtonAction, @"Trash", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        return @[swipeTrashButton];
+        NSString *buttonTitle = nil;
+        if (!hidesLabel) {
+            buttonTitle = NSLocalizedString(@"Trash", nil);
+        }
+        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
+                                                   backgroundColor:XXTE_COLOR_DANGER
+                                                            insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+        if (!hidesLabel) {
+            button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+            [button centerIconOverText];
+        }
+        objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Trash", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        return @[button];
     }
     return @[];
 }

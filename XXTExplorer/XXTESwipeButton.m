@@ -1,6 +1,6 @@
 /*
  * XXTESwipeTableCell is licensed under MIT license. See LICENSE.md file for more information.
- * Copyright (c) 2014 Imanol Fernandez @MortimerGoro
+ * Copyright (c) 2016 Imanol Fernandez @MortimerGoro
  */
 
 #import "XXTESwipeButton.h"
@@ -70,7 +70,6 @@
     button.backgroundColor = color;
     button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     button.titleLabel.textAlignment = NSTextAlignmentCenter;
-    button.titleLabel.font = [UIFont systemFontOfSize:14.f];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setImage:icon forState:UIControlStateNormal];
@@ -93,16 +92,31 @@
 }
 
 -(void) centerIconOverTextWithSpacing: (CGFloat) spacing {
-	CGSize size = self.imageView.image.size;
-	self.titleEdgeInsets = UIEdgeInsetsMake(0.0,
-											-size.width,
-											-(size.height + spacing),
-											0.0);
-	size = [self.titleLabel.text sizeWithAttributes:@{ NSFontAttributeName: self.titleLabel.font }];
-	self.imageEdgeInsets = UIEdgeInsetsMake(-(size.height + spacing),
-											0.0,
-											0.0,
-											-size.width);
+  CGSize size = self.imageView.image.size;
+  
+  if ([UIDevice currentDevice].systemVersion.floatValue >= 9.0 && [self isRTLLocale]) {
+    self.titleEdgeInsets = UIEdgeInsetsMake(0.0,
+                                            0.0,
+                                            -(size.height + spacing),
+                                            -size.width);
+    size = [self.titleLabel.text sizeWithAttributes:@{ NSFontAttributeName: self.titleLabel.font }];
+    self.imageEdgeInsets = UIEdgeInsetsMake(-(size.height + spacing),
+                                            -size.width,
+                                            0.0,
+                                            0.0);
+  }
+  else
+  {
+    self.titleEdgeInsets = UIEdgeInsetsMake(0.0,
+                                            -size.width,
+                                            -(size.height + spacing),
+                                            0.0);
+    size = [self.titleLabel.text sizeWithAttributes:@{ NSFontAttributeName: self.titleLabel.font }];
+    self.imageEdgeInsets = UIEdgeInsetsMake(-(size.height + spacing),
+                                            0.0,
+                                            0.0,
+                                            -size.width);
+  }
 }
 
 -(void) setPadding:(CGFloat) padding
@@ -130,6 +144,38 @@
 {
     self.contentEdgeInsets = insets;
     [self sizeToFit];
+}
+
+-(void) iconTintColor:(UIColor *)tintColor
+{
+    UIImage *currentIcon = self.imageView.image;
+    if (currentIcon.renderingMode != UIImageRenderingModeAlwaysTemplate) {
+        currentIcon = [currentIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self setImage:currentIcon forState:UIControlStateNormal];
+    }
+    self.tintColor = tintColor;
+}
+
+- (BOOL)isAppExtension
+{
+    return [[NSBundle mainBundle].executablePath rangeOfString:@".appex/"].location != NSNotFound;
+}
+
+
+-(BOOL) isRTLLocale
+{
+    XXTE_START_IGNORE_PARTIAL
+    if ([[UIView class] respondsToSelector:@selector(userInterfaceLayoutDirectionForSemanticContentAttribute:)]) {
+        return [UIView userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute] == UIUserInterfaceLayoutDirectionRightToLeft;
+    } else {
+        if ([self isAppExtension]) {
+            return [NSLocale characterDirectionForLanguage:[[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode]]==NSLocaleLanguageDirectionRightToLeft;
+        } else {
+            UIApplication *application = [UIApplication performSelector:@selector(sharedApplication)];
+            return application.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+        }
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 @end

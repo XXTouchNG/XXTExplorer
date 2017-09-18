@@ -27,7 +27,7 @@ typedef enum : NSUInteger {
     kXXTEMoreLicenseSectionIndexMax
 } kXXTEMoreLicenseSectionIndex;
 
-typedef void (^ _Nullable XXTERefreshControlHandler)();
+typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 @interface XXTEMoreLicenseController () <UITextFieldDelegate, LGAlertViewDelegate>
 @property (nonatomic, weak) UITextField *licenseField;

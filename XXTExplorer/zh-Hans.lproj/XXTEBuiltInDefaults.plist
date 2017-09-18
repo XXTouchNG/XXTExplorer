@@ -97,6 +97,23 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>隐藏操作标签</string>
+			<key>description</key>
+			<string>隐藏滑动操作标签, 如 &quot;启动&quot;, &quot;编辑&quot; 等.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerAllowOpenMethodKey</string>
 			<key>default</key>
 			<false/>

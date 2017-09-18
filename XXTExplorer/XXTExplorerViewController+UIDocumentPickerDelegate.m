@@ -13,12 +13,16 @@
 
 #pragma mark - UIDocumentPickerDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
     
 }
+XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
 }
+XXTE_END_IGNORE_PARTIAL
 
 @end

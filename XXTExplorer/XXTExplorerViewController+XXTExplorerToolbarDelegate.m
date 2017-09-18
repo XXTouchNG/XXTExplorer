@@ -105,29 +105,31 @@
             XXTE_END_IGNORE_PARTIAL
             [self.navigationController presentViewController:navController animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
-            UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
-            controller.delegate = self;
-            [controller addOptionWithTitle:NSLocalizedString(@"New Document", nil)
-                                     image:nil
-                                     order:UIDocumentMenuOrderFirst
-                                   handler:^{
-                                       [self presentNewDocumentViewController];
-                                   }];
-            [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
-                                     image:nil
-                                     order:UIDocumentMenuOrderLast
-                                   handler:^{
-                                       [self presentImagePickerController];
-                                   }];
             XXTE_START_IGNORE_PARTIAL
             if (XXTE_SYSTEM_8) {
+                UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+                controller.delegate = self;
+                [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
+                                         image:nil
+                                         order:UIDocumentMenuOrderFirst
+                                       handler:^{
+                                           [self presentNewDocumentViewController];
+                                       }];
+                [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
+                                         image:nil
+                                         order:UIDocumentMenuOrderLast
+                                       handler:^{
+                                           [self presentImagePickerController];
+                                       }];
                 controller.modalPresentationStyle = UIModalPresentationPopover;
                 UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
                 popoverController.barButtonItem = buttonItem;
                 popoverController.backgroundColor = [UIColor whiteColor];
+                [self.navigationController presentViewController:controller animated:YES completion:nil];
+            } else {
+                [self presentNewDocumentViewController];
             }
             XXTE_END_IGNORE_PARTIAL
-            [self.navigationController presentViewController:controller animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
             if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);

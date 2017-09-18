@@ -194,9 +194,16 @@
 }
 
 - (void)loadEntryListDataWithError:(NSError **)error {
+    
     {
+#ifdef DEBUG
+        BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, YES);
+#else
+        BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO);
+#endif
+        
         if ([self showsHomeSeries] &&
-            XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO) &&
+             homeEnabled &&
                 self == self.navigationController.viewControllers[0]) {
             _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
         } else {

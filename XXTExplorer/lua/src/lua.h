@@ -26,6 +26,10 @@
 #define LUA_COPYRIGHT	LUA_RELEASE "  Copyright (C) 1994-2016 Lua.org, PUC-Rio"
 #define LUA_AUTHORS	"R. Ierusalimschy, L. H. de Figueiredo, W. Celes"
 
+#define LUA_COMPAT_ALL 1
+#define LUA_USE_POSIX 1
+#define LUA_USE_DLOPEN 1
+#define LUA_COMPAT_BITLIB 1
 
 /* mark for precompiled code ('<esc>Lua') */
 #define LUA_SIGNATURE	"\x1bLua"

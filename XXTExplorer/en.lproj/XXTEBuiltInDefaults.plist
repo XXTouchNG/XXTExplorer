@@ -97,6 +97,23 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Hide Operation Label</string>
+			<key>description</key>
+			<string>Hide swipe operation label like &quot;Launch&quot;, &quot;Edit&quot;, etc.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerAllowOpenMethodKey</string>
 			<key>default</key>
 			<false/>

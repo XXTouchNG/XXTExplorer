@@ -1,6 +1,6 @@
 /*
  * XXTESwipeTableCell is licensed under MIT license. See LICENSE.md file for more information.
- * Copyright (c) 2014 Imanol Fernandez @MortimerGoro
+ * Copyright (c) 2016 Imanol Fernandez @MortimerGoro
  */
 
 #import <UIKit/UIKit.h>
@@ -39,7 +39,8 @@ typedef NS_ENUM(NSInteger, XXTESwipeState) {
 /** Swipe state */
 typedef NS_ENUM(NSInteger, XXTESwipeExpansionLayout) {
     XXTESwipeExpansionLayoutBorder = 0,
-    XXTESwipeExpansionLayoutCenter
+    XXTESwipeExpansionLayoutCenter,
+    XXTESwipeExpansionLayoutNone
 };
 
 /** Swipe Easing Function */
@@ -85,13 +86,15 @@ typedef NS_ENUM(NSInteger, XXTESwipeEasingFunction) {
 @property (nonatomic, assign) CGFloat topMargin;
 /** Bottom margin of the buttons relative to the contentView */
 @property (nonatomic, assign) CGFloat bottomMargin;
+/** Distance between the buttons. Default value : 0 */
+@property (nonatomic, assign) CGFloat buttonsDistance;
 
 /** Animation settings when the swipe buttons are shown */
-@property (nonatomic, strong) XXTESwipeAnimation * showAnimation;
+@property (nonatomic, strong, nonnull) XXTESwipeAnimation * showAnimation;
 /** Animation settings when the swipe buttons are hided */
-@property (nonatomic, strong) XXTESwipeAnimation * hideAnimation;
+@property (nonatomic, strong, nonnull) XXTESwipeAnimation * hideAnimation;
 /** Animation settings when the cell is stretched from the swipe buttons */
-@property (nonatomic, strong) XXTESwipeAnimation * stretchAnimation;
+@property (nonatomic, strong, nonnull) XXTESwipeAnimation * stretchAnimation;
 
 /** Property to read or change swipe animation durations. Default value 0.3 */
 @property (nonatomic, assign) CGFloat animationDuration DEPRECATED_ATTRIBUTE;
@@ -106,6 +109,10 @@ typedef NS_ENUM(NSInteger, XXTESwipeEasingFunction) {
 
 /** If NO the swipe bounces will be disabled, the swipe motion will stop right after the button */
 @property (nonatomic, assign) BOOL enableSwipeBounces;
+
+/** Coefficient applied to cell movement in bounce zone. Set to value between 0.0 and 1.0
+    to make the cell 'resist' swiping after buttons are revealed. Default is 1.0 */
+@property (nonatomic, assign) CGFloat swipeBounceRate;
 
 @end
 
@@ -122,11 +129,11 @@ typedef NS_ENUM(NSInteger, XXTESwipeEasingFunction) {
 /** Size proportional threshold to trigger the expansion button. Default value 1.5 */
 @property (nonatomic, assign) CGFloat threshold;
 /** Optional expansion color. Expanded button's background color is used by default **/
-@property (nonatomic, strong) UIColor * expansionColor;
+@property (nonatomic, strong, nullable) UIColor * expansionColor;
 /** Defines the layout of the expanded button **/
 @property (nonatomic, assign) XXTESwipeExpansionLayout expansionLayout;
 /** Animation settings when the expansion is triggered **/
-@property (nonatomic, strong) XXTESwipeAnimation * triggerAnimation;
+@property (nonatomic, strong, nonnull) XXTESwipeAnimation * triggerAnimation;
 
 /** Property to read or change expansion animation durations. Default value 0.2 
  * The target animation is the change of a button from normal state to expanded state
@@ -150,50 +157,50 @@ typedef NS_ENUM(NSInteger, XXTESwipeEasingFunction) {
  * Delegate method to enable/disable swipe gestures
  * @return YES if swipe is allowed
  **/
--(BOOL) swipeTableCell:(XXTESwipeTableCell*) cell canSwipe:(XXTESwipeDirection) direction fromPoint:(CGPoint) point;
--(BOOL) swipeTableCell:(XXTESwipeTableCell*) cell canSwipe:(XXTESwipeDirection) direction DEPRECATED_ATTRIBUTE; //backwards compatibility
+-(BOOL) swipeTableCell:(nonnull XXTESwipeTableCell*) cell canSwipe:(XXTESwipeDirection) direction fromPoint:(CGPoint) point;
+-(BOOL) swipeTableCell:(nonnull XXTESwipeTableCell*) cell canSwipe:(XXTESwipeDirection) direction DEPRECATED_ATTRIBUTE; //backwards compatibility
 
 /**
  * Delegate method invoked when the current swipe state changes
  @param state the current Swipe State
  @param gestureIsActive YES if the user swipe gesture is active. No if the uses has already ended the gesture
  **/
--(void) swipeTableCell:(XXTESwipeTableCell*) cell didChangeSwipeState:(XXTESwipeState) state gestureIsActive:(BOOL) gestureIsActive;
+-(void) swipeTableCell:(nonnull XXTESwipeTableCell*) cell didChangeSwipeState:(XXTESwipeState) state gestureIsActive:(BOOL) gestureIsActive;
 
 /**
  * Called when the user clicks a swipe button or when a expandable button is automatically triggered
  * @return YES to autohide the current swipe buttons
  **/
--(BOOL) swipeTableCell:(XXTESwipeTableCell*) cell tappedButtonAtIndex:(NSInteger) index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL) fromExpansion;
+-(BOOL) swipeTableCell:(nonnull XXTESwipeTableCell*) cell tappedButtonAtIndex:(NSInteger) index direction:(XXTESwipeDirection)direction fromExpansion:(BOOL) fromExpansion;
 /**
  * Delegate method to setup the swipe buttons and swipe/expansion settings
  * Buttons can be any kind of UIView but it's recommended to use the convenience XXTESwipeButton class
  * Setting up buttons with this delegate instead of using cell properties improves memory usage because buttons are only created in demand
- * @param cell the UITableVieCel to configure. You can get the indexPath using [tableView indexPathForCell:cell]
+ * @param cell the UITableViewCell to configure. You can get the indexPath using [tableView indexPathForCell:cell]
  * @param direction The swipe direction (left to right or right to left)
  * @param swipeSettings instance to configure the swipe transition and setting (optional)
  * @param expansionSettings instance to configure button expansions (optional)
  * @return Buttons array
  **/
--(NSArray*) swipeTableCell:(XXTESwipeTableCell*) cell swipeButtonsForDirection:(XXTESwipeDirection)direction
-             swipeSettings:(XXTESwipeSettings*) swipeSettings expansionSettings:(XXTESwipeExpansionSettings*) expansionSettings;
+-(nullable NSArray<UIView*>*) swipeTableCell:(nonnull XXTESwipeTableCell*) cell swipeButtonsForDirection:(XXTESwipeDirection)direction
+             swipeSettings:(nonnull XXTESwipeSettings*) swipeSettings expansionSettings:(nonnull XXTESwipeExpansionSettings*) expansionSettings;
 
 /**
  * Called when the user taps on a swiped cell
  * @return YES to autohide the current swipe buttons
  **/
--(BOOL) swipeTableCell:(XXTESwipeTableCell *)cell shouldHideSwipeOnTap:(CGPoint) point;
+-(BOOL) swipeTableCell:(nonnull XXTESwipeTableCell *)cell shouldHideSwipeOnTap:(CGPoint) point;
 
 /**
  * Called when the cell will begin swiping
  * Useful to make cell changes that only are shown after the cell is swiped open
  **/
--(void) swipeTableCellWillBeginSwiping:(XXTESwipeTableCell *) cell;
+-(void) swipeTableCellWillBeginSwiping:(nonnull XXTESwipeTableCell *) cell;
 
 /**
  * Called when the cell will end swiping
  **/
--(void) swipeTableCellWillEndSwiping:(XXTESwipeTableCell *) cell;
+-(void) swipeTableCellWillEndSwiping:(nonnull XXTESwipeTableCell *) cell;
 
 @end
 
@@ -206,23 +213,23 @@ typedef NS_ENUM(NSInteger, XXTESwipeEasingFunction) {
 @interface XXTESwipeTableCell : UITableViewCell
 
 /** optional delegate (not retained) */
-@property (nonatomic, weak) id<XXTESwipeTableCellDelegate> delegate;
+@property (nonatomic, weak, nullable) id<XXTESwipeTableCellDelegate> delegate;
 
 /** optional to use contentView alternative. Use this property instead of contentView to support animated views while swiping */
-@property (nonatomic, strong, readonly) UIView * swipeContentView;
+@property (nonatomic, strong, readonly, nonnull) UIView * swipeContentView;
 
 /** 
  * Left and right swipe buttons and its settings.
  * Buttons can be any kind of UIView but it's recommended to use the convenience XXTESwipeButton class
  */
-@property (nonatomic, copy) NSArray * leftButtons;
-@property (nonatomic, copy) NSArray * rightButtons;
-@property (nonatomic, strong) XXTESwipeSettings * leftSwipeSettings;
-@property (nonatomic, strong) XXTESwipeSettings * rightSwipeSettings;
+@property (nonatomic, copy, nonnull) NSArray<UIView*> * leftButtons;
+@property (nonatomic, copy, nonnull) NSArray<UIView*> * rightButtons;
+@property (nonatomic, strong, nonnull) XXTESwipeSettings * leftSwipeSettings;
+@property (nonatomic, strong, nonnull) XXTESwipeSettings * rightSwipeSettings;
 
 /** Optional settings to allow expandable buttons */
-@property (nonatomic, strong) XXTESwipeExpansionSettings * leftExpansion;
-@property (nonatomic, strong) XXTESwipeExpansionSettings * rightExpansion;
+@property (nonatomic, strong, nonnull) XXTESwipeExpansionSettings * leftExpansion;
+@property (nonatomic, strong, nonnull) XXTESwipeExpansionSettings * rightExpansion;
 
 /** Readonly property to fetch the current swipe state */
 @property (nonatomic, readonly) XXTESwipeState swipeState;
@@ -244,17 +251,17 @@ typedef NS_ENUM(NSInteger, XXTESwipeEasingFunction) {
 @property (nonatomic) BOOL touchOnDismissSwipe;
 
 /** Optional background color for swipe overlay. If not set, its inferred automatically from the cell contentView */
-@property (nonatomic, strong) UIColor * swipeBackgroundColor;
+@property (nonatomic, strong, nullable) UIColor * swipeBackgroundColor;
 /** Property to read or change the current swipe offset programmatically */
 @property (nonatomic, assign) CGFloat swipeOffset;
 
 /** Utility methods to show or hide swipe buttons programmatically */
 -(void) hideSwipeAnimated: (BOOL) animated;
--(void) hideSwipeAnimated: (BOOL) animated completion:(void(^)(BOOL finished)) completion;
+-(void) hideSwipeAnimated: (BOOL) animated completion:(nullable void(^)(BOOL finished)) completion;
 -(void) showSwipe: (XXTESwipeDirection) direction animated: (BOOL) animated;
--(void) showSwipe: (XXTESwipeDirection) direction animated: (BOOL) animated completion:(void(^)(BOOL finished)) completion;
--(void) setSwipeOffset:(CGFloat)offset animated: (BOOL) animated completion:(void(^)(BOOL finished)) completion;
--(void) setSwipeOffset:(CGFloat)offset animation: (XXTESwipeAnimation *) animation completion:(void(^)(BOOL finished)) completion;
+-(void) showSwipe: (XXTESwipeDirection) direction animated: (BOOL) animated completion:(nullable void(^)(BOOL finished)) completion;
+-(void) setSwipeOffset:(CGFloat)offset animated: (BOOL) animated completion:(nullable void(^)(BOOL finished)) completion;
+-(void) setSwipeOffset:(CGFloat)offset animation: (nullable XXTESwipeAnimation *) animation completion:(nullable void(^)(BOOL finished)) completion;
 -(void) expandSwipe: (XXTESwipeDirection) direction animated: (BOOL) animated;
 
 /** Refresh method to be used when you want to update the cell contents while the user is swiping */

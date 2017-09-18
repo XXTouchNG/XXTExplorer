@@ -11,13 +11,17 @@
 
 @implementation XXTExplorerViewController (UIDocumentMenuDelegate)
 
+XXTE_START_IGNORE_PARTIAL
 - (void)documentMenuWasCancelled:(UIDocumentMenuViewController *)documentMenu {
     
 }
+XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
     documentPicker.delegate = self;
     [self.navigationController presentViewController:documentPicker animated:YES completion:nil];
 }
+XXTE_END_IGNORE_PARTIAL
 
 @end
