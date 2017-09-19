@@ -566,6 +566,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 - (NSRange)rangeShouldRenderOnScreen {
     XXTEEditorTextView *textView = self.textView;
+    NSUInteger textLength = textView.text.length;
     
     CGRect bounds = textView.bounds;
     UITextPosition *start = [textView characterRangeAtPoint:bounds.origin].start;
@@ -576,6 +577,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     if (beginOffset < 0) beginOffset = 0;
     NSInteger endLength = [textView offsetFromPosition:start toPosition:end];
     endLength += kXXTEEditorCachedRangeLength * 2;
+    if (beginOffset + endLength > 0 + textLength) endLength = 0 + textLength - beginOffset;
     
     NSRange range = NSMakeRange((NSUInteger) beginOffset, (NSUInteger) endLength);
     return range;

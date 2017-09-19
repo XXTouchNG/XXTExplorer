@@ -109,17 +109,17 @@
             if (XXTE_SYSTEM_8) {
                 UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
                 controller.delegate = self;
+                [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
+                                         image:nil
+                                         order:UIDocumentMenuOrderFirst
+                                       handler:^{
+                                           [self presentImagePickerController];
+                                       }];
                 [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
                                          image:nil
                                          order:UIDocumentMenuOrderFirst
                                        handler:^{
                                            [self presentNewDocumentViewController];
-                                       }];
-                [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
-                                         image:nil
-                                         order:UIDocumentMenuOrderLast
-                                       handler:^{
-                                           [self presentImagePickerController];
                                        }];
                 controller.modalPresentationStyle = UIModalPresentationPopover;
                 UIPopoverPresentationController *popoverController = controller.popoverPresentationController;

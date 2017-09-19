@@ -307,6 +307,7 @@
 		D6686F421F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F411F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m */; };
 		D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6686F431F4AE74E004403D0 /* SKFont.plist */; };
 		D6686F481F4AEF32004403D0 /* UIControl+BlockTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F471F4AEF32004403D0 /* UIControl+BlockTarget.m */; };
+		D677ABE31F70C2D700AB5AA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D677ABE21F70C2D700AB5AA1 /* LaunchScreen.storyboard */; };
 		D677B0E21F4FC7C200E741C2 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = D677B0A61F4FC7C200E741C2 /* lapi.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D677B0E31F4FC7C200E741C2 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = D677B0A81F4FC7C200E741C2 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D677B0E41F4FC7C200E741C2 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = D677B0AA1F4FC7C200E741C2 /* lbaselib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
@@ -931,6 +932,7 @@
 		D6686F431F4AE74E004403D0 /* SKFont.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKFont.plist; sourceTree = "<group>"; };
 		D6686F461F4AEF32004403D0 /* UIControl+BlockTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+BlockTarget.h"; sourceTree = "<group>"; };
 		D6686F471F4AEF32004403D0 /* UIControl+BlockTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+BlockTarget.m"; sourceTree = "<group>"; };
+		D677ABE21F70C2D700AB5AA1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D677B0A61F4FC7C200E741C2 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		D677B0A71F4FC7C200E741C2 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		D677B0A81F4FC7C200E741C2 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -1631,6 +1633,7 @@
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
+				D677ABE41F70C5F200AB5AA1 /* LaunchScreen */,
 				D6E140971F5032AB00D78CB9 /* XXTPickerCollection */,
 				0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */,
 				0FA7ABEB1ED641A3003EAD7D /* Products */,
@@ -2391,6 +2394,14 @@
 			name = Respring;
 			sourceTree = "<group>";
 		};
+		D677ABE41F70C5F200AB5AA1 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D677ABE21F70C2D700AB5AA1 /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
 		D677B0A41F4FC7C200E741C2 /* lua */ = {
 			isa = PBXGroup;
 			children = (
@@ -2699,6 +2710,7 @@
 				D60A26A21F3DA24B00E013E2 /* CamingoCode-Regular.ttf in Resources */,
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
 				D60A26A41F3DA24B00E013E2 /* SourceCodePro-BoldIt.otf in Resources */,
+				D677ABE31F70C2D700AB5AA1 /* LaunchScreen.storyboard in Resources */,
 				0FB30ED21F64296B008517BF /* XUICheckboxCell.xib in Resources */,
 				D6686F381F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.xib in Resources */,
 				D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */,
