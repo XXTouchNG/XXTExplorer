@@ -19,20 +19,26 @@ return {
 	},{
 		["cell"] = "XUITitleValueCell",
 		["label"] = "Version",
-		["value"] = "1.1.3",
-		["get"] = "valueForSpecifier:"
+		["value"] = "1.1.3"
 	},{
 		["cell"] = "XUITitleValueCell",
 		["label"] = "Dynamic",
 		["key"] = "switch1",
-		["defaults"] = "com.yourcompany.yourscript",
-		["get"] = "valueForSpecifier:"
+		["defaults"] = "com.yourcompany.yourscript"
+	},{
+		["cell"] = "XUIGroupCell",
+		["label"] = "Pickers"
 	},{
 		["cell"] = "XUITitleValueCell",
 		["label"] = "Application",
 		["key"] = "picker1",
 		["defaults"] = "com.yourcompany.yourscript",
 		["snippet"] = "snippets/app.snippet"
+	},{
+		["cell"] = "XUIFileCell",
+		["key"] = "file1",
+		["defaults"] = "com.yourcompany.yourscript",
+		["allowedExtensions"] = { "lua", "xxt", "xpp" }
 	},{
 		["cell"] = "XUIGroupCell",
 		["label"] = "Date"

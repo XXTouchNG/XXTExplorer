@@ -290,6 +290,7 @@
 		D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */; };
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
 		D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63B58DA1F56684F00D26475 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D63D1EFF1F6FA3F80073C055 /* XUIAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */; };
 		D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A24F1F4D18AA005B9A59 /* Bugly.framework */; };
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
@@ -348,7 +349,6 @@
 		D67FBBDD1F6A4679000BDD3D /* XUITheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D67FBBDC1F6A4679000BDD3D /* XUITheme.m */; };
 		D67FBBE01F6A4C3F000BDD3D /* UIColor+DarkColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D67FBBDF1F6A4C3F000BDD3D /* UIColor+DarkColor.m */; };
 		D67FBBE31F6A7759000BDD3D /* UIViewController+PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D67FBBE21F6A7759000BDD3D /* UIViewController+PreviousViewController.m */; };
-		D6863AE41F6B9743003E1511 /* XUIAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D6863AE31F6B9743003E1511 /* XUIAdapter.lua */; };
 		D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
@@ -889,6 +889,7 @@
 		D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextView.m; sourceTree = "<group>"; };
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
 		D63B58DA1F56684F00D26475 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = XUIAdapter.lua; sourceTree = "<group>"; };
 		D643A24F1F4D18AA005B9A59 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D643A2531F4D18BE005B9A59 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1006,7 +1007,6 @@
 		D67FBBDF1F6A4C3F000BDD3D /* UIColor+DarkColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DarkColor.m"; sourceTree = "<group>"; };
 		D67FBBE11F6A7759000BDD3D /* UIViewController+PreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+PreviousViewController.h"; sourceTree = "<group>"; };
 		D67FBBE21F6A7759000BDD3D /* UIViewController+PreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+PreviousViewController.m"; sourceTree = "<group>"; };
-		D6863AE31F6B9743003E1511 /* XUIAdapter.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XUIAdapter.lua; sourceTree = "<group>"; };
 		D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLayoutManager.h; sourceTree = "<group>"; };
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
@@ -1725,7 +1725,7 @@
 				D67FBBDC1F6A4679000BDD3D /* XUITheme.m */,
 				0F30D92B1F2C79720001E10B /* XUILogger.h */,
 				0F8521461F2D8A4600A912AC /* XUILogger.m */,
-				D6863AE31F6B9743003E1511 /* XUIAdapter.lua */,
+				D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */,
 				0F9A62DF1F6AC63300BA330C /* XUIAdapter.h */,
 				0F9A62E01F6AC63300BA330C /* XUIAdapter.m */,
 				0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */,
@@ -2690,6 +2690,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D63D1EFF1F6FA3F80073C055 /* XUIAdapter.lua in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
 				D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
@@ -2705,7 +2706,6 @@
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
 				0FD973F21F4B1D3700133162 /* Tomorrow.tmTheme in Resources */,
 				0FB0090A1F4364AF00097E9C /* Kimbie (Light).tmTheme in Resources */,
-				D6863AE41F6B9743003E1511 /* XUIAdapter.lua in Resources */,
 				0F271CCA1F5D97C400E8FED5 /* XUIStepperCell.xib in Resources */,
 				0FBAFF441F6E5378008B3189 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,

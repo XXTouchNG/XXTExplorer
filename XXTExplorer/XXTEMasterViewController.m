@@ -373,6 +373,9 @@
         showUserMessage(self, [entryError localizedDescription]);
         return;
     }
+    if (!entryDetail) {
+        return;
+    }
     NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
     if (![[XXTExplorerViewController explorerEntryService] hasConfiguratorForEntry:entryDetail]) {
         showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);

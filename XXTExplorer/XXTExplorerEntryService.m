@@ -99,7 +99,7 @@
 
 - (BOOL)hasEditorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && reader.editable) {
+    if (reader && [reader conformsToProtocol:@protocol(XXTExplorerEntryReader)] && reader.editable) {
         Class testClass = [[reader class] relatedEditor];
         if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
             return YES;
@@ -110,6 +110,9 @@
 
 - (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (![reader conformsToProtocol:@protocol(XXTExplorerEntryBundleReader)]) {
+        return NO;
+    }
     return reader && reader.configurable;
 }
 
@@ -123,7 +126,7 @@
 - (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && reader.editable) {
+    if (reader && [reader conformsToProtocol:@protocol(XXTExplorerEntryReader)] && reader.editable) {
         Class editorClass = [[reader class] relatedEditor];
         if (editorClass && [editorClass isSubclassOfClass:[UIViewController class]]) {
             if ([editorClass instancesRespondToSelector:@selector(initWithPath:)]) {
@@ -137,7 +140,9 @@
 
 - (UIViewController *)configuratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && reader.configurable && reader.configurationName) {
+    if (reader &&
+        [reader conformsToProtocol:@protocol(XXTExplorerEntryBundleReader)] &&
+        reader.configurable && reader.configurationName) {
         XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:reader.configurationName withBundlePath:reader.entryPath];
         return configutator;
     }

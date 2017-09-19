@@ -36,6 +36,7 @@
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
             NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter" ofType:@"lua"];
+            assert(adapterPath);
             if (luaL_loadfile(L, adapterPath.UTF8String) == LUA_OK) {
                 lua_pushvalue(L, -1);
                 lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter");

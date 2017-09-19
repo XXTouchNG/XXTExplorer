@@ -22,6 +22,9 @@
 
 #import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTENetworkDefines.h"
+#import <PromiseKit/PromiseKit.h>
+#import <NSURLConnection+PromiseKit.h>
 
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
@@ -223,8 +226,8 @@ typedef enum : NSUInteger {
                 } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
                     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
                     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-                    showUserMessage(self, NSLocalizedString(@"Operation succeed.", nil));
                     [alertView dismissAnimated];
+                    [self performResetDefaultsAtRemote];
                 }];
                 [alertView showAnimated];
             }
@@ -260,6 +263,32 @@ typedef enum : NSUInteger {
                         error:(NSError *)error
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Reset Action
+
+- (void)performResetDefaultsAtRemote {
+    blockUserInteractions(self, YES, 2.0);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"reset_defaults") JSON:@{}]
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDirectory) {
+        if (jsonDirectory[@"code"]) {
+            // already been killed
+            showUserMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+        }
+    })
+    .catch(^(NSError *error) {
+        if (error) {
+            if (error.code == -1004) {
+                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                showUserMessage(self, [error localizedDescription]);
+            }
+        }
+    })
+    .finally(^() {
+        blockUserInteractions(self, NO, 2.0);
+    });
 }
 
 #pragma mark - Memory

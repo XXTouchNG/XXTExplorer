@@ -48,6 +48,9 @@ local _ENV = {
 		execute = os.execute;
         time = os.time;
 	};
+	io = {
+		popen = io.popen;
+	};
 	error = error;
 	loadfile = loadfile;
 	type = type;
@@ -153,8 +156,8 @@ local function sh_escape(path)
 end
 
 local function fixPermission(path)
-	os.execute(opt.rootPath..'/bin/add1s chmod -R 644 '..sh_escape(path))
-	os.execute(opt.rootPath..'/bin/add1s chown -R mobile:mobile '..sh_escape(path))
+	io.popen(opt.rootPath..'/bin/add1s chmod -R 644 '..sh_escape(path))
+	io.popen(opt.rootPath..'/bin/add1s chown -R mobile:mobile '..sh_escape(path))
 end
 
 local function loadDefaultsAndCache(defaultsId)
