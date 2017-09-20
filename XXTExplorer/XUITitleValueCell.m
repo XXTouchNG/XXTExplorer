@@ -94,6 +94,7 @@
             }
         }
     }
+    [self setNeedsLayout];
 }
 
 @end
