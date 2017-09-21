@@ -3,8 +3,12 @@
 
 NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
 
-void lua_pushNSArray(lua_State *L, NSArray *arr)
+void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level)
 {
+	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+		lua_pushnil(L);
+		return;
+	}
 	int arcount = (int)[arr count];
 	lua_newtable(L);
 	for (int i = 0; i < arcount; ++i) {
@@ -18,7 +22,7 @@ void lua_pushNSArray(lua_State *L, NSArray *arr)
 			lua_rawseti(L, -2, i + 1);
 		} else if([[arr objectAtIndex:i] isKindOfClass:[NSNumber class]]) {
 			NSNumber *n = [arr objectAtIndex:i];
-			if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
+			if ([n class] == [@(NO) class] || strcmp([n objCType], @encode(BOOL)) == 0) {
 				lua_pushboolean(L, [n boolValue]);
 			} else if (strcmp([n objCType], @encode(int)) == 0) {
 				lua_pushinteger(L, [n intValue]);
@@ -32,11 +36,11 @@ void lua_pushNSArray(lua_State *L, NSArray *arr)
 			lua_rawseti(L, -2, i + 1);
 		} else if([[arr objectAtIndex:i] isKindOfClass:[NSDictionary class]]) {
 			NSDictionary *di = [arr objectAtIndex:i];
-			lua_pushNSDictionary(L, di);
+			lua_pushNSDictionaryx(L, di, level + 1);
 			lua_rawseti(L, -2, i + 1);
 		} else if([[arr objectAtIndex:i] isKindOfClass:[NSArray class]]) {
 			NSArray *ar = [arr objectAtIndex:i];
-			lua_pushNSArray(L, ar);
+			lua_pushNSArrayx(L, ar, level + 1);
 			lua_rawseti(L, -2, i + 1);
 		} else if([[arr objectAtIndex:i] isKindOfClass:[NSNull class]]) {
 			lua_pushlightuserdata(L, 0);
@@ -45,8 +49,12 @@ void lua_pushNSArray(lua_State *L, NSArray *arr)
 	}
 }
 
-void lua_pushNSDictionary(lua_State *L, NSDictionary *dict)
+void lua_pushNSDictionaryx(lua_State *L, NSDictionary *dict, int level)
 {
+	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+		lua_pushnil(L);
+		return;
+	}
 	NSArray *keys = [dict allKeys];
 	int kcount = (int)[keys count];
 	lua_newtable(L);
@@ -62,7 +70,7 @@ void lua_pushNSDictionary(lua_State *L, NSDictionary *dict)
 			lua_setfield(L, -2, [k UTF8String]);
 		} else if([[dict valueForKey:k] isKindOfClass:[NSNumber class]]) {
 			NSNumber *n = [dict valueForKey:k];
-			if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
+			if ([n class] == [@(NO) class] || strcmp([n objCType], @encode(BOOL)) == 0) {
 				lua_pushboolean(L, [n boolValue]);
 			} else if (strcmp([n objCType], @encode(int)) == 0) {
 				lua_pushinteger(L, [n intValue]);
@@ -76,11 +84,11 @@ void lua_pushNSDictionary(lua_State *L, NSDictionary *dict)
 			lua_setfield(L, -2, [k UTF8String]);
 		} else if([[dict valueForKey:k] isKindOfClass:[NSDictionary class]]) {
 			NSDictionary *di = [dict valueForKey:k];
-			lua_pushNSDictionary(L, di);
+			lua_pushNSDictionaryx(L, di, level + 1);
 			lua_setfield(L, -2, [k UTF8String]);
 		} else if([[dict valueForKey:k] isKindOfClass:[NSArray class]]) {
 			NSArray *ar = [dict valueForKey:k];
-			lua_pushNSArray(L, ar);
+			lua_pushNSArrayx(L, ar, level + 1);
 			lua_setfield(L, -2, [k UTF8String]);
 		} else if([[dict valueForKey:k] isKindOfClass:[NSNull class]]) {
 			lua_pushlightuserdata(L, 0);
@@ -89,14 +97,14 @@ void lua_pushNSDictionary(lua_State *L, NSDictionary *dict)
 	}
 }
 
-void lua_pushNSValue(lua_State *L, id value)
+void lua_pushNSValuex(lua_State *L, id value, int level)
 {
 	if ([value isKindOfClass:[NSString class]]) {
 		lua_pushstring(L, [value UTF8String]);
 	} else if ([value isKindOfClass:[NSData class]]) {
 		lua_pushlstring(L, (const char *)[value bytes], [value length]);
 	} else if ([value isKindOfClass:[NSNumber class]]) {
-		if (value == (void*)kCFBooleanFalse || value == (void*)kCFBooleanTrue) {
+		if ([value class] == [@(NO) class] || strcmp([value objCType], @encode(BOOL)) == 0) {
 			lua_pushboolean(L, [value boolValue]);
 		} else if (strcmp([value objCType], @encode(int)) == 0) {
 			lua_pushinteger(L, [value intValue]);
@@ -108,9 +116,9 @@ void lua_pushNSValue(lua_State *L, id value)
 			lua_pushnumber(L, [value doubleValue]);
 		}
 	} else if ([value isKindOfClass:[NSDictionary class]]) {
-		lua_pushNSDictionary(L, value);
+		lua_pushNSDictionaryx(L, value, level + 1);
 	} else if ([value isKindOfClass:[NSArray class]]) {
-		lua_pushNSArray(L, value);
+		lua_pushNSArrayx(L, value, level + 1);
 	} else if([value isKindOfClass:[NSNull class]]) {
 		lua_pushlightuserdata(L, 0);
 	} else {
@@ -169,8 +177,11 @@ int lua_table_is_array(lua_State *L, int index)
 	return ret;
 }
 
-NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray)
+NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray, int level)
 {
+	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+		return nil;
+	}
 	if (lua_type(L, index) != LUA_TTABLE) {
 		return nil;
 	}
@@ -184,15 +195,18 @@ NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray)
     long long n = luaL_len(L, -1);
 	for (int i = 1; i <= n; ++i) {
 		lua_rawgeti(L, -1, i);
-		[resultarray addObject:lua_toNSValue(L, -1)];
+		[resultarray addObject:lua_toNSValuex(L, -1, level + 1)];
 		lua_pop(L, 1);
 	}
 	lua_pop(L, 1);
 	return resultarray;
 }
 
-NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *resultdict)
+NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *resultdict, int level)
 {
+	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+		return nil;
+	}
 	if (lua_type(L, index) != LUA_TTABLE) {
 		return nil;
 	}
@@ -205,9 +219,9 @@ NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *
 	lua_pushvalue(L, index);
 	lua_pushnil(L);  /* first key */
 	while (lua_next(L, -2) != 0) {
-		id key = lua_toNSValue(L, -2);
+		id key = lua_toNSValuex(L, -2, level + 1);
 		if (key != nil) {
-			resultdict[key] = lua_toNSValue(L, -1);
+			resultdict[key] = lua_toNSValuex(L, -1, level + 1);
 		}
 		lua_pop(L, 1);
 	}
@@ -215,7 +229,7 @@ NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *
 	return resultdict;
 }
 
-id lua_toNSValue(lua_State *L, int index)
+id lua_toNSValuex(lua_State *L, int index, int level)
 {
 	int value_type = lua_type(L, index);
 	if (value_type == LUA_TSTRING) {
@@ -248,9 +262,9 @@ id lua_toNSValue(lua_State *L, int index)
 		return @((BOOL)lua_toboolean(L, index));
 	} else if (value_type == LUA_TTABLE) {
 		if (lua_table_is_array(L, index)) {
-			return lua_toNSArrayx(L, index, nil);
+			return lua_toNSArrayx(L, index, nil, level + 1);
 		} else {
-			return lua_toNSDictionaryx(L, index, nil);
+			return lua_toNSDictionaryx(L, index, nil, level + 1);
 		}
 	} else if (value_type == LUA_TLIGHTUSERDATA && lua_touserdata(L, index) == NULL) {
 		return [NSNull null];
@@ -318,7 +332,7 @@ int luaopen_json(lua_State *L)
 	lua_setfield(L, -2, "encode");
 	lua_pushlightuserdata(L, (void *)NULL);
 	lua_setfield(L, -2, "null");
-	lua_pushliteral(L, "0.1");
+	lua_pushliteral(L, "0.2");
 	lua_setfield(L, -2, "_VERSION");
 	return 1;
 }
@@ -365,7 +379,7 @@ int luaopen_plist(lua_State *L)
 	lua_setfield(L, -2, "read");
 	lua_pushcfunction(L, l_toPlist);
 	lua_setfield(L, -2, "write");
-	lua_pushliteral(L, "0.1");
+	lua_pushliteral(L, "0.2");
 	lua_setfield(L, -2, "_VERSION");
 	return 1;
 }
