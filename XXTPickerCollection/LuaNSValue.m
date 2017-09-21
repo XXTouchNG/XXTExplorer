@@ -22,7 +22,7 @@ void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level)
 			lua_rawseti(L, -2, i + 1);
 		} else if([[arr objectAtIndex:i] isKindOfClass:[NSNumber class]]) {
 			NSNumber *n = [arr objectAtIndex:i];
-			if ([n class] == [@(NO) class] || strcmp([n objCType], @encode(BOOL)) == 0) {
+			if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
 				lua_pushboolean(L, [n boolValue]);
 			} else if (strcmp([n objCType], @encode(int)) == 0) {
 				lua_pushinteger(L, [n intValue]);
@@ -70,7 +70,7 @@ void lua_pushNSDictionaryx(lua_State *L, NSDictionary *dict, int level)
 			lua_setfield(L, -2, [k UTF8String]);
 		} else if([[dict valueForKey:k] isKindOfClass:[NSNumber class]]) {
 			NSNumber *n = [dict valueForKey:k];
-			if ([n class] == [@(NO) class] || strcmp([n objCType], @encode(BOOL)) == 0) {
+			if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
 				lua_pushboolean(L, [n boolValue]);
 			} else if (strcmp([n objCType], @encode(int)) == 0) {
 				lua_pushinteger(L, [n intValue]);
@@ -104,7 +104,7 @@ void lua_pushNSValuex(lua_State *L, id value, int level)
 	} else if ([value isKindOfClass:[NSData class]]) {
 		lua_pushlstring(L, (const char *)[value bytes], [value length]);
 	} else if ([value isKindOfClass:[NSNumber class]]) {
-		if ([value class] == [@(NO) class] || strcmp([value objCType], @encode(BOOL)) == 0) {
+		if (value == (void*)kCFBooleanFalse || value == (void*)kCFBooleanTrue) {
 			lua_pushboolean(L, [value boolValue]);
 		} else if (strcmp([value objCType], @encode(int)) == 0) {
 			lua_pushinteger(L, [value intValue]);
