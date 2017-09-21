@@ -5,7 +5,7 @@ NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
 
 void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level)
 {
-	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+	if (level > LUA_NSVALUE_MAX_DEPTH) {
 		lua_pushnil(L);
 		return;
 	}
@@ -51,7 +51,7 @@ void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level)
 
 void lua_pushNSDictionaryx(lua_State *L, NSDictionary *dict, int level)
 {
-	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+	if (level > LUA_NSVALUE_MAX_DEPTH) {
 		lua_pushnil(L);
 		return;
 	}
@@ -179,7 +179,7 @@ int lua_table_is_array(lua_State *L, int index)
 
 NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray, int level)
 {
-	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+	if (level > LUA_NSVALUE_MAX_DEPTH) {
 		return nil;
 	}
 	if (lua_type(L, index) != LUA_TTABLE) {
@@ -195,7 +195,10 @@ NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray, in
     long long n = luaL_len(L, -1);
 	for (int i = 1; i <= n; ++i) {
 		lua_rawgeti(L, -1, i);
-		[resultarray addObject:lua_toNSValuex(L, -1, level + 1)];
+		id value = lua_toNSValuex(L, -1, level);
+		if (value != nil) {
+			[resultarray addObject:value];
+		}
 		lua_pop(L, 1);
 	}
 	lua_pop(L, 1);
@@ -204,7 +207,7 @@ NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *resultarray, in
 
 NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *resultdict, int level)
 {
-	if (level >= LUA_NSVALUE_MAX_DEPTH) {
+	if (level > LUA_NSVALUE_MAX_DEPTH) {
 		return nil;
 	}
 	if (lua_type(L, index) != LUA_TTABLE) {
@@ -219,9 +222,12 @@ NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *
 	lua_pushvalue(L, index);
 	lua_pushnil(L);  /* first key */
 	while (lua_next(L, -2) != 0) {
-		id key = lua_toNSValuex(L, -2, level + 1);
+		id key = lua_toNSValuex(L, -2, level);
 		if (key != nil) {
-			resultdict[key] = lua_toNSValuex(L, -1, level + 1);
+			id value = lua_toNSValuex(L, -1, level);
+			if (value != nil) {
+				resultdict[key] = value;
+			}
 		}
 		lua_pop(L, 1);
 	}
