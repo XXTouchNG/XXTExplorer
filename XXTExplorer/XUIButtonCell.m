@@ -11,8 +11,6 @@
 
 @interface XUIButtonCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *xui_button_label;
-
 @end
 
 @implementation XUIButtonCell
@@ -50,7 +48,7 @@
 
 - (void)setTheme:(XUITheme *)theme {
     [super setTheme:theme];
-    self.xui_button_label.textColor = theme.tintColor;
+    self.textLabel.textColor = theme.tintColor;
 }
 
 @end

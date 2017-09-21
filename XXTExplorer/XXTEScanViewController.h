@@ -24,5 +24,6 @@
 @interface XXTEScanViewController : UIViewController
 
 @property (nonatomic, weak) id <XXTEScanViewControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL shouldConfirm;
 
 @end

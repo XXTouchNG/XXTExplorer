@@ -33,5 +33,6 @@
 
 - (instancetype)initWithAdapter:(XUIAdapter *)adapter Error:(NSError **)error;
 - (void)parse; // this method should run in main thread
+- (void)updateRelatedCellsForCell:(XUIBaseCell *)inCell;
 
 @end

@@ -459,8 +459,8 @@
 
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];
-    if (url && [[UIApplication sharedApplication] canOpenURL:url]) {
-        if ([[url scheme] isEqualToString:@"xxt"]) {
+    if (url.scheme.length > 0 && [[UIApplication sharedApplication] canOpenURL:url]) {
+        if (self.shouldConfirm == NO || [[url scheme] isEqualToString:@"xxt"]) {
             [self alertView:nil openURL:url];
             return;
         }
@@ -489,6 +489,10 @@
     // PLAIN TEXT
     {
         NSString *detailText = output;
+        if (self.shouldConfirm == NO) {
+            [self alertView:nil copyString:detailText];
+            return;
+        }
         LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Text Content", nil)
                                                             message:detailText
                                                               style:LGAlertViewStyleAlert

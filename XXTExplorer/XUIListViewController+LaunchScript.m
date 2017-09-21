@@ -15,10 +15,10 @@
 
 @implementation XUIListViewController (LaunchScript)
 
-- (void)LaunchScript:(XUIButtonCell *)cell {
+- (NSNumber *)LaunchScript:(XUIButtonCell *)cell {
     NSArray *kwargs = cell.xui_kwargs;
     if (!kwargs || kwargs.count != 1 || ![kwargs[0] isKindOfClass:[NSString class]]) {
-        return;
+        return @(NO);
     }
     NSString *scriptName = kwargs[0];
     NSString *scriptPath = [self.bundle pathForResource:scriptName ofType:nil];
@@ -43,6 +43,7 @@
     .finally(^() {
         blockUserInteractions(self, NO, 0);
     });
+    return @(scriptPath != nil);
 }
 
 @end

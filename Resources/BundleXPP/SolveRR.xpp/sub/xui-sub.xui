@@ -28,6 +28,13 @@ return {
 	},{
 		["cell"] = "XUIGroupCell",
 		["label"] = "Pickers"
+	}, {
+		["cell"] = "XUIButtonCell",
+		["label"] = "Open Camera for QR Scan",
+		["key"] = "qr1",
+		["defaults"] = "com.yourcompany.yourscript",
+		["action"] = "ScanQRCode:",
+		["kwargs"] = {}
 	},{
 		["cell"] = "XUITitleValueCell",
 		["label"] = "Application",

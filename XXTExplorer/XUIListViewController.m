@@ -47,10 +47,8 @@
 @property (nonatomic, strong) NSMutableArray <XUIBaseCell *> *cellsNeedStore;
 @property (nonatomic, assign) BOOL shouldStoreCells;
 
-@property (nonatomic, strong, readonly) XUICellFactory *parser;
-
-@property (nonatomic, strong) XXTPickerFactory *pickerFactory;
-@property (nonatomic, strong) XUIBaseCell *pickerCell;
+@property (nonatomic, strong, readonly) XUICellFactory *cellFactory;
+@property (nonatomic, strong, readonly) XXTPickerFactory *pickerFactory;
 
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -109,6 +107,10 @@
     {
         _cellsNeedStore = [[NSMutableArray alloc] init];
         
+        XXTPickerFactory *factory = [[XXTPickerFactory alloc] init];
+        factory.delegate = self;
+        _pickerFactory = factory;
+        
         XUIAdapter *adapter = [[XUIAdapter alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
         if (!adapter) {
             return;
@@ -116,11 +118,11 @@
         _adapter = adapter;
         
         NSError *xuiError = nil;
-        XUICellFactory *parser = [[XUICellFactory alloc] initWithAdapter:adapter Error:&xuiError];
+        XUICellFactory *cellFactory = [[XUICellFactory alloc] initWithAdapter:adapter Error:&xuiError];
         if (!xuiError) {
-            parser.delegate = self;
-            _parser = parser;
-            _theme = parser.theme;
+            cellFactory.delegate = self;
+            _cellFactory = cellFactory;
+            _theme = cellFactory.theme;
         } else {
             [self presentErrorAlertController:xuiError];
         }
@@ -139,7 +141,7 @@
     
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
-    NSDictionary <NSString *, id> *rootEntry = self.parser.rootEntry;
+    NSDictionary <NSString *, id> *rootEntry = self.cellFactory.rootEntry;
     
     NSString *listTitle = rootEntry[@"title"];
     if (listTitle) {
@@ -147,7 +149,7 @@
     }
     
     {
-        [self.parser parse];
+        [self.cellFactory parse];
     }
     
     NSString *listHeader = rootEntry[@"header"];
@@ -173,8 +175,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
 }
 
@@ -238,14 +239,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {
-        return self.parser.sectionCells.count;
+        return self.cellFactory.sectionCells.count;
     }
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return self.parser.otherCells[(NSUInteger) section].count;
+        return self.cellFactory.otherCells[(NSUInteger) section].count;
     }
     return 0;
 }
@@ -256,7 +257,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        XUIBaseCell *cell = self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+        XUIBaseCell *cell = self.cellFactory.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
         CGFloat cellHeight = [cell.xui_height floatValue];
         if (cellHeight > 0) {
             return cellHeight;
@@ -281,20 +282,20 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return self.parser.sectionCells[(NSUInteger) section].xui_label;
+        return self.cellFactory.sectionCells[(NSUInteger) section].xui_label;
     }
     return nil;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return self.parser.sectionCells[(NSUInteger) section].xui_footerText;
+        return self.cellFactory.sectionCells[(NSUInteger) section].xui_footerText;
     }
     return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XUIBaseCell *cell = self.parser.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+    XUIBaseCell *cell = self.cellFactory.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
     if ([cell isKindOfClass:[XUIOptionCell class]]) {
         [self updateLinkListCell:(XUIOptionCell *)cell];
     }
@@ -343,11 +344,9 @@
                 [self presentErrorAlertController:snippetError];
                 return;
             }
-            XXTPickerFactory *factory = [[XXTPickerFactory alloc] init];
-            factory.delegate = self;
+            XXTPickerFactory *factory = self.pickerFactory;
             [factory executeTask:snippet fromViewController:self];
             self.pickerCell = titleValueCell;
-            self.pickerFactory = factory;
         }
     }
 }
@@ -381,9 +380,11 @@
         NSString *selectorName = buttonCell.xui_action;
         SEL actionSelector = NSSelectorFromString(selectorName);
         if (actionSelector && [self respondsToSelector:actionSelector]) {
-            [self performSelector:actionSelector withObject:cell];
+            id performObject = [self performSelector:actionSelector withObject:cell];
+            buttonCell.xui_value = performObject;
+            [self.adapter saveDefaultsFromCell:buttonCell];
         } else {
-            [self.parser.logger logMessage:XUIParserErrorUndknownSelector(NSStringFromSelector(actionSelector))];
+            [self.cellFactory.logger logMessage:XUIParserErrorUndknownSelector(NSStringFromSelector(actionSelector))];
         }
     }
 #pragma clang diagnostic pop
@@ -408,7 +409,7 @@
         optionViewController.adapter = self.adapter;
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
-        optionViewController.theme = self.parser.theme;
+        optionViewController.theme = self.cellFactory.theme;
         [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
@@ -421,7 +422,7 @@
         optionViewController.adapter = self.adapter;
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
-        optionViewController.theme = self.parser.theme;
+        optionViewController.theme = self.cellFactory.theme;
         [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
@@ -434,7 +435,7 @@
         optionViewController.adapter = self.adapter;
         optionViewController.delegate = self;
         optionViewController.title = linkListCell.xui_label;
-        optionViewController.theme = self.parser.theme;
+        optionViewController.theme = self.cellFactory.theme;
         [self.navigationController pushViewController:optionViewController animated:YES];
     }
 }
@@ -479,13 +480,13 @@
 
 #pragma mark - XUICellFactoryDelegate
 
-- (void)cellFactoryDidFinishParsing:(XUICellFactory *)parser {
+- (void)cellFactoryDidFinishParsing:(XUICellFactory *)cellFactory {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
 }
 
-- (void)cellFactory:(XUICellFactory *)parser didFailWithError:(NSError *)error {
+- (void)cellFactory:(XUICellFactory *)cellFactory didFailWithError:(NSError *)error {
     [self presentErrorAlertController:error];
 }
 
@@ -511,7 +512,7 @@
 
 - (void)optionViewController:(XUIOptionViewController *)controller didSelectOption:(NSInteger)optionIndex {
     [self updateLinkListCell:controller.cell];
-    [self.parser.adapter saveDefaultsFromCell:controller.cell];
+    [self.cellFactory.adapter saveDefaultsFromCell:controller.cell];
 }
 
 - (void)updateLinkListCell:(XUIOptionCell *)cell {
@@ -538,7 +539,7 @@
 
 - (void)multipleOptionViewController:(XUIMultipleOptionViewController *)controller didSelectOption:(NSArray <NSNumber *> *)optionIndexes {
     [self updateLinkMultipleListCell:controller.cell];
-    [self.parser.adapter saveDefaultsFromCell:controller.cell];
+    [self.cellFactory.adapter saveDefaultsFromCell:controller.cell];
 }
 
 - (void)updateLinkMultipleListCell:(XUIMultipleOptionCell *)cell {
@@ -551,7 +552,7 @@
 
 - (void)orderedOptionViewController:(XUIOrderedOptionViewController *)controller didSelectOption:(NSArray<NSNumber *> *)optionIndexes {
     [self updateLinkOrderedListCell:controller.cell];
-    [self.parser.adapter saveDefaultsFromCell:controller.cell];
+    [self.cellFactory.adapter saveDefaultsFromCell:controller.cell];
 }
 
 - (void)updateLinkOrderedListCell:(XUIOrderedOptionCell *)cell {
@@ -600,10 +601,12 @@
 
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
     XUIFileCell *cell = (XUIFileCell *)self.pickerCell;
-    cell.xui_value = path;
-    [self storeCellWhenNeeded:cell];
-    [self storeCellsIfNecessary];
-    [self.navigationController popToViewController:self animated:YES];
+    if ([cell isKindOfClass:[XUIFileCell class]]) {
+        cell.xui_value = path;
+        [self storeCellWhenNeeded:cell];
+        [self storeCellsIfNecessary];
+        [self.navigationController popToViewController:self animated:YES];
+    }
 }
 
 #pragma mark - Store
@@ -625,7 +628,7 @@
     if (self.shouldStoreCells) {
         self.shouldStoreCells = NO;
         for (XUIBaseCell *cell in self.cellsNeedStore) {
-            [self.parser.adapter saveDefaultsFromCell:cell];
+            [self.cellFactory.adapter saveDefaultsFromCell:cell];
         }
     }
 }

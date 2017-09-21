@@ -136,6 +136,7 @@
 #else
     BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, NO);
 #endif
+    UIEdgeInsets buttonInsets = hidesLabel ? UIEdgeInsetsMake(0, 24.0, 0, 24.0) : UIEdgeInsetsMake(0, 8.0, 0, 8.0);
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary *entryDetail = self.entryList[indexPath.row];
@@ -150,7 +151,7 @@
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                        backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
-                                                                insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                                                                insets:buttonInsets];
             if (!hidesLabel) {
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
@@ -166,7 +167,7 @@
                 }
                 XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
                                                            backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
-                                                                    insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                                                                    insets:buttonInsets];
                 if (!hidesLabel) {
                     button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                     [button centerIconOverText];
@@ -182,7 +183,7 @@
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                        backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
-                                                                insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                                                                insets:buttonInsets];
             if (!hidesLabel) {
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
@@ -197,7 +198,7 @@
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconInside]
                                                        backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
-                                                                insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                                                                insets:buttonInsets];
             if (!hidesLabel) {
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
@@ -211,7 +212,7 @@
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
                                                    backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
-                                                            insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                                                            insets:buttonInsets];
         if (!hidesLabel) {
             button.titleLabel.font = [UIFont systemFontOfSize:12.f];
             [button centerIconOverText];
@@ -226,7 +227,7 @@
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
                                                    backgroundColor:XXTE_COLOR_DANGER
-                                                            insets:UIEdgeInsetsMake(0, 4, 0, 4)];
+                                                            insets:buttonInsets];
         if (!hidesLabel) {
             button.titleLabel.font = [UIFont systemFontOfSize:12.f];
             [button centerIconOverText];

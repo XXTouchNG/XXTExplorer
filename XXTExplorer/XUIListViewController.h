@@ -8,10 +8,13 @@
 
 #import "XUIViewController.h"
 
+@class XUIBaseCell;
+
 @interface XUIListViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong, readonly) NSBundle *bundle;
-// @property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, strong) XUIBaseCell *pickerCell;
+
 - (instancetype)initWithPath:(NSString *)path withBundlePath:(NSString *)bundlePath;
 
 @end

@@ -556,6 +556,17 @@ function ValueCheckers.XUIFileCell(item, value, index)
     return value
 end
 
+function ValueCheckers.XUIButtonCell(item, value, index)
+    if type(item.action) ~= 'string' then
+        error(string.format('%q: items[%d](%q).action (string expected got %s)', opt.XUIPath, index, item.key, type(item.action)))
+    end
+    if type(item.kwargs) ~= 'table' then
+        item.kwargs = {}
+    end
+    item.kwargs.isArray = true
+    return value
+end
+
 local function checkCellValue(item, value, index)
 	local checker = ValueCheckers[tostring(item.cell)]
 	if type(checker) == 'function' then

@@ -93,6 +93,7 @@
     if (toolbar == self.toolbar) {
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan]) {
             XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
+            scanViewController.shouldConfirm = YES;
             scanViewController.delegate = self;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
             XXTE_START_IGNORE_PARTIAL

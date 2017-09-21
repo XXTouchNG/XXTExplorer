@@ -137,6 +137,7 @@
 		0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
 		0F9A62E11F6AC63300BA330C /* XUIAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A62E01F6AC63300BA330C /* XUIAdapter.m */; };
+		0F9E63EA1F728ABD00E3537E /* XUIListViewController+ScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E63E91F728ABD00E3537E /* XUIListViewController+ScanQRCode.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
 		0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */; };
@@ -651,6 +652,8 @@
 		0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+SharedInstance.m"; sourceTree = "<group>"; };
 		0F9A62DF1F6AC63300BA330C /* XUIAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIAdapter.h; sourceTree = "<group>"; };
 		0F9A62E01F6AC63300BA330C /* XUIAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIAdapter.m; sourceTree = "<group>"; };
+		0F9E63E81F728ABD00E3537E /* XUIListViewController+ScanQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+ScanQRCode.h"; sourceTree = "<group>"; };
+		0F9E63E91F728ABD00E3537E /* XUIListViewController+ScanQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+ScanQRCode.m"; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA7ABEE1ED641A3003EAD7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDelegate.h; sourceTree = "<group>"; };
@@ -1211,6 +1214,8 @@
 				0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */,
 				0F16A78E1F3222E300BA2868 /* XUIListViewController+LaunchScript.h */,
 				0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */,
+				0F9E63E81F728ABD00E3537E /* XUIListViewController+ScanQRCode.h */,
+				0F9E63E91F728ABD00E3537E /* XUIListViewController+ScanQRCode.m */,
 			);
 			name = ButtonCellActions;
 			sourceTree = "<group>";
@@ -2944,6 +2949,7 @@
 				0F8521501F2D979E00A912AC /* XUIMultipleOptionCell.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F6AEA8D1F3750880017BE7C /* XXTExplorerViewController+XXTEScanViewControllerDelegate.m in Sources */,
+				0F9E63EA1F728ABD00E3537E /* XUIListViewController+ScanQRCode.m in Sources */,
 				0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0FB30ED11F64296B008517BF /* XUICheckboxCell.m in Sources */,

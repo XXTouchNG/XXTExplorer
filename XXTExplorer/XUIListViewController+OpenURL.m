@@ -11,15 +11,17 @@
 
 @implementation XUIListViewController (OpenURL)
 
-- (void)OpenURL:(XUIButtonCell *)cell {
+- (NSNumber *)OpenURL:(XUIButtonCell *)cell {
     NSArray *kwargs = cell.xui_kwargs;
     if (!kwargs || kwargs.count != 1 || ![kwargs[0] isKindOfClass:[NSString class]]) {
-        return;
+        return @(NO);
     }
     NSURL *url = [NSURL URLWithString:kwargs[0]];
-    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+    BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:url];
+    if (canOpenURL) {
         [[UIApplication sharedApplication] openURL:url];
     }
+    return @(canOpenURL);
 }
 
 @end

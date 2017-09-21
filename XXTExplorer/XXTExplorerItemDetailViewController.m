@@ -551,8 +551,13 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     
     // #8 - Open with
     
+#ifdef DEBUG
+    BOOL allowOpenMethod = XXTEDefaultsBool(XXTExplorerAllowOpenMethodKey, YES);
+#else
+    BOOL allowOpenMethod = XXTEDefaultsBool(XXTExplorerAllowOpenMethodKey, NO);
+#endif
     
-    if (entryRegular && XXTEDefaultsBool(XXTExplorerAllowOpenMethodKey, NO))
+    if (entryRegular && allowOpenMethod)
     {
         NSString *entryExtension = entry[XXTExplorerViewEntryAttributeExtension];
         if (entryExtension.length > 0) {

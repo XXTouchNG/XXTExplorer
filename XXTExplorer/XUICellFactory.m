@@ -7,6 +7,7 @@
 //
 
 #import <objc/runtime.h>
+#import "XUI.h"
 #import "XUICellFactory.h"
 #import "XUIBaseCell.h"
 #import "XUIGroupCell.h"
@@ -22,6 +23,8 @@
 
 @implementation XUICellFactory
 
+#pragma mark - Initializers
+
 - (instancetype)initWithAdapter:(XUIAdapter *)adapter Error:(NSError *__autoreleasing *)error {
     if (self = [super init]) {
         _adapter = adapter;
@@ -36,9 +39,17 @@
             _theme = [[XUITheme alloc] init];
         else
             _theme = [[XUITheme alloc] initWithDictionary:themeDictionary];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(xuiValueChanged:) name:XUINotificationEventValueChanged object:nil];
     }
     return self;
 }
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Parse
 
 - (void)parse {
     @try {
@@ -145,6 +156,32 @@
         [cellInstance setValue:itemValue forKey:propertyName];
     } else {
         [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
+    }
+}
+
+#pragma mark - Notifications
+
+- (void)xuiValueChanged:(NSNotification *)aNotification {
+    XUIBaseCell *cell = aNotification.object;
+    if ([cell isKindOfClass:[XUIBaseCell class]]) {
+        [self updateRelatedCellsForCell:cell];
+    }
+}
+
+- (void)updateRelatedCellsForCell:(XUIBaseCell *)inCell {
+    NSString *cellDefaults = inCell.xui_defaults;
+    NSString *cellKey = inCell.xui_key;
+    NSString *cellValue = inCell.xui_value;
+    for (NSArray <XUIBaseCell *> *cellArray in self.otherCells) {
+        [cellArray enumerateObjectsUsingBlock:^(XUIBaseCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (cell.xui_defaults.length > 0 &&
+                [cell.xui_defaults isEqualToString:cellDefaults] &&
+                cell.xui_key.length > 0 &&
+                [cell.xui_key isEqualToString:cellKey]
+                ) {
+                cell.xui_value = cellValue;
+            }
+        }];
     }
 }
 

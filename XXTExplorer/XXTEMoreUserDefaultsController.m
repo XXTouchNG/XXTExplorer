@@ -143,7 +143,6 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)loadStaticUserDefaults {
-    
     NSArray <NSDictionary *> *sectionMetas = XXTEBuiltInDefaultsObject(@"SECTION_META");
     self.defaultsSectionMeta = sectionMetas;
     

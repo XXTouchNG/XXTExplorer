@@ -90,6 +90,7 @@
         }
     } else if ([jsonEvent isEqualToString:@"scan"]) {
         XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
+        scanViewController.shouldConfirm = YES;
         scanViewController.delegate = self;
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
