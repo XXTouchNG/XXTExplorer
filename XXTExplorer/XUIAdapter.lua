@@ -7,20 +7,20 @@
 --
 
 -- opt = {
--- 	event = 'load',
--- 	bundlePath = 'xxx',
--- 	rootPath = '/var/mobile/Media/1ferver',
--- 	XUIPath = '/var/mobile/interface.xui',
+--  event = 'load',
+--  bundlePath = 'xxx',
+--  rootPath = '/var/mobile/Media/1ferver',
+--  XUIPath = '/var/mobile/interface.xui',
 -- }
 
 -- opt = {
--- 	event = 'save',
--- 	bundlePath = 'xxx',
--- 	rootPath = '/var/mobile/Media/1ferver',
--- 	XUIPath = '/var/mobile/interface.xui',
--- 	defaultsId = 'com.yourcompany.yourscript',
--- 	key = 'key',
--- 	value = 'value',
+--  event = 'save',
+--  bundlePath = 'xxx',
+--  rootPath = '/var/mobile/Media/1ferver',
+--  XUIPath = '/var/mobile/interface.xui',
+--  defaultsId = 'com.yourcompany.yourscript',
+--  key = 'key',
+--  value = 'value',
 -- }
 
 local opt = ...
@@ -35,6 +35,7 @@ local _ENV = {
 		format = string.format;
 		match = string.match;
 		gsub = string.gsub;
+		lower = string.lower;
 	};
 	plist = {
 		read = plist.read;
@@ -46,7 +47,7 @@ local _ENV = {
 	};
 	os = {
 		execute = os.execute;
-        time = os.time;
+		time = os.time;
 	};
 	io = {
 		popen = io.popen;
@@ -514,57 +515,57 @@ function ValueCheckers.TextField(item, value, index)
 	return value
 end
 
-ValueCheckers.SecureTextField = ValueCheckers.TextField
+ValueCheckers.securetextfield = ValueCheckers.TextField
 
 function ValueCheckers.DateTime(item, value, index)
-    if item.minuteInterval ~= nil and type(item.minuteInterval) ~= 'integer' then
-        error(string.format('%q: items[%d](%q).minuteInterval (opt.integer expected got %s)', opt.XUIPath, index, item.key, type(item.minuteInterval)))
-    end
-    if item.min ~= nil and type(item.min) ~= 'number' then
-        error(string.format('%q: items[%d](%q).min (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
-    end
-    if item.max ~= nil and type(item.max) ~= 'number' then
-        error(string.format('%q: items[%d](%q).max (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
-    end
-    if item.default == nil then
-        item.default = os.time()
-    end
-    if item.default ~= nil and type(item.default) ~= 'number' then
-        error(string.format('%q: items[%d](%q).default (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
-    end
-    if item.min ~= nil and item.default < item.min then
-        error(string.format('%q: items[%d](%q).default (default < min)', opt.XUIPath, index, item.key))
-    end
-    if item.max ~= nil and item.default > item.max then
-        error(string.format('%q: items[%d](%q).default (default > max)', opt.XUIPath, index, item.key))
-    end
-    value = tonumber(value) or item.default
-    if (item.min ~= nil and value < item.min) or (item.max ~= nil and value > item.max) then
-        value = item.default
-    end
-    return value
+	if item.minuteInterval ~= nil and type(item.minuteInterval) ~= 'integer' then
+		error(string.format('%q: items[%d](%q).minuteInterval (opt.integer expected got %s)', opt.XUIPath, index, item.key, type(item.minuteInterval)))
+	end
+	if item.min ~= nil and type(item.min) ~= 'number' then
+		error(string.format('%q: items[%d](%q).min (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
+	end
+	if item.max ~= nil and type(item.max) ~= 'number' then
+		error(string.format('%q: items[%d](%q).max (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
+	end
+	if item.default == nil then
+		item.default = os.time()
+	end
+	if item.default ~= nil and type(item.default) ~= 'number' then
+		error(string.format('%q: items[%d](%q).default (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
+	end
+	if item.min ~= nil and item.default < item.min then
+		error(string.format('%q: items[%d](%q).default (default < min)', opt.XUIPath, index, item.key))
+	end
+	if item.max ~= nil and item.default > item.max then
+		error(string.format('%q: items[%d](%q).default (default > max)', opt.XUIPath, index, item.key))
+	end
+	value = tonumber(value) or item.default
+	if (item.min ~= nil and value < item.min) or (item.max ~= nil and value > item.max) then
+		value = item.default
+	end
+	return value
 end
 
 function ValueCheckers.File(item, value, index)
-    if item.allowedExtensions and type(item.allowedExtensions) ~= 'table' then
-        item.allowedExtensions = {isArray = true}
-    end
-    if item.initialPath and type(item.initialPath) ~= 'string' then
-        item.initialPath = ''
-    end
-    value = value or item.default
-    return value
+	if item.allowedExtensions and type(item.allowedExtensions) ~= 'table' then
+		item.allowedExtensions = {isArray = true}
+	end
+	if item.initialPath and type(item.initialPath) ~= 'string' then
+		item.initialPath = ''
+	end
+	value = value or item.default
+	return value
 end
 
 function ValueCheckers.Button(item, value, index)
-    if type(item.action) ~= 'string' then
-        error(string.format('%q: items[%d](%q).action (string expected got %s)', opt.XUIPath, index, item.key, type(item.action)))
-    end
-    if type(item.kwargs) ~= 'table' then
-        item.kwargs = {}
-    end
-    item.kwargs.isArray = true
-    return value
+	if type(item.action) ~= 'string' then
+		error(string.format('%q: items[%d](%q).action (string expected got %s)', opt.XUIPath, index, item.key, type(item.action)))
+	end
+	if type(item.kwargs) ~= 'table' then
+		item.kwargs = {}
+	end
+	item.kwargs.isArray = true
+	return value
 end
 
 local function checkCellValue(item, value, index)
@@ -575,6 +576,29 @@ local function checkCellValue(item, value, index)
 		return nil
 	end
 end
+
+local cellNameMap = {
+	button          = 'Button';
+	file            = 'File';
+	datetime        = 'DateTime';
+	securetextfield = 'SecureTextField';
+	textfield       = 'TextField';
+	stepper         = 'Stepper';
+	slider          = 'Slider';
+	multipleoption  = 'MultipleOption';
+	orderedoption   = 'OrderedOption';
+	option          = 'Option';
+	radio           = 'Radio';
+	segment         = 'Segment';
+	textarea        = 'Textarea';
+	titlevalue      = 'TitleValue';
+	switch          = 'Switch';
+
+	group           = 'Group';
+	link            = 'Link';
+	statictext      = 'StaticText';
+	image           = 'Image';
+}
 
 local events = {}
 
@@ -589,8 +613,12 @@ function _loadDefaults(opt)
 			error(string.format('%q: items (table expected got %s)', opt.XUIPath, type(item)))
 		end
 		local itemKey = item.key
-		local itemCell = item.cell
-		if type(itemKey) == 'string' and type(ValueCheckers[tostring(itemCell)]) == 'function' then
+		local itemCell = string.lower(tostring(item.cell))
+		if cellNameMap[itemCell] ~= nil then
+			itemCell = cellNameMap[itemCell]
+			item.cell = itemCell
+		end
+		if type(itemKey) == 'string' and type(ValueCheckers[itemCell]) == 'function' then
 			item.defaults = item.defaults or globalDefaults
 			local itemDefaultsId = item.defaults
 			if type(itemDefaultsId) == 'string' then
@@ -621,8 +649,8 @@ function events.save(opt)
 end
 
 function events.reset(opt)
-    DefaultsCaches = {}
-    saveCachedDefaults()
+	DefaultsCaches = {}
+	saveCachedDefaults()
 end
 
 if type(events[opt.event]) == 'function' then
