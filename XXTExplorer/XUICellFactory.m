@@ -66,15 +66,16 @@
         NSMutableArray <XUIBaseCell *> *cells = [[NSMutableArray alloc] initWithCapacity:itemCount];
         for (NSUInteger itemIdx = 0; itemIdx < itemCount; itemIdx++) {
             NSDictionary *itemDictionary = items[itemIdx];
-            NSString *cellClassName = itemDictionary[@"cell"];
-            if (!cellClassName) {
+            NSString *cellName = itemDictionary[@"cell"];
+            if (!cellName) {
                 [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorMissingEntry(@"items[%lu] -> cell"), itemIdx]];
                 continue;
             }
-            if (![cellClassName isKindOfClass:[NSString class]]) {
+            if (![cellName isKindOfClass:[NSString class]]) {
                 [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorInvalidType(@"items[%lu] -> cell", @"NSString"), itemIdx]];
                 continue;
             }
+            NSString *cellClassName = [NSString stringWithFormat:@"XUI%@Cell", cellName];
             Class cellClass = NSClassFromString(cellClassName);
             if (!cellClass || ![cellClass isSubclassOfClass:[XUIBaseCell class]]) {
                 [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUnknownEnum(@"items[%lu] -> cell", cellClassName), itemIdx]];

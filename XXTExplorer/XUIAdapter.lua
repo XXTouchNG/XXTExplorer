@@ -132,7 +132,7 @@ local function removeValueInArrayIf(array, condition)
 	end
 end
 
-local XUITableBuilder, err = loadfile(opt.XUIPath, 't', __G)
+local XUITableBuilder, err = loadfile(opt.XUIPath, 'bt', __G)
 
 if type(XUITableBuilder) ~= 'function' then
 	error(err)
@@ -178,7 +178,7 @@ end
 
 local ValueCheckers = {}
 
-function ValueCheckers.XUISwitchCell(item, value, index)
+function ValueCheckers.Switch(item, value, index)
 	if type(item.default) ~= 'boolean' then
 		item.default = false
 	end
@@ -189,7 +189,7 @@ function ValueCheckers.XUISwitchCell(item, value, index)
 	end
 end
 
-function ValueCheckers.XUITextareaCell(item, value, index)
+function ValueCheckers.Textarea(item, value, index)
 	if type(item.default) ~= 'string' then
 		item.default = ''
 	end
@@ -200,7 +200,7 @@ function ValueCheckers.XUITextareaCell(item, value, index)
 	end
 end
 
-function ValueCheckers.XUITitleValueCell(item, value, index)
+function ValueCheckers.TitleValue(item, value, index)
 	if item.default == nil then
 		item.default = ''
 	end
@@ -211,7 +211,7 @@ function ValueCheckers.XUITitleValueCell(item, value, index)
 	end
 end
 
-function ValueCheckers.XUIOptionCell(item, value, index)
+function ValueCheckers.Option(item, value, index)
 	if type(item.options) ~= 'table' then
 		item.options = {isArray = true}
 	end
@@ -252,7 +252,7 @@ function ValueCheckers.XUIOptionCell(item, value, index)
 	end
 end
 
-function ValueCheckers.XUIMultipleOptionCell(item, value, index)
+function ValueCheckers.MultipleOption(item, value, index)
 	if type(item.options) ~= 'table' then
 		item.options = {isArray = true}
 	end
@@ -317,7 +317,7 @@ function ValueCheckers.XUIMultipleOptionCell(item, value, index)
 	return value
 end
 
-function ValueCheckers.XUIOrderedOptionCell(item, value, index)
+function ValueCheckers.OrderedOption(item, value, index)
 	if type(item.options) ~= 'table' then
 		item.options = {isArray = true}
 	end
@@ -394,11 +394,11 @@ function ValueCheckers.XUIOrderedOptionCell(item, value, index)
 	return value
 end
 
-ValueCheckers.XUICheckboxCell = ValueCheckers.XUIOrderedOptionCell
-ValueCheckers.XUIRadioCell = ValueCheckers.XUIOptionCell
-ValueCheckers.XUISegmentCell = ValueCheckers.XUIOptionCell
+ValueCheckers.Checkbox = ValueCheckers.OrderedOption
+ValueCheckers.Radio = ValueCheckers.Option
+ValueCheckers.Segment = ValueCheckers.Option
 
-function ValueCheckers.XUISliderCell(item, value, index)
+function ValueCheckers.Slider(item, value, index)
 	if type(item.min) ~= 'number' then
 		error(string.format('%q: items[%d](%q).min (number expected got %s)', opt.XUIPath, index, item.key, type(item.min)))
 	end
@@ -427,7 +427,7 @@ function ValueCheckers.XUISliderCell(item, value, index)
 	return value
 end
 
-function ValueCheckers.XUIStepperCell(item, value, index)
+function ValueCheckers.Stepper(item, value, index)
 	if item.step == nil then
 		item.step = 1
 	end
@@ -465,7 +465,7 @@ function ValueCheckers.XUIStepperCell(item, value, index)
 	return value
 end
 
-function ValueCheckers.XUITextFieldCell(item, value, index)
+function ValueCheckers.TextField(item, value, index)
 	if item.isNumeric then
 		if not isNumeric(item.default) then
 			error(string.format('%q: items[%d](%q).default (integer expected got %s)', opt.XUIPath, index, item.key, math.type(item.default) or type(item.default)))
@@ -514,9 +514,9 @@ function ValueCheckers.XUITextFieldCell(item, value, index)
 	return value
 end
 
-ValueCheckers.XUISecureTextFieldCell = ValueCheckers.XUITextFieldCell
+ValueCheckers.SecureTextField = ValueCheckers.TextField
 
-function ValueCheckers.XUIDateTimeCell(item, value, index)
+function ValueCheckers.DateTime(item, value, index)
     if item.minuteInterval ~= nil and type(item.minuteInterval) ~= 'integer' then
         error(string.format('%q: items[%d](%q).minuteInterval (opt.integer expected got %s)', opt.XUIPath, index, item.key, type(item.minuteInterval)))
     end
@@ -545,7 +545,7 @@ function ValueCheckers.XUIDateTimeCell(item, value, index)
     return value
 end
 
-function ValueCheckers.XUIFileCell(item, value, index)
+function ValueCheckers.File(item, value, index)
     if item.allowedExtensions and type(item.allowedExtensions) ~= 'table' then
         item.allowedExtensions = {isArray = true}
     end
@@ -556,7 +556,7 @@ function ValueCheckers.XUIFileCell(item, value, index)
     return value
 end
 
-function ValueCheckers.XUIButtonCell(item, value, index)
+function ValueCheckers.Button(item, value, index)
     if type(item.action) ~= 'string' then
         error(string.format('%q: items[%d](%q).action (string expected got %s)', opt.XUIPath, index, item.key, type(item.action)))
     end
@@ -618,6 +618,11 @@ function events.save(opt)
 	local defaultsTable = loadDefaultsAndCache(opt.defaultsId)
 	defaultsTable[opt.key] = opt.value
 	saveCachedDefaults()
+end
+
+function events.reset(opt)
+    DefaultsCaches = {}
+    saveCachedDefaults()
 end
 
 if type(events[opt.event]) == 'function' then

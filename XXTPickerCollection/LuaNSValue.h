@@ -34,7 +34,7 @@
         int luaopen_plist(lua_State *L);
         void lua_openNSValueLibs(lua_State *L);
 
-        NSString * const kXXTELuaVModelErrorDomain;
+        extern NSString * const kXXTELuaVModelErrorDomain;
         BOOL checkCode(lua_State *L, int code, NSError **error);
 
 #ifdef __cplusplus
@@ -49,6 +49,6 @@
 #define lua_toNSArray(L, IDX) lua_toNSArrayx((L), (IDX), nil, 0)
 #define lua_toNSValue(L, IDX) lua_toNSValuex((L), (IDX), 0)
 
-#define LUA_NSVALUE_MAX_DEPTH 100
+#define LUA_NSVALUE_MAX_DEPTH 50
 
 #endif

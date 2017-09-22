@@ -71,7 +71,8 @@
     @synchronized (self) {
         lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
-            lua_pushNSValue(L, @{ @"event": @"load", @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath });
+            id args = @{ @"event": @"load", @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
+            lua_pushNSValue(L, args);
             int entryResult = lua_pcall(L, 1, 1, 0);
             if (checkCode(L, entryResult, error)) {
                 value = lua_toNSValue(L, -1);
@@ -102,7 +103,8 @@
     @synchronized (self) {
         lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
-            lua_pushNSValue(L, @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": obj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath });
+            id args = @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": obj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
+            lua_pushNSValue(L, args);
             int entryResult = lua_pcall(L, 1, 1, 0);
             NSError *saveError = nil;
             if (checkCode(L, entryResult, &saveError)) {
