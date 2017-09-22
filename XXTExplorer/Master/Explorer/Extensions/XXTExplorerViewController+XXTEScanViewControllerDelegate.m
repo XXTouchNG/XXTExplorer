@@ -33,7 +33,7 @@
             if (webController) {
                 if (XXTE_COLLAPSED) {
                     XXTE_START_IGNORE_PARTIAL
-                    if (XXTE_SYSTEM_8) {
+                    if (@available(iOS 8.0, *)) {
                         XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
                         [self.splitViewController showDetailViewController:navigationController sender:self];
                     }

@@ -70,7 +70,7 @@
         } else {
             if (XXTE_COLLAPSED) {
                 XXTE_START_IGNORE_PARTIAL
-                if (XXTE_SYSTEM_8) {
+                if (@available(iOS 8.0, *)) {
                     XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
                     [self.splitViewController showDetailViewController:navigationController sender:self];
                 }

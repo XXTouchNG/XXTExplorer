@@ -87,7 +87,7 @@ XXTE_END_IGNORE_PARTIAL
     self.extendedLayoutIncludesOpaqueBars = YES;
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     }
     XXTE_END_IGNORE_PARTIAL
@@ -109,13 +109,13 @@ XXTE_END_IGNORE_PARTIAL
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleDescriptionValueCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         [self.searchController loadViewIfNeeded];
     }
     XXTE_END_IGNORE_PARTIAL

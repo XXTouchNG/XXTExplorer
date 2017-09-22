@@ -78,7 +78,7 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     }
     XXTE_END_IGNORE_PARTIAL
@@ -88,7 +88,7 @@ typedef enum : NSUInteger {
     self.tableView.dataSource = self;
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTE_END_IGNORE_PARTIAL
@@ -318,7 +318,7 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 return 66.f;
             } else {
-                if (XXTE_SYSTEM_8) {
+                if (@available(iOS 8.0, *)) {
                     return UITableViewAutomaticDimension;
                 } else {
                     UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];

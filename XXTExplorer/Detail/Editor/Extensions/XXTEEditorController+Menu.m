@@ -317,7 +317,7 @@
         @strongify(self);
         NSString *entryName = [self.entryPath lastPathComponent];
         XXTE_START_IGNORE_PARTIAL
-        if (XXTE_SYSTEM_8) {
+        if (@available(iOS 8.0, *)) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self.navigationController presentViewController:alertController animated:YES completion:nil];

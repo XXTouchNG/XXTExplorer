@@ -53,7 +53,7 @@
     [super viewDidLoad];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     }
     XXTE_END_IGNORE_PARTIAL
@@ -63,7 +63,7 @@
     self.tableView.dataSource = self;
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTE_END_IGNORE_PARTIAL
@@ -187,7 +187,7 @@
             }
         } else if (indexPath.section == 1) {
             if (indexPath.row == 0) {
-                if (XXTE_SYSTEM_8) {
+                if (@available(iOS 8.0, *)) {
                     return UITableViewAutomaticDimension;
                 } else {
                     UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];

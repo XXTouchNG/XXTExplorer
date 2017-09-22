@@ -175,7 +175,7 @@
 
 - (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         NSURL *shareURL = [NSURL fileURLWithPath:self.entryPath];
         if (!shareURL) {
             return;

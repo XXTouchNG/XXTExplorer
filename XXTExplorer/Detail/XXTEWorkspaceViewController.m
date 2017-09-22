@@ -37,7 +37,7 @@
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         self.arrowPlaceholderImageView.hidden = (self.splitViewController.displayMode != UISplitViewControllerDisplayModePrimaryHidden);
     }
     XXTE_END_IGNORE_PARTIAL

@@ -70,7 +70,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
     
     {
-        if (XXTE_SYSTEM_8) {
+        if (@available(iOS 8.0, *)) {
             // Detail Controller
             XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
             XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
@@ -155,7 +155,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     // Setup Shortcut Actions
     {
         XXTE_START_IGNORE_PARTIAL
-        if (XXTE_SYSTEM_9) {
+        if (@available(iOS 9.0, *)) {
             UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
             UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ XXTEShortcutAction: @"stop" }];
             UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
@@ -217,7 +217,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 
 /*
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         return NO;
     }
     return [self application:application openURL:url];

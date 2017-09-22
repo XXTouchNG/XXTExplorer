@@ -61,7 +61,7 @@
     LGAlertView *alertAppearance = [LGAlertView appearanceWhenContainedIn:[self class], nil];
     alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.25];
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     }
     XXTE_END_IGNORE_PARTIAL

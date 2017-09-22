@@ -49,7 +49,7 @@
         textLabel.textColor = XXTE_COLOR;
         textLabel.backgroundColor = [UIColor whiteColor];
         XXTE_START_IGNORE_PARTIAL
-        if (XXTE_SYSTEM_9)
+        if (@available(iOS 9.0, *))
         {
             textLabel.font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
         }

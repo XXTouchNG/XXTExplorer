@@ -43,7 +43,7 @@
     [navigationBarAppearance setBarTintColor:XXTE_COLOR];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         [navigationBarAppearance setTranslucent:NO];
     }
     XXTE_END_IGNORE_PARTIAL

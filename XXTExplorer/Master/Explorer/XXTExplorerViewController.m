@@ -114,7 +114,7 @@
         tableView.allowsSelectionDuringEditing = YES;
         tableView.allowsMultipleSelectionDuringEditing = YES;
         XXTE_START_IGNORE_PARTIAL
-        if (XXTE_SYSTEM_9) {
+        if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }XXTE_END_IGNORE_PARTIAL
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
@@ -413,7 +413,7 @@
                             openWithController.delegate = self;
                             XXTExplorerEntryOpenWithNavigationController *navController = [[XXTExplorerEntryOpenWithNavigationController alloc] initWithRootViewController:openWithController];
                             XXTE_START_IGNORE_PARTIAL
-                            if (XXTE_SYSTEM_8) {
+                            if (@available(iOS 8.0, *)) {
                                 navController.modalPresentationStyle = UIModalPresentationPopover;
                                 UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
                                 popoverController.sourceView = tableView;

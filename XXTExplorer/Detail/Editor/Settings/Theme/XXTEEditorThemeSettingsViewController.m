@@ -51,7 +51,7 @@
     self.tableView.dataSource = self;
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTE_END_IGNORE_PARTIAL

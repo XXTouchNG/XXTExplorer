@@ -37,8 +37,10 @@
 
 - (void)setupAppearance {
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8 && XXTE_PAD) {
-        self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    if (XXTE_PAD) {
+        if (@available(iOS 8.0, *)) {
+            self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+        }
     }
     XXTE_END_IGNORE_PARTIAL
 }

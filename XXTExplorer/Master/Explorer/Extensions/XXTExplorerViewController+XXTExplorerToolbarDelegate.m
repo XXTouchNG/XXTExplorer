@@ -97,7 +97,7 @@
             scanViewController.delegate = self;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
             XXTE_START_IGNORE_PARTIAL
-            if (XXTE_SYSTEM_8) {
+            if (@available(iOS 8.0, *)) {
                 navController.modalPresentationStyle = UIModalPresentationPopover;
                 UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
                 popoverController.barButtonItem = buttonItem;
@@ -107,7 +107,7 @@
             [self.navigationController presentViewController:navController animated:YES completion:nil];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
             XXTE_START_IGNORE_PARTIAL
-            if (XXTE_SYSTEM_8) {
+            if (@available(iOS 8.0, *)) {
                 UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
                 controller.delegate = self;
                 [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
@@ -240,7 +240,7 @@
             }
             if (shareUrls.count != 0) {
                 XXTE_START_IGNORE_PARTIAL
-                if (XXTE_SYSTEM_8) {
+                if (@available(iOS 8.0, *)) {
                     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
                     activityViewController.modalPresentationStyle = UIModalPresentationPopover;
                     UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;

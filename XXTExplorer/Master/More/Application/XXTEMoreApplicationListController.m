@@ -112,7 +112,7 @@ XXTE_END_IGNORE_PARTIAL
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         XXTE_START_IGNORE_PARTIAL
-        if (XXTE_SYSTEM_9) {
+        if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XXTE_END_IGNORE_PARTIAL
@@ -141,7 +141,7 @@ XXTE_END_IGNORE_PARTIAL
     XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         [self.searchController loadViewIfNeeded];
     }
     XXTE_END_IGNORE_PARTIAL
@@ -203,7 +203,7 @@ XXTE_END_IGNORE_PARTIAL
                         }
                         NSData *applicationIconImageData = CFBridgingRelease(SBSCopyIconImagePNGDataForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
                         UIImage *applicationIconImage = [UIImage imageWithData:applicationIconImageData];
-                        if (XXTE_SYSTEM_8) {
+                        if (@available(iOS 8.0, *)) {
                             if ([appProxy respondsToSelector:@selector(dataContainerURL)]) {
                                 applicationContainerPath = [[appProxy dataContainerURL] path];
                             }

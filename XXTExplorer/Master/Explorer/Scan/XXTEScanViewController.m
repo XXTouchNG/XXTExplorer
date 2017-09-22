@@ -52,7 +52,7 @@
      }];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     }
     XXTE_END_IGNORE_PARTIAL
@@ -355,7 +355,7 @@
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         if (![XXTEImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
             return;
         }
@@ -436,7 +436,7 @@
 
 - (NSString *)scanImage:(UIImage *)image {
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_SYSTEM_8) {
+    if (@available(iOS 8.0, *)) {
         NSString *scannedResult = nil;
         CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
         NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
