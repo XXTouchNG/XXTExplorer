@@ -588,6 +588,7 @@ local cellNameMap = {
 	multipleoption  = 'MultipleOption';
 	orderedoption   = 'OrderedOption';
 	option          = 'Option';
+	checkbox        = 'Checkbox';
 	radio           = 'Radio';
 	segment         = 'Segment';
 	textarea        = 'Textarea';
