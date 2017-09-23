@@ -57,10 +57,10 @@
     [self.cellSlider addTarget:self action:@selector(xuiSliderValueDidFinishChanging:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)setXui_enabled:(NSNumber *)xui_enabled {
-    [super setXui_enabled:xui_enabled];
-    BOOL enabled = [xui_enabled boolValue];
-    self.cellSlider.enabled = enabled;
+- (void)setXui_readonly:(NSNumber *)xui_readonly {
+    [super setXui_readonly:xui_readonly];
+    BOOL readonly = [xui_readonly boolValue];
+    self.cellSlider.enabled = !readonly;
 }
 
 - (void)setXui_value:(id)xui_value {

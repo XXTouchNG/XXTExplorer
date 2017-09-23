@@ -82,10 +82,10 @@
     [self.cellStepper addTarget:self action:@selector(xuiStepperValueDidFinishChanging:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)setXui_enabled:(NSNumber *)xui_enabled {
-    [super setXui_enabled:xui_enabled];
-    BOOL enabled = [xui_enabled boolValue];
-    self.cellStepper.enabled = enabled;
+- (void)setXui_readonly:(NSNumber *)xui_readonly {
+    [super setXui_readonly:xui_readonly];
+    BOOL readonly = [xui_readonly boolValue];
+    self.cellStepper.enabled = !readonly;
 }
 
 - (void)setXui_value:(id)xui_value {

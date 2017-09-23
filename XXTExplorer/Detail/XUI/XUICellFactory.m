@@ -94,7 +94,16 @@
                 continue;
             }
             cellInstance.adapter = self.adapter;
-            cellInstance.theme = self.theme;
+            XUITheme *theme = nil;
+            NSDictionary *itemTheme = itemDictionary[@"theme"];
+            if ([itemTheme isKindOfClass:[NSDictionary class]]) {
+                theme = [[XUITheme alloc] initWithDictionary:itemTheme];
+            } else {
+                theme = self.theme;
+            }
+            if (theme) {
+                cellInstance.theme = theme;
+            }
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
             for (NSUInteger keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
                 NSString *itemKey = itemAllKeys[keyIdx];
@@ -173,14 +182,20 @@
     NSString *cellDefaults = inCell.xui_defaults;
     NSString *cellKey = inCell.xui_key;
     NSString *cellValue = inCell.xui_value;
+    if (!cellValue) return;
     for (NSArray <XUIBaseCell *> *cellArray in self.otherCells) {
         [cellArray enumerateObjectsUsingBlock:^(XUIBaseCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (cell.xui_defaults.length > 0 &&
+            if (cell != inCell &&
+                cell.xui_defaults.length > 0 &&
                 [cell.xui_defaults isEqualToString:cellDefaults] &&
                 cell.xui_key.length > 0 &&
                 [cell.xui_key isEqualToString:cellKey]
                 ) {
-                cell.xui_value = cellValue;
+                NSDictionary *testEntry = @{ @"value": cellValue };
+                BOOL testResult = [[cell class] checkEntry:testEntry withError:nil];
+                if (testResult) {
+                    cell.xui_value = cellValue;
+                }
             }
         }];
     }

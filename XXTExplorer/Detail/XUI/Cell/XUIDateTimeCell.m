@@ -64,10 +64,10 @@
     [self.dateTimePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)setXui_enabled:(NSNumber *)xui_enabled {
-    [super setXui_enabled:xui_enabled];
-    BOOL enabled = [xui_enabled boolValue];
-    self.dateTimePicker.enabled = enabled;
+- (void)setXui_readonly:(NSNumber *)xui_readonly {
+    [super setXui_readonly:xui_readonly];
+    BOOL readonly = [xui_readonly boolValue];
+    self.dateTimePicker.enabled = !readonly;
 }
 
 - (void)setXui_mode:(NSString *)xui_mode {

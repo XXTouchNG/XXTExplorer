@@ -37,7 +37,8 @@
             [self loadEntryListData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         }
-        else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+        else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive] ||
+                 [eventType isEqualToString:XXTENotificationEventTypeApplicationDidExtractResource]) {
             [self refreshEntryListView:nil];
         }
     }

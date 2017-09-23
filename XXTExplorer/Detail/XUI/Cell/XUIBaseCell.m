@@ -98,7 +98,7 @@ NSString * XUIOptionCellIconKey = @"icon";
 }
 
 - (void)setupCell {
-    _xui_enabled = @YES;
+    _xui_readonly = @NO;
     if ([self.class layoutRequiresDynamicRowHeight]) {
         _xui_height = @(-1);
     } else {
@@ -152,6 +152,10 @@ NSString * XUIOptionCellIconKey = @"icon";
     self.tintColor = theme.tintColor;
     self.textLabel.textColor = theme.labelColor;
     self.detailTextLabel.textColor = theme.valueColor;
+}
+
+- (BOOL)canEdit {
+    return NO;
 }
 
 @end

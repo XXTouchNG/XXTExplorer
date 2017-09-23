@@ -49,8 +49,8 @@
         self.textView.text = self.cell.xui_value;
     }
     
-    BOOL xui_enabled = [self.cell.xui_enabled boolValue];
-    self.textView.editable = xui_enabled;
+    BOOL xui_readonly = [self.cell.xui_readonly boolValue];
+    self.textView.editable = !xui_readonly;
     
     NSString *xui_alignment = self.cell.xui_alignment;
     if ([xui_alignment isEqualToString:@"left"]) {

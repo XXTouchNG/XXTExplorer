@@ -55,7 +55,6 @@
     if (!specKey) return;
     assert ([specKey isKindOfClass:[NSString class]] && specKey.length > 0);
     id specValue = cell.xui_value;
-    if (!specValue) return;
     [self setObject:specValue forKey:specKey Defaults:specComponent];
     [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventValueChanged object:cell userInfo:@{}];
 }
@@ -92,7 +91,8 @@
 }
 
 - (void)setObject:(id)obj forKey:(NSString *)key Defaults:(NSString *)identifier {
-    if (!obj || !key || !identifier) return;
+    if (!key || !identifier) return;
+    id saveObj = obj ? obj : [[NSObject alloc] init];
     
     NSString *path = self.path;
     NSBundle *bundle = self.bundle;
@@ -103,7 +103,7 @@
     @synchronized (self) {
         lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
-            id args = @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": obj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
+            id args = @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": saveObj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
             lua_pushNSValue(L, args);
             int entryResult = lua_pcall(L, 1, 1, 0);
             NSError *saveError = nil;

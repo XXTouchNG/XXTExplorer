@@ -145,7 +145,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
                     int status = zip_extract(fromPath.UTF8String, toPath.UTF8String, extract_callback, &arg);
                     BOOL result = (status == 0);
                     if (result) {
-                        
+                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:application userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeApplicationDidExtractResource}]];
                     }
                 }
             });

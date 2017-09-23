@@ -119,10 +119,10 @@
     }
 }
 
-- (void)setXui_enabled:(NSNumber *)xui_enabled {
-    [super setXui_enabled:xui_enabled];
-    BOOL enabled = [xui_enabled boolValue];
-    self.cellSegmentControl.enabled = enabled;
+- (void)setXui_readonly:(NSNumber *)xui_readonly {
+    [super setXui_readonly:xui_readonly];
+    BOOL readonly = [xui_readonly boolValue];
+    self.cellSegmentControl.enabled = !readonly;
 }
 
 - (IBAction)xuiSegmentValueChanged:(UISegmentedControl *)sender {
