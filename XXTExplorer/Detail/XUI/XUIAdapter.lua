@@ -578,6 +578,7 @@ local function checkCellValue(item, value, index)
 end
 
 local cellNameMap = {
+<<<<<<< HEAD
     button          = 'Button';
     file            = 'File';
     datetime        = 'DateTime';
@@ -598,6 +599,29 @@ local cellNameMap = {
     link            = 'Link';
     statictext      = 'StaticText';
     image           = 'Image';
+=======
+	button          = 'Button';
+	file            = 'File';
+	datetime        = 'DateTime';
+	securetextfield = 'SecureTextField';
+	textfield       = 'TextField';
+	stepper         = 'Stepper';
+	slider          = 'Slider';
+	multipleoption  = 'MultipleOption';
+	orderedoption   = 'OrderedOption';
+	option          = 'Option';
+	checkbox        = 'Checkbox';
+	radio           = 'Radio';
+	segment         = 'Segment';
+	textarea        = 'Textarea';
+	titlevalue      = 'TitleValue';
+	switch          = 'Switch';
+
+	group           = 'Group';
+	link            = 'Link';
+	statictext      = 'StaticText';
+	image           = 'Image';
+>>>>>>> ef144f2d8b1b03b93f3c63b8298c6ed8d6e7d751
 }
 
 local events = {}
