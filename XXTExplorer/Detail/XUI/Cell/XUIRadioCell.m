@@ -190,10 +190,10 @@
     }
 }
 
-- (void)setXui_enabled:(NSNumber *)xui_enabled {
-    [super setXui_enabled:xui_enabled];
-    BOOL enabled = [xui_enabled boolValue];
-    self.tagView.enableTagSelection = enabled;
+- (void)setXui_readonly:(NSNumber *)xui_readonly {
+    [super setXui_readonly:xui_readonly];
+    BOOL readonly = [xui_readonly boolValue];
+    self.tagView.enableTagSelection = !readonly;
 }
 
 - (void)setTheme:(XUITheme *)theme {

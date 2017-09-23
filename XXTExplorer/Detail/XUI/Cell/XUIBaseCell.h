@@ -24,12 +24,13 @@ extern NSString * XUIOptionCellIconKey;
 @property (nonatomic, strong) NSString *xui_key;
 @property (nonatomic, strong) id xui_default;
 @property (nonatomic, strong) NSString *xui_icon;
-@property (nonatomic, strong) NSNumber *xui_enabled;
+@property (nonatomic, strong) NSNumber *xui_readonly;
 @property (nonatomic, strong) NSNumber *xui_height;
 @property (nonatomic, strong) id xui_value;
 @property (nonatomic, strong) XUIAdapter *adapter;
 
 @property (nonatomic, strong) XUITheme *theme;
+@property (nonatomic, assign) BOOL canEdit;
 
 + (BOOL)xibBasedLayout;
 + (BOOL)layoutNeedsTextLabel;

@@ -146,6 +146,20 @@
     return @(self.tagView.contentSize.height + 24.f);
 }
 
+- (id)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView valueForTagAtIndex:(NSUInteger)selectedIndexValue {
+    NSMutableArray *validValues = [[NSMutableArray alloc] init];
+    for (NSDictionary *obj in self.xui_options) {
+        if (obj[XUIOptionCellValueKey]) {
+            [validValues addObject:obj[XUIOptionCellValueKey]];
+        } else {
+            return nil;
+        }
+    }
+    if (selectedIndexValue >= validValues.count) return nil;
+    id selectedValue = validValues[selectedIndexValue];
+    return selectedValue;
+}
+
 - (BOOL)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView canTapTag:(NSString *)tagText atIndex:(NSUInteger)index currentSelected:(BOOL)currentSelected {
     NSArray *selectedValues = self.xui_value;
     NSUInteger maxCount = [self.xui_maxCount unsignedIntegerValue];
@@ -156,7 +170,7 @@
     else if (selectedValues.count <= minCount && currentSelected == YES) {
         return NO;
     }
-    return YES;
+    return ([self textTagCollectionView:textTagCollectionView valueForTagAtIndex:index] != nil);
 }
 
 - (void)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView
@@ -168,12 +182,15 @@
     [self.xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj[XUIOptionCellValueKey]) {
             [validValues addObject:obj[XUIOptionCellValueKey]];
+        } else {
+            return;
         }
     }];
     NSMutableArray *selectedValues = [[NSMutableArray alloc] init];
     NSArray <NSNumber *> *selectedIndexes = textTagCollectionView.allSelectedIndexes;
     for (NSNumber *selectedIndex in selectedIndexes) {
         NSUInteger selectedIndexValue = [selectedIndex unsignedIntegerValue];
+        if (selectedIndexValue >= validValues.count) return;
         id selectedValue = validValues[selectedIndexValue];
         if (selectedValue) [selectedValues addObject:selectedValue];
     }
@@ -203,10 +220,10 @@
     }
 }
 
-- (void)setXui_enabled:(NSNumber *)xui_enabled {
-    [super setXui_enabled:xui_enabled];
-    BOOL enabled = [xui_enabled boolValue];
-    self.tagView.enableTagSelection = enabled;
+- (void)setXui_readonly:(NSNumber *)xui_readonly {
+    [super setXui_readonly:xui_readonly];
+    BOOL readonly = [xui_readonly boolValue];
+    self.tagView.enableTagSelection = !readonly;
 }
 
 - (void)setTheme:(XUITheme *)theme {

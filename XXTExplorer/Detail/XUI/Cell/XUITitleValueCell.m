@@ -74,6 +74,9 @@
         self.shouldUpdateValue = NO;
         self.detailTextLabel.text = [self.xui_value stringValue];
         BOOL isBaseType = NO;
+        if (!self.xui_value) {
+            isBaseType = YES;
+        }
         NSArray <Class> *baseTypes = [XXTEBaseObjectViewController supportedTypes];
         for (Class baseType in baseTypes) {
             if ([self.xui_value isKindOfClass:baseType]) {
@@ -95,6 +98,10 @@
         }
     }
     [self setNeedsLayout];
+}
+
+- (BOOL)canEdit {
+    return YES;
 }
 
 @end

@@ -312,6 +312,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        BOOL readonly = [cell.xui_readonly boolValue];
+        if (readonly) {
+            return;
+        }
         if ([cell isKindOfClass:[XUILinkCell class]]) {
             [self tableView:tableView performLinkCell:cell];
         } else if ([cell isKindOfClass:[XUIOptionCell class]]) {
@@ -334,6 +338,10 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    BOOL readonly = [cell.xui_readonly boolValue];
+    if (readonly) {
+        return;
+    }
     if ([cell isKindOfClass:[XUITitleValueCell class]]) {
         XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
         if (titleValueCell.xui_snippet) {
@@ -348,6 +356,45 @@
             [factory executeTask:snippet fromViewController:self];
             self.pickerCell = titleValueCell;
         }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    BOOL readonly = [cell.xui_readonly boolValue];
+    if (readonly) {
+        return NO;
+    }
+    if (cell.canEdit) {
+        if (cell.xui_value) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    @weakify(self);
+    UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedString(@"Delete", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+        {
+            @strongify(self);
+            [self tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+        }];
+    button.backgroundColor = self.theme.dangerColor;
+    return @[button];
+}
+XXTE_END_IGNORE_PARTIAL
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell.canEdit) {
+        cell.xui_value = nil;
+        [self.adapter saveDefaultsFromCell:cell];
     }
 }
 
@@ -376,7 +423,8 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     XUIButtonCell *buttonCell = (XUIButtonCell *)cell;
-    if ([buttonCell.xui_enabled boolValue] && buttonCell.xui_action) {
+    BOOL readonly = [buttonCell.xui_readonly boolValue];
+    if (readonly == NO && buttonCell.xui_action) {
         NSString *cellAction = buttonCell.xui_action;
         if (cellAction) {
             NSString *selectorName = [NSString stringWithFormat:@"xui_%@", cellAction];

@@ -61,12 +61,15 @@
     _xui_height = @(72.f); // standard height for date time picker
     _xui_allowedExtensions = @[ @"lua", @"xxt", @"xpp" ];
     
-    self.nameLabel.text = NSLocalizedString(@"Tap here to add a file.", nil);
-    self.descriptionLabel.text = [self openWithCellDescriptionFromExtensions:self.xui_allowedExtensions];
-    self.iconImageView.image = [UIImage imageNamed:@"XUIFileCellIcon"];
+    [self resetCellState];
 }
 
 - (void)setXui_value:(id)xui_value {
+    if (!xui_value) {
+        _xui_value = xui_value;
+        [self resetCellState];
+        return;
+    }
     NSString *filePath = xui_value;
     if (filePath) {
         NSDictionary *entryDetail = [XXTExplorerViewController.explorerEntryParser entryOfPath:filePath withError:nil];
@@ -96,6 +99,12 @@
     }
 }
 
+- (void)resetCellState {
+    self.nameLabel.text = NSLocalizedString(@"Tap here to add a file.", nil);
+    self.descriptionLabel.text = [self openWithCellDescriptionFromExtensions:self.xui_allowedExtensions];
+    self.iconImageView.image = [UIImage imageNamed:@"XUIFileCellIcon"];
+}
+
 - (NSString *)openWithCellDescriptionFromExtensions:(NSArray <NSString *> *)extensions {
     NSMutableString *mutableDescription = [@"" mutableCopy];
     [extensions enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -105,6 +114,10 @@
             [mutableDescription appendFormat:@"%@. ", obj];
     }];
     return [[NSString alloc] initWithString:mutableDescription];
+}
+
+- (BOOL)canEdit {
+    return YES;
 }
 
 @end
