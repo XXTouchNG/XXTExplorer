@@ -52,9 +52,10 @@
 
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, assign) UIEdgeInsets defaultInsets;
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *aboutButtonItem;
+@property (nonatomic, assign) UIEdgeInsets defaultContentInsets;
 
 @end
 
@@ -83,6 +84,8 @@
     });
     return entryService;
 }
+
+#pragma mark - Initializers
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithPath:path]) {
@@ -130,6 +133,8 @@
     }
 }
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -164,6 +169,7 @@
 
     if ([self.navigationController.viewControllers firstObject] == self) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+        self.navigationItem.rightBarButtonItem = self.aboutButtonItem;
     }
 }
 
@@ -181,6 +187,11 @@
 
 - (void)setupSubviews {
     [self.view addSubview:self.tableView];
+    
+    self.tableView.contentInset =
+    self.tableView.scrollIndicatorInsets = self.defaultContentInsets;
+    [self.tableView setContentOffset:CGPointMake(0, -self.defaultContentInsets.top) animated:YES];
+    
     if (self.headerView.headerText.length > 0 &&
         self.headerView.subheaderText.length > 0) {
         [self.tableView setTableHeaderView:self.headerView];
@@ -204,11 +215,20 @@
 
 - (UIBarButtonItem *)closeButtonItem {
     if (!_closeButtonItem) {
-        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissViewController:)];
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XUICloseIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonItemTapped:)];
         closeButtonItem.tintColor = [UIColor whiteColor];
         _closeButtonItem = closeButtonItem;
     }
     return _closeButtonItem;
+}
+
+- (UIBarButtonItem *)aboutButtonItem {
+    if (!_aboutButtonItem) {
+        UIBarButtonItem *aboutButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XUIWarningIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(aboutButtonItemTapped:)];
+        aboutButtonItem.tintColor = [UIColor whiteColor];
+        _aboutButtonItem = aboutButtonItem;
+    }
+    return _aboutButtonItem;
 }
 
 - (XUIListHeaderView *)headerView {
@@ -225,6 +245,8 @@
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.estimatedRowHeight = 44.f;
         XUI_START_IGNORE_PARTIAL
         if (XUI_SYSTEM_9) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
@@ -273,7 +295,9 @@
                 [cell layoutIfNeeded];
                 
                 CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.f) : 44.f;
+                CGFloat fixedHeight = (height > 0) ? (height + 1.f) : 44.f;
+                cell.xui_height = @(fixedHeight);
+                return fixedHeight;
             }
         }
     }
@@ -686,8 +710,16 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - UIControl Actions
 
+- (void)closeButtonItemTapped:(UIBarButtonItem *)sender {
+    [self dismissViewController:sender];
+}
+
 - (void)dismissViewController:(id)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)aboutButtonItemTapped:(UIBarButtonItem *)sender {
+    
 }
 
 #pragma mark - Keyboard
@@ -698,7 +730,8 @@ XXTE_END_IGNORE_PARTIAL
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    UIEdgeInsets contentInsets = [self defaultContentInsets];
+    contentInsets.bottom = kbSize.height;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
@@ -707,9 +740,17 @@ XXTE_END_IGNORE_PARTIAL
 - (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
     UITableView *tableView = self.tableView;
-    UIEdgeInsets contentInsets = XXTE_PAD ? UIEdgeInsetsZero : UIEdgeInsetsMake(0.0, 0.0, self.tabBarController.tabBar.bounds.size.height, 0.0);
+    UIEdgeInsets contentInsets = [self defaultContentInsets];
+    contentInsets.bottom = XXTE_PAD ? 0.0 : self.tabBarController.tabBar.bounds.size.height;
     tableView.contentInset = contentInsets;
     tableView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - Banner
+
+- (UIEdgeInsets)defaultContentInsets {
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    return insets;
 }
 
 #pragma mark - Memory

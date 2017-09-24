@@ -11,5 +11,6 @@
 @interface XUIStaticTextCell : XUIBaseCell
 
 @property (nonatomic, strong) NSString *xui_alignment;
+@property (nonatomic, strong) NSNumber *xui_selectable;
 
 @end

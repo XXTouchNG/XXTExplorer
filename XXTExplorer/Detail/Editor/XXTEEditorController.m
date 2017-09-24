@@ -241,16 +241,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.editable = !isReadOnlyMode;
     textView.tintColor = theme.caretColor;
     
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 11.0, *)) {
-        textView.smartDashesType = UITextSmartDashesTypeNo;
-        textView.smartQuotesType = UITextSmartQuotesTypeNo;
-        textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-    } else {
-        // Fallback on earlier versions
-    }
-    XXTE_END_IGNORE_PARTIAL
-    
     // Layout Manager
     [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     if (textView.vLayoutManager) {
@@ -485,6 +475,16 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
         
         textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
+        
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 11.0, *)) {
+            textView.smartDashesType = UITextSmartDashesTypeNo;
+            textView.smartQuotesType = UITextSmartQuotesTypeNo;
+            textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
+        } else {
+            // Fallback on earlier versions
+        }
+        XXTE_END_IGNORE_PARTIAL
         
         textView.vTextStorage = textStorage;
         textView.vTypeSetter = typeSetter;

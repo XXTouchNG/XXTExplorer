@@ -11,7 +11,7 @@
 
 @interface XUIStaticTextCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *cellStaticTextLabel;
+@property (weak, nonatomic) IBOutlet UITextView *cellStaticTextView;
 
 @end
 
@@ -36,7 +36,8 @@
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
     return
     @{
-      @"alignment": [NSString class]
+      @"alignment": [NSString class],
+      @"selectable": [NSNumber class],
       };
 }
 
@@ -71,34 +72,40 @@
 
 - (void)setXui_label:(NSString *)xui_label {
     [super setXui_label:xui_label];
-    self.cellStaticTextLabel.text = xui_label;
+    self.cellStaticTextView.text = xui_label;
 }
 
 - (void)setXui_alignment:(NSString *)xui_alignment {
     _xui_alignment = xui_alignment;
     if ([xui_alignment isEqualToString:@"left"]) {
-        self.cellStaticTextLabel.textAlignment = NSTextAlignmentLeft;
+        self.cellStaticTextView.textAlignment = NSTextAlignmentLeft;
     }
     else if ([xui_alignment isEqualToString:@"center"]) {
-        self.cellStaticTextLabel.textAlignment = NSTextAlignmentCenter;
+        self.cellStaticTextView.textAlignment = NSTextAlignmentCenter;
     }
     else if ([xui_alignment isEqualToString:@"right"]) {
-        self.cellStaticTextLabel.textAlignment = NSTextAlignmentRight;
+        self.cellStaticTextView.textAlignment = NSTextAlignmentRight;
     }
     else if ([xui_alignment isEqualToString:@"natural"]) {
-        self.cellStaticTextLabel.textAlignment = NSTextAlignmentNatural;
+        self.cellStaticTextView.textAlignment = NSTextAlignmentNatural;
     }
     else if ([xui_alignment isEqualToString:@"justified"]) {
-        self.cellStaticTextLabel.textAlignment = NSTextAlignmentJustified;
+        self.cellStaticTextView.textAlignment = NSTextAlignmentJustified;
     }
     else {
-        self.cellStaticTextLabel.textAlignment = NSTextAlignmentNatural;
+        self.cellStaticTextView.textAlignment = NSTextAlignmentNatural;
     }
+}
+
+- (void)setXui_selectable:(NSNumber *)xui_selectable {
+    _xui_selectable = xui_selectable;
+    self.cellStaticTextView.selectable = [xui_selectable boolValue];
 }
 
 - (void)setTheme:(XUITheme *)theme {
     [super setTheme:theme];
-    self.cellStaticTextLabel.textColor = theme.labelColor;
+    self.cellStaticTextView.textColor = theme.labelColor;
+    self.cellStaticTextView.tintColor = theme.tintColor;
 }
 
 @end

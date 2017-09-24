@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong, readonly) UIColor *tintColor;
 @property (nonatomic, strong, readonly) UIColor *dangerColor;
+@property (nonatomic, strong, readonly) UIColor *warningColor;
 @property (nonatomic, strong, readonly) UIColor *successColor;
 @property (nonatomic, strong, readonly) UIColor *highlightColor;
 
