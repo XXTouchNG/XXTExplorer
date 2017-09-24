@@ -26,6 +26,7 @@
 #import "XXTExplorerEntryService.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEDispatchDefines.h"
+#import "XXTENotificationCenterDefines.h"
 
 #import "XUIOptionViewController.h"
 #import "XUIMultipleOptionViewController.h"
@@ -174,7 +175,8 @@
     
     [self setupSubviews];
 
-    if ([self.navigationController.viewControllers firstObject] == self) {
+    if (self.awakeFromOutside == NO &&
+        [self.navigationController.viewControllers firstObject] == self) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     }
 }
@@ -182,6 +184,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];
     [super viewWillAppear:animated];
     [self storeCellsIfNecessary];
 }
@@ -754,6 +757,20 @@ XXTE_END_IGNORE_PARTIAL
 - (UIEdgeInsets)defaultContentInsets {
     UIEdgeInsets insets = UIEdgeInsetsZero;
     return insets;
+}
+
+#pragma mark - Notifications
+
+- (void)handleApplicationNotifications:(NSNotification *)aNotification {
+    NSDictionary *userInfo = aNotification.userInfo;
+    NSString *eventType = userInfo[XXTENotificationEventType];
+    if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidEnterBackground])
+    {
+        if (self.awakeFromOutside) {
+            
+            [self dismissViewController:aNotification];
+        }
+    }
 }
 
 #pragma mark - Memory

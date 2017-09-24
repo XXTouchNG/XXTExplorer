@@ -24,7 +24,7 @@
 
 @implementation XXTEPackageViewerController
 
-@synthesize entryPath = _entryPath;
+@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Installer", nil);

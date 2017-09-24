@@ -138,7 +138,7 @@
     return nil;
 }
 
-- (UIViewController *)configuratorForEntry:(NSDictionary *)entry {
+- (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
     if (reader &&
         [reader conformsToProtocol:@protocol(XXTExplorerEntryBundleReader)] &&

@@ -26,7 +26,7 @@
 
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry;
 - (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry;
-- (UIViewController *)configuratorForEntry:(NSDictionary *)entry;
+- (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry;
 - (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)controllerName forEntryPath:(NSString *)entryPath;
 
 @end

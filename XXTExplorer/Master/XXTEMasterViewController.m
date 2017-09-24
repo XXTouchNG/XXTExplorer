@@ -28,6 +28,8 @@
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
 
+#import "XXTEViewer.h"
+
 @interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEAPTHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
 
 @property(nonatomic, assign) BOOL checkUpdateInBackground;
@@ -361,12 +363,17 @@
     if ([jsonEvent isEqualToString:@"xui"]) {
         if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]]) {
             NSString *rawTargetPathString = jsonDictionary[@"path"];
-            [self performAction:sender presentConfiguratorForBundleAtPath:rawTargetPathString];
+            BOOL interactive = NO;
+            NSString *interactiveModeString = jsonDictionary[@"interactive"];
+            if ([interactiveModeString isEqualToString:@"true"]) {
+                interactive = YES;
+            }
+            [self performAction:sender presentConfiguratorForBundleAtPath:rawTargetPathString interactiveMode:interactive];
         }
     }
 }
 
-- (void)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath {
+- (void)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath interactiveMode:(BOOL)interactive {
     NSError *entryError = nil;
     NSDictionary *entryDetail = [[XXTExplorerViewController explorerEntryParser] entryOfPath:bundlePath withError:&entryError];
     if (entryError) {
@@ -381,11 +388,12 @@
         showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
         return;
     }
-    UIViewController *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail];
+    UIViewController <XXTEViewer> *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail];
     if (!configurator) {
         showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]);
         return;
     }
+    configurator.awakeFromOutside = interactive;
     XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
     navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

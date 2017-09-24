@@ -515,7 +515,7 @@ function ValueCheckers.TextField(item, value, index)
     return value
 end
 
-ValueCheckers.securetextfield = ValueCheckers.TextField
+ValueCheckers.SecureTextField = ValueCheckers.TextField
 
 function ValueCheckers.DateTime(item, value, index)
     if item.minuteInterval ~= nil and type(item.minuteInterval) ~= 'integer' then
