@@ -10,6 +10,8 @@
 #import "XUIListViewController.h"
 
 #import "XUIListHeaderView.h"
+#import "XUIListFooterView.h"
+
 #import "XUIGroupCell.h"
 #import "XUILinkCell.h"
 #import "XUIOptionCell.h"
@@ -52,6 +54,7 @@
 
 @property (nonatomic, strong) XUIListHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) XUIListFooterView *footerView;
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *aboutButtonItem;
@@ -159,17 +162,20 @@
     
     NSString *listHeader = rootEntry[@"header"];
     NSString *listSubheader = rootEntry[@"subheader"];
-    
-    if (listHeader && listSubheader) {
+    if ([listHeader isKindOfClass:[NSString class]] && [listSubheader isKindOfClass:[NSString class]]) {
         self.headerView.headerText = listHeader;
         self.headerView.subheaderText = listSubheader;
+    }
+    
+    NSString *listFooter = rootEntry[@"footer"];
+    if ([listFooter isKindOfClass:[NSString class]]) {
+        self.footerView.footerText = listFooter;
     }
     
     [self setupSubviews];
 
     if ([self.navigationController.viewControllers firstObject] == self) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
-        self.navigationItem.rightBarButtonItem = self.aboutButtonItem;
     }
 }
 
@@ -192,22 +198,24 @@
     self.tableView.scrollIndicatorInsets = self.defaultContentInsets;
     [self.tableView setContentOffset:CGPointMake(0, -self.defaultContentInsets.top) animated:YES];
     
-    if (self.headerView.headerText.length > 0 &&
-        self.headerView.subheaderText.length > 0) {
+    {
+        CGFloat height = self.headerView.intrinsicContentSize.height;
+        CGRect headerFrame = self.headerView.frame;
+        headerFrame.size.height = height;
+        self.headerView.frame = headerFrame;
         [self.tableView setTableHeaderView:self.headerView];
-        if (@available(iOS 8.0, *)) {
-            
-        } else {
-            [self.headerView setNeedsLayout];
-            [self.headerView layoutIfNeeded];
-            CGFloat height = [self.headerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            
-            // update the header's frame and set it again
-            CGRect headerFrame = self.headerView.frame;
-            headerFrame.size.height = height;
-            self.headerView.frame = headerFrame;
-            self.tableView.tableHeaderView = self.headerView;
-        }
+        
+        self.headerView.theme = self.theme;
+    }
+    
+    {
+        CGFloat height = self.footerView.intrinsicContentSize.height;
+        CGRect footerFrame = self.footerView.frame;
+        footerFrame.size.height = height;
+        self.footerView.frame = footerFrame;
+        [self.tableView setTableFooterView:self.footerView];
+        
+        self.footerView.theme = self.theme;
     }
 }
 
@@ -215,25 +223,16 @@
 
 - (UIBarButtonItem *)closeButtonItem {
     if (!_closeButtonItem) {
-        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XUICloseIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonItemTapped:)];
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonItemTapped:)];
         closeButtonItem.tintColor = [UIColor whiteColor];
         _closeButtonItem = closeButtonItem;
     }
     return _closeButtonItem;
 }
 
-- (UIBarButtonItem *)aboutButtonItem {
-    if (!_aboutButtonItem) {
-        UIBarButtonItem *aboutButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XUIWarningIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(aboutButtonItemTapped:)];
-        aboutButtonItem.tintColor = [UIColor whiteColor];
-        _aboutButtonItem = aboutButtonItem;
-    }
-    return _aboutButtonItem;
-}
-
 - (XUIListHeaderView *)headerView {
     if (!_headerView) {
-        XUIListHeaderView *headerView = [[XUIListHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 140.f)];
+        XUIListHeaderView *headerView = [[XUIListHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.f)];
         _headerView = headerView;
     }
     return _headerView;
@@ -255,6 +254,14 @@
         _tableView = tableView;
     }
     return _tableView;
+}
+
+- (XUIListFooterView *)footerView {
+    if (!_footerView) {
+        XUIListFooterView *footerView = [[XUIListFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.f)];
+        _footerView = footerView;
+    }
+    return _footerView;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -710,16 +717,12 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - UIControl Actions
 
-- (void)closeButtonItemTapped:(UIBarButtonItem *)sender {
+- (void)closeButtonItemTapped:(id)sender {
     [self dismissViewController:sender];
 }
 
 - (void)dismissViewController:(id)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)aboutButtonItemTapped:(UIBarButtonItem *)sender {
-    
 }
 
 #pragma mark - Keyboard

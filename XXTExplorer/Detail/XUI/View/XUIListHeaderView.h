@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class XUITheme;
+
 @interface XUIListHeaderView : UIView
 
 @property (nonatomic, strong) NSString *headerText;
 @property (nonatomic, strong) NSString *subheaderText;
+@property (nonatomic, strong) XUITheme *theme;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "XUIListHeaderView.h"
 
+static UIEdgeInsets const XUIListHeaderViewEdgeInsets = { 40.f, 20.f, 20.f, 20.f };
+
 @interface XUIListHeaderView ()
 
 @property (nonatomic, strong) UILabel *headerLabel;
@@ -49,12 +51,15 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.headerLabel.frame = CGRectMake(20.f, 40.f, self.bounds.size.width - 40.f, self.headerHeight);
-    self.subheaderLabel.frame = CGRectMake(20.f, 40.f + self.headerHeight + 12.f, self.bounds.size.width - 40.f, self.subheaderHeight);
+    self.headerLabel.frame = CGRectMake(XUIListHeaderViewEdgeInsets.left, XUIListHeaderViewEdgeInsets.top, self.bounds.size.width - XUIListHeaderViewEdgeInsets.left - XUIListHeaderViewEdgeInsets.right, self.headerHeight);
+    self.subheaderLabel.frame = CGRectMake(XUIListHeaderViewEdgeInsets.left, XUIListHeaderViewEdgeInsets.top + self.headerHeight + 12.f, self.bounds.size.width - XUIListHeaderViewEdgeInsets.left - XUIListHeaderViewEdgeInsets.right, self.subheaderHeight);
 }
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(self.bounds.size.width, 40.f + CGRectGetHeight(self.headerLabel.bounds) + 12.f + CGRectGetHeight(self.subheaderLabel.bounds) + 20.f);
+    if (self.headerText && self.subheaderHeight) {
+        return CGSizeMake(self.bounds.size.width, XUIListHeaderViewEdgeInsets.top + self.headerHeight + 12.f + self.subheaderHeight + XUIListHeaderViewEdgeInsets.bottom);
+    }
+    return CGSizeZero;
 }
 
 #pragma mark - UIView Getters
@@ -83,13 +88,15 @@
     return _subheaderLabel;
 }
 
+#pragma mark - Setters
+
 - (void)setHeaderText:(NSString *)headerText {
     _headerText = headerText;
     
     NSAttributedString *attributedHeaderText = [[NSAttributedString alloc] initWithString:headerText attributes:self.headerAttributes];
     [self.headerLabel setAttributedText:attributedHeaderText];
     
-    self.headerHeight = [attributedHeaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - 40.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
+    self.headerHeight = [attributedHeaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - XUIListHeaderViewEdgeInsets.left - XUIListHeaderViewEdgeInsets.right, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
 }
 
 - (void)setSubheaderText:(NSString *)subheaderText {
@@ -98,7 +105,7 @@
     NSAttributedString *attributedSubheaderText = [[NSAttributedString alloc] initWithString:subheaderText attributes:self.subheaderAttributes];
     [self.subheaderLabel setAttributedText:attributedSubheaderText];
     
-    self.subheaderHeight = [attributedSubheaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - 40.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
+    self.subheaderHeight = [attributedSubheaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - XUIListHeaderViewEdgeInsets.left - XUIListHeaderViewEdgeInsets.right, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
 }
 
 @end
