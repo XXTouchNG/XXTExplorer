@@ -43,7 +43,6 @@
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
-    self.textLabel.textColor = self.theme.tintColor;
 }
 
 - (void)setTheme:(XUITheme *)theme {

@@ -7,6 +7,8 @@
 //
 
 #import "XUIStaticTextCell.h"
+
+#import "XUI.h"
 #import "XUILogger.h"
 
 @interface XUIStaticTextCell ()
@@ -67,6 +69,17 @@
 
 - (void)setupCell {
     [super setupCell];
+    XUI_START_IGNORE_PARTIAL
+    if (XUI_SYSTEM_9) {
+        self.cellStaticTextView.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
+    } else if (XUI_SYSTEM_8) {
+        self.cellStaticTextView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
+    } else {
+        self.cellStaticTextView.selectable = YES;
+        self.cellStaticTextView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
+        self.cellStaticTextView.selectable = NO;
+    }
+    XUI_END_IGNORE_PARTIAL
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 

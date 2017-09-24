@@ -211,24 +211,46 @@
     self.tableView.scrollIndicatorInsets = self.defaultContentInsets;
     [self.tableView setContentOffset:CGPointMake(0, -self.defaultContentInsets.top) animated:YES];
     
-    {
-        CGFloat height = self.headerView.intrinsicContentSize.height;
-        CGRect headerFrame = self.headerView.frame;
-        headerFrame.size.height = height;
-        self.headerView.frame = headerFrame;
-        [self.tableView setTableHeaderView:self.headerView];
+    if (@available(iOS 8.0, *)) {
+        {
+            CGFloat height = self.headerView.intrinsicContentSize.height;
+            CGRect headerFrame = self.headerView.frame;
+            headerFrame.size.height = height;
+            self.headerView.frame = headerFrame;
+            [self.tableView setTableHeaderView:self.headerView];
+            self.headerView.theme = self.theme;
+        }
         
-        self.headerView.theme = self.theme;
-    }
-    
-    {
-        CGFloat height = self.footerView.intrinsicContentSize.height;
-        CGRect footerFrame = self.footerView.frame;
-        footerFrame.size.height = height;
-        self.footerView.frame = footerFrame;
-        [self.tableView setTableFooterView:self.footerView];
+        {
+            CGFloat height = self.footerView.intrinsicContentSize.height;
+            CGRect footerFrame = self.footerView.frame;
+            footerFrame.size.height = height;
+            self.footerView.frame = footerFrame;
+            [self.tableView setTableFooterView:self.footerView];
+            self.footerView.theme = self.theme;
+        }
+    } else {
+        {
+            [self.headerView setNeedsLayout];
+            [self.headerView layoutIfNeeded];
+            CGFloat height = [self.headerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            CGRect headerFrame = self.headerView.frame;
+            headerFrame.size.height = height;
+            self.headerView.frame = headerFrame;
+            [self.tableView setTableHeaderView:self.headerView];
+            self.headerView.theme = self.theme;
+        }
         
-        self.footerView.theme = self.theme;
+        {
+            [self.footerView setNeedsLayout];
+            [self.footerView layoutIfNeeded];
+            CGFloat height = [self.footerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            CGRect footerFrame = self.footerView.frame;
+            footerFrame.size.height = height;
+            self.footerView.frame = footerFrame;
+            [self.tableView setTableFooterView:self.footerView];
+            self.footerView.theme = self.theme;
+        }
     }
 }
 
@@ -294,7 +316,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.f;
+    if (@available(iOS 8.0, *)) {
+        return 44.f;
+    } else {
+        return [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -440,6 +466,7 @@ XXTE_END_IGNORE_PARTIAL
         cell.xui_value = nil;
         [self.adapter saveDefaultsFromCell:cell];
     }
+    [cell setEditing:NO animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView performFileCell:(UITableViewCell *)cell {

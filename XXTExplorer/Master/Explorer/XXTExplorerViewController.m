@@ -567,8 +567,7 @@
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateBegan) {
         CGPoint location = [recognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-        if (indexPath.section == XXTExplorerViewSectionIndexHome &&
-            indexPath.row == 0) {
+        if (indexPath.section == XXTExplorerViewSectionIndexHome) {
             XXTExplorerViewHomeCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             [cell becomeFirstResponder];
             UIMenuController *menuController = [UIMenuController sharedMenuController];
@@ -699,10 +698,14 @@
 }
 
 - (void)hideHomeItemTapped:(id)sender {
+    NSMutableArray <NSIndexPath *> *homeIndexes = [[NSMutableArray alloc] init];
+    for (NSUInteger idx = 0; idx < self.homeEntryList.count; idx++) {
+        [homeIndexes addObject:[NSIndexPath indexPathForRow:idx inSection:XXTExplorerViewSectionIndexHome]];
+    }
     XXTEDefaultsSetBasic(XXTExplorerViewEntryHomeEnabledKey, NO);
     [self loadEntryListData];
     [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:XXTExplorerViewSectionIndexHome] ] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     showUserMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
 }

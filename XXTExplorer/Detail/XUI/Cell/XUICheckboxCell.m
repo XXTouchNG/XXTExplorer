@@ -8,11 +8,14 @@
 
 #import "XUICheckboxCell.h"
 #import "XUITextTagCollectionView.h"
+
 #import "XUI.h"
 #import "XUILogger.h"
+#import "XXTEViewShaker.h"
 
 @interface XUICheckboxCell () <XUITextTagCollectionViewDelegate>
 
+@property (nonatomic, strong) XXTEViewShaker *viewShaker;
 @property (weak, nonatomic) IBOutlet XUITextTagCollectionView *tagView;
 @property (assign, nonatomic) BOOL shouldUpdateValue;
 
@@ -77,6 +80,8 @@
     // Use manual calculate height
     self.tagView.manualCalculateHeight = YES;
     self.tagView.delegate = self;
+    
+    self.viewShaker = [[XXTEViewShaker alloc] initWithView:self.tagView];
 }
 
 - (void)layoutSubviews {
@@ -164,13 +169,20 @@
     NSArray *selectedValues = self.xui_value;
     NSUInteger maxCount = [self.xui_maxCount unsignedIntegerValue];
     NSUInteger minCount = [self.xui_minCount unsignedIntegerValue];
+    BOOL canTap = YES;
     if (selectedValues.count >= maxCount && currentSelected == NO) {
-        return NO;
+        canTap = NO;
     }
     else if (selectedValues.count <= minCount && currentSelected == YES) {
-        return NO;
+        canTap = NO;
     }
-    return ([self textTagCollectionView:textTagCollectionView valueForTagAtIndex:index] != nil);
+    if ([self textTagCollectionView:textTagCollectionView valueForTagAtIndex:index] == nil) {
+        canTap = NO;
+    }
+    if (!canTap) {
+        [self.viewShaker shake];
+    }
+    return canTap;
 }
 
 - (void)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView

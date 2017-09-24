@@ -55,13 +55,21 @@
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    _xui_height = @(217.f); // standard height for date time picker
+    _xui_height = @(217.0);
     
     self.dateTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.dateTimePicker.minuteInterval = 1;
     self.dateTimePicker.date = [NSDate date];
     
     [self.dateTimePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (NSNumber *)xui_height {
+    if (@available(iOS 8.0, *)) {
+        return _xui_height;
+    } else {
+        return @(217.0);
+    }
 }
 
 - (void)setXui_readonly:(NSNumber *)xui_readonly {
