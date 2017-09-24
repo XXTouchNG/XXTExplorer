@@ -70,6 +70,8 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     self.tagView.scrollView.scrollEnabled = NO;
+    self.tagView.contentInset = UIEdgeInsetsZero;
+    self.tagView.scrollDirection = XUITagCollectionScrollDirectionVertical;
     self.tagView.defaultConfig.tagCornerRadius = 8.f;
     self.tagView.defaultConfig.tagSelectedCornerRadius = 8.f;
     self.tagView.defaultConfig.tagShadowColor = UIColor.clearColor;
@@ -86,7 +88,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - 32.f;
+    self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 32.f;
 }
 
 - (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
@@ -118,6 +120,11 @@
     _xui_value = xui_value;
     [self setNeedsUpdateValue];
     [self updateValueIfNeeded];
+}
+
+- (void)setXui_maxCount:(NSNumber *)xui_maxCount {
+    _xui_maxCount = xui_maxCount;
+    self.tagView.selectionLimit = [xui_maxCount unsignedIntegerValue];
 }
 
 - (void)setNeedsUpdateValue {

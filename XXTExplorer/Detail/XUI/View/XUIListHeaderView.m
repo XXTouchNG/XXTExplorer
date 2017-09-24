@@ -70,7 +70,9 @@ static UIEdgeInsets const XUIListHeaderViewEdgeInsets = { 40.f, 20.f, 20.f, 20.f
         headerLabel.backgroundColor = UIColor.clearColor;
         headerLabel.textAlignment = NSTextAlignmentCenter;
         headerLabel.numberOfLines = 1;
-        headerLabel.lineBreakMode = NSLineBreakByClipping;
+        headerLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        headerLabel.adjustsFontSizeToFitWidth = YES;
+        headerLabel.minimumScaleFactor = 0.75f;
         _headerLabel = headerLabel;
     }
     return _headerLabel;
