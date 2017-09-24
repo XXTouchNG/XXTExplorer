@@ -66,7 +66,7 @@
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    self.tagView.scrollView.scrollEnabled = YES;
+    self.tagView.scrollView.scrollEnabled = NO;
     self.tagView.defaultConfig.tagCornerRadius = 8.f;
     self.tagView.defaultConfig.tagSelectedCornerRadius = 8.f;
     self.tagView.defaultConfig.tagShadowColor = UIColor.clearColor;

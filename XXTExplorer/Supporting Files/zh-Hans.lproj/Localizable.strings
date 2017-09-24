@@ -1106,6 +1106,9 @@
 "This operation will shut down the device and launch it again." = "该操作将使设备关闭, 并重新启动它.";
 
 /* No comment provided by engineer. */
+"This page is provided by the script producer." = "该页所示内容由脚本开发商提供.";
+
+/* No comment provided by engineer. */
 "Thread terminated." = "线程终止";
 
 /* No comment provided by engineer. */

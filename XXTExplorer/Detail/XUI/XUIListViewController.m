@@ -161,17 +161,27 @@
         [self.cellFactory parse];
     }
     
-    NSString *listHeader = rootEntry[@"header"];
-    NSString *listSubheader = rootEntry[@"subheader"];
-    if ([listHeader isKindOfClass:[NSString class]] && [listSubheader isKindOfClass:[NSString class]]) {
-        self.headerView.headerText = listHeader;
-        self.headerView.subheaderText = listSubheader;
+    {
+        NSString *listHeader = rootEntry[@"header"];
+        NSString *listSubheader = rootEntry[@"subheader"];
+        if ([listHeader isKindOfClass:[NSString class]] && [listSubheader isKindOfClass:[NSString class]]) {
+            self.headerView.headerText = listHeader;
+            self.headerView.subheaderText = listSubheader;
+        }
     }
     
-    NSString *listFooter = rootEntry[@"footer"];
-    if ([listFooter isKindOfClass:[NSString class]]) {
-        self.footerView.footerText = listFooter;
+#ifdef DEBUG
+    {
+        NSString *listFooter = rootEntry[@"footer"];
+        if ([listFooter isKindOfClass:[NSString class]]) {
+            self.footerView.footerText = listFooter;
+        }
     }
+#else
+    {
+        self.footerView.footerText = NSLocalizedString(@"This page is provided by the script producer.", nil);
+    }
+#endif
     
     [self setupSubviews];
 
