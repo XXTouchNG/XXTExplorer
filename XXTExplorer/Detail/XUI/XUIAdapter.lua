@@ -217,8 +217,8 @@ function ValueCheckers.Option(item, value, index)
         item.options = {isArray = true}
     end
 
-    local values = {}
-    local options = {}
+    local values = {isArray = true}
+    local options = {isArray = true}
     for _, option in ipairs(item.options) do
         if type(option) == 'table' then
             if type(option.title) == 'string' then
@@ -258,8 +258,8 @@ function ValueCheckers.MultipleOption(item, value, index)
         item.options = {isArray = true}
     end
 
-    local values = {}
-    local options = {}
+    local values = {isArray = true}
+    local options = {isArray = true}
     for _, option in ipairs(item.options) do
         if type(option) == 'table' then
             if type(option.title) == 'string' then
@@ -296,7 +296,7 @@ function ValueCheckers.MultipleOption(item, value, index)
     end
 
     if type(item.default) ~= 'table' then
-        item.default = {isArray = true}
+        item.default = {}
     end
 
     if #(item.default) <= item.maxCount then
@@ -304,8 +304,10 @@ function ValueCheckers.MultipleOption(item, value, index)
             return not isValueInArray(values, v)
         end)
     else
-        item.default = {isArray = true}
+        item.default = {}
     end
+
+    item.default.isArray = true
 
     if type(value) ~= 'table' then
         value = item.default
@@ -315,6 +317,8 @@ function ValueCheckers.MultipleOption(item, value, index)
         end)
     end
 
+    value.isArray = true
+
     return value
 end
 
@@ -323,8 +327,8 @@ function ValueCheckers.OrderedOption(item, value, index)
         item.options = {isArray = true}
     end
 
-    local values = {}
-    local options = {}
+    local values = {isArray = true}
+    local options = {isArray = true}
     for _, option in ipairs(item.options) do
         if type(option) == 'table' then
             if type(option.title) == 'string' then
@@ -373,7 +377,7 @@ function ValueCheckers.OrderedOption(item, value, index)
     end
 
     if type(item.default) ~= 'table' then
-        item.default = {isArray = true}
+        item.default = {}
     end
 
     if #(item.default) <= item.maxCount then
@@ -381,8 +385,10 @@ function ValueCheckers.OrderedOption(item, value, index)
             return not isValueInArray(values, v)
         end)
     else
-        item.default = {isArray = true}
+        item.default = {}
     end
+
+    item.default.isArray = true
 
     if type(value) ~= 'table' then
         value = item.default
@@ -391,6 +397,8 @@ function ValueCheckers.OrderedOption(item, value, index)
             return not isValueInArray(values, v)
         end)
     end
+
+    value.isArray = true
 
     return value
 end
