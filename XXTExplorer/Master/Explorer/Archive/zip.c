@@ -533,7 +533,8 @@ int zip_create(const char *zipname, const char *filenames[], size_t len) {
 }
 
 int zip_extract(const char *zipname, const char *dir,
-                int (^on_extract)(const char *filename, void *arg), void *arg) {
+                int (^will_extract)(const char *filename, void *arg),
+                int (^did_extract)(const char *filename, void *arg), void *arg) {
     int status = -1;
     mz_uint i, n;
     char path[MAX_PATH + 1] = {0};
@@ -589,14 +590,21 @@ int zip_extract(const char *zipname, const char *dir,
         if (strcmp(slash, "/") == 0) {
             
         } else {
+            
+            if (will_extract) {
+                if (will_extract(path, arg) < 0) {
+                    goto out;
+                }
+            }
+            
             if (!mz_zip_reader_extract_to_file(&zip_archive, i, path, 0)) {
                 // Cannot extract zip archive to file
                 goto out;
             }
         }
 
-        if (on_extract) {
-            if (on_extract(path, arg) < 0) {
+        if (did_extract) {
+            if (did_extract(path, arg) < 0) {
                 goto out;
             }
         }

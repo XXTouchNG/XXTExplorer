@@ -116,7 +116,7 @@
     return [[NSString alloc] initWithString:mutableDescription];
 }
 
-- (BOOL)canEdit {
+- (BOOL)canDelete {
     return YES;
 }
 

@@ -30,12 +30,13 @@ extern NSString * XUIOptionCellIconKey;
 @property (nonatomic, strong) XUIAdapter *adapter;
 
 @property (nonatomic, strong) XUITheme *theme;
-@property (nonatomic, assign) BOOL canEdit;
+@property (nonatomic, assign) BOOL canDelete;
 
 + (BOOL)xibBasedLayout;
 + (BOOL)layoutNeedsTextLabel;
 + (BOOL)layoutNeedsImageView;
 + (BOOL)layoutRequiresDynamicRowHeight;
++ (BOOL)layoutUsesAutoResizing;
 + (NSDictionary <NSString *, Class> *)entryValueTypes;
 + (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error;
 

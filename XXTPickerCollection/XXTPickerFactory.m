@@ -31,8 +31,10 @@
         if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
             [viewController.navigationController pushViewController:nextPicker animated:YES];
         } else {
-            XXTPickerNavigationController *popupNavigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:nextPicker];
-            [viewController presentViewController:popupNavigationController animated:YES completion:nil];
+            XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:nextPicker];
+            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+            navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [viewController presentViewController:navigationController animated:YES completion:nil];
         }
     } else {
         BOOL shouldFinish = YES;

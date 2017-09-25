@@ -151,6 +151,7 @@
     if (_tagCollectionView) {
         return;
     }
+    self.autoresizingMask = UIViewAutoresizingNone;
 
     _enableTagSelection = YES;
     _tagLabels = [NSMutableArray new];

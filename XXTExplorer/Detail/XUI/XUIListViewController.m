@@ -282,7 +282,7 @@
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 44.f;
         XUI_START_IGNORE_PARTIAL
-        if (XUI_SYSTEM_9) {
+        if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XUI_END_IGNORE_PARTIAL
@@ -330,9 +330,7 @@
         if (cellHeight > 0) {
             return cellHeight;
         } else {
-            if (@available(iOS 8.0, *)) {
-                return UITableViewAutomaticDimension;
-            } else {
+            if ([[cell class] layoutUsesAutoResizing]) {
                 [cell setNeedsUpdateConstraints];
                 [cell updateConstraintsIfNeeded];
                 
@@ -342,8 +340,10 @@
                 
                 CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 CGFloat fixedHeight = (height > 0) ? (height + 1.f) : 44.f;
-                cell.xui_height = @(fixedHeight);
+                // cell.xui_height = @(fixedHeight);
                 return fixedHeight;
+            } else {
+                return UITableViewAutomaticDimension;
             }
         }
     }
@@ -435,7 +435,7 @@
     if (readonly) {
         return NO;
     }
-    if (cell.canEdit) {
+    if (cell.canDelete) {
         if (cell.xui_value) {
             return YES;
         }
@@ -462,7 +462,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     XUIBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell.canEdit) {
+    if (cell.canDelete) {
         cell.xui_value = nil;
         [self.adapter saveDefaultsFromCell:cell];
     }

@@ -229,7 +229,7 @@
                     return 0;
                 };
                 int arg = 2;
-                int status = zip_extract(extractFrom, extractTo, extract_callback, &arg);
+                int status = zip_extract(extractFrom, extractTo, NULL, extract_callback, &arg);
                 result = (status == 0);
                 if (NO == result) {
                     if (!self.busyOperationProgressFlag) {

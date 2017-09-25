@@ -34,6 +34,14 @@ NSString * XUIOptionCellIconKey = @"icon";
     return NO;
 }
 
++ (BOOL)layoutUsesAutoResizing {
+    if (@available(iOS 8.0, *)) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 + (NSDictionary <NSString *, NSString *> *)entryValueTypes {
     return @{};
 }
@@ -106,7 +114,7 @@ NSString * XUIOptionCellIconKey = @"icon";
     }
     if ([self.class layoutNeedsTextLabel]) {
         XUI_START_IGNORE_PARTIAL
-        if (XUI_SYSTEM_9) {
+        if (@available(iOS 9.0, *)) {
             self.textLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
         } else {
             self.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
@@ -154,7 +162,7 @@ NSString * XUIOptionCellIconKey = @"icon";
     self.detailTextLabel.textColor = theme.valueColor;
 }
 
-- (BOOL)canEdit {
+- (BOOL)canDelete {
     return NO;
 }
 

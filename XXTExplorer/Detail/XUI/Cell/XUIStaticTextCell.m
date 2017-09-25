@@ -71,7 +71,7 @@
     [super setupCell];
     self.cellStaticTextView.scrollEnabled = NO;
     XUI_START_IGNORE_PARTIAL
-    if (XUI_SYSTEM_9) {
+    if (@available(iOS 10.0, *)) {
         self.cellStaticTextView.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
     } else {
         BOOL selectable = self.cellStaticTextView.selectable;

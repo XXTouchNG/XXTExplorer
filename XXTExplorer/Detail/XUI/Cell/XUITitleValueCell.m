@@ -46,7 +46,7 @@
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
     XUI_START_IGNORE_PARTIAL
-    if (XUI_SYSTEM_9) {
+    if (@available(iOS 9.0, *)) {
         self.detailTextLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
     }
     XUI_END_IGNORE_PARTIAL
@@ -100,7 +100,7 @@
     [self setNeedsLayout];
 }
 
-- (BOOL)canEdit {
+- (BOOL)canDelete {
     return YES;
 }
 
