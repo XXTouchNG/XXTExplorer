@@ -35,7 +35,11 @@
 }
 
 + (BOOL)layoutRequiresDynamicRowHeight {
-    return NO;
+    if (@available(iOS 8.0, *)) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
@@ -74,15 +78,24 @@
     self.tagView.alignment = XUITagCollectionAlignmentLeft;
     
     // Use manual calculate height
-    self.tagView.manualCalculateHeight = YES;
     self.tagView.delegate = self;
+    
+    if (@available(iOS 8.0, *)) {
+        self.tagView.manualCalculateHeight = NO;
+    } else {
+        self.tagView.manualCalculateHeight = YES;
+    }
     
 //    self.isRadio = ([self.xui_minCount unsignedIntegerValue] == 1 && [self.xui_maxCount unsignedIntegerValue] == 1);
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 32.f;
+    if (@available(iOS 8.0, *)) {
+        
+    } else {
+        self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 32.f;
+    }
 }
 
 - (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
@@ -137,7 +150,11 @@
 }
 
 - (NSNumber *)xui_height {
-    return @(self.tagView.contentSize.height + 24.f);
+    if (@available(iOS 8.0, *)) {
+        return [super xui_height];
+    } else {
+        return @(self.tagView.contentSize.height + 24.f);
+    }
 }
 
 - (BOOL)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView canTapTag:(NSString *)tagText atIndex:(NSUInteger)index currentSelected:(BOOL)currentSelected {

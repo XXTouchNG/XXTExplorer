@@ -69,15 +69,15 @@
 
 - (void)setupCell {
     [super setupCell];
+    self.cellStaticTextView.scrollEnabled = NO;
     XUI_START_IGNORE_PARTIAL
     if (XUI_SYSTEM_9) {
         self.cellStaticTextView.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
-    } else if (XUI_SYSTEM_8) {
-        self.cellStaticTextView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
     } else {
+        BOOL selectable = self.cellStaticTextView.selectable;
         self.cellStaticTextView.selectable = YES;
         self.cellStaticTextView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
-        self.cellStaticTextView.selectable = NO;
+        self.cellStaticTextView.selectable = selectable;
     }
     XUI_END_IGNORE_PARTIAL
     self.selectionStyle = UITableViewCellSelectionStyleNone;

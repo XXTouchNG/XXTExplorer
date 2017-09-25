@@ -38,8 +38,14 @@ static UIEdgeInsets const XUIListFooterViewEdgeInsets = { 20.f, 20.f, 40.f, 20.f
 }
 
 - (void)setup {
-    _footerAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:14.f],
-                           NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    UIFont *lightFont = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:14.f];
+    if (!lightFont) {
+        lightFont = [UIFont systemFontOfSize:14.f];
+    }
+    if (lightFont) {
+        _footerAttributes = @{ NSFontAttributeName: lightFont,
+                               NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    }
     
     [self addSubview:self.footerIconView];
     [self addSubview:self.footerLabel];

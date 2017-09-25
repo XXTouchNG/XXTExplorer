@@ -40,10 +40,22 @@ static UIEdgeInsets const XUIListHeaderViewEdgeInsets = { 40.f, 20.f, 20.f, 20.f
 }
 
 - (void)setup {
-    _headerAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:45.f],
-                           NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
-    _subheaderAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f],
-                              NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    UIFont *lightHeaderFont = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:45.f];
+    if (!lightHeaderFont) {
+        lightHeaderFont = [UIFont systemFontOfSize:45.f];
+    }
+    if (lightHeaderFont) {
+        _headerAttributes = @{ NSFontAttributeName: lightHeaderFont,
+                               NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    }
+    UIFont *lightSubheaderFont = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f];
+    if (!lightSubheaderFont) {
+        lightSubheaderFont = [UIFont systemFontOfSize:18.f];
+    }
+    if (lightSubheaderFont) {
+        _subheaderAttributes = @{ NSFontAttributeName: lightSubheaderFont,
+                                  NSForegroundColorAttributeName: [UIColor colorWithWhite:0.f alpha:.85f] };
+    }
     
     [self addSubview:self.headerLabel];
     [self addSubview:self.subheaderLabel];
