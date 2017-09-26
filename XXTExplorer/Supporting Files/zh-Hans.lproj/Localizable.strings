@@ -834,6 +834,9 @@
 "Press & Hold \"Volume -\"" = "按住 \"音量 -\"";
 
 /* No comment provided by engineer. */
+"Press \"Home\" button to quit.\nTap to dismiss this notice." = "按下主屏幕按钮以退出.\n轻按以忽略本提示.";
+
+/* No comment provided by engineer. */
 "Press \"Volume +\"" = "按下 \"音量 +\"";
 
 /* No comment provided by engineer. */

@@ -76,7 +76,7 @@
 //}
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_record_conf") JSON:@{}]
     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         return jsonDictionary[@"data"];
@@ -92,13 +92,13 @@
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
         [self.tableView reloadData];
     });
 }
@@ -169,7 +169,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         NSUInteger operationIndex = (NSUInteger) indexPath.row;
-        blockUserInteractions(self, YES, 2.0);
+        blockInteractions(self, YES);;
         NSString *commandUrl = nil;
         if (indexPath.section == 0) {
             commandUrl = (indexPath.row == 0) ? uAppDaemonCommandUrl(@"set_record_volume_up_on") : uAppDaemonCommandUrl(@"set_record_volume_up_off");
@@ -190,13 +190,13 @@
         })
         .catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
         })
         .finally(^() {
-            blockUserInteractions(self, NO, 2.0);
+            blockInteractions(self, NO);;
         });
     }
 }

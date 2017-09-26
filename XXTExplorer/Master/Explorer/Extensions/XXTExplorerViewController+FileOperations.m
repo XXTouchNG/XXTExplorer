@@ -62,7 +62,7 @@
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         if (error) {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
             for (NSUInteger i = 0; i < self.entryList.count; i++) {
@@ -199,7 +199,7 @@
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         if (error) {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
             for (NSUInteger i = 0; i < self.entryList.count; i++) {
@@ -323,7 +323,7 @@
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         if (error) {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
             for (NSUInteger i = 0; i < self.entryList.count; i++) {
@@ -407,7 +407,7 @@
             [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
         } else {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         }
     };
     if (self.busyOperationProgressFlag) {
@@ -502,7 +502,7 @@
             [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
         } else {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         }
     };
     if (self.busyOperationProgressFlag) {

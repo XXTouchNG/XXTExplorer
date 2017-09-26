@@ -139,11 +139,19 @@
 }
 
 - (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry {
+    return [self configuratorForEntry:entry configurationName:nil];
+}
+
+- (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry configurationName:(NSString *)name {
     id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
     if (reader &&
         [reader conformsToProtocol:@protocol(XXTExplorerEntryBundleReader)] &&
-        reader.configurable && reader.configurationName) {
-        XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:reader.configurationName withBundlePath:reader.entryPath];
+        reader.configurable &&
+        reader.configurationName) {
+        if (name.length == 0) {
+            name = reader.configurationName;
+        }
+        XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:name withBundlePath:reader.entryPath];
         return configutator;
     }
     return nil;

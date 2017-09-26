@@ -119,7 +119,7 @@
 }
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_startup_conf") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             BOOL bootScriptEnabled = [jsonDictionary[@"data"][@"startup_run"] boolValue];
@@ -141,12 +141,12 @@
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
     });
 }
 
@@ -216,15 +216,15 @@
             if (indexPath.row == 0) {
                 NSString *addressText = bootScriptPath;
                 if (addressText && addressText.length > 0) {
-                    blockUserInteractions(self, YES, 2.0);
+                    blockInteractions(self, YES);;
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:addressText];
                             fulfill(nil);
                         });
                     }].finally(^() {
-                        showUserMessage(self, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
-                        blockUserInteractions(self, NO, 2.0);
+                        toastMessage(self, NSLocalizedString(@"Boot script path has been copied to the pasteboard.", nil));
+                        blockInteractions(self, NO);;
                     });
                 }
             } else if (indexPath.row == 1) {
@@ -272,7 +272,7 @@
             changeToCommand = @"set_startup_run_on";
         else
             changeToCommand = @"set_startup_run_off";
-        blockUserInteractions(self, YES, 2.0);
+        blockInteractions(self, YES);;
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
                 if (changeToStatus) {
@@ -295,13 +295,13 @@
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
             [self.bootScriptSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
-            blockUserInteractions(self, NO, 2.0);
+            blockInteractions(self, NO);;
         });
     }
 }
@@ -309,7 +309,7 @@
 #pragma mark - XXTExplorerItemPickerDelegate
 
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_startup_script_file") JSON:@{ @"filename": path }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             bootScriptPath = path;
@@ -320,12 +320,12 @@
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
         [picker.navigationController popViewControllerAnimated:YES];
     });
 }

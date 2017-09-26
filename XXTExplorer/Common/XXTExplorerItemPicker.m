@@ -77,7 +77,7 @@
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                 if (accessError) {
-                    showUserMessage(self, [accessError localizedDescription]);
+                    toastMessage(self, [accessError localizedDescription]);
                 }
                 else {
                     XXTExplorerItemPicker *explorerViewController = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
@@ -105,16 +105,16 @@
                         [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
                     }
                 } else {
-                    showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]);
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]));
                 }
             }
             else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
             {
-                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]);
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]));
             }
             else
             {
-                showUserMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
+                toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
             }
         }
         else if (XXTExplorerViewSectionIndexHome == indexPath.section)

@@ -38,11 +38,11 @@
     if ([jsonEvent isEqualToString:@"bind_code"] || [jsonEvent isEqualToString:@"license"]) {
         if ([jsonDictionary[@"code"] isKindOfClass:[NSString class]]) {
             NSString *licenseCode = jsonDictionary[@"code"];
-            blockUserInteractions(self, YES, 0);
+            blockInteractionsWithDelay(self, YES, 0);
             @weakify(self);
             void (^ completionBlock)(void) = ^() {
                 @strongify(self);
-                blockUserInteractions(self, NO, 0);
+                blockInteractions(self, NO);
                 XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
                 XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
                 licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -70,11 +70,11 @@
                 targetFullPath = [self.entryPath stringByAppendingPathComponent:targetPath];
             }
             NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
-            blockUserInteractions(self, YES, 0);
+            blockInteractionsWithDelay(self, YES, 0);
             @weakify(self);
             void (^ completionBlock)(void) = ^() {
                 @strongify(self);
-                blockUserInteractions(self, NO, 0);
+                blockInteractions(self, NO);
                 XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
                 XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
                 downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -106,7 +106,7 @@
 
 - (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
     if (!entryPath) return;
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -118,20 +118,20 @@
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
     });
 }
 
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
     if (!entryPath) return;
     BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -166,13 +166,13 @@
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
     });
 }
 

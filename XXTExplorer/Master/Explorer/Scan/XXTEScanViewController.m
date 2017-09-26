@@ -373,7 +373,7 @@
         imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
     } else {
-        showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+        toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
     }
 }
 
@@ -559,7 +559,7 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *) kUTTypeImage]) {
         UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
-        blockUserInteractions(self, YES, 0);
+        blockInteractionsWithDelay(self, YES, 0);
         [PMKPromise promiseWithValue:@(YES)].then(^() {
             NSString *scannedResult = [self scanImage:originalImage];
             if (!scannedResult || scannedResult.length <= 0) {
@@ -571,7 +571,7 @@
         }).catch(^(NSError *scanError) {
             [self performSelector:@selector(showError:) withObject:scanError afterDelay:.2f];
         }).finally(^() {
-            blockUserInteractions(self, NO, 0);
+            blockInteractions(self, NO);
         });
     }
 }

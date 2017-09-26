@@ -147,7 +147,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadDynamicTableViewData {
-//    blockUserInteractions(self, YES, 2.0);
+//    blockInteractions(self, YES);;
     if (!isFetchingRemoteStatus) {
         isFetchingRemoteStatus = YES;
         [self.remoteAccessSwitch setHidden:YES];
@@ -170,14 +170,14 @@ typedef enum : NSUInteger {
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-//        blockUserInteractions(self, NO, 2.0);
+//        blockInteractions(self, NO);;
             isFetchingRemoteStatus = NO;
         });
     }
@@ -350,15 +350,15 @@ typedef enum : NSUInteger {
                     addressText = bonjourWebServerUrl;
                 }
                 if (addressText && addressText.length > 0) {
-                    blockUserInteractions(self, YES, 2.0);
+                    blockInteractions(self, YES);;
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:addressText];
                             fulfill(nil);
                         });
                     }].finally(^() {
-                        showUserMessage(self, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
-                        blockUserInteractions(self, NO, 2.0);
+                        toastMessage(self, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
+                        blockInteractions(self, NO);;
                     });
                 }
             }
@@ -502,7 +502,7 @@ typedef enum : NSUInteger {
             changeToCommand = @"open_remote_access";
         else
             changeToCommand = @"close_remote_access";
-        blockUserInteractions(self, YES, 2.0);
+        blockInteractions(self, YES);;
         [self.remoteAccessSwitch setHidden:YES];
         [self.remoteAccessIndicator startAnimating];
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -520,15 +520,15 @@ typedef enum : NSUInteger {
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
             [self.remoteAccessSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-            blockUserInteractions(self, NO, 2.0);
+            blockInteractions(self, NO);;
         });
     }
 }
@@ -567,93 +567,93 @@ typedef enum : NSUInteger {
 
 - (void)alertView:(LGAlertView *)alertView cleanGPSCaches:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") formURLEncodedParameters:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         } else {
-            showUserMessage(self, jsonDictionary[@"message"]);
+            toastMessage(self, jsonDictionary[@"message"]);
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO,0);
+        blockInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanUICaches:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"uicache") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO, 0);
+        blockInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanAll:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_all") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO, 0);
+        blockInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView respringDevice:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"respring") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO, 0);
+        blockInteractions(self, NO);
     });
 }
 
 - (void)alertView:(LGAlertView *)alertView rebootDevice:(id)obj {
     [alertView dismissAnimated];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"reboot2") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            showUserMessage(self, [NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]);
+            toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockUserInteractions(self, NO, 0);
+        blockInteractions(self, NO);
     });
 }
 
@@ -670,13 +670,13 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
-//    blockUserInteractions(self, YES, 2.0);
+//    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"restart") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView1 afterDelay:1.f];
         }
     }).catch(^(NSError *serverError) {
-//        blockUserInteractions(self, NO, 2.0);
+//        blockInteractions(self, NO);;
         LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Could not connect to the daemon: %@", nil), [serverError localizedDescription]]
                                                                style:LGAlertViewStyleActionSheet
@@ -696,9 +696,9 @@ typedef enum : NSUInteger {
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             // finished
-//            blockUserInteractions(self, NO, 2.0);
+//            blockInteractions(self, NO);;
 //            [alertView dismissAnimated];
-//            showUserMessage(self, NSLocalizedString(@"The daemon has been restarted.", nil));
+//            toastMessage(self, NSLocalizedString(@"The daemon has been restarted.", nil));
             LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Daemon Restarted", nil)
                                                                  message:NSLocalizedString(@"The daemon has been restarted.", nil)
                                                                    style:LGAlertViewStyleActionSheet
@@ -716,9 +716,9 @@ typedef enum : NSUInteger {
             [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView afterDelay:3.f];
         } else {
             // unknown error, stop
-//            blockUserInteractions(self, NO, 2.0);
+//            blockInteractions(self, NO);;
 //            [alertView dismissAnimated];
-//            showUserMessage(self, [serverError localizedDescription]);
+//            toastMessage(self, [serverError localizedDescription]);
             LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"Cannot restart daemon: %@", nil), [serverError localizedDescription]]
                                                                    style:LGAlertViewStyleActionSheet

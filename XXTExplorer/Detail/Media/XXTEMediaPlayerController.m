@@ -97,7 +97,7 @@
     if ([userInfo[@"error"] isKindOfClass:[NSError class]]) {
         NSString *entryName = [self.entryPath lastPathComponent];
         NSString *reason = [userInfo[@"error"] localizedDescription];
-        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot load movie \"%@\": %@", nil), entryName, reason]);
+        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot load movie \"%@\": %@", nil), entryName, reason]));
     }
 }
 

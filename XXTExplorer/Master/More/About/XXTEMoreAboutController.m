@@ -186,7 +186,7 @@ typedef enum : NSUInteger {
                     picker.modalPresentationStyle = UIModalPresentationFormSheet;
                     [self presentViewController:picker animated:YES completion:nil];
                 } else {
-                    showUserMessage(self, NSLocalizedString(@"Please setup \"Mail\" to send mail feedback directly.", nil));
+                    toastMessage(self, NSLocalizedString(@"Please setup \"Mail\" to send mail feedback directly.", nil));
                 }
             }
             else if (indexPath.row == 1) {
@@ -196,7 +196,7 @@ typedef enum : NSUInteger {
                     if ([[UIApplication sharedApplication] canOpenURL:qqURL]) {
                         [[UIApplication sharedApplication] openURL:qqURL];
                     } else {
-                        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), contactStr]);
+                        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), contactStr]));
                     }
                 }
             }
@@ -254,26 +254,26 @@ typedef enum : NSUInteger {
 #pragma mark - Reset Action
 
 - (void)performResetDefaultsAtRemote {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"reset_defaults") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if (jsonDirectory[@"code"]) {
             // already been killed
-            showUserMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+            toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
         }
     })
     .catch(^(NSError *error) {
         if (error) {
             if (error.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [error localizedDescription]);
+                toastMessage(self, [error localizedDescription]);
             }
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
     });
 }
 

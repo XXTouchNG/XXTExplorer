@@ -227,7 +227,7 @@
 }
 
 - (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;
         NSString *taskResult = nil;
@@ -238,7 +238,7 @@
             taskResult = [result description];
         }
         dispatch_async_on_main_queue(^{
-            blockUserInteractions(self, NO, 0);
+            blockInteractions(self, NO);
             if (taskResult) {
                 [self replaceSelectedRangeInTextView:self.textView withString:taskResult];
                 [self setNeedsFocusTextView];

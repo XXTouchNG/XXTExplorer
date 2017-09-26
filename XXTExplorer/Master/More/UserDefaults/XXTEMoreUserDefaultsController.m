@@ -168,7 +168,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)loadDynamicUserDefaults {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
@@ -196,13 +196,13 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
         [self.tableView reloadData];
     });
 }
@@ -351,7 +351,7 @@ XXTE_END_IGNORE_PARTIAL
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
 //    editedUserDefaults[modifyKey] = (index != 0) ? @YES : @NO;
     editedUserDefaults[modifyKey] = @(index);
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -369,13 +369,13 @@ XXTE_END_IGNORE_PARTIAL
     }).catch(^(NSError *serverError) {
         block(NO);
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
         [self.tableView reloadData];
     });
 }

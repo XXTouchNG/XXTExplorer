@@ -129,7 +129,7 @@ __attribute__((weak_import));
     _entryViewerDescription = [XXTEExecutableViewer viewerName];
     NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
     if (interfaceFile) {
-        NSString *configurationName = [localizationBundle pathForResource:interfaceFile ofType:nil];
+        NSString *configurationName = interfaceFile;
         _configurationName = configurationName;
     }
     _metaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,

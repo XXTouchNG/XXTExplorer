@@ -517,7 +517,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     NSError *readError = nil;
     NSString *string = [NSString stringWithContentsOfFile:self.entryPath encoding:NSUTF8StringEncoding error:&readError];
     if (readError) {
-        showUserMessage(self, [readError localizedDescription]);
+        toastMessage(self, [readError localizedDescription]);
         return;
     }
     XXTEEditorTextView *textView = self.textView;
@@ -535,7 +535,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
         NSString *wholeString = self.textView.text;
-        blockUserInteractions(self, YES, 0);
+        blockInteractionsWithDelay(self, YES, 0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @weakify(self);
             [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
@@ -547,7 +547,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
             }];
             dispatch_async_on_main_queue(^{
                 [self renderSyntaxOnScreen];
-                blockUserInteractions(self, NO, 0);
+                blockInteractions(self, NO);
             });
         });
     }

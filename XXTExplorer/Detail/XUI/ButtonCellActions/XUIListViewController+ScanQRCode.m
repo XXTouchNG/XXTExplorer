@@ -32,7 +32,7 @@
         cell.xui_value = [url absoluteString];
         [self.adapter saveDefaultsFromCell:cell];
         [controller dismissViewControllerAnimated:YES completion:^{
-            showUserMessage(self, NSLocalizedString(@"Scan result has been saved.", nil));
+            toastMessage(self, NSLocalizedString(@"Scan result has been saved.", nil));
         }];
     }
     self.pickerCell = nil;
@@ -44,7 +44,7 @@
         cell.xui_value = string;
         [self.adapter saveDefaultsFromCell:cell];
         [controller dismissViewControllerAnimated:YES completion:^{
-            showUserMessage(self, NSLocalizedString(@"Scan result has been saved.", nil));
+            toastMessage(self, NSLocalizedString(@"Scan result has been saved.", nil));
         }];
     }
     self.pickerCell = nil;
@@ -56,7 +56,7 @@
         cell.xui_value = jsonDictionary;
         [self.adapter saveDefaultsFromCell:cell];
         [controller dismissViewControllerAnimated:YES completion:^{
-            showUserMessage(self, NSLocalizedString(@"Scan result has been saved.", nil));
+            toastMessage(self, NSLocalizedString(@"Scan result has been saved.", nil));
         }];
     }
     self.pickerCell = nil;

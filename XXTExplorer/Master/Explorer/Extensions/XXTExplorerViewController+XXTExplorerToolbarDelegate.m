@@ -248,11 +248,11 @@
                     popoverPresentationController.barButtonItem = buttonItem;
                     [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
                 } else {
-                    showUserMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+                    toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
                 }
                 XXTE_END_IGNORE_PARTIAL
             } else {
-                showUserMessage(self, NSLocalizedString(@"You cannot share directory.", nil));
+                toastMessage(self, NSLocalizedString(@"You cannot share directory.", nil));
             }
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];

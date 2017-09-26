@@ -112,7 +112,7 @@ static void * activatorHandler = nil;
 //}
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
             .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
                 return jsonDictionary[@"data"];
@@ -130,13 +130,13 @@ static void * activatorHandler = nil;
             })
             .catch(^(NSError *serverError) {
                 if (serverError.code == -1004) {
-                    showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                    toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
                 } else {
-                    showUserMessage(self, [serverError localizedDescription]);
+                    toastMessage(self, [serverError localizedDescription]);
                 }
             })
             .finally(^() {
-                blockUserInteractions(self, NO, 2.0);
+                blockInteractions(self, NO);;
                 [self.tableView reloadData];
             });
 }
@@ -245,7 +245,7 @@ static void * activatorHandler = nil;
                 operationController.title = cell.titleLabel.text;
                 [self.navigationController pushViewController:operationController animated:YES];
             } else {
-                showUserMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
+                toastMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
             }
         } else if (indexPath.section == 1) {
             if (indexPath.row == kXXTEActivatorListenerRunOrStopWithAlertIndex) {

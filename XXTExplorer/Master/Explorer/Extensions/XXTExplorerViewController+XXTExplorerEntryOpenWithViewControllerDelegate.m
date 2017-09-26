@@ -41,7 +41,7 @@
 - (void)tableView:(UITableView *)tableView showDetailController:(UIViewController <XXTEViewer> *)viewer {
     if (viewer) {
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]]) {
-            blockUserInteractions(self, YES, 2.0);
+            blockInteractions(self, YES);;
             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": viewer.entryPath}]
             .then(convertJsonString)
             .then(^(NSDictionary *jsonDictionary) {
@@ -53,13 +53,13 @@
             })
             .catch(^(NSError *serverError) {
                 if (serverError.code == -1004) {
-                    showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                    toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
                 } else {
-                    showUserMessage(self, [serverError localizedDescription]);
+                    toastMessage(self, [serverError localizedDescription]);
                 }
             })
             .finally(^() {
-                blockUserInteractions(self, NO, 2.0);
+                blockInteractions(self, NO);;
                 [self loadEntryListData];
                 for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
                     [self reconfigureCellAtIndexPath:indexPath];

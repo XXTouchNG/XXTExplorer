@@ -94,7 +94,7 @@
         }
         [self updateToolbarStatus];
         if (error) {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         }
     };
     if (self.busyOperationProgressFlag) {
@@ -203,7 +203,7 @@
         }
         [self updateToolbarStatus];
         if (error) {
-            showUserMessage(self, [error localizedDescription]);
+            toastMessage(self, [error localizedDescription]);
         }
     };
     if (self.busyOperationProgressFlag) {

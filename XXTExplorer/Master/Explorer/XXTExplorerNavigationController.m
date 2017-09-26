@@ -68,7 +68,7 @@
     {
         NSURL *inboxURL = aNotification.object;
         @weakify(self);
-        blockUserInteractions(self, YES, 0);
+        blockInteractionsWithDelay(self, YES, 0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @strongify(self);
             NSError *err = nil;
@@ -92,7 +92,7 @@
             }
             BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
             dispatch_async_on_main_queue(^{
-                blockUserInteractions(self, NO, 0);
+                blockInteractions(self, NO);
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:nil userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
                 if (result && err == nil) {
                     [self.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]];

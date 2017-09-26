@@ -178,29 +178,29 @@ typedef enum : NSUInteger {
         if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexDetail) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES, 2.0);
+                blockInteractions(self, YES);;
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     });
                 }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO, 2.0);
+                    toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockInteractions(self, NO);;
                 });
             }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES, 2.0);
+                blockInteractions(self, YES);;
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     });
                 }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO, 2.0);
+                    toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockInteractions(self, NO);;
                 });
             }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexAction) {
@@ -270,43 +270,43 @@ typedef enum : NSUInteger {
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanApplicationGPSCaches:(id)obj {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [alertView dismissAnimated:YES completionHandler:^{
         [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]));
             } else {
                 @throw [NSString stringWithFormat:NSLocalizedString(@"Clean failed: %@", nil), jsonDictionary[@"message"]];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
-            blockUserInteractions(self, NO, 2.0);
+            blockInteractions(self, NO);;
         });
     }];
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanApplicationData:(id)obj {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [alertView dismissAnimated:YES completionHandler:^{
         [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_app_data") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]);
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Clean succeed: %@", nil), jsonDictionary[@"message"]]));
             } else {
                 @throw [NSString stringWithFormat:NSLocalizedString(@"Clean failed: %@", nil), jsonDictionary[@"message"]];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
-            blockUserInteractions(self, NO, 2.0);
+            blockInteractions(self, NO);;
         });
     }];
 }

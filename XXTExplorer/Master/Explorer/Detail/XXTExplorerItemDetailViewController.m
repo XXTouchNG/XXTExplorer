@@ -658,11 +658,11 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     struct stat itemStat;
     NSString *itemPath = [entryParentPath stringByAppendingPathComponent:itemName];
     if (/* [renameManager fileExistsAtPath:itemPath] */ 0 == lstat([itemPath UTF8String], &itemStat)) {
-        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]);
+        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]));
         [self.itemNameShaker shake];
         return;
     }
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSError *renameError = nil;
@@ -678,9 +678,9 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     }].then(^(id renameResult) {
         
     }).catch(^(NSError *systemError) {
-        showUserMessage(self, [systemError localizedDescription]);
+        toastMessage(self, [systemError localizedDescription]);
     }).finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
         sizingCancelFlag = 1;
         if (XXTE_PAD) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
@@ -759,30 +759,30 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES, 2.0);
+                blockInteractions(self, YES);;
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     });
                 }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO, 2.0);
+                    toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockInteractions(self, NO);;
                 });
             }
         }
         else if ([cell isKindOfClass:[XXTEMoreAddressCell class]]) {
             NSString *detailText = ((XXTEMoreAddressCell *)cell).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES, 2.0);
+                blockInteractions(self, YES);;
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     });
                 }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO, 2.0);
+                    toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockInteractions(self, NO);;
                 });
             }
         }

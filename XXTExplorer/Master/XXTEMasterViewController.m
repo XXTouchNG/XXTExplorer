@@ -182,9 +182,9 @@
                                                       cancelHandler:nil
                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
                                                      [alertView dismissAnimated];
-                                                     blockUserInteractions(self, YES, 0);
+                                                     blockInteractionsWithDelay(self, YES, 0);
                                                      [XXTERespringAgent performRespring];
-                                                     blockUserInteractions(self, NO, 0);
+                                                     blockInteractions(self, NO);
                                                  }];
         if (self.alertView && self.alertView.isShowing) {
             [self.alertView transitionToAlertView:alertView completionHandler:nil];
@@ -299,7 +299,7 @@
         if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl]) {
             [[UIApplication sharedApplication] openURL:cydiaUrl];
         } else {
-            showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaUrlString]);
+            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaUrlString]));
         }
     } else if (index == 1) {
         [self.updateAgent ignoreThisDay];
@@ -373,23 +373,39 @@
         return;
     }
     if ([jsonEvent isEqualToString:@"xui"]) {
-        if ([jsonDictionary[@"path"] isKindOfClass:[NSString class]]) {
-            NSString *rawTargetPathString = jsonDictionary[@"path"];
-            BOOL interactive = NO;
-            NSString *interactiveModeString = jsonDictionary[@"interactive"];
-            if ([interactiveModeString isEqualToString:@"true"]) {
-                interactive = YES;
-            }
-            [self performAction:sender presentConfiguratorForBundleAtPath:rawTargetPathString interactiveMode:interactive];
+        NSString *bundlePath = jsonDictionary[@"bundle"];
+        if (![bundlePath isKindOfClass:[NSString class]])
+        {
+            return; // invalid bundle path
         }
+        if (bundlePath.length == 0) {
+            return;
+        }
+        NSString *name = jsonDictionary[@"name"];
+        if (!name) {
+            // nothing to do... just left it as nil
+        }
+        if (name && ![name isKindOfClass:[NSString class]]) {
+            return; // invalid name
+        }
+        if (name.length == 0) {
+            // nothing to do... just left it as empty
+        }
+        BOOL interactive = NO;
+        NSString *interactiveString = jsonDictionary[@"interactive"];
+        if ([interactiveString isEqualToString:@"true"])
+        {
+            interactive = YES;
+        }
+        [self performAction:sender presentConfiguratorForBundleAtPath:bundlePath configurationName:name interactiveMode:interactive];
     }
 }
 
-- (void)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath interactiveMode:(BOOL)interactive {
+- (void)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath configurationName:(NSString *)name interactiveMode:(BOOL)interactive {
     NSError *entryError = nil;
     NSDictionary *entryDetail = [[XXTExplorerViewController explorerEntryParser] entryOfPath:bundlePath withError:&entryError];
     if (entryError) {
-        showUserMessage(self, [entryError localizedDescription]);
+        toastMessageWithDelay(self, ([entryError localizedDescription]), 5.0);
         return;
     }
     if (!entryDetail) {
@@ -397,19 +413,22 @@
     }
     NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
     if (![[XXTExplorerViewController explorerEntryService] hasConfiguratorForEntry:entryDetail]) {
-        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
+        toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]), 5.0);
         return;
     }
-    UIViewController <XXTEViewer> *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail];
+    UIViewController <XXTEViewer> *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail configurationName:name];
     if (!configurator) {
-        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]);
+        toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]), 5.0);
         return;
     }
     configurator.awakeFromOutside = interactive;
     XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
     navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:YES completion:^() {
+        if (interactive)
+            toastMessageWithDelay(configurator, NSLocalizedString(@"Press \"Home\" button to quit.\nTap to dismiss this notice.", nil), 6.0);
+    }];
 }
 
 @end

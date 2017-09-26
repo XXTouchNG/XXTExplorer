@@ -183,6 +183,12 @@
         textView.textColor = UIColor.blackColor;
         textView.font = [UIFont systemFontOfSize:14.f];
         
+        if (@available(iOS 11.0, *)) {
+            textView.smartDashesType = UITextSmartDashesTypeNo;
+            textView.smartQuotesType = UITextSmartQuotesTypeNo;
+            textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
+        }
+        
         _textView = textView;
     }
     return _textView;

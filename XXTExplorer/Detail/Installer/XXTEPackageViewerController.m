@@ -170,26 +170,26 @@
 
 - (void)installButtonItemTapped:(UIBarButtonItem *)sender {
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:YES];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [self.activityIndicatorView startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.extractor installPackage];
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
-            blockUserInteractions(self, NO, 0);
+            blockInteractions(self, NO);
         });
     });
 }
 
 - (void)respringButtonItemTapped:(UIBarButtonItem *)sender {
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:YES];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [self.activityIndicatorView startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.extractor killBackboardd];
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
-            blockUserInteractions(self, NO, 0);
+            blockInteractions(self, NO);
         });
     });
 }

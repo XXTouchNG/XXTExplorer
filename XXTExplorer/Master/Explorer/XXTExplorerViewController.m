@@ -296,7 +296,7 @@
     NSError *entryLoadError = nil;
     [self loadEntryListDataWithError:&entryLoadError];
     if (entryLoadError) {
-        showUserMessage(self, [entryLoadError localizedDescription]);
+        toastMessage(self, [entryLoadError localizedDescription]);
     }
 }
 
@@ -321,9 +321,9 @@
         })
         .catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
-                showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
             } else {
-                showUserMessage(self, [serverError localizedDescription]);
+                toastMessage(self, [serverError localizedDescription]);
             }
         })
         .finally(^() {
@@ -394,7 +394,7 @@
                     NSError *accessError = nil;
                     [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                     if (accessError) {
-                        showUserMessage(self, [accessError localizedDescription]);
+                        toastMessage(self, [accessError localizedDescription]);
                     } else {
                         XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
                         [self.navigationController pushViewController:explorerViewController animated:YES];
@@ -425,15 +425,15 @@
                         }
                     } else {
                         // TODO: not readable, unlock?
-                        showUserMessage(self, NSLocalizedString(@"Access denied.", nil));
+                        toastMessage(self, NSLocalizedString(@"Access denied.", nil));
                     }
                 } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
                 { // broken symlink
-                    showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]);
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]));
                 }
                 else
                 { // not supported
-                    showUserMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
+                    toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
                 }
             }
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
@@ -452,7 +452,7 @@
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
                 if (accessError) {
-                    showUserMessage(self, [accessError localizedDescription]);
+                    toastMessage(self, [accessError localizedDescription]);
                 } else {
                     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
                     [self.navigationController pushViewController:explorerViewController animated:YES];
@@ -683,15 +683,15 @@
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
         NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
         if (detailText && detailText.length > 0) {
-            blockUserInteractions(self, YES, 2.0);
+            blockInteractions(self, YES);;
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     [[UIPasteboard generalPasteboard] setString:detailText];
                     fulfill(nil);
                 });
             }].finally(^() {
-                showUserMessage(self, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
-                blockUserInteractions(self, NO, 2.0);
+                toastMessage(self, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
+                blockInteractions(self, NO);;
             });
         }
     }
@@ -707,7 +707,7 @@
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-    showUserMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+    toastMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
 }
 
 #pragma mark - Gesture Attachments

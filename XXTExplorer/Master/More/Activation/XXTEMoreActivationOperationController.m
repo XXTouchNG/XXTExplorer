@@ -75,7 +75,7 @@
 //}
 
 - (void)reloadDynamicTableViewData {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
             .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
                 return jsonDictionary[@"data"];
@@ -91,13 +91,13 @@
             })
             .catch(^(NSError *serverError) {
                 if (serverError.code == -1004) {
-                    showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                    toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
                 } else {
-                    showUserMessage(self, [serverError localizedDescription]);
+                    toastMessage(self, [serverError localizedDescription]);
                 }
             })
             .finally(^() {
-                blockUserInteractions(self, NO, 2.0);
+                blockInteractions(self, NO);;
                 [self.tableView reloadData];
             });
 }
@@ -163,7 +163,7 @@
     if (tableView == self.tableView) {
         if (indexPath.section == 0) {
             NSUInteger operationIndex = (NSUInteger) indexPath.row;
-            blockUserInteractions(self, YES, 2.0);
+            blockInteractions(self, YES);;
             NSString *commandUrl = [NSString stringWithFormat:uAppDaemonCommandUrl(@"set_%@_action"), operationKeyNames[self.actionIndex]];
             [NSURLConnection POST:commandUrl JSON:@{@"action": @(operationIndex)}]
                     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -177,13 +177,13 @@
                     })
                     .catch(^(NSError *serverError) {
                         if (serverError.code == -1004) {
-                            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+                            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
                         } else {
-                            showUserMessage(self, [serverError localizedDescription]);
+                            toastMessage(self, [serverError localizedDescription]);
                         }
                     })
                     .finally(^() {
-                        blockUserInteractions(self, NO, 2.0);
+                        blockInteractions(self, NO);;
                     });
         }
     }

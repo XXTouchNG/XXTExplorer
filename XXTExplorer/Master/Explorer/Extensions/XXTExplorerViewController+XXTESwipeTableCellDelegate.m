@@ -69,7 +69,7 @@
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                 if (accessError) {
-                    showUserMessage(self, [accessError localizedDescription]);
+                    toastMessage(self, [accessError localizedDescription]);
                 } else {
                     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
                     [self.navigationController pushViewController:explorerViewController animated:YES];
@@ -84,10 +84,10 @@
                     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                     [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
                 } else {
-                    showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]);
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]));
                 }
             } else {
-                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]));
             }
         } else if ([buttonAction isEqualToString:@"Edit"]) {
             if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
@@ -105,7 +105,7 @@
                     }
                 }
             } else {
-                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]);
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]));
             }
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {

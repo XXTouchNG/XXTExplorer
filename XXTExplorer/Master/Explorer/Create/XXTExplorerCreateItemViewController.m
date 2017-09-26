@@ -273,15 +273,15 @@ typedef enum : NSUInteger {
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES, 2.0);
+                blockInteractions(self, YES);;
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     });
                 }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO, 2.0);
+                    toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockInteractions(self, NO);;
                 });
             }
         }
@@ -357,7 +357,7 @@ typedef enum : NSUInteger {
     struct stat itemStat;
     NSString *itemPath = [self.entryPath stringByAppendingPathComponent:itemName];
     if (/* [createItemManager fileExistsAtPath:itemPath] */ 0 == lstat([itemPath UTF8String], &itemStat)) {
-        showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]);
+        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]));
         [self.itemNameShaker shake];
         return;
     }
@@ -365,7 +365,7 @@ typedef enum : NSUInteger {
         NSError *createError = nil;
         BOOL createResult = [createItemManager createDirectoryAtPath:itemPath withIntermediateDirectories:NO attributes:nil error:&createError];
         if (!createResult) {
-            showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot create file \"%@\": %@.", nil), itemName, [createError localizedDescription]]);
+            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot create file \"%@\": %@.", nil), itemName, [createError localizedDescription]]));
             [self.itemNameShaker shake];
             return;
         }
@@ -380,7 +380,7 @@ typedef enum : NSUInteger {
             NSMutableString *newTemplate = [[[NSString alloc] initWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:&createError] mutableCopy];
             
             if (createError) {
-                showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read template \"%@\".", nil), templatePath]);
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot read template \"%@\".", nil), templatePath]));
                 return;
             }
             
@@ -403,7 +403,7 @@ typedef enum : NSUInteger {
         
         BOOL createResult = [createItemManager createFileAtPath:itemPath contents:templateData attributes:nil];
         if (!createResult) {
-            showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot create file \"%@\".", nil), itemName]);
+            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot create file \"%@\".", nil), itemName]));
             [self.itemNameShaker shake];
             return;
         }

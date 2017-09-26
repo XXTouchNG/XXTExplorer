@@ -192,15 +192,15 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
                 if (detailText && detailText.length > 0) {
-                    blockUserInteractions(self, YES, 2.0);
+                    blockInteractions(self, YES);;
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];
                             fulfill(nil);
                         });
                     }].finally(^() {
-                        showUserMessage(self, NSLocalizedString(@"Source URL has been copied to the pasteboard.", nil));
-                        blockUserInteractions(self, NO, 2.0);
+                        toastMessage(self, NSLocalizedString(@"Source URL has been copied to the pasteboard.", nil));
+                        blockInteractions(self, NO);;
                     });
                 }
             }
@@ -209,15 +209,15 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
                 if (detailText && detailText.length > 0) {
-                    blockUserInteractions(self, YES, 2.0);
+                    blockInteractions(self, YES);;
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];
                             fulfill(nil);
                         });
                     }].finally(^() {
-                        showUserMessage(self, NSLocalizedString(@"Target Path has been copied to the pasteboard.", nil));
-                        blockUserInteractions(self, NO, 2.0);
+                        toastMessage(self, NSLocalizedString(@"Target Path has been copied to the pasteboard.", nil));
+                        blockInteractions(self, NO);;
                     });
                 }
             }

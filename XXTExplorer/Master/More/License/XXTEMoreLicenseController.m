@@ -133,7 +133,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
             cell1.licenseField.text = [self formatLicense:initialLicenseCode];
             [self textFieldDidChange:cell1.licenseField];
         } else {
-            showUserMessage(self, NSLocalizedString(@"Cannot autofill license field: Invalid license code.", nil));
+            toastMessage(self, NSLocalizedString(@"Cannot autofill license field: Invalid license code.", nil));
         }
     }
     
@@ -185,7 +185,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 }
 
 - (void)reloadDynamicTableViewDataWithCompletion:(XXTERefreshControlHandler)handler {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDictionary) {
@@ -220,13 +220,13 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 2.0);
+        blockInteractions(self, NO);;
         if (handler) {
             handler();
         }
@@ -328,15 +328,15 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockUserInteractions(self, YES, 2.0);
+                blockInteractions(self, YES);;
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
                         fulfill(nil);
                     });
                 }].finally(^() {
-                    showUserMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockUserInteractions(self, NO, 2.0);
+                    toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                    blockInteractions(self, NO);;
                 });
             }
         }

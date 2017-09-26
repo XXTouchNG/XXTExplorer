@@ -92,19 +92,30 @@
 #pragma mark - Initializers
 
 - (instancetype)initWithPath:(NSString *)path {
+    if (!path)
+        return nil;
+    _bundle = nil;
     if (self = [super initWithPath:path]) {
-        if (!path)
-            return nil;
         [self setup];
     }
     return self;
 }
 
 - (instancetype)initWithPath:(NSString *)path withBundlePath:(NSString *)bundlePath {
-    if (self = [super initWithPath:path]) {
-        if (!path || !bundlePath)
-            return nil;
-        _bundle = [NSBundle bundleWithPath:bundlePath];
+    if (!path || !bundlePath)
+        return nil;
+    NSString *absolutePath = nil;
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    if ([path isAbsolutePath]) {
+        absolutePath = path;
+    } else {
+        absolutePath = [bundle pathForResource:path ofType:nil];
+    }
+    if (!absolutePath) {
+        return nil;
+    }
+    _bundle = bundle;
+    if (self = [super initWithPath:absolutePath]) {
         [self setup];
     }
     return self;
@@ -701,14 +712,14 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);
         NSError *error = nil;
         id result = [task generateWithError:&error];
         dispatch_async_on_main_queue(^{
-            blockUserInteractions(self, NO, 0);
+            blockInteractions(self, NO);
             if (result) {
                 if ([self.pickerCell isKindOfClass:[XUITitleValueCell class]]) {
                     XUITitleValueCell *cell = (XUITitleValueCell *)self.pickerCell;

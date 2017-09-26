@@ -22,7 +22,7 @@
     }
     NSString *scriptName = kwargs[0];
     NSString *scriptPath = [self.bundle pathForResource:scriptName ofType:nil];
-    blockUserInteractions(self, YES, 0);
+    blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": scriptPath, @"envp": uAppConstEnvp()}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -35,13 +35,13 @@
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
-            showUserMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
         } else {
-            showUserMessage(self, [serverError localizedDescription]);
+            toastMessage(self, [serverError localizedDescription]);
         }
     })
     .finally(^() {
-        blockUserInteractions(self, NO, 0);
+        blockInteractions(self, NO);
     });
     return @(scriptPath != nil);
 }

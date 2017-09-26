@@ -169,7 +169,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
-    blockUserInteractions(self, YES, 2.0);
+    blockInteractions(self, YES);;
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);
@@ -240,7 +240,7 @@ XXTE_END_IGNORE_PARTIAL
             if (refreshControl && [refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }
-            blockUserInteractions(self, NO, 2.0);
+            blockInteractions(self, NO);;
         });
     });
 }
