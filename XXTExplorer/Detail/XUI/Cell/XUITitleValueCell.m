@@ -93,7 +93,7 @@
     [self setNeedsLayout];
 }
 
-- (BOOL)canEdit {
+- (BOOL)canDelete {
     return YES;
 }
 

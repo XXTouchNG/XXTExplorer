@@ -122,7 +122,7 @@
     self.descriptionLabel.textColor = theme.valueColor;
 }
 
-- (BOOL)canEdit {
+- (BOOL)canDelete {
     return YES;
 }
 

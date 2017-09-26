@@ -35,11 +35,11 @@
 }
 
 + (BOOL)layoutRequiresDynamicRowHeight {
-    if (@available(iOS 8.0, *)) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return YES;
+}
+
++ (BOOL)layoutUsesAutoResizing {
+    return YES;
 }
 
 + (NSDictionary <NSString *, Class> *)entryValueTypes {
@@ -79,21 +79,12 @@
     
     // Use manual calculate height
     self.tagView.delegate = self;
-    
-    if (@available(iOS 8.0, *)) {
-        self.tagView.manualCalculateHeight = NO;
-    } else {
-        self.tagView.manualCalculateHeight = YES;
-    }
+    self.tagView.manualCalculateHeight = NO;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (@available(iOS 8.0, *)) {
-        
-    } else {
-        self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 32.f;
-    }
+    self.tagView.preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 32.f;
 }
 
 - (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
@@ -144,14 +135,6 @@
         if (selectedIndex != NSNotFound) {
             [self.tagView setTagAtIndex:selectedIndex selected:YES];
         }
-    }
-}
-
-- (NSNumber *)xui_height {
-    if (@available(iOS 8.0, *)) {
-        return [super xui_height];
-    } else {
-        return @(self.tagView.contentSize.height + 24.f);
     }
 }
 
