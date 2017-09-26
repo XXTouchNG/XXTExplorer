@@ -22,7 +22,7 @@
 
 @implementation XUIFileCell
 
-@synthesize xui_value = _xui_value, xui_height = _xui_height, theme = _theme;
+@synthesize xui_value = _xui_value, xui_height = _xui_height;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -117,7 +117,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.nameLabel.textColor = theme.labelColor;
     self.descriptionLabel.textColor = theme.valueColor;
 }

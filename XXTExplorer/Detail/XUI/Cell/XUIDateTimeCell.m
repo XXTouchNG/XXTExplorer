@@ -17,7 +17,7 @@
 
 @implementation XUIDateTimeCell
 
-@synthesize xui_value = _xui_value, theme = _theme, xui_height = _xui_height;
+@synthesize xui_value = _xui_value, xui_height = _xui_height;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -159,7 +159,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.dateTimePicker.tintColor = theme.tintColor;
 }
 

@@ -18,6 +18,10 @@
 
 @implementation XXTESplitViewController
 
+- (BOOL)shouldAutorotate {
+    return self.viewControllers.firstObject.shouldAutorotate;
+}
+
 #pragma mark - Restore State
 
 - (NSString *)restorationIdentifier {

@@ -70,7 +70,7 @@
 		0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */; };
 		0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */; };
 		0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */; };
-		0F50AEA31F307A510098211C /* UIViewController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */; };
+		0F50AEA31F307A510098211C /* UIViewController+XXTExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA21F307A510098211C /* UIViewController+XXTExplorer.m */; };
 		0F50AEA71F307C430098211C /* XXTEBaseObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA61F307C430098211C /* XXTEBaseObjectViewController.m */; };
 		0F50AEAA1F3080400098211C /* XXTEArrayObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA91F3080400098211C /* XXTEArrayObjectViewController.m */; };
 		0F50AEB31F3084790098211C /* NSObject+StringValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEB21F3084790098211C /* NSObject+StringValue.m */; };
@@ -293,6 +293,7 @@
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
 		D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63B58DA1F56684F00D26475 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D63D1EFF1F6FA3F80073C055 /* XUIAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */; };
+		D63F36611F7A435D00E2386C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D63F36601F7A42DB00E2386C /* Settings.bundle */; };
 		D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A24F1F4D18AA005B9A59 /* Bugly.framework */; };
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
@@ -519,8 +520,8 @@
 		0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerCreateItemViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryService.h; sourceTree = "<group>"; };
 		0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryService.m; sourceTree = "<group>"; };
-		0F50AEA11F307A510098211C /* UIViewController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+StatusBar.h"; sourceTree = "<group>"; };
-		0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+StatusBar.m"; sourceTree = "<group>"; };
+		0F50AEA11F307A510098211C /* UIViewController+XXTExplorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XXTExplorer.h"; sourceTree = "<group>"; };
+		0F50AEA21F307A510098211C /* UIViewController+XXTExplorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XXTExplorer.m"; sourceTree = "<group>"; };
 		0F50AEA51F307C430098211C /* XXTEBaseObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEBaseObjectViewController.h; sourceTree = "<group>"; };
 		0F50AEA61F307C430098211C /* XXTEBaseObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEBaseObjectViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F50AEA81F3080400098211C /* XXTEArrayObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEArrayObjectViewController.h; sourceTree = "<group>"; };
@@ -897,6 +898,7 @@
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
 		D63B58DA1F56684F00D26475 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = XUIAdapter.lua; sourceTree = "<group>"; };
+		D63F36601F7A42DB00E2386C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		D643A24F1F4D18AA005B9A59 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D643A2531F4D18BE005B9A59 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1682,6 +1684,7 @@
 		0FA7ABED1ED641A3003EAD7D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D63F36601F7A42DB00E2386C /* Settings.bundle */,
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
 				0FE1629C1F3C8FFC003064B2 /* InfoPlist.strings */,
 				0F3508C21F166A69000403FD /* Localizable.strings */,
@@ -1861,8 +1864,8 @@
 				0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */,
 				0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */,
 				0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */,
-				0F50AEA11F307A510098211C /* UIViewController+StatusBar.h */,
-				0F50AEA21F307A510098211C /* UIViewController+StatusBar.m */,
+				0F50AEA11F307A510098211C /* UIViewController+XXTExplorer.h */,
+				0F50AEA21F307A510098211C /* UIViewController+XXTExplorer.m */,
 			);
 			path = StatusBar;
 			sourceTree = "<group>";
@@ -2807,6 +2810,7 @@
 				0FBAFF421F6E5378008B3189 /* XXTImagePickerController.xib in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
 				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
+				D63F36611F7A435D00E2386C /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3069,7 +3073,7 @@
 				0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */,
 				D6E141241F5032AB00D78CB9 /* XXTColorPicker.m in Sources */,
 				0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */,
-				0F50AEA31F307A510098211C /* UIViewController+StatusBar.m in Sources */,
+				0F50AEA31F307A510098211C /* UIViewController+XXTExplorer.m in Sources */,
 				D6E141231F5032AB00D78CB9 /* UIImage+XXTCrop.m in Sources */,
 				D677B0F61F4FC7C200E741C2 /* lopcodes.c in Sources */,
 				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,

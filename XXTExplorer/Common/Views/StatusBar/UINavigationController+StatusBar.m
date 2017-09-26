@@ -11,35 +11,35 @@
 @implementation UINavigationController (StatusBar)
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.topViewController.preferredStatusBarStyle;
+    return self.visibleViewController.preferredStatusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return self.topViewController.prefersStatusBarHidden;
+    return self.visibleViewController.prefersStatusBarHidden;
 }
 
 /*
 - (UIViewController *)childViewControllerForStatusBarStyle {
-    return self.topViewController;
+    return self.visibleViewController;
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
-    return self.topViewController;
+    return self.visibleViewController;
 }
 */
 
 #pragma mark - View Style
 
 - (BOOL)shouldAutorotate {
-    return self.topViewController.shouldAutorotate;
+    return self.visibleViewController.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return self.topViewController.supportedInterfaceOrientations;
+    return self.visibleViewController.supportedInterfaceOrientations;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return self.topViewController.preferredInterfaceOrientationForPresentation;
+    return self.visibleViewController.preferredInterfaceOrientationForPresentation;
 }
 
 @end

@@ -40,7 +40,7 @@
     self = [super init];
     if (self) {
         APP_CACHE_POLICY = 1;
-        APP_CONNECTION_TIMEOUT = 5;
+        APP_CONNECTION_TIMEOUT = 60;
     }
     return self;
 }

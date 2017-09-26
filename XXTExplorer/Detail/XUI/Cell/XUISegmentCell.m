@@ -18,7 +18,7 @@
 
 @implementation XUISegmentCell
 
-@synthesize xui_value = _xui_value, theme = _theme;
+@synthesize xui_value = _xui_value;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -137,7 +137,7 @@
 }
 
 - (void)setTheme:(XUITheme *)theme {
-    _theme = theme;
+    [super setTheme:theme];
     self.cellSegmentControl.tintColor = theme.tintColor;
 }
 

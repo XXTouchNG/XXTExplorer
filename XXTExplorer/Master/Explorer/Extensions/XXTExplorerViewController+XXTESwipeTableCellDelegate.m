@@ -48,23 +48,23 @@
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
+    
+    {
+        [cell hideSwipeAnimated:YES];
+    }
+    
     if (direction == XXTESwipeDirectionLeftToRight) {
         XXTESwipeButton *button = (XXTESwipeButton *)cell.leftButtons[index];
         NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
-            [cell hideSwipeAnimated:YES];
             [self performAction:button launchScript:entryPath];
         } else if ([buttonAction isEqualToString:@"Property"]) {
-            if (XXTE_PAD)
-                [cell hideSwipeAnimated:YES];
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
             XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
             detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
         } else if ([buttonAction isEqualToString:@"Inside"]) {
-            if (XXTE_PAD)
-                [cell hideSwipeAnimated:YES];
             if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
@@ -76,8 +76,6 @@
                 }
             }
         } else if ([buttonAction isEqualToString:@"Configure"]) {
-            if (XXTE_PAD)
-                [cell hideSwipeAnimated:YES];
             if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
                 UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
                 if (configurator) {
@@ -92,8 +90,6 @@
                 showUserMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]);
             }
         } else if ([buttonAction isEqualToString:@"Edit"]) {
-            if (XXTE_PAD)
-                [cell hideSwipeAnimated:YES];
             if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
                 UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
                 if (editor) {
@@ -131,6 +127,9 @@
 
 - (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
               swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+    swipeSettings.transition = XXTESwipeTransitionBorder;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.fillOnTrigger = YES;
 #ifdef DEBUG
     BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, YES);
 #else

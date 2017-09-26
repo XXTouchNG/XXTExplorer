@@ -97,36 +97,28 @@ typedef enum : NSUInteger {
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell3.titleLabel.text = NSLocalizedString(@"User Agreement", nil);
+    cell3.titleLabel.text = NSLocalizedString(@"Mail Feedback", nil);
     
     XXTEMoreLinkNoIconCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell4.titleLabel.text = NSLocalizedString(@"Third Party Credits", nil);
+    cell4.titleLabel.text = NSLocalizedString(@"Official QQ Group", nil);
     
     XXTEMoreLinkNoIconCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell5.titleLabel.text = NSLocalizedString(@"Mail Feedback", nil);
+    cell5.titleLabel.text = NSLocalizedString(@"Check Update", nil);
     
     XXTEMoreLinkNoIconCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell6.titleLabel.text = NSLocalizedString(@"Official QQ Group", nil);
-    
-    XXTEMoreLinkNoIconCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-    cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell7.titleLabel.text = NSLocalizedString(@"Check Update", nil);
-    
-    XXTEMoreLinkNoIconCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-    cell8.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell8.titleLabel.text = NSLocalizedString(@"Reset Defaults", nil);
+    cell6.titleLabel.text = NSLocalizedString(@"Reset Defaults", nil);
     
     staticCells = @[
                     @[ cell1 ],
                     //
-                    @[ cell2, cell3, cell4 ],
+                    @[ cell2 ],
                     //
-                    @[ cell5, cell6 ],
+                    @[ cell3, cell4 ],
                     //
-                    @[ cell7, cell8 ]
+                    @[ cell5, cell6 ]
                     ];
 }
 
@@ -168,12 +160,6 @@ typedef enum : NSUInteger {
             NSURL *titleUrl = nil;
             if (indexPath.row == 0) {
                 titleUrl = [NSURL URLWithString:uAppDefine(@"OFFICIAL_SITE")];
-            }
-            else if (indexPath.row == 1) {
-                titleUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/tos" ofType:@"html"]];
-            }
-            else if (indexPath.row == 2) {
-                titleUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/open" ofType:@"html"]];
             }
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
             webController.title = titleString;

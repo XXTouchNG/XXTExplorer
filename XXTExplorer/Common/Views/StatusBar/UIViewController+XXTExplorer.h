@@ -1,5 +1,5 @@
 //
-//  UIViewController+StatusBar.h
+//  UIViewController+XXTExplorer.h
 //  XXTExplorer
 //
 //  Created by Zheng on 01/08/2017.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIViewController (StatusBar)
+@interface UIViewController (XXTExplorer)
 
 @end

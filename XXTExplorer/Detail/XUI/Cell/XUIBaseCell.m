@@ -168,6 +168,7 @@ NSString * XUIOptionCellIconKey = @"icon";
 - (void)setTheme:(XUITheme *)theme {
     _theme = theme;
     self.tintColor = theme.tintColor;
+    self.contentView.tintColor = theme.tintColor;
     self.textLabel.textColor = theme.labelColor;
     self.detailTextLabel.textColor = theme.valueColor;
 }

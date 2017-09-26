@@ -94,7 +94,7 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    if (XXTE_PAD) return;
+    if (XXTE_COLLAPSED) return;
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
     if (restore) {

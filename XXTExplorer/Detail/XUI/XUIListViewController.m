@@ -187,7 +187,13 @@
 
     if (self.awakeFromOutside == NO &&
         [self.navigationController.viewControllers firstObject] == self) {
-        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+        XXTE_START_IGNORE_PARTIAL
+        if (XXTE_COLLAPSED) {
+            [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+        } else {
+            [self.navigationItem setLeftBarButtonItem:self.closeButtonItem];
+        }
+        XXTE_END_IGNORE_PARTIAL
     }
 }
 
@@ -803,7 +809,6 @@ XXTE_END_IGNORE_PARTIAL
     if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidEnterBackground])
     {
         if (self.awakeFromOutside) {
-            
             [self dismissViewController:aNotification];
         }
     }
