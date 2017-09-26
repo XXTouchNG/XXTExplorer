@@ -22,7 +22,7 @@
 
 @implementation XUIFileCell
 
-@synthesize xui_value = _xui_value, xui_height = _xui_height;
+@synthesize xui_value = _xui_value, xui_height = _xui_height, theme = _theme;
 
 + (BOOL)xibBasedLayout {
     return YES;
@@ -114,6 +114,12 @@
             [mutableDescription appendFormat:@"%@. ", obj];
     }];
     return [[NSString alloc] initWithString:mutableDescription];
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.nameLabel.textColor = theme.labelColor;
+    self.descriptionLabel.textColor = theme.valueColor;
 }
 
 - (BOOL)canEdit {

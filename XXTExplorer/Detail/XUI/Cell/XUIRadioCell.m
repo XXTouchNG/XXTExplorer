@@ -85,8 +85,6 @@
     } else {
         self.tagView.manualCalculateHeight = YES;
     }
-    
-//    self.isRadio = ([self.xui_minCount unsignedIntegerValue] == 1 && [self.xui_maxCount unsignedIntegerValue] == 1);
 }
 
 - (void)layoutSubviews {

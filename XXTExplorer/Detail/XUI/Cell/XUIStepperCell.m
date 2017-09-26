@@ -140,6 +140,7 @@
 - (void)setTheme:(XUITheme *)theme {
     [super setTheme:theme];
     self.cellStepper.tintColor = theme.tintColor;
+    self.cellNumberLabel.textColor = theme.valueColor;
 }
 
 @end

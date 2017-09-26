@@ -8,6 +8,8 @@
 
 #import "XUIListHeaderView.h"
 
+#import "XUITheme.h"
+
 static UIEdgeInsets const XUIListHeaderViewEdgeInsets = { 40.f, 20.f, 20.f, 20.f };
 
 @interface XUIListHeaderView ()
@@ -120,6 +122,12 @@ static UIEdgeInsets const XUIListHeaderViewEdgeInsets = { 40.f, 20.f, 20.f, 20.f
     [self.subheaderLabel setAttributedText:attributedSubheaderText];
     
     self.subheaderHeight = [attributedSubheaderText boundingRectWithSize:CGSizeMake(self.bounds.size.width - XUIListHeaderViewEdgeInsets.left - XUIListHeaderViewEdgeInsets.right, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
+}
+
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.headerLabel.textColor = theme.labelColor;
+    self.subheaderLabel.textColor = theme.labelColor;
 }
 
 @end

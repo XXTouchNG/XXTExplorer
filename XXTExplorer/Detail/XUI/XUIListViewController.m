@@ -282,7 +282,7 @@
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 44.f;
         XUI_START_IGNORE_PARTIAL
-        if (XUI_SYSTEM_9) {
+        if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XUI_END_IGNORE_PARTIAL
@@ -342,7 +342,6 @@
                 
                 CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 CGFloat fixedHeight = (height > 0) ? (height + 1.f) : 44.f;
-                cell.xui_height = @(fixedHeight);
                 return fixedHeight;
             }
         }

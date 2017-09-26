@@ -158,4 +158,9 @@
     }
 }
 
+- (void)setTheme:(XUITheme *)theme {
+    _theme = theme;
+    self.dateTimePicker.tintColor = theme.tintColor;
+}
+
 @end

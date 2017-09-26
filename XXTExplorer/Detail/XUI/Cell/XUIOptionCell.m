@@ -12,8 +12,6 @@
 
 @implementation XUIOptionCell
 
-@synthesize theme = _theme;
-
 + (BOOL)xibBasedLayout {
     return YES;
 }
@@ -55,13 +53,6 @@
 - (void)setupCell {
     [super setupCell];
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    XUI_START_IGNORE_PARTIAL
-    if (XUI_SYSTEM_9) {
-        self.detailTextLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
-    }
-    XUI_END_IGNORE_PARTIAL
-    self.detailTextLabel.textColor = UIColor.grayColor;
-    self.detailTextLabel.text = nil;
 }
 
 - (void)setXui_options:(NSArray<NSDictionary *> *)xui_options {
