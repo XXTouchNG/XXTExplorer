@@ -8,11 +8,12 @@
 
 #import "XXTEImageViewerController.h"
 #import "XXTExplorerEntryImageReader.h"
+#import <YYImage/YYImage.h>
 
 @interface XXTEImageViewerController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) YYAnimatedImageView *imageView;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
 
@@ -58,7 +59,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
-    UIImage *image = [UIImage imageWithContentsOfFile:self.entryPath];
+    YYImage *image = [YYImage imageWithContentsOfFile:self.entryPath];
     self.imageView.image = image;
     CGSize imageSize = image.size;
     CGRect maxRect = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
@@ -111,7 +112,7 @@
 
 - (UIImageView *)imageView {
     if (!_imageView) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithFrame:CGRectZero];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _imageView = imageView;
     }

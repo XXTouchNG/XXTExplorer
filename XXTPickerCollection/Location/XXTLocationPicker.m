@@ -12,8 +12,8 @@
 #import "XXTPickerDefine.h"
 #import "XXTPickerSnippet.h"
 
-static NSString * const kXXTCoordinateRegionLatitudeKey = @"kXXTCoordinateRegionLatitudeKey";
-static NSString * const kXXTCoordinateRegionLongitudeKey = @"kXXTCoordinateRegionLongitudeKey";
+static NSString * const kXXTCoordinateRegionLatitudeKey = @"latitude";
+static NSString * const kXXTCoordinateRegionLongitudeKey = @"longitude";
 static NSString * const kXXTMapViewAnnotationIdentifier = @"kXXTMapViewAnnotationIdentifier";
 static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude: %f";
 
@@ -41,7 +41,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 }
 
 - (NSDictionary <NSString *, NSNumber *> *)pickerResult {
-    return @{ @"latitude": @(self.pointAnnotation.coordinate.latitude), @"longitude": @(self.pointAnnotation.coordinate.longitude) };
+    return @{ kXXTCoordinateRegionLatitudeKey: @(self.pointAnnotation.coordinate.latitude), kXXTCoordinateRegionLongitudeKey: @(self.pointAnnotation.coordinate.longitude) };
 }
 
 - (NSString *)title {
@@ -80,13 +80,16 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     defaultCoordinate.longitude = 116.46f;
     MKCoordinateSpan defaultSpan = {1.f, 1.f};
     MKCoordinateRegion region = {defaultCoordinate, defaultSpan};
-    id latitudeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kXXTCoordinateRegionLatitudeKey];
-    id longitudeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kXXTCoordinateRegionLongitudeKey];
-    if (
-        latitudeObj && longitudeObj
-        ) {
-        defaultCoordinate.latitude = [(NSNumber *)latitudeObj floatValue];
-        defaultCoordinate.longitude = [(NSNumber *)longitudeObj floatValue];
+    NSDictionary *defaultPosition = self.pickerMeta[@"default"];
+    if ([defaultPosition isKindOfClass:[NSDictionary class]]) {
+        NSNumber *latitudeObj = defaultPosition[kXXTCoordinateRegionLatitudeKey];
+        NSNumber *longitudeObj = defaultPosition[kXXTCoordinateRegionLongitudeKey];
+        if (
+            [latitudeObj isKindOfClass:[NSNumber class]] && [longitudeObj isKindOfClass:[NSNumber class]]
+            ) {
+            defaultCoordinate.latitude = [latitudeObj doubleValue];
+            defaultCoordinate.longitude = [longitudeObj doubleValue];
+        }
     }
     [mapView setRegion:region animated:YES];
     

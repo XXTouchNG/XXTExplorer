@@ -66,23 +66,20 @@
     @synchronized (self) {
         if (!L) {
             L = luaL_newstate();
-            NSAssert(L, @"not enough memory");
-            luaL_openlibs(L);
-            lua_openNSValueLibs(L);
+            NSAssert(L, @"LuaVM: not enough memory.");
         }
+        luaL_openlibs(L);
+        lua_openNSValueLibs(L);
         
         int luaResult = luaL_loadfile(L, [path UTF8String]);
-        if (NO == checkCode(L, luaResult, errorPtr))
-        {
+        if (!checkCode(L, luaResult, errorPtr))
             return NO;
-        }
         
         int callResult = lua_pcall(L, 0, 1, 0);
-        if (NO == checkCode(L, callResult, errorPtr))
-        {
+        if (!checkCode(L, callResult, errorPtr))
             return NO;
-        }
         
+        // get name
         if (lua_type(L, -1) == LUA_TTABLE) {
             NSString *snippet_name = nil;
             lua_getfield(L, -1, "name");
@@ -97,6 +94,7 @@
             _name = snippet_name;
         }
         
+        // get arguments and transform it
         if (lua_type(L, -1) == LUA_TTABLE) {
             NSArray *args_array = nil;
             lua_getfield(L, -1, "arguments");
@@ -106,6 +104,8 @@
             lua_pop(L, 1);
             _flags = args_array;
         }
+        
+        // remain table in that stack
     }
     
     return YES;
@@ -115,25 +115,25 @@
 
 - (id)generateWithError:(NSError **)error {
     if (!L) return nil;
+    id snippet_body = nil;
     @synchronized (self) {
         NSArray *arguments = [self.results copy];
-        lua_getfield(L, -1, "generator");
-        if (lua_type(L, -1) == LUA_TFUNCTION) {
-            id snippet_body = nil;
+        lua_getfield(L, -1, "generator"); // push 1
+        if (lua_type(L, -1) == LUA_TFUNCTION) { // judge type
             for (int i = 0; i < [arguments count]; ++i) {
                 lua_pushNSValue(L, [arguments objectAtIndex:i]);
             }
             int argumentCount = (int)[arguments count];
-            int generateResult = lua_pcall(L, argumentCount, 1, 0);
+            int generateResult = lua_pcall(L, argumentCount, 1, 0); // push 2
             if (checkCode(L, generateResult, error))
             {
                 snippet_body = lua_toNSValue(L, -1);
-                lua_pop(L, 1);
+                lua_pop(L, 1); // pop 2
             }
-            return snippet_body;
         }
+        lua_pop(L, 1); // pop 1
     }
-	return nil;
+	return snippet_body;
 }
 
 #pragma mark - NSCoding

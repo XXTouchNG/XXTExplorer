@@ -48,7 +48,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 @property(nonatomic, strong) NSArray <NSDictionary *> *allApplications;
 @property(nonatomic, strong) NSArray <NSDictionary *> *displayApplications;
 @property(nonatomic, strong) UITableView *tableView;
-@property(nonatomic, strong) NSDictionary *selectedApplication;
+@property(nonatomic, strong) NSString *selectedIdentifier;
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
 @end
@@ -73,7 +73,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (NSString *)pickerResult {
-    return self.selectedApplication[kXXTApplicationDetailKeyBundleID];
+    return self.selectedIdentifier;
 }
 
 #pragma mark - Default Style
@@ -178,6 +178,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
+    NSString *defaultValue = self.pickerMeta[@"default"];
+    if ([defaultValue isKindOfClass:[NSString class]]) {
+        self.selectedIdentifier = defaultValue;
+    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         _allApplications = ({
             NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
@@ -240,8 +244,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
             }
             filteredApplications;
         });
-        if (self.allApplications.count != 0) {
-            self.selectedApplication = self.allApplications[0];
+        if (self.allApplications.count != 0 &&
+            self.selectedIdentifier == nil)
+        {
+            self.selectedIdentifier = self.allApplications[0][kXXTApplicationDetailKeyBundleID];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -295,7 +301,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
     [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
     [cell setTintColor:XXTP_PICKER_FRONT_COLOR];
-    if (appDetail == self.selectedApplication) {
+    if ([appDetail[kXXTApplicationDetailKeyBundleID] isEqualToString:self.selectedIdentifier]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -335,7 +341,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     XXTApplicationCell *cell1 = [tableView cellForRowAtIndexPath:indexPath];
     cell1.accessoryType = UITableViewCellAccessoryCheckmark;
-    self.selectedApplication = appDetail;
+    self.selectedIdentifier = appDetail[kXXTApplicationDetailKeyBundleID];
 
     [self updateSubtitle:[cell1 applicationBundleID]];
 }

@@ -23,26 +23,31 @@
     if (self) {
         _path = path;
         _bundle = bundle ? bundle : [NSBundle mainBundle];
-        [self setup];
+        BOOL setupResult = [self setupWithError:nil];
+        if (!setupResult) return nil;
     }
     return self;
 }
 
-- (void)setup {
+- (BOOL)setupWithError:(NSError **)error {
     @synchronized (self) {
         if (!L) {
             L = luaL_newstate();
-            NSAssert(L, @"not enough memory");
+            NSAssert(L, @"LuaVM: not enough memory.");
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
             NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter" ofType:@"lua"];
-            assert(adapterPath);
-            if (luaL_loadfile(L, adapterPath.UTF8String) == LUA_OK) {
-                lua_pushvalue(L, -1);
-                lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
-                lua_pop(L, 1);
+            NSAssert(adapterPath, @"LuaVM: XUIAdapter not found.");
+            int loadResult = luaL_loadfile(L, adapterPath.UTF8String);
+            if (!checkCode(L, loadResult, error)) {
+                return NO;
             }
+            lua_pushvalue(L, -1);
+            lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter");
+            lua_pop(L, 1);
+            return YES;
         }
+        return NO;
     }
 }
 
@@ -78,6 +83,7 @@
                 lua_pop(L, 1);
             }
         }
+        lua_pop(L, 1);
     }
     
     if ([value isKindOfClass:[NSDictionary class]]) {
@@ -105,14 +111,15 @@
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": saveObj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
             lua_pushNSValue(L, args);
-            int entryResult = lua_pcall(L, 1, 1, 0);
+            int entryResult = lua_pcall(L, 1, 0, 0);
             NSError *saveError = nil;
-            if (checkCode(L, entryResult, &saveError)) {
+            if (checkCode(L, entryResult, &saveError))
+            {
                 
             }
         }
+        lua_pop(L, -1);
     }
-    
 }
 
 - (void)dealloc {

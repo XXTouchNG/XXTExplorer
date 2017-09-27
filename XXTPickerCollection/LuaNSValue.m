@@ -398,6 +398,22 @@ void lua_openNSValueLibs(lua_State *L)
 	lua_pop(L, 1);
 }
 
+void lua_setPath(lua_State* L, const char *key, const char *path)
+{
+    lua_getglobal(L, "package");
+    lua_getfield(L, -1, key); // get field "path" from table at top of stack (-1)
+    const char *origPath = lua_tostring(L, -1); // grab path string from top of stack
+    NSString *strPath = [[NSString alloc] initWithUTF8String:path];
+    NSString *strOrigPath = [[NSString alloc] initWithUTF8String:origPath];
+    strOrigPath = [strOrigPath stringByAppendingString:@";"];
+    strOrigPath = [strOrigPath stringByAppendingString:strPath];
+    strOrigPath = [strOrigPath stringByAppendingString:@";"];
+    lua_pop(L, 1); // get rid of the string on the stack we just pushed on line 5
+    lua_pushstring(L, [strOrigPath UTF8String]); // push the new one
+    lua_setfield(L, -2, key); // set the field "path" in table at -2 with value at top of stack
+    lua_pop(L, 1); // get rid of package table from top of stack
+}
+
 BOOL checkCode(lua_State *L, int code, NSError **error) {
     if (LUA_OK != code) {
         const char *cErrString = lua_tostring(L, -1);

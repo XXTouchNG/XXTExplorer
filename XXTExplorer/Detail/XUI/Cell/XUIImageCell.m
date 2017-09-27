@@ -7,10 +7,11 @@
 //
 
 #import "XUIImageCell.h"
+#import <YYImage/YYImage.h>
 
 @interface XUIImageCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
+@property (weak, nonatomic) IBOutlet YYAnimatedImageView *cellImageView;
 
 @end
 
@@ -52,7 +53,7 @@
 - (void)setXui_path:(NSString *)xui_path {
     _xui_path = xui_path;
     NSString *imagePath = [self.adapter.bundle pathForResource:xui_path ofType:nil];
-    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+    UIImage *image = [YYImage imageWithContentsOfFile:imagePath];
     self.cellImageView.image = image;
 }
 

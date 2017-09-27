@@ -148,17 +148,20 @@ return {
         "Green";
       };
       cell = "Checkbox";
-      key = "checkbox";
+      key = "checkbox1";
       maxCount = 4;
       options = {
         {
           title = "Red";
+          value = "Red";
         };
         {
           title = "Green";
+          value = "Green";
         };
         {
           title = "Blue";
+          value = "Blue";
         };
         {
           title = "Yellow";

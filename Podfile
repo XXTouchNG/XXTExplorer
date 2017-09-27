@@ -17,5 +17,6 @@ pod 'PromiseKit', '~> 1.7'
 pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device'
 
 # pod 'Masonry', '~> 1.0.2'
+pod 'YYImage', '~> 1.0.4'
 
 end

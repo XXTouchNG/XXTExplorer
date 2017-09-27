@@ -10,11 +10,9 @@
 #import "XXTESnippetViewerController.h"
 #import "XXTEEditorController.h"
 
-#import "XXTPickerSnippet.h"
+#import "LuaNSValue.h"
 
 @interface XXTExplorerEntrySnippetReader ()
-
-@property (nonatomic, strong) XXTPickerSnippet *snippet;
 
 @end
 
@@ -47,7 +45,6 @@
 - (instancetype)initWithPath:(NSString *)filePath {
     if (self = [super init]) {
         _entryPath = filePath;
-        _snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:filePath Error:nil];
         [self setupWithPath:filePath];
     }
     return self;
@@ -66,12 +63,43 @@
             iconImage = extensionIconImage;
         }
     }
-    if (self.snippet) {
-        _entryDisplayName = self.snippet.name;
-    }
+    _entryDisplayName = [self nameForEntry:path];
     _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Document", entryUpperedExtension];
     _entryViewerDescription = [XXTESnippetViewerController viewerName];
+}
+
+- (NSString *)nameForEntry:(NSString *)path {
+    NSString *snippet_name = nil;
+    lua_State *L = luaL_newstate(); // only for grammar parsing, no bullshit
+    if (!L) {
+        NSAssert(L, @"LuaVM: not enough memory.");
+        return nil;
+    }
+    luaL_openlibs(L); // performance?
+    int luaResult = luaL_loadfile(L, [path UTF8String]);
+    if (checkCode(L, luaResult, nil))
+    {
+        int callResult = lua_pcall(L, 0, 1, 0);
+        if (checkCode(L, callResult, nil))
+        {
+            if (lua_type(L, -1) == LUA_TTABLE) {
+                int fieldType = lua_getfield(L, -1, "name");
+                if (fieldType == LUA_TSTRING) {
+                    const char *name = lua_tostring(L, -1);
+                    if (name)
+                        snippet_name = [NSString stringWithUTF8String:name];
+                }
+                lua_pop(L, 1);
+                if (!snippet_name)
+                    snippet_name = [path lastPathComponent];
+            }
+            lua_pop(L, 1);
+        }
+    }
+    lua_close(L);
+    L = NULL;
+    return snippet_name;
 }
 
 @end

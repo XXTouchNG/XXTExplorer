@@ -10,6 +10,8 @@
 #import "XXTExplorerEntryXPPMeta.h"
 #import "XXTEExecutableViewer.h"
 
+#import "LuaNSValue.h"
+
 @interface NSBundle (FlushCaches)
 
 - (BOOL)flushCaches;
@@ -65,38 +67,34 @@ __attribute__((weak_import));
     return [UIImage imageNamed:@"XXTEFileType-xpp"];
 }
 
-//+ (Class)configurationViewer {
-//    return NSClassFromString(@"XUIListViewController");
-//}
-
 - (instancetype)initWithPath:(NSString *)filePath {
     if (self = [super init]) {
         _entryPath = filePath;
-        [self setupWithPath:filePath];
+        BOOL setupResult = [self setupWithPath:filePath];
+        if (!setupResult) return nil;
     }
     return self;
 }
 
-- (void)setupWithPath:(NSString *)path {
+- (BOOL)setupWithPath:(NSString *)path {
     _executable = YES;
     _editable = NO;
     _configurable = YES;
-    NSBundle *pathBundle = [NSBundle bundleWithPath:path];
-    if (!pathBundle) {
-        return;
-    } else {
-        [pathBundle flushCaches];
-    }
-    NSString *existsMetaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
-    if (!existsMetaPath)
-    {
-        return;
-    }
-    NSDictionary *metaInfo = [[NSDictionary alloc] initWithContentsOfFile:existsMetaPath];
+    
+    // fetch bundle
+    NSBundle *pathBundle = [self clearedBundleForPath:path];
+    if (!pathBundle)
+        return NO;
+    
+    // fetch meta
+    NSString *metaPath = [pathBundle pathForResource:@"Info" ofType:@"lua"];
+    if (!metaPath)
+        return NO;
+    NSDictionary *metaInfo = [self metaInfoForEntry:metaPath];
     if (!metaInfo)
-    {
-        return;
-    }
+        return NO;
+    
+    // check required metas
     if (!metaInfo[kXXTEBundleIdentifier] ||
         ![metaInfo[kXXTEBundleIdentifier] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEBundleName] ||
@@ -108,11 +106,18 @@ __attribute__((weak_import));
         !metaInfo[kXXTEBundleInfoDictionaryVersion] ||
         ![metaInfo[kXXTEBundleInfoDictionaryVersion] isKindOfClass:[NSString class]]
         ) {
-        return;
+        return NO;
     }
-    NSBundle *localizationBundle = pathBundle ? pathBundle : [NSBundle mainBundle];
+    
+    // fetch localization
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSBundle *localizationBundle = pathBundle ? pathBundle : mainBundle;
+    
     _entryName = metaInfo[kXXTEBundleName];
-    _entryDescription = [NSString stringWithFormat:[localizationBundle localizedStringForKey:(@"Version %@") value:@"" table:(@"Meta")], metaInfo[kXXTEBundleVersion]];
+    NSString *localizedDescription = [mainBundle localizedStringForKey:(@"Version %@") value:nil table:(@"Meta")];
+    if (!localizedDescription)
+        localizedDescription = [localizationBundle localizedStringForKey:(@"Version %@") value:nil table:(@"Meta")];
+    _entryDescription = [NSString stringWithFormat:localizedDescription, metaInfo[kXXTEBundleVersion]];
     if (metaInfo[kXXTEBundleDisplayName] &&
         [metaInfo[kXXTEBundleDisplayName] isKindOfClass:[NSString class]]) {
         _entryDisplayName = metaInfo[kXXTEBundleDisplayName];
@@ -128,15 +133,53 @@ __attribute__((weak_import));
     _entryExtensionDescription = @"XXTouch Bundle";
     _entryViewerDescription = [XXTEExecutableViewer viewerName];
     NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
-    if (interfaceFile) {
-        NSString *configurationName = interfaceFile;
-        _configurationName = configurationName;
+    if (interfaceFile)
+    {
+        _configurationName = interfaceFile;
+    } else {
+        _configurationName = nil;
     }
+    
     _metaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
                    kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,
                    kXXTEMinimumXXTVersion, kXXTESupportedResolutions, kXXTESupportedDeviceTypes,
                    kXXTEExecutable, kXXTEMainInterfaceFile, kXXTEPackageControl ];
     _metaDictionary = metaInfo;
+    return YES;
+}
+
+- (NSDictionary *)metaInfoForEntry:(NSString *)path {
+    NSDictionary *metaInfo = nil;
+    lua_State *L = luaL_newstate(); // only for grammar parsing, no bullshit
+    if (!L) {
+        NSAssert(L, @"LuaVM: not enough memory.");
+        return nil;
+    }
+    luaL_openlibs(L); // performance?
+    int luaResult = luaL_loadfile(L, [path UTF8String]);
+    if (checkCode(L, luaResult, nil))
+    {
+        int callResult = lua_pcall(L, 0, 1, 0);
+        if (checkCode(L, callResult, nil))
+        {
+            if (lua_type(L, -1) == LUA_TTABLE) {
+                metaInfo = lua_toNSDictionary(L, -1);
+            }
+            lua_pop(L, 1);
+        }
+    }
+    lua_close(L);
+    L = NULL;
+    return metaInfo;
+}
+
+- (NSBundle *)clearedBundleForPath:(NSString *)path {
+    NSBundle *pathBundle = [NSBundle bundleWithPath:path];
+    if (!pathBundle) {
+        return nil;
+    }
+    [pathBundle flushCaches];
+    return pathBundle;
 }
 
 @end

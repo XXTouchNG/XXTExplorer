@@ -7,7 +7,6 @@
 //
 
 #import "LuaNSValue.h"
-#import "XXTELuaInterpreter.h"
 #import <Foundation/Foundation.h>
 
 @class XXTELuaVModel;
@@ -17,7 +16,7 @@
 
 @end
 
-@interface XXTELuaVModel : XXTELuaInterpreter
+@interface XXTELuaVModel : NSObject
 @property (nonatomic, weak) id<XXTELuaVModelDelegate> delegate;
 @property (nonatomic, assign) FILE *stdoutHandler;
 @property (nonatomic, assign) FILE *stderrHandler;

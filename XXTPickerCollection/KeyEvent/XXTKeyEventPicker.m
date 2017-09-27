@@ -18,7 +18,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, strong) NSArray <NSArray <XXTKeyEvent *> *> *events;
 @property (nonatomic, strong) NSArray <NSString *> *sectionNames;
-@property (nonatomic, strong) NSIndexPath *lastSelected;
+@property (nonatomic, strong) NSString *selectedCommand;
 
 @end
 
@@ -40,7 +40,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 }
 
 - (NSString *)pickerResult {
-    return self.events[(NSUInteger) self.lastSelected.section][(NSUInteger) self.lastSelected.row].command;
+    return self.selectedCommand;
 }
 
 - (NSString *)title {
@@ -57,8 +57,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.lastSelected = [NSIndexPath indexPathForRow:0 inSection:0];
+    
     self.sectionNames = @[
             NSLocalizedStringFromTable(@"Hardware Keys", @"XXTPickerCollection", nil),
             NSLocalizedStringFromTable(@"Keyboard Keys", @"XXTPickerCollection", nil),
@@ -92,7 +91,14 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
                     [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Media Play/Pause Key", @"XXTPickerCollection", nil) command:@"PLAYPAUSE"],
             ]
     ];
-
+    
+    NSString *selectedCommand = self.pickerMeta[@"default"];
+    if (selectedCommand) {
+        self.selectedCommand = selectedCommand;
+    } else {
+        self.selectedCommand = self.events[0][0].command;
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
 
     UITableView * tableView1 = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -171,9 +177,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", keyEvent.title, keyEvent.command];
     cell.textLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:16.0f];
     cell.tintColor = XXTP_PICKER_FRONT_COLOR;
-    if (self.lastSelected &&
-            self.lastSelected.section == indexPath.section &&
-            self.lastSelected.row == indexPath.row) {
+    if ([self.selectedCommand isEqualToString:keyEvent.command]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -183,14 +187,14 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.lastSelected) {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:self.lastSelected];
+    for (UITableViewCell *cell in tableView.visibleCells) {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    self.lastSelected = indexPath;
     UITableViewCell *cell1 = [tableView cellForRowAtIndexPath:indexPath];
     cell1.accessoryType = UITableViewCellAccessoryCheckmark;
     [self updateSubtitle:cell1.textLabel.text];
+    XXTKeyEvent *keyEvent = self.events[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+    self.selectedCommand = keyEvent.command;
 }
 
 #pragma mark - Memory

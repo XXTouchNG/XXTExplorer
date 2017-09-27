@@ -76,6 +76,8 @@
 - (void)configureCell:(XXTEMoreTitleValueCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.tintColor = XXTE_COLOR;
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSBundle *entryBundle = self.entryBundle;
     id pairKey = self.allKeys[indexPath.row];
     Class keyClass = [pairKey class];
     BOOL supportedKey = NO;
@@ -88,7 +90,10 @@
     if (supportedKey)
     {
         if (self.entryBundle && [pairKey isKindOfClass:[NSString class]]) {
-            cell.titleLabel.text = [self.entryBundle localizedStringForKey:pairKey value:nil table:@"Meta"];
+            NSString *localizedKey = [mainBundle localizedStringForKey:(pairKey) value:nil table:(@"Meta")];
+            if (!localizedKey)
+                localizedKey = [entryBundle localizedStringForKey:(pairKey) value:nil table:(@"Meta")];
+            cell.titleLabel.text = localizedKey;
         } else {
             cell.titleLabel.text = [pairKey stringValue];
         }

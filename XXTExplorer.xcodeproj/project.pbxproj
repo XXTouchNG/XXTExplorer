@@ -277,6 +277,7 @@
 		D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */; };
 		D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */; };
 		D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */; };
+		D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D617D1D31F7B4BC0009F4B59 /* libc++.tbd */; };
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
@@ -345,7 +346,6 @@
 		D677B1011F4FC7C300E741C2 /* lutf8lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D677B0DD1F4FC7C200E741C2 /* lutf8lib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D677B1021F4FC7C300E741C2 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = D677B0DE1F4FC7C200E741C2 /* lvm.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D677B1031F4FC7C300E741C2 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = D677B0E01F4FC7C200E741C2 /* lzio.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
-		D677B1091F4FE88B00E741C2 /* XXTELuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = D677B1081F4FE88B00E741C2 /* XXTELuaInterpreter.mm */; settings = {COMPILER_FLAGS = "-Wno-varargs"; }; };
 		D677B10C1F4FE8AB00E741C2 /* XXTELuaVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B10B1F4FE8AB00E741C2 /* XXTELuaVModel.m */; };
 		D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B10E1F4FE94000E741C2 /* XXTETerminalTextView.m */; };
 		D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1111F4FEA7B00E741C2 /* XXTETerminalViewController.m */; };
@@ -871,6 +871,7 @@
 		D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Monokai.tmTheme; sourceTree = "<group>"; };
 		D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Solarized (Dark).tmTheme"; sourceTree = "<group>"; };
 		D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Solarized (Light).tmTheme"; sourceTree = "<group>"; };
+		D617D1D31F7B4BC0009F4B59 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D61D5DD01F6F64B400CDF16D /* XXTESwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeButton.h; sourceTree = "<group>"; };
 		D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeButton.m; sourceTree = "<group>"; };
 		D61D5DD21F6F64B400CDF16D /* XXTESwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeTableCell.h; sourceTree = "<group>"; };
@@ -1001,8 +1002,6 @@
 		D677B0DF1F4FC7C200E741C2 /* lvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lvm.h; sourceTree = "<group>"; };
 		D677B0E01F4FC7C200E741C2 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		D677B0E11F4FC7C200E741C2 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
-		D677B1071F4FE88B00E741C2 /* XXTELuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTELuaInterpreter.h; sourceTree = "<group>"; };
-		D677B1081F4FE88B00E741C2 /* XXTELuaInterpreter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XXTELuaInterpreter.mm; sourceTree = "<group>"; };
 		D677B10A1F4FE8AB00E741C2 /* XXTELuaVModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTELuaVModel.h; sourceTree = "<group>"; };
 		D677B10B1F4FE8AB00E741C2 /* XXTELuaVModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTELuaVModel.m; sourceTree = "<group>"; };
 		D677B10D1F4FE94000E741C2 /* XXTETerminalTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETerminalTextView.h; sourceTree = "<group>"; };
@@ -1114,6 +1113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */,
 				D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */,
 				D6E560511F50359B00E0F997 /* CoreMedia.framework in Frameworks */,
 				D6E5604F1F50358B00E0F997 /* ImageIO.framework in Frameworks */,
@@ -2165,6 +2165,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D617D1D31F7B4BC0009F4B59 /* libc++.tbd */,
 				0F3E4C641F627C970068B257 /* Reveal.framework */,
 				D63B58DA1F56684F00D26475 /* WebKit.framework */,
 				D6E560501F50359B00E0F997 /* CoreMedia.framework */,
@@ -2494,8 +2495,6 @@
 			isa = PBXGroup;
 			children = (
 				D677B1131F4FEC3D00E741C2 /* Reader */,
-				D677B1071F4FE88B00E741C2 /* XXTELuaInterpreter.h */,
-				D677B1081F4FE88B00E741C2 /* XXTELuaInterpreter.mm */,
 				D677B10A1F4FE8AB00E741C2 /* XXTELuaVModel.h */,
 				D677B10B1F4FE8AB00E741C2 /* XXTELuaVModel.m */,
 				D677B10D1F4FE94000E741C2 /* XXTETerminalTextView.h */,
@@ -2974,7 +2973,6 @@
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				D677B0FA1F4FC7C300E741C2 /* lstring.c in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
-				D677B1091F4FE88B00E741C2 /* XXTELuaInterpreter.mm in Sources */,
 				0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */,
 				0FBAFF131F6D3A4B008B3189 /* XUIDateTimeCell.m in Sources */,
 				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,

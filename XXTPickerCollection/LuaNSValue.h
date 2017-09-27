@@ -33,6 +33,7 @@
         int luaopen_json(lua_State *L);
         int luaopen_plist(lua_State *L);
         void lua_openNSValueLibs(lua_State *L);
+        void lua_setPath(lua_State* L, const char *key, const char *path);
 
         extern NSString * const kXXTELuaVModelErrorDomain;
         BOOL checkCode(lua_State *L, int code, NSError **error);

@@ -239,10 +239,11 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     BOOL entryMaskBundle = [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle];
     BOOL entryMaskBrokenSymlink = [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink];
     
+    NSBundle *mainBundle = [NSBundle mainBundle];
     NSBundle *entryBundle = nil;
     if (entryMaskBundle)
         entryBundle = [NSBundle bundleWithPath:entryPath];
-    entryBundle = (entryBundle != nil) ? entryBundle : [NSBundle mainBundle];
+    entryBundle = (entryBundle != nil) ? entryBundle : mainBundle;
     self.entryBundle = entryBundle;
     
     struct stat entryStat;
@@ -448,7 +449,10 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                 if (supportedValue)
                 {
                     XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-                    cell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                    NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    if (!localizedKey)
+                        localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    cell.titleLabel.text = localizedKey;
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     cell.valueLabel.text = [extendedValue stringValue];
                     
@@ -459,7 +463,10 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                 else
                 {
                     XXTEMoreLinkNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
-                    cell.titleLabel.text = [entryBundle localizedStringForKey:(extendedKey) value:@"" table:(@"Meta")];
+                    NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    if (!localizedKey)
+                        localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    cell.titleLabel.text = localizedKey;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     
                     if (cell) [extendedCells addObject:cell];

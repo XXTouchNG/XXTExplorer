@@ -327,8 +327,10 @@
             }
         })
         .finally(^() {
-            [self loadEntryListData];
-            [self.tableView reloadData];
+            UITableView *tableView = self.tableView;
+            for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+                [self reconfigureCellAtIndexPath:indexPath];
+            }
             if (refreshControl && [refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }
