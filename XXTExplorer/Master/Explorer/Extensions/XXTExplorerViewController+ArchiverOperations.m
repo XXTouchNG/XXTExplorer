@@ -163,17 +163,46 @@
 }
 
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath {
-    NSString *entryName = [entryPath lastPathComponent];
+    
+    // entryPath UTF-8 representation
+    const char *extractFrom = [entryPath fileSystemRepresentation];
+    
+    // entry name part
+    NSString *entryName = entryPath.lastPathComponent;
+    
+    // entry parent part
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
-    NSString *destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
-    NSString *destinationPathWithIndex = destinationPath;
-    NSUInteger destinationIndex = 2;
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    while ([fileManager fileExistsAtPath:destinationPathWithIndex]) {
-        destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
-        destinationIndex++;
+    
+    // sub-entries count in that zip
+    char alone[260] = { 0 };
+    int subentryCount = zip_root_entry_count(extractFrom, alone);
+    NSString *aloneName = [[NSString alloc] initWithUTF8String:alone];
+    
+    // decide the destionation
+    BOOL combinedMode = (subentryCount >= 2);
+    NSString *destinationPath = nil;
+    if (combinedMode) {
+        destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
+    } else {
+        destinationPath = entryParentPath;
     }
+    NSString *alonePath = [destinationPath stringByAppendingPathComponent:aloneName];
+    
+    // adjust destination path
+    NSString *destinationPathWithIndex = destinationPath;
+    if (combinedMode) {
+        NSUInteger destinationIndex = 2;
+        NSFileManager *fileManager = [[NSFileManager alloc] init];
+        while ([fileManager fileExistsAtPath:destinationPathWithIndex]) {
+            destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
+            destinationIndex++;
+        }
+    }
+    
+    // destination name part
     NSString *destinationName = [destinationPathWithIndex lastPathComponent];
+    
+    // present alert
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Unarchive", nil)
                                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Unarchiving \"%@\" to \"%@\"", nil), entryName, destinationName]
                                                                                style:LGAlertViewStyleActionSheet
@@ -185,17 +214,21 @@
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
+    
+    // callback block for extracting
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
-    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+    @weakify(self);
+    void (^completionBlock)(BOOL, NSString *, NSError *) = ^(BOOL result, NSString *createdEntry , NSError *error) {
+        @strongify(self);
         [alertView1 dismissAnimated];
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         [self setEditing:YES animated:YES];
         for (NSUInteger i = 0; i < self.entryList.count; i++) {
             NSDictionary *entryDetail = self.entryList[i];
-            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:destinationPathWithIndex]) {
+            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:createdEntry]) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                 break;
@@ -206,45 +239,81 @@
             toastMessage(self, [error localizedDescription]);
         }
     };
-    if (self.busyOperationProgressFlag) {
+    
+    // busy lock
+    if (self.busyOperationProgressFlag)
         return;
-    }
     self.busyOperationProgressFlag = YES;
+    
+    // extact delay in another thread
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            const char *extractFrom = [entryPath fileSystemRepresentation];
-            const char *extractTo = [destinationPathWithIndex fileSystemRepresentation];
+            
+            // destinationPath UTF-8 representation
+            const char *from = [entryPath fileSystemRepresentation];
+            const char *to = [destinationPathWithIndex fileSystemRepresentation];
+            
+            // define error
             NSError *error = nil;
-            BOOL result = (mkdir(extractTo, 0755) == 0);
+            
+            // make appropriate folder
+            BOOL result = (access(to, F_OK) == 0 || mkdir(to, 0755) == 0);
             if (NO == result) {
+                
                 error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create destination directory \"%@\".", nil), destinationPathWithIndex]}];
+                
             } else {
+                
                 int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
+                    
+                    // display
                     dispatch_async_on_main_queue(^{
                         callbackBlock([NSString stringWithUTF8String:filename]);
                     });
+                    
+                    // check cancel flag
                     if (!self.busyOperationProgressFlag) {
                         return -1;
                     }
+                    
                     return 0;
+                    
                 };
+                
                 int arg = 2;
-                int status = zip_extract(extractFrom, extractTo, NULL, extract_callback, &arg);
+                int status = zip_extract(from, to, NULL, extract_callback, &arg);
+                
                 result = (status == 0);
+                
+                // error handling
                 if (NO == result) {
+                    
                     if (!self.busyOperationProgressFlag) {
                         error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unarchiving process terminated: User interrupt occurred.", nil)}];
                     } else {
                         error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath]}];
                     }
+                    
                 }
+                
             }
+            
+            // update result in main thread
             dispatch_async_on_main_queue(^{
+                
                 self.busyOperationProgressFlag = NO;
-                completionBlock(result, error);
-            });
-        });
-    });
+                if (combinedMode) {
+                    completionBlock(result, destinationPathWithIndex, error);
+                } else {
+                    completionBlock(result, alonePath, error);
+                }
+                
+            }); // end updating
+            
+        }); // end thread
+        
+    }); // end delay
+    
 }
 
 @end

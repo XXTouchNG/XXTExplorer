@@ -532,6 +532,68 @@ int zip_create(const char *zipname, const char *filenames[], size_t len) {
     return status;
 }
 
+int zip_root_entry_count(const char *zipname, char *entryname) {
+    int count = 0;
+    
+    mz_uint i, n;
+    mz_zip_archive zip_archive;
+    mz_zip_archive_file_stat info;
+    
+    if (!memset(&(zip_archive), 0, sizeof(zip_archive))) {
+        // Cannot memset zip archive
+        return -1;
+    }
+    
+    if (!zipname) {
+        // Cannot parse zip archive name
+        return -1;
+    }
+    
+    // Now try to open the archive.
+    if (!mz_zip_reader_init_file(&zip_archive, zipname, 0)) {
+        // Cannot initialize zip_archive reader
+        return -1;
+    }
+    
+    // Get and print information about each file in the archive.
+    n = mz_zip_reader_get_num_files(&zip_archive);
+    for (i = 0; i < n; ++i) {
+        if (!mz_zip_reader_file_stat(&zip_archive, i, &info)) {
+            // Cannot get information about zip archive;
+            break;
+        }
+        if (strncmp(info.m_filename, "__MACOSX/", 9) == 0) {
+            continue;
+        } else {
+            mz_bool is_dir = mz_zip_reader_is_file_a_directory(&zip_archive, i);
+            if (!is_dir && strncmp(info.m_filename, ".DS_Store", 9) == 0) {
+                continue;
+            }
+        }
+        // count
+        char *pa = strchr(info.m_filename, '/');
+        char *pb = strrchr(info.m_filename, '/');
+        if (pa == pb &&
+            (
+             pa == NULL || // all null, single file
+             (pa != NULL && strcmp(pa, "/") == 0) // all not null, only one slash at end
+             )
+            ) {
+            count++;
+            if (count > 1) break;
+            strncpy(entryname, info.m_filename, strlen(info.m_filename));
+        }
+    }
+    
+    // Close the archive, freeing any resources it was using
+    if (!mz_zip_reader_end(&zip_archive)) {
+        // Cannot end zip reader
+        
+    }
+    
+    return count;
+}
+
 int zip_extract(const char *zipname, const char *dir,
                 int (^will_extract)(const char *filename, void *arg),
                 int (^did_extract)(const char *filename, void *arg), void *arg) {
@@ -580,8 +642,7 @@ int zip_extract(const char *zipname, const char *dir,
             // Cannot get information about zip archive;
             goto out;
         }
-        if (mz_zip_reader_is_file_a_directory(&zip_archive, i) &&
-            strncmp(info.m_filename, "__MACOSX", 8) == 0) {
+        if (strncmp(info.m_filename, "__MACOSX/", 9) == 0) {
             continue;
         }
         strncpy(&path[dirlen], info.m_filename, MAX_PATH - dirlen);
