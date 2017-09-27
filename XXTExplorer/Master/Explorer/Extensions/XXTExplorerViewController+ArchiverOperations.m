@@ -174,9 +174,7 @@
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
     
     // sub-entries count in that zip
-    char alone[260] = { 0 };
-    int subentryCount = zip_root_entry_count(extractFrom, alone);
-    NSString *aloneName = [[NSString alloc] initWithUTF8String:alone];
+    int subentryCount = zip_root_entry_count(extractFrom);
     
     // decide the destionation
     BOOL combinedMode = (subentryCount >= 2);
@@ -186,14 +184,12 @@
     } else {
         destinationPath = entryParentPath;
     }
-    NSString *alonePath = [destinationPath stringByAppendingPathComponent:aloneName];
     
     // adjust destination path
     NSString *destinationPathWithIndex = destinationPath;
     if (combinedMode) {
         NSUInteger destinationIndex = 2;
-        NSFileManager *fileManager = [[NSFileManager alloc] init];
-        while ([fileManager fileExistsAtPath:destinationPathWithIndex]) {
+        while (0 == access(destinationPathWithIndex.UTF8String, F_OK)) {
             destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
             destinationIndex++;
         }
@@ -215,20 +211,66 @@
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
     
+    __block NSMutableArray <NSString *> *changedPaths = [[NSMutableArray alloc] init];
+    
+    // block for item that will be extracted
+    int (^will_extract)(char *, void *) = ^int (char *filename, void *arg) {
+        NSString *originalPath = [[NSString alloc] initWithUTF8String:filename];
+        NSString *originalPathNoExt = [originalPath stringByDeletingPathExtension];
+        NSString *originalPathExt = [originalPath pathExtension];
+        NSString *changedPath = originalPath;
+        NSUInteger changedIndex = 2;
+        BOOL flag = NO;
+        while (0 == access(changedPath.UTF8String, F_OK)) {
+            changedPath = [[NSString stringWithFormat:@"%@-%lu", originalPathNoExt, (unsigned long) changedIndex] stringByAppendingPathExtension:originalPathExt];
+            changedIndex++;
+            flag = YES;
+        }
+        [changedPaths addObject:changedPath];
+        if (flag) {
+            const char *changed = changedPath.UTF8String;
+            strncpy(filename, changed, MAX_PATH);
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+    
     // callback block for extracting
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    
     @weakify(self);
-    void (^completionBlock)(BOOL, NSString *, NSError *) = ^(BOOL result, NSString *createdEntry , NSError *error) {
+    
+    // block for extracted item
+    int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
         @strongify(self);
+        
+        // display
+        dispatch_async_on_main_queue(^{
+            callbackBlock([NSString stringWithUTF8String:filename]);
+        });
+        
+        // check cancel flag
+        if (!self.busyOperationProgressFlag) {
+            return -1;
+        }
+        
+        return 0;
+    };
+    
+    
+    void (^completionBlock)(BOOL, NSArray <NSString *> *, NSError *) = ^(BOOL result, NSArray <NSString *> *createdEntries, NSError *error) {
+        @strongify(self);
+        
         [alertView1 dismissAnimated];
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         [self setEditing:YES animated:YES];
         for (NSUInteger i = 0; i < self.entryList.count; i++) {
             NSDictionary *entryDetail = self.entryList[i];
-            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:createdEntry]) {
+            if ([createdEntries containsObject:entryDetail[XXTExplorerViewEntryAttributePath]]) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                 break;
@@ -248,6 +290,7 @@
     // extact delay in another thread
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            @strongify(self);
             
             // destinationPath UTF-8 representation
             const char *from = [entryPath fileSystemRepresentation];
@@ -264,24 +307,8 @@
                 
             } else {
                 
-                int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
-                    
-                    // display
-                    dispatch_async_on_main_queue(^{
-                        callbackBlock([NSString stringWithUTF8String:filename]);
-                    });
-                    
-                    // check cancel flag
-                    if (!self.busyOperationProgressFlag) {
-                        return -1;
-                    }
-                    
-                    return 0;
-                    
-                };
-                
                 int arg = 2;
-                int status = zip_extract(from, to, NULL, extract_callback, &arg);
+                int status = zip_extract(from, to, will_extract, extract_callback, &arg);
                 
                 result = (status == 0);
                 
@@ -303,9 +330,9 @@
                 
                 self.busyOperationProgressFlag = NO;
                 if (combinedMode) {
-                    completionBlock(result, destinationPathWithIndex, error);
+                    completionBlock(result, @[ destinationPathWithIndex ], error);
                 } else {
-                    completionBlock(result, alonePath, error);
+                    completionBlock(result, [changedPaths copy], error);
                 }
                 
             }); // end updating

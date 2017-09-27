@@ -137,7 +137,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
                     NSString *fromPath = [[NSBundle mainBundle] pathForResource:from ofType:@"zip"];
                     NSString *to = copyResource[@"to"];
                     NSString *toPath = [rootPath stringByAppendingPathComponent:to];
-                    int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
+                    int (^will_extract)(char *, void *) = ^int (char *filename, void *arg) {
                         if (0 == unlink(filename)) {} // try to unlink old snippets
                         return 0;
                     };

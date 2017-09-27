@@ -532,7 +532,7 @@ int zip_create(const char *zipname, const char *filenames[], size_t len) {
     return status;
 }
 
-int zip_root_entry_count(const char *zipname, char *entryname) {
+int zip_root_entry_count(const char *zipname) {
     int count = 0;
     
     mz_uint i, n;
@@ -581,7 +581,6 @@ int zip_root_entry_count(const char *zipname, char *entryname) {
             ) {
             count++;
             if (count > 1) break;
-            strncpy(entryname, info.m_filename, strlen(info.m_filename));
         }
     }
     
@@ -595,7 +594,7 @@ int zip_root_entry_count(const char *zipname, char *entryname) {
 }
 
 int zip_extract(const char *zipname, const char *dir,
-                int (^will_extract)(const char *filename, void *arg),
+                int (^will_extract)(char *filename, void *arg),
                 int (^did_extract)(const char *filename, void *arg), void *arg) {
     int status = -1;
     mz_uint i, n;
@@ -639,15 +638,17 @@ int zip_extract(const char *zipname, const char *dir,
     n = mz_zip_reader_get_num_files(&zip_archive);
     for (i = 0; i < n; ++i) {
         if (!mz_zip_reader_file_stat(&zip_archive, i, &info)) {
-            // Cannot get information about zip archive;
+            // cannot get information about zip archive
             goto out;
         }
+        
         if (strncmp(info.m_filename, "__MACOSX/", 9) == 0) {
             continue;
         }
+        
         strncpy(&path[dirlen], info.m_filename, MAX_PATH - dirlen);
         if (mkpath(path) < 0) {
-            // Cannot make a path
+            // cannot make a path, abort
             goto out;
         }
         
@@ -657,9 +658,27 @@ int zip_extract(const char *zipname, const char *dir,
         } else {
             
             if (will_extract) {
-                if (will_extract(path, arg) < 0) {
-                    continue;
+                
+                int method = will_extract(path, arg);
+                if (method < 0) {
+                    continue; // skip this file
+                } else if (method == 0) {
+                    // nothing to change
+                } else {
+                    
+                    if (mkpath(path) < 0) {
+                        // cannot make a path, abort
+                        goto out;
+                    }
+                    
+                    char *subslash = strrchr(path, '/');
+                    if (strcmp(subslash, "/") == 0) {
+                        // try to create directory instead of file, abort
+                        goto out;
+                    }
+                    
                 }
+                
             }
             
             if (!mz_zip_reader_extract_to_file(&zip_archive, i, path, 0)) {
