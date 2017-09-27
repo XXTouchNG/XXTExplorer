@@ -76,7 +76,8 @@
         NSAssert(L, @"LuaVM: not enough memory.");
         return nil;
     }
-    luaL_openlibs(L); // performance?
+    luaL_openlibs(L);
+    lua_openNSValueLibs(L); // performance?
     int luaResult = luaL_loadfile(L, [path UTF8String]);
     if (checkCode(L, luaResult, nil))
     {

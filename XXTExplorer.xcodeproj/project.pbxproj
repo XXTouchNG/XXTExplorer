@@ -2655,7 +2655,7 @@
 				0FA7ABE81ED641A3003EAD7D /* Resources */,
 				6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
-				D6DBD48D1F3C52D9002D5561 /* ShellScript */,
+				D6DBD48D1F3C52D9002D5561 /* Localization */,
 			);
 			buildRules = (
 			);
@@ -2867,13 +2867,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D6DBD48D1F3C52D9002D5561 /* ShellScript */ = {
+		D6DBD48D1F3C52D9002D5561 /* Localization */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = Localization;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

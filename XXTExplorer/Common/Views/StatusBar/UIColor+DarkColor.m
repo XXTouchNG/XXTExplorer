@@ -22,7 +22,7 @@
         }
     }
     CGFloat colorBrightness = ((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000.f;
-    return (colorBrightness < 0.5);
+    return (colorBrightness < 0.7);
 }
 
 @end

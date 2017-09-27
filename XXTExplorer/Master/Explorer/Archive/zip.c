@@ -580,6 +580,10 @@ int zip_extract(const char *zipname, const char *dir,
             // Cannot get information about zip archive;
             goto out;
         }
+        if (mz_zip_reader_is_file_a_directory(&zip_archive, i) &&
+            strncmp(info.m_filename, "__MACOSX", 8) == 0) {
+            continue;
+        }
         strncpy(&path[dirlen], info.m_filename, MAX_PATH - dirlen);
         if (mkpath(path) < 0) {
             // Cannot make a path
@@ -593,7 +597,7 @@ int zip_extract(const char *zipname, const char *dir,
             
             if (will_extract) {
                 if (will_extract(path, arg) < 0) {
-                    goto out;
+                    continue;
                 }
             }
             
