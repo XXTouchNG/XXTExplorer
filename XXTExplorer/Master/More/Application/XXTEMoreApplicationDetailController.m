@@ -102,7 +102,7 @@ typedef enum : NSUInteger {
     XXTEMoreAddressCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     NSString *containerPath = self.applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath];
     if (!containerPath || containerPath.length <= 0) {
-        containerPath = @"/private/var/mobile";
+        containerPath = NSLocalizedString(@"/private/var/mobile", nil);
     }
     cell4.addressLabel.text = containerPath;
     

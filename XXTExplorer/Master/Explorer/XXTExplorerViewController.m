@@ -193,7 +193,7 @@
     return YES;
 }
 
-- (void)loadEntryListDataWithError:(NSError **)error {
+- (BOOL)loadEntryListDataWithError:(NSError **)error {
     
     {
 #ifdef DEBUG
@@ -284,12 +284,17 @@
     NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
     if (!usageError) {
         NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
-        if (deviceFreeSpace) {
+        if (deviceFreeSpace != nil) {
             usageString = [NSByteCountFormatter stringFromByteCount:[deviceFreeSpace unsignedLongLongValue] countStyle:NSByteCountFormatterCountStyleFile];
         }
     }
     NSString *finalFooterString = [NSString stringWithFormat:NSLocalizedString(@"%@, %@ free", nil), itemCountString, usageString];
     [self.footerView.footerLabel setText:finalFooterString];
+    
+    if (error && *error) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)loadEntryListData {

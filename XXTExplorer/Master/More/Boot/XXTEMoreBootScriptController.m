@@ -74,7 +74,7 @@
 
 - (void)updateBootScriptDisplay {
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : @"N/A";
+    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : NSLocalizedString(@"N/A", nil);
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -103,7 +103,7 @@
     self.bootScriptSwitch = cell1.optionSwitch;
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : @"N/A";
+    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : NSLocalizedString(@"N/A", nil);
     
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

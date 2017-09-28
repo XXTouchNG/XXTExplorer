@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 } XXTExplorerViewCellFlagType;
 
 static NSString * const XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";
-static CGFloat XXTExplorerViewCellHeight = 66.f;
+static CGFloat XXTExplorerViewCellHeight = 72.f;
 
 @interface XXTExplorerViewCell : XXTESwipeTableCell
 @property (weak, nonatomic) IBOutlet UIImageView *entryIconImageView;

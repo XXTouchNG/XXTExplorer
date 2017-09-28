@@ -171,7 +171,7 @@
     if (sourceIndexPath.section == 1 && proposedDestinationIndexPath.section == 0) {
         // Move In
         NSNumber *maxCountObject = self.cell.xui_maxCount;
-        if (maxCountObject) {
+        if (maxCountObject != nil) {
             NSUInteger maxCount = [maxCountObject unsignedIntegerValue];
             if (self.selectedIndexes.count >= maxCount) {
                 return sourceIndexPath;
@@ -180,7 +180,7 @@
     } else if (sourceIndexPath.section == 0 && proposedDestinationIndexPath.section == 1) {
         // Move Out
         NSNumber *minCountOnbject = self.cell.xui_minCount;
-        if (minCountOnbject) {
+        if (minCountOnbject != nil) {
             NSUInteger minCount = [minCountOnbject unsignedIntegerValue];
             if (self.selectedIndexes.count <= minCount) {
                 return sourceIndexPath;

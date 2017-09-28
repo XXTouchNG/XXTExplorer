@@ -370,13 +370,16 @@ UISearchDisplayDelegate
             identifier = self.displayUnselectedIdentifiers[(NSUInteger) indexPath.row];
         }
     }
-    NSDictionary *appDetail = self.applications[identifier];
-    [cell setApplicationName:appDetail[kXXTApplicationDetailKeyName]];
-    [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
-    [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
-    [cell setTintColor:XXTP_PICKER_FRONT_COLOR];
-    [cell setShowsReorderControl:YES];
-    return cell;
+    if (identifier) {
+        NSDictionary *appDetail = self.applications[identifier];
+        [cell setApplicationName:appDetail[kXXTApplicationDetailKeyName]];
+        [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
+        [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
+        [cell setTintColor:XXTP_PICKER_FRONT_COLOR];
+        [cell setShowsReorderControl:YES];
+        return cell;
+    }
+    return [UITableViewCell new];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -448,7 +451,7 @@ UISearchDisplayDelegate
     }
     
     NSIndexPath *toIndexPath = nil;
-    BOOL alreadyExists = [selectedIdentifiers containsObject:identifier];
+    BOOL alreadyExists = identifier ? [selectedIdentifiers containsObject:identifier] : NO;
     
     if (alreadyExists && editingStyle == UITableViewCellEditingStyleDelete) {
         toIndexPath = [NSIndexPath indexPathForRow:0 inSection:kXXTApplicationPickerCellSectionUnselected];

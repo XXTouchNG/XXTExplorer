@@ -40,7 +40,7 @@
         titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.numberOfLines = 1;
-        titleLabel.text = @"N/A";
+        titleLabel.text = NSLocalizedString(@"N/A", nil);
         _titleLabel = titleLabel;
     }
     return _titleLabel;
@@ -53,7 +53,7 @@
         subtitleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         subtitleLabel.textAlignment = NSTextAlignmentCenter;
         subtitleLabel.numberOfLines = 1;
-        subtitleLabel.text = @"N/A";
+        subtitleLabel.text = NSLocalizedString(@"N/A", nil);
         _subtitleLabel = subtitleLabel;
     }
     return _subtitleLabel;

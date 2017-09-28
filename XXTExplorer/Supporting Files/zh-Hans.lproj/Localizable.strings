@@ -45,6 +45,9 @@
 "(Un)Comment" = "切换注释";
 
 /* No comment provided by engineer. */
+"/private/var/mobile" = "/private/var/mobile";
+
+/* No comment provided by engineer. */
 "1 item" = "1 项";
 
 /* No comment provided by engineer. */
@@ -444,6 +447,9 @@
 "Device Type" = "设备类型";
 
 /* No comment provided by engineer. */
+"DIR" = "DIR";
+
+/* No comment provided by engineer. */
 "Directory" = "目录";
 
 /* No comment provided by engineer. */
@@ -514,6 +520,9 @@
 
 /* No comment provided by engineer. */
 "Feedback" = "反馈";
+
+/* No comment provided by engineer. */
+"FIL" = "FIL";
 
 /* No comment provided by engineer. */
 "File \"%@\" already exists." = "文件 \"%@\" 已经存在.";
@@ -663,7 +672,13 @@
 "Location" = "位置";
 
 /* No comment provided by engineer. */
+"LUA" = "LUA";
+
+/* No comment provided by engineer. */
 "MAC Address" = "MAC 地址";
+
+/* No comment provided by engineer. */
+"Mac Classic" = "Mac Classic";
 
 /* No comment provided by engineer. */
 "Mail Feedback" = "邮件反馈";
@@ -694,6 +709,9 @@
 
 /* No comment provided by engineer. */
 "My Scripts" = "我的脚本";
+
+/* No comment provided by engineer. */
+"N/A" = "N/A";
 
 /* No comment provided by engineer. */
 "N/A\n(Not Available)" = "N/A\n(不可用)";
@@ -1127,6 +1145,9 @@
 
 /* No comment provided by engineer. */
 "Turn to \"Settings > Privacy > Camera\" and enable %@ to use your camera." = "请前往 \"设置 > 隐私 > 相机\", 并允许 %@ 使用您的相机.";
+
+/* No comment provided by engineer. */
+"TXT" = "TXT";
 
 /* No comment provided by engineer. */
 "Type" = "类型";

@@ -521,7 +521,9 @@ XXTE_END_IGNORE_PARTIAL
                 buttonCell.xui_value = performObject;
                 [self.adapter saveDefaultsFromCell:buttonCell];
             } else {
-                [self.cellFactory.logger logMessage:XUIParserErrorUndknownSelector(NSStringFromSelector(actionSelector))];
+                if (actionSelector) {
+                    [self.cellFactory.logger logMessage:XUIParserErrorUndknownSelector(NSStringFromSelector(actionSelector))];
+                }
             }
         }
     }
