@@ -277,7 +277,7 @@ UISearchDisplayDelegate
 #pragma mark - UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 66.f;
+    return 72.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -455,19 +455,23 @@ UISearchDisplayDelegate
     
     if (alreadyExists && editingStyle == UITableViewCellEditingStyleDelete) {
         toIndexPath = [NSIndexPath indexPathForRow:0 inSection:kXXTApplicationPickerCellSectionUnselected];
-        [selectedIdentifiers removeObject:identifier];
-        [unselectedIdentifiers insertObject:identifier atIndex:0];
-        if (tableView != self.tableView) {
-            [self.selectedIdentifiers removeObject:identifier];
-            [self.unselectedIdentifiers insertObject:identifier atIndex:0];
+        if (identifier) {
+            [selectedIdentifiers removeObject:identifier];
+            [unselectedIdentifiers insertObject:identifier atIndex:0];
+            if (tableView != self.tableView) {
+                [self.selectedIdentifiers removeObject:identifier];
+                [self.unselectedIdentifiers insertObject:identifier atIndex:0];
+            }
         }
     } else if (!alreadyExists && editingStyle == UITableViewCellEditingStyleInsert) {
         toIndexPath = [NSIndexPath indexPathForRow:selectedIdentifiers.count inSection:kXXTApplicationPickerCellSectionSelected];
-        [unselectedIdentifiers removeObject:identifier];
-        [selectedIdentifiers addObject:identifier];
-        if (tableView != self.tableView) {
-            [self.unselectedIdentifiers removeObject:identifier];
-            [self.selectedIdentifiers addObject:identifier];
+        if (identifier) {
+            [unselectedIdentifiers removeObject:identifier];
+            [selectedIdentifiers addObject:identifier];
+            if (tableView != self.tableView) {
+                [self.unselectedIdentifiers removeObject:identifier];
+                [self.selectedIdentifiers addObject:identifier];
+            }
         }
     }
     

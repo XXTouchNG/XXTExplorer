@@ -81,10 +81,6 @@
             AVAssetTrack *videoTrack = nil;
             NSArray <AVAssetTrack *> *videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
             if (videoTracks.count > 0) {
-                CMFormatDescriptionRef formatDescription = NULL;
-                NSArray *formatDescriptions = [videoTrack formatDescriptions];
-                if ([formatDescriptions count] > 0)
-                    formatDescription = (__bridge CMFormatDescriptionRef)[formatDescriptions objectAtIndex:0];
                 if ([videoTracks count] > 0)
                     videoTrack = [videoTracks objectAtIndex:0];
                 CGSize trackDimensions = {
@@ -116,10 +112,6 @@
             AVAssetTrack *audioTrack = nil;
             NSArray <AVAssetTrack *> *audioTracks = [asset tracksWithMediaType:AVMediaTypeAudio];
             if (audioTracks.count > 0) {
-                CMFormatDescriptionRef formatDescription = NULL;
-                NSArray *formatDescriptions = [audioTrack formatDescriptions];
-                if ([formatDescriptions count] > 0)
-                    formatDescription = (__bridge CMFormatDescriptionRef)[formatDescriptions objectAtIndex:0];
                 if ([audioTracks count] > 0)
                     audioTrack = [audioTracks objectAtIndex:0];
                 NSString *mediaType = [audioTrack mediaType];

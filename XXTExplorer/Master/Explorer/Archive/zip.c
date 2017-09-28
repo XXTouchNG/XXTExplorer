@@ -677,10 +677,8 @@ int zip_root_entry_alone(const char *zipname) { // 0: alone, -1: error, 1: not a
             else
             {
                 result = 1;
+                goto out1;
             }
-        }
-        if (result == 1) {
-            goto out1;
         }
     }
     result = 0;

@@ -267,7 +267,7 @@
             default:
                 break;
         }
-        XXTEDefaultsSetBasic(XXTEEditorWrapColumn, widthValue);
+        XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
         [self.editor setNeedsReload];
     }];
     

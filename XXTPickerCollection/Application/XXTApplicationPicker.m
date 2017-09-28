@@ -263,7 +263,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == kXXTApplicationPickerCellSection) {
-        return 66.f;
+        return 72.f;
     }
     return 0;
 }

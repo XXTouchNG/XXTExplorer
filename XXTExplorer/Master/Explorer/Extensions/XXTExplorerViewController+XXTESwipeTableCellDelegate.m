@@ -15,7 +15,7 @@
 #import "XXTEUserInterfaceDefines.h"
 
 #import "XXTExplorerItemDetailViewController.h"
-#import "XXTExplorerItemDetailNavigationController.h"
+#import "XXTENavigationController.h"
 #import "XXTECommonNavigationController.h"
 
 #import <objc/runtime.h>
@@ -60,7 +60,7 @@
             [self performAction:button launchScript:entryPath];
         } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
-            XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
+            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailController];
             detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
