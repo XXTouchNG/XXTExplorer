@@ -8,8 +8,6 @@
 
 #import "XXTImagePickerAlbumCell.h"
 #import "XXTImagePickerPhotoCell.h"
-#import "XXTPickerFactory.h"
-#import "XXTPickerDefine.h"
 
 @implementation XXTImagePickerController
 
@@ -31,7 +29,7 @@
     [self initBottomMenu];
     [self initControls];
 
-    NSBundle *frameworkBundle = [XXTPickerFactory bundle];
+    NSBundle *frameworkBundle = [NSBundle mainBundle];
     UINib *nib = [UINib nibWithNibName:@"XXTImagePickerPhotoCell" bundle:frameworkBundle];
     [_cvPhotoList registerNib:nib forCellWithReuseIdentifier:@"XXTImagePickerPhotoCell"];
 
@@ -53,22 +51,20 @@
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongTapForPreview:)];
     longTap.minimumPressDuration = 0.3;
     [self.view addGestureRecognizer:longTap];
-}
 
-- (void)viewWillAppear:(BOOL)animated {
     // add observer for refresh asset data
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
-    [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [super viewDidDisappear:animated];
     if (_nResultType == XXT_PICKER_RESULT_UIIMAGE)
         [XXT_ASSET_HELPER clearData];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)handleEnterForeground:(NSNotification *)notification {
@@ -79,8 +75,8 @@
 
 - (void)initControls {
     // side buttons
-    _btUp.backgroundColor = XXTP_PICKER_FRONT_COLOR;
-    _btDown.backgroundColor = XXTP_PICKER_FRONT_COLOR;
+    _btUp.backgroundColor = XXTE_COLOR;
+    _btDown.backgroundColor = XXTE_COLOR;
 
     CALayer *layer1 = [_btDown layer];
     [layer1 setMasksToBounds:YES];
@@ -133,7 +129,7 @@
 #pragma mark - for bottom menu
 
 - (void)initBottomMenu {
-    _vBottomMenu.backgroundColor = XXTP_PICKER_FRONT_COLOR;
+    _vBottomMenu.backgroundColor = XXTE_COLOR;
     [_btSelectAlbum setTitleColor:XXT_BOTTOM_TEXT_COLOR forState:UIControlStateNormal];
     [_btSelectAlbum setTitleColor:XXT_BOTTOM_TEXT_COLOR forState:UIControlStateDisabled];
 
@@ -141,7 +137,7 @@
     _ivLine2.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"xxt-picker-line"]];
 
     if (_nMaxCount == XXT_NO_LIMIT_SELECT) {
-        _lbSelectCount.text = NSLocalizedStringFromTableInBundle(@"(0)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        _lbSelectCount.text = NSLocalizedString(@"(0)", nil);
         _lbSelectCount.textColor = XXT_BOTTOM_TEXT_COLOR;
     } else if (_nMaxCount <= 1) {
         // hide ok button
@@ -229,7 +225,7 @@
     XXTImagePickerAlbumCell *cell = (XXTImagePickerAlbumCell *) [tableView dequeueReusableCellWithIdentifier:@"XXTImagePickerAlbumCell"];
 
     if (cell == nil) {
-        NSBundle *frameworkBundle = [XXTPickerFactory bundle];
+        NSBundle *frameworkBundle = [NSBundle mainBundle];
         cell = [[frameworkBundle loadNibNamed:@"XXTImagePickerAlbumCell" owner:nil options:nil] lastObject];
     }
 
@@ -305,10 +301,10 @@
             if (resultImage) {
                 [_delegate didSelectPhotosFromImagePickerController:self result:@[resultImage]];
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                                    message:NSLocalizedStringFromTableInBundle(@"Please download this image from iCloud.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                    message:NSLocalizedString(@"Please download this image from iCloud.", nil)
                                                                    delegate:nil
-                                                          cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                           otherButtonTitles:nil];
                 [alertView show];
             }
@@ -317,10 +313,10 @@
             if (resultAsset) {
                 [_delegate didSelectPhotosFromImagePickerController:self result:@[resultAsset]];
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
-                                                                    message:NSLocalizedStringFromTableInBundle(@"Please download this image from iCloud.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                    message:NSLocalizedString(@"Please download this image from iCloud.", nil)
                                                                    delegate:nil
-                                                          cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                           otherButtonTitles:nil];
                 [alertView show];
             }
@@ -423,10 +419,10 @@
 - (void)showPhotosInGroup:(NSInteger)nIndex {
     if (_nMaxCount == XXT_NO_LIMIT_SELECT) {
         _dSelected = [[NSMutableDictionary alloc] init];
-        _lbSelectCount.text = NSLocalizedStringFromTableInBundle(@"(0)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+        _lbSelectCount.text = NSLocalizedString(@"(0)", nil);
     } else if (_nMaxCount > 1) {
         _dSelected = [[NSMutableDictionary alloc] initWithCapacity:(NSUInteger) _nMaxCount];
-        _lbSelectCount.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"(0/%d)", @"XXTPickerCollection", [XXTPickerFactory bundle], nil), (int) _nMaxCount];
+        _lbSelectCount.text = [NSString stringWithFormat:@"(0/%d)", (int) _nMaxCount];
     }
 
     [XXT_ASSET_HELPER getPhotoListOfGroupByIndex:nIndex result:^(NSArray *aPhotos) {

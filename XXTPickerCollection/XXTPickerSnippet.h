@@ -6,23 +6,26 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "XXTBasePicker.h"
 
-@interface XXTPickerSnippet : NSObject <NSCoding, NSCopying, NSMutableCopying>
+@interface XXTPickerSnippet : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSArray <NSString *> *flags;
+@property (nonatomic, strong) NSArray <NSDictionary *> *flags;
 
-- (instancetype)initWithContentsOfFile:(NSString *)path;
-- (NSString *)generateWithError:(NSError **)error;
+- (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr;
+- (id)generateWithError:(NSError **)error;
 
 - (void)addResult:(id)result;
-- (Class)nextStepClass;
+- (UIViewController <XXTBasePicker> *)nextPicker;
 - (BOOL)taskFinished;
 - (float)currentProgress;
 
 - (NSUInteger)currentStep;
 - (NSUInteger)totalStep;
+
+- (NSArray *)getResults;
 
 @end

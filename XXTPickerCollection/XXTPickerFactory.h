@@ -21,7 +21,6 @@
 
 @property (nonatomic, weak) id <XXTPickerFactoryDelegate> delegate;
 
-+ (NSBundle *)bundle;
 - (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController;
 - (void)performNextStep:(UIViewController *)viewController;
 - (void)performFinished:(UIViewController *)viewController;

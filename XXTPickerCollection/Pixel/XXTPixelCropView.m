@@ -67,9 +67,7 @@ static const CGFloat MarginLeft = 37.f;
 - (void)commonInitWithType:(kXXTPixelCropViewType)type {
     self.type = type;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    NSBundle *frameworkBundle = [XXTPickerFactory bundle];
-    NSString *patternImagePath = [frameworkBundle pathForResource:@"xxt-crop-pattern" ofType:@"png"];
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageWithContentsOfFile:patternImagePath]];
+    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"xxt-crop-pattern"]];
 
     self.layer.masksToBounds = YES;
 
@@ -409,7 +407,7 @@ static const CGFloat MarginLeft = 37.f;
 #pragma mark - Crop Image
 
 - (UIImage *)croppedImage {
-    return [self.image rotatedImageWithtransform:self.rotation croppedToRect:self.zoomedCropRect];
+    return [self.image rotatedImageWithTransform:self.rotation croppedToRect:self.zoomedCropRect];
 }
 
 - (CGRect)cappedCropRectInImageRectWithCropRectView:(XXTPixelCropRectView *)cropRectView {

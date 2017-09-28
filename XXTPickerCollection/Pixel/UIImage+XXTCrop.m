@@ -7,10 +7,10 @@
 
 @implementation UIImage (XXTCrop)
 
-- (UIImage *)rotatedImageWithtransform:(CGAffineTransform)rotation
+- (UIImage *)rotatedImageWithTransform:(CGAffineTransform)rotation
                          croppedToRect:(CGRect)rect
 {
-    UIImage *rotatedImage = [self xx_rotatedImageWithtransform:rotation];
+    UIImage *rotatedImage = [self xx_rotatedImageWithTransform:rotation];
     
     CGFloat scale = rotatedImage.scale;
     CGRect cropRect = CGRectApplyAffineTransform(rect, CGAffineTransformMakeScale(scale, scale));
@@ -22,7 +22,7 @@
     return image;
 }
 
-- (UIImage *)xx_rotatedImageWithtransform:(CGAffineTransform)transform
+- (UIImage *)xx_rotatedImageWithTransform:(CGAffineTransform)transform
 {
     CGSize size = self.size;
     

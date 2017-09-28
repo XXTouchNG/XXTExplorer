@@ -32,9 +32,7 @@
 
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectInset(self.bounds, -2.0f, -2.0f)];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        NSBundle *frameworkBundle = [XXTPickerFactory bundle];
-        NSString *patternImagePath = [frameworkBundle pathForResource:@"xxt-picker-border" ofType:@"png"];
-        imageView.image = [[UIImage imageWithContentsOfFile:patternImagePath] resizableImageWithCapInsets:UIEdgeInsetsMake(23.0f, 23.0f, 23.0f, 23.0f)];
+        imageView.image = [[UIImage imageNamed:@"xxt-picker-border"] resizableImageWithCapInsets:UIEdgeInsetsMake(23.0f, 23.0f, 23.0f, 23.0f)];
         [self addSubview:imageView];
 
         self.topLeftCornerView = [[XXTPixelResizeControl alloc] init];

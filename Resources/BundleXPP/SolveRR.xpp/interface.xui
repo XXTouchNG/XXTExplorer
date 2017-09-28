@@ -1,0 +1,266 @@
+return {
+  subheader = "Elegant App UI provided by XXTouchApp.";
+  header = "Example";
+  title = "Demo";
+  items = {
+    {
+      cell = "Group";
+      label = "Switch";
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = true;
+      label = "Enabled";
+      cell = "Switch";
+      key = "enabled";
+      icon = "res/16.png";
+    };
+    {
+      cell = "Group";
+      label = "Button";
+    };
+    {
+      url = "https://www.xxtouch.com";
+      cell = "Link";
+      label = "Open XXTouch.com";
+    };
+    {
+      cell = "Button";
+      action = "OpenURL:";
+      label = "Contact i.82@me.com";
+      kwargs = {
+        "mailto://i.82@me.com";
+      }
+    };
+    {
+      cell = "Group";
+      label = "Menu";
+    };
+    {
+      url = "sub/xui-sub.xui";
+      cell = "Link";
+      label = "Load another pane";
+    };
+    {
+      url = "appicon.png";
+      cell = "Link";
+      label = "Open an image";
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = {
+        "Green, it's green!";
+      };
+      label = "List of Options";
+      cell = "Option";
+      key = "list-1";
+      options = {
+        {
+          title = "Red, it's red!";
+          shortTitle = "Red";
+        };
+        {
+          title = "Green, it's green!";
+          shortTitle = "Green";
+        };
+        {
+          title = "Blue, great color!";
+          shortTitle = "Blue";
+        };
+      };
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = {
+        "Red, it's red!";
+        "Green, it's green!";
+      };
+      label = "List of Multiple Options";
+      cell = "MultipleOption";
+      key = "list-2";
+      maxCount = 2;
+      options = {
+        {
+          title = "Red, it's red!";
+          icon = "res/red.png";
+        };
+        {
+          title = "Green, it's green!";
+          icon = "res/green.png";
+        };
+        {
+          title = "Blue, great color!";
+          icon = "res/blue.png";
+        };
+      };
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = {
+        "Red";
+      };
+      label = "List of Ordered Options";
+      cell = "OrderedOption";
+      key = "list-3";
+      maxCount = 2;
+      minCount = 1;
+      options = {
+        {
+          title = "Red";
+          icon = "res/red.png";
+        };
+        {
+          title = "Green";
+          icon = "res/green.png";
+        };
+        {
+          title = "Blue";
+          icon = "res/blue.png";
+        };
+      };
+    };
+    {
+      cell = "Group";
+      label = "Segment";
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = "Green";
+      label = "List of Options";
+      cell = "Segment";
+      key = "list-segment";
+      options = {
+        {
+          title = "Red";
+        };
+        {
+          title = "Green";
+        };
+        {
+          title = "Blue";
+        };
+      };
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = {
+        "Red";
+        "Green";
+      };
+      cell = "Checkbox";
+      key = "checkbox1";
+      maxCount = 4;
+      options = {
+        {
+          title = "Red";
+          value = "Red";
+        };
+        {
+          title = "Green";
+          value = "Green";
+        };
+        {
+          title = "Blue";
+          value = "Blue";
+        };
+        {
+          title = "Yellow";
+        };
+        {
+          title = "Purple";
+        };
+        {
+          title = "Black";
+        };
+        {
+          title = "White";
+        };
+      };
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      default = "Fifth, please!";
+      cell = "Radio";
+      key = "radio";
+      options = {
+        {
+          title = "First";
+        };
+        {
+          title = "Second";
+        };
+        {
+          title = "Third";
+        };
+        {
+          title = "Fourth";
+        };
+        {
+          title = "Fifth, please!";
+        };
+        {
+          title = "Zero";
+        };
+      };
+    };
+    {
+      cell = "Group";
+      label = "Number";
+    };
+    {
+      showValue = true;
+      defaults = "com.yourcompany.yourscript";
+      min = 1;
+      default = 5;
+      max = 10;
+      label = "Slider";
+      cell = "Slider";
+      key = "slider";
+    };
+    {
+      defaults = "com.yourcompany.yourscript";
+      min = 1;
+      default = 5;
+      max = 10;
+      autoRepeat = true;
+      label = "Stepper";
+      cell = "Stepper";
+      key = "stepper";
+      isInteger = true;
+    };
+    {
+      cell = "Group";
+      footerText = "This is the footer text of this section.";
+      label = "TextField";
+    };
+    {
+      noAutoCorrect = true;
+      defaults = "com.yourcompany.yourscript";
+      default = "";
+      label = "Username";
+      cell = "TextField";
+      key = "username";
+      keyboard = "default";
+      placeholder = "Enter the username";
+    };
+    {
+      noAutoCorrect = true;
+      defaults = "com.yourcompany.yourscript";
+      default = "";
+      label = "Password";
+      cell = "SecureTextField";
+      key = "password";
+      keyboard = "ascii";
+      placeholder = "Enter the password";
+    };
+    {
+      cell = "Group";
+      label = "StaticText";
+    };
+    {
+      cell = "StaticText";
+      label = "This specifier uses the label key as text content. Dynamic height of this cell is enabled.";
+    };
+  };
+};
+

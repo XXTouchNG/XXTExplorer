@@ -17,17 +17,8 @@
 
 @implementation XXTPickerFactory
 
-+ (NSBundle *)bundle {
-    static dispatch_once_t onceToken;
-    static NSBundle *bundle = nil;
-    dispatch_once(&onceToken, ^{
-        bundle = [NSBundle mainBundle];
-    });
-    return bundle;
-}
-
 - (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController {
-    id nextPicker = [[pickerTask nextStepClass] new];
+    id nextPicker = [pickerTask nextPicker];
     if (nextPicker) {
         if ([nextPicker respondsToSelector:@selector(setPickerTask:)])
         {
@@ -40,8 +31,10 @@
         if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
             [viewController.navigationController pushViewController:nextPicker animated:YES];
         } else {
-            XXTPickerNavigationController *popupNavigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:nextPicker];
-            [viewController presentViewController:popupNavigationController animated:YES completion:nil];
+            XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:nextPicker];
+            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+            navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [viewController presentViewController:navigationController animated:YES completion:nil];
         }
     } else {
         BOOL shouldFinish = YES;
@@ -49,7 +42,9 @@
             shouldFinish = [_delegate pickerFactory:self taskShouldFinished:pickerTask];
         }
         if (shouldFinish) {
-            [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
+                    [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+            }
         }
     }
 }
@@ -67,7 +62,7 @@
         }
         XXTPickerSnippet *pickerTask = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:pickerTaskObj]];
         [pickerTask addResult:pickerResult];
-        id nextPicker = [[pickerTask nextStepClass] new];
+        id nextPicker = [pickerTask nextPicker];
         if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerTask:)])
         {
             [nextPicker performSelector:@selector(setPickerTask:) withObject:pickerTask];

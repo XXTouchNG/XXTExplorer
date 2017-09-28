@@ -1,0 +1,14 @@
+local group, name
+
+group = 'App'
+name = 'app.quit(bid)'
+
+return {
+	name = string.format('%s - %s', group, name),
+	arguments = {
+		{type = '@app@'},
+	},
+	generator = function(bid)
+		return string.format('app.quit(%q)', bid)
+	end,
+}

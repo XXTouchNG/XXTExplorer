@@ -18,6 +18,10 @@
 
 @implementation XXTESplitViewController
 
+- (BOOL)shouldAutorotate {
+    return self.viewControllers.firstObject.shouldAutorotate;
+}
+
 #pragma mark - Restore State
 
 - (NSString *)restorationIdentifier {
@@ -36,7 +40,13 @@
 }
 
 - (void)setupAppearance {
-    
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_PAD) {
+        if (@available(iOS 8.0, *)) {
+            self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+        }
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -61,12 +71,16 @@
 
 #pragma mark - UISplitViewDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (void)splitViewController:(UISplitViewController *)svc willChangeToDisplayMode:(UISplitViewControllerDisplayMode)displayMode {
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:svc userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode, XXTENotificationDetailDisplayMode: @(displayMode)}]];
 }
+XXTE_END_IGNORE_PARTIAL
 
 - (UIViewController *)primaryViewControllerForCollapsingSplitViewController:(UISplitViewController *)splitViewController {
     return splitViewController.viewControllers[0];
 }
+
+// DO NOT OVERRIDE preferredDisplayMode
 
 @end

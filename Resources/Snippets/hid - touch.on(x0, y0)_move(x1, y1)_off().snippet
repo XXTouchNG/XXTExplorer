@@ -1,0 +1,15 @@
+local group, name
+
+group = '模拟'
+name = 'touch.on(x0, y0):move(x1, y1):off()'
+
+return {
+	name = string.format('%s - %s', group, name),
+	arguments = {
+		{type = '@pos@'},
+		{type = '@pos@'},
+	},
+	generator = function(p0, p1)
+		return string.format('touch.on(%d, %d):move(%d, %d):off()', p0[1], p0[2], p1[1], p1[2])
+	end,
+}

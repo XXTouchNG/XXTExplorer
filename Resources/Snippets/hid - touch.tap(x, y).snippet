@@ -1,0 +1,14 @@
+local group, name
+
+group = '模拟'
+name = 'touch.tap(x, y)'
+
+return {
+	name = string.format('%s - %s', group, name),
+	arguments = {
+		{type = '@pos@'},
+	},
+	generator = function(pos)
+		return string.format('touch.tap(%d, %d)', pos[1], pos[2])
+	end,
+}

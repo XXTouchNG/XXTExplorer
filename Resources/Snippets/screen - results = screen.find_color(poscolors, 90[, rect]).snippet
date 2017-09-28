@@ -1,0 +1,29 @@
+local group, name
+
+group = '图色'
+name = 'results = screen.find_color(poscolors, 90[, rect])'
+
+return {
+	name = string.format('%s - %s', group, name),
+	arguments = {
+		{type = '@poscolors@'},
+		{type = '@rect@'},
+	},
+	generator = function(poscolors, rect)
+		local pcs = {}
+		for i, pc in ipairs(poscolors) do
+			pcs[#pcs + 1] = string.format('\t{ %4d, %4d, 0x%08x}, -- %3d\n', pc[1], pc[2], pc[3] & 0x00ffffff, i)
+		end
+		if rect[1] == 0 and rect[2] == 0 and rect[3] == 0 and rect[4] == 0 then
+			rect = ''
+		else
+			rect = string.format(', %d, %d, %d, %d', rect[1], rect[2], rect[3], rect[4])
+		end
+		return string.format([[
+results = screen.find_color({
+	find_all = true,
+	max_results = 1000,
+%s}, 90%s)
+]], table.concat(pcs), rect)
+	end,
+}

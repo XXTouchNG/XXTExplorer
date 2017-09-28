@@ -12,8 +12,8 @@
 #import "XXTPickerDefine.h"
 #import "XXTPickerSnippet.h"
 
-static NSString * const kXXTCoordinateRegionLatitudeKey = @"kXXTCoordinateRegionLatitudeKey";
-static NSString * const kXXTCoordinateRegionLongitudeKey = @"kXXTCoordinateRegionLongitudeKey";
+static NSString * const kXXTCoordinateRegionLatitudeKey = @"latitude";
+static NSString * const kXXTCoordinateRegionLongitudeKey = @"longitude";
 static NSString * const kXXTMapViewAnnotationIdentifier = @"kXXTMapViewAnnotationIdentifier";
 static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude: %f";
 
@@ -23,30 +23,37 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 
 @end
 
+// type
+// title
+// subtitle
+
 @implementation XXTLocationPicker {
     NSString *_pickerSubtitle;
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - XXTBasePicker
 
 + (NSString *)pickerKeyword {
-    return @"@loc@";
+    return @"loc";
 }
 
 - (NSDictionary <NSString *, NSNumber *> *)pickerResult {
-    return @{ @"latitude": @(self.pointAnnotation.coordinate.latitude), @"longitude": @(self.pointAnnotation.coordinate.longitude) };
-}
-
-#pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return @{ kXXTCoordinateRegionLatitudeKey: @(self.pointAnnotation.coordinate.latitude), kXXTCoordinateRegionLongitudeKey: @(self.pointAnnotation.coordinate.longitude) };
 }
 
 - (NSString *)title {
-    return NSLocalizedStringFromTableInBundle(@"Location", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        return NSLocalizedStringFromTable(@"Location", @"XXTPickerCollection", nil);
+    }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - View
@@ -73,18 +80,21 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     defaultCoordinate.longitude = 116.46f;
     MKCoordinateSpan defaultSpan = {1.f, 1.f};
     MKCoordinateRegion region = {defaultCoordinate, defaultSpan};
-    id latitudeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kXXTCoordinateRegionLatitudeKey];
-    id longitudeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kXXTCoordinateRegionLongitudeKey];
-    if (
-        latitudeObj && longitudeObj
-        ) {
-        defaultCoordinate.latitude = [(NSNumber *)latitudeObj floatValue];
-        defaultCoordinate.longitude = [(NSNumber *)longitudeObj floatValue];
+    NSDictionary *defaultPosition = self.pickerMeta[@"default"];
+    if ([defaultPosition isKindOfClass:[NSDictionary class]]) {
+        NSNumber *latitudeObj = defaultPosition[kXXTCoordinateRegionLatitudeKey];
+        NSNumber *longitudeObj = defaultPosition[kXXTCoordinateRegionLongitudeKey];
+        if (
+            [latitudeObj isKindOfClass:[NSNumber class]] && [longitudeObj isKindOfClass:[NSNumber class]]
+            ) {
+            defaultCoordinate.latitude = [latitudeObj doubleValue];
+            defaultCoordinate.longitude = [longitudeObj doubleValue];
+        }
     }
     [mapView setRegion:region animated:YES];
     
     MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
-    pointAnnotation.title = NSLocalizedStringFromTableInBundle(@"Drag & Drop 📌", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    pointAnnotation.title = NSLocalizedStringFromTable(@"Drag & Drop 📌", @"XXTPickerCollection", nil);
     pointAnnotation.subtitle = [NSString stringWithFormat:NSLocalizedString(kXXTMapViewAnnotationFormat, nil), defaultCoordinate.latitude, defaultCoordinate.longitude];
     pointAnnotation.coordinate = defaultCoordinate;
     [mapView addAnnotation:pointAnnotation];
@@ -97,14 +107,20 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Next", @"XXTPickerCollection", [XXTPickerFactory bundle], nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select a location by dragging 📌", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
+    } else {
+        subtitle = NSLocalizedStringFromTable(@"Select a location by dragging 📌", @"XXTPickerCollection", nil);
+    }
+    [self updateSubtitle:subtitle];
 }
 
 #pragma mark - Task Operations

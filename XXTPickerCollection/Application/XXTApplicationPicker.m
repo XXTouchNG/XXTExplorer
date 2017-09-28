@@ -3,7 +3,7 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#include <objc/runtime.h>
+#import <objc/runtime.h>
 #import "XXTApplicationPicker.h"
 #import "XXTPickerFactory.h"
 #import "LSApplicationProxy.h"
@@ -48,10 +48,15 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 @property(nonatomic, strong) NSArray <NSDictionary *> *allApplications;
 @property(nonatomic, strong) NSArray <NSDictionary *> *displayApplications;
 @property(nonatomic, strong) UITableView *tableView;
-@property(nonatomic, strong) NSDictionary *selectedApplication;
+@property(nonatomic, strong) NSString *selectedIdentifier;
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
 @end
+
+// type
+// title
+// subtitle
+// allowedExtensions
 
 @implementation XXTApplicationPicker {
     NSString *_pickerSubtitle;
@@ -59,15 +64,16 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 @synthesize pickerTask = _pickerTask;
+@synthesize pickerMeta = _pickerMeta;
 
 #pragma mark - XXTBasePicker
 
 + (NSString *)pickerKeyword {
-    return @"@app@";
+    return @"app";
 }
 
 - (NSString *)pickerResult {
-    return self.selectedApplication[kXXTApplicationDetailKeyBundleID];
+    return self.selectedIdentifier;
 }
 
 #pragma mark - Default Style
@@ -80,7 +86,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 }
 
 - (NSString *)title {
-    return NSLocalizedStringFromTableInBundle(@"Application", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    if (self.pickerMeta[@"title"]) {
+        return self.pickerMeta[@"title"];
+    } else {
+        return NSLocalizedStringFromTable(@"Application", @"XXTPickerCollection", nil);
+    }
 }
 
 #pragma mark - View
@@ -100,10 +110,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     _allApplications = @[];
 
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-    searchBar.placeholder = NSLocalizedStringFromTableInBundle(@"Search Application", @"XXTPickerCollection", [XXTPickerFactory bundle], nil);
+    searchBar.placeholder = NSLocalizedStringFromTable(@"Search Application", @"XXTPickerCollection", nil);
     searchBar.scopeButtonTitles = @[
-            NSLocalizedStringFromTableInBundle(@"Name", @"XXTPickerCollection", [XXTPickerFactory bundle], nil),
-            NSLocalizedStringFromTableInBundle(@"Bundle ID", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)
+            NSLocalizedStringFromTable(@"Name", @"XXTPickerCollection", nil),
+            NSLocalizedStringFromTable(@"Bundle ID", @"XXTPickerCollection", nil)
     ];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -120,7 +130,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[XXTPickerFactory bundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -148,7 +158,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Next", @"XXTPickerCollection", [XXTPickerFactory bundle], nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -158,10 +168,20 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateSubtitle:NSLocalizedStringFromTableInBundle(@"Select an application.", @"XXTPickerCollection", [XXTPickerFactory bundle], nil)];
+    NSString *subtitle = nil;
+    if (self.pickerMeta[@"subtitle"]) {
+        subtitle = self.pickerMeta[@"subtitle"];
+    } else {
+        subtitle = NSLocalizedStringFromTable(@"Select an application.", @"XXTPickerCollection", nil);
+    }
+    [self updateSubtitle:subtitle];
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
+    NSString *defaultValue = self.pickerMeta[@"default"];
+    if ([defaultValue isKindOfClass:[NSString class]]) {
+        self.selectedIdentifier = defaultValue;
+    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         _allApplications = ({
             NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
@@ -224,8 +244,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
             }
             filteredApplications;
         });
-        if (self.allApplications.count != 0) {
-            self.selectedApplication = self.allApplications[0];
+        if (self.allApplications.count != 0 &&
+            self.selectedIdentifier == nil)
+        {
+            self.selectedIdentifier = self.allApplications[0][kXXTApplicationDetailKeyBundleID];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -241,7 +263,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == kXXTApplicationPickerCellSection) {
-        return 66.f;
+        return 72.f;
     }
     return 0;
 }
@@ -279,7 +301,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
     [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
     [cell setTintColor:XXTP_PICKER_FRONT_COLOR];
-    if (appDetail == self.selectedApplication) {
+    if ([appDetail[kXXTApplicationDetailKeyBundleID] isEqualToString:self.selectedIdentifier]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -319,7 +341,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     XXTApplicationCell *cell1 = [tableView cellForRowAtIndexPath:indexPath];
     cell1.accessoryType = UITableViewCellAccessoryCheckmark;
-    self.selectedApplication = appDetail;
+    self.selectedIdentifier = appDetail[kXXTApplicationDetailKeyBundleID];
 
     [self updateSubtitle:[cell1 applicationBundleID]];
 }
@@ -346,7 +368,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #pragma mark - UISearchDisplayDelegate
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
-    [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[XXTPickerFactory bundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
     XXTPickerNavigationController *navController = ((XXTPickerNavigationController *)self.navigationController);
     [navController.popupBar setHidden:YES];
 }
