@@ -133,7 +133,7 @@ typedef enum : NSUInteger {
         cellAddress1.addressLabel.textColor = XXTE_COLOR_DANGER;
         cellAddress1.addressLabel.text = NSLocalizedString(@"Connect to Wi-fi network.", nil);
     }
-    cellAddress2.addressLabel.text = bonjourWebServerUrl ? bonjourWebServerUrl : @"N/A";
+    cellAddress2.addressLabel.text = bonjourWebServerUrl ? bonjourWebServerUrl : NSLocalizedString(@"N/A", nil);
     
     staticCells[0][0] = cell1;
     staticCells[0][1] = cellAddress1;

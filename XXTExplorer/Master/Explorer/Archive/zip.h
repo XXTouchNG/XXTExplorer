@@ -182,9 +182,17 @@ extern int zip_create(const char *zipname, const char *filenames[], size_t len);
   Returns:
     The return code - 0 on success, negative number (< 0) on error.
 */
-extern int zip_root_entry_count(const char *zipname);
+
+extern enum {
+    zip_extract_skip = 0,
+    zip_extract_remain,
+    zip_extract_override,
+    zip_extract_rename,
+} zip_extract_method;
+
+extern int zip_root_entry_alone(const char *zipname);
 extern int zip_extract(const char *zipname, const char *dir,
-                    int (^will_extract)(char *filename, void *arg),
+                    int (^will_extract)(const char *filename, void *arg),
                     int (^did_extract)(const char *filename, void *arg), void *arg);
 
 #ifdef __cplusplus

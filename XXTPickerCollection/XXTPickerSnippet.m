@@ -67,45 +67,46 @@
         if (!L) {
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
-        }
-        luaL_openlibs(L);
-        lua_openNSValueLibs(L);
-        
-        int luaResult = luaL_loadfile(L, [path UTF8String]);
-        if (!checkCode(L, luaResult, errorPtr))
-            return NO;
-        
-        int callResult = lua_pcall(L, 0, 1, 0);
-        if (!checkCode(L, callResult, errorPtr))
-            return NO;
-        
-        // get name
-        if (lua_type(L, -1) == LUA_TTABLE) {
-            NSString *snippet_name = nil;
-            lua_getfield(L, -1, "name");
-            if (lua_type(L, -1) == LUA_TSTRING) {
-                const char *name = lua_tostring(L, -1);
-                if (name)
-                    snippet_name = [NSString stringWithUTF8String:name];
-            }
-            lua_pop(L, 1);
-            if (!snippet_name)
-                snippet_name = [self.path lastPathComponent];
-            _name = snippet_name;
-        }
-        
-        // get arguments and transform it
-        if (lua_type(L, -1) == LUA_TTABLE) {
-            NSArray *args_array = nil;
-            lua_getfield(L, -1, "arguments");
+            
+            luaL_openlibs(L);
+            lua_openNSValueLibs(L);
+            
+            int luaResult = luaL_loadfile(L, [path UTF8String]);
+            if (!lua_checkCode(L, luaResult, errorPtr))
+                return NO;
+            
+            int callResult = lua_pcall(L, 0, 1, 0);
+            if (!lua_checkCode(L, callResult, errorPtr))
+                return NO;
+            
+            // get name
             if (lua_type(L, -1) == LUA_TTABLE) {
-                args_array = lua_toNSArray(L, -1);
+                NSString *snippet_name = nil;
+                lua_getfield(L, -1, "name");
+                if (lua_type(L, -1) == LUA_TSTRING) {
+                    const char *name = lua_tostring(L, -1);
+                    if (name)
+                        snippet_name = [NSString stringWithUTF8String:name];
+                }
+                lua_pop(L, 1);
+                if (!snippet_name)
+                    snippet_name = [self.path lastPathComponent];
+                _name = snippet_name;
             }
-            lua_pop(L, 1);
-            _flags = args_array;
+            
+            // get arguments and transform it
+            if (lua_type(L, -1) == LUA_TTABLE) {
+                NSArray *args_array = nil;
+                lua_getfield(L, -1, "arguments");
+                if (lua_type(L, -1) == LUA_TTABLE) {
+                    args_array = lua_toNSArray(L, -1);
+                }
+                lua_pop(L, 1);
+                _flags = args_array;
+            }
+            
+            // remain table in that stack
         }
-        
-        // remain table in that stack
     }
     
     return YES;
@@ -125,7 +126,7 @@
             }
             int argumentCount = (int)[arguments count];
             int generateResult = lua_pcall(L, argumentCount, 1, 0); // push 2
-            if (checkCode(L, generateResult, error))
+            if (lua_checkCode(L, generateResult, error))
             {
                 snippet_body = lua_toNSValue(L, -1);
                 lua_pop(L, 1); // pop 2

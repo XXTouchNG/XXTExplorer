@@ -414,7 +414,7 @@ void lua_setPath(lua_State* L, const char *key, const char *path)
     lua_pop(L, 1); // get rid of package table from top of stack
 }
 
-BOOL checkCode(lua_State *L, int code, NSError **error) {
+BOOL lua_checkCode(lua_State *L, int code, NSError **error) {
     if (LUA_OK != code) {
         const char *cErrString = lua_tostring(L, -1);
         NSString *errString = [NSString stringWithUTF8String:cErrString];
@@ -429,4 +429,23 @@ BOOL checkCode(lua_State *L, int code, NSError **error) {
         return NO;
     }
     return YES;
+}
+
+static void ____lua_setmaxline_hook(lua_State *L, lua_Debug *ar)
+{
+    lua_getfield(L, LUA_REGISTRYINDEX, "lua_setmaxline_line_count");
+    lua_Integer *line_count_ptr = (lua_Integer *)lua_touserdata(L, -1);
+    lua_pop(L, 1);
+    *line_count_ptr = *line_count_ptr - 1;
+    if (*line_count_ptr < 0) {
+        luaL_error(L, "line overflow");
+    }
+}
+
+void lua_setMaxLine(lua_State *L, lua_Integer maxline)
+{
+    lua_Integer *line_count_ptr = (lua_Integer *)lua_newuserdata(L, sizeof(lua_Integer));
+    lua_setfield(L, LUA_REGISTRYINDEX, "lua_setmaxline_line_count");
+    *line_count_ptr = maxline;
+    lua_sethook(L, ____lua_setmaxline_hook, LUA_MASKLINE, 0);
 }

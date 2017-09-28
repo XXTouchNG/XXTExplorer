@@ -769,7 +769,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     
     CGPDFDocumentRef pdf = CGPDFDocumentCreateWithURL((CFURLRef)url);
     const size_t numberOfPages = CGPDFDocumentGetNumberOfPages(pdf);
-    if (page > numberOfPages) return nil;
+    if (page > numberOfPages) {
+        CGPDFDocumentRelease(pdf);
+        return nil;
+    }
     
     CGFloat scale = 0.0;
     
@@ -795,6 +798,9 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     
     UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
+    CGPDFDocumentRelease(pdf);
+    pdf = nil;
     
     return resultingImage;
 }

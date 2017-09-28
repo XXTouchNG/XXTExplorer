@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,13 +19,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDd-s4-s8H">
-                        <rect key="frame" x="8" y="8" width="50" height="55.5"/>
+                        <rect key="frame" x="8" y="8" width="56" height="55.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hwv-3M-uvi">
-                                <rect key="frame" x="8" y="11" width="34" height="34"/>
+                                <rect key="frame" x="8" y="8" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="Kcv-17-VOh"/>
-                                    <constraint firstAttribute="height" constant="34" id="Mti-Ae-rhB"/>
+                                    <constraint firstAttribute="width" constant="40" id="Kcv-17-VOh"/>
+                                    <constraint firstAttribute="height" constant="40" id="Mti-Ae-rhB"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -33,15 +33,14 @@
                         <constraints>
                             <constraint firstItem="Hwv-3M-uvi" firstAttribute="centerY" secondItem="gDd-s4-s8H" secondAttribute="centerY" id="3iq-Ov-tFD"/>
                             <constraint firstAttribute="trailing" secondItem="Hwv-3M-uvi" secondAttribute="trailing" constant="8" id="7c3-JY-W6l"/>
-                            <constraint firstAttribute="width" constant="50" id="b72-Vq-QVI"/>
                             <constraint firstItem="Hwv-3M-uvi" firstAttribute="leading" secondItem="gDd-s4-s8H" secondAttribute="leading" constant="8" id="j6z-Ng-Rpt"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYD-Lt-sFL">
-                        <rect key="frame" x="66" y="8" width="307" height="55.5"/>
+                        <rect key="frame" x="72" y="8" width="301" height="55.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptv-cy-uCF">
-                                <rect key="frame" x="0.0" y="2" width="307" height="28"/>
+                                <rect key="frame" x="0.0" y="2" width="301" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="H6R-zd-Zji"/>
                                 </constraints>
@@ -50,7 +49,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MA6-Qb-LXA">
-                                <rect key="frame" x="0.0" y="30" width="307" height="14.5"/>
+                                <rect key="frame" x="0.0" y="30" width="301" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>

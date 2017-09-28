@@ -174,20 +174,20 @@
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
     
     // sub-entries count in that zip
-    int subentryCount = zip_root_entry_count(extractFrom);
+    int subentry = zip_root_entry_alone(extractFrom);
     
     // decide the destionation
-    BOOL combinedMode = (subentryCount >= 2);
+    BOOL singleMode = (subentry == 0);
     NSString *destinationPath = nil;
-    if (combinedMode) {
-        destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
-    } else {
+    if (singleMode) {
         destinationPath = entryParentPath;
+    } else {
+        destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
     }
     
     // adjust destination path
     NSString *destinationPathWithIndex = destinationPath;
-    if (combinedMode) {
+    if (!singleMode) {
         NSUInteger destinationIndex = 2;
         while (0 == access(destinationPathWithIndex.UTF8String, F_OK)) {
             destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
@@ -211,46 +211,30 @@
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
     
-    __block NSMutableArray <NSString *> *changedPaths = [[NSMutableArray alloc] init];
-    
-    // block for item that will be extracted
-    int (^will_extract)(char *, void *) = ^int (char *filename, void *arg) {
-        NSString *originalPath = [[NSString alloc] initWithUTF8String:filename];
-        NSString *originalPathNoExt = [originalPath stringByDeletingPathExtension];
-        NSString *originalPathExt = [originalPath pathExtension];
-        NSString *changedPath = originalPath;
-        NSUInteger changedIndex = 2;
-        BOOL flag = NO;
-        while (0 == access(changedPath.UTF8String, F_OK)) {
-            changedPath = [[NSString stringWithFormat:@"%@-%lu", originalPathNoExt, (unsigned long) changedIndex] stringByAppendingPathExtension:originalPathExt];
-            changedIndex++;
-            flag = YES;
-        }
-        [changedPaths addObject:changedPath];
-        if (flag) {
-            const char *changed = changedPath.UTF8String;
-            strncpy(filename, changed, MAX_PATH);
-            return 1;
-        } else {
-            return 0;
-        }
-    };
-    
     // callback block for extracting
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
     
+    __block NSMutableArray <NSString *> *changedPaths = [[NSMutableArray alloc] init];
+    
     @weakify(self);
     
-    // block for extracted item
-    int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
+    int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
+        return zip_extract_rename;
+    };
+    
+    int (^did_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
         @strongify(self);
+        
+        NSString *changedPath = [[NSString alloc] initWithUTF8String:filename];
         
         // display
         dispatch_async_on_main_queue(^{
-            callbackBlock([NSString stringWithUTF8String:filename]);
+            callbackBlock(changedPath);
         });
+        
+        [changedPaths addObject:changedPath];
         
         // check cancel flag
         if (!self.busyOperationProgressFlag) {
@@ -260,17 +244,27 @@
         return 0;
     };
     
-    
     void (^completionBlock)(BOOL, NSArray <NSString *> *, NSError *) = ^(BOOL result, NSArray <NSString *> *createdEntries, NSError *error) {
         @strongify(self);
-        
         [alertView1 dismissAnimated];
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         [self setEditing:YES animated:YES];
         for (NSUInteger i = 0; i < self.entryList.count; i++) {
             NSDictionary *entryDetail = self.entryList[i];
-            if ([createdEntries containsObject:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+            BOOL contains = NO;
+            for (NSString *createdEntry in createdEntries) {
+                NSString *listPath = entryDetail[XXTExplorerViewEntryAttributePath];
+                BOOL isDirectory = [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
+                if (
+                    [createdEntry isEqualToString:listPath] ||
+                    (isDirectory && [createdEntry hasPrefix:[listPath stringByAppendingString:@"/"]])
+                    ) {
+                    contains = YES;
+                    break;
+                }
+            }
+            if (contains) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                 break;
@@ -308,7 +302,7 @@
             } else {
                 
                 int arg = 2;
-                int status = zip_extract(from, to, will_extract, extract_callback, &arg);
+                int status = zip_extract(from, to, will_extract, did_extract, &arg);
                 
                 result = (status == 0);
                 
@@ -329,10 +323,10 @@
             dispatch_async_on_main_queue(^{
                 
                 self.busyOperationProgressFlag = NO;
-                if (combinedMode) {
-                    completionBlock(result, @[ destinationPathWithIndex ], error);
-                } else {
+                if (singleMode) {
                     completionBlock(result, [changedPaths copy], error);
+                } else {
+                    completionBlock(result, @[ destinationPathWithIndex ], error);
                 }
                 
             }); // end updating

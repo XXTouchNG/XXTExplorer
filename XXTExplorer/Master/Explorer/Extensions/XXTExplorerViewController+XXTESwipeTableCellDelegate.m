@@ -15,7 +15,7 @@
 #import "XXTEUserInterfaceDefines.h"
 
 #import "XXTExplorerItemDetailViewController.h"
-#import "XXTExplorerItemDetailNavigationController.h"
+#import "XXTENavigationController.h"
 #import "XXTECommonNavigationController.h"
 
 #import <objc/runtime.h>
@@ -60,7 +60,7 @@
             [self performAction:button launchScript:entryPath];
         } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
-            XXTExplorerItemDetailNavigationController *detailNavigationController = [[XXTExplorerItemDetailNavigationController alloc] initWithRootViewController:detailController];
+            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailController];
             detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
@@ -147,6 +147,8 @@
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Launch", nil);
+            } else {
+                buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
                                                        backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
@@ -163,6 +165,8 @@
                 NSString *buttonTitle = nil;
                 if (!hidesLabel) {
                     buttonTitle = NSLocalizedString(@"Configure", nil);
+                } else {
+                    buttonTitle = @"";
                 }
                 XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
                                                            backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
@@ -179,6 +183,8 @@
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Edit", nil);
+            } else {
+                buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
                                                        backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
@@ -194,6 +200,8 @@
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Inside", nil);
+            } else {
+                buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconInside]
                                                        backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
@@ -208,6 +216,8 @@
         NSString *buttonTitle = nil;
         if (!hidesLabel) {
             buttonTitle = NSLocalizedString(@"Property", nil);
+        } else {
+            buttonTitle = @"";
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
                                                    backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
@@ -223,6 +233,8 @@
         NSString *buttonTitle = nil;
         if (!hidesLabel) {
             buttonTitle = NSLocalizedString(@"Trash", nil);
+        } else {
+            buttonTitle = @"";
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
                                                    backgroundColor:XXTE_COLOR_DANGER

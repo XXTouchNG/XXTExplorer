@@ -153,25 +153,25 @@ typedef enum : NSUInteger {
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.titleLabel.text = NSLocalizedString(@"Regular Lua File", nil);
     cell2.descriptionLabel.text = NSLocalizedString(@"A regular lua file from template. (text/lua)", nil);
-    cell2.valueLabel.text = @"LUA";
+    cell2.valueLabel.text = NSLocalizedString(@"LUA", nil);
     
     XXTEMoreTitleDescriptionValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryNone;
     cell3.titleLabel.text = NSLocalizedString(@"Regular Text File", nil);
     cell3.descriptionLabel.text = NSLocalizedString(@"An empty regular text file. (text/plain)", nil);
-    cell3.valueLabel.text = @"TXT";
+    cell3.valueLabel.text = NSLocalizedString(@"TXT", nil);
     
     XXTEMoreTitleDescriptionValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryNone;
     cell4.titleLabel.text = NSLocalizedString(@"Regular File", nil);
     cell4.descriptionLabel.text = NSLocalizedString(@"An empty regular file.", nil);
-    cell4.valueLabel.text = @"FIL";
+    cell4.valueLabel.text = NSLocalizedString(@"FIL", nil);
     
     XXTEMoreTitleDescriptionValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryNone;
     cell5.titleLabel.text = NSLocalizedString(@"Directory", nil);
     cell5.descriptionLabel.text = NSLocalizedString(@"A directory with nothing inside.", nil);
-    cell5.valueLabel.text = @"DIR";
+    cell5.valueLabel.text = NSLocalizedString(@"DIR", nil);
     
     XXTEMoreAddressCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell6.addressLabel.text = self.entryPath;

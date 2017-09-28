@@ -69,7 +69,7 @@
 
 - (IBAction)xuiSwitchValueChanged:(UISwitch *)sender {
     if (sender == self.cellSwitch) {
-        self.xui_value = self.xui_negate ? @(!(BOOL)sender.on) : @((BOOL)sender.on);
+        self.xui_value = [self.xui_negate boolValue] ? @(!(BOOL)sender.on) : @((BOOL)sender.on);
         [self.adapter saveDefaultsFromCell:self];
     }
 }
@@ -87,7 +87,7 @@
     if (self.shouldUpdateValue) {
         self.shouldUpdateValue = NO;
         BOOL value = [self.xui_value boolValue];
-        self.cellSwitch.on = self.xui_negate ? !value : value;
+        self.cellSwitch.on = [self.xui_negate boolValue] ? !value : value;
     }
 }
 

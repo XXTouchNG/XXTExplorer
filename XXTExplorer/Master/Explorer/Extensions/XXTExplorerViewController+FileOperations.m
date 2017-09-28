@@ -398,7 +398,10 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    
+    @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        @strongify(self);
         [alertView1 dismissAnimated];
         [self setEditing:NO animated:YES];
         if (error == nil) {
@@ -416,6 +419,7 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            @strongify(self);
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [@[entryPath] mutableCopy];

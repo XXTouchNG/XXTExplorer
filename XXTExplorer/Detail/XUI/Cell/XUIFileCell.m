@@ -58,7 +58,7 @@
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
     
-    _xui_height = @(72.f); // standard height for date time picker
+    _xui_height = @(72.f); // standard height for file cell
     _xui_allowedExtensions = @[ @"lua", @"xxt", @"xpp" ];
     
     [self resetCellState];

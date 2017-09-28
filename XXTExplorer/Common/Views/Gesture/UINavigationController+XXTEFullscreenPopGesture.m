@@ -187,7 +187,7 @@ typedef void (^_XXTEViewControllerWillAppearInjectBlock)(UIViewController *viewC
 - (BOOL)xxte_viewControllerBasedNavigationBarAppearanceEnabled
 {
     NSNumber *number = objc_getAssociatedObject(self, _cmd);
-    if (number) {
+    if (number != nil) {
         return number.boolValue;
     }
     self.xxte_viewControllerBasedNavigationBarAppearanceEnabled = YES;

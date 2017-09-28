@@ -13,12 +13,12 @@
 #import "XXTEUserInterfaceDefines.h"
 
 #import "XXTEMoreLicenseController.h"
-#import "XXTEMoreLicenseNavigationController.h"
+#import "XXTENavigationController.h"
 
 #import "XXTEScanViewController.h"
 
 #import "XXTExplorerDownloadViewController.h"
-#import "XXTExplorerDownloadNavigationController.h"
+#import "XXTENavigationController.h"
 
 #import "XXTENetworkDefines.h"
 #import <PromiseKit/PromiseKit.h>
@@ -44,7 +44,7 @@
                 @strongify(self);
                 blockInteractions(self, NO);
                 XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
-                XXTEMoreLicenseNavigationController *licenseNavigationController = [[XXTEMoreLicenseNavigationController alloc] initWithRootViewController:licenseController];
+                XXTENavigationController *licenseNavigationController = [[XXTENavigationController alloc] initWithRootViewController:licenseController];
                 licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                 licenseNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                 [self.navigationController presentViewController:licenseNavigationController animated:YES completion:nil];
@@ -76,7 +76,7 @@
                 @strongify(self);
                 blockInteractions(self, NO);
                 XXTExplorerDownloadViewController *downloadController = [[XXTExplorerDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
-                XXTExplorerDownloadNavigationController *downloadNavigationController = [[XXTExplorerDownloadNavigationController alloc] initWithRootViewController:downloadController];
+                XXTENavigationController *downloadNavigationController = [[XXTENavigationController alloc] initWithRootViewController:downloadController];
                 downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                 downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                 [self.navigationController presentViewController:downloadNavigationController animated:YES completion:nil];

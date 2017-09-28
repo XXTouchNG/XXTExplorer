@@ -82,7 +82,7 @@
             })
             .then(^(NSDictionary *dataDictionary) {
                 NSNumber *selectedOperation = dataDictionary[operationKeyNames[self.actionIndex]];
-                if (selectedOperation) {
+                if (selectedOperation != nil) {
                     _selectedOperation = (NSUInteger) [selectedOperation integerValue];
                 }
             })

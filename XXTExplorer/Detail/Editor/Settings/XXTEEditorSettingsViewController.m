@@ -108,7 +108,7 @@
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Theme", nil);
-    cell3.valueLabel.text = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
+    cell3.valueLabel.text = XXTEDefaultsObject(XXTEEditorThemeName, NSLocalizedString(@"Mac Classic", nil));
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     XXTEMoreSwitchNoIconCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
@@ -267,7 +267,7 @@
             default:
                 break;
         }
-        XXTEDefaultsSetBasic(XXTEEditorWrapColumn, widthValue);
+        XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
         [self.editor setNeedsReload];
     }];
     

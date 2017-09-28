@@ -137,7 +137,7 @@
     _ivLine2.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"xxt-picker-line"]];
 
     if (_nMaxCount == XXT_NO_LIMIT_SELECT) {
-        _lbSelectCount.text = @"(0)";
+        _lbSelectCount.text = NSLocalizedString(@"(0)", nil);
         _lbSelectCount.textColor = XXT_BOTTOM_TEXT_COLOR;
     } else if (_nMaxCount <= 1) {
         // hide ok button
@@ -419,7 +419,7 @@
 - (void)showPhotosInGroup:(NSInteger)nIndex {
     if (_nMaxCount == XXT_NO_LIMIT_SELECT) {
         _dSelected = [[NSMutableDictionary alloc] init];
-        _lbSelectCount.text = @"(0)";
+        _lbSelectCount.text = NSLocalizedString(@"(0)", nil);
     } else if (_nMaxCount > 1) {
         _dSelected = [[NSMutableDictionary alloc] initWithCapacity:(NSUInteger) _nMaxCount];
         _lbSelectCount.text = [NSString stringWithFormat:@"(0/%d)", (int) _nMaxCount];

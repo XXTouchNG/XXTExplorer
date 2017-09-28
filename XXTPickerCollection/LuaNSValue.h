@@ -36,8 +36,8 @@
         void lua_setPath(lua_State* L, const char *key, const char *path);
 
         extern NSString * const kXXTELuaVModelErrorDomain;
-        BOOL checkCode(lua_State *L, int code, NSError **error);
-
+        BOOL lua_checkCode(lua_State *L, int code, NSError **error);
+        void lua_setMaxLine(lua_State *L, lua_Integer maxline);
 #ifdef __cplusplus
         }
 #endif
@@ -51,5 +51,6 @@
 #define lua_toNSValue(L, IDX) lua_toNSValuex((L), (IDX), 0)
 
 #define LUA_NSVALUE_MAX_DEPTH 50
+#define LUA_MAX_LINE 10000
 
 #endif

@@ -19,9 +19,8 @@
 #import "XXTENotificationCenterDefines.h"
 
 #import "XXTEScanViewController.h"
-
+#import "XXTENavigationController.h"
 #import "XXTExplorerCreateItemViewController.h"
-#import "XXTExplorerCreateItemNavigationController.h"
 
 #import <LGAlertView/LGAlertView.h>
 
@@ -279,7 +278,7 @@
 
 - (void)presentNewDocumentViewController {
     XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
-    XXTExplorerCreateItemNavigationController *createItemNavigationController = [[XXTExplorerCreateItemNavigationController alloc] initWithRootViewController:createItemViewController];
+    XXTENavigationController *createItemNavigationController = [[XXTENavigationController alloc] initWithRootViewController:createItemViewController];
     createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];

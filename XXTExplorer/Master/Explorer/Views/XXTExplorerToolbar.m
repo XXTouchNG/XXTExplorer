@@ -157,7 +157,9 @@
                 break;
             }
         }
-        [_tapDelegate toolbar:self buttonTypeTapped:buttonType buttonItem:self.buttons[buttonType]];
+        if (buttonType) {
+            [_tapDelegate toolbar:self buttonTypeTapped:buttonType buttonItem:self.buttons[buttonType]];
+        }
     }
 }
 

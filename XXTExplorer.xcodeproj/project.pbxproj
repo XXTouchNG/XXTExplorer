@@ -67,7 +67,6 @@
 		0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */; };
 		0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */; };
 		0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m */; };
-		0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */; };
 		0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */; };
 		0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */; };
 		0F50AEA31F307A510098211C /* UIViewController+XXTExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA21F307A510098211C /* UIViewController+XXTExplorer.m */; };
@@ -198,8 +197,6 @@
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
-		0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD51F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m */; };
-		0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */; };
 		0FD973E71F4B122D00133162 /* XXTEEditorThemeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD973E51F4B122D00133162 /* XXTEEditorThemeCell.m */; };
 		0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */; };
 		0FD973EE1F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */; };
@@ -235,7 +232,6 @@
 		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251209D280AFB66F3169F0C /* SKLanguage.m */; };
 		52512159F631F9582F89C858 /* SKRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124A0DCE70FECE2B114E7 /* SKRepository.m */; };
-		525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */; };
 		52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251251343C867D1BE381F9F /* SKTheme.m */; };
 		5251242F0537AF64E7895EDB /* SKResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512B97AF1A3C5F4F0A8EDA /* SKResult.m */; };
 		52512432C43B553660F98172 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */; };
@@ -514,8 +510,6 @@
 		0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryUnarchiver.h; sourceTree = "<group>"; };
 		0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryUnarchiver.m; sourceTree = "<group>"; };
 		0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEUserInterfaceDefines.h; sourceTree = "<group>"; };
-		0F4F67041F1268970042C449 /* XXTExplorerCreateItemNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerCreateItemNavigationController.h; sourceTree = "<group>"; };
-		0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerCreateItemNavigationController.m; sourceTree = "<group>"; };
 		0F4F67061F1268970042C449 /* XXTExplorerCreateItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerCreateItemViewController.h; sourceTree = "<group>"; };
 		0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerCreateItemViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F4F670A1F1268E70042C449 /* XXTExplorerEntryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryService.h; sourceTree = "<group>"; };
@@ -757,10 +751,7 @@
 		0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerItemNameCell.xib; sourceTree = "<group>"; };
 		0FCC2AD11F135AA100C50A48 /* XXTExplorerItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemDetailViewController.h; sourceTree = "<group>"; };
 		0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerItemDetailViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0FCC2AD41F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemDetailNavigationController.h; sourceTree = "<group>"; };
-		0FCC2AD51F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemDetailNavigationController.m; sourceTree = "<group>"; };
-		0FD489091F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDownloadNavigationController.h; sourceTree = "<group>"; };
-		0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerDownloadNavigationController.m; sourceTree = "<group>"; };
+		0FCD74FB1F7D50AF00CA8B05 /* XXTExplorer copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XXTExplorer copy-Info.plist"; path = "/Users/Zheng/Projects/XXTExplorer/XXTExplorer copy-Info.plist"; sourceTree = "<absolute>"; };
 		0FD973E41F4B122D00133162 /* XXTEEditorThemeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorThemeCell.h; sourceTree = "<group>"; };
 		0FD973E51F4B122D00133162 /* XXTEEditorThemeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorThemeCell.m; sourceTree = "<group>"; };
 		0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEEditorThemeCell.xib; sourceTree = "<group>"; };
@@ -822,7 +813,6 @@
 		52512481E485AD2E09205EFB /* XUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		525124A0DCE70FECE2B114E7 /* SKRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKRepository.m; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
-		525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreLicenseNavigationController.m; sourceTree = "<group>"; };
 		5251251343C867D1BE381F9F /* SKTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTheme.m; sourceTree = "<group>"; };
 		5251252B5911308B6BCA707F /* SKRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKRepository.h; sourceTree = "<group>"; };
 		525125513F9BC46CACEC6D53 /* SKResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKResultSet.h; sourceTree = "<group>"; };
@@ -852,7 +842,6 @@
 		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
 		52512C7DA4E0285A9A9B9F92 /* SKPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPattern.m; sourceTree = "<group>"; };
 		52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKReferenceManager.m; sourceTree = "<group>"; };
-		52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseNavigationController.h; sourceTree = "<group>"; };
 		52512D31FC610E7D9963A8EA /* SKInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKInclude.m; sourceTree = "<group>"; };
 		52512DF49CDDF706A91B90B2 /* SKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKParser.m; sourceTree = "<group>"; };
 		52512EB1AE32276E843CEC6C /* XUIBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIBaseCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1170,8 +1159,8 @@
 			isa = PBXGroup;
 			children = (
 				0F0654B91EE483A0005B6C5F /* miniz.h */,
-				0F0654BA1EE483A0005B6C5F /* zip.c */,
 				0F0654BB1EE483A0005B6C5F /* zip.h */,
+				0F0654BA1EE483A0005B6C5F /* zip.c */,
 			);
 			path = Archive;
 			sourceTree = "<group>";
@@ -1206,8 +1195,6 @@
 				0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */,
 				0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */,
 				0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */,
-				52512D31F7A93655F16F3D25 /* XXTEMoreLicenseNavigationController.h */,
-				525124F7B232960E64875754 /* XXTEMoreLicenseNavigationController.m */,
 			);
 			path = License;
 			sourceTree = "<group>";
@@ -1327,8 +1314,6 @@
 			isa = PBXGroup;
 			children = (
 				0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */,
-				0F4F67041F1268970042C449 /* XXTExplorerCreateItemNavigationController.h */,
-				0F4F67051F1268970042C449 /* XXTExplorerCreateItemNavigationController.m */,
 				0F4F67061F1268970042C449 /* XXTExplorerCreateItemViewController.h */,
 				0F4F67071F1268970042C449 /* XXTExplorerCreateItemViewController.m */,
 			);
@@ -1650,6 +1635,7 @@
 				0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */,
 				D6E140971F5032AB00D78CB9 /* XXTPickerCollection */,
 				525124A3753CAD3DB3A0D077 /* .gitignore */,
+				0FCD74FB1F7D50AF00CA8B05 /* XXTExplorer copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1919,8 +1905,6 @@
 			children = (
 				0F5690031F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.h */,
 				0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */,
-				0FCC2AD41F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.h */,
-				0FCC2AD51F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m */,
 				0FCC2AD11F135AA100C50A48 /* XXTExplorerItemDetailViewController.h */,
 				0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */,
 			);
@@ -2189,8 +2173,6 @@
 		525120167AABAE46AFCDD933 /* Download */ = {
 			isa = PBXGroup;
 			children = (
-				0FD489091F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.h */,
-				0FD4890A1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m */,
 				52512B1BFF61DAE1351D9936 /* XXTExplorerDownloadViewController.h */,
 				52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */,
 			);
@@ -2906,7 +2888,6 @@
 				0F1864FA1F64535A00A96230 /* XUIRadioCell.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D677B0F21F4FC7C200E741C2 /* lmathlib.c in Sources */,
-				0FD4890B1F14F4BC005A9B9D /* XXTExplorerDownloadNavigationController.m in Sources */,
 				D677B0EE1F4FC7C200E741C2 /* lgc.c in Sources */,
 				0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */,
 				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
@@ -3024,7 +3005,6 @@
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
 				0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */,
 				D67FBBDD1F6A4679000BDD3D /* XUITheme.m in Sources */,
-				0F4F67081F1268970042C449 /* XXTExplorerCreateItemNavigationController.m in Sources */,
 				0F6AEA901F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */,
 				0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */,
 				0F8455D41F0D4D430055F98B /* XXTEMoreDocumentsController.m in Sources */,
@@ -3061,7 +3041,6 @@
 				D677B1011F4FC7C300E741C2 /* lutf8lib.c in Sources */,
 				0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */,
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
-				0FCC2AD61F135AED00C50A48 /* XXTExplorerItemDetailNavigationController.m in Sources */,
 				0F50AEB31F3084790098211C /* NSObject+StringValue.m in Sources */,
 				0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F6AEA931F3752600017BE7C /* XXTExplorerViewController+ArchiverOperations.m in Sources */,
@@ -3117,7 +3096,6 @@
 				D677B0F51F4FC7C200E741C2 /* lobject.c in Sources */,
 				D6686F271F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m in Sources */,
 				0F00CAE01F66EECB00692913 /* UIImage+ColoredImage.m in Sources */,
-				525123AD05D399C82E9A3664 /* XXTEMoreLicenseNavigationController.m in Sources */,
 				0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */,
 				0F6AEA8A1F374E4C0017BE7C /* XXTExplorerViewController+Shortcuts.m in Sources */,
 				52512BD02B62F2E839374051 /* XUIViewController.m in Sources */,

@@ -84,8 +84,8 @@
                                                           (const void **) imageValues, 2,
                                                           &kCFTypeDictionaryKeyCallBacks,
                                                           &kCFTypeDictionaryValueCallBacks);
-        
-        CGImageSourceRef source = CGImageSourceCreateWithURL(CFBridgingRetain([NSURL fileURLWithPath:self.entryPath]), imageOptions);
+        NSURL *imageUrl = [NSURL fileURLWithPath:self.entryPath];
+        CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)imageUrl, imageOptions);
         if (source) {
             CFDictionaryRef dictRef = CGImageSourceCopyPropertiesAtIndex(source, 0, imageOptions);
             NSDictionary* metadata = CFBridgingRelease(dictRef);

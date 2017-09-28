@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,13 +19,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNn-dR-AFH">
-                        <rect key="frame" x="8" y="8" width="50" height="55.5"/>
+                        <rect key="frame" x="8" y="8" width="56" height="55.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HEf-By-uFg">
-                                <rect key="frame" x="8" y="11" width="34" height="34"/>
+                                <rect key="frame" x="8" y="8" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="2x4-EP-bJV"/>
-                                    <constraint firstAttribute="width" constant="34" id="vnW-eY-bKe"/>
+                                    <constraint firstAttribute="height" constant="40" id="2x4-EP-bJV"/>
+                                    <constraint firstAttribute="width" constant="40" id="vnW-eY-bKe"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -33,24 +33,23 @@
                         <constraints>
                             <constraint firstItem="HEf-By-uFg" firstAttribute="leading" secondItem="SNn-dR-AFH" secondAttribute="leading" constant="8" id="7uR-OQ-OmE"/>
                             <constraint firstItem="HEf-By-uFg" firstAttribute="centerY" secondItem="SNn-dR-AFH" secondAttribute="centerY" id="ISW-75-qZB"/>
-                            <constraint firstAttribute="width" constant="50" id="OMG-Zv-apS"/>
                             <constraint firstAttribute="trailing" secondItem="HEf-By-uFg" secondAttribute="trailing" constant="8" id="gJP-YF-qaZ"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRG-I1-Xlm">
-                        <rect key="frame" x="66" y="8" width="273" height="55.5"/>
+                        <rect key="frame" x="72" y="8" width="267" height="55.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCR-c0-zcG">
-                                <rect key="frame" x="0.0" y="2" width="273" height="28"/>
+                                <rect key="frame" x="0.0" y="2" width="267" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="eiL-Pq-suV"/>
+                                    <constraint firstAttribute="height" constant="32" id="eiL-Pq-suV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AQ-6d-5OW">
-                                <rect key="frame" x="0.0" y="30" width="273" height="14.5"/>
+                                <rect key="frame" x="0.0" y="34" width="267" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>

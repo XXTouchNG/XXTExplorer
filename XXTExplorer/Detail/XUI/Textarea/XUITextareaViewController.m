@@ -24,7 +24,7 @@
         _cell = cell;
         
         _maxLength = UINT_MAX;
-        if (cell.xui_maxLength) {
+        if (cell.xui_maxLength != nil) {
             _maxLength = [cell.xui_maxLength unsignedIntegerValue];
         }
     }

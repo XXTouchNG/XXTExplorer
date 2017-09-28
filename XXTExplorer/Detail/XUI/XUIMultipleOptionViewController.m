@@ -129,7 +129,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         } else {
             NSNumber *maxCountObject = self.cell.xui_maxCount;
-            if (maxCountObject) {
+            if (maxCountObject != nil) {
                 NSUInteger maxCount = [maxCountObject unsignedIntegerValue];
                 if (self.selectedIndexes.count >= maxCount) {
                     return;
