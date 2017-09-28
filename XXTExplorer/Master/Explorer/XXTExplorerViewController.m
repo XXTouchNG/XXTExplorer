@@ -327,12 +327,15 @@
             }
         })
         .finally(^() {
-            UITableView *tableView = self.tableView;
-            for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
-                [self reconfigureCellAtIndexPath:indexPath];
-            }
             if (refreshControl && [refreshControl isRefreshing]) {
+                [self loadEntryListData];
+                [self.tableView reloadData];
                 [refreshControl endRefreshing];
+            } else {
+                UITableView *tableView = self.tableView;
+                for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+                    [self reconfigureCellAtIndexPath:indexPath];
+                }
             }
             [self.class setFetchingSelectedScript:NO];
         });

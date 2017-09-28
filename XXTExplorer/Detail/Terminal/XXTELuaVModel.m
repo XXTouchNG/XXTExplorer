@@ -49,8 +49,11 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
         if (!L) {
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
+            
             lua_sethook(L, &lua_terminate, LUA_MASKLINE, 1);
+            
             luaL_openlibs(L);
+            lua_openNSValueLibs(L);
         }
     }
 }
@@ -150,7 +153,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
     [self setCurrentPath:[path stringByDeletingLastPathComponent]];
     const char *cString = [path UTF8String];
     int load_stat = luaL_loadfile(L, cString);
-    if (!checkCode(L, load_stat, error)) {
+    if (!lua_checkCode(L, load_stat, error)) {
         return NO;
     }
     return YES;
@@ -161,7 +164,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 {
     const char *cString = [string UTF8String];
     int load_stat = luaL_loadbufferx(L, cString, strlen(cString), "", 0);
-    if (!checkCode(L, load_stat, error)) {
+    if (!lua_checkCode(L, load_stat, error)) {
         return NO;
     }
     return YES;
@@ -175,7 +178,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
     if (!setjmp(buf)) {
         load_stat = lua_pcall(L, 0, 0, 0);
         self.running = NO;
-        if (!checkCode(L, load_stat, error)) {
+        if (!lua_checkCode(L, load_stat, error)) {
             return NO;
         }
         return YES;

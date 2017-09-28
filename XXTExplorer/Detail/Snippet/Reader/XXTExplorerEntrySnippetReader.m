@@ -71,18 +71,19 @@
 
 - (NSString *)nameForEntry:(NSString *)path {
     NSString *snippet_name = nil;
+    
     lua_State *L = luaL_newstate(); // only for grammar parsing, no bullshit
-    if (!L) {
-        NSAssert(L, @"LuaVM: not enough memory.");
-        return nil;
-    }
+    NSAssert(L, @"LuaVM: not enough memory.");
+    
+    lua_setMaxLine(L, LUA_MAX_LINE);
     luaL_openlibs(L);
     lua_openNSValueLibs(L); // performance?
+    
     int luaResult = luaL_loadfile(L, [path UTF8String]);
-    if (checkCode(L, luaResult, nil))
+    if (lua_checkCode(L, luaResult, nil))
     {
         int callResult = lua_pcall(L, 0, 1, 0);
-        if (checkCode(L, callResult, nil))
+        if (lua_checkCode(L, callResult, nil))
         {
             if (lua_type(L, -1) == LUA_TTABLE) {
                 int fieldType = lua_getfield(L, -1, "name");

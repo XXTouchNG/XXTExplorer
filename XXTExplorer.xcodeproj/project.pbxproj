@@ -1170,8 +1170,8 @@
 			isa = PBXGroup;
 			children = (
 				0F0654B91EE483A0005B6C5F /* miniz.h */,
-				0F0654BA1EE483A0005B6C5F /* zip.c */,
 				0F0654BB1EE483A0005B6C5F /* zip.h */,
+				0F0654BA1EE483A0005B6C5F /* zip.c */,
 			);
 			path = Archive;
 			sourceTree = "<group>";

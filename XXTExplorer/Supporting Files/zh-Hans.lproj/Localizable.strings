@@ -165,7 +165,7 @@
 "Archive" = "压缩";
 
 /* No comment provided by engineer. */
-"Archive %@ to \"%@\"" = "解压 %@ 到 \"%@\"";
+"Archive %@ to \"%@\"" = "压缩 %@ 到 \"%@\"";
 
 /* No comment provided by engineer. */
 "Archive %@?" = "压缩 %@?";

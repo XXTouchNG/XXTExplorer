@@ -174,23 +174,20 @@
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
     
     // sub-entries count in that zip
-    char alone[260] = { 0 };
-    int subentryCount = zip_root_entry_count(extractFrom, alone);
-    NSString *aloneName = [[NSString alloc] initWithUTF8String:alone];
+    int subentry = zip_root_entry_alone(extractFrom);
     
     // decide the destionation
-    BOOL combinedMode = (subentryCount >= 2);
+    BOOL singleMode = (subentry == 0);
     NSString *destinationPath = nil;
-    if (combinedMode) {
-        destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
-    } else {
+    if (singleMode) {
         destinationPath = entryParentPath;
+    } else {
+        destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
     }
-    NSString *alonePath = [destinationPath stringByAppendingPathComponent:aloneName];
     
     // adjust destination path
     NSString *destinationPathWithIndex = destinationPath;
-    if (combinedMode) {
+    if (!singleMode) {
         NSUInteger destinationIndex = 2;
         while (0 == access(destinationPathWithIndex.UTF8String, F_OK)) {
             destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
@@ -218,8 +215,36 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    
+    __block NSMutableArray <NSString *> *changedPaths = [[NSMutableArray alloc] init];
+    
     @weakify(self);
-    void (^completionBlock)(BOOL, NSString *, NSError *) = ^(BOOL result, NSString *createdEntry , NSError *error) {
+    
+    int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
+        return zip_extract_rename;
+    };
+    
+    int (^did_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
+        @strongify(self);
+        
+        NSString *changedPath = [[NSString alloc] initWithUTF8String:filename];
+        
+        // display
+        dispatch_async_on_main_queue(^{
+            callbackBlock(changedPath);
+        });
+        
+        [changedPaths addObject:changedPath];
+        
+        // check cancel flag
+        if (!self.busyOperationProgressFlag) {
+            return -1;
+        }
+        
+        return 0;
+    };
+    
+    void (^completionBlock)(BOOL, NSArray <NSString *> *, NSError *) = ^(BOOL result, NSArray <NSString *> *createdEntries, NSError *error) {
         @strongify(self);
         [alertView1 dismissAnimated];
         [self loadEntryListData];
@@ -227,7 +252,19 @@
         [self setEditing:YES animated:YES];
         for (NSUInteger i = 0; i < self.entryList.count; i++) {
             NSDictionary *entryDetail = self.entryList[i];
-            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:createdEntry]) {
+            BOOL contains = NO;
+            for (NSString *createdEntry in createdEntries) {
+                NSString *listPath = entryDetail[XXTExplorerViewEntryAttributePath];
+                BOOL isDirectory = [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
+                if (
+                    [createdEntry isEqualToString:listPath] ||
+                    (isDirectory && [createdEntry hasPrefix:[listPath stringByAppendingString:@"/"]])
+                    ) {
+                    contains = YES;
+                    break;
+                }
+            }
+            if (contains) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                 break;
@@ -263,24 +300,8 @@
                 
             } else {
                 
-                int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
-                    
-                    // display
-                    dispatch_async_on_main_queue(^{
-                        callbackBlock([NSString stringWithUTF8String:filename]);
-                    });
-                    
-                    // check cancel flag
-                    if (!self.busyOperationProgressFlag) {
-                        return -1;
-                    }
-                    
-                    return 0;
-                    
-                };
-                
                 int arg = 2;
-                int status = zip_extract(from, to, NULL, extract_callback, &arg);
+                int status = zip_extract(from, to, will_extract, did_extract, &arg);
                 
                 result = (status == 0);
                 
@@ -301,10 +322,10 @@
             dispatch_async_on_main_queue(^{
                 
                 self.busyOperationProgressFlag = NO;
-                if (combinedMode) {
-                    completionBlock(result, destinationPathWithIndex, error);
+                if (singleMode) {
+                    completionBlock(result, [changedPaths copy], error);
                 } else {
-                    completionBlock(result, alonePath, error);
+                    completionBlock(result, @[ destinationPathWithIndex ], error);
                 }
                 
             }); // end updating

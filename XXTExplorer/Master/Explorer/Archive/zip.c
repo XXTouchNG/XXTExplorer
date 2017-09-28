@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <unistd.h>
 
 #if defined _WIN32 || defined __WIN32__
 /* Win32, DOS */
@@ -102,6 +103,84 @@ struct zip_t {
     struct zip_entry_t entry;
     char mode;
 };
+
+void zip_available_path(char *buf, int len, const char *base) {
+    
+    // check buf != NULL, base != NULL
+    if (!buf || !base) return;
+    
+    // check access
+    if (access(buf, F_OK) != 0) return;
+    
+    // check len
+    int maxlen = MAX_PATH;
+    if (len > maxlen)
+        return;
+    
+    // check valid base
+    char *chk = strnstr(buf, base, len);
+    if (chk != buf)
+        return;
+    
+    // check valid relative
+    char *startpos = buf + strlen(base);
+    if (*startpos == '\0')
+        return;
+    
+    // skip the top slash
+    if (strchr(startpos, '/') == startpos)
+        startpos += 1;
+    
+    // find the split point
+    char *split = NULL;
+    split = strchr(startpos, '/');
+    if (split != NULL) {
+        // got a level flag
+    } else {
+        // use a buf termination instead :-(
+        split = buf + strlen(buf);
+    }
+    
+    // find an extension from split reversely, if exists...
+    char *ext = NULL;
+    char *rfind = split;
+    while (rfind != buf) {
+        if (*rfind == '.') {
+            ext = rfind;
+            break;
+        }
+        rfind--;
+    }
+    if (ext != NULL) {
+        // got an extension
+        split = ext;
+    }
+    
+    // copy the former part
+    char *t = malloc(maxlen);
+    if (t == NULL) return;
+    memset(t, 0x0, maxlen);
+    strlcpy(t, buf, split + 1 - buf);
+    
+    // insert test idx
+    unsigned long act = strlen(t);
+    for (int idx = 2; idx < __INT_MAX__; idx++) {
+        unsigned long idxlen = snprintf(&t[act], maxlen - act, "-%d", idx);
+        unsigned long tact = act + idxlen;
+        strlcat(&t[tact], split, maxlen - tact);
+        // check if t not exists
+        if (access(t, F_OK) != 0) {
+            break;
+        }
+    }
+    
+    // copy back to the path buffer
+    strlcpy(buf, t, len);
+    
+    // do some clean
+    free(t);
+    
+}
 
 struct zip_t *zip_open(const char *zipname, int level, char mode) {
     struct zip_t *zip = NULL;
@@ -532,8 +611,8 @@ int zip_create(const char *zipname, const char *filenames[], size_t len) {
     return status;
 }
 
-int zip_root_entry_count(const char *zipname, char *entryname) {
-    int count = 0;
+int zip_root_entry_alone(const char *zipname) { // 0: alone, -1: error, 1: not alone
+    int result = -1;
     
     mz_uint i, n;
     mz_zip_archive zip_archive;
@@ -555,6 +634,13 @@ int zip_root_entry_count(const char *zipname, char *entryname) {
         return -1;
     }
     
+    unsigned long tlen = MAX_PATH + 1;
+    
+    char *store = malloc(tlen);
+    if (!store) goto out1;
+    
+    memset(store, 0x0, tlen);
+    
     // Get and print information about each file in the archive.
     n = mz_zip_reader_get_num_files(&zip_archive);
     for (i = 0; i < n; ++i) {
@@ -562,6 +648,7 @@ int zip_root_entry_count(const char *zipname, char *entryname) {
             // Cannot get information about zip archive;
             break;
         }
+        // ignore macOS additional items
         if (strncmp(info.m_filename, "__MACOSX/", 9) == 0) {
             continue;
         } else {
@@ -570,28 +657,45 @@ int zip_root_entry_count(const char *zipname, char *entryname) {
                 continue;
             }
         }
-        // count
-        char *pa = strchr(info.m_filename, '/');
-        char *pb = strrchr(info.m_filename, '/');
-        if (pa == pb &&
-            (
-             pa == NULL || // all null, single file
-             (pa != NULL && strcmp(pa, "/") == 0) // all not null, only one slash at end
-             )
-            ) {
-            count++;
-            if (count > 1) break;
-            strncpy(entryname, info.m_filename, strlen(info.m_filename));
+        
+        const char *name = info.m_filename;
+        char *split = strchr(name, '/');
+        unsigned long cpy = 0;
+        if (split == NULL)
+        {
+            cpy = tlen;
+        }
+        else
+        {
+            cpy = split - name + 1;
+        }
+        if (*store == '\0' || strncmp(name, store, strlen(store)) != 0) {
+            if (*store == '\0')
+            {
+                strlcpy(store, name, cpy);
+            }
+            else
+            {
+                result = 1;
+            }
+        }
+        if (result == 1) {
+            goto out1;
         }
     }
+    result = 0;
+    
+out1:
+    
+    if (store) free(store);
     
     // Close the archive, freeing any resources it was using
     if (!mz_zip_reader_end(&zip_archive)) {
         // Cannot end zip reader
-        
+        result = -1;
     }
     
-    return count;
+    return result;
 }
 
 int zip_extract(const char *zipname, const char *dir,
@@ -643,9 +747,27 @@ int zip_extract(const char *zipname, const char *dir,
             goto out;
         }
         if (strncmp(info.m_filename, "__MACOSX/", 9) == 0) {
+            // all this path or paths inside it should be ignored.
             continue;
         }
         strncpy(&path[dirlen], info.m_filename, MAX_PATH - dirlen);
+        
+        if (will_extract) {
+            int method = will_extract(path, arg);
+            if (method == zip_extract_skip) {
+                continue; // skip
+            } else if (method == zip_extract_remain) {
+                // remain
+            } else if (method == zip_extract_override) {
+                // override
+                if (0 == access(path, F_OK))
+                    if (0 == remove(path)) {} // try to unlink/rmdir old ones
+            } else if (method == zip_extract_rename) {
+                // rename
+                zip_available_path(path, MAX_PATH, dir);
+            }
+        }
+        
         if (mkpath(path) < 0) {
             // Cannot make a path
             goto out;
@@ -655,22 +777,6 @@ int zip_extract(const char *zipname, const char *dir,
         if (strcmp(slash, "/") == 0) {
             
         } else {
-            
-            if (will_extract) {
-                int method = will_extract(path, arg);
-                if (method == zip_extract_skip) {
-                    continue; // skip
-                } else if (method == zip_extract_remain) {
-                    // remain
-                } else if (method == zip_extract_override) {
-                    // override
-                    if (0 == remove(path)) {} // try to unlink old snippets
-                } else if (method == zip_extract_rename) {
-                    // rename
-#warning - not implemented
-                }
-            }
-            
             if (!mz_zip_reader_extract_to_file(&zip_archive, i, path, 0)) {
                 // Cannot extract zip archive to file
                 goto out;
