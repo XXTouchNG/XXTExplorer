@@ -138,8 +138,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
                     NSString *to = copyResource[@"to"];
                     NSString *toPath = [rootPath stringByAppendingPathComponent:to];
                     int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
-                        if (0 == unlink(filename)) {} // try to unlink old snippets
-                        return 0;
+                        return zip_extract_override;
                     };
                     int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
                         NSLog(@"Extract \"%@\"...", [[NSString alloc] initWithUTF8String:filename]);

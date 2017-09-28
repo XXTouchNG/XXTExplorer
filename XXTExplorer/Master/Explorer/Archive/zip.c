@@ -657,8 +657,17 @@ int zip_extract(const char *zipname, const char *dir,
         } else {
             
             if (will_extract) {
-                if (will_extract(path, arg) < 0) {
-                    continue;
+                int method = will_extract(path, arg);
+                if (method == zip_extract_skip) {
+                    continue; // skip
+                } else if (method == zip_extract_remain) {
+                    // remain
+                } else if (method == zip_extract_override) {
+                    // override
+                    if (0 == remove(path)) {} // try to unlink old snippets
+                } else if (method == zip_extract_rename) {
+                    // rename
+#warning - not implemented
                 }
             }
             

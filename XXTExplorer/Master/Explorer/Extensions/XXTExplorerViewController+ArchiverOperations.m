@@ -192,8 +192,7 @@
     NSString *destinationPathWithIndex = destinationPath;
     if (combinedMode) {
         NSUInteger destinationIndex = 2;
-        NSFileManager *fileManager = [[NSFileManager alloc] init];
-        while ([fileManager fileExistsAtPath:destinationPathWithIndex]) {
+        while (0 == access(destinationPathWithIndex.UTF8String, F_OK)) {
             destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
             destinationIndex++;
         }
