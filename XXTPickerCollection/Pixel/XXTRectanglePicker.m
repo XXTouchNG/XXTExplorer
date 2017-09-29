@@ -70,6 +70,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSString *tempImagePath = nil;
+    NSString *defaultPath = self.pickerMeta[@"default"];
+    if (!tempImagePath) {
+        if ([defaultPath isKindOfClass:[NSString class]]) {
+            if (0 == access(defaultPath.UTF8String, F_OK)) {
+                tempImagePath = defaultPath;
+            }
+        }
+    }
+    if (!tempImagePath) {
+        NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+        NSString *imagePath = [cachePath stringByAppendingPathComponent:@"XXTPixelPickerCachedImage.png"];
+        if (0 == access(imagePath.UTF8String, F_OK)) {
+            tempImagePath = imagePath;
+        }
+    }
+    _tempImagePath = tempImagePath;
 
     [self setSelectedImage:nil];
     [self loadImageFromCache];
@@ -116,7 +134,7 @@
 #pragma mark - Image Cache
 
 - (void)loadImageFromCache {
-    if ([[NSFileManager defaultManager] isReadableFileAtPath:self.tempImagePath]) {
+    if (self.tempImagePath && 0 == access(self.tempImagePath.UTF8String, R_OK)) {
         NSError *err = nil;
         NSData *imageData = [NSData dataWithContentsOfFile:self.tempImagePath
                                                    options:NSDataReadingMappedIfSafe
@@ -160,15 +178,6 @@
         _placeholderView = placeholderView;
     }
     return _placeholderView;
-}
-
-- (NSString *)tempImagePath {
-    if (!_tempImagePath) {
-        NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-        NSString *tempImagePath = [cachePath stringByAppendingPathComponent:@"kXXTImagePickerCacheImage.png"];
-        _tempImagePath = tempImagePath;
-    }
-    return _tempImagePath;
 }
 
 - (UIToolbar *)cropToolbar {
