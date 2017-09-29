@@ -20,6 +20,17 @@
 
 @synthesize path = _path, bundle = _bundle;
 
+- (instancetype)initWithXUIPath:(NSString *)path {
+    self = [super init];
+    if (self) {
+        _path = path;
+        _bundle = [NSBundle mainBundle];
+        BOOL setupResult = [self setupWithError:nil];
+        if (!setupResult) return nil;
+    }
+    return self;
+}
+
 - (instancetype)initWithXUIPath:(NSString *)path Bundle:(NSBundle *)bundle {
     self = [super init];
     if (self) {

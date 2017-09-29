@@ -15,7 +15,9 @@
 @property (nonatomic, strong, readonly) NSString *path;
 @property (nonatomic, strong, readonly) NSBundle *bundle;
 
+- (instancetype)initWithXUIPath:(NSString *)path;
 - (instancetype)initWithXUIPath:(NSString *)path Bundle:(NSBundle *)bundle;
+
 - (NSDictionary *)rootEntryWithError:(NSError **)error;
 - (void)saveDefaultsFromCell:(XUIBaseCell *)cell;
 - (id)objectForKey:(NSString *)key Defaults:(NSString *)identifier;

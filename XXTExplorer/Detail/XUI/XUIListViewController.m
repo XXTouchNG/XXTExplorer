@@ -462,6 +462,7 @@ XUI_END_IGNORE_PARTIAL
 #pragma mark - UIControl Actions
 
 - (void)closeButtonItemTapped:(id)sender {
+    [self setEditing:NO animated:YES];
     [self dismissViewController:sender];
 }
 

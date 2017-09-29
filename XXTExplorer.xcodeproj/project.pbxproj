@@ -355,8 +355,8 @@
 		D6863D231F7E3B9100A45CF7 /* XUITitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D1A1F7E3B9100A45CF7 /* XUITitleValueCell.m */; };
 		D6863D241F7E3B9100A45CF7 /* XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D1F1F7E3B9100A45CF7 /* XUILinkCell.m */; };
 		D6863D251F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D201F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m */; };
-		D6863D2A1F7E3D2F00A45CF7 /* XUILuaAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D271F7E3D2F00A45CF7 /* XUILuaAdapter.m */; };
-		D6863D2B1F7E3D2F00A45CF7 /* XUILuaAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D6863D281F7E3D2F00A45CF7 /* XUILuaAdapter.lua */; };
+		D6863D391F7E574F00A45CF7 /* XUILuaAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D361F7E574F00A45CF7 /* XUILuaAdapter.m */; };
+		D6863D3A1F7E574F00A45CF7 /* XUILuaAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D6863D371F7E574F00A45CF7 /* XUILuaAdapter.lua */; };
 		D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
@@ -1025,10 +1025,10 @@
 		D6863D1E1F7E3B9100A45CF7 /* XUILinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkCell.h; sourceTree = "<group>"; };
 		D6863D1F1F7E3B9100A45CF7 /* XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkCell.m; sourceTree = "<group>"; };
 		D6863D201F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUILinkCell.m"; sourceTree = "<group>"; };
-		D6863D271F7E3D2F00A45CF7 /* XUILuaAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILuaAdapter.m; sourceTree = "<group>"; };
-		D6863D281F7E3D2F00A45CF7 /* XUILuaAdapter.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XUILuaAdapter.lua; sourceTree = "<group>"; };
-		D6863D291F7E3D2F00A45CF7 /* XUILuaAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILuaAdapter.h; sourceTree = "<group>"; };
 		D6863D2C1F7E3D5400A45CF7 /* XUIAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAdapter.h; sourceTree = "<group>"; };
+		D6863D361F7E574F00A45CF7 /* XUILuaAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILuaAdapter.m; sourceTree = "<group>"; };
+		D6863D371F7E574F00A45CF7 /* XUILuaAdapter.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XUILuaAdapter.lua; sourceTree = "<group>"; };
+		D6863D381F7E574F00A45CF7 /* XUILuaAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILuaAdapter.h; sourceTree = "<group>"; };
 		D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLayoutManager.h; sourceTree = "<group>"; };
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
@@ -2440,6 +2440,7 @@
 		D6863C501F7E275800A45CF7 /* XUIExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				D6863D341F7E574F00A45CF7 /* Adapter */,
 				D6863C5C1F7E275800A45CF7 /* Reader */,
 				D6863C511F7E275800A45CF7 /* Cell */,
 				D6863C551F7E275800A45CF7 /* ButtonAction */,
@@ -2556,8 +2557,8 @@
 		D6863CAF1F7E326D00A45CF7 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				D6863CB01F7E326D00A45CF7 /* XUIGroupCell.m */,
 				D6863CB11F7E326D00A45CF7 /* XUIGroupCell.h */,
+				D6863CB01F7E326D00A45CF7 /* XUIGroupCell.m */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -2713,11 +2714,26 @@
 			isa = PBXGroup;
 			children = (
 				D6863D2C1F7E3D5400A45CF7 /* XUIAdapter.h */,
-				D6863D291F7E3D2F00A45CF7 /* XUILuaAdapter.h */,
-				D6863D271F7E3D2F00A45CF7 /* XUILuaAdapter.m */,
-				D6863D281F7E3D2F00A45CF7 /* XUILuaAdapter.lua */,
 			);
 			path = Adapter;
+			sourceTree = "<group>";
+		};
+		D6863D341F7E574F00A45CF7 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D351F7E574F00A45CF7 /* Lua */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
+		D6863D351F7E574F00A45CF7 /* Lua */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D361F7E574F00A45CF7 /* XUILuaAdapter.m */,
+				D6863D371F7E574F00A45CF7 /* XUILuaAdapter.lua */,
+				D6863D381F7E574F00A45CF7 /* XUILuaAdapter.h */,
+			);
+			path = Lua;
 			sourceTree = "<group>";
 		};
 		D6E140971F5032AB00D78CB9 /* XXTPickerCollection */ = {
@@ -3015,7 +3031,7 @@
 				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
 				D6863D041F7E374D00A45CF7 /* XUIOrderedOptionCell.xib in Resources */,
 				D63F36611F7A435D00E2386C /* Settings.bundle in Resources */,
-				D6863D2B1F7E3D2F00A45CF7 /* XUILuaAdapter.lua in Resources */,
+				D6863D3A1F7E574F00A45CF7 /* XUILuaAdapter.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3213,7 +3229,7 @@
 				D6863CB71F7E327B00A45CF7 /* XUIImageCell.m in Sources */,
 				D677B1021F4FC7C300E741C2 /* lvm.c in Sources */,
 				0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */,
-				D6863D2A1F7E3D2F00A45CF7 /* XUILuaAdapter.m in Sources */,
+				D6863D391F7E574F00A45CF7 /* XUILuaAdapter.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
