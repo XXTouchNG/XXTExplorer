@@ -6,16 +6,6 @@
 	<array>
 		<dict>
 			<key>title</key>
-			<string>主目录</string>
-			<key>subtitle</key>
-			<string>XXTouch 运行时主目录</string>
-			<key>icon</key>
-			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
-			<key>path</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>title</key>
 			<string>根目录</string>
 			<key>subtitle</key>
 			<string>iOS 文件系统根目录</string>
@@ -23,6 +13,16 @@
 			<string>XXTExplorerViewSectionHomeSeriesRootIcon</string>
 			<key>path</key>
 			<string>/</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>主目录</string>
+			<key>subtitle</key>
+			<string>XXTouch 运行时主目录</string>
+			<key>icon</key>
+			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
+			<key>path</key>
+			<string></string>
 		</dict>
 	</array>
 	<key>SECTION_META</key>

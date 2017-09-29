@@ -15,7 +15,6 @@
 @implementation UIViewController (XXTExplorer)
 
 - (BOOL)shouldAutorotate {
-    if (!XXTE_COLLAPSED) return NO;
     BOOL notViewer = [self conformsToProtocol:@protocol(XXTEViewer)] == NO && [self conformsToProtocol:@protocol(XXTEEditor)] == NO;
     return (notViewer);
 }

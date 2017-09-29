@@ -26,7 +26,7 @@
 #import "XXTExplorerEntryBundleReader.h"
 
 #import "XXTExplorerEntryOpenWithViewController.h"
-#import "XXTExplorerEntryOpenWithNavigationController.h"
+#import "XXTENavigationController.h"
 
 #import "XXTExplorerViewController+Notification.h"
 #import "XXTExplorerViewController+Shortcuts.h"
@@ -421,7 +421,7 @@
                         } else {
                             XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryAttributes];
                             openWithController.delegate = self;
-                            XXTExplorerEntryOpenWithNavigationController *navController = [[XXTExplorerEntryOpenWithNavigationController alloc] initWithRootViewController:openWithController];
+                            XXTENavigationController *navController = [[XXTENavigationController alloc] initWithRootViewController:openWithController];
                             XXTE_START_IGNORE_PARTIAL
                             if (@available(iOS 8.0, *)) {
                                 navController.modalPresentationStyle = UIModalPresentationPopover;

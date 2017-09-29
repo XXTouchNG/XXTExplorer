@@ -6,16 +6,6 @@
 	<array>
 		<dict>
 			<key>title</key>
-			<string>Home Directory</string>
-			<key>subtitle</key>
-			<string>XXTouch Runtime Home Directory</string>
-			<key>icon</key>
-			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
-			<key>path</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>title</key>
 			<string>Root Directory</string>
 			<key>subtitle</key>
 			<string>iOS File System Root Directory</string>
@@ -23,6 +13,16 @@
 			<string>XXTExplorerViewSectionHomeSeriesRootIcon</string>
 			<key>path</key>
 			<string>/</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Home Directory</string>
+			<key>subtitle</key>
+			<string>XXTouch Runtime Home Directory</string>
+			<key>icon</key>
+			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
+			<key>path</key>
+			<string></string>
 		</dict>
 	</array>
 	<key>SECTION_META</key>
