@@ -5,7 +5,10 @@
 
 #import "XUIViewController.h"
 #import "XUIEntryReader.h"
+
+#import "XUI.h"
 #import "XUITheme.h"
+#import "XUILogger.h"
 
 #import "UIViewController+PreviousViewController.h"
 
@@ -60,8 +63,6 @@
 
 - (void)setupXUI {
     self.hidesBottomBarWhenPushed = YES;
-    
-    _theme = [[XUITheme alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,8 +95,8 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    if (XXTE_COLLAPSED) return;
-    UIColor *backgroundColor = XXTE_COLOR;
+    if (XUI_COLLAPSED) return;
+    UIColor *backgroundColor = XUI_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
     if (restore) {
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];

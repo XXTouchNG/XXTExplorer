@@ -12,7 +12,6 @@
 #import "XUIBaseCell.h"
 #import "XUIGroupCell.h"
 #import "XUILogger.h"
-#import "XUIAdapter.h"
 #import "XUITheme.h"
 
 @interface XUICellFactory ()
@@ -25,7 +24,7 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithAdapter:(XUIAdapter *)adapter Error:(NSError *__autoreleasing *)error {
+- (instancetype)initWithAdapter:(id <XUIAdapter>)adapter Error:(NSError *__autoreleasing *)error {
     if (self = [super init]) {
         _adapter = adapter;
         _logger = [[XUILogger alloc] init];

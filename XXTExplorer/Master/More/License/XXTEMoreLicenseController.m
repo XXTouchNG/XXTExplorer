@@ -15,7 +15,7 @@
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreLicenseCell.h"
 #import "XXTENetworkDefines.h"
-#import "XXTEViewShaker.h"
+#import "XUIViewShaker.h"
 #import "XXTExplorerViewController.h"
 
 #import "XXTEShimmeringView.h"
@@ -31,7 +31,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 @interface XXTEMoreLicenseController () <UITextFieldDelegate, LGAlertViewDelegate>
 @property (nonatomic, weak) UITextField *licenseField;
-@property (nonatomic, strong) XXTEViewShaker *licenseShaker;
+@property (nonatomic, strong) XUIViewShaker *licenseShaker;
 @property (nonatomic, strong) NSString *licenseCode;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
@@ -125,7 +125,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     cell1.licenseField.text = @"";
     cell1.licenseField.delegate = self;
     self.licenseField = cell1.licenseField;
-    self.licenseShaker = [[XXTEViewShaker alloc] initWithView:self.licenseField];
+    self.licenseShaker = [[XUIViewShaker alloc] initWithView:self.licenseField];
     
     NSString *initialLicenseCode = self.licenseCode;
     if (initialLicenseCode.length > 0) {

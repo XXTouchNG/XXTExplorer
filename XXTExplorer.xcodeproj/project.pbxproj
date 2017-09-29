@@ -21,41 +21,15 @@
 		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
-		0F16A7901F3222E300BA2868 /* XUIListViewController+LaunchScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */; };
-		0F1864FA1F64535A00A96230 /* XUIRadioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1864F71F64535A00A96230 /* XUIRadioCell.m */; };
-		0F1864FB1F64535A00A96230 /* XUIRadioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F1864F81F64535A00A96230 /* XUIRadioCell.xib */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
-		0F1EF7C61F64FABE00093984 /* XUITextareaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1EF7C51F64FABE00093984 /* XUITextareaCell.m */; };
-		0F1EF7C91F64FD0D00093984 /* XUITextareaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */; };
 		0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
-		0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */; };
-		0F271CCA1F5D97C400E8FED5 /* XUIStepperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
 		0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */; };
 		0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */; };
 		0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */; };
-		0F30B0AE1F652A5700B14DC9 /* XUIListViewController+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */; };
-		0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */; };
-		0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */; };
-		0F30D9291F2BAAA20001E10B /* XUITextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */; };
-		0F30D92A1F2BAAA20001E10B /* XUITextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9281F2BAAA20001E10B /* XUITextFieldCell.xib */; };
-		0F30D92F1F2C7FB10001E10B /* XUISecureTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D92D1F2C7FB10001E10B /* XUISecureTextFieldCell.m */; };
-		0F30D9301F2C7FB10001E10B /* XUISecureTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D92E1F2C7FB10001E10B /* XUISecureTextFieldCell.xib */; };
-		0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9321F2C835A0001E10B /* XUIButtonCell.m */; };
-		0F30D9391F2C86450001E10B /* XUISliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9371F2C86450001E10B /* XUISliderCell.m */; };
-		0F30D93A1F2C86450001E10B /* XUISliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9381F2C86450001E10B /* XUISliderCell.xib */; };
-		0F30D93F1F2C8C620001E10B /* XUIStaticTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D93D1F2C8C620001E10B /* XUIStaticTextCell.m */; };
-		0F30D9401F2C8C620001E10B /* XUIStaticTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D93E1F2C8C620001E10B /* XUIStaticTextCell.xib */; };
-		0F30D9491F2CEF860001E10B /* XUIImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9471F2CEF860001E10B /* XUIImageCell.m */; };
-		0F30D94A1F2CEF860001E10B /* XUIImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9481F2CEF860001E10B /* XUIImageCell.xib */; };
-		0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9501F2CF4100001E10B /* XUILinkCell.m */; };
-		0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9551F2D000B0001E10B /* XUISegmentCell.m */; };
-		0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */; };
-		0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */; };
-		0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */; };
 		0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F349BB21F62F474004143B7 /* strings.tmLanguage */; };
 		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
@@ -88,7 +62,6 @@
 		0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB51B1F08E0510016016A /* XXTECloudAppConfiguration.m */; };
 		0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB51D1F08E0510016016A /* XXTECloudApiSdk.m */; };
 		0F5EB5241F08E0510016016A /* XXTECloudSignUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */; };
-		0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5291F0942B30016016A /* XXTEViewShaker.m */; };
 		0F5EB5311F0A85AE0016016A /* XXTEMoreAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5301F0A85AE0016016A /* XXTEMoreAboutController.m */; };
 		0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5331F0A88600016016A /* XXTEMoreAboutCell.m */; };
 		0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5341F0A88600016016A /* XXTEMoreAboutCell.xib */; };
@@ -123,19 +96,10 @@
 		0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */; };
 		0F8455D41F0D4D430055F98B /* XXTEMoreDocumentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8455D31F0D4D430055F98B /* XXTEMoreDocumentsController.m */; };
 		0F8521471F2D8A4600A912AC /* XUILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8521461F2D8A4600A912AC /* XUILogger.m */; };
-		0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8521491F2D978A00A912AC /* XUIOptionCell.m */; };
-		0F85214C1F2D978A00A912AC /* XUIOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85214A1F2D978A00A912AC /* XUIOptionCell.xib */; };
-		0F8521501F2D979E00A912AC /* XUIMultipleOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F85214E1F2D979E00A912AC /* XUIMultipleOptionCell.m */; };
-		0F8521511F2D979E00A912AC /* XUIMultipleOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85214F1F2D979E00A912AC /* XUIMultipleOptionCell.xib */; };
-		0F8521551F2D97AE00A912AC /* XUIOrderedOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8521531F2D97AE00A912AC /* XUIOrderedOptionCell.m */; };
-		0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8521541F2D97AE00A912AC /* XUIOrderedOptionCell.xib */; };
 		0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */; };
-		0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */; };
 		0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */; };
 		0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
-		0F9A62E11F6AC63300BA330C /* XUIAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A62E01F6AC63300BA330C /* XUIAdapter.m */; };
-		0F9E63EA1F728ABD00E3537E /* XUIListViewController+ScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E63E91F728ABD00E3537E /* XUIListViewController+ScanQRCode.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
 		0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */; };
@@ -168,15 +132,9 @@
 		0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */; };
 		0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */; };
 		0FB30ECD1F6425F2008517BF /* XUITextTagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */; };
-		0FB30ED11F64296B008517BF /* XUICheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECF1F64296B008517BF /* XUICheckboxCell.m */; };
-		0FB30ED21F64296B008517BF /* XUICheckboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB30ED01F64296B008517BF /* XUICheckboxCell.xib */; };
 		0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */; };
 		0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */; };
-		0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */; };
-		0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */; };
 		0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */; };
-		0FBAFF131F6D3A4B008B3189 /* XUIDateTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */; };
-		0FBAFF141F6D3A4B008B3189 /* XUIDateTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */; };
 		0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */; };
 		0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */; };
 		0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */; };
@@ -190,8 +148,6 @@
 		0FBAFF4A1F6E701A008B3189 /* NSString+QueryItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */; };
 		0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */; };
 		0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
-		0FC043BB1F6ED31000730FAB /* XUIFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043B91F6ED31000730FAB /* XUIFileCell.m */; };
-		0FC043BC1F6ED31000730FAB /* XUIFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */; };
 		0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
@@ -233,7 +189,6 @@
 		52512159F631F9582F89C858 /* SKRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124A0DCE70FECE2B114E7 /* SKRepository.m */; };
 		52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251251343C867D1BE381F9F /* SKTheme.m */; };
 		5251242F0537AF64E7895EDB /* SKResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512B97AF1A3C5F4F0A8EDA /* SKResult.m */; };
-		52512432C43B553660F98172 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */; };
 		52512440558639F0CA2A63C6 /* SKInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512D31FC610E7D9963A8EA /* SKInclude.m */; };
 		5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 525129847C45779842CAFB08 /* SKScopedString.m */; };
 		525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */; };
@@ -241,7 +196,6 @@
 		525126B84EE2F4B50D1AE7C6 /* XXTExplorerDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */; };
 		525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512024B32016196224ED51 /* SKResultSet.m */; };
 		5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 525121AA050C36B577A99998 /* SKCaptureCollection.m */; };
-		52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */; };
 		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
 		525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512EB1AE32276E843CEC6C /* XUIBaseCell.m */; };
 		52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */; };
@@ -288,7 +242,6 @@
 		D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */; };
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
 		D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63B58DA1F56684F00D26475 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D63D1EFF1F6FA3F80073C055 /* XUIAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */; };
 		D63F36611F7A435D00E2386C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D63F36601F7A42DB00E2386C /* Settings.bundle */; };
 		D643A2501F4D18AA005B9A59 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A24F1F4D18AA005B9A59 /* Bugly.framework */; };
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
@@ -348,6 +301,62 @@
 		D67FBBDD1F6A4679000BDD3D /* XUITheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D67FBBDC1F6A4679000BDD3D /* XUITheme.m */; };
 		D67FBBE01F6A4C3F000BDD3D /* UIColor+DarkColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D67FBBDF1F6A4C3F000BDD3D /* UIColor+DarkColor.m */; };
 		D67FBBE31F6A7759000BDD3D /* UIViewController+PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D67FBBE21F6A7759000BDD3D /* UIViewController+PreviousViewController.m */; };
+		D6863C261F7E246A00A45CF7 /* XUIViewShaker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C241F7E246A00A45CF7 /* XUIViewShaker.m */; };
+		D6863C621F7E275900A45CF7 /* XUIListViewController+LaunchScript.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C571F7E275800A45CF7 /* XUIListViewController+LaunchScript.m */; };
+		D6863C631F7E275900A45CF7 /* XUIListViewController+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5A1F7E275800A45CF7 /* XUIListViewController+OpenURL.m */; };
+		D6863C641F7E275900A45CF7 /* XUIListViewController+ScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5B1F7E275800A45CF7 /* XUIListViewController+ScanQRCode.m */; };
+		D6863C651F7E275900A45CF7 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5D1F7E275800A45CF7 /* XUIEntryReader.m */; };
+		D6863C711F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C6F1F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.m */; };
+		D6863C721F7E2D2300A45CF7 /* XUIButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C701F7E2D2300A45CF7 /* XUIButtonCell.m */; };
+		D6863C8C1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C8B1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.m */; };
+		D6863C951F7E315500A45CF7 /* XUIListViewController+XUITextareaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C911F7E315400A45CF7 /* XUIListViewController+XUITextareaCell.m */; };
+		D6863C961F7E315500A45CF7 /* XUITextareaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C921F7E315400A45CF7 /* XUITextareaCell.m */; };
+		D6863C9B1F7E31FA00A45CF7 /* XUITextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C981F7E31FA00A45CF7 /* XUITextFieldCell.m */; };
+		D6863C9C1F7E31FA00A45CF7 /* XUITextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863C991F7E31FA00A45CF7 /* XUITextFieldCell.xib */; };
+		D6863CA11F7E321300A45CF7 /* XUISecureTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863C9F1F7E321300A45CF7 /* XUISecureTextFieldCell.xib */; };
+		D6863CA21F7E321300A45CF7 /* XUISecureTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CA01F7E321300A45CF7 /* XUISecureTextFieldCell.m */; };
+		D6863CA71F7E322B00A45CF7 /* XUICheckboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CA51F7E322B00A45CF7 /* XUICheckboxCell.xib */; };
+		D6863CA81F7E322B00A45CF7 /* XUICheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CA61F7E322B00A45CF7 /* XUICheckboxCell.m */; };
+		D6863CAD1F7E324000A45CF7 /* XUIDateTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CAB1F7E324000A45CF7 /* XUIDateTimeCell.xib */; };
+		D6863CAE1F7E324000A45CF7 /* XUIDateTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CAC1F7E324000A45CF7 /* XUIDateTimeCell.m */; };
+		D6863CB21F7E326E00A45CF7 /* XUIGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CB01F7E326D00A45CF7 /* XUIGroupCell.m */; };
+		D6863CB71F7E327B00A45CF7 /* XUIImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CB51F7E327B00A45CF7 /* XUIImageCell.m */; };
+		D6863CB81F7E327B00A45CF7 /* XUIImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CB61F7E327B00A45CF7 /* XUIImageCell.xib */; };
+		D6863CBD1F7E32A800A45CF7 /* XUIRadioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CBA1F7E32A800A45CF7 /* XUIRadioCell.m */; };
+		D6863CBE1F7E32A800A45CF7 /* XUIRadioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CBB1F7E32A800A45CF7 /* XUIRadioCell.xib */; };
+		D6863CC31F7E32C900A45CF7 /* XUISegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CC11F7E32C900A45CF7 /* XUISegmentCell.xib */; };
+		D6863CC41F7E32C900A45CF7 /* XUISegmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CC21F7E32C900A45CF7 /* XUISegmentCell.m */; };
+		D6863CC91F7E32E500A45CF7 /* XUISliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CC61F7E32E400A45CF7 /* XUISliderCell.xib */; };
+		D6863CCA1F7E32E500A45CF7 /* XUISliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CC81F7E32E400A45CF7 /* XUISliderCell.m */; };
+		D6863CCF1F7E32F500A45CF7 /* XUIStaticTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CCC1F7E32F500A45CF7 /* XUIStaticTextCell.xib */; };
+		D6863CD01F7E32F500A45CF7 /* XUIStaticTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CCD1F7E32F500A45CF7 /* XUIStaticTextCell.m */; };
+		D6863CD51F7E330A00A45CF7 /* XUIStepperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CD21F7E330900A45CF7 /* XUIStepperCell.m */; };
+		D6863CD61F7E330A00A45CF7 /* XUIStepperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CD31F7E330900A45CF7 /* XUIStepperCell.xib */; };
+		D6863CDB1F7E331B00A45CF7 /* XUISwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CD91F7E331B00A45CF7 /* XUISwitchCell.xib */; };
+		D6863CDC1F7E331B00A45CF7 /* XUISwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CDA1F7E331B00A45CF7 /* XUISwitchCell.m */; };
+		D6863CDF1F7E339400A45CF7 /* XUITextareaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CDE1F7E339400A45CF7 /* XUITextareaViewController.m */; };
+		D6863CE61F7E340A00A45CF7 /* XUIFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CE11F7E340A00A45CF7 /* XUIFileCell.m */; };
+		D6863CE71F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CE21F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.m */; };
+		D6863CE81F7E340A00A45CF7 /* XUIFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CE51F7E340A00A45CF7 /* XUIFileCell.xib */; };
+		D6863CF21F7E343500A45CF7 /* XUIOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CED1F7E343500A45CF7 /* XUIOptionCell.m */; };
+		D6863CF31F7E343500A45CF7 /* XUIOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CEE1F7E343500A45CF7 /* XUIOptionCell.xib */; };
+		D6863CF41F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CEF1F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.m */; };
+		D6863CF71F7E345B00A45CF7 /* XUIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CF61F7E345B00A45CF7 /* XUIOptionViewController.m */; };
+		D6863D031F7E374D00A45CF7 /* XUIOrderedOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863CFC1F7E374C00A45CF7 /* XUIOrderedOptionViewController.m */; };
+		D6863D041F7E374D00A45CF7 /* XUIOrderedOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863D001F7E374C00A45CF7 /* XUIOrderedOptionCell.xib */; };
+		D6863D051F7E374D00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D011F7E374C00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.m */; };
+		D6863D061F7E374D00A45CF7 /* XUIOrderedOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D021F7E374C00A45CF7 /* XUIOrderedOptionCell.m */; };
+		D6863D101F7E387500A45CF7 /* XUIMultipleOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D0B1F7E387500A45CF7 /* XUIMultipleOptionCell.m */; };
+		D6863D111F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D0C1F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.m */; };
+		D6863D121F7E387500A45CF7 /* XUIMultipleOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863D0D1F7E387500A45CF7 /* XUIMultipleOptionCell.xib */; };
+		D6863D151F7E389500A45CF7 /* XUIMultipleOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D131F7E389400A45CF7 /* XUIMultipleOptionViewController.m */; };
+		D6863D211F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D181F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.m */; };
+		D6863D221F7E3B9100A45CF7 /* XUITitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863D191F7E3B9100A45CF7 /* XUITitleValueCell.xib */; };
+		D6863D231F7E3B9100A45CF7 /* XUITitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D1A1F7E3B9100A45CF7 /* XUITitleValueCell.m */; };
+		D6863D241F7E3B9100A45CF7 /* XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D1F1F7E3B9100A45CF7 /* XUILinkCell.m */; };
+		D6863D251F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D201F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m */; };
+		D6863D2A1F7E3D2F00A45CF7 /* XUILuaAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D271F7E3D2F00A45CF7 /* XUILuaAdapter.m */; };
+		D6863D2B1F7E3D2F00A45CF7 /* XUILuaAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D6863D281F7E3D2F00A45CF7 /* XUILuaAdapter.lua */; };
 		D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
@@ -423,28 +432,16 @@
 		0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLicenseCell.xib; sourceTree = "<group>"; };
 		0F1482631EDABCC6007A777B /* XXTExplorerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerToolbar.h; sourceTree = "<group>"; };
 		0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerToolbar.m; sourceTree = "<group>"; };
-		0F16A78E1F3222E300BA2868 /* XUIListViewController+LaunchScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+LaunchScript.h"; sourceTree = "<group>"; };
-		0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XUIListViewController+LaunchScript.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F1864F71F64535A00A96230 /* XUIRadioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIRadioCell.m; sourceTree = "<group>"; };
-		0F1864F81F64535A00A96230 /* XUIRadioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIRadioCell.xib; sourceTree = "<group>"; };
-		0F1864F91F64535A00A96230 /* XUIRadioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIRadioCell.h; sourceTree = "<group>"; };
 		0F1DD1C11F11B6A700F1A66A /* XXTEScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanViewController.h; sourceTree = "<group>"; };
 		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEScanViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
 		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
-		0F1EF7C41F64FABE00093984 /* XUITextareaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextareaCell.h; sourceTree = "<group>"; };
-		0F1EF7C51F64FABE00093984 /* XUITextareaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextareaCell.m; sourceTree = "<group>"; };
-		0F1EF7C71F64FD0D00093984 /* XUITextareaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextareaViewController.h; sourceTree = "<group>"; };
-		0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextareaViewController.m; sourceTree = "<group>"; };
 		0F2184BE1F0FBE01001BD8BD /* XXTEMoreRecordingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRecordingController.h; sourceTree = "<group>"; };
 		0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreRecordingController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBar.h"; sourceTree = "<group>"; };
 		0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+StatusBar.m"; sourceTree = "<group>"; };
 		0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImagePickerController.h; sourceTree = "<group>"; };
 		0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImagePickerController.m; sourceTree = "<group>"; };
-		0F271CC61F5D97C400E8FED5 /* XUIStepperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStepperCell.h; sourceTree = "<group>"; };
-		0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIStepperCell.m; sourceTree = "<group>"; };
-		0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIStepperCell.xib; sourceTree = "<group>"; };
 		0F2916131F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsOperationController.h; sourceTree = "<group>"; };
 		0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreUserDefaultsOperationController.m; sourceTree = "<group>"; };
 		0F2CD3511F3B5CAB00110772 /* XXTEAPTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEAPTHelper.h; sourceTree = "<group>"; };
@@ -453,37 +450,7 @@
 		0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTPackage.m; sourceTree = "<group>"; };
 		0F2CD3551F3B5CAB00110772 /* XXTEUpdateAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEUpdateAgent.h; sourceTree = "<group>"; };
 		0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdateAgent.m; sourceTree = "<group>"; };
-		0F30B0AC1F652A5700B14DC9 /* XUIListViewController+OpenURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+OpenURL.h"; sourceTree = "<group>"; };
-		0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+OpenURL.m"; sourceTree = "<group>"; };
-		0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
-		0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
-		0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
-		0F30D9261F2BAAA20001E10B /* XUITextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextFieldCell.h; sourceTree = "<group>"; };
-		0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUITextFieldCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F30D9281F2BAAA20001E10B /* XUITextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITextFieldCell.xib; sourceTree = "<group>"; };
 		0F30D92B1F2C79720001E10B /* XUILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILogger.h; sourceTree = "<group>"; };
-		0F30D92C1F2C7FB10001E10B /* XUISecureTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISecureTextFieldCell.h; sourceTree = "<group>"; };
-		0F30D92D1F2C7FB10001E10B /* XUISecureTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUISecureTextFieldCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F30D92E1F2C7FB10001E10B /* XUISecureTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISecureTextFieldCell.xib; sourceTree = "<group>"; };
-		0F30D9311F2C835A0001E10B /* XUIButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIButtonCell.h; sourceTree = "<group>"; };
-		0F30D9321F2C835A0001E10B /* XUIButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIButtonCell.m; sourceTree = "<group>"; };
-		0F30D9361F2C86450001E10B /* XUISliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISliderCell.h; sourceTree = "<group>"; };
-		0F30D9371F2C86450001E10B /* XUISliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISliderCell.m; sourceTree = "<group>"; };
-		0F30D9381F2C86450001E10B /* XUISliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISliderCell.xib; sourceTree = "<group>"; };
-		0F30D93C1F2C8C620001E10B /* XUIStaticTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStaticTextCell.h; sourceTree = "<group>"; };
-		0F30D93D1F2C8C620001E10B /* XUIStaticTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIStaticTextCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F30D93E1F2C8C620001E10B /* XUIStaticTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIStaticTextCell.xib; sourceTree = "<group>"; };
-		0F30D9461F2CEF860001E10B /* XUIImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIImageCell.h; sourceTree = "<group>"; };
-		0F30D9471F2CEF860001E10B /* XUIImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIImageCell.m; sourceTree = "<group>"; };
-		0F30D9481F2CEF860001E10B /* XUIImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIImageCell.xib; sourceTree = "<group>"; };
-		0F30D94F1F2CF4100001E10B /* XUILinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkCell.h; sourceTree = "<group>"; };
-		0F30D9501F2CF4100001E10B /* XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkCell.m; sourceTree = "<group>"; };
-		0F30D9541F2D000B0001E10B /* XUISegmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISegmentCell.h; sourceTree = "<group>"; };
-		0F30D9551F2D000B0001E10B /* XUISegmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUISegmentCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISegmentCell.xib; sourceTree = "<group>"; };
-		0F30D9621F2D06D00001E10B /* XUITitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITitleValueCell.h; sourceTree = "<group>"; };
-		0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITitleValueCell.m; sourceTree = "<group>"; };
-		0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITitleValueCell.xib; sourceTree = "<group>"; };
 		0F349BB21F62F474004143B7 /* strings.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = strings.tmLanguage; sourceTree = "<group>"; };
 		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
 		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
@@ -554,8 +521,6 @@
 		0F5EB51F1F08E0510016016A /* XXTECloudSDKConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudSDKConstant.h; sourceTree = "<group>"; };
 		0F5EB5201F08E0510016016A /* XXTECloudSignUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECloudSignUtil.h; sourceTree = "<group>"; };
 		0F5EB5211F08E0510016016A /* XXTECloudSignUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECloudSignUtil.m; sourceTree = "<group>"; };
-		0F5EB5281F0942B30016016A /* XXTEViewShaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEViewShaker.h; sourceTree = "<group>"; };
-		0F5EB5291F0942B30016016A /* XXTEViewShaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEViewShaker.m; sourceTree = "<group>"; };
 		0F5EB52F1F0A85AE0016016A /* XXTEMoreAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreAboutController.h; sourceTree = "<group>"; };
 		0F5EB5301F0A85AE0016016A /* XXTEMoreAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreAboutController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F5EB5321F0A88600016016A /* XXTEMoreAboutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreAboutCell.h; sourceTree = "<group>"; };
@@ -624,29 +589,14 @@
 		0F8455D31F0D4D430055F98B /* XXTEMoreDocumentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreDocumentsController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
 		0F8521461F2D8A4600A912AC /* XUILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILogger.m; sourceTree = "<group>"; };
-		0F8521481F2D978A00A912AC /* XUIOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOptionCell.h; sourceTree = "<group>"; };
-		0F8521491F2D978A00A912AC /* XUIOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOptionCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F85214A1F2D978A00A912AC /* XUIOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIOptionCell.xib; sourceTree = "<group>"; };
-		0F85214D1F2D979E00A912AC /* XUIMultipleOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIMultipleOptionCell.h; sourceTree = "<group>"; };
-		0F85214E1F2D979E00A912AC /* XUIMultipleOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIMultipleOptionCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F85214F1F2D979E00A912AC /* XUIMultipleOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIMultipleOptionCell.xib; sourceTree = "<group>"; };
-		0F8521521F2D97AE00A912AC /* XUIOrderedOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOrderedOptionCell.h; sourceTree = "<group>"; };
-		0F8521531F2D97AE00A912AC /* XUIOrderedOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOrderedOptionCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F8521541F2D97AE00A912AC /* XUIOrderedOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIOrderedOptionCell.xib; sourceTree = "<group>"; };
 		0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedParsingOperation.h; sourceTree = "<group>"; };
 		0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedParsingOperation.m; sourceTree = "<group>"; };
-		0F8AB9F81F2EFCA500E3C774 /* XUIMultipleOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIMultipleOptionViewController.h; sourceTree = "<group>"; };
-		0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIMultipleOptionViewController.m; sourceTree = "<group>"; };
 		0F92731E1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"; sourceTree = "<group>"; };
 		0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XXTExplorerViewController+XXTESwipeTableCellDelegate.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F9273211F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+LGAlertViewDelegate.h"; sourceTree = "<group>"; };
 		0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+LGAlertViewDelegate.m"; sourceTree = "<group>"; };
 		0F9273241F375F7800109096 /* XXTExplorerViewController+SharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+SharedInstance.h"; sourceTree = "<group>"; };
 		0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+SharedInstance.m"; sourceTree = "<group>"; };
-		0F9A62DF1F6AC63300BA330C /* XUIAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIAdapter.h; sourceTree = "<group>"; };
-		0F9A62E01F6AC63300BA330C /* XUIAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIAdapter.m; sourceTree = "<group>"; };
-		0F9E63E81F728ABD00E3537E /* XUIListViewController+ScanQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+ScanQRCode.h"; sourceTree = "<group>"; };
-		0F9E63E91F728ABD00E3537E /* XUIListViewController+ScanQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+ScanQRCode.m"; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA7ABEE1ED641A3003EAD7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDelegate.h; sourceTree = "<group>"; };
@@ -698,22 +648,12 @@
 		0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITagCollectionView.m; sourceTree = "<group>"; };
 		0FB30ECA1F6425F2008517BF /* XUITextTagCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextTagCollectionView.h; sourceTree = "<group>"; };
 		0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextTagCollectionView.m; sourceTree = "<group>"; };
-		0FB30ECE1F64296B008517BF /* XUICheckboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICheckboxCell.h; sourceTree = "<group>"; };
-		0FB30ECF1F64296B008517BF /* XUICheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUICheckboxCell.m; sourceTree = "<group>"; };
-		0FB30ED01F64296B008517BF /* XUICheckboxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUICheckboxCell.xib; sourceTree = "<group>"; };
 		0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIListViewController.h; sourceTree = "<group>"; };
 		0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEObjectViewController.h; sourceTree = "<group>"; };
 		0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEObjectViewController.m; sourceTree = "<group>"; };
-		0FB6BB711F1C4B8C00CADCEA /* XUIOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOptionViewController.h; sourceTree = "<group>"; };
-		0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOptionViewController.m; sourceTree = "<group>"; };
-		0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOrderedOptionViewController.h; sourceTree = "<group>"; };
-		0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIOrderedOptionViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICellFactory.h; sourceTree = "<group>"; };
 		0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUICellFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0FBAFF101F6D3A4B008B3189 /* XUIDateTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIDateTimeCell.h; sourceTree = "<group>"; };
-		0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIDateTimeCell.m; sourceTree = "<group>"; };
-		0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIDateTimeCell.xib; sourceTree = "<group>"; };
 		0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XXTExplorer.entitlements; sourceTree = "<group>"; };
 		0FBAFF161F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentMenuDelegate.h"; sourceTree = "<group>"; };
 		0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UIDocumentMenuDelegate.m"; sourceTree = "<group>"; };
@@ -737,9 +677,6 @@
 		0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SKColor.h"; sourceTree = "<group>"; };
 		0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SKColor.m"; sourceTree = "<group>"; };
 		0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "B4FDE60B-30B3-4035-B874-619C896626BE.zip"; sourceTree = "<group>"; };
-		0FC043B81F6ED31000730FAB /* XUIFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIFileCell.h; sourceTree = "<group>"; };
-		0FC043B91F6ED31000730FAB /* XUIFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIFileCell.m; sourceTree = "<group>"; };
-		0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIFileCell.xib; sourceTree = "<group>"; };
 		0FC043BD1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+StatusBar.h"; sourceTree = "<group>"; };
 		0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+StatusBar.m"; sourceTree = "<group>"; };
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
@@ -802,10 +739,8 @@
 		0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerSnippet.m; sourceTree = "<group>"; };
 		52512024B32016196224ED51 /* SKResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKResultSet.m; sourceTree = "<group>"; };
 		5251209D280AFB66F3169F0C /* SKLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLanguage.m; sourceTree = "<group>"; };
-		525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
 		525121AA050C36B577A99998 /* SKCaptureCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCaptureCollection.m; sourceTree = "<group>"; };
 		525121CE4F5030A8AA672FBF /* SKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKParser.h; sourceTree = "<group>"; };
-		5251235021715EB2390B1658 /* XUIGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIGroupCell.h; sourceTree = "<group>"; };
 		52512481E485AD2E09205EFB /* XUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		525124A0DCE70FECE2B114E7 /* SKRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKRepository.m; sourceTree = "<group>"; };
 		525124A3753CAD3DB3A0D077 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
@@ -818,7 +753,6 @@
 		525126EC09B501AE61B5E535 /* SKScopedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKScopedString.h; sourceTree = "<group>"; };
 		5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCaptureCollection.h; sourceTree = "<group>"; };
 		5251277CF9F156FA35CC3946 /* SKLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKLanguage.h; sourceTree = "<group>"; };
-		525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIGroupCell.m; sourceTree = "<group>"; };
 		52512938F4A2E38F2887C2CF /* XXTEMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMailComposeViewController.h; sourceTree = "<group>"; };
 		5251293D44AFD758EEA8E4B2 /* SKCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCapture.m; sourceTree = "<group>"; };
 		5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedParser.m; sourceTree = "<group>"; };
@@ -835,7 +769,6 @@
 		52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMailComposeViewController.m; sourceTree = "<group>"; };
 		52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerDownloadViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52512C344413AFCA2550E12D /* XUIBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIBaseCell.h; sourceTree = "<group>"; };
-		52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
 		52512C7DA4E0285A9A9B9F92 /* SKPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPattern.m; sourceTree = "<group>"; };
 		52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKReferenceManager.m; sourceTree = "<group>"; };
 		52512D31FC610E7D9963A8EA /* SKInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKInclude.m; sourceTree = "<group>"; };
@@ -883,7 +816,6 @@
 		D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextView.m; sourceTree = "<group>"; };
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
 		D63B58DA1F56684F00D26475 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = XUIAdapter.lua; sourceTree = "<group>"; };
 		D63F36601F7A42DB00E2386C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		D643A24F1F4D18AA005B9A59 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1001,6 +933,102 @@
 		D67FBBDF1F6A4C3F000BDD3D /* UIColor+DarkColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DarkColor.m"; sourceTree = "<group>"; };
 		D67FBBE11F6A7759000BDD3D /* UIViewController+PreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+PreviousViewController.h"; sourceTree = "<group>"; };
 		D67FBBE21F6A7759000BDD3D /* UIViewController+PreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+PreviousViewController.m"; sourceTree = "<group>"; };
+		D6863C241F7E246A00A45CF7 /* XUIViewShaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIViewShaker.m; sourceTree = "<group>"; };
+		D6863C251F7E246A00A45CF7 /* XUIViewShaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewShaker.h; sourceTree = "<group>"; };
+		D6863C561F7E275800A45CF7 /* XUIListViewController+OpenURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+OpenURL.h"; sourceTree = "<group>"; };
+		D6863C571F7E275800A45CF7 /* XUIListViewController+LaunchScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+LaunchScript.m"; sourceTree = "<group>"; };
+		D6863C581F7E275800A45CF7 /* XUIListViewController+ScanQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+ScanQRCode.h"; sourceTree = "<group>"; };
+		D6863C591F7E275800A45CF7 /* XUIListViewController+LaunchScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+LaunchScript.h"; sourceTree = "<group>"; };
+		D6863C5A1F7E275800A45CF7 /* XUIListViewController+OpenURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+OpenURL.m"; sourceTree = "<group>"; };
+		D6863C5B1F7E275800A45CF7 /* XUIListViewController+ScanQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+ScanQRCode.m"; sourceTree = "<group>"; };
+		D6863C5D1F7E275800A45CF7 /* XUIEntryReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIEntryReader.m; sourceTree = "<group>"; };
+		D6863C5E1F7E275800A45CF7 /* XUIEntryReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIEntryReader.h; sourceTree = "<group>"; };
+		D6863C6D1F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUIButtonCell.h"; sourceTree = "<group>"; };
+		D6863C6E1F7E2D2300A45CF7 /* XUIButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIButtonCell.h; sourceTree = "<group>"; };
+		D6863C6F1F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUIButtonCell.m"; sourceTree = "<group>"; };
+		D6863C701F7E2D2300A45CF7 /* XUIButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIButtonCell.m; sourceTree = "<group>"; };
+		D6863C8A1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+SharedInstance.h"; sourceTree = "<group>"; };
+		D6863C8B1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+SharedInstance.m"; sourceTree = "<group>"; };
+		D6863C911F7E315400A45CF7 /* XUIListViewController+XUITextareaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUITextareaCell.m"; sourceTree = "<group>"; };
+		D6863C921F7E315400A45CF7 /* XUITextareaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextareaCell.m; sourceTree = "<group>"; };
+		D6863C931F7E315400A45CF7 /* XUIListViewController+XUITextareaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUITextareaCell.h"; sourceTree = "<group>"; };
+		D6863C941F7E315400A45CF7 /* XUITextareaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextareaCell.h; sourceTree = "<group>"; };
+		D6863C981F7E31FA00A45CF7 /* XUITextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextFieldCell.m; sourceTree = "<group>"; };
+		D6863C991F7E31FA00A45CF7 /* XUITextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITextFieldCell.xib; sourceTree = "<group>"; };
+		D6863C9A1F7E31FA00A45CF7 /* XUITextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextFieldCell.h; sourceTree = "<group>"; };
+		D6863C9E1F7E321300A45CF7 /* XUISecureTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISecureTextFieldCell.h; sourceTree = "<group>"; };
+		D6863C9F1F7E321300A45CF7 /* XUISecureTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISecureTextFieldCell.xib; sourceTree = "<group>"; };
+		D6863CA01F7E321300A45CF7 /* XUISecureTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISecureTextFieldCell.m; sourceTree = "<group>"; };
+		D6863CA41F7E322B00A45CF7 /* XUICheckboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUICheckboxCell.h; sourceTree = "<group>"; };
+		D6863CA51F7E322B00A45CF7 /* XUICheckboxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUICheckboxCell.xib; sourceTree = "<group>"; };
+		D6863CA61F7E322B00A45CF7 /* XUICheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUICheckboxCell.m; sourceTree = "<group>"; };
+		D6863CAA1F7E324000A45CF7 /* XUIDateTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIDateTimeCell.h; sourceTree = "<group>"; };
+		D6863CAB1F7E324000A45CF7 /* XUIDateTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIDateTimeCell.xib; sourceTree = "<group>"; };
+		D6863CAC1F7E324000A45CF7 /* XUIDateTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIDateTimeCell.m; sourceTree = "<group>"; };
+		D6863CB01F7E326D00A45CF7 /* XUIGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIGroupCell.m; sourceTree = "<group>"; };
+		D6863CB11F7E326D00A45CF7 /* XUIGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIGroupCell.h; sourceTree = "<group>"; };
+		D6863CB41F7E327B00A45CF7 /* XUIImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIImageCell.h; sourceTree = "<group>"; };
+		D6863CB51F7E327B00A45CF7 /* XUIImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIImageCell.m; sourceTree = "<group>"; };
+		D6863CB61F7E327B00A45CF7 /* XUIImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIImageCell.xib; sourceTree = "<group>"; };
+		D6863CBA1F7E32A800A45CF7 /* XUIRadioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIRadioCell.m; sourceTree = "<group>"; };
+		D6863CBB1F7E32A800A45CF7 /* XUIRadioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIRadioCell.xib; sourceTree = "<group>"; };
+		D6863CBC1F7E32A800A45CF7 /* XUIRadioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIRadioCell.h; sourceTree = "<group>"; };
+		D6863CC01F7E32C900A45CF7 /* XUISegmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISegmentCell.h; sourceTree = "<group>"; };
+		D6863CC11F7E32C900A45CF7 /* XUISegmentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISegmentCell.xib; sourceTree = "<group>"; };
+		D6863CC21F7E32C900A45CF7 /* XUISegmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISegmentCell.m; sourceTree = "<group>"; };
+		D6863CC61F7E32E400A45CF7 /* XUISliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISliderCell.xib; sourceTree = "<group>"; };
+		D6863CC71F7E32E400A45CF7 /* XUISliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISliderCell.h; sourceTree = "<group>"; };
+		D6863CC81F7E32E400A45CF7 /* XUISliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISliderCell.m; sourceTree = "<group>"; };
+		D6863CCC1F7E32F500A45CF7 /* XUIStaticTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIStaticTextCell.xib; sourceTree = "<group>"; };
+		D6863CCD1F7E32F500A45CF7 /* XUIStaticTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIStaticTextCell.m; sourceTree = "<group>"; };
+		D6863CCE1F7E32F500A45CF7 /* XUIStaticTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStaticTextCell.h; sourceTree = "<group>"; };
+		D6863CD21F7E330900A45CF7 /* XUIStepperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIStepperCell.m; sourceTree = "<group>"; };
+		D6863CD31F7E330900A45CF7 /* XUIStepperCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIStepperCell.xib; sourceTree = "<group>"; };
+		D6863CD41F7E330900A45CF7 /* XUIStepperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIStepperCell.h; sourceTree = "<group>"; };
+		D6863CD81F7E331B00A45CF7 /* XUISwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUISwitchCell.h; sourceTree = "<group>"; };
+		D6863CD91F7E331B00A45CF7 /* XUISwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUISwitchCell.xib; sourceTree = "<group>"; };
+		D6863CDA1F7E331B00A45CF7 /* XUISwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUISwitchCell.m; sourceTree = "<group>"; };
+		D6863CDD1F7E339300A45CF7 /* XUITextareaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextareaViewController.h; sourceTree = "<group>"; };
+		D6863CDE1F7E339400A45CF7 /* XUITextareaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITextareaViewController.m; sourceTree = "<group>"; };
+		D6863CE11F7E340A00A45CF7 /* XUIFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIFileCell.m; sourceTree = "<group>"; };
+		D6863CE21F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUIFileCell.m"; sourceTree = "<group>"; };
+		D6863CE31F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUIFileCell.h"; sourceTree = "<group>"; };
+		D6863CE41F7E340A00A45CF7 /* XUIFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIFileCell.h; sourceTree = "<group>"; };
+		D6863CE51F7E340A00A45CF7 /* XUIFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIFileCell.xib; sourceTree = "<group>"; };
+		D6863CED1F7E343500A45CF7 /* XUIOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOptionCell.m; sourceTree = "<group>"; };
+		D6863CEE1F7E343500A45CF7 /* XUIOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIOptionCell.xib; sourceTree = "<group>"; };
+		D6863CEF1F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUIOptionCell.m"; sourceTree = "<group>"; };
+		D6863CF01F7E343500A45CF7 /* XUIOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOptionCell.h; sourceTree = "<group>"; };
+		D6863CF11F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUIOptionCell.h"; sourceTree = "<group>"; };
+		D6863CF51F7E345B00A45CF7 /* XUIOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOptionViewController.h; sourceTree = "<group>"; };
+		D6863CF61F7E345B00A45CF7 /* XUIOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOptionViewController.m; sourceTree = "<group>"; };
+		D6863CFC1F7E374C00A45CF7 /* XUIOrderedOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOrderedOptionViewController.m; sourceTree = "<group>"; };
+		D6863CFD1F7E374C00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUIOrderedOptionCell.h"; sourceTree = "<group>"; };
+		D6863CFE1F7E374C00A45CF7 /* XUIOrderedOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOrderedOptionCell.h; sourceTree = "<group>"; };
+		D6863CFF1F7E374C00A45CF7 /* XUIOrderedOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIOrderedOptionViewController.h; sourceTree = "<group>"; };
+		D6863D001F7E374C00A45CF7 /* XUIOrderedOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIOrderedOptionCell.xib; sourceTree = "<group>"; };
+		D6863D011F7E374C00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUIOrderedOptionCell.m"; sourceTree = "<group>"; };
+		D6863D021F7E374C00A45CF7 /* XUIOrderedOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIOrderedOptionCell.m; sourceTree = "<group>"; };
+		D6863D0B1F7E387500A45CF7 /* XUIMultipleOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIMultipleOptionCell.m; sourceTree = "<group>"; };
+		D6863D0C1F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUIMutipleOptionCell.m"; sourceTree = "<group>"; };
+		D6863D0D1F7E387500A45CF7 /* XUIMultipleOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIMultipleOptionCell.xib; sourceTree = "<group>"; };
+		D6863D0E1F7E387500A45CF7 /* XUIMultipleOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIMultipleOptionCell.h; sourceTree = "<group>"; };
+		D6863D0F1F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUIMutipleOptionCell.h"; sourceTree = "<group>"; };
+		D6863D131F7E389400A45CF7 /* XUIMultipleOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIMultipleOptionViewController.m; sourceTree = "<group>"; };
+		D6863D141F7E389400A45CF7 /* XUIMultipleOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIMultipleOptionViewController.h; sourceTree = "<group>"; };
+		D6863D171F7E3B9100A45CF7 /* XUITitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITitleValueCell.h; sourceTree = "<group>"; };
+		D6863D181F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUITitleValueCell.m"; sourceTree = "<group>"; };
+		D6863D191F7E3B9100A45CF7 /* XUITitleValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUITitleValueCell.xib; sourceTree = "<group>"; };
+		D6863D1A1F7E3B9100A45CF7 /* XUITitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITitleValueCell.m; sourceTree = "<group>"; };
+		D6863D1B1F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUITitleValueCell.h"; sourceTree = "<group>"; };
+		D6863D1D1F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XUIListViewController+XUILinkCell.h"; sourceTree = "<group>"; };
+		D6863D1E1F7E3B9100A45CF7 /* XUILinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILinkCell.h; sourceTree = "<group>"; };
+		D6863D1F1F7E3B9100A45CF7 /* XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILinkCell.m; sourceTree = "<group>"; };
+		D6863D201F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XUIListViewController+XUILinkCell.m"; sourceTree = "<group>"; };
+		D6863D271F7E3D2F00A45CF7 /* XUILuaAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUILuaAdapter.m; sourceTree = "<group>"; };
+		D6863D281F7E3D2F00A45CF7 /* XUILuaAdapter.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XUILuaAdapter.lua; sourceTree = "<group>"; };
+		D6863D291F7E3D2F00A45CF7 /* XUILuaAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILuaAdapter.h; sourceTree = "<group>"; };
+		D6863D2C1F7E3D5400A45CF7 /* XUIAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAdapter.h; sourceTree = "<group>"; };
 		D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLayoutManager.h; sourceTree = "<group>"; };
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
@@ -1142,15 +1170,6 @@
 			path = Toolbar;
 			sourceTree = "<group>";
 		};
-		0F00CAF81F67161F00692913 /* Textarea */ = {
-			isa = PBXGroup;
-			children = (
-				0F1EF7C71F64FD0D00093984 /* XUITextareaViewController.h */,
-				0F1EF7C81F64FD0D00093984 /* XUITextareaViewController.m */,
-			);
-			path = Textarea;
-			sourceTree = "<group>";
-		};
 		0F0654B81EE48395005B6C5F /* Archive */ = {
 			isa = PBXGroup;
 			children = (
@@ -1193,19 +1212,6 @@
 				0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */,
 			);
 			path = License;
-			sourceTree = "<group>";
-		};
-		0F16A78A1F32221400BA2868 /* ButtonCellActions */ = {
-			isa = PBXGroup;
-			children = (
-				0F16A78E1F3222E300BA2868 /* XUIListViewController+LaunchScript.h */,
-				0F16A78F1F3222E300BA2868 /* XUIListViewController+LaunchScript.m */,
-				0F30B0AC1F652A5700B14DC9 /* XUIListViewController+OpenURL.h */,
-				0F30B0AD1F652A5700B14DC9 /* XUIListViewController+OpenURL.m */,
-				0F9E63E81F728ABD00E3537E /* XUIListViewController+ScanQRCode.h */,
-				0F9E63E91F728ABD00E3537E /* XUIListViewController+ScanQRCode.m */,
-			);
-			path = ButtonCellActions;
 			sourceTree = "<group>";
 		};
 		0F1DD1C01F11B68F00F1A66A /* Scan */ = {
@@ -1471,6 +1477,7 @@
 				D677B1061F4FE85600E741C2 /* Terminal */,
 				0FE1E4381F18DF9200055E02 /* Web */,
 				0FB6BB601F1C497900CADCEA /* XUI */,
+				D6863C501F7E275800A45CF7 /* XUIExtensions */,
 				0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */,
 				0FC477591F376A0500B8F28E /* XXTEEditor.h */,
 				0F4419F01F1797CF00967980 /* XXTEViewer.h */,
@@ -1603,8 +1610,6 @@
 				0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */,
 				0F8093F31F5470A9003D5894 /* XXTEShimmeringView.h */,
 				0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */,
-				0F5EB5281F0942B30016016A /* XXTEViewShaker.h */,
-				0F5EB5291F0942B30016016A /* XXTEViewShaker.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1713,31 +1718,20 @@
 		0FB6BB601F1C497900CADCEA /* XUI */ = {
 			isa = PBXGroup;
 			children = (
-				0F16A78A1F32221400BA2868 /* ButtonCellActions */,
 				0FB6BB641F1C4ABA00CADCEA /* Cell */,
-				525128D22C704E63FCDB99CD /* Reader */,
-				0F00CAF81F67161F00692913 /* Textarea */,
 				0FF3E8AF1F211300006DED5A /* View */,
+				D6863D261F7E3D2F00A45CF7 /* Adapter */,
 				0FF3E8B61F2127E0006DED5A /* XUI.h */,
-				0F9A62DF1F6AC63300BA330C /* XUIAdapter.h */,
-				D63D1EFE1F6FA1B30073C055 /* XUIAdapter.lua */,
-				0F9A62E01F6AC63300BA330C /* XUIAdapter.m */,
-				0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */,
-				0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */,
-				0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */,
-				0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */,
-				0F30D92B1F2C79720001E10B /* XUILogger.h */,
-				0F8521461F2D8A4600A912AC /* XUILogger.m */,
-				0F8AB9F81F2EFCA500E3C774 /* XUIMultipleOptionViewController.h */,
-				0F8AB9F91F2EFCA500E3C774 /* XUIMultipleOptionViewController.m */,
-				0FB6BB711F1C4B8C00CADCEA /* XUIOptionViewController.h */,
-				0FB6BB721F1C4B8C00CADCEA /* XUIOptionViewController.m */,
-				0FB6BB741F1C4BEB00CADCEA /* XUIOrderedOptionViewController.h */,
-				0FB6BB751F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m */,
 				D67FBBDB1F6A4679000BDD3D /* XUITheme.h */,
 				D67FBBDC1F6A4679000BDD3D /* XUITheme.m */,
+				0F30D92B1F2C79720001E10B /* XUILogger.h */,
+				0F8521461F2D8A4600A912AC /* XUILogger.m */,
+				0FB6BB771F1C4C3000CADCEA /* XUICellFactory.h */,
+				0FB6BB781F1C4C3000CADCEA /* XUICellFactory.m */,
 				525126B545F29123B15E6B55 /* XUIViewController.h */,
 				52512481E485AD2E09205EFB /* XUIViewController.m */,
+				0FB6BB651F1C4AE800CADCEA /* XUIListViewController.h */,
+				0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */,
 			);
 			path = XUI;
 			sourceTree = "<group>";
@@ -1747,62 +1741,23 @@
 			children = (
 				52512C344413AFCA2550E12D /* XUIBaseCell.h */,
 				52512EB1AE32276E843CEC6C /* XUIBaseCell.m */,
-				0F30D9311F2C835A0001E10B /* XUIButtonCell.h */,
-				0F30D9321F2C835A0001E10B /* XUIButtonCell.m */,
-				0FB30ECE1F64296B008517BF /* XUICheckboxCell.h */,
-				0FB30ECF1F64296B008517BF /* XUICheckboxCell.m */,
-				0FB30ED01F64296B008517BF /* XUICheckboxCell.xib */,
-				0FBAFF101F6D3A4B008B3189 /* XUIDateTimeCell.h */,
-				0FBAFF111F6D3A4B008B3189 /* XUIDateTimeCell.m */,
-				0FBAFF121F6D3A4B008B3189 /* XUIDateTimeCell.xib */,
-				0FC043B81F6ED31000730FAB /* XUIFileCell.h */,
-				0FC043B91F6ED31000730FAB /* XUIFileCell.m */,
-				0FC043BA1F6ED31000730FAB /* XUIFileCell.xib */,
-				5251235021715EB2390B1658 /* XUIGroupCell.h */,
-				525128E0AE9FDDAB2087A50E /* XUIGroupCell.m */,
-				0F30D9461F2CEF860001E10B /* XUIImageCell.h */,
-				0F30D9471F2CEF860001E10B /* XUIImageCell.m */,
-				0F30D9481F2CEF860001E10B /* XUIImageCell.xib */,
-				0F30D94F1F2CF4100001E10B /* XUILinkCell.h */,
-				0F30D9501F2CF4100001E10B /* XUILinkCell.m */,
-				0F85214D1F2D979E00A912AC /* XUIMultipleOptionCell.h */,
-				0F85214E1F2D979E00A912AC /* XUIMultipleOptionCell.m */,
-				0F85214F1F2D979E00A912AC /* XUIMultipleOptionCell.xib */,
-				0F8521481F2D978A00A912AC /* XUIOptionCell.h */,
-				0F8521491F2D978A00A912AC /* XUIOptionCell.m */,
-				0F85214A1F2D978A00A912AC /* XUIOptionCell.xib */,
-				0F8521521F2D97AE00A912AC /* XUIOrderedOptionCell.h */,
-				0F8521531F2D97AE00A912AC /* XUIOrderedOptionCell.m */,
-				0F8521541F2D97AE00A912AC /* XUIOrderedOptionCell.xib */,
-				0F1864F91F64535A00A96230 /* XUIRadioCell.h */,
-				0F1864F71F64535A00A96230 /* XUIRadioCell.m */,
-				0F1864F81F64535A00A96230 /* XUIRadioCell.xib */,
-				0F30D92C1F2C7FB10001E10B /* XUISecureTextFieldCell.h */,
-				0F30D92D1F2C7FB10001E10B /* XUISecureTextFieldCell.m */,
-				0F30D92E1F2C7FB10001E10B /* XUISecureTextFieldCell.xib */,
-				0F30D9541F2D000B0001E10B /* XUISegmentCell.h */,
-				0F30D9551F2D000B0001E10B /* XUISegmentCell.m */,
-				0F30D9561F2D000B0001E10B /* XUISegmentCell.xib */,
-				0F30D9361F2C86450001E10B /* XUISliderCell.h */,
-				0F30D9371F2C86450001E10B /* XUISliderCell.m */,
-				0F30D9381F2C86450001E10B /* XUISliderCell.xib */,
-				0F30D93C1F2C8C620001E10B /* XUIStaticTextCell.h */,
-				0F30D93D1F2C8C620001E10B /* XUIStaticTextCell.m */,
-				0F30D93E1F2C8C620001E10B /* XUIStaticTextCell.xib */,
-				0F271CC61F5D97C400E8FED5 /* XUIStepperCell.h */,
-				0F271CC71F5D97C400E8FED5 /* XUIStepperCell.m */,
-				0F271CC81F5D97C400E8FED5 /* XUIStepperCell.xib */,
-				0F30D91E1F2B8BD20001E10B /* XUISwitchCell.h */,
-				0F30D91F1F2B8BD20001E10B /* XUISwitchCell.m */,
-				0F30D9201F2B8BD20001E10B /* XUISwitchCell.xib */,
-				0F30D9261F2BAAA20001E10B /* XUITextFieldCell.h */,
-				0F30D9271F2BAAA20001E10B /* XUITextFieldCell.m */,
-				0F30D9281F2BAAA20001E10B /* XUITextFieldCell.xib */,
-				0F1EF7C41F64FABE00093984 /* XUITextareaCell.h */,
-				0F1EF7C51F64FABE00093984 /* XUITextareaCell.m */,
-				0F30D9621F2D06D00001E10B /* XUITitleValueCell.h */,
-				0F30D9631F2D06D00001E10B /* XUITitleValueCell.m */,
-				0F30D9641F2D06D00001E10B /* XUITitleValueCell.xib */,
+				D6863C6C1F7E2D2300A45CF7 /* Button */,
+				D6863CA31F7E322B00A45CF7 /* Checkbox */,
+				D6863CA91F7E324000A45CF7 /* DateTime */,
+				D6863CAF1F7E326D00A45CF7 /* Group */,
+				D6863CB31F7E327B00A45CF7 /* Image */,
+				D6863CB91F7E32A800A45CF7 /* Radio */,
+				D6863CD71F7E331B00A45CF7 /* Switch */,
+				D6863CEC1F7E343500A45CF7 /* Option */,
+				D6863D0A1F7E387500A45CF7 /* MultipleOption */,
+				D6863CFB1F7E374C00A45CF7 /* OrderedOption */,
+				D6863C971F7E31FA00A45CF7 /* TextField */,
+				D6863C9D1F7E321300A45CF7 /* SecureTextField */,
+				D6863CBF1F7E32C900A45CF7 /* Segment */,
+				D6863CC51F7E32E400A45CF7 /* Slider */,
+				D6863CCB1F7E32F500A45CF7 /* StaticText */,
+				D6863CD11F7E330900A45CF7 /* Stepper */,
+				D6863C901F7E315400A45CF7 /* Textarea */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2127,6 +2082,8 @@
 		0FF3E8AF1F211300006DED5A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D6863C251F7E246A00A45CF7 /* XUIViewShaker.h */,
+				D6863C241F7E246A00A45CF7 /* XUIViewShaker.m */,
 				0FF3E8B31F211384006DED5A /* XUIListHeaderView.h */,
 				0FF3E8B41F211384006DED5A /* XUIListHeaderView.m */,
 				0FE9040F1F77E3AE00C04194 /* XUIListFooterView.h */,
@@ -2170,15 +2127,6 @@
 				52512BF3654DEBDFED0B90A4 /* XXTExplorerDownloadViewController.m */,
 			);
 			path = Download;
-			sourceTree = "<group>";
-		};
-		525128D22C704E63FCDB99CD /* Reader */ = {
-			isa = PBXGroup;
-			children = (
-				52512C79168DC46E0F4BD8EA /* XUIEntryReader.h */,
-				525120AA52AAF86B1C9E0FAF /* XUIEntryReader.m */,
-			);
-			path = Reader;
 			sourceTree = "<group>";
 		};
 		59918F7D2218C7F23C834EB4 /* Pods */ = {
@@ -2489,6 +2437,289 @@
 			path = Reader;
 			sourceTree = "<group>";
 		};
+		D6863C501F7E275800A45CF7 /* XUIExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C5C1F7E275800A45CF7 /* Reader */,
+				D6863C511F7E275800A45CF7 /* Cell */,
+				D6863C551F7E275800A45CF7 /* ButtonAction */,
+				D6863C891F7E307600A45CF7 /* SharedInstance */,
+			);
+			path = XUIExtensions;
+			sourceTree = "<group>";
+		};
+		D6863C511F7E275800A45CF7 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D1C1F7E3B9100A45CF7 /* Link */,
+				D6863D161F7E3B9100A45CF7 /* TitleValue */,
+				D6863CE01F7E340A00A45CF7 /* File */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		D6863C551F7E275800A45CF7 /* ButtonAction */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C561F7E275800A45CF7 /* XUIListViewController+OpenURL.h */,
+				D6863C5A1F7E275800A45CF7 /* XUIListViewController+OpenURL.m */,
+				D6863C591F7E275800A45CF7 /* XUIListViewController+LaunchScript.h */,
+				D6863C571F7E275800A45CF7 /* XUIListViewController+LaunchScript.m */,
+				D6863C581F7E275800A45CF7 /* XUIListViewController+ScanQRCode.h */,
+				D6863C5B1F7E275800A45CF7 /* XUIListViewController+ScanQRCode.m */,
+			);
+			path = ButtonAction;
+			sourceTree = "<group>";
+		};
+		D6863C5C1F7E275800A45CF7 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C5D1F7E275800A45CF7 /* XUIEntryReader.m */,
+				D6863C5E1F7E275800A45CF7 /* XUIEntryReader.h */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
+		D6863C6C1F7E2D2300A45CF7 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C6E1F7E2D2300A45CF7 /* XUIButtonCell.h */,
+				D6863C701F7E2D2300A45CF7 /* XUIButtonCell.m */,
+				D6863C6D1F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.h */,
+				D6863C6F1F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.m */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		D6863C891F7E307600A45CF7 /* SharedInstance */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C8A1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.h */,
+				D6863C8B1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.m */,
+			);
+			path = SharedInstance;
+			sourceTree = "<group>";
+		};
+		D6863C901F7E315400A45CF7 /* Textarea */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C941F7E315400A45CF7 /* XUITextareaCell.h */,
+				D6863C921F7E315400A45CF7 /* XUITextareaCell.m */,
+				D6863C931F7E315400A45CF7 /* XUIListViewController+XUITextareaCell.h */,
+				D6863C911F7E315400A45CF7 /* XUIListViewController+XUITextareaCell.m */,
+				D6863CDD1F7E339300A45CF7 /* XUITextareaViewController.h */,
+				D6863CDE1F7E339400A45CF7 /* XUITextareaViewController.m */,
+			);
+			path = Textarea;
+			sourceTree = "<group>";
+		};
+		D6863C971F7E31FA00A45CF7 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C981F7E31FA00A45CF7 /* XUITextFieldCell.m */,
+				D6863C9A1F7E31FA00A45CF7 /* XUITextFieldCell.h */,
+				D6863C991F7E31FA00A45CF7 /* XUITextFieldCell.xib */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
+		D6863C9D1F7E321300A45CF7 /* SecureTextField */ = {
+			isa = PBXGroup;
+			children = (
+				D6863C9E1F7E321300A45CF7 /* XUISecureTextFieldCell.h */,
+				D6863CA01F7E321300A45CF7 /* XUISecureTextFieldCell.m */,
+				D6863C9F1F7E321300A45CF7 /* XUISecureTextFieldCell.xib */,
+			);
+			path = SecureTextField;
+			sourceTree = "<group>";
+		};
+		D6863CA31F7E322B00A45CF7 /* Checkbox */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CA41F7E322B00A45CF7 /* XUICheckboxCell.h */,
+				D6863CA61F7E322B00A45CF7 /* XUICheckboxCell.m */,
+				D6863CA51F7E322B00A45CF7 /* XUICheckboxCell.xib */,
+			);
+			path = Checkbox;
+			sourceTree = "<group>";
+		};
+		D6863CA91F7E324000A45CF7 /* DateTime */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CAA1F7E324000A45CF7 /* XUIDateTimeCell.h */,
+				D6863CAC1F7E324000A45CF7 /* XUIDateTimeCell.m */,
+				D6863CAB1F7E324000A45CF7 /* XUIDateTimeCell.xib */,
+			);
+			path = DateTime;
+			sourceTree = "<group>";
+		};
+		D6863CAF1F7E326D00A45CF7 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CB01F7E326D00A45CF7 /* XUIGroupCell.m */,
+				D6863CB11F7E326D00A45CF7 /* XUIGroupCell.h */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		D6863CB31F7E327B00A45CF7 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CB41F7E327B00A45CF7 /* XUIImageCell.h */,
+				D6863CB51F7E327B00A45CF7 /* XUIImageCell.m */,
+				D6863CB61F7E327B00A45CF7 /* XUIImageCell.xib */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		D6863CB91F7E32A800A45CF7 /* Radio */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CBA1F7E32A800A45CF7 /* XUIRadioCell.m */,
+				D6863CBB1F7E32A800A45CF7 /* XUIRadioCell.xib */,
+				D6863CBC1F7E32A800A45CF7 /* XUIRadioCell.h */,
+			);
+			path = Radio;
+			sourceTree = "<group>";
+		};
+		D6863CBF1F7E32C900A45CF7 /* Segment */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CC01F7E32C900A45CF7 /* XUISegmentCell.h */,
+				D6863CC11F7E32C900A45CF7 /* XUISegmentCell.xib */,
+				D6863CC21F7E32C900A45CF7 /* XUISegmentCell.m */,
+			);
+			path = Segment;
+			sourceTree = "<group>";
+		};
+		D6863CC51F7E32E400A45CF7 /* Slider */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CC61F7E32E400A45CF7 /* XUISliderCell.xib */,
+				D6863CC71F7E32E400A45CF7 /* XUISliderCell.h */,
+				D6863CC81F7E32E400A45CF7 /* XUISliderCell.m */,
+			);
+			path = Slider;
+			sourceTree = "<group>";
+		};
+		D6863CCB1F7E32F500A45CF7 /* StaticText */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CCC1F7E32F500A45CF7 /* XUIStaticTextCell.xib */,
+				D6863CCD1F7E32F500A45CF7 /* XUIStaticTextCell.m */,
+				D6863CCE1F7E32F500A45CF7 /* XUIStaticTextCell.h */,
+			);
+			path = StaticText;
+			sourceTree = "<group>";
+		};
+		D6863CD11F7E330900A45CF7 /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CD21F7E330900A45CF7 /* XUIStepperCell.m */,
+				D6863CD31F7E330900A45CF7 /* XUIStepperCell.xib */,
+				D6863CD41F7E330900A45CF7 /* XUIStepperCell.h */,
+			);
+			path = Stepper;
+			sourceTree = "<group>";
+		};
+		D6863CD71F7E331B00A45CF7 /* Switch */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CD81F7E331B00A45CF7 /* XUISwitchCell.h */,
+				D6863CD91F7E331B00A45CF7 /* XUISwitchCell.xib */,
+				D6863CDA1F7E331B00A45CF7 /* XUISwitchCell.m */,
+			);
+			path = Switch;
+			sourceTree = "<group>";
+		};
+		D6863CE01F7E340A00A45CF7 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CE41F7E340A00A45CF7 /* XUIFileCell.h */,
+				D6863CE11F7E340A00A45CF7 /* XUIFileCell.m */,
+				D6863CE51F7E340A00A45CF7 /* XUIFileCell.xib */,
+				D6863CE31F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.h */,
+				D6863CE21F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.m */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
+		D6863CEC1F7E343500A45CF7 /* Option */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CF01F7E343500A45CF7 /* XUIOptionCell.h */,
+				D6863CED1F7E343500A45CF7 /* XUIOptionCell.m */,
+				D6863CEE1F7E343500A45CF7 /* XUIOptionCell.xib */,
+				D6863CF11F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.h */,
+				D6863CEF1F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.m */,
+				D6863CF51F7E345B00A45CF7 /* XUIOptionViewController.h */,
+				D6863CF61F7E345B00A45CF7 /* XUIOptionViewController.m */,
+			);
+			path = Option;
+			sourceTree = "<group>";
+		};
+		D6863CFB1F7E374C00A45CF7 /* OrderedOption */ = {
+			isa = PBXGroup;
+			children = (
+				D6863CFE1F7E374C00A45CF7 /* XUIOrderedOptionCell.h */,
+				D6863D021F7E374C00A45CF7 /* XUIOrderedOptionCell.m */,
+				D6863D001F7E374C00A45CF7 /* XUIOrderedOptionCell.xib */,
+				D6863CFD1F7E374C00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.h */,
+				D6863D011F7E374C00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.m */,
+				D6863CFF1F7E374C00A45CF7 /* XUIOrderedOptionViewController.h */,
+				D6863CFC1F7E374C00A45CF7 /* XUIOrderedOptionViewController.m */,
+			);
+			path = OrderedOption;
+			sourceTree = "<group>";
+		};
+		D6863D0A1F7E387500A45CF7 /* MultipleOption */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D0E1F7E387500A45CF7 /* XUIMultipleOptionCell.h */,
+				D6863D0B1F7E387500A45CF7 /* XUIMultipleOptionCell.m */,
+				D6863D0D1F7E387500A45CF7 /* XUIMultipleOptionCell.xib */,
+				D6863D0F1F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.h */,
+				D6863D0C1F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.m */,
+				D6863D141F7E389400A45CF7 /* XUIMultipleOptionViewController.h */,
+				D6863D131F7E389400A45CF7 /* XUIMultipleOptionViewController.m */,
+			);
+			path = MultipleOption;
+			sourceTree = "<group>";
+		};
+		D6863D161F7E3B9100A45CF7 /* TitleValue */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D171F7E3B9100A45CF7 /* XUITitleValueCell.h */,
+				D6863D1A1F7E3B9100A45CF7 /* XUITitleValueCell.m */,
+				D6863D191F7E3B9100A45CF7 /* XUITitleValueCell.xib */,
+				D6863D1B1F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.h */,
+				D6863D181F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.m */,
+			);
+			path = TitleValue;
+			sourceTree = "<group>";
+		};
+		D6863D1C1F7E3B9100A45CF7 /* Link */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D1E1F7E3B9100A45CF7 /* XUILinkCell.h */,
+				D6863D1F1F7E3B9100A45CF7 /* XUILinkCell.m */,
+				D6863D1D1F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.h */,
+				D6863D201F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m */,
+			);
+			path = Link;
+			sourceTree = "<group>";
+		};
+		D6863D261F7E3D2F00A45CF7 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				D6863D2C1F7E3D5400A45CF7 /* XUIAdapter.h */,
+				D6863D291F7E3D2F00A45CF7 /* XUILuaAdapter.h */,
+				D6863D271F7E3D2F00A45CF7 /* XUILuaAdapter.m */,
+				D6863D281F7E3D2F00A45CF7 /* XUILuaAdapter.lua */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
 		D6E140971F5032AB00D78CB9 /* XXTPickerCollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -2688,54 +2919,58 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D63D1EFF1F6FA3F80073C055 /* XUIAdapter.lua in Resources */,
+				D6863CC31F7E32C900A45CF7 /* XUISegmentCell.xib in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
 				D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */,
 				0FD973EF1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme in Resources */,
 				D60A26A21F3DA24B00E013E2 /* CamingoCode-Regular.ttf in Resources */,
+				D6863CE81F7E340A00A45CF7 /* XUIFileCell.xib in Resources */,
+				D6863CF31F7E343500A45CF7 /* XUIOptionCell.xib in Resources */,
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
 				D60A26A41F3DA24B00E013E2 /* SourceCodePro-BoldIt.otf in Resources */,
 				D677ABE31F70C2D700AB5AA1 /* LaunchScreen.storyboard in Resources */,
-				0FB30ED21F64296B008517BF /* XUICheckboxCell.xib in Resources */,
 				D6686F381F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.xib in Resources */,
 				D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */,
 				D60A26A61F3DA24B00E013E2 /* SourceCodePro-Regular.otf in Resources */,
+				D6863CBE1F7E32A800A45CF7 /* XUIRadioCell.xib in Resources */,
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
 				0FD973F21F4B1D3700133162 /* Tomorrow.tmTheme in Resources */,
 				0FB0090A1F4364AF00097E9C /* Kimbie (Light).tmTheme in Resources */,
-				0F271CCA1F5D97C400E8FED5 /* XUIStepperCell.xib in Resources */,
+				D6863C9C1F7E31FA00A45CF7 /* XUITextFieldCell.xib in Resources */,
 				0FBAFF441F6E5378008B3189 /* XXTImagePickerPhotoCell.xib in Resources */,
+				D6863CC91F7E32E500A45CF7 /* XUISliderCell.xib in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
+				D6863CDB1F7E331B00A45CF7 /* XUISwitchCell.xib in Resources */,
+				D6863CA71F7E322B00A45CF7 /* XUICheckboxCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
 				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
-				0F30D93A1F2C86450001E10B /* XUISliderCell.xib in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
-				0F85214C1F2D978A00A912AC /* XUIOptionCell.xib in Resources */,
 				0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
 				0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */,
 				D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */,
-				0F1864FB1F64535A00A96230 /* XUIRadioCell.xib in Resources */,
 				D60A26C71F3DB7BE00E013E2 /* IDLE.tmTheme in Resources */,
 				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
 				0FB0090C1F4364B800097E9C /* Nothing.tmTheme in Resources */,
+				D6863CCF1F7E32F500A45CF7 /* XUIStaticTextCell.xib in Resources */,
 				D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */,
 				D60A26C51F3DB7BE00E013E2 /* Eiffel.tmTheme in Resources */,
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
+				D6863D121F7E387500A45CF7 /* XUIMultipleOptionCell.xib in Resources */,
 				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
 				D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */,
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
-				0FC043BC1F6ED31000730FAB /* XUIFileCell.xib in Resources */,
 				0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				0FB009091F4364AF00097E9C /* Kimbie (Dark).tmTheme in Resources */,
-				0F30D9581F2D000B0001E10B /* XUISegmentCell.xib in Resources */,
+				D6863D221F7E3B9100A45CF7 /* XUITitleValueCell.xib in Resources */,
 				D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */,
+				D6863CD61F7E330A00A45CF7 /* XUIStepperCell.xib in Resources */,
 				0FD973F61F4B1D8B00133162 /* Ciapre (Black).tmTheme in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
 				0FB009111F43685E00097E9C /* OneHalf (Dark).tmTheme in Resources */,
@@ -2745,19 +2980,18 @@
 				0F5EB5361F0A88600016016A /* XXTEMoreAboutCell.xib in Resources */,
 				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
 				D60A26C41F3DB7BE00E013E2 /* Dawn.tmTheme in Resources */,
-				0F30D9401F2C8C620001E10B /* XUIStaticTextCell.xib in Resources */,
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				D60A26CE1F3DB7BE00E013E2 /* Sunburst.tmTheme in Resources */,
-				0FBAFF141F6D3A4B008B3189 /* XUIDateTimeCell.xib in Resources */,
 				0FD973F01F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
 				0FD973F41F4B1D7B00133162 /* Oceanic (Eighties).tmTheme in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
+				D6863CB81F7E327B00A45CF7 /* XUIImageCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
-				0F30D9221F2B8BD20001E10B /* XUISwitchCell.xib in Resources */,
+				D6863CAD1F7E324000A45CF7 /* XUIDateTimeCell.xib in Resources */,
 				0FB009021F43573500097E9C /* Oceanic.tmTheme in Resources */,
 				0FE1629E1F3C8FFC003064B2 /* InfoPlist.strings in Resources */,
 				D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */,
@@ -2765,26 +2999,23 @@
 				0FBAFF3F1F6E5378008B3189 /* XXTImagePickerAlbumCell.xib in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */,
-				0F30D94A1F2CEF860001E10B /* XUIImageCell.xib in Resources */,
-				0F8521511F2D979E00A912AC /* XUIMultipleOptionCell.xib in Resources */,
 				0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */,
 				D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */,
-				0F30D9661F2D06D00001E10B /* XUITitleValueCell.xib in Resources */,
 				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */,
-				0F30D9301F2C7FB10001E10B /* XUISecureTextFieldCell.xib in Resources */,
 				0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
 				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
 				D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */,
-				0F8521561F2D97AE00A912AC /* XUIOrderedOptionCell.xib in Resources */,
 				0FD973EE1F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme in Resources */,
-				0F30D92A1F2BAAA20001E10B /* XUITextFieldCell.xib in Resources */,
+				D6863CA11F7E321300A45CF7 /* XUISecureTextFieldCell.xib in Resources */,
 				D6686F331F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib in Resources */,
 				B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */,
 				0FBAFF421F6E5378008B3189 /* XXTImagePickerController.xib in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
 				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
+				D6863D041F7E374D00A45CF7 /* XUIOrderedOptionCell.xib in Resources */,
 				D63F36611F7A435D00E2386C /* Settings.bundle in Resources */,
+				D6863D2B1F7E3D2F00A45CF7 /* XUILuaAdapter.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2872,22 +3103,21 @@
 				D6E141181F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m in Sources */,
 				D677B0E71F4FC7C200E741C2 /* lcorolib.c in Sources */,
 				D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */,
-				0F30D93F1F2C8C620001E10B /* XUIStaticTextCell.m in Sources */,
+				D6863C261F7E246A00A45CF7 /* XUIViewShaker.m in Sources */,
 				0F51CB1C1F612ACF00150D6D /* XXTEEditorTextInput.m in Sources */,
 				D677B0F81F4FC7C300E741C2 /* lparser.c in Sources */,
 				0FF3E8B51F211384006DED5A /* XUIListHeaderView.m in Sources */,
 				0F50AEA71F307C430098211C /* XXTEBaseObjectViewController.m in Sources */,
 				D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */,
-				0F1864FA1F64535A00A96230 /* XUIRadioCell.m in Sources */,
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D677B0F21F4FC7C200E741C2 /* lmathlib.c in Sources */,
 				D677B0EE1F4FC7C200E741C2 /* lgc.c in Sources */,
 				0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */,
+				D6863CF21F7E343500A45CF7 /* XUIOptionCell.m in Sources */,
 				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
 				0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
-				0F30D9491F2CEF860001E10B /* XUIImageCell.m in Sources */,
 				0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */,
 				D6686F421F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m in Sources */,
 				0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */,
@@ -2897,67 +3127,61 @@
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				0FD974011F4B37FE00133162 /* XXTEEditorController+Menu.m in Sources */,
 				D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */,
+				D6863CD51F7E330A00A45CF7 /* XUIStepperCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
-				0F1EF7C91F64FD0D00093984 /* XUITextareaViewController.m in Sources */,
 				D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */,
 				0FE5B1281F6956CF00034424 /* SKAttributedRenderer.m in Sources */,
 				0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */,
 				0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */,
+				D6863CE61F7E340A00A45CF7 /* XUIFileCell.m in Sources */,
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FBAFF411F6E5378008B3189 /* XXTImagePickerController.m in Sources */,
 				0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */,
 				0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
+				D6863CA21F7E321300A45CF7 /* XUISecureTextFieldCell.m in Sources */,
 				D67FBBE01F6A4C3F000BDD3D /* UIColor+DarkColor.m in Sources */,
 				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				D677B0E21F4FC7C200E741C2 /* lapi.c in Sources */,
 				D6E1412A1F5032AB00D78CB9 /* XXTPixelImage.m in Sources */,
-				0FB6BB731F1C4B8C00CADCEA /* XUIOptionViewController.m in Sources */,
 				D6E141261F5032AB00D78CB9 /* XXTPixelColor.m in Sources */,
+				D6863C961F7E315500A45CF7 /* XUITextareaCell.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
 				D677B0FE1F4FC7C300E741C2 /* ltm.c in Sources */,
 				D677B0F91F4FC7C300E741C2 /* lstate.c in Sources */,
+				D6863D051F7E374D00A45CF7 /* XUIListViewController+XUIOrderedOptionCell.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
 				0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */,
 				0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */,
-				0F30D9291F2BAAA20001E10B /* XUITextFieldCell.m in Sources */,
 				0F50AEB61F30C9A50098211C /* XXTEDictionaryObjectViewController.m in Sources */,
+				D6863D101F7E387500A45CF7 /* XUIMultipleOptionCell.m in Sources */,
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0FB6BB791F1C4C3000CADCEA /* XUICellFactory.m in Sources */,
 				0FD973E71F4B122D00133162 /* XXTEEditorThemeCell.m in Sources */,
+				D6863CCA1F7E32E500A45CF7 /* XUISliderCell.m in Sources */,
 				0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
-				0F5EB52A1F0942B30016016A /* XXTEViewShaker.m in Sources */,
-				0F30D9341F2C835A0001E10B /* XUIButtonCell.m in Sources */,
 				D6E141281F5032AB00D78CB9 /* XXTPixelCropView.m in Sources */,
 				D677B0F41F4FC7C200E741C2 /* loadlib.c in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0F51CB191F61289600150D6D /* XXTEEditorTypeSetter.m in Sources */,
-				0F8521501F2D979E00A912AC /* XUIMultipleOptionCell.m in Sources */,
 				0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */,
 				0F6AEA8D1F3750880017BE7C /* XXTExplorerViewController+XXTEScanViewControllerDelegate.m in Sources */,
-				0F9E63EA1F728ABD00E3537E /* XUIListViewController+ScanQRCode.m in Sources */,
 				0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
-				0FB30ED11F64296B008517BF /* XUICheckboxCell.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
-				0F30D9521F2CF4100001E10B /* XUILinkCell.m in Sources */,
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				D677B0FA1F4FC7C300E741C2 /* lstring.c in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
-				0F271CC91F5D97C400E8FED5 /* XUIStepperCell.m in Sources */,
-				0FBAFF131F6D3A4B008B3189 /* XUIDateTimeCell.m in Sources */,
 				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D677B1031F4FC7C300E741C2 /* lzio.c in Sources */,
-				0F9A62E11F6AC63300BA330C /* XUIAdapter.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
-				0F30B0AE1F652A5700B14DC9 /* XUIListViewController+OpenURL.m in Sources */,
 				D6E141251F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m in Sources */,
 				D677B0E81F4FC7C200E741C2 /* lctype.c in Sources */,
 				D677B0FD1F4FC7C300E741C2 /* ltablib.c in Sources */,
@@ -2969,19 +3193,16 @@
 				D6E1412D1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m in Sources */,
 				0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */,
 				D6E1412E1F5032AB00D78CB9 /* XXTPixelResizeControl.m in Sources */,
-				0F16A7901F3222E300BA2868 /* XUIListViewController+LaunchScript.m in Sources */,
 				0F5EB5351F0A88600016016A /* XXTEMoreAboutCell.m in Sources */,
 				D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */,
-				0FB6BB761F1C4BEB00CADCEA /* XUIOrderedOptionViewController.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
-				0F85214B1F2D978A00A912AC /* XUIOptionCell.m in Sources */,
 				0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m in Sources */,
+				D6863C631F7E275900A45CF7 /* XUIListViewController+OpenURL.m in Sources */,
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,
-				0F8AB9FA1F2EFCA500E3C774 /* XUIMultipleOptionViewController.m in Sources */,
 				0FE904111F77E3AE00C04194 /* XUIListFooterView.m in Sources */,
 				D6E141271F5032AB00D78CB9 /* XXTPixelCropRectView.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
-				0F8521551F2D97AE00A912AC /* XUIOrderedOptionCell.m in Sources */,
+				D6863D241F7E3B9100A45CF7 /* XUILinkCell.m in Sources */,
 				0F6AEA961F3753E20017BE7C /* XXTExplorerViewController+FileOperations.m in Sources */,
 				D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */,
 				D677B0FB1F4FC7C300E741C2 /* lstrlib.c in Sources */,
@@ -2989,24 +3210,28 @@
 				0F8521471F2D8A4600A912AC /* XUILogger.m in Sources */,
 				0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
+				D6863CB71F7E327B00A45CF7 /* XUIImageCell.m in Sources */,
 				D677B1021F4FC7C300E741C2 /* lvm.c in Sources */,
 				0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */,
-				0F30D92F1F2C7FB10001E10B /* XUISecureTextFieldCell.m in Sources */,
+				D6863D2A1F7E3D2F00A45CF7 /* XUILuaAdapter.m in Sources */,
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
-				0F30D9651F2D06D00001E10B /* XUITitleValueCell.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
+				D6863C8C1F7E30C600A45CF7 /* XUIListViewController+SharedInstance.m in Sources */,
 				0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */,
+				D6863C651F7E275900A45CF7 /* XUIEntryReader.m in Sources */,
 				D67FBBDD1F6A4679000BDD3D /* XUITheme.m in Sources */,
 				0F6AEA901F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */,
 				0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */,
 				0F8455D41F0D4D430055F98B /* XXTEMoreDocumentsController.m in Sources */,
+				D6863D211F7E3B9100A45CF7 /* XUIListViewController+XUITitleValueCell.m in Sources */,
 				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
 				0F50AEBB1F30DBAB0098211C /* XXTExplorerEntryObjectReader.m in Sources */,
 				0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */,
+				D6863C711F7E2D2300A45CF7 /* XUIListViewController+XUIButtonCell.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */,
 				0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */,
@@ -3015,16 +3240,19 @@
 				D677B0EF1F4FC7C200E741C2 /* linit.c in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				D6686F321F4ACEB6004403D0 /* XXTEEditorFontSizeCell.m in Sources */,
+				D6863C721F7E2D2300A45CF7 /* XUIButtonCell.m in Sources */,
 				D6E141151F5032AB00D78CB9 /* XXTApplicationCell.m in Sources */,
+				D6863CD01F7E32F500A45CF7 /* XUIStaticTextCell.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
 				D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
-				0FC043BB1F6ED31000730FAB /* XUIFileCell.m in Sources */,
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
 				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
+				D6863CDF1F7E339400A45CF7 /* XUITextareaViewController.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
+				D6863CC41F7E32C900A45CF7 /* XUISegmentCell.m in Sources */,
 				D677B0EA1F4FC7C200E741C2 /* ldebug.c in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */,
@@ -3046,8 +3274,8 @@
 				0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */,
 				0F50AEA31F307A510098211C /* UIViewController+XXTExplorer.m in Sources */,
 				D6E141231F5032AB00D78CB9 /* UIImage+XXTCrop.m in Sources */,
+				D6863CBD1F7E32A800A45CF7 /* XUIRadioCell.m in Sources */,
 				D677B0F61F4FC7C200E741C2 /* lopcodes.c in Sources */,
-				0F30D9211F2B8BD20001E10B /* XUISwitchCell.m in Sources */,
 				0FBAFF401F6E5378008B3189 /* XXTImagePickerAssetHelper.m in Sources */,
 				D6686F2D1F4AC920004403D0 /* XXTEEditorFontSizeView.m in Sources */,
 				D6E1411F1F5032AB00D78CB9 /* XXTKeyEventPicker.m in Sources */,
@@ -3056,14 +3284,19 @@
 				D6E141211F5032AB00D78CB9 /* UIColor+hexValue.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
 				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
+				D6863C641F7E275900A45CF7 /* XUIListViewController+ScanQRCode.m in Sources */,
 				0F8093F51F5470A9003D5894 /* XXTEShimmeringLayer.m in Sources */,
 				0F5EB5421F0AA2AE0016016A /* XXTECommonNavigationController.m in Sources */,
 				0F5EB5231F08E0510016016A /* XXTECloudApiSdk.m in Sources */,
 				D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */,
 				0F51CB161F61191900150D6D /* XXTEEditorLanguage.m in Sources */,
+				D6863D231F7E3B9100A45CF7 /* XUITitleValueCell.m in Sources */,
+				D6863CDC1F7E331B00A45CF7 /* XUISwitchCell.m in Sources */,
 				0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */,
 				D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */,
 				0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */,
+				D6863D031F7E374D00A45CF7 /* XUIOrderedOptionViewController.m in Sources */,
+				D6863D251F7E3B9100A45CF7 /* XUIListViewController+XUILinkCell.m in Sources */,
 				0F5EB5221F08E0510016016A /* XXTECloudAppConfiguration.m in Sources */,
 				D677B0ED1F4FC7C200E741C2 /* lfunc.c in Sources */,
 				D677B0E31F4FC7C200E741C2 /* lauxlib.c in Sources */,
@@ -3076,11 +3309,9 @@
 				D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
 				0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */,
-				0F1EF7C61F64FABE00093984 /* XUITextareaCell.m in Sources */,
 				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
-				0F30D9571F2D000B0001E10B /* XUISegmentCell.m in Sources */,
+				D6863CA81F7E322B00A45CF7 /* XUICheckboxCell.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
-				0F30D9391F2C86450001E10B /* XUISliderCell.m in Sources */,
 				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
 				0F50AEAA1F3080400098211C /* XXTEArrayObjectViewController.m in Sources */,
 				D60A26AA1F3DA83D00E013E2 /* XXTEEditorTheme.m in Sources */,
@@ -3096,17 +3327,17 @@
 				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,
 				D677B0FF1F4FC7C300E741C2 /* lua.c in Sources */,
 				D677B0E51F4FC7C200E741C2 /* lbitlib.c in Sources */,
-				52512913A886456ECFF5BB23 /* XUIEntryReader.m in Sources */,
 				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
 				0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */,
 				D677B0F31F4FC7C200E741C2 /* lmem.c in Sources */,
 				D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */,
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
 				D677B0FC1F4FC7C300E741C2 /* ltable.c in Sources */,
-				52512432C43B553660F98172 /* XUIGroupCell.m in Sources */,
+				D6863CF41F7E343500A45CF7 /* XUIListViewController+XUIOptionCell.m in Sources */,
 				D6E1412F1F5032AB00D78CB9 /* XXTPositionColorModel.m in Sources */,
 				525129F920CFCC2736E2B228 /* XUIBaseCell.m in Sources */,
 				D677B0F71F4FC7C200E741C2 /* loslib.c in Sources */,
+				D6863C951F7E315500A45CF7 /* XUIListViewController+XUITextareaCell.m in Sources */,
 				0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */,
 				B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */,
 				52512CB22B66C2C399BAF27D /* SKCapture.m in Sources */,
@@ -3116,11 +3347,16 @@
 				0F00CAF31F66F7A500692913 /* XXTEKeyboardButton.m in Sources */,
 				D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */,
 				5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */,
+				D6863D111F7E387500A45CF7 /* XUIListViewController+XUIMutipleOptionCell.m in Sources */,
+				D6863CB21F7E326E00A45CF7 /* XUIGroupCell.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
+				D6863CE71F7E340A00A45CF7 /* XUIListViewController+XUIFileCell.m in Sources */,
 				5251242F0537AF64E7895EDB /* SKResult.m in Sources */,
+				D6863C621F7E275900A45CF7 /* XUIListViewController+LaunchScript.m in Sources */,
 				D677B0E91F4FC7C200E741C2 /* ldblib.c in Sources */,
 				5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */,
 				52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */,
+				D6863D061F7E374D00A45CF7 /* XUIOrderedOptionCell.m in Sources */,
 				52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */,
 				D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */,
 				D677B0EB1F4FC7C200E741C2 /* ldo.c in Sources */,
@@ -3131,9 +3367,13 @@
 				52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */,
 				0FB30ECD1F6425F2008517BF /* XUITextTagCollectionView.m in Sources */,
 				52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */,
+				D6863CF71F7E345B00A45CF7 /* XUIOptionViewController.m in Sources */,
 				D6686F481F4AEF32004403D0 /* UIControl+BlockTarget.m in Sources */,
 				52512440558639F0CA2A63C6 /* SKInclude.m in Sources */,
 				D6E141291F5032AB00D78CB9 /* XXTPixelFlagView.m in Sources */,
+				D6863C9B1F7E31FA00A45CF7 /* XUITextFieldCell.m in Sources */,
+				D6863D151F7E389500A45CF7 /* XUIMultipleOptionViewController.m in Sources */,
+				D6863CAE1F7E324000A45CF7 /* XUIDateTimeCell.m in Sources */,
 				D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */,
 				0FBAFF3E1F6E5378008B3189 /* XXTImagePickerAlbumCell.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,

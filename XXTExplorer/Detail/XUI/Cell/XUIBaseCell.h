@@ -4,10 +4,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XUIAdapter.h"
-#import "XUITheme.h"
 
-@class XUIAdapter;
+#import "XUITheme.h"
+#import "XUIAdapter.h"
 
 extern NSString * XUIBaseCellReuseIdentifier;
 
@@ -27,7 +26,7 @@ extern NSString * XUIOptionCellIconKey;
 @property (nonatomic, strong) NSNumber *xui_readonly;
 @property (nonatomic, strong) NSNumber *xui_height;
 @property (nonatomic, strong) id xui_value;
-@property (nonatomic, strong) XUIAdapter *adapter;
+@property (nonatomic, strong) id <XUIAdapter> adapter;
 
 @property (nonatomic, strong) XUITheme *theme;
 @property (nonatomic, assign) BOOL canDelete;

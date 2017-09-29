@@ -8,13 +8,25 @@
 
 #import "XUIViewController.h"
 
-@class XUIBaseCell;
+@class XUIBaseCell, XUICellFactory, XUIListHeaderView, XUIListFooterView;
 
 @interface XUIListViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong, readonly) NSBundle *bundle;
-@property (nonatomic, strong) XUIBaseCell *pickerCell;
+
+// Views
+@property (nonatomic, strong, readonly) XUIListHeaderView *headerView;
+@property (nonatomic, strong, readonly) UITableView *tableView;
+@property (nonatomic, strong, readonly) XUIListFooterView *footerView;
 
 - (instancetype)initWithPath:(NSString *)path withBundlePath:(NSString *)bundlePath;
+
+// Store
+- (void)storeCellWhenNeeded:(XUIBaseCell *)cell;
+- (void)setNeedsStoreCells;
+- (void)storeCellsIfNecessary;
+
+// Error
+- (void)presentErrorAlertController:(NSError *)error;
 
 @end

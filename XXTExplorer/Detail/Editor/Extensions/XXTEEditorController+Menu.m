@@ -214,10 +214,9 @@
         [self presentErrorAlertController:initError];
         return;
     }
-    XXTPickerFactory *pickerFactory = [[XXTPickerFactory alloc] init];
+    XXTPickerFactory *pickerFactory = [XXTPickerFactory sharedInstance];
     pickerFactory.delegate = self;
     [pickerFactory executeTask:snippet fromViewController:picker];
-    self.pickerFactory = pickerFactory; // you must hold the factory until its tasks are all finished.
 }
 
 #pragma mark - XXTPickerFactoryDelegate

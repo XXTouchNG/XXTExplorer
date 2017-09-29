@@ -13,49 +13,18 @@
 #import "XUIListFooterView.h"
 
 #import "XUIGroupCell.h"
-#import "XUILinkCell.h"
-#import "XUIOptionCell.h"
-#import "XUIMultipleOptionCell.h"
-#import "XUIOrderedOptionCell.h"
-#import "XUITitleValueCell.h"
-#import "XUIButtonCell.h"
-#import "XUITextareaCell.h"
-#import "XUIFileCell.h"
-
-#import "XXTExplorerEntryParser.h"
-#import "XXTExplorerEntryService.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 #import "XXTENotificationCenterDefines.h"
-
-#import "XUIOptionViewController.h"
-#import "XUIMultipleOptionViewController.h"
-#import "XUIOrderedOptionViewController.h"
-#import "XXTECommonWebViewController.h"
-#import "XXTEObjectViewController.h"
-#import "XUITextareaViewController.h"
 
 #import "XUICellFactory.h"
 #import "XUILogger.h"
 #import "XUITheme.h"
-#import "XUIAdapter.h"
+#import "XUILuaAdapter.h"
 
-#import "XXTPickerSnippet.h"
-#import "XXTPickerFactory.h"
-
-#import "XXTExplorerItemPicker.h"
-
-@interface XUIListViewController () <XUICellFactoryDelegate, XUIOptionViewControllerDelegate, XUIMultipleOptionViewControllerDelegate, XUIOrderedOptionViewControllerDelegate, XUITextareaViewControllerDelegate, XXTPickerFactoryDelegate, XXTExplorerItemPickerDelegate>
-
-@property (nonatomic, strong) NSMutableArray <XUIBaseCell *> *cellsNeedStore;
-@property (nonatomic, assign) BOOL shouldStoreCells;
+@interface XUIListViewController () <XUICellFactoryDelegate>
 
 @property (nonatomic, strong, readonly) XUICellFactory *cellFactory;
-@property (nonatomic, strong, readonly) XXTPickerFactory *pickerFactory;
-
-@property (nonatomic, strong) XUIListHeaderView *headerView;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) XUIListFooterView *footerView;
+@property (nonatomic, strong) NSMutableArray <XUIBaseCell *> *cellsNeedStore;
+@property (nonatomic, assign) BOOL shouldStoreCells;
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *aboutButtonItem;
@@ -65,29 +34,7 @@
 
 @implementation XUIListViewController
 
-@synthesize theme = _theme, adapter = _adapter;
-
-+ (XXTExplorerEntryParser *)entryParser {
-    static XXTExplorerEntryParser *entryParser = nil;
-    static dispatch_once_t token;
-    dispatch_once(&token, ^{
-        if (!entryParser) {
-            entryParser = [[XXTExplorerEntryParser alloc] init];
-        }
-    });
-    return entryParser;
-}
-
-+ (XXTExplorerEntryService *)entryService {
-    static XXTExplorerEntryService *entryService = nil;
-    static dispatch_once_t token;
-    dispatch_once(&token, ^{
-        if (!entryService) {
-            entryService = [XXTExplorerEntryService sharedInstance];
-        }
-    });
-    return entryService;
-}
+@synthesize theme = _theme, logger = _logger, adapter = _adapter;
 
 #pragma mark - Initializers
 
@@ -125,11 +72,7 @@
     {
         _cellsNeedStore = [[NSMutableArray alloc] init];
         
-        XXTPickerFactory *factory = [[XXTPickerFactory alloc] init];
-        factory.delegate = self;
-        _pickerFactory = factory;
-        
-        XUIAdapter *adapter = [[XUIAdapter alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
+        XUILuaAdapter *adapter = [[XUILuaAdapter alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
         if (!adapter) {
             return;
         }
@@ -140,7 +83,6 @@
         if (!xuiError) {
             cellFactory.delegate = self;
             _cellFactory = cellFactory;
-            _theme = cellFactory.theme;
         } else {
             [self presentErrorAlertController:xuiError];
         }
@@ -153,58 +95,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Title
     NSString *entryPath = self.entryPath;
     if (entryPath) {
         NSString *entryName = [entryPath lastPathComponent];
         self.title = entryName;
     }
     
-    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    [self initSubviews];
     
     NSDictionary <NSString *, id> *rootEntry = self.cellFactory.rootEntry;
-    
     NSString *listTitle = rootEntry[@"title"];
     if (listTitle) {
         self.title = listTitle;
     }
+    [self.cellFactory parse];
     
-    {
-        [self.cellFactory parse];
+    // header
+    NSString *listHeader = rootEntry[@"header"];
+    NSString *listSubheader = rootEntry[@"subheader"];
+    if ([listHeader isKindOfClass:[NSString class]] && [listSubheader isKindOfClass:[NSString class]]) {
+        self.headerView.headerText = listHeader;
+        self.headerView.subheaderText = listSubheader;
     }
     
-    {
-        NSString *listHeader = rootEntry[@"header"];
-        NSString *listSubheader = rootEntry[@"subheader"];
-        if ([listHeader isKindOfClass:[NSString class]] && [listSubheader isKindOfClass:[NSString class]]) {
-            self.headerView.headerText = listHeader;
-            self.headerView.subheaderText = listSubheader;
-        }
-    }
-    
+    // footer
 #ifdef DEBUG
-    {
-        NSString *listFooter = rootEntry[@"footer"];
-        if ([listFooter isKindOfClass:[NSString class]]) {
-            self.footerView.footerText = listFooter;
-        }
+    NSString *listFooter = rootEntry[@"footer"];
+    if ([listFooter isKindOfClass:[NSString class]]) {
+        self.footerView.footerText = listFooter;
     }
 #else
-    {
-        self.footerView.footerText = NSLocalizedString(@"This page is provided by the script producer.", nil);
-    }
+    self.footerView.footerText = NSLocalizedString(@"This page is provided by the script producer.", nil);
 #endif
     
+    // setup frame
     [self setupSubviews];
 
+    // navigation items
     if (self.awakeFromOutside == NO &&
         [self.navigationController.viewControllers firstObject] == self) {
-        XXTE_START_IGNORE_PARTIAL
-        if (XXTE_COLLAPSED) {
+        XUI_START_IGNORE_PARTIAL
+        if (XUI_COLLAPSED) {
             [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
         } else {
             [self.navigationItem setLeftBarButtonItem:self.closeButtonItem];
         }
-        XXTE_END_IGNORE_PARTIAL
+        XUI_END_IGNORE_PARTIAL
     }
 }
 
@@ -219,6 +156,30 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
+}
+
+- (void)initSubviews {
+    XUIListHeaderView *headerView = [[XUIListHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.f)];
+    _headerView = headerView;
+    
+    _tableView = ({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.estimatedRowHeight = 44.f;
+        tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+        XUI_START_IGNORE_PARTIAL
+        if (@available(iOS 9.0, *)) {
+            tableView.cellLayoutMarginsFollowReadableWidth = NO;
+        }
+        XUI_END_IGNORE_PARTIAL
+        tableView;
+    });
+    
+    XUIListFooterView *footerView = [[XUIListFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.f)];
+    _footerView = footerView;
 }
 
 - (void)setupSubviews {
@@ -271,6 +232,16 @@
     }
 }
 
+#pragma mark - Getters
+
+- (XUITheme *)theme {
+    return self.cellFactory.theme;
+}
+
+- (XUILogger *)logger {
+    return self.cellFactory.logger;
+}
+
 #pragma mark - UIView Getters
 
 - (UIBarButtonItem *)closeButtonItem {
@@ -280,40 +251,6 @@
         _closeButtonItem = closeButtonItem;
     }
     return _closeButtonItem;
-}
-
-- (XUIListHeaderView *)headerView {
-    if (!_headerView) {
-        XUIListHeaderView *headerView = [[XUIListHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.f)];
-        _headerView = headerView;
-    }
-    return _headerView;
-}
-
-- (UITableView *)tableView {
-    if (!_tableView) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        tableView.dataSource = self;
-        tableView.delegate = self;
-        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        tableView.rowHeight = UITableViewAutomaticDimension;
-        tableView.estimatedRowHeight = 44.f;
-        XUI_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
-        XUI_END_IGNORE_PARTIAL
-        _tableView = tableView;
-    }
-    return _tableView;
-}
-
-- (XUIListFooterView *)footerView {
-    if (!_footerView) {
-        XUIListFooterView *footerView = [[XUIListFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.f)];
-        _footerView = footerView;
-    }
-    return _footerView;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -382,15 +319,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XUIBaseCell *cell = self.cellFactory.otherCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
-    if ([cell isKindOfClass:[XUIOptionCell class]]) {
-        [self updateLinkListCell:(XUIOptionCell *)cell];
+    NSString *cellClassName = NSStringFromClass([cell class]);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    SEL cellActionSelector = NSSelectorFromString([NSString stringWithFormat:@"tableView:configure%@:", cellClassName]);
+    if ([self respondsToSelector:cellActionSelector]) {
+        [self performSelector:cellActionSelector withObject:self withObject:cell];
     }
-    else if ([cell isKindOfClass:[XUIMultipleOptionCell class]]) {
-        [self updateLinkMultipleListCell:(XUIMultipleOptionCell *)cell];
-    }
-    else if ([cell isKindOfClass:[XUIOrderedOptionCell class]]) {
-        [self updateLinkOrderedListCell:(XUIOrderedOptionCell *)cell];
-    }
+#pragma clang diagnostic pop
     return cell;
 }
 
@@ -402,23 +338,14 @@
         if (readonly) {
             return;
         }
-        if ([cell isKindOfClass:[XUILinkCell class]]) {
-            [self tableView:tableView performLinkCell:cell];
-        } else if ([cell isKindOfClass:[XUIOptionCell class]]) {
-            [self tableView:tableView performLinkListCell:cell];
-        } else if ([cell isKindOfClass:[XUIMultipleOptionCell class]]) {
-            [self tableView:tableView performLinkMultipleListCell:cell];
-        } else if ([cell isKindOfClass:[XUIOrderedOptionCell class]]) {
-            [self tableView:tableView performLinkOrderedListCell:cell];
-        } else if ([cell isKindOfClass:[XUITitleValueCell class]]) {
-            [self tableView:tableView performTitleValueCell:cell];
-        } else if ([cell isKindOfClass:[XUIButtonCell class]]) {
-            [self tableView:tableView performButtonCell:cell];
-        } else if ([cell isKindOfClass:[XUITextareaCell class]]) {
-            [self tableView:tableView performTextareaCell:cell];
-        } else if ([cell isKindOfClass:[XUIFileCell class]]) {
-            [self tableView:tableView performFileCell:cell];
+        NSString *cellClassName = NSStringFromClass([cell class]);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        SEL cellActionSelector = NSSelectorFromString([NSString stringWithFormat:@"tableView:%@:", cellClassName]);
+        if ([self respondsToSelector:cellActionSelector]) {
+            [self performSelector:cellActionSelector withObject:self withObject:cell];
         }
+#pragma clang diagnostic pop
     }
 }
 
@@ -428,21 +355,14 @@
     if (readonly) {
         return;
     }
-    if ([cell isKindOfClass:[XUITitleValueCell class]]) {
-        XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
-        if (titleValueCell.xui_snippet) {
-            NSString *snippetPath = [self.bundle pathForResource:titleValueCell.xui_snippet ofType:nil];
-            NSError *snippetError = nil;
-            XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:snippetPath Error:&snippetError];
-            if (snippetError) {
-                [self presentErrorAlertController:snippetError];
-                return;
-            }
-            XXTPickerFactory *factory = self.pickerFactory;
-            [factory executeTask:snippet fromViewController:self];
-            self.pickerCell = titleValueCell;
-        }
+    NSString *cellClassName = NSStringFromClass([cell class]);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    SEL cellActionSelector = NSSelectorFromString([NSString stringWithFormat:@"tableView:accessory%@:", cellClassName]);
+    if ([self respondsToSelector:cellActionSelector]) {
+        [self performSelector:cellActionSelector withObject:self withObject:cell];
     }
+#pragma clang diagnostic pop
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -459,7 +379,7 @@
     return NO;
 }
 
-XXTE_START_IGNORE_PARTIAL
+XUI_START_IGNORE_PARTIAL
 - (NSArray <UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     @weakify(self);
     UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedString(@"Delete", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
@@ -470,7 +390,7 @@ XXTE_START_IGNORE_PARTIAL
     button.backgroundColor = self.theme.dangerColor;
     return @[button];
 }
-XXTE_END_IGNORE_PARTIAL
+XUI_END_IGNORE_PARTIAL
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
@@ -483,139 +403,6 @@ XXTE_END_IGNORE_PARTIAL
         [self.adapter saveDefaultsFromCell:cell];
     }
     [cell setEditing:NO animated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView performFileCell:(UITableViewCell *)cell {
-    XUIFileCell *fileCell = (XUIFileCell *)cell;
-    NSString *bundlePath = [self.bundle bundlePath];
-    NSString *initialPath = fileCell.xui_initialPath;
-    // NSString *filePath = fileCell.xui_value;
-    if (initialPath) {
-        if ([initialPath isAbsolutePath]) {
-            
-        } else {
-            initialPath = [bundlePath stringByAppendingPathComponent:initialPath];
-        }
-    } else {
-        initialPath = bundlePath;
-    }
-    self.pickerCell = fileCell;
-    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:initialPath];
-    itemPicker.delegate = self;
-    itemPicker.allowedExtensions = fileCell.xui_allowedExtensions;
-    [self.navigationController pushViewController:itemPicker animated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView performButtonCell:(UITableViewCell *)cell {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    XUIButtonCell *buttonCell = (XUIButtonCell *)cell;
-    BOOL readonly = [buttonCell.xui_readonly boolValue];
-    if (readonly == NO && buttonCell.xui_action) {
-        NSString *cellAction = buttonCell.xui_action;
-        if (cellAction) {
-            NSString *selectorName = [NSString stringWithFormat:@"xui_%@", cellAction];
-            SEL actionSelector = NSSelectorFromString(selectorName);
-            if (actionSelector && [self respondsToSelector:actionSelector]) {
-                id performObject = [self performSelector:actionSelector withObject:cell];
-                buttonCell.xui_value = performObject;
-                [self.adapter saveDefaultsFromCell:buttonCell];
-            } else {
-                if (actionSelector) {
-                    [self.cellFactory.logger logMessage:XUIParserErrorUndknownSelector(NSStringFromSelector(actionSelector))];
-                }
-            }
-        }
-    }
-#pragma clang diagnostic pop
-}
-
-- (void)tableView:(UITableView *)tableView performTitleValueCell:(UITableViewCell *)cell {
-    XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
-    if (titleValueCell.xui_value) {
-        id extendedValue = titleValueCell.xui_value;
-        XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
-        objectViewController.title = titleValueCell.textLabel.text;
-        objectViewController.entryBundle = self.bundle;
-        [self.navigationController pushViewController:objectViewController animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView performLinkOrderedListCell:(UITableViewCell *)cell {
-    XUIOrderedOptionCell *linkListCell = (XUIOrderedOptionCell *)cell;
-    if (linkListCell.xui_options)
-    {
-        XUIOrderedOptionViewController *optionViewController = [[XUIOrderedOptionViewController alloc] initWithCell:linkListCell];
-        optionViewController.adapter = self.adapter;
-        optionViewController.delegate = self;
-        optionViewController.title = linkListCell.xui_label;
-        optionViewController.theme = self.cellFactory.theme;
-        [self.navigationController pushViewController:optionViewController animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView performLinkMultipleListCell:(UITableViewCell *)cell {
-    XUIMultipleOptionCell *linkListCell = (XUIMultipleOptionCell *)cell;
-    if (linkListCell.xui_options)
-    {
-        XUIMultipleOptionViewController *optionViewController = [[XUIMultipleOptionViewController alloc] initWithCell:linkListCell];
-        optionViewController.adapter = self.adapter;
-        optionViewController.delegate = self;
-        optionViewController.title = linkListCell.xui_label;
-        optionViewController.theme = self.cellFactory.theme;
-        [self.navigationController pushViewController:optionViewController animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView performLinkListCell:(UITableViewCell *)cell {
-    XUIOptionCell *linkListCell = (XUIOptionCell *)cell;
-    if (linkListCell.xui_options)
-    {
-        XUIOptionViewController *optionViewController = [[XUIOptionViewController alloc] initWithCell:linkListCell];
-        optionViewController.adapter = self.adapter;
-        optionViewController.delegate = self;
-        optionViewController.title = linkListCell.xui_label;
-        optionViewController.theme = self.cellFactory.theme;
-        [self.navigationController pushViewController:optionViewController animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView performLinkCell:(UITableViewCell *)cell {
-    XUILinkCell *linkCell = (XUILinkCell *)cell;
-    NSString *detailUrl = linkCell.xui_url;
-    UIViewController *detailController = nil;
-    NSURL *detailPathURL = [NSURL URLWithString:detailUrl];
-    if ([detailPathURL scheme]) {
-        XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:detailPathURL];
-        detailController = webController;
-    } else {
-        NSString *detailPathNameExt = [[detailUrl pathExtension] lowercaseString];
-        NSString *detailPath = [self.bundle pathForResource:detailUrl ofType:nil];
-        if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
-            detailController = [[[self class] alloc] initWithPath:detailPath withBundlePath:[self.bundle bundlePath]];
-        }
-        else {
-            NSError *entryError = nil;
-            NSDictionary *entryAttributes = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
-            if (!entryError && [self.class.entryService hasViewerForEntry:entryAttributes]) {
-                UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryAttributes];
-                detailController = viewer;
-            }
-        }
-    }
-    if (detailController) {
-        detailController.title = linkCell.xui_label;
-        [self.navigationController pushViewController:detailController animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView performTextareaCell:(UITableViewCell *)cell {
-    XUITextareaCell *textareaCell = (XUITextareaCell *)cell;
-    XUITextareaViewController *textareaViewController = [[XUITextareaViewController alloc] initWithCell:textareaCell];
-    textareaViewController.adapter = self.adapter;
-    textareaViewController.delegate = self;
-    textareaViewController.title = textareaCell.xui_label;
-    [self.navigationController pushViewController:textareaViewController animated:YES];
 }
 
 #pragma mark - XUICellFactoryDelegate
@@ -635,7 +422,7 @@ XXTE_END_IGNORE_PARTIAL
     dispatch_async(dispatch_get_main_queue(), ^{
         @strongify(self);
         NSString *entryName = [self.entryPath lastPathComponent];
-        XXTE_START_IGNORE_PARTIAL
+        XUI_START_IGNORE_PARTIAL
         if (@available(iOS 8.0, *)) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -644,109 +431,8 @@ XXTE_END_IGNORE_PARTIAL
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alertView show];
         }
-        XXTE_END_IGNORE_PARTIAL
+        XUI_END_IGNORE_PARTIAL
     });
-}
-
-#pragma mark - XUIOptionViewControllerDelegate
-
-- (void)optionViewController:(XUIOptionViewController *)controller didSelectOption:(NSInteger)optionIndex {
-    [self updateLinkListCell:controller.cell];
-    [self.cellFactory.adapter saveDefaultsFromCell:controller.cell];
-}
-
-- (void)updateLinkListCell:(XUIOptionCell *)cell {
-    NSUInteger optionIndex = 0;
-    id rawValue = cell.xui_value;
-    if (rawValue) {
-        NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
-                return YES;
-            }
-            return NO;
-        }];
-        if ((rawIndex) != NSNotFound) {
-            optionIndex = rawIndex;
-        }
-    }
-    if (optionIndex < cell.xui_options.count) {
-        NSString *shortTitle = cell.xui_options[optionIndex][XUIOptionCellShortTitleKey];
-        cell.detailTextLabel.text = shortTitle;
-    }
-}
-
-#pragma mark - XUIMultipleOptionViewControllerDelegate
-
-- (void)multipleOptionViewController:(XUIMultipleOptionViewController *)controller didSelectOption:(NSArray <NSNumber *> *)optionIndexes {
-    [self updateLinkMultipleListCell:controller.cell];
-    [self.cellFactory.adapter saveDefaultsFromCell:controller.cell];
-}
-
-- (void)updateLinkMultipleListCell:(XUIMultipleOptionCell *)cell {
-    NSArray *optionValues = cell.xui_value;
-    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionValues.count];
-    cell.detailTextLabel.text = shortTitle;
-}
-
-#pragma mark - XUIOrderedOptionViewControllerDelegate
-
-- (void)orderedOptionViewController:(XUIOrderedOptionViewController *)controller didSelectOption:(NSArray<NSNumber *> *)optionIndexes {
-    [self updateLinkOrderedListCell:controller.cell];
-    [self.cellFactory.adapter saveDefaultsFromCell:controller.cell];
-}
-
-- (void)updateLinkOrderedListCell:(XUIOrderedOptionCell *)cell {
-    NSArray *optionValues = cell.xui_value;
-    NSString *shortTitle = [NSString stringWithFormat:NSLocalizedString(@"%lu Selected", nil), optionValues.count];
-    cell.detailTextLabel.text = shortTitle;
-}
-
-#pragma mark - XUITextareaViewControllerDelegate
-
-- (void)textareaViewControllerTextDidChanged:(XUITextareaViewController *)controller {
-    [self storeCellWhenNeeded:controller.cell];
-}
-
-#pragma mark - XXTPickerFactoryDelegate
-
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task {
-    return YES;
-}
-
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
-    blockInteractionsWithDelay(self, YES, 0);
-    @weakify(self);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        @strongify(self);
-        NSError *error = nil;
-        id result = [task generateWithError:&error];
-        dispatch_async_on_main_queue(^{
-            blockInteractions(self, NO);
-            if (result) {
-                if ([self.pickerCell isKindOfClass:[XUITitleValueCell class]]) {
-                    XUITitleValueCell *cell = (XUITitleValueCell *)self.pickerCell;
-                    cell.xui_value = result;
-                    [self storeCellWhenNeeded:cell];
-                    [self storeCellsIfNecessary];
-                }
-            } else {
-                [self presentErrorAlertController:error];
-            }
-        });
-    });
-    return YES;
-}
-
-#pragma mark - XXTExplorerItemPickerDelegate
-
-- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
-    XUIFileCell *cell = (XUIFileCell *)self.pickerCell;
-    if ([cell isKindOfClass:[XUIFileCell class]]) {
-        cell.xui_value = path;
-        [self storeCellWhenNeeded:cell];
-        [self storeCellsIfNecessary];
-        [self.navigationController popToViewController:self animated:YES];
-    }
 }
 
 #pragma mark - Store
@@ -768,7 +454,7 @@ XXTE_END_IGNORE_PARTIAL
     if (self.shouldStoreCells) {
         self.shouldStoreCells = NO;
         for (XUIBaseCell *cell in self.cellsNeedStore) {
-            [self.cellFactory.adapter saveDefaultsFromCell:cell];
+            [self.adapter saveDefaultsFromCell:cell];
         }
     }
 }
@@ -785,7 +471,6 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Keyboard
 
-// Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardDidAppear:(NSNotification *)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
@@ -797,12 +482,11 @@ XXTE_END_IGNORE_PARTIAL
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
     UITableView *tableView = self.tableView;
     UIEdgeInsets contentInsets = [self defaultContentInsets];
-    contentInsets.bottom = XXTE_PAD ? 0.0 : self.tabBarController.tabBar.bounds.size.height;
+    contentInsets.bottom = XUI_PAD ? 0.0 : self.tabBarController.tabBar.bounds.size.height;
     tableView.contentInset = contentInsets;
     tableView.scrollIndicatorInsets = contentInsets;
 }

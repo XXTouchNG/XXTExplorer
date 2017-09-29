@@ -11,7 +11,7 @@
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionValueCell.h"
 #import "XXTEUserInterfaceDefines.h"
-#import "XXTEViewShaker.h"
+#import "XUIViewShaker.h"
 #import "XXTEAppDefines.h"
 #import "XXTEMoreAddressCell.h"
 #import <PromiseKit/PromiseKit.h>
@@ -38,7 +38,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, assign) kXXTExplorerCreateItemViewItemType selectedItemType;
-@property (nonatomic, strong) XXTEViewShaker *itemNameShaker;
+@property (nonatomic, strong) XUIViewShaker *itemNameShaker;
 
 @end
 
@@ -147,7 +147,7 @@ typedef enum : NSUInteger {
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
     cell1.nameField.delegate = self;
     self.nameField = cell1.nameField;
-    self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
+    self.itemNameShaker = [[XUIViewShaker alloc] initWithView:self.nameField];
     
     XXTEMoreTitleDescriptionValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;

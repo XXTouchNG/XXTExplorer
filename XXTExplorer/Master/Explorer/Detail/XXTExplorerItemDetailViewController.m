@@ -13,7 +13,7 @@
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionValueCell.h"
 #import "XXTEUserInterfaceDefines.h"
-#import "XXTEViewShaker.h"
+#import "XUIViewShaker.h"
 #import "XXTEAppDefines.h"
 #import "XXTEDispatchDefines.h"
 
@@ -138,7 +138,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
-@property (nonatomic, strong) XXTEViewShaker *itemNameShaker;
+@property (nonatomic, strong) XUIViewShaker *itemNameShaker;
 
 @property (nonatomic, strong) XXTExplorerEntryParser *entryParser;
 @property (nonatomic, strong) NSArray <XXTExplorerDynamicSection *> *dynamicSections;
@@ -255,7 +255,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         cell1.nameField.delegate = self;
         cell1.nameField.text = entry[XXTExplorerViewEntryAttributeName];
         self.nameField = cell1.nameField;
-        self.itemNameShaker = [[XXTEViewShaker alloc] initWithView:self.nameField];
+        self.itemNameShaker = [[XUIViewShaker alloc] initWithView:self.nameField];
         
         XXTExplorerDynamicSection *section1 = [[XXTExplorerDynamicSection alloc] init];
         section1.identifier = kXXTEDynamicSectionIdentifierSectionName;

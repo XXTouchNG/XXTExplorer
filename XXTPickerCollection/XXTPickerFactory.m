@@ -17,6 +17,15 @@
 
 @implementation XXTPickerFactory
 
++ (instancetype)sharedInstance {
+    static XXTPickerFactory *sharedInstance = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController {
     id nextPicker = [pickerTask nextPicker];
     if (nextPicker) {

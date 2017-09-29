@@ -143,12 +143,12 @@
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
         id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-        UIColor *colorSeries = nil;
-        if (entryReader.executable) {
-            colorSeries = XXTE_COLOR_SUCCESS;
-        } else {
-            colorSeries = XXTE_COLOR;
-        }
+        UIColor *colorSeries = XXTE_COLOR;
+//        if (entryReader.executable) {
+//            colorSeries = XXTE_COLOR_SUCCESS;
+//        } else {
+//            colorSeries = XXTE_COLOR;
+//        }
         if (entryReader.executable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {

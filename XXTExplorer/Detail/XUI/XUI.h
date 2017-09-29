@@ -14,7 +14,12 @@
 #define XUI_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
 #define XUI_END_IGNORE_PARTIAL _Pragma("clang diagnostic pop")
 
+#define XUI_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
 #define XUI_PAD ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone)
+#define XUI_COLLAPSED \
+XUI_START_IGNORE_PARTIAL \
+(XUI_SYSTEM_8 && self.splitViewController && self.splitViewController.collapsed != YES) \
+XUI_END_IGNORE_PARTIAL
 
 static NSString * const XUINotificationEventValueChanged = @"XUINotificationEventValueChanged";
 

@@ -1,0 +1,45 @@
+//
+//  XUIListViewController+XUILinkCell.m
+//  XXTExplorer
+//
+//  Created by Zheng Wu on 29/09/2017.
+//  Copyright © 2017 Zheng. All rights reserved.
+//
+
+#import "XUIListViewController+XUILinkCell.h"
+#import "XUIListViewController+SharedInstance.h"
+
+#import "XXTECommonWebViewController.h"
+
+@implementation XUIListViewController (XUILinkCell)
+
+- (void)tableView:(UITableView *)tableView XUILinkCell:(UITableViewCell *)cell {
+    XUILinkCell *linkCell = (XUILinkCell *)cell;
+    NSString *detailUrl = linkCell.xui_url;
+    UIViewController *detailController = nil;
+    NSURL *detailPathURL = [NSURL URLWithString:detailUrl];
+    if ([detailPathURL scheme]) {
+        XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:detailPathURL];
+        detailController = webController;
+    } else {
+        NSString *detailPathNameExt = [[detailUrl pathExtension] lowercaseString];
+        NSString *detailPath = [self.bundle pathForResource:detailUrl ofType:nil];
+        if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
+            detailController = [[[self class] alloc] initWithPath:detailPath withBundlePath:[self.bundle bundlePath]];
+        }
+        else {
+            NSError *entryError = nil;
+            NSDictionary *entryAttributes = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
+            if (!entryError && [self.class.entryService hasViewerForEntry:entryAttributes]) {
+                UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryAttributes];
+                detailController = viewer;
+            }
+        }
+    }
+    if (detailController) {
+        detailController.title = linkCell.xui_label;
+        [self.navigationController pushViewController:detailController animated:YES];
+    }
+}
+
+@end

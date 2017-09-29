@@ -16,8 +16,6 @@
 @property (nonatomic, strong) XXTEEditorLanguage *language;
 @property (nonatomic, strong) XXTEEditorTextView *textView;
 
-@property (nonatomic, strong) XXTPickerFactory *pickerFactory;
-
 - (void)setNeedsReload;
 - (void)setNeedsSaveDocument;
 - (void)setNeedsFocusTextView;
