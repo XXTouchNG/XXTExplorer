@@ -36,16 +36,6 @@ XXTE_END_IGNORE_PARTIAL
     BOOL isFirstTimeLoaded;
 }
 
-//+ (NSUserDefaults *)localDefaults {
-//    static NSUserDefaults *localDefaults = nil;
-//    if (!localDefaults) {
-//        localDefaults = ({
-//            [NSUserDefaults standardUserDefaults];
-//        });
-//    }
-//    return localDefaults;
-//}
-
 - (instancetype)init {
     if (self = [super init]) {
         [self setup];

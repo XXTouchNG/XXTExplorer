@@ -20,11 +20,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
-//    self.iconImageView.layer.cornerRadius = 6.f;
-//    self.iconImageView.layer.masksToBounds = YES;
-//    self.iconImageView.layer.shouldRasterize = YES;
-//    self.iconImageView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    UIView *selectionBackground = [[UIView alloc] init];
+    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    self.selectedBackgroundView = selectionBackground;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

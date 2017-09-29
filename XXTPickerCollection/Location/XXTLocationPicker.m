@@ -154,7 +154,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
         customPinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kXXTMapViewAnnotationIdentifier];
         XXTP_START_IGNORE_PARTIAL
         if (XXTP_SYSTEM_9) {
-            customPinView.pinTintColor = XXTP_PICKER_FRONT_COLOR;
+            customPinView.pinTintColor = XXTE_COLOR;
         } else {
             customPinView.pinColor = MKPinAnnotationColorRed;
         }

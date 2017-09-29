@@ -312,8 +312,6 @@ UISearchDisplayDelegate
             label.attributedText = attributedText;
         }
         
-//        CGSize newSize = [label sizeThatFits:CGSizeMake(0, 24)];
-//        label.bounds = CGRectMake(0, 0, newSize.width, newSize.height);
         [label sizeToFit];
     }
 }
@@ -375,7 +373,7 @@ UISearchDisplayDelegate
         [cell setApplicationName:appDetail[kXXTApplicationDetailKeyName]];
         [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
         [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
-        [cell setTintColor:XXTP_PICKER_FRONT_COLOR];
+        [cell setTintColor:XXTE_COLOR];
         [cell setShowsReorderControl:YES];
         return cell;
     }

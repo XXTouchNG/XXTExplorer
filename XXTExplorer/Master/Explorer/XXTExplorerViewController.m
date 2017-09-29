@@ -119,6 +119,9 @@
         }XXTE_END_IGNORE_PARTIAL
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
+        UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
+        cellLongPressGesture.delegate = self;
+        [tableView addGestureRecognizer:cellLongPressGesture];
         tableView;
     });
 
@@ -577,6 +580,7 @@
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateBegan) {
         CGPoint location = [recognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+        if (!indexPath) return;
         if (indexPath.section == XXTExplorerViewSectionIndexHome) {
             XXTExplorerViewHomeCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             [cell becomeFirstResponder];
@@ -672,9 +676,6 @@
     entryCell.entryTitleLabel.text = entryDisplayName;
     entryCell.entrySubtitleLabel.text = entryDescription;
     entryCell.entryIconImageView.image = entryIconImage;
-    UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
-    cellLongPressGesture.delegate = self;
-    [entryCell addGestureRecognizer:cellLongPressGesture];
 }
 
 - (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell withEntry:(NSDictionary *)entryDetail {
@@ -682,9 +683,6 @@
     entryCell.entryIconImageView.image = [UIImage imageNamed:entryDetail[@"icon"]];
     entryCell.entryTitleLabel.text = entryDetail[@"title"];
     entryCell.entrySubtitleLabel.text = entryDetail[@"subtitle"];
-    UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
-    cellLongPressGesture.delegate = self;
-    [entryCell addGestureRecognizer:cellLongPressGesture];
 }
 
 #pragma mark - View Attachments

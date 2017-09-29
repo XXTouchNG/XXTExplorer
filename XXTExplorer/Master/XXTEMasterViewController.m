@@ -89,7 +89,7 @@
     alertAppearance.buttonsTextAlignment = NSTextAlignmentLeft;
     
     [XXTEToastManager setTapToDismissEnabled:YES];
-    [XXTEToastManager setDefaultDuration:2.f];
+    [XXTEToastManager setDefaultDuration:2.4f];
     [XXTEToastManager setQueueEnabled:NO];
     [XXTEToastManager setDefaultPosition:XXTEToastPositionCenter];
     
@@ -99,6 +99,7 @@
     toastStyle.messageFont = [UIFont systemFontOfSize:14.f];
     toastStyle.activitySize = CGSizeMake(80.f, 80.f);
     toastStyle.verticalMargin = 16.f;
+    toastStyle.horizontalPadding = 16.f;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

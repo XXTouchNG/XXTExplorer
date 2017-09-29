@@ -14,6 +14,5 @@
 
 #define XXTP_SYSTEM_9 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0)
 #define XXTP_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
-#define XXTP_PICKER_FRONT_COLOR ([UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f])
 
 #endif /* XXTPickerInternalDefine_h */

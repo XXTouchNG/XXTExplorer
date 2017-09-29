@@ -28,19 +28,23 @@
     return self;
 }
 
-- (void)setup {
-    
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
     
+    [self setup];
+}
+
+- (void)setup {
     self.flagIconImageView.layer.shadowOffset = CGSizeMake(0, 0);
     self.flagIconImageView.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:1.f].CGColor;
     self.flagIconImageView.layer.shadowOpacity = .3f;
     self.flagIconImageView.layer.shadowRadius = 1.f;
     self.flagIconImageView.layer.masksToBounds = NO;
+    
+    UIView *selectionBackground = [[UIView alloc] init];
+    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    self.selectedBackgroundView = selectionBackground;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

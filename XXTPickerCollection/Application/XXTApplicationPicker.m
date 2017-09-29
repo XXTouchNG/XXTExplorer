@@ -120,7 +120,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.barTintColor = [UIColor whiteColor];
-    searchBar.tintColor = XXTP_PICKER_FRONT_COLOR;
+    searchBar.tintColor = XXTE_COLOR;
 
     UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     searchDisplayController.searchResultsDelegate = self;
@@ -300,7 +300,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     [cell setApplicationName:appDetail[kXXTApplicationDetailKeyName]];
     [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
     [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
-    [cell setTintColor:XXTP_PICKER_FRONT_COLOR];
+    [cell setTintColor:XXTE_COLOR];
     if ([appDetail[kXXTApplicationDetailKeyBundleID] isEqualToString:self.selectedIdentifier]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {

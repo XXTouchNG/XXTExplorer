@@ -159,6 +159,11 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     return self.events.count;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font = [UIFont systemFontOfSize:14.0];
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return self.sectionNames[(NSUInteger) section];
 }
@@ -176,7 +181,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     XXTKeyEvent *keyEvent = self.events[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", keyEvent.title, keyEvent.command];
     cell.textLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:16.0f];
-    cell.tintColor = XXTP_PICKER_FRONT_COLOR;
+    cell.tintColor = XXTE_COLOR;
     if ([self.selectedCommand isEqualToString:keyEvent.command]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {

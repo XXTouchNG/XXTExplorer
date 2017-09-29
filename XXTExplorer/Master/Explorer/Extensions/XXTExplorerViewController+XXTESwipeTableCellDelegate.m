@@ -143,6 +143,12 @@
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
         id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        UIColor *colorSeries = nil;
+        if (entryReader.executable) {
+            colorSeries = XXTE_COLOR_SUCCESS;
+        } else {
+            colorSeries = XXTE_COLOR;
+        }
         if (entryReader.executable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
@@ -151,7 +157,7 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
-                                                       backgroundColor:[XXTE_COLOR colorWithAlphaComponent:1.f]
+                                                       backgroundColor:[colorSeries colorWithAlphaComponent:1.f]
                                                                 insets:buttonInsets];
             if (!hidesLabel) {
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
@@ -169,7 +175,7 @@
                     buttonTitle = @"";
                 }
                 XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
-                                                           backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.9f]
+                                                           backgroundColor:[colorSeries colorWithAlphaComponent:.9f]
                                                                     insets:buttonInsets];
                 if (!hidesLabel) {
                     button.titleLabel.font = [UIFont systemFontOfSize:12.f];
@@ -187,7 +193,7 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
-                                                       backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
+                                                       backgroundColor:[colorSeries colorWithAlphaComponent:.8f]
                                                                 insets:buttonInsets];
             if (!hidesLabel) {
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
@@ -204,7 +210,7 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconInside]
-                                                       backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.8f]
+                                                       backgroundColor:[colorSeries colorWithAlphaComponent:.8f]
                                                                 insets:buttonInsets];
             if (!hidesLabel) {
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
@@ -220,7 +226,7 @@
             buttonTitle = @"";
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
-                                                   backgroundColor:[XXTE_COLOR colorWithAlphaComponent:.6f]
+                                                   backgroundColor:[colorSeries colorWithAlphaComponent:.6f]
                                                             insets:buttonInsets];
         if (!hidesLabel) {
             button.titleLabel.font = [UIFont systemFontOfSize:12.f];

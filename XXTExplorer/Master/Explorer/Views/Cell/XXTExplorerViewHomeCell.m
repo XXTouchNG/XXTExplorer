@@ -29,12 +29,15 @@
 }
 
 - (void)setup {
-    
+    UIView *selectionBackground = [[UIView alloc] init];
+    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    self.selectedBackgroundView = selectionBackground;
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    [self setup];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
