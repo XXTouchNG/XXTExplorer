@@ -130,6 +130,8 @@
 		0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */; };
 		0FB009171F45AC0A00097E9C /* XXTEEditorController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */; };
 		0FB0091A1F45AF2000097E9C /* XXTEEditorController+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */; };
+		0FB2209C1F824A9200156C3B /* XXTEEditorPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB2209B1F824A9200156C3B /* XXTEEditorPreprocessor.m */; };
+		0FB2209F1F824B2100156C3B /* XXTEEditorController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB2209E1F824B2100156C3B /* XXTEEditorController+NavigationBar.m */; };
 		0FB30ECC1F6425F2008517BF /* XUITagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */; };
 		0FB30ECD1F6425F2008517BF /* XUITextTagCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB30ECB1F6425F2008517BF /* XUITextTagCollectionView.m */; };
 		0FB6BB671F1C4AE800CADCEA /* XUIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB661F1C4AE800CADCEA /* XUIListViewController.m */; };
@@ -644,6 +646,10 @@
 		0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+Keyboard.m"; sourceTree = "<group>"; };
 		0FB009181F45AF2000097E9C /* XXTEEditorController+Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+Settings.h"; sourceTree = "<group>"; };
 		0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+Settings.m"; sourceTree = "<group>"; };
+		0FB2209A1F824A9200156C3B /* XXTEEditorPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorPreprocessor.h; sourceTree = "<group>"; };
+		0FB2209B1F824A9200156C3B /* XXTEEditorPreprocessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorPreprocessor.m; sourceTree = "<group>"; };
+		0FB2209D1F824B2100156C3B /* XXTEEditorController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+NavigationBar.h"; sourceTree = "<group>"; };
+		0FB2209E1F824B2100156C3B /* XXTEEditorController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+NavigationBar.m"; sourceTree = "<group>"; };
 		0FB30EC81F6425F2008517BF /* XUITagCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITagCollectionView.h; sourceTree = "<group>"; };
 		0FB30EC91F6425F2008517BF /* XUITagCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUITagCollectionView.m; sourceTree = "<group>"; };
 		0FB30ECA1F6425F2008517BF /* XUITextTagCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUITextTagCollectionView.h; sourceTree = "<group>"; };
@@ -1711,6 +1717,8 @@
 				0FB009191F45AF2000097E9C /* XXTEEditorController+Settings.m */,
 				0FD973F71F4B29E700133162 /* XXTEEditorController+State.h */,
 				0FD973F81F4B29E700133162 /* XXTEEditorController+State.m */,
+				0FB2209D1F824B2100156C3B /* XXTEEditorController+NavigationBar.h */,
+				0FB2209E1F824B2100156C3B /* XXTEEditorController+NavigationBar.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1993,6 +2001,8 @@
 				D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */,
 				0F51CB171F61289600150D6D /* XXTEEditorTypeSetter.h */,
 				0F51CB181F61289600150D6D /* XXTEEditorTypeSetter.m */,
+				0FB2209A1F824A9200156C3B /* XXTEEditorPreprocessor.h */,
+				0FB2209B1F824A9200156C3B /* XXTEEditorPreprocessor.m */,
 			);
 			path = TextKit;
 			sourceTree = "<group>";
@@ -3128,6 +3138,7 @@
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D677B0F21F4FC7C200E741C2 /* lmathlib.c in Sources */,
 				D677B0EE1F4FC7C200E741C2 /* lgc.c in Sources */,
+				0FB2209C1F824A9200156C3B /* XXTEEditorPreprocessor.m in Sources */,
 				0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */,
 				D6863CF21F7E343500A45CF7 /* XUIOptionCell.m in Sources */,
 				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
@@ -3338,6 +3349,7 @@
 				0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */,
 				0F6AEA8A1F374E4C0017BE7C /* XXTExplorerViewController+Shortcuts.m in Sources */,
 				52512BD02B62F2E839374051 /* XUIViewController.m in Sources */,
+				0FB2209F1F824B2100156C3B /* XXTEEditorController+NavigationBar.m in Sources */,
 				D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */,
 				D6686F371F4AD2F3004403D0 /* XXTEMoreSwitchNoIconCell.m in Sources */,
 				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,

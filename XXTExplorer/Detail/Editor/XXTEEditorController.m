@@ -9,33 +9,39 @@
 #import "XXTEEditorController.h"
 #import "XXTECodeViewerController.h"
 
+// Pre-Defines
 #import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
 
+// Theme & Language
 #import "XXTEEditorTheme.h"
 #import "XXTEEditorLanguage.h"
 
+// TextKit
 #import "XXTEEditorTextView.h"
 #import "XXTEEditorTextStorage.h"
 #import "XXTEEditorLayoutManager.h"
 #import "XXTEEditorTypeSetter.h"
 #import "XXTEEditorTextInput.h"
+#import "XXTEEditorPreprocessor.h"
 
+// SyntaxKit
+#import "SKAttributedParser.h"
+#import "SKRange.h"
+
+// Keyboard
 #import "XXTEKeyboardRow.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
 
+// Extensions
 #import "XXTEEditorController+State.h"
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorController+Settings.h"
 #import "XXTEEditorController+Menu.h"
-
-#import "SKAttributedParser.h"
-#import "SKRange.h"
-
-#import "UIColor+DarkColor.h"
+#import "XXTEEditorController+NavigationBar.h"
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
@@ -72,63 +78,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 + (NSArray <NSString *> *)suggestedExtensions {
     return [XXTECodeViewerController suggestedExtensions];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    if ([self isDarkMode]) {
-        return UIStatusBarStyleLightContent;
-    } else {
-        return UIStatusBarStyleDefault;
-    }
-}
-
-- (BOOL)isDarkMode
-{
-    UIColor *newColor = self.theme.backgroundColor;
-    if (!newColor) newColor = XXTE_COLOR;
-    return [newColor isDarkColor];
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return NO;
-}
-
-- (BOOL)xxte_prefersNavigationBarHidden {
-    return [self prefersNavigationBarHidden];
-}
-
-- (BOOL)prefersNavigationBarHidden {
-    if (XXTE_PAD || NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO))
-    {
-        return NO;
-    }
-    return [self isEditing];
-}
-
-#pragma mark - Navigation Bar Color
-
-- (void)renderNavigationBarTheme:(BOOL)restore {
-    if (XXTE_PAD) return;
-    UIColor *backgroundColor = XXTE_COLOR;
-    UIColor *foregroundColor = [UIColor whiteColor];
-    if (restore) {
-        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-        self.navigationController.navigationBar.tintColor = foregroundColor;
-        self.navigationController.navigationBar.barTintColor = backgroundColor;
-        self.settingsButtonItem.tintColor = foregroundColor;
-    } else {
-        if (self.theme) {
-            if (self.theme.foregroundColor)
-                foregroundColor = self.theme.foregroundColor;
-            if (self.theme.backgroundColor)
-                backgroundColor = self.theme.backgroundColor;
-        }
-        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-        self.navigationController.navigationBar.tintColor = foregroundColor;
-        self.navigationController.navigationBar.barTintColor = backgroundColor;
-        self.settingsButtonItem.tintColor = foregroundColor;
-    }
-    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 #pragma mark - Initializers
@@ -513,17 +462,20 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 #pragma mark - Content
 
 - (void)reloadContent {
+    NSString *entryPath = self.entryPath;
+    if (!entryPath) return;
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     NSError *readError = nil;
-    NSString *string = [NSString stringWithContentsOfFile:self.entryPath encoding:NSUTF8StringEncoding error:&readError];
+    NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:self.entryPath Error:&readError];
     if (readError) {
         toastMessage(self, [readError localizedDescription]);
         return;
     }
+    XXTEEditorTheme *theme = self.theme;
     XXTEEditorTextView *textView = self.textView;
     textView.editable = NO;
-    [textView setFont:self.theme.font];
-    [textView setTextColor:self.theme.foregroundColor];
+    [textView setFont:theme.font];
+    [textView setTextColor:theme.foregroundColor];
     [textView setText:string];
     textView.editable = !isReadOnlyMode;
 }
