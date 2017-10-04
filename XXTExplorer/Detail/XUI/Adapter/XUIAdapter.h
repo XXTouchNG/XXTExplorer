@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong, readonly) NSString *path;
 @property (nonatomic, strong, readonly) NSBundle *bundle;
+@property (nonatomic, strong, readonly) NSString *stringsTable;
 
 - (instancetype)initWithXUIPath:(NSString *)path;
 - (instancetype)initWithXUIPath:(NSString *)path Bundle:(NSBundle *)bundle;
@@ -22,5 +23,7 @@
 - (void)saveDefaultsFromCell:(XUIBaseCell *)cell;
 - (id)objectForKey:(NSString *)key Defaults:(NSString *)identifier;
 - (void)setObject:(id)obj forKey:(NSString *)key Defaults:(NSString *)identifier;
+
+- (NSString *)localizedStringForKey:(NSString *)key value:(NSString *)value;
 
 @end

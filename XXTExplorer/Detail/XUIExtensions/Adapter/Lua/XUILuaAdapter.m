@@ -18,7 +18,7 @@
     lua_State *L;
 }
 
-@synthesize path = _path, bundle = _bundle;
+@synthesize path = _path, bundle = _bundle, stringsTable = _stringsTable;
 
 - (instancetype)initWithXUIPath:(NSString *)path {
     self = [super init];
@@ -49,6 +49,7 @@
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
             
+            lua_setMaxLine(L, LUA_MAX_LINE_ADAPTER);
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
             
@@ -61,6 +62,7 @@
             lua_pushvalue(L, -1);
             lua_setfield(L, LUA_REGISTRYINDEX, "XUILuaAdapter");
             lua_pop(L, 1);
+            
             return YES;
         }
         return NO;
@@ -103,6 +105,10 @@
     }
     
     if ([value isKindOfClass:[NSDictionary class]]) {
+        NSString *stringsTable = value[@"stringsTable"];
+        if ([stringsTable isKindOfClass:[NSString class]]) {
+            _stringsTable = stringsTable;
+        }
         return value;
     }
     return nil;
@@ -136,6 +142,11 @@
         }
         lua_pop(L, -1);
     }
+}
+
+- (NSString *)localizedStringForKey:(NSString *)key value:(NSString *)value {
+    NSString *localized = [self.bundle localizedStringForKey:key value:value table:self.stringsTable];
+    return localized ? localized : value;
 }
 
 - (void)dealloc {

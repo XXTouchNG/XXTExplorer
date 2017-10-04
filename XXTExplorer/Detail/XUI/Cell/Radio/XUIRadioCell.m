@@ -101,8 +101,10 @@
     _xui_options = xui_options;
     NSMutableArray <NSString *> *xui_validTitles = [[NSMutableArray alloc] init];
     [xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj[XUIOptionCellTitleKey]) {
-            [xui_validTitles addObject:obj[XUIOptionCellTitleKey]];
+        NSString *title = obj[XUIOptionCellTitleKey];
+        if (title) {
+            NSString *localizedTitle = [self.adapter localizedStringForKey:title value:title];
+            [xui_validTitles addObject:localizedTitle];
         }
     }];
     [self.tagView removeAllTags];

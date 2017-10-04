@@ -52,5 +52,6 @@
 
 #define LUA_NSVALUE_MAX_DEPTH 50
 #define LUA_MAX_LINE 10000
+#define LUA_MAX_LINE_ADAPTER 100000
 
 #endif
