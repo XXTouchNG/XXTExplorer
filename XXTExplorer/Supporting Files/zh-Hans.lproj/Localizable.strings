@@ -354,6 +354,9 @@
 "Connect to Wi-fi network." = "请连接到无线局域网.";
 
 /* No comment provided by engineer. */
+"Connecting..." = "连接中...";
+
+/* No comment provided by engineer. */
 "Console" = "终端";
 
 /* No comment provided by engineer. */
@@ -592,6 +595,9 @@
 
 /* No comment provided by engineer. */
 "Invalid package data." = "无效的列表数据.";
+
+/* No comment provided by engineer. */
+"Invalid url parameters." = "无效的 URL 参数.";
 
 /* No comment provided by engineer. */
 "iOS Version" = "iOS 版本";

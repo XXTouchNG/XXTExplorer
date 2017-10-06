@@ -23,9 +23,12 @@ static NSString * const XXTENotificationEventTypeInboxMoved = @"XXTENotification
 static NSString * const XXTENotificationEventTypeApplicationDidBecomeActive = @"XXTENotificationEventTypeApplicationDidBecomeActive";
 static NSString * const XXTENotificationEventTypeApplicationDidExtractResource = @"XXTENotificationEventTypeApplicationDidExtractResource";
 static NSString * const XXTENotificationEventTypeApplicationDidEnterBackground = @"XXTENotificationEventTypeApplicationDidEnterBackground";
+
 static NSString * const XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode = @"XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode";
-//static NSString * const XXTENotificationEventTypePopoverDismissed = @"XXTENotificationEventTypePopoverDismissed";
+
 static NSString * const XXTENotificationEventTypeFormSheetDismissed = @"XXTENotificationEventTypeFormSheetDismissed";
+
+static NSString * const XXTENotificationEventTypeSelectedScriptPathChanged = @"XXTENotificationEventTypeSelectedScriptPathChanged";
 
 // XXTENotificationShortcut
 static NSString * const XXTENotificationShortcutInterface = @"XXTENotificationShortcutInterface";

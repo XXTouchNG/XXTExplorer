@@ -9,7 +9,7 @@
 #import "XXTEMoreAboutController.h"
 #import "XXTEMoreLinkNoIconCell.h"
 #import "XXTEMoreAboutCell.h"
-#import "XXTECommonNavigationController.h"
+#import "XXTENavigationController.h"
 #import "XXTECommonWebViewController.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEMailComposeViewController.h"
@@ -166,7 +166,7 @@ typedef enum : NSUInteger {
             if (XXTE_COLLAPSED) {
                 XXTE_START_IGNORE_PARTIAL
                 if (@available(iOS 8.0, *)) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:webController];
                     [self showDetailViewController:navigationController sender:self];
                 }
                 XXTE_END_IGNORE_PARTIAL

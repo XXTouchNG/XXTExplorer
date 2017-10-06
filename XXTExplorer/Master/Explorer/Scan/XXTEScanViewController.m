@@ -348,10 +348,20 @@
 #pragma mark - UIControl Actions
 
 - (void)dismissScanViewController:(UIBarButtonItem *)sender {
+    if (XXTE_PAD) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [self dismissViewControllerAnimated:YES completion:^() {
+        
+    }];
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
     if (self.scanSession) {
         [self.scanSession stopRunning];
+        self.scanSession = nil;
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [super dismissViewControllerAnimated:flag completion:completion];
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
@@ -456,6 +466,11 @@
 
 - (void)handleOutput:(NSString *)output {
     if (!output) return;
+    
+    if (@available(iOS 10.0, *)) {
+        UINotificationFeedbackGenerator *feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+        [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
+    }
 
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];

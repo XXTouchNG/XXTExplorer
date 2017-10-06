@@ -467,7 +467,12 @@ XUI_END_IGNORE_PARTIAL
 }
 
 - (void)dismissViewController:(id)dismissViewController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (XXTE_PAD) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [self dismissViewControllerAnimated:YES completion:^() {
+        
+    }];
 }
 
 #pragma mark - Keyboard

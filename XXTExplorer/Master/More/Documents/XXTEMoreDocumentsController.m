@@ -9,7 +9,7 @@
 #import "XXTEMoreDocumentsController.h"
 #import "XXTEMoreLinkNoIconCell.h"
 #import "XXTECommonWebViewController.h"
-#import "XXTECommonNavigationController.h"
+#import "XXTENavigationController.h"
 #import "XXTEAppDefines.h"
 
 @interface XXTEMoreDocumentsController ()
@@ -150,7 +150,7 @@
             if (XXTE_COLLAPSED) {
                 XXTE_START_IGNORE_PARTIAL
                 if (@available(iOS 8.0, *)) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:webController];
+                    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:webController];
                     [self.splitViewController showDetailViewController:navigationController sender:self];
                 }
                 XXTE_END_IGNORE_PARTIAL

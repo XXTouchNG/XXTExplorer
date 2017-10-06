@@ -14,6 +14,7 @@
 
 + (NSString *)initialPath;
 + (NSFileManager *)explorerFileManager;
+
 + (NSString *)selectedScriptPath;
 + (BOOL)isFetchingSelectedScript;
 + (void)setFetchingSelectedScript:(BOOL)fetching;

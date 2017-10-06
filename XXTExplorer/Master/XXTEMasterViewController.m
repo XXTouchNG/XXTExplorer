@@ -8,11 +8,11 @@
 
 #import "XXTEMasterViewController.h"
 #import <LGAlertView/LGAlertView.h>
+#import "XXTEMasterViewController+Notifications.h"
 
 #import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEDispatchDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "XXTERespringAgent.h"
 #import "XXTEDaemonAgent.h"
@@ -20,15 +20,6 @@
 #import "XXTEAPTHelper.h"
 #import "XXTEAPTPackage.h"
 #import "XXTEUpdateAgent.h"
-
-#import "NSString+QueryItems.h"
-#import "XXTExplorerViewController+SharedInstance.h"
-#import "XXTECommonNavigationController.h"
-#import "XXTExplorerDefaults.h"
-#import "XXTExplorerEntryParser.h"
-#import "XXTExplorerEntryService.h"
-
-#import "XXTEViewer.h"
 
 @interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEAPTHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
 
@@ -50,9 +41,15 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self setupAgents];
-        [self setupAppearance];
         // UITabBarController is different
+        static BOOL alreadyInitialized = NO;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSAssert(NO == alreadyInitialized, @"XXTEMasterViewController is a singleton.");
+            alreadyInitialized = YES;
+            [self setupAgents];
+            [self setupAppearance];
+        });
     }
     return self;
 }
@@ -76,6 +73,7 @@
     alertAppearance.titleTextColor = [UIColor blackColor];
     alertAppearance.messageTextColor = [UIColor blackColor];
     alertAppearance.activityIndicatorViewColor = XXTE_COLOR;
+    alertAppearance.progressViewProgressTintColor = XXTE_COLOR;
     alertAppearance.buttonsTitleColor = XXTE_COLOR;
     alertAppearance.buttonsBackgroundColorHighlighted = XXTE_COLOR;
     alertAppearance.cancelButtonTitleColor = XXTE_COLOR;
@@ -86,7 +84,7 @@
     alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
     alertAppearance.dismissOnAction = NO;
     alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
-    alertAppearance.buttonsTextAlignment = NSTextAlignmentLeft;
+    alertAppearance.buttonsTextAlignment = NSTextAlignmentCenter;
     
     [XXTEToastManager setTapToDismissEnabled:YES];
     [XXTEToastManager setDefaultDuration:2.4f];
@@ -135,7 +133,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationShortcut object:nil];
+    [self registerNotifications];
     [super viewWillAppear:animated];
     if (!firstTimeLoaded) {
         [self launchAgents];
@@ -144,7 +142,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeNotifications];
     [super viewWillDisappear:animated];
 }
 
@@ -214,7 +212,7 @@
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Latest Version", nil)
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"Your version v%@ is up-to-date with remote.", nil), currentVersion]
                                                                       style:LGAlertViewStyleActionSheet
-                                                               buttonTitles:@[]
+                                                               buttonTitles:@[ ]
                                                           cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
                                                      destructiveButtonTitle:nil
                                                                    delegate:self];
@@ -233,10 +231,11 @@
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"New Version", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"New version found: v%@\nCurrent version: v%@", nil), packageVersion, currentVersion]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[[NSString stringWithFormat:NSLocalizedString(@"Install via %@", nil), channelId], NSLocalizedString(@"Remind me tomorrow", nil)]
+                                                           buttonTitles:@[
+                                                                          [NSString stringWithFormat:NSLocalizedString(@"Install via %@", nil), channelId], NSLocalizedString(@"Remind me tomorrow", nil)
+                                                                          ]
                                                       cancelButtonTitle:NSLocalizedString(@"Remind me later", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Ignore this version", nil) delegate:self];
-            alertView.buttonsTextAlignment = NSTextAlignmentCenter;
             if (self.alertView && self.alertView.isShowing) {
                 [self.alertView transitionToAlertView:alertView completionHandler:nil];
             } else {
@@ -253,7 +252,7 @@
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Cannot check update: %@", nil), error.localizedDescription]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[]
+                                                           buttonTitles:@[ ]
                                                       cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                  destructiveButtonTitle:nil
                                                                delegate:self];
@@ -279,7 +278,7 @@
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Sync Failed", nil)
                                                         message:[NSString stringWithFormat:NSLocalizedString(@"Cannot sync with daemon: %@", nil), error.localizedDescription]
                                                           style:LGAlertViewStyleActionSheet
-                                                   buttonTitles:@[]
+                                                   buttonTitles:@[ ]
                                               cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
                                          destructiveButtonTitle:nil
                                                        delegate:self];
@@ -348,88 +347,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.aptHelper sync];
     });
-}
-
-#pragma mark - Notifications
-
-- (void)handleApplicationNotification:(NSNotification *)aNotification {
-    NSDictionary *userInfo = aNotification.userInfo;
-    if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
-        NSString *userDataString = userInfo[XXTENotificationShortcutUserData];
-        NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
-        if (userDataString && shortcutInterface) {
-            NSDictionary *queryStringDictionary = [userDataString queryItems];
-            NSDictionary <NSString *, NSString *> *userDataDictionary = [[NSDictionary alloc] initWithDictionary:queryStringDictionary];
-            NSMutableDictionary *mutableOperation = [@{ @"event": shortcutInterface } mutableCopy];
-            for (NSString *operationKey in userDataDictionary)
-                mutableOperation[operationKey] = userDataDictionary[operationKey];
-            [self performShortcut:aNotification.object jsonOperation:[mutableOperation copy]];
-        }
-    }
-}
-
-- (void)performShortcut:(id)sender jsonOperation:(NSDictionary *)jsonDictionary {
-    NSString *jsonEvent = jsonDictionary[@"event"];
-    if (![jsonEvent isKindOfClass:[NSString class]]) {
-        return;
-    }
-    if ([jsonEvent isEqualToString:@"xui"]) {
-        NSString *bundlePath = jsonDictionary[@"bundle"];
-        if (![bundlePath isKindOfClass:[NSString class]])
-        {
-            return; // invalid bundle path
-        }
-        if (bundlePath.length == 0) {
-            return;
-        }
-        NSString *name = jsonDictionary[@"name"];
-        if (!name) {
-            // nothing to do... just left it as nil
-        }
-        if (name && ![name isKindOfClass:[NSString class]]) {
-            return; // invalid name
-        }
-        if (name.length == 0) {
-            // nothing to do... just left it as empty
-        }
-        BOOL interactive = NO;
-        NSString *interactiveString = jsonDictionary[@"interactive"];
-        if ([interactiveString isEqualToString:@"true"])
-        {
-            interactive = YES;
-        }
-        [self performAction:sender presentConfiguratorForBundleAtPath:bundlePath configurationName:name interactiveMode:interactive];
-    }
-}
-
-- (void)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath configurationName:(NSString *)name interactiveMode:(BOOL)interactive {
-    NSError *entryError = nil;
-    NSDictionary *entryDetail = [[XXTExplorerViewController explorerEntryParser] entryOfPath:bundlePath withError:&entryError];
-    if (entryError) {
-        toastMessageWithDelay(self, ([entryError localizedDescription]), 5.0);
-        return;
-    }
-    if (!entryDetail) {
-        return;
-    }
-    NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
-    if (![[XXTExplorerViewController explorerEntryService] hasConfiguratorForEntry:entryDetail]) {
-        toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]), 5.0);
-        return;
-    }
-    UIViewController <XXTEViewer> *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail configurationName:name];
-    if (!configurator) {
-        toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]), 5.0);
-        return;
-    }
-    configurator.awakeFromOutside = interactive;
-    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
-    navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigationController animated:YES completion:^() {
-        if (interactive)
-            toastMessageWithDelay(configurator, NSLocalizedString(@"Press \"Home\" button to quit.\nTap to dismiss this notice.", nil), 6.0);
-    }];
 }
 
 @end

@@ -19,7 +19,6 @@
 #import "XXTEMoreViewController.h"
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENotificationCenterDefines.h"
-#import "XXTECommonNavigationController.h"
 
 #import "XXTEAppDefines.h"
 
@@ -73,7 +72,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         if (@available(iOS 8.0, *)) {
             // Detail Controller
             XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-            XXTECommonNavigationController *detailNavigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:detailViewController];
+            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
             
             // Split Controller
             XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
@@ -290,7 +289,7 @@ XXTE_START_IGNORE_PARTIAL
         NSString *shortcutAction = (NSString *)shortcutItem.userInfo[XXTEShortcutAction];
         NSDictionary *userInfo =
         @{XXTENotificationShortcutInterface: shortcutAction,
-          XXTENotificationShortcutUserData: @""};
+          XXTENotificationShortcutUserData: [NSNull null]};
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
         });

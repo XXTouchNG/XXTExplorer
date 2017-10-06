@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerViewController+Notification.h"
-#import "XXTExplorerViewController+Shortcuts.h"
 
 #import "XXTExplorerDefaults.h"
 #import "XXTENotificationCenterDefines.h"
@@ -38,21 +37,9 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
         }
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive] ||
-                 [eventType isEqualToString:XXTENotificationEventTypeApplicationDidExtractResource]) {
+                 [eventType isEqualToString:XXTENotificationEventTypeApplicationDidExtractResource] ||
+                 [eventType isEqualToString:XXTENotificationEventTypeSelectedScriptPathChanged]) {
             [self refreshEntryListView:nil];
-        }
-    }
-    else if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
-        NSDictionary *userInfo = aNotification.userInfo;
-        NSString *userDataString = userInfo[XXTENotificationShortcutUserData];
-        NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
-        if (userDataString && shortcutInterface) {
-            NSDictionary *queryStringDictionary = [userDataString queryItems];
-            NSDictionary <NSString *, NSString *> *userDataDictionary = [[NSDictionary alloc] initWithDictionary:queryStringDictionary];
-            NSMutableDictionary *mutableOperation = [@{ @"event": shortcutInterface } mutableCopy];
-            for (NSString *operationKey in userDataDictionary)
-                mutableOperation[operationKey] = userDataDictionary[operationKey];
-            [self performShortcut:aNotification.object jsonOperation:[mutableOperation copy]];
         }
     }
 }

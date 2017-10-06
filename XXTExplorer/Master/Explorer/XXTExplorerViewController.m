@@ -29,14 +29,12 @@
 #import "XXTENavigationController.h"
 
 #import "XXTExplorerViewController+Notification.h"
-#import "XXTExplorerViewController+Shortcuts.h"
 #import "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
-#import "XXTExplorerViewController+XXTEScanViewControllerDelegate.h"
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 #import "XXTExplorerViewController+LGAlertViewDelegate.h"
-#import "XXTExplorerViewController+ArchiverOperations.h"
-#import "XXTExplorerViewController+FileOperations.h"
+#import "XXTExplorerViewController+ArchiverOperation.h"
+#import "XXTExplorerViewController+FileOperation.h"
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
