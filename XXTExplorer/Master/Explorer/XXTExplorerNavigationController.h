@@ -8,6 +8,9 @@
 
 #import "XXTENavigationController.h"
 
+@class XXTExplorerViewController;
+
 @interface XXTExplorerNavigationController : XXTENavigationController
+- (XXTExplorerViewController *)topmostExplorerViewController;
 
 @end

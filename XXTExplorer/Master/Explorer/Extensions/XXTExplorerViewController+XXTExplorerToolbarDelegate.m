@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
-#import "XXTExplorerViewController+XXTEScanViewControllerDelegate.h"
 #import "XXTExplorerViewController+LGAlertViewDelegate.h"
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+UIDocumentMenuDelegate.h"
@@ -91,19 +90,10 @@
 - (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem {
     if (toolbar == self.toolbar) {
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan]) {
-            XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];
-            scanViewController.shouldConfirm = YES;
-            scanViewController.delegate = self;
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
-            XXTE_START_IGNORE_PARTIAL
-            if (@available(iOS 8.0, *)) {
-                navController.modalPresentationStyle = UIModalPresentationPopover;
-                UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
-                popoverController.barButtonItem = buttonItem;
-                popoverController.backgroundColor = [UIColor whiteColor];
-            }
-            XXTE_END_IGNORE_PARTIAL
-            [self.navigationController presentViewController:navController animated:YES completion:nil];
+            NSDictionary *userInfo =
+            @{XXTENotificationShortcutInterface: @"scan",
+              XXTENotificationShortcutUserData: [NSNull null]};
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:buttonItem userInfo:userInfo]];
         } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
             XXTE_START_IGNORE_PARTIAL
             if (@available(iOS 8.0, *)) {
@@ -179,6 +169,7 @@
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                      destructiveButtonTitle:NSLocalizedString(@"Clear Pasteboard", nil)
                                                                    delegate:self];
+                alertView.buttonsTextAlignment = NSTextAlignmentLeft;
                 alertView.destructiveButtonEnabled = clearEnabled;
                 alertView.buttonsIconImages = @[[UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportCopy]];
                 objc_setAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String], XXTExplorerAlertViewActionPasteboardImport, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -198,6 +189,7 @@
                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                      destructiveButtonTitle:NSLocalizedString(@"Clear Pasteboard", nil)
                                                                    delegate:self];
+                alertView.buttonsTextAlignment = NSTextAlignmentLeft;
                 alertView.destructiveButtonEnabled = clearEnabled;
                 alertView.buttonsEnabled = (pasteboardCount != 0);
                 alertView.buttonsIconImages = @[[UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportPaste], [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportCut], [UIImage imageNamed:XXTExplorerAlertViewActionPasteboardExportLink]];
@@ -219,7 +211,7 @@
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[]
+                                                           buttonTitles:@[ ]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
@@ -266,7 +258,7 @@
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Delete %@?\nThis operation cannot be revoked.", nil), formatString]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[]
+                                                           buttonTitles:@[ ]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];

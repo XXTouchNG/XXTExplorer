@@ -7,24 +7,28 @@
 //
 
 #import "XXTEEditorSettingsViewController.h"
-#import "XXTEEditorController.h"
-#import "XXTEEditorTheme.h"
 
+// Pre-Defines
+#import "XXTEAppDefines.h"
+#import "XXTEEditorDefaults.h"
+
+// Cells & Subviews
 #import "XXTEEditorFontSizeView.h"
-
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreSwitchNoIconCell.h"
 #import "XXTEEditorFontSizeCell.h"
 #import "XXTEEditorTabWidthCell.h"
 #import "XXTEEditorWrapColumnCell.h"
+#import "UIControl+BlockTarget.h"
 
-#import "XXTEEditorDefaults.h"
-#import "XXTEAppDefines.h"
+// Parent
+#import "XXTEEditorController.h"
+#import "XXTEEditorController+NavigationBar.h"
+#import "XXTEEditorTheme.h"
 
+// Children
 #import "XXTEEditorThemeSettingsViewController.h"
 #import "XXTEEditorFontSettingsViewController.h"
-
-#import "UIControl+BlockTarget.h"
 
 @interface XXTEEditorSettingsViewController () <XXTEEditorFontSizeViewDelegate, XXTEEditorFontSettingsViewControllerDelegate, XXTEEditorThemeSettingsViewControllerDelegate>
 

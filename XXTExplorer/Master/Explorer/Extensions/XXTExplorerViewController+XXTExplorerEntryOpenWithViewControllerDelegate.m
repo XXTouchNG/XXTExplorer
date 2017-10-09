@@ -7,7 +7,7 @@
 //
 
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
-#import "XXTExplorerViewController+ArchiverOperations.h"
+#import "XXTExplorerViewController+ArchiverOperation.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
 #import "XXTExplorerDefaults.h"
@@ -17,7 +17,7 @@
 #import "XXTEArchiveViewer.h"
 #import "XXTEExecutableViewer.h"
 
-#import "XXTECommonNavigationController.h"
+#import "XXTENavigationController.h"
 
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
@@ -71,7 +71,7 @@
             if (XXTE_COLLAPSED) {
                 XXTE_START_IGNORE_PARTIAL
                 if (@available(iOS 8.0, *)) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:viewer];
+                    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
                     [self.splitViewController showDetailViewController:navigationController sender:self];
                 }
                 XXTE_END_IGNORE_PARTIAL

@@ -7,16 +7,15 @@
 //
 
 #import "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"
-#import "XXTExplorerViewController+Shortcuts.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTENotificationCenterDefines.h"
 
 #import "XXTExplorerItemDetailViewController.h"
 #import "XXTENavigationController.h"
-#import "XXTECommonNavigationController.h"
 
 #import <objc/runtime.h>
 #import <LGAlertView/LGAlertView.h>
@@ -55,9 +54,12 @@
     
     if (direction == XXTESwipeDirectionLeftToRight) {
         XXTESwipeButton *button = (XXTESwipeButton *)cell.leftButtons[index];
-        NSString *buttonAction = objc_getAssociatedObject(cell.leftButtons[index], XXTESwipeButtonAction);
+        NSString *buttonAction = objc_getAssociatedObject(button, XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
-            [self performAction:button launchScript:entryPath];
+            NSDictionary *userInfo =
+            @{XXTENotificationShortcutInterface: @"launch",
+              XXTENotificationShortcutUserData: @{ @"path": (entryPath ? entryPath : [NSNull null]) }};
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:button userInfo:userInfo]];
         } else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
             XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailController];
@@ -79,7 +81,7 @@
             if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
                 UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
                 if (configurator) {
-                    XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:configurator];
+                    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:configurator];
                     navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
                     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                     [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
@@ -96,7 +98,7 @@
                     if (XXTE_COLLAPSED) {
                         XXTE_START_IGNORE_PARTIAL
                         if (@available(iOS 8.0, *)) {
-                            XXTECommonNavigationController *navigationController = [[XXTECommonNavigationController alloc] initWithRootViewController:editor];
+                            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:editor];
                             [self.splitViewController showDetailViewController:navigationController sender:self];
                         }
                         XXTE_END_IGNORE_PARTIAL
@@ -114,7 +116,7 @@
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Delete \"%@\"?\nThis operation cannot be revoked.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[]
+                                                           buttonTitles:@[ ]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
@@ -144,11 +146,6 @@
         id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         UIColor *colorSeries = XXTE_COLOR;
-//        if (entryReader.executable) {
-//            colorSeries = XXTE_COLOR_SUCCESS;
-//        } else {
-//            colorSeries = XXTE_COLOR;
-//        }
         if (entryReader.executable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {

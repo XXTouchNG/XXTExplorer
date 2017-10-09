@@ -157,7 +157,7 @@ NSString * XUIOptionCellIconKey = @"icon";
 - (void)setXui_label:(NSString *)xui_label {
     _xui_label = xui_label;
     if ([self.class layoutNeedsTextLabel]) {
-        self.textLabel.text = xui_label;
+        self.textLabel.text = [self.adapter localizedStringForKey:xui_label value:xui_label];
     }
 }
 

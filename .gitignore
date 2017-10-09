@@ -1,6 +1,7 @@
 .idea/
 Releases/
 Pods/
+Resources/Support/DeviceSupport/
 
 ### macOS template
 *.DS_Store

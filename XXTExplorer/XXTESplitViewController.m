@@ -32,9 +32,15 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.delegate = self;
-        [self setRestorationIdentifier:self.restorationIdentifier];
-        [self setupAppearance];
+        static BOOL alreadyInitialized = NO;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSAssert(NO == alreadyInitialized, @"XXTESplitViewController is a singleton.");
+            alreadyInitialized = YES;
+            self.delegate = self;
+            [self setRestorationIdentifier:self.restorationIdentifier];
+            [self setupAppearance];
+        });
     }
     return self;
 }
@@ -49,20 +55,24 @@
     XXTE_END_IGNORE_PARTIAL
 }
 
+- (UIViewController *)masterViewController {
+    return (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.viewControllers[0].preferredStatusBarStyle;
+    return self.masterViewController.preferredStatusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return self.viewControllers[0].prefersStatusBarHidden;
+    return self.masterViewController.prefersStatusBarHidden;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-    return self.viewControllers[0];
+    return self.masterViewController;
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
-    return self.viewControllers[0];
+    return self.masterViewController;
 }
 
 - (void)viewDidLoad {
@@ -78,7 +88,7 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 - (UIViewController *)primaryViewControllerForCollapsingSplitViewController:(UISplitViewController *)splitViewController {
-    return splitViewController.viewControllers[0];
+    return (splitViewController.viewControllers.count > 0) ? splitViewController.viewControllers[0] : nil;
 }
 
 // DO NOT OVERRIDE preferredDisplayMode

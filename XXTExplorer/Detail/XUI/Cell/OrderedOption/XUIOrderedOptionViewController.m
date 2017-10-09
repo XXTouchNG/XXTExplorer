@@ -28,8 +28,9 @@
         _cell = cell;
         NSMutableArray *validValues = [[NSMutableArray alloc] init];
         [cell.xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj[XUIOptionCellValueKey]) {
-                [validValues addObject:obj[XUIOptionCellValueKey]];
+            id value = obj[XUIOptionCellValueKey];
+            if (value) {
+                [validValues addObject:value];
             }
         }];
         NSMutableArray *unselectedIndexes = [[NSMutableArray alloc] initWithCapacity:validValues.count];
@@ -41,7 +42,8 @@
             NSMutableArray <NSNumber *> *selectedIndexes = [[NSMutableArray alloc] initWithCapacity:rawValues.count];
             for (id rawValue in rawValues) {
                 NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+                    id value = obj[XUIOptionCellValueKey];
+                    if ([rawValue isEqual:value]) {
                         return YES;
                     }
                     return NO;

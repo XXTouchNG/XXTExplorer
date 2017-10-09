@@ -22,7 +22,6 @@
 @property(nonatomic, strong) XXTPixelPlaceholderView *placeholderView;
 @property(nonatomic, assign) BOOL locked;
 @property(nonatomic, strong) UIButton *lockButton;
-@property(nonatomic, copy) NSString *tempImagePath;
 @property(nonatomic, strong) XXTPixelCropView *cropView;
 @property(nonatomic, strong) UIToolbar *cropToolbar;
 @end
@@ -68,26 +67,19 @@
 
 #pragma mark - View & Constraints
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    NSString *tempImagePath = nil;
-    NSString *defaultPath = self.pickerMeta[@"default"];
-    if (!tempImagePath) {
-        if ([defaultPath isKindOfClass:[NSString class]]) {
-            if (0 == access(defaultPath.UTF8String, F_OK)) {
-                tempImagePath = defaultPath;
-            }
-        }
-    }
-    if (!tempImagePath) {
++ (NSString *)cachedImagePath {
+    static NSString *cachedImagePath = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
         NSString *imagePath = [cachePath stringByAppendingPathComponent:@"XXTPixelPickerCachedImage.png"];
-        if (0 == access(imagePath.UTF8String, F_OK)) {
-            tempImagePath = imagePath;
-        }
-    }
-    _tempImagePath = tempImagePath;
+        cachedImagePath = imagePath;
+    });
+    return cachedImagePath;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
     [self setSelectedImage:nil];
     [self loadImageFromCache];
@@ -134,9 +126,21 @@
 #pragma mark - Image Cache
 
 - (void)loadImageFromCache {
-    if (self.tempImagePath && 0 == access(self.tempImagePath.UTF8String, R_OK)) {
+    NSString *tempImagePath = nil;
+    NSString *defaultPath = self.pickerMeta[@"default"];
+    if (!tempImagePath) {
+        if ([defaultPath isKindOfClass:[NSString class]]) {
+            if (0 == access(defaultPath.UTF8String, F_OK)) {
+                tempImagePath = defaultPath;
+            }
+        }
+    }
+    if (!tempImagePath) {
+        tempImagePath = self.class.cachedImagePath;
+    }
+    if (tempImagePath && 0 == access(tempImagePath.UTF8String, R_OK)) {
         NSError *err = nil;
-        NSData *imageData = [NSData dataWithContentsOfFile:self.tempImagePath
+        NSData *imageData = [NSData dataWithContentsOfFile:tempImagePath
                                                    options:NSDataReadingMappedIfSafe
                                                      error:&err];
         if (imageData) {
@@ -390,7 +394,7 @@
         UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
         NSError *err = nil;
         NSData *imageData = UIImagePNGRepresentation(originalImage);
-        BOOL result = [imageData writeToFile:self.tempImagePath
+        BOOL result = [imageData writeToFile:self.class.cachedImagePath
                                      options:NSDataWritingAtomic
                                        error:&err];
         if (!result) {
@@ -409,7 +413,7 @@
 - (void)cleanCanvas {
     [self setSelectedImage:nil];
     NSError *err = nil;
-    BOOL result = [[NSFileManager defaultManager] removeItemAtPath:self.tempImagePath error:&err];
+    BOOL result = [[NSFileManager defaultManager] removeItemAtPath:self.class.cachedImagePath error:&err];
     if (!result) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
                                                             message:[err localizedDescription]
@@ -516,6 +520,10 @@
 }
 
 - (void)cropView:(XXTPixelCropView *)crop selectValueUpdated:(id)selectedValue {
+    if (@available(iOS 10.0, *)) {
+        UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+        [feedbackGenerator impactOccurred];
+    }
     XXTPixelPickerType type = [[self class] cropViewType];
     if (type == kXXTPixelCropViewTypeRect) {
         NSAssert([selectedValue isKindOfClass:[NSValue class]], @"type == kXXTPixelCropViewTypeRect");

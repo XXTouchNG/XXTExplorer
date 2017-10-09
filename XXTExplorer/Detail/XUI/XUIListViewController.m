@@ -107,7 +107,7 @@
     NSDictionary <NSString *, id> *rootEntry = self.cellFactory.rootEntry;
     NSString *listTitle = rootEntry[@"title"];
     if (listTitle) {
-        self.title = listTitle;
+        self.title = [self.adapter localizedStringForKey:listTitle value:listTitle];
     }
     [self.cellFactory parse];
     
@@ -115,15 +115,15 @@
     NSString *listHeader = rootEntry[@"header"];
     NSString *listSubheader = rootEntry[@"subheader"];
     if ([listHeader isKindOfClass:[NSString class]] && [listSubheader isKindOfClass:[NSString class]]) {
-        self.headerView.headerText = listHeader;
-        self.headerView.subheaderText = listSubheader;
+        self.headerView.headerText = [self.adapter localizedStringForKey:listHeader value:listHeader];
+        self.headerView.subheaderText = [self.adapter localizedStringForKey:listSubheader value:listSubheader];
     }
     
     // footer
 #ifdef DEBUG
     NSString *listFooter = rootEntry[@"footer"];
     if ([listFooter isKindOfClass:[NSString class]]) {
-        self.footerView.footerText = listFooter;
+        self.footerView.footerText = [self.adapter localizedStringForKey:listFooter value:listFooter];
     }
 #else
     self.footerView.footerText = NSLocalizedString(@"This page is provided by the script producer.", nil);
@@ -467,7 +467,12 @@ XUI_END_IGNORE_PARTIAL
 }
 
 - (void)dismissViewController:(id)dismissViewController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (XXTE_PAD) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [self dismissViewControllerAnimated:YES completion:^() {
+        
+    }];
 }
 
 #pragma mark - Keyboard

@@ -18,14 +18,20 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self setup];
+        NSAssert(NO, @"XXTEMoreNavigationController must be initialized with a rootViewController.");
     }
     return self;
 }
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
     if (self = [super initWithRootViewController:rootViewController]) {
-        [self setup];
+        static BOOL alreadyInitialized = NO;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSAssert(NO == alreadyInitialized, @"XXTEMoreNavigationController is a singleton.");
+            alreadyInitialized = YES;
+            [self setup];
+        });
     }
     return self;
 }

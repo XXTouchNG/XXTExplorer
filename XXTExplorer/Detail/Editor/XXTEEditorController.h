@@ -21,7 +21,6 @@
 - (void)setNeedsFocusTextView;
 
 - (void)reloadConstraints;
-- (void)renderNavigationBarTheme:(BOOL)restore;
 
 - (void)invalidateSyntaxCaches;
 - (void)saveDocumentIfNecessary;

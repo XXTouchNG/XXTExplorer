@@ -8,7 +8,7 @@
 
 #import "XXTExplorerViewController+LGAlertViewDelegate.h"
 #import "XXTExplorerViewController+PasteboardOperations.h"
-#import "XXTExplorerViewController+FileOperations.h"
+#import "XXTExplorerViewController+FileOperation.h"
 
 #import "XXTExplorerDefaults.h"
 

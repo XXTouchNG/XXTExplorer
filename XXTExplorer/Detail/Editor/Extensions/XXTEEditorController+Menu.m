@@ -15,7 +15,7 @@
 
 #import "XXTEEditorTextView.h"
 
-#import "XXTECommonNavigationController.h"
+#import "XXTENavigationController.h"
 #import "XXTPickerFactory.h"
 #import "XXTPickerSnippet.h"
 

@@ -85,7 +85,8 @@
 
 - (void)setXui_label:(NSString *)xui_label {
     [super setXui_label:xui_label];
-    self.cellStaticTextView.text = xui_label;
+    NSString *localizedLabel = [self.adapter localizedStringForKey:xui_label value:xui_label];
+    self.cellStaticTextView.text = localizedLabel;
 }
 
 - (void)setXui_alignment:(NSString *)xui_alignment {

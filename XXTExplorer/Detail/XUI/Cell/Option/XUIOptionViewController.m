@@ -31,7 +31,8 @@
         id rawValue = cell.xui_value;
         if (rawValue) {
             NSUInteger rawIndex = [self.cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+                id value = obj[XUIOptionCellValueKey];
+                if ([rawValue isEqual:value]) {
                     return YES;
                 }
                 return NO;

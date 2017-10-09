@@ -23,14 +23,20 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self setup];
+        NSAssert(NO, @"XXTExplorerNavigationController must be initialized with a rootViewController.");
     }
     return self;
 }
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
     if (self = [super initWithRootViewController:rootViewController]) {
-        [self setup];
+        static BOOL alreadyInitialized = NO;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSAssert(NO == alreadyInitialized, @"XXTExplorerNavigationController is a singleton.");
+            alreadyInitialized = YES;
+            [self setup];
+        });
     }
     return self;
 }
@@ -104,10 +110,19 @@
     }
 }
 
-
-
 - (void)dealloc {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
+- (XXTExplorerViewController *)topmostExplorerViewController {
+    __block XXTExplorerViewController *topmostExplorerViewController = nil;
+    [self.viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[XXTExplorerViewController class]]) {
+            topmostExplorerViewController = (XXTExplorerViewController *)obj;
+            *stop = YES;
+        }
+    }];
+    return topmostExplorerViewController;
 }
 
 @end

@@ -79,7 +79,8 @@
     NSUInteger titleIdx = 0;
     for (NSDictionary *option in xui_options) {
         NSString *validTitle = option[XUIOptionCellTitleKey];
-        [self.cellSegmentControl insertSegmentWithTitle:validTitle atIndex:titleIdx animated:NO];
+        NSString *localizedTitle = [self.adapter localizedStringForKey:validTitle value:validTitle];
+        [self.cellSegmentControl insertSegmentWithTitle:localizedTitle atIndex:titleIdx animated:NO];
         titleIdx++;
     }
     if (self.xui_value) {
