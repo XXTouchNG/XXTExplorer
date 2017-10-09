@@ -1,12 +1,12 @@
 //
-//  XUILuaAdapter.m
+//  XUIAdapter_xui.m
 //  XXTExplorer
 //
 //  Created by Zheng on 14/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUILuaAdapter.h"
+#import "XUIAdapter_xui.h"
 #import "XXTEAppDelegate.h"
 
 #import "XUIBaseCell.h"
@@ -14,7 +14,7 @@
 
 #import "XUI.h"
 
-@implementation XUILuaAdapter {
+@implementation XUIAdapter_xui {
     lua_State *L;
 }
 
@@ -53,14 +53,14 @@
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
             
-            NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUILuaAdapter" ofType:@"lua"];
-            NSAssert(adapterPath, @"LuaVM: XUILuaAdapter not found.");
+            NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter_xui" ofType:@"lua"];
+            NSAssert(adapterPath, @"LuaVM: XUIAdapter_xui not found.");
             int loadResult = luaL_loadfile(L, adapterPath.UTF8String);
             if (!lua_checkCode(L, loadResult, error)) {
                 return NO;
             }
             lua_pushvalue(L, -1);
-            lua_setfield(L, LUA_REGISTRYINDEX, "XUILuaAdapter");
+            lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
             lua_pop(L, 1);
             
             return YES;
@@ -91,7 +91,7 @@
     id value = nil;
     
     @synchronized (self) {
-        lua_getfield(L, LUA_REGISTRYINDEX, "XUILuaAdapter");
+        lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"load", @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
             lua_pushNSValue(L, args);
@@ -109,6 +109,11 @@
         if ([stringsTable isKindOfClass:[NSString class]]) {
             _stringsTable = stringsTable;
         }
+#ifdef DEBUG
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value options:0 error:error];
+        [jsonData writeToFile:[self.path stringByAppendingPathExtension:@"json"] atomically:YES];
+        [value writeToFile:[self.path stringByAppendingPathExtension:@"plist"] atomically:YES];
+#endif
         return value;
     }
     return nil;
@@ -129,7 +134,7 @@
     if (!path || !bundle || !rootPath) return;
     
     @synchronized (self) {
-        lua_getfield(L, LUA_REGISTRYINDEX, "XUILuaAdapter");
+        lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": saveObj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
             lua_pushNSValue(L, args);

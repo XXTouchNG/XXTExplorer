@@ -18,7 +18,7 @@
 #import "XUICellFactory.h"
 #import "XUILogger.h"
 #import "XUITheme.h"
-#import "XUILuaAdapter.h"
+#import "XUIAdapter.h"
 
 @interface XUIListViewController () <XUICellFactoryDelegate>
 
@@ -71,8 +71,14 @@
 - (void)setup {
     {
         _cellsNeedStore = [[NSMutableArray alloc] init];
-        
-        XUILuaAdapter *adapter = [[XUILuaAdapter alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
+
+        NSString *entryExtension = [self.entryPath pathExtension];
+        NSString *adapterName = [NSString stringWithFormat:@"XUIAdapter_%@", [entryExtension lowercaseString]];
+        Class adapterClass = NSClassFromString(adapterName);
+        if (!adapterClass) {
+            return;
+        }
+        id <XUIAdapter> adapter = (id <XUIAdapter>) [[(id)adapterClass alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
         if (!adapter) {
             return;
         }

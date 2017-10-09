@@ -1,5 +1,5 @@
 --
---  XUILuaAdapter.lua
+--  XUIAdapter_xui.lua
 --  XXTExplorer
 --
 --  Created by Soze on 14/09/2017.
