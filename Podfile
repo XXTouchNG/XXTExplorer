@@ -19,4 +19,6 @@ pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch
 # pod 'Masonry', '~> 1.0.2'
 pod 'YYImage', '~> 1.0.4'
 
+pod 'Bugly'
+
 end

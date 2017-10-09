@@ -17,11 +17,8 @@
 #import <objc/runtime.h>
 #import "libactivator.h"
 #import <dlfcn.h>
-
-typedef enum : NSUInteger {
-    kXXTEActivatorListenerRunOrStopWithAlertIndex = 0,
-    kXXTEActivatorListenerRunOrStopIndex = 1,
-} kXXTEActivatorListenerIndex;
+#import "XXTEModeSettingsController.h"
+#import "LASettingsViewController+MyShowsAd.h"
 
 static NSString * const kXXTEActivatorLibraryPath = @"/usr/lib/libactivator.dylib";
 static NSString * const kXXTEActivatorListenerRunOrStop = @"com.1func.xxtouch.run_or_stop";
@@ -70,9 +67,14 @@ static void * activatorHandler = nil;
         }
         dlerror();
         LAActivator *sharedActivator = [la sharedInstance];
-        BOOL hasSeen = [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStop];
+        BOOL hasSeen = [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStop] && [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStopWithAlert];
         if (hasSeen) {
             _activatorExists = YES;
+
+            // Method Swizzing to hide Ads
+            Method s1_Method =  class_getInstanceMethod([LASettingsViewController class], @selector(showsAd));
+            Method s2_Method = class_getInstanceMethod([LASettingsViewController class], @selector(myShowsAd));
+            method_exchangeImplementations(s1_Method, s2_Method);
         }
     } else {
         _activatorExists = NO;
@@ -102,14 +104,6 @@ static void * activatorHandler = nil;
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewData];
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    if (isFirstTimeLoaded) {
-//        [self reloadDynamicTableViewData];
-//    }
-//    isFirstTimeLoaded = YES;
-//}
 
 - (void)reloadDynamicTableViewData {
     blockInteractions(self, YES);;
@@ -164,7 +158,7 @@ static void * activatorHandler = nil;
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[@"", NSLocalizedString(@"Activator", nil)];
+    staticSectionTitles = @[@"", @""];
     staticSectionFooters = @[@"", NSLocalizedString(@"\"Activator\" is active, configure activation behaviours here.", nil)];
 
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
@@ -188,19 +182,14 @@ static void * activatorHandler = nil;
     cell4.descriptionLabel.text = NSLocalizedString(@"No action", nil);
     
     if (self.activatorExists) {
-        XXTEMoreTitleDescriptionCell *cellActivator1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
-        cellActivator1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cellActivator1.titleLabel.text = NSLocalizedString(@"Pop-up Menu", nil);
-        cellActivator1.descriptionLabel.text = NSLocalizedString(@"Ask you for a choice.", nil);
-        
-        XXTEMoreTitleDescriptionCell *cellActivator2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
-        cellActivator2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cellActivator2.titleLabel.text = NSLocalizedString(@"Launch / Stop Selected Script", nil);
-        cellActivator2.descriptionLabel.text = NSLocalizedString(@"Launch or stop the selected script directly.", nil);
+        XXTEMoreTitleDescriptionCell *cellActivator = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
+        cellActivator.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cellActivator.titleLabel.text = NSLocalizedString(@"Activator", nil);
+        cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
         
         staticCells = @[
                         @[ cell1, cell2, cell3, cell4 ],
-                        @[ cellActivator1, cellActivator2 ],
+                        @[ cellActivator ],
                         ];
     } else {
         staticCells = @[
@@ -248,17 +237,9 @@ static void * activatorHandler = nil;
                 toastMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
             }
         } else if (indexPath.section == 1) {
-            if (indexPath.row == kXXTEActivatorListenerRunOrStopWithAlertIndex) {
-                LAListenerSettingsViewController *vc = [objc_getClass("LAListenerSettingsViewController") new];
-                vc.listenerName = kXXTEActivatorListenerRunOrStopWithAlert;
-                vc.title = NSLocalizedString(@"Pop-up Menu", nil);
-                [self.navigationController pushViewController:vc animated:YES];
-            } else if (indexPath.row == kXXTEActivatorListenerRunOrStopIndex) {
-                LAListenerSettingsViewController *vc = [objc_getClass("LAListenerSettingsViewController") new];
-                vc.listenerName = kXXTEActivatorListenerRunOrStop;
-                vc.title = NSLocalizedString(@"Launch / Stop Selected Script", nil);
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] initWithMode:nil];
+            vc.title = NSLocalizedString(@"Activator", nil);
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }

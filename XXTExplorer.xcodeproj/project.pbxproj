@@ -101,10 +101,8 @@
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
-		0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */; };
 		0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */; };
 		0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */; };
-		0FAC07B41F848A7100C52225 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAC07B31F848A3F00C52225 /* Bugly.framework */; };
 		0FAC07B51F848A7500C52225 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAC07B21F848A3E00C52225 /* Reveal.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0FAC07B81F848AAA00C52225 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAC07B71F848AAA00C52225 /* AssetsLibrary.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0FAC07BA1F848AB200C52225 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAC07B91F848AB200C52225 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -210,7 +208,9 @@
 		52512E40750E7BF6394042D8 /* SKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DF49CDDF706A91B90B2 /* SKParser.m */; };
 		52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512C7DA4E0285A9A9B9F92 /* SKPattern.m */; };
 		B0312069F0CA67921AF7D07C /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B031245EC670B5FA88B88215 /* XXTEMoreReferences.bundle */; };
+		B03127AEA4CB69148AAC0A6E /* XXTEModeSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03129E6E50EA4075FA95E9A /* XXTEModeSettingsController.m */; };
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
+		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
 		D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
 		D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
 		D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */; };
@@ -361,6 +361,7 @@
 		D6863D391F7E574F00A45CF7 /* XUILuaAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D361F7E574F00A45CF7 /* XUILuaAdapter.m */; };
 		D6863D3A1F7E574F00A45CF7 /* XUILuaAdapter.lua in Resources */ = {isa = PBXBuildFile; fileRef = D6863D371F7E574F00A45CF7 /* XUILuaAdapter.lua */; };
 		D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
+		D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -601,14 +602,12 @@
 		0FA7ABEE1ED641A3003EAD7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDelegate.h; sourceTree = "<group>"; };
 		0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		0FA7AC081ED644FA003EAD7D /* XXTEPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEPrefixHeader.pch; sourceTree = "<group>"; };
 		0FAAB58B1EDA319700897680 /* XXTExplorerFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerFooterView.h; sourceTree = "<group>"; };
 		0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerFooterView.m; sourceTree = "<group>"; };
 		0FAAB5911EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+XXTEFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+XXTEFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		0FAC07B21F848A3E00C52225 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = Frameworks/Reveal.framework; sourceTree = "<group>"; };
-		0FAC07B31F848A3F00C52225 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bugly.framework; path = Frameworks/Bugly.framework; sourceTree = "<group>"; };
 		0FAC07B71F848AAA00C52225 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0FAC07B91F848AB200C52225 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		0FAD691A1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRemoteSwitchCell.h; sourceTree = "<group>"; };
@@ -781,8 +780,12 @@
 		52512DF49CDDF706A91B90B2 /* SKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKParser.m; sourceTree = "<group>"; };
 		52512EB1AE32276E843CEC6C /* XUIBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XUIBaseCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B03120C9E16A3F457F292605 /* XXTERespringAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTERespringAgent.m; sourceTree = "<group>"; };
+		B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LASettingsViewController+MyShowsAd.m"; sourceTree = "<group>"; };
 		B0312320215B9EB671DEF366 /* XXTERespringAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTERespringAgent.h; sourceTree = "<group>"; };
+		B03124086D97689351B0522E /* XXTEModeSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEModeSettingsController.h; sourceTree = "<group>"; };
 		B031245EC670B5FA88B88215 /* XXTEMoreReferences.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = XXTEMoreReferences.bundle; sourceTree = "<group>"; };
+		B03129E6E50EA4075FA95E9A /* XXTEModeSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEModeSettingsController.m; sourceTree = "<group>"; };
+		B0312C21EE8787B23F70687A /* LASettingsViewController+MyShowsAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LASettingsViewController+MyShowsAd.h"; sourceTree = "<group>"; };
 		D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTheme.h; sourceTree = "<group>"; };
 		D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTheme.m; sourceTree = "<group>"; };
 		D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Blackboard.tmTheme; sourceTree = "<group>"; };
@@ -863,6 +866,7 @@
 		D6686F431F4AE74E004403D0 /* SKFont.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKFont.plist; sourceTree = "<group>"; };
 		D6686F461F4AEF32004403D0 /* UIControl+BlockTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+BlockTarget.h"; sourceTree = "<group>"; };
 		D6686F471F4AEF32004403D0 /* UIControl+BlockTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+BlockTarget.m"; sourceTree = "<group>"; };
+		D673F8211F8B2E4000685390 /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		D677ABE21F70C2D700AB5AA1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D677B0A61F4FC7C200E741C2 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		D677B0A71F4FC7C200E741C2 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
@@ -1036,6 +1040,7 @@
 		D6863D381F7E574F00A45CF7 /* XUILuaAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUILuaAdapter.h; sourceTree = "<group>"; };
 		D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLayoutManager.h; sourceTree = "<group>"; };
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
+		D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libactivator.tbd; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -1134,7 +1139,6 @@
 				0FAC07BA1F848AB200C52225 /* Photos.framework in Frameworks */,
 				0FAC07B81F848AAA00C52225 /* AssetsLibrary.framework in Frameworks */,
 				D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */,
-				0FAC07B41F848A7100C52225 /* Bugly.framework in Frameworks */,
 				0FAC07B51F848A7500C52225 /* Reveal.framework in Frameworks */,
 				D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */,
 				D6E560511F50359B00E0F997 /* CoreMedia.framework in Frameworks */,
@@ -1147,6 +1151,7 @@
 				D6E141641F50330400D78CB9 /* SpringBoardServices in Frameworks */,
 				D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */,
 				0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */,
+				D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */,
 				13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1680,12 +1685,12 @@
 				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
-				0FA7ABF91ED641A3003EAD7D /* XXTEAssets.xcassets */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
 				0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */,
+				D673F8211F8B2E4000685390 /* XXTEAssets.xcassets */,
 			);
 			path = XXTExplorer;
 			sourceTree = "<group>";
@@ -2127,7 +2132,6 @@
 				0FAC07B91F848AB200C52225 /* Photos.framework */,
 				0FAC07B71F848AAA00C52225 /* AssetsLibrary.framework */,
 				D617D1D31F7B4BC0009F4B59 /* libc++.tbd */,
-				0FAC07B31F848A3F00C52225 /* Bugly.framework */,
 				0FAC07B21F848A3E00C52225 /* Reveal.framework */,
 				D63B58DA1F56684F00D26475 /* WebKit.framework */,
 				D6E560501F50359B00E0F997 /* CoreMedia.framework */,
@@ -2233,6 +2237,7 @@
 		D643A2551F4D1B39005B9A59 /* Activator */ = {
 			isa = PBXGroup;
 			children = (
+				D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */,
 				D643A2561F4D1B39005B9A59 /* LAActivator.h */,
 				D643A2571F4D1B39005B9A59 /* LAActivatorVersion.h */,
 				D643A2581F4D1B39005B9A59 /* LAEvent.h */,
@@ -2878,6 +2883,10 @@
 				D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */,
 				D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */,
 				D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */,
+				B03129E6E50EA4075FA95E9A /* XXTEModeSettingsController.m */,
+				B03124086D97689351B0522E /* XXTEModeSettingsController.h */,
+				B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */,
+				B0312C21EE8787B23F70687A /* LASettingsViewController+MyShowsAd.h */,
 			);
 			path = Activation;
 			sourceTree = "<group>";
@@ -2980,7 +2989,6 @@
 				D6863CDB1F7E331B00A45CF7 /* XUISwitchCell.xib in Resources */,
 				D6863CA71F7E322B00A45CF7 /* XUICheckboxCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
-				0FA7ABFA1ED641A3003EAD7D /* XXTEAssets.xcassets in Resources */,
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
@@ -3412,6 +3420,8 @@
 				0FBAFF3E1F6E5378008B3189 /* XXTImagePickerAlbumCell.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
 				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
+				B03127AEA4CB69148AAC0A6E /* XXTEModeSettingsController.m in Sources */,
+				B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3583,7 +3593,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3595,6 +3604,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTPickerCollection/Application",
+					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3639,7 +3649,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PREFIX_HEADER = "XXTExplorer/Supporting Files/XXTEPrefixHeader.pch";
@@ -3650,6 +3659,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTPickerCollection/Application",
+					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
