@@ -51,6 +51,9 @@
 #define lua_toNSValue(L, IDX) lua_toNSValuex((L), (IDX), 0)
 
 #define LUA_NSVALUE_MAX_DEPTH 50
+
 #define LUA_MAX_LINE 10000
+#define LUA_MAX_LINE_B 100000
+#define LUA_MAX_LINE_C 1000000
 
 #endif

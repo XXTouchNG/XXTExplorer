@@ -11,12 +11,18 @@
 
 #import "SKTheme.h"
 
+@interface XXTEEditorTheme ()
+
+@property (nonatomic, strong) NSParagraphStyle *paragraphStyle;
+
+@end
+
 @implementation XXTEEditorTheme
 
 - (instancetype)initWithName:(NSString *)name font:(UIFont *)font {
     if (self = [super init]) {
-        _font = font;
-        _name = name;
+        _font = font ? font : [UIFont systemFontOfSize:14.0];
+        _name = name ? name : @"";
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;
         _caretColor = XXTE_COLOR;
@@ -60,19 +66,45 @@
 }
 
 - (void)setupWithDictionary:(NSDictionary *)dictionary {
-    _backgroundColor = [UIColor colorWithHex:dictionary[@"background"]];
-    _foregroundColor = [UIColor colorWithHex:dictionary[@"foreground"]];
-    _caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
-    _selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
-    _invisibleColor = [UIColor colorWithHex:dictionary[@"invisibles"]];
-    _tabWidth = [@" " sizeWithAttributes:self.defaultAttributes].width;
+    UIColor *backgroundColor = [UIColor colorWithHex:dictionary[@"background"]];
+    _backgroundColor = backgroundColor;
+    
+    UIColor *foregroundColor = [UIColor colorWithHex:dictionary[@"foreground"]];
+    _foregroundColor = foregroundColor;
+    
+    UIColor *caretColor = [UIColor colorWithHex:dictionary[@"caret"]];
+    _caretColor = caretColor;
+    
+    UIColor *selectionColor = [UIColor colorWithHex:dictionary[@"selection"]];
+    _selectionColor = selectionColor;
+    
+    UIColor *invisibleColor = [UIColor colorWithHex:dictionary[@"invisibles"]];
+    _invisibleColor = invisibleColor;
+    
+    UIFont *font = self.font;
+    NSDictionary *defaultAttributes = @{
+                                        NSForegroundColorAttributeName: foregroundColor,
+                                        NSBackgroundColorAttributeName: backgroundColor,
+                                        NSFontAttributeName: font,
+                                        };
+    _tabWidth = [@" " sizeWithAttributes:defaultAttributes].width;
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.minimumLineHeight = font.pointSize;
+    paragraphStyle.maximumLineHeight = font.pointSize;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+    _paragraphStyle = [paragraphStyle copy];
+    
+    
 }
 
 - (NSDictionary *)defaultAttributes {
     return @{
              NSForegroundColorAttributeName: self.foregroundColor,
              NSBackgroundColorAttributeName: self.backgroundColor,
-             NSFontAttributeName: self.font
+             NSFontAttributeName: self.font,
+             NSParagraphStyleAttributeName: self.paragraphStyle,
              };
 }
 

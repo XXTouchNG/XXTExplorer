@@ -2729,9 +2729,9 @@
 		D6863D351F7E574F00A45CF7 /* Lua */ = {
 			isa = PBXGroup;
 			children = (
+				D6863D381F7E574F00A45CF7 /* XUILuaAdapter.h */,
 				D6863D361F7E574F00A45CF7 /* XUILuaAdapter.m */,
 				D6863D371F7E574F00A45CF7 /* XUILuaAdapter.lua */,
-				D6863D381F7E574F00A45CF7 /* XUILuaAdapter.h */,
 			);
 			path = Lua;
 			sourceTree = "<group>";

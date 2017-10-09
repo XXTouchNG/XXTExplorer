@@ -119,7 +119,6 @@
     return YES;
 }
 
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

@@ -473,6 +473,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         textView.translatesAutoresizingMaskIntoConstraints = NO;
         textView.returnKeyType = UIReturnKeyDefault;
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
+        textView.textAlignment = NSTextAlignmentLeft;
+        textView.allowsEditingTextAttributes = NO;
         
         textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
         

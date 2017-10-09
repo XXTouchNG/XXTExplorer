@@ -350,11 +350,11 @@ XXTE_END_IGNORE_PARTIAL
     dispatch_once(&token, ^{
         if (!rootPath) {
             rootPath = ({
-#ifndef DEBUG
+//#ifndef DEBUG
                 NSString *mainPath = uAppDefine(@"MAIN_PATH");
-#else
-                NSString *mainPath = nil;
-#endif
+//#else
+//                NSString *mainPath = nil;
+//#endif
                 const char *mainPathCStr = [mainPath UTF8String];
                 if (!mainPath) {
                     mainPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];

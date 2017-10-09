@@ -68,6 +68,7 @@
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
             
+            lua_setMaxLine(L, LUA_MAX_LINE_C);
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
             
