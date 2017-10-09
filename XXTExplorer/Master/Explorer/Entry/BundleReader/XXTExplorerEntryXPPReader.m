@@ -87,7 +87,13 @@ __attribute__((weak_import));
         return NO;
     
     // fetch meta
-    NSString *metaPath = [pathBundle pathForResource:@"Info" ofType:@"lua"];
+    NSString *metaPath = nil;
+    if (!metaPath)
+        metaPath = [pathBundle pathForResource:@"Info" ofType:@"lua"];
+    if (!metaPath)
+        metaPath = [pathBundle pathForResource:@"Info" ofType:@"plist"];
+    if (!metaPath)
+        metaPath = [pathBundle pathForResource:@"Info" ofType:@"json"];
     if (!metaPath)
         return NO;
     NSDictionary *metaInfo = [self metaInfoForEntry:metaPath];
@@ -150,28 +156,39 @@ __attribute__((weak_import));
 
 - (NSDictionary *)metaInfoForEntry:(NSString *)path {
     NSDictionary *metaInfo = nil;
-    
-    lua_State *L = luaL_newstate(); // only for grammar parsing, no bullshit
-    NSAssert(L, @"LuaVM: not enough memory.");
-    
-    lua_setMaxLine(L, LUA_MAX_LINE);
-    luaL_openlibs(L);
-    lua_openNSValueLibs(L); // performance?
-    
-    int luaResult = luaL_loadfile(L, [path UTF8String]);
-    if (lua_checkCode(L, luaResult, nil))
-    {
-        int callResult = lua_pcall(L, 0, 1, 0);
-        if (lua_checkCode(L, callResult, nil))
+
+    NSString *entryBaseExtension = [[path pathExtension] lowercaseString];
+    if ([entryBaseExtension isEqualToString:@"lua"]) {
+        lua_State *L = luaL_newstate(); // only for grammar parsing, no bullshit
+        NSAssert(L, @"LuaVM: not enough memory.");
+
+        lua_setMaxLine(L, LUA_MAX_LINE);
+        luaL_openlibs(L);
+        lua_openNSValueLibs(L); // performance?
+
+        int luaResult = luaL_loadfile(L, [path UTF8String]);
+        if (lua_checkCode(L, luaResult, nil))
         {
-            if (lua_type(L, -1) == LUA_TTABLE) {
-                metaInfo = lua_toNSDictionary(L, -1);
+            int callResult = lua_pcall(L, 0, 1, 0);
+            if (lua_checkCode(L, callResult, nil))
+            {
+                if (lua_type(L, -1) == LUA_TTABLE) {
+                    metaInfo = lua_toNSDictionary(L, -1);
+                }
+                lua_pop(L, 1);
             }
-            lua_pop(L, 1);
+        }
+        lua_close(L);
+        L = NULL;
+    } else if ([entryBaseExtension isEqualToString:@"plist"]) {
+        metaInfo = [[NSDictionary alloc] initWithContentsOfFile:path];
+    } else if ([entryBaseExtension isEqualToString:@"json"]) {
+        NSData *metaData = [[NSData alloc] initWithContentsOfFile:path];
+        if (metaData) {
+            metaInfo = [NSJSONSerialization JSONObjectWithData:metaData options:0 error:nil];
         }
     }
-    lua_close(L);
-    L = NULL;
+
     return metaInfo;
 }
 
