@@ -93,7 +93,6 @@
 
 - (IBAction)xuiSliderValueChanged:(UISlider *)sender {
     if (sender == self.cellSlider) {
-//        self.cellSliderValueLabel.text = [@(sender.value) stringValue];
         self.cellSliderValueLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
     }
 }
@@ -102,8 +101,6 @@
     if (sender == self.cellSlider) {
         self.xui_value = @(sender.value);
         [self.adapter saveDefaultsFromCell:self];
-        
-//        self.cellSliderValueLabel.text = [@(sender.value) stringValue];
         self.cellSliderValueLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
     }
 }

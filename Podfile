@@ -4,7 +4,9 @@ inhibit_all_warnings!
 xcodeproj 'XXTExplorer'
 
 target 'XXTExplorer' do
-    
+
+pod 'XUI', :path => '../XUI'
+
 # pod 'TOWebViewController', '~> 2.2.6'
 # pod 'TOWebViewController', :path => '../TOWebViewController'
 pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'

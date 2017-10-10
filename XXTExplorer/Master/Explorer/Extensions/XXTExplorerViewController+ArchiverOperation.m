@@ -165,7 +165,7 @@
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath {
     
     // entryPath UTF-8 representation
-    const char *extractFrom = [entryPath fileSystemRepresentation];
+//    const char *extractFrom = [entryPath fileSystemRepresentation];
     
     // entry name part
     NSString *entryName = entryPath.lastPathComponent;
@@ -174,27 +174,27 @@
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
     
     // sub-entries count in that zip
-    int subentry = zip_root_entry_alone(extractFrom);
+//    int subentry = zip_root_entry_alone(extractFrom);
     
     // decide the destionation
-    BOOL singleMode = (subentry == 0);
+//    BOOL singleMode = (subentry == 0);
     NSString *destinationPath = nil;
-    if (singleMode) {
-        destinationPath = entryParentPath;
-    } else {
+//    if (singleMode) {
+//        destinationPath = entryParentPath;
+//    } else {
         destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
-    }
+//    }
     
     // adjust destination path
     NSString *destinationPathWithIndex = destinationPath;
-    if (!singleMode) {
+//    if (!singleMode) {
         NSUInteger destinationIndex = 2;
         while (0 == access(destinationPathWithIndex.UTF8String, F_OK)) {
             destinationPathWithIndex = [NSString stringWithFormat:@"%@-%lu", destinationPath, (unsigned long) destinationIndex];
             destinationIndex++;
         }
-    }
-    
+//    }
+
     // destination name part
     NSString *destinationName = [destinationPathWithIndex lastPathComponent];
     
@@ -221,7 +221,7 @@
     @weakify(self);
     
     int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
-        return zip_extract_rename;
+        return zip_extract_override;
     };
     
     int (^did_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
@@ -323,11 +323,11 @@
             dispatch_async_on_main_queue(^{
                 
                 self.busyOperationProgressFlag = NO;
-                if (singleMode) {
-                    completionBlock(result, [changedPaths copy], error);
-                } else {
+//                if (singleMode) {
+//                    completionBlock(result, [changedPaths copy], error);
+//                } else {
                     completionBlock(result, @[ destinationPathWithIndex ], error);
-                }
+//                }
                 
             }); // end updating
             

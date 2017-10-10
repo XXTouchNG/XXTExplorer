@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+XXTExplorer.h"
-#import "UIColor+DarkColor.h"
+#import "UIColor+XUIDarkColor.h"
 
 #import "XXTEViewer.h"
 #import "XXTEEditor.h"

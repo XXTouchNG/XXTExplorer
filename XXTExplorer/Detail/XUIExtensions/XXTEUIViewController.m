@@ -8,12 +8,42 @@
 
 #import "XXTEUIViewController.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XUIEntryReader.h"
 
 @interface XXTEUIViewController ()
 
 @end
 
 @implementation XXTEUIViewController
+
+@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+
++ (NSString *)viewerName {
+    return NSLocalizedString(@"Interface Viewer", nil);
+}
+
++ (NSArray <NSString *> *)suggestedExtensions {
+    return @[ @"xui", @"plist", @"json" ];
+}
+
++ (Class)relatedReader {
+    return [XUIEntryReader class];
+}
+
+- (instancetype)initWithPath:(NSString *)path { 
+    if (self = [super initWithPath:path]) {
+        _entryPath = path;
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    if (self.awakeFromOutside) {
+        [self.navigationItem setLeftBarButtonItem:nil];
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];

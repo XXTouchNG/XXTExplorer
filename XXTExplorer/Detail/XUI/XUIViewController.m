@@ -4,13 +4,12 @@
 //
 
 #import "XUIViewController.h"
-#import "XUIEntryReader.h"
 
 #import "XUI.h"
 #import "XUITheme.h"
 #import "XUILogger.h"
 
-#import "UIViewController+PreviousViewController.h"
+#import "UIViewController+XUIPreviousViewController.h"
 
 @interface XUIViewController ()
 
@@ -19,20 +18,6 @@
 @end
 
 @implementation XUIViewController
-
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
-
-+ (NSString *)viewerName {
-    return NSLocalizedString(@"Interface Viewer", nil);
-}
-
-+ (NSArray <NSString *> *)suggestedExtensions {
-    return @[@"xui"];
-}
-
-+ (Class)relatedReader {
-    return [XUIEntryReader class];
-}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     if (self.theme) {
@@ -48,14 +33,6 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self setupXUI];
-    }
-    return self;
-}
-
-- (instancetype)initWithPath:(NSString *)path {
-    if (self = [super init]) {
-        _entryPath = path;
         [self setupXUI];
     }
     return self;
@@ -85,7 +62,7 @@
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     if (parent != nil) {
-        if ([[self previousViewController] isKindOfClass:[XUIViewController class]]) {
+        if ([[self xui_previousViewController] isKindOfClass:[XUIViewController class]]) {
             self.fromXUIViewController = YES;
         }
     }

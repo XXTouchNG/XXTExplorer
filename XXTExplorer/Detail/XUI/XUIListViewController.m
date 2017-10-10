@@ -40,8 +40,9 @@
 - (instancetype)initWithPath:(NSString *)path {
     if (!path)
         return nil;
-    _bundle = nil;
-    if (self = [super initWithPath:path]) {
+    _bundle = [NSBundle mainBundle];
+    _path = path;
+    if (self = [super init]) {
         [self setup];
     }
     return self;
@@ -61,7 +62,8 @@
         return nil;
     }
     _bundle = bundle;
-    if (self = [super initWithPath:absolutePath]) {
+    _path = absolutePath;
+    if (self = [super init]) {
         [self setup];
     }
     return self;
@@ -71,13 +73,13 @@
     {
         _cellsNeedStore = [[NSMutableArray alloc] init];
 
-        NSString *entryExtension = [self.entryPath pathExtension];
+        NSString *entryExtension = [self.path pathExtension];
         NSString *adapterName = [NSString stringWithFormat:@"XUIAdapter_%@", [entryExtension lowercaseString]];
         Class adapterClass = NSClassFromString(adapterName);
         if (!adapterClass) {
             return;
         }
-        id <XUIAdapter> adapter = (id <XUIAdapter>) [[(id)adapterClass alloc] initWithXUIPath:self.entryPath Bundle:self.bundle];
+        id <XUIAdapter> adapter = (id <XUIAdapter>) [[(id)adapterClass alloc] initWithXUIPath:self.path Bundle:self.bundle];
         if (!adapter) {
             return;
         }
@@ -101,7 +103,7 @@
     [super viewDidLoad];
     
     // Title
-    NSString *entryPath = self.entryPath;
+    NSString *entryPath = self.path;
     if (entryPath) {
         NSString *entryName = [entryPath lastPathComponent];
         self.title = entryName;
@@ -138,8 +140,7 @@
     [self setupSubviews];
 
     // navigation items
-    if (self.awakeFromOutside == NO &&
-        [self.navigationController.viewControllers firstObject] == self) {
+    if ([self.navigationController.viewControllers firstObject] == self) {
         XUI_START_IGNORE_PARTIAL
         if (XUI_COLLAPSED) {
             [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
@@ -385,10 +386,10 @@
 
 XUI_START_IGNORE_PARTIAL
 - (NSArray <UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    @weakify(self);
+    __weak typeof(self) weak_self = self;
     UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedString(@"Delete", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
         {
-            @strongify(self);
+            __strong typeof(weak_self) self = weak_self;
             [self tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
         }];
     button.backgroundColor = self.theme.dangerColor;
@@ -422,10 +423,10 @@ XUI_END_IGNORE_PARTIAL
 }
 
 - (void)presentErrorAlertController:(NSError *)error {
-    @weakify(self);
+    __weak typeof(self) weak_self = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        @strongify(self);
-        NSString *entryName = [self.entryPath lastPathComponent];
+        __strong typeof(weak_self) self = weak_self;
+        NSString *entryName = [self.path lastPathComponent];
         XUI_START_IGNORE_PARTIAL
         if (@available(iOS 8.0, *)) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"XUI Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] preferredStyle:UIAlertControllerStyleAlert];

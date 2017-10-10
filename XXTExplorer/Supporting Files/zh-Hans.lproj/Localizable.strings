@@ -612,16 +612,10 @@
 "Item Detail" = "项目详情";
 
 /* No comment provided by engineer. */
+"key \"%@\" (\"%@\") is invalid." = "键 \"%@\" 的值 (\"%@\") 是无效的.";
+
+/* No comment provided by engineer. */
 "key \"%@\", should be \"%@\"." = "键 \"%@\", 应该为 \"%@\".";
-
-/* No comment provided by engineer. */
-"key \"alignment\" (\"%@\") is invalid." = "键 \"alignment\" (\"%@\") 无效.";
-
-/* No comment provided by engineer. */
-"key \"autoCaps\" (\"%@\") is invalid." = "键 \"autoCaps\" (\"%@\") 无效.";
-
-/* No comment provided by engineer. */
-"key \"keyboard\" (\"%@\") is invalid." = "键 \"keyboard\" (\"%@\") 无效.";
 
 /* No comment provided by engineer. */
 "Keyboard" = "键盘";

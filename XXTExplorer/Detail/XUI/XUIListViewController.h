@@ -12,6 +12,7 @@
 
 @interface XUIListViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong, readonly) NSString *path;
 @property (nonatomic, strong, readonly) NSBundle *bundle;
 
 // Views
@@ -19,6 +20,7 @@
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong, readonly) XUIListFooterView *footerView;
 
+- (instancetype)initWithPath:(NSString *)path; // will use main bundle
 - (instancetype)initWithPath:(NSString *)path withBundlePath:(NSString *)bundlePath;
 
 // Store

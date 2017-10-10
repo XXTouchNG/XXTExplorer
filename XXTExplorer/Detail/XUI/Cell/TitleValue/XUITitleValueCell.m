@@ -8,7 +8,7 @@
 
 #import "XUITitleValueCell.h"
 #import "XUI.h"
-#import "NSObject+StringValue.h"
+#import "NSObject+XUIStringValue.h"
 
 @interface XUITitleValueCell ()
 @property (assign, nonatomic) BOOL shouldUpdateValue;
@@ -68,12 +68,12 @@
 - (void)updateValueIfNeeded {
     if (self.shouldUpdateValue) {
         self.shouldUpdateValue = NO;
-        self.detailTextLabel.text = [self.xui_value stringValue];
+        self.detailTextLabel.text = [self.xui_value xui_stringValue];
         BOOL isBaseType = NO;
         if (!self.xui_value) {
             isBaseType = YES;
         }
-        NSArray <Class> *baseTypes = [NSObject baseTypes];
+        NSArray <Class> *baseTypes = [NSObject xui_baseTypes];
         for (Class baseType in baseTypes) {
             if ([self.xui_value isKindOfClass:baseType]) {
                 isBaseType = YES;

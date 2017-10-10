@@ -104,83 +104,83 @@ struct zip_t {
     char mode;
 };
 
-void zip_available_path(char *buf, int len, const char *base) {
-    
-    // check buf != NULL, base != NULL
-    if (!buf || !base) return;
-    
-    // check access
-    if (access(buf, F_OK) != 0) return;
-    
-    // check len
-    int maxlen = MAX_PATH;
-    if (len > maxlen)
-        return;
-    
-    // check valid base
-    char *chk = strnstr(buf, base, len);
-    if (chk != buf)
-        return;
-    
-    // check valid relative
-    char *startpos = buf + strlen(base);
-    if (*startpos == '\0')
-        return;
-    
-    // skip the top slash
-    if (strchr(startpos, '/') == startpos)
-        startpos += 1;
-    
-    // find the split point
-    char *split = NULL;
-    split = strchr(startpos, '/');
-    if (split != NULL) {
-        // got a level flag
-    } else {
-        // use a buf termination instead :-(
-        split = buf + strlen(buf);
-    }
-    
-    // find an extension from split reversely, if exists...
-    char *ext = NULL;
-    char *rfind = split;
-    while (rfind != buf) {
-        if (*rfind == '.') {
-            ext = rfind;
-            break;
-        }
-        rfind--;
-    }
-    if (ext != NULL) {
-        // got an extension
-        split = ext;
-    }
-    
-    // copy the former part
-    char *t = malloc(maxlen);
-    if (t == NULL) return;
-    memset(t, 0x0, maxlen);
-    strlcpy(t, buf, split + 1 - buf);
-    
-    // insert test idx
-    unsigned long act = strlen(t);
-    for (int idx = 2; idx < __INT_MAX__; idx++) {
-        unsigned long idxlen = snprintf(&t[act], maxlen - act, "-%d", idx);
-        unsigned long tact = act + idxlen;
-        strlcat(&t[tact], split, maxlen - tact);
-        // check if t not exists
-        if (access(t, F_OK) != 0) {
-            break;
-        }
-    }
-    
-    // copy back to the path buffer
-    strlcpy(buf, t, len);
-    
-    // do some clean
-    free(t);
-    
-}
+//void zip_available_path(char *buf, int len, const char *base) {
+//    
+//    // check buf != NULL, base != NULL
+//    if (!buf || !base) return;
+//    
+//    // check access
+//    if (access(buf, F_OK) != 0) return;
+//    
+//    // check len
+//    int maxlen = MAX_PATH;
+//    if (len > maxlen)
+//        return;
+//    
+//    // check valid base
+//    char *chk = strnstr(buf, base, len);
+//    if (chk != buf)
+//        return;
+//    
+//    // check valid relative
+//    char *startpos = buf + strlen(base);
+//    if (*startpos == '\0')
+//        return;
+//    
+//    // skip the top slash
+//    if (strchr(startpos, '/') == startpos)
+//        startpos += 1;
+//    
+//    // find the split point
+//    char *split = NULL;
+//    split = strchr(startpos, '/');
+//    if (split != NULL) {
+//        // got a level flag
+//    } else {
+//        // use a buf termination instead :-(
+//        split = buf + strlen(buf);
+//    }
+//    
+//    // find an extension from split reversely, if exists...
+//    char *ext = NULL;
+//    char *rfind = split;
+//    while (rfind != buf) {
+//        if (*rfind == '.') {
+//            ext = rfind;
+//            break;
+//        }
+//        rfind--;
+//    }
+//    if (ext != NULL) {
+//        // got an extension
+//        split = ext;
+//    }
+//    
+//    // copy the former part
+//    char *t = malloc(maxlen);
+//    if (t == NULL) return;
+//    memset(t, 0x0, maxlen);
+//    strlcpy(t, buf, split + 1 - buf);
+//    
+//    // insert test idx
+//    unsigned long act = strlen(t);
+//    for (int idx = 2; idx < __INT_MAX__; idx++) {
+//        unsigned long idxlen = snprintf(&t[act], maxlen - act, "-%d", idx);
+//        unsigned long tact = act + idxlen;
+//        strlcat(&t[tact], split, maxlen - tact);
+//        // check if t not exists
+//        if (access(t, F_OK) != 0) {
+//            break;
+//        }
+//    }
+//    
+//    // copy back to the path buffer
+//    strlcpy(buf, t, len);
+//    
+//    // do some clean
+//    free(t);
+//    
+//}
 
 struct zip_t *zip_open(const char *zipname, int level, char mode) {
     struct zip_t *zip = NULL;
@@ -756,16 +756,18 @@ int zip_extract(const char *zipname, const char *dir,
             int method = will_extract(path, arg);
             if (method == zip_extract_skip) {
                 continue; // skip
-            } else if (method == zip_extract_remain) {
+            }
+            else if (method == zip_extract_remain) {
                 // remain
-            } else if (method == zip_extract_override) {
+            }
+            else if (method == zip_extract_override) {
                 // override
                 if (0 == access(path, F_OK))
                     if (0 == remove(path)) {} // try to unlink/rmdir old ones
-            } else if (method == zip_extract_rename) {
-                // rename
-                zip_available_path(path, MAX_PATH, dir);
             }
+//            else if (method == zip_extract_rename) {
+//                zip_available_path(path, MAX_PATH, dir);
+//            }
         }
         
         if (mkpath(path) < 0) {

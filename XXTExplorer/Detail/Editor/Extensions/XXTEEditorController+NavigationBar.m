@@ -12,7 +12,7 @@
 #import "XXTEEditorDefaults.h"
 
 #import "XXTEEditorTheme.h"
-#import "UIColor+DarkColor.h"
+#import "UIColor+XUIDarkColor.h"
 
 @implementation XXTEEditorController (NavigationBar)
 
@@ -28,7 +28,7 @@
 {
     UIColor *newColor = self.theme.backgroundColor;
     if (!newColor) newColor = XXTE_COLOR;
-    return [newColor isDarkColor];
+    return [newColor xui_isDarkColor];
 }
 
 - (BOOL)prefersStatusBarHidden {

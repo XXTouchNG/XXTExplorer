@@ -42,7 +42,7 @@
             if (![validAlignment containsObject:alignmentString]) {
                 superResult = NO;
                 checkType = kXUICellFactoryErrorUnknownEnumDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"alignment\" (\"%@\") is invalid.", nil), alignmentString];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"%@\" (\"%@\") is invalid.", nil), @"alignment", alignmentString];
             }
         }
         NSString *keyboardString = cellEntry[@"keyboard"];
@@ -51,7 +51,7 @@
             if (![validKeyboard containsObject:keyboardString]) {
                 superResult = NO;
                 checkType = kXUICellFactoryErrorUnknownEnumDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"keyboard\" (\"%@\") is invalid.", nil), keyboardString];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"%@\" (\"%@\") is invalid.", nil), @"keyboard", keyboardString];
             }
         }
         NSString *autoCapsString = cellEntry[@"autoCaps"];
@@ -60,7 +60,7 @@
             if (![validAutoCaps containsObject:autoCapsString]) {
                 superResult = NO;
                 checkType = kXUICellFactoryErrorUnknownEnumDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"autoCaps\" (\"%@\") is invalid.", nil), autoCapsString];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"%@\" (\"%@\") is invalid.", nil), @"autoCaps", autoCapsString];
             }
         }
     } @catch (NSString *exceptionReason) {

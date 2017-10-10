@@ -30,7 +30,7 @@
 #import "XXTExplorerViewController.h"
 
 #import "XXTEBaseObjectViewController.h"
-#import "NSObject+StringValue.h"
+#import "NSObject+XUIStringValue.h"
 
 static int sizingCancelFlag = 0;
 
@@ -429,7 +429,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             entryReader.metaDictionary &&
             entryReader.metaKeys) {
             
-            NSArray <Class> *supportedTypes = [NSObject baseTypes];
+            NSArray <Class> *supportedTypes = [NSObject xui_baseTypes];
             NSDictionary *extendedDictionary = entryReader.metaDictionary;
             NSArray <NSString *> *displayExtendedKeys = entryReader.metaKeys;
             

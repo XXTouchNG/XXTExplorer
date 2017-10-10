@@ -9,7 +9,7 @@
 #import "XXTEArrayObjectViewController.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEObjectViewController.h"
-#import "NSObject+StringValue.h"
+#import "NSObject+XUIStringValue.h"
 #import "XXTEBaseObjectViewController.h"
 #import "XXTEUserInterfaceDefines.h"
 #import <PromiseKit/PromiseKit.h>

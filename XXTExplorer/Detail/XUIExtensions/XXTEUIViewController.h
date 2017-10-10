@@ -7,7 +7,8 @@
 //
 
 #import "XUIListViewController.h"
+#import "XXTEViewer.h"
 
-@interface XXTEUIViewController : XUIListViewController
+@interface XXTEUIViewController : XUIListViewController <XXTEViewer>
 
 @end

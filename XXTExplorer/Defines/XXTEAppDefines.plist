@@ -92,7 +92,7 @@ All Rights Reserved.</string>
 		<string>XXTEWebViewerController</string>
 		<string>XXTECodeViewerController</string>
 		<string>XXTEObjectViewController</string>
-		<string>XUIListViewController</string>
+		<string>XXTEUIViewController</string>
 		<string>XXTEPackageViewerController</string>
 		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>

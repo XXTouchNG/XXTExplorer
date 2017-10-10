@@ -7,8 +7,7 @@
 //
 
 #import "XUITheme.h"
-#import "UIColor+DarkColor.h"
-#import "UIColor+SKColor.h"
+#import "UIColor+XUIDarkColor.h"
 
 @implementation XUITheme
 
@@ -26,23 +25,23 @@
         [self setup];
         
         if (themeDictionary[@"tintColor"])
-            _tintColor = [UIColor colorWithHex:themeDictionary[@"tintColor"]];
+            _tintColor = [UIColor xui_colorWithHex:themeDictionary[@"tintColor"]];
         if (themeDictionary[@"dangerColor"])
-            _dangerColor = [UIColor colorWithHex:themeDictionary[@"dangerColor"]];
+            _dangerColor = [UIColor xui_colorWithHex:themeDictionary[@"dangerColor"]];
         if (themeDictionary[@"warningColor"])
-            _warningColor = [UIColor colorWithHex:themeDictionary[@"warningColor"]];
+            _warningColor = [UIColor xui_colorWithHex:themeDictionary[@"warningColor"]];
         if (themeDictionary[@"successColor"])
-            _successColor = [UIColor colorWithHex:themeDictionary[@"successColor"]];
+            _successColor = [UIColor xui_colorWithHex:themeDictionary[@"successColor"]];
         if (themeDictionary[@"highlightColor"])
-            _highlightColor = [UIColor colorWithHex:themeDictionary[@"highlightColor"]];
+            _highlightColor = [UIColor xui_colorWithHex:themeDictionary[@"highlightColor"]];
         if (themeDictionary[@"navigationBarColor"])
-            _navigationBarColor = [UIColor colorWithHex:themeDictionary[@"navigationBarColor"]];
+            _navigationBarColor = [UIColor xui_colorWithHex:themeDictionary[@"navigationBarColor"]];
         if (themeDictionary[@"navigationTitleColor"])
-            _navigationTitleColor = [UIColor colorWithHex:themeDictionary[@"navigationTitleColor"]];
+            _navigationTitleColor = [UIColor xui_colorWithHex:themeDictionary[@"navigationTitleColor"]];
         if (themeDictionary[@"labelColor"])
-            _labelColor = [UIColor colorWithHex:themeDictionary[@"labelColor"]];
+            _labelColor = [UIColor xui_colorWithHex:themeDictionary[@"labelColor"]];
         if (themeDictionary[@"valueColor"])
-            _valueColor = [UIColor colorWithHex:themeDictionary[@"valueColor"]];
+            _valueColor = [UIColor xui_colorWithHex:themeDictionary[@"valueColor"]];
     }
     return self;
 }
@@ -62,7 +61,7 @@
 }
 
 - (BOOL)isDarkMode {
-    return [self.navigationBarColor isDarkColor];
+    return [self.navigationBarColor xui_isDarkColor];
 }
 
 @end

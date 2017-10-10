@@ -8,7 +8,7 @@
 
 #import "XXTEBaseObjectViewController.h"
 #import "XXTEMoreTitleValueCell.h"
-#import "NSObject+StringValue.h"
+#import "NSObject+XUIStringValue.h"
 #import "XXTEUserInterfaceDefines.h"
 #import <PromiseKit/PromiseKit.h>
 
@@ -23,7 +23,7 @@
 @synthesize RootObject = _RootObject;
 
 + (NSArray <Class> *)supportedTypes {
-    return [NSObject baseTypes];
+    return [NSObject xui_baseTypes];
 }
 
 - (instancetype)initWithRootObject:(id)RootObject {

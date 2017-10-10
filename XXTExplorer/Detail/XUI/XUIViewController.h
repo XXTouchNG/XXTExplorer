@@ -4,12 +4,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XXTEViewer.h"
 #import "XUIAdapter.h"
 
 @class XUITheme, XUILogger;
 
-@interface XUIViewController : UIViewController <XXTEViewer>
+@interface XUIViewController : UIViewController
 
 @property (nonatomic, strong) id <XUIAdapter> adapter;
 @property (nonatomic, strong) XUITheme *theme;

@@ -4,14 +4,14 @@
 //
 
 #import "XXTEMailComposeViewController.h"
-#import "UIColor+DarkColor.h"
+#import "UIColor+XUIDarkColor.h"
 
 @implementation XXTEMailComposeViewController {
 
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return [self.navigationBar.tintColor isDarkColor] ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
+    return [self.navigationBar.tintColor xui_isDarkColor] ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {

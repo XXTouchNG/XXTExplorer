@@ -53,7 +53,7 @@
             if (![validAlignment containsObject:alignmentString]) {
                 superResult = NO;
                 checkType = kXUICellFactoryErrorUnknownEnumDomain;
-                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"alignment\" (\"%@\") is invalid.", nil), alignmentString];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"key \"%@\" (\"%@\") is invalid.", nil), @"alignment", alignmentString];
             }
         }
     } @catch (NSString *exceptionReason) {
