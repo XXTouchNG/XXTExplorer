@@ -10,6 +10,10 @@
 
 @implementation NSObject (StringValue)
 
++ (NSArray <Class> *)baseTypes {
+    return @[ [NSString class], [NSURL class], [NSNumber class], [NSData class], [NSDate class], [NSNull class] ];
+}
+
 - (NSString *)stringValue {
     if ([self isKindOfClass:[NSString class]]) {
         return ((NSString *)self);

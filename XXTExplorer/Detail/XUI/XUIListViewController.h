@@ -29,4 +29,7 @@
 // Error
 - (void)presentErrorAlertController:(NSError *)error;
 
+// Dismiss
+- (void)dismissViewController:(id)dismissViewController NS_REQUIRES_SUPER;
+
 @end

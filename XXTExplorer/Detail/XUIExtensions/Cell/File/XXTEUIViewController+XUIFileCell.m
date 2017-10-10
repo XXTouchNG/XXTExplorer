@@ -1,19 +1,19 @@
 //
-//  XUIListViewController+XUIFileCell.m
+//  XXTEUIViewController+XUIFileCell.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 29/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController+XUIFileCell.h"
+#import "XXTEUIViewController+XUIFileCell.h"
 #import "XUIFileCell.h"
 
 #import <objc/runtime.h>
 
 static const void * XUIFileCellStorageKey = &XUIFileCellStorageKey;
 
-@implementation XUIListViewController (XUIFileCell)
+@implementation XXTEUIViewController (XUIFileCell)
 
 - (void)tableView:(UITableView *)tableView XUIFileCell:(UITableViewCell *)cell {
     XUIFileCell *fileCell = (XUIFileCell *)cell;

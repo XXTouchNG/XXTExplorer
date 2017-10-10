@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="219.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTEAboutIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-5Z-sX7">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XUIAboutIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-5Z-sX7">
                         <rect key="frame" x="175" y="20" width="64" height="64"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="64" id="5zW-h6-nBV"/>
@@ -67,6 +67,6 @@ All Rights Reserved.</string>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="XXTEAboutIcon" width="648" height="578"/>
+        <image name="XUIAboutIcon" width="648" height="578"/>
     </resources>
 </document>

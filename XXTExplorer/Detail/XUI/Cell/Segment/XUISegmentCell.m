@@ -8,6 +8,7 @@
 
 #import "XUISegmentCell.h"
 #import "XUILogger.h"
+#import "XUIOptionModel.h"
 
 @interface XUISegmentCell ()
 
@@ -46,14 +47,14 @@
 + (NSDictionary <NSString *, Class> *)optionValueTypes {
     return
     @{
-      XUIOptionCellTitleKey: [NSString class],
-      XUIOptionCellShortTitleKey: [NSString class],
-      XUIOptionCellIconKey: [NSString class],
+      XUIOptionTitleKey: [NSString class],
+      XUIOptionShortTitleKey: [NSString class],
+      XUIOptionIconKey: [NSString class],
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     return superResult;
 }
 
@@ -78,7 +79,7 @@
     [self.cellSegmentControl removeAllSegments];
     NSUInteger titleIdx = 0;
     for (NSDictionary *option in xui_options) {
-        NSString *validTitle = option[XUIOptionCellTitleKey];
+        NSString *validTitle = option[XUIOptionTitleKey];
         NSString *localizedTitle = [self.adapter localizedStringForKey:validTitle value:validTitle];
         [self.cellSegmentControl insertSegmentWithTitle:localizedTitle atIndex:titleIdx animated:NO];
         titleIdx++;
@@ -106,7 +107,7 @@
         id xui_value = self.xui_value;
         if (xui_value) {
             NSUInteger selectedIndex = [self.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([xui_value isEqual:obj[XUIOptionCellValueKey]]) {
+                if ([xui_value isEqual:obj[XUIOptionValueKey]]) {
                     return YES;
                 }
                 return NO;
@@ -130,7 +131,7 @@
     if (sender == self.cellSegmentControl) {
         NSUInteger selectedIndex = sender.selectedSegmentIndex;
         if (selectedIndex < self.xui_options.count) {
-            id selectedValue = self.xui_options[selectedIndex][XUIOptionCellValueKey];
+            id selectedValue = self.xui_options[selectedIndex][XUIOptionValueKey];
             self.xui_value = selectedValue;
             [self.adapter saveDefaultsFromCell:self];
         }

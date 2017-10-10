@@ -4,7 +4,7 @@
 //
 
 #import "XUIEntryReader.h"
-#import "XUIListViewController.h"
+#import "XXTEUIViewController.h"
 #import "XXTEEditorController.h"
 
 @implementation XUIEntryReader
@@ -22,7 +22,7 @@
 @synthesize editable = _editable;
 
 + (NSArray <NSString *> *)supportedExtensions {
-    return [XUIListViewController suggestedExtensions];
+    return [XXTEUIViewController suggestedExtensions];
 }
 
 + (UIImage *)defaultImage {
@@ -56,7 +56,7 @@
     }
     _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Document", entryUpperedExtension];
-    _entryViewerDescription = [XUIListViewController viewerName];
+    _entryViewerDescription = [XXTEUIViewController viewerName];
 
     // No Meta
 }

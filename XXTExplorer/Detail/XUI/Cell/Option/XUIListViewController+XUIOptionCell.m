@@ -7,9 +7,10 @@
 //
 
 #import "XUIListViewController+XUIOptionCell.h"
-#import "XUIOptionViewController.h"
 
 #import "XUICellFactory.h"
+#import "XUIOptionModel.h"
+#import "XUIOptionViewController.h"
 
 @implementation XUIListViewController (XUIOptionCell)
 
@@ -38,7 +39,7 @@
     id rawValue = cell.xui_value;
     if (rawValue) {
         NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([rawValue isEqual:obj[XUIOptionCellValueKey]]) {
+            if ([rawValue isEqual:obj[XUIOptionValueKey]]) {
                 return YES;
             }
             return NO;
@@ -48,7 +49,7 @@
         }
     }
     if (optionIndex < cell.xui_options.count) {
-        NSString *shortTitle = cell.xui_options[optionIndex][XUIOptionCellShortTitleKey];
+        NSString *shortTitle = cell.xui_options[optionIndex][XUIOptionShortTitleKey];
         cell.detailTextLabel.text = shortTitle;
     }
 }

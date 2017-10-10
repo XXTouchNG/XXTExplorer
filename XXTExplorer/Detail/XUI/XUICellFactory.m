@@ -87,7 +87,7 @@
                 cellInstance = [[cellClass alloc] init];
             }
             NSError *checkError = nil;
-            BOOL checkResult = [[cellInstance class] checkEntry:itemDictionary withError:&checkError];
+            BOOL checkResult = [[cellInstance class] testEntry:itemDictionary withError:&checkError];
             if (!checkResult) {
                 [self.logger logMessage:[NSString stringWithFormat:NSLocalizedString(@"[%@]\nPath \"items[%lu]\", %@", nil), checkError.domain, itemIdx, checkError.localizedDescription]];
                 continue;
@@ -106,15 +106,10 @@
             NSArray <NSString *> *itemAllKeys = [itemDictionary allKeys];
             for (NSUInteger keyIdx = 0; keyIdx < itemAllKeys.count; ++keyIdx) {
                 NSString *itemKey = itemAllKeys[keyIdx];
-                if (![itemKey isEqualToString:@"value"])
-                {
-                    id itemValue = itemDictionary[itemKey];
-                    [self setObject:itemValue forKey:itemKey forCellInstance:cellInstance atIndex:itemIdx];
-                }
+                id itemValue = itemDictionary[itemKey];
+                [self testObject:itemValue forKey:itemKey forCellInstance:cellInstance atIndex:itemIdx]; // test property
             }
-            NSString *itemKey = @"value";
-            id itemValue = itemDictionary[itemKey];
-            [self setObject:itemValue forKey:itemKey forCellInstance:cellInstance atIndex:itemIdx];
+            [cellInstance configureCellWithEntry:itemDictionary];
             [cells addObject:cellInstance];
         }
         NSMutableArray <XUIGroupCell *> *groupCells = [[NSMutableArray alloc] init];
@@ -158,11 +153,11 @@
     }
 }
 
-- (void)setObject:(id)itemValue forKey:(NSString *)itemKey forCellInstance:(XUIBaseCell *)cellInstance atIndex:(NSUInteger)itemIdx {
+- (void)testObject:(id)itemValue forKey:(NSString *)itemKey forCellInstance:(XUIBaseCell *)cellInstance atIndex:(NSUInteger)itemIdx {
     if (!itemValue || !itemKey || !cellInstance) return;
     NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
     if (class_getProperty([cellInstance class], [propertyName UTF8String])) {
-        [cellInstance setValue:itemValue forKey:propertyName];
+
     } else {
         [self.logger logMessage:[NSString stringWithFormat:XUIParserErrorUndefinedKey(@"items[%lu] -> %@"), itemIdx, propertyName]];
     }
@@ -191,7 +186,7 @@
                 [cell.xui_key isEqualToString:cellKey]
                 ) {
                 NSDictionary *testEntry = @{ @"value": cellValue };
-                BOOL testResult = [[cell class] checkEntry:testEntry withError:nil];
+                BOOL testResult = [[cell class] testEntry:testEntry withError:nil];
                 if (testResult) {
                     cell.xui_value = cellValue;
                 }

@@ -10,8 +10,6 @@
 #import "XUI.h"
 #import "NSObject+StringValue.h"
 
-#import "XXTEBaseObjectViewController.h"
-
 @interface XUITitleValueCell ()
 @property (assign, nonatomic) BOOL shouldUpdateValue;
 
@@ -37,14 +35,19 @@
     return YES;
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     return superResult;
 }
 
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
+}
+
+- (void)configureCellWithEntry:(NSDictionary *)entry {
+    self.xui_snippet = entry[@"snippet"];
+    [super configureCellWithEntry:entry];
 }
 
 - (void)setXui_value:(id)xui_value {
@@ -70,7 +73,7 @@
         if (!self.xui_value) {
             isBaseType = YES;
         }
-        NSArray <Class> *baseTypes = [XXTEBaseObjectViewController supportedTypes];
+        NSArray <Class> *baseTypes = [NSObject baseTypes];
         for (Class baseType in baseTypes) {
             if ([self.xui_value isKindOfClass:baseType]) {
                 isBaseType = YES;

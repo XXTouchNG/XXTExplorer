@@ -7,9 +7,11 @@
 //
 
 #import "XUIOrderedOptionViewController.h"
+
 #import "XUI.h"
 #import "XUITheme.h"
-#import "XUIBaseCell.h"
+#import "XUIOptionModel.h"
+#import "XUIBaseOptionCell.h"
 
 @interface XUIOrderedOptionViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -28,7 +30,7 @@
         _cell = cell;
         NSMutableArray *validValues = [[NSMutableArray alloc] init];
         [cell.xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            id value = obj[XUIOptionCellValueKey];
+            id value = obj[XUIOptionValueKey];
             if (value) {
                 [validValues addObject:value];
             }
@@ -42,7 +44,7 @@
             NSMutableArray <NSNumber *> *selectedIndexes = [[NSMutableArray alloc] initWithCapacity:rawValues.count];
             for (id rawValue in rawValues) {
                 NSUInteger rawIndex = [cell.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    id value = obj[XUIOptionCellValueKey];
+                    id value = obj[XUIOptionValueKey];
                     if ([rawValue isEqual:value]) {
                         return YES;
                     }
@@ -130,12 +132,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XUIBaseCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:XUIBaseCellReuseIdentifier];
+    XUIBaseOptionCell *cell =
+    [tableView dequeueReusableCellWithIdentifier:XUIBaseOptionCellReuseIdentifier];
     if (nil == cell)
     {
-        cell = [[XUIBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                  reuseIdentifier:XUIBaseCellReuseIdentifier];
+        cell = [[XUIBaseOptionCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                        reuseIdentifier:XUIBaseOptionCellReuseIdentifier];
     }
     cell.adapter = self.adapter;
     cell.showsReorderControl = YES;
@@ -145,15 +147,15 @@
     {
         NSUInteger selectedIndex = [self.selectedIndexes[(NSUInteger) indexPath.row] unsignedIntegerValue];
         NSDictionary *optionDictionary = self.cell.xui_options[selectedIndex];
-        cell.xui_icon = optionDictionary[XUIOptionCellIconKey];
-        cell.xui_label = optionDictionary[XUIOptionCellTitleKey];
+        cell.xui_icon = optionDictionary[XUIOptionIconKey];
+        cell.xui_label = optionDictionary[XUIOptionTitleKey];
     }
     else if (indexPath.section == 1)
     {
         NSUInteger unselectedIndex = [self.unselectedIndexes[(NSUInteger) indexPath.row] unsignedIntegerValue];
         NSDictionary *optionDictionary = self.cell.xui_options[unselectedIndex];
-        cell.xui_icon = optionDictionary[XUIOptionCellIconKey];
-        cell.xui_label = optionDictionary[XUIOptionCellTitleKey];
+        cell.xui_icon = optionDictionary[XUIOptionIconKey];
+        cell.xui_label = optionDictionary[XUIOptionTitleKey];
     }
     else {
         cell.xui_label = nil;
@@ -212,7 +214,7 @@
     NSMutableArray *selectedValues = [[NSMutableArray alloc] initWithCapacity:self.selectedIndexes.count];
     for (NSNumber *selectedIndex in self.selectedIndexes) {
         NSUInteger selectedIndexValue = [selectedIndex unsignedIntegerValue];
-        id selectedValue = self.cell.xui_options[selectedIndexValue][XUIOptionCellValueKey];
+        id selectedValue = self.cell.xui_options[selectedIndexValue][XUIOptionValueKey];
         [selectedValues addObject:selectedValue];
     }
     self.cell.xui_value = [[NSArray alloc] initWithArray:selectedValues];

@@ -49,8 +49,8 @@
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     return superResult;
 }
 
@@ -62,6 +62,12 @@
     _xui_allowedExtensions = @[ @"lua", @"xxt", @"xpp" ];
     
     [self resetCellState];
+}
+
+- (void)configureCellWithEntry:(NSDictionary *)entry {
+    self.xui_allowedExtensions = entry[@"allowedExtensions"];
+    self.xui_initialPath = entry[@"initialPath"];
+    [super configureCellWithEntry:entry];
 }
 
 - (void)setXui_value:(id)xui_value {

@@ -1,12 +1,12 @@
 //
-//  XUIListViewController+ScanQRCode.m
+//  XXTEUIViewController+ScanQRCode.m
 //  XXTExplorer
 //
 //  Created by Zheng on 20/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController+ScanQRCode.h"
+#import "XXTEUIViewController+ScanQRCode.h"
 
 #import "XUIButtonCell.h"
 #import "XXTEScanViewController.h"
@@ -14,7 +14,7 @@
 
 #import <objc/runtime.h>
 
-@implementation XUIListViewController (ScanQRCode)
+@implementation XXTEUIViewController (ScanQRCode)
 
 - (id)xui_ScanQRCode:(XUIButtonCell *)cell {
     XXTEScanViewController *scanViewController = [[XXTEScanViewController alloc] init];

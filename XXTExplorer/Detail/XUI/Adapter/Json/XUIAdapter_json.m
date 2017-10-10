@@ -4,7 +4,6 @@
 //
 
 #import "XUIAdapter_json.h"
-#import "XXTEAppDelegate.h"
 #import "XUIBaseCell.h"
 
 @implementation XUIAdapter_json

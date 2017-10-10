@@ -1,19 +1,19 @@
 //
-//  XUIListViewController+LaunchScript.m
+//  XXTEUIViewController+LaunchScript.m
 //  XXTExplorer
 //
 //  Created by Zheng on 02/08/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController+LaunchScript.h"
+#import "XXTEUIViewController+LaunchScript.h"
 #import "XUIButtonCell.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENetworkDefines.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
-@implementation XUIListViewController (LaunchScript)
+@implementation XXTEUIViewController (LaunchScript)
 
 - (NSNumber *)xui_LaunchScript:(XUIButtonCell *)cell {
     NSArray *kwargs = cell.xui_kwargs;

@@ -51,8 +51,8 @@
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     NSString *checkType = kXUICellFactoryErrorDomain;
     @try {
         NSString *alignmentString = cellEntry[@"alignment"];

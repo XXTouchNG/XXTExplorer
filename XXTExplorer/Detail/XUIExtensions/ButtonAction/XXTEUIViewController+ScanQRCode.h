@@ -1,17 +1,17 @@
 //
-//  XUIListViewController+ScanQRCode.h
+//  XXTEUIViewController+ScanQRCode.h
 //  XXTExplorer
 //
 //  Created by Zheng on 20/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController.h"
+#import "XXTEUIViewController.h"
 #import "XXTEScanViewController.h"
 
 @class XUIButtonCell;
 
-@interface XUIListViewController (ScanQRCode) <XXTEScanViewControllerDelegate>
+@interface XXTEUIViewController (ScanQRCode) <XXTEScanViewControllerDelegate>
 
 - (id)xui_ScanQRCode:(XUIButtonCell *)cell;
 

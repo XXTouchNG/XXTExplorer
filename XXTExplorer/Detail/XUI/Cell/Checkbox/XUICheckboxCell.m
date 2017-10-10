@@ -12,6 +12,7 @@
 #import "XUI.h"
 #import "XUILogger.h"
 #import "XUIViewShaker.h"
+#import "XUIOptionModel.h"
 
 @interface XUICheckboxCell () <XUITextTagCollectionViewDelegate>
 
@@ -58,14 +59,14 @@
 + (NSDictionary <NSString *, Class> *)optionValueTypes {
     return
     @{
-      XUIOptionCellTitleKey: [NSString class],
-      XUIOptionCellShortTitleKey: [NSString class],
-      XUIOptionCellIconKey: [NSString class],
+      XUIOptionTitleKey: [NSString class],
+      XUIOptionShortTitleKey: [NSString class],
+      XUIOptionIconKey: [NSString class],
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     return superResult;
 }
 
@@ -113,7 +114,7 @@
     _xui_options = xui_options;
     NSMutableArray <NSString *> *xui_validTitles = [[NSMutableArray alloc] init];
     [xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *title = obj[XUIOptionCellTitleKey];
+        NSString *title = obj[XUIOptionTitleKey];
         if (title) {
             NSString *localizedTitle = [self.adapter localizedStringForKey:title value:title];
             [xui_validTitles addObject:localizedTitle];
@@ -152,7 +153,7 @@
         }
         for (id selectedValue in selectedValues) {
             NSUInteger selectedIndex = [self.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([selectedValue isEqual:obj[XUIOptionCellValueKey]]) {
+                if ([selectedValue isEqual:obj[XUIOptionValueKey]]) {
                     return YES;
                 }
                 return NO;
@@ -167,8 +168,8 @@
 - (id)textTagCollectionView:(XUITextTagCollectionView *)textTagCollectionView valueForTagAtIndex:(NSUInteger)selectedIndexValue {
     NSMutableArray *validValues = [[NSMutableArray alloc] init];
     for (NSDictionary *obj in self.xui_options) {
-        if (obj[XUIOptionCellValueKey]) {
-            [validValues addObject:obj[XUIOptionCellValueKey]];
+        if (obj[XUIOptionValueKey]) {
+            [validValues addObject:obj[XUIOptionValueKey]];
         } else {
             return nil;
         }
@@ -205,8 +206,8 @@
 {
     NSMutableArray *validValues = [[NSMutableArray alloc] init];
     [self.xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj[XUIOptionCellValueKey]) {
-            [validValues addObject:obj[XUIOptionCellValueKey]];
+        if (obj[XUIOptionValueKey]) {
+            [validValues addObject:obj[XUIOptionValueKey]];
         } else {
             return;
         }

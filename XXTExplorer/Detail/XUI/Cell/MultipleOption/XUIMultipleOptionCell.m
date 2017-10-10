@@ -7,8 +7,10 @@
 //
 
 #import "XUIMultipleOptionCell.h"
+
 #import "XUI.h"
 #import "XUILogger.h"
+#import "XUIOptionModel.h"
 
 @implementation XUIMultipleOptionCell
 
@@ -43,14 +45,14 @@
 + (NSDictionary <NSString *, Class> *)optionValueTypes {
     return
     @{
-      XUIOptionCellTitleKey: [NSString class],
-      XUIOptionCellShortTitleKey: [NSString class],
-      XUIOptionCellIconKey: [NSString class],
+      XUIOptionTitleKey: [NSString class],
+      XUIOptionShortTitleKey: [NSString class],
+      XUIOptionIconKey: [NSString class],
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     NSString *checkType = kXUICellFactoryErrorDomain;
     @try {
         NSArray *validOptions = cellEntry[@"options"];

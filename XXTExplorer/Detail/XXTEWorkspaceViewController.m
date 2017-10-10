@@ -118,7 +118,7 @@
         logoPlaceholderImageView.contentMode = UIViewContentModeScaleAspectFill;
         logoPlaceholderImageView.translatesAutoresizingMaskIntoConstraints = NO;
         logoPlaceholderImageView.tintColor = [UIColor colorWithRed: 189.0/255.0 green: 195.0/255.0 blue: 199.0/255.0 alpha: 1.0];
-        logoPlaceholderImageView.image = [[UIImage imageNamed:@"XXTEAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        logoPlaceholderImageView.image = [[UIImage imageNamed:@"XUIAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _logoPlaceholderImageView = logoPlaceholderImageView;
     }
     return _logoPlaceholderImageView;

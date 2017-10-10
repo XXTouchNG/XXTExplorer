@@ -10,6 +10,7 @@
 
 @interface NSObject (StringValue)
 
++ (NSArray <Class> *)baseTypes;
 - (NSString *)stringValue;
 
 @end

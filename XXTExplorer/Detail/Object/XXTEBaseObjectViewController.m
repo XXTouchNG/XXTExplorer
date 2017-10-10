@@ -23,7 +23,7 @@
 @synthesize RootObject = _RootObject;
 
 + (NSArray <Class> *)supportedTypes {
-    return @[ [NSString class], [NSURL class], [NSNumber class], [NSData class], [NSDate class], [NSNull class] ];
+    return [NSObject baseTypes];
 }
 
 - (instancetype)initWithRootObject:(id)RootObject {

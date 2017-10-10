@@ -1,12 +1,12 @@
 //
-//  XUIListViewController+XUITitleValueCell.m
+//  XXTEUIViewController+XUITitleValueCell.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 29/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController+XUITitleValueCell.h"
+#import "XXTEUIViewController+XUITitleValueCell.h"
 #import "XXTEObjectViewController.h"
 
 #import "XXTEUserInterfaceDefines.h"
@@ -16,7 +16,7 @@
 
 static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 
-@implementation XUIListViewController (XUITitleValueCell)
+@implementation XXTEUIViewController (XUITitleValueCell)
 
 - (void)tableView:(UITableView *)tableView XUITitleValueCell:(UITableViewCell *)cell {
     XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;

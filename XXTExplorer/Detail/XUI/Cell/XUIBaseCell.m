@@ -7,12 +7,15 @@
 #import "XUILogger.h"
 #import "XUI.h"
 
+#import <objc/runtime.h>
+
 NSString * XUIBaseCellReuseIdentifier = @"XUIBaseCellReuseIdentifier";
 
-NSString * XUIOptionCellTitleKey = @"title";
-NSString * XUIOptionCellShortTitleKey = @"shortTitle";
-NSString * XUIOptionCellValueKey = @"value";
-NSString * XUIOptionCellIconKey = @"icon";
+@interface XUIBaseCell ()
+
+@property (nonatomic, strong) XUITheme *theme;
+
+@end
 
 @implementation XUIBaseCell {
 
@@ -46,7 +49,7 @@ NSString * XUIOptionCellIconKey = @"icon";
     return @{};
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
     NSMutableDictionary *baseTypes =
     [@{
       @"cell": [NSString class],
@@ -132,6 +135,18 @@ NSString * XUIOptionCellIconKey = @"icon";
         self.detailTextLabel.textColor = UIColor.grayColor;
         self.detailTextLabel.text = nil;
     }
+}
+
+- (void)configureCellWithEntry:(NSDictionary *)entry {
+    for (NSString *itemKey in entry) {
+        if ([itemKey isEqualToString:@"value"]) continue;
+        NSString *propertyName = [NSString stringWithFormat:@"xui_%@", itemKey];
+        if (class_getProperty([self class], [propertyName UTF8String])) {
+            id itemValue = entry[itemKey];
+            [self setValue:itemValue forKey:propertyName];
+        }
+    }
+    self.xui_value = entry[@"value"]; // do not change its order
 }
 
 - (id)valueForUndefinedKey:(NSString *)key {

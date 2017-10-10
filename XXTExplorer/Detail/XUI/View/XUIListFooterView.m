@@ -67,7 +67,7 @@ static UIEdgeInsets const XUIListFooterViewEdgeInsets = { 20.f, 20.f, 40.f, 20.f
     if (!_footerIconView) {
         UIImageView *footerIconView = [[UIImageView alloc] init];
         footerIconView.contentMode = UIViewContentModeScaleAspectFit;
-        footerIconView.image = [[UIImage imageNamed:@"XXTEAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        footerIconView.image = [[UIImage imageNamed:@"XUIAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _footerIconView = footerIconView;
     }
     return _footerIconView;

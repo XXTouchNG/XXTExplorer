@@ -8,8 +8,10 @@
 
 #import "XUIRadioCell.h"
 #import "XUITextTagCollectionView.h"
+
 #import "XUI.h"
 #import "XUILogger.h"
+#import "XUIOptionModel.h"
 
 @interface XUIRadioCell () <XUITextTagCollectionViewDelegate>
 
@@ -52,14 +54,14 @@
 + (NSDictionary <NSString *, Class> *)optionValueTypes {
     return
     @{
-      XUIOptionCellTitleKey: [NSString class],
-      XUIOptionCellShortTitleKey: [NSString class],
-      XUIOptionCellIconKey: [NSString class],
+      XUIOptionTitleKey: [NSString class],
+      XUIOptionShortTitleKey: [NSString class],
+      XUIOptionIconKey: [NSString class],
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     return superResult;
 }
 
@@ -101,7 +103,7 @@
     _xui_options = xui_options;
     NSMutableArray <NSString *> *xui_validTitles = [[NSMutableArray alloc] init];
     [xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *title = obj[XUIOptionCellTitleKey];
+        NSString *title = obj[XUIOptionTitleKey];
         if (title) {
             NSString *localizedTitle = [self.adapter localizedStringForKey:title value:title];
             [xui_validTitles addObject:localizedTitle];
@@ -129,7 +131,7 @@
         self.shouldUpdateValue = NO;
         id selectedValue = self.xui_value;
         NSUInteger selectedIndex = [self.xui_options indexOfObjectPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([selectedValue isEqual:obj[XUIOptionCellValueKey]]) {
+            if ([selectedValue isEqual:obj[XUIOptionValueKey]]) {
                 return YES;
             }
             return NO;
@@ -152,8 +154,8 @@
     NSUInteger selectedIndexValue = index;
     NSMutableArray *validValues = [[NSMutableArray alloc] init];
     [self.xui_options enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj[XUIOptionCellValueKey]) {
-            [validValues addObject:obj[XUIOptionCellValueKey]];
+        if (obj[XUIOptionValueKey]) {
+            [validValues addObject:obj[XUIOptionValueKey]];
         }
     }];
     if (index < validValues.count) {

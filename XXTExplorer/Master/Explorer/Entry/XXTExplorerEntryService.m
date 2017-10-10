@@ -13,7 +13,7 @@
 #import "XXTEEditor.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBundleReader.h"
-#import "XUIListViewController.h"
+#import "XXTEUIViewController.h"
 #import "XXTExplorerEntryOpenWithViewController.h"
 
 @interface XXTExplorerEntryService ()
@@ -151,7 +151,7 @@
         if (name.length == 0) {
             name = reader.configurationName;
         }
-        XUIListViewController *configutator = [[XUIListViewController alloc] initWithPath:name withBundlePath:reader.entryPath];
+        XXTEUIViewController *configutator = [[XXTEUIViewController alloc] initWithPath:name withBundlePath:reader.entryPath];
         return configutator;
     }
     return nil;

@@ -1,15 +1,15 @@
 //
-//  XUIListViewController+XUIFileCell.h
+//  XXTEUIViewController+XUIFileCell.h
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 29/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController.h"
+#import "XXTEUIViewController.h"
 #import "XXTExplorerItemPicker.h"
 
-@interface XUIListViewController (XUIFileCell) <XXTExplorerItemPickerDelegate>
+@interface XXTEUIViewController (XUIFileCell) <XXTExplorerItemPickerDelegate>
 
 - (void)tableView:(UITableView *)tableView XUIFileCell:(UITableViewCell *)cell;
 

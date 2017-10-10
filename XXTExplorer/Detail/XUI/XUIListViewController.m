@@ -13,7 +13,6 @@
 #import "XUIListFooterView.h"
 
 #import "XUIGroupCell.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "XUICellFactory.h"
 #import "XUILogger.h"
@@ -154,7 +153,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];
     [super viewWillAppear:animated];
     [self storeCellsIfNecessary];
 }
@@ -473,9 +471,6 @@ XUI_END_IGNORE_PARTIAL
 }
 
 - (void)dismissViewController:(id)dismissViewController {
-    if (XXTE_PAD) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-    }
     [self dismissViewControllerAnimated:YES completion:^() {
         
     }];
@@ -508,19 +503,6 @@ XUI_END_IGNORE_PARTIAL
 - (UIEdgeInsets)defaultContentInsets {
     UIEdgeInsets insets = UIEdgeInsetsZero;
     return insets;
-}
-
-#pragma mark - Notifications
-
-- (void)handleApplicationNotifications:(NSNotification *)aNotification {
-    NSDictionary *userInfo = aNotification.userInfo;
-    NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidEnterBackground])
-    {
-        if (self.awakeFromOutside) {
-            [self dismissViewController:aNotification];
-        }
-    }
 }
 
 #pragma mark - Memory

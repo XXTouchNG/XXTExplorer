@@ -10,11 +10,6 @@
 
 extern NSString * XUIBaseCellReuseIdentifier;
 
-extern NSString * XUIOptionCellTitleKey;
-extern NSString * XUIOptionCellShortTitleKey;
-extern NSString * XUIOptionCellValueKey;
-extern NSString * XUIOptionCellIconKey;
-
 @interface XUIBaseCell : UITableViewCell
 
 @property (nonatomic, strong) NSString *xui_cell;
@@ -26,9 +21,9 @@ extern NSString * XUIOptionCellIconKey;
 @property (nonatomic, strong) NSNumber *xui_readonly;
 @property (nonatomic, strong) NSNumber *xui_height;
 @property (nonatomic, strong) id xui_value;
+
 @property (nonatomic, strong) id <XUIAdapter> adapter;
 
-@property (nonatomic, strong) XUITheme *theme;
 @property (nonatomic, assign) BOOL canDelete;
 
 + (BOOL)xibBasedLayout;
@@ -37,8 +32,10 @@ extern NSString * XUIOptionCellIconKey;
 + (BOOL)layoutRequiresDynamicRowHeight;
 + (BOOL)layoutUsesAutoResizing;
 + (NSDictionary <NSString *, Class> *)entryValueTypes;
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error;
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error NS_REQUIRES_SUPER;
 
-- (void)setupCell; // init cell
+- (void)setupCell NS_REQUIRES_SUPER;
+- (void)configureCellWithEntry:(NSDictionary *)entry NS_REQUIRES_SUPER;
+- (void)setTheme:(XUITheme *)theme NS_REQUIRES_SUPER;
 
 @end

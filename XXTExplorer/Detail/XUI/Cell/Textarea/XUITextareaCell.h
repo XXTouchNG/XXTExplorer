@@ -11,7 +11,6 @@
 @interface XUITextareaCell : XUIBaseCell
 
 @property (nonatomic, strong) NSNumber *xui_maxLength;
-
 @property (nonatomic, strong) NSString *xui_alignment;
 @property (nonatomic, strong) NSString *xui_keyboard;
 @property (nonatomic, strong) NSString *xui_autoCaps;

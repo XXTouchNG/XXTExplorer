@@ -33,14 +33,19 @@
       };
 }
 
-+ (BOOL)checkEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super checkEntry:cellEntry withError:error];
++ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
+    BOOL superResult = [super testEntry:cellEntry withError:error];
     return superResult;
 }
 
 - (void)setupCell {
     [super setupCell];
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (void)configureCellWithEntry:(NSDictionary *)entry {
+    self.xui_url = entry[@"url"];
+    [super configureCellWithEntry:entry];
 }
 
 - (void)setXui_url:(NSString *)xui_url {

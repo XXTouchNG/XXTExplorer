@@ -429,7 +429,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             entryReader.metaDictionary &&
             entryReader.metaKeys) {
             
-            NSArray <Class> *supportedTypes = [XXTEBaseObjectViewController supportedTypes];
+            NSArray <Class> *supportedTypes = [NSObject baseTypes];
             NSDictionary *extendedDictionary = entryReader.metaDictionary;
             NSArray <NSString *> *displayExtendedKeys = entryReader.metaKeys;
             

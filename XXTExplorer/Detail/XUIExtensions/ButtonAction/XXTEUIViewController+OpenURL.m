@@ -1,15 +1,15 @@
 //
-//  XUIListViewController+OpenURL.m
+//  XXTEUIViewController+OpenURL.m
 //  XXTExplorer
 //
 //  Created by Zheng on 10/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController+OpenURL.h"
+#import "XXTEUIViewController+OpenURL.h"
 #import "XUIButtonCell.h"
 
-@implementation XUIListViewController (OpenURL)
+@implementation XXTEUIViewController (OpenURL)
 
 - (NSNumber *)xui_OpenURL:(XUIButtonCell *)cell {
     NSArray *kwargs = cell.xui_kwargs;

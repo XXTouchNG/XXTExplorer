@@ -1,17 +1,17 @@
 //
-//  XUIListViewController+XUILinkCell.m
+//  XXTEUIViewController+XUILinkCell.m
 //  XXTExplorer
 //
 //  Created by Zheng Wu on 29/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XUIListViewController+XUILinkCell.h"
-#import "XUIListViewController+SharedInstance.h"
+#import "XXTEUIViewController+XUILinkCell.h"
+#import "XXTEUIViewController+SharedInstance.h"
 
 #import "XXTECommonWebViewController.h"
 
-@implementation XUIListViewController (XUILinkCell)
+@implementation XXTEUIViewController (XUILinkCell)
 
 - (void)tableView:(UITableView *)tableView XUILinkCell:(UITableViewCell *)cell {
     XUILinkCell *linkCell = (XUILinkCell *)cell;

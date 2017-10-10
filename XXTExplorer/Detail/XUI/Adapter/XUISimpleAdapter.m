@@ -4,7 +4,6 @@
 //
 
 #import "XUISimpleAdapter.h"
-#import "XXTEAppDelegate.h"
 #import "XUIBaseCell.h"
 #import "XUI.h"
 
@@ -26,7 +25,8 @@
     if (self) {
         _path = path;
         _bundle = [NSBundle mainBundle];
-        _defaultsPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"uicfg"];
+        NSString *libraryPath = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject;
+        _defaultsPath = [libraryPath stringByAppendingPathComponent:@"uicfg"];
         BOOL setupResult = [self setupWithError:nil];
         if (!setupResult) return nil;
     }
@@ -38,7 +38,8 @@
     if (self) {
         _path = path;
         _bundle = bundle ? bundle : [NSBundle mainBundle];
-        _defaultsPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"uicfg"];
+        NSString *libraryPath = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject;
+        _defaultsPath = [libraryPath stringByAppendingPathComponent:@"uicfg"];
         BOOL setupResult = [self setupWithError:nil];
         if (!setupResult) return nil;
     }
