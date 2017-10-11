@@ -234,23 +234,21 @@ return {
       label = "TextField";
     };
     {
-      noAutoCorrect = true;
       defaults = "com.yourcompany.yourscript";
       default = "";
       label = "Username";
       cell = "TextField";
       key = "username";
-      keyboard = "default";
+      keyboard = "Default";
       placeholder = "Enter the username";
     };
     {
-      noAutoCorrect = true;
       defaults = "com.yourcompany.yourscript";
       default = "";
       label = "Password";
       cell = "SecureTextField";
       key = "password";
-      keyboard = "ascii";
+      keyboard = "ASCIICapable";
       placeholder = "Enter the password";
     };
     {
