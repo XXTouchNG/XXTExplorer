@@ -62,30 +62,6 @@ local _ENV = {
     tonumber = tonumber;
 }
 
-local function isNumeric(v)
-    return math.type(tonumber(tostring(v))) == 'integer'
-end
-
-local function isDecimalPad(v)
-    return tonumber(tostring(v)) ~= nil
-end
-
-local function isIP(v)
-    local function is00Toff(v)
-        return math.type(v) == 'integer' and v >= 0x00 and v <= 0xff
-    end
-    local ip1, ip2, ip3, ip4 = string.match(tostring(v), "^(%d+)%.(%d+)%.(%d+)%.(%d+)$")
-    return is00Toff(ip1) and is00Toff(ip2) and is00Toff(ip3) and is00Toff(ip4)
-end
-
-local function isEmail(v)
-    return string.match(tostring(v), "^([%w]+@[%w]+%.[%w]+)$") ~= nil
-end
-
-local function isURL(v)
-    return string.match(tostring(v), "^([%w]+://[%w.]*)$") ~= nil
-end
-
 local function _isEqual(a, b)
     if (a == b) then
         return true
@@ -475,47 +451,10 @@ function ValueCheckers.Stepper(item, value, index)
 end
 
 function ValueCheckers.TextField(item, value, index)
-    if item.isNumeric then
-        if not isNumeric(item.default) then
-            error(string.format('%q: items[%d](%q).default (integer expected got %s)', opt.XUIPath, index, item.key, math.type(item.default) or type(item.default)))
-        end
-        if not isNumeric(value) then
-            value = item.default
-        end
-    elseif item.isDecimalPad then
-        if not isDecimalPad(item.default) then
-            error(string.format('%q: items[%d](%q).default (number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
-        end
-        if not isDecimalPad(value) then
-            value = item.default
-        end
-    elseif item.isIP then
-        if not isIP(item.default) then
-            error(string.format('%q: items[%d](%q).default (IP expected)', opt.XUIPath, index, item.key))
-        end
-        if not isIP(value) then
-            value = item.default
-        end
-    elseif item.isEmail then
-        if not isEmail(item.default) then
-            error(string.format('%q: items[%d](%q).default (Email expected)', opt.XUIPath, index, item.key))
-        end
-        if not isEmail(value) then
-            value = item.default
-        end
-    elseif item.isURL then
-        if not isURL(item.default) then
-            error(string.format('%q: items[%d](%q).default (URL expected)', opt.XUIPath, index, item.key))
-        end
-        if not isURL(value) then
-            value = item.default
-        end
+    if item.default == nil then
+        item.default = ''
     else
-        if item.default == nil then
-            item.default = ''
-        else
-            item.default = tostring(item.default)
-        end
+        item.default = tostring(item.default)
     end
     if not value then
         value = item.default

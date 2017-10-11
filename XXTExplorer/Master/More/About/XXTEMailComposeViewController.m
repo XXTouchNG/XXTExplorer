@@ -11,7 +11,7 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return [self.navigationBar.tintColor xui_isDarkColor] ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
+    return UIStatusBarStyleLightContent;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
