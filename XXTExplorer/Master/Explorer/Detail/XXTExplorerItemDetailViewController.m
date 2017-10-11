@@ -291,8 +291,20 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         NSString *originalPath = [previewManager destinationOfSymbolicLinkAtPath:entryPath error:&originalError];
         
         if (originalPath) {
+            
+            NSString *originalAbsolutePath = nil;
+            if ([originalPath isAbsolutePath]) {
+                originalAbsolutePath = originalPath;
+            } else {
+                char *resolved_path = realpath(entryPath.UTF8String, NULL);
+                if (resolved_path) {
+                    originalAbsolutePath = [[NSString alloc] initWithUTF8String:resolved_path];
+                    free(resolved_path);
+                }
+            }
+            
             XXTEMoreAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-            cell3.addressLabel.text = originalPath;
+            cell3.addressLabel.text = originalAbsolutePath;
             
             XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
             section3.identifier = kXXTEDynamicSectionIdentifierSectionOriginal;
