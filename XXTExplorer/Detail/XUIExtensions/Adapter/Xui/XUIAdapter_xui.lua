@@ -41,6 +41,10 @@ local _ENV = {
         read = plist.read;
         write = plist.write;
     };
+    json = {
+        decode = json.decode;
+        encode = json.encode;
+    };
     table = {
         insert = table.insert;
         remove = table.remove;
@@ -51,6 +55,7 @@ local _ENV = {
     };
     io = {
         popen = io.popen;
+        open = io.open;
     };
     error = error;
     loadfile = loadfile;
@@ -135,11 +140,23 @@ end
 
 local XUITableBuilder, err = loadfile(opt.XUIPath, 'bt', __G)
 
-if type(XUITableBuilder) ~= 'function' then
-    error(err)
+if type(XUITableBuilder) == 'function' then
+    opt.XUITable = XUITableBuilder()
+else
+    opt.XUITable = plist.read(opt.XUIPath)
+    if type(opt.XUITable) ~= 'table' then
+        local f0, ferr = io.open(opt.XUIPath, 'r+b')
+        if not f0 then
+            error(ferr)
+        end
+        local ctx = f0:read('*a')
+        f0:close()
+        opt.XUITable = json.decode(ctx)
+        if type(opt.XUITable) ~= 'table' then
+            error(err)
+        end
+    end
 end
-
-opt.XUITable = XUITableBuilder()
 
 if type(opt.XUITable) ~= 'table' then
     error(string.format('%q', XUIPath))
