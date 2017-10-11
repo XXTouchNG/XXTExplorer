@@ -26,6 +26,8 @@
 #import <PromiseKit/PromiseKit.h>
 #import <NSURLConnection+PromiseKit.h>
 
+#import <XUI/XUIListViewController.h>
+
 typedef enum : NSUInteger {
     kXXTEMoreAboutSectionIndexWell = 0,
     kXXTEMoreAboutSectionIndexHomepage,
@@ -95,6 +97,10 @@ typedef enum : NSUInteger {
     cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell2.titleLabel.text = NSLocalizedString(@"Official Site", nil);
     
+    XXTEMoreLinkNoIconCell *bundleCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+    bundleCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    bundleCell.titleLabel.text = NSLocalizedString(@"Copyright & User Agreement", nil);
+    
     XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell3.titleLabel.text = NSLocalizedString(@"Mail Feedback", nil);
@@ -114,7 +120,7 @@ typedef enum : NSUInteger {
     staticCells = @[
                     @[ cell1 ],
                     //
-                    @[ cell2 ],
+                    @[ cell2, bundleCell ],
                     //
                     @[ cell3, cell4 ],
                     //
@@ -160,18 +166,26 @@ typedef enum : NSUInteger {
             NSURL *titleUrl = nil;
             if (indexPath.row == 0) {
                 titleUrl = [NSURL URLWithString:uAppDefine(@"OFFICIAL_SITE")];
-            }
-            XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
-            webController.title = titleString;
-            if (XXTE_COLLAPSED) {
-                XXTE_START_IGNORE_PARTIAL
-                if (@available(iOS 8.0, *)) {
-                    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:webController];
-                    [self showDetailViewController:navigationController sender:self];
+                XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:titleUrl];
+                webController.title = titleString;
+                if (XXTE_COLLAPSED) {
+                    XXTE_START_IGNORE_PARTIAL
+                    if (@available(iOS 8.0, *)) {
+                        XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:webController];
+                        [self showDetailViewController:navigationController sender:self];
+                    }
+                    XXTE_END_IGNORE_PARTIAL
+                } else {
+                    [self.navigationController pushViewController:webController animated:YES];
                 }
-                XXTE_END_IGNORE_PARTIAL
-            } else {
-                [self.navigationController pushViewController:webController animated:YES];
+            }
+            else if (indexPath.row == 1)
+            {
+                NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.bundle"];
+                NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Root.plist"];
+                XUIListViewController *xuiController = [[XUIListViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
+                xuiController.title = titleString;
+                [self.navigationController pushViewController:xuiController animated:YES];
             }
         }
         else if (indexPath.section == kXXTEMoreAboutSectionIndexFeedback) {

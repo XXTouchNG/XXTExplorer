@@ -37,7 +37,7 @@
         }
     }
     if (detailController) {
-        detailController.title = linkCell.xui_label;
+        detailController.title = linkCell.textLabel.text;
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }

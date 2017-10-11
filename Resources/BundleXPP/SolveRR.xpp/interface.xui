@@ -68,6 +68,7 @@ return {
           shortTitle = "Blue";
         };
       };
+      footerText = "This is a series of options.";
     };
     {
       defaults = "com.yourcompany.yourscript";

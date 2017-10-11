@@ -378,6 +378,9 @@
 "Copy %@" = "复制 %@";
 
 /* No comment provided by engineer. */
+"Copyright & User Agreement" = "版权与服务条款";
+
+/* No comment provided by engineer. */
 "Could not connect to the daemon." = "无法连接到守护进程.";
 
 /* No comment provided by engineer. */
@@ -1109,9 +1112,6 @@
 "Theme" = "主题";
 
 /* No comment provided by engineer. */
-"Third Party Credits" = "第三方协议";
-
-/* No comment provided by engineer. */
 "This feature is not supported." = "该功能暂不支持当前系统.";
 
 /* No comment provided by engineer. */
@@ -1187,9 +1187,6 @@
 
 /* No comment provided by engineer. */
 "Use this viewer to open all documents like this one." = "使用该查看器查看所有此类型文档.";
-
-/* No comment provided by engineer. */
-"User Agreement" = "用户协议";
 
 /* No comment provided by engineer. */
 "User Defaults" = "用户偏好设置";
