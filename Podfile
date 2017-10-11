@@ -1,5 +1,5 @@
 platform :ios, '7.0'
-inhibit_all_warnings!
+# inhibit_all_warnings!
 
 xcodeproj 'XXTExplorer'
 
