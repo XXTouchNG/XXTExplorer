@@ -95,7 +95,7 @@
                 localizedKey = [entryBundle localizedStringForKey:(pairKey) value:nil table:(@"Meta")];
             cell.titleLabel.text = localizedKey;
         } else {
-            cell.titleLabel.text = [pairKey stringValue];
+            cell.titleLabel.text = [pairKey xui_stringValue];
         }
     }
     else
@@ -116,7 +116,7 @@
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.valueLabel.textColor = [UIColor grayColor];
-        cell.valueLabel.text = [pairValue stringValue];
+        cell.valueLabel.text = [pairValue xui_stringValue];
     }
     else
     {

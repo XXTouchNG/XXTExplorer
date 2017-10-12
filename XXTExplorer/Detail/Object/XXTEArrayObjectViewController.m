@@ -86,7 +86,7 @@
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.valueLabel.textColor = [UIColor grayColor];
-        cell.valueLabel.text = [elementValue stringValue];
+        cell.valueLabel.text = [elementValue xui_stringValue];
     }
     else
     {

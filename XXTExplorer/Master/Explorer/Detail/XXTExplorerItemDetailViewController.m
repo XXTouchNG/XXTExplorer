@@ -466,7 +466,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
                         localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
                     cell.titleLabel.text = localizedKey;
                     cell.accessoryType = UITableViewCellAccessoryNone;
-                    cell.valueLabel.text = [extendedValue stringValue];
+                    cell.valueLabel.text = [extendedValue xui_stringValue];
                     
                     if (cell) [extendedCells addObject:cell];
                     [extendedHeights addObject:@(44.f)];

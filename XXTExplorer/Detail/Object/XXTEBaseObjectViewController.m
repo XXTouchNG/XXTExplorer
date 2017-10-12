@@ -40,7 +40,7 @@
         id Object = self.RootObject;
         XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell.titleLabel.text = NSLocalizedString(@"Value", nil);
-        cell.valueLabel.text = [Object stringValue];
+        cell.valueLabel.text = [Object xui_stringValue];
         cell;
     });
 }
