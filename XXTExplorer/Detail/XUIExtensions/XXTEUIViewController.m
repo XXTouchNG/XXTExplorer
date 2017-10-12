@@ -38,6 +38,7 @@
 }
 
 - (void)viewDidLoad {
+    self.hidesBottomBarWhenPushed = YES;
     [super viewDidLoad];
     if (self.awakeFromOutside) {
         [self.navigationItem setLeftBarButtonItem:nil];
