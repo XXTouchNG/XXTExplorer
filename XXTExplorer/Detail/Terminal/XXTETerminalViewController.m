@@ -213,7 +213,7 @@
     NSError *err = nil;
     BOOL result = [self.virtualModel loadFileFromPath:self.entryPath error:&err];
     if (!result && err) {
-        [self.textView appendError:[NSString stringWithFormat:@"\n%@\n", [err localizedFailureReason]]];
+        [self.textView appendError:[NSString stringWithFormat:@"\n%@\n", [err localizedDescription]]];
         self.launchItem.enabled = YES;
         return;
     } else {
@@ -224,7 +224,7 @@
         BOOL result = [self.virtualModel pcallWithError:&err];
         dispatch_async_on_main_queue(^{
             if (!result && err) {
-                [self.textView appendError:[NSString stringWithFormat:@"\n%@", [err localizedFailureReason]]];
+                [self.textView appendError:[NSString stringWithFormat:@"\n%@", [err localizedDescription]]];
                 return;
             }
         });

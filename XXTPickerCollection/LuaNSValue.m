@@ -418,8 +418,8 @@ BOOL lua_checkCode(lua_State *L, int code, NSError **error) {
     if (LUA_OK != code) {
         const char *cErrString = lua_tostring(L, -1);
         NSString *errString = [NSString stringWithUTF8String:cErrString];
-        NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Error", nil),
-                                         NSLocalizedFailureReasonErrorKey: errString
+        NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: errString,
+                                         NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Error", nil),
                                          };
         lua_pop(L, 1);
         if (error != nil)

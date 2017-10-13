@@ -317,11 +317,11 @@
         NSString *entryName = [self.entryPath lastPathComponent];
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 8.0, *)) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedFailureReason, error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self.navigationController presentViewController:alertController animated:YES completion:nil];
         } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedDescription, error.localizedFailureReason] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedFailureReason, error.localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alertView show];
         }
         XXTE_END_IGNORE_PARTIAL
