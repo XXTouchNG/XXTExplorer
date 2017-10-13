@@ -10,6 +10,7 @@
 #import "XXTEUIViewController+SharedInstance.h"
 
 #import "XXTECommonWebViewController.h"
+#import <XUI/XUICellFactory.h>
 
 @implementation XXTEUIViewController (XUILinkCell)
 
@@ -39,6 +40,11 @@
     }
     if (detailController) {
         detailController.title = linkCell.textLabel.text;
+        if ([detailController isKindOfClass:[self class]])
+        {
+            XXTEUIViewController *nextController = (XXTEUIViewController *)detailController;
+            nextController.cellFactory.theme = self.cellFactory.theme;
+        }
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }

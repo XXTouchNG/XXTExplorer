@@ -8,6 +8,8 @@
 		<string>#3498db</string>
 		<key>navigationBarColor</key>
 		<string>#3498db</string>
+		<key>selectedColor</key>
+		<string>#3498db18</string>
 	</dict>
 	<key>items</key>
 	<array>
