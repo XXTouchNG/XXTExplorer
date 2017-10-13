@@ -64,12 +64,6 @@
     [self resetCellState];
 }
 
-- (void)configureCellWithEntry:(NSDictionary *)entry {
-    self.xui_allowedExtensions = entry[@"allowedExtensions"];
-    self.xui_initialPath = entry[@"initialPath"];
-    [super configureCellWithEntry:entry];
-}
-
 - (void)setXui_value:(id)xui_value {
     if (!xui_value) {
         _xui_value = xui_value;

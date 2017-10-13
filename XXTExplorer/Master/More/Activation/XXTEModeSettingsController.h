@@ -6,5 +6,10 @@
 #import <Foundation/Foundation.h>
 #import "libactivator.h"
 
+#if !(TARGET_OS_SIMULATOR)
 @interface XXTEModeSettingsController : LAModeSettingsController
+#else
+@interface XXTEModeSettingsController : UIViewController
+#endif
+
 @end

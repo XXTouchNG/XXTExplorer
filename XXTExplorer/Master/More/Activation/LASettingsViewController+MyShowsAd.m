@@ -5,7 +5,7 @@
 
 #import "LASettingsViewController+MyShowsAd.h"
 
-
+#if !(TARGET_OS_SIMULATOR)
 @implementation LASettingsViewController (MyShowsAd)
 
 - (BOOL)showsAd
@@ -19,3 +19,4 @@
 }
 
 @end
+#endif

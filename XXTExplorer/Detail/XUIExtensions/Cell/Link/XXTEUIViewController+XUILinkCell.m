@@ -26,6 +26,7 @@
         NSString *detailPath = [self.bundle pathForResource:detailUrl ofType:nil];
         if ([[self.class suggestedExtensions] containsObject:detailPathNameExt]) {
             detailController = [[[self class] alloc] initWithPath:detailPath withBundlePath:[self.bundle bundlePath]];
+            detailController.hidesBottomBarWhenPushed = self.hidesBottomBarWhenPushed;
         }
         else {
             NSError *entryError = nil;

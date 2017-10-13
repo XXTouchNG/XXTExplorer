@@ -12,11 +12,11 @@
 @implementation XXTEUIViewController (OpenURL)
 
 - (NSNumber *)xui_OpenURL:(XUIButtonCell *)cell {
-    NSArray *kwargs = cell.xui_kwargs;
-    if (!kwargs || kwargs.count != 1 || ![kwargs[0] isKindOfClass:[NSString class]]) {
+    NSDictionary *args = cell.xui_args;
+    if (![args[@"url"] isKindOfClass:[NSString class]]) {
         return @(NO);
     }
-    NSURL *url = [NSURL URLWithString:kwargs[0]];
+    NSURL *url = [NSURL URLWithString:args[@"url"]];
     BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:url];
     if (canOpenURL) {
         [[UIApplication sharedApplication] openURL:url];

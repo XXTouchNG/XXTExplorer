@@ -19,13 +19,12 @@
 #import "XXTENetworkDefines.h"
 #import "XXTEMoreApplicationListController.h"
 #import "XXTEMoreLicenseController.h"
-#import "XXTEMoreAboutController.h"
-#import "XXTEMoreDocumentsController.h"
 #import "XXTEMoreActivationController.h"
 #import "XXTEMoreRecordingController.h"
 #import "XXTENotificationCenterDefines.h"
 #import "XXTEMoreUserDefaultsController.h"
 #import "XXTEMoreBootScriptController.h"
+#import "XXTEUIViewController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreSectionIndexRemote = 0,
@@ -257,7 +256,7 @@ typedef enum : NSUInteger {
     XXTEMoreLinkCell *cell14 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell14.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell14.imageView.image = [UIImage imageNamed:@"XXTEMoreIconDocumentsOnline"];
-    cell14.titleLabel.text = NSLocalizedString(@"Documents (Online)", nil);
+    cell14.titleLabel.text = NSLocalizedString(@"Online Documents", nil);
     
     XXTEMoreLinkCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell15.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -459,13 +458,18 @@ typedef enum : NSUInteger {
             }
         }
         else if (indexPath.section == kXXTEMoreSectionIndexHelp) {
+            NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.bundle"];
             if (indexPath.row == 0) {
-                XXTEMoreDocumentsController *documentsController = [[XXTEMoreDocumentsController alloc] initWithStyle:UITableViewStyleGrouped];
-                [self.navigationController pushViewController:documentsController animated:YES];
+                NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
+                XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
+                xuiController.hidesBottomBarWhenPushed = NO;
+                [self.navigationController pushViewController:xuiController animated:YES];
             }
             else if (indexPath.row == 1) {
-                XXTEMoreAboutController *aboutController = [[XXTEMoreAboutController alloc] initWithStyle:UITableViewStyleGrouped];
-                [self.navigationController pushViewController:aboutController animated:YES];
+                NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
+                xuiController.hidesBottomBarWhenPushed = NO;
+                [self.navigationController pushViewController:xuiController animated:YES];
             }
         }
     }

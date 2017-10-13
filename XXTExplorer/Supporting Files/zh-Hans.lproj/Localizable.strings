@@ -336,9 +336,6 @@
 "Close" = "关闭";
 
 /* No comment provided by engineer. */
-"Code Snippet Reference" = "代码片段参考文档";
-
-/* No comment provided by engineer. */
 "Code Snippets" = "代码片段";
 
 /* No comment provided by engineer. */
@@ -376,9 +373,6 @@
 
 /* No comment provided by engineer. */
 "Copy %@" = "复制 %@";
-
-/* No comment provided by engineer. */
-"Copyright & User Agreement" = "版权与服务条款";
 
 /* No comment provided by engineer. */
 "Could not connect to the daemon." = "无法连接到守护进程.";
@@ -444,9 +438,6 @@
 "Detail" = "详情";
 
 /* No comment provided by engineer. */
-"Developer Reference" = "开发者参考文档";
-
-/* No comment provided by engineer. */
 "Device" = "设备";
 
 /* No comment provided by engineer. */
@@ -474,9 +465,6 @@
 "Documents" = "文档";
 
 /* No comment provided by engineer. */
-"Documents (Online)" = "在线文档";
-
-/* No comment provided by engineer. */
 "Done" = "完成";
 
 /* No comment provided by engineer. */
@@ -493,9 +481,6 @@
 
 /* No comment provided by engineer. */
 "Download terminated: User interrupt occurred." = "下载终止: 用户结束操作.";
-
-/* No comment provided by engineer. */
-"DynamicXUI (XUI) Reference" = "XUI 参考文档";
 
 /* No comment provided by engineer. */
 "Edit" = "编辑";
@@ -687,9 +672,6 @@
 "Mac Classic" = "Mac Classic";
 
 /* No comment provided by engineer. */
-"Mail Feedback" = "邮件反馈";
-
-/* No comment provided by engineer. */
 "Modified At" = "修改于";
 
 /* No comment provided by engineer. */
@@ -762,22 +744,16 @@
 "Off" = "Off";
 
 /* No comment provided by engineer. */
-"Official QQ Group" = "官方 QQ 群";
-
-/* No comment provided by engineer. */
-"Official Site" = "官方网站";
-
-/* No comment provided by engineer. */
 "OK" = "好";
 
 /* No comment provided by engineer. */
 "On" = "On";
 
 /* No comment provided by engineer. */
-"Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
+"Online Documents" = "在线文档";
 
 /* No comment provided by engineer. */
-"Open API Reference" = "Open API 参考文档";
+"Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
 
 /* No comment provided by engineer. */
 "Open URL" = "打开 URL";
@@ -934,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "Reset" = "重置";
-
-/* No comment provided by engineer. */
-"Reset Confirm" = "重置确认";
 
 /* No comment provided by engineer. */
 "Reset Defaults" = "恢复初始设置";
@@ -1183,16 +1156,10 @@
 "Unknown" = "未知";
 
 /* No comment provided by engineer. */
-"Update Logs" = "更新日志";
-
-/* No comment provided by engineer. */
 "Use this viewer to open all documents like this one." = "使用该查看器查看所有此类型文档.";
 
 /* No comment provided by engineer. */
 "User Defaults" = "用户偏好设置";
-
-/* No comment provided by engineer. */
-"User's Guide" = "用户指南";
 
 /* No comment provided by engineer. */
 "Value" = "值";

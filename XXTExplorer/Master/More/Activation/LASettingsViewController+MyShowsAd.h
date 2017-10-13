@@ -6,11 +6,12 @@
 #import <Foundation/Foundation.h>
 #import "LASettingsViewController.h"
 
+#if !(TARGET_OS_SIMULATOR)
 @interface LASettingsViewController (MyShowsAd)
-
 
 - (BOOL)showsAd;
 
 - (BOOL)myShowsAd;
 
 @end
+#endif

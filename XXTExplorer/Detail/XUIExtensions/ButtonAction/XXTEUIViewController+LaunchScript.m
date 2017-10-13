@@ -16,11 +16,11 @@
 @implementation XXTEUIViewController (LaunchScript)
 
 - (NSNumber *)xui_LaunchScript:(XUIButtonCell *)cell {
-    NSArray *kwargs = cell.xui_kwargs;
-    if (!kwargs || kwargs.count != 1 || ![kwargs[0] isKindOfClass:[NSString class]]) {
+    NSDictionary *args = cell.xui_args;
+    if (![args[@"path"] isKindOfClass:[NSString class]]) {
         return @(NO);
     }
-    NSString *scriptName = kwargs[0];
+    NSString *scriptName = args[@"path"];
     NSString *scriptPath = [self.bundle pathForResource:scriptName ofType:nil];
     blockInteractionsWithDelay(self, YES, 0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": scriptPath, @"envp": uAppConstEnvp()}]

@@ -59,6 +59,7 @@ static void * activatorHandler = nil;
     
     activatorHandler = NULL;
     if (0 == access([kXXTEActivatorLibraryPath UTF8String], R_OK)) {
+#if !(TARGET_OS_SIMULATOR)
         activatorHandler = dlopen([kXXTEActivatorLibraryPath UTF8String], RTLD_LAZY);
         Class la = objc_getClass("LAActivator");
         if (!la) {
@@ -76,6 +77,7 @@ static void * activatorHandler = nil;
             Method s2_Method = class_getInstanceMethod([LASettingsViewController class], @selector(myShowsAd));
             method_exchangeImplementations(s1_Method, s2_Method);
         }
+#endif
     } else {
         _activatorExists = NO;
     }
@@ -237,7 +239,11 @@ static void * activatorHandler = nil;
                 toastMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
             }
         } else if (indexPath.section == 1) {
+#if !(TARGET_OS_SIMULATOR)
             XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] initWithMode:nil];
+#else
+            XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] init];
+#endif
             vc.title = NSLocalizedString(@"Activator", nil);
             [self.navigationController pushViewController:vc animated:YES];
         }

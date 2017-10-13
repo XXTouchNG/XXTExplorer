@@ -33,12 +33,24 @@
 - (instancetype)initWithPath:(NSString *)path { 
     if (self = [super initWithPath:path]) {
         _entryPath = path;
+        [self setupUI];
     }
     return self;
 }
 
-- (void)viewDidLoad {
+- (instancetype)initWithPath:(NSString *)path withBundlePath:(NSString *)bundlePath {
+    if (self = [super initWithPath:path withBundlePath:bundlePath]) {
+        _entryPath = path;
+        [self setupUI];
+    }
+    return self;
+}
+
+- (void)setupUI {
     self.hidesBottomBarWhenPushed = YES;
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     if (self.awakeFromOutside) {
         [self.navigationItem setLeftBarButtonItem:nil];

@@ -525,10 +525,9 @@ function ValueCheckers.Button(item, value, index)
     if type(item.action) ~= 'string' then
         error(string.format('%q: items[%d](%q).action (string expected got %s)', opt.XUIPath, index, item.key, type(item.action)))
     end
-    if type(item.kwargs) ~= 'table' then
-        item.kwargs = {}
+    if type(item.args) ~= 'table' then
+        item.args = {}
     end
-    item.kwargs.isArray = true
     return value
 end
 
@@ -562,6 +561,7 @@ local cellNameMap = {
     link            = 'Link';
     statictext      = 'StaticText';
     image           = 'Image';
+    animatedimage   = 'AnimatedImage';
 }
 
 local events = {}

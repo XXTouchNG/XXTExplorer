@@ -64,7 +64,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setup {
-//    self.hidesBottomBarWhenPushed = YES;
+    
 }
 
 #pragma mark - Default Style

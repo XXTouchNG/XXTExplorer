@@ -26,13 +26,13 @@ All Rights Reserved.</string>
 			<key>Title</key>
 			<string>Terms Of Service</string>
 			<key>File</key>
-			<string>tos</string>
+			<string>TOS</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>Licenses</string>
+			<string>3rd Party Credits</string>
 			<key>File</key>
 			<string>3rd</string>
 		</dict>
