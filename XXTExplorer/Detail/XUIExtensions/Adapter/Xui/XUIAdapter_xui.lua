@@ -205,6 +205,17 @@ function ValueCheckers.TitleValue(item, value, index)
     end
 end
 
+function ValueCheckers.EditableList(item, value, index)
+    if type(item.default) ~= 'table' then
+        item.default = {}
+    end
+    item.default.isArray = true
+    if type(value) ~= 'table' then
+        value = item.default
+    end
+    return value
+end
+
 function ValueCheckers.Option(item, value, index)
     if type(item.options) ~= 'table' then
         item.options = {isArray = true}
@@ -562,6 +573,7 @@ local cellNameMap = {
     statictext      = 'StaticText';
     image           = 'Image';
     animatedimage   = 'AnimatedImage';
+    editablelist    = 'EditableList';
 }
 
 local events = {}

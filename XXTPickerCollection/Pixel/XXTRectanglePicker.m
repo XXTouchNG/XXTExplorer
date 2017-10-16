@@ -520,11 +520,13 @@
 }
 
 - (void)cropView:(XXTPixelCropView *)crop selectValueUpdated:(id)selectedValue {
-    if (@available(iOS 10.0, *)) {
-        UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
-        [feedbackGenerator impactOccurred];
-    }
     XXTPixelPickerType type = [[self class] cropViewType];
+    if (type != kXXTPixelCropViewTypeRect) {
+        if (@available(iOS 10.0, *)) {
+            UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+            [feedbackGenerator impactOccurred];
+        }
+    }
     if (type == kXXTPixelCropViewTypeRect) {
         NSAssert([selectedValue isKindOfClass:[NSValue class]], @"type == kXXTPixelCropViewTypeRect");
         CGRect cropRect = [selectedValue CGRectValue];
