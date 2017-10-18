@@ -109,12 +109,14 @@
         if ([stringsTable isKindOfClass:[NSString class]]) {
             _stringsTable = stringsTable;
         }
+        NSMutableDictionary *mutableValue = [[NSMutableDictionary alloc] initWithDictionary:value];
+        mutableValue[@"footerText"] = NSLocalizedString(@"This page is provided by the script producer.", nil);
 #ifdef DEBUG
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value options:0 error:error];
         [jsonData writeToFile:[self.path stringByAppendingPathExtension:@"json"] atomically:YES];
         [value writeToFile:[self.path stringByAppendingPathExtension:@"plist"] atomically:YES];
 #endif
-        return value;
+        return [mutableValue copy];
     }
     return nil;
 }

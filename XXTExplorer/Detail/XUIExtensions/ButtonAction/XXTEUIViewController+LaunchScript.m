@@ -12,12 +12,14 @@
 #import "XXTENetworkDefines.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
+#import <XUI/XUILogger.h>
 
 @implementation XXTEUIViewController (LaunchScript)
 
 - (NSNumber *)xui_LaunchScript:(XUIButtonCell *)cell {
     NSDictionary *args = cell.xui_args;
     if (![args[@"path"] isKindOfClass:[NSString class]]) {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(LaunchScript:) -> path", @"NSString")];
         return @(NO);
     }
     NSString *scriptName = args[@"path"];

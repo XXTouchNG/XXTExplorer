@@ -18,13 +18,25 @@
 
 - (NSNumber *)xui_SendMail:(XUIButtonCell *)cell {
     NSDictionary *args = cell.xui_args;
-    if ((args[@"subject"] && ![args[@"subject"] isKindOfClass:[NSString class]]) ||
-        (args[@"toRecipients"] && ![args[@"toRecipients"] isKindOfClass:[NSArray class]]) ||
-        (args[@"ccRecipients"] && ![args[@"ccRecipients"] isKindOfClass:[NSArray class]]) ||
-        (args[@"bccRecipients"] && ![args[@"bccRecipients"] isKindOfClass:[NSArray class]]) ||
-        (args[@"attachments"] && ![args[@"attachments"] isKindOfClass:[NSArray class]])
-        )
+    if ((args[@"subject"] && ![args[@"subject"] isKindOfClass:[NSString class]]))
     {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(SendMail:) -> subject", @"NSString")];
+        return @(NO);
+    }
+    if ((args[@"toRecipients"] && ![args[@"toRecipients"] isKindOfClass:[NSArray class]])) {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(SendMail:) -> toRecipients", @"NSArray")];
+        return @(NO);
+    }
+    if ((args[@"ccRecipients"] && ![args[@"ccRecipients"] isKindOfClass:[NSArray class]])) {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(SendMail:) -> ccRecipients", @"NSArray")];
+        return @(NO);
+    }
+    if ((args[@"bccRecipients"] && ![args[@"bccRecipients"] isKindOfClass:[NSArray class]])) {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(SendMail:) -> bccRecipients", @"NSArray")];
+        return @(NO);
+    }
+    if ((args[@"attachments"] && ![args[@"attachments"] isKindOfClass:[NSArray class]])) {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(SendMail:) -> attachments", @"NSArray")];
         return @(NO);
     }
     if ([XXTEMailComposeViewController canSendMail]) {

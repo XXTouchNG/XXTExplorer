@@ -8,12 +8,14 @@
 
 #import "XXTEUIViewController+OpenURL.h"
 #import "XUIButtonCell.h"
+#import <XUI/XUILogger.h>
 
 @implementation XXTEUIViewController (OpenURL)
 
 - (NSNumber *)xui_OpenURL:(XUIButtonCell *)cell {
     NSDictionary *args = cell.xui_args;
     if (![args[@"url"] isKindOfClass:[NSString class]]) {
+        [self.logger logMessage:XUIParserErrorInvalidType(@"@selector(OpenURL:) -> url", @"NSString")];
         return @(NO);
     }
     NSURL *url = [NSURL URLWithString:args[@"url"]];
