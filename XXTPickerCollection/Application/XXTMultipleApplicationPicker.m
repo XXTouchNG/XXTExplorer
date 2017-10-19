@@ -552,7 +552,7 @@ UISearchDisplayDelegate
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTMultipleApplicationPicker dealloc]");
+    NSLog(@"- [XXTMultipleApplicationPicker dealloc]");
 #endif
 }
 

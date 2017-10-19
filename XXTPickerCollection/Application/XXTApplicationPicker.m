@@ -408,7 +408,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTApplicationPicker dealloc]");
+    NSLog(@"- [XXTApplicationPicker dealloc]");
 #endif
 }
 

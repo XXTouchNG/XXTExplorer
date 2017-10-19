@@ -497,7 +497,7 @@ typedef enum : NSUInteger {
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEDownloadViewController dealloc]");
+    NSLog(@"- [XXTEDownloadViewController dealloc]");
 #endif
 }
 

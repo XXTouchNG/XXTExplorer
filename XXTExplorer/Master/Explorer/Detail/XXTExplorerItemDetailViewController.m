@@ -880,7 +880,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTExplorerItemDetailViewController dealloc]");
+    NSLog(@"- [XXTExplorerItemDetailViewController dealloc]");
 #endif
 }
 

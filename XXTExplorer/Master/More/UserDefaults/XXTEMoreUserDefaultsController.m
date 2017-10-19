@@ -375,7 +375,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)dealloc {
     [self.searchController.view removeFromSuperview];
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreUserDefaultsController dealloc]");
+    NSLog(@"- [XXTEMoreUserDefaultsController dealloc]");
 #endif
 }
 

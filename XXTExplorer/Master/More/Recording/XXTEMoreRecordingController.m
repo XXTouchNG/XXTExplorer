@@ -240,7 +240,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreRecordingController dealloc]");
+    NSLog(@"- [XXTEMoreRecordingController dealloc]");
 #endif
 }
 

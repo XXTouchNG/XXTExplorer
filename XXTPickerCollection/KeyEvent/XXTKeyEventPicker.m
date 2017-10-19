@@ -206,7 +206,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTKeyEventPicker dealloc]");
+    NSLog(@"- [XXTKeyEventPicker dealloc]");
 #endif
 }
 

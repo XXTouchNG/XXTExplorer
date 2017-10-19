@@ -356,7 +356,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)dealloc {
     [self.searchController.view removeFromSuperview];
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreApplicationListController dealloc]");
+    NSLog(@"- [XXTEMoreApplicationListController dealloc]");
 #endif
 }
 

@@ -286,7 +286,7 @@ static void * activatorHandler = nil;
         dlclose(activatorHandler);
     }
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreActivationController dealloc]");
+    NSLog(@"- [XXTEMoreActivationController dealloc]");
 #endif
 }
 

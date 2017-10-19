@@ -119,7 +119,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     staticSectionTitles = @[ NSLocalizedString(@"New License", nil),
                              NSLocalizedString(@"Current License", nil),
                              NSLocalizedString(@"Device", nil) ];
-    staticSectionFooters = @[ NSLocalizedString(@"Enter your 16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", nil), NSLocalizedString(@"The content displayed in this page cannot be the proof of your purchase.", nil), @"" ];
+    staticSectionFooters = @[ NSLocalizedString(@"Enter your 12/16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included.", nil), NSLocalizedString(@"The content displayed in this page cannot be the proof of your purchase.", nil), @"" ];
     
     XXTEMoreLicenseCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLicenseCell class]) owner:nil options:nil] lastObject];
     cell1.licenseField.text = @"";
@@ -273,7 +273,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     UITextField *textField = self.licenseField;
     NSString *fromString = textField.text;
     NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (trimedString.length != 16) {
+    if (trimedString.length != 12 && trimedString.length != 16) {
         [self.licenseShaker shake];
         return NO;
     }
@@ -373,18 +373,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.licenseField) {
         NSString *fromString = textField.text;
-        if (range.location == fromString.length - 1 && range.length == 1) {
-            if ([[fromString substringWithRange:range] isEqualToString:@" "]) {
-                [textField deleteBackward];
-            }
-            [textField deleteBackward];
-            [self textFieldDidChange:textField];
-            return NO;
-        }
-        if (range.location != fromString.length) {
-            [self textFieldDidChange:textField];
-            return NO;
-        }
         NSString *toString = [fromString stringByReplacingCharactersInRange:range withString:string];
         if (![self isValidLicenseFormat:toString]) {
             [self.licenseShaker shake];
@@ -408,9 +396,12 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (trimedString.length == 16) {
         textField.textColor = XXTE_COLOR_SUCCESS;
-        self.doneButtonItem.enabled = YES;
     } else {
         textField.textColor = XXTE_COLOR;
+    }
+    if (trimedString.length == 12 || trimedString.length == 16) {
+        self.doneButtonItem.enabled = YES;
+    } else {
         self.doneButtonItem.enabled = NO;
     }
 }
@@ -418,8 +409,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 #pragma mark - License Check
 
 - (BOOL)isValidLicenseFormat:(NSString *)licenseCode {
-    if (licenseCode.length <= 0)
-        return NO;
     NSString *trimedString = [licenseCode stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *upperedString = [trimedString uppercaseString];
     NSString *regex = @"^[3-9A-Z]{0,16}$";
@@ -428,12 +417,13 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 }
 
 - (NSString *)formatLicense:(NSString *)licenseCode {
-    NSString *trimedString = [licenseCode stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSString *upperedString = [trimedString uppercaseString];
+    NSString *trimmedString = [licenseCode stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSUInteger trimmedLength = trimmedString.length;
+    NSString *upperedString = [trimmedString uppercaseString];
     NSMutableString *spacedString = [[NSMutableString alloc] init];
     for (NSUInteger i = 0; i < upperedString.length; i++) {
         [spacedString appendString:[upperedString substringWithRange:NSMakeRange(i, 1)]];
-        if ((i + 1) % 4 == 0 && i != 15) {
+        if ((i + 1) % 4 == 0 && (i != trimmedLength - 1)) {
             [spacedString appendString:@" "];
         }
     }
@@ -809,7 +799,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreLicenseController dealloc]");
+    NSLog(@"- [XXTEMoreLicenseController dealloc]");
 #endif
 }
 

@@ -144,7 +144,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTPickerFactory dealloc]");
+    NSLog(@"- [XXTPickerFactory dealloc]");
 #endif
 }
 

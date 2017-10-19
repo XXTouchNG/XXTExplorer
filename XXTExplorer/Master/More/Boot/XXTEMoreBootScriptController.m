@@ -334,7 +334,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreBootScriptController dealloc]");
+    NSLog(@"- [XXTEMoreBootScriptController dealloc]");
 #endif
 }
 

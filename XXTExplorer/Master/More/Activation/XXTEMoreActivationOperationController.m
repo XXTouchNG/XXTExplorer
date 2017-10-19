@@ -220,7 +220,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreActivationOperationController dealloc]");
+    NSLog(@"- [XXTEMoreActivationOperationController dealloc]");
 #endif
 }
 

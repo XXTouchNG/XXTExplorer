@@ -153,7 +153,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTPixelPreview dealloc]");
+    NSLog(@"- [XXTPixelPreview dealloc]");
 #endif
 }
 

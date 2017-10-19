@@ -191,7 +191,7 @@
         NSString *bindedViewerName = bindingDictionary[entryBaseExtension];
         if (bindedViewerName) {
             Class bindedViewerClass = NSClassFromString(bindedViewerName);
-            if (bindedViewerClass) {
+            if ([bindedViewerClass respondsToSelector:@selector(relatedReader)]) {
                 Class relatedReaderClass = [((Class <XXTEViewer>)bindedViewerClass) relatedReader];
                 if (relatedReaderClass) {
                     id <XXTExplorerEntryReader> relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];

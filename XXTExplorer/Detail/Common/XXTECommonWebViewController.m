@@ -69,7 +69,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTECommonWebViewController dealloc]");
+    NSLog(@"- [XXTECommonWebViewController dealloc]");
 #endif
 }
 

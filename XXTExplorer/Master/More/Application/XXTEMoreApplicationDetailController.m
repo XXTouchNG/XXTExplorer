@@ -319,7 +319,7 @@ typedef enum : NSUInteger {
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTEMoreApplicationDetailController dealloc]");
+    NSLog(@"- [XXTEMoreApplicationDetailController dealloc]");
 #endif
 }
 

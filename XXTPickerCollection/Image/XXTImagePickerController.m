@@ -551,7 +551,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTImagePickerController dealloc]");
+    NSLog(@"- [XXTImagePickerController dealloc]");
 #endif
 }
 

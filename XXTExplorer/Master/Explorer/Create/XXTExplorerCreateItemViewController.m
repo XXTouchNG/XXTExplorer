@@ -452,7 +452,7 @@ typedef enum : NSUInteger {
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"[XXTExplorerCreateItemViewController dealloc]");
+    NSLog(@"- [XXTExplorerCreateItemViewController dealloc]");
 #endif
 }
 

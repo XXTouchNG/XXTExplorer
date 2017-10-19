@@ -194,11 +194,13 @@ typedef enum : NSUInteger {
         } else {
             viewerClass = nil;
         }
-        if (viewerClass) {
+        if ([viewerClass respondsToSelector:@selector(viewerName)]) {
             cell.entryTitleLabel.text = [viewerClass viewerName];
             cell.entrySubtitleLabel.text = [self openWithCellDescriptionFromExtensions:[viewerClass suggestedExtensions]];
-            Class <XXTExplorerEntryReader> readerClass = [viewerClass relatedReader];
-            cell.entryIconImageView.image = [readerClass defaultImage];
+            if ([viewerClass respondsToSelector:@selector(relatedReader)]) {
+                Class <XXTExplorerEntryReader> readerClass = [viewerClass relatedReader];
+                cell.entryIconImageView.image = [readerClass defaultImage];
+            }
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
