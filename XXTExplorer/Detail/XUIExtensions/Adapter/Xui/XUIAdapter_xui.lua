@@ -36,6 +36,7 @@ local _ENV = {
         match = string.match;
         gsub = string.gsub;
         lower = string.lower;
+        find = string.find;
     };
     plist = {
         read = plist.read;
@@ -114,6 +115,20 @@ local function removeValueInArrayIf(array, condition)
     end
 end
 
+local function sh_escape(path)
+    path = string.gsub(path, "([ \\()<>'\"`#&*;?~$])", "\\%1")
+    return path
+end
+
+local function fixPermission(path)
+    io.popen(
+        opt.rootPath..'/bin/add1s chmod -R 644 '..sh_escape(path)..'; '..
+        opt.rootPath..'/bin/add1s chown -R mobile:mobile '..sh_escape(path)
+    )
+end
+
+fixPermission(opt.XUIPath)
+
 local XUITableBuilder, err = loadfile(opt.XUIPath, 'bt', __G)
 
 if type(XUITableBuilder) == 'function' then
@@ -143,16 +158,6 @@ local function getDefaultsPath(defaults)
 end
 
 local DefaultsCaches = {}
-
-local function sh_escape(path)
-    path = string.gsub(path, "([ \\()<>'\"`#&*;?~$])", "\\%1")
-    return path
-end
-
-local function fixPermission(path)
-    io.popen(opt.rootPath..'/bin/add1s chmod -R 644 '..sh_escape(path))
-    io.popen(opt.rootPath..'/bin/add1s chown -R mobile:mobile '..sh_escape(path))
-end
 
 local function loadDefaultsAndCache(defaultsId)
     if not DefaultsCaches[defaultsId] then
@@ -608,6 +613,21 @@ function _loadDefaults(opt)
             end
         end
     end
+
+    XUITable.footer = 'This page is provided by the script producer.'
+    local _GlobalPreferences = plist.read("/private/var/mobile/Library/Preferences/.GlobalPreferences.plist")
+    if type(_GlobalPreferences) ~= 'table' then
+        _GlobalPreferences = {}
+    end
+    if type(_GlobalPreferences.AppleLanguages) == "table" then
+        local lang = _GlobalPreferences.AppleLanguages[1]
+        if type(lang) == 'string' then
+            if string.find(lang, 'zh') == 1 then
+                XUITable.footer = '该页所示内容由脚本开发商提供'
+            end
+        end
+    end
+
     return XUITable
 end
 
