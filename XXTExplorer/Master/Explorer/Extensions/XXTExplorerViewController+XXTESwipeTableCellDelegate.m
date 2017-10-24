@@ -8,9 +8,11 @@
 
 #import "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"
 #import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTExplorerViewController+FileOperation.h"
+#import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
+#import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
 
@@ -109,6 +111,16 @@
             } else {
                 toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]));
             }
+        } else if ([buttonAction isEqualToString:@"Encrypt"]) {
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Encrypt Confirm", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
+                                                                  style:LGAlertViewStyleActionSheet
+                                                           buttonTitles:@[ ]
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                 destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                               delegate:self];
+            objc_setAssociatedObject(alertView, @selector(alertView:encryptItemAtPath:), entryPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [alertView showAnimated:YES completionHandler:nil];
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {
         NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);
@@ -153,7 +165,7 @@
             } else {
                 buttonTitle = @"";
             }
-            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconLaunch]
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconLaunch"]
                                                        backgroundColor:[colorSeries colorWithAlphaComponent:1.f]
                                                                 insets:buttonInsets];
             if (!hidesLabel) {
@@ -171,7 +183,7 @@
                 } else {
                     buttonTitle = @"";
                 }
-                XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconConfigure]
+                XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconConfigure"]
                                                            backgroundColor:[colorSeries colorWithAlphaComponent:.9f]
                                                                     insets:buttonInsets];
                 if (!hidesLabel) {
@@ -189,7 +201,7 @@
             } else {
                 buttonTitle = @"";
             }
-            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconEdit]
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconEdit"]
                                                        backgroundColor:[colorSeries colorWithAlphaComponent:.8f]
                                                                 insets:buttonInsets];
             if (!hidesLabel) {
@@ -206,7 +218,7 @@
             } else {
                 buttonTitle = @"";
             }
-            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconInside]
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconInside"]
                                                        backgroundColor:[colorSeries colorWithAlphaComponent:.8f]
                                                                 insets:buttonInsets];
             if (!hidesLabel) {
@@ -216,13 +228,30 @@
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
+        if (entryReader.executable && entryReader.editable) {
+            NSString *buttonTitle = nil;
+            if (!hidesLabel) {
+                buttonTitle = NSLocalizedString(@"Encrypt", nil);
+            } else {
+                buttonTitle = @"";
+            }
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconEncrypt"]
+                                                       backgroundColor:[colorSeries colorWithAlphaComponent:.7f]
+                                                                insets:buttonInsets];
+            if (!hidesLabel) {
+                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
+                [button centerIconOverText];
+            }
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Encrypt", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:button];
+        }
         NSString *buttonTitle = nil;
         if (!hidesLabel) {
             buttonTitle = NSLocalizedString(@"Property", nil);
         } else {
             buttonTitle = @"";
         }
-        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconProperty]
+        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconProperty"]
                                                    backgroundColor:[colorSeries colorWithAlphaComponent:.6f]
                                                             insets:buttonInsets];
         if (!hidesLabel) {
@@ -239,7 +268,7 @@
         } else {
             buttonTitle = @"";
         }
-        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:XXTExplorerActionIconTrash]
+        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconTrash"]
                                                    backgroundColor:XXTE_COLOR_DANGER
                                                             insets:buttonInsets];
         if (!hidesLabel) {

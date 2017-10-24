@@ -42,7 +42,8 @@
         @selector(alertView:removeEntriesAtIndexPaths:),
         @selector(alertView:archiveEntriesAtIndexPaths:),
         @selector(alertView:unarchiveEntryPath:),
-        @selector(alertView:clearPasteboardEntriesStored:)
+        @selector(alertView:clearPasteboardEntriesStored:),
+        @selector(alertView:encryptItemAtPath:)
     };
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

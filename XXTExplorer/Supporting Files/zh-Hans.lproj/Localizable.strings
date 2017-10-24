@@ -75,10 +75,10 @@
 "\"%@\"" = "\"%@\"";
 
 /* No comment provided by engineer. */
-"\"Activator\" is active, configure activation behaviours below." = "\"Activator\" 已激活，请在下方配置激活行为。";
+"\"Activator\" is active, configure activation behaviours below." = "\"Activator\" 已激活, 请在下方配置激活行为. ";
 
 /* No comment provided by engineer. */
-"\"Activator\" is active, configure activation behaviours here." = "\"Activator\" 已激活，请在此配置激活行为。";
+"\"Activator\" is active, configure activation behaviours here." = "\"Activator\" 已激活, 请在此配置激活行为. ";
 
 /* No comment provided by engineer. */
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" 已关闭, 在 \"更多 > 用户偏好设置\" 中可以重新开启它.";
@@ -249,6 +249,9 @@
 "Cannot download from url \"%@\".\n%@" = "无法从 URL \"%@\" 下载.\n%@";
 
 /* No comment provided by engineer. */
+"Cannot encrypt script: %@" = "无法加密脚本: %@";
+
+/* No comment provided by engineer. */
 "Cannot find QR Code in the image." = "图像中找不到二维码.";
 
 /* No comment provided by engineer. */
@@ -340,6 +343,9 @@
 
 /* No comment provided by engineer. */
 "Code Viewer" = "代码查看器";
+
+/* No comment provided by engineer. */
+"Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory." = "编译并加密 \"%@\"?\n加密脚本将保存到当前目录.";
 
 /* No comment provided by engineer. */
 "Configure" = "配置";
@@ -489,10 +495,19 @@
 "Empty response." = "响应数据为空.";
 
 /* No comment provided by engineer. */
-"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key." = "启用 \"软缩进\" 将在按下 Tab 键时插入指定数量的空格而不是缩进符 (\\t)。";
+"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key." = "启用 \"软缩进\" 将在按下 Tab 键时插入指定数量的空格而不是缩进符 (\\t). ";
 
 /* No comment provided by engineer. */
 "Enable Boot Script" = "启用开机启动项";
+
+/* No comment provided by engineer. */
+"Encrypt" = "加密";
+
+/* No comment provided by engineer. */
+"Encrypt \"%@\" to \"%@\"" = "加密 \"%@\" 到 \"%@\"";
+
+/* No comment provided by engineer. */
+"Encrypt Confirm" = "加密确认";
 
 /* No comment provided by engineer. */
 "Enter your 12/16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "键入 12/16 位授权码, 轻按 \"完成\" 以激活授权, 并将授权绑定至当前设备.\n授权码中仅包含 3-9 和 A-Z, 不包含空格.";
@@ -1064,7 +1079,7 @@
 "Text Editor" = "文本编辑器";
 
 /* No comment provided by engineer. */
-"The alias \"%@\" can't be opened because the original item can't be found." = "替身 \"%@\" 无法打开，因为找不到其原身.";
+"The alias \"%@\" can't be opened because the original item can't be found." = "替身 \"%@\" 无法打开, 因为找不到其原身.";
 
 /* No comment provided by engineer. */
 "The content displayed in this page cannot be the proof of your purchase." = "该页面所显示内容不能作为您的购买凭据.";

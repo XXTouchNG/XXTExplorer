@@ -85,14 +85,6 @@ static NSString * const XXTExplorerAlertViewActionPasteboardExportLink = @"XXTEx
 static NSString * const XXTExplorerAlertViewActionPasteboardExportPaste = @"XXTExplorerAlertViewActionPasteboardExportPaste";
 static NSString * const XXTExplorerAlertViewContext = @"XXTExplorerAlertViewContext";
 
-// XXTExplorerActionIcon
-static NSString * const XXTExplorerActionIconLaunch = @"XXTExplorerActionIconLaunch";
-static NSString * const XXTExplorerActionIconEdit = @"XXTExplorerActionIconEdit";
-static NSString * const XXTExplorerActionIconProperty = @"XXTExplorerActionIconProperty";
-static NSString * const XXTExplorerActionIconTrash = @"XXTExplorerActionIconTrash";
-static NSString * const XXTExplorerActionIconInside = @"XXTExplorerActionIconInside";
-static NSString * const XXTExplorerActionIconConfigure = @"XXTExplorerActionIconConfigure";
-
 #pragma mark - Pasteboard
 
 // XXTExplorerPasteboard

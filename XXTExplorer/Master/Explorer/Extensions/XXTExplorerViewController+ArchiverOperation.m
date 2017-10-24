@@ -83,18 +83,19 @@
         [alertView1 dismissAnimated];
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
-        [self setEditing:YES animated:YES];
-        for (NSUInteger i = 0; i < self.entryList.count; i++) {
-            NSDictionary *entryDetail = self.entryList[i];
-            if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:archivePath]) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-                break;
-            }
-        }
-        [self updateToolbarStatus];
         if (error) {
             toastMessage(self, [error localizedDescription]);
+        } else {
+            [self setEditing:YES animated:YES];
+            for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                NSDictionary *entryDetail = self.entryList[i];
+                if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:archivePath]) {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+                    break;
+                }
+            }
+            [self updateToolbarStatus];
         }
     };
     if (self.busyOperationProgressFlag) {
@@ -249,30 +250,31 @@
         [alertView1 dismissAnimated];
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
-        [self setEditing:YES animated:YES];
-        for (NSUInteger i = 0; i < self.entryList.count; i++) {
-            NSDictionary *entryDetail = self.entryList[i];
-            BOOL contains = NO;
-            for (NSString *createdEntry in createdEntries) {
-                NSString *listPath = entryDetail[XXTExplorerViewEntryAttributePath];
-                BOOL isDirectory = [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
-                if (
-                    [createdEntry isEqualToString:listPath] ||
-                    (isDirectory && [createdEntry hasPrefix:[listPath stringByAppendingString:@"/"]])
-                    ) {
-                    contains = YES;
+        if (error) {
+            toastMessage(self, [error localizedDescription]);
+        } else {
+            [self setEditing:YES animated:YES];
+            for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                NSDictionary *entryDetail = self.entryList[i];
+                BOOL contains = NO;
+                for (NSString *createdEntry in createdEntries) {
+                    NSString *listPath = entryDetail[XXTExplorerViewEntryAttributePath];
+                    BOOL isDirectory = [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
+                    if (
+                        [createdEntry isEqualToString:listPath] ||
+                        (isDirectory && [createdEntry hasPrefix:[listPath stringByAppendingString:@"/"]])
+                        ) {
+                        contains = YES;
+                        break;
+                    }
+                }
+                if (contains) {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                     break;
                 }
             }
-            if (contains) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-                break;
-            }
-        }
-        [self updateToolbarStatus];
-        if (error) {
-            toastMessage(self, [error localizedDescription]);
+            [self updateToolbarStatus];
         }
     };
     

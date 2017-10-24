@@ -13,9 +13,13 @@
 #import <LGAlertView/LGAlertView.h>
 
 #import "XXTEAppDefines.h"
+#import "XXTENetworkDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEDispatchDefines.h"
+
+#import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
 
 #import <sys/stat.h>
 
@@ -26,6 +30,81 @@
 @implementation XXTExplorerViewController (FileOperation)
 
 #pragma mark - File Operations
+
+- (void)alertView:(LGAlertView *)alertView encryptItemAtPath:(NSString *)entryPath {
+    NSString *currentPath = self.entryPath;
+    NSString *entryName = [entryPath lastPathComponent];
+    NSString *encryptedName = [entryName stringByDeletingPathExtension];
+    NSString *encryptedNameWithExt = [encryptedName stringByAppendingPathExtension:@"xxt"];
+    NSString *encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
+    NSUInteger encryptedIndex = 2;
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    while ([fileManager fileExistsAtPath:encryptedPath]) {
+        encryptedNameWithExt = [NSString stringWithFormat:@"%@-%lu.xxt", encryptedName, (unsigned long) encryptedIndex];
+        encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
+        encryptedIndex++;
+    }
+    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Encrypt", nil)
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Encrypt \"%@\" to \"%@\"", nil), entryName, encryptedNameWithExt]
+                                                                               style:LGAlertViewStyleActionSheet
+                                                                   progressLabelText:entryPath
+                                                                        buttonTitles:nil
+                                                                   cancelButtonTitle:nil
+                                                              destructiveButtonTitle:nil
+                                                                            delegate:self];
+    if (alertView && alertView.isShowing) {
+        [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    }
+    void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
+        [alertView1 dismissAnimated];
+        [self loadEntryListData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        if (error) {
+            toastMessage(self, [error localizedDescription]);
+        } else {
+            [self setEditing:YES animated:YES];
+            for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                NSDictionary *entryDetail = self.entryList[i];
+                if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:encryptedPath]) {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+                    break;
+                }
+            }
+            [self updateToolbarStatus];
+        }
+    };
+    if (self.busyOperationProgressFlag) {
+        return;
+    }
+    self.busyOperationProgressFlag = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [NSURLConnection POST:uAppDaemonCommandUrl(@"encript_file") JSON:@{ @"in_file": entryPath, @"out_file": encryptedPath }]
+            .then(convertJsonString)
+            .then(^(NSDictionary *jsonDirectory) {
+                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                    dispatch_async_on_main_queue(^{
+                        self.busyOperationProgressFlag = NO;
+                        completionBlock(YES, nil);
+                    });
+                } else {
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt script: %@", nil), jsonDirectory[@"message"]];
+                }
+                return [PMKPromise promiseWithValue:@{}];
+            })
+            .catch(^(NSError *serverError) {
+                dispatch_async_on_main_queue(^{
+                    self.busyOperationProgressFlag = NO;
+                    completionBlock(NO, serverError);
+                });
+            })
+            .finally(^() {
+                
+            });
+        });
+    });
+}
 
 - (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path {
     NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];
