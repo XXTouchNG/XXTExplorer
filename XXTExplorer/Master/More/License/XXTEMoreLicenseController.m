@@ -524,6 +524,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         XXTEShimmeringView *shimmeringView = nil;
         NSArray <NSString *> *buttonTitles = @[ ];
         LGAlertViewActionHandler actionHandler = nil;
+        NSString *cancelButtonTitle = nil;
         if (NO == batchLicense) {
             shimmeringView = [[XXTEShimmeringView alloc] init];
             buttonTitles = @[ NSLocalizedString(@"Save to Camera Roll", nil) ];
@@ -536,6 +537,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                     UIImageWriteToSavedPhotosAlbum(licenseImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
                 }
             };
+        } else {
+            cancelButtonTitle = NSLocalizedString(@"Dismiss", nil);
         }
         
         LGAlertView *cardAlertView = [[LGAlertView alloc] initWithViewAndTitle:NSLocalizedString(@"License Activated", nil)
@@ -543,7 +546,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                                                                          style:LGAlertViewStyleActionSheet
                                                                           view:shimmeringView
                                                                   buttonTitles:buttonTitles
-                                                             cancelButtonTitle:nil
+                                                             cancelButtonTitle:cancelButtonTitle
                                                         destructiveButtonTitle:nil
                                                                  actionHandler:actionHandler
                                                                  cancelHandler:nil

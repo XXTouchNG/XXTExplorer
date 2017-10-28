@@ -175,9 +175,6 @@
         if (![scriptPath isKindOfClass:[NSString class]]) {
             scriptPath = [XXTExplorerViewController selectedScriptPath];
         }
-        if (scriptPath.length == 0) {
-            return NO;
-        }
         [self performAction:sender launchScript:scriptPath];
         return YES;
     } else if ([jsonEvent isEqualToString:@"stop"])
@@ -185,9 +182,6 @@
         NSString *scriptPath = jsonDictionary[@"path"];
         if (![scriptPath isKindOfClass:[NSString class]]) {
             scriptPath = [XXTExplorerViewController selectedScriptPath];
-        }
-        if (scriptPath.length == 0) {
-            return NO;
         }
         [self performAction:sender stopSelectedScript:scriptPath];
         return YES;
@@ -238,7 +232,7 @@
 #pragma mark - Button Actions
 
 - (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
-    if (!entryPath) return;
+//    if (!entryPath) return;
     blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
     .then(convertJsonString)
@@ -262,14 +256,18 @@
 }
 
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
-    if (!entryPath) return;
     BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
     blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-            return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": uAppConstEnvp()}];
+            if (entryPath)
+            {
+                return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": entryPath, @"envp": uAppConstEnvp()}];
+            } else {
+                return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{ }];
+            }
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
         }
@@ -278,7 +276,12 @@
     .then(^(NSDictionary *jsonDirectory) {
         if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
             if (selectAfterLaunch) {
-                return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}];
+                if (entryPath)
+                {
+                    return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}];
+                } else {
+                    return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ }];
+                }
             }
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
@@ -288,7 +291,10 @@
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
-            XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
+            if (entryPath)
+            {
+                XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
+            }
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:sender userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSelectedScriptPathChanged}]];
         } else {
             if (selectAfterLaunch) {
