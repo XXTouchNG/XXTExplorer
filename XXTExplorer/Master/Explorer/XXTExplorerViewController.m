@@ -687,9 +687,10 @@
 
 - (void)addressLabelTapped:(UITapGestureRecognizer *)recognizer {
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
-        NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
+//        NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
+        NSString *detailText = self.entryPath;
         if (detailText && detailText.length > 0) {
-            blockInteractions(self, YES);;
+            blockInteractions(self, YES);
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     [[UIPasteboard generalPasteboard] setString:detailText];
@@ -697,7 +698,7 @@
                 });
             }].finally(^() {
                 toastMessage(self, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
-                blockInteractions(self, NO);;
+                blockInteractions(self, NO);
             });
         }
     }

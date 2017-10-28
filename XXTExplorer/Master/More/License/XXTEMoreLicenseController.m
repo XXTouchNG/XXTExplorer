@@ -185,7 +185,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 }
 
 - (void)reloadDynamicTableViewDataWithCompletion:(XXTERefreshControlHandler)handler {
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDictionary) {
@@ -226,7 +226,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);;
+        blockInteractions(self, NO);
         if (handler) {
             handler();
         }
@@ -328,7 +328,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockInteractions(self, YES);;
+                blockInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -336,7 +336,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                     });
                 }].finally(^() {
                     toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(self, NO);;
+                    blockInteractions(self, NO);
                 });
             }
         }
@@ -456,6 +456,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 }
 
 - (void)alertView:(LGAlertView *)alertView activateLicense:(NSString *)licenseCode {
+    BOOL batchLicense = (licenseCode.length == 12);
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Activating", nil)
                                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Activating license \"%@\" and bind to current device...", nil), licenseCode]
                                                                                style:LGAlertViewStyleActionSheet
@@ -487,7 +488,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
             return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
                 UIImage *cardImage = [self generateCardImageWithLicense:licenseDictionary];
-                if (cardImage) {
+                if (cardImage && NO == batchLicense) {
                     resolve(@[ licenseDictionary, cardImage ]);
                 } else {
                     resolve(@[ licenseDictionary, [UIImage new] ]);
@@ -520,41 +521,48 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
         
         // Add Animations
-        XXTEShimmeringView *shimmeringView = [[XXTEShimmeringView alloc] init];
-        
-        LGAlertViewActionHandler actionHandler = ^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
-            shimmeringView.shimmering = NO;
-            if (index == 0) {
-                self.licenseField.text = @"";
-                [self textFieldDidChange:self.licenseField];
-                [alertView dismissAnimated];
-                UIImageWriteToSavedPhotosAlbum(licenseImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-            }
-        };
+        XXTEShimmeringView *shimmeringView = nil;
+        NSArray <NSString *> *buttonTitles = @[ ];
+        LGAlertViewActionHandler actionHandler = nil;
+        if (NO == batchLicense) {
+            shimmeringView = [[XXTEShimmeringView alloc] init];
+            buttonTitles = @[ NSLocalizedString(@"Save to Camera Roll", nil) ];
+            actionHandler = ^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                shimmeringView.shimmering = NO;
+                if (index == 0) {
+                    self.licenseField.text = @"";
+                    [self textFieldDidChange:self.licenseField];
+                    [alertView dismissAnimated];
+                    UIImageWriteToSavedPhotosAlbum(licenseImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                }
+            };
+        }
         
         LGAlertView *cardAlertView = [[LGAlertView alloc] initWithViewAndTitle:NSLocalizedString(@"License Activated", nil)
                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"%@\nActivated At: %@", nil), licenseDictionary[@"message"], nowDateString]
                                                                          style:LGAlertViewStyleActionSheet
                                                                           view:shimmeringView
-                                                                  buttonTitles:@[ NSLocalizedString(@"Save to Camera Roll", nil) ]
+                                                                  buttonTitles:buttonTitles
                                                              cancelButtonTitle:nil
                                                         destructiveButtonTitle:nil
                                                                  actionHandler:actionHandler
                                                                  cancelHandler:nil
                                                             destructiveHandler:nil];
         
-        // Adjust Frame
-        CGFloat imageRatio = 284.f / 450.f;
-        CGFloat alertWidth = cardAlertView.width;
-        CGFloat imageHeight = alertWidth * imageRatio;
-        [licenseImageView setFrame:CGRectMake(0, 0, alertWidth, imageHeight)];
-        [shimmeringView setFrame:licenseImageView.bounds];
-        
-        // Start shimmering.
-        shimmeringView.shimmering = YES;
-        shimmeringView.shimmeringSpeed = 150.;
-        shimmeringView.shimmeringAnimationOpacity = .2;
-        shimmeringView.contentView = licenseImageView;
+        if (NO == batchLicense) {
+            // Adjust Frame
+            CGFloat imageRatio = 284.f / 450.f;
+            CGFloat alertWidth = cardAlertView.width;
+            CGFloat imageHeight = alertWidth * imageRatio;
+            [licenseImageView setFrame:CGRectMake(0, 0, alertWidth, imageHeight)];
+            [shimmeringView setFrame:licenseImageView.bounds];
+            
+            // Start shimmering.
+            shimmeringView.shimmering = YES;
+            shimmeringView.shimmeringSpeed = 150.;
+            shimmeringView.shimmeringAnimationOpacity = .2;
+            shimmeringView.contentView = licenseImageView;
+        }
         
         if (alertView1 && alertView1.isShowing) {
             [alertView1 transitionToAlertView:cardAlertView completionHandler:nil];

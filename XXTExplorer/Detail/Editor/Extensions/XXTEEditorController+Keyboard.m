@@ -39,7 +39,6 @@
         
     } else {
         if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
-            self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
             [self.navigationController setNavigationBarHidden:YES animated:YES];
         }
         [self reloadConstraints];
@@ -79,7 +78,6 @@
         
     } else {
         if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
-            self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
             [self.navigationController setNavigationBarHidden:NO animated:YES];
         }
         [self reloadConstraints];

@@ -74,7 +74,7 @@
     {
         NSURL *inboxURL = aNotification.object;
         @weakify(self);
-        blockInteractionsWithDelay(self, YES, 0);
+        blockInteractions(self, YES);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @strongify(self);
             NSError *err = nil;

@@ -34,7 +34,7 @@
                                           result:(NSArray *)aSelected
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
-    blockInteractionsWithDelay(self, YES, 0);
+    blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @strongify(self);

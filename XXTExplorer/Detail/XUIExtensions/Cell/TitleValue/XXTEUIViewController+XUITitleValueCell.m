@@ -53,7 +53,7 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 }
 
 - (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
-    blockInteractionsWithDelay(self, YES, 0);
+    blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);

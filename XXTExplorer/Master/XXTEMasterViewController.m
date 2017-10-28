@@ -183,7 +183,7 @@
                                                       cancelHandler:nil
                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
                                                      [alertView dismissAnimated];
-                                                     blockInteractionsWithDelay(self, YES, 0);
+                                                     blockInteractions(self, YES);
                                                      [XXTERespringAgent performRespring];
                                                      blockInteractions(self, NO);
                                                  }];

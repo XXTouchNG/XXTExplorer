@@ -90,8 +90,8 @@
     _tabWidth = [@" " sizeWithAttributes:defaultAttributes].width;
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.minimumLineHeight = font.pointSize;
-    paragraphStyle.maximumLineHeight = font.pointSize;
+//    paragraphStyle.minimumLineHeight = font.pointSize;
+//    paragraphStyle.maximumLineHeight = font.pointSize;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.alignment = NSTextAlignmentLeft;
     _paragraphStyle = [paragraphStyle copy];

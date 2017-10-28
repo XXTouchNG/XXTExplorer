@@ -60,6 +60,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 @property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
 
 @property (nonatomic, assign) BOOL shouldSaveDocument;
+@property (nonatomic, assign) BOOL shouldReloadAttributes;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
 @property (nonatomic, assign) BOOL shouldRefreshNagivationBar;
 @property (nonatomic, assign) BOOL shouldReloadAll;
@@ -95,7 +96,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
-    [self prepareForView];
 }
 
 - (void)reloadAll {
@@ -105,8 +105,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self reloadContent];
     [self reloadAttributes];
 }
-
-#pragma mark - BEFORE -viewDidLoad
 
 - (void)prepareForView {
     // Theme
@@ -182,7 +180,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     // TextView
     XXTEEditorTextView *textView = self.textView;
     textView.keyboardType = UIKeyboardTypeDefault;
-    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
     textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
     textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
@@ -269,6 +267,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     
     [self configure];
     
+    [self prepareForView];
     [self reloadConstraints];
     [self reloadTextView];
     [self reloadContent];
@@ -489,14 +488,17 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
         NSString *wholeString = self.textView.text;
-        blockInteractionsWithDelay(self, YES, 0);
+        NSDictionary *d = self.theme.defaultAttributes;
+        blockInteractions(self, YES);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @weakify(self);
             [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
                 @strongify(self);
+                [self.rangesArray addObject:[NSValue valueWithRange:range]];
                 if (attributes) {
-                    [self.rangesArray addObject:[NSValue valueWithRange:range]];
                     [self.attributesArray addObject:attributes];
+                } else {
+                    [self.attributesArray addObject:d];
                 }
             }];
             dispatch_async_on_main_queue(^{
@@ -507,12 +509,36 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     }
 }
 
+- (void)reloadAttributesIfNecessary {
+    if (!self.shouldReloadAttributes) return;
+    self.shouldReloadAttributes = NO;
+    [self reloadAttributes];
+}
+
 #pragma mark - NSTextStorageDelegate
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
+    if (!self.textView.editable) return;
     if (editedMask & NSTextStorageEditedCharacters) {
-        
+        NSString *text = textStorage.string;
+        NSUInteger s, e;
+        [text getLineStart:&s end:NULL contentsEnd:&e forRange:editedRange];
+        NSRange lineRange = NSMakeRange(s, e - s);
+        NSDictionary *d = self.theme.defaultAttributes;
+//        [textStorage setAttributes:d range:lineRange];
+//        [textStorage fixAttributesInRange:lineRange];
+        [self.parser attributedParseString:text inRange:lineRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
+            if (NO == NSRangeEntirelyContains(lineRange, range)) {
+                range = NSIntersectionRange(lineRange, range);
+            }
+            if (attributes) {
+                [textStorage addAttributes:attributes range:range];
+            } else {
+                [textStorage setAttributes:d range:range];
+            }
+            [textStorage fixAttributesInRange:range];
+        }];
     }
 }
 
@@ -554,6 +580,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     NSArray *attributesArray = self.attributesArray;
     NSMutableIndexSet *renderedSet = self.renderedSet;
     XXTEEditorTextView *textView = self.textView;
+    NSTextStorage *vStorage = textView.vTextStorage;
     
     NSRange range = [self rangeShouldRenderOnScreen];
     
@@ -583,15 +610,15 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         // Render
         if (!self.parser.aborted) {
             dispatch_async_on_main_queue(^{
-                [textView.vTextStorage beginEditing];
+                [vStorage beginEditing];
                 NSUInteger renderLength = renderIndexes.count;
                 for (NSUInteger idx = 0; idx < renderLength; idx++) {
                     NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
                     NSValue *rangeValue = rangesArray[index];
                     NSRange preparedRange = [rangeValue rangeValue];
-                    [textView.vTextStorage addAttributes:attributesArray[index] range:preparedRange];
+                    [vStorage addAttributes:attributesArray[index] range:preparedRange];
                 }
-                [textView.vTextStorage endEditing];
+                [vStorage endEditing];
             });
         }
         
@@ -615,6 +642,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     self.shouldSaveDocument = YES;
 }
 
+- (void)setNeedsReloadAttributes {
+    self.shouldReloadAttributes = YES;
+}
+
 - (void)setNeedsFocusTextView {
     self.shouldFocusTextView = YES;
 }
@@ -626,11 +657,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 #pragma mark - Save Document
 
 - (void)saveDocumentIfNecessary {
-    if (!self.shouldSaveDocument) return;
+    if (!self.shouldSaveDocument || !self.textView.editable) return;
+    self.shouldSaveDocument = NO;
     NSString *documentString = self.textView.textStorage.string;
     NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
     [documentData writeToFile:self.entryPath atomically:YES];
-    self.shouldSaveDocument = NO;
 }
 
 #pragma mark - Memory

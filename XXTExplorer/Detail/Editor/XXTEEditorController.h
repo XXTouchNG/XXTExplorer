@@ -17,10 +17,12 @@
 @property (nonatomic, strong) XXTEEditorTextView *textView;
 
 - (void)setNeedsReload;
+- (void)setNeedsReloadAttributes;
 - (void)setNeedsSaveDocument;
 - (void)setNeedsFocusTextView;
 
 - (void)reloadConstraints;
+- (void)reloadAttributesIfNecessary;
 
 - (void)invalidateSyntaxCaches;
 - (void)saveDocumentIfNecessary;

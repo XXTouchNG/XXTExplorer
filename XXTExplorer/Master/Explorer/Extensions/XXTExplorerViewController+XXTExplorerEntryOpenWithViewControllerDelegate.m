@@ -41,7 +41,7 @@
 - (void)tableView:(UITableView *)tableView showDetailController:(UIViewController <XXTEViewer> *)viewer {
     if (viewer) {
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]]) {
-            blockInteractions(self, YES);;
+            blockInteractions(self, YES);
             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": viewer.entryPath}]
             .then(convertJsonString)
             .then(^(NSDictionary *jsonDictionary) {
@@ -59,7 +59,7 @@
                 }
             })
             .finally(^() {
-                blockInteractions(self, NO);;
+                blockInteractions(self, NO);
                 [self loadEntryListData];
                 for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
                     [self reconfigureCellAtIndexPath:indexPath];

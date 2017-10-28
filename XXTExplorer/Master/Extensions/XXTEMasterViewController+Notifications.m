@@ -105,7 +105,7 @@
     else if ([jsonEvent isEqualToString:@"bind_code"] ||
              [jsonEvent isEqualToString:@"license"]) {
         NSString *licenseCode = jsonDictionary[@"code"];
-        blockInteractionsWithDelay(self, YES, 0);
+        blockInteractions(self, YES);
         @weakify(self);
         void (^ completionBlock)(void) = ^() {
             @strongify(self);
@@ -150,7 +150,7 @@
             targetFullPath = [topmostExplorerViewController.entryPath stringByAppendingPathComponent:targetPath];
         }
         NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
-        blockInteractionsWithDelay(self, YES, 0);
+        blockInteractions(self, YES);
         @weakify(self);
         void (^ completionBlock)(void) = ^() {
             @strongify(self);
@@ -239,7 +239,7 @@
 
 - (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
     if (!entryPath) return;
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -257,14 +257,14 @@
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);;
+        blockInteractions(self, NO);
     });
 }
 
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
     if (!entryPath) return;
     BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -304,14 +304,14 @@
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);;
+        blockInteractions(self, NO);
     });
 }
 
 #pragma mark - XXTEScanViewControllerDelegate
 
 - (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url {
-    blockInteractionsWithDelay(self, YES, 0);
+    blockInteractions(self, YES);
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
@@ -343,7 +343,7 @@
 }
 
 - (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)detailText {
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
@@ -354,7 +354,7 @@
             });
         }].finally(^() {
             toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-            blockInteractions(self, NO);;
+            blockInteractions(self, NO);
         });
     }];
 }

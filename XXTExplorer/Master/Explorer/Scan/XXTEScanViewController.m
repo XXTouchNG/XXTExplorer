@@ -165,10 +165,18 @@
     self.scanLayer.frame = self.view.layer.bounds;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (firstTimeLoaded) {
+        [self reloadCaptureSceneWithSize:self.view.bounds.size];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     {
-        [self performSelector:@selector(startAnimation) withObject:nil afterDelay:0.2f];
+        blockInteractionsWithDelay(self, NO, .6f);
+        [self performSelector:@selector(startAnimation) withObject:nil afterDelay:.6f];
     }
     if (!firstTimeLoaded) {
         firstTimeLoaded = YES;
@@ -183,10 +191,10 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if (firstTimeLoaded) {
-        [self reloadCaptureSceneWithSize:self.view.bounds.size];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    {
+        blockInteractions(self, YES);
     }
 }
 
@@ -574,7 +582,7 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *) kUTTypeImage]) {
         UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
-        blockInteractionsWithDelay(self, YES, 0);
+        blockInteractions(self, YES);
         [PMKPromise promiseWithValue:@(YES)].then(^() {
             NSString *scannedResult = [self scanImage:originalImage];
             if (!scannedResult || scannedResult.length <= 0) {

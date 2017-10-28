@@ -24,7 +24,7 @@
     }
     NSString *scriptName = args[@"path"];
     NSString *scriptPath = [self.bundle pathForResource:scriptName ofType:nil];
-    blockInteractionsWithDelay(self, YES, 0);
+    blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": scriptPath, @"envp": uAppConstEnvp()}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {

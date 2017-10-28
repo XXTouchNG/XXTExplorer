@@ -21,9 +21,8 @@ static inline void blockInteractionsWithDelay(UIViewController *viewController, 
         parentController = viewController;
     }
     UIView *viewToBlock = parentController.view;
-    if (delay > 0) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:viewToBlock selector:@selector(makeToastActivity:) object:XXTEToastPositionCenter];
-    }
+    [NSObject cancelPreviousPerformRequestsWithTarget:viewToBlock selector:@selector(makeToastActivity:) object:XXTEToastPositionCenter];
+    [NSObject cancelPreviousPerformRequestsWithTarget:viewToBlock selector:@selector(hideToastActivity) object:XXTEToastPositionCenter];
     if (shouldBlock) {
         viewToBlock.userInteractionEnabled = NO;
         if (delay > 0) {
@@ -32,12 +31,16 @@ static inline void blockInteractionsWithDelay(UIViewController *viewController, 
             [viewToBlock makeToastActivity:XXTEToastPositionCenter];
         }
     } else {
-        [viewToBlock hideToastActivity];
+        if (delay > 0) {
+            [viewToBlock performSelector:@selector(hideToastActivity) withObject:nil afterDelay:delay];
+        } else {
+            [viewToBlock hideToastActivity];
+        }
         viewToBlock.userInteractionEnabled = YES;
     }
 }
 static inline void blockInteractions(UIViewController *viewController, BOOL shouldBlock) {
-    blockInteractionsWithDelay(viewController, shouldBlock, 2.0);
+    blockInteractionsWithDelay(viewController, shouldBlock, 0.0);
 }
 
 static inline void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration) {

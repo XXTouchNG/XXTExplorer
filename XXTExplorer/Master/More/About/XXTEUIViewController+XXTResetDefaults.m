@@ -34,7 +34,7 @@
 #pragma mark - Reset Action
 
 - (void)performResetDefaultsAtRemote {
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"reset_defaults") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -53,7 +53,7 @@
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);;
+        blockInteractions(self, NO);
     });
 }
 

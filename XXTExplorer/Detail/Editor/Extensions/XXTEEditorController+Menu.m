@@ -226,7 +226,7 @@
 }
 
 - (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
-    blockInteractionsWithDelay(self, YES, 0);
+    blockInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;
         NSString *taskResult = nil;

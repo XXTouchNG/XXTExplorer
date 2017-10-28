@@ -9,6 +9,7 @@
 #import "XXTEEditorController+State.h"
 
 #import "XXTENotificationCenterDefines.h"
+#import "XXTEEditorTextView.h"
 
 @implementation XXTEEditorController (State)
 
@@ -40,15 +41,20 @@
 }
 
 - (void)handleTextViewNotifications:(NSNotification *)aNotification {
+    XXTEEditorTextView *textView = aNotification.object;
     if ([aNotification.name isEqualToString:UITextViewTextDidBeginEditingNotification]) {
         // Begin
         [self invalidateSyntaxCaches];
     } else if ([aNotification.name isEqualToString:UITextViewTextDidEndEditingNotification]) {
         // End
         [self saveDocumentIfNecessary];
+        [self reloadAttributesIfNecessary];
     } else if ([aNotification.name isEqualToString:UITextViewTextDidChangeNotification]) {
         // Changed
-        [self setNeedsSaveDocument];
+        if (textView.editable) {
+            [self setNeedsSaveDocument];
+            [self setNeedsReloadAttributes];
+        }
     }
 }
 

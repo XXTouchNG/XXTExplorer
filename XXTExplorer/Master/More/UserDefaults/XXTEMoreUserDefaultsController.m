@@ -158,7 +158,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)loadDynamicUserDefaults {
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
@@ -192,7 +192,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);;
+        blockInteractions(self, NO);
         [self.tableView reloadData];
     });
 }
@@ -341,7 +341,7 @@ XXTE_END_IGNORE_PARTIAL
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
 //    editedUserDefaults[modifyKey] = (index != 0) ? @YES : @NO;
     editedUserDefaults[modifyKey] = @(index);
-    blockInteractions(self, YES);;
+    blockInteractions(self, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -365,7 +365,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);;
+        blockInteractions(self, NO);
         [self.tableView reloadData];
     });
 }
