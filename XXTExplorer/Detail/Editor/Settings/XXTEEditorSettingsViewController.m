@@ -48,7 +48,7 @@
     return self;
 }
 
-- (instancetype) initWithStyle:(UITableViewStyle)style {
+- (instancetype)initWithStyle:(UITableViewStyle)style {
     if (self = [super initWithStyle:style]) {
         [self setup];
     }

@@ -8,6 +8,7 @@
 
 #import "XXTEEditorController+Settings.h"
 #import "XXTEEditorSettingsViewController.h"
+#import "XXTEEditorStatisticsViewController.h"
 #import "XXTEUserInterfaceDefines.h"
 
 #import "XXTEEditorTextView.h"
@@ -43,7 +44,10 @@
 }
 
 - (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender {
-    
+    [self.textView resignFirstResponder];
+    XXTEEditorStatisticsViewController *statisticsController = [[XXTEEditorStatisticsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    statisticsController.editor = self;
+    [self.navigationController pushViewController:statisticsController animated:YES];
 }
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {

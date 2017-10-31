@@ -400,7 +400,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 - (UIBarButtonItem *)shareButtonItem {
     if (!_shareButtonItem) {
-        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarShare"] style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonItemTapped:)];
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
         _shareButtonItem = shareButtonItem;
     }
     return _shareButtonItem;
