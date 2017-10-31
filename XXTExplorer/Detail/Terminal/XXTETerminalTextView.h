@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ICTextView.h"
 
 /*
  This TextView is used to display standard output buffer and not editable.
  */
 
-@interface XXTETerminalTextView : UITextView
+@interface XXTETerminalTextView : ICTextView
 - (void)appendString:(NSString *)text;
 - (void)appendMessage:(NSString *)text;
 - (void)appendError:(NSString *)text;
