@@ -45,6 +45,9 @@
 "(Un)Comment" = "切换注释";
 
 /* No comment provided by engineer. */
+"..." = "...";
+
+/* No comment provided by engineer. */
 "/private/var/mobile" = "/private/var/mobile";
 
 /* No comment provided by engineer. */
@@ -198,6 +201,9 @@
 "Auto Word Wrap" = "自动折行";
 
 /* No comment provided by engineer. */
+"Basic" = "基本";
+
+/* No comment provided by engineer. */
 "Boot Script" = "开机启动项";
 
 /* No comment provided by engineer. */
@@ -303,6 +309,9 @@
 "Centralized gestures and button management for iOS." = "中心化的 iOS 手势与按钮动作管理插件.";
 
 /* No comment provided by engineer. */
+"Character Count" = "字符数";
+
+/* No comment provided by engineer. */
 "Check Update" = "检查更新";
 
 /* No comment provided by engineer. */
@@ -385,6 +394,9 @@
 
 /* No comment provided by engineer. */
 "Could not connect to the daemon: %@" = "无法连接到守护进程: %@";
+
+/* No comment provided by engineer. */
+"Counting" = "计数";
 
 /* No comment provided by engineer. */
 "Create Item" = "创建项目";
@@ -501,6 +513,9 @@
 "Enable Boot Script" = "启用开机启动项";
 
 /* No comment provided by engineer. */
+"Encoding" = "编码";
+
+/* No comment provided by engineer. */
 "Encrypt" = "加密";
 
 /* No comment provided by engineer. */
@@ -562,6 +577,9 @@
 
 /* No comment provided by engineer. */
 "Font Size" = "字体尺寸";
+
+/* No comment provided by engineer. */
+"Format" = "格式";
 
 /* No comment provided by engineer. */
 "General" = "通用";
@@ -657,6 +675,12 @@
 "License Activation" = "授权激活";
 
 /* No comment provided by engineer. */
+"Line Count" = "行数";
+
+/* No comment provided by engineer. */
+"Line Endings" = "换行符";
+
+/* No comment provided by engineer. */
 "Line Numbers" = "行号";
 
 /* No comment provided by engineer. */
@@ -679,6 +703,12 @@
 
 /* No comment provided by engineer. */
 "LUA" = "LUA";
+
+/* No comment provided by engineer. */
+"Lua (*.lua)" = "Lua (*.lua, *.xui)";
+
+/* No comment provided by engineer. */
+"Mac (CR)" = "Mac (CR)";
 
 /* No comment provided by engineer. */
 "MAC Address" = "MAC 地址";
@@ -738,10 +768,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -829,6 +859,9 @@
 
 /* No comment provided by engineer. */
 "Photos Library" = "照片图库";
+
+/* No comment provided by engineer. */
+"Plain Text (*.txt)" = "Plain Text (*.txt)";
 
 /* No comment provided by engineer. */
 "Please confirm these information.\n\nThe source is provided by third party script author.\nTap \"Download\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方脚本作者提供.\n如果你信任该数据源, 轻按 \"下载\" 以继续.";
@@ -1049,6 +1082,9 @@
 "Sync Failed" = "同步失败";
 
 /* No comment provided by engineer. */
+"Syntax Definition" = "语法定义";
+
+/* No comment provided by engineer. */
 "Syntax Highlight" = "语法高亮";
 
 /* No comment provided by engineer. */
@@ -1168,7 +1204,13 @@
 "Unarchiving process terminated: User interrupt occurred." = "解压缩进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
+"Unicode (UTF-8)" = "Unicode (UTF-8)";
+
+/* No comment provided by engineer. */
 "Unique ID" = "唯一标识符";
+
+/* No comment provided by engineer. */
+"Unix (LF)" = "Unix (LF)";
 
 /* No comment provided by engineer. */
 "Unknown" = "未知";
@@ -1198,7 +1240,13 @@
 "Will open url: \n\"%@\", continue?" = "即将打开 URL: \n\"%@\", 继续?";
 
 /* No comment provided by engineer. */
+"Windows (CRLF)" = "Windows (CRLF)";
+
+/* No comment provided by engineer. */
 "Word Column" = "行宽度";
+
+/* No comment provided by engineer. */
+"Word Count" = "单词数";
 
 /* No comment provided by engineer. */
 "Word Wrap" = "折行";
@@ -1208,6 +1256,9 @@
 
 /* No comment provided by engineer. */
 "XUI Error" = "XUI 错误";
+
+/* No comment provided by engineer. */
+"XXTouch does not support editing any properties in this section." = "XXTouch 暂不支持更改此区域中的任何属性.";
 
 /* No comment provided by engineer. */
 "Yes" = "是";

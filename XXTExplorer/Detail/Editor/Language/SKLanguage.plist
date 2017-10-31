@@ -31,7 +31,7 @@
 		<key>name</key>
 		<string>lua</string>
 		<key>displayName</key>
-		<string>Lua (*.lua, *.snippet)</string>
+		<string>Lua (*.lua, *.snippet, *.xui)</string>
 		<key>extensions</key>
 		<array>
 			<string>lua</string>
