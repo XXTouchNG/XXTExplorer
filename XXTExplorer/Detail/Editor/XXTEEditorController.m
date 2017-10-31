@@ -43,6 +43,9 @@
 #import "XXTEEditorController+Menu.h"
 #import "XXTEEditorController+NavigationBar.h"
 
+// Toolbar
+#import "XXTEEditorToolbar.h"
+
 static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
@@ -50,8 +53,14 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 @property (nonatomic, strong) NSArray <NSLayoutConstraint *> *statusBarConstraints;
 
 @property (nonatomic, strong) UIView *fakeStatusBar;
-@property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 @property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
+
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
+
+@property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *statisticsButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
 @property (nonatomic, assign) BOOL isRendering;
@@ -258,6 +267,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     // Set Render Flags
     [textView setNeedsDisplay];
     [self setNeedsRefreshNavigationBar];
+    
+    // Other Views
+    self.toolbar.tintColor = theme.foregroundColor;
+    self.toolbar.barTintColor = theme.backgroundColor;
+    for (UIBarButtonItem *item in self.toolbar.items) {
+        item.tintColor = theme.foregroundColor;
+    }
 }
 
 #pragma mark - Life Cycle
@@ -337,7 +353,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         self.title = entryName;
     }
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = self.settingsButtonItem;
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     // Subviews
     if (XXTE_PAD) {
@@ -346,6 +362,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         [self.view addSubview:self.fakeStatusBar];
     }
     [self.view addSubview:self.textView];
+    [self.view addSubview:self.toolbar];
     
     // Constraints
     if (XXTE_PAD)
@@ -370,9 +387,26 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
           ];
         [self.view addConstraints:constraints];
     }
+    
+    NSArray <NSLayoutConstraint *> *constraints =
+    @[
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:kXXTEEditorToolbarHeight],
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+      ];
+    [self.view addConstraints:constraints];
 }
 
 #pragma mark - UIView Getters
+
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarShare"] style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonItemTapped:)];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
+}
 
 - (UIBarButtonItem *)settingsButtonItem {
     if (!_settingsButtonItem) {
@@ -424,6 +458,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         textView.textAlignment = NSTextAlignmentLeft;
         textView.allowsEditingTextAttributes = NO;
         
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kXXTEEditorToolbarHeight, 0.0);
+        textView.contentInset = contentInsets;
+        textView.scrollIndicatorInsets = contentInsets;
+        
         textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
         
         XXTE_START_IGNORE_PARTIAL
@@ -431,6 +469,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
             textView.smartDashesType = UITextSmartDashesTypeNo;
             textView.smartQuotesType = UITextSmartQuotesTypeNo;
             textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
+            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
             // Fallback on earlier versions
         }
@@ -452,6 +491,18 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         _keyboardRow = keyboardRow;
     }
     return _keyboardRow;
+}
+
+- (XXTEEditorToolbar *)toolbar {
+    if (!_toolbar) {
+        XXTEEditorToolbar *toolbar = [[XXTEEditorToolbar alloc] init];
+        toolbar.translucent = NO;
+        toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        toolbar.items = @[ flexible, self.settingsButtonItem ];
+        _toolbar = toolbar;
+    }
+    return _toolbar;
 }
 
 #pragma mark - Getters

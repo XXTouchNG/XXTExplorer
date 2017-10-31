@@ -14,6 +14,8 @@
 #import "XXTEEditorTheme.h"
 #import "UIColor+XUIDarkColor.h"
 
+#import "XXTEEditorToolbar.h"
+
 @implementation XXTEEditorController (NavigationBar)
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -8,13 +8,15 @@
 
 #import "XXTEEditor.h"
 
-@class SKAttributedParser, XXTEEditorTextView, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory;
+@class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory;
 
 @interface XXTEEditorController : UIViewController <XXTEEditor>
 
 @property (nonatomic, strong) XXTEEditorTheme *theme;
 @property (nonatomic, strong) XXTEEditorLanguage *language;
+
 @property (nonatomic, strong) XXTEEditorTextView *textView;
+@property (nonatomic, strong) XXTEEditorToolbar *toolbar;
 
 - (void)setNeedsReload;
 - (void)setNeedsReloadAttributes;

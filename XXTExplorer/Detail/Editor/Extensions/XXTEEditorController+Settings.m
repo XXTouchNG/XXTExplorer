@@ -8,6 +8,7 @@
 
 #import "XXTEEditorController+Settings.h"
 #import "XXTEEditorSettingsViewController.h"
+#import "XXTEUserInterfaceDefines.h"
 
 #import "XXTEEditorTextView.h"
 
@@ -15,10 +16,25 @@
 
 #pragma mark - Button Actions
 
+- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
+    if (!self.entryPath) return;
+    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareUrl) return;
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 8.0, *)) {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverPresentationController.barButtonItem = sender;
+        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    } else {
+        toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+    }
+    XXTE_END_IGNORE_PARTIAL
+}
+
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
-//    if ([self.textView isFirstResponder]) {
-//        [self setNeedsFocusTextView];
-//    }
     [self.textView resignFirstResponder];
     XXTEEditorSettingsViewController *settingsController = [[XXTEEditorSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     settingsController.editor = self;

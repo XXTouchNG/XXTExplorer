@@ -95,6 +95,7 @@
 		0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */; };
 		0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
+		0F9888CB1FA753AE00ED33E7 /* XXTEEditorToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
 		0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */; };
@@ -537,6 +538,8 @@
 		0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+LGAlertViewDelegate.m"; sourceTree = "<group>"; };
 		0F9273241F375F7800109096 /* XXTExplorerViewController+SharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+SharedInstance.h"; sourceTree = "<group>"; };
 		0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+SharedInstance.m"; sourceTree = "<group>"; };
+		0F9888C91FA753AE00ED33E7 /* XXTEEditorToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorToolbar.h; sourceTree = "<group>"; };
+		0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorToolbar.m; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA7ABEE1ED641A3003EAD7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDelegate.h; sourceTree = "<group>"; };
@@ -1494,6 +1497,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		0F9888C81FA7538D00ED33E7 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				0F9888C91FA753AE00ED33E7 /* XXTEEditorToolbar.h */,
+				0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */,
+			);
+			path = Toolbar;
+			sourceTree = "<group>";
+		};
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
@@ -2103,6 +2115,7 @@
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				0F9888C81FA7538D00ED33E7 /* Toolbar */,
 				0FB009141F45ABA000097E9C /* Extensions */,
 				D660855C1F3C663E00E87B3C /* Font */,
 				0F6B6A4D1F5F9C6C0095A760 /* Keyboard */,
@@ -2771,6 +2784,7 @@
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
+				0F9888CB1FA753AE00ED33E7 /* XXTEEditorToolbar.m in Sources */,
 				D6E141251F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m in Sources */,
 				D6E1415E1F5032AC00D78CB9 /* XXTPickerFactory.m in Sources */,
 				0FE1E4431F18E9D800055E02 /* XXTECodeViewerController.m in Sources */,
