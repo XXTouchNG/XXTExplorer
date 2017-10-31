@@ -21,6 +21,9 @@
 		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		0F1482651EDABCC6007A777B /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
+		0F1C3EB91FA8376200B5146C /* ICTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB21FA8376000B5146C /* ICTextView.m */; };
+		0F1C3EBA1FA8376200B5146C /* ICRangeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB51FA8376100B5146C /* ICRangeUtils.m */; };
+		0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
 		0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
@@ -384,6 +387,13 @@
 		0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreLicenseCell.xib; sourceTree = "<group>"; };
 		0F1482631EDABCC6007A777B /* XXTExplorerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerToolbar.h; sourceTree = "<group>"; };
 		0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerToolbar.m; sourceTree = "<group>"; };
+		0F1C3EB21FA8376000B5146C /* ICTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICTextView.m; sourceTree = "<group>"; };
+		0F1C3EB31FA8376100B5146C /* ICRangeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICRangeUtils.h; sourceTree = "<group>"; };
+		0F1C3EB41FA8376100B5146C /* ICRegularExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICRegularExpression.h; sourceTree = "<group>"; };
+		0F1C3EB51FA8376100B5146C /* ICRangeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICRangeUtils.m; sourceTree = "<group>"; };
+		0F1C3EB61FA8376100B5146C /* ICTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICTextView.h; sourceTree = "<group>"; };
+		0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICRegularExpression.m; sourceTree = "<group>"; };
+		0F1C3EB81FA8376200B5146C /* ICPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICPreprocessor.h; sourceTree = "<group>"; };
 		0F1DD1C11F11B6A700F1A66A /* XXTEScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanViewController.h; sourceTree = "<group>"; };
 		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEScanViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
@@ -1081,6 +1091,20 @@
 				0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */,
 			);
 			path = License;
+			sourceTree = "<group>";
+		};
+		0F1C3EB11FA8375200B5146C /* ICTextView */ = {
+			isa = PBXGroup;
+			children = (
+				0F1C3EB81FA8376200B5146C /* ICPreprocessor.h */,
+				0F1C3EB31FA8376100B5146C /* ICRangeUtils.h */,
+				0F1C3EB51FA8376100B5146C /* ICRangeUtils.m */,
+				0F1C3EB41FA8376100B5146C /* ICRegularExpression.h */,
+				0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */,
+				0F1C3EB61FA8376100B5146C /* ICTextView.h */,
+				0F1C3EB21FA8376000B5146C /* ICTextView.m */,
+			);
+			path = ICTextView;
 			sourceTree = "<group>";
 		};
 		0F1DD1C01F11B68F00F1A66A /* Scan */ = {
@@ -1815,6 +1839,7 @@
 		0FE162A21F3C9370003064B2 /* TextKit */ = {
 			isa = PBXGroup;
 			children = (
+				0F1C3EB11FA8375200B5146C /* ICTextView */,
 				D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */,
 				D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */,
 				0F51CB1A1F612ACF00150D6D /* XXTEEditorTextInput.h */,
@@ -2767,6 +2792,7 @@
 				0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */,
 				0FD973E71F4B122D00133162 /* XXTEEditorThemeCell.m in Sources */,
 				0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */,
+				0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
 				D6E141281F5032AB00D78CB9 /* XXTPixelCropView.m in Sources */,
@@ -2840,6 +2866,7 @@
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
+				0F1C3EBA1FA8376200B5146C /* ICRangeUtils.m in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */,
 				0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
@@ -2936,6 +2963,7 @@
 				B0312E7DB009E7FB2A5FB5DF /* lbitlib.c in Sources */,
 				B0312DF40FB983A6683D34FE /* lcode.c in Sources */,
 				B0312E0B03F5361610C9837D /* lcorolib.c in Sources */,
+				0F1C3EB91FA8376200B5146C /* ICTextView.m in Sources */,
 				B0312BFDA930E7D5C8B77E30 /* lctype.c in Sources */,
 				B0312EBD513D285EA078FE4E /* ldblib.c in Sources */,
 				B03127AAD5F1F6762E66773C /* ldebug.c in Sources */,

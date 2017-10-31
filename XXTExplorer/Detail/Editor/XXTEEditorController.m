@@ -536,17 +536,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self invalidateSyntaxCaches];
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
-        NSMutableArray *rangesArray = [[NSMutableArray alloc] init];
-        NSMutableArray *attributesArray = [[NSMutableArray alloc] init];
-        NSMutableIndexSet *renderedSet = [[NSMutableIndexSet alloc] init];
-        {
-            self.rangesArray = rangesArray;
-            self.attributesArray = attributesArray;
-            self.renderedSet = renderedSet;
-        }
         NSString *wholeString = self.textView.text;
-        blockInteractions(self, YES);
+        blockInteractionsWithDelay(self, YES, 0.6);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSMutableArray *rangesArray = [[NSMutableArray alloc] init];
+            NSMutableArray *attributesArray = [[NSMutableArray alloc] init];
             [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
                 if (attributes) {
                     [rangesArray addObject:[NSValue valueWithRange:range]];
@@ -554,6 +548,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
                 }
             }];
             dispatch_async_on_main_queue(^{
+                {
+                    self.rangesArray = rangesArray;
+                    self.attributesArray = attributesArray;
+                    self.renderedSet = [[NSMutableIndexSet alloc] init];
+                }
                 [self renderSyntaxOnScreen];
                 blockInteractions(self, NO);
             });

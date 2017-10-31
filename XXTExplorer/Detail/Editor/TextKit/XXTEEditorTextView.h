@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ICTextView.h"
 
 @class XXTEEditorTextStorage, XXTEEditorLayoutManager, XXTEEditorTypeSetter, XXTEEditorTextInput;
 
-@interface XXTEEditorTextView : UITextView
+@interface XXTEEditorTextView : ICTextView
 
 @property (nonatomic, assign) BOOL showLineNumbers;
 
