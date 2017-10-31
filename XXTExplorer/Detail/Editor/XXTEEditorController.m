@@ -406,6 +406,30 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     return _shareButtonItem;
 }
 
+- (UIBarButtonItem *)searchButtonItem {
+    if (!_searchButtonItem) {
+        UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSearch"] style:UIBarButtonItemStylePlain target:self action:@selector(searchButtonItemTapped:)];
+        _searchButtonItem = searchButtonItem;
+    }
+    return _searchButtonItem;
+}
+
+- (UIBarButtonItem *)symbolsButtonItem {
+    if (!_symbolsButtonItem) {
+        UIBarButtonItem *symbolsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSymbols"] style:UIBarButtonItemStylePlain target:self action:@selector(symbolsButtonItemTapped:)];
+        _symbolsButtonItem = symbolsButtonItem;
+    }
+    return _symbolsButtonItem;
+}
+
+- (UIBarButtonItem *)statisticsButtonItem {
+    if (!_statisticsButtonItem) {
+        UIBarButtonItem *statisticsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarStatistics"] style:UIBarButtonItemStylePlain target:self action:@selector(statisticsButtonItemTapped:)];
+        _statisticsButtonItem = statisticsButtonItem;
+    }
+    return _statisticsButtonItem;
+}
+
 - (UIBarButtonItem *)settingsButtonItem {
     if (!_settingsButtonItem) {
         UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSettings"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonItemTapped:)];
@@ -497,7 +521,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         toolbar.translucent = NO;
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        toolbar.items = @[ flexible, self.settingsButtonItem ];
+        toolbar.items = @[ self.searchButtonItem, flexible, self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
         _toolbar = toolbar;
     }
     return _toolbar;

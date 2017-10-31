@@ -10,6 +10,9 @@
 
 @interface XXTEEditorController (Settings)
 
+- (void)searchButtonItemTapped:(UIBarButtonItem *)sender;
+- (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender;
+- (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender;
 
 @end

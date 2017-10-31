@@ -34,6 +34,18 @@
     XXTE_END_IGNORE_PARTIAL
 }
 
+- (void)searchButtonItemTapped:(UIBarButtonItem *)sender {
+    
+}
+
+- (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {
+    
+}
+
+- (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender {
+    
+}
+
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
     XXTEEditorSettingsViewController *settingsController = [[XXTEEditorSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
