@@ -64,6 +64,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
 @property (nonatomic, assign) BOOL isRendering;
+
 @property (atomic, strong) NSMutableIndexSet *renderedSet;
 @property (atomic, strong) NSMutableArray <NSValue *> *rangesArray;
 @property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;
@@ -95,9 +96,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
-        _rangesArray = [[NSMutableArray alloc] init];
-        _attributesArray = [[NSMutableArray alloc] init];
-        _renderedSet = [[NSMutableIndexSet alloc] init];
         [self setup];
     }
     return self;
@@ -538,18 +536,21 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     [self invalidateSyntaxCaches];
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
+        NSMutableArray *rangesArray = [[NSMutableArray alloc] init];
+        NSMutableArray *attributesArray = [[NSMutableArray alloc] init];
+        NSMutableIndexSet *renderedSet = [[NSMutableIndexSet alloc] init];
+        {
+            self.rangesArray = rangesArray;
+            self.attributesArray = attributesArray;
+            self.renderedSet = renderedSet;
+        }
         NSString *wholeString = self.textView.text;
-        NSDictionary *d = self.theme.defaultAttributes;
         blockInteractions(self, YES);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            @weakify(self);
             [self.parser attributedParseString:wholeString matchCallback:^(NSString * _Nonnull scope, NSRange range, NSDictionary <NSString *, id> * _Nullable attributes) {
-                @strongify(self);
-                [self.rangesArray addObject:[NSValue valueWithRange:range]];
                 if (attributes) {
-                    [self.attributesArray addObject:attributes];
-                } else {
-                    [self.attributesArray addObject:d];
+                    [rangesArray addObject:[NSValue valueWithRange:range]];
+                    [attributesArray addObject:attributes];
                 }
             }];
             dispatch_async_on_main_queue(^{
@@ -577,18 +578,16 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         [text getLineStart:&s end:NULL contentsEnd:&e forRange:editedRange];
         NSRange lineRange = NSMakeRange(s, e - s);
         NSDictionary *d = self.theme.defaultAttributes;
-//        [textStorage setAttributes:d range:lineRange];
-//        [textStorage fixAttributesInRange:lineRange];
+        [textStorage setAttributes:d range:lineRange];
+        [textStorage fixAttributesInRange:lineRange];
         [self.parser attributedParseString:text inRange:lineRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
             if (NO == NSRangeEntirelyContains(lineRange, range)) {
                 range = NSIntersectionRange(lineRange, range);
             }
             if (attributes) {
                 [textStorage addAttributes:attributes range:range];
-            } else {
-                [textStorage setAttributes:d range:range];
+                [textStorage fixAttributesInRange:range];
             }
-            [textStorage fixAttributesInRange:range];
         }];
     }
 }
@@ -626,10 +625,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 - (void)renderSyntaxOnScreen {
     if (self.parser.aborted) return;
+    if (!self.rangesArray || !self.attributesArray || !self.renderedSet) return;
     
     NSArray *rangesArray = self.rangesArray;
     NSArray *attributesArray = self.attributesArray;
     NSMutableIndexSet *renderedSet = self.renderedSet;
+    
     XXTEEditorTextView *textView = self.textView;
     NSTextStorage *vStorage = textView.vTextStorage;
     
@@ -662,6 +663,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         if (!self.parser.aborted) {
             dispatch_async_on_main_queue(^{
                 [vStorage beginEditing];
+                NSDictionary *d = self.theme.defaultAttributes;
+                [vStorage setAttributes:d range:range];
                 NSUInteger renderLength = renderIndexes.count;
                 for (NSUInteger idx = 0; idx < renderLength; idx++) {
                     NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
@@ -678,9 +681,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 - (void)invalidateSyntaxCaches {
-    [self.rangesArray removeAllObjects];
-    [self.attributesArray removeAllObjects];
-    [self.renderedSet removeAllIndexes];
+    self.rangesArray = nil;
+    self.attributesArray = nil;
+    self.renderedSet = nil;
 }
 
 #pragma mark - Lazy Flags
