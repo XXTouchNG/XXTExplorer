@@ -210,17 +210,20 @@
         self.characterCountLabel.text = NSLocalizedString(@"...", nil);
         self.wordCountLabel.text = NSLocalizedString(@"...", nil);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            formatter.numberStyle = NSNumberFormatterDecimalStyle;
+            formatter.groupingSize = 3;
             NSUInteger lineCount = [self countChar:fileContent cchar:'\n'] + 1;
             dispatch_async_on_main_queue(^{
-                self.lineCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)lineCount];
+                self.lineCountLabel.text = [formatter stringFromNumber:@(lineCount)];
             });
             NSUInteger charCount = [self countCharacters:fileContent];
             dispatch_async_on_main_queue(^{
-                self.characterCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)charCount];
+                self.characterCountLabel.text = [formatter stringFromNumber:@(charCount)];
             });
             NSUInteger wordCount = [self wordCount:fileContent];
             dispatch_async_on_main_queue(^{
-                self.wordCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)wordCount];
+                self.wordCountLabel.text = [formatter stringFromNumber:@(wordCount)];
             });
         });
     }

@@ -86,7 +86,8 @@
     }
     
     UITextView *textView = self.textView;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kXXTEEditorToolbarHeight, 0.0);
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
 }

@@ -87,6 +87,10 @@
     alertAppearance.dismissOnAction = NO;
     alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
     alertAppearance.buttonsTextAlignment = NSTextAlignmentCenter;
+    if (@available(iOS 11.0, *)) {
+        CGFloat bottomOffset = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;
+        alertAppearance.cancelButtonOffsetY = bottomOffset;
+    }
     
     [XXTEToastManager setTapToDismissEnabled:YES];
     [XXTEToastManager setDefaultDuration:2.4f];

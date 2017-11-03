@@ -56,6 +56,12 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         }
     }
     
+    UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    mainWindow.tintColor = XXTE_COLOR;
+    mainWindow.backgroundColor = [UIColor whiteColor];
+    [mainWindow makeKeyAndVisible];
+    self.window = mainWindow;
+    
     // Master - Explorer Controller
     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
@@ -78,21 +84,9 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
             XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
             splitViewController.viewControllers = @[masterViewController, detailNavigationController];
             
-            UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            mainWindow.tintColor = XXTE_COLOR;
-            mainWindow.backgroundColor = [UIColor whiteColor];
             mainWindow.rootViewController = splitViewController;
-            [mainWindow makeKeyAndVisible];
-            
-            self.window = mainWindow;
         } else {
-            UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            mainWindow.tintColor = XXTE_COLOR;
-            mainWindow.backgroundColor = [UIColor whiteColor];
             mainWindow.rootViewController = masterViewController;
-            [mainWindow makeKeyAndVisible];
-            
-            self.window = mainWindow;
         }
     }
     

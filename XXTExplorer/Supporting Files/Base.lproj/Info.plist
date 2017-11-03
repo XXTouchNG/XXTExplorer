@@ -61,7 +61,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>94</string>
+	<string>95</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -81,6 +81,8 @@
 	<string>${PRODUCT_NAME} want to access your camera to scan QR code.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>${PRODUCT_NAME} want to access your album to extract QR code.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>${PRODUCT_NAME} want to access your album to save license record.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceCodePro-Regular.otf</string>

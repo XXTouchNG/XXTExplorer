@@ -386,12 +386,18 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         [self.view addConstraints:constraints];
     }
     
+    NSLayoutConstraint *bottomConstraint = nil;
+    if (@available(iOS 11.0, *)) {
+        bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    } else {
+        bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    }
     NSArray <NSLayoutConstraint *> *constraints =
     @[
       [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:kXXTEEditorToolbarHeight],
       [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
       [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+      bottomConstraint,
       ];
     [self.view addConstraints:constraints];
 }
@@ -480,7 +486,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         textView.textAlignment = NSTextAlignmentLeft;
         textView.allowsEditingTextAttributes = NO;
         
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kXXTEEditorToolbarHeight, 0.0);
+        UIEdgeInsets insets = UIEdgeInsetsZero;
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
         textView.contentInset = contentInsets;
         textView.scrollIndicatorInsets = contentInsets;
         
@@ -491,7 +498,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
             textView.smartDashesType = UITextSmartDashesTypeNo;
             textView.smartQuotesType = UITextSmartQuotesTypeNo;
             textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
             // Fallback on earlier versions
         }
