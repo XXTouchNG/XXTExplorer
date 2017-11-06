@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>fileTypes</key>
-	<array>
-		<string>json</string>
-	</array>
-	<key>keyEquivalent</key>
-	<string>^~J</string>
+<!--    <key>fileTypes</key>-->
+<!--    <array>-->
+<!--        <string>json</string>-->
+<!--    </array>-->
+<!--    <key>keyEquivalent</key>-->
+<!--    <string>^~J</string>-->
 	<key>name</key>
 	<string>JSON</string>
 	<key>patterns</key>

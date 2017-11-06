@@ -777,6 +777,9 @@
 "No item" = "无项目";
 
 /* No comment provided by engineer. */
+"No symbol definition found for this language." = "找不到当前语言的符号定义.";
+
+/* No comment provided by engineer. */
 "None" = "无";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1080,9 @@
 
 /* No comment provided by engineer. */
 "Symbolic Link" = "符号链接";
+
+/* No comment provided by engineer. */
+"Symbols" = "符号表";
 
 /* No comment provided by engineer. */
 "Sync Failed" = "同步失败";

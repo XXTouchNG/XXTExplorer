@@ -27,6 +27,8 @@ extern NSString * const kTextMateCommentMultilineEnd;
 @property (nonatomic, strong, readonly) NSArray <NSString *> *extensions;
 @property (nonatomic, strong, readonly) NSString *name;
 
+@property (nonatomic, strong, readonly) NSArray <NSString *> *symbolScopes;
+
 - (instancetype)initWithExtension:(NSString *)extension;
 
 @end

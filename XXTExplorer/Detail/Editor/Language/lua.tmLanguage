@@ -4,16 +4,16 @@
 <dict>
 	<key>comment</key>
 	<string>Lua Syntax: version 0.8</string>
-	<key>fileTypes</key>
-	<array>
-		<string>lua</string>
-		<string>p8</string>
-		<string>rockspec</string>
-	</array>
-	<key>firstLineMatch</key>
-	<string>\A#!.*?\blua(\d+(\.\d+)?)?\b|\A--\s+-\*-\s*lua\s*-\*-</string>
-	<key>keyEquivalent</key>
-	<string>^~L</string>
+<!--    <key>fileTypes</key>-->
+<!--    <array>-->
+<!--        <string>lua</string>-->
+<!--        <string>p8</string>-->
+<!--        <string>rockspec</string>-->
+<!--    </array>-->
+<!--    <key>firstLineMatch</key>-->
+<!--    <string>\A#!.*?\blua(\d+(\.\d+)?)?\b|\A--\s+-\*-\s*lua\s*-\*-</string>-->
+<!--    <key>keyEquivalent</key>-->
+<!--    <string>^~L</string>-->
 	<key>name</key>
 	<string>Lua</string>
 	<key>patterns</key>
@@ -152,47 +152,47 @@
 				</dict>
 			</array>
 		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?&lt;=\.cdef)\s*(\[(=*)\[)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>string.quoted.other.multiline.lua</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.lua</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>meta.embedded.lua</string>
-			<key>end</key>
-			<string>(\]\2\])</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>string.quoted.other.multiline.lua</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.lua</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>source.c</string>
-				</dict>
-			</array>
-		</dict>
+<!--        <dict>-->
+<!--            <key>begin</key>-->
+<!--            <string>(?&lt;=\.cdef)\s*(\[(=*)\[)</string>-->
+<!--            <key>beginCaptures</key>-->
+<!--            <dict>-->
+<!--                <key>0</key>-->
+<!--                <dict>-->
+<!--                    <key>name</key>-->
+<!--                    <string>string.quoted.other.multiline.lua</string>-->
+<!--                </dict>-->
+<!--                <key>1</key>-->
+<!--                <dict>-->
+<!--                    <key>name</key>-->
+<!--                    <string>punctuation.definition.string.begin.lua</string>-->
+<!--                </dict>-->
+<!--            </dict>-->
+<!--            <key>contentName</key>-->
+<!--            <string>meta.embedded.lua</string>-->
+<!--            <key>end</key>-->
+<!--            <string>(\]\2\])</string>-->
+<!--            <key>endCaptures</key>-->
+<!--            <dict>-->
+<!--                <key>0</key>-->
+<!--                <dict>-->
+<!--                    <key>name</key>-->
+<!--                    <string>string.quoted.other.multiline.lua</string>-->
+<!--                </dict>-->
+<!--                <key>1</key>-->
+<!--                <dict>-->
+<!--                    <key>name</key>-->
+<!--                    <string>punctuation.definition.string.end.lua</string>-->
+<!--                </dict>-->
+<!--            </dict>-->
+<!--            <key>patterns</key>-->
+<!--            <array>-->
+<!--                <dict>-->
+<!--                    <key>include</key>-->
+<!--                    <string>source.c</string>-->
+<!--                </dict>-->
+<!--            </array>-->
+<!--        </dict>-->
 		<dict>
 			<key>begin</key>
 			<string>(?&lt;!--)\[(=*)\[</string>

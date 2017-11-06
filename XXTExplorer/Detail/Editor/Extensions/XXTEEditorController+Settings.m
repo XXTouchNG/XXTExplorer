@@ -9,6 +9,7 @@
 #import "XXTEEditorController+Settings.h"
 #import "XXTEEditorSettingsViewController.h"
 #import "XXTEEditorStatisticsViewController.h"
+#import "XXTESymbolViewController.h"
 #import "XXTEUserInterfaceDefines.h"
 
 #import "XXTEEditorTextView.h"
@@ -40,7 +41,14 @@
 }
 
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {
-    
+    [self.textView resignFirstResponder];
+    if ([XXTESymbolViewController hasSymbolPatternsForLanguage:self.language]) {
+        XXTESymbolViewController *symbolController = [[XXTESymbolViewController alloc] initWithStyle:UITableViewStylePlain];
+        symbolController.editor = self;
+        [self.navigationController pushViewController:symbolController animated:YES];
+    } else {
+        toastMessage(self, NSLocalizedString(@"No symbol definition found for this language.", nil));
+    }
 }
 
 - (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender {

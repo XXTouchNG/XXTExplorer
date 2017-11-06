@@ -3,6 +3,18 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>identifier</key>
+		<string></string>
+		<key>name</key>
+		<string>txt</string>
+		<key>displayName</key>
+		<string>Plain Text (*.txt)</string>
+		<key>extensions</key>
+		<array>
+			<string>txt</string>
+		</array>
+	</dict>
+	<dict>
 		<key>comments</key>
 		<dict>
 			<key>TM_COMMENT_START</key>
@@ -37,6 +49,10 @@
 			<string>lua</string>
 			<string>snippet</string>
 			<string>xui</string>
+		</array>
+		<key>symbolScopes</key>
+		<array>
+			<string>entity.name.function.lua</string>
 		</array>
 	</dict>
 	<dict>

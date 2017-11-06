@@ -39,6 +39,8 @@
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
 		0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
 		0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */; };
+		0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */; };
+		0F3D5DFB1FAF55120083196D /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D5DFA1FAF55120083196D /* txt.tmLanguage */; };
 		0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
 		0F457F341F87796B001F0951 /* XXTEDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F457F331F877957001F0951 /* XXTEDownloadViewController.m */; };
@@ -424,6 +426,9 @@
 		0F35F20C1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionValueCell.h; sourceTree = "<group>"; };
 		0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreTitleDescriptionValueCell.m; sourceTree = "<group>"; };
 		0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionValueCell.xib; sourceTree = "<group>"; };
+		0F3D5DF71FAEC4420083196D /* XXTESymbolViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESymbolViewController.h; sourceTree = "<group>"; };
+		0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESymbolViewController.m; sourceTree = "<group>"; };
+		0F3D5DFA1FAF55120083196D /* txt.tmLanguage */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = txt.tmLanguage; sourceTree = "<group>"; };
 		0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDetailViewController.h; sourceTree = "<group>"; };
 		0F4419ED1F17974D00967980 /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1171,6 +1176,15 @@
 				0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */,
 			);
 			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		0F3D5DF61FAEC4120083196D /* Symbol */ = {
+			isa = PBXGroup;
+			children = (
+				0F3D5DF71FAEC4420083196D /* XXTESymbolViewController.h */,
+				0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */,
+			);
+			path = Symbol;
 			sourceTree = "<group>";
 		};
 		0F4419EC1F17969000967980 /* Media */ = {
@@ -2084,6 +2098,7 @@
 				0FEB74511F3EB88400B58A4F /* json.tmLanguage */,
 				D645F9D31F42A68C00E3247B /* lua.tmLanguage */,
 				0F349BB21F62F474004143B7 /* strings.tmLanguage */,
+				0F3D5DFA1FAF55120083196D /* txt.tmLanguage */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -2152,6 +2167,7 @@
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				0F3D5DF61FAEC4120083196D /* Symbol */,
 				0FB388E21FA860AA00B41E44 /* Statistics */,
 				0F9888C81FA7538D00ED33E7 /* Toolbar */,
 				0FB009141F45ABA000097E9C /* Extensions */,
@@ -2596,6 +2612,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F3D5DFB1FAF55120083196D /* txt.tmLanguage in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
 				D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
@@ -2796,6 +2813,7 @@
 				D6E141261F5032AB00D78CB9 /* XXTPixelColor.m in Sources */,
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0F5690011F185B1A009AF9FE /* XXTEImageViewerController.m in Sources */,
+				0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */,
 				0F457F381F87948A001F0951 /* XXTEMasterViewController+Notifications.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
 				0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */,

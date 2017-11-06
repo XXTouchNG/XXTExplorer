@@ -45,9 +45,9 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
         assert([languageMeta isKindOfClass:[NSDictionary class]]);
         
         NSString *languageName = languageMeta[@"name"];
-        assert(languageName);
+        if (!languageName) return nil;
         NSString *languagePath = [[NSBundle mainBundle] pathForResource:languageName ofType:@"tmLanguage"];
-        assert(languagePath);
+        if (!languagePath) return nil;
         
         NSDictionary *languageDictionary = [[NSDictionary alloc] initWithContentsOfFile:languagePath];
         assert([languageDictionary isKindOfClass:[NSDictionary class]]);
@@ -68,14 +68,22 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
         assert(rawLanguage);
         _rawLanguage = rawLanguage;
         
-        _comments = languageMeta[@"comments"];
-        _indent = languageMeta[@"indent"];
-        _folding = languageMeta[@"folding"];
-        
-        _identifier = languageMeta[@"identifier"];
-        _displayName = languageMeta[@"displayName"];
-        _name = languageMeta[@"name"];
-        _extensions = languageMeta[@"extensions"];
+        if ([languageMeta[@"comments"] isKindOfClass:[NSDictionary class]])
+            _comments = languageMeta[@"comments"];
+        if ([languageMeta[@"indent"] isKindOfClass:[NSDictionary class]])
+            _indent = languageMeta[@"indent"];
+        if ([languageMeta[@"folding"] isKindOfClass:[NSDictionary class]])
+            _folding = languageMeta[@"folding"];
+        if ([languageMeta[@"identifier"] isKindOfClass:[NSString class]])
+            _identifier = languageMeta[@"identifier"];
+        if ([languageMeta[@"displayName"] isKindOfClass:[NSString class]])
+            _displayName = languageMeta[@"displayName"];
+        if ([languageMeta[@"name"] isKindOfClass:[NSString class]])
+            _name = languageMeta[@"name"];
+        if ([languageMeta[@"extensions"] isKindOfClass:[NSArray class]])
+            _extensions = languageMeta[@"extensions"];
+        if ([languageMeta[@"symbolScopes"] isKindOfClass:[NSArray class]])
+            _symbolScopes = languageMeta[@"symbolScopes"];
     }
     return self;
 }
