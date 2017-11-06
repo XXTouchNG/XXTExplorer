@@ -20,32 +20,41 @@
 #import "XXTEEditorLanguage.h"
 #import "UIColor+SKColor.h"
 
-#import "XXTEMoreLinkCell.h"
+#import "XXTESymbolCell.h"
 #import "XXTEEditorTextView.h"
 #import "SKParser.h"
 
 @interface XXTESymbolViewController ()
+<
+UITableViewDelegate,
+UITableViewDataSource,
+UISearchDisplayDelegate
+>
 
-//@property (nonatomic, strong) UIFont *font;
-@property (nonatomic, strong) NSMutableArray <NSDictionary *> *symbolsTable;
+@property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) NSArray <NSDictionary *> *symbolsTable;
+@property (nonatomic, strong) NSArray <NSDictionary *> *displaySymbolsTable;
 
 @end
 
-@implementation XXTESymbolViewController
+@implementation XXTESymbolViewController {
+    UISearchDisplayController *_searchDisplayController;
+}
 
 + (BOOL)hasSymbolPatternsForLanguage:(XXTEEditorLanguage *)language {
     return (language.symbolScopes.count > 0);
 }
 
-- (instancetype)init {
-    if (self = [super init]) {
-        [self setup];
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    if (self.searchDisplayController.active) {
+        return UIStatusBarStyleDefault;
     }
-    return self;
+    return UIStatusBarStyleLightContent;
 }
 
-- (instancetype)initWithStyle:(UITableViewStyle)style {
-    if (self = [super initWithStyle:style]) {
+- (instancetype)init {
+    if (self = [super init]) {
         [self setup];
     }
     return self;
@@ -60,12 +69,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = YES;
     self.title = NSLocalizedString(@"Symbols", nil);
     
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkCellReuseIdentifier];
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
+    searchBar.placeholder = NSLocalizedString(@"Search Symbol", nil);
+    searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
+    searchBar.backgroundColor = [UIColor whiteColor];
+    searchBar.barTintColor = [UIColor whiteColor];
+    searchBar.tintColor = XXTE_COLOR;
+    
+    UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    searchDisplayController.searchResultsDelegate = self;
+    searchDisplayController.searchResultsDataSource = self;
+    searchDisplayController.delegate = self;
+    _searchDisplayController = searchDisplayController;
+    
+    _tableView = ({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTESymbolCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTESymbolCellReuseIdentifier];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        tableView.tableHeaderView = searchBar;
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 9.0, *)) {
+            tableView.cellLayoutMarginsFollowReadableWidth = NO;
+        }
+        XXTE_END_IGNORE_PARTIAL
+        [self.view addSubview:tableView];
+        tableView;
+    });
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -99,7 +134,7 @@
 }
 
 - (BOOL)loadFileSymbolsWithError:(NSError **)error {
-    [self.symbolsTable removeAllObjects];
+    self.symbolsTable = @[];
     
     NSArray <NSString *> *symbols = self.editor.language.symbolScopes;
     if (!symbols) {
@@ -120,6 +155,7 @@
     
     blockInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSMutableArray *symbolsTable = [[NSMutableArray alloc] init];
         [parser parseString:string matchCallback:^(NSString *scopeName, NSRange range) {
             NSArray <NSString *> *scopes = [scopeName componentsSeparatedByString:@"."];
             if ([scopes containsObject:@"entity"]) {
@@ -131,10 +167,11 @@
                   @"title": title,
                   @"scopeName": scopeName,
                   };
-                [self.symbolsTable addObject:cache];
+                [symbolsTable addObject:cache];
             }
         }];
         dispatch_async_on_main_queue(^{
+            self.symbolsTable = symbolsTable;
             blockInteractions(self, NO);
             [self.tableView reloadData];
         });
@@ -152,7 +189,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (0 == section) {
-        return self.symbolsTable.count;
+        if (tableView == self.tableView) {
+            return self.symbolsTable.count;
+        } else {
+            return self.displaySymbolsTable.count;
+        }
     }
     return 0;
 }
@@ -160,36 +201,87 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
     {
-        XXTEMoreLinkCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkCellReuseIdentifier];
+        XXTESymbolCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:XXTESymbolCellReuseIdentifier];
         if (nil == cell)
         {
-            cell = [[XXTEMoreLinkCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                 reuseIdentifier:XXTEMoreLinkCellReuseIdentifier];
+            cell = [[XXTESymbolCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                         reuseIdentifier:XXTESymbolCellReuseIdentifier];
         }
-        [self configureCell:cell forRowAtIndexPath:indexPath];
+        if (tableView == self.tableView) {
+            [self configureCell:cell forRowAtIndexPath:indexPath];
+        } else {
+            [self configureDisplayCell:cell forRowAtIndexPath:indexPath];
+        }
         
         return cell;
     }
-    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    return [UITableViewCell new];
 }
 
-- (void)configureCell:(XXTEMoreLinkCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(XXTESymbolCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUInteger idx = indexPath.row;
     if (idx < self.symbolsTable.count) {
         NSDictionary *detail = self.symbolsTable[idx];
-        cell.titleLabel.text = detail[@"title"];
-//        cell.titleLabel.font = self.font;
+        cell.symbolLabel.text = detail[@"title"];
+    }
+}
+
+- (void)configureDisplayCell:(XXTESymbolCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger idx = indexPath.row;
+    if (idx < self.displaySymbolsTable.count) {
+        NSDictionary *detail = self.displaySymbolsTable[idx];
+        cell.symbolLabel.text = detail[@"title"];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUInteger idx = indexPath.row;
-    if (idx < self.symbolsTable.count) {
-        NSDictionary *detail = self.symbolsTable[idx];
-        NSRange toRange = [detail[@"range"] rangeValue];
-        // scroll to range if exists
+    if (tableView == self.tableView) {
+        NSUInteger idx = indexPath.row;
+        if (idx < self.symbolsTable.count) {
+            NSDictionary *detail = self.symbolsTable[idx];
+            NSRange toRange = [detail[@"range"] rangeValue];
+            // scroll to range if exists
+        }
+    } else {
+        NSUInteger idx = indexPath.row;
+        if (idx < self.displaySymbolsTable.count) {
+            NSDictionary *detail = self.displaySymbolsTable[idx];
+            NSRange toRange = [detail[@"range"] rangeValue];
+            // scroll to range if exists
+        }
+    }
+}
+
+#pragma mark - UISearchDisplayDelegate
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTESymbolCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTESymbolCellReuseIdentifier];
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+    
+}
+
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    [self reloadSearch];
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+    [self reloadSearch];
+    return YES;
+}
+
+- (void)reloadSearch {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", self.searchDisplayController.searchBar.text];
+    if (predicate) {
+        self.displaySymbolsTable = [[NSArray alloc] initWithArray:[self.symbolsTable filteredArrayUsingPredicate:predicate]];
     }
 }
 

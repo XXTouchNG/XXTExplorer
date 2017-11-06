@@ -52,7 +52,7 @@
 		</array>
 		<key>symbolScopes</key>
 		<array>
-			<string>entity.name.function.lua</string>
+			<string>function</string>
 		</array>
 	</dict>
 	<dict>

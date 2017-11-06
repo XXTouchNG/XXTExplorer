@@ -43,7 +43,7 @@
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
     if ([XXTESymbolViewController hasSymbolPatternsForLanguage:self.language]) {
-        XXTESymbolViewController *symbolController = [[XXTESymbolViewController alloc] initWithStyle:UITableViewStylePlain];
+        XXTESymbolViewController *symbolController = [[XXTESymbolViewController alloc] init];
         symbolController.editor = self;
         [self.navigationController pushViewController:symbolController animated:YES];
     } else {

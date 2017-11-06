@@ -93,6 +93,10 @@
 		0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA981F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m */; };
 		0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA9B1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m */; };
 		0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m */; };
+		0F707E791FB094110052A4B5 /* XXTESymbolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E771FB094110052A4B5 /* XXTESymbolCell.m */; };
+		0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F707E781FB094110052A4B5 /* XXTESymbolCell.xib */; };
+		0F707E7D1FB09A920052A4B5 /* XXTESymbolTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E7C1FB09A920052A4B5 /* XXTESymbolTypeView.m */; };
+		0F707E831FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */; };
 		0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
 		0F8093F51F5470A9003D5894 /* XXTEShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */; };
 		0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */; };
@@ -536,6 +540,13 @@
 		0F6AEA9B1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XXTExplorerViewController+XXTExplorerToolbarDelegate.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F6B6A4E1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardToolbarRow.h; sourceTree = "<group>"; };
 		0F6B6A4F1F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardToolbarRow.m; sourceTree = "<group>"; };
+		0F707E761FB094110052A4B5 /* XXTESymbolCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESymbolCell.h; sourceTree = "<group>"; };
+		0F707E771FB094110052A4B5 /* XXTESymbolCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESymbolCell.m; sourceTree = "<group>"; };
+		0F707E781FB094110052A4B5 /* XXTESymbolCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTESymbolCell.xib; sourceTree = "<group>"; };
+		0F707E7B1FB09A920052A4B5 /* XXTESymbolTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESymbolTypeView.h; sourceTree = "<group>"; };
+		0F707E7C1FB09A920052A4B5 /* XXTESymbolTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESymbolTypeView.m; sourceTree = "<group>"; };
+		0F707E811FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDocumentPickerViewController+NavigationBar.h"; sourceTree = "<group>"; };
+		0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDocumentPickerViewController+NavigationBar.m"; sourceTree = "<group>"; };
 		0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDefaults.h; sourceTree = "<group>"; wrapsLines = 0; };
 		0F766CAE1ED8D7D700E18BE2 /* UIView+XXTEToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XXTEToast.h"; sourceTree = "<group>"; };
 		0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XXTEToast.m"; sourceTree = "<group>"; };
@@ -1181,6 +1192,11 @@
 		0F3D5DF61FAEC4120083196D /* Symbol */ = {
 			isa = PBXGroup;
 			children = (
+				0F707E7B1FB09A920052A4B5 /* XXTESymbolTypeView.h */,
+				0F707E7C1FB09A920052A4B5 /* XXTESymbolTypeView.m */,
+				0F707E761FB094110052A4B5 /* XXTESymbolCell.h */,
+				0F707E771FB094110052A4B5 /* XXTESymbolCell.m */,
+				0F707E781FB094110052A4B5 /* XXTESymbolCell.xib */,
 				0F3D5DF71FAEC4420083196D /* XXTESymbolViewController.h */,
 				0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */,
 			);
@@ -1695,6 +1711,8 @@
 			children = (
 				0FBAFF481F6E701A008B3189 /* NSString+QueryItems.h */,
 				0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */,
+				0F707E811FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.h */,
+				0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2670,6 +2688,7 @@
 				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
 				0FD973F41F4B1D7B00133162 /* Oceanic (Eighties).tmTheme in Resources */,
+				0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
@@ -2793,6 +2812,7 @@
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */,
 				D6686F421F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m in Sources */,
+				0F707E831FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */,
 				0FFBC1321F5C391300690C8F /* LuaNSValue.m in Sources */,
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
@@ -2861,6 +2881,7 @@
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
 				0F6AEA961F3753E20017BE7C /* XXTExplorerViewController+FileOperation.m in Sources */,
 				D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */,
+				0F707E7D1FB09A920052A4B5 /* XXTESymbolTypeView.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
 				0F5EB53A1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
@@ -2986,6 +3007,7 @@
 				D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */,
 				0FBAFF3E1F6E5378008B3189 /* XXTImagePickerAlbumCell.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
+				0F707E791FB094110052A4B5 /* XXTESymbolCell.m in Sources */,
 				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
 				B03127AEA4CB69148AAC0A6E /* XXTEModeSettingsController.m in Sources */,
 				B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */,

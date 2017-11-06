@@ -10,7 +10,7 @@
 
 @class XXTEEditorController, XXTEEditorLanguage;
 
-@interface XXTESymbolViewController : UITableViewController
+@interface XXTESymbolViewController : UIViewController
 
 @property (nonatomic, weak) XXTEEditorController *editor;
 + (BOOL)hasSymbolPatternsForLanguage:(XXTEEditorLanguage *)language;

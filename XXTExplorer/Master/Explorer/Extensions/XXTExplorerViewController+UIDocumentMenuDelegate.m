@@ -19,6 +19,7 @@ XXTE_END_IGNORE_PARTIAL
 
 XXTE_START_IGNORE_PARTIAL
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
+    [[UINavigationBar appearanceWhenContainedIn:[UIDocumentPickerViewController class], nil] setBarTintColor:XXTE_COLOR];
     documentPicker.delegate = self;
     [self.navigationController presentViewController:documentPicker animated:YES completion:nil];
 }
