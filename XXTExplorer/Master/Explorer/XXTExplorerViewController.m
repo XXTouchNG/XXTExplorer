@@ -100,9 +100,19 @@
     }
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+    }
 
     _tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        CGRect tableViewFrame = CGRectZero;
+        if (@available(iOS 11.0, *)) {
+            tableViewFrame = self.view.bounds;
+        } else {
+            tableViewFrame = CGRectMake(0.0, 44.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0);
+        }
+        UITableView *tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -714,6 +724,7 @@
     [self loadEntryListData];
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
     [self.tableView endUpdates];
     toastMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
 }

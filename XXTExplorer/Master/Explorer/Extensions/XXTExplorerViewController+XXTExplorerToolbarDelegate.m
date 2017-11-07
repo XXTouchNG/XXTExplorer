@@ -37,7 +37,11 @@
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     toolbar.tapDelegate = self;
     self.toolbar = toolbar;
-    [self.tableView setTableHeaderView:toolbar];
+    if (@available(iOS 11.0, *)) {
+        [self.tableView setTableHeaderView:toolbar];
+    } else {
+        [self.view addSubview:toolbar];
+    }
 }
 
 #pragma mark - XXTExplorerToolbar

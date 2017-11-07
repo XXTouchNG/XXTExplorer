@@ -487,6 +487,7 @@
             [self loadEntryListData];
             [self.tableView beginUpdates];
             [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView reloadData];
             [self.tableView endUpdates];
         } else {
             toastMessage(self, [error localizedDescription]);
@@ -583,6 +584,7 @@
             [self loadEntryListData];
             [self.tableView beginUpdates];
             [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView reloadData];
             [self.tableView endUpdates];
         } else {
             toastMessage(self, [error localizedDescription]);
