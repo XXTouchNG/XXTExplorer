@@ -16,13 +16,16 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEDispatchDefines.h"
 
-#import "XXTERespringAgent.h"
-#import "XXTEDaemonAgent.h"
+#ifndef APPSTORE
+    #import "XXTERespringAgent.h"
+    #import "XXTEDaemonAgent.h"
 
-#import "XXTEAPTHelper.h"
-#import "XXTEAPTPackage.h"
-#import "XXTEUpdateAgent.h"
+    #import "XXTEAPTHelper.h"
+    #import "XXTEAPTPackage.h"
+    #import "XXTEUpdateAgent.h"
+#endif
 
+#ifndef APPSTORE
 @interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEAPTHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
 
 @property(nonatomic, assign) BOOL checkUpdateInBackground;
@@ -34,6 +37,7 @@
 @property (nonatomic, strong) XXTEUpdateAgent *updateAgent;
 
 @end
+#endif
 
 @implementation XXTEMasterViewController {
     BOOL firstTimeLoaded;
@@ -49,7 +53,9 @@
         dispatch_once(&onceToken, ^{
             NSAssert(NO == alreadyInitialized, @"XXTEMasterViewController is a singleton.");
             alreadyInitialized = YES;
+#ifndef APPSTORE
             [self setupAgents];
+#endif
             [self setupAppearance];
         });
     }
@@ -141,10 +147,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self registerNotifications];
     [super viewWillAppear:animated];
+#ifndef APPSTORE
     if (!firstTimeLoaded) {
         [self launchAgents];
         firstTimeLoaded = YES;
     }
+#endif
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -154,6 +162,7 @@
 
 #pragma mark - Agents
 
+#ifndef APPSTORE
 - (void)setupAgents {
     NSString *packageIdentifier = uAppDefine(@"UPDATE_PACKAGE");
     self.packageIdentifier = packageIdentifier;
@@ -173,7 +182,9 @@
     daemonAgent.delegate = self;
     self.daemonAgent = daemonAgent;
 }
+#endif
 
+#ifndef APPSTORE
 - (void)launchAgents {
     BOOL shouldRespring = [XXTERespringAgent shouldPerformRespring];
     if (shouldRespring) {
@@ -201,10 +212,11 @@
         [self.daemonAgent sync];
     }
 }
-
+#endif
 
 #pragma mark - XXTEAPTHelperDelegate
 
+#ifndef APPSTORE
 - (void)aptHelperDidSyncReady:(XXTEAPTHelper *)helper {
     dispatch_async_on_main_queue(^{
         NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
@@ -251,7 +263,9 @@
         }
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)aptHelper:(XXTEAPTHelper *)helper didSyncFailWithError:(NSError *)error {
     dispatch_async_on_main_queue(^{
         if (NO == self.checkUpdateInBackground) {
@@ -271,15 +285,19 @@
         }
     });
 }
+#endif
 
 #pragma mark - XXTEDaemonAgentDelegate
 
+#ifndef APPSTORE
 - (void)daemonAgentDidSyncReady:(XXTEDaemonAgent *)agent {
     if (agent == self.daemonAgent) {
         [self checkUpdateBackground];
     }
 }
+#endif
 
+#ifndef APPSTORE
 - (void)daemonAgent:(XXTEDaemonAgent *)agent didFailWithError:(NSError *)error {
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Sync Failed", nil)
                                                         message:[NSString stringWithFormat:NSLocalizedString(@"Cannot sync with daemon: %@", nil), error.localizedDescription]
@@ -295,9 +313,11 @@
         [alertView showAnimated];
     }
 }
+#endif
 
 #pragma mark - LGAlertViewDelegate
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
     if (index == 0) {
         NSString *cydiaUrlString = uAppDefine(@"CYDIA_URL");
@@ -312,7 +332,9 @@
     }
     [alertView dismissAnimated];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     [alertView dismissAnimated];
     NSString *packageIdentifier = self.packageIdentifier;
@@ -322,18 +344,24 @@
     [self.updateAgent ignoreVersion:packageVersion];
     [self.updateAgent ignoreThisDay];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertViewCancelled:(LGAlertView *)alertView {
     [alertView dismissAnimated];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)checkUpdateBackground {
     self.checkUpdateInBackground = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [self.aptHelper sync];
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)checkUpdate {
     self.checkUpdateInBackground = NO;
     LGAlertView *alertView = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Check Update", nil)
@@ -354,5 +382,6 @@
         [self.aptHelper sync];
     });
 }
+#endif
 
 @end

@@ -15,6 +15,7 @@
 #import "XXTECloudApiSdk.h"
 #import "XXTEUserInterfaceDefines.h"
 
+#ifndef APPSTORE
 static id (^convertJsonString)(id) =
 ^id (id obj) {
     if ([obj isKindOfClass:[NSString class]]) {
@@ -31,7 +32,9 @@ static id (^convertJsonString)(id) =
     }
     return @{};
 };
+#endif
 
+#ifndef APPSTORE
 static id (^sendCloudApiRequest)(NSArray *objs) =
 ^(NSArray *objs) {
     NSString *commandUrl = objs[0];
@@ -69,14 +72,19 @@ static id (^sendCloudApiRequest)(NSArray *objs) =
     }
     return licenseDictionary;
 };
+#endif
 
+#ifndef APPSTORE
 static inline NSString *uAppDaemonCommandUrl(NSString *command) {
     return ([uAppDefine(@"LOCAL_API") stringByAppendingString:command]);
 }
+#endif
 
+#ifndef APPSTORE
 static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
     return ([uAppDefine(@"AUTH_API") stringByAppendingString:command]);
 }
+#endif
 
 static inline NSDictionary *uAppConstEnvp() {
     NSString *languageCode = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];

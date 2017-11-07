@@ -33,6 +33,10 @@
     self.showLoadingBar = YES;
     self.showUrlWhileLoading = NO;
     self.hideWebViewBoundaries = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
 }
 
 - (void)viewDidLoad {

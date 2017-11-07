@@ -31,6 +31,7 @@
 
 #pragma mark - File Operations
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView encryptItemAtPath:(NSString *)entryPath {
     NSString *currentPath = self.entryPath;
     NSString *entryName = [entryPath lastPathComponent];
@@ -105,6 +106,7 @@
         });
     });
 }
+#endif
 
 - (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path {
     NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];

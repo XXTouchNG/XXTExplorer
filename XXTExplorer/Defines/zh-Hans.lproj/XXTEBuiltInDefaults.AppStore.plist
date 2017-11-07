@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EXPLORER_HOME_SERIES</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>主目录</string>
+			<key>subtitle</key>
+			<string>XXTouch 运行时主目录</string>
+			<key>icon</key>
+			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
+			<key>path</key>
+			<string></string>
+		</dict>
+	</array>
+	<key>SECTION_META</key>
+	<array>
+		<dict>
+			<key>key</key>
+			<string>EXPLORER_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>文件管理器设置</string>
+		</dict>
+	</array>
+	<key>EXPLORER_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHomeEnabledKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>显示 &quot;主目录&quot; 入口</string>
+			<key>description</key>
+			<string>在文件管理器顶部显示 &quot;主目录&quot; 入口.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListHideDotItemKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>隐藏点符文件</string>
+			<key>description</key>
+			<string>隐藏文件名以句点 (&quot;.&quot;) 开头的文件.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>隐藏已知文件的扩展名</string>
+			<key>description</key>
+			<string>在文件管理器中隐藏已知文件的扩展名, 如 &quot;.txt&quot;, &quot;.lua&quot; 等.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>隐藏操作标签</string>
+			<key>description</key>
+			<string>隐藏滑动操作标签, 如 &quot;启动&quot;, &quot;编辑&quot; 等.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerAllowOpenMethodKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>允许修改打开方式</string>
+			<key>description</key>
+			<string>允许在 &quot;项目属性&quot; 中修改打开方式.</string>
+			<key>options</key>
+			<array>
+				<string>❌</string>
+				<string>⭕️</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortFieldKey</string>
+			<key>default</key>
+			<string>XXTExplorerViewEntryAttributeCreationDate</string>
+			<key>title</key>
+			<string></string>
+			<key>description</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortOrderKey</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string></string>
+			<key>New item</key>
+			<string></string>
+		</dict>
+	</array>
+</dict>
+</plist>

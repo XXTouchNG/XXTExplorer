@@ -318,6 +318,8 @@
 }
 
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
+#ifndef APPSTORE
+    
     if ([self.class isFetchingSelectedScript] == NO) {
         [self.class setFetchingSelectedScript:YES];
         [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{}]
@@ -357,6 +359,22 @@
             [self.class setFetchingSelectedScript:NO];
         });
     }
+    
+#else
+    
+    if (refreshControl && [refreshControl isRefreshing]) {
+        [self loadEntryListData];
+        [self.tableView reloadData];
+        [refreshControl endRefreshing];
+    } else {
+        UITableView *tableView = self.tableView;
+        for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+            [self reconfigureCellAtIndexPath:indexPath];
+        }
+    }
+    [self.class setFetchingSelectedScript:NO];
+    
+#endif
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource

@@ -8,12 +8,16 @@
 
 #import "XXTEMoreUserDefaultsController.h"
 #import "XXTEMoreTitleDescriptionValueCell.h"
-#import <PromiseKit/PromiseKit.h>
-#import <PromiseKit/NSURLConnection+PromiseKit.h>
-#import "UIView+XXTEToast.h"
-#import "XXTENetworkDefines.h"
-#import "XXTEMoreUserDefaultsOperationController.h"
+
 #import "XXTEAppDefines.h"
+#import "UIView+XXTEToast.h"
+#import "XXTEMoreUserDefaultsOperationController.h"
+
+#ifndef APPSTORE
+    #import "XXTENetworkDefines.h"
+    #import <PromiseKit/PromiseKit.h>
+    #import <PromiseKit/NSURLConnection+PromiseKit.h>
+#endif
 
 enum {
     kXXTEMoreUserDefaultsSearchTypeTitle = 0,
@@ -162,18 +166,20 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)loadDynamicUserDefaults {
+#ifndef APPSTORE
+    
     blockInteractions(self, YES);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-        [self.defaultsMeta enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            
-        }];
-        [((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]) enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
-            id key = entry[@"key"];
-            id value = XXTEDefaultsObject(key, nil);
-            if (value) {
-                self.userDefaults[key] = value;
-            }
-        }];
+        NSArray <NSDictionary *> *metaArray = ((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]);
+        if ([metaArray isKindOfClass:[NSArray class]]) {
+            [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
+                id key = entry[@"key"];
+                id value = XXTEDefaultsObject(key, nil);
+                if (value) {
+                    self.userDefaults[key] = value;
+                }
+            }];
+        }
         fulfill(nil);
     }];
     PMKPromise *remoteDefaultsPromise = [NSURLConnection POST:uAppDaemonCommandUrl(@"get_user_conf") JSON:@{}];
@@ -199,6 +205,22 @@ XXTE_END_IGNORE_PARTIAL
         blockInteractions(self, NO);
         [self.tableView reloadData];
     });
+    
+#else
+    
+    NSArray <NSDictionary *> *metaArray = ((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]);
+    if ([metaArray isKindOfClass:[NSArray class]]) {
+        [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
+            id key = entry[@"key"];
+            id value = XXTEDefaultsObject(key, nil);
+            if (value) {
+                self.userDefaults[key] = value;
+            }
+        }];
+    }
+    [self.tableView reloadData];
+    
+#endif
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -343,8 +365,9 @@ XXTE_END_IGNORE_PARTIAL
 - (void)userDefaultsOperationController:(XXTEMoreUserDefaultsOperationController *)controller operationSelectedWithIndex:(NSUInteger)index completion:(void (^)(BOOL))block {
     NSString *modifyKey = controller.userDefaultsEntry[@"key"];
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
-//    editedUserDefaults[modifyKey] = (index != 0) ? @YES : @NO;
     editedUserDefaults[modifyKey] = @(index);
+#ifndef APPSTORE
+    
     blockInteractions(self, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
@@ -372,6 +395,17 @@ XXTE_END_IGNORE_PARTIAL
         blockInteractions(self, NO);
         [self.tableView reloadData];
     });
+    
+#else
+    
+    block(YES);
+    self.userDefaults[modifyKey] = @(index);
+    [editedUserDefaults enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        XXTEDefaultsSetObject(key, obj);
+    }];
+    [self.tableView reloadData];
+    
+#endif
 }
 
 #pragma mark - Memory

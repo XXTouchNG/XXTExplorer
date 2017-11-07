@@ -148,6 +148,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         }
     }
     
+#ifndef APPSTORE
     // Setup Shortcut Actions
     {
         XXTE_START_IGNORE_PARTIAL
@@ -162,6 +163,15 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         }
         XXTE_END_IGNORE_PARTIAL
     }
+#else
+    {
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 9.0, *)) {
+            [UIApplication sharedApplication].shortcutItems = @[ ];
+        }
+        XXTE_END_IGNORE_PARTIAL
+    }
+#endif
     
     return YES;
 }
@@ -245,6 +255,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url withDelay:(BOOL)delay {
     if ([[url scheme] isEqualToString:@"xxt"]) {
+#ifndef APPSTORE
         NSURL *xxtCommandURL = url;
         NSString *xxtCommandInterface = [xxtCommandURL host];
         NSArray <NSString *> *xxtComponents = [xxtCommandURL pathComponents];
@@ -265,6 +276,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         } else {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
         }
+#endif
     } else if ([[url scheme] isEqualToString:@"file"]) {
         if (delay) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -277,6 +289,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     return NO;
 }
 
+#ifndef APPSTORE
 XXTE_START_IGNORE_PARTIAL
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     if (shortcutItem.userInfo[XXTEShortcutAction]) {
@@ -290,6 +303,7 @@ XXTE_START_IGNORE_PARTIAL
     }
 }
 XXTE_END_IGNORE_PARTIAL
+#endif
 
 #pragma mark - App Defines
 
@@ -299,10 +313,14 @@ XXTE_END_IGNORE_PARTIAL
     dispatch_once(&token, ^{
         if (!localAppDefines) {
             localAppDefines = ({
+#ifndef APPSTORE
                 NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
                 [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
                 [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
                 [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
+#else
+                NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines.AppStore" ofType:@"plist"]];
+#endif
                 appDefines;
             });
         }
@@ -328,10 +346,17 @@ XXTE_END_IGNORE_PARTIAL
     static dispatch_once_t token;
     dispatch_once(&token, ^{
         if (!builtInDefaults) {
+#ifndef APPSTORE
             builtInDefaults = ({
                 NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults" ofType:@"plist"];
                 [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
             });
+#else
+            builtInDefaults = ({
+                NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults.AppStore" ofType:@"plist"];
+                [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
+            });
+#endif
         }
     });
     return builtInDefaults;
@@ -343,8 +368,12 @@ XXTE_END_IGNORE_PARTIAL
     dispatch_once(&token, ^{
         if (!rootPath) {
             rootPath = ({
-#ifndef DEBUG
-                NSString *mainPath = uAppDefine(@"MAIN_PATH");
+#ifndef APPSTORE
+    #ifndef DEBUG
+                    NSString *mainPath = uAppDefine(@"MAIN_PATH");
+    #else
+                    NSString *mainPath = nil;
+    #endif
 #else
                 NSString *mainPath = nil;
 #endif

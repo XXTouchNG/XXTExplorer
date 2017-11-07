@@ -40,7 +40,9 @@
 
 - (void)tableView:(UITableView *)tableView showDetailController:(UIViewController <XXTEViewer> *)viewer {
     if (viewer) {
-        if ([viewer isKindOfClass:[XXTEExecutableViewer class]]) {
+        if ([viewer isKindOfClass:[XXTEExecutableViewer class]])
+        {
+#ifndef APPSTORE
             blockInteractions(self, YES);
             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": viewer.entryPath}]
             .then(convertJsonString)
@@ -65,9 +67,13 @@
                     [self reconfigureCellAtIndexPath:indexPath];
                 }
             });
-        } else if ([viewer isKindOfClass:[XXTEArchiveViewer class]]) {
+#endif
+        }
+        else if ([viewer isKindOfClass:[XXTEArchiveViewer class]]) {
             [self tableView:tableView archiveEntryCellTappedWithEntryPath:viewer.entryPath];
-        } else {
+        }
+        else
+        {
             if (XXTE_COLLAPSED) {
                 XXTE_START_IGNORE_PARTIAL
                 if (@available(iOS 8.0, *)) {

@@ -11,24 +11,26 @@
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
-#import "XXTENetworkDefines.h"
-#import "NSString+QueryItems.h"
 
 #import "XXTEViewer.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
+#import "NSString+QueryItems.h"
 
 #import "XXTENavigationController.h"
-#import "XXTEMoreLicenseController.h"
-#import "XXTEDownloadViewController.h"
 #import "XXTECommonWebViewController.h"
 #import "XXTExplorerNavigationController.h"
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
-#import <PromiseKit/PromiseKit.h>
-#import <PromiseKit/NSURLConnection+PromiseKit.h>
+#ifndef APPSTORE
+    #import "XXTENetworkDefines.h"
+    #import "XXTEMoreLicenseController.h"
+    #import "XXTEDownloadViewController.h"
+    #import <PromiseKit/PromiseKit.h>
+    #import <PromiseKit/NSURLConnection+PromiseKit.h>
+#endif
 
 @implementation XXTEMasterViewController (Notifications)
 
@@ -102,6 +104,7 @@
         [self performAction:sender presentConfiguratorForBundleAtPath:bundlePath configurationName:name interactiveMode:interactive];
         return YES;
     }
+#ifndef APPSTORE
     else if ([jsonEvent isEqualToString:@"bind_code"] ||
              [jsonEvent isEqualToString:@"license"]) {
         NSString *licenseCode = jsonDictionary[@"code"];
@@ -195,6 +198,7 @@
         [self presentViewController:navController animated:YES completion:nil];
         return YES;
     }
+#endif
     return NO;
 }
 
@@ -231,8 +235,8 @@
 
 #pragma mark - Button Actions
 
+#ifndef APPSTORE
 - (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
-//    if (!entryPath) return;
     blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
     .then(convertJsonString)
@@ -254,7 +258,9 @@
         blockInteractions(self, NO);
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
     BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
     blockInteractions(self, YES);
@@ -313,9 +319,11 @@
         blockInteractions(self, NO);
     });
 }
+#endif
 
 #pragma mark - XXTEScanViewControllerDelegate
 
+#ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url {
     blockInteractions(self, YES);
     @weakify(self);
@@ -347,7 +355,9 @@
         }
     }];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)detailText {
     blockInteractions(self, YES);
     @weakify(self);
@@ -364,9 +374,12 @@
         });
     }];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller jsonOperation:(NSDictionary *)jsonDictionary {
     [self performShortcut:controller jsonOperation:jsonDictionary];
 }
+#endif
 
 @end

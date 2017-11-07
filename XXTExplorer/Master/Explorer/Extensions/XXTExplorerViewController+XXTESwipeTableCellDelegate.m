@@ -58,17 +58,21 @@
         XXTESwipeButton *button = (XXTESwipeButton *)cell.leftButtons[index];
         NSString *buttonAction = objc_getAssociatedObject(button, XXTESwipeButtonAction);
         if ([buttonAction isEqualToString:@"Launch"]) {
+#ifndef APPSTORE
             NSDictionary *userInfo =
             @{XXTENotificationShortcutInterface: @"launch",
               XXTENotificationShortcutUserData: @{ @"path": (entryPath ? entryPath : [NSNull null]) }};
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:button userInfo:userInfo]];
-        } else if ([buttonAction isEqualToString:@"Property"]) {
+#endif
+        }
+        else if ([buttonAction isEqualToString:@"Property"]) {
             XXTExplorerItemDetailViewController *detailController = [[XXTExplorerItemDetailViewController alloc] initWithPath:entryPath];
             XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailController];
             detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
-        } else if ([buttonAction isEqualToString:@"Inside"]) {
+        }
+        else if ([buttonAction isEqualToString:@"Inside"]) {
             if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
@@ -79,7 +83,8 @@
                     [self.navigationController pushViewController:explorerViewController animated:YES];
                 }
             }
-        } else if ([buttonAction isEqualToString:@"Configure"]) {
+        }
+        else if ([buttonAction isEqualToString:@"Configure"]) {
             if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
                 UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
                 if (configurator) {
@@ -93,7 +98,8 @@
             } else {
                 toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]));
             }
-        } else if ([buttonAction isEqualToString:@"Edit"]) {
+        }
+        else if ([buttonAction isEqualToString:@"Edit"]) {
             if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
                 UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
                 if (editor) {
@@ -111,7 +117,9 @@
             } else {
                 toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]));
             }
-        } else if ([buttonAction isEqualToString:@"Encrypt"]) {
+        }
+        else if ([buttonAction isEqualToString:@"Encrypt"]) {
+#ifndef APPSTORE
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Encrypt Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory.", nil), entryDetail[XXTExplorerViewEntryAttributeName]]
                                                                   style:LGAlertViewStyleActionSheet
@@ -121,6 +129,7 @@
                                                                delegate:self];
             objc_setAssociatedObject(alertView, @selector(alertView:encryptItemAtPath:), entryPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated:YES completionHandler:nil];
+#endif
         }
     } else if (direction == XXTESwipeDirectionRightToLeft && index == 0) {
         NSString *buttonAction = objc_getAssociatedObject(cell.rightButtons[index], XXTESwipeButtonAction);
@@ -160,6 +169,7 @@
         id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         UIColor *colorSeries = XXTE_COLOR;
+#ifndef APPSTORE
         if (entryReader.executable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
@@ -178,6 +188,7 @@
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
+#endif
         if ([entryBundleReader respondsToSelector:@selector(configurable)]) {
             if (entryBundleReader.configurable) {
                 NSString *buttonTitle = nil;
@@ -234,6 +245,7 @@
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
+#ifndef APPSTORE
         if (entryReader.executable && entryReader.editable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
@@ -252,6 +264,7 @@
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Encrypt", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
+#endif
         NSString *buttonTitle = nil;
         if (!hidesLabel) {
             buttonTitle = NSLocalizedString(@"Property", nil);

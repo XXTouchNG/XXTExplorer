@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PRODUCT_NAME</key>
+	<string>XXTouch</string>
+	<key>DAEMON_VERSION</key>
+	<string>1.2.0-1</string>
+	<key>REQUIRED_SUBDIRECTORIES</key>
+	<array>
+		<string>caches</string>
+		<string>log</string>
+		<string>uicfg</string>
+		<string>lib</string>
+		<string>web</string>
+		<string>res</string>
+		<string>bin</string>
+		<string>lua</string>
+		<string>lua/scripts</string>
+		<string>snippets</string>
+	</array>
+	<key>INITIAL_RESOURCES</key>
+	<array>
+		<dict>
+			<key>from</key>
+			<string>B4FDE60B-30B3-4035-B874-619C896626BE</string>
+			<key>to</key>
+			<string>snippets</string>
+		</dict>
+	</array>
+	<key>AVAILABLE_VIEWER</key>
+	<array>
+		<string>XXTEArchiveViewer</string>
+		<string>XXTEImageViewerController</string>
+		<string>XXTEMediaPlayerController</string>
+		<string>XXTEWebViewerController</string>
+		<string>XXTECodeViewerController</string>
+		<string>XXTEObjectViewController</string>
+		<string>XXTEUIViewController</string>
+		<string>XXTESnippetViewerController</string>
+	</array>
+	<key>AVAILABLE_BUNDLE_READER</key>
+	<array>
+		<string>XXTExplorerEntryXPPReader</string>
+	</array>
+	<key>EXPLORER_INITIAL_PATH</key>
+	<string>lua/scripts</string>
+</dict>
+</plist>

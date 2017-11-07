@@ -4,7 +4,8 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -62,11 +63,11 @@
                         <viewControllerLayoutGuide type="bottom" id="nMD-Nk-a77"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GZd-FD-I2s">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" id="n05-iy-NYp"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="n05-iy-NYp"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TKz-ej-rky" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -96,8 +97,8 @@
             <objects>
                 <navigationController id="BkR-Qj-wNG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="XXTEMoreTabbarIcon" id="FLF-IA-p6q"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Ges-eq-684">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="Ges-eq-684">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>

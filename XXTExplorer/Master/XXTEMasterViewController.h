@@ -12,6 +12,8 @@
 
 @interface XXTEMasterViewController : UITabBarController
 
+#ifndef APPSTORE
 - (void)checkUpdate;
+#endif
 
 @end

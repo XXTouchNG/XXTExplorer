@@ -12,7 +12,10 @@
 
 @interface XXTExplorerViewController (FileOperation)
 
-- (void)alertView:(LGAlertView *)alertView encryptItemAtPath:(NSString *)entryPath;
+#ifndef APPSTORE
+    - (void)alertView:(LGAlertView *)alertView encryptItemAtPath:(NSString *)entryPath;
+#endif
+
 - (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path;
 - (void)alertView:(LGAlertView *)alertView pastePasteboardItemsAtPath:(NSString *)path;
 - (void)alertView:(LGAlertView *)alertView symlinkPasteboardItemsAtPath:(NSString *)path;

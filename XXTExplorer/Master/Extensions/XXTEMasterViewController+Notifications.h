@@ -9,9 +9,22 @@
 #import "XXTEMasterViewController.h"
 #import "XXTEScanViewController.h"
 
-@interface XXTEMasterViewController (Notifications) <XXTEScanViewControllerDelegate>
+#ifndef APPSTORE
 
-- (void)registerNotifications;
-- (void)removeNotifications;
+    @interface XXTEMasterViewController (Notifications) <XXTEScanViewControllerDelegate>
 
-@end
+    - (void)registerNotifications;
+    - (void)removeNotifications;
+
+    @end
+
+#else
+
+    @interface XXTEMasterViewController (Notifications)
+
+    - (void)registerNotifications;
+    - (void)removeNotifications;
+
+    @end
+
+#endif

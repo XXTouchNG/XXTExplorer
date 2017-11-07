@@ -6,41 +6,78 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <objc/runtime.h>
-#import <objc/message.h>
 #import "XXTEMoreViewController.h"
-#import "XXTEMoreRemoteSwitchCell.h"
-#import "XXTEMoreAddressCell.h"
 #import "XXTEMoreLinkCell.h"
-#import <LGAlertView/LGAlertView.h>
-#import <PromiseKit/PromiseKit.h>
-#import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "UIView+XXTEToast.h"
-#import "XXTENetworkDefines.h"
-#import "XXTEMoreApplicationListController.h"
-#import "XXTEMoreLicenseController.h"
-#import "XXTEMoreActivationController.h"
-#import "XXTEMoreRecordingController.h"
-#import "XXTENotificationCenterDefines.h"
 #import "XXTEMoreUserDefaultsController.h"
-#import "XXTEMoreBootScriptController.h"
 #import "XXTEUIViewController.h"
 
-typedef enum : NSUInteger {
-    kXXTEMoreSectionIndexRemote = 0,
-    kXXTEMoreSectionIndexDaemon,
-    kXXTEMoreSectionIndexLicense,
-    kXXTEMoreSectionIndexSettings,
-    kXXTEMoreSectionIndexSystem,
-    kXXTEMoreSectionIndexHelp,
-    kXXTEMoreSectionIndexMax
-} kXXTEMoreSectionIndex;
+#ifndef APPSTORE
+    #import <objc/runtime.h>
+    #import <objc/message.h>
+    #import "XXTEMoreRemoteSwitchCell.h"
+    #import "XXTEMoreAddressCell.h"
+    #import <LGAlertView/LGAlertView.h>
+    #import <PromiseKit/PromiseKit.h>
+    #import <PromiseKit/NSURLConnection+PromiseKit.h>
+    #import "XXTENetworkDefines.h"
+    #import "XXTEMoreApplicationListController.h"
+    #import "XXTEMoreLicenseController.h"
+    #import "XXTEMoreActivationController.h"
+    #import "XXTEMoreRecordingController.h"
+    #import "XXTENotificationCenterDefines.h"
+    #import "XXTEMoreBootScriptController.h"
+#endif
 
+#ifndef APPSTORE
+
+    typedef enum : NSUInteger {
+        kXXTEMoreSectionIndexRemote = 0,
+        kXXTEMoreSectionIndexDaemon,
+        kXXTEMoreSectionIndexLicense,
+        kXXTEMoreSectionIndexSettings,
+        kXXTEMoreSectionIndexSystem,
+        kXXTEMoreSectionIndexHelp,
+        kXXTEMoreSectionIndexMax
+    } kXXTEMoreSectionIndex;
+
+    typedef enum : NSUInteger {
+        kXXTEMoreSectionSettingsRowIndexActivationConfig = 0,
+        kXXTEMoreSectionSettingsRowIndexRecordingConfig,
+        kXXTEMoreSectionSettingsRowIndexBootScript,
+        kXXTEMoreSectionSettingsRowIndexUserDefaults,
+    } kXXTEMoreSectionSettingsRowIndex;
+
+    typedef enum : NSUInteger {
+        kXXTEMoreSectionHelpRowIndexDocuments = 0,
+        kXXTEMoreSectionHelpRowIndexAbout,
+    } kXXTEMoreSectionHelpRowIndex;
+
+#else
+
+    typedef enum : NSUInteger {
+        kXXTEMoreSectionIndexSettings = 0,
+        kXXTEMoreSectionIndexHelp,
+        kXXTEMoreSectionIndexMax
+    } kXXTEMoreSectionIndex;
+
+    typedef enum : NSUInteger {
+        kXXTEMoreSectionSettingsRowIndexUserDefaults = 0,
+    } kXXTEMoreSectionSettingsRowIndex;
+
+    typedef enum : NSUInteger {
+        kXXTEMoreSectionHelpRowIndexAbout = 0,
+    } kXXTEMoreSectionHelpRowIndex;
+
+#endif
+
+#ifndef APPSTORE
 @interface XXTEMoreViewController () <LGAlertViewDelegate>
 @property (weak, nonatomic) UISwitch *remoteAccessSwitch;
 @property (weak, nonatomic) UIActivityIndicatorView *remoteAccessIndicator;
 
 @end
+#endif
 
 @implementation XXTEMoreViewController {
     BOOL isFirstTimeLoaded;
@@ -97,9 +134,14 @@ typedef enum : NSUInteger {
     }
     
     [self reloadStaticTableViewData];
+    
+#ifndef APPSTORE
     [self reloadDynamicTableViewData];
+#endif
+    
 }
 
+#ifndef APPSTORE
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (isFirstTimeLoaded) {
@@ -107,17 +149,23 @@ typedef enum : NSUInteger {
     }
     isFirstTimeLoaded = YES;
 }
+#endif
 
+#ifndef APPSTORE
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
     [super viewWillAppear:animated];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
 }
+#endif
 
+#ifndef APPSTORE
 - (void)updateRemoteAccessAddressDisplay {
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Remote Access", nil);
@@ -148,9 +196,10 @@ typedef enum : NSUInteger {
         staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
     }
 }
+#endif
 
+#ifndef APPSTORE
 - (void)reloadDynamicTableViewData {
-//    blockInteractions(self, YES);
     if (!isFetchingRemoteStatus) {
         isFetchingRemoteStatus = YES;
         [self.remoteAccessSwitch setHidden:YES];
@@ -180,13 +229,15 @@ typedef enum : NSUInteger {
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-//        blockInteractions(self, NO);
             isFetchingRemoteStatus = NO;
         });
     }
 }
+#endif
 
 - (void)reloadStaticTableViewData {
+#ifndef APPSTORE
+    
     staticSectionTitles = @[ NSLocalizedString(@"Remote", nil),
                              NSLocalizedString(@"Daemon", nil),
                              NSLocalizedString(@"License", nil),
@@ -194,6 +245,17 @@ typedef enum : NSUInteger {
                              NSLocalizedString(@"System", nil),
                              NSLocalizedString(@"Help", nil)];
     staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web Client. \n- Access the WebDAV server.", nil), @"", @"", @"", @"", @"" ];
+    staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
+    
+#else
+    
+    staticSectionTitles = @[ @"", @"" ];
+    staticSectionFooters = @[ @"", @"" ];
+    staticSectionRowNum = @[ @1, @1 ];
+    
+#endif
+    
+#ifndef APPSTORE
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     
@@ -271,6 +333,22 @@ typedef enum : NSUInteger {
     
     XXTEMoreAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     
+#else
+    
+    XXTEMoreLinkCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+    cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell7.imageView.image = [UIImage imageNamed:@"XXTEMoreIconUserDefaults"];
+    cell7.titleLabel.text = NSLocalizedString(@"User Defaults", nil);
+    
+    XXTEMoreLinkCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+    cell15.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell15.imageView.image = [UIImage imageNamed:@"XXTEMoreIconAbout"];
+    cell15.titleLabel.text = NSLocalizedString(@"About", nil);
+    
+#endif
+    
+#ifndef APPSTORE
+    
     staticCells = @[
                     [@[ cell1, cellAddress1, cellAddress2 ] mutableCopy],
                     //
@@ -285,7 +363,21 @@ typedef enum : NSUInteger {
                     [@[ cell14, cell15 ] mutableCopy],
                     ];
     
+#else
+    
+    staticCells = @[
+                    //
+                    [@[ cell7 ] mutableCopy],
+                    //
+                    [@[ cell15 ] mutableCopy],
+                    ];
+    
+#endif
+    
+#ifndef APPSTORE
     [self updateRemoteAccessAddressDisplay];
+#endif
+    
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -305,6 +397,7 @@ typedef enum : NSUInteger {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+#ifndef APPSTORE
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreSectionIndexRemote) {
             if (indexPath.row == 0) {
@@ -312,10 +405,12 @@ typedef enum : NSUInteger {
             }
         }
     }
+#endif
     return 44.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+#ifndef APPSTORE
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreSectionIndexRemote) {
             if (indexPath.row == 0) {
@@ -338,11 +433,14 @@ typedef enum : NSUInteger {
             }
         }
     }
+#endif
     return 44.f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+#ifndef APPSTORE
+    
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreSectionIndexRemote) {
             if (indexPath.row > 0) {
@@ -366,7 +464,8 @@ typedef enum : NSUInteger {
                 }
             }
         }
-        else if (indexPath.section == kXXTEMoreSectionIndexDaemon) {
+        else
+        if (indexPath.section == kXXTEMoreSectionIndexDaemon) {
             if (indexPath.row == 0) {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Restart Daemon", nil)
                                                                     message:NSLocalizedString(@"This operation will restart daemon, and wait until it launched.", nil)
@@ -379,28 +478,31 @@ typedef enum : NSUInteger {
                 [alertView showAnimated:YES completionHandler:nil];
             }
         }
-        else if (indexPath.section == kXXTEMoreSectionIndexLicense) {
+        else
+        if (indexPath.section == kXXTEMoreSectionIndexLicense) {
             if (indexPath.row == 0) {
                 XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:licenseController animated:YES];
             }
         }
-        else if (indexPath.section == kXXTEMoreSectionIndexSettings) {
-            if (indexPath.row == 0) {
+        else
+        if (indexPath.section == kXXTEMoreSectionIndexSettings) {
+            if (indexPath.row == kXXTEMoreSectionSettingsRowIndexActivationConfig) {
                 XXTEMoreActivationController *activationController = [[XXTEMoreActivationController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:activationController animated:YES];
-            } else if (indexPath.row == 1) {
+            } else if (indexPath.row == kXXTEMoreSectionSettingsRowIndexRecordingConfig) {
                 XXTEMoreRecordingController *recordingController = [[XXTEMoreRecordingController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:recordingController animated:YES];
-            } else if (indexPath.row == 2) {
+            } else if (indexPath.row == kXXTEMoreSectionSettingsRowIndexBootScript) {
                 XXTEMoreBootScriptController *bootController = [[XXTEMoreBootScriptController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:bootController animated:YES];
-            } else if (indexPath.row == 3) {
+            } else if (indexPath.row == kXXTEMoreSectionSettingsRowIndexUserDefaults) {
                 XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStylePlain];
                 [self.navigationController pushViewController:userDefaultsController animated:YES];
             }
         }
-        else if (indexPath.section == kXXTEMoreSectionIndexSystem) {
+        else
+        if (indexPath.section == kXXTEMoreSectionIndexSystem) {
             if (indexPath.row == 0) {
                 XXTEMoreApplicationListController *applicationListController = [[XXTEMoreApplicationListController alloc] init];
                 [self.navigationController pushViewController:applicationListController animated:YES];
@@ -461,15 +563,20 @@ typedef enum : NSUInteger {
                 [alertView showAnimated:YES completionHandler:nil];
             }
         }
-        else if (indexPath.section == kXXTEMoreSectionIndexHelp) {
+        else
+        if (indexPath.section == kXXTEMoreSectionIndexHelp) {
+#ifndef APPSTORE
+            NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.Pro.bundle"];
+#else
             NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.bundle"];
-            if (indexPath.row == 0) {
+#endif
+            if (indexPath.row == kXXTEMoreSectionHelpRowIndexDocuments) {
                 NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
                 XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
                 xuiController.hidesBottomBarWhenPushed = NO;
                 [self.navigationController pushViewController:xuiController animated:YES];
             }
-            else if (indexPath.row == 1) {
+            else if (indexPath.row == kXXTEMoreSectionHelpRowIndexAbout) {
                 NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
                 XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
                 xuiController.hidesBottomBarWhenPushed = NO;
@@ -477,6 +584,31 @@ typedef enum : NSUInteger {
             }
         }
     }
+    
+#else
+    
+    if (indexPath.section == kXXTEMoreSectionIndexSettings) {
+        if (indexPath.row == kXXTEMoreSectionSettingsRowIndexUserDefaults) {
+            XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:userDefaultsController animated:YES];
+        }
+    }
+    else
+    if (indexPath.section == kXXTEMoreSectionIndexHelp) {
+#ifndef APPSTORE
+        NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.Pro.bundle"];
+#else
+        NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.bundle"];
+#endif
+        if (indexPath.row == kXXTEMoreSectionHelpRowIndexAbout) {
+            NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+            XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
+            xuiController.hidesBottomBarWhenPushed = NO;
+            [self.navigationController pushViewController:xuiController animated:YES];
+        }
+    }
+    
+#endif
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -502,6 +634,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - UIControl Actions
 
+#ifndef APPSTORE
 - (void)remoteAccessOptionSwitchChanged:(UISwitch *)sender {
     if (sender == self.remoteAccessSwitch) {
         BOOL changeToStatus = sender.on;
@@ -540,9 +673,11 @@ typedef enum : NSUInteger {
         });
     }
 }
+#endif
 
 #pragma mark - LGAlertViewDelegate
 
+#ifndef APPSTORE
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     SEL selectors[] = {
         @selector(alertView:restartDaemon:),
@@ -566,13 +701,17 @@ typedef enum : NSUInteger {
     objc_removeAssociatedObjects(alertView);
 #pragma clang diagnostic pop
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertViewCancelled:(LGAlertView *)alertView {
     [alertView dismissAnimated];
 }
+#endif
 
 #pragma mark - LGAlertView Actions
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanGPSCaches:(id)obj {
     [alertView dismissAnimated];
     blockInteractions(self, YES);
@@ -592,7 +731,9 @@ typedef enum : NSUInteger {
         blockInteractions(self, NO);
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanUICaches:(id)obj {
     [alertView dismissAnimated];
     blockInteractions(self, YES);
@@ -610,7 +751,9 @@ typedef enum : NSUInteger {
         blockInteractions(self, NO);
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanAll:(id)obj {
     [alertView dismissAnimated];
     blockInteractions(self, YES);
@@ -628,7 +771,9 @@ typedef enum : NSUInteger {
         blockInteractions(self, NO);
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView respringDevice:(id)obj {
     [alertView dismissAnimated];
     blockInteractions(self, YES);
@@ -646,7 +791,9 @@ typedef enum : NSUInteger {
         blockInteractions(self, NO);
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView rebootDevice:(id)obj {
     [alertView dismissAnimated];
     blockInteractions(self, YES);
@@ -664,9 +811,10 @@ typedef enum : NSUInteger {
         blockInteractions(self, NO);
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView restartDaemon:(id)obj {
-//    [alertView dismissAnimated];
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Restart Daemon", nil)
                                                                              message:NSLocalizedString(@"Restart daemon, please wait...", nil)
                                                                                style:LGAlertViewStyleActionSheet
@@ -678,13 +826,11 @@ typedef enum : NSUInteger {
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
-//    blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"restart") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView1 afterDelay:1.f];
         }
     }).catch(^(NSError *serverError) {
-//        blockInteractions(self, NO);
         LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Could not connect to the daemon: %@", nil), [serverError localizedDescription]]
                                                                style:LGAlertViewStyleActionSheet
@@ -699,14 +845,12 @@ typedef enum : NSUInteger {
         
     });
 }
+#endif
 
+#ifndef APPSTORE
 - (void)alertViewRestartDaemonCheckLaunched:(LGAlertView *)alertView {
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            // finished
-//            blockInteractions(self, NO);
-//            [alertView dismissAnimated];
-//            toastMessage(self, NSLocalizedString(@"The daemon has been restarted.", nil));
             LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Daemon Restarted", nil)
                                                                  message:NSLocalizedString(@"The daemon has been restarted.", nil)
                                                                    style:LGAlertViewStyleActionSheet
@@ -720,13 +864,8 @@ typedef enum : NSUInteger {
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004 || serverError.code == -1005) {
-            // wait until done
             [self performSelector:@selector(alertViewRestartDaemonCheckLaunched:) withObject:alertView afterDelay:3.f];
         } else {
-            // unknown error, stop
-//            blockInteractions(self, NO);
-//            [alertView dismissAnimated];
-//            toastMessage(self, [serverError localizedDescription]);
             LGAlertView *alertView2 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"Cannot restart daemon: %@", nil), [serverError localizedDescription]]
                                                                    style:LGAlertViewStyleActionSheet
@@ -742,9 +881,11 @@ typedef enum : NSUInteger {
         
     });
 }
+#endif
 
 #pragma mark - Notifications
 
+#ifndef APPSTORE
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
@@ -752,9 +893,6 @@ typedef enum : NSUInteger {
         [self reloadDynamicTableViewData];
     }
 }
-
-- (void)dealloc {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+#endif
 
 @end

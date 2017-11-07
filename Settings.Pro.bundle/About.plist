@@ -92,6 +92,32 @@ All Rights Reserved.</string>
 				<string>mqqapi://card/show_pslcard?src_type=internal&amp;version=1&amp;uin=40898074&amp;card_type=group&amp;source=external</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Group</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Button</string>
+			<key>label</key>
+			<string>Check Update</string>
+			<key>action</key>
+			<string>XXTCheckUpdate:</string>
+			<key>args</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Button</string>
+			<key>label</key>
+			<string>Reset Defaults</string>
+			<key>action</key>
+			<string>XXTResetDefaults:</string>
+			<key>args</key>
+			<dict/>
+		</dict>
 	</array>
 	<key>stringsTable</key>
 	<string>About</string>

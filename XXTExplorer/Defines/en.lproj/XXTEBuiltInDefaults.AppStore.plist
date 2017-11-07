@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EXPLORER_HOME_SERIES</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Home Directory</string>
+			<key>subtitle</key>
+			<string>XXTouch Runtime Home Directory</string>
+			<key>icon</key>
+			<string>XXTExplorerViewSectionHomeSeriesHomeIcon</string>
+			<key>path</key>
+			<string></string>
+		</dict>
+	</array>
+	<key>SECTION_META</key>
+	<array>
+		<dict>
+			<key>key</key>
+			<string>EXPLORER_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>Explorer Config</string>
+		</dict>
+	</array>
+	<key>EXPLORER_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHomeEnabledKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Show &quot;Home&quot; Entry</string>
+			<key>description</key>
+			<string>Show &quot;Home&quot; entry at the top of file explorer.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListHideDotItemKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Hide Dot Files</string>
+			<key>description</key>
+			<string>Hide files whose name prefixed with a dot (&quot;.&quot;).</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Hide Common File Extensions</string>
+			<key>description</key>
+			<string>Hide common file extensions like &quot;.txt&quot;, &quot;.lua&quot;, etc.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Hide Operation Label</string>
+			<key>description</key>
+			<string>Hide swipe operation label like &quot;Launch&quot;, &quot;Edit&quot;, etc.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerAllowOpenMethodKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Allow Open Method</string>
+			<key>description</key>
+			<string>Allow changing open method in &quot;Item Property&quot;.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortFieldKey</string>
+			<key>default</key>
+			<string>XXTExplorerViewEntryAttributeCreationDate</string>
+			<key>title</key>
+			<string></string>
+			<key>description</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortOrderKey</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string></string>
+			<key>New item</key>
+			<string></string>
+		</dict>
+	</array>
+</dict>
+</plist>

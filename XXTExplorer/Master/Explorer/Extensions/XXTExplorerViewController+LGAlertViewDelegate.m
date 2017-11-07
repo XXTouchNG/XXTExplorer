@@ -43,7 +43,9 @@
         @selector(alertView:archiveEntriesAtIndexPaths:),
         @selector(alertView:unarchiveEntryPath:),
         @selector(alertView:clearPasteboardEntriesStored:),
-        @selector(alertView:encryptItemAtPath:)
+#ifndef APPSTORE
+        @selector(alertView:encryptItemAtPath:),
+#endif
     };
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
