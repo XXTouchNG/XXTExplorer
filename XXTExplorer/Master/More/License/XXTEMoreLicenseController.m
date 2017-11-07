@@ -101,6 +101,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     }
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewDataWithCompletion:nil];
 }

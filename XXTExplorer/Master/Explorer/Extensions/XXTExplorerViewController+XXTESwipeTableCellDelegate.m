@@ -141,6 +141,8 @@
 
 - (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
               swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+    CGFloat buttonWidth = 80.0;
+    cell.allowsButtonsWithDifferentWidth = YES;
     swipeSettings.transition = XXTESwipeTransitionBorder;
     expansionSettings.buttonIndex = 0;
     expansionSettings.fillOnTrigger = YES;
@@ -172,6 +174,7 @@
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
             }
+            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -190,6 +193,7 @@
                     button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                     [button centerIconOverText];
                 }
+                button.buttonWidth = buttonWidth;
                 objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [swipeButtons addObject:button];
             }
@@ -208,6 +212,7 @@
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
             }
+            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Edit", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -225,6 +230,7 @@
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
             }
+            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -242,6 +248,7 @@
                 button.titleLabel.font = [UIFont systemFontOfSize:12.f];
                 [button centerIconOverText];
             }
+            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Encrypt", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -258,6 +265,7 @@
             button.titleLabel.font = [UIFont systemFontOfSize:12.f];
             [button centerIconOverText];
         }
+        button.buttonWidth = buttonWidth;
         objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Property", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [swipeButtons addObject:button];
         return [swipeButtons copy];
@@ -275,6 +283,7 @@
             button.titleLabel.font = [UIFont systemFontOfSize:12.f];
             [button centerIconOverText];
         }
+        button.buttonWidth = buttonWidth;
         objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Trash", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return @[button];
     }

@@ -128,6 +128,10 @@ XXTE_END_IGNORE_PARTIAL
         searchBar;
     });
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     [self loadStaticUserDefaults];
     [self loadDynamicUserDefaults];
 }

@@ -10,11 +10,21 @@
 #import "XXTBasePicker.h"
 #import "XXTPickerFactory.h"
 
+static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
+
 @interface XXTPickerNavigationController () <UINavigationControllerDelegate>
 
 @end
 
 @implementation XXTPickerNavigationController
+
+- (CGFloat)safeAreaBottomMargin {
+    if (@available(iOS 11.0, *)) {
+        return self.view.safeAreaInsets.bottom;
+    } else {
+        return 0;
+    }
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -70,7 +80,7 @@
 
 - (XXTPickerPreviewBar *)popupBar {
     if (!_popupBar) {
-        XXTPickerPreviewBar *popupBar = [[XXTPickerPreviewBar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 44.f, self.view.bounds.size.width, 44.f)];
+        XXTPickerPreviewBar *popupBar = [[XXTPickerPreviewBar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin])];
         popupBar.userInteractionEnabled = YES;
         popupBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(previewBarTapped:)];
@@ -106,14 +116,14 @@
         if (YES == self.popupBar.hidden) {
             self.popupBar.hidden = NO;
             [UIView animateWithDuration:.2f animations:^{
-                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - 44.f, self.view.bounds.size.width, 44.f);
+                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]);
             } completion:^(BOOL finished) {
             }];
         }
     } else {
         if (NO == self.popupBar.hidden) {
             [UIView animateWithDuration:.2f animations:^{
-                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 44.f);
+                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]);
             } completion:^(BOOL finished) {
                 if (finished) self.popupBar.hidden = YES;
             }];

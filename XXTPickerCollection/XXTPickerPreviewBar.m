@@ -64,6 +64,7 @@
         UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 2.f, self.frame.size.width, 1.f)];
         progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         progressView.progressTintColor = XXTE_COLOR;
+        progressView.progressViewStyle = UIProgressViewStyleBar;
         _progressView = progressView;
     }
     return _progressView;

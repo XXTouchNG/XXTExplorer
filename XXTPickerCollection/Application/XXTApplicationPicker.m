@@ -162,6 +162,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     [self.refreshControl beginRefreshing];
     [self asyncApplicationList:self.refreshControl];
 }

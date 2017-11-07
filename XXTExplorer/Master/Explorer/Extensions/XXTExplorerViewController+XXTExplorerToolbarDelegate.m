@@ -33,13 +33,11 @@
 @implementation XXTExplorerViewController (XXTExplorerToolbarDelegate)
 
 - (void)configureToolbar {
-    self.toolbar = ({
-        XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-        toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        toolbar.tapDelegate = self;
-        toolbar;
-    });
-    [self.view addSubview:self.toolbar];
+    XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
+    toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    toolbar.tapDelegate = self;
+    self.toolbar = toolbar;
+    [self.tableView setTableHeaderView:toolbar];
 }
 
 #pragma mark - XXTExplorerToolbar

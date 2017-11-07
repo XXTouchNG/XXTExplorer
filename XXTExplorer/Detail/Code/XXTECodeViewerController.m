@@ -97,6 +97,10 @@
         [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
     }
     XXTE_END_IGNORE_PARTIAL
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
 }
 
 - (NSURL *)baseUrl {

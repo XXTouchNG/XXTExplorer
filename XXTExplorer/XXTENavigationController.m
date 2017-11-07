@@ -32,7 +32,11 @@
     UINavigationBar *barAppearance = [UINavigationBar appearance];
     [barAppearance setTintColor:[UIColor whiteColor]];
     [barAppearance setBarTintColor:XXTE_COLOR];
-    [barAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    [barAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f] }];
+    if (@available(iOS 11.0, *)) {
+        [barAppearance setLargeTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:24.f] }];
+        [barAppearance setPrefersLargeTitles:YES];
+    }
 
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];

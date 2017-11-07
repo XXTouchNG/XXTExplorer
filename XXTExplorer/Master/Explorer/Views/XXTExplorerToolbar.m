@@ -101,7 +101,6 @@
       };
     
     [self updateStatus:XXTExplorerToolbarStatusDefault];
-    
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -119,9 +118,7 @@
 - (void)updateStatus:(NSString *)status {
     for (NSString *buttonItemName in self.buttons) {
         UIBarButtonItem *button = self.buttons[buttonItemName];
-        if (button.enabled) {
-            [button setEnabled:NO];
-        }
+        button.enabled = NO;
     }
     [self setItems:self.statusSeries[status] animated:YES];
 }

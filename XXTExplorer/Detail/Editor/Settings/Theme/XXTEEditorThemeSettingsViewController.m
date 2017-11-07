@@ -56,7 +56,9 @@
     }
     XXTE_END_IGNORE_PARTIAL
     
-//    self.navigationItem.rightBarButtonItem = self.previewItem;
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
 }
 
 #pragma mark - UITableViewDelegate / DataSource

@@ -91,6 +91,10 @@
         rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -285,6 +289,8 @@
 }
 
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
+    CGFloat statusBarHeight = UIApplication.sharedApplication.statusBarFrame.size.height;
+    if (statusBarHeight > 40.0) return;
     [self.navigationController setNavigationBarHidden:hidden animated:animated];
 }
 

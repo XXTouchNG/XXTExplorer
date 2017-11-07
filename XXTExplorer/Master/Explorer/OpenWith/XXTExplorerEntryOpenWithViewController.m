@@ -102,6 +102,10 @@ typedef enum : NSUInteger {
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     staticSectionTitles = @[ NSLocalizedString(@"Suggested", nil),
                              NSLocalizedString(@"Other", nil)];
     staticSectionFooters = @[ @"", @"" ];

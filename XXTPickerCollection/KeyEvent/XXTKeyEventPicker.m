@@ -111,6 +111,10 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     }
     XXTP_END_IGNORE_PARTIAL
     self.tableView = tableView1;
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
 
     [self.view addSubview:tableView1];
 

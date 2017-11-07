@@ -61,7 +61,6 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
-//    [self setRestorationIdentifier:self.restorationIdentifier];
     {
         NSArray *explorerUserDefaults = XXTEBuiltInDefaultsObject(@"EXPLORER_USER_DEFAULTS");
         for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
@@ -103,7 +102,7 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     _tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44.f, self.view.bounds.size.width, self.view.bounds.size.height - 44.f) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -114,7 +113,8 @@
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }XXTE_END_IGNORE_PARTIAL
+        }
+        XXTE_END_IGNORE_PARTIAL
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
         UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
@@ -122,21 +122,22 @@
         [tableView addGestureRecognizer:cellLongPressGesture];
         tableView;
     });
-
     [self.view addSubview:self.tableView];
-
-    [self configureToolbar];
 
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     _refreshControl = ({
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        if (@available(iOS 11.0, *)) {
+            refreshControl.tintColor = [UIColor whiteColor];
+        }
         [refreshControl addTarget:self action:@selector(refreshEntryListView:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
         refreshControl;
     });
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
 
+    [self configureToolbar];
     _footerView = ({
         XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
         entryFooterView;
@@ -150,8 +151,8 @@
     [self restoreTheme];
     [super viewWillAppear:animated];
     [self registerNotifications];
-    [self updateToolbarButton];
     [self updateToolbarStatus];
+    [self updateToolbarButton];
     if (firstTimeLoaded) {
         [self loadEntryListData];
         [self.tableView reloadData];

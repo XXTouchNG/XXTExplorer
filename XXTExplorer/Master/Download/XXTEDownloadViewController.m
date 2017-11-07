@@ -106,6 +106,10 @@ typedef enum : NSUInteger {
     }
     self.navigationItem.rightBarButtonItem = self.downloadButtonItem;
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     [self reloadStaticTableViewData];
 }
 

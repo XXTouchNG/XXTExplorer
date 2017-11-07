@@ -83,6 +83,9 @@
         self.navigationItem.leftBarButtonItem = self.dismissItem;
     }
     self.navigationItem.rightBarButtonItem = self.albumItem;
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+    }
 
     [self fetchVideoPermission];
     [self reloadCaptureSceneWithSize:self.view.bounds.size];
