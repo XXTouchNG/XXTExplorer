@@ -54,7 +54,11 @@
     
     self.navigationBar.translucent = NO;
     
+#ifndef APPSTORE
     self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"My Scripts", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];
+#else
+    self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Files", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];
+#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated {

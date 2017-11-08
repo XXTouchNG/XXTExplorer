@@ -137,7 +137,7 @@
 			<key>title</key>
 			<string>Select Launched Script</string>
 			<key>description</key>
-			<string>Select the script after being launched once in XXTouch Explorer.</string>
+			<string>Select the script after being launched once in XXTouch.</string>
 			<key>options</key>
 			<array>
 				<string>Off</string>

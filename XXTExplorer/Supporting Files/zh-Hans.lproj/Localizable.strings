@@ -504,6 +504,9 @@
 "Edit" = "编辑";
 
 /* No comment provided by engineer. */
+"Editing any properties in this section is not supported." = "暂不支持更改此区域中的任何属性.";
+
+/* No comment provided by engineer. */
 "Empty response." = "响应数据为空.";
 
 /* No comment provided by engineer. */
@@ -568,6 +571,9 @@
 
 /* No comment provided by engineer. */
 "Filename" = "文件名";
+
+/* No comment provided by engineer. */
+"Files" = "文件";
 
 /* No comment provided by engineer. */
 "Font" = "字体";
@@ -768,10 +774,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -1265,9 +1271,6 @@
 
 /* No comment provided by engineer. */
 "XUI Error" = "XUI 错误";
-
-/* No comment provided by engineer. */
-"XXTouch does not support editing any properties in this section." = "XXTouch 暂不支持更改此区域中的任何属性.";
 
 /* No comment provided by engineer. */
 "Yes" = "是";

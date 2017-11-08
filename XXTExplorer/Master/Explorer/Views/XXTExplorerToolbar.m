@@ -40,6 +40,7 @@
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
+#ifndef APPSTORE
     NSArray <NSString *> *buttonTypes =
     @[
       XXTExplorerToolbarButtonTypeScan,
@@ -50,6 +51,17 @@
       XXTExplorerToolbarButtonTypePaste,
       XXTExplorerToolbarButtonTypeTrash
       ];
+#else
+    NSArray <NSString *> *buttonTypes =
+    @[
+      XXTExplorerToolbarButtonTypeCompress,
+      XXTExplorerToolbarButtonTypeAddItem,
+      XXTExplorerToolbarButtonTypeSort,
+      XXTExplorerToolbarButtonTypeShare,
+      XXTExplorerToolbarButtonTypePaste,
+      XXTExplorerToolbarButtonTypeTrash
+      ];
+#endif
     
     NSMutableDictionary <NSString *, UIBarButtonItem *> *buttons = [[NSMutableDictionary alloc] initWithCapacity:buttonTypes.count];
     for (NSString *buttonType in buttonTypes) {
@@ -64,6 +76,7 @@
     }
     _buttons = buttons;
     
+#ifndef APPSTORE
     _defaultButtons =
     @[
       buttons[XXTExplorerToolbarButtonTypeScan],
@@ -74,6 +87,16 @@
       flexibleSpace,
       buttons[XXTExplorerToolbarButtonTypePaste],
       ];
+#else
+    _defaultButtons =
+    @[
+      buttons[XXTExplorerToolbarButtonTypeAddItem],
+      flexibleSpace,
+      buttons[XXTExplorerToolbarButtonTypeSort],
+      flexibleSpace,
+      buttons[XXTExplorerToolbarButtonTypePaste],
+      ];
+#endif
     
     _editingButtons =
     @[

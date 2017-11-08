@@ -6,10 +6,10 @@
   Copyright © 2016 Zheng. All rights reserved.
 */
 
-"NSLocationWhenInUseUsageDescription" = "${PRODUCT_NAME} 需要您的位置信息以生成代码片段.";
-"NSCameraUsageDescription" = "${PRODUCT_NAME} 需要访问您的相机以扫描二维码.";
-"NSPhotoLibraryUsageDescription" = "${PRODUCT_NAME} 需要访问您的相册以识别二维码或导入图片.";
-"NSPhotoLibraryAddUsageDescription" = "${PRODUCT_NAME} 需要访问您的相册以保存授权记录.";
+"NSLocationWhenInUseUsageDescription" = "XXTouch 需要您的位置信息以生成代码片段.";
+"NSCameraUsageDescription" = "XXTouch 需要访问您的相机以扫描二维码.";
+"NSPhotoLibraryUsageDescription" = "XXTouch 需要访问您的相册以识别二维码或导入图片.";
+"NSPhotoLibraryAddUsageDescription" = "XXTouch 需要访问您的相册以保存授权记录.";
 "Stop" = "停止运行";
 "Launch" = "开始运行";
 "Scan" = "扫一扫";

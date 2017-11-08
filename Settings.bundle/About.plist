@@ -23,7 +23,7 @@
 			<key>cell</key>
 			<string>About</string>
 			<key>label</key>
-			<string>XXTouch
+			<string>XXTouch Editor
 v1.2.0-1</string>
 			<key>value</key>
 			<string>https://www.xxtouch.com
@@ -68,7 +68,7 @@ All Rights Reserved.</string>
 			<key>args</key>
 			<dict>
 				<key>subject</key>
-				<string>[Feedback] XXTouch v1.2.0-1</string>
+				<string>[Feedback] XXTouch Editor v1.2.0-1</string>
 				<key>toRecipients</key>
 				<array>
 					<string>bug@xxtouch.com</string>

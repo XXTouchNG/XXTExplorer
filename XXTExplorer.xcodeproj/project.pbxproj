@@ -3950,7 +3950,7 @@
 					"-framework",
 					"\"Reveal\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTouch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
@@ -4007,7 +4007,7 @@
 					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTouch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};

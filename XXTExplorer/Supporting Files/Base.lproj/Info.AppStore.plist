@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>XXTouch</string>
+	<string>X.X.T.E.</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -56,16 +56,10 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechrome</string>
-		<string>cydia</string>
 		<string>mqqapi</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>${PRODUCT_NAME} want to access your album to import images.</string>
 	<key>UIAppFonts</key>

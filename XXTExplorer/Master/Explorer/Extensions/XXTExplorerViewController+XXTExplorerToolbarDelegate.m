@@ -81,7 +81,9 @@
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
         }
     } else {
+#ifndef APPSTORE
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan enabled:YES];
+#endif
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
     }
@@ -91,12 +93,19 @@
 
 - (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem {
     if (toolbar == self.toolbar) {
+#ifndef APPSTORE
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan]) {
             NSDictionary *userInfo =
             @{XXTENotificationShortcutInterface: @"scan",
               XXTENotificationShortcutUserData: [NSNull null]};
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:buttonItem userInfo:userInfo]];
-        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
+        }
+#else
+        if (NO) {
+            
+        }
+#endif
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
             XXTE_START_IGNORE_PARTIAL
             if (@available(iOS 8.0, *)) {
                 UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
@@ -122,7 +131,8 @@
                 [self presentNewDocumentViewController];
             }
             XXTE_END_IGNORE_PARTIAL
-        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
+        }
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
             if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeName);
@@ -133,7 +143,8 @@
             [self updateToolbarButton];
             [self loadEntryListData];
             [self.tableView reloadData];
-        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste]) {
+        }
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             if (!selectedIndexPaths) {
                 selectedIndexPaths = @[];
@@ -200,7 +211,8 @@
                 objc_setAssociatedObject(alertView, @selector(alertView:clearPasteboardEntriesStored:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated];
             }
-        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeCompress]) {
+        }
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeCompress]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
@@ -219,7 +231,8 @@
                                                                delegate:self];
             objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated:YES completionHandler:nil];
-        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
+        }
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSMutableArray <NSURL *> *shareUrls = [[NSMutableArray alloc] init];
             for (NSIndexPath *indexPath in selectedIndexPaths) {
@@ -247,7 +260,8 @@
             } else {
                 toastMessage(self, NSLocalizedString(@"You cannot share directory.", nil));
             }
-        } else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
+        }
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {

@@ -90,7 +90,11 @@
     [super viewDidLoad];
 
     if (self == self.navigationController.viewControllers[0]) {
+#ifndef APPSTORE
         self.title = NSLocalizedString(@"My Scripts", nil);
+#else
+        self.title = NSLocalizedString(@"Files", nil);
+#endif
     } else {
         NSString *entryPath = self.entryPath;
         if (entryPath) {

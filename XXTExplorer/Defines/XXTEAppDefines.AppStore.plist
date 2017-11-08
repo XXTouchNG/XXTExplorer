@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>PRODUCT_NAME</key>
-	<string>XXTouch</string>
+	<string>X.X.T.E.</string>
 	<key>DAEMON_VERSION</key>
 	<string>1.2.0-1</string>
 	<key>REQUIRED_SUBDIRECTORIES</key>
@@ -15,8 +15,7 @@
 		<string>web</string>
 		<string>res</string>
 		<string>bin</string>
-		<string>lua</string>
-		<string>lua/scripts</string>
+		<string>home</string>
 		<string>snippets</string>
 	</array>
 	<key>INITIAL_RESOURCES</key>
@@ -44,6 +43,6 @@
 		<string>XXTExplorerEntryXPPReader</string>
 	</array>
 	<key>EXPLORER_INITIAL_PATH</key>
-	<string>lua/scripts</string>
+	<string>home</string>
 </dict>
 </plist>
