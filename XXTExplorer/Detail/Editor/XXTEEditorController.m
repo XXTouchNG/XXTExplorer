@@ -55,6 +55,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 @property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
 
+@property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
@@ -355,6 +356,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         self.title = entryName;
     }
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = self.myBackButtonItem;
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     // Subviews
@@ -407,6 +409,14 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 }
 
 #pragma mark - UIView Getters
+
+- (UIBarButtonItem *)myBackButtonItem {
+    if (!_myBackButtonItem) {
+        UIBarButtonItem *myBackButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarBack"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonItemTapped:)];
+        _myBackButtonItem = myBackButtonItem;
+    }
+    return _myBackButtonItem;
+}
 
 - (UIBarButtonItem *)shareButtonItem {
     if (!_shareButtonItem) {

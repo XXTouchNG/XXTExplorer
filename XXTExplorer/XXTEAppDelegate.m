@@ -140,7 +140,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
                     int arg = 2;
                     int status = zip_extract(fromPath.UTF8String, toPath.UTF8String, will_extract, extract_callback, &arg);
                     BOOL result = (status == 0);
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         if (result) {
                             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:application userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeApplicationDidExtractResource}]];
                         }

@@ -22,7 +22,13 @@
 	<array>
 		<dict>
 			<key>from</key>
-			<string>B4FDE60B-30B3-4035-B874-619C896626BE</string>
+			<string>50BDCBCF-BF33-455E-9EE1-64E0FBBE0380</string>
+			<key>to</key>
+			<string>home</string>
+		</dict>
+		<dict>
+			<key>from</key>
+			<string>493711B6-F9C0-4508-A505-F63386F09191</string>
 			<key>to</key>
 			<string>snippets</string>
 		</dict>
@@ -36,6 +42,7 @@
 		<string>XXTECodeViewerController</string>
 		<string>XXTEObjectViewController</string>
 		<string>XXTEUIViewController</string>
+		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>
 	</array>
 	<key>AVAILABLE_BUNDLE_READER</key>

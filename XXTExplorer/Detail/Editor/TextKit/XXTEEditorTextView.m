@@ -90,7 +90,7 @@
     if (self.shouldReloadContainerInsets) {
         UIEdgeInsets insets = UIEdgeInsetsZero;
         if (self.showLineNumbers) {
-            insets = UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth, 8, 8);
+            insets = UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth + 2, 8, 8);
         } else {
             insets = UIEdgeInsetsMake(8, 8, 8, 8);
         }

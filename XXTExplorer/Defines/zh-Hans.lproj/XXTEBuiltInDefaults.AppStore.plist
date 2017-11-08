@@ -32,7 +32,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>title</key>
 			<string>显示 &quot;主目录&quot; 入口</string>
 			<key>description</key>
@@ -83,7 +83,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>title</key>
 			<string>隐藏操作标签</string>
 			<key>description</key>
@@ -100,7 +100,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowOpenMethodKey</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>title</key>
 			<string>允许修改打开方式</string>
 			<key>description</key>

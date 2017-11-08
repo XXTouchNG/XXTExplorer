@@ -187,8 +187,11 @@
     
     XXTELuaVModel *virtualModel = [[XXTELuaVModel alloc] init];
     virtualModel.delegate = self;
-    [self redirectStandardOutput:fileno(virtualModel.stdoutHandler)];
-    [self redirectStandardOutput:fileno(virtualModel.stderrHandler)];
+    [virtualModel setFakeIOEnabled:YES];
+    if (virtualModel.stdoutHandler && virtualModel.stderrHandler) {
+        [self redirectStandardOutput:fileno(virtualModel.stdoutHandler)];
+        [self redirectStandardOutput:fileno(virtualModel.stderrHandler)];
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
                                                  name:UIKeyboardWillShowNotification
@@ -264,7 +267,9 @@
             [textView insertText:text];
             NSString *bufferedString = [textView getBufferString];
             const char *buf = bufferedString.UTF8String;
-            write(fileno(self.virtualModel.stdinWriteHandler), buf, strlen(buf));
+            if (self.virtualModel.stdinWriteHandler) {
+                write(fileno(self.virtualModel.stdinWriteHandler), buf, strlen(buf));
+            }
             return NO;
         }
         [self.textView resetTypingAttributes];

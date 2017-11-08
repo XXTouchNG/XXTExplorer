@@ -351,7 +351,6 @@
 		0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
 		0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */; };
 		0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
-		0F8EDC841FB1F779003C92D6 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
 		0F8EDC851FB1F779003C92D6 /* strings.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F349BB21F62F474004143B7 /* strings.tmLanguage */; };
 		0F8EDC861FB1F779003C92D6 /* Solarized (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */; };
 		0F8EDC871FB1F779003C92D6 /* IDLE.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B41F3DB7BE00E013E2 /* IDLE.tmTheme */; };
@@ -421,6 +420,14 @@
 		0F97F1D01FB2A7EA007CA883 /* XXTMultipleApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */; };
 		0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
 		0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
+		0F97F1D41FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0F97F1D31FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip */; };
+		0F97F1D61FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0F97F1D51FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip */; };
+		0F97F1D71FB309C6007CA883 /* XXTExplorerEntryTerminalReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1151F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m */; };
+		0F97F1D81FB309C6007CA883 /* XXTETerminalTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B10E1F4FE94000E741C2 /* XXTETerminalTextView.m */; };
+		0F97F1D91FB309C6007CA883 /* XXTETerminalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1111F4FEA7B00E741C2 /* XXTETerminalViewController.m */; };
+		0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B10B1F4FE8AB00E741C2 /* XXTELuaVModel.m */; };
+		0F97F1DB1FB30CED007CA883 /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */; };
+		0F97F1DC1FB30CFB007CA883 /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */; };
 		0F9888CB1FA753AE00ED33E7 /* XXTEEditorToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
@@ -879,6 +886,8 @@
 		0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+LGAlertViewDelegate.m"; sourceTree = "<group>"; };
 		0F9273241F375F7800109096 /* XXTExplorerViewController+SharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+SharedInstance.h"; sourceTree = "<group>"; };
 		0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+SharedInstance.m"; sourceTree = "<group>"; };
+		0F97F1D31FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "493711B6-F9C0-4508-A505-F63386F09191.zip"; sourceTree = "<group>"; };
+		0F97F1D51FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip"; sourceTree = "<group>"; };
 		0F9888C91FA753AE00ED33E7 /* XXTEEditorToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorToolbar.h; sourceTree = "<group>"; };
 		0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorToolbar.m; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2304,6 +2313,8 @@
 			isa = PBXGroup;
 			children = (
 				0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */,
+				0F97F1D31FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip */,
+				0F97F1D51FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip */,
 				0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */,
 			);
 			path = Resources;
@@ -2999,6 +3010,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F97F1DC1FB30CFB007CA883 /* XXTEMoreReferences.bundle in Resources */,
 				0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */,
 				0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */,
 				0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */,
@@ -3024,7 +3036,6 @@
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
 				0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */,
 				0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */,
-				0F8EDC841FB1F779003C92D6 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
 				0F8EDC851FB1F779003C92D6 /* strings.tmLanguage in Resources */,
 				0F8EDC861FB1F779003C92D6 /* Solarized (Dark).tmTheme in Resources */,
 				0F8EDC871FB1F779003C92D6 /* IDLE.tmTheme in Resources */,
@@ -3056,6 +3067,7 @@
 				0F8EDCA51FB1F779003C92D6 /* XXTESymbolCell.xib in Resources */,
 				0F8EDCA61FB1F779003C92D6 /* XXTEMoreLinkCell.xib in Resources */,
 				0F8EDCA71FB1F779003C92D6 /* XXTExplorerViewHomeCell.xib in Resources */,
+				0F97F1D41FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip in Resources */,
 				0F8EDCA81FB1F779003C92D6 /* XXTEMoreSwitchCell.xib in Resources */,
 				0F8EDCA91FB1F779003C92D6 /* Oceanic.tmTheme in Resources */,
 				0F8EDCAA1FB1F779003C92D6 /* InfoPlist.strings in Resources */,
@@ -3070,6 +3082,7 @@
 				0F8EDCB31FB1F779003C92D6 /* SKFont.plist in Resources */,
 				0F8EDCB41FB1F779003C92D6 /* Cobalt.tmTheme in Resources */,
 				0F8EDCB51FB1F779003C92D6 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
+				0F97F1D61FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip in Resources */,
 				0F8EDCB61FB1F779003C92D6 /* XXTEMoreLinkNoIconCell.xib in Resources */,
 				0F8EDCB71FB1F779003C92D6 /* lua.tmLanguage in Resources */,
 				0F8EDCB81FB1F779003C92D6 /* Tomorrow Night (Blue).tmTheme in Resources */,
@@ -3086,6 +3099,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F97F1DB1FB30CED007CA883 /* XXTEMoreReferences.bundle in Resources */,
 				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
 				0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */,
 				0F3D5DFB1FAF55120083196D /* txt.tmLanguage in Resources */,
@@ -3315,6 +3329,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */,
+				0F97F1D71FB309C6007CA883 /* XXTExplorerEntryTerminalReader.m in Sources */,
+				0F97F1D81FB309C6007CA883 /* XXTETerminalTextView.m in Sources */,
+				0F97F1D91FB309C6007CA883 /* XXTETerminalViewController.m in Sources */,
 				0F8EDCD41FB2132D003C92D6 /* XXTEExecutableViewer.m in Sources */,
 				0F8EDCD31FB2130D003C92D6 /* XXTExplorerEntryLauncher.m in Sources */,
 				0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */,

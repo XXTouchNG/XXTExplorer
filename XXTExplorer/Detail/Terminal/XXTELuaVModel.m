@@ -54,6 +54,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
             
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
+            lua_setMaxLine(L, LUA_MAX_LINE_C);
         }
     }
 }

@@ -32,7 +32,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>title</key>
 			<string>Show &quot;Home&quot; Entry</string>
 			<key>description</key>
@@ -83,7 +83,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>title</key>
 			<string>Hide Operation Label</string>
 			<key>description</key>

@@ -18,6 +18,10 @@
 
 #pragma mark - Button Actions
 
+- (void)backButtonItemTapped:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
     if (!self.entryPath) return;
     NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];

@@ -70,6 +70,7 @@
     navigation.navigationItem.rightBarButtonItem.tintColor = foregroundColor;
     self.navigationItem.leftBarButtonItem.tintColor = foregroundColor;
     self.navigationItem.rightBarButtonItem.tintColor = foregroundColor;
+    
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
