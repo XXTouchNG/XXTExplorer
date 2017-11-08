@@ -507,6 +507,8 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         
     }
     
+#ifndef APPSTORE
+    
     // #6 - Owner
     
     {
@@ -531,6 +533,10 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
             if (section6) [mutableDynamicSections addObject:section6];
         }
     }
+    
+#endif
+    
+#ifndef APPSTORE
     
     // #7 - Perimssion
     
@@ -571,6 +577,8 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
         
         if (section7) [mutableDynamicSections addObject:section7];
     }
+    
+#endif
     
     // #8 - Open with
     

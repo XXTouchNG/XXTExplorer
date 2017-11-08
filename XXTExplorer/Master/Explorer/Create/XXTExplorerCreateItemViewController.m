@@ -17,13 +17,20 @@
 #import <PromiseKit/PromiseKit.h>
 #import "XXTENotificationCenterDefines.h"
 
-typedef enum : NSUInteger {
-    kXXTExplorerCreateItemViewSectionIndexName = 0,
-    kXXTExplorerCreateItemViewSectionIndexType,
-    kXXTExplorerCreateItemViewSectionIndexLocation,
-    kXXTExplorerCreateItemViewSectionIndexMax
-} kXXTExplorerCreateItemViewSectionIndex;
-
+#ifndef APPSTORE
+    typedef enum : NSUInteger {
+        kXXTExplorerCreateItemViewSectionIndexName = 0,
+        kXXTExplorerCreateItemViewSectionIndexType,
+        kXXTExplorerCreateItemViewSectionIndexLocation,
+        kXXTExplorerCreateItemViewSectionIndexMax
+    } kXXTExplorerCreateItemViewSectionIndex;
+#else
+    typedef enum : NSUInteger {
+        kXXTExplorerCreateItemViewSectionIndexName = 0,
+        kXXTExplorerCreateItemViewSectionIndexType,
+        kXXTExplorerCreateItemViewSectionIndexMax
+    } kXXTExplorerCreateItemViewSectionIndex;
+#endif
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewItemTypeLUA = 0,
     kXXTExplorerCreateItemViewItemTypeTXT,
@@ -142,11 +149,18 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
+#ifndef APPSTORE
     staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
                              NSLocalizedString(@"Type", nil),
-                             NSLocalizedString(@"Location", nil)
+                             NSLocalizedString(@"Location", nil),
                              ];
     staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"", @"" ];
+#else
+    staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
+                             NSLocalizedString(@"Type", nil),
+                             ];
+    staticSectionFooters = @[ NSLocalizedString(@"Tap to edit filename.", nil), @"" ];
+#endif
     
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
     cell1.nameField.delegate = self;
@@ -177,14 +191,23 @@ typedef enum : NSUInteger {
     cell5.descriptionLabel.text = NSLocalizedString(@"A directory with nothing inside.", nil);
     cell5.valueLabel.text = NSLocalizedString(@"DIR", nil);
     
+#ifndef APPSTORE
     XXTEMoreAddressCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell6.addressLabel.text = self.entryPath;
+#endif
     
+#ifndef APPSTORE
     staticCells = @[
                     @[ cell1 ],
                     @[ cell2, cell3, cell4, cell5 ],
-                    @[ cell6 ]
+                    @[ cell6 ],
                     ];
+#else
+    staticCells = @[
+                    @[ cell1 ],
+                    @[ cell2, cell3, cell4, cell5 ],
+                    ];
+#endif
 }
 
 #pragma mark - UIView Getters
@@ -229,8 +252,6 @@ typedef enum : NSUInteger {
             }
         } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             return 66.f;
-        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
-            
         }
     }
     return 44.f;
@@ -242,9 +263,12 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 return 52.f;
             }
-        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
+        }
+        else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             return 66.f;
-        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
+        }
+#ifndef APPSTORE
+        else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             if (@available(iOS 8.0, *)) {
                 return UITableViewAutomaticDimension;
             } else {
@@ -260,6 +284,7 @@ typedef enum : NSUInteger {
                 return (height > 0) ? (height + 1.0) : 44.f;
             }
         }
+#endif
     }
     return 44.f;
 }
@@ -274,7 +299,9 @@ typedef enum : NSUInteger {
             }
             UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
             selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        } else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
+        }
+#ifndef APPSTORE
+        else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
                 blockInteractions(self, YES);
@@ -289,6 +316,7 @@ typedef enum : NSUInteger {
                 });
             }
         }
+#endif
     }
 }
 

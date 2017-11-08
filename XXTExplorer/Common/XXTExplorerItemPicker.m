@@ -41,6 +41,10 @@
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     }
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     [self.toolbar updateStatus:XXTExplorerToolbarStatusReadonly];
 }
 

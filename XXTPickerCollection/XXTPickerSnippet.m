@@ -32,9 +32,17 @@
 	// Register Picker Here
 	NSArray <Class> *availablePickers =
 	@[
-	  [XXTLocationPicker class], [XXTKeyEventPicker class], [XXTRectanglePicker class],
-	  [XXTPositionPicker class], [XXTColorPicker class], [XXTPositionColorPicker class],
-	  [XXTMultiplePositionColorPicker class], [XXTApplicationPicker class], [XXTMultipleApplicationPicker class]
+	  [XXTLocationPicker class],
+      [XXTKeyEventPicker class],
+      [XXTRectanglePicker class],
+	  [XXTPositionPicker class],
+      [XXTColorPicker class],
+      [XXTPositionColorPicker class],
+	  [XXTMultiplePositionColorPicker class],
+#ifndef APPSTORE
+      [XXTApplicationPicker class],
+      [XXTMultipleApplicationPicker class],
+#endif
 	  ];
 	for (Class cls in availablePickers) {
 		NSString *errorMessage = [NSString stringWithFormat:@"Class %@ type mismatch!", NSStringFromClass(cls)];

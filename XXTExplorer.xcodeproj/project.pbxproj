@@ -105,7 +105,6 @@
 		0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
 		0F8EDB5C1FB1F779003C92D6 /* XXTESnippetViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */; };
-		0F8EDB5D1FB1F779003C92D6 /* XXTMultipleApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		0F8EDB5E1FB1F779003C92D6 /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		0F8EDB5F1FB1F779003C92D6 /* XXTEEditorTextInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F51CB1B1F612ACF00150D6D /* XXTEEditorTextInput.m */; };
 		0F8EDB601FB1F779003C92D6 /* XXTEBaseObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA61F307C430098211C /* XXTEBaseObjectViewController.m */; };
@@ -154,7 +153,6 @@
 		0F8EDB911FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */; };
 		0F8EDB931FB1F779003C92D6 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
 		0F8EDB951FB1F779003C92D6 /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
-		0F8EDB971FB1F779003C92D6 /* XXTApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409F1F5032AB00D78CB9 /* XXTApplicationPicker.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		0F8EDB981FB1F779003C92D6 /* XXTPixelPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */; };
 		0F8EDB991FB1F779003C92D6 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
 		0F8EDB9A1FB1F779003C92D6 /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
@@ -183,7 +181,6 @@
 		0F8EDBB31FB1F779003C92D6 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F8EDBB51FB1F779003C92D6 /* XUIAdapter_xui.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */; };
 		0F8EDBB61FB1F779003C92D6 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
-		0F8EDBB71FB1F779003C92D6 /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
 		0F8EDBB81FB1F779003C92D6 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		0F8EDBB91FB1F779003C92D6 /* XXTEUIViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C8B1F7E30C600A45CF7 /* XXTEUIViewController+SharedInstance.m */; };
 		0F8EDBBA1FB1F779003C92D6 /* XXTEEditorController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */; };
@@ -203,7 +200,6 @@
 		0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */; };
 		0F8EDBCA1FB1F779003C92D6 /* XXTExplorerHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F091ED70F8700798B4B /* XXTExplorerHeaderView.m */; };
 		0F8EDBCB1FB1F779003C92D6 /* XXTEEditorFontSizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F301F4ACEB6004403D0 /* XXTEEditorFontSizeCell.m */; };
-		0F8EDBCC1FB1F779003C92D6 /* XXTApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409D1F5032AB00D78CB9 /* XXTApplicationCell.m */; };
 		0F8EDBCD1FB1F779003C92D6 /* XXTEMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */; };
 		0F8EDBCE1FB1F779003C92D6 /* XXTKeyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B01F5032AB00D78CB9 /* XXTKeyEvent.m */; };
 		0F8EDBD01FB1F779003C92D6 /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
@@ -214,7 +210,6 @@
 		0F8EDBD51FB1F779003C92D6 /* ICRangeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB51FA8376100B5146C /* ICRangeUtils.m */; };
 		0F8EDBD71FB1F779003C92D6 /* XXTExplorerItemPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */; };
 		0F8EDBD81FB1F779003C92D6 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
-		0F8EDBD91FB1F779003C92D6 /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
 		0F8EDBDA1FB1F779003C92D6 /* XXTEArchiveViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F56900D1F1B022E009AF9FE /* XXTEArchiveViewer.m */; };
 		0F8EDBDB1FB1F779003C92D6 /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
 		0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
@@ -277,7 +272,6 @@
 		0F8EDC281FB1F779003C92D6 /* SKInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512D31FC610E7D9963A8EA /* SKInclude.m */; };
 		0F8EDC291FB1F779003C92D6 /* XXTPixelFlagView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140C81F5032AB00D78CB9 /* XXTPixelFlagView.m */; };
 		0F8EDC2A1FB1F779003C92D6 /* XXTEUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64323881F8B79A3009477BE /* XXTEUIViewController.m */; };
-		0F8EDC2B1FB1F779003C92D6 /* XXTPickerInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A41F5032AB00D78CB9 /* XXTPickerInsetsLabel.m */; };
 		0F8EDC2C1FB1F779003C92D6 /* XXTImagePickerAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF341F6E5378008B3189 /* XXTImagePickerAlbumCell.m */; };
 		0F8EDC2D1FB1F779003C92D6 /* SKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DF49CDDF706A91B90B2 /* SKParser.m */; };
 		0F8EDC2E1FB1F779003C92D6 /* XXTESymbolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E771FB094110052A4B5 /* XXTESymbolCell.m */; };
@@ -330,13 +324,11 @@
 		0F8EDC621FB1F779003C92D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560421F50353200E0F997 /* MapKit.framework */; };
 		0F8EDC631FB1F779003C92D6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
 		0F8EDC641FB1F779003C92D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
-		0F8EDC651FB1F779003C92D6 /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E141621F50330400D78CB9 /* SpringBoardServices */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0F8EDC661FB1F779003C92D6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		0F8EDC671FB1F779003C92D6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
 		0F8EDC691FB1F779003C92D6 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D5DFA1FAF55120083196D /* txt.tmLanguage */; };
 		0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
-		0F8EDC6D1FB1F779003C92D6 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
 		0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
 		0F8EDC6F1FB1F779003C92D6 /* CamingoCode-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */; };
 		0F8EDC701FB1F779003C92D6 /* Tomorrow Night (Bright).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EA1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme */; };
@@ -368,7 +360,6 @@
 		0F8EDC8B1FB1F779003C92D6 /* Eiffel.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B21F3DB7BE00E013E2 /* Eiffel.tmTheme */; };
 		0F8EDC8C1FB1F779003C92D6 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		0F8EDC8D1FB1F779003C92D6 /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
-		0F8EDC8E1FB1F779003C92D6 /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E141631F50330400D78CB9 /* xxte-white-icons.plist */; };
 		0F8EDC8F1FB1F779003C92D6 /* Twilight.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26BC1F3DB7BE00E013E2 /* Twilight.tmTheme */; };
 		0F8EDC911FB1F779003C92D6 /* XXTEMoreAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD69211F04038600B2F0EC /* XXTEMoreAddressCell.xib */; };
 		0F8EDC921FB1F779003C92D6 /* Kimbie (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */; };
@@ -422,6 +413,14 @@
 		0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */; };
 		0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
+		0F97F1CB1FB2A7EA007CA883 /* XXTEMoreApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */; };
+		0F97F1CC1FB2A7EA007CA883 /* XXTEMoreApplicationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2271F063AE20030C6DA /* XXTEMoreApplicationDetailController.m */; };
+		0F97F1CD1FB2A7EA007CA883 /* XXTEMoreApplicationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2241F06362C0030C6DA /* XXTEMoreApplicationListController.m */; };
+		0F97F1CE1FB2A7EA007CA883 /* XXTApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409D1F5032AB00D78CB9 /* XXTApplicationCell.m */; };
+		0F97F1CF1FB2A7EA007CA883 /* XXTApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409F1F5032AB00D78CB9 /* XXTApplicationPicker.m */; };
+		0F97F1D01FB2A7EA007CA883 /* XXTMultipleApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */; };
+		0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
+		0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
 		0F9888CB1FA753AE00ED33E7 /* XXTEEditorToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
@@ -585,10 +584,6 @@
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
-		D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
-		D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */; };
-		D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2241F06362C0030C6DA /* XXTEMoreApplicationListController.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations -Wno-arc-performSelector-leaks"; }; };
-		D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2271F063AE20030C6DA /* XXTEMoreApplicationDetailController.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations -Wno-arc-performSelector-leaks"; }; };
 		D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22A1F063B830030C6DA /* XXTEMoreTitleValueCell.m */; };
 		D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
 		D629C2311F063E270030C6DA /* XXTEMoreActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22F1F063E270030C6DA /* XXTEMoreActionCell.m */; };
@@ -641,9 +636,6 @@
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
-		D6E141151F5032AB00D78CB9 /* XXTApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409D1F5032AB00D78CB9 /* XXTApplicationCell.m */; };
-		D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1409F1F5032AB00D78CB9 /* XXTApplicationPicker.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
-		D6E141181F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A21F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140A41F5032AB00D78CB9 /* XXTPickerInsetsLabel.m */; };
 		D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B01F5032AB00D78CB9 /* XXTKeyEvent.m */; };
 		D6E1411F1F5032AB00D78CB9 /* XXTKeyEventPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B21F5032AB00D78CB9 /* XXTKeyEventPicker.m */; };
@@ -667,7 +659,6 @@
 		D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */; };
 		D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */; };
 		D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
-		D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
 		D6E1415E1F5032AC00D78CB9 /* XXTPickerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1410D1F5032AB00D78CB9 /* XXTPickerFactory.m */; };
 		D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1410F1F5032AB00D78CB9 /* XXTPickerNavigationController.m */; };
 		D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */; };
@@ -1358,7 +1349,6 @@
 				0F8EDC621FB1F779003C92D6 /* MapKit.framework in Frameworks */,
 				0F8EDC631FB1F779003C92D6 /* Security.framework in Frameworks */,
 				0F8EDC641FB1F779003C92D6 /* SystemConfiguration.framework in Frameworks */,
-				0F8EDC651FB1F779003C92D6 /* SpringBoardServices in Frameworks */,
 				0F8EDC661FB1F779003C92D6 /* libz.tbd in Frameworks */,
 				0F8EDC671FB1F779003C92D6 /* MobileCoreServices.framework in Frameworks */,
 				0F8EDC691FB1F779003C92D6 /* libPods-XXTExplorer.a in Frameworks */,
@@ -3011,7 +3001,6 @@
 			files = (
 				0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */,
 				0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */,
-				0F8EDC6D1FB1F779003C92D6 /* XXTApplicationCell.xib in Resources */,
 				0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */,
 				0F8EDC6F1FB1F779003C92D6 /* CamingoCode-Italic.ttf in Resources */,
 				0F8EDC701FB1F779003C92D6 /* Tomorrow Night (Bright).tmTheme in Resources */,
@@ -3044,7 +3033,6 @@
 				0F8EDC8B1FB1F779003C92D6 /* Eiffel.tmTheme in Resources */,
 				0F8EDC8C1FB1F779003C92D6 /* XXTEMoreLicenseCell.xib in Resources */,
 				0F8EDC8D1FB1F779003C92D6 /* json.tmLanguage in Resources */,
-				0F8EDC8E1FB1F779003C92D6 /* xxte-white-icons.plist in Resources */,
 				0F8EDC8F1FB1F779003C92D6 /* Twilight.tmTheme in Resources */,
 				0F8EDC911FB1F779003C92D6 /* XXTEMoreAddressCell.xib in Resources */,
 				0F8EDC921FB1F779003C92D6 /* Kimbie (Dark).tmTheme in Resources */,
@@ -3098,9 +3086,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
+				0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */,
 				0F3D5DFB1FAF55120083196D /* txt.tmLanguage in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
-				D6E1415A1F5032AC00D78CB9 /* XXTApplicationCell.xib in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */,
 				0FD973EF1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme in Resources */,
@@ -3130,7 +3119,6 @@
 				D60A26C71F3DB7BE00E013E2 /* IDLE.tmTheme in Resources */,
 				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
 				0FB0090C1F4364B800097E9C /* Nothing.tmTheme in Resources */,
-				D629C21F1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib in Resources */,
 				D60A26C51F3DB7BE00E013E2 /* Eiffel.tmTheme in Resources */,
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
 				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
@@ -3333,7 +3321,6 @@
 				0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */,
 				0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */,
 				0F8EDB5C1FB1F779003C92D6 /* XXTESnippetViewerController.m in Sources */,
-				0F8EDB5D1FB1F779003C92D6 /* XXTMultipleApplicationPicker.m in Sources */,
 				0F8EDB5E1FB1F779003C92D6 /* XXTESwipeButton.m in Sources */,
 				0F8EDB5F1FB1F779003C92D6 /* XXTEEditorTextInput.m in Sources */,
 				0F8EDB601FB1F779003C92D6 /* XXTEBaseObjectViewController.m in Sources */,
@@ -3382,7 +3369,6 @@
 				0F8EDB911FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				0F8EDB931FB1F779003C92D6 /* XXTExplorerNavigationController.m in Sources */,
 				0F8EDB951FB1F779003C92D6 /* XXTExplorerEntryXPPReader.m in Sources */,
-				0F8EDB971FB1F779003C92D6 /* XXTApplicationPicker.m in Sources */,
 				0F8EDB981FB1F779003C92D6 /* XXTPixelPlaceholderView.m in Sources */,
 				0F8EDB991FB1F779003C92D6 /* XXTETurtleBezierPath.m in Sources */,
 				0F8EDB9A1FB1F779003C92D6 /* XXTEEditorController.m in Sources */,
@@ -3411,7 +3397,6 @@
 				0F8EDBB31FB1F779003C92D6 /* XXTEWorkspaceViewController.m in Sources */,
 				0F8EDBB51FB1F779003C92D6 /* XUIAdapter_xui.m in Sources */,
 				0F8EDBB61FB1F779003C92D6 /* XXTEMasterViewController.m in Sources */,
-				0F8EDBB71FB1F779003C92D6 /* NSData+SHA1.m in Sources */,
 				0F8EDBB81FB1F779003C92D6 /* zip.c in Sources */,
 				0F8EDBB91FB1F779003C92D6 /* XXTEUIViewController+SharedInstance.m in Sources */,
 				0F8EDBBA1FB1F779003C92D6 /* XXTEEditorController+Keyboard.m in Sources */,
@@ -3431,7 +3416,6 @@
 				0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0F8EDBCA1FB1F779003C92D6 /* XXTExplorerHeaderView.m in Sources */,
 				0F8EDBCB1FB1F779003C92D6 /* XXTEEditorFontSizeCell.m in Sources */,
-				0F8EDBCC1FB1F779003C92D6 /* XXTApplicationCell.m in Sources */,
 				0F8EDBCD1FB1F779003C92D6 /* XXTEMoreViewController.m in Sources */,
 				0F8EDBCE1FB1F779003C92D6 /* XXTKeyEvent.m in Sources */,
 				0F8EDBD01FB1F779003C92D6 /* XXTEEditorLayoutManager.m in Sources */,
@@ -3442,7 +3426,6 @@
 				0F8EDBD51FB1F779003C92D6 /* ICRangeUtils.m in Sources */,
 				0F8EDBD71FB1F779003C92D6 /* XXTExplorerItemPicker.m in Sources */,
 				0F8EDBD81FB1F779003C92D6 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
-				0F8EDBD91FB1F779003C92D6 /* NSString+SHA1.m in Sources */,
 				0F8EDBDA1FB1F779003C92D6 /* XXTEArchiveViewer.m in Sources */,
 				0F8EDBDB1FB1F779003C92D6 /* XXTExplorerToolbar.m in Sources */,
 				0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */,
@@ -3506,7 +3489,6 @@
 				0F8EDC281FB1F779003C92D6 /* SKInclude.m in Sources */,
 				0F8EDC291FB1F779003C92D6 /* XXTPixelFlagView.m in Sources */,
 				0F8EDC2A1FB1F779003C92D6 /* XXTEUIViewController.m in Sources */,
-				0F8EDC2B1FB1F779003C92D6 /* XXTPickerInsetsLabel.m in Sources */,
 				0F8EDC2C1FB1F779003C92D6 /* XXTImagePickerAlbumCell.m in Sources */,
 				0F8EDC2D1FB1F779003C92D6 /* SKParser.m in Sources */,
 				0F8EDC2E1FB1F779003C92D6 /* XXTESymbolCell.m in Sources */,
@@ -3554,12 +3536,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F97F1CB1FB2A7EA007CA883 /* XXTEMoreApplicationCell.m in Sources */,
+				0F97F1CC1FB2A7EA007CA883 /* XXTEMoreApplicationDetailController.m in Sources */,
+				0F97F1CD1FB2A7EA007CA883 /* XXTEMoreApplicationListController.m in Sources */,
+				0F97F1CE1FB2A7EA007CA883 /* XXTApplicationCell.m in Sources */,
+				0F97F1CF1FB2A7EA007CA883 /* XXTApplicationPicker.m in Sources */,
+				0F97F1D01FB2A7EA007CA883 /* XXTMultipleApplicationPicker.m in Sources */,
 				0F457F341F87796B001F0951 /* XXTEDownloadViewController.m in Sources */,
 				D6686F3F1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
 				0F00CAF41F66F7A500692913 /* XXTEKeyboardButtonView.m in Sources */,
 				0F6679DE1F5162880072C177 /* XXTESnippetViewerController.m in Sources */,
-				D6E141181F5032AB00D78CB9 /* XXTMultipleApplicationPicker.m in Sources */,
 				D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */,
 				0F51CB1C1F612ACF00150D6D /* XXTEEditorTextInput.m in Sources */,
 				0F50AEA71F307C430098211C /* XXTEBaseObjectViewController.m in Sources */,
@@ -3617,7 +3604,6 @@
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
-				D6E141161F5032AB00D78CB9 /* XXTApplicationPicker.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
@@ -3664,13 +3650,11 @@
 				0F50AEBB1F30DBAB0098211C /* XXTExplorerEntryObjectReader.m in Sources */,
 				0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
-				D629C2221F0635F20030C6DA /* XXTEMoreApplicationCell.m in Sources */,
 				0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */,
 				0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				D6686F321F4ACEB6004403D0 /* XXTEEditorFontSizeCell.m in Sources */,
-				D6E141151F5032AB00D78CB9 /* XXTApplicationCell.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
 				D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
@@ -3723,9 +3707,7 @@
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
-				D629C2251F06362C0030C6DA /* XXTEMoreApplicationListController.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
-				D629C2281F063AE20030C6DA /* XXTEMoreApplicationDetailController.m in Sources */,
 				0F50AEAA1F3080400098211C /* XXTEArrayObjectViewController.m in Sources */,
 				D60A26AA1F3DA83D00E013E2 /* XXTEEditorTheme.m in Sources */,
 				D6686F271F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m in Sources */,
