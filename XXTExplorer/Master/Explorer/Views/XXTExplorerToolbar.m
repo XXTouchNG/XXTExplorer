@@ -38,6 +38,8 @@
     
     self.backgroundColor = [UIColor whiteColor];
     
+    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedSpace.width = 20.0f;
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
 #ifndef APPSTORE
@@ -76,45 +78,97 @@
     }
     _buttons = buttons;
     
+    if (@available(iOS 11.0, *)) {
 #ifndef APPSTORE
-    _defaultButtons =
-    @[
-      buttons[XXTExplorerToolbarButtonTypeScan],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypeAddItem],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypeSort],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypePaste],
-      ];
+        _defaultButtons =
+        @[
+          fixedSpace,
+          buttons[XXTExplorerToolbarButtonTypeScan],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeAddItem],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypePaste],
+          fixedSpace,
+          ];
 #else
-    _defaultButtons =
-    @[
-      buttons[XXTExplorerToolbarButtonTypeAddItem],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypeSort],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypePaste],
-      ];
+        _defaultButtons =
+        @[
+          fixedSpace,
+          buttons[XXTExplorerToolbarButtonTypeAddItem],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypePaste],
+          fixedSpace,
+          ];
 #endif
-    
-    _editingButtons =
-    @[
-      buttons[XXTExplorerToolbarButtonTypeShare],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypeCompress],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypeTrash],
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypePaste],
-      ];
-    
-    _readonlyButtons =
-    @[
-      flexibleSpace,
-      buttons[XXTExplorerToolbarButtonTypeSort],
-      flexibleSpace,
-      ];
+        
+        _editingButtons =
+        @[
+          fixedSpace,
+          buttons[XXTExplorerToolbarButtonTypeShare],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeCompress],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeTrash],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypePaste],
+          fixedSpace,
+          ];
+        
+        _readonlyButtons =
+        @[
+          fixedSpace,
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
+          flexibleSpace,
+          fixedSpace,
+          ];
+    }
+    else
+    {
+#ifndef APPSTORE
+        _defaultButtons =
+        @[
+          buttons[XXTExplorerToolbarButtonTypeScan],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeAddItem],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypePaste],
+          ];
+#else
+        _defaultButtons =
+        @[
+          buttons[XXTExplorerToolbarButtonTypeAddItem],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypePaste],
+          ];
+#endif
+        
+        _editingButtons =
+        @[
+          buttons[XXTExplorerToolbarButtonTypeShare],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeCompress],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeTrash],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypePaste],
+          ];
+        
+        _readonlyButtons =
+        @[
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
+          flexibleSpace,
+          ];
+    }
     
     _statusSeries =
     @{
