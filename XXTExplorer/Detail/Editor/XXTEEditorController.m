@@ -196,6 +196,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
     textView.editable = !isReadOnlyMode;
     textView.tintColor = theme.caretColor;
     
+    textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
+    
     // Layout Manager
     [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     if (textView.vLayoutManager) {
@@ -345,6 +347,18 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         [self saveDocumentIfNecessary];
     }
     [super didMoveToParentViewController:parent];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        insets = self.view.safeAreaInsets;
+    }
+    UITextView *textView = self.textView;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
+    textView.contentInset = contentInsets;
+    textView.scrollIndicatorInsets = contentInsets;
 }
 
 #pragma mark - Layout
@@ -500,19 +514,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         textView.textAlignment = NSTextAlignmentLeft;
         textView.allowsEditingTextAttributes = NO;
         
-        UIEdgeInsets insets = UIEdgeInsetsZero;
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
-        textView.contentInset = contentInsets;
-        textView.scrollIndicatorInsets = contentInsets;
-        
-        textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
-        
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 11.0, *)) {
             textView.smartDashesType = UITextSmartDashesTypeNo;
             textView.smartQuotesType = UITextSmartQuotesTypeNo;
             textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-//            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
             // Fallback on earlier versions
         }

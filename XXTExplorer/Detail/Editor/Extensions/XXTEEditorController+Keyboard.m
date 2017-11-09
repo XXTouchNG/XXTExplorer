@@ -85,8 +85,11 @@
         [self reloadConstraints];
     }
     
-    UITextView *textView = self.textView;
     UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        insets = self.view.safeAreaInsets;
+    }
+    UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
