@@ -327,7 +327,6 @@
 		0F8EDC641FB1F779003C92D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		0F8EDC661FB1F779003C92D6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		0F8EDC671FB1F779003C92D6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
-		0F8EDC691FB1F779003C92D6 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D5DFA1FAF55120083196D /* txt.tmLanguage */; };
 		0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
 		0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
@@ -532,6 +531,7 @@
 		52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 525126AA8416F9D88F2E89F7 /* SKBundleManager.m */; };
 		52512E40750E7BF6394042D8 /* SKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DF49CDDF706A91B90B2 /* SKParser.m */; };
 		52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512C7DA4E0285A9A9B9F92 /* SKPattern.m */; };
+		73B661AEBF07848FA550EF1E /* libPods-XXTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD648480DA696CAD33102457 /* libPods-XXTouch.a */; };
 		B03120B5AE76BFA4D245D47B /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = B03126653E88BAA23A496C7D /* lzio.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B03123205C26A5D2FDE8E6E1 /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312E193E6BAE03CB0E0C4D /* lobject.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B0312367E625FD7FB2D0DE79 /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = B03122F48D9B5C22E0828697 /* loadlib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
@@ -1061,6 +1061,9 @@
 		52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKReferenceManager.m; sourceTree = "<group>"; };
 		52512D31FC610E7D9963A8EA /* SKInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKInclude.m; sourceTree = "<group>"; };
 		52512DF49CDDF706A91B90B2 /* SKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKParser.m; sourceTree = "<group>"; };
+		7467C452DEE4D5A4B71BF9C8 /* Pods-XXTouch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch.debug.xcconfig"; sourceTree = "<group>"; };
+		8DA9FF4071622E0DD393FC30 /* Pods-XXTExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.debug.xcconfig"; sourceTree = "<group>"; };
+		AD648480DA696CAD33102457 /* libPods-XXTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTouch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B031207225C49CF54B692D31 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		B0312077E98F731237FDBDC6 /* lcorolib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcorolib.c; sourceTree = "<group>"; };
 		B03120A91E06863377C4CE3D /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
@@ -1339,9 +1342,9 @@
 		D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionCell.xib; sourceTree = "<group>"; };
 		D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationOperationController.h; sourceTree = "<group>"; };
 		D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationOperationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.debug.xcconfig"; sourceTree = "<group>"; };
+		E15A559CFF7426B35A2959FE /* Pods-XXTouch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouch.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch.release.xcconfig"; sourceTree = "<group>"; };
 		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
+		EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1362,7 +1365,7 @@
 				0F8EDC641FB1F779003C92D6 /* SystemConfiguration.framework in Frameworks */,
 				0F8EDC661FB1F779003C92D6 /* libz.tbd in Frameworks */,
 				0F8EDC671FB1F779003C92D6 /* MobileCoreServices.framework in Frameworks */,
-				0F8EDC691FB1F779003C92D6 /* libPods-XXTExplorer.a in Frameworks */,
+				73B661AEBF07848FA550EF1E /* libPods-XXTouch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2370,6 +2373,7 @@
 				0F6063D81F111E2E0087822E /* MobileCoreServices.framework */,
 				D6DBD48E1F3C5B5C002D5561 /* libz.tbd */,
 				E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */,
+				AD648480DA696CAD33102457 /* libPods-XXTouch.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2377,8 +2381,10 @@
 		59918F7D2218C7F23C834EB4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */,
-				FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */,
+				8DA9FF4071622E0DD393FC30 /* Pods-XXTExplorer.debug.xcconfig */,
+				EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */,
+				7467C452DEE4D5A4B71BF9C8 /* Pods-XXTouch.debug.xcconfig */,
+				E15A559CFF7426B35A2959FE /* Pods-XXTouch.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2933,13 +2939,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F8EDCC21FB1F779003C92D6 /* Build configuration list for PBXNativeTarget "XXTouch" */;
 			buildPhases = (
-				0F8EDB561FB1F779003C92D6 /* [CP] Check Pods Manifest.lock */,
+				1E5BD987FA01455D091829D9 /* [CP] Check Pods Manifest.lock */,
 				0F8EDB571FB1F779003C92D6 /* Sources */,
 				0F8EDC581FB1F779003C92D6 /* Frameworks */,
 				0F8EDC6A1FB1F779003C92D6 /* Resources */,
-				0F8EDCBF1FB1F779003C92D6 /* [CP] Embed Pods Frameworks */,
-				0F8EDCC01FB1F779003C92D6 /* [CP] Copy Pods Resources */,
 				0F8EDCC11FB1F779003C92D6 /* Localization */,
+				4D89EE81A6D019938A6B5ABF /* [CP] Embed Pods Frameworks */,
+				CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2978,7 +2984,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = XXTE;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Zheng;
 				TargetAttributes = {
 					0F8EDB551FB1F779003C92D6 = {
@@ -3202,58 +3208,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F8EDB561FB1F779003C92D6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-XXTExplorer-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F8EDCBF1FB1F779003C92D6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F8EDCC01FB1F779003C92D6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController/TOWebViewControllerLocalizable.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/XUI/XUI.bundle,
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		0F8EDCC11FB1F779003C92D6 /* Localization */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3267,6 +3221,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "export PATH=\"/Users/Zheng/homebrew/bin:${PATH}\"\n\nif which bartycrouch > /dev/null; then\n# Incrementally update all Storyboards/XIBs strings files\nbartycrouch interfaces -p \"$PROJECT_DIR/XXTExplorer\"\n\n# Add new keys to Localizable.strings files from NSLocalizedString in code\nbartycrouch code -p \"$PROJECT_DIR/XXTExplorer\" -l \"$PROJECT_DIR/XXTExplorer\" -a -s\nelse\necho \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
+		};
+		1E5BD987FA01455D091829D9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-XXTouch-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4D89EE81A6D019938A6B5ABF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3318,6 +3305,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
+				$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController/TOWebViewControllerLocalizable.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/XUI/XUI.bundle,
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D6DBD48D1F3C52D9002D5561 /* Localization */ = {
@@ -3908,7 +3914,7 @@
 /* Begin XCBuildConfiguration section */
 		0F8EDCC31FB1F779003C92D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */;
+			baseConfigurationReference = 7467C452DEE4D5A4B71BF9C8 /* Pods-XXTouch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3990,7 +3996,7 @@
 		};
 		0F8EDCC41FB1F779003C92D6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */;
+			baseConfigurationReference = E15A559CFF7426B35A2959FE /* Pods-XXTouch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4140,7 +4146,7 @@
 		};
 		0FA7AC021ED641A3003EAD7D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE2B6BB308505FE1CD84137F /* Pods-XXTExplorer.debug.xcconfig */;
+			baseConfigurationReference = 8DA9FF4071622E0DD393FC30 /* Pods-XXTExplorer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4196,7 +4202,7 @@
 		};
 		0FA7AC031ED641A3003EAD7D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCBEB1F3E67728F076F1ACE5 /* Pods-XXTExplorer.release.xcconfig */;
+			baseConfigurationReference = EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
