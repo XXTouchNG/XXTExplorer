@@ -27,6 +27,7 @@
 #import "XXTEEditorTypeSetter.h"
 #import "XXTEEditorTextInput.h"
 #import "XXTEEditorPreprocessor.h"
+#import "XXTEEditorMaskView.h"
 
 // SyntaxKit
 #import "SKAttributedParser.h"
@@ -75,6 +76,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
 @property (nonatomic, assign) BOOL shouldRefreshNagivationBar;
 @property (nonatomic, assign) BOOL shouldReloadAll;
+
+@property (nonatomic, assign) BOOL shouldHighlightRange;
+@property (nonatomic, assign) NSRange highlightRange;
 
 @end
 
@@ -322,9 +326,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
             
         }];
     }
-    if (self.shouldFocusTextView) {
-        self.shouldFocusTextView = NO;
-        [self.textView becomeFirstResponder];
+    if (self.shouldHighlightRange) {
+        [self highlightRangeIfNeeded];
+    } else {
+        if (self.shouldFocusTextView) {
+            self.shouldFocusTextView = NO;
+            [self.textView becomeFirstResponder];
+        }
     }
 }
 
@@ -380,6 +388,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         [self.view addSubview:self.fakeStatusBar];
     }
     [self.view addSubview:self.textView];
+    self.maskView.textView = self.textView;
+    [self.view addSubview:self.maskView];
     [self.view addSubview:self.toolbar];
     
     // Constraints
@@ -391,6 +401,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           ];
         [self.view addConstraints:constraints];
     }
@@ -402,6 +416,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.fakeStatusBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           ];
         [self.view addConstraints:constraints];
     }
@@ -533,6 +551,16 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
         _textView = textView;
     }
     return _textView;
+}
+
+- (XXTEEditorMaskView *)maskView {
+    if (!_maskView) {
+        XXTEEditorMaskView *maskView = [[XXTEEditorMaskView alloc] initWithFrame:self.view.bounds];
+        maskView.translatesAutoresizingMaskIntoConstraints = NO;
+        maskView.maskColor = [UIColor colorWithRed:241.0/255.0 green:196.0/255.0 blue:15.0/255.0 alpha:1.0];
+        _maskView = maskView;
+    }
+    return _maskView;
 }
 
 - (XXTEKeyboardRow *)keyboardRow {
@@ -757,6 +785,20 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 
 - (void)setNeedsRefreshNavigationBar {
     self.shouldRefreshNagivationBar = YES;
+}
+
+#pragma mark - Highlight
+
+- (void)setNeedsHighlightRange:(NSRange)range {
+    self.highlightRange = range;
+    self.shouldHighlightRange = YES;
+}
+
+- (void)highlightRangeIfNeeded {
+    if (self.shouldHighlightRange) {
+        self.shouldHighlightRange = NO;
+        [self.maskView highlightWithRange:self.highlightRange];
+    }
 }
 
 #pragma mark - Save Document

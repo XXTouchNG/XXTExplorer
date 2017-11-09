@@ -8,7 +8,7 @@
 
 #import "XXTEEditor.h"
 
-@class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory;
+@class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory, XXTEEditorMaskView;
 
 @interface XXTEEditorController : UIViewController <XXTEEditor>
 
@@ -16,12 +16,14 @@
 @property (nonatomic, strong) XXTEEditorLanguage *language;
 
 @property (nonatomic, strong) XXTEEditorTextView *textView;
+@property (nonatomic, strong) XXTEEditorMaskView *maskView;
 @property (nonatomic, strong) XXTEEditorToolbar *toolbar;
 
 - (void)setNeedsReload;
 - (void)setNeedsReloadAttributes;
 - (void)setNeedsSaveDocument;
 - (void)setNeedsFocusTextView;
+- (void)setNeedsHighlightRange:(NSRange)range;
 
 - (void)reloadConstraints;
 - (void)reloadAttributesIfNecessary;

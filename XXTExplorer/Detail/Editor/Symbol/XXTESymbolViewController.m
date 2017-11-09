@@ -24,6 +24,8 @@
 #import "XXTEEditorTextView.h"
 #import "SKParser.h"
 
+#import "XXTEEditorMaskView.h"
+
 @interface XXTESymbolViewController ()
 <
 UITableViewDelegate,
@@ -241,21 +243,24 @@ UISearchDisplayDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSRange toRange = {0, 0};
     if (tableView == self.tableView) {
         NSUInteger idx = indexPath.row;
         if (idx < self.symbolsTable.count) {
             NSDictionary *detail = self.symbolsTable[idx];
-            NSRange toRange = [detail[@"range"] rangeValue];
+            toRange = [detail[@"range"] rangeValue];
             // scroll to range if exists
         }
     } else {
         NSUInteger idx = indexPath.row;
         if (idx < self.displaySymbolsTable.count) {
             NSDictionary *detail = self.displaySymbolsTable[idx];
-            NSRange toRange = [detail[@"range"] rangeValue];
+            toRange = [detail[@"range"] rangeValue];
             // scroll to range if exists
         }
     }
+    [self.editor setNeedsHighlightRange:toRange];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UISearchDisplayDelegate

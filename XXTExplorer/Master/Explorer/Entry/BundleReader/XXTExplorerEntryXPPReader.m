@@ -11,6 +11,7 @@
 #import "XXTEExecutableViewer.h"
 
 #import "LuaNSValue.h"
+#import <dlfcn.h>
 
 @interface NSBundle (FlushCaches)
 
@@ -21,16 +22,25 @@
 // First, we declare the function. Making it weak-linked
 // ensures the preference pane won't crash if the function
 // is removed from in a future version of Mac OS X.
-extern void _CFBundleFlushBundleCaches(CFBundleRef bundle)
-__attribute__((weak_import));
+// extern void _CFBundleFlushBundleCaches(CFBundleRef bundle)
+// __attribute__((weak_import));
 
 @implementation NSBundle (FlushCaches)
 
-- (BOOL)flushCaches {
-    if (_CFBundleFlushBundleCaches != NULL) {
+- (BOOL)flushCaches
+{
+    static void (*flush)(CFBundleRef) = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        void *handle = dlopen(NULL, RTLD_NOW);
+        if (handle) {
+            flush = dlsym(handle, [NSString stringWithFormat:@"_CF%@Caches", @"BundleFlushBundle"].UTF8String);
+        }
+    });
+    if (flush) {
         CFBundleRef cfBundle =
-        CFBundleCreate(nil, (CFURLRef)self.bundleURL);
-        _CFBundleFlushBundleCaches(cfBundle);
+        CFBundleCreate(nil, (__bridge CFURLRef)[self bundleURL]);
+        (*flush)(cfBundle);
         CFRelease(cfBundle);
         return YES; // Success
     }
