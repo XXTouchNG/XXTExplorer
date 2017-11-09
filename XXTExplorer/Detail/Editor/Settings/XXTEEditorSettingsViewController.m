@@ -217,7 +217,6 @@
         [self.editor setNeedsReload];
     }];
     
-    /*
     XXTEMoreSwitchNoIconCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Indent Wrapped Lines", nil);
     cell9.optionSwitch.on = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, NO);
@@ -279,7 +278,6 @@
         XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
         [self.editor setNeedsReload];
     }];
-    */
     
     XXTEMoreSwitchNoIconCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell12.titleLabel.text = NSLocalizedString(@"Read Only", nil);
@@ -326,7 +324,6 @@
         [self.editor setNeedsReload];
     }];
     
-    /*
     XXTEMoreSwitchNoIconCell *cell17 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
     cell17.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
     cell17.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
@@ -342,7 +339,6 @@
         UISwitch *optionSwitch = (UISwitch *)sender;
         XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
     }];
-    */
     
     NSArray *layoutSection = nil;
     if (XXTE_PAD) {
@@ -356,9 +352,9 @@
                     @[ cell3, cell4 ],
                     layoutSection,
                     @[ cell7, cell8, tabCell ],
-                    /* @[ cell9, cell10, cell11 ], */
+                    @[ cell9, cell10, cell11 ],
                     @[ cell12, cell13, cell14, cell15, cell16 ],
-                    /* @[ cell17, cell18 ], */
+                    @[ cell17, cell18 ],
                     ];
 }
 

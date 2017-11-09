@@ -165,15 +165,23 @@ UISearchDisplayDelegate
         [parser parseString:string matchCallback:^(NSString *scopeName, NSRange range) {
             NSArray <NSString *> *scopes = [scopeName componentsSeparatedByString:@"."];
             if ([scopes containsObject:@"entity"]) {
-                NSValue *rangeVal = [NSValue valueWithRange:range];
                 NSString *title = [string substringWithRange:range];
-                NSDictionary *cache =
-                @{
-                  @"range": rangeVal,
-                  @"title": title,
-                  @"scopeName": scopeName,
-                  };
-                [symbolsTable addObject:cache];
+                NSString *trimmedTitle = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSRange trimmedRange = [title rangeOfString:trimmedTitle];
+                if (trimmedRange.location != NSNotFound) {
+                    range.location += trimmedRange.location;
+                    range.length = trimmedRange.length;
+                    NSValue *rangeVal = [NSValue valueWithRange:range];
+                    if (rangeVal && trimmedTitle && scopeName) {
+                        NSDictionary *cache =
+                        @{
+                          @"range": rangeVal,
+                          @"title": trimmedTitle,
+                          @"scopeName": scopeName,
+                          };
+                        [symbolsTable addObject:cache];
+                    }
+                }
             }
         }];
         dispatch_async_on_main_queue(^{
