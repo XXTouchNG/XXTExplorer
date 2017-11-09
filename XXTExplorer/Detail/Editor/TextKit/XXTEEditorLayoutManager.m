@@ -56,7 +56,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
     self.allowsNonContiguousLayout = NO;
     _gutterWidth = kMinimumGutterWidth;
     
-    _lineAreaInset = UIEdgeInsetsMake(0.0, 12.0, 0.0, 8.0);
+    _lineAreaInset = UIEdgeInsetsMake(0.0, 8.0, 0.0, 8.0);
     _lineNumberColor = [UIColor grayColor];
     _lineNumberFont = [UIFont systemFontOfSize:14.0];
     _invisibleColor = [UIColor lightGrayColor];

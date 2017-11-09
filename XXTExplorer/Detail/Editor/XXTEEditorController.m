@@ -47,7 +47,7 @@
 // Toolbar
 #import "XXTEEditorToolbar.h"
 
-static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
+static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
 
@@ -797,7 +797,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 10000;
 - (void)highlightRangeIfNeeded {
     if (self.shouldHighlightRange) {
         self.shouldHighlightRange = NO;
-        [self.maskView highlightWithRange:self.highlightRange];
+        [self.maskView flashWithRange:self.highlightRange];
     }
 }
 

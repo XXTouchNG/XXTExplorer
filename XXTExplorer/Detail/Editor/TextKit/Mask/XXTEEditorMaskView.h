@@ -15,7 +15,6 @@
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIColor *maskColor;
 
-- (void)highlightWithRange:(NSRange)range;
-- (void)highlightWithRange:(NSRange)range duration:(NSTimeInterval)duration;
+- (void)flashWithRange:(NSRange)range;
 
 @end

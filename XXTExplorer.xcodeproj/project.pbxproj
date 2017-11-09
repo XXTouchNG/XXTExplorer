@@ -480,6 +480,7 @@
 		0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
 		0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */; };
 		0FC598AA1FB2189A001F918B /* main.AppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC598A91FB2189A001F918B /* main.AppStore.m */; };
+		0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC598AC1FB49317001F918B /* QuartzCore.framework */; };
 		0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */; };
 		0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */; };
@@ -978,6 +979,7 @@
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
 		0FC598A71FB216A1001F918B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.AppStore.plist; sourceTree = "<group>"; };
 		0FC598A91FB2189A001F918B /* main.AppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.AppStore.m; sourceTree = "<group>"; };
+		0FC598AC1FB49317001F918B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0FCC2AC41F130BE600C50A48 /* XXTExplorerItemNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemNameCell.h; sourceTree = "<group>"; };
 		0FCC2AC51F130BE600C50A48 /* XXTExplorerItemNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemNameCell.m; sourceTree = "<group>"; };
 		0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerItemNameCell.xib; sourceTree = "<group>"; };
@@ -1352,6 +1354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,
 				0F8EDC591FB1F779003C92D6 /* Photos.framework in Frameworks */,
 				0F8EDC5A1FB1F779003C92D6 /* AssetsLibrary.framework in Frameworks */,
 				0F8EDC5B1FB1F779003C92D6 /* libc++.tbd in Frameworks */,
@@ -2355,6 +2358,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0FC598AC1FB49317001F918B /* QuartzCore.framework */,
 				0FAC07B91F848AB200C52225 /* Photos.framework */,
 				0FAC07B71F848AAA00C52225 /* AssetsLibrary.framework */,
 				D617D1D31F7B4BC0009F4B59 /* libc++.tbd */,
