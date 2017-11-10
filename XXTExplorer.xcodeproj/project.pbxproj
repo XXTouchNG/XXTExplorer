@@ -104,6 +104,7 @@
 		0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */; };
 		0F81BE951FB54258002EE457 /* XXTEEditorSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */; };
 		0F81BE961FB54259002EE457 /* XXTEEditorSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */; };
+		0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */; };
 		0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */; };
 		0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */; };
 		0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
@@ -879,6 +880,7 @@
 		0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringView.m; sourceTree = "<group>"; };
 		0F81BE931FB54258002EE457 /* XXTEEditorSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchController.h; sourceTree = "<group>"; };
 		0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchController.m; sourceTree = "<group>"; };
+		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
 		0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedParsingOperation.h; sourceTree = "<group>"; };
@@ -1984,6 +1986,7 @@
 			isa = PBXGroup;
 			children = (
 				D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */,
+				0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */,
 				D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */,
 				D63F36601F7A42DB00E2386C /* Settings.bundle */,
 				0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */,
@@ -3046,6 +3049,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */,
 				0F97F1DC1FB30CFB007CA883 /* XXTEMoreReferences.bundle in Resources */,
 				0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */,
 				0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */,
@@ -3936,7 +3940,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7467C452DEE4D5A4B71BF9C8 /* Pods-XXTouch.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.AppStore;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
@@ -4018,7 +4022,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E15A559CFF7426B35A2959FE /* Pods-XXTouch.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.AppStore;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
@@ -4168,7 +4172,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8DA9FF4071622E0DD393FC30 /* Pods-XXTExplorer.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPro;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
@@ -4224,7 +4228,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPro;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
