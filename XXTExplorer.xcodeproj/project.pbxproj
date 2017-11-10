@@ -102,6 +102,8 @@
 		0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
 		0F8093F51F5470A9003D5894 /* XXTEShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */; };
 		0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */; };
+		0F81BE951FB54258002EE457 /* XXTEEditorSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */; };
+		0F81BE961FB54259002EE457 /* XXTEEditorSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */; };
 		0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */; };
 		0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */; };
 		0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
@@ -875,6 +877,8 @@
 		0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringLayer.m; sourceTree = "<group>"; };
 		0F8093F31F5470A9003D5894 /* XXTEShimmeringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEShimmeringView.h; sourceTree = "<group>"; };
 		0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringView.m; sourceTree = "<group>"; };
+		0F81BE931FB54258002EE457 /* XXTEEditorSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchController.h; sourceTree = "<group>"; };
+		0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchController.m; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
 		0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedParsingOperation.h; sourceTree = "<group>"; };
@@ -1918,6 +1922,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		0F81BE921FB54235002EE457 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0F81BE931FB54258002EE457 /* XXTEEditorSearchController.h */,
+				0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		0F9888C81FA7538D00ED33E7 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2562,6 +2575,7 @@
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				0F81BE921FB54235002EE457 /* Search */,
 				0F3D5DF61FAEC4120083196D /* Symbol */,
 				0FB388E21FA860AA00B41E44 /* Statistics */,
 				0F9888C81FA7538D00ED33E7 /* Toolbar */,
@@ -3516,6 +3530,7 @@
 				0F8EDC181FB1F779003C92D6 /* SKScopedString.m in Sources */,
 				0F8EDC191FB1F779003C92D6 /* SKResultSet.m in Sources */,
 				0F8EDC1A1FB1F779003C92D6 /* XXTEUIViewController+XUIFileCell.m in Sources */,
+				0F81BE961FB54259002EE457 /* XXTEEditorSearchController.m in Sources */,
 				0F8EDC1B1FB1F779003C92D6 /* SKResult.m in Sources */,
 				0F8EDC1D1FB1F779003C92D6 /* SKCaptureCollection.m in Sources */,
 				0F8EDC1E1FB1F779003C92D6 /* SKTheme.m in Sources */,
@@ -3716,6 +3731,7 @@
 				0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F6AEA931F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
 				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
+				0F81BE951FB54258002EE457 /* XXTEEditorSearchController.m in Sources */,
 				0FB388E51FA860E800B41E44 /* XXTEEditorStatisticsViewController.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
@@ -4152,7 +4168,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8DA9FF4071622E0DD393FC30 /* Pods-XXTExplorer.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPro;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
@@ -4208,7 +4224,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPro;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;

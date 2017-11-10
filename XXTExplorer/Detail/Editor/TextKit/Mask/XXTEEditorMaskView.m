@@ -81,7 +81,7 @@
     NSRange glyphRange = [manager glyphRangeForCharacterRange:range actualCharacterRange:NULL];
     CGRect textRect = [manager boundingRectForGlyphRange:glyphRange inTextContainer:[textView textContainer]];
     
-    UIEdgeInsets textInsets = UIEdgeInsetsMake(1.5, 4.0, 2.0, 4.0);
+    UIEdgeInsets textInsets = UIEdgeInsetsMake(1.8, 4.0, 2.0, 4.0);
     CGPoint textViewOrigin = textView.frame.origin;
     textRect.origin.x += (textViewOrigin.x / 2.0) + textView.textContainerInset.left - textInsets.left;
     textRect.origin.y += (textViewOrigin.y / 2.0) + textView.textContainerInset.top - textInsets.top;

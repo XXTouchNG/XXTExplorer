@@ -3,115 +3,115 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-20@2x.png",
+      "filename" : "XXTouch-20@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-20@3x.png",
+      "filename" : "XXTouch-20@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-Small.png",
+      "filename" : "XXTouch-Small.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-Small@2x.png",
+      "filename" : "XXTouch-Small@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-Small@3x.png",
+      "filename" : "XXTouch-Small@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-Small-40@2x.png",
+      "filename" : "XXTouch-Small-40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-Small-40@3x.png",
+      "filename" : "XXTouch-Small-40@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-60@2x.png",
+      "filename" : "XXTouch-60@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "XXTouchIcon-60@3x.png",
+      "filename" : "XXTouch-60@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-20.png",
+      "filename" : "XXTouch-20.png",
       "scale" : "1x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-20@2x.png",
+      "filename" : "XXTouch-20@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-Small.png",
+      "filename" : "XXTouch-Small.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-Small@2x.png",
+      "filename" : "XXTouch-Small@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-Small-40.png",
+      "filename" : "XXTouch-Small-40.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-Small-40@2x.png",
+      "filename" : "XXTouch-Small-40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-76.png",
+      "filename" : "XXTouch-76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-76@2x.png",
+      "filename" : "XXTouch-76@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "XXTouchIcon-83.5@2x.png",
+      "filename" : "XXTouch-83.5@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "XXTouchIcon_v2.png",
+      "filename" : "XXTouchIcon_v1.png",
       "scale" : "1x"
     }
   ],
