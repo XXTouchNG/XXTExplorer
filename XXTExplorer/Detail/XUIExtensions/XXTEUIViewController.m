@@ -23,7 +23,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"xui", @"plist", @"json" ];
+    return @[ @"xuic", @"xui", @"plist", @"json" ];
 }
 
 + (Class)relatedReader {

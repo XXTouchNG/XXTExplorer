@@ -8,6 +8,6 @@
 
 #import "XXTExplorerEntryReader.h"
 
-@interface XXTExplorerEntryTerminalReader : NSObject <XXTExplorerEntryReader>
+@interface XXTExplorerEntryTerminalReader : XXTExplorerEntryReader
 
 @end

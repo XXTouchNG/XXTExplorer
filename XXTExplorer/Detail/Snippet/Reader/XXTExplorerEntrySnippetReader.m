@@ -29,6 +29,7 @@
 @synthesize entryViewerDescription = _entryViewerDescription;
 @synthesize executable = _executable;
 @synthesize editable = _editable;
+@synthesize encryptionType = _encryptionType;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return [XXTESnippetViewerController suggestedExtensions];

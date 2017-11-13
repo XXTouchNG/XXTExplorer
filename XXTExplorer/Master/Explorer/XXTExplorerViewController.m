@@ -23,8 +23,6 @@
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
 #import "XXTExplorerEntryReader.h"
-#import "XXTExplorerEntryBundleReader.h"
-
 #import "XXTExplorerEntryOpenWithViewController.h"
 #import "XXTENavigationController.h"
 
@@ -688,7 +686,7 @@
     NSString *entryDescription = entryDetail[XXTExplorerViewEntryAttributeDescription];
     UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
     if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
-        id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         if (entryReader.entryDisplayName) {
             entryDisplayName = entryReader.entryDisplayName;
         } else {

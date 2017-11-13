@@ -12,7 +12,6 @@
 #import "XXTEViewer.h"
 #import "XXTEEditor.h"
 #import "XXTExplorerEntryReader.h"
-#import "XXTExplorerEntryBundleReader.h"
 #import "XXTEUIViewController.h"
 #import "XXTExplorerEntryOpenWithViewController.h"
 
@@ -98,8 +97,8 @@
 }
 
 - (BOOL)hasEditorForEntry:(NSDictionary *)entry {
-    id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && [reader conformsToProtocol:@protocol(XXTExplorerEntryReader)] && reader.editable) {
+    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]] && reader.editable) {
         Class testClass = [[reader class] relatedEditor];
         if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
             return YES;
@@ -109,11 +108,11 @@
 }
 
 - (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
-    id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (![reader conformsToProtocol:@protocol(XXTExplorerEntryBundleReader)]) {
-        return NO;
+    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]]) {
+        return reader && reader.configurable;;
     }
-    return reader && reader.configurable;
+    return NO;
 }
 
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {
@@ -125,8 +124,8 @@
 
 - (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    id <XXTExplorerEntryReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    if (reader && [reader conformsToProtocol:@protocol(XXTExplorerEntryReader)] && reader.editable) {
+    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]] && reader.editable) {
         Class editorClass = [[reader class] relatedEditor];
         if (editorClass && [editorClass isSubclassOfClass:[UIViewController class]]) {
             if ([editorClass instancesRespondToSelector:@selector(initWithPath:)]) {
@@ -143,9 +142,9 @@
 }
 
 - (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry configurationName:(NSString *)name {
-    id <XXTExplorerEntryBundleReader> reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
     if (reader &&
-        [reader conformsToProtocol:@protocol(XXTExplorerEntryBundleReader)] &&
+        [reader isKindOfClass:[XXTExplorerEntryReader class]] &&
         reader.configurable &&
         reader.configurationName) {
         if (name.length == 0) {

@@ -23,6 +23,8 @@
 @synthesize entryViewerDescription = _entryViewerDescription;
 @synthesize executable = _executable;
 @synthesize editable = _editable;
+@synthesize encryptionType = _encryptionType;
+@synthesize encryptionExtension = _encryptionExtension;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return [XXTEExecutableViewer suggestedExtensions];
@@ -48,6 +50,12 @@
     NSString *entryExtension = [path pathExtension];
     _executable = YES;
     _editable = ([entryExtension isEqualToString:@"lua"]);
+    if (self.editable) {
+        _encryptionType = XXTExplorerEntryReaderEncryptionTypeRemote;
+        _encryptionExtension = @"xxt";
+    } else {
+        _encryptionType = XXTExplorerEntryReaderEncryptionTypeNone;
+    }
     NSString *entryBaseExtension = [entryExtension lowercaseString];
     NSString *entryUpperedExtension = [entryExtension uppercaseString];
     UIImage *iconImage = [self.class defaultImage];

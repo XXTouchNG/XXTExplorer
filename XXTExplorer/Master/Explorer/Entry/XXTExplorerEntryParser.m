@@ -194,7 +194,7 @@
             if ([bindedViewerClass respondsToSelector:@selector(relatedReader)]) {
                 Class relatedReaderClass = [((Class <XXTEViewer>)bindedViewerClass) relatedReader];
                 if (relatedReaderClass) {
-                    id <XXTExplorerEntryReader> relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];
+                    XXTExplorerEntryReader *relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];
                     newEntry[XXTExplorerViewEntryAttributeEntryReader] = relatedReader;
                 }
             }
@@ -211,7 +211,7 @@
                 }
             }
             if (supported) {
-                id <XXTExplorerEntryReader> bundleReader = [[readerClass alloc] initWithPath:entryPath];
+                XXTExplorerEntryReader *bundleReader = [[readerClass alloc] initWithPath:entryPath];
                 newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
                 newEntry[XXTExplorerViewEntryAttributeEntryReader] = bundleReader;
                 UIImage *bundleIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeMaskTypeBundle];

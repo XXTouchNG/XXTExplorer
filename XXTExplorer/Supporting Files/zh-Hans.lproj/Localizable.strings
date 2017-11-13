@@ -255,7 +255,7 @@
 "Cannot download from url \"%@\".\n%@" = "无法从 URL \"%@\" 下载.\n%@";
 
 /* No comment provided by engineer. */
-"Cannot encrypt script: %@" = "无法加密脚本: %@";
+"Cannot encrypt: %@" = "无法加密: %@";
 
 /* No comment provided by engineer. */
 "Cannot find QR Code in the image." = "图像中找不到二维码.";
@@ -271,6 +271,9 @@
 
 /* No comment provided by engineer. */
 "Cannot open file \"%@\" for writing." = "无法打开文件以供写入 \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot open: \"%@\"" = "无法打开: \"%@\"";
 
 /* No comment provided by engineer. */
 "Cannot overwrite file \"%@\".\n%@" = "无法替换文件 \"%@\".\n%@";
@@ -576,6 +579,9 @@
 "Files" = "文件";
 
 /* No comment provided by engineer. */
+"Find" = "查找";
+
+/* No comment provided by engineer. */
 "Font" = "字体";
 
 /* No comment provided by engineer. */
@@ -625,6 +631,9 @@
 
 /* No comment provided by engineer. */
 "Invalid package data." = "无效的列表数据.";
+
+/* No comment provided by engineer. */
+"Invalid RAW Data." = "无效的原始数据.";
 
 /* No comment provided by engineer. */
 "Invalid url parameters." = "无效的 URL 参数.";
@@ -966,6 +975,9 @@
 "Rename" = "重命名";
 
 /* No comment provided by engineer. */
+"Replace" = "替换";
+
+/* No comment provided by engineer. */
 "Reset" = "重置";
 
 /* No comment provided by engineer. */
@@ -1104,9 +1116,6 @@
 
 /* No comment provided by engineer. */
 "System" = "系统";
-
-/* No comment provided by engineer. */
-"Tab Width" = "缩进符宽度";
 
 /* No comment provided by engineer. */
 "Tabs" = "缩进符";
@@ -1250,6 +1259,9 @@
 
 /* No comment provided by engineer. */
 "Where" = "位置";
+
+/* No comment provided by engineer. */
+"Width" = "宽度";
 
 /* No comment provided by engineer. */
 "Will open url: \n\"%@\", continue?" = "即将打开 URL: \n\"%@\", 继续?";

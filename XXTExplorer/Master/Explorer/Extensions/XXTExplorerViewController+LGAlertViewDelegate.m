@@ -44,7 +44,7 @@
         @selector(alertView:unarchiveEntryPath:),
         @selector(alertView:clearPasteboardEntriesStored:),
 #ifndef APPSTORE
-        @selector(alertView:encryptItemAtPath:),
+        @selector(alertView:encryptEntry:),
 #endif
     };
 #pragma clang diagnostic push

@@ -5,6 +5,6 @@
 
 #import "XXTExplorerEntryReader.h"
 
-@interface XUIEntryReader : NSObject <XXTExplorerEntryReader>
+@interface XUIEntryReader : XXTExplorerEntryReader
 
 @end

@@ -20,6 +20,8 @@
 @synthesize entryViewerDescription = _entryViewerDescription;
 @synthesize executable = _executable;
 @synthesize editable = _editable;
+@synthesize encryptionType = _encryptionType;
+@synthesize encryptionExtension = _encryptionExtension;
 
 + (NSArray <NSString *> *)supportedExtensions {
     return [XXTEUIViewController suggestedExtensions];
@@ -42,11 +44,17 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
-    _editable = YES;
-    _executable = NO;
     NSString *entryExtension = [path pathExtension];
-    NSString *entryBaseExtension = [entryExtension lowercaseString];
     NSString *entryUpperedExtension = [entryExtension uppercaseString];
+    NSString *entryBaseExtension = [entryExtension lowercaseString];
+    _editable = (NO == [entryBaseExtension isEqualToString:@"xuic"]);
+    _executable = NO;
+    if (self.editable) {
+        _encryptionType = XXTExplorerEntryReaderEncryptionTypeLocal;
+    } else {
+        _encryptionType = XXTExplorerEntryReaderEncryptionTypeNone;
+    }
+    _encryptionExtension = @"xuic";
     UIImage *iconImage = [self.class defaultImage];
     {
         UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];

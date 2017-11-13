@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTESegmentedController.h"
 
 @class XXTEEditorController;
 
-@interface XXTEEditorSearchController : UIViewController
+@interface XXTEEditorSearchController : XXTESegmentedController
 
 @property (nonatomic, weak) XXTEEditorController *editor;
 

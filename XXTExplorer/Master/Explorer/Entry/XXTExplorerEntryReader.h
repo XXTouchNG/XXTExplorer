@@ -2,18 +2,21 @@
 //  XXTExplorerEntryReader.h
 //  XXTExplorer
 //
-//  Created by Zheng on 12/07/2017.
+//  Created by Zheng on 13/11/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#ifndef XXTExplorerEntryReader_h
-#define XXTExplorerEntryReader_h
-
 #import <UIKit/UIKit.h>
+
+typedef enum : NSUInteger {
+    XXTExplorerEntryReaderEncryptionTypeNone = 0,
+    XXTExplorerEntryReaderEncryptionTypeLocal = 1,
+    XXTExplorerEntryReaderEncryptionTypeRemote = 2,
+} XXTExplorerEntryReaderEncryptionType;
 
 static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 
-@protocol XXTExplorerEntryReader <NSObject>
+@interface XXTExplorerEntryReader : NSObject
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
 @property (nonatomic, copy, readonly) NSArray <NSString *> *metaKeys;
@@ -26,6 +29,8 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 
 @property (nonatomic, assign, readonly) BOOL executable;
 @property (nonatomic, assign, readonly) BOOL editable;
+@property (nonatomic, assign, readonly) XXTExplorerEntryReaderEncryptionType encryptionType;
+@property (nonatomic, copy, readonly)   NSString *encryptionExtension;
 
 @property (nonatomic, copy, readonly)   NSString *entryName;
 @property (nonatomic, copy, readonly)   NSString *entryDisplayName;
@@ -34,6 +39,7 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 @property (nonatomic, copy, readonly)   NSString *entryExtensionDescription;
 @property (nonatomic, copy, readonly)   NSString *entryViewerDescription;
 
-@end
+@property (nonatomic, assign, readonly) BOOL configurable;
+@property (nonatomic, copy, readonly) NSString *configurationName;
 
-#endif /* XXTExplorerEntryReader_h */
+@end

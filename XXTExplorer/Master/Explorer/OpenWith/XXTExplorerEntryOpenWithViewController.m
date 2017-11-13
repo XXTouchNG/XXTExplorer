@@ -202,7 +202,7 @@ typedef enum : NSUInteger {
             cell.entryTitleLabel.text = [viewerClass viewerName];
             cell.entrySubtitleLabel.text = [self openWithCellDescriptionFromExtensions:[viewerClass suggestedExtensions]];
             if ([viewerClass respondsToSelector:@selector(relatedReader)]) {
-                Class <XXTExplorerEntryReader> readerClass = [viewerClass relatedReader];
+                Class readerClass = [viewerClass relatedReader];
                 cell.entryIconImageView.image = [readerClass defaultImage];
             }
         }

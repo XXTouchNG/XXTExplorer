@@ -24,7 +24,6 @@
 
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryService.h"
-#import "XXTExplorerEntryBundleReader.h"
 
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
@@ -127,7 +126,7 @@
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
-            objc_setAssociatedObject(alertView, @selector(alertView:encryptItemAtPath:), entryPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            objc_setAssociatedObject(alertView, @selector(alertView:encryptEntry:), entryDetail, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated:YES completionHandler:nil];
 #endif
         }
@@ -166,8 +165,7 @@
     NSDictionary *entryDetail = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
-        id <XXTExplorerEntryReader> entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-        id <XXTExplorerEntryBundleReader> entryBundleReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
         UIColor *colorSeries = XXTE_COLOR;
 #ifndef APPSTORE
         if (entryReader.executable) {
@@ -189,8 +187,8 @@
             [swipeButtons addObject:button];
         }
 #endif
-        if ([entryBundleReader respondsToSelector:@selector(configurable)]) {
-            if (entryBundleReader.configurable) {
+        if ([entryReader respondsToSelector:@selector(configurable)]) {
+            if (entryReader.configurable) {
                 NSString *buttonTitle = nil;
                 if (!hidesLabel) {
                     buttonTitle = NSLocalizedString(@"Configure", nil);
@@ -246,7 +244,8 @@
             [swipeButtons addObject:button];
         }
 #ifndef APPSTORE
-        if (entryReader.executable && entryReader.editable) {
+        if (entryReader.encryptionType != XXTExplorerEntryReaderEncryptionTypeNone)
+        {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Encrypt", nil);

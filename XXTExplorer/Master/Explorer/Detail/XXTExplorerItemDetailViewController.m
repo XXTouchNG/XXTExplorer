@@ -232,7 +232,7 @@ static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"Section
     NSFileManager *previewManager = [[NSFileManager alloc] init];
     NSMutableArray <XXTExplorerDynamicSection *> *mutableDynamicSections = [[NSMutableArray alloc] init];
     
-    id <XXTExplorerEntryReader> entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
+    XXTExplorerEntryReader *entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     NSString *entryBaseType = entry[XXTExplorerViewEntryAttributeType];
     BOOL entryReadable = [previewManager isReadableFileAtPath:entryPath];

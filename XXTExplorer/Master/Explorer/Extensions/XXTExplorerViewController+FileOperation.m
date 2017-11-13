@@ -17,11 +17,13 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEDispatchDefines.h"
+#import "XXTExplorerEntryReader.h"
 
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
 #import <sys/stat.h>
+#import "xui32.h"
 
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
@@ -32,16 +34,20 @@
 #pragma mark - File Operations
 
 #ifndef APPSTORE
-- (void)alertView:(LGAlertView *)alertView encryptItemAtPath:(NSString *)entryPath {
+- (void)alertView:(LGAlertView *)alertView encryptEntry:(NSDictionary *)entryDetail {
     NSString *currentPath = self.entryPath;
+    XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+    NSString *encryptionExtension = entryReader.encryptionExtension;
+    if (!encryptionExtension) return;
+    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     NSString *entryName = [entryPath lastPathComponent];
     NSString *encryptedName = [entryName stringByDeletingPathExtension];
-    NSString *encryptedNameWithExt = [encryptedName stringByAppendingPathExtension:@"xxt"];
+    NSString *encryptedNameWithExt = [encryptedName stringByAppendingPathExtension:encryptionExtension];
     NSString *encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
     NSUInteger encryptedIndex = 2;
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     while ([fileManager fileExistsAtPath:encryptedPath]) {
-        encryptedNameWithExt = [NSString stringWithFormat:@"%@-%lu.xxt", encryptedName, (unsigned long) encryptedIndex];
+        encryptedNameWithExt = [NSString stringWithFormat:@"%@-%lu.%@", encryptedName, (unsigned long) encryptedIndex, encryptionExtension];
         encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
         encryptedIndex++;
     }
@@ -81,28 +87,54 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [NSURLConnection POST:uAppDaemonCommandUrl(@"encript_file") JSON:@{ @"in_file": entryPath, @"out_file": encryptedPath }]
-            .then(convertJsonString)
-            .then(^(NSDictionary *jsonDirectory) {
-                if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+            if (entryReader.encryptionType == XXTExplorerEntryReaderEncryptionTypeRemote) {
+                [NSURLConnection POST:uAppDaemonCommandUrl(@"encript_file") JSON:@{ @"in_file": entryPath, @"out_file": encryptedPath }]
+                .then(convertJsonString)
+                .then(^(NSDictionary *jsonDirectory) {
+                    if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {
+                        dispatch_async_on_main_queue(^{
+                            self.busyOperationProgressFlag = NO;
+                            completionBlock(YES, nil);
+                        });
+                    } else {
+                        @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt: %@", nil), jsonDirectory[@"message"]];
+                    }
+                    return [PMKPromise promiseWithValue:@{}];
+                })
+                .catch(^(NSError *serverError) {
                     dispatch_async_on_main_queue(^{
                         self.busyOperationProgressFlag = NO;
-                        completionBlock(YES, nil);
+                        completionBlock(NO, serverError);
                     });
-                } else {
-                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt script: %@", nil), jsonDirectory[@"message"]];
-                }
-                return [PMKPromise promiseWithValue:@{}];
-            })
-            .catch(^(NSError *serverError) {
-                dispatch_async_on_main_queue(^{
-                    self.busyOperationProgressFlag = NO;
-                    completionBlock(NO, serverError);
+                })
+                .finally(^() {
+                    
                 });
-            })
-            .finally(^() {
-                
-            });
+            } else {
+                @try {
+                    xui_32 *xui = XUICreateWithContentsOfFile(entryPath.UTF8String);
+                    if (xui) {
+                        int result = XUIWriteToFile(encryptedPath.UTF8String, xui);
+                        if (result == 0) {
+                            dispatch_async_on_main_queue(^{
+                                self.busyOperationProgressFlag = NO;
+                                completionBlock(YES, nil);
+                            });
+                        } else {
+                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot open: \"%@\"", nil), encryptedPath];
+                        }
+                    } else {
+                        @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt: %@", nil), NSLocalizedString(@"Invalid RAW Data.", nil)];
+                    }
+                }
+                @catch (NSString *errorMessage) {
+                    dispatch_async_on_main_queue(^{
+                        self.busyOperationProgressFlag = NO;
+                        completionBlock(NO, [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}]);
+                    });
+                }
+            }
+            
         });
     });
 }
