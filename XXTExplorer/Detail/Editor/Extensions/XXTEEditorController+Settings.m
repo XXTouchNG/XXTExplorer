@@ -12,6 +12,7 @@
 #import "XXTEEditorSearchController.h"
 #import "XXTESymbolViewController.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTENavigationController.h"
 
 #import "XXTEEditorTextView.h"
 
@@ -45,7 +46,8 @@
     [self.textView resignFirstResponder];
     XXTEEditorSearchController *searchController = [[XXTEEditorSearchController alloc] init];
     searchController.editor = self;
-    [self.navigationController pushViewController:searchController animated:YES];
+    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:searchController];
+    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {

@@ -29,6 +29,8 @@
 		0F072DBA1FB9EC8B00597EE2 /* xxtea.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F072DB41FB9EC8B00597EE2 /* xxtea.c */; };
 		0F072DBD1FB9F54D00597EE2 /* XUIAdapter_xuic.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F072DBC1FB9F54D00597EE2 /* XUIAdapter_xuic.m */; };
 		0F072DBE1FB9F54D00597EE2 /* XUIAdapter_xuic.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F072DBC1FB9F54D00597EE2 /* XUIAdapter_xuic.m */; };
+		0F072DC01FBB311600597EE2 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F072DBF1FBB311500597EE2 /* txt.tmLanguage */; };
+		0F072DC11FBB311600597EE2 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F072DBF1FBB311500597EE2 /* txt.tmLanguage */; };
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
 		0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */; };
 		0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */; };
@@ -56,7 +58,6 @@
 		0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
 		0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */; };
 		0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */; };
-		0F3D5DFB1FAF55120083196D /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D5DFA1FAF55120083196D /* txt.tmLanguage */; };
 		0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
 		0F457F341F87796B001F0951 /* XXTEDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F457F331F877957001F0951 /* XXTEDownloadViewController.m */; };
@@ -354,7 +355,6 @@
 		0F8EDC641FB1F779003C92D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		0F8EDC661FB1F779003C92D6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		0F8EDC671FB1F779003C92D6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
-		0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D5DFA1FAF55120083196D /* txt.tmLanguage */; };
 		0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
 		0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
 		0F8EDC6F1FB1F779003C92D6 /* CamingoCode-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */; };
@@ -741,6 +741,7 @@
 		0F072DB41FB9EC8B00597EE2 /* xxtea.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxtea.c; sourceTree = "<group>"; };
 		0F072DBB1FB9F54D00597EE2 /* XUIAdapter_xuic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAdapter_xuic.h; sourceTree = "<group>"; };
 		0F072DBC1FB9F54D00597EE2 /* XUIAdapter_xuic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAdapter_xuic.m; sourceTree = "<group>"; };
+		0F072DBF1FBB311500597EE2 /* txt.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = txt.tmLanguage; sourceTree = "<group>"; };
 		0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XXTEItemTemplate.lua; sourceTree = "<group>"; };
 		0F0F76261F361509006EA102 /* XXTEPackageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageViewerController.h; sourceTree = "<group>"; };
 		0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEPackageViewerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -792,7 +793,6 @@
 		0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionValueCell.xib; sourceTree = "<group>"; };
 		0F3D5DF71FAEC4420083196D /* XXTESymbolViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESymbolViewController.h; sourceTree = "<group>"; };
 		0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESymbolViewController.m; sourceTree = "<group>"; };
-		0F3D5DFA1FAF55120083196D /* txt.tmLanguage */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = txt.tmLanguage; sourceTree = "<group>"; };
 		0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDetailViewController.h; sourceTree = "<group>"; };
 		0F4419ED1F17974D00967980 /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2595,8 +2595,8 @@
 				0FEB74511F3EB88400B58A4F /* json.tmLanguage */,
 				D645F9D31F42A68C00E3247B /* lua.tmLanguage */,
 				0F349BB21F62F474004143B7 /* strings.tmLanguage */,
-				0F3D5DFA1FAF55120083196D /* txt.tmLanguage */,
 				0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */,
+				0F072DBF1FBB311500597EE2 /* txt.tmLanguage */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -3141,7 +3141,6 @@
 			files = (
 				0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */,
 				0F97F1DC1FB30CFB007CA883 /* XXTEMoreReferences.bundle in Resources */,
-				0F8EDC6B1FB1F779003C92D6 /* txt.tmLanguage in Resources */,
 				0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */,
 				0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */,
 				0F8EDC6F1FB1F779003C92D6 /* CamingoCode-Italic.ttf in Resources */,
@@ -3149,6 +3148,7 @@
 				0F8EDC711FB1F779003C92D6 /* CamingoCode-Regular.ttf in Resources */,
 				0F8EDC721FB1F779003C92D6 /* XUIFileCell.xib in Resources */,
 				0F8EDC731FB1F779003C92D6 /* SourceCodePro-Bold.otf in Resources */,
+				0F072DC11FBB311600597EE2 /* txt.tmLanguage in Resources */,
 				0F8EDC741FB1F779003C92D6 /* SourceCodePro-BoldIt.otf in Resources */,
 				0F8EDC751FB1F779003C92D6 /* XXTEMoreSwitchNoIconCell.xib in Resources */,
 				0F8EDCD11FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist in Resources */,
@@ -3233,7 +3233,6 @@
 				0F97F1DB1FB30CED007CA883 /* XXTEMoreReferences.bundle in Resources */,
 				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
 				0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */,
-				0F3D5DFB1FAF55120083196D /* txt.tmLanguage in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */,
@@ -3294,6 +3293,7 @@
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
+				0F072DC01FBB311600597EE2 /* txt.tmLanguage in Resources */,
 				0FB009021F43573500097E9C /* Oceanic.tmTheme in Resources */,
 				0FE1629E1F3C8FFC003064B2 /* InfoPlist.strings in Resources */,
 				D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */,

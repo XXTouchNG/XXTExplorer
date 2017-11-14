@@ -48,7 +48,7 @@ typedef enum : NSUInteger {
     
     XXTEEditorSearchFindController *controller1 = [[XXTEEditorSearchFindController alloc] init];
     XXTEEditorSearchReplaceController *controller2 = [[XXTEEditorSearchReplaceController alloc] init];
-    [self setViewControllers:@[ controller1, controller2]];
+    [self setViewControllers:@[ controller1, controller2 ]];
 }
 
 #pragma mark - Life Cycle
@@ -63,24 +63,6 @@ typedef enum : NSUInteger {
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [self.editor renderNavigationBarTheme:YES];
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-    if (parent == nil) {
-        [self.editor renderNavigationBarTheme:NO];
-    } else {
-        [self.editor renderNavigationBarTheme:YES];
-    }
-    [super willMoveToParentViewController:parent];
 }
 
 #pragma mark - UIView Getters
@@ -104,7 +86,7 @@ typedef enum : NSUInteger {
 #pragma mark - Actions
 
 - (void)backButtonItemTapped:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {

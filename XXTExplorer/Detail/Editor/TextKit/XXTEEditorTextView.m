@@ -57,7 +57,7 @@
     CGContextFillRect(context, CGRectMake(bounds.origin.x, bounds.origin.y, manager.gutterWidth, height));
     
     CGContextSetFillColorWithColor(context, self.gutterLineColor.CGColor);
-    CGContextFillRect(context, CGRectMake(manager.gutterWidth, bounds.origin.y, 0.5, height));
+    CGContextFillRect(context, CGRectMake(manager.gutterWidth, bounds.origin.y, 1.0, height));
     
     [super drawRect:rect];
 }

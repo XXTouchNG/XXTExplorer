@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>identifier</key>
-		<string></string>
+		<string>text.plain</string>
 		<key>name</key>
 		<string>txt</string>
 		<key>displayName</key>
