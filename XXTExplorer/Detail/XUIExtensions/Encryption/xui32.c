@@ -163,7 +163,7 @@ void XUIRelease(xui_32 *xui) {
     free(xui);
 }
 
-void XUICopyRawData(xui_32 *xui, const void **ptr, uint32_t *total) {
+void XUICopyRawData(xui_32 *xui, void **ptr, uint32_t *total) {
     assert(xui);
     assert(ptr);
     assert(total);

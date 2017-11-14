@@ -36,7 +36,7 @@ xui_32 *XUICreateWithData(const void *data, uint32_t length);
 xui_32 *XUICreateWithContentsOfFile(const char *path);
 
 int XUIWriteToFile(const char *path, xui_32 *xui);
-void XUICopyRawData(xui_32 *xui, const void **ptr, uint32_t *total);
+void XUICopyRawData(xui_32 *xui, void **ptr, uint32_t *total);
 
 void XUIRelease(xui_32 *xui);
 
