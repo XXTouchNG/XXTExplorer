@@ -128,6 +128,8 @@
 		0F8811621FB6AF430004F20C /* XXTESegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8811601FB6AF430004F20C /* XXTESegmentedButton.m */; };
 		0F8811651FB6AF640004F20C /* XXTESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */; };
 		0F8811661FB6AF640004F20C /* XXTESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */; };
+		0F8B4E1C1FBAF8E1009ED646 /* xml.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */; };
+		0F8B4E1D1FBAF8E1009ED646 /* xml.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */; };
 		0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */; };
 		0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
@@ -927,6 +929,7 @@
 		0F8811601FB6AF430004F20C /* XXTESegmentedButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedButton.m; sourceTree = "<group>"; };
 		0F8811631FB6AF640004F20C /* XXTESegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESegmentedControl.h; sourceTree = "<group>"; };
 		0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedControl.m; sourceTree = "<group>"; };
+		0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml.tmLanguage; sourceTree = "<group>"; };
 		0F8EDCC51FB1F779003C92D6 /* XXTouch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTouch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8EDCCC1FB203AF003C92D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/XXTEBuiltInDefaults.AppStore.plist; sourceTree = "<group>"; };
 		0F8EDCCD1FB203BD003C92D6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.AppStore.plist"; sourceTree = "<group>"; };
@@ -2593,6 +2596,7 @@
 				D645F9D31F42A68C00E3247B /* lua.tmLanguage */,
 				0F349BB21F62F474004143B7 /* strings.tmLanguage */,
 				0F3D5DFA1FAF55120083196D /* txt.tmLanguage */,
+				0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -3188,6 +3192,7 @@
 				0F8EDC9F1FB1F779003C92D6 /* .gitignore in Resources */,
 				0F8EDCA01FB1F779003C92D6 /* Sunburst.tmTheme in Resources */,
 				0F8EDCA11FB1F779003C92D6 /* Tomorrow Night (Eighties).tmTheme in Resources */,
+				0F8B4E1D1FBAF8E1009ED646 /* xml.tmLanguage in Resources */,
 				0F8EDCA31FB1F779003C92D6 /* Monokai.tmTheme in Resources */,
 				0F8EDCA41FB1F779003C92D6 /* Oceanic (Eighties).tmTheme in Resources */,
 				0F8EDCA51FB1F779003C92D6 /* XXTESymbolCell.xib in Resources */,
@@ -3294,6 +3299,7 @@
 				D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */,
 				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
 				0FBAFF3F1F6E5378008B3189 /* XXTImagePickerAlbumCell.xib in Resources */,
+				0F8B4E1C1FBAF8E1009ED646 /* xml.tmLanguage in Resources */,
 				D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */,

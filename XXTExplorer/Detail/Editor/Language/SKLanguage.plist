@@ -103,6 +103,8 @@
 	<dict>
 		<key>comments</key>
 		<dict>
+			<key>TM_COMMENT_START</key>
+			<string>//</string>
 			<key>TM_COMMENT_START_2</key>
 			<string>/*</string>
 			<key>TM_COMMENT_END_2</key>
@@ -117,6 +119,40 @@
 		<key>extensions</key>
 		<array>
 			<string>strings</string>
+		</array>
+	</dict>
+	<dict>
+		<key>comments</key>
+		<dict>
+			<key>TM_COMMENT_START_2</key>
+			<string>&lt;!--</string>
+			<key>TM_COMMENT_END_2</key>
+			<string>--&gt;</string>
+		</dict>
+		<key>indent</key>
+		<dict>
+			<key>decreaseIndentPattern</key>
+			<string>^\s*(&lt;/[^&gt;]+&gt;|--&gt;|--%&gt;)</string>
+			<key>increaseIndentPattern</key>
+			<string>^\s*&lt;(([^!/?]|%)(?!.+?([/%]&gt;|&lt;/.+?&gt;))|[%!]--\s*$)</string>
+		</dict>
+		<key>folding</key>
+		<dict>
+			<key>foldingStartMarker</key>
+			<string>^\s*(&lt;[^!?%/](?!.+?(/&gt;|&lt;/.+?&gt;))|&lt;[!%]--(?!.+?--%?&gt;)|&lt;%[!]?(?!.+?%&gt;))</string>
+			<key>foldingStopMarker</key>
+			<string>^\s*(&lt;/[^&gt;]+&gt;|[/%]&gt;|--&gt;)\s*$</string>
+		</dict>
+		<key>identifier</key>
+		<string>text.xml</string>
+		<key>name</key>
+		<string>xml</string>
+		<key>displayName</key>
+		<string>XML (*.xml, *.plist)</string>
+		<key>extensions</key>
+		<array>
+			<string>xml</string>
+			<string>plist</string>
 		</array>
 	</dict>
 </array>

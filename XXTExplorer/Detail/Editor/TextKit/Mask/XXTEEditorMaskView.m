@@ -108,19 +108,6 @@
         [highlightLayer removeFromSuperlayer];
     }];
     
-    // opacity
-    CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    opacityAnimation.beginTime = CACurrentMediaTime() + 1.6;
-    opacityAnimation.duration = 0.4;
-    opacityAnimation.repeatCount = 1;
-    opacityAnimation.fromValue = [NSNumber numberWithFloat:0.66f];
-    opacityAnimation.toValue = [NSNumber numberWithFloat:0.0f];
-    opacityAnimation.removedOnCompletion = NO;
-    opacityAnimation.fillMode = kCAFillModeBoth;
-    opacityAnimation.additive = NO;
-    opacityAnimation.autoreverses = NO;
-    [highlightLayer addAnimation:opacityAnimation forKey:@"opacityOut"];
-    
     // scale
     CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     scaleAnimation.beginTime = CACurrentMediaTime() + 0.4;
@@ -133,6 +120,19 @@
     scaleAnimation.additive = NO;
     scaleAnimation.autoreverses = NO;
     [highlightLayer addAnimation:scaleAnimation forKey:@"scaleOut"];
+    
+    // opacity out
+    CABasicAnimation *opacityOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opacityOutAnimation.beginTime = CACurrentMediaTime() + 1.6;
+    opacityOutAnimation.duration = 0.4;
+    opacityOutAnimation.repeatCount = 1;
+    opacityOutAnimation.fromValue = [NSNumber numberWithFloat:0.66f];
+    opacityOutAnimation.toValue = [NSNumber numberWithFloat:0.0f];
+    opacityOutAnimation.removedOnCompletion = NO;
+    opacityOutAnimation.fillMode = kCAFillModeBoth;
+    opacityOutAnimation.additive = NO;
+    opacityOutAnimation.autoreverses = NO;
+    [highlightLayer addAnimation:opacityOutAnimation forKey:@"opacityOut"];
     
     [CATransaction commit];
     
