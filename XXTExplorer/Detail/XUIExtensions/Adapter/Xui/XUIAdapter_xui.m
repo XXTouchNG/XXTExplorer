@@ -55,20 +55,25 @@
             lua_openNSValueLibs(L);
             
             NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter_xui" ofType:@"xuic"];
-            NSAssert(adapterPath, @"LuaVM: XUIAdapter not found.");
+            if (!adapterPath) {
+                return NO; // NSAssert(adapterPath, @"LuaVM: XUIAdapter not found.");
+            }
             xui_32 *xui = XUICreateWithContentsOfFile(adapterPath.UTF8String);
             
-            NSAssert(xui, @"LuaVM: Cannot decode XUIAdapter.");
+            if (!xui) {
+                return NO; // NSAssert(xui, @"LuaVM: Cannot decode XUIAdapter.");
+            }
             void *xuiBuffer = NULL; uint32_t xuiSize = 0;
             XUICopyRawData(xui, &xuiBuffer, &xuiSize);
-            if (xui) free(xui);
+            if (xui) XUIRelease(xui);
+            if (!xuiBuffer) {
+                return NO; // NSAssert(xuiBuffer, @"LuaVM: Cannot decode XUIAdapter.");
+            }
             
-            NSAssert(xuiBuffer, @"LuaVM: Cannot decode XUIAdapter.");
             size_t xuiSizeT = xuiSize;
             int loadResult = luaL_loadbuffer(L, xuiBuffer, xuiSizeT, adapterPath.UTF8String);
             if (xuiBuffer) free(xuiBuffer);
             
-//            int loadResult = luaL_loadfile(L, adapterPath.UTF8String);
             if (!lua_checkCode(L, loadResult, error)) {
                 return NO;
             }

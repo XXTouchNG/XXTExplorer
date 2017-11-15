@@ -122,8 +122,8 @@
 		0F81BE951FB54258002EE457 /* XXTEEditorSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */; };
 		0F81BE961FB54259002EE457 /* XXTEEditorSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */; };
 		0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */; };
-		0F856CF01FBB51FF002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CEF1FBB51FF002332F2 /* XUIAdapter_xui.xuic */; };
-		0F856CF11FBB51FF002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CEF1FBB51FF002332F2 /* XUIAdapter_xui.xuic */; };
+		0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
+		0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
 		0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */; };
 		0F88115D1FB6AF220004F20C /* XXTESegmentedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F88115C1FB6AF220004F20C /* XXTESegmentedController.m */; };
 		0F88115E1FB6AF220004F20C /* XXTESegmentedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F88115C1FB6AF220004F20C /* XXTESegmentedController.m */; };
@@ -921,8 +921,8 @@
 		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
-		0F856CEF1FBB51FF002332F2 /* XUIAdapter_xui.xuic */ = {isa = PBXFileReference; lastKnownFileType = file; path = XUIAdapter_xui.xuic; sourceTree = "<group>"; };
 		0F856CF21FBB5210002332F2 /* XUIAdapter_xui.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XUIAdapter_xui.lua; sourceTree = "<group>"; };
+		0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */ = {isa = PBXFileReference; lastKnownFileType = file; path = XUIAdapter_xui.xuic; sourceTree = "<group>"; };
 		0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedParsingOperation.h; sourceTree = "<group>"; };
 		0F86B3111F474EC4003CC228 /* SKAttributedParsingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedParsingOperation.m; sourceTree = "<group>"; };
 		0F88115B1FB6AF220004F20C /* XXTESegmentedController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESegmentedController.h; sourceTree = "<group>"; };
@@ -2897,7 +2897,7 @@
 				D6863D381F7E574F00A45CF7 /* XUIAdapter_xui.h */,
 				D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */,
 				0F856CF21FBB5210002332F2 /* XUIAdapter_xui.lua */,
-				0F856CEF1FBB51FF002332F2 /* XUIAdapter_xui.xuic */,
+				0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */,
 				B03122BD9FFFB7920A5AC290 /* lua */,
 			);
 			path = Xui;
@@ -3167,7 +3167,7 @@
 				0F8EDC801FB1F779003C92D6 /* Blackboard.tmTheme in Resources */,
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
 				0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */,
-				0F856CF11FBB51FF002332F2 /* XUIAdapter_xui.xuic in Resources */,
+				0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F8EDC851FB1F779003C92D6 /* strings.tmLanguage in Resources */,
 				0F8EDC861FB1F779003C92D6 /* Solarized (Dark).tmTheme in Resources */,
@@ -3260,7 +3260,7 @@
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
-				0F856CF01FBB51FF002332F2 /* XUIAdapter_xui.xuic in Resources */,
+				0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */,
 				D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */,
 				D60A26C71F3DB7BE00E013E2 /* IDLE.tmTheme in Resources */,

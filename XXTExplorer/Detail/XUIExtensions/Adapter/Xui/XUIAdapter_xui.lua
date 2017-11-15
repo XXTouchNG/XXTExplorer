@@ -46,6 +46,9 @@ local _ENV = {
         decode = json.decode;
         encode = json.encode;
     };
+    xui = {
+        decode = xui.decode;
+    };
     table = {
         insert = table.insert;
         remove = table.remove;
@@ -66,6 +69,7 @@ local _ENV = {
     ipairs = ipairs;
     tostring = tostring;
     tonumber = tonumber;
+    load = load;
 }
 
 local function _isEqual(a, b)
@@ -129,7 +133,21 @@ end
 
 fixPermission(opt.XUIPath)
 
-local XUITableBuilder, err = loadfile(opt.XUIPath, 'bt', __G)
+local function loadXUIFile(filename)
+    local f, err = io.open(filename, 'r+b')
+    if (f) then
+        local xuictx = f:read('*a')
+        f:close()
+        if (xuictx:sub(1, 4) == '\xe7XUI') then
+            xuictx = xui.decode(xuictx)
+        end
+        return load(xuictx)
+    else
+        return nil, err
+    end
+end
+
+local XUITableBuilder, err = loadXUIFile(opt.XUIPath)
 
 if type(XUITableBuilder) == 'function' then
     opt.XUITable = XUITableBuilder()
