@@ -159,7 +159,7 @@ UISearchDisplayDelegate
         return NO;
     }
     
-    blockInteractions(self, YES);
+    blockInteractionsWithDelay(self, YES, 2.0);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSMutableArray *symbolsTable = [[NSMutableArray alloc] init];
         [parser parseString:string matchCallback:^(NSString *scopeName, NSRange range) {

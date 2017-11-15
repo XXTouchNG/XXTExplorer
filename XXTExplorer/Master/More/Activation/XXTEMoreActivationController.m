@@ -112,7 +112,7 @@ static void * activatorHandler = nil;
 }
 
 - (void)reloadDynamicTableViewData {
-    blockInteractions(self, YES);
+    blockInteractionsWithDelay(self, YES, 2.0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
             .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
                 return jsonDictionary[@"data"];

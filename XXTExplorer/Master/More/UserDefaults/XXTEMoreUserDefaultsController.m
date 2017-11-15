@@ -168,7 +168,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)loadDynamicUserDefaults {
 #ifndef APPSTORE
     
-    blockInteractions(self, YES);
+    blockInteractionsWithDelay(self, YES, 2.0);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         NSArray <NSDictionary *> *metaArray = ((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]);
         if ([metaArray isKindOfClass:[NSArray class]]) {
@@ -368,7 +368,7 @@ XXTE_END_IGNORE_PARTIAL
     editedUserDefaults[modifyKey] = @(index);
 #ifndef APPSTORE
     
-    blockInteractions(self, YES);
+    blockInteractionsWithDelay(self, YES, 2.0);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {

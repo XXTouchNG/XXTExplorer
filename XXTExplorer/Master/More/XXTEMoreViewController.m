@@ -451,7 +451,7 @@
                     addressText = bonjourWebServerUrl;
                 }
                 if (addressText && addressText.length > 0) {
-                    blockInteractions(self, YES);
+                    blockInteractionsWithDelay(self, YES, 2.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:addressText];
@@ -643,7 +643,7 @@
             changeToCommand = @"open_remote_access";
         else
             changeToCommand = @"close_remote_access";
-        blockInteractions(self, YES);
+        blockInteractionsWithDelay(self, YES, 2.0);
         [self.remoteAccessSwitch setHidden:YES];
         [self.remoteAccessIndicator startAnimating];
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {

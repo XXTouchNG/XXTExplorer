@@ -117,7 +117,7 @@
             {
                 NSString *detailText = cell.valueLabel.text;
                 if (detailText && detailText.length > 0) {
-                    blockInteractions(self, YES);
+                    blockInteractionsWithDelay(self, YES, 2.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];

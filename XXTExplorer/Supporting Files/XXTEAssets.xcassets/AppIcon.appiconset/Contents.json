@@ -13,9 +13,8 @@
       "scale" : "3x"
     },
     {
-      "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "XXTouch-Small.png",
+      "size" : "29x29",
       "scale" : "1x"
     },
     {
@@ -55,9 +54,8 @@
       "scale" : "3x"
     },
     {
-      "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "XXTouch-20.png",
+      "size" : "20x20",
       "scale" : "1x"
     },
     {
@@ -67,9 +65,8 @@
       "scale" : "2x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "XXTouch-Small.png",
+      "size" : "29x29",
       "scale" : "1x"
     },
     {
@@ -79,9 +76,8 @@
       "scale" : "2x"
     },
     {
-      "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "XXTouch-Small-40.png",
+      "size" : "40x40",
       "scale" : "1x"
     },
     {
@@ -91,9 +87,8 @@
       "scale" : "2x"
     },
     {
-      "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "XXTouch-76.png",
+      "size" : "76x76",
       "scale" : "1x"
     },
     {

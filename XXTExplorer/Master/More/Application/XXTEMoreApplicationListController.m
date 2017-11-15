@@ -172,7 +172,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
-    blockInteractions(self, YES);
+    blockInteractionsWithDelay(self, YES, 2.0);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);
