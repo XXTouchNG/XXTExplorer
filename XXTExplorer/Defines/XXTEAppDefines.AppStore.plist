@@ -42,6 +42,7 @@
 		<string>XXTECodeViewerController</string>
 		<string>XXTEObjectViewController</string>
 		<string>XXTEUIViewController</string>
+		<string>XXTEInstallerViewController</string>
 		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>
 	</array>

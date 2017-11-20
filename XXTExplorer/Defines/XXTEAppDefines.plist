@@ -69,6 +69,7 @@
 		<string>XXTEObjectViewController</string>
 		<string>XXTEUIViewController</string>
 		<string>XXTEPackageViewerController</string>
+		<string>XXTEInstallerViewController</string>
 		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>
 	</array>

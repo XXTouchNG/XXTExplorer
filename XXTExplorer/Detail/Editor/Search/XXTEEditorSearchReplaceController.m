@@ -9,9 +9,11 @@
 #import "XXTEEditorSearchReplaceController.h"
 #import "XXTEEditorController.h"
 
+#import "XXTEEditorSearchHeaderView.h"
+
 @interface XXTEEditorSearchReplaceController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) XXTEEditorSearchHeaderView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
@@ -52,16 +54,9 @@
 
 #pragma mark - UIView Getters
 
-- (UIView *)headerView {
+- (XXTEEditorSearchHeaderView *)headerView {
     if (!_headerView) {
-        UIView *headerView = [[UIView alloc] init];
-        headerView.backgroundColor = [UIColor colorWithWhite:0.99 alpha:1.0];
-        headerView.layer.borderColor = [UIColor colorWithWhite:0.85 alpha:1.0].CGColor;
-        headerView.layer.borderWidth = .5;
-        headerView.layer.shadowColor = [UIColor colorWithWhite:0.2 alpha:1.0].CGColor;
-        headerView.layer.shadowRadius = 6.0;
-        headerView.layer.shadowOpacity = 0.12;
-        headerView.layer.shadowOffset = CGSizeMake(4.0, 4.0);
+        XXTEEditorSearchHeaderView *headerView = [[XXTEEditorSearchHeaderView alloc] init];
         _headerView = headerView;
     }
     return _headerView;

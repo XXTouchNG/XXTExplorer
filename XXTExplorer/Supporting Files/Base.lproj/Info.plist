@@ -20,8 +20,11 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.xxtouch.xui</string>
+				<string>com.xxtouch.xuic</string>
 				<string>com.xxtouch.lua</string>
+				<string>com.xxtouch.luac</string>
 				<string>com.xxtouch.xxt</string>
+				<string>com.xxtouch.xpa</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,6 +38,111 @@
 			<array>
 				<string>public.item</string>
 			</array>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.xui</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xui</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-xui</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.xuic</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xuic</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-xuic</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.xxt</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xxt</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-xxt</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.lua</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>lua</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>text/lua</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.luac</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>luac</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-luac</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.xpa</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xpa</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-xpa</string>
+			</dict>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -128,59 +236,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.text</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.xui</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xui</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xui</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.xxt</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xxt</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xxt</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.text</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.lua</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>lua</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>text/lua</string>
-			</dict>
-		</dict>
-	</array>
 </dict>
 </plist>

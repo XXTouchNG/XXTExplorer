@@ -9,9 +9,13 @@
 #import "XXTEEditorSearchFindController.h"
 #import "XXTEEditorController.h"
 
+#import "XXTEEditorSearchHeaderView.h"
+#import "XXTEEditorSearchTextField.h"
+
 @interface XXTEEditorSearchFindController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) XXTEEditorSearchHeaderView *headerView;
+@property (nonatomic, strong) XXTEEditorSearchTextField *findTextField;
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
@@ -38,6 +42,7 @@
     
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.headerView];
+    [self.headerView addSubview:self.findTextField];
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
@@ -52,16 +57,9 @@
 
 #pragma mark - UIView Getters
 
-- (UIView *)headerView {
+- (XXTEEditorSearchHeaderView *)headerView {
     if (!_headerView) {
-        UIView *headerView = [[UIView alloc] init];
-        headerView.backgroundColor = [UIColor colorWithWhite:0.99 alpha:1.0];
-        headerView.layer.borderColor = [UIColor colorWithWhite:0.85 alpha:1.0].CGColor;
-        headerView.layer.borderWidth = .5;
-        headerView.layer.shadowColor = [UIColor colorWithWhite:0.33 alpha:1.0].CGColor;
-        headerView.layer.shadowRadius = 6.0;
-        headerView.layer.shadowOpacity = 0.12;
-        headerView.layer.shadowOffset = CGSizeMake(4.0, 4.0);
+        XXTEEditorSearchHeaderView *headerView = [[XXTEEditorSearchHeaderView alloc] init];
         _headerView = headerView;
     }
     return _headerView;
@@ -77,6 +75,15 @@
         _tableView = tableView;
     }
     return _tableView;
+}
+
+- (XXTEEditorSearchTextField *)findTextField {
+    if (!_findTextField) {
+        XXTEEditorSearchTextField *findTextField = [[XXTEEditorSearchTextField alloc] initWithFrame:self.headerView.bounds];
+        findTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _findTextField = findTextField;
+    }
+    return _findTextField;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
