@@ -111,25 +111,28 @@
                     
                 });
             } else {
-                @try {
-                    xui_32 *xui = XUICreateWithContentsOfFile(entryPath.UTF8String);
-                    if (xui) {
-                        int result = XUIWriteToFile(encryptedPath.UTF8String, xui);
-                        if (result == 0) {
-                            dispatch_async_on_main_queue(^{
-                                self.busyOperationProgressFlag = NO;
-                                completionBlock(YES, nil);
-                            });
-                        } else {
-                            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot open: \"%@\"", nil), encryptedPath];
-                        }
+                xui_32 *xui = XUICreateWithContentsOfFile(entryPath.UTF8String);
+                if (xui) {
+                    int result = XUIWriteToFile(encryptedPath.UTF8String, xui);
+                    XUIRelease(xui);
+                    if (result == 0) {
+                        dispatch_async_on_main_queue(^{
+                            self.busyOperationProgressFlag = NO;
+                            completionBlock(YES, nil);
+                        });
                     } else {
-                        @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt: %@", nil), NSLocalizedString(@"Invalid RAW Data.", nil)];
+                        dispatch_async_on_main_queue(^{
+                            self.busyOperationProgressFlag = NO;
+                            NSString *errorMessage =
+                            [NSString stringWithFormat:NSLocalizedString(@"Cannot open: \"%@\"", nil), encryptedPath];
+                            completionBlock(NO, [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}]);
+                        });
                     }
-                }
-                @catch (NSString *errorMessage) {
+                } else {
                     dispatch_async_on_main_queue(^{
                         self.busyOperationProgressFlag = NO;
+                        NSString *errorMessage =
+                        [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt: %@", nil), NSLocalizedString(@"Invalid RAW Data.", nil)];
                         completionBlock(NO, [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}]);
                     });
                 }
