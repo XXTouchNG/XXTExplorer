@@ -36,6 +36,7 @@
 
 - (void)registerNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationShortcut object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
 }
 
 - (void)removeNotifications {
@@ -46,6 +47,7 @@
 
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
+    NSString *eventType = userInfo[XXTENotificationEventType];
     if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
         id userData = userInfo[XXTENotificationShortcutUserData];
         NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
@@ -67,6 +69,46 @@
             if (!performResult) {
                 toastMessage(self, NSLocalizedString(@"Invalid url parameters.", nil));
             }
+        }
+    }
+    else if ([aNotification.name isEqualToString:XXTENotificationEvent])
+    {
+        if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
+            NSURL *inboxURL = aNotification.object;
+            @weakify(self);
+            blockInteractions(self, YES);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                @strongify(self);
+                NSError *err = nil;
+                NSString *lastComponent = [inboxURL lastPathComponent];
+                NSString *formerPath = [inboxURL path];
+                NSString *currentPath = XXTExplorerViewController.initialPath;
+                XXTExplorerNavigationController *explorerNavigationController = (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
+                XXTExplorerViewController *topmostExplorerViewController = explorerNavigationController.topmostExplorerViewController;
+                if (topmostExplorerViewController) {
+                    currentPath = topmostExplorerViewController.entryPath;
+                }
+                NSString *lastComponentName = [lastComponent stringByDeletingPathExtension];
+                NSString *lastComponentExt = [lastComponent pathExtension];
+                NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+                NSUInteger testedIndex = 2;
+                NSFileManager *fileManager = [[NSFileManager alloc] init];
+                while ([fileManager fileExistsAtPath:testedPath]) {
+                    lastComponent = [[NSString stringWithFormat:@"%@-%lu", lastComponentName, (unsigned long)testedIndex] stringByAppendingPathExtension:lastComponentExt];
+                    testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+                    testedIndex++;
+                }
+                BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
+                dispatch_async_on_main_queue(^{
+                    blockInteractions(self, NO);
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:nil userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
+                    if (result && err == nil) {
+                        [self.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]];
+                    } else {
+                        [self.view makeToast:[err localizedDescription]];
+                    }
+                });
+            });
         }
     }
 }

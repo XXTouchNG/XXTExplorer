@@ -134,7 +134,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
                         return zip_extract_override;
                     };
                     int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
-                        NSLog(@"Extract \"%@\"...", [[NSString alloc] initWithUTF8String:filename]);
+                        NSLog(@"Extract \"%s\"...", filename);
                         return 0;
                     };
                     int arg = 2;

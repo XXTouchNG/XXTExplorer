@@ -104,7 +104,7 @@
 }
 
 - (void)setup {
-    
+    _tableViewStyle = UITableViewStyleGrouped;
 }
 
 - (void)viewDidLoad {
@@ -117,7 +117,7 @@
     }
     
     _tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:self.tableViewStyle];
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

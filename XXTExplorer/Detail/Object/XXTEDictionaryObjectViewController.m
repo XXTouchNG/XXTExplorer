@@ -163,6 +163,7 @@
             else
             {
                 XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:pairValue];
+                objectViewController.tableViewStyle = self.tableViewStyle;
                 objectViewController.title = cell.titleLabel.text;
                 objectViewController.entryBundle = self.entryBundle;
                 [self.navigationController pushViewController:objectViewController animated:YES];

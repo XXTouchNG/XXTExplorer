@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "XXTEViewer.h"
 
-@interface XXTEInstallerViewController : UIViewController  <XXTEViewer>
+@interface XXTEInstallerViewController : UITableViewController  <XXTEViewer>
 
 @end

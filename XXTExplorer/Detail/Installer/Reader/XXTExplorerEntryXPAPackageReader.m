@@ -1,15 +1,15 @@
 //
-//  XXTExplorerEntryDiskImageReader.m
+//  XXTExplorerEntryXPAPackageReader.m
 //  XXTExplorer
 //
 //  Created by Zheng on 19/11/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTExplorerEntryDiskImageReader.h"
+#import "XXTExplorerEntryXPAPackageReader.h"
 #import "XXTEInstallerViewController.h"
 
-@implementation XXTExplorerEntryDiskImageReader
+@implementation XXTExplorerEntryXPAPackageReader
 
 @synthesize entryPath = _entryPath;
 @synthesize executable = _executable;
@@ -24,7 +24,7 @@
 }
 
 + (UIImage *)defaultImage {
-    return [UIImage imageNamed:@"XXTEFileReaderType-DiskImage"];
+    return [UIImage imageNamed:@"XXTEFileReaderType-XPAPackage"];
 }
 
 + (Class)relatedEditor {

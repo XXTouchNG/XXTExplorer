@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSBundle *entryBundle;
 @property (nonatomic, copy, readonly) id RootObject;
 @property (nonatomic, strong, readonly) UITableView *tableView;
+@property (nonatomic, assign) UITableViewStyle tableViewStyle;
 
 /**
  * Create a new instance with the root object.

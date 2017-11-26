@@ -31,6 +31,7 @@
 
 #import "XXTEBaseObjectViewController.h"
 #import "NSObject+XUIStringValue.h"
+#import "XXTExplorerDynamicSection.h"
 
 static int sizingCancelFlag = 0;
 
@@ -107,27 +108,6 @@ static int sizingCancelFlag = 0;
     return (NSNumber *)[[self attributesOfItemAtPath:path error:error] objectForKey:NSFileSize];
 }
 
-@end
-
-static NSString * const kXXTEDynamicSectionIdentifierSectionName = @"SectionName";
-static NSString * const kXXTEDynamicSectionIdentifierSectionWhere = @"SectionWhere";
-static NSString * const kXXTEDynamicSectionIdentifierSectionOriginal = @"SectionOriginal";
-static NSString * const kXXTEDynamicSectionIdentifierSectionGeneral = @"SectionGeneral";
-static NSString * const kXXTEDynamicSectionIdentifierSectionExtended = @"SectionExtended";
-static NSString * const kXXTEDynamicSectionIdentifierSectionOwner = @"SectionOwner";
-static NSString * const kXXTEDynamicSectionIdentifierSectionPermission = @"SectionPermission";
-static NSString * const kXXTEDynamicSectionIdentifierSectionOpenWith = @"SectionOpenWith";
-
-@interface XXTExplorerDynamicSection : NSObject
-@property (nonatomic, strong) NSString *identifier;
-@property (nonatomic, strong) NSArray <UITableViewCell *> *cells;
-@property (nonatomic, strong) NSArray <NSNumber *> *cellHeights;
-@property (nonatomic, strong) NSArray *relatedObjects;
-@property (nonatomic, strong) NSString *sectionTitle;
-@property (nonatomic, strong) NSString *sectionFooter;
-@end
-
-@implementation XXTExplorerDynamicSection
 @end
 
 @interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate>

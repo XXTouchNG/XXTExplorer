@@ -1,5 +1,5 @@
 //
-//  XXTExplorerEntryDiskImageReader.h
+//  XXTExplorerEntryXPAPackageReader.h
 //  XXTExplorer
 //
 //  Created by Zheng on 19/11/2017.
@@ -8,6 +8,6 @@
 
 #import "XXTExplorerEntryReader.h"
 
-@interface XXTExplorerEntryDiskImageReader : XXTExplorerEntryReader
+@interface XXTExplorerEntryXPAPackageReader : XXTExplorerEntryReader
 
 @end

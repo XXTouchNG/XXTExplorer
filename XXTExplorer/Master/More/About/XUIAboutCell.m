@@ -71,4 +71,12 @@
     self.iconImageView.image = image;
 }
 
+- (UIImage *)centeredImage {
+    return self.iconImageView.image;
+}
+
+- (void)setCenteredImage:(UIImage *)centeredImage {
+    self.iconImageView.image = centeredImage;
+}
+
 @end
