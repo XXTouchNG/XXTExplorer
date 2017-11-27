@@ -85,7 +85,7 @@
         return;
     }
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             if (entryReader.encryptionType == XXTExplorerEntryReaderEncryptionTypeRemote) {
                 [NSURLConnection POST:uAppDaemonCommandUrl(@"encript_file") JSON:@{ @"in_file": entryPath, @"out_file": encryptedPath }]
@@ -201,7 +201,7 @@
         return;
     }
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
@@ -338,7 +338,7 @@
         return;
     }
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
@@ -462,7 +462,7 @@
         return;
     }
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
@@ -534,7 +534,7 @@
         return;
     }
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @strongify(self);
             NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -631,7 +631,7 @@
         return;
     }
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:entryPaths];

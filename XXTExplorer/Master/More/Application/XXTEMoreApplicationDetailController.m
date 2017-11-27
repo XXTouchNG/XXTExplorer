@@ -56,12 +56,15 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     _applicationWorkspace = ({
         Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
         SEL selector = NSSelectorFromString(@"defaultWorkspace");
         LSApplicationWorkspace *applicationWorkspace = [LSApplicationWorkspace_class performSelector:selector];
         applicationWorkspace;
     });
+#pragma clang diagnostic pop
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {

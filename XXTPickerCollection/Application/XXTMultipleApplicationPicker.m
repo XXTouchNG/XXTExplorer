@@ -113,12 +113,15 @@ UISearchDisplayDelegate
     
     self.edgesForExtendedLayout = UIRectEdgeLeft | UIRectEdgeBottom | UIRectEdgeRight;
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     _applicationWorkspace = ({
         Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
         SEL selector = NSSelectorFromString(@"defaultWorkspace");
         LSApplicationWorkspace *applicationWorkspace = [LSApplicationWorkspace_class performSelector:selector];
         applicationWorkspace;
     });
+#pragma clang diagnostic pop
     
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
     searchBar.placeholder = NSLocalizedStringFromTable(@"Search Application", @"XXTPickerCollection", nil);
@@ -206,8 +209,11 @@ UISearchDisplayDelegate
                 [allApplications addObject:proxy];
             }];
         } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             SEL selectorAll = NSSelectorFromString(@"allApplications");
             allApplications = [self.applicationWorkspace performSelector:selectorAll];
+#pragma clang diagnostic pop
         }
         [self.unselectedIdentifiers removeAllObjects];
         [self.selectedIdentifiers removeAllObjects];

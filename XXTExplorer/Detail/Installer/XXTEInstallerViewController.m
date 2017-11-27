@@ -6,6 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <sys/stat.h>
+
 #import "XXTEInstallerViewController.h"
 #import "XXTExplorerEntryXPAPackageReader.h"
 #import "XXTEXPAPackageExtractor.h"
@@ -29,6 +31,7 @@
 #import "XUIAboutCell.h"
 
 #import "XXTExplorerEntryXPPMeta.h"
+#import <LGAlertView/LGAlertView.h>
 
 @interface XXTEInstallerViewController () <XXTEXPAPackageExtractorDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -38,7 +41,7 @@
 @property (nonatomic, strong) NSArray <XXTExplorerDynamicSection *> *dynamicSections;
 @property (nonatomic, strong) UIBarButtonItem *installButtonItem;
 
-@property (nonatomic, strong) NSBundle *entryBundle;
+@property (nonatomic, strong) NSBundle *temporarilyEntryBundle;
 
 @end
 
@@ -138,7 +141,7 @@
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSBundle *entryBundle = [NSBundle bundleWithPath:entryPath];
     entryBundle = (entryBundle != nil) ? entryBundle : mainBundle;
-    _entryBundle = entryBundle;
+    _temporarilyEntryBundle = entryBundle;
     
     NSDictionary *controlDetail = entryReader.metaDictionary[kXXTEPackageControl];
     
@@ -441,7 +444,7 @@
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
             XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
             objectViewController.tableViewStyle = UITableViewStylePlain;
-            objectViewController.entryBundle = self.entryBundle;
+            objectViewController.entryBundle = self.temporarilyEntryBundle;
             objectViewController.title = ((XXTEMoreLinkNoIconCell *)cell).titleLabel.text;
             [self.navigationController pushViewController:objectViewController animated:YES];
         }
@@ -488,12 +491,48 @@
 #pragma mark - UIControl Actions
 
 - (void)installButtonItemTapped:(UIBarButtonItem *)sender {
-    if (!self.entryBundle) return;
+    if (!self.temporarilyEntryBundle) return;
     if (sender == self.installButtonItem) {
-        NSURL *url = [self.entryBundle bundleURL];
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
-        [self.navigationController popViewControllerAnimated:YES];
+        NSString *bundleTestName = [[self.temporarilyEntryBundle bundlePath] lastPathComponent];
+        NSString *bundleTestPath = [[self.entryPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:bundleTestName];
+        struct stat testStat;
+        if (0 == lstat(bundleTestPath.UTF8String, &testStat)) {
+            LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Replace", nil)
+                                                             message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), bundleTestName]
+                                                               style:LGAlertViewStyleActionSheet
+                                                        buttonTitles:@[ NSLocalizedString(@"Rename", nil) ]
+                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                              destructiveButtonTitle:NSLocalizedString(@"Replace Now", nil)
+                                                       actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                           [alertView dismissAnimated];
+                                                           if (index == 0) {
+                                                               [self performMoveAndPopViewControllerAnimated];
+                                                           }
+                                                       }
+                                                       cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                                                           [alertView dismissAnimated];
+                                                       }
+                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                                                      NSError *removeError = nil;
+                                                      BOOL result = [[NSFileManager defaultManager] removeItemAtPath:bundleTestPath error:&removeError];
+                                                      if (result) {
+                                                          [self performMoveAndPopViewControllerAnimated];
+                                                      } else {
+                                                          toastMessageWithDelay(self, removeError.localizedDescription, 5.0);
+                                                      }
+                                                      [alertView dismissAnimated];
+                                                  }];
+            [alertView showAnimated];
+        } else {
+            [self performMoveAndPopViewControllerAnimated];
+        }
     }
+}
+
+- (void)performMoveAndPopViewControllerAnimated {
+    NSURL *url = [self.temporarilyEntryBundle bundleURL];
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Memory

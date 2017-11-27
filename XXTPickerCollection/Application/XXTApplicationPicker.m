@@ -100,12 +100,15 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
     self.edgesForExtendedLayout = UIRectEdgeLeft | UIRectEdgeBottom | UIRectEdgeRight;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     _applicationWorkspace = ({
         Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
         SEL selector = NSSelectorFromString(@"defaultWorkspace");
         LSApplicationWorkspace *applicationWorkspace = [LSApplicationWorkspace_class performSelector:selector];
         applicationWorkspace;
     });
+#pragma clang diagnostic pop
     
     _allApplications = @[];
 
@@ -197,8 +200,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
                     [allApplications addObject:proxy];
                 }];
             } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                 SEL selectorAll = NSSelectorFromString(@"allApplications");
                 allApplications = [self.applicationWorkspace performSelector:selectorAll];
+#pragma clang diagnostic pop
             }
             NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
             NSArray <NSString *> *blacklistIdentifiers = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
