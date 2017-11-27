@@ -114,7 +114,11 @@
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
 #ifndef APPSTORE
             
+#ifndef DEBUG
             XXTExplorerPasteboardDetectType detectType = XXTEDefaultsEnum(XXTExplorerPasteboardDetectOnActive, XXTExplorerPasteboardDetectTypeNone);
+#else
+            XXTExplorerPasteboardDetectType detectType = XXTExplorerPasteboardDetectTypeAll;
+#endif
             
             if (detectType != XXTExplorerPasteboardDetectTypeNone) {
                 
@@ -143,11 +147,12 @@
                         NSString *pasteboardString = [pb string];
                         if (pasteboardString) {
                             dispatch_async_on_main_queue(^{
-                                NSString *regex = @"^[3-9A-Z]{16}|[3-9A-Z]{12}$";
+                                NSString *regex = @"\\b([3-9A-Z]{16}|[3-9A-Z]{12})\\b";
                                 NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:NULL];
-                                BOOL isValid = ([pattern numberOfMatchesInString:pasteboardString options:0 range:NSMakeRange(0, pasteboardString.length)] > 0);
-                                if (isValid) {
-                                    BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"license", @"code": pasteboardString }];
+                                NSTextCheckingResult *validMatch = ([pattern firstMatchInString:pasteboardString options:0 range:NSMakeRange(0, pasteboardString.length)]);
+                                if (validMatch) {
+                                    NSString *finalCode = [pasteboardString substringWithRange:validMatch.range];
+                                    BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"license", @"code": finalCode }];
                                     if (!performResult) {
                                         
                                     }
