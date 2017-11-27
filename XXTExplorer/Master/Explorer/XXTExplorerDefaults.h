@@ -29,12 +29,20 @@ static NSString * const XXTExplorerViewEntrySelectLaunchedScriptKey = @"XXTExplo
 static NSString * const XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey = @"XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey";
 static NSString * const XXTExplorerAllowOpenMethodKey = @"XXTExplorerAllowOpenMethodKey";
 static NSString * const XXTExplorerViewEntryHideOperationLabelKey = @"XXTExplorerViewEntryHideOperationLabelKey";
+static NSString * const XXTExplorerPasteboardDetectOnActive = @"XXTExplorerPasteboardDetectOnActive";
 
 // XXTExplorerViewEntryListSortOrderKey
 typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortOrderAsc = 0,
     XXTExplorerViewEntryListSortOrderDesc,
 } XXTExplorerViewEntryListSortOrder;
+
+typedef enum : NSUInteger {
+    XXTExplorerPasteboardDetectTypeNone = 0,
+    XXTExplorerPasteboardDetectTypeURL,
+    XXTExplorerPasteboardDetectTypeLicense,
+    XXTExplorerPasteboardDetectTypeAll
+} XXTExplorerPasteboardDetectType;
 
 #pragma mark - Attributes
 

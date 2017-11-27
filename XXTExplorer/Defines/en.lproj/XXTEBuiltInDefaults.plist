@@ -146,6 +146,25 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerPasteboardDetectOnActive</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Detect Available Content in Pasteboard on Active</string>
+			<key>description</key>
+			<string>Detect license string or downloadable url in general pasteboard when application becomes active.</string>
+			<key>options</key>
+			<array>
+				<string>Detect None</string>
+				<string>Detect Downloadable URL</string>
+				<string>Detect License String</string>
+				<string>Detect All</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<false/>
 			<key>key</key>
 			<string>XXTExplorerViewEntryListSortFieldKey</string>

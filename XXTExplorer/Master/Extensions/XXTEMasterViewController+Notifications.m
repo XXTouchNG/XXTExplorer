@@ -30,6 +30,7 @@
     #import "XXTEDownloadViewController.h"
     #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
+    #import "XXTExplorerDefaults.h"
 #endif
 
 @implementation XXTEMasterViewController (Notifications)
@@ -103,12 +104,67 @@
                     blockInteractions(self, NO);
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:nil userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
                     if (result && err == nil) {
-                        [self.view makeToast:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]];
+                        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]);
                     } else {
-                        [self.view makeToast:[err localizedDescription]];
+                        toastMessage(self, err.localizedDescription);
                     }
                 });
             });
+        }
+        else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
+#ifndef APPSTORE
+            
+            XXTExplorerPasteboardDetectType detectType = XXTEDefaultsEnum(XXTExplorerPasteboardDetectOnActive, XXTExplorerPasteboardDetectTypeNone);
+            
+            if (detectType != XXTExplorerPasteboardDetectTypeNone) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    UIPasteboard *pb = [UIPasteboard generalPasteboard];
+                    if (detectType == XXTExplorerPasteboardDetectTypeAll || detectType == XXTExplorerPasteboardDetectTypeURL) {
+                        NSURL *pasteboardURL = [pb URL];
+                        if ([pasteboardURL scheme].length > 0)
+                        {
+                            dispatch_async_on_main_queue(^{
+                                NSString *pasteboardString = [pasteboardURL absoluteString];
+                                NSString *saveName = [pasteboardString lastPathComponent];
+                                BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"download", @"url": pasteboardString, @"path": saveName }];
+                                if (!performResult) {
+                                    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot perform operation \"Download\" on Pasteboard URL \"%@\".", nil), pasteboardURL]);
+                                }
+                                else {
+                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                                        [pb setValue:@"" forPasteboardType:UIPasteboardNameGeneral];
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    if (detectType == XXTExplorerPasteboardDetectTypeAll || detectType == XXTExplorerPasteboardDetectTypeLicense) {
+                        NSString *pasteboardString = [pb string];
+                        if (pasteboardString) {
+                            dispatch_async_on_main_queue(^{
+                                NSString *regex = @"^[3-9A-Z]{16}|[3-9A-Z]{12}$";
+                                NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:NULL];
+                                BOOL isValid = ([pattern numberOfMatchesInString:pasteboardString options:0 range:NSMakeRange(0, pasteboardString.length)] > 0);
+                                if (isValid) {
+                                    BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"license", @"code": pasteboardString }];
+                                    if (!performResult) {
+                                        
+                                    }
+                                    else {
+                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                                            [pb setValue:@"" forPasteboardType:UIPasteboardNameGeneral];
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                
+            }
+            
+#endif
         }
     }
 }
@@ -269,8 +325,9 @@
     navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:navigationController animated:YES completion:^() {
-        if (interactive)
+        if (interactive) {
             toastMessageWithDelay(configurator, NSLocalizedString(@"Press \"Home\" button to quit.\nTap to dismiss this notice.", nil), 6.0);
+        }
     }];
     return YES;
 }

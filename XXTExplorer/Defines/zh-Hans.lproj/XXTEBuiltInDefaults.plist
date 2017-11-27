@@ -146,6 +146,25 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerPasteboardDetectOnActive</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>唤醒时检查剪贴板可用内容</string>
+			<key>description</key>
+			<string>当应用程序启动或从后台唤醒时, 检查剪贴板中的授权码或可供下载的 URL.</string>
+			<key>options</key>
+			<array>
+				<string>不检查</string>
+				<string>仅检查可供下载的 URL</string>
+				<string>仅检查授权码</string>
+				<string>全部检查</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<false/>
 			<key>key</key>
 			<string>XXTExplorerViewEntryListSortFieldKey</string>

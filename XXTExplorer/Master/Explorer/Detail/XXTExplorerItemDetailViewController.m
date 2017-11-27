@@ -686,19 +686,21 @@ static int sizingCancelFlag = 0;
                 fulfill(@(renameResult));
             }
         });
-    }].then(^(id renameResult) {
-        
+    }].then(^(NSNumber *renameResult) {
+        BOOL result = [renameResult boolValue];
+        if (result) {
+            sizingCancelFlag = 1;
+            if (XXTE_PAD) {
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+            }
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }
     }).catch(^(NSError *systemError) {
         toastMessage(self, [systemError localizedDescription]);
     }).finally(^() {
         blockInteractions(self, NO);
-        sizingCancelFlag = 1;
-        if (XXTE_PAD) {
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-        }
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
     });
 }
 
