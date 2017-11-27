@@ -84,19 +84,17 @@
         return 0;
     };
     self.busyOperationProgressFlag = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            @strongify(self);
-            int arg = 2;
-            int status = zip_extract([packagePath UTF8String], [temporarilyPath UTF8String], will_extract, did_extract, &arg);
-            dispatch_async_on_main_queue(^{
-                if (status == 0) {
-                    if ([_delegate respondsToSelector:@selector(packageExtractor:didFinishFetchingMetaData:)]) {
-                        NSData *pathData = [self.metaPath dataUsingEncoding:NSUTF8StringEncoding];
-                        [_delegate packageExtractor:self didFinishFetchingMetaData:pathData];
-                    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        @strongify(self);
+        int arg = 2;
+        int status = zip_extract([packagePath UTF8String], [temporarilyPath UTF8String], will_extract, did_extract, &arg);
+        dispatch_async_on_main_queue(^{
+            if (status == 0) {
+                if ([_delegate respondsToSelector:@selector(packageExtractor:didFinishFetchingMetaData:)]) {
+                    NSData *pathData = [self.metaPath dataUsingEncoding:NSUTF8StringEncoding];
+                    [_delegate packageExtractor:self didFinishFetchingMetaData:pathData];
                 }
-            });
+            }
         });
     });
 }

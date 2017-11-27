@@ -30,8 +30,9 @@
 
 #import "XXTExplorerEntryXPPMeta.h"
 
-@interface XXTEInstallerViewController () <XXTEXPAPackageExtractorDelegate>
+@interface XXTEInstallerViewController () <XXTEXPAPackageExtractorDelegate, UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) XXTEInstallerLoadingView *loadingView;
 @property (nonatomic, strong) XXTEXPAPackageExtractor *extractor;
 @property (nonatomic, strong) NSArray <XXTExplorerDynamicSection *> *dynamicSections;
@@ -76,22 +77,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView.tableFooterView = [UIView new];
     
     self.title = [self.class viewerName];
+    [self.view addSubview:self.tableView];
     [self.view addSubview:self.loadingView];
     [self.navigationItem setRightBarButtonItem:self.installButtonItem];
     
-    [self.view bringSubviewToFront:self.loadingView];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.extractor extractMetaData];
     });
-    
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
-    XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
@@ -330,6 +324,24 @@
     return _installButtonItem;
 }
 
+- (UITableView *)tableView {
+    if (!_tableView) {
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        tableView.tableFooterView = [UIView new];
+        tableView.editing = NO;
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 9.0, *)) {
+            tableView.cellLayoutMarginsFollowReadableWidth = NO;
+        }
+        XXTE_END_IGNORE_PARTIAL
+        _tableView = tableView;
+    }
+    return _tableView;
+}
+
 #pragma mark - XXTEXPAPackageExtractorDelegate
 
 - (void)packageExtractor:(XXTEXPAPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData {
@@ -362,7 +374,7 @@
     }
     {
         XXTExplorerEntryXPPReader *reader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-        [self.loadingView removeFromSuperview];
+        [self.loadingView setHidden:YES];
         [self reloadStaticTableViewDataWithReader:reader];
         [self.tableView reloadData];
         [self.installButtonItem setEnabled:YES];
@@ -392,7 +404,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return 44.f;
+    return 44.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -411,12 +423,12 @@
                 [cell layoutIfNeeded];
                 
                 CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
+                return (height > 0) ? (height + 1.0) : 44.0;
             }
         }
         return storedHeight;
     }
-    return 44.f;
+    return 44.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
