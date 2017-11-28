@@ -45,8 +45,9 @@
     NSString *encryptedNameWithExt = [encryptedName stringByAppendingPathExtension:encryptionExtension];
     NSString *encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
     NSUInteger encryptedIndex = 2;
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    while ([fileManager fileExistsAtPath:encryptedPath]) {
+//    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    struct stat encryptTestStat;
+    while (0 == lstat(encryptedPath.UTF8String, &encryptTestStat)) {
         encryptedNameWithExt = [NSString stringWithFormat:@"%@-%lu.%@", encryptedName, (unsigned long) encryptedIndex, encryptionExtension];
         encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
         encryptedIndex++;

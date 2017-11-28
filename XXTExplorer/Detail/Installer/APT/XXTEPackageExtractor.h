@@ -15,8 +15,8 @@
 - (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData;
 - (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailFetchingMetaDataWithError:(NSError *)error;
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishInstalling:(NSString *)outputLog;
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailInstallingWithError:(NSError *)error;
+- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishInstallation:(NSString *)outputLog;
+- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailInstallationWithError:(NSError *)error;
 
 @end
 

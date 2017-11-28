@@ -585,7 +585,7 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *) kUTTypeImage]) {
         UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
-        blockInteractions(self, YES);
+        UIViewController *blockVC = blockInteractions(self, YES);
         [PMKPromise promiseWithValue:@(YES)].then(^() {
             NSString *scannedResult = [self scanImage:originalImage];
             if (!scannedResult || scannedResult.length <= 0) {
@@ -597,7 +597,7 @@
         }).catch(^(NSError *scanError) {
             [self performSelector:@selector(showError:) withObject:scanError afterDelay:.2f];
         }).finally(^() {
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     }
 }

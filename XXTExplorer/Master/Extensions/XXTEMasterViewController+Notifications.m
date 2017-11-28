@@ -6,6 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <sys/stat.h>
 #import "XXTEMasterViewController+Notifications.h"
 
 #import "XXTEDispatchDefines.h"
@@ -77,7 +78,7 @@
         if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
             NSURL *inboxURL = aNotification.object;
             @weakify(self);
-            blockInteractions(self, YES);
+            UIViewController *blockVC = blockInteractions(self, YES);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 @strongify(self);
                 NSError *err = nil;
@@ -93,15 +94,15 @@
                 NSString *lastComponentExt = [lastComponent pathExtension];
                 NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
                 NSUInteger testedIndex = 2;
-                NSFileManager *fileManager = [[NSFileManager alloc] init];
-                while ([fileManager fileExistsAtPath:testedPath]) {
+                struct stat inboxTestStat;
+                while (0 == lstat(testedPath.UTF8String, &inboxTestStat)) {
                     lastComponent = [[NSString stringWithFormat:@"%@-%lu", lastComponentName, (unsigned long)testedIndex] stringByAppendingPathExtension:lastComponentExt];
                     testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
                     testedIndex++;
                 }
                 BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
                 dispatch_async_on_main_queue(^{
-                    blockInteractions(self, NO);
+                    blockInteractions(blockVC, NO);
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:nil userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
                     if (result && err == nil) {
                         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]);
@@ -211,11 +212,11 @@
     else if ([jsonEvent isEqualToString:@"bind_code"] ||
              [jsonEvent isEqualToString:@"license"]) {
         NSString *licenseCode = jsonDictionary[@"code"];
-        blockInteractions(self, YES);
+        UIViewController *blockVC = blockInteractions(self, YES);
         @weakify(self);
         void (^ completionBlock)(void) = ^() {
             @strongify(self);
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
             XXTEMoreLicenseController *licenseController = [[XXTEMoreLicenseController alloc] initWithLicenseCode:licenseCode];
             XXTENavigationController *licenseNavigationController = [[XXTENavigationController alloc] initWithRootViewController:licenseController];
             licenseNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -256,11 +257,11 @@
             targetFullPath = [topmostExplorerViewController.entryPath stringByAppendingPathComponent:targetPath];
         }
         NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
-        blockInteractions(self, YES);
+        UIViewController *blockVC = blockInteractions(self, YES);
         @weakify(self);
         void (^ completionBlock)(void) = ^() {
             @strongify(self);
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
             XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
             XXTENavigationController *downloadNavigationController = [[XXTENavigationController alloc] initWithRootViewController:downloadController];
             downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -341,7 +342,7 @@
 
 #ifndef APPSTORE
 - (void)performAction:(id)sender stopSelectedScript:(NSString *)entryPath {
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"recycle") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -359,7 +360,7 @@
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif
@@ -367,7 +368,7 @@
 #ifndef APPSTORE
 - (void)performAction:(id)sender launchScript:(NSString *)entryPath {
     BOOL selectAfterLaunch = XXTEDefaultsBool(XXTExplorerViewEntrySelectLaunchedScriptKey, NO);
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"is_running") JSON:@{}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -420,7 +421,7 @@
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif
@@ -429,11 +430,11 @@
 
 #ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url {
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
         BOOL internal = ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]);
         if (internal) {
             XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
@@ -463,7 +464,7 @@
 
 #ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)detailText {
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
@@ -474,7 +475,7 @@
             });
         }].finally(^() {
             toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     }];
 }

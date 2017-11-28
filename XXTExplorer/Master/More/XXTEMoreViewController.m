@@ -451,7 +451,7 @@
                     addressText = bonjourWebServerUrl;
                 }
                 if (addressText && addressText.length > 0) {
-                    blockInteractionsWithDelay(self, YES, 2.0);
+                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:addressText];
@@ -459,7 +459,7 @@
                         });
                     }].finally(^() {
                         toastMessage(self, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
-                        blockInteractions(self, NO);
+                        blockInteractions(blockVC, NO);
                     });
                 }
             }
@@ -643,7 +643,7 @@
             changeToCommand = @"open_remote_access";
         else
             changeToCommand = @"close_remote_access";
-        blockInteractionsWithDelay(self, YES, 2.0);
+        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
         [self.remoteAccessSwitch setHidden:YES];
         [self.remoteAccessIndicator startAnimating];
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -669,7 +669,7 @@
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     }
 }
@@ -714,7 +714,7 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanGPSCaches:(id)obj {
     [alertView dismissAnimated];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") formURLEncodedParameters:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
@@ -728,7 +728,7 @@
             toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif
@@ -736,7 +736,7 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanUICaches:(id)obj {
     [alertView dismissAnimated];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"uicache") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
@@ -748,7 +748,7 @@
             toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif
@@ -756,7 +756,7 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanAll:(id)obj {
     [alertView dismissAnimated];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_all") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
@@ -768,7 +768,7 @@
             toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif
@@ -776,7 +776,7 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView respringDevice:(id)obj {
     [alertView dismissAnimated];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"respring") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
@@ -788,7 +788,7 @@
             toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif
@@ -796,7 +796,7 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView rebootDevice:(id)obj {
     [alertView dismissAnimated];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"reboot2") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
@@ -808,7 +808,7 @@
             toastMessage(self, [serverError localizedDescription]);
         }
     }).finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 #endif

@@ -27,7 +27,7 @@
     if (!scriptPath) {
         return @(NO);
     }
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": scriptPath, @"envp": uAppConstEnvp()}]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
@@ -46,7 +46,7 @@
         }
     })
     .finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
     return @(scriptPath != nil);
 }

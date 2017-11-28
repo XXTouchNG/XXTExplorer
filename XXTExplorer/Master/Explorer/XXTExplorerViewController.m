@@ -721,7 +721,7 @@
 //        NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
         NSString *detailText = self.entryPath;
         if (detailText && detailText.length > 0) {
-            blockInteractionsWithDelay(self, YES, 2.0);
+            UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     [[UIPasteboard generalPasteboard] setString:detailText];
@@ -729,7 +729,7 @@
                 });
             }].finally(^() {
                 toastMessage(self, NSLocalizedString(@"Current path has been copied to the pasteboard.", nil));
-                blockInteractions(self, NO);
+                blockInteractions(blockVC, NO);
             });
         }
     }

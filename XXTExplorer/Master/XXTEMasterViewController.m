@@ -198,9 +198,9 @@
                                                       cancelHandler:nil
                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
                                                      [alertView dismissAnimated];
-                                                     blockInteractions(self, YES);
+                                                     UIViewController *blockVC = blockInteractions(self, YES);
                                                      [XXTERespringAgent performRespring];
-                                                     blockInteractions(self, NO);
+                                                     blockInteractions(blockVC, NO);
                                                  }];
         if (self.alertView && self.alertView.isShowing) {
             [self.alertView transitionToAlertView:alertView completionHandler:nil];

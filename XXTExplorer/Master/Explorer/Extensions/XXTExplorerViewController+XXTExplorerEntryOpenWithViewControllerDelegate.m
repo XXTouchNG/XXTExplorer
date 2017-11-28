@@ -43,7 +43,7 @@
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]])
         {
 #ifndef APPSTORE
-            blockInteractions(self, YES);
+            UIViewController *blockVC = blockInteractions(self, YES);
             [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": viewer.entryPath}]
             .then(convertJsonString)
             .then(^(NSDictionary *jsonDictionary) {
@@ -61,7 +61,7 @@
                 }
             })
             .finally(^() {
-                blockInteractions(self, NO);
+                blockInteractions(blockVC, NO);
                 [self loadEntryListData];
                 for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
                     [self reconfigureCellAtIndexPath:indexPath];

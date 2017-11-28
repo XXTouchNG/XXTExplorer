@@ -48,7 +48,9 @@
     } else if ([aNotification.name isEqualToString:UITextViewTextDidEndEditingNotification]) {
         // End
         [self saveDocumentIfNecessary];
-        [self reloadAttributesIfNecessary];
+        if (self.navigationController) {
+            [self reloadAttributesIfNecessary];
+        }
     } else if ([aNotification.name isEqualToString:UITextViewTextDidChangeNotification]) {
         // Changed
         if (textView.editable) {

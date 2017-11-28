@@ -196,7 +196,7 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
                 if (detailText && detailText.length > 0) {
-                    blockInteractionsWithDelay(self, YES, 2.0);
+                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];
@@ -204,7 +204,7 @@ typedef enum : NSUInteger {
                         });
                     }].finally(^() {
                         toastMessage(self, NSLocalizedString(@"Source URL has been copied to the pasteboard.", nil));
-                        blockInteractions(self, NO);
+                        blockInteractions(blockVC, NO);
                     });
                 }
             }
@@ -213,7 +213,7 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
                 if (detailText && detailText.length > 0) {
-                    blockInteractionsWithDelay(self, YES, 2.0);
+                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];
@@ -221,7 +221,7 @@ typedef enum : NSUInteger {
                         });
                     }].finally(^() {
                         toastMessage(self, NSLocalizedString(@"Target Path has been copied to the pasteboard.", nil));
-                        blockInteractions(self, NO);
+                        blockInteractions(blockVC, NO);
                     });
                 }
             }

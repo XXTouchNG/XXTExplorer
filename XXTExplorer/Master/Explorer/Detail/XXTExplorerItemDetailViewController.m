@@ -673,7 +673,7 @@ static int sizingCancelFlag = 0;
         [self.itemNameShaker shake];
         return;
     }
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSError *renameError = nil;
@@ -700,7 +700,7 @@ static int sizingCancelFlag = 0;
     }).catch(^(NSError *systemError) {
         toastMessage(self, [systemError localizedDescription]);
     }).finally(^() {
-        blockInteractions(self, NO);
+        blockInteractions(blockVC, NO);
     });
 }
 
@@ -772,7 +772,7 @@ static int sizingCancelFlag = 0;
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -780,14 +780,14 @@ static int sizingCancelFlag = 0;
                     });
                 }].finally(^() {
                     toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(self, NO);
+                    blockInteractions(blockVC, NO);
                 });
             }
         }
         else if ([cell isKindOfClass:[XXTEMoreAddressCell class]]) {
             NSString *detailText = ((XXTEMoreAddressCell *)cell).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -795,7 +795,7 @@ static int sizingCancelFlag = 0;
                     });
                 }].finally(^() {
                     toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockInteractions(self, NO);
+                    blockInteractions(blockVC, NO);
                 });
             }
         }

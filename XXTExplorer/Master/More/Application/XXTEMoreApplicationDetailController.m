@@ -185,7 +185,7 @@ typedef enum : NSUInteger {
         if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexDetail) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -193,13 +193,13 @@ typedef enum : NSUInteger {
                     });
                 }].finally(^() {
                     toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(self, NO);
+                    blockInteractions(blockVC, NO);
                 });
             }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -207,7 +207,7 @@ typedef enum : NSUInteger {
                     });
                 }].finally(^() {
                     toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockInteractions(self, NO);
+                    blockInteractions(blockVC, NO);
                 });
             }
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexAction) {
@@ -277,7 +277,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanApplicationGPSCaches:(id)obj {
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [alertView dismissAnimated:YES completionHandler:^{
         [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_gps") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
@@ -292,13 +292,13 @@ typedef enum : NSUInteger {
                 toastMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     }];
 }
 
 - (void)alertView:(LGAlertView *)alertView cleanApplicationData:(id)obj {
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [alertView dismissAnimated:YES completionHandler:^{
         [NSURLConnection POST:uAppDaemonCommandUrl(@"clear_app_data") JSON:@{ @"bid": self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
@@ -313,7 +313,7 @@ typedef enum : NSUInteger {
                 toastMessage(self, [serverError localizedDescription]);
             }
         }).finally(^() {
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     }];
 }

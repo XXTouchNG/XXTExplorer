@@ -59,8 +59,8 @@
     NSString *archiveNameWithExt = [NSString stringWithFormat:@"%@.zip", archiveName];
     NSString *archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
     NSUInteger archiveIndex = 2;
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    while ([fileManager fileExistsAtPath:archivePath]) {
+    struct stat archiveTestStat;
+    while (0 == lstat(archivePath.UTF8String, &archiveTestStat)) {
         archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.zip", archiveName, (unsigned long) archiveIndex];
         archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
         archiveIndex++;

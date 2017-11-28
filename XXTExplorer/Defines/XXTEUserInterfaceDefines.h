@@ -12,7 +12,7 @@
 #import "UIView+XXTEToast.h"
 
 
-static inline void blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay) {
+static inline UIViewController *blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay) {
     UIViewController *parentController = viewController.tabBarController;
     if (!parentController) {
         parentController = viewController.navigationController;
@@ -38,9 +38,11 @@ static inline void blockInteractionsWithDelay(UIViewController *viewController, 
         }
         viewToBlock.userInteractionEnabled = YES;
     }
+    return parentController;
 }
-static inline void blockInteractions(UIViewController *viewController, BOOL shouldBlock) {
-    blockInteractionsWithDelay(viewController, shouldBlock, 0.0);
+
+static inline UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock) {
+    return blockInteractionsWithDelay(viewController, shouldBlock, 0.0);
 }
 
 static inline void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration) {

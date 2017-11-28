@@ -151,7 +151,7 @@
     });
 }
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishInstalling:(NSString *)outputLog {
+- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishInstallation:(NSString *)outputLog {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.respringButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
@@ -160,7 +160,7 @@
     });
 }
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailInstallingWithError:(NSError *)error {
+- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailInstallationWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
@@ -174,26 +174,26 @@
 
 - (void)installButtonItemTapped:(UIBarButtonItem *)sender {
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:YES];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [self.activityIndicatorView startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.extractor installPackage];
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     });
 }
 
 - (void)respringButtonItemTapped:(UIBarButtonItem *)sender {
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:YES];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [self.activityIndicatorView startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.extractor killBackboardd];
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
         });
     });
 }

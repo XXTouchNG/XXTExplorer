@@ -53,14 +53,14 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 }
 
 - (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);
         NSError *error = nil;
         id result = [task generateWithError:&error];
         dispatch_async_on_main_queue(^{
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
             if (result) {
                 XUITitleValueCell *cell = objc_getAssociatedObject(self, XUITitleValueCellStorageKey);
                 if ([cell isKindOfClass:[XUITitleValueCell class]]) {

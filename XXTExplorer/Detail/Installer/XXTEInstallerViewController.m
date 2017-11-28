@@ -33,6 +33,15 @@
 #import "XXTExplorerEntryXPPMeta.h"
 #import <LGAlertView/LGAlertView.h>
 
+#import "XXTEMoreSwitchNoIconCell.h"
+#import "UIControl+BlockTarget.h"
+
+typedef enum : NSUInteger {
+    XXTEInstallerViewControllerReplacementTypeNone = 0,
+    XXTEInstallerViewControllerReplacementTypeRename,
+    XXTEInstallerViewControllerReplacementTypeOverride,
+} XXTEInstallerViewControllerReplacementType;
+
 @interface XXTEInstallerViewController () <XXTEXPAPackageExtractorDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -42,6 +51,8 @@
 @property (nonatomic, strong) UIBarButtonItem *installButtonItem;
 
 @property (nonatomic, strong) NSBundle *temporarilyEntryBundle;
+@property (nonatomic, assign) BOOL removeAfterInstallation;
+@property (nonatomic, strong) LGAlertView *previousAlertView;
 
 @end
 
@@ -65,6 +76,7 @@
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
+        _removeAfterInstallation = YES;
         _entryPath = path;
         
         XXTEXPAPackageExtractor *extractor = [[XXTEXPAPackageExtractor alloc] initWithPath:path];
@@ -153,15 +165,35 @@
         cell.xui_label = [NSString stringWithFormat:@"%@\nv%@", entryReader.entryDisplayName, bundleVersion];
         cell.xui_value = NSLocalizedString(@"The information below is provided by the third party script author.", nil);
         
-        XXTExplorerDynamicSection *section1 = [[XXTExplorerDynamicSection alloc] init];
-        section1.identifier = nil;
-        section1.cells = @[cell];
-        section1.cellHeights = @[@(-1)];
-        section1.relatedObjects = @[ [NSNull null] ];
-        section1.sectionTitle = @"";
-        section1.sectionFooter = @"";
+        XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
+        section.identifier = @"";
+        section.cells = @[cell];
+        section.cellHeights = @[@(-1)];
+        section.relatedObjects = @[ [NSNull null] ];
+        section.sectionTitle = @"";
+        section.sectionFooter = @"";
         
-        if (section1) [mutableDynamicSections addObject:section1];
+        if (section) [mutableDynamicSections addObject:section];
+    }
+    
+    // Install
+    {
+        XXTEMoreSwitchNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+        cell.titleLabel.text = NSLocalizedString(@"Remove after installation", nil);
+        cell.optionSwitch.on = self.removeAfterInstallation;
+        [cell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            self.removeAfterInstallation = ((UISwitch *)sender).on;
+        }];
+        
+        XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
+        section.identifier = @"";
+        section.cells = @[cell];
+        section.cellHeights = @[@(44.0)];
+        section.relatedObjects = @[ [NSNull null] ];
+        section.sectionTitle = @"";
+        section.sectionFooter = @"";
+        
+        if (section) [mutableDynamicSections addObject:section];
     }
     
     // Control
@@ -218,15 +250,15 @@
         }
         
         if (cells.count > 0) {
-            XXTExplorerDynamicSection *section2 = [[XXTExplorerDynamicSection alloc] init];
-            section2.identifier = kXXTEDynamicSectionIdentifierSectionGeneral;
-            section2.cells = [[NSArray alloc] initWithArray:cells];
-            section2.cellHeights = [[NSArray alloc] initWithArray:heights];
-            section2.relatedObjects = [[NSArray alloc] initWithArray:objects];
-            section2.sectionTitle = NSLocalizedString(@"General", nil);
-            section2.sectionFooter = @"";
+            XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
+            section.identifier = kXXTEDynamicSectionIdentifierSectionGeneral;
+            section.cells = [[NSArray alloc] initWithArray:cells];
+            section.cellHeights = [[NSArray alloc] initWithArray:heights];
+            section.relatedObjects = [[NSArray alloc] initWithArray:objects];
+            section.sectionTitle = NSLocalizedString(@"General", nil);
+            section.sectionFooter = @"";
             
-            if (section2) [mutableDynamicSections addObject:section2];
+            if (section) [mutableDynamicSections addObject:section];
         }
         
     }
@@ -236,9 +268,9 @@
         entryReader.metaDictionary &&
         entryReader.metaKeys)
     {
-        NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
-        NSMutableArray <NSNumber *> *extendedHeights = [[NSMutableArray alloc] init];
-        NSMutableArray *extendedObjects = [[NSMutableArray alloc] init];
+        NSMutableArray <UITableViewCell *> *cells = [[NSMutableArray alloc] init];
+        NSMutableArray <NSNumber *> *heights = [[NSMutableArray alloc] init];
+        NSMutableArray *objects = [[NSMutableArray alloc] init];
         
         NSArray <Class> *supportedTypes = [NSObject xui_baseTypes];
         NSDictionary *extendedDictionary = entryReader.metaDictionary;
@@ -268,9 +300,9 @@
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.valueLabel.text = [extendedValue xui_stringValue];
                 
-                if (cell) [extendedCells addObject:cell];
-                [extendedHeights addObject:@(44.f)];
-                [extendedObjects addObject:[NSNull null]];
+                if (cell) [cells addObject:cell];
+                [heights addObject:@(44.f)];
+                [objects addObject:[NSNull null]];
             }
             else
             {
@@ -281,23 +313,23 @@
                 cell.titleLabel.text = localizedKey;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 
-                if (cell) [extendedCells addObject:cell];
-                [extendedHeights addObject:@(44.f)];
-                [extendedObjects addObject:extendedValue];
+                if (cell) [cells addObject:cell];
+                [heights addObject:@(44.f)];
+                [objects addObject:extendedValue];
             }
             
         }
         
-        if (extendedCells.count > 0) {
-            XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
-            section3.identifier = kXXTEDynamicSectionIdentifierSectionExtended;
-            section3.cells = [[NSArray alloc] initWithArray:extendedCells];
-            section3.cellHeights = [[NSArray alloc] initWithArray:extendedHeights];
-            section3.relatedObjects = [[NSArray alloc] initWithArray:extendedObjects];
-            section3.sectionTitle = NSLocalizedString(@"Extended", nil);
-            section3.sectionFooter = @"";
+        if (cells.count > 0) {
+            XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
+            section.identifier = kXXTEDynamicSectionIdentifierSectionExtended;
+            section.cells = [[NSArray alloc] initWithArray:cells];
+            section.cellHeights = [[NSArray alloc] initWithArray:heights];
+            section.relatedObjects = [[NSArray alloc] initWithArray:objects];
+            section.sectionTitle = NSLocalizedString(@"Extended", nil);
+            section.sectionFooter = @"";
             
-            if (section3) [mutableDynamicSections addObject:section3];
+            if (section) [mutableDynamicSections addObject:section];
         }
         
     }
@@ -451,7 +483,7 @@
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -459,7 +491,7 @@
                     });
                 }].finally(^() {
                     toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(self, NO);
+                    blockInteractions(blockVC, NO);
                 });
             }
         }
@@ -504,35 +536,60 @@
                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                               destructiveButtonTitle:NSLocalizedString(@"Replace Now", nil)
                                                        actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
-                                                           [alertView dismissAnimated];
-                                                           if (index == 0) {
-                                                               [self performMoveAndPopViewControllerAnimated];
+                                                           if (index == 0)
+                                                           {
+                                                               [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeRename];
                                                            }
                                                        }
                                                        cancelHandler:^(LGAlertView * _Nonnull alertView) {
                                                            [alertView dismissAnimated];
                                                        }
                                                   destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-                                                      NSError *removeError = nil;
-                                                      BOOL result = [[NSFileManager defaultManager] removeItemAtPath:bundleTestPath error:&removeError];
-                                                      if (result) {
-                                                          [self performMoveAndPopViewControllerAnimated];
-                                                      } else {
-                                                          toastMessageWithDelay(self, removeError.localizedDescription, 5.0);
-                                                      }
-                                                      [alertView dismissAnimated];
+                                                      [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeOverride];
                                                   }];
-            [alertView showAnimated];
+            if (self.previousAlertView) {
+                [self.previousAlertView transitionToAlertView:alertView];
+            } else {
+                [alertView showAnimated];
+            }
+            self.previousAlertView = alertView;
         } else {
-            [self performMoveAndPopViewControllerAnimated];
+            [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeNone];
         }
     }
 }
 
-- (void)performMoveAndPopViewControllerAnimated {
-    NSURL *url = [self.temporarilyEntryBundle bundleURL];
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:url userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+- (void)performMoveImmediatelyWithReplacementType:(XXTEInstallerViewControllerReplacementType)type {
+    NSString *bundlePath = [self.temporarilyEntryBundle bundlePath];
+    NSString *bundleTestName = [bundlePath lastPathComponent];
+    NSString *bundleTestPath = [[self.entryPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:bundleTestName];
+    
+    if (type == XXTEInstallerViewControllerReplacementTypeOverride) {
+        NSError *removeError = nil;
+        BOOL result = [[NSFileManager defaultManager] removeItemAtPath:bundleTestPath error:&removeError];
+        if (!result) {
+            toastMessageWithDelay(self, removeError.localizedDescription, 5.0);
+            return;
+        }
+    }
+    
+    {
+        NSURL *bundleURL = [self.temporarilyEntryBundle bundleURL];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:bundleURL userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+    }
+    
+    [self performCleanAfterInstallation];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)performCleanAfterInstallation {
+    if (self.removeAfterInstallation) {
+        NSError *cleanError = nil;
+        BOOL cleanResult = [[NSFileManager defaultManager] removeItemAtPath:self.entryPath error:&cleanError];
+        if (!cleanResult && cleanError) {
+            toastMessageWithDelay(self, [NSString stringWithFormat:NSLocalizedString(@"Failed to clean: %@", nil), cleanError.localizedDescription], 5.0);
+        }
+    }
 }
 
 #pragma mark - Memory

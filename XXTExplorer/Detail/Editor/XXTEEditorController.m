@@ -617,7 +617,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if (isHighlightEnabled) {
         NSString *wholeString = self.textView.text;
-        blockInteractionsWithDelay(self, YES, 0.6);
+        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 0.6);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSMutableArray *rangesArray = [[NSMutableArray alloc] init];
             NSMutableArray *attributesArray = [[NSMutableArray alloc] init];
@@ -634,7 +634,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
                     self.renderedSet = [[NSMutableIndexSet alloc] init];
                 }
                 [self renderSyntaxOnScreen];
-                blockInteractions(self, NO);
+                blockInteractions(blockVC, NO);
             });
         });
     }

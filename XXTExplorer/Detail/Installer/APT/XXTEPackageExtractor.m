@@ -39,7 +39,7 @@
     NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
     struct stat temporarilyStat;
     if (0 == lstat([temporarilyPath UTF8String], &temporarilyStat)) {
-        [self callbackInstallingErrorWithReason:[NSString stringWithFormat:@"Temporarily file \"%@\" already exists.", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Temporarily file \"%@\" already exists.", temporarilyPath]];
         return;
     }
     [[NSData data] writeToFile:temporarilyPath atomically:YES];
@@ -53,37 +53,37 @@
     posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)sharedEnvp);
     posix_spawn_file_actions_destroy(&action);
     if (pid == 0) {
-        [self callbackInstallingErrorWithReason:@"Cannot launch installer process."];
+        [self callbackInstallationErrorWithReason:@"Cannot launch installer process."];
         return;
     }
     waitpid(pid, &status, 0);
     struct stat temporarilyControlStat;
     if (0 != lstat([temporarilyPath UTF8String], &temporarilyControlStat)) {
-        [self callbackInstallingErrorWithReason:[NSString stringWithFormat:@"Cannot find log file \"%@\".", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot find log file \"%@\".", temporarilyPath]];
         return;
     }
     NSData *logData = [[NSData alloc] initWithContentsOfFile:temporarilyPath];
     if (!logData) {
-        [self callbackInstallingErrorWithReason:[NSString stringWithFormat:@"Cannot open log file \"%@\".", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot open log file \"%@\".", temporarilyPath]];
         return;
     }
     NSString *logString = [[NSString alloc] initWithData:logData encoding:NSUTF8StringEncoding];
     if (status != 0) {
-        [self callbackInstallingErrorWithReason:logString];
+        [self callbackInstallationErrorWithReason:logString];
         return;
     }
-    if (_delegate && [_delegate respondsToSelector:@selector(packageExtractor:didFinishInstalling:)]) {
-        [_delegate packageExtractor:self didFinishInstalling:logString];
+    if (_delegate && [_delegate respondsToSelector:@selector(packageExtractor:didFinishInstallation:)]) {
+        [_delegate packageExtractor:self didFinishInstallation:logString];
     }
 }
 
-- (void)callbackInstallingErrorWithReason:(NSString *)exceptionReason {
+- (void)callbackInstallationErrorWithReason:(NSString *)exceptionReason {
     if (!exceptionReason) {
         return;
     }
     NSError *exceptionError = [NSError errorWithDomain:kXXTErrorDomain code:400 userInfo:@{ NSLocalizedDescriptionKey: exceptionReason }];
-    if (_delegate && [_delegate respondsToSelector:@selector(packageExtractor:didFailInstallingWithError:)]) {
-        [_delegate packageExtractor:self didFailInstallingWithError:exceptionError];
+    if (_delegate && [_delegate respondsToSelector:@selector(packageExtractor:didFailInstallationWithError:)]) {
+        [_delegate packageExtractor:self didFailInstallationWithError:exceptionError];
     }
 }
 

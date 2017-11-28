@@ -978,6 +978,9 @@
 "Remote address has been copied to the pasteboard." = "远程地址已被复制到剪贴板.";
 
 /* No comment provided by engineer. */
+"Remove after installation" = "安装成功后移除安装包";
+
+/* No comment provided by engineer. */
 "Removing process terminated: User interrupt occurred." = "删除进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
@@ -1313,3 +1316,6 @@
 
 /* No comment provided by engineer. */
 "Cannot perform operation \"Download\" on Pasteboard URL \"%@\"." = "";
+
+/* No comment provided by engineer. */
+"Failed to clean: %@" = "";

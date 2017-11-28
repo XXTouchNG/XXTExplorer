@@ -34,7 +34,7 @@
                                           result:(NSArray *)aSelected
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
-    blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @strongify(self);
@@ -54,7 +54,7 @@
             }
         }
         dispatch_async_on_main_queue(^{
-            blockInteractions(self, NO);
+            blockInteractions(blockVC, NO);
             toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"%lu image(s) imported.", nil), aSelected.count]));
             [self loadEntryListData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
