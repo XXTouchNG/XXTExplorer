@@ -535,7 +535,7 @@ typedef enum : NSUInteger {
                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                               destructiveButtonTitle:NSLocalizedString(@"Replace Now", nil)
                                                        actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
-                                                           [alertView showAnimated];
+                                                           [alertView dismissAnimated];
                                                            if (index == 0)
                                                            {
                                                                [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeRename];
@@ -545,7 +545,7 @@ typedef enum : NSUInteger {
                                                            [alertView dismissAnimated];
                                                        }
                                                   destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-                                                      [alertView showAnimated];
+                                                      [alertView dismissAnimated];
                                                       [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeOverride];
                                                   }];
             [alertView showAnimated];
