@@ -16,13 +16,15 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
 
 @end
 
-@implementation XXTPickerNavigationController
+@implementation XXTPickerNavigationController {
+    BOOL isFirstLoaded;
+}
 
-- (CGFloat)safeAreaBottomMargin {
+- (UIEdgeInsets)safeAreaInsets {
     if (@available(iOS 11.0, *)) {
-        return self.view.safeAreaInsets.bottom;
+        return self.view.safeAreaInsets;
     } else {
-        return 0;
+        return UIEdgeInsetsZero;
     }
 }
 
@@ -68,8 +70,12 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
     [self.view addSubview:self.popupBar];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (!isFirstLoaded) {
+        isFirstLoaded = YES;
+        self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom);
+    }
 }
 
 - (void)dismiss {
@@ -80,7 +86,7 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
 
 - (XXTPickerPreviewBar *)popupBar {
     if (!_popupBar) {
-        XXTPickerPreviewBar *popupBar = [[XXTPickerPreviewBar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin])];
+        XXTPickerPreviewBar *popupBar = [[XXTPickerPreviewBar alloc] init];
         popupBar.userInteractionEnabled = YES;
         popupBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(previewBarTapped:)];
@@ -116,14 +122,14 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
         if (YES == self.popupBar.hidden) {
             self.popupBar.hidden = NO;
             [UIView animateWithDuration:.2f animations:^{
-                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]);
+                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom);
             } completion:^(BOOL finished) {
             }];
         }
     } else {
         if (NO == self.popupBar.hidden) {
             [UIView animateWithDuration:.2f animations:^{
-                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + [self safeAreaBottomMargin]);
+                self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom);
             } completion:^(BOOL finished) {
                 if (finished) self.popupBar.hidden = YES;
             }];

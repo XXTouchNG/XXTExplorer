@@ -42,11 +42,11 @@
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];
     [navigationBarAppearance setBarTintColor:XXTE_COLOR];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
+    if (@available(iOS 11.0, *)) {
+        [navigationBarAppearance setTranslucent:YES];
+    } else if (@available(iOS 8.0, *)) {
         [navigationBarAppearance setTranslucent:NO];
     }
-    XXTE_END_IGNORE_PARTIAL
 
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
@@ -71,7 +71,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationBar.translucent = NO;
+    if (@available(iOS 11.0, *)) {
+        self.navigationBar.translucent = YES;
+    } else {
+        self.navigationBar.translucent = NO;
+    }
 }
 
 @end

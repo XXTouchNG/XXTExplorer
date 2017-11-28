@@ -52,7 +52,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationBar.translucent = NO;
+    if (@available(iOS 11.0, *)) {
+        self.navigationBar.translucent = YES;
+    } else {
+        self.navigationBar.translucent = NO;
+    }
     
 #ifndef APPSTORE
     self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"My Scripts", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];

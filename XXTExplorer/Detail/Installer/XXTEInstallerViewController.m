@@ -52,7 +52,6 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSBundle *temporarilyEntryBundle;
 @property (nonatomic, assign) BOOL removeAfterInstallation;
-@property (nonatomic, strong) LGAlertView *previousAlertView;
 
 @end
 
@@ -536,6 +535,7 @@ typedef enum : NSUInteger {
                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                               destructiveButtonTitle:NSLocalizedString(@"Replace Now", nil)
                                                        actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                           [alertView showAnimated];
                                                            if (index == 0)
                                                            {
                                                                [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeRename];
@@ -545,14 +545,10 @@ typedef enum : NSUInteger {
                                                            [alertView dismissAnimated];
                                                        }
                                                   destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                                                      [alertView showAnimated];
                                                       [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeOverride];
                                                   }];
-            if (self.previousAlertView) {
-                [self.previousAlertView transitionToAlertView:alertView];
-            } else {
-                [alertView showAnimated];
-            }
-            self.previousAlertView = alertView;
+            [alertView showAnimated];
         } else {
             [self performMoveImmediatelyWithReplacementType:XXTEInstallerViewControllerReplacementTypeNone];
         }

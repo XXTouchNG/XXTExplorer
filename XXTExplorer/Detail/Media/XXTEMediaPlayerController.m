@@ -60,14 +60,6 @@
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     [self moviePlayer];
-    
-    if (XXTE_COLLAPSED) {
-        self.moviePlayer.view.frame = self.view.bounds;
-    } else {
-        CGSize viewSize = self.view.bounds.size;
-        self.moviePlayer.view.frame = CGRectMake(0, 0, viewSize.width, viewSize.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
-    }
-    
     [self.view addSubview:self.moviePlayer.view];
 
     XXTE_START_IGNORE_PARTIAL
@@ -85,6 +77,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackWillEnterFullscreen:) name:MPMoviePlayerWillEnterFullscreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackWillExitFullscreen:) name:MPMoviePlayerWillExitFullscreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackDidExitFullscreen:) name:MPMoviePlayerDidExitFullscreenNotification object:nil];
     [super viewWillAppear:animated];
 }
 
@@ -92,6 +85,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
     [self.moviePlayer pause];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        insets = self.view.safeAreaInsets;
+    }
+    if (XXTE_COLLAPSED) {
+        self.moviePlayer.view.frame = UIEdgeInsetsInsetRect(self.view.bounds, insets);
+    } else {
+        self.moviePlayer.view.frame = UIEdgeInsetsInsetRect(CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(self.navigationController.tabBarController.tabBar.bounds)), insets);
+    }
 }
 
 #pragma mark - Notifications
@@ -111,6 +117,11 @@
 }
 
 - (void)moviePlaybackWillExitFullscreen:(NSNotification *)aNotification {
+    self.moviePlayer.view.backgroundColor = [UIColor whiteColor];
+    self.moviePlayer.backgroundView.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)moviePlaybackDidExitFullscreen:(NSNotification *)aNotification {
     self.moviePlayer.view.backgroundColor = [UIColor whiteColor];
     self.moviePlayer.backgroundView.backgroundColor = [UIColor whiteColor];
 }

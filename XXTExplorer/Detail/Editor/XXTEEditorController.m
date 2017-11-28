@@ -574,7 +574,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (XXTEEditorToolbar *)toolbar {
     if (!_toolbar) {
         XXTEEditorToolbar *toolbar = [[XXTEEditorToolbar alloc] init];
-        toolbar.translucent = NO;
+        if (@available(iOS 11.0, *)) {
+            toolbar.translucent = YES;
+        } else {
+            toolbar.translucent = NO;
+        }
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         toolbar.items = @[ self.searchButtonItem, flexible, self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
