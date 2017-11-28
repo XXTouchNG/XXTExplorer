@@ -153,7 +153,7 @@
     cell.allowsButtonsWithDifferentWidth = YES;
     swipeSettings.transition = XXTESwipeTransitionBorder;
     expansionSettings.buttonIndex = 0;
-    expansionSettings.fillOnTrigger = YES;
+    expansionSettings.fillOnTrigger = NO;
 #ifdef DEBUG
     BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, YES);
 #else
@@ -176,13 +176,8 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconLaunch"]
-                                                       backgroundColor:[colorSeries colorWithAlphaComponent:1.f]
+                                                       backgroundColor:colorSeries
                                                                 insets:buttonInsets];
-            if (!hidesLabel) {
-                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-                [button centerIconOverText];
-            }
-            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Launch", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -196,13 +191,8 @@
                     buttonTitle = @"";
                 }
                 XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconConfigure"]
-                                                           backgroundColor:[colorSeries colorWithAlphaComponent:.9f]
+                                                           backgroundColor:colorSeries
                                                                     insets:buttonInsets];
-                if (!hidesLabel) {
-                    button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-                    [button centerIconOverText];
-                }
-                button.buttonWidth = buttonWidth;
                 objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Configure", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [swipeButtons addObject:button];
             }
@@ -215,13 +205,8 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconEdit"]
-                                                       backgroundColor:[colorSeries colorWithAlphaComponent:.8f]
+                                                       backgroundColor:colorSeries
                                                                 insets:buttonInsets];
-            if (!hidesLabel) {
-                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-                [button centerIconOverText];
-            }
-            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Edit", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -233,13 +218,8 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconInside"]
-                                                       backgroundColor:[colorSeries colorWithAlphaComponent:.8f]
+                                                       backgroundColor:colorSeries
                                                                 insets:buttonInsets];
-            if (!hidesLabel) {
-                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-                [button centerIconOverText];
-            }
-            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Inside", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -253,13 +233,8 @@
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconEncrypt"]
-                                                       backgroundColor:[colorSeries colorWithAlphaComponent:.7f]
+                                                       backgroundColor:colorSeries
                                                                 insets:buttonInsets];
-            if (!hidesLabel) {
-                button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-                [button centerIconOverText];
-            }
-            button.buttonWidth = buttonWidth;
             objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Encrypt", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
@@ -271,15 +246,22 @@
             buttonTitle = @"";
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconProperty"]
-                                                   backgroundColor:[colorSeries colorWithAlphaComponent:.6f]
+                                                   backgroundColor:colorSeries
                                                             insets:buttonInsets];
-        if (!hidesLabel) {
-            button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-            [button centerIconOverText];
-        }
-        button.buttonWidth = buttonWidth;
         objc_setAssociatedObject(button, XXTESwipeButtonAction, @"Property", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [swipeButtons addObject:button];
+        
+        CGFloat stepValue = 0.6 / swipeButtons.count;
+        for (NSUInteger idx = 0; idx < swipeButtons.count; idx++) {
+            XXTESwipeButton *buttonItem = swipeButtons[idx];
+            if (!hidesLabel) {
+                buttonItem.titleLabel.font = [UIFont systemFontOfSize:12.f];
+                [buttonItem centerIconOverText];
+            }
+            buttonItem.buttonWidth = buttonWidth;
+            buttonItem.backgroundColor = [colorSeries colorWithAlphaComponent:(1.0 - stepValue * idx)];
+        }
+        
         return [swipeButtons copy];
     } else if (direction == XXTESwipeDirectionRightToLeft) {
         NSString *buttonTitle = nil;

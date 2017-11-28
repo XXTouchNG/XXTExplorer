@@ -572,6 +572,10 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
     void (^_animationCompletion)(BOOL finished);
     CADisplayLink * _displayLink;
     XXTESwipeState _firstSwipeState;
+    
+XXTE_START_IGNORE_PARTIAL
+    UIImpactFeedbackGenerator * _feedbackGenerator;
+XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark View creation & layout
@@ -628,7 +632,9 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
     _preservesSelectionStatus = NO;
     _allowsOppositeSwipe = YES;
     _firstSwipeState = XXTESwipeStateNone;
-    
+    if (@available(iOS 10.0, *)) {
+        _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+    }
 }
 
 -(void) cleanViews
@@ -983,6 +989,31 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
 {
     if (!_triggerStateChanges || _swipeState == newState) {
         return;
+    }
+    if (@available(iOS 11.0, *)) {
+        if (
+            (
+             _swipeState == XXTESwipeStateSwipingLeftToRight &&
+             newState == XXTESwipeStateExpandingLeftToRight
+             )
+            ||
+            (
+             _swipeState == XXTESwipeStateSwipingRightToLeft &&
+             newState == XXTESwipeStateExpandingRightToLeft
+             )
+            ||
+            (
+             _swipeState == XXTESwipeStateExpandingLeftToRight &&
+             newState == XXTESwipeStateSwipingLeftToRight
+             )
+            ||
+            (
+             _swipeState == XXTESwipeStateExpandingRightToLeft &&
+             newState == XXTESwipeStateSwipingRightToLeft
+             )
+            ) {
+            [_feedbackGenerator impactOccurred];
+        }
     }
     _swipeState = newState;
     if (_delegate && [_delegate respondsToSelector:@selector(swipeTableCell:didChangeSwipeState:gestureIsActive:)]) {

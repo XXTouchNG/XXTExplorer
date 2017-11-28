@@ -282,6 +282,9 @@
 "Cannot overwrite file \"%@\".\n%@" = "无法替换文件 \"%@\".\n%@";
 
 /* No comment provided by engineer. */
+"Cannot perform operation \"Download\" on Pasteboard URL \"%@\"." = "无法对剪贴板链接 \"%@\" 执行操作 \"下载\".";
+
+/* No comment provided by engineer. */
 "Cannot read archive file \"%@\"." = "无法读取压缩文件 \"%@\".";
 
 /* No comment provided by engineer. */
@@ -552,6 +555,9 @@
 "Failed to activate license \"%@\": %@" = "无法激活授权 \"%@\": %@";
 
 /* No comment provided by engineer. */
+"Failed to clean: %@" = "无法清理: %@";
+
+/* No comment provided by engineer. */
 "Feedback" = "反馈";
 
 /* No comment provided by engineer. */
@@ -789,10 +795,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -1313,9 +1319,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"Cannot perform operation \"Download\" on Pasteboard URL \"%@\"." = "";
-
-/* No comment provided by engineer. */
-"Failed to clean: %@" = "";
