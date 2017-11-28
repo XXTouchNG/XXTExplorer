@@ -281,7 +281,7 @@ XXTE_END_IGNORE_PARTIAL
     NSNumber *defaultsValue = self.userDefaults[rowDetail[@"key"]];
     NSInteger optionIndex = [defaultsValue integerValue];
     NSString *optionTitle = rowDetail[@"options"][(NSUInteger) optionIndex];
-    if (optionTitle.length <= 2) {
+    if (optionTitle.length <= 3) {
         cell.valueLabel.text = optionTitle;
     } else {
         cell.valueLabel.text = [NSString stringWithFormat:@"%ld", (long)optionIndex];
