@@ -7,7 +7,7 @@
 //
 
 #import "XXTEMoreUserDefaultsController.h"
-#import "XXTEMoreTitleDescriptionValueCell.h"
+#import "XXTEMoreTitleDescriptionCell.h"
 
 #import "XXTEAppDefines.h"
 #import "UIView+XXTEToast.h"
@@ -101,7 +101,7 @@ XXTE_END_IGNORE_PARTIAL
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 //    self.tableView.tableFooterView = [UIView new];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleDescriptionValueCellReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleDescriptionCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -276,17 +276,13 @@ XXTE_END_IGNORE_PARTIAL
     } else {
         rowDetail = self.displayDefaultsMeta[sectionKey][(NSUInteger) indexPath.row];
     }
-    XXTEMoreTitleDescriptionValueCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreTitleDescriptionValueCellReuseIdentifier];
+    XXTEMoreTitleDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreTitleDescriptionCellReuseIdentifier];
     cell.titleLabel.text = rowDetail[@"title"];
     cell.descriptionLabel.text = rowDetail[@"description"];
     NSNumber *defaultsValue = self.userDefaults[rowDetail[@"key"]];
     NSInteger optionIndex = [defaultsValue integerValue];
     NSString *optionTitle = rowDetail[@"options"][(NSUInteger) optionIndex];
-    if (optionTitle.length <= 3) {
-        cell.valueLabel.text = optionTitle;
-    } else {
-        cell.valueLabel.text = [NSString stringWithFormat:@"%ld", (long)optionIndex];
-    }
+    cell.valueLabel.text = optionTitle;
     return cell;
 }
 

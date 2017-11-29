@@ -55,8 +55,6 @@
 		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
 		0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
-		0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
-		0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */; };
 		0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */; };
 		0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
@@ -243,7 +241,6 @@
 		0F8EDBCD1FB1F779003C92D6 /* XXTEMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */; };
 		0F8EDBCE1FB1F779003C92D6 /* XXTKeyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140B01F5032AB00D78CB9 /* XXTKeyEvent.m */; };
 		0F8EDBD01FB1F779003C92D6 /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
-		0F8EDBD11FB1F779003C92D6 /* XXTEMoreTitleDescriptionValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */; };
 		0F8EDBD21FB1F779003C92D6 /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
 		0F8EDBD31FB1F779003C92D6 /* XXTExplorerViewController+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA861F374D8B0017BE7C /* XXTExplorerViewController+Notification.m */; };
 		0F8EDBD41FB1F779003C92D6 /* XXTExplorerEntryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4F670B1F1268E70042C449 /* XXTExplorerEntryService.m */; };
@@ -431,7 +428,6 @@
 		0F8EDCB21FB1F779003C92D6 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
 		0F8EDCB31FB1F779003C92D6 /* SKFont.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6686F431F4AE74E004403D0 /* SKFont.plist */; };
 		0F8EDCB41FB1F779003C92D6 /* Cobalt.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */; };
-		0F8EDCB51FB1F779003C92D6 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */; };
 		0F8EDCB61FB1F779003C92D6 /* XXTEMoreLinkNoIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5391F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib */; };
 		0F8EDCB71FB1F779003C92D6 /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
 		0F8EDCB81FB1F779003C92D6 /* Tomorrow Night (Blue).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */; };
@@ -804,9 +800,6 @@
 		0F3508C31F166A7B000403FD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0F35F2071F1068E500B5B327 /* XXTEMoreUserDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsController.h; sourceTree = "<group>"; };
 		0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreUserDefaultsController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F35F20C1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreTitleDescriptionValueCell.h; sourceTree = "<group>"; };
-		0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMoreTitleDescriptionValueCell.m; sourceTree = "<group>"; };
-		0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionValueCell.xib; sourceTree = "<group>"; };
 		0F3D5DF71FAEC4420083196D /* XXTESymbolViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESymbolViewController.h; sourceTree = "<group>"; };
 		0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESymbolViewController.m; sourceTree = "<group>"; };
 		0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDetailViewController.h; sourceTree = "<group>"; };
@@ -2345,9 +2338,6 @@
 				D6FC2F351F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.h */,
 				D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */,
 				D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */,
-				0F35F20C1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.h */,
-				0F35F20D1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m */,
-				0F35F20E1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib */,
 				D629C2291F063B830030C6DA /* XXTEMoreTitleValueCell.h */,
 				D629C22A1F063B830030C6DA /* XXTEMoreTitleValueCell.m */,
 				D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */,
@@ -3286,7 +3276,6 @@
 				0F8EDCB21FB1F779003C92D6 /* XXTPickerCollection.strings in Resources */,
 				0F8EDCB31FB1F779003C92D6 /* SKFont.plist in Resources */,
 				0F8EDCB41FB1F779003C92D6 /* Cobalt.tmTheme in Resources */,
-				0F8EDCB51FB1F779003C92D6 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
 				0F97F1D61FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip in Resources */,
 				0F8EDCB61FB1F779003C92D6 /* XXTEMoreLinkNoIconCell.xib in Resources */,
 				0F8EDCB71FB1F779003C92D6 /* lua.tmLanguage in Resources */,
@@ -3382,7 +3371,6 @@
 				D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */,
 				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */,
-				0F35F2101F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.xib in Resources */,
 				0F5EB53B1F0A9DC50016016A /* XXTEMoreLinkNoIconCell.xib in Resources */,
 				D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */,
 				0FD973EE1F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme in Resources */,
@@ -3651,7 +3639,6 @@
 				0F8EDBCE1FB1F779003C92D6 /* XXTKeyEvent.m in Sources */,
 				0F8EDBD01FB1F779003C92D6 /* XXTEEditorLayoutManager.m in Sources */,
 				0F8811661FB6AF640004F20C /* XXTESegmentedControl.m in Sources */,
-				0F8EDBD11FB1F779003C92D6 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F8EDBD21FB1F779003C92D6 /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F8EDBD31FB1F779003C92D6 /* XXTExplorerViewController+Notification.m in Sources */,
 				0F8EDBD41FB1F779003C92D6 /* XXTExplorerEntryService.m in Sources */,
@@ -3911,7 +3898,6 @@
 				D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */,
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
-				0F35F20F1F10860C00B5B327 /* XXTEMoreTitleDescriptionValueCell.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,

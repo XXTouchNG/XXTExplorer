@@ -14,6 +14,10 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.titleLabel.text = @"";
+    self.descriptionLabel.text = @"";
+    self.valueLabel.text = @"";
+    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;

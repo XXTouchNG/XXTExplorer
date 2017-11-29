@@ -55,8 +55,8 @@
 			<string>在文件管理器顶部显示 &quot;主目录&quot; 入口.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -72,8 +72,8 @@
 			<string>隐藏文件名以句点 (&quot;.&quot;) 开头的文件.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -89,8 +89,8 @@
 			<string>在文件管理器中隐藏已知文件的扩展名, 如 &quot;.txt&quot;, &quot;.lua&quot; 等.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -106,8 +106,8 @@
 			<string>隐藏滑动操作标签, 如 &quot;启动&quot;, &quot;编辑&quot; 等.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -123,8 +123,8 @@
 			<string>允许在 &quot;项目属性&quot; 中修改打开方式.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -140,8 +140,8 @@
 			<string>自动选中在文件管理器中启动过的脚本.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -203,8 +203,8 @@
 			<string>禁止 &quot;无 SIM&quot; 弹出框显示.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -220,8 +220,8 @@
 			<string>禁止 &quot;低电量&quot; 弹出框显示.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -237,8 +237,8 @@
 			<string>防止设备进入睡眠模式 (掉线).</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -254,8 +254,8 @@
 			<string>如果守护进程崩溃, 尝试重启最后一次运行的脚本.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -271,8 +271,8 @@
 			<string>显示 &quot;脚本已停止&quot; 浮动提示信息.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -288,8 +288,8 @@
 			<string>禁止 &quot;连接到 iTunes 以使用推送通知&quot; 弹出框显示.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -305,8 +305,8 @@
 			<string>禁止状态栏 &quot;无 SIM&quot; 文字标签显示.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 		<dict>
@@ -322,8 +322,8 @@
 			<string>在守护进程中使用经典提示框, 而不是动画提示框.</string>
 			<key>options</key>
 			<array>
-				<string>❌</string>
-				<string>⭕️</string>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 	</array>

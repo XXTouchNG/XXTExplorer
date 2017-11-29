@@ -11,7 +11,7 @@
 #import <sys/stat.h>
 #import "XXTExplorerItemDetailViewController.h"
 #import "XXTExplorerItemNameCell.h"
-#import "XXTEMoreTitleDescriptionValueCell.h"
+#import "XXTEMoreTitleDescriptionCell.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XUIViewShaker.h"
 #import "XXTEAppDefines.h"

@@ -9,7 +9,7 @@
 #import <sys/stat.h>
 #import "XXTExplorerCreateItemViewController.h"
 #import "XXTExplorerItemNameCell.h"
-#import "XXTEMoreTitleDescriptionValueCell.h"
+#import "XXTEMoreTitleDescriptionCell.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XUIViewShaker.h"
 #import "XXTEAppDefines.h"
@@ -167,25 +167,25 @@ typedef enum : NSUInteger {
     self.nameField = cell1.nameField;
     self.itemNameShaker = [[XUIViewShaker alloc] initWithView:self.nameField];
     
-    XXTEMoreTitleDescriptionValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.titleLabel.text = NSLocalizedString(@"Regular Lua File", nil);
     cell2.descriptionLabel.text = NSLocalizedString(@"A regular lua file from template. (text/lua)", nil);
     cell2.valueLabel.text = NSLocalizedString(@"LUA", nil);
     
-    XXTEMoreTitleDescriptionValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreTitleDescriptionCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryNone;
     cell3.titleLabel.text = NSLocalizedString(@"Regular Text File", nil);
     cell3.descriptionLabel.text = NSLocalizedString(@"An empty regular text file. (text/plain)", nil);
     cell3.valueLabel.text = NSLocalizedString(@"TXT", nil);
     
-    XXTEMoreTitleDescriptionValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreTitleDescriptionCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryNone;
     cell4.titleLabel.text = NSLocalizedString(@"Regular File", nil);
     cell4.descriptionLabel.text = NSLocalizedString(@"An empty regular file.", nil);
     cell4.valueLabel.text = NSLocalizedString(@"FIL", nil);
     
-    XXTEMoreTitleDescriptionValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreTitleDescriptionCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryNone;
     cell5.titleLabel.text = NSLocalizedString(@"Directory", nil);
     cell5.descriptionLabel.text = NSLocalizedString(@"A directory with nothing inside.", nil);
