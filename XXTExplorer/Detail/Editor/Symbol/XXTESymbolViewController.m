@@ -25,6 +25,7 @@
 #import "SKParser.h"
 
 #import "XXTEEditorMaskView.h"
+#import "XXTExplorerFooterView.h"
 
 @interface XXTESymbolViewController ()
 <
@@ -37,6 +38,8 @@ UISearchDisplayDelegate
 
 @property (nonatomic, strong) NSArray <NSDictionary *> *symbolsTable;
 @property (nonatomic, strong) NSArray <NSDictionary *> *displaySymbolsTable;
+
+@property (nonatomic, strong) XXTExplorerFooterView *footerView;
 
 @end
 
@@ -95,6 +98,7 @@ UISearchDisplayDelegate
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.tableHeaderView = searchBar;
+//        tableView.tableFooterView = [UIView new];
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
@@ -103,6 +107,12 @@ UISearchDisplayDelegate
         [self.view addSubview:tableView];
         tableView;
     });
+    
+    _footerView = ({
+        XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
+        entryFooterView;
+    });
+    [self.tableView setTableFooterView:self.footerView];
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -185,6 +195,11 @@ UISearchDisplayDelegate
             }
         }];
         dispatch_async_on_main_queue(^{
+            if (symbolsTable.count == 0) {
+                self.footerView.footerLabel.text = NSLocalizedString(@"No Result", nil);
+            } else {
+                self.footerView.footerLabel.text = @"";
+            }
             self.symbolsTable = symbolsTable;
             blockInteractions(blockVC, NO);
             [self.tableView reloadData];

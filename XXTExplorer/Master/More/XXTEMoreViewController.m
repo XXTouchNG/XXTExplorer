@@ -244,7 +244,7 @@
                              NSLocalizedString(@"Settings", nil),
                              NSLocalizedString(@"System", nil),
                              NSLocalizedString(@"Help", nil)];
-    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web Client. \n- Access the WebDAV server.", nil), @"", @"", @"", @"", @"" ];
+    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil), @"", @"", @"", @"", @"" ];
     staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
     
 #else
@@ -267,7 +267,7 @@
     XXTEMoreLinkCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell3.imageView.image = [UIImage imageNamed:@"XXTEMoreIconLicense"];
-    cell3.titleLabel.text = NSLocalizedString(@"My License", nil);
+    cell3.titleLabel.text = NSLocalizedString(@"License & Device", nil);
     
     XXTEMoreLinkCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

@@ -80,7 +80,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     }
     XXTE_END_IGNORE_PARTIAL
     
-    self.title = NSLocalizedString(@"My License", nil);
+    self.title = NSLocalizedString(@"License & Device", nil);
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshControlDidChanged:) forControlEvents:UIControlEventValueChanged];

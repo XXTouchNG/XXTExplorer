@@ -630,6 +630,9 @@
 "Install" = "安装";
 
 /* No comment provided by engineer. */
+"Install Activator" = "安装 Activator";
+
+/* No comment provided by engineer. */
 "Install via %@" = "通过 %@ 安装";
 
 /* No comment provided by engineer. */
@@ -694,6 +697,9 @@
 
 /* No comment provided by engineer. */
 "License" = "授权";
+
+/* No comment provided by engineer. */
+"License & Device" = "授权与设备";
 
 /* No comment provided by engineer. */
 "License Activated" = "授权已激活";
@@ -765,9 +771,6 @@
 "Moving process terminated: User interrupt occurred." = "移动进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
-"My License" = "我的授权";
-
-/* No comment provided by engineer. */
 "My Scripts" = "我的脚本";
 
 /* No comment provided by engineer. */
@@ -795,13 +798,19 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
-
-/* No comment provided by engineer. */
 "No action" = "无动作";
 
 /* No comment provided by engineer. */
+"No Action" = "无动作";
+
+/* No comment provided by engineer. */
+"No Application" = "无应用";
+
+/* No comment provided by engineer. */
 "No item" = "无项目";
+
+/* No comment provided by engineer. */
+"No Result" = "无结果";
 
 /* No comment provided by engineer. */
 "No symbol definition found for this language." = "找不到当前语言的符号定义.";
@@ -829,6 +838,9 @@
 
 /* No comment provided by engineer. */
 "Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
+
+/* No comment provided by engineer. */
+"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods." = "打开 \"Cydia\" 并安装第三方插件 \"Activator\", 获取更多自定义的激活方式.";
 
 /* No comment provided by engineer. */
 "Open URL" = "打开 URL";
@@ -1222,7 +1234,7 @@
 "Try Again" = "重试";
 
 /* No comment provided by engineer. */
-"Turn on the switch: \n- Access the Web Client. \n- Access the WebDAV server." = "启用远程访问以: \n- 访问 Web 客户端. \n- 访问 WebDAV 服务器.";
+"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi." = "启用远程访问以: \n- 访问 Web/WebDAV 服务. \n- 通过无线局域网向设备上传文件.";
 
 /* No comment provided by engineer. */
 "Turn to \"Settings > Privacy > Camera\" and enable %@ to use your camera." = "请前往 \"设置 > 隐私 > 相机\", 并允许 %@ 使用您的相机.";

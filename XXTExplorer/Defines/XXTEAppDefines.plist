@@ -20,6 +20,8 @@
 	<string>http://%@:46952/</string>
 	<key>CYDIA_URL</key>
 	<string>cydia://url/https://cydia.saurik.com/api/share#?source=https://apt.xxtouch.com/&amp;package=com.1func.xxtouch.ios</string>
+	<key>ACTIVATOR_URL</key>
+	<string>cydia://package/libactivator</string>
 	<key>FEVER_PATH</key>
 	<string>/private/var/mobile/Media/1ferver/lua/scripts</string>
 	<key>MAIN_PATH</key>

@@ -13,6 +13,8 @@
 #import "XXTPickerDefine.h"
 #import "XXTPickerSnippet.h"
 
+#import "XXTExplorerFooterView.h"
+
 enum {
     kXXTApplicationPickerCellSectionSelected = 0,
     kXXTApplicationPickerCellSectionUnselected
@@ -51,6 +53,7 @@ UISearchDisplayDelegate
 @property(nonatomic, strong, readonly) NSMutableArray <NSString *> *displayUnselectedIdentifiers;
 
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
+@property (nonatomic, strong) XXTExplorerFooterView *footerView;
 
 @end
 
@@ -157,6 +160,12 @@ UISearchDisplayDelegate
         [self.view addSubview:tableView];
         tableView;
     });
+    
+    _footerView = ({
+        XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
+        entryFooterView;
+    });
+    [self.tableView setTableFooterView:self.footerView];
     
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
@@ -275,6 +284,11 @@ UISearchDisplayDelegate
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (allApplications.count == 0) {
+                self.footerView.footerLabel.text = NSLocalizedString(@"No Application", nil);
+            } else {
+                self.footerView.footerLabel.text = @"";
+            }
             [self.tableView reloadData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (refreshControl && [refreshControl isRefreshing]) {

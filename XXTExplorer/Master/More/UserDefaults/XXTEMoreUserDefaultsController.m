@@ -100,6 +100,7 @@ XXTE_END_IGNORE_PARTIAL
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+//    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleDescriptionValueCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleDescriptionValueCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL

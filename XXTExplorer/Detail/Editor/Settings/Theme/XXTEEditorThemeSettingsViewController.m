@@ -37,8 +37,6 @@
     NSString *rawThemesPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
     NSArray <NSDictionary *> *rawThemes = [[NSArray alloc] initWithContentsOfFile:rawThemesPath];
     _themes = rawThemes;
-    
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEEditorThemeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEEditorThemeCellReuseIdentifier];
 }
 
 #pragma mark - Life Cycle
@@ -49,6 +47,8 @@
     self.title = NSLocalizedString(@"Theme", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+//    self.tableView.tableFooterView = [UIView new];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEEditorThemeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEEditorThemeCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {

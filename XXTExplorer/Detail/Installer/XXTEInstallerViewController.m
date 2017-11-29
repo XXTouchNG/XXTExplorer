@@ -364,7 +364,7 @@ typedef enum : NSUInteger {
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.dataSource = self;
         tableView.delegate = self;
-        tableView.tableFooterView = [UIView new];
+//        tableView.tableFooterView = [UIView new];
         tableView.editing = NO;
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {

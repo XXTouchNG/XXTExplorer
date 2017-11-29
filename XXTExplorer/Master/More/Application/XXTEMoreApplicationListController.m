@@ -13,6 +13,8 @@
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 
+#import "XXTExplorerFooterView.h"
+
 enum {
     kXXTEMoreApplicationListControllerCellSection = 0,
 };
@@ -51,6 +53,8 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
+
+@property (nonatomic, strong) XXTExplorerFooterView *footerView;
 
 @end
 
@@ -122,6 +126,12 @@ XXTE_END_IGNORE_PARTIAL
         [self.view addSubview:tableView];
         tableView;
     });
+    
+    _footerView = ({
+        XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
+        entryFooterView;
+    });
+    [self.tableView setTableFooterView:self.footerView];
     
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
@@ -244,6 +254,11 @@ XXTE_END_IGNORE_PARTIAL
             filteredApplications;
         });
         dispatch_async_on_main_queue(^{
+            if (self.allApplications.count == 0) {
+                self.footerView.footerLabel.text = NSLocalizedString(@"No Application", nil);
+            } else {
+                self.footerView.footerLabel.text = @"";
+            }
             [self.tableView reloadData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (refreshControl && [refreshControl isRefreshing]) {

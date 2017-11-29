@@ -20,6 +20,8 @@
 #import "XXTEModeSettingsController.h"
 #import "LASettingsViewController+MyShowsAd.h"
 
+#import "XXTEAppDefines.h"
+
 static NSString * const kXXTEActivatorLibraryPath = @"/usr/lib/libactivator.dylib";
 static NSString * const kXXTEActivatorListenerRunOrStop = @"com.1func.xxtouch.run_or_stop";
 static NSString * const kXXTEActivatorListenerRunOrStopWithAlert = @"com.1func.xxtouch.run_or_stop_with_alert";
@@ -165,7 +167,11 @@ static void * activatorHandler = nil;
 
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[@"", @""];
-    staticSectionFooters = @[@"", NSLocalizedString(@"\"Activator\" is active, configure activation behaviours here.", nil)];
+    if (self.activatorExists) {
+        staticSectionFooters = @[@"", NSLocalizedString(@"\"Activator\" is active, configure activation behaviours here.", nil)];
+    } else {
+        staticSectionFooters = @[@"", NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods.", nil)];
+    }
 
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -198,8 +204,14 @@ static void * activatorHandler = nil;
                         @[ cellActivator ],
                         ];
     } else {
+        XXTEMoreTitleDescriptionCell *cellActivator = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
+        cellActivator.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cellActivator.titleLabel.text = NSLocalizedString(@"Install Activator", nil);
+        cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
+        
         staticCells = @[
-                        @[cell1, cell2, cell3, cell4],
+                        @[ cell1, cell2, cell3, cell4 ],
+                        @[ cellActivator ],
                         ];
     }
 }
@@ -243,13 +255,23 @@ static void * activatorHandler = nil;
                 toastMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
             }
         } else if (indexPath.section == 1) {
+            if (self.activatorExists) {
 #if !(TARGET_OS_SIMULATOR)
-            XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] initWithMode:nil];
+                XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] initWithMode:nil];
 #else
-            XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] init];
+                XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] init];
 #endif
-            vc.title = NSLocalizedString(@"Activator", nil);
-            [self.navigationController pushViewController:vc animated:YES];
+                vc.title = NSLocalizedString(@"Activator", nil);
+                [self.navigationController pushViewController:vc animated:YES];
+            } else {
+                NSString *activatorURLString = uAppDefine(@"ACTIVATOR_URL");
+                NSURL *activatorURL = [NSURL URLWithString:activatorURLString];
+                if ([[UIApplication sharedApplication] canOpenURL:activatorURL]) {
+                    [[UIApplication sharedApplication] openURL:activatorURL];
+                } else {
+                    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open: \"%@\"", nil), activatorURL]);
+                }
+            }
         }
     }
 }

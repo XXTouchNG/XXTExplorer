@@ -139,15 +139,22 @@
             [self childViewControllerWillDisappear:previousPage animated:NO];
         }
         [self childViewControllerWillAppear:idx animated:NO];
-        if (NO == [self.childViewControllers containsObject:controller]) {
+        BOOL alreadyLoaded = [self.childViewControllers containsObject:controller];
+        if (!alreadyLoaded) {
             [self addChildViewController:controller];
             [self.pageScrollView addSubview:controller.view];
             [controller didMoveToParentViewController:self];
         }
-        if (previousPage != idx) {
+        BOOL switchPage = (previousPage != idx);
+        if (switchPage)
+        {
             [self childViewControllerDidDisappear:previousPage animated:NO];
         }
-        [self childViewControllerDidAppear:idx animated:NO];
+        if (alreadyLoaded ||
+            !switchPage)
+        {
+            [self childViewControllerDidAppear:idx animated:NO];
+        }
     }
 }
     
