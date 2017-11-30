@@ -66,7 +66,13 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBar.translucent = NO;
+   
+    if (@available(iOS 11.0, *)) {
+        self.navigationBar.translucent = YES;
+    } else {
+        self.navigationBar.translucent = NO;
+    }
+    
     [self.view addSubview:self.popupBar];
 }
 

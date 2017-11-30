@@ -156,6 +156,9 @@
                                     {
                                         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot perform operation \"%@\" on Pasteboard URL \"%@\".", nil), NSLocalizedString(@"Native Open", nil), pasteboardURL]);
                                     }
+                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                                        [pb setValue:@"" forPasteboardType:UIPasteboardNameGeneral];
+                                    });
                                 });
                             }
                             else

@@ -94,6 +94,8 @@
                     NSData *pathData = [self.metaPath dataUsingEncoding:NSUTF8StringEncoding];
                     [_delegate packageExtractor:self didFinishFetchingMetaData:pathData];
                 }
+            } else {
+                [self callbackFetchingMetaDataWithErrorReason:NSLocalizedString(@"Cannot extract package.", nil)];
             }
         });
     });

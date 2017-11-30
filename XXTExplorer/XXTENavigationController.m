@@ -50,6 +50,7 @@
 
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
+    [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateNormal];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

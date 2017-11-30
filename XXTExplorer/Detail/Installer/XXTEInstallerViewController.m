@@ -131,7 +131,7 @@ typedef enum : NSUInteger {
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.topLayoutGuide
-                                                        attribute:NSLayoutAttributeTop
+                                                        attribute:NSLayoutAttributeBottom
                                                        multiplier:1.f
                                                          constant:0.f]];
     [constraints addObject:[NSLayoutConstraint constraintWithItem:self.loadingView
@@ -141,6 +141,13 @@ typedef enum : NSUInteger {
                                                         attribute:NSLayoutAttributeWidth
                                                        multiplier:1.f
                                                          constant:0.f]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:self.loadingView
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.f
+                                                         constant:XXTEInstallerLoadingViewHeight]];
     [self.view addConstraints:constraints];
 }
 
@@ -370,6 +377,7 @@ typedef enum : NSUInteger {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XXTE_END_IGNORE_PARTIAL
+        tableView.tableFooterView = [UIView new];
         _tableView = tableView;
     }
     return _tableView;
@@ -494,6 +502,11 @@ typedef enum : NSUInteger {
             }
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font = [UIFont systemFontOfSize:14.0];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

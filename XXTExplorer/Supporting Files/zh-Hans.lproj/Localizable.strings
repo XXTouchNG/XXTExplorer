@@ -258,6 +258,9 @@
 "Cannot encrypt: %@" = "无法加密: %@";
 
 /* No comment provided by engineer. */
+"Cannot extract package." = "无法解压安装包.";
+
+/* No comment provided by engineer. */
 "Cannot find QR Code in the image." = "图像中找不到二维码.";
 
 /* No comment provided by engineer. */
@@ -801,10 +804,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";

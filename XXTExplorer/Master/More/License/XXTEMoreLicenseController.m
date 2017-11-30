@@ -553,7 +553,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                                                              cancelButtonTitle:cancelButtonTitle
                                                         destructiveButtonTitle:nil
                                                                  actionHandler:actionHandler
-                                                                 cancelHandler:^ (LGAlertView *alert) { [alert dismissAnimated]; }
+                                                                 cancelHandler:^ (LGAlertView *alert) {
+                                                                     self.licenseField.text = @"";
+                                                                     [self textFieldDidChange:self.licenseField];
+                                                                     [alert dismissAnimated];
+                                                                 }
                                                             destructiveHandler:nil];
         
         if (NO == batchLicense) {

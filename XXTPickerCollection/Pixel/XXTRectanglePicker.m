@@ -127,6 +127,40 @@
     [self.view addSubview:self.placeholderView];
 }
 
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
+    NSMutableArray <NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:self.cropToolbar
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.f
+                                                         constant:0.f]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:self.cropToolbar
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.topLayoutGuide
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.f
+                                                         constant:0.f]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:self.cropToolbar
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeWidth
+                                                       multiplier:1.f
+                                                         constant:0.f]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:self.cropToolbar
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.f
+                                                         constant:44.0]];
+    [self.view addConstraints:constraints];
+}
+
 #pragma mark - Image Cache
 
 - (void)loadImageFromCache {
@@ -190,9 +224,9 @@
 
 - (UIToolbar *)cropToolbar {
     if (!_cropToolbar) {
-        UIToolbar *cropToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+        UIToolbar *cropToolbar = [[UIToolbar alloc] init];
         cropToolbar.hidden = YES;
-        cropToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        cropToolbar.translatesAutoresizingMaskIntoConstraints = NO;
         cropToolbar.backgroundColor = [UIColor clearColor];
         [cropToolbar setBackgroundColor:[UIColor colorWithWhite:1.f alpha:.75f]];
         
