@@ -11,7 +11,7 @@
 static NSString * const XXTEMoreLinkCellReuseIdentifier = @"XXTEMoreLinkCellReuseIdentifier";
 
 @interface XXTEMoreLinkCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) UIImage *iconImage;
 
 @end

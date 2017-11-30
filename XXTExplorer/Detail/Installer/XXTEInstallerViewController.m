@@ -22,7 +22,7 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryXPPReader.h"
 #import "XXTEMoreTitleValueCell.h"
-#import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEMoreLinkCell.h"
 #import "XXTExplorerDynamicSection.h"
 #import <XUI/NSObject+XUIStringValue.h>
 
@@ -33,7 +33,7 @@
 #import "XXTExplorerEntryXPPMeta.h"
 #import <LGAlertView/LGAlertView.h>
 
-#import "XXTEMoreSwitchNoIconCell.h"
+#import "XXTEMoreSwitchCell.h"
 #import "UIControl+BlockTarget.h"
 
 typedef enum : NSUInteger {
@@ -184,7 +184,7 @@ typedef enum : NSUInteger {
     
     // Install
     {
-        XXTEMoreSwitchNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+        XXTEMoreSwitchCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
         cell.titleLabel.text = NSLocalizedString(@"Remove after installation", nil);
         cell.optionSwitch.on = self.removeAfterInstallation;
         [cell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
@@ -241,7 +241,7 @@ typedef enum : NSUInteger {
             }
             else
             {
-                XXTEMoreLinkNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
                 NSString *localizedKey = [mainBundle localizedStringForKey:(generalKey) value:nil table:(@"Meta")];
                 if (!localizedKey)
                     localizedKey = [entryBundle localizedStringForKey:(generalKey) value:nil table:(@"Meta")];
@@ -312,7 +312,7 @@ typedef enum : NSUInteger {
             }
             else
             {
-                XXTEMoreLinkNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
                 NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
                 if (!localizedKey)
                     localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
@@ -477,13 +477,13 @@ typedef enum : NSUInteger {
     if (tableView == self.tableView) {
         NSString *sectionIdentifier = self.dynamicSections[indexPath.section].identifier;
         UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
-        if ([cell isKindOfClass:[XXTEMoreLinkNoIconCell class]] &&
+        if ([cell isKindOfClass:[XXTEMoreLinkCell class]] &&
                  [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
             XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
             objectViewController.tableViewStyle = UITableViewStylePlain;
             objectViewController.entryBundle = self.temporarilyEntryBundle;
-            objectViewController.title = ((XXTEMoreLinkNoIconCell *)cell).titleLabel.text;
+            objectViewController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
             [self.navigationController pushViewController:objectViewController animated:YES];
         }
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {

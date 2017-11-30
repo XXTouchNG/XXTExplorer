@@ -8,7 +8,7 @@
 #import <sys/stat.h>
 #import "XXTEDownloadViewController.h"
 #import "XXTEMoreAddressCell.h"
-#import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEMoreLinkCell.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
 #import "XXTEAppDefines.h"

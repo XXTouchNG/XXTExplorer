@@ -11,8 +11,8 @@
 static NSString * const XXTEMoreSwitchCellReuseIdentifier = @"XXTEMoreSwitchCellReuseIdentifier";
 
 @interface XXTEMoreSwitchCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *optionSwitch;
+@property (nonatomic, strong) UIImage *iconImage;
 
 @end

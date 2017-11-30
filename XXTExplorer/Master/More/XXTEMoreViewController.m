@@ -170,7 +170,7 @@
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Remote Access", nil);
     cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell1.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRemoteAccess"];
+    cell1.iconImageView.image = [UIImage imageNamed:@"XXTEMoreIconRemoteAccess"];
     [cell1.optionSwitch addTarget:self action:@selector(remoteAccessOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.remoteAccessSwitch = cell1.optionSwitch;
     self.remoteAccessIndicator = cell1.optionIndicator;
@@ -261,72 +261,72 @@
     
     XXTEMoreLinkCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
-    cell2.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRestartDaemon"];
+    cell2.iconImage = [UIImage imageNamed:@"XXTEMoreIconRestartDaemon"];
     cell2.titleLabel.text = NSLocalizedString(@"Restart Daemon", nil);
     
     XXTEMoreLinkCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell3.imageView.image = [UIImage imageNamed:@"XXTEMoreIconLicense"];
+    cell3.iconImage = [UIImage imageNamed:@"XXTEMoreIconLicense"];
     cell3.titleLabel.text = NSLocalizedString(@"License & Device", nil);
     
     XXTEMoreLinkCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell4.imageView.image = [UIImage imageNamed:@"XXTEMoreIconActivationConfig"];
+    cell4.iconImage = [UIImage imageNamed:@"XXTEMoreIconActivationConfig"];
     cell4.titleLabel.text = NSLocalizedString(@"Activation Config", nil);
     
     XXTEMoreLinkCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell5.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRecordingConfig"];
+    cell5.iconImage = [UIImage imageNamed:@"XXTEMoreIconRecordingConfig"];
     cell5.titleLabel.text = NSLocalizedString(@"Recording Config", nil);
     
     XXTEMoreLinkCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell6.imageView.image = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
+    cell6.iconImage = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
     cell6.titleLabel.text = NSLocalizedString(@"Boot Script", nil);
     
     XXTEMoreLinkCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell7.imageView.image = [UIImage imageNamed:@"XXTEMoreIconUserDefaults"];
+    cell7.iconImage = [UIImage imageNamed:@"XXTEMoreIconUserDefaults"];
     cell7.titleLabel.text = NSLocalizedString(@"User Defaults", nil);
     
     XXTEMoreLinkCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell8.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell8.imageView.image = [UIImage imageNamed:@"XXTEMoreIconApplicationList"];
+    cell8.iconImage = [UIImage imageNamed:@"XXTEMoreIconApplicationList"];
     cell8.titleLabel.text = NSLocalizedString(@"Application List", nil);
     
     XXTEMoreLinkCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell9.accessoryType = UITableViewCellAccessoryNone;
-    cell9.imageView.image = [UIImage imageNamed:@"XXTEMoreIconCleanGPSCaches"];
+    cell9.iconImage = [UIImage imageNamed:@"XXTEMoreIconCleanGPSCaches"];
     cell9.titleLabel.text = NSLocalizedString(@"Clean GPS Caches", nil);
     
     XXTEMoreLinkCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell10.accessoryType = UITableViewCellAccessoryNone;
-    cell10.imageView.image = [UIImage imageNamed:@"XXTEMoreIconCleanUICaches"];
+    cell10.iconImage = [UIImage imageNamed:@"XXTEMoreIconCleanUICaches"];
     cell10.titleLabel.text = NSLocalizedString(@"Clean UI Caches", nil);
     
     XXTEMoreLinkCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell11.accessoryType = UITableViewCellAccessoryNone;
-    cell11.imageView.image = [UIImage imageNamed:@"XXTEMoreIconCleanAll"];
+    cell11.iconImage = [UIImage imageNamed:@"XXTEMoreIconCleanAll"];
     cell11.titleLabel.text = NSLocalizedString(@"Clean All", nil);
     
     XXTEMoreLinkCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell12.accessoryType = UITableViewCellAccessoryNone;
-    cell12.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRespringDevice"];
+    cell12.iconImage = [UIImage imageNamed:@"XXTEMoreIconRespringDevice"];
     cell12.titleLabel.text = NSLocalizedString(@"Respring Device", nil);
     
     XXTEMoreLinkCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell13.accessoryType = UITableViewCellAccessoryNone;
-    cell13.imageView.image = [UIImage imageNamed:@"XXTEMoreIconRebootDevice"];
+    cell13.iconImage = [UIImage imageNamed:@"XXTEMoreIconRebootDevice"];
     cell13.titleLabel.text = NSLocalizedString(@"Restart Device", nil);
     
     XXTEMoreLinkCell *cell14 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell14.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell14.imageView.image = [UIImage imageNamed:@"XXTEMoreIconDocumentsOnline"];
+    cell14.iconImage = [UIImage imageNamed:@"XXTEMoreIconDocumentsOnline"];
     cell14.titleLabel.text = NSLocalizedString(@"Online Documents", nil);
     
     XXTEMoreLinkCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell15.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell15.imageView.image = [UIImage imageNamed:@"XXTEMoreIconAbout"];
+    cell15.iconImage = [UIImage imageNamed:@"XXTEMoreIconAbout"];
     cell15.titleLabel.text = NSLocalizedString(@"About", nil);
     
     XXTEMoreAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
@@ -337,12 +337,12 @@
     
     XXTEMoreLinkCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell7.imageView.image = [UIImage imageNamed:@"XXTEMoreIconUserDefaults"];
+    cell7.iconImage = [UIImage imageNamed:@"XXTEMoreIconUserDefaults"];
     cell7.titleLabel.text = NSLocalizedString(@"User Defaults", nil);
     
     XXTEMoreLinkCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell15.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell15.imageView.image = [UIImage imageNamed:@"XXTEMoreIconAbout"];
+    cell15.iconImage = [UIImage imageNamed:@"XXTEMoreIconAbout"];
     cell15.titleLabel.text = NSLocalizedString(@"About", nil);
     
 #endif

@@ -7,7 +7,7 @@
 //
 
 #import "XXTEMoreUserDefaultsOperationController.h"
-#import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEMoreLinkCell.h"
 #import "XXTEDispatchDefines.h"
 
 @interface XXTEMoreUserDefaultsOperationController ()
@@ -46,7 +46,7 @@
     self.title = self.userDefaultsEntry[@"title"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkNoIconCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkNoIconCellReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -103,7 +103,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XXTEMoreLinkNoIconCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkNoIconCellReuseIdentifier];
+    XXTEMoreLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkCellReuseIdentifier];
     if ((NSUInteger) indexPath.row == self.selectedOperation) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {

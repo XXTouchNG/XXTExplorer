@@ -193,27 +193,19 @@ static void * activatorHandler = nil;
     cell4.titleLabel.text = NSLocalizedString(@"Press & Hold \"Volume -\"", nil);
     cell4.descriptionLabel.text = NSLocalizedString(@"No action", nil);
     
+    XXTEMoreTitleDescriptionCell *cellActivator = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
+    cellActivator.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cellActivator.iconImage = [UIImage imageNamed:@"ActivatorIcon"];
+    cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
     if (self.activatorExists) {
-        XXTEMoreTitleDescriptionCell *cellActivator = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
-        cellActivator.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cellActivator.titleLabel.text = NSLocalizedString(@"Activator", nil);
-        cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
-        
-        staticCells = @[
-                        @[ cell1, cell2, cell3, cell4 ],
-                        @[ cellActivator ],
-                        ];
     } else {
-        XXTEMoreTitleDescriptionCell *cellActivator = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
-        cellActivator.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cellActivator.titleLabel.text = NSLocalizedString(@"Install Activator", nil);
-        cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
-        
-        staticCells = @[
-                        @[ cell1, cell2, cell3, cell4 ],
-                        @[ cellActivator ],
-                        ];
     }
+    staticCells = @[
+                    @[ cell1, cell2, cell3, cell4 ],
+                    @[ cellActivator ],
+                    ];
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource

@@ -13,7 +13,7 @@
 #import "XXTEEditorDefaults.h"
 
 // Cells & Subviews
-#import "XXTEMoreSwitchNoIconCell.h"
+#import "XXTEMoreSwitchCell.h"
 #import "UIControl+BlockTarget.h"
 
 @interface XXTEEditorSearchSettingsController ()
@@ -71,7 +71,7 @@
     staticSectionTitles = @[ @"" ];
     staticSectionFooters = @[ @"" ];
     
-    XXTEMoreSwitchNoIconCell *cell17 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreSwitchCell *cell17 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell17.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
     cell17.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
     [cell17.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
@@ -79,7 +79,7 @@
         XXTEDefaultsSetBasic(XXTEEditorSearchRegularExpression, optionSwitch.on);
     }];
     
-    XXTEMoreSwitchNoIconCell *cell18 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchNoIconCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreSwitchCell *cell18 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell18.titleLabel.text = NSLocalizedString(@"Case Sensitive", nil);
     cell18.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
     [cell18.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {

@@ -7,7 +7,7 @@
 //
 
 #import "XXTEMoreBootScriptController.h"
-#import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEMoreLinkCell.h"
 #import "XXTEMoreSwitchCell.h"
 #import "XXTEMoreAddressCell.h"
 #import <PromiseKit/PromiseKit.h>
@@ -19,6 +19,7 @@
 
 @interface XXTEMoreBootScriptController () <XXTExplorerItemPickerDelegate>
 @property (nonatomic, strong) UISwitch *bootScriptSwitch;
+@property (nonatomic, copy) NSString *bootScriptPath;
 
 @end
 
@@ -28,7 +29,6 @@
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
     NSArray <NSNumber *> *staticSectionRowNum;
-    NSString *bootScriptPath;
 }
 
 - (instancetype)init {
@@ -78,16 +78,16 @@
 
 - (void)updateBootScriptDisplay {
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : NSLocalizedString(@"N/A", nil);
+    cell2.addressLabel.text = self.bootScriptPath.length > 0 ? self.bootScriptPath : NSLocalizedString(@"N/A", nil);
     
-    XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreLinkCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell3.titleLabel.text = NSLocalizedString(@"Select Boot Script", nil);
     
     staticCells[1][0] = cell2;
     staticCells[1][1] = cell3;
     
-    if (bootScriptPath) {
+    if (self.bootScriptPath) {
         staticSectionTitles = @[ @"", NSLocalizedString(@"Current Script", nil) ];
         staticSectionRowNum = @[ @1, @2 ];
     } else {
@@ -102,14 +102,14 @@
     
     XXTEMoreSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Enable Boot Script", nil);
-    cell1.iconImageView.image = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
+    cell1.iconImage = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
     [cell1.optionSwitch addTarget:self action:@selector(bootScriptOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.bootScriptSwitch = cell1.optionSwitch;
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell2.addressLabel.text = bootScriptPath.length > 0 ? bootScriptPath : NSLocalizedString(@"N/A", nil);
+    cell2.addressLabel.text = self.bootScriptPath.length > 0 ? self.bootScriptPath : NSLocalizedString(@"N/A", nil);
     
-    XXTEMoreLinkNoIconCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreLinkCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell3.titleLabel.text = NSLocalizedString(@"Select Boot Script", nil);
     
@@ -124,16 +124,18 @@
 
 - (void)reloadDynamicTableViewData {
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    @weakify(self);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_startup_conf") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        @strongify(self);
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
             BOOL bootScriptEnabled = [jsonDictionary[@"data"][@"startup_run"] boolValue];
             if (bootScriptEnabled) {
                 NSString *bootScriptName = jsonDictionary[@"data"][@"startup_script"];
                 if (bootScriptName) {
                     if ([bootScriptName isAbsolutePath]) {
-                        bootScriptPath = bootScriptName;
+                        self.bootScriptPath = bootScriptName;
                     } else {
-                        bootScriptPath = [XXTExplorerViewController.initialPath stringByAppendingPathComponent:bootScriptName];
+                        self.bootScriptPath = [XXTExplorerViewController.initialPath stringByAppendingPathComponent:bootScriptName];
                     }
                 }
             }
@@ -218,7 +220,7 @@
     if (tableView == self.tableView) {
         if (indexPath.section == 1) {
             if (indexPath.row == 0) {
-                NSString *addressText = bootScriptPath;
+                NSString *addressText = self.bootScriptPath;
                 if (addressText && addressText.length > 0) {
                     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
@@ -232,14 +234,12 @@
                     });
                 }
             } else if (indexPath.row == 1) {
-                NSString *entryPath = [bootScriptPath stringByDeletingLastPathComponent];
-                if (entryPath) {
-                    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
-                    itemPicker.delegate = self;
-                    itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua" ];
-                    itemPicker.selectedBootScriptPath = bootScriptPath;
-                    [self.navigationController pushViewController:itemPicker animated:YES];
-                }
+                NSString *rootPath = [XXTEAppDelegate sharedRootPath];
+                XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:rootPath];
+                itemPicker.delegate = self;
+                itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua" ];
+                itemPicker.selectedBootScriptPath = self.bootScriptPath;
+                [self.navigationController pushViewController:itemPicker animated:YES];
             }
         }
     }
@@ -276,20 +276,22 @@
             changeToCommand = @"set_startup_run_on";
         else
             changeToCommand = @"set_startup_run_off";
+        @weakify(self);
         UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+            @strongify(self);
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
                 if (changeToStatus) {
                     NSString *bootScriptName = jsonDictionary[@"data"][@"startup_script"];
                     if (bootScriptName) {
                         if ([bootScriptName isAbsolutePath]) {
-                            bootScriptPath = bootScriptName;
+                            self.bootScriptPath = bootScriptName;
                         } else {
-                            bootScriptPath = [XXTExplorerViewController.initialPath stringByAppendingPathComponent:bootScriptName];
+                            self.bootScriptPath = [XXTExplorerViewController.initialPath stringByAppendingPathComponent:bootScriptName];
                         }
                     }
                 } else {
-                    bootScriptPath = nil;
+                    self.bootScriptPath = nil;
                 }
                 [self updateBootScriptDisplay];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -314,9 +316,11 @@
 
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    @weakify(self);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_startup_script_file") JSON:@{ @"filename": path }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        @strongify(self);
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            bootScriptPath = path;
+            self.bootScriptPath = path;
             [self updateBootScriptDisplay];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         } else {

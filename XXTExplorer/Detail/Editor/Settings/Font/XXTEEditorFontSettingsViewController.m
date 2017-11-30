@@ -8,7 +8,7 @@
 
 #import "XXTEEditorFontSettingsViewController.h"
 
-#import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEMoreLinkCell.h"
 
 @interface XXTEEditorFontSettingsViewController ()
 
@@ -53,7 +53,7 @@
     self.title = NSLocalizedString(@"Font Family", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkNoIconCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkNoIconCellReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -85,7 +85,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        XXTEMoreLinkNoIconCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkNoIconCellReuseIdentifier forIndexPath:indexPath];
+        XXTEMoreLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkCellReuseIdentifier forIndexPath:indexPath];
         UIFont *font = self.fonts[indexPath.row];
         cell.titleLabel.text = font.familyName;
         cell.titleLabel.font = font;

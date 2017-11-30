@@ -14,5 +14,6 @@ static NSString * const XXTEMoreTitleDescriptionCellReuseIdentifier = @"XXTEMore
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (nonatomic, strong) UIImage *iconImage;
 
 @end

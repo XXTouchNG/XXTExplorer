@@ -171,25 +171,21 @@ typedef enum : NSUInteger {
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.titleLabel.text = NSLocalizedString(@"Regular Lua File", nil);
     cell2.descriptionLabel.text = NSLocalizedString(@"A regular lua file from template. (text/lua)", nil);
-    cell2.valueLabel.text = NSLocalizedString(@"LUA", nil);
     
     XXTEMoreTitleDescriptionCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryNone;
     cell3.titleLabel.text = NSLocalizedString(@"Regular Text File", nil);
     cell3.descriptionLabel.text = NSLocalizedString(@"An empty regular text file. (text/plain)", nil);
-    cell3.valueLabel.text = NSLocalizedString(@"TXT", nil);
     
     XXTEMoreTitleDescriptionCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryNone;
     cell4.titleLabel.text = NSLocalizedString(@"Regular File", nil);
     cell4.descriptionLabel.text = NSLocalizedString(@"An empty regular file.", nil);
-    cell4.valueLabel.text = NSLocalizedString(@"FIL", nil);
     
     XXTEMoreTitleDescriptionCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell5.accessoryType = UITableViewCellAccessoryNone;
     cell5.titleLabel.text = NSLocalizedString(@"Directory", nil);
     cell5.descriptionLabel.text = NSLocalizedString(@"A directory with nothing inside.", nil);
-    cell5.valueLabel.text = NSLocalizedString(@"DIR", nil);
     
 #ifndef APPSTORE
     XXTEMoreAddressCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];

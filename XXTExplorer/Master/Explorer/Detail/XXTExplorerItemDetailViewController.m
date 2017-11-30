@@ -20,7 +20,7 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreAddressCell.h"
-#import "XXTEMoreLinkNoIconCell.h"
+#import "XXTEMoreLinkCell.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <PromiseKit/PromiseKit.h>
 #import "XXTExplorerEntryParser.h"
@@ -458,7 +458,7 @@ static int sizingCancelFlag = 0;
                 }
                 else
                 {
-                    XXTEMoreLinkNoIconCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkNoIconCell class]) owner:nil options:nil] lastObject];
+                    XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
                     NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
                     if (!localizedKey)
                         localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
@@ -761,12 +761,12 @@ static int sizingCancelFlag = 0;
                 }
             }
         }
-        else if ([cell isKindOfClass:[XXTEMoreLinkNoIconCell class]] &&
+        else if ([cell isKindOfClass:[XXTEMoreLinkCell class]] &&
                  [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
             XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
             objectViewController.entryBundle = self.entryBundle;
-            objectViewController.title = ((XXTEMoreLinkNoIconCell *)cell).titleLabel.text;
+            objectViewController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
             [self.navigationController pushViewController:objectViewController animated:YES];
         }
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
