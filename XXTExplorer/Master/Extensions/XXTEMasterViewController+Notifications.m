@@ -127,21 +127,43 @@
                     UIPasteboard *pb = [UIPasteboard generalPasteboard];
                     if (detectType == XXTExplorerPasteboardDetectTypeAll || detectType == XXTExplorerPasteboardDetectTypeURL) {
                         NSURL *pasteboardURL = [pb URL];
-                        if ([pasteboardURL scheme].length > 0)
-                        {
-                            dispatch_async_on_main_queue(^{
-                                NSString *pasteboardString = [pasteboardURL absoluteString];
-                                NSString *saveName = [pasteboardString lastPathComponent];
-                                BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"download", @"url": pasteboardString, @"path": saveName }];
-                                if (!performResult) {
-                                    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot perform operation \"Download\" on Pasteboard URL \"%@\".", nil), pasteboardURL]);
-                                }
-                                else {
-                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                                        [pb setValue:@"" forPasteboardType:UIPasteboardNameGeneral];
-                                    });
-                                }
-                            });
+                        NSString *scheme = [pasteboardURL scheme];
+                        if (scheme.length > 0) {
+                            if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
+                            { // Download
+                                dispatch_async_on_main_queue(^{
+                                    NSString *pasteboardString = [pasteboardURL absoluteString];
+                                    NSString *saveName = [pasteboardString lastPathComponent];
+                                    BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"download", @"url": pasteboardString, @"path": saveName }];
+                                    if (!performResult) {
+                                        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot perform operation \"%@\" on Pasteboard URL \"%@\".", nil), NSLocalizedString(@"Download", nil), pasteboardURL]);
+                                    }
+                                    else {
+                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                                            [pb setValue:@"" forPasteboardType:UIPasteboardNameGeneral];
+                                        });
+                                    }
+                                });
+                            }
+                            else if ([scheme isEqualToString:@"xxt"])
+                            { // Native Open
+                                dispatch_async_on_main_queue(^{
+                                    if ([[UIApplication sharedApplication] canOpenURL:pasteboardURL])
+                                    {
+                                        [[UIApplication sharedApplication] openURL:pasteboardURL];
+                                    }
+                                    else
+                                    {
+                                        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot perform operation \"%@\" on Pasteboard URL \"%@\".", nil), NSLocalizedString(@"Native Open", nil), pasteboardURL]);
+                                    }
+                                });
+                            }
+                            else
+                            { // Unsupported
+                                dispatch_async_on_main_queue(^{
+                                    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Unsupported Pasteboard URL: \"%@\".", nil), pasteboardURL]);
+                                });
+                            }
                         }
                     }
                     if (detectType == XXTExplorerPasteboardDetectTypeAll || detectType == XXTExplorerPasteboardDetectTypeLicense) {

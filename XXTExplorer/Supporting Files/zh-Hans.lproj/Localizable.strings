@@ -282,7 +282,7 @@
 "Cannot overwrite file \"%@\".\n%@" = "无法替换文件 \"%@\".\n%@";
 
 /* No comment provided by engineer. */
-"Cannot perform operation \"Download\" on Pasteboard URL \"%@\"." = "无法对剪贴板链接 \"%@\" 执行操作 \"下载\".";
+"Cannot perform operation \"%@\" on Pasteboard URL \"%@\"." = "无法执行操作 \"%@\": 剪贴板链接 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot read archive file \"%@\"." = "无法读取压缩文件 \"%@\".";
@@ -783,6 +783,9 @@
 "Name" = "名称";
 
 /* No comment provided by engineer. */
+"Native Open" = "本地打开";
+
+/* No comment provided by engineer. */
 "Needs Respring" = "需要注销";
 
 /* No comment provided by engineer. */
@@ -1271,6 +1274,9 @@
 
 /* No comment provided by engineer. */
 "Unknown" = "未知";
+
+/* No comment provided by engineer. */
+"Unsupported Pasteboard URL: \"%@\"." = "不支持的剪贴板链接: \"%@\".";
 
 /* No comment provided by engineer. */
 "Use this viewer to open all documents like this one." = "使用该查看器查看所有此类型文档.";
