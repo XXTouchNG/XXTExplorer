@@ -53,12 +53,9 @@
         textLabel.textColor = XXTE_COLOR;
         textLabel.backgroundColor = [UIColor whiteColor];
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *))
-        {
+        if (@available(iOS 8.2, *)) {
             textLabel.font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
-        }
-        else
-        {
+        } else {
             textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
         }
         XXTE_END_IGNORE_PARTIAL
