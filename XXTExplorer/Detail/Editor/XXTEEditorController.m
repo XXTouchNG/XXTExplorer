@@ -59,7 +59,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
+#ifdef DEBUG
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
+#endif
 @property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *statisticsButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
@@ -458,6 +460,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     return _shareButtonItem;
 }
 
+#ifdef DEBUG
 - (UIBarButtonItem *)searchButtonItem {
     if (!_searchButtonItem) {
         UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSearch"] style:UIBarButtonItemStylePlain target:self action:@selector(searchButtonItemTapped:)];
@@ -465,6 +468,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     return _searchButtonItem;
 }
+#endif
 
 - (UIBarButtonItem *)symbolsButtonItem {
     if (!_symbolsButtonItem) {
@@ -581,7 +585,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         }
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+#ifdef DEBUG
         toolbar.items = @[ self.searchButtonItem, flexible, self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
+#else
+        toolbar.items = @[ self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
+#endif
         _toolbar = toolbar;
     }
     return _toolbar;

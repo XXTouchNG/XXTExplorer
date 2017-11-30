@@ -13,8 +13,6 @@
 #import "XXTPickerDefine.h"
 #import "XXTPickerSnippet.h"
 
-#import "XXTExplorerFooterView.h"
-
 enum {
     kXXTApplicationPickerCellSection = 0,
 };
@@ -52,7 +50,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSString *selectedIdentifier;
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
-@property (nonatomic, strong) XXTExplorerFooterView *footerView;
 
 @end
 
@@ -149,12 +146,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         [self.view addSubview:tableView];
         tableView;
     });
-    
-    _footerView = ({
-        XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
-        entryFooterView;
-    });
-    [self.tableView setTableFooterView:self.footerView];
     
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
@@ -269,11 +260,6 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
             self.selectedIdentifier = self.allApplications[0][kXXTApplicationDetailKeyBundleID];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.allApplications.count == 0) {
-                self.footerView.footerLabel.text = NSLocalizedString(@"No Application", nil);
-            } else {
-                self.footerView.footerLabel.text = @"";
-            }
             [self.tableView reloadData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (refreshControl && [refreshControl isRefreshing]) {

@@ -127,7 +127,6 @@
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XXTE_END_IGNORE_PARTIAL
-//        tableView.tableFooterView = [UIView new];
         tableView;
     });
     

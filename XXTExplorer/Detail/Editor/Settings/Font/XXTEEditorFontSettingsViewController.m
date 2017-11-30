@@ -53,7 +53,6 @@
     self.title = NSLocalizedString(@"Font Family", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-//    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkNoIconCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreLinkNoIconCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL

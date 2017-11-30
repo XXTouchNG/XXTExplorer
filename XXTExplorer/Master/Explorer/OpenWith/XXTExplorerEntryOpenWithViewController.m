@@ -93,7 +93,6 @@ typedef enum : NSUInteger {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-//    self.tableView.tableFooterView = [UIView new];
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {

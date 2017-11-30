@@ -110,7 +110,6 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
         tableView1.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTP_END_IGNORE_PARTIAL
-//    tableView1.tableFooterView = [UIView new];
     self.tableView = tableView1;
     
     if (@available(iOS 11.0, *)) {

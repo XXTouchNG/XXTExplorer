@@ -47,7 +47,6 @@
     self.title = NSLocalizedString(@"Theme", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-//    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEEditorThemeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEEditorThemeCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL

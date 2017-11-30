@@ -36,6 +36,9 @@
 
 - (void)setup {
     [self addSubview:self.footerLabel];
+    CGRect newFrame = self.frame;
+    newFrame.size.height = 92.f;
+    self.frame = newFrame;
 }
 
 - (void)layoutSubviews {
@@ -46,6 +49,7 @@
 - (UILabel *)footerLabel {
     if (!_footerLabel) {
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
+        textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textLabel.textColor = XXTE_COLOR;
         textLabel.backgroundColor = [UIColor whiteColor];
         XXTE_START_IGNORE_PARTIAL
@@ -58,7 +62,7 @@
             textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
         }
         XXTE_END_IGNORE_PARTIAL
-        textLabel.edgeInsets = UIEdgeInsetsMake(0, 12.f, 0, 12.f);
+        textLabel.edgeInsets = UIEdgeInsetsMake(0.0, 12.f, 24.0, 12.f);
         textLabel.numberOfLines = 1;
         textLabel.lineBreakMode = NSLineBreakByClipping;
         textLabel.textAlignment = NSTextAlignmentCenter;

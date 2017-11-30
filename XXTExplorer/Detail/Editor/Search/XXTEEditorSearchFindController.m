@@ -71,7 +71,6 @@
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         tableView.dataSource = self;
         tableView.delegate = self;
-//        tableView.tableFooterView = [UIView new];
         _tableView = tableView;
     }
     return _tableView;
