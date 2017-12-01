@@ -234,7 +234,7 @@
                     });
                 }
             } else if (indexPath.row == 1) {
-                NSString *rootPath = [XXTEAppDelegate sharedRootPath];
+                NSString *rootPath = [XXTExplorerViewController initialPath];
                 XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:rootPath];
                 itemPicker.delegate = self;
                 itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua" ];
@@ -334,7 +334,7 @@
         }
     }).finally(^() {
         blockInteractions(blockVC, NO);
-        [picker.navigationController popViewControllerAnimated:YES];
+        [picker.navigationController popToViewController:self animated:YES];
     });
 }
 

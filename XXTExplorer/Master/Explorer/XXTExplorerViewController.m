@@ -479,10 +479,10 @@
                 }
             }
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             if ([tableView isEditing]) {
 
             } else {
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
                 NSString *directoryRelativePath = entryAttributes[@"path"];
                 NSString *directoryPath = nil;
