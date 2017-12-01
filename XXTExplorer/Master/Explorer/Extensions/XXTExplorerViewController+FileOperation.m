@@ -570,16 +570,18 @@
                 BOOL removeResult = [fileManager removeItemAtPath:enumPath error:&error];
                 if (!removeResult) {
                     // TODO: pause by remove error
+                    break;
                 }
                 if (!self.busyOperationProgressFlag) {
                     error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil)}];
                     break;
                 }
             }
-            if ([fileManager fileExistsAtPath:entryPath] == NO) {
+            struct stat removeStat;
+            if (0 != lstat(entryPath.UTF8String, &removeStat)) {
                 [deletedPaths addObject:indexPath];
             }
-            BOOL result = (deletedPaths.count != 0);
+            BOOL result = (error == nil);
             dispatch_async_on_main_queue(^{
                 self.busyOperationProgressFlag = NO;
                 completionBlock(result, error);
