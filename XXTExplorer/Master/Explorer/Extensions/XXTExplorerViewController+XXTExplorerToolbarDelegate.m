@@ -26,6 +26,8 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
+#import "XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h"
+
 @interface XXTExplorerViewController ()
 
 @end
@@ -286,6 +288,7 @@
 
 - (void)presentNewDocumentViewController {
     XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
+    createItemViewController.delegate = self;
     XXTENavigationController *createItemNavigationController = [[XXTENavigationController alloc] initWithRootViewController:createItemViewController];
     createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

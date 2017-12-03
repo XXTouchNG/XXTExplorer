@@ -36,7 +36,7 @@
         self.leftConstraint.constant = 16.0;
         self.iconWidthConstraint.constant = 32.0;
     } else {
-        self.leftConstraint.constant = 0.0;
+        self.leftConstraint.constant = 8.0;
         self.iconWidthConstraint.constant = 0.0;
     }
 }

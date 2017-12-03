@@ -12,6 +12,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
+#import "XXTExplorerViewController+Notification.h"
 
 @implementation XXTExplorerViewController (XXTImagePickerControllerDelegate)
 
@@ -71,13 +72,7 @@
                 {
                     [self.tableView reloadData];
                 }
-                for (NSString *importedPath in importedPaths) {
-                    NSIndexPath *importedIndexPath = [self indexPathForEntryAtPath:importedPath];
-                    if (importedIndexPath) {
-                        [self.tableView selectRowAtIndexPath:importedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-                    }
-                }
-                [self updateToolbarStatus];
+                [self selectCellEntriesAtPaths:importedPaths];
                 blockInteractions(blockVC, NO);
             });
         });

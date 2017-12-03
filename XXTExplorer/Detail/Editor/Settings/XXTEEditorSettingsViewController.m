@@ -250,7 +250,7 @@
         case XXTEEditorWordColumnValue_160:
             columnIndex = 2;
             break;
-        case XXTEEditorWordColumnValue_320:
+        case XXTEEditorWordColumnValue_240:
             columnIndex = 3;
             break;
         default:
@@ -271,7 +271,7 @@
                 columnValue = XXTEEditorWordColumnValue_160;
                 break;
             case 3:
-                columnValue = XXTEEditorWordColumnValue_320;
+                columnValue = XXTEEditorWordColumnValue_240;
                 break;
             default:
                 break;

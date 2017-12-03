@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="XXTEMoreTitleDescriptionCellReuseIdentifier" rowHeight="66" id="KGk-i7-Jjw" customClass="XXTEMoreTitleDescriptionCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="0.0" reuseIdentifier="XXTEMoreTitleDescriptionCellReuseIdentifier" rowHeight="66" id="KGk-i7-Jjw" customClass="XXTEMoreTitleDescriptionCell">
             <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Up Press" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnV-py-qLM">
-                        <rect key="frame" x="80" y="15" width="155" height="21"/>
+                        <rect key="frame" x="88" y="15" width="155" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="ek7-U8-lkY"/>
                         </constraints>
@@ -29,21 +29,21 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Press &quot;Volume Up&quot; Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0MW-Fm-tRZ">
-                        <rect key="frame" x="80" y="35" width="155" height="16"/>
+                        <rect key="frame" x="88" y="35" width="155" height="16"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                         <color key="textColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NC-xf-GFy">
-                        <rect key="frame" x="251" y="22" width="117" height="20.5"/>
+                        <rect key="frame" x="259" y="22" width="101" height="20.5"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RBF-7b-ZGz">
-                        <rect key="frame" x="20" y="11" width="44" height="44"/>
+                        <rect key="frame" x="28" y="11" width="44" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="KbU-yS-WjF"/>
                             <constraint firstAttribute="height" constant="44" id="yQx-PM-S9W"/>
@@ -53,14 +53,14 @@
                 <constraints>
                     <constraint firstItem="RBF-7b-ZGz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6iC-Ky-XeL"/>
                     <constraint firstItem="4NC-xf-GFy" firstAttribute="leading" secondItem="0MW-Fm-tRZ" secondAttribute="trailing" constant="16" id="AFh-aR-S79"/>
-                    <constraint firstItem="RBF-7b-ZGz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="E7m-Jq-w4Z"/>
+                    <constraint firstItem="RBF-7b-ZGz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="E7m-Jq-w4Z"/>
                     <constraint firstItem="JnV-py-qLM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="Nie-sK-H64"/>
                     <constraint firstAttribute="bottomMargin" secondItem="0MW-Fm-tRZ" secondAttribute="bottom" constant="4" id="fHq-Qk-1m7"/>
                     <constraint firstItem="4NC-xf-GFy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hY3-ry-wvF"/>
                     <constraint firstItem="4NC-xf-GFy" firstAttribute="leading" secondItem="JnV-py-qLM" secondAttribute="trailing" constant="16" id="kuo-uv-lC6"/>
                     <constraint firstItem="JnV-py-qLM" firstAttribute="leading" secondItem="RBF-7b-ZGz" secondAttribute="trailing" constant="16" id="lHv-0D-8U5"/>
                     <constraint firstItem="0MW-Fm-tRZ" firstAttribute="leading" secondItem="JnV-py-qLM" secondAttribute="leading" id="x9B-4z-Ody"/>
-                    <constraint firstItem="4NC-xf-GFy" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="zWC-Ma-Hu2"/>
+                    <constraint firstItem="4NC-xf-GFy" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-8" id="zWC-Ma-Hu2"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>

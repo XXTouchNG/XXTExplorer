@@ -7,7 +7,8 @@
 //
 
 #import "XXTExplorerViewController.h"
+#import "XXTExplorerCreateItemViewController.h"
 
-@interface XXTExplorerViewController (XXTExplorerCreateItemViewControllerDelegate)
+@interface XXTExplorerViewController (XXTExplorerCreateItemViewControllerDelegate) <XXTExplorerCreateItemViewControllerDelegate>
 
 @end

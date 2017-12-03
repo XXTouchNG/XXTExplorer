@@ -370,7 +370,8 @@
         [refreshControl endRefreshing];
     } else {
         UITableView *tableView = self.tableView;
-        for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+        for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows])
+        {
             [self reconfigureCellAtIndexPath:indexPath];
         }
     }

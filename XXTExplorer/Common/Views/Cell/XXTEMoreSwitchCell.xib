@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="XXTEMoreSwitchCellReuseIdentifier" rowHeight="48" id="KGk-i7-Jjw" customClass="XXTEMoreSwitchCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="XXTEMoreSwitchCellReuseIdentifier" rowHeight="48" id="KGk-i7-Jjw" customClass="XXTEMoreSwitchCell">
             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -20,30 +20,30 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2L8-jD-zNU">
-                        <rect key="frame" x="20" y="5" width="32" height="32"/>
+                        <rect key="frame" x="28" y="5" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="WuJ-Ss-n2E"/>
                             <constraint firstAttribute="width" constant="32" id="wF7-fh-loi"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restart Service" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJ4-B3-vdy">
-                        <rect key="frame" x="68" y="11" width="261" height="21"/>
+                        <rect key="frame" x="76" y="11" width="245" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yb9-M0-dh7">
-                        <rect key="frame" x="345" y="6" width="51" height="31"/>
+                        <rect key="frame" x="337" y="6" width="51" height="31"/>
                         <color key="onTintColor" red="0.1019607843" green="0.73725490199999999" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
                     </switch>
                 </subviews>
                 <constraints>
                     <constraint firstItem="2L8-jD-zNU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2KT-dS-ZcL"/>
-                    <constraint firstItem="2L8-jD-zNU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="4Dj-PD-cPH"/>
+                    <constraint firstItem="2L8-jD-zNU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="4Dj-PD-cPH"/>
                     <constraint firstItem="Yb9-M0-dh7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="F6t-ef-gKc"/>
                     <constraint firstItem="oJ4-B3-vdy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OPl-ab-dQT"/>
                     <constraint firstItem="oJ4-B3-vdy" firstAttribute="leading" secondItem="2L8-jD-zNU" secondAttribute="trailing" constant="16" id="Sdu-qt-3NV"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Yb9-M0-dh7" secondAttribute="trailing" id="VGI-2O-Xhp"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Yb9-M0-dh7" secondAttribute="trailing" constant="8" id="VGI-2O-Xhp"/>
                     <constraint firstItem="Yb9-M0-dh7" firstAttribute="leading" secondItem="oJ4-B3-vdy" secondAttribute="trailing" constant="16" id="hDa-s4-ap3"/>
                 </constraints>
             </tableViewCellContentView>

@@ -36,15 +36,12 @@
             ) {
             [self loadEntryListData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
-            {
-                [self.tableView reloadData]; // fix indexPath misplace
-            }
             NSString *movedPath = aNotification.object;
-            if ([movedPath isKindOfClass:[NSString class]]) {
-                NSIndexPath *indexPath = [self indexPathForEntryAtPath:movedPath];
-                [self setEditing:YES animated:YES];
-                [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
-                [self updateToolbarStatus];
+            if (movedPath) {
+                [self.tableView reloadData]; // fix indexPath misplace
+                if ([movedPath isKindOfClass:[NSString class]]) {
+                    [self selectCellEntryAtPath:movedPath];
+                }
             }
         }
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive] ||
@@ -53,6 +50,25 @@
             [self refreshEntryListView:nil];
         }
     }
+}
+
+#pragma mark - Select Moved Cell
+
+- (void)selectCellEntryAtPath:(NSString *)entryPath {
+    NSIndexPath *indexPath = [self indexPathForEntryAtPath:entryPath];
+    [self setEditing:YES animated:YES];
+    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    [self updateToolbarStatus];
+}
+
+- (void)selectCellEntriesAtPaths:(NSArray <NSString *> *)entryPaths {
+    for (NSString *importedPath in entryPaths) {
+        NSIndexPath *importedIndexPath = [self indexPathForEntryAtPath:importedPath];
+        if (importedIndexPath) {
+            [self.tableView selectRowAtIndexPath:importedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
+    [self updateToolbarStatus];
 }
 
 @end

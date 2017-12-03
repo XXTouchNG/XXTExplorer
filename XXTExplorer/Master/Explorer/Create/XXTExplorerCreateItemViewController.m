@@ -49,7 +49,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, assign) kXXTExplorerCreateItemViewItemType selectedItemType;
 @property (nonatomic, strong) XUIViewShaker *itemNameShaker;
-@property (nonatomic, assign) BOOL editAfterCreatingItem;
 
 @end
 
@@ -59,6 +58,7 @@ typedef enum : NSUInteger {
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
     NSArray <NSNumber *> *staticSectionRowNum;
+    BOOL _editAfterCreatingItem;
 }
 
 + (NSDateFormatter *)itemTemplateDateFormatter {
@@ -173,10 +173,10 @@ typedef enum : NSUInteger {
     
     XXTEMoreSwitchCell *cell1_2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell1_2.titleLabel.text = NSLocalizedString(@"Edit After Creating Item", nil);
-    cell1_2.optionSwitch.on = self.editAfterCreatingItem;
+    cell1_2.optionSwitch.on = _editAfterCreatingItem;
     [cell1_2.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
         UISwitch *optionSwitch = (UISwitch *)sender;
-        self.editAfterCreatingItem = optionSwitch.on;
+        _editAfterCreatingItem = optionSwitch.on;
     }];
     
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
@@ -216,6 +216,16 @@ typedef enum : NSUInteger {
                     @[ cell2, cell3, cell4, cell5 ],
                     ];
 #endif
+}
+
+#pragma mark - Getters
+
+- (BOOL)editImmediately {
+    return (_editAfterCreatingItem &&
+            (
+             self.selectedItemType == kXXTExplorerCreateItemViewItemTypeLUA ||
+             self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT
+             ));
 }
 
 #pragma mark - UIView Getters
@@ -363,12 +373,9 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
-    if (XXTE_PAD) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    if ([_delegate respondsToSelector:@selector(createItemViewControllerDidDismiss:)]) {
+        [_delegate createItemViewControllerDidDismiss:self];
     }
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
 }
 
 - (void)submitViewController:(id)sender {
@@ -448,14 +455,9 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    if (XXTE_PAD) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    if ([_delegate respondsToSelector:@selector(createItemViewController:didFinishCreatingItemAtPath:)]) {
+        [_delegate createItemViewController:self didFinishCreatingItemAtPath:itemPath];
     }
-    UIViewController *blockController = blockInteractions(self, YES);
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:itemPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
-        blockInteractions(blockController, NO);
-    }];
 }
 
 #pragma mark - UITextFieldDelegate

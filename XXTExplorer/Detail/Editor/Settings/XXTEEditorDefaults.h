@@ -50,7 +50,7 @@ typedef enum : NSUInteger {
     XXTEEditorWordColumnValue_40 = 40,
     XXTEEditorWordColumnValue_80 = 80,
     XXTEEditorWordColumnValue_160 = 160,
-    XXTEEditorWordColumnValue_320 = 320,
+    XXTEEditorWordColumnValue_240 = 240,
 } XXTEEditorWordColumnValue;
 
 #endif /* XXTEEditorDefaults_h */

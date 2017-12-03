@@ -8,7 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXTExplorerCreateItemViewController;
+
+@protocol XXTExplorerCreateItemViewControllerDelegate <NSObject>
+
+- (void)createItemViewControllerDidDismiss:(XXTExplorerCreateItemViewController *)controller;
+- (void)createItemViewController:(XXTExplorerCreateItemViewController *)controller didFinishCreatingItemAtPath:(NSString *)path;
+
+@end
+
 @interface XXTExplorerCreateItemViewController : UITableViewController
+
+@property (nonatomic, weak) id <XXTExplorerCreateItemViewControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL editImmediately;
 
 + (NSDateFormatter *)itemTemplateDateFormatter;
 - (instancetype)initWithEntryPath:(NSString *)entryPath;

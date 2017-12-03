@@ -37,6 +37,7 @@
     UIViewController *blockController = blockInteractions(self, YES);
     [alertView dismissAnimated:YES completionHandler:^{
         [self.class.explorerPasteboard setStrings:[[NSArray alloc] initWithArray:selectedEntryPaths]];
+        [self updateToolbarStatus];
         blockInteractions(blockController, NO);
     }];
 }
