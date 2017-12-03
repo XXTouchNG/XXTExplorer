@@ -5,11 +5,12 @@ xcodeproj 'XXTExplorer'
 
 def shared_pods
 
-    pod 'XUI', :path => '../XUI'
+    # pod 'XUI', :path => '../XUI'
+    pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
 
     # pod 'TOWebViewController', '~> 2.2.6'
-    pod 'TOWebViewController', :path => '../TOWebViewController'
-    # pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'
+    # pod 'TOWebViewController', :path => '../TOWebViewController'
+    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'
 
     pod 'PromiseKit', '~> 1.7'
     # pod 'PromiseKit', :path => '../PromiseKit'
