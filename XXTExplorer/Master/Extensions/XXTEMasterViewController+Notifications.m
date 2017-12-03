@@ -103,8 +103,9 @@
                 BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
                 dispatch_async_on_main_queue(^{
                     blockInteractions(blockVC, NO);
-                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:nil userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
-                    if (result && err == nil) {
+                    if (result && err == nil)
+                    {
+                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:testedPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
                         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]);
                     } else {
                         toastMessage(self, err.localizedDescription);

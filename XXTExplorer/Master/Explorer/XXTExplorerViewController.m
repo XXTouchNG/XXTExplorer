@@ -651,7 +651,6 @@
 
 - (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(NSDictionary *)entryDetail {
     entryCell.delegate = self;
-    entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     entryCell.entryTitleLabel.textColor = [UIColor blackColor];
     entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
     if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
@@ -705,10 +704,13 @@
     entryCell.entryTitleLabel.text = entryDisplayName;
     entryCell.entrySubtitleLabel.text = entryDescription;
     entryCell.entryIconImageView.image = entryIconImage;
+    if (entryCell.accessoryType != UITableViewCellAccessoryDetailDisclosureButton)
+    {
+        entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    }
 }
 
 - (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell withEntry:(NSDictionary *)entryDetail {
-    entryCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     entryCell.entryIconImageView.image = [UIImage imageNamed:entryDetail[@"icon"]];
     entryCell.entryTitleLabel.text = entryDetail[@"title"];
     entryCell.entrySubtitleLabel.text = entryDetail[@"subtitle"];
@@ -776,6 +778,18 @@
         [self.toolbar updateStatus:XXTExplorerToolbarStatusDefault];
     }
     [self updateToolbarStatus];
+}
+
+#pragma mark - Scroll to Rect
+
+- (NSIndexPath *)indexPathForEntryAtPath:(NSString *)entryPath {
+    for (NSUInteger idx = 0; idx < self.entryList.count; idx++) {
+        NSDictionary *entryDetail = self.entryList[idx];
+        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:entryPath]) {
+            return [NSIndexPath indexPathForRow:idx inSection:XXTExplorerViewSectionIndexList];
+        }
+    }
+    return nil;
 }
 
 #pragma mark - Memory

@@ -17,6 +17,9 @@
 #import <PromiseKit/PromiseKit.h>
 #import "XXTENotificationCenterDefines.h"
 
+#import "XXTEMoreSwitchCell.h"
+#import "UIControl+BlockTarget.h"
+
 #ifndef APPSTORE
     typedef enum : NSUInteger {
         kXXTExplorerCreateItemViewSectionIndexName = 0,
@@ -46,6 +49,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, assign) kXXTExplorerCreateItemViewItemType selectedItemType;
 @property (nonatomic, strong) XUIViewShaker *itemNameShaker;
+@property (nonatomic, assign) BOOL editAfterCreatingItem;
 
 @end
 
@@ -93,7 +97,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    
+    _editAfterCreatingItem = YES;
 }
 
 #pragma mark - UIViewController
@@ -167,6 +171,14 @@ typedef enum : NSUInteger {
     self.nameField = cell1.nameField;
     self.itemNameShaker = [[XUIViewShaker alloc] initWithView:self.nameField];
     
+    XXTEMoreSwitchCell *cell1_2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cell1_2.titleLabel.text = NSLocalizedString(@"Edit After Creating Item", nil);
+    cell1_2.optionSwitch.on = self.editAfterCreatingItem;
+    [cell1_2.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        self.editAfterCreatingItem = optionSwitch.on;
+    }];
+    
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.titleLabel.text = NSLocalizedString(@"Regular Lua File", nil);
@@ -194,13 +206,13 @@ typedef enum : NSUInteger {
     
 #ifndef APPSTORE
     staticCells = @[
-                    @[ cell1 ],
+                    @[ cell1, cell1_2 ],
                     @[ cell2, cell3, cell4, cell5 ],
                     @[ cell6 ],
                     ];
 #else
     staticCells = @[
-                    @[ cell1 ],
+                    @[ cell1, cell1_2 ],
                     @[ cell2, cell3, cell4, cell5 ],
                     ];
 #endif
@@ -439,8 +451,10 @@ typedef enum : NSUInteger {
     if (XXTE_PAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
+    UIViewController *blockController = blockInteractions(self, YES);
     [self dismissViewControllerAnimated:YES completion:^{
-        
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:itemPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved}]];
+        blockInteractions(blockController, NO);
     }];
 }
 

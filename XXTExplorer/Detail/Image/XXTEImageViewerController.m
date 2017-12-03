@@ -28,7 +28,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"png", @"jpg", @"gif", @"jpeg" ];
+    return @[ @"png", @"jpg", @"gif", @"jpeg", @"heic" ];
 }
 
 + (Class)relatedReader {
@@ -62,7 +62,7 @@
     YYImage *image = [YYImage imageWithContentsOfFile:self.entryPath];
     self.imageView.image = image;
     CGSize imageSize = image.size;
-    CGRect maxRect = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
+    CGRect maxRect = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     if (CGRectContainsRect(maxRect, CGRectMake(0, 0, imageSize.width, imageSize.height)))
     {
         self.imageView.contentMode = UIViewContentModeCenter;
@@ -90,7 +90,7 @@
     [self.scrollView setZoomScale:1.0 animated:NO];
     [self.scrollView setContentOffset:CGPointZero animated:NO];
     [self.imageView removeFromSuperview];
-    self.imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.navigationController.tabBarController.tabBar.bounds.size.height);
+    self.imageView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     [self.scrollView addSubview:self.imageView];
 }
 
@@ -105,10 +105,13 @@
         scrollView.bounces = YES;
         scrollView.bouncesZoom = YES;
         scrollView.minimumZoomScale = 1.0;
-        scrollView.maximumZoomScale = 10.f;
+        scrollView.maximumZoomScale = 40.f;
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.clipsToBounds = YES;
+        if (@available(iOS 11.0, *)) {
+            scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
         _scrollView = scrollView;
     }
     return _scrollView;
@@ -168,8 +171,8 @@
 
 - (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
     CGRect zoomRect;
-    zoomRect.size.height = [self.imageView frame].size.height / scale;
-    zoomRect.size.width  = [self.imageView frame].size.width  / scale;
+    zoomRect.size.height = CGRectGetHeight(self.imageView.frame) / scale;
+    zoomRect.size.width  = CGRectGetWidth(self.imageView.frame) / scale;
     center = [self.imageView convertPoint:center fromView:self.scrollView];
     zoomRect.origin.x = center.x - ((zoomRect.size.width / 2.0));
     zoomRect.origin.y = center.y - ((zoomRect.size.height / 2.0));

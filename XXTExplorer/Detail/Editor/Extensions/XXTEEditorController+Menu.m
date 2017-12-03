@@ -240,6 +240,7 @@
             blockInteractions(blockVC, NO);
             if (taskResult) {
                 [self replaceSelectedRangeInTextView:self.textView withString:taskResult];
+                [self setNeedsSaveDocument];
                 [self setNeedsFocusTextView];
             } else {
                 [self presentErrorAlertController:error];

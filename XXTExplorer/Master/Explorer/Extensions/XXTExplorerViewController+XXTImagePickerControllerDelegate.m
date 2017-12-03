@@ -11,6 +11,8 @@
 #import "XXTEDispatchDefines.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
+
 @implementation XXTExplorerViewController (XXTImagePickerControllerDelegate)
 
 - (void)presentImagePickerController {
@@ -33,33 +35,53 @@
 - (void)didSelectPhotosFromImagePickerController:(XXTImagePickerController *)picker
                                           result:(NSArray *)aSelected
 {
-    [picker dismissViewControllerAnimated:YES completion:nil];
     UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    [picker dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
-        NSError *error = nil;
         NSString *currentDirectory = self.entryPath;
-        for (ALAsset *asset in aSelected) {
-            ALAssetRepresentation *assetRepr = asset.defaultRepresentation;
-            Byte *buffer = (Byte *)malloc((size_t)assetRepr.size);
-            NSUInteger buffered = [assetRepr getBytes:buffer fromOffset:0 length:(NSUInteger)assetRepr.size error:&error];
-            if (error) {
-                continue;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSUInteger succeedCount = 0;
+            NSError *error = nil;
+            NSMutableArray <NSString *> *importedPaths = [[NSMutableArray alloc] initWithCapacity:aSelected.count];
+            for (ALAsset *asset in aSelected) {
+                ALAssetRepresentation *assetRepr = asset.defaultRepresentation;
+                if (assetRepr) {
+                    Byte *buffer = (Byte *)malloc((size_t)assetRepr.size);
+                    NSUInteger buffered = [assetRepr getBytes:buffer fromOffset:0 length:(NSUInteger)assetRepr.size error:&error];
+                    if (error) {
+                        continue;
+                    }
+                    NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+                    if (assetRepr.filename) {
+                        NSString *writePath = [currentDirectory stringByAppendingPathComponent:assetRepr.filename];
+                        BOOL result = [data writeToFile:writePath atomically:YES];
+                        if (result) {
+                            [importedPaths addObject:writePath];
+                            succeedCount++;
+                        }
+                    }
+                }
             }
-            NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-            if (assetRepr.filename) {
-                NSString *writePath = [currentDirectory stringByAppendingPathComponent:assetRepr.filename];
-                [data writeToFile:writePath atomically:YES];
-            }
-        }
-        dispatch_async_on_main_queue(^{
-            blockInteractions(blockVC, NO);
-            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"%lu image(s) imported.", nil), aSelected.count]));
-            [self loadEntryListData];
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+            dispatch_async_on_main_queue(^{
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Image(s) imported, %lu succeed, %lu failed.", nil), succeedCount, aSelected.count - succeedCount]));
+                [self setEditing:YES animated:YES];
+                [self loadEntryListData];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+                {
+                    [self.tableView reloadData];
+                }
+                for (NSString *importedPath in importedPaths) {
+                    NSIndexPath *importedIndexPath = [self indexPathForEntryAtPath:importedPath];
+                    if (importedIndexPath) {
+                        [self.tableView selectRowAtIndexPath:importedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                    }
+                }
+                [self updateToolbarStatus];
+                blockInteractions(blockVC, NO);
+            });
         });
-    });
+    }];
 }
 
 @end

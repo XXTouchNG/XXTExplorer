@@ -42,6 +42,8 @@
     self.flagIconImageView.layer.shadowRadius = 1.f;
     self.flagIconImageView.layer.masksToBounds = NO;
     
+    self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;

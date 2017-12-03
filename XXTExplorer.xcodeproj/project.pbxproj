@@ -840,7 +840,7 @@
 		0F51CB1A1F612ACF00150D6D /* XXTEEditorTextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextInput.h; sourceTree = "<group>"; };
 		0F51CB1B1F612ACF00150D6D /* XXTEEditorTextInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextInput.m; sourceTree = "<group>"; };
 		0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
-		0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
+		0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; wrapsLines = 0; };
 		0F5690031F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryBindingViewController.h; sourceTree = "<group>"; };
 		0F5690041F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerEntryBindingViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F56900C1F1B022E009AF9FE /* XXTEArchiveViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEArchiveViewer.h; sourceTree = "<group>"; };

@@ -45,7 +45,6 @@
     NSString *encryptedNameWithExt = [encryptedName stringByAppendingPathExtension:encryptionExtension];
     NSString *encryptedPath = [currentPath stringByAppendingPathComponent:encryptedNameWithExt];
     NSUInteger encryptedIndex = 2;
-//    NSFileManager *fileManager = [[NSFileManager alloc] init];
     struct stat encryptTestStat;
     while (0 == lstat(encryptedPath.UTF8String, &encryptTestStat)) {
         encryptedNameWithExt = [NSString stringWithFormat:@"%@-%lu.%@", encryptedName, (unsigned long) encryptedIndex, encryptionExtension];
@@ -63,24 +62,31 @@
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
+    @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
-        [alertView1 dismissAnimated];
-        [self loadEntryListData];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        @strongify(self);
         if (error) {
             toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
-            for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                NSDictionary *entryDetail = self.entryList[i];
-                if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:encryptedPath]) {
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
-                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-                    break;
-                }
-            }
-            [self updateToolbarStatus];
         }
+        UIViewController *blockController = blockInteractions(self, YES);
+        [alertView1 dismissAnimated:YES completionHandler:^{
+            [self loadEntryListData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (nil == error) {
+                for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                    NSDictionary *entryDetail = self.entryList[i];
+                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:encryptedPath]) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+                        break;
+                    }
+                }
+                [self updateToolbarStatus];
+            }
+            blockInteractions(blockController, NO);
+        }];
     };
     if (self.busyOperationProgressFlag) {
         return;
@@ -174,29 +180,38 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
-        [self alertView:alertView1 clearPasteboardEntriesStored:nil];
-        [self loadEntryListData];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        @strongify(self);
         if (error) {
             toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
-            for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                NSDictionary *entryDetail = self.entryList[i];
-                BOOL shouldSelect = NO;
-                for (NSString *resultPath in resultPaths) {
-                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
-                        shouldSelect = YES;
+        }
+        UIViewController *blockController = blockInteractions(self, YES);
+        [alertView1 dismissAnimated:YES completionHandler:^{
+            [self.class.explorerPasteboard setStrings:@[]];
+            [self updateToolbarStatus];
+            [self loadEntryListData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (nil == error) {
+                for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                    NSDictionary *entryDetail = self.entryList[i];
+                    BOOL shouldSelect = NO;
+                    for (NSString *resultPath in resultPaths) {
+                        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                            shouldSelect = YES;
+                        }
+                    }
+                    if (shouldSelect) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                     }
                 }
-                if (shouldSelect) {
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
-                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                }
+                [self updateToolbarStatus];
             }
-            [self updateToolbarStatus];
-        }
+            blockInteractions(blockController, NO);
+        }];
     };
     if (self.busyOperationProgressFlag) {
         return;
@@ -311,29 +326,36 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
-        [alertView1 dismissAnimated];
-        [self loadEntryListData];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        @strongify(self);
         if (error) {
             toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
-            for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                NSDictionary *entryDetail = self.entryList[i];
-                BOOL shouldSelect = NO;
-                for (NSString *resultPath in resultPaths) {
-                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
-                        shouldSelect = YES;
+        }
+        UIViewController *blockController = blockInteractions(self, YES);
+        [alertView1 dismissAnimated:YES completionHandler:^{
+            [self loadEntryListData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (nil == error) {
+                for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                    NSDictionary *entryDetail = self.entryList[i];
+                    BOOL shouldSelect = NO;
+                    for (NSString *resultPath in resultPaths) {
+                        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                            shouldSelect = YES;
+                        }
+                    }
+                    if (shouldSelect) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                     }
                 }
-                if (shouldSelect) {
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
-                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                }
+                [self updateToolbarStatus];
             }
-            [self updateToolbarStatus];
-        }
+            blockInteractions(blockController, NO);
+        }];
     };
     if (self.busyOperationProgressFlag) {
         return;
@@ -435,29 +457,36 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
-        [alertView1 dismissAnimated];
-        [self loadEntryListData];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationFade];
+        @strongify(self);
         if (error) {
             toastMessage(self, [error localizedDescription]);
         } else {
             [self setEditing:YES animated:YES];
-            for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                NSDictionary *entryDetail = self.entryList[i];
-                BOOL shouldSelect = NO;
-                for (NSString *resultPath in resultPaths) {
-                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
-                        shouldSelect = YES;
+        }
+        UIViewController *blockController = blockInteractions(self, YES);
+        [alertView1 dismissAnimated:YES completionHandler:^{
+            [self loadEntryListData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (nil == error) {
+                for (NSUInteger i = 0; i < self.entryList.count; i++) {
+                    NSDictionary *entryDetail = self.entryList[i];
+                    BOOL shouldSelect = NO;
+                    for (NSString *resultPath in resultPaths) {
+                        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                            shouldSelect = YES;
+                        }
+                    }
+                    if (shouldSelect) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                     }
                 }
-                if (shouldSelect) {
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
-                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                }
+                [self updateToolbarStatus];
             }
-            [self updateToolbarStatus];
-        }
+            blockInteractions(blockController, NO);
+        }];
     };
     if (self.busyOperationProgressFlag) {
         return;
@@ -515,21 +544,24 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
-    
     @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
-        [alertView1 dismissAnimated];
-        [self setEditing:NO animated:YES];
-        if (error == nil) {
-            [self loadEntryListData];
-            [self.tableView beginUpdates];
-            [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView reloadData];
-            [self.tableView endUpdates];
-        } else {
+        if (error) {
             toastMessage(self, [error localizedDescription]);
+        } else {
+            [self setEditing:NO animated:YES];
         }
+        UIViewController *blockController = blockInteractions(self, YES);
+        [alertView1 dismissAnimated:YES completionHandler:^{
+            [self loadEntryListData];
+            if (error) {
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            } else {
+                [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+            blockInteractions(blockController, NO);
+        }];
     };
     if (self.busyOperationProgressFlag) {
         return;
@@ -617,18 +649,24 @@
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
+    @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
-        [alertView1 dismissAnimated];
-        [self setEditing:NO animated:YES];
-        if (error == nil) {
-            [self loadEntryListData];
-            [self.tableView beginUpdates];
-            [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView reloadData];
-            [self.tableView endUpdates];
-        } else {
+        @strongify(self);
+        if (error) {
             toastMessage(self, [error localizedDescription]);
+        } else {
+            [self setEditing:NO animated:YES];
         }
+        UIViewController *blockController = blockInteractions(self, YES);
+        [alertView1 dismissAnimated:YES completionHandler:^{
+            [self loadEntryListData];
+            if (error) {
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            } else {
+                [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+            blockInteractions(blockController, NO);
+        }];
     };
     if (self.busyOperationProgressFlag) {
         return;
@@ -677,7 +715,8 @@
             }
             for (NSUInteger i = 0; i < entryPaths.count; i++) {
                 NSString *entryPath = entryPaths[i];
-                if ([fileManager fileExistsAtPath:entryPath] == NO) {
+                struct stat removeStat;
+                if (0 != lstat(entryPath.UTF8String, &removeStat)) {
                     [deletedPaths addObject:indexPaths[i]];
                 }
             }

@@ -25,9 +25,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="XXTO UCHF AKEA UTHZ" placeholder="AAAA BBBB CCCC DDDD" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="24" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xri-SD-Vp0">
-                        <rect key="frame" x="28" y="11" width="358" height="44"/>
-                        <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="textColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <rect key="frame" x="20" y="11" width="374" height="44"/>
+                        <color key="tintColor" red="0.1019607843" green="0.63137254899999995" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" red="0.1019607843" green="0.63137254899999995" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="24"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="done" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                     </textField>
@@ -35,8 +35,8 @@
                 <constraints>
                     <constraint firstItem="xri-SD-Vp0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Nlu-Lo-D9F"/>
                     <constraint firstAttribute="bottomMargin" secondItem="xri-SD-Vp0" secondAttribute="bottom" id="flF-6d-iWd"/>
-                    <constraint firstItem="xri-SD-Vp0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="stw-bU-KPR"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="xri-SD-Vp0" secondAttribute="trailing" constant="8" id="ua6-Rv-6Zz"/>
+                    <constraint firstItem="xri-SD-Vp0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="stw-bU-KPR"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="xri-SD-Vp0" secondAttribute="trailing" id="ua6-Rv-6Zz"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

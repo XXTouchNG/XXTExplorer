@@ -45,6 +45,21 @@ static inline UIViewController *blockInteractions(UIViewController *viewControll
     return blockInteractionsWithDelay(viewController, shouldBlock, 0.0);
 }
 
+static inline BOOL isiPhoneX() {
+    static BOOL checkiPhoneX = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (@available(iOS 8.0, *)) {
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone && UIScreen.mainScreen.nativeBounds.size.height == 2436)  {
+                checkiPhoneX = YES;
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    });
+    return checkiPhoneX;
+}
+
 static inline void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration) {
     if (viewController.navigationController) {
         [viewController.navigationController.view makeToast:message duration:duration position:XXTEToastPositionCenter];

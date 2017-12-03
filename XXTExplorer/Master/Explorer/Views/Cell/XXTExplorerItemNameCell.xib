@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +25,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="demo.lua" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vXS-51-9gD">
-                        <rect key="frame" x="28" y="15" width="358" height="22"/>
+                        <rect key="frame" x="20" y="11" width="374" height="30"/>
+                        <color key="tintColor" red="0.1019607843" green="0.63137254899999995" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="17"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -35,10 +36,10 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="vXS-51-9gD" secondAttribute="trailing" constant="8" id="4PS-qC-dUi"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="vXS-51-9gD" secondAttribute="bottom" constant="4" id="Mms-Hh-6ci"/>
-                    <constraint firstItem="vXS-51-9gD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="N10-Js-hNN"/>
-                    <constraint firstItem="vXS-51-9gD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="pGI-CT-iE4"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vXS-51-9gD" secondAttribute="trailing" id="4PS-qC-dUi"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vXS-51-9gD" secondAttribute="bottom" id="Mms-Hh-6ci"/>
+                    <constraint firstItem="vXS-51-9gD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="N10-Js-hNN"/>
+                    <constraint firstItem="vXS-51-9gD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="pGI-CT-iE4"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>

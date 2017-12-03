@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,7 +29,6 @@
                 <outlet property="lbSelectCount" destination="Aes-5e-n0s" id="ab4-Gj-S8q"/>
                 <outlet property="tvAlbumList" destination="OuM-nH-WaU" id="icz-iC-8hb"/>
                 <outlet property="vBottomMenu" destination="m70-sa-NHK" id="eu7-UE-Y2p"/>
-                <outlet property="vDimmed" destination="v5R-jm-nVL" id="x82-tL-iti"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -79,13 +78,6 @@
                         <action selector="onDown:" destination="-1" eventType="touchUpInside" id="glY-XH-qPw"/>
                     </connections>
                 </button>
-                <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5R-jm-nVL" userLabel="View : dimmed layer">
-                    <rect key="frame" x="0.0" y="20" width="375" height="208"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="208" id="1vo-6h-XVH"/>
-                    </constraints>
-                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OuM-nH-WaU">
                     <rect key="frame" x="0.0" y="527" width="375" height="140"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.95000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
@@ -165,7 +157,6 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="v5R-jm-nVL" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="113-8A-h5q"/>
                 <constraint firstItem="NWT-KZ-ZEa" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="2bf-mz-p7G"/>
                 <constraint firstAttribute="trailing" secondItem="NWT-KZ-ZEa" secondAttribute="trailing" id="4X1-N0-lag"/>
                 <constraint firstItem="NWT-KZ-ZEa" firstAttribute="top" secondItem="1" secondAttribute="top" id="4ZZ-zA-TOF"/>
@@ -175,8 +166,6 @@
                 <constraint firstItem="OuM-nH-WaU" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Ssb-ee-uw7"/>
                 <constraint firstItem="OuM-nH-WaU" firstAttribute="bottom" secondItem="1" secondAttribute="bottomMargin" id="UaO-kd-mg8"/>
                 <constraint firstAttribute="trailing" secondItem="m70-sa-NHK" secondAttribute="trailing" id="V65-Z7-ToD"/>
-                <constraint firstItem="v5R-jm-nVL" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="aQU-Su-PFA"/>
-                <constraint firstAttribute="trailing" secondItem="v5R-jm-nVL" secondAttribute="trailing" id="dHw-8X-7MN"/>
                 <constraint firstItem="m70-sa-NHK" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="eDS-vH-Gue"/>
                 <constraint firstAttribute="trailing" secondItem="cGZ-TM-6a7" secondAttribute="trailing" constant="12" id="ldu-U5-zOH"/>
                 <constraint firstAttribute="trailing" secondItem="j0i-qC-Y6W" secondAttribute="trailing" constant="12" id="mdg-Y8-90k"/>

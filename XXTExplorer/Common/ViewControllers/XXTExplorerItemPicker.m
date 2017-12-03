@@ -136,7 +136,6 @@
     if (tableView == self.tableView) {
         if (indexPath.section == XXTExplorerViewSectionIndexList) {
             XXTExplorerViewCell *cell = (XXTExplorerViewCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
-            cell.accessoryType = UITableViewCellAccessoryNone;
             NSDictionary *entryAttributes = self.entryList[indexPath.row];
             NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
             if ([entryPath isEqualToString:self.selectedBootScriptPath]) {
@@ -146,6 +145,7 @@
                 cell.entryTitleLabel.textColor = [UIColor blackColor];
                 cell.flagType = XXTExplorerViewCellFlagTypeNone;
             }
+            cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         }
     }
@@ -195,6 +195,12 @@
     if (_delegate && [_delegate respondsToSelector:@selector(itemPickerDidCancelSelectingItem:)]) {
         [_delegate itemPickerDidCancelSelectingItem:self];
     }
+}
+
+#pragma mark - Block Inherit
+
+- (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
+    
 }
 
 @end

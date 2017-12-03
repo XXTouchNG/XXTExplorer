@@ -47,11 +47,6 @@
         [self.view addGestureRecognizer:pan];
     }
 
-    // init gesture for preview
-    UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongTapForPreview:)];
-    longTap.minimumPressDuration = 0.3;
-    [self.view addGestureRecognizer:longTap];
-
     // add observer for refresh asset data
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleEnterForeground:)
@@ -94,12 +89,6 @@
     UIImageView *ivFooter = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _tvAlbumList.frame.size.width, 0.5)];
     ivFooter.backgroundColor = XXT_ALBUM_NAME_TEXT_COLOR;
     _tvAlbumList.tableFooterView = ivFooter;
-
-    // dimmed view
-    _vDimmed.alpha = 0.0;
-    _vDimmed.frame = self.view.frame;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapOnDimmedView:)];
-    [_vDimmed addGestureRecognizer:tap];
 }
 
 - (void)readAlbumList:(BOOL)bFirst {
@@ -181,9 +170,6 @@
     if (_tvAlbumList.frame.origin.y == _vBottomMenu.frame.origin.y) {
         // show tableview
         [UIView animateWithDuration:0.2 animations:^(void) {
-
-            self->_vDimmed.alpha = 0.7;
-
             self->_tvAlbumList.frame = CGRectMake(0, self->_vBottomMenu.frame.origin.y - self->_tvAlbumList.frame.size.height,
                     self->_tvAlbumList.frame.size.width, self->_tvAlbumList.frame.size.height);
             self->_tvAlbumList.alpha = 1.0;
@@ -197,15 +183,6 @@
 }
 
 #pragma mark - for side buttons
-
-- (void)onTapOnDimmedView:(UITapGestureRecognizer *)tap {
-    if (tap.state == UIGestureRecognizerStateEnded) {
-        [self hideBottomMenu];
-
-        if (_ivPreview != nil)
-            [self hidePreview];
-    }
-}
 
 - (IBAction)onUp:(id)sender {
     [_cvPhotoList scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
@@ -245,8 +222,6 @@
 
 - (void)hideBottomMenu {
     [UIView animateWithDuration:0.2 animations:^(void) {
-
-        self->_vDimmed.alpha = 0.0;
 
         self->_tvAlbumList.frame = CGRectMake(0, self->_vBottomMenu.frame.origin.y, self->_tvAlbumList.frame.size.width, self->_tvAlbumList.frame.size.height);
         self->_ivShowMark.transform = CGAffineTransformMakeRotation(0);
@@ -349,9 +324,6 @@
 
 // for multiple selection with panning
 - (void)onPanForSelection:(UIPanGestureRecognizer *)gestureRecognizer {
-    if (_ivPreview != nil)
-        return;
-
     double fX = [gestureRecognizer locationInView:_cvPhotoList].x;
     double fY = [gestureRecognizer locationInView:_cvPhotoList].y;
 
@@ -375,42 +347,6 @@
     if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         _lastAccessed = nil;
         _cvPhotoList.scrollEnabled = YES;
-    }
-}
-
-// for preview
-- (void)onLongTapForPreview:(UILongPressGestureRecognizer *)gestureRecognizer {
-    if (_ivPreview != nil)
-        return;
-
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        double fX = [gestureRecognizer locationInView:_cvPhotoList].x;
-        double fY = [gestureRecognizer locationInView:_cvPhotoList].y;
-
-        // check boundary of controls
-        CGPoint pt = [gestureRecognizer locationInView:self.view];
-        if (CGRectContainsPoint(_vBottomMenu.frame, pt))
-            return;
-        if (_btDown.alpha == 1.0 && CGRectContainsPoint(_btDown.frame, pt))
-            return;
-        if (_btUp.alpha == 1.0 && CGRectContainsPoint(_btUp.frame, pt))
-            return;
-
-        NSIndexPath *indexPath = nil;
-        for (UICollectionViewCell *cell in _cvPhotoList.visibleCells) {
-            float fSX = cell.frame.origin.x;
-            float fEX = cell.frame.origin.x + cell.frame.size.width;
-            float fSY = cell.frame.origin.y;
-            float fEY = cell.frame.origin.y + cell.frame.size.height;
-
-            if (fX >= fSX && fX <= fEX && fY >= fSY && fY <= fEY) {
-                indexPath = [_cvPhotoList indexPathForCell:cell];
-                break;
-            }
-        }
-
-        if (indexPath != nil)
-            [self showPreview:indexPath.row];
     }
 }
 
@@ -454,67 +390,6 @@
     [self saveSelectedGroup:nIndex];
 #endif
 
-}
-
-- (void)showPreview:(NSInteger)nIndex {
-    [self.view bringSubviewToFront:_vDimmed];
-
-    _ivPreview = [[UIImageView alloc] initWithFrame:_vDimmed.frame];
-    _ivPreview.contentMode = UIViewContentModeScaleAspectFit;
-    _ivPreview.autoresizingMask = _vDimmed.autoresizingMask;
-    [_vDimmed addSubview:_ivPreview];
-
-    _ivPreview.image = [XXT_ASSET_HELPER getImageAtIndex:nIndex type:XXT_ASSET_PHOTO_SCREEN_SIZE];
-
-    // add gesture for close preview
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanToClosePreview:)];
-    [_vDimmed addGestureRecognizer:pan];
-
-    [UIView animateWithDuration:0.2 animations:^(void) {
-        self->_vDimmed.alpha = 1.0;
-    }];
-}
-
-- (void)hidePreview {
-    [self.view bringSubviewToFront:_tvAlbumList];
-    [self.view bringSubviewToFront:_vBottomMenu];
-
-    [_ivPreview removeFromSuperview];
-    _ivPreview = nil;
-
-    _vDimmed.alpha = 0.0;
-    [_vDimmed removeGestureRecognizer:[_vDimmed.gestureRecognizers lastObject]];
-}
-
-- (void)onPanToClosePreview:(UIPanGestureRecognizer *)gestureRecognizer {
-    CGPoint translation = [gestureRecognizer translationInView:self.view];
-
-    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration:0.2 animations:^(void) {
-
-            if (self->_vDimmed.alpha < 0.7)   // close preview
-            {
-                CGPoint pt = self->_ivPreview.center;
-                if (self->_ivPreview.center.y > self->_vDimmed.center.y)
-                    pt.y = (CGFloat) (self.view.frame.size.height * 1.5);
-                else if (self->_ivPreview.center.y < self->_vDimmed.center.y)
-                    pt.y = (CGFloat) (-self.view.frame.size.height * 1.5);
-
-                self->_ivPreview.center = pt;
-
-                [self hidePreview];
-            } else {
-                self->_vDimmed.alpha = 1.0;
-                self->_ivPreview.center = self->_vDimmed.center;
-            }
-
-        }];
-    } else {
-        _ivPreview.center = CGPointMake(_ivPreview.center.x, _ivPreview.center.y + translation.y);
-        [gestureRecognizer setTranslation:CGPointMake(0, 0) inView:self.view];
-
-        _vDimmed.alpha = (CGFloat) (1 - ABS(_ivPreview.center.y - _vDimmed.center.y) / (self.view.frame.size.height / 2.0));
-    }
 }
 
 #pragma mark - save selected album

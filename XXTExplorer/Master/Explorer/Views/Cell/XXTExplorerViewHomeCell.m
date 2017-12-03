@@ -29,6 +29,8 @@
 }
 
 - (void)setup {
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;

@@ -7,6 +7,7 @@
 //
 
 #import "XXTECommonWebViewController.h"
+#import "XXTEUserInterfaceDefines.h"
 
 @interface XXTECommonWebViewController ()
 
@@ -34,8 +35,10 @@
     self.showUrlWhileLoading = NO;
     self.hideWebViewBoundaries = YES;
     
-    if (@available(iOS 11.0, *)) {
+    if (isiPhoneX()) {
         self.hidesBottomBarWhenPushed = YES;
+    } else {
+        self.hidesBottomBarWhenPushed = NO;
     }
 }
 

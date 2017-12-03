@@ -33,9 +33,6 @@
 "%d items" = "%d 项";
 
 /* No comment provided by engineer. */
-"%lu image(s) imported." = "已导入 %lu 张图片.";
-
-/* No comment provided by engineer. */
 "%lu items" = "%lu 项";
 
 /* No comment provided by engineer. */
@@ -516,6 +513,9 @@
 "Edit" = "编辑";
 
 /* No comment provided by engineer. */
+"Edit After Creating Item" = "创建项目后编辑";
+
+/* No comment provided by engineer. */
 "Editing any properties in this section is not supported." = "暂不支持更改此区域中的任何属性.";
 
 /* No comment provided by engineer. */
@@ -622,6 +622,9 @@
 
 /* No comment provided by engineer. */
 "Image Viewer" = "图片查看器";
+
+/* No comment provided by engineer. */
+"Image(s) imported, %lu succeed, %lu failed." = "图片已导入, %lu 张成功, %lu 张失败.";
 
 /* No comment provided by engineer. */
 "Indent Wrapped Lines" = "折行缩进";

@@ -12,6 +12,7 @@
 #import <LGAlertView/LGAlertView.h>
 
 #import "XXTExplorerDefaults.h"
+#import "XXTEUserInterfaceDefines.h"
 
 @implementation XXTExplorerViewController (PasteboardOperations)
 
@@ -32,15 +33,21 @@
     for (NSIndexPath *indexPath in indexPaths) {
         [selectedEntryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
     }
-    [self.class.explorerPasteboard setStrings:[[NSArray alloc] initWithArray:selectedEntryPaths]];
-    [alertView dismissAnimated];
     [self setEditing:NO animated:YES];
+    UIViewController *blockController = blockInteractions(self, YES);
+    [alertView dismissAnimated:YES completionHandler:^{
+        [self.class.explorerPasteboard setStrings:[[NSArray alloc] initWithArray:selectedEntryPaths]];
+        blockInteractions(blockController, NO);
+    }];
 }
 
 - (void)alertView:(LGAlertView *)alertView clearPasteboardEntriesStored:(NSArray <NSIndexPath *> *)indexPaths {
-    [self.class.explorerPasteboard setStrings:@[]];
-    [alertView dismissAnimated];
-    [self updateToolbarStatus];
+    UIViewController *blockController = blockInteractions(self, YES);
+    [alertView dismissAnimated:YES completionHandler:^{
+        [self.class.explorerPasteboard setStrings:@[]];
+        [self updateToolbarStatus];
+        blockInteractions(blockController, NO);
+    }];
 }
 
 @end
