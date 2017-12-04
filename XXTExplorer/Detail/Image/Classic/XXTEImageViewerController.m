@@ -102,7 +102,7 @@
         scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         scrollView.delegate = self;
         scrollView.scrollEnabled = YES;
-        scrollView.bounces = YES;
+        scrollView.bounces = NO;
         scrollView.bouncesZoom = YES;
         scrollView.minimumZoomScale = 1.0;
         scrollView.maximumZoomScale = 40.f;
@@ -196,6 +196,12 @@
         [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
     }
     XXTE_END_IGNORE_PARTIAL
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    [scrollView setContentOffset:scrollView.contentOffset animated:YES];
 }
 
 #pragma mark - Memory

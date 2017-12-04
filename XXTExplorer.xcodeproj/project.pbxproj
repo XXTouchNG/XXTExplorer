@@ -1771,8 +1771,8 @@
 			isa = PBXGroup;
 			children = (
 				0FE1E42E1F1887B800055E02 /* Reader */,
-				0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */,
-				0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */,
+				0FE622C01FD46A2B0061DAF6 /* IDM */,
+				0FE622B61FD467180061DAF6 /* Classic */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -2468,6 +2468,22 @@
 				0F4EE36D1FC1A979003FF5FD /* XXTEInstallerViewController.m */,
 			);
 			path = Installer;
+			sourceTree = "<group>";
+		};
+		0FE622B61FD467180061DAF6 /* Classic */ = {
+			isa = PBXGroup;
+			children = (
+				0F568FFF1F185B1A009AF9FE /* XXTEImageViewerController.h */,
+				0F5690001F185B1A009AF9FE /* XXTEImageViewerController.m */,
+			);
+			path = Classic;
+			sourceTree = "<group>";
+		};
+		0FE622C01FD46A2B0061DAF6 /* IDM */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = IDM;
 			sourceTree = "<group>";
 		};
 		0FE65E231F528EF1005F81FB /* Resources */ = {
