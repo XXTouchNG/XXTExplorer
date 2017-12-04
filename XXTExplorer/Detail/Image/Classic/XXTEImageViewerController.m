@@ -10,6 +10,8 @@
 #import "XXTExplorerEntryImageReader.h"
 #import <YYImage/YYImage.h>
 
+#import "XXTEUserInterfaceDefines.h"
+
 @interface XXTEImageViewerController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -103,12 +105,13 @@
         scrollView.delegate = self;
         scrollView.scrollEnabled = YES;
         scrollView.bounces = NO;
-        scrollView.bouncesZoom = YES;
+        scrollView.bouncesZoom = NO;
         scrollView.minimumZoomScale = 1.0;
-        scrollView.maximumZoomScale = 40.f;
+        scrollView.maximumZoomScale = 1000.f;
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.clipsToBounds = YES;
+        scrollView.scrollsToTop = NO;
         if (@available(iOS 11.0, *)) {
             scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
@@ -121,6 +124,8 @@
     if (!_imageView) {
         YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithFrame:CGRectZero];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        imageView.layer.magnificationFilter = kCAFilterNearest;
+        imageView.layer.minificationFilter = kCAFilterNearest;
         _imageView = imageView;
     }
     return _imageView;
@@ -202,6 +207,13 @@
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
     [scrollView setContentOffset:scrollView.contentOffset animated:YES];
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView
+                       withView:(UIView *)view
+                        atScale:(CGFloat)scale
+{
+    
 }
 
 #pragma mark - Memory

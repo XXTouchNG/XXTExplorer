@@ -818,6 +818,10 @@ static const CGFloat MarginLeft = 37.f;
 }
 
 - (void)movePreviewByPoint:(CGPoint)p {
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        insets = self.safeAreaInsets;
+    }
     CGFloat sW = [UIScreen mainScreen].bounds.size.width;
     CGFloat sH = [UIScreen mainScreen].bounds.size.height;
     CGFloat width = (int) (MIN(sW, sH) / 20.f) * 10.f;
@@ -826,13 +830,13 @@ static const CGFloat MarginLeft = 37.f;
             // 2
             if (lastPreviewCorner != 2) {
                 lastPreviewCorner = 2;
-                self.imagePreview.frame = CGRectMake(sW - width, sH - width, width, width);
+                self.imagePreview.frame = CGRectMake(sW - width - insets.right, sH - width - insets.bottom, width, width);
             }
         } else {
             // 4
             if (lastPreviewCorner != 4) {
                 lastPreviewCorner = 4;
-                self.imagePreview.frame = CGRectMake(sW - width, 0, width, width);
+                self.imagePreview.frame = CGRectMake(sW - width - insets.right, insets.top, width, width);
             }
         }
     } else {
@@ -840,13 +844,13 @@ static const CGFloat MarginLeft = 37.f;
             // 1
             if (lastPreviewCorner != 1) {
                 lastPreviewCorner = 1;
-                self.imagePreview.frame = CGRectMake(0, sH - width, width, width);
+                self.imagePreview.frame = CGRectMake(insets.left, sH - width - insets.bottom, width, width);
             }
         } else {
             // 3
             if (lastPreviewCorner != 3) {
                 lastPreviewCorner = 3;
-                self.imagePreview.frame = CGRectMake(0, 0, width, width);
+                self.imagePreview.frame = CGRectMake(insets.left, insets.top, width, width);
             }
         }
     }
