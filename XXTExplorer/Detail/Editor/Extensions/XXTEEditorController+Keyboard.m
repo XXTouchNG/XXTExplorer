@@ -53,7 +53,11 @@
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+         insets = self.view.safeAreaInsets;
+    }
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height - insets.bottom, 0.0);
     self.textView.contentInset = contentInsets;
     self.textView.scrollIndicatorInsets = contentInsets;
     
@@ -87,7 +91,7 @@
     
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
-        insets = self.view.safeAreaInsets;
+        // insets = self.view.safeAreaInsets;
     }
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);

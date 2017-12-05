@@ -16,9 +16,16 @@
 #import "XXTPositionColorModel.h"
 #import "XXTPickerSnippet.h"
 
-#import <MobileCoreServices/MobileCoreServices.h>
+#import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTExplorerItemPicker.h"
+#import "XXTENavigationController.h"
+#import "XXTExplorerEntryImageReader.h"
+#import "XXTEUserInterfaceDefines.h"
 
-@interface XXTRectanglePicker () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, XXTPixelCropViewDelegate>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <LGAlertView/LGAlertView.h>
+
+@interface XXTRectanglePicker () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, LGAlertViewDelegate, XXTPixelCropViewDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate, XXTExplorerItemPickerDelegate>
 @property(nonatomic, strong) XXTPixelPlaceholderView *placeholderView;
 @property(nonatomic, assign) BOOL locked;
 @property(nonatomic, strong) UIButton *lockButton;
@@ -186,20 +193,18 @@
             if (image) {
                 [self setSelectedImage:image];
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
-                                                                    message:NSLocalizedStringFromTable(@"Cannot read image data, invalid image?", @"XXTPickerCollection", nil)
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
-                                                          otherButtonTitles:nil];
-                [alertView show];
+                LGAlertView *alertView =
+                [[LGAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil) message:NSLocalizedStringFromTable(@"Cannot read image data, invalid image?", @"XXTPickerCollection", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                    [alertView dismissAnimated];
+                } destructiveHandler:nil];
+                [alertView showAnimated];
             }
         } else if (err) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Cannot load image from cache: %@", @"XXTPickerCollection", nil), [err localizedDescription]]
-                                                               delegate:self
-                                                      cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            LGAlertView *alertView =
+            [[LGAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil) message:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Cannot load image from cache: %@", @"XXTPickerCollection", nil), [err localizedDescription]] style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                [alertView dismissAnimated];
+            } destructiveHandler:nil];
+            [alertView showAnimated];
         }
     }
 }
@@ -305,10 +310,41 @@
 #pragma mark - Tap Gestures
 
 - (void)placeholderViewTapped:(id)sender {
-    XXTEImagePickerController *imagePickerController = [[XXTEImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    
-    [self presentViewController:imagePickerController animated:YES completion:nil];
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 8.0, *)) {
+        UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.image"] inMode:UIDocumentPickerModeImport];
+        controller.delegate = self;
+        [controller addOptionWithTitle:NSLocalizedStringFromTable(@"Photos Library", @"XXTPickerCollection", nil)
+                                 image:nil
+                                 order:UIDocumentMenuOrderFirst
+                               handler:^{
+                                   [self selectImageFromCameraRoll];
+                               }];
+        [controller addOptionWithTitle:NSLocalizedStringFromTable(@"File System", @"XXTPickerCollection", nil)
+                                 image:nil
+                                 order:UIDocumentMenuOrderFirst
+                               handler:^{
+                                   [self selectImageFromFileSystem];
+                               }];
+        controller.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
+        if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+            UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
+            popoverController.barButtonItem = barButtonItem;
+        } else if ([sender isKindOfClass:[UIGestureRecognizer class]]) {
+            UIView *sourceView = ((UIGestureRecognizer *)sender).view;
+            popoverController.sourceView = sourceView;
+            popoverController.sourceRect = sourceView.frame;
+            popoverController.canOverlapSourceViewRect = YES;
+        } else {
+            return;
+        }
+        popoverController.backgroundColor = [UIColor whiteColor];
+        [self.navigationController presentViewController:controller animated:YES completion:nil];
+    } else {
+        [self selectImageFromCameraRoll];
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)tripleFingerTapped:(UITapGestureRecognizer *)sender {
@@ -401,24 +437,21 @@
 }
 
 - (void)trashButtonTapped:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Confirm", @"XXTPickerCollection", nil)
-                                                        message:NSLocalizedStringFromTable(@"Discard all changes and reset the canvas?", @"XXTPickerCollection", nil)
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
-                                              otherButtonTitles:NSLocalizedStringFromTable(@"Yes", @"XXTPickerCollection", nil), nil];
-    [alertView show];
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Confirm", @"XXTPickerCollection", nil) message:NSLocalizedStringFromTable(@"Discard all changes and reset the canvas?", @"XXTPickerCollection", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil) destructiveButtonTitle:NSLocalizedStringFromTable(@"Yes", @"XXTPickerCollection", nil) delegate:self];
+    [alertView showAnimated];
 }
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - LGAlertViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+}
 
-    } else if (buttonIndex == 1) {
-        _pickerResult = nil;
-        [self setNavigationBarHidden:NO animated:YES];
-        [self cleanCanvas];
-    }
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    _pickerResult = nil;
+    [self setNavigationBarHidden:NO animated:YES];
+    [self cleanCanvas];
+    [alertView dismissAnimated];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -432,6 +465,12 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     if ([[mediaInfo objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *) kUTTypeImage]) {
         UIImage *originalImage = [mediaInfo objectForKey:UIImagePickerControllerOriginalImage];
+        [self displayImage:originalImage needsCache:YES];
+    }
+}
+
+- (void)displayImage:(UIImage *)originalImage needsCache:(BOOL)cache {
+    if (cache) {
         NSError *err = nil;
         NSData *imageData = UIImagePNGRepresentation(originalImage);
         BOOL result = [imageData writeToFile:self.class.cachedImagePath
@@ -445,9 +484,9 @@
                                                       otherButtonTitles:nil];
             [alertView show];
         }
-        _pickerResult = nil;
-        [self setSelectedImage:originalImage];
     }
+    _pickerResult = nil;
+    [self setSelectedImage:originalImage];
 }
 
 - (void)cleanCanvas {
@@ -561,7 +600,7 @@
 
 - (void)cropView:(XXTPixelCropView *)crop selectValueUpdated:(id)selectedValue {
     XXTPixelPickerType type = [[self class] cropViewType];
-    if (type != kXXTPixelCropViewTypeRect) {
+    if (type != kXXTPixelCropViewTypeRect && _locked == NO) {
         if (@available(iOS 10.0, *)) {
             UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
             [feedbackGenerator impactOccurred];
@@ -654,6 +693,83 @@
             NSAssert(YES, @"type == kXXTPixelCropViewTypePositionColor || type == kXXTPixelCropViewTypeMultiplePositionColor");
         }
     }
+}
+
+#pragma mark - Image Selection
+
+- (void)selectImageFromFileSystem {
+    XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:[XXTExplorerViewController initialPath]];
+    itemPicker.delegate = self;
+    itemPicker.allowedExtensions = [XXTExplorerEntryImageReader supportedExtensions];
+    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:itemPicker];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)selectImageFromCameraRoll {
+    XXTEImagePickerController *imagePickerController = [[XXTEImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - UIDocumentMenuDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (void)documentMenuWasCancelled:(UIDocumentMenuViewController *)documentMenu {
+    
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
+    [[UINavigationBar appearanceWhenContainedIn:[UIDocumentPickerViewController class], nil] setBarTintColor:XXTE_COLOR];
+    documentPicker.delegate = self;
+    if (@available(iOS 11.0, *)) {
+        documentPicker.allowsMultipleSelection = NO;
+    }
+    [self.navigationController presentViewController:documentPicker animated:YES completion:^{
+        blockInteractions(self, YES);
+    }];
+}
+XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - UIDocumentPickerDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
+    blockInteractions(self, NO);
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
+    if (!url) return;
+    NSString *imagePath = [url path];
+    if (!imagePath) return;
+    UIImage *originalImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    [self displayImage:originalImage needsCache:YES];
+    blockInteractions(self, NO);
+}
+XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - XXTExplorerItemPickerDelegate
+
+- (void)itemPickerDidCancelSelectingItem:(XXTExplorerItemPicker *)picker {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)imagePath {
+    UIViewController *blockController = blockInteractions(self, YES);
+    [picker dismissViewControllerAnimated:YES completion:^{
+        if (!imagePath) return;
+        UIImage *originalImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+        [self displayImage:originalImage needsCache:YES];
+        blockInteractions(blockController, NO);
+    }];
 }
 
 #pragma mark - Memory

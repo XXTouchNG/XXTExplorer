@@ -363,7 +363,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [super viewDidLayoutSubviews];
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
-        insets = self.view.safeAreaInsets;
+        // insets = self.view.safeAreaInsets;
     }
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
@@ -541,7 +541,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
             textView.smartDashesType = UITextSmartDashesTypeNo;
             textView.smartQuotesType = UITextSmartQuotesTypeNo;
             textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
             // Fallback on earlier versions
         }
