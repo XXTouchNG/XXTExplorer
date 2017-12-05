@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,24 +20,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KRN-Yj-m7h">
-                        <rect key="frame" x="337" y="17" width="51" height="31"/>
+                        <rect key="frame" x="349" y="17" width="51" height="31"/>
                         <color key="onTintColor" red="0.10196078431372549" green="0.73725490196078436" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
                     </switch>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qqh-sy-sRL">
-                        <rect key="frame" x="20" y="16" width="32" height="32"/>
+                        <rect key="frame" x="16" y="16" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="46e-JX-C52"/>
                             <constraint firstAttribute="height" constant="32" id="VEF-Pl-S8i"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remote Access" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bz1-IT-GUT">
-                        <rect key="frame" x="68" y="22" width="117.5" height="21"/>
+                        <rect key="frame" x="64" y="22" width="117.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="b3U-9m-WvI">
-                        <rect key="frame" x="352" y="23" width="20" height="20"/>
+                        <rect key="frame" x="364" y="23" width="20" height="20"/>
                     </activityIndicatorView>
                 </subviews>
                 <constraints>
@@ -48,12 +48,14 @@
                     <constraint firstItem="bz1-IT-GUT" firstAttribute="leading" secondItem="Qqh-sy-sRL" secondAttribute="trailing" constant="16" id="fI7-hz-Jk4"/>
                     <constraint firstItem="KRN-Yj-m7h" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mah-um-N5q"/>
                     <constraint firstItem="Qqh-sy-sRL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="q72-9a-cV8"/>
-                    <constraint firstItem="Qqh-sy-sRL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="yAL-PM-1AO"/>
+                    <constraint firstItem="Qqh-sy-sRL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="yAL-PM-1AO"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="iconImageView" destination="Qqh-sy-sRL" id="yZL-i1-4sZ"/>
+                <outlet property="iconWidthConstraint" destination="46e-JX-C52" id="yRO-FA-nKh"/>
+                <outlet property="leftConstraint" destination="fI7-hz-Jk4" id="lQK-nQ-Nol"/>
                 <outlet property="optionIndicator" destination="b3U-9m-WvI" id="tcz-Iv-8US"/>
                 <outlet property="optionSwitch" destination="KRN-Yj-m7h" id="gmI-4v-x7b"/>
                 <outlet property="titleLabel" destination="bz1-IT-GUT" id="cit-Zf-4Ng"/>

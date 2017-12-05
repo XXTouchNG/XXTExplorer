@@ -76,7 +76,7 @@ CHECKOUT OPTIONS:
     :commit: 117c5a838dc06fe7182a387cedbe7442093445e4
     :git: https://github.com/Lessica/TOWebViewController.git
   XUI:
-    :commit: 654d3b77145ae0e662ca608a42ebb42f51cc82ec
+    :commit: 6dc9439bc2b41ee0104f91d3830489143fd8aa91
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:

@@ -8,6 +8,12 @@
 
 #import "XXTEMoreRemoteSwitchCell.h"
 
+@interface XXTEMoreRemoteSwitchCell ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconWidthConstraint;
+
+@end
+
 @implementation XXTEMoreRemoteSwitchCell
 
 - (void)awakeFromNib {

@@ -1618,9 +1618,9 @@
 		0F2E49E51F4CA10600BD11AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				0F61E1641ED7875A003DCC78 /* Views */,
 				0F072D8C1FB6B15300597EE2 /* ViewControllers */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
-				0F61E1641ED7875A003DCC78 /* Views */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1916,6 +1916,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				0F766CB71ED8DD5D00E18BE2 /* Views */,
 				0F0654B81EE48395005B6C5F /* Archive */,
 				0FBAFF471F6E6FC6008B3189 /* Common */,
 				0F4F66FD1F1268370042C449 /* Create */,
@@ -1924,7 +1925,6 @@
 				0FC4775A1F376DD500B8F28E /* Extensions */,
 				0F6AEA7E1F372A450017BE7C /* OpenWith */,
 				0F1DD1C01F11B68F00F1A66A /* Scan */,
-				0F766CB71ED8DD5D00E18BE2 /* Views */,
 				0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */,
 				0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */,
 				0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */,
