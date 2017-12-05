@@ -115,25 +115,28 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
             value = [setting removeValueForKey:@"background"];
             if (value) setting[NSBackgroundColorAttributeName] = [UIColor colorWithHex:value];
             value = [setting removeValueForKey:@"fontStyle"];
-            if (value) {
-                if ([value isEqualToString:SKThemeFontStyleBold]) {
-                    setting[NSFontAttributeName] = boldFont;
-                }
-                else if ([value isEqualToString:SKThemeFontStyleItalic]) {
-                    setting[NSFontAttributeName] = italicFont;
-                }
-                else if ([value isEqualToString:SKThemeFontStyleBoldItalic]) {
-                    setting[NSFontAttributeName] = boldItalicFont;
-                }
-                else if ([value isEqualToString:SKThemeFontStyleUnderline]) {
-                    setting[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle);
-                }
-                else if ([value isEqualToString:SKThemeFontStyleStrikeThrough]) {
-                    setting[NSBaselineOffsetAttributeName] = @(0);
-                    setting[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
-                }
-                else if ([value isEqualToString:SKThemeFontStyleRegular]) {
-                    setting[NSFontAttributeName] = font;
+            if ([value isKindOfClass:[NSString class]]) {
+                NSArray <NSString *> *valueStyles = [value componentsSeparatedByString:@" "];
+                for (NSString *valueStyle in valueStyles) {
+                    if ([valueStyle isEqualToString:SKThemeFontStyleBold]) {
+                        setting[NSFontAttributeName] = boldFont;
+                    }
+                    else if ([valueStyle isEqualToString:SKThemeFontStyleItalic]) {
+                        setting[NSFontAttributeName] = italicFont;
+                    }
+                    else if ([valueStyle isEqualToString:SKThemeFontStyleBoldItalic]) {
+                        setting[NSFontAttributeName] = boldItalicFont;
+                    }
+                    else if ([valueStyle isEqualToString:SKThemeFontStyleUnderline]) {
+                        setting[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle);
+                    }
+                    else if ([valueStyle isEqualToString:SKThemeFontStyleStrikeThrough]) {
+                        setting[NSBaselineOffsetAttributeName] = @(0);
+                        setting[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
+                    }
+                    else if ([valueStyle isEqualToString:SKThemeFontStyleRegular]) {
+                        setting[NSFontAttributeName] = font;
+                    }
                 }
             }
             NSString *patternIdentifiers = raw[@"scope"];
