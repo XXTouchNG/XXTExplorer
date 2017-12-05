@@ -19,6 +19,10 @@ def shared_pods
     # pod 'LGAlertView', :path => '../LGAlertView'
     pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device'
 
+    # pod 'MWPhotoBrowser', '~> 2.1.2'
+    pod 'MWPhotoBrowser', :path => '../MWPhotoBrowser'
+    # pod 'MWPhotoBrowser', :git => 'https://github.com/Lessica/MWPhotoBrowser.git'
+
     # pod 'Masonry', '~> 1.0.2'
     pod 'YYImage', '~> 1.0.4'
 

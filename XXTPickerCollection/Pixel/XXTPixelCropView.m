@@ -144,12 +144,6 @@ static const CGFloat MarginLeft = 37.f;
         return self.scrollView;
     }
 
-    if (_delegate && [_delegate respondsToSelector:@selector(cropView:shouldEnterFullscreen:)] &&
-            [_delegate respondsToSelector:@selector(cropViewFullscreen:)]
-            ) {
-        [_delegate cropView:self shouldEnterFullscreen:![_delegate cropViewFullscreen:self]];
-    }
-
     return [super hitTest:point withEvent:event];
 }
 

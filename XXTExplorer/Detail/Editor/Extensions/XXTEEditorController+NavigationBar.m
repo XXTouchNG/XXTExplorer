@@ -52,7 +52,7 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    if (XXTE_PAD) return;
+//    if (XXTE_PAD) return;
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
     XXTEEditorTheme *theme = self.theme;

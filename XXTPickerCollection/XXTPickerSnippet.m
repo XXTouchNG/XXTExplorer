@@ -44,10 +44,6 @@
       [XXTMultipleApplicationPicker class],
 #endif
 	  ];
-	for (Class cls in availablePickers) {
-		NSString *errorMessage = [NSString stringWithFormat:@"Class %@ type mismatch!", NSStringFromClass(cls)];
-		NSAssert([cls isSubclassOfClass:[UIViewController class]], errorMessage);
-	}
 	return availablePickers;
 }
 

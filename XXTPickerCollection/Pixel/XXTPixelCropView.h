@@ -19,8 +19,6 @@ typedef enum : NSUInteger {
 
 @protocol XXTPixelCropViewDelegate <NSObject>
 
-- (void)cropView:(XXTPixelCropView *)crop shouldEnterFullscreen:(BOOL)fullscreen;
-- (BOOL)cropViewFullscreen:(XXTPixelCropView *)crop;
 - (void)cropView:(XXTPixelCropView *)crop selectValueUpdated:(id)selectedValue;
 
 @end

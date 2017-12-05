@@ -116,13 +116,13 @@
                                          image:nil
                                          order:UIDocumentMenuOrderFirst
                                        handler:^{
-                                           [self presentImagePickerController];
+                                           [self presentImagePickerController:buttonItem];
                                        }];
                 [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
                                          image:nil
                                          order:UIDocumentMenuOrderFirst
                                        handler:^{
-                                           [self presentNewDocumentViewController];
+                                           [self presentNewDocumentViewController:buttonItem];
                                        }];
                 controller.modalPresentationStyle = UIModalPresentationPopover;
                 UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
@@ -130,7 +130,7 @@
                 popoverController.backgroundColor = [UIColor whiteColor];
                 [self.navigationController presentViewController:controller animated:YES completion:nil];
             } else {
-                [self presentNewDocumentViewController];
+                [self presentNewDocumentViewController:buttonItem];
             }
             XXTE_END_IGNORE_PARTIAL
         }
@@ -286,7 +286,7 @@
     }
 }
 
-- (void)presentNewDocumentViewController {
+- (void)presentNewDocumentViewController:(UIBarButtonItem *)buttonItem {
     XXTExplorerCreateItemViewController *createItemViewController = [[XXTExplorerCreateItemViewController alloc] initWithEntryPath:self.entryPath];
     createItemViewController.delegate = self;
     XXTENavigationController *createItemNavigationController = [[XXTENavigationController alloc] initWithRootViewController:createItemViewController];

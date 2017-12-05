@@ -65,6 +65,24 @@ typedef enum : NSUInteger {
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.editor renderNavigationBarTheme:YES];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if (parent == nil) {
+        [self.editor renderNavigationBarTheme:NO];
+    } else {
+        [self.editor renderNavigationBarTheme:YES];
+    }
+    [super willMoveToParentViewController:parent];
+}
+
 #pragma mark - UIView Getters
 
 - (UIBarButtonItem *)myBackButtonItem {
@@ -86,7 +104,7 @@ typedef enum : NSUInteger {
 #pragma mark - Actions
 
 - (void)backButtonItemTapped:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {

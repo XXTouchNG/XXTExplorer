@@ -110,7 +110,7 @@
         UIImageView *arrowPlaceholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 128.f, 128.f)];
         arrowPlaceholderImageView.contentMode = UIViewContentModeScaleAspectFill;
         arrowPlaceholderImageView.tintColor = [UIColor colorWithRed: 189.0/255.0 green: 195.0/255.0 blue: 199.0/255.0 alpha: 1.0];
-        arrowPlaceholderImageView.image = [[UIImage imageNamed:@"XXTEWorkspacePlaceholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        arrowPlaceholderImageView.image = [UIImage new];
         _arrowPlaceholderImageView = arrowPlaceholderImageView;
     }
     return _arrowPlaceholderImageView;

@@ -1,6 +1,12 @@
 PODS:
   - Bugly (2.4.8)
+  - DACircularProgress (2.3.1)
   - LGAlertView (2.4.0)
+  - MBProgressHUD (0.9.2)
+  - MWPhotoBrowser (2.1.2):
+    - DACircularProgress (~> 2.3)
+    - MBProgressHUD (~> 0.9)
+    - SDWebImage (!= 3.7.2, ~> 3.7)
   - OMGHTTPURLRQ (2.1.3):
     - OMGHTTPURLRQ/RQ (= 2.1.3)
   - OMGHTTPURLRQ/FormURLEncode (2.1.3)
@@ -42,6 +48,9 @@ PODS:
     - PromiseKit/When
   - PromiseKit/When (1.7.2):
     - PromiseKit/Promise
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - TOWebViewController (2.2.6):
     - TOWebViewController/Core (= 2.2.6)
   - TOWebViewController/Core (2.2.6)
@@ -53,6 +62,7 @@ PODS:
 DEPENDENCIES:
   - Bugly
   - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
+  - MWPhotoBrowser (from `../MWPhotoBrowser`)
   - PromiseKit (~> 1.7)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
   - XUI (from `https://github.com/Lessica/XUI.git`)
@@ -62,6 +72,8 @@ EXTERNAL SOURCES:
   LGAlertView:
     :branch: old-device
     :git: https://github.com/Lessica/LGAlertView.git
+  MWPhotoBrowser:
+    :path: ../MWPhotoBrowser
   TOWebViewController:
     :branch: WKWebView
     :git: https://github.com/Lessica/TOWebViewController.git
@@ -81,13 +93,17 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Bugly: da3c02408c14838d498429320545a8e439392978
+  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   OMGHTTPURLRQ: c4268dea4295b585d711055dbcd87bfa82badd5f
   PromiseKit: 102844c7b5ccff53f693e0710365c445d8df3871
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   XUI: 962106a41a26f8c1fd640906412aa78e1ea48b2f
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: 9c94704a5307931ee58579eeee021751e037649a
+PODFILE CHECKSUM: 5d13d1267e19536f745fd5d61e3584292405275b
 
 COCOAPODS: 1.3.1

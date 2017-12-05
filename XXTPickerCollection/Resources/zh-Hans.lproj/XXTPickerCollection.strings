@@ -1,6 +1,6 @@
 
 /* No comment provided by engineer. */
-"%lu Application(s) selected." = "%lu 应用程序已选择。";
+"%lu Application(s) selected." = "%lu 应用程序已选择.";
 
 /* No comment provided by engineer. */
 "(0)" = "(0)";
@@ -30,16 +30,16 @@
 "Cannot load image from cache: %@" = "无法从缓存载入图片: %@";
 
 /* No comment provided by engineer. */
-"Cannot read image data, invalid image?" = "无法读取图片，请确认图片是否有效。";
+"Cannot read image data, invalid image?" = "无法读取图片, 请确认图片是否有效.";
 
 /* No comment provided by engineer. */
-"Canvas locked, it cannot be moved or zoomed." = "画布已锁定，不可被移动或缩放。";
+"Canvas locked, it cannot be moved or zoomed." = "画布已锁定, 不可被移动或缩放.";
 
 /* No comment provided by engineer. */
-"Canvas reset." = "画布已重置。";
+"Canvas reset." = "画布已重置.";
 
 /* No comment provided by engineer. */
-"Canvas unlocked." = "画布已解锁。";
+"Canvas unlocked." = "画布已解锁.";
 
 /* No comment provided by engineer. */
 "Color" = "颜色";
@@ -48,7 +48,7 @@
 "Confirm" = "确认";
 
 /* No comment provided by engineer. */
-"Discard all changes and reset the canvas?" = "放弃所有更改并重置画布？";
+"Discard all changes and reset the canvas?" = "放弃所有更改并重置画布?";
 
 /* 
   Localizable.strings
@@ -113,7 +113,7 @@
 "No image\nTap here to add" = "无图片\n轻按此处以添加";
 
 /* No comment provided by engineer. */
-"Please download this image from iCloud." = "请先从 iCloud 下载该图片。";
+"Please download this image from iCloud." = "请先从 iCloud 下载该图片.";
 
 /* No comment provided by engineer. */
 "Position" = "位置";
@@ -134,7 +134,7 @@
 "Search Application" = "搜索应用程序";
 
 /* No comment provided by engineer. */
-"Select a color by tapping on image." = "轻按以选择图片中任意位置的颜色。";
+"Select a color by tapping on image." = "轻按以选择图片中任意位置的颜色.";
 
 /* No comment provided by engineer. */
 "Select a key event" = "请选择一个按键事件";
@@ -143,22 +143,22 @@
 "Select a location by dragging 📌" = "拖拽以选择地理位置 📌";
 
 /* No comment provided by engineer. */
-"Select a position by tapping on image." = "轻按以选择图片中任意位置。";
+"Select a position by tapping on image." = "轻按以选择图片中任意位置.";
 
 /* No comment provided by engineer. */
-"Select a rectangle area by dragging its corners." = "拖拽矩形顶点以选择区域。";
+"Select a rectangle area by dragging its corners." = "拖拽矩形顶点以选择区域.";
 
 /* No comment provided by engineer. */
-"Select an application." = "选择一个应用程序。";
+"Select an application." = "选择一个应用程序.";
 
 /* No comment provided by engineer. */
 "Select an image from album." = "从相册选择一张图片";
 
 /* No comment provided by engineer. */
-"Select several positions by tapping on image." = "轻按以选择图片中若干位置。";
+"Select several positions by tapping on image." = "轻按以选择图片中若干位置.";
 
 /* No comment provided by engineer. */
-"Select some applications." = "选择一些应用程序。";
+"Select some applications." = "选择一些应用程序.";
 
 /* No comment provided by engineer. */
 "Selected Applications (%lu)" = "已选择的应用程序 (%lu)";
@@ -176,10 +176,7 @@
 "Tab Key" = "Tab 键";
 
 /* No comment provided by engineer. */
-"Tap blank area to enter/exit fullscreen." = "轻按空白处以进入/退出全屏。";
-
-/* No comment provided by engineer. */
-"Triple touches to enter/exit fullscreen." = "三指轻按以进入/退出全屏。";
+"3+2 touches to enter/exit fullscreen." = "三指双击以进入/退出全屏.";
 
 /* No comment provided by engineer. */
 "Unselected Applications (%lu)" = "未选择的应用程序 (%lu)";

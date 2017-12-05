@@ -25,6 +25,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <LGAlertView/LGAlertView.h>
 
+#import "UINavigationController+XXTEFullscreenPopGesture.h"
+
 @interface XXTRectanglePicker () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, LGAlertViewDelegate, XXTPixelCropViewDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate, XXTExplorerItemPickerDelegate>
 @property(nonatomic, strong) XXTPixelPlaceholderView *placeholderView;
 @property(nonatomic, assign) BOOL locked;
@@ -79,7 +81,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-        NSString *imagePath = [cachePath stringByAppendingPathComponent:@"XXTPixelPickerCachedImage.png"];
+        NSString *imagePath = [cachePath stringByAppendingPathComponent:@".XXTPixelPickerCachedImage.png"];
         cachedImagePath = imagePath;
     });
     return cachedImagePath;
@@ -88,6 +90,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.xxte_interactivePopDisabled = YES;
+    
     [self setSelectedImage:nil];
     [self loadImageFromCache];
 
@@ -125,7 +129,7 @@
 
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(tripleFingerTapped:)];
-    tapGesture.numberOfTapsRequired = 1;
+    tapGesture.numberOfTapsRequired = 2;
     tapGesture.numberOfTouchesRequired = 3;
     tapGesture.delegate = self;
     [self.cropView addGestureRecognizer:tapGesture];
@@ -349,7 +353,7 @@
 
 - (void)tripleFingerTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        [self updateSubtitle:NSLocalizedStringFromTable(@"Triple touches to enter/exit fullscreen.", @"XXTPickerCollection", nil)];
+        [self updateSubtitle:NSLocalizedStringFromTable(@"3+2 touches to enter/exit fullscreen.", @"XXTPickerCollection", nil)];
         [self setNavigationBarHidden:![self isNavigationBarHidden] animated:YES];
     }
 }
@@ -359,8 +363,6 @@
 }
 
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
-    CGFloat statusBarHeight = UIApplication.sharedApplication.statusBarFrame.size.height;
-    if (statusBarHeight > 40.0) return;
     [self.navigationController setNavigationBarHidden:hidden animated:animated];
 }
 
@@ -589,15 +591,6 @@
 
 #pragma mark - XXTPixelCropViewDelegate
 
-- (void)cropView:(XXTPixelCropView *)crop shouldEnterFullscreen:(BOOL)fullscreen {
-    [self updateSubtitle:NSLocalizedStringFromTable(@"Tap blank area to enter/exit fullscreen.", @"XXTPickerCollection", nil)];
-    [self setNavigationBarHidden:fullscreen animated:YES];
-}
-
-- (BOOL)cropViewFullscreen:(XXTPixelCropView *)crop {
-    return [self isNavigationBarHidden];
-}
-
 - (void)cropView:(XXTPixelCropView *)crop selectValueUpdated:(id)selectedValue {
     XXTPixelPickerType type = [[self class] cropViewType];
     if (type != kXXTPixelCropViewTypeRect && _locked == NO) {
@@ -702,7 +695,7 @@
     itemPicker.delegate = self;
     itemPicker.allowedExtensions = [XXTExplorerEntryImageReader supportedExtensions];
     XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:itemPicker];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navigationController.modalPresentationStyle = UIModalPresentationCurrentContext;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -710,7 +703,8 @@
 - (void)selectImageFromCameraRoll {
     XXTEImagePickerController *imagePickerController = [[XXTEImagePickerController alloc] init];
     imagePickerController.delegate = self;
-    
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
@@ -729,6 +723,8 @@ XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 11.0, *)) {
         documentPicker.allowsMultipleSelection = NO;
     }
+    documentPicker.modalPresentationStyle = UIModalPresentationCurrentContext;
+    documentPicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.navigationController presentViewController:documentPicker animated:YES completion:^{
         blockInteractions(self, YES);
     }];

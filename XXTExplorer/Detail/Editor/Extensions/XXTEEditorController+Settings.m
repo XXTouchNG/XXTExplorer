@@ -46,8 +46,7 @@
     [self.textView resignFirstResponder];
     XXTEEditorSearchController *searchController = [[XXTEEditorSearchController alloc] init];
     searchController.editor = self;
-    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:searchController];
-    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+    [self.navigationController pushViewController:searchController animated:YES];
 }
 
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {

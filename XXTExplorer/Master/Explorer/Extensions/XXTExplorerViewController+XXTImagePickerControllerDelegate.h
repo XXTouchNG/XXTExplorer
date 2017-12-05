@@ -11,6 +11,6 @@
 
 @interface XXTExplorerViewController (XXTImagePickerControllerDelegate) <XXTImagePickerControllerDelegate>
 
-- (void)presentImagePickerController;
+- (void)presentImagePickerController:(UIBarButtonItem *)buttonItem;
 
 @end

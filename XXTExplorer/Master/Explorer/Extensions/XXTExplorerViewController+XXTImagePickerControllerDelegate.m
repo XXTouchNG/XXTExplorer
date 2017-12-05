@@ -16,14 +16,15 @@
 
 @implementation XXTExplorerViewController (XXTImagePickerControllerDelegate)
 
-- (void)presentImagePickerController {
+- (void)presentImagePickerController:(UIBarButtonItem *)buttonItem {
     NSBundle *frameBundle = [NSBundle mainBundle];
-    XXTImagePickerController *cont = [[XXTImagePickerController alloc] initWithNibName:@"XXTImagePickerController" bundle:frameBundle];
-    cont.delegate = self;
-    cont.nResultType = XXT_PICKER_RESULT_ASSET;
-    cont.nMaxCount = XXT_NO_LIMIT_SELECT;
-    cont.nColumnCount = 4;
-    [self.navigationController presentViewController:cont animated:YES completion:nil];
+    XXTImagePickerController *controller = [[XXTImagePickerController alloc] initWithNibName:@"XXTImagePickerController" bundle:frameBundle];
+    controller.delegate = self;
+    controller.nResultType = XXT_PICKER_RESULT_ASSET;
+    controller.nMaxCount = XXT_NO_LIMIT_SELECT;
+    controller.nColumnCount = 4;
+    controller.modalPresentationStyle = UIModalPresentationPageSheet;
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - XXTImagePickerControllerDelegate
