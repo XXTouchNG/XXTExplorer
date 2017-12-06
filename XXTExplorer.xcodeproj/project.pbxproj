@@ -58,7 +58,6 @@
 		0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3D5DF81FAEC4420083196D /* XXTESymbolViewController.m */; };
 		0F40C1AC1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F40C1AB1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m */; };
 		0F40C1AD1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F40C1AB1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m */; };
-		0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
 		0F457F341F87796B001F0951 /* XXTEDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F457F331F877957001F0951 /* XXTEDownloadViewController.m */; };
 		0F457F381F87948A001F0951 /* XXTEMasterViewController+Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F457F371F87948A001F0951 /* XXTEMasterViewController+Notifications.m */; };
@@ -200,7 +199,6 @@
 		0F8EDBA11FB1F779003C92D6 /* XXTEMoreActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22F1F063E270030C6DA /* XXTEMoreActionCell.m */; };
 		0F8EDBA21FB1F779003C92D6 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
 		0F8EDBA31FB1F779003C92D6 /* XXTPixelPreviewRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D01F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m */; };
-		0F8EDBA41FB1F779003C92D6 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */; };
 		0F8EDBA51FB1F779003C92D6 /* XXTPixelResizeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D21F5032AB00D78CB9 /* XXTPixelResizeControl.m */; };
 		0F8EDBA61FB1F779003C92D6 /* XUIAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5331F0A88600016016A /* XUIAboutCell.m */; };
 		0F8EDBA71FB1F779003C92D6 /* XXTPickerPreviewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */; };
@@ -604,6 +602,10 @@
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		B0312F7F228AF24585508F52 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312AD0A1F2567D3206D00B /* loslib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
+		D600C3251FD7B92500FDED9F /* XXTEMediaPlayerController.h in Sources */ = {isa = PBXBuildFile; fileRef = D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */; };
+		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
+		D600C3271FD7B92F00FDED9F /* XXTEMediaPlayerController.h in Sources */ = {isa = PBXBuildFile; fileRef = D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */; };
+		D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
 		D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
 		D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */; };
@@ -799,8 +801,6 @@
 		0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDetailViewController.h; sourceTree = "<group>"; };
 		0F40C1AA1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h"; sourceTree = "<group>"; };
 		0F40C1AB1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m"; sourceTree = "<group>"; };
-		0F4419ED1F17974D00967980 /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
-		0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F4419F01F1797CF00967980 /* XXTEViewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEViewer.h; sourceTree = "<group>"; };
 		0F4419F71F17E14F00967980 /* XXTExplorerEntryMediaReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryMediaReader.h; sourceTree = "<group>"; };
 		0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryMediaReader.m; sourceTree = "<group>"; };
@@ -1200,6 +1200,8 @@
 		B0312E7C21C7B2451E6D240D /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		B0312E8696170984090886F2 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
 		B0312EA80D17B9AF4D5E309E /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
+		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
+		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTheme.h; sourceTree = "<group>"; };
 		D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTheme.m; sourceTree = "<group>"; };
 		D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Blackboard.tmTheme; sourceTree = "<group>"; };
@@ -1664,8 +1666,8 @@
 			isa = PBXGroup;
 			children = (
 				0F4419F61F17E11F00967980 /* Reader */,
-				0F4419ED1F17974D00967980 /* XXTEMediaPlayerController.h */,
-				0F4419EE1F17974D00967980 /* XXTEMediaPlayerController.m */,
+				D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */,
+				D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -1771,6 +1773,8 @@
 			isa = PBXGroup;
 			children = (
 				0FE1E42E1F1887B800055E02 /* Reader */,
+				D63340611FD6529200B08B4E /* XXTEImageViewerController.h */,
+				D63340621FD6529200B08B4E /* XXTEImageViewerController.m */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -1896,8 +1900,6 @@
 				0FE1E4381F18DF9200055E02 /* Web */,
 				0F6679DB1F51559E0072C177 /* Snippet */,
 				0F568FFE1F185AFE009AF9FE /* Image */,
-				D63340611FD6529200B08B4E /* XXTEImageViewerController.h */,
-				D63340621FD6529200B08B4E /* XXTEImageViewerController.m */,
 				0F4419EC1F17969000967980 /* Media */,
 				0F50AEA41F307BD80098211C /* Object */,
 				0FE1E44E1F19226600055E02 /* Installer */,
@@ -3507,6 +3509,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D600C3271FD7B92F00FDED9F /* XXTEMediaPlayerController.h in Sources */,
+				D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */,
 				0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */,
 				0F97F1D71FB309C6007CA883 /* XXTExplorerEntryTerminalReader.m in Sources */,
 				0F97F1D81FB309C6007CA883 /* XXTETerminalTextView.m in Sources */,
@@ -3581,7 +3585,6 @@
 				0F8EDBA11FB1F779003C92D6 /* XXTEMoreActionCell.m in Sources */,
 				0F8EDBA21FB1F779003C92D6 /* UIView+XXTEToast.m in Sources */,
 				0F8EDBA31FB1F779003C92D6 /* XXTPixelPreviewRootViewController.m in Sources */,
-				0F8EDBA41FB1F779003C92D6 /* XXTEMediaPlayerController.m in Sources */,
 				0F8EDBA51FB1F779003C92D6 /* XXTPixelResizeControl.m in Sources */,
 				0F8EDBA61FB1F779003C92D6 /* XUIAboutCell.m in Sources */,
 				0F8EDBA71FB1F779003C92D6 /* XXTPickerPreviewBar.m in Sources */,
@@ -3750,6 +3753,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D600C3251FD7B92500FDED9F /* XXTEMediaPlayerController.h in Sources */,
+				D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */,
 				0F97F1CB1FB2A7EA007CA883 /* XXTEMoreApplicationCell.m in Sources */,
 				0F97F1CC1FB2A7EA007CA883 /* XXTEMoreApplicationDetailController.m in Sources */,
 				0F97F1CD1FB2A7EA007CA883 /* XXTEMoreApplicationListController.m in Sources */,
@@ -3834,7 +3839,6 @@
 				0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */,
 				D6E1412D1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m in Sources */,
 				0F072D901FB6B2D100597EE2 /* XXTEEditorSearchFindController.m in Sources */,
-				0F4419EF1F17974D00967980 /* XXTEMediaPlayerController.m in Sources */,
 				D6E1412E1F5032AB00D78CB9 /* XXTPixelResizeControl.m in Sources */,
 				0F5EB5351F0A88600016016A /* XUIAboutCell.m in Sources */,
 				D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */,

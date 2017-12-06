@@ -2,12 +2,13 @@
 //  XXTEMediaPlayerController.h
 //  XXTExplorer
 //
-//  Created by Zheng on 13/07/2017.
+//  Created by Zheng Wu on 05/12/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
 #import "XXTEViewer.h"
+#import <MWPhotoBrowser/MWPhotoBrowser.h>
 
-@interface XXTEMediaPlayerController : UIViewController <XXTEViewer>
+@interface XXTEMediaPlayerController : MWPhotoBrowser <XXTEViewer>
 
 @end

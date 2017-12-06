@@ -44,6 +44,14 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/MWPhotoBrowser</string>
+			<key>Title</key>
+			<string>MWPhotoBrowser</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
 	</array>
 </dict>
 </plist>
