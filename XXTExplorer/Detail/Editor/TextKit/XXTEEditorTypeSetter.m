@@ -7,6 +7,7 @@
 //
 
 #import "XXTEEditorTypeSetter.h"
+#import "XXTEEditorLayoutManager.h"
 
 @implementation XXTEEditorTypeSetter
 
@@ -32,6 +33,12 @@
         return rect;
     }
     return CGRectZero;
+}
+
+- (CGFloat)layoutManager:(XXTEEditorLayoutManager *)layoutManager lineSpacingAfterGlyphAtIndex:(NSUInteger)glyphIndex withProposedLineFragmentRect:(CGRect)rect
+{
+    // Line height is a multiple of the complete line, here we need only the extra space
+    return (MAX(layoutManager.lineHeightScale, 1) - 1) * rect.size.height;
 }
 
 @end

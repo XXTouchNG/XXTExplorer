@@ -1,7 +1,8 @@
 PODS:
   - Bugly (2.4.8)
   - LGAlertView (2.4.0)
-  - MWPhotoBrowser (2.1.2)
+  - MWPhotoBrowser (2.1.2):
+    - YYImage (~> 1.0.4)
   - OMGHTTPURLRQ (2.1.3):
     - OMGHTTPURLRQ/RQ (= 2.1.3)
   - OMGHTTPURLRQ/FormURLEncode (2.1.3)
@@ -86,7 +87,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Bugly: da3c02408c14838d498429320545a8e439392978
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
-  MWPhotoBrowser: bdccb6812ea62d8d6966d7f0c0f998b9629f8b7f
+  MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: c4268dea4295b585d711055dbcd87bfa82badd5f
   PromiseKit: 102844c7b5ccff53f693e0710365c445d8df3871
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15

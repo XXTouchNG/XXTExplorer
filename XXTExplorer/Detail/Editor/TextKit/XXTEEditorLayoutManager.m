@@ -12,9 +12,6 @@ static CGFloat kMinimumGutterWidth = 42.f;
 
 @interface XXTEEditorLayoutManager ()
 
-@property (nonatomic, assign) CGFloat gutterWidth;
-@property (nonatomic, assign) UIEdgeInsets lineAreaInset;
-
 @property (nonatomic) NSUInteger lastParaLocation;
 @property (nonatomic) NSUInteger lastParaNumber;
 
@@ -61,6 +58,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
     _lineNumberFont = [UIFont systemFontOfSize:14.0];
     _invisibleColor = [UIColor lightGrayColor];
     _invisibleFont = [UIFont systemFontOfSize:14.f];
+    _lineHeightScale = 1.0;
     
     unichar crlf = 0x00B6;
     char_CRLF = [[NSString alloc] initWithCharacters:&crlf length:1];
@@ -72,6 +70,7 @@ static CGFloat kMinimumGutterWidth = 42.f;
 
 - (void)setLineNumberFont:(UIFont *)lineNumberFont {
     _lineNumberFont = lineNumberFont;
+    _fontPointSize = lineNumberFont.pointSize;
     [self reloadGutterWidth];
 }
 
@@ -252,5 +251,74 @@ static CGFloat kMinimumGutterWidth = 42.f;
     }
     [super drawGlyphsForGlyphRange:glyphsToShow atPoint:origin];
 }
+
+#pragma mark - Layout Computation
+
+//- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex
+//{
+//    CGFloat leftInset = 0;
+//    
+//    // Base inset when showing paragraph numbers
+//    if (self.showLineNumbers)
+//        leftInset += _gutterWidth;
+//    
+//    // For wrapped lines, determine where line is supposed to start
+//    NSRange paragraphRange = [self.textStorage.string paragraphRangeForRange:NSMakeRange(characterIndex, 0)];
+//    if (paragraphRange.location < characterIndex) {
+//        // Get the first glyph index in the paragraph
+//        NSUInteger firstGlyphIndex = [self glyphIndexForCharacterAtIndex:paragraphRange.location];
+//        
+//        // Get the first line of the paragraph
+//        NSRange firstLineGlyphRange;
+//        [self lineFragmentRectForGlyphAtIndex:firstGlyphIndex effectiveRange:&firstLineGlyphRange];
+//        NSRange firstLineCharRange = [self characterRangeForGlyphRange:firstLineGlyphRange actualGlyphRange:NULL];
+//        
+//        // Find the first wrapping char (here we use brackets), and wrap one char behind
+//        NSUInteger wrappingCharIndex = NSNotFound;
+//        wrappingCharIndex = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString: @"({["] options:0 range:firstLineCharRange].location;
+//        if (wrappingCharIndex != NSNotFound)
+//            wrappingCharIndex += 1;
+//        
+//        // Alternatively, fall back to the first text (ie. non-whitespace) char
+//        if (wrappingCharIndex == NSNotFound) {
+//            wrappingCharIndex = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet.whitespaceCharacterSet invertedSet] options:0 range:firstLineCharRange].location;
+//            if (wrappingCharIndex != NSNotFound)
+//                wrappingCharIndex += 4;
+//        }
+//        
+//        // Wrapping char found, determine indent
+//        if (wrappingCharIndex != NSNotFound) {
+//            NSUInteger firstTextGlyphIndex = [self glyphIndexForCharacterAtIndex:wrappingCharIndex];
+//            
+//            // The additional indent is the distance from the first to the last character
+//            leftInset += [self locationForGlyphAtIndex:firstTextGlyphIndex].x - [self locationForGlyphAtIndex:firstGlyphIndex].x;
+//        }
+//    }
+//    
+//    // For now we compute left insets only, but rigth inset is also possible
+//    return UIEdgeInsetsMake(0, leftInset, 0, 0);
+//}
+//
+//- (void)setLineFragmentRect:(CGRect)fragmentRect forGlyphRange:(NSRange)glyphRange usedRect:(CGRect)usedRect
+//{
+//    // IMPORTANT: Perform the shift of the X-coordinate that cannot be done in NSTextContainer's -lineFragmentRectForProposedRect:atIndex:writingDirection:remainingRect:
+//    UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: [self characterIndexForGlyphAtIndex: glyphRange.location]];
+//
+//    fragmentRect.origin.x += insets.left;
+//    usedRect.origin.x += insets.left;
+//
+//    [super setLineFragmentRect:fragmentRect forGlyphRange:glyphRange usedRect:usedRect];
+//}
+//
+//- (void)setExtraLineFragmentRect:(CGRect)fragmentRect usedRect:(CGRect)usedRect textContainer:(NSTextContainer *)container
+//{
+//    // Etxra line fragment rect must be indented just like every other line fragment rect
+//    UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: self.textStorage.length];
+//
+//    fragmentRect.origin.x += insets.left;
+//    usedRect.origin.x += insets.left;
+//
+//    [super setExtraLineFragmentRect:fragmentRect usedRect:usedRect textContainer:container];
+//}
 
 @end

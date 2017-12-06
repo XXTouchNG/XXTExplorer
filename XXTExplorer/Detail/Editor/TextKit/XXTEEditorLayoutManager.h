@@ -21,4 +21,8 @@
 
 @property (nonatomic, assign, readonly) CGFloat gutterWidth;
 
+@property (nonatomic, assign, readonly) UIEdgeInsets lineAreaInset;
+@property (nonatomic, assign, readonly) CGFloat fontPointSize;
+@property (nonatomic, assign, readonly) CGFloat lineHeightScale;
+
 @end
