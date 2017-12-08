@@ -29,7 +29,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Hwv-3M-uvi" firstAttribute="centerY" secondItem="gDd-s4-s8H" secondAttribute="centerY" id="3iq-Ov-tFD"/>
                             <constraint firstAttribute="trailing" secondItem="Hwv-3M-uvi" secondAttribute="trailing" constant="8" id="7c3-JY-W6l"/>
@@ -55,7 +55,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ptv-cy-uCF" firstAttribute="leading" secondItem="HYD-Lt-sFL" secondAttribute="leading" id="9Yj-eL-L7q"/>
                             <constraint firstItem="MA6-Qb-LXA" firstAttribute="leading" secondItem="HYD-Lt-sFL" secondAttribute="leading" id="Dn7-BE-ZnU"/>

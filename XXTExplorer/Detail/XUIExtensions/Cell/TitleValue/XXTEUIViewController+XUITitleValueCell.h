@@ -15,6 +15,6 @@
 @interface XXTEUIViewController (XUITitleValueCell) <XXTPickerFactoryDelegate>
 
 - (void)tableView:(UITableView *)tableView XUITitleValueCell:(UITableViewCell *)cell;
-- (void)tableView:(UITableView *)tableView accessoryXUITitleValueCell:(XUITitleValueCell *)cell;
+- (void)tableView:(UITableView *)tableView accessoryXUITitleValueCell:(UITableViewCell *)cell;
 
 @end

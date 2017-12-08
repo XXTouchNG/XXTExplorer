@@ -127,11 +127,6 @@
         if ([stringsTable isKindOfClass:[NSString class]]) {
             _stringsTable = stringsTable;
         }
-#ifdef DEBUG
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value options:0 error:error];
-        [jsonData writeToFile:[self.path stringByAppendingPathExtension:@"json"] atomically:YES];
-        [value writeToFile:[self.path stringByAppendingPathExtension:@"plist"] atomically:YES];
-#endif
         return value;
     }
     return nil;

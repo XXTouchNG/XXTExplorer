@@ -20,17 +20,6 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 
 - (void)tableView:(UITableView *)tableView XUITitleValueCell:(UITableViewCell *)cell {
     XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
-    if (titleValueCell.xui_value) {
-        id extendedValue = titleValueCell.xui_value;
-        XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
-        objectViewController.title = titleValueCell.textLabel.text;
-        objectViewController.entryBundle = self.bundle;
-        [self.navigationController pushViewController:objectViewController animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView accessoryXUITitleValueCell:(XUITitleValueCell *)cell {
-    XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
     if (titleValueCell.xui_snippet) {
         NSString *snippetPath = [self.bundle pathForResource:titleValueCell.xui_snippet ofType:nil];
         NSError *snippetError = nil;
@@ -43,6 +32,19 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
         factory.delegate = self;
         [factory executeTask:snippet fromViewController:self];
         objc_setAssociatedObject(self, XUITitleValueCellStorageKey, titleValueCell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    } else {
+        [self tableView:tableView accessoryXUITitleValueCell:cell];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryXUITitleValueCell:(UITableViewCell *)cell {
+    XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
+    if (titleValueCell.xui_value) {
+        id extendedValue = titleValueCell.xui_value;
+        XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
+        objectViewController.title = titleValueCell.textLabel.text;
+        objectViewController.entryBundle = self.bundle;
+        [self.navigationController pushViewController:objectViewController animated:YES];
     }
 }
 

@@ -5,8 +5,8 @@ xcodeproj 'XXTExplorer'
 
 def shared_pods
 
-    # pod 'XUI', :path => '../XUI'
-    pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
+    pod 'XUI', :path => '../XUI'
+    # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
 
     # pod 'TOWebViewController', '~> 2.2.6'
     # pod 'TOWebViewController', :path => '../TOWebViewController'
