@@ -300,6 +300,13 @@ UISearchDisplayDelegate
     [self tableView:tableView willDisplayHeaderView:view forSection:section];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
+    if (tableView.style == UITableViewStylePlain) {
+        UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+        footer.textLabel.font = [UIFont systemFontOfSize:12.0];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     UILabel *label = ((UITableViewHeaderFooterView *)view).textLabel;
     if (label) {

@@ -168,6 +168,13 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     header.textLabel.font = [UIFont systemFontOfSize:14.0];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
+    if (tableView.style == UITableViewStylePlain) {
+        UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+        footer.textLabel.font = [UIFont systemFontOfSize:12.0];
+    }
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return self.sectionNames[(NSUInteger) section];
 }
