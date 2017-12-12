@@ -16,7 +16,7 @@
 
 @implementation XXTEImageViewerController
 
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+@synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Image Viewer", nil);
@@ -136,5 +136,7 @@
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
+
+@synthesize awakeFromOutside;
 
 @end

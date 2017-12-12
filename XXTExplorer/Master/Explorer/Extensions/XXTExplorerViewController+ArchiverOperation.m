@@ -26,7 +26,7 @@
 
 @implementation XXTExplorerViewController (Archiver)
 
-- (void)tableView:(UITableView *)tableView archiveEntryCellTappedWithEntryPath:(NSString *)entryPath {
+- (void)tableView:(UITableView *)tableView unarchiveEntryCellTappedWithEntryPath:(NSString *)entryPath {
     NSString *entryName = [entryPath lastPathComponent];
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Unarchive Confirm", nil)
                                                         message:[NSString stringWithFormat:NSLocalizedString(@"Unarchive \"%@\" to current directory?", nil), entryName]
@@ -168,6 +168,10 @@
             });
         });
     });
+}
+
+- (void)alertView:(LGAlertView *)alertView archivePackageEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
+    [alertView dismissAnimated];
 }
 
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath {

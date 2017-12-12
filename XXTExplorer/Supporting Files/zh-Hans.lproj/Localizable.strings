@@ -414,6 +414,9 @@
 "Create Link at \"%@\"" = "创建链接于 \"%@\"";
 
 /* No comment provided by engineer. */
+"Create Package" = "创建安装包";
+
+/* No comment provided by engineer. */
 "Created At" = "创建于";
 
 /* No comment provided by engineer. */
@@ -807,10 +810,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";

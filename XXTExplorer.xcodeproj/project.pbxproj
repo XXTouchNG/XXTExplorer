@@ -602,9 +602,7 @@
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		B0312F7F228AF24585508F52 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312AD0A1F2567D3206D00B /* loslib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
-		D600C3251FD7B92500FDED9F /* XXTEMediaPlayerController.h in Sources */ = {isa = PBXBuildFile; fileRef = D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
-		D600C3271FD7B92F00FDED9F /* XXTEMediaPlayerController.h in Sources */ = {isa = PBXBuildFile; fileRef = D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */; };
 		D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
 		D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
@@ -3509,7 +3507,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D600C3271FD7B92F00FDED9F /* XXTEMediaPlayerController.h in Sources */,
 				D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */,
 				0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */,
 				0F97F1D71FB309C6007CA883 /* XXTExplorerEntryTerminalReader.m in Sources */,
@@ -3753,7 +3750,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D600C3251FD7B92500FDED9F /* XXTEMediaPlayerController.h in Sources */,
 				D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */,
 				0F97F1CB1FB2A7EA007CA883 /* XXTEMoreApplicationCell.m in Sources */,
 				0F97F1CC1FB2A7EA007CA883 /* XXTEMoreApplicationDetailController.m in Sources */,

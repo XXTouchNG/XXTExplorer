@@ -20,7 +20,7 @@
 
 @implementation XXTEObjectViewController
 
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+@synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Object Viewer", nil);
@@ -168,5 +168,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+@synthesize awakeFromOutside;
 
 @end

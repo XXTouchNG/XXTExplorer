@@ -17,7 +17,7 @@
 
 @implementation XXTECodeViewerController
 
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+@synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Code Viewer", nil);
@@ -114,5 +114,7 @@
     NSLog(@"- [XXTECodeViewerController dealloc]");
 #endif
 }
+
+@synthesize awakeFromOutside;
 
 @end

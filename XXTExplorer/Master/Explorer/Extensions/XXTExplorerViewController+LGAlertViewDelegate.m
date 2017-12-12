@@ -18,10 +18,11 @@
 
 #pragma mark - LGAlertViewDelegate
 
-- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
+- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title
+{
     NSString *action = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewAction UTF8String]);
-    id obj = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String]);
     if (action) {
+        id obj = objc_getAssociatedObject(alertView, [XXTExplorerAlertViewContext UTF8String]);
         if ([action isEqualToString:XXTExplorerAlertViewActionPasteboardImport]) {
             if (index == 0)
                 [self alertView:alertView copyPasteboardItemsAtIndexPaths:obj];
@@ -33,14 +34,22 @@
             else if (index == 2)
                 [self alertView:alertView symlinkPasteboardItemsAtPath:obj];
         }
+    } else {
+        [self alertViewPerformAssociatedSelector:alertView];
     }
 }
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
+    [self alertViewPerformAssociatedSelector:alertView];
+}
+
+- (void)alertViewPerformAssociatedSelector:(LGAlertView *)alertView {
     SEL selectors[] = {
+        // Register Global Selectors
         @selector(alertView:removeEntryCell:),
         @selector(alertView:removeEntriesAtIndexPaths:),
         @selector(alertView:archiveEntriesAtIndexPaths:),
+        @selector(alertView:archivePackageEntriesAtIndexPaths:),
         @selector(alertView:unarchiveEntryPath:),
         @selector(alertView:clearPasteboardEntriesStored:),
 #ifndef APPSTORE

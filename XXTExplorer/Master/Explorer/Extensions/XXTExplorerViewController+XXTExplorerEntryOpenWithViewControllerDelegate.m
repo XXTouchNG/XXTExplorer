@@ -70,7 +70,7 @@
 #endif
         }
         else if ([viewer isKindOfClass:[XXTEArchiveViewer class]]) {
-            [self tableView:tableView archiveEntryCellTappedWithEntryPath:viewer.entryPath];
+            [self tableView:tableView unarchiveEntryCellTappedWithEntryPath:viewer.entryPath];
         }
         else
         {

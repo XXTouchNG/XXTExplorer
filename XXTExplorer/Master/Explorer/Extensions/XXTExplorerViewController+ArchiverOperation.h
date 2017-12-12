@@ -12,8 +12,10 @@
 
 @interface XXTExplorerViewController (ArchiverOperation)
 
-- (void)tableView:(UITableView *)tableView archiveEntryCellTappedWithEntryPath:(NSString *)entryPath;
+- (void)tableView:(UITableView *)tableView unarchiveEntryCellTappedWithEntryPath:(NSString *)entryPath;
+
 - (void)alertView:(LGAlertView *)alertView archiveEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths;
+- (void)alertView:(LGAlertView *)alertView archivePackageEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths;
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath;
 
 @end

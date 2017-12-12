@@ -11,7 +11,7 @@
 
 @implementation XXTEExecutableViewer
 
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+@synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Launcher", nil);
@@ -31,5 +31,7 @@
     }
     return self;
 }
+
+@synthesize awakeFromOutside;
 
 @end

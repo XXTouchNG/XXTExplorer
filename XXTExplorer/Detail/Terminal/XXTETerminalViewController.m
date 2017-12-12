@@ -25,7 +25,7 @@
 
 @implementation XXTETerminalViewController
 
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+@synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Local Debugger", nil);
@@ -322,5 +322,7 @@
     textView.contentInset = newInsets;
     textView.scrollIndicatorInsets = newInsets;
 }
+
+@synthesize awakeFromOutside;
 
 @end

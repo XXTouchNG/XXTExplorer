@@ -57,7 +57,7 @@ typedef enum : NSUInteger {
 
 @implementation XXTEInstallerViewController
 
-@synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
+@synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Installer", nil);
@@ -613,5 +613,7 @@ typedef enum : NSUInteger {
     NSLog(@"- [XXTEInstallerViewController dealloc]");
 #endif
 }
+
+@synthesize awakeFromOutside;
 
 @end
