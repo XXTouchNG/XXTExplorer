@@ -225,7 +225,7 @@
         NSString *packageVersion = packageModel.apt_Version;
         if ([currentVersion isEqualToString:packageVersion]) {
             if (YES == self.checkUpdateInBackground) {
-                [self.updateAgent ignoreThisDay];
+                
             } else {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Latest Version", nil)
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"Your version v%@ is up-to-date with remote.", nil), currentVersion]
