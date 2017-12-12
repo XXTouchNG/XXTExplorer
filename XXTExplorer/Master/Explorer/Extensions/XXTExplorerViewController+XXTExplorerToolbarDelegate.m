@@ -229,24 +229,18 @@
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
             }
-            NSArray *buttonTitles = nil;
-            if (isXPP) {
-                buttonTitles = @[ NSLocalizedString(@"Create Package", nil) ];
-            } else {
-                buttonTitles = @[ ];
-            }
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
                                                                   style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:buttonTitles
+                                                           buttonTitles:@[ ]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
-            if (isXPP) {
-                objc_setAssociatedObject(alertView, @selector(alertView:archivePackageEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            } else {
+//            if (isXPP) {
+//                objc_setAssociatedObject(alertView, @selector(alertView:archivePackageEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//            } else {
                 objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            }
+//            }
             [alertView showAnimated:YES completionHandler:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {

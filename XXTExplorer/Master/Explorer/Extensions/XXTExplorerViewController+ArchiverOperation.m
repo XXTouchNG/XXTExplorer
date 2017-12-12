@@ -40,12 +40,39 @@
 }
 
 - (void)alertView:(LGAlertView *)alertView archiveEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
-    NSString *currentPath = self.entryPath;
     NSMutableArray <NSString *> *entryNames = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
         NSDictionary *entryDetail = self.entryList[indexPath.row];
         [entryNames addObject:entryDetail[XXTExplorerViewEntryAttributeName]];
     }
+    if (entryNames.count == 1) {
+        NSString *entryName = entryNames[0];
+        NSString *entryBaseExtension = [[entryName pathExtension] lowercaseString];
+        if ([entryBaseExtension isEqualToString:@"xpp"]) {
+            LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Package Operation", nil)
+                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Choose an package operation for \"%@\".", nil), entryName]
+                                                                   style:LGAlertViewStyleActionSheet
+                                                            buttonTitles:@[ NSLocalizedString(@"Continue as Archive", nil) ]
+                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                  destructiveButtonTitle:NSLocalizedString(@"Create Package", nil)
+                                                           actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                               if (index == 0) { [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"]; }
+                                                           } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                                                               [alertView dismissAnimated];
+                                                           } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                                                               [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"Payload" baseExtension:@"xpa"];
+                                                           }];
+            if (alertView && alertView.isShowing) {
+                [alertView transitionToAlertView:alertView1 completionHandler:nil];
+            }
+        }
+    } else {
+        [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"];
+    }
+}
+
+- (void)alertView:(LGAlertView *)alertView archiveEntriesAtPaths:(NSArray <NSString *> *)entryNames baseDirectory:(NSString *)baseDirectory baseExtension:(NSString *)baseExtension {
+    NSString *currentPath = self.entryPath;
     NSUInteger entryCount = entryNames.count;
     NSString *entryDisplayName = nil;
     NSString *archiveName = nil;
@@ -56,12 +83,12 @@
         archiveName = @"Archive";
         entryDisplayName = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), entryNames.count];
     }
-    NSString *archiveNameWithExt = [NSString stringWithFormat:@"%@.zip", archiveName];
+    NSString *archiveNameWithExt = [NSString stringWithFormat:@"%@.%@", archiveName, baseExtension];
     NSString *archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
     NSUInteger archiveIndex = 2;
     struct stat archiveTestStat;
     while (0 == lstat(archivePath.UTF8String, &archiveTestStat)) {
-        archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.zip", archiveName, (unsigned long) archiveIndex];
+        archiveNameWithExt = [NSString stringWithFormat:@"%@-%lu.%@", archiveName, (unsigned long) archiveIndex, baseExtension];
         archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
         archiveIndex++;
     }
@@ -147,7 +174,8 @@
                             }
                         }
                     }
-                    int open_result = zip_entry_open(zip, [enumName fileSystemRepresentation]);
+                    NSString *respName = [baseDirectory stringByAppendingPathComponent:enumName];
+                    int open_result = zip_entry_open(zip, [respName fileSystemRepresentation]);
                     {
                         zip_entry_fwrite(zip, [enumPath fileSystemRepresentation]);
                     }
@@ -168,10 +196,6 @@
             });
         });
     });
-}
-
-- (void)alertView:(LGAlertView *)alertView archivePackageEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
-    [alertView dismissAnimated];
 }
 
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath {

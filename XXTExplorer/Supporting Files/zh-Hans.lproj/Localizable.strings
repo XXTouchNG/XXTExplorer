@@ -324,6 +324,9 @@
 "Check Update" = "检查更新";
 
 /* No comment provided by engineer. */
+"Choose an package operation for \"%@\"." = "请为 \"%@\" 选择一项安装包操作.";
+
+/* No comment provided by engineer. */
 "Clean All" = "全清设备";
 
 /* No comment provided by engineer. */
@@ -388,6 +391,9 @@
 
 /* No comment provided by engineer. */
 "Continue" = "继续";
+
+/* No comment provided by engineer. */
+"Continue as Archive" = "作为存档继续";
 
 /* No comment provided by engineer. */
 "Copied to the pasteboard." = "已复制到剪贴板.";
@@ -810,10 +816,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -889,6 +895,9 @@
 
 /* No comment provided by engineer. */
 "Owner" = "所有者";
+
+/* No comment provided by engineer. */
+"Package Operation" = "安装包操作";
 
 /* No comment provided by engineer. */
 "Paste" = "粘贴";

@@ -49,7 +49,7 @@
         @selector(alertView:removeEntryCell:),
         @selector(alertView:removeEntriesAtIndexPaths:),
         @selector(alertView:archiveEntriesAtIndexPaths:),
-        @selector(alertView:archivePackageEntriesAtIndexPaths:),
+//        @selector(alertView:archivePackageEntriesAtIndexPaths:),
         @selector(alertView:unarchiveEntryPath:),
         @selector(alertView:clearPasteboardEntriesStored:),
 #ifndef APPSTORE
