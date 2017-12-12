@@ -77,15 +77,18 @@
     alertAppearance.layerShadowRadius = 4.0;
     alertAppearance.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     alertAppearance.buttonsHeight = 44.0;
-    alertAppearance.titleFont = [UIFont boldSystemFontOfSize:18.0];
+    alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
     alertAppearance.titleTextColor = [UIColor blackColor];
     alertAppearance.messageTextColor = [UIColor blackColor];
     alertAppearance.activityIndicatorViewColor = XXTE_COLOR;
     alertAppearance.progressViewProgressTintColor = XXTE_COLOR;
+    alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.buttonsTitleColor = XXTE_COLOR;
     alertAppearance.buttonsBackgroundColorHighlighted = XXTE_COLOR;
+    alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.cancelButtonTitleColor = XXTE_COLOR;
     alertAppearance.cancelButtonBackgroundColorHighlighted = XXTE_COLOR;
+    alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTE_COLOR_DANGER;
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTE_COLOR_DANGER;
     alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
@@ -110,6 +113,9 @@
     toastStyle.activitySize = CGSizeMake(80.f, 80.f);
     toastStyle.verticalMargin = 16.f;
     toastStyle.horizontalPadding = 16.f;
+    
+//    [[UILabel appearance] setFont:[UIFont systemFontOfSize:16.0]];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16.0]];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

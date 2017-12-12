@@ -320,7 +320,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreLicenseSectionIndexNewLicense
             || indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
-            return 66.f;
+            return 56.f;
         }
     }
     return 44.f;

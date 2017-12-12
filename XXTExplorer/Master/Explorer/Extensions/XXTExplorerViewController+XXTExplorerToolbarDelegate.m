@@ -11,6 +11,7 @@
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+UIDocumentMenuDelegate.h"
 #import "XXTExplorerViewController+XXTImagePickerControllerDelegate.h"
+#import "XXTExplorerViewController+ArchiverOperation.h"
 
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
@@ -138,9 +139,11 @@
             if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeName);
+                toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
             } else {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
                 XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeCreationDate);
+                 toastMessage(self, NSLocalizedString(@"Sort by Creation Date Descend", nil));
             }
             [self updateToolbarButton];
             [self loadEntryListData];
@@ -229,19 +232,20 @@
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
             }
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
-                                                                  style:LGAlertViewStyleActionSheet
-                                                           buttonTitles:@[ ]
-                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                 destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
-                                                               delegate:self];
-//            if (isXPP) {
-//                objc_setAssociatedObject(alertView, @selector(alertView:archivePackageEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//            } else {
+            if (isXPP) {
+                // XPP Bundle, jump to archive without confirm.
+                [self alertView:nil archiveEntriesAtIndexPaths:selectedIndexPaths];
+            } else {
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:@[ ]
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                     destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                                   delegate:self];
                 objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//            }
-            [alertView showAnimated:YES completionHandler:nil];
+                [alertView showAnimated:YES completionHandler:nil];
+            }
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];

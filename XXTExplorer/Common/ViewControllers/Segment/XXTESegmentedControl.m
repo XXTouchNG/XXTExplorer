@@ -72,7 +72,7 @@
     _selectedTitleColor = [UIColor whiteColor];
     _titleColor = [UIColor whiteColor];
     
-    _titleFont = [UIFont boldSystemFontOfSize:17.0];
+    _titleFont = [UIFont boldSystemFontOfSize:16.0];
     
     _animationDelay = 0.33;
     _scrollsToSelectedSegment = YES;

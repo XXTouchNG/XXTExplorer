@@ -170,7 +170,7 @@ static void * activatorHandler = nil;
     if (self.activatorExists) {
         staticSectionFooters = @[@"", NSLocalizedString(@"\"Activator\" is active, configure activation behaviours here.", nil)];
     } else {
-        staticSectionFooters = @[@"", NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods.", nil)];
+        staticSectionFooters = @[@"", NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks.", nil)];
     }
 
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];

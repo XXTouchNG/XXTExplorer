@@ -165,19 +165,19 @@
 "Applications" = "应用程序";
 
 /* No comment provided by engineer. */
-"Archive" = "压缩";
+"Archive" = "归档";
 
 /* No comment provided by engineer. */
-"Archive %@ to \"%@\"" = "压缩 %@ 到 \"%@\"";
+"Archive %@ to \"%@\"" = "归档 %@ 到 \"%@\"";
 
 /* No comment provided by engineer. */
-"Archive %@?" = "压缩 %@?";
+"Archive %@?" = "归档 %@?";
 
 /* No comment provided by engineer. */
-"Archive Confirm" = "压缩确认";
+"Archive Confirm" = "归档确认";
 
 /* No comment provided by engineer. */
-"Archiving process terminated: User interrupt occurred." = "压缩进程终止: 用户结束操作.";
+"Archiving process terminated: User interrupt occurred." = "归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Ask you for a choice." = "询问用户的选择.";
@@ -231,7 +231,7 @@
 "Cannot connect to video device." = "无法连接到视频设备.";
 
 /* No comment provided by engineer. */
-"Cannot create archive file \"%@\"." = "无法创建压缩文件 \"%@\".";
+"Cannot create archive file \"%@\"." = "无法创建归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot create destination directory \"%@\"." = "无法创建目标目录 \"%@\".";
@@ -285,7 +285,7 @@
 "Cannot perform operation \"%@\" on Pasteboard URL \"%@\"." = "无法执行操作 \"%@\": 剪贴板链接 \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot read archive file \"%@\"." = "无法读取压缩文件 \"%@\".";
+"Cannot read archive file \"%@\"." = "无法读取归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot read template \"%@\"." = "无法读取模板 \"%@\".";
@@ -393,7 +393,7 @@
 "Continue" = "继续";
 
 /* No comment provided by engineer. */
-"Continue as Archive" = "作为存档继续";
+"Continue as Archive" = "作为归档继续";
 
 /* No comment provided by engineer. */
 "Copied to the pasteboard." = "已复制到剪贴板.";
@@ -855,7 +855,7 @@
 "Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
 
 /* No comment provided by engineer. */
-"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods." = "打开 \"Cydia\" 并安装第三方插件 \"Activator\", 获取更多自定义的激活方式.";
+"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks." = "打开 \"Cydia\" 并安装第三方插件 \"Activator\", 获取更多自定义的激活方式和计划任务.";
 
 /* No comment provided by engineer. */
 "Open URL" = "打开 URL";
@@ -1125,6 +1125,12 @@
 "Soft Tabs" = "软缩进";
 
 /* No comment provided by engineer. */
+"Sort by Creation Date Descend" = "按创建日期降序排列";
+
+/* No comment provided by engineer. */
+"Sort by Name Ascend" = "按名称升序排列";
+
+/* No comment provided by engineer. */
 "Source URL" = "源 URL";
 
 /* No comment provided by engineer. */
@@ -1264,13 +1270,13 @@
 "Type" = "类型";
 
 /* No comment provided by engineer. */
-"Unarchive" = "解压缩";
+"Unarchive" = "解归档";
 
 /* No comment provided by engineer. */
 "Unarchive \"%@\" to current directory?" = "解压 \"%@\" 到当前目录?";
 
 /* No comment provided by engineer. */
-"Unarchive Confirm" = "解压缩确认";
+"Unarchive Confirm" = "解归档确认";
 
 /* No comment provided by engineer. */
 "Unarchiver" = "解压器";
@@ -1279,7 +1285,7 @@
 "Unarchiving \"%@\" to \"%@\"" = "解压 \"%@\" 到 \"%@\"";
 
 /* No comment provided by engineer. */
-"Unarchiving process terminated: User interrupt occurred." = "解压缩进程终止: 用户结束操作.";
+"Unarchiving process terminated: User interrupt occurred." = "解归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Unicode (UTF-8)" = "Unicode (UTF-8)";

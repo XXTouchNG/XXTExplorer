@@ -45,30 +45,36 @@
         NSDictionary *entryDetail = self.entryList[indexPath.row];
         [entryNames addObject:entryDetail[XXTExplorerViewEntryAttributeName]];
     }
-    if (entryNames.count == 1) {
+    if (entryNames.count == 1)
+    {
         NSString *entryName = entryNames[0];
         NSString *entryBaseExtension = [[entryName pathExtension] lowercaseString];
-        if ([entryBaseExtension isEqualToString:@"xpp"]) {
-            LGAlertView *alertView1 = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Package Operation", nil)
-                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Choose an package operation for \"%@\".", nil), entryName]
-                                                                   style:LGAlertViewStyleActionSheet
-                                                            buttonTitles:@[ NSLocalizedString(@"Continue as Archive", nil) ]
-                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                  destructiveButtonTitle:NSLocalizedString(@"Create Package", nil)
-                                                           actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
-                                                               if (index == 0) { [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"]; }
-                                                           } cancelHandler:^(LGAlertView * _Nonnull alertView) {
-                                                               [alertView dismissAnimated];
-                                                           } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-                                                               [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"Payload" baseExtension:@"xpa"];
-                                                           }];
+        if ([entryBaseExtension isEqualToString:@"xpp"])
+        {
+            LGAlertView *alertView1 =
+            [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Package Operation", nil)
+                                       message:[NSString stringWithFormat:NSLocalizedString(@"Choose an package operation for \"%@\".", nil), entryName]
+                                         style:LGAlertViewStyleActionSheet
+                                  buttonTitles:@[ NSLocalizedString(@"Continue as Archive", nil) ]
+                             cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                        destructiveButtonTitle:NSLocalizedString(@"Create Package", nil)
+                                 actionHandler:^(LGAlertView * _Nonnull alertViewA, NSUInteger index, NSString * _Nullable title) {
+                                     if (index == 0) { [self alertView:alertViewA archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"]; } else { [alertViewA dismissAnimated]; }
+                                 } cancelHandler:^(LGAlertView * _Nonnull alertViewA) {
+                                     [alertViewA dismissAnimated];
+                                 } destructiveHandler:^(LGAlertView * _Nonnull alertViewA) {
+                                     [self alertView:alertViewA archiveEntriesAtPaths:entryNames baseDirectory:@"Payload" baseExtension:@"xpa"];
+                                 }];
             if (alertView && alertView.isShowing) {
                 [alertView transitionToAlertView:alertView1 completionHandler:nil];
+            } else {
+                [alertView1 showAnimated];
             }
+            return;
         }
-    } else {
-        [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"];
     }
+    // Archive directly
+    [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"];
 }
 
 - (void)alertView:(LGAlertView *)alertView archiveEntriesAtPaths:(NSArray <NSString *> *)entryNames baseDirectory:(NSString *)baseDirectory baseExtension:(NSString *)baseExtension {
@@ -92,16 +98,19 @@
         archivePath = [currentPath stringByAppendingPathComponent:archiveNameWithExt];
         archiveIndex++;
     }
-    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Archive", nil)
-                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@ to \"%@\"", nil), entryDisplayName, archiveNameWithExt]
-                                                                               style:LGAlertViewStyleActionSheet
-                                                                   progressLabelText:@"..."
-                                                                        buttonTitles:nil
-                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                              destructiveButtonTitle:nil
-                                                                            delegate:self];
+    LGAlertView *alertView1 =
+    [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Archive", nil)
+                                                   message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@ to \"%@\"", nil), entryDisplayName, archiveNameWithExt]
+                                                     style:LGAlertViewStyleActionSheet
+                                         progressLabelText:@"..."
+                                              buttonTitles:nil
+                                         cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                    destructiveButtonTitle:nil
+                                                  delegate:self];
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    } else {
+        [alertView1 showAnimated];
     }
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
@@ -235,16 +244,19 @@
     NSString *destinationName = [destinationPathWithIndex lastPathComponent];
     
     // present alert
-    LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Unarchive", nil)
-                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Unarchiving \"%@\" to \"%@\"", nil), entryName, destinationName]
-                                                                               style:LGAlertViewStyleActionSheet
-                                                                   progressLabelText:entryPath
-                                                                        buttonTitles:nil
-                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                              destructiveButtonTitle:nil
-                                                                            delegate:self];
+    LGAlertView *alertView1 =
+    [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Unarchive", nil)
+                                                   message:[NSString stringWithFormat:NSLocalizedString(@"Unarchiving \"%@\" to \"%@\"", nil), entryName, destinationName]
+                                                     style:LGAlertViewStyleActionSheet
+                                         progressLabelText:entryPath
+                                              buttonTitles:nil
+                                         cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                    destructiveButtonTitle:nil
+                                                  delegate:self];
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
+    } else {
+        [alertView1 showAnimated];
     }
     
     // callback block for extracting
