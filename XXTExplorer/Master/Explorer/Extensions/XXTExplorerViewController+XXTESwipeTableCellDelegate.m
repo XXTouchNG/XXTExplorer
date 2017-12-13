@@ -25,6 +25,8 @@
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryService.h"
 
+#import "XXTExplorerViewCell.h"
+
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
 @end
@@ -171,11 +173,7 @@
     swipeSettings.transition = XXTESwipeTransitionBorder;
     expansionSettings.buttonIndex = 0;
     expansionSettings.fillOnTrigger = NO;
-#ifdef DEBUG
-    BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, YES);
-#else
     BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, NO);
-#endif
     UIEdgeInsets buttonInsets = hidesLabel ? UIEdgeInsetsMake(0, 24.0, 0, 24.0) : UIEdgeInsetsMake(0, 8.0, 0, 8.0);
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];

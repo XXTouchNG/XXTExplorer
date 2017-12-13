@@ -258,7 +258,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == kXXTEMoreApplicationListControllerCellSection) {
-        return 72.f;
+        return XXTEMoreApplicationCellHeight;
     }
     return 0;
 }

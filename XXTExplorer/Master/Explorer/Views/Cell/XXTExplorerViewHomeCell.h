@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 static NSString *XXTExplorerViewHomeCellReuseIdentifier = @"XXTExplorerViewHomeCellReuseIdentifier";
-static CGFloat XXTExplorerViewHomeCellHeight = 72.f;
+static CGFloat XXTExplorerViewHomeCellHeight = 68.f;
 
 @interface XXTExplorerViewHomeCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *entryIconImageView;

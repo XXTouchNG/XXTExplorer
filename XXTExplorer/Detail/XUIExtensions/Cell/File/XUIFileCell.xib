@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="72" id="gJN-dq-ANM" customClass="XUIFileCell">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gJN-dq-ANM" id="OL3-vc-hx8">
-                <rect key="frame" x="0.0" y="0.0" width="381" height="71.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="376" height="67.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDd-s4-s8H">
-                        <rect key="frame" x="8" y="8" width="56" height="55.5"/>
+                        <rect key="frame" x="8" y="8" width="58" height="51.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hwv-3M-uvi">
-                                <rect key="frame" x="8" y="8" width="40" height="40"/>
+                                <rect key="frame" x="10" y="6" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="Kcv-17-VOh"/>
                                     <constraint firstAttribute="height" constant="40" id="Mti-Ae-rhB"/>
@@ -33,14 +33,14 @@
                         <constraints>
                             <constraint firstItem="Hwv-3M-uvi" firstAttribute="centerY" secondItem="gDd-s4-s8H" secondAttribute="centerY" id="3iq-Ov-tFD"/>
                             <constraint firstAttribute="trailing" secondItem="Hwv-3M-uvi" secondAttribute="trailing" constant="8" id="7c3-JY-W6l"/>
-                            <constraint firstItem="Hwv-3M-uvi" firstAttribute="leading" secondItem="gDd-s4-s8H" secondAttribute="leading" constant="8" id="j6z-Ng-Rpt"/>
+                            <constraint firstItem="Hwv-3M-uvi" firstAttribute="leading" secondItem="gDd-s4-s8H" secondAttribute="leading" constant="10" id="j6z-Ng-Rpt"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYD-Lt-sFL">
-                        <rect key="frame" x="72" y="8" width="301" height="55.5"/>
+                        <rect key="frame" x="74" y="8" width="294" height="51.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptv-cy-uCF">
-                                <rect key="frame" x="0.0" y="2" width="301" height="28"/>
+                                <rect key="frame" x="0.0" y="0.0" width="294" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="H6R-zd-Zji"/>
                                 </constraints>
@@ -49,7 +49,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MA6-Qb-LXA">
-                                <rect key="frame" x="0.0" y="30" width="301" height="14.5"/>
+                                <rect key="frame" x="0.0" y="28" width="294" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -60,7 +60,7 @@
                             <constraint firstItem="ptv-cy-uCF" firstAttribute="leading" secondItem="HYD-Lt-sFL" secondAttribute="leading" id="9Yj-eL-L7q"/>
                             <constraint firstItem="MA6-Qb-LXA" firstAttribute="leading" secondItem="HYD-Lt-sFL" secondAttribute="leading" id="Dn7-BE-ZnU"/>
                             <constraint firstAttribute="trailing" secondItem="ptv-cy-uCF" secondAttribute="trailing" id="F4O-SU-FIu"/>
-                            <constraint firstItem="ptv-cy-uCF" firstAttribute="top" secondItem="HYD-Lt-sFL" secondAttribute="top" constant="2" id="LgO-BQ-2zm"/>
+                            <constraint firstItem="ptv-cy-uCF" firstAttribute="top" secondItem="HYD-Lt-sFL" secondAttribute="top" id="LgO-BQ-2zm"/>
                             <constraint firstItem="MA6-Qb-LXA" firstAttribute="top" secondItem="ptv-cy-uCF" secondAttribute="bottom" id="Sji-za-mKH"/>
                             <constraint firstAttribute="trailing" secondItem="MA6-Qb-LXA" secondAttribute="trailing" id="otf-ja-w0Y"/>
                         </constraints>

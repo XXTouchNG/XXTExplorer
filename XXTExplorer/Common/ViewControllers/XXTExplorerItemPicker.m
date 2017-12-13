@@ -87,6 +87,7 @@
                     XXTExplorerItemPicker *explorerViewController = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
                     explorerViewController.delegate = self.delegate;
                     explorerViewController.allowedExtensions = self.allowedExtensions;
+                    explorerViewController.selectedBootScriptPath = self.selectedBootScriptPath;
                     [self.navigationController pushViewController:explorerViewController animated:YES];
                 }
             }
@@ -140,9 +141,17 @@
             NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
             if ([entryPath isEqualToString:self.selectedBootScriptPath]) {
                 cell.entryTitleLabel.textColor = XXTE_COLOR;
+                cell.entrySubtitleLabel.textColor = XXTE_COLOR;
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
-            } else {
+            }
+            else if ([self.selectedBootScriptPath hasPrefix:entryPath]) {
+                cell.entryTitleLabel.textColor = XXTE_COLOR;
+                cell.entrySubtitleLabel.textColor = XXTE_COLOR;
+                cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
+            }
+            else {
                 cell.entryTitleLabel.textColor = [UIColor blackColor];
+                cell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
                 cell.flagType = XXTExplorerViewCellFlagTypeNone;
             }
             cell.accessoryType = UITableViewCellAccessoryNone;

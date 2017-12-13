@@ -16,10 +16,11 @@ typedef enum : NSUInteger {
     XXTExplorerViewCellFlagTypeForbidden,
     XXTExplorerViewCellFlagTypeBroken,
     XXTExplorerViewCellFlagTypeSelectedBootScript,
+    XXTExplorerViewCellFlagTypeSelectedBootScriptInside,
 } XXTExplorerViewCellFlagType;
 
 static NSString * const XXTExplorerViewCellReuseIdentifier = @"XXTExplorerViewCellReuseIdentifier";
-static CGFloat XXTExplorerViewCellHeight = 72.f;
+static CGFloat XXTExplorerViewCellHeight = 68.f;
 
 @interface XXTExplorerViewCell : XXTESwipeTableCell
 @property (weak, nonatomic) IBOutlet UIImageView *entryIconImageView;
@@ -28,5 +29,6 @@ static CGFloat XXTExplorerViewCellHeight = 72.f;
 @property (weak, nonatomic) IBOutlet UIImageView *flagIconImageView;
 
 @property (nonatomic, assign) XXTExplorerViewCellFlagType flagType;
+@property (nonatomic, strong, readonly) UIColor *flagColor;
 
 @end

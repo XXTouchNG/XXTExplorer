@@ -8,6 +8,8 @@
 
 #import "XUIBaseCell.h"
 
+static CGFloat const XUIFileCellHeight = 68.f;
+
 @interface XUIFileCell : XUIBaseCell
 
 @property (nonatomic, strong) NSString *xui_initialPath;

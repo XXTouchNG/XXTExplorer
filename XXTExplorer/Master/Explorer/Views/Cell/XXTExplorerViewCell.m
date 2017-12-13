@@ -9,6 +9,7 @@
 #import "XXTExplorerViewCell.h"
 
 @interface XXTExplorerViewCell ()
+@property (weak, nonatomic) IBOutlet UIImageView *indicatorView;
 
 @end
 
@@ -49,30 +50,54 @@
     self.selectedBackgroundView = selectionBackground;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 - (void)setFlagType:(XXTExplorerViewCellFlagType)flagType {
     _flagType = flagType;
+    
+    UIImageView *imageView = self.flagIconImageView;
+    UIImageView *indicatorView = self.indicatorView;
+    
     if (flagType == XXTExplorerViewCellFlagTypeSelected) {
-        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptFlag"];
+        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptFlag"];
+        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelSuccess"];
     } else if (flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
-        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptInsideFlag"];
+        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptInsideFlag"];
+        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelSuccess"];
     } else if (flagType == XXTExplorerViewCellFlagTypeForbidden) {
-        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
+        imageView.image = [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
+        indicatorView.image = nil;
     } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {
-        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerBrokenFlag"];
+        imageView.image = [UIImage imageNamed:@"XXTExplorerBrokenFlag"];
+        indicatorView.image = nil;
     } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript) {
-        self.flagIconImageView.image = [UIImage imageNamed:@"XXTExplorerSelectedBootScriptFlag"];
+        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedBootScriptFlag"];
+        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelNormal"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
+        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedBootScriptInsideFlag"];
+        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelNormal"];
     }
+    
     if (flagType == XXTExplorerViewCellFlagTypeNone) {
-        self.flagIconImageView.hidden = YES;
+        imageView.hidden = YES;
+        indicatorView.hidden = YES;
     } else {
-        self.flagIconImageView.hidden = NO;
+        imageView.hidden = NO;
+        indicatorView.hidden = NO;
     }
+}
+
+- (UIColor *)flagColor {
+    XXTExplorerViewCellFlagType flagType = self.flagType;
+    if (flagType == XXTExplorerViewCellFlagTypeSelected
+        || flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
+        return XXTE_COLOR_SUCCESS;
+    } else if (flagType == XXTExplorerViewCellFlagTypeForbidden
+               || flagType == XXTExplorerViewCellFlagTypeBroken) {
+        return XXTE_COLOR_DANGER;
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript
+               || flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
+        return XXTE_COLOR;
+    }
+    return XXTE_COLOR;
 }
 
 @end

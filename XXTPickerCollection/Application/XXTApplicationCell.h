@@ -16,6 +16,8 @@ static NSString * const kXXTApplicationDetailKeyBundlePath = @"kXXTApplicationDe
 static NSString * const kXXTApplicationDetailKeyContainerPath = @"kXXTApplicationDetailKeyContainerPath";
 static NSString * const kXXTApplicationDetailKeyIconImage = @"kXXTApplicationDetailKeyIconImage";
 
+static CGFloat const XXTApplicationCellHeight = 68.f;
+
 @interface XXTApplicationCell : UITableViewCell
 
 - (void)setApplicationName:(NSString *)name;

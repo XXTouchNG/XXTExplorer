@@ -6,13 +6,8 @@
 #import "XXTEModeSettingsController.h"
 
 
-@implementation XXTEModeSettingsController {
-
-}
-
-- (BOOL)showsAd
-{
+@implementation XXTEModeSettingsController {}
+- (BOOL)showsAd {
     return NO;
 }
-
 @end

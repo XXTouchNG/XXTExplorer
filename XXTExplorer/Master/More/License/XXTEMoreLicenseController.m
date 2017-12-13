@@ -318,9 +318,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTEMoreLicenseSectionIndexNewLicense
-            || indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
+        if (indexPath.section == kXXTEMoreLicenseSectionIndexNewLicense) {
             return 56.f;
+        }
+        else if (indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
+            return 66.f;
         }
     }
     return 44.f;

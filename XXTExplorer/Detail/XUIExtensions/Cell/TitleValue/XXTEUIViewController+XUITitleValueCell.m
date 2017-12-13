@@ -13,6 +13,8 @@
 #import "XXTEDispatchDefines.h"
 
 #import <objc/runtime.h>
+#import <XUI/XUICellFactory.h>
+#import <XUI/XUITheme.h>
 
 static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 
@@ -44,6 +46,7 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
         XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
         objectViewController.title = titleValueCell.textLabel.text;
         objectViewController.entryBundle = self.bundle;
+        objectViewController.cellFactory.theme = self.theme;
         [self.navigationController pushViewController:objectViewController animated:YES];
     }
 }

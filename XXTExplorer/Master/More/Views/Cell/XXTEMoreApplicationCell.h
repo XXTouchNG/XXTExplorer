@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 static NSString * const kXXTEMoreApplicationCellReuseIdentifier = @"kXXTEMoreApplicationCellReuseIdentifier";
+static CGFloat const XXTEMoreApplicationCellHeight = 68.f;
 
 @interface XXTEMoreApplicationCell : UITableViewCell
 

@@ -658,20 +658,24 @@
         [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
         // broken symlink
         entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
+        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_DANGER;
         entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
     } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
                ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
         // symlink
         entryCell.entryTitleLabel.textColor = XXTE_COLOR;
+        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR;
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     } else {
         entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+        entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     }
     if (![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
         [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
         // selected script itself
         entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
+        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_SUCCESS;
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
     } else if ((
                 [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] ||
@@ -680,6 +684,7 @@
                [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
         // selected script in directory / bundle
         entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
+        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_SUCCESS;
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
     }
     NSString *entryDisplayName = entryDetail[XXTExplorerViewEntryAttributeDisplayName];

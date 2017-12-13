@@ -7,7 +7,7 @@
 //
 
 #import "XXTEViewer.h"
-//#import "XUIViewController.h"
+#import <XUI/XUIViewController.h>
 
 /**
  *
@@ -19,7 +19,7 @@
  * it will push another XXTEObjectViewController and set its RootObject to the value of that cell.
  *
  **/
-@interface XXTEObjectViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, XXTEViewer>
+@interface XXTEObjectViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource, XXTEViewer>
 
 + (NSArray <Class> *)supportedTypes;
 

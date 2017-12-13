@@ -12,7 +12,7 @@
 #import "XXTEDictionaryObjectViewController.h"
 #import "XXTExplorerEntryObjectReader.h"
 
-#import "XUITheme.h"
+#import <XUI/XUITheme.h>
 
 @interface XXTEObjectViewController ()
 
@@ -117,7 +117,13 @@
     }
     
     _tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:self.tableViewStyle];
+        XUITheme *theme = self.theme;
+        UITableView *tableView = nil;
+        if (theme) {
+            tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:theme.tableViewStyle];
+        } else {
+            tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:self.tableViewStyle];
+        }
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -127,6 +133,12 @@
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XXTE_END_IGNORE_PARTIAL
+        /*
+        if (theme) {
+            tableView.backgroundColor = theme.backgroundColor;
+            tableView.separatorColor = theme.separatorColor;
+        }
+         */
         tableView;
     });
     

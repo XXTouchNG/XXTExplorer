@@ -72,7 +72,14 @@ typedef enum : NSUInteger {
     }
     XXTE_END_IGNORE_PARTIAL
     
-    self.title = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
+    NSString *controllerTitle = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
+    if (controllerTitle.length == 0) {
+        controllerTitle = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID];
+    }
+    if (controllerTitle.length == 0) {
+        controllerTitle = @"(null)";
+    }
+    self.title = controllerTitle;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -97,11 +104,21 @@ typedef enum : NSUInteger {
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Name", nil);
-    cell1.valueLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
+    
+    NSString *applicationName = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
+    if (applicationName.length == 0) {
+        applicationName = @"(null)";
+    }
+    cell1.valueLabel.text = applicationName;
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell2.titleLabel.text = NSLocalizedString(@"Bundle ID", nil);
-    cell2.valueLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID];
+    
+    NSString *applicationBundleID = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID];
+    if (applicationBundleID.length == 0) {
+        applicationBundleID = @"(null)";
+    }
+    cell2.valueLabel.text = applicationBundleID;
     
     XXTEMoreAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell3.addressLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath];

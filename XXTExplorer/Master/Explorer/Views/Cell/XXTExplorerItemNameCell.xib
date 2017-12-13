@@ -25,7 +25,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="demo.lua" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vXS-51-9gD">
-                        <rect key="frame" x="28" y="11" width="358" height="30"/>
+                        <rect key="frame" x="28" y="11" width="334" height="30"/>
                         <color key="tintColor" red="0.1019607843" green="0.63137254899999995" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="16"/>
@@ -34,11 +34,20 @@
                             <outlet property="delegate" destination="-1" id="bmR-wu-4J8"/>
                         </connections>
                     </textField>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTEItemNameEditIcon" translatesAutoresizingMaskIntoConstraints="NO" id="50D-tZ-9m4">
+                        <rect key="frame" x="370" y="18" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="LJb-4m-QJm"/>
+                            <constraint firstAttribute="width" constant="16" id="hAV-HP-zzE"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="vXS-51-9gD" secondAttribute="trailing" constant="8" id="4PS-qC-dUi"/>
                     <constraint firstAttribute="bottomMargin" secondItem="vXS-51-9gD" secondAttribute="bottom" id="Mms-Hh-6ci"/>
                     <constraint firstItem="vXS-51-9gD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="N10-Js-hNN"/>
+                    <constraint firstItem="50D-tZ-9m4" firstAttribute="leading" secondItem="vXS-51-9gD" secondAttribute="trailing" constant="8" id="ZHc-bU-1bZ"/>
+                    <constraint firstItem="50D-tZ-9m4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="dQG-Rd-vYf"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="50D-tZ-9m4" secondAttribute="trailing" constant="8" id="eep-HK-Wsa"/>
                     <constraint firstItem="vXS-51-9gD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="pGI-CT-iE4"/>
                 </constraints>
             </tableViewCellContentView>
@@ -48,4 +57,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="XXTEItemNameEditIcon" width="24" height="24"/>
+    </resources>
 </document>
