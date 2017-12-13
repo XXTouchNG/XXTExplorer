@@ -92,7 +92,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
         
         fakeio(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
     } else {
-        fakeio(stdin, stdout, stderr);
+        fakeio(nil, nil, nil);
         chdir("/");
         
         if (self.stdoutHandler) {

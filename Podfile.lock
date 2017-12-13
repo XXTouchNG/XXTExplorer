@@ -1,5 +1,5 @@
 PODS:
-  - Bugly (2.4.8)
+  - Bugly (2.5.0)
   - LGAlertView (2.4.0)
   - MWPhotoBrowser (2.1.2):
     - YYImage (~> 1.0.4)
@@ -83,11 +83,11 @@ CHECKOUT OPTIONS:
     :commit: ff155a14a9a02a34add13ae6509f859827794dd3
     :git: https://github.com/Lessica/MWPhotoBrowser.git
   TOWebViewController:
-    :commit: 117c5a838dc06fe7182a387cedbe7442093445e4
+    :commit: e4fc21a5a54abbca3a7c0b50b0cdee99219a7e0e
     :git: https://github.com/Lessica/TOWebViewController.git
 
 SPEC CHECKSUMS:
-  Bugly: da3c02408c14838d498429320545a8e439392978
+  Bugly: 00c8701f2bebab4887771ba43afbf51334009742
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: c4268dea4295b585d711055dbcd87bfa82badd5f

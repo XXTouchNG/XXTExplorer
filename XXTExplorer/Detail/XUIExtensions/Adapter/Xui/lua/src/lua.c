@@ -590,11 +590,11 @@ static int pmain (lua_State *L) {
 }
 
 static FILE *_fakein = NULL;
-void *fakein() { return _fakein; }
+void *fakein() { return _fakein ? _fakein : stdin; }
 static FILE *_fakeout = NULL;
-void *fakeout() { return _fakeout; }
+void *fakeout() { return _fakeout ? _fakeout : stdout; }
 static FILE *_fakeerr = NULL;
-void *fakeerr() { return _fakeerr; }
+void *fakeerr() { return _fakeerr ? _fakeerr : stderr; }
 
 void fakeio(void *fin, void *fout, void *ferr) {
     _fakein = fin; _fakeout = fout; _fakeerr = ferr;
