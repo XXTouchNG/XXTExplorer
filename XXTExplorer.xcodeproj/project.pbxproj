@@ -670,6 +670,8 @@
 		D6863D251F7E3B9100A45CF7 /* XXTEUIViewController+XUILinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D201F7E3B9100A45CF7 /* XXTEUIViewController+XUILinkCell.m */; };
 		D6863D391F7E574F00A45CF7 /* XUIAdapter_xui.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */; };
 		D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
+		D68F11FC1FE1291400D86555 /* XXTEShield.m in Sources */ = {isa = PBXBuildFile; fileRef = D68F11FB1FE1291400D86555 /* XXTEShield.m */; };
+		D68F11FD1FE1291400D86555 /* XXTEShield.m in Sources */ = {isa = PBXBuildFile; fileRef = D68F11FB1FE1291400D86555 /* XXTEShield.m */; };
 		D69532FA1F8F79DB00A24B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
 		D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */; };
 		D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
@@ -1318,6 +1320,8 @@
 		D6863D381F7E574F00A45CF7 /* XUIAdapter_xui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIAdapter_xui.h; sourceTree = "<group>"; };
 		D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLayoutManager.h; sourceTree = "<group>"; };
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
+		D68F11FA1FE1291400D86555 /* XXTEShield.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEShield.h; sourceTree = "<group>"; };
+		D68F11FB1FE1291400D86555 /* XXTEShield.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEShield.m; sourceTree = "<group>"; };
 		D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D69532FD1F904DE300A24B9B /* XUIAnimatedImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAnimatedImageCell.h; sourceTree = "<group>"; };
 		D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAnimatedImageCell.m; sourceTree = "<group>"; };
@@ -1618,6 +1622,7 @@
 		0F2E49E51F4CA10600BD11AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D68F11F91FE128F200D86555 /* XXShield */,
 				0F61E1641ED7875A003DCC78 /* Views */,
 				0F072D8C1FB6B15300597EE2 /* ViewControllers */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
@@ -2949,6 +2954,15 @@
 			path = Xui;
 			sourceTree = "<group>";
 		};
+		D68F11F91FE128F200D86555 /* XXShield */ = {
+			isa = PBXGroup;
+			children = (
+				D68F11FA1FE1291400D86555 /* XXTEShield.h */,
+				D68F11FB1FE1291400D86555 /* XXTEShield.m */,
+			);
+			path = XXShield;
+			sourceTree = "<group>";
+		};
 		D69532FC1F904DD000A24B9B /* AnimatedImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -3725,6 +3739,7 @@
 				0F8EDC451FB1F779003C92D6 /* lmathlib.c in Sources */,
 				0F8EDC461FB1F779003C92D6 /* lmem.c in Sources */,
 				0F8EDC471FB1F779003C92D6 /* loadlib.c in Sources */,
+				D68F11FD1FE1291400D86555 /* XXTEShield.m in Sources */,
 				0F8EDC481FB1F779003C92D6 /* lobject.c in Sources */,
 				0F8EDC491FB1F779003C92D6 /* lopcodes.c in Sources */,
 				0F072D951FB6B2E200597EE2 /* XXTEEditorSearchReplaceController.m in Sources */,
@@ -3864,6 +3879,7 @@
 				0F072DB91FB9EC8B00597EE2 /* xxtea.c in Sources */,
 				D6863D211F7E3B9100A45CF7 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
 				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
+				D68F11FC1FE1291400D86555 /* XXTEShield.m in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,

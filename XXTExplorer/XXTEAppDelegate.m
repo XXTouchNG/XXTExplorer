@@ -26,16 +26,27 @@
 #import <Bugly/Bugly.h>
 #import "XXTECloudApiSdk.h"
 #import "XXTENetworkDefines.h"
+#import "XXTEShield.h"
 
 static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 
 @interface XXTEAppDelegate ()
+@property (nonatomic, strong) XXTEShield *superShield;
 
 @end
 
 @implementation XXTEAppDelegate {
     
+}
+
+#pragma mark - Shield
+
+- (XXTEShield *)superShield {
+    if (!_superShield) {
+        _superShield = [[XXTEShield alloc] init];
+    }
+    return _superShield;
 }
 
 #pragma mark - Application
@@ -96,9 +107,20 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    // Setup Bugly
+    // Setup Bugly & Super Shield
     {
         [Bugly startWithAppId:nil];
+        [XXShieldSDK registerRecordHandler:self.superShield];
+    }
+    
+    // Reset Application if crash repeatedly
+    {
+        BOOL crashRepeatedly = [Bugly isAppCrashedOnStartUpExceedTheLimit];
+        if (crashRepeatedly)
+        { // Reset Application Persistent Store
+            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        }
     }
     
     // Setup Envp
