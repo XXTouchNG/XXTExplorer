@@ -1,5 +1,4 @@
-platform :ios, '7.0'
-inhibit_all_warnings!
+# inhibit_all_warnings!
 
 xcodeproj 'XXTExplorer'
 
@@ -32,10 +31,17 @@ def shared_pods
 end
 
 target 'XXTouch' do
+    platform :ios, '8.0'
     shared_pods
 end
 
 target 'XXTExplorer' do
+    platform :ios, '8.0'
+    shared_pods
+end
+
+target 'XXTExplorer-Archive' do
+    platform :ios, '7.0'
     shared_pods
 end
 

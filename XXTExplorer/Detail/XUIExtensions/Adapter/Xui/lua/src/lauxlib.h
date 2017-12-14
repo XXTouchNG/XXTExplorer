@@ -212,18 +212,18 @@ LUALIB_API void (luaL_openlib) (lua_State *L, const char *libname,
 
 /* print a string */
 #if !defined(lua_writestring)
-#define lua_writestring(s,l)   fwrite((s), sizeof(char), (l), fakeout())
+#define lua_writestring(s,l)   fwrite((s), sizeof(char), (l), lua_outputStream())
 #endif
 
 /* print a newline and flush the output */
 #if !defined(lua_writeline)
-#define lua_writeline()        (lua_writestring("\n", 1), fflush(fakeout()))
+#define lua_writeline()        (lua_writestring("\n", 1), fflush(lua_outputStream()))
 #endif
 
 /* print an error message */
 #if !defined(lua_writestringerror)
 #define lua_writestringerror(s,p) \
-        (fprintf(fakeerr(), (s), (p)), fflush(fakeerr()))
+        (fprintf(lua_errorStream(), (s), (p)), fflush(lua_errorStream()))
 #endif
 
 /* }================================================================== */

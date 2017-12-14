@@ -12,7 +12,7 @@
 
 - (instancetype)initWithTextView:(UITextView *)textView;
 
-@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, weak) UITextView *textView;
 @property (nonatomic, strong) UIColor *maskColor;
 
 - (void)flashWithRange:(NSRange)range;

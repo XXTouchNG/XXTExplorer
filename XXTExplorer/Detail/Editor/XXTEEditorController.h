@@ -31,4 +31,8 @@
 - (void)invalidateSyntaxCaches;
 - (void)saveDocumentIfNecessary;
 
+#pragma mark - Search
+
+- (void)toggleSearchBar;
+
 @end

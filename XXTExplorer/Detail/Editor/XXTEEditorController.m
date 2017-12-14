@@ -47,21 +47,22 @@
 // Toolbar
 #import "XXTEEditorToolbar.h"
 
+// Search
+#import "XXTEEditorSearchBar.h"
+#import "ICTextView.h"
+#import "ICRangeUtils.h"
+#import "ICRegularExpression.h"
+
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, UITextFieldDelegate, XXTEEditorSearchAccessoryViewDelegate>
 
-@property (nonatomic, strong) NSArray <NSLayoutConstraint *> *statusBarConstraints;
-
-@property (nonatomic, strong) UIView *fakeStatusBar;
 @property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
-#ifdef DEBUG
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
-#endif
 @property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *statisticsButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
@@ -81,6 +82,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @property (nonatomic, assign) BOOL shouldHighlightRange;
 @property (nonatomic, assign) NSRange highlightRange;
+
+@property (nonatomic, assign, getter=isSearchMode) BOOL searchMode;
+@property (nonatomic, strong) XXTEEditorSearchBar *searchBar;
+@property (nonatomic, strong) NSArray <NSLayoutConstraint *> *closedSearchBarConstraints;
+@property (nonatomic, strong) NSArray <NSLayoutConstraint *> *expandedSearchBarConstraints;
 
 @end
 
@@ -151,30 +157,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - AFTER -viewDidLoad
 
 - (void)reloadConstraints {
-    if (XXTE_PAD) {
-        
-    } else {
-        CGRect frame = CGRectNull;
-        if (NO == [self.navigationController isNavigationBarHidden]) frame = CGRectZero;
-        else frame = [[UIApplication sharedApplication] statusBarFrame];
-        
-        {
-            NSArray <NSLayoutConstraint *> *constraints =
-            @[
-              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0],
-              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-              [NSLayoutConstraint constraintWithItem:self.fakeStatusBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:frame.size.height],
-              ];
-            if (self.statusBarConstraints) {
-                [self.view removeConstraints:self.statusBarConstraints];
-            }
-            [self.view addConstraints:constraints];
-            self.statusBarConstraints = constraints;
-        }
-        
-    }
-    [self updateViewConstraints]; // TODO: back gesture will break this method :-(
+    
 }
 
 - (void)reloadTextView {
@@ -190,6 +173,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     XXTEEditorTheme *theme = self.theme;
     self.view.backgroundColor = theme.backgroundColor;
     self.view.tintColor = theme.foregroundColor;
+    
+    XXTEEditorSearchBar *searchBar = self.searchBar;
+    searchBar.backgroundColor = theme.backgroundColor;
+    searchBar.tintColor = theme.foregroundColor;
+    searchBar.searchField.tintColor = theme.caretColor;
+    searchBar.searchField.textColor = theme.foregroundColor;
     
     // TextView
     XXTEEditorTextView *textView = self.textView;
@@ -245,14 +234,22 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     // Keyboard Appearance
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
+        searchBar.searchField.keyboardAppearance = UIKeyboardAppearanceLight;
+        searchBar.searchAccessoryView.barStyle = UIBarStyleDefault;
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
         keyboardRow.colorStyle = XXTEKeyboardRowStyleLight;
     }
     else
     {
+        searchBar.searchField.keyboardAppearance = UIKeyboardAppearanceDark;
+        searchBar.searchAccessoryView.barStyle = UIBarStyleBlack;
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
         keyboardRow.colorStyle = XXTEKeyboardRowStyleDark;
     }
+    
+    searchBar.searchAccessoryView.tintColor = theme.foregroundColor;
+    [searchBar.searchAccessoryView reloadItemTintColor];
+    
     if (isKeyboardRowEnabled && NO == isReadOnlyMode)
     {
         keyboardRow.textInput = textView;
@@ -384,26 +381,24 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     // Subviews
-    if (XXTE_PAD) {
-        
-    } else {
-        [self.view addSubview:self.fakeStatusBar];
-    }
     [self.view addSubview:self.textView];
     self.maskView.textView = self.textView;
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.toolbar];
+    
+    [self.view addSubview:self.searchBar];
+    [self.view addConstraints:[self closedSearchBarConstraints]];
     
     // Constraints
     if (XXTE_PAD)
     {
         NSArray <NSLayoutConstraint *> *constraints =
         @[
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
@@ -414,11 +409,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     {
         NSArray <NSLayoutConstraint *> *constraints =
         @[
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.fakeStatusBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.fakeStatusBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
@@ -460,7 +455,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     return _shareButtonItem;
 }
 
-#ifdef DEBUG
 - (UIBarButtonItem *)searchButtonItem {
     if (!_searchButtonItem) {
         UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSearch"] style:UIBarButtonItemStylePlain target:self action:@selector(searchButtonItemTapped:)];
@@ -468,7 +462,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     return _searchButtonItem;
 }
-#endif
 
 - (UIBarButtonItem *)symbolsButtonItem {
     if (!_symbolsButtonItem) {
@@ -492,18 +485,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         _settingsButtonItem = settingsButtonItem;
     }
     return _settingsButtonItem;
-}
-
-- (UIView *)fakeStatusBar {
-    if (!_fakeStatusBar) {
-        CGRect frame = [[UIApplication sharedApplication] statusBarFrame];
-        UIView *fakeStatusBar = [[UIView alloc] initWithFrame:frame];
-        fakeStatusBar.backgroundColor = [UIColor clearColor];
-        fakeStatusBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        fakeStatusBar.translatesAutoresizingMaskIntoConstraints = NO;
-        _fakeStatusBar = fakeStatusBar;
-    }
-    return _fakeStatusBar;
 }
 
 - (XXTEEditorTextView *)textView {
@@ -620,6 +601,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [textView setTextColor:theme.foregroundColor];
     [textView setText:string];
     textView.editable = !isReadOnlyMode;
+    [textView setSelectedRange:NSMakeRange(0, 0)];
 }
 
 #pragma mark - Attributes
@@ -821,6 +803,172 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     NSString *documentString = self.textView.textStorage.string;
     NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
     [documentData writeToFile:self.entryPath atomically:YES];
+}
+
+#pragma mark - Search
+
+- (void)toggleSearchBar {
+    {
+        if ([self.searchBar.searchField isFirstResponder]) {
+            [self.searchBar.searchField resignFirstResponder];
+        }
+        [self.textView resetSearch];
+        [self.searchBar.searchField setText:@""];
+    }
+    if ([self isSearchMode]) {
+        [self closeSearchBarAnimated:YES];
+        _searchMode = NO;
+    } else {
+        [self expandSearchBarAnimated:YES];
+        _searchMode = YES;
+    }
+}
+
+- (void)expandSearchBarAnimated:(BOOL)animated {
+    if (animated) {
+        [self.searchBar setHidden:NO];
+        [self.view layoutIfNeeded];
+        [self.view removeConstraints:[self closedSearchBarConstraints]];
+        [self.view addConstraints:[self expandedSearchBarConstraints]];
+        self.searchButtonItem.enabled = NO;
+        [UIView animateWithDuration:.2
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                         } completion:^(BOOL finished) {
+                             self.searchButtonItem.enabled = YES;
+                         }];
+    } else {
+        [self.view removeConstraints:[self closedSearchBarConstraints]];
+        [self.view addConstraints:[self expandedSearchBarConstraints]];
+    }
+}
+
+- (void)closeSearchBarAnimated:(BOOL)animated {
+    if (animated) {
+        [self.view layoutIfNeeded];
+        [self.view removeConstraints:[self expandedSearchBarConstraints]];
+        [self.view addConstraints:[self closedSearchBarConstraints]];
+        self.searchButtonItem.enabled = NO;
+        [UIView animateWithDuration:.2
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                         } completion:^(BOOL finished) {
+                             [self.searchBar setHidden:YES];
+                             self.searchButtonItem.enabled = YES;
+                         }];
+    } else {
+        [self.view removeConstraints:[self expandedSearchBarConstraints]];
+        [self.view addConstraints:[self closedSearchBarConstraints]];
+    }
+}
+
+- (NSArray <NSLayoutConstraint *> *)expandedSearchBarConstraints {
+    if (!_expandedSearchBarConstraints) {
+        _expandedSearchBarConstraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:XXTEEditorSearchBarHeight],
+          ];
+    }
+    return _expandedSearchBarConstraints;
+}
+
+- (NSArray <NSLayoutConstraint *> *)closedSearchBarConstraints {
+    if (!_closedSearchBarConstraints) {
+        _closedSearchBarConstraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:-XXTEEditorSearchBarHeight],
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:XXTEEditorSearchBarHeight],
+          ];
+    }
+    return _closedSearchBarConstraints;
+}
+
+- (BOOL)isSearchMode {
+    return _searchMode;
+}
+
+- (XXTEEditorSearchBar *)searchBar {
+    if (!_searchBar) {
+        XXTEEditorSearchBar *searchBar = [[XXTEEditorSearchBar alloc] init];
+        searchBar.backgroundColor = [UIColor whiteColor];
+        searchBar.translatesAutoresizingMaskIntoConstraints = NO;
+        searchBar.hidden = YES;
+        searchBar.searchField.delegate = self;
+        [searchBar.searchField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        searchBar.searchAccessoryView.accessoryDelegate = self;
+        _searchBar = searchBar;
+    }
+    return _searchBar;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self searchNextMatch];
+    return YES;
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    [self searchNextMatch];
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    [self searchNextMatch];
+    return YES;
+}
+
+#pragma mark - XXTEEditorSearchAccessoryViewDelegate
+
+- (void)searchAccessoryViewShouldMatchPrev:(XXTEEditorSearchAccessoryView *)accessoryView {
+    [self searchPreviousMatch];
+}
+
+- (void)searchAccessoryViewShouldMatchNext:(XXTEEditorSearchAccessoryView *)accessoryView {
+    [self searchNextMatch];
+}
+
+#pragma mark - ICTextView
+
+- (void)searchNextMatch
+{
+    [self searchMatchInDirection:ICTextViewSearchDirectionForward];
+}
+
+- (void)searchPreviousMatch
+{
+    [self searchMatchInDirection:ICTextViewSearchDirectionBackward];
+}
+
+- (void)searchMatchInDirection:(ICTextViewSearchDirection)direction
+{
+    NSString *searchString = self.searchBar.searchField.text;
+    
+    if (searchString.length) {
+//        if ([XXTGSSI.dataService regexSearchingEnabled]) {
+//            [self.textView scrollToMatch:searchString searchDirection:direction];
+//        } else {
+            [self.textView scrollToString:searchString searchDirection:direction];
+//        }
+    } else {
+        [self.textView resetSearch];
+    }
+    
+    [self updateCountLabel];
+}
+
+- (void)updateCountLabel
+{
+    ICTextView *textView = self.textView;
+    UILabel *countLabel = self.searchBar.searchAccessoryView.countLabel;
+    
+    NSUInteger numberOfMatches = textView.numberOfMatches;
+    countLabel.text = numberOfMatches ? [NSString stringWithFormat:NSLocalizedString(@"%lu/%lu", nil), (unsigned long)textView.indexOfFoundString + 1, (unsigned long)numberOfMatches] : NSLocalizedString(@"0/0", nil);
+    [countLabel sizeToFit];
 }
 
 #pragma mark - Memory

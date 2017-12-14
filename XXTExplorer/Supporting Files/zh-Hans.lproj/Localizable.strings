@@ -39,6 +39,9 @@
 "%lu Selected" = "%lu 已选择";
 
 /* No comment provided by engineer. */
+"%lu/%lu" = "%lu/%lu";
+
+/* No comment provided by engineer. */
 "(Un)Comment" = "切换注释";
 
 /* No comment provided by engineer. */
@@ -46,6 +49,9 @@
 
 /* No comment provided by engineer. */
 "/private/var/mobile" = "/private/var/mobile";
+
+/* No comment provided by engineer. */
+"0/0" = "0/0";
 
 /* No comment provided by engineer. */
 "1 item" = "1 项";
@@ -1084,6 +1090,9 @@
 
 /* No comment provided by engineer. */
 "Search User Defaults" = "搜索用户偏好设置";
+
+/* No comment provided by engineer. */
+"Search..." = "搜索...";
 
 /* No comment provided by engineer. */
 "Select Boot Script" = "选择开机启动项";

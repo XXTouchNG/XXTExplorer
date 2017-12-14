@@ -86,8 +86,8 @@
 #else				/* }{ */
 
 #define lua_readline(L,b,p) \
-        ((void)L, fputs(p, fakeout()), fflush(fakeout()),  /* show prompt */ \
-        fgets(b, LUA_MAXINPUT, fakein()) != NULL)  /* get line */
+        ((void)L, fputs(p, lua_outputStream()), fflush(lua_outputStream()),  /* show prompt */ \
+        fgets(b, LUA_MAXINPUT, lua_inputStream()) != NULL)  /* get line */
 #define lua_saveline(L,line)	{ (void)L; (void)line; }
 #define lua_freeline(L,b)	{ (void)L; (void)b; }
 
@@ -589,30 +589,30 @@ static int pmain (lua_State *L) {
   return 1;
 }
 
-static FILE *_fakein = NULL;
-void *fakein() { return _fakein ? _fakein : stdin; }
-static FILE *_fakeout = NULL;
-void *fakeout() { return _fakeout ? _fakeout : stdout; }
-static FILE *_fakeerr = NULL;
-void *fakeerr() { return _fakeerr ? _fakeerr : stderr; }
+static void *_inputStream = NULL;
+void *lua_inputStream() { return _inputStream ? _inputStream : stdin; }
+static void *_outputStream = NULL;
+void *lua_outputStream() { return _outputStream ? _outputStream : stdout; }
+static void *_errorStream = NULL;
+void *lua_errorStream() { return _errorStream ? _errorStream : stderr; }
 
-void fakeio(void *fin, void *fout, void *ferr) {
-    _fakein = fin; _fakeout = fout; _fakeerr = ferr;
+void lua_setStream(void *fin, void *fout, void *ferr) {
+    _inputStream = fin; _outputStream = fout; _errorStream = ferr;
 }
 
-int interactive (int argc, char **argv) {
-  int status, result;
-  lua_State *L = luaL_newstate();  /* create state */
-  if (L == NULL) {
-    l_message(argv[0], "cannot create state: not enough memory");
-    return EXIT_FAILURE;
-  }
-  lua_pushcfunction(L, &pmain);  /* to call 'pmain' in protected mode */
-  lua_pushinteger(L, argc);  /* 1st argument */
-  lua_pushlightuserdata(L, argv); /* 2nd argument */
-  status = lua_pcall(L, 2, 1, 0);  /* do the call */
-  result = lua_toboolean(L, -1);  /* get result */
-  report(L, status);
-  lua_close(L);
-  return (result && status == LUA_OK) ? EXIT_SUCCESS : EXIT_FAILURE;
+int lua_main (int argc, char **argv) {
+    int status, result;
+    lua_State *L = luaL_newstate();  /* create state */
+    if (L == NULL) {
+        l_message(argv[0], "cannot create state: not enough memory");
+        return EXIT_FAILURE;
+    }
+    lua_pushcfunction(L, &pmain);  /* to call 'pmain' in protected mode */
+    lua_pushinteger(L, argc);  /* 1st argument */
+    lua_pushlightuserdata(L, argv); /* 2nd argument */
+    status = lua_pcall(L, 2, 1, 0);  /* do the call */
+    result = lua_toboolean(L, -1);  /* get result */
+    report(L, status);
+    lua_close(L);
+    return (result && status == LUA_OK) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

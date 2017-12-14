@@ -90,9 +90,9 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
             }
         }
         
-        fakeio(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
+        lua_setStream(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
     } else {
-        fakeio(nil, nil, nil);
+        lua_setStream(nil, nil, nil);
         chdir("/");
         
         if (self.stdoutHandler) {

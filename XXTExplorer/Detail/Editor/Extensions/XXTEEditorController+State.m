@@ -41,7 +41,10 @@
 }
 
 - (void)handleTextViewNotifications:(NSNotification *)aNotification {
-    XXTEEditorTextView *textView = aNotification.object;
+    id <UITextInput> textInput = aNotification.object;
+    if (textInput != self.textView) {
+        return;
+    }
     if ([aNotification.name isEqualToString:UITextViewTextDidBeginEditingNotification]) {
         // Begin
         [self invalidateSyntaxCaches];
@@ -53,9 +56,12 @@
         }
     } else if ([aNotification.name isEqualToString:UITextViewTextDidChangeNotification]) {
         // Changed
-        if (textView.editable) {
-            [self setNeedsSaveDocument];
-            [self setNeedsReloadAttributes];
+        if ([textInput isKindOfClass:[XXTEEditorTextView class]]) {
+            XXTEEditorTextView *textView = (XXTEEditorTextView *)textInput;
+            if ([textView isEditable]) {
+                [self setNeedsSaveDocument];
+                [self setNeedsReloadAttributes];
+            }
         }
     }
 }

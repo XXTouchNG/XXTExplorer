@@ -403,7 +403,7 @@ static int db_debug (lua_State *L) {
   for (;;) {
     char buffer[250];
     lua_writestringerror("%s", "lua_debug> ");
-    if (fgets(buffer, sizeof(buffer), fakein()) == 0 ||
+    if (fgets(buffer, sizeof(buffer), lua_inputStream()) == 0 ||
         strcmp(buffer, "cont\n") == 0)
       return 0;
     if (luaL_loadbuffer(L, buffer, strlen(buffer), "=(debug command)") ||

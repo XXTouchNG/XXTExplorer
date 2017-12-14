@@ -486,10 +486,10 @@ struct lua_Debug {
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************************/
 
-extern void *fakein(void);
-extern void *fakeout(void);
-extern void *fakeerr(void);
-extern void fakeio(void *fin, void *fout, void *ferr);
-extern int interactive (int argc, char **argv);
+extern void *lua_inputStream(void);
+extern void *lua_outputStream(void);
+extern void *lua_errorStream(void);
+extern void lua_setStream(void *fin, void *fout, void *ferr);
+extern int lua_main (int argc, char **argv);
 
 #endif

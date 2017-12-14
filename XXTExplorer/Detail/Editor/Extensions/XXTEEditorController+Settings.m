@@ -44,9 +44,12 @@
 
 - (void)searchButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
-    XXTEEditorSearchController *searchController = [[XXTEEditorSearchController alloc] init];
-    searchController.editor = self;
-    [self.navigationController pushViewController:searchController animated:YES];
+    
+//    XXTEEditorSearchController *searchController = [[XXTEEditorSearchController alloc] init];
+//    searchController.editor = self;
+//    [self.navigationController pushViewController:searchController animated:YES];
+    
+    [self toggleSearchBar];
 }
 
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {
