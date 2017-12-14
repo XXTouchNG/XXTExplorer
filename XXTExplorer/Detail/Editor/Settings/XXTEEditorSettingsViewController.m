@@ -326,6 +326,22 @@
         [self.editor setNeedsReload];
     }];
     
+    XXTEMoreSwitchCell *cell17 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cell17.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
+    cell17.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+    [cell17.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorSearchRegularExpression, optionSwitch.on);
+    }];
+    
+    XXTEMoreSwitchCell *cell18 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cell18.titleLabel.text = NSLocalizedString(@"Case Sensitive", nil);
+    cell18.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
+    [cell18.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+        UISwitch *optionSwitch = (UISwitch *)sender;
+        XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
+    }];
+    
     NSArray *layoutSection = nil;
     if (XXTE_PAD) {
         layoutSection = @[ cell5, cell6 ];
@@ -342,6 +358,7 @@
                     @[ cell9, cell10, cell11 ],
 #endif
                     @[ cell12, cell13, cell14, cell15, cell16 ],
+                    @[ cell17, cell18 ]
                     ];
 }
 

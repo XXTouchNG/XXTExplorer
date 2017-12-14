@@ -948,12 +948,20 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 {
     NSString *searchString = self.searchBar.searchField.text;
     
+    BOOL caseSensitive = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
+    if (!caseSensitive) {
+        self.textView.searchOptions = NSRegularExpressionCaseInsensitive;
+    } else {
+        self.textView.searchOptions = 0;
+    }
+    
     if (searchString.length) {
-//        if ([XXTGSSI.dataService regexSearchingEnabled]) {
-//            [self.textView scrollToMatch:searchString searchDirection:direction];
-//        } else {
+        BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+        if (useRegular) {
+            [self.textView scrollToMatch:searchString searchDirection:direction];
+        } else {
             [self.textView scrollToString:searchString searchDirection:direction];
-//        }
+        }
     } else {
         [self.textView resetSearch];
     }
