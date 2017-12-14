@@ -567,11 +567,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         }
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-#ifdef DEBUG
         toolbar.items = @[ self.searchButtonItem, flexible, self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
-#else
-        toolbar.items = @[ self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
-#endif
         _toolbar = toolbar;
     }
     return _toolbar;

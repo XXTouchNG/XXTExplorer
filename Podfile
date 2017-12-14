@@ -1,4 +1,4 @@
-# inhibit_all_warnings!
+inhibit_all_warnings!
 
 xcodeproj 'XXTExplorer'
 
