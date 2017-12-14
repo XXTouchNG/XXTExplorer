@@ -46,7 +46,7 @@
 }
 
 - (void)setup {
-    _maskColor = [UIColor blueColor];
+    _maskColor = [UIColor colorWithRed:150.0f/255.0f green:200.0f/255.0f blue:1.0 alpha:1.0];
     self.userInteractionEnabled = NO;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }

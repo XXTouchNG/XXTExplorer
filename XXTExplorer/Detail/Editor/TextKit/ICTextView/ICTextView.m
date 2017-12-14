@@ -453,11 +453,13 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 - (UIView *)addHighlightAtRect:(CGRect)frame
 {
     UIView *highlight = [[UIView alloc] initWithFrame:frame];
+    highlight.alpha = 0.66;
     CGFloat cornerRadius = self.highlightCornerRadius;
     highlight.layer.cornerRadius = (cornerRadius < 0.0 ? frame.size.height * 0.2f : cornerRadius);
     highlight.backgroundColor = self.secondaryHighlightColor;
     [self.secondaryHighlights addObject:highlight];
-    [self insertSubview:highlight belowSubview:self.textSubview];
+//    [self insertSubview:highlight belowSubview:self.textSubview];
+    [self addSubview:highlight];
     return highlight;
 }
 
@@ -617,12 +619,12 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
     _highlightSearchResults = YES;
     _maxHighlightedMatches = 100;
     _primaryHighlights = [[NSMutableArray alloc] init];
-    _primaryHighlightColor = [UIColor colorWithRed:150.0f/255.0f green:200.0f/255.0f blue:1.0 alpha:1.0];
+    _primaryHighlightColor = [UIColor colorWithRed:241.0/255.0 green:196.0/255.0 blue:15.0/255.0 alpha:1.0];
     _scrollAutoRefreshDelay = 0.2;
     _searchIndex = ICSearchIndexAuto;
     _searchRange = ICRangeMax;
     _secondaryHighlights = [[NSMutableOrderedSet alloc] init];
-    _secondaryHighlightColor = [UIColor colorWithRed:215.0f/255.0f green:240.0f/255.0f blue:1.0 alpha:1.0];
+    _secondaryHighlightColor = [UIColor colorWithRed:241.0/255.0 green:196.0/255.0 blue:15.0/255.0 alpha:0.5];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textChanged)

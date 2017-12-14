@@ -187,7 +187,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
     textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
     textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
-    textView.backgroundColor = theme.backgroundColor;
+    textView.backgroundColor = [UIColor clearColor];
+//    textView.backgroundColor = theme.backgroundColor;
     textView.editable = !isReadOnlyMode;
     textView.tintColor = theme.caretColor;
     
@@ -975,8 +976,15 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     UILabel *countLabel = self.searchBar.searchAccessoryView.countLabel;
     
     NSUInteger numberOfMatches = textView.numberOfMatches;
-    countLabel.text = numberOfMatches ? [NSString stringWithFormat:NSLocalizedString(@"%lu/%lu", nil), (unsigned long)textView.indexOfFoundString + 1, (unsigned long)numberOfMatches] : NSLocalizedString(@"0/0", nil);
-    [countLabel sizeToFit];
+    if (numberOfMatches > 0) {
+        NSUInteger idx = textView.indexOfFoundString;
+        if (idx != NSNotFound) {
+            countLabel.text = numberOfMatches ? [NSString stringWithFormat:NSLocalizedString(@"%lu/%lu", nil), (unsigned long)idx + 1, (unsigned long)numberOfMatches] : NSLocalizedString(@"0/0", nil);
+            [countLabel sizeToFit];
+        }
+    } else {
+        countLabel.text = NSLocalizedString(@"0/0", nil);
+    }
 }
 
 #pragma mark - Memory

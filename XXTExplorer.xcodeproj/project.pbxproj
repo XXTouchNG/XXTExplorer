@@ -120,6 +120,9 @@
 		0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F707E781FB094110052A4B5 /* XXTESymbolCell.xib */; };
 		0F707E7D1FB09A920052A4B5 /* XXTESymbolTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E7C1FB09A920052A4B5 /* XXTESymbolTypeView.m */; };
 		0F707E831FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */; };
+		0F71A2741FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
+		0F71A2751FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
+		0F71A2761FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
 		0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
 		0F8093F51F5470A9003D5894 /* XXTEShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */; };
 		0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */; };
@@ -1301,6 +1304,8 @@
 		0F707E7C1FB09A920052A4B5 /* XXTESymbolTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESymbolTypeView.m; sourceTree = "<group>"; };
 		0F707E811FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDocumentPickerViewController+NavigationBar.h"; sourceTree = "<group>"; };
 		0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDocumentPickerViewController+NavigationBar.m"; sourceTree = "<group>"; };
+		0F71A2721FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+DisableFuckingSmartXXX.h"; sourceTree = "<group>"; };
+		0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+DisableFuckingSmartXXX.m"; sourceTree = "<group>"; };
 		0F766CAD1ED8D2BF00E18BE2 /* XXTExplorerDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerDefaults.h; sourceTree = "<group>"; wrapsLines = 0; };
 		0F766CAE1ED8D7D700E18BE2 /* UIView+XXTEToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XXTEToast.h"; sourceTree = "<group>"; };
 		0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XXTEToast.m"; sourceTree = "<group>"; };
@@ -2830,6 +2835,8 @@
 				0F51CB181F61289600150D6D /* XXTEEditorTypeSetter.m */,
 				0FB2209A1F824A9200156C3B /* XXTEEditorPreprocessor.h */,
 				0FB2209B1F824A9200156C3B /* XXTEEditorPreprocessor.m */,
+				0F71A2721FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.h */,
+				0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */,
 			);
 			path = TextKit;
 			sourceTree = "<group>";
@@ -4327,6 +4334,7 @@
 				0F8EDBF71FB1F779003C92D6 /* XXTEUIViewController+XUILinkCell.m in Sources */,
 				0F8EDBF91FB1F779003C92D6 /* XXTEImagePickerController.m in Sources */,
 				0F8EDBFA1FB1F779003C92D6 /* XXTEEditorTabWidthCell.m in Sources */,
+				0F71A2751FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				0F8EDBFB1FB1F779003C92D6 /* XXTExplorerEntryUnarchiver.m in Sources */,
 				0F8EDBFC1FB1F779003C92D6 /* XXTExplorerCreateItemViewController.m in Sources */,
 				0F8EDBFE1FB1F779003C92D6 /* XXTEMoreSwitchCell.m in Sources */,
@@ -4632,6 +4640,7 @@
 				52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */,
 				52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */,
 				D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */,
+				0F71A2741FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				0F40C1AC1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */,
 				52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */,
 				D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */,
@@ -4917,6 +4926,7 @@
 				D60FE7211FE2369300954818 /* SKTheme.m in Sources */,
 				D60FE7221FE2369300954818 /* SKReferenceManager.m in Sources */,
 				D60FE7231FE2369300954818 /* XXTPickerNavigationController.m in Sources */,
+				0F71A2761FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				D60FE7241FE2369300954818 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */,
 				D60FE7251FE2369300954818 /* SKPattern.m in Sources */,
 				D60FE7261FE2369300954818 /* XUIAnimatedImageCell.m in Sources */,

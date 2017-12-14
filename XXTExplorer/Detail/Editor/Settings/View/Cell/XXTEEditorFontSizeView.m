@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UILabel *ptLabel;
 @property (nonatomic, strong) UILabel *upTriView;
 @property (nonatomic, strong) UILabel *downTriView;
+@property (nonatomic, strong) UIColor *separatorColor;
 
 @end
 
@@ -26,6 +27,8 @@
 }
 
 - (void)setup {
+    _separatorColor = [XXTE_COLOR colorWithAlphaComponent:0.2];
+    
     self.backgroundColor = [UIColor clearColor];
     self.layer.borderColor = XXTE_COLOR.CGColor;
     self.layer.borderWidth = 1.f;
@@ -63,6 +66,12 @@
     self.downView = downView;
     
     [self setFontSize:self.fontSize];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.sizeLabel.center = CGPointMake(self.bounds.size.width / 2 - self.sizeLabel.bounds.size.width / 2, self.bounds.size.height / 2);
+    self.ptLabel.frame = CGRectMake(self.bounds.size.width / 2 + 4, self.sizeLabel.frame.origin.y + self.sizeLabel.bounds.size.height - self.ptLabel.bounds.size.height, self.bounds.size.width, self.bounds.size.height);
 }
 
 - (void)increaseFontSize:(UIButton *)btn {
@@ -112,8 +121,17 @@
     _fontSize = fontSize;
     self.sizeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.fontSize];
     [self.sizeLabel sizeToFit];
-    self.sizeLabel.center = CGPointMake(self.bounds.size.width / 2 - self.sizeLabel.bounds.size.width / 2, self.bounds.size.height / 2);
-    self.ptLabel.frame = CGRectMake(self.bounds.size.width / 2 + 4, self.sizeLabel.frame.origin.y + self.sizeLabel.bounds.size.height - self.ptLabel.bounds.size.height, self.bounds.size.width, self.bounds.size.height);
+    [self setNeedsLayout];
+}
+
+- (void)drawRect:(CGRect)rect {
+    if (_separatorColor) {
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetStrokeColorWithColor(ctx, _separatorColor.CGColor);
+        CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect) / 2.0);
+        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect) / 2.0);
+        CGContextStrokePath(ctx);
+    }
 }
 
 @end

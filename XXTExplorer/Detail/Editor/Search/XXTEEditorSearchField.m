@@ -41,7 +41,7 @@
         self.font = [UIFont systemFontOfSize:14.0];
     }
     self.textAlignment = NSTextAlignmentLeft;
-    self.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.clearButtonMode = UITextFieldViewModeAlways;
     self.returnKeyType = UIReturnKeyNext;
 }
 

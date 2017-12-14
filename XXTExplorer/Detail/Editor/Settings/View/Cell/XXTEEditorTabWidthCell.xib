@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,17 +18,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXk-55-Hbn">
-                        <rect key="frame" x="28" y="12" width="117" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Width" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXk-55-Hbn">
+                        <rect key="frame" x="28" y="12" width="231" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="d7X-2b-GLn">
-                        <rect key="frame" x="161" y="7" width="225" height="29"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="225" id="WKw-P1-i6U"/>
-                        </constraints>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="d7X-2b-GLn">
+                        <rect key="frame" x="291" y="7" width="95" height="29"/>
                         <segments>
                             <segment title="2"/>
                             <segment title="3"/>
@@ -41,7 +37,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="OXk-55-Hbn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="7ug-vR-RiT"/>
-                    <constraint firstItem="d7X-2b-GLn" firstAttribute="leading" secondItem="OXk-55-Hbn" secondAttribute="trailing" constant="16" id="8oV-fC-Ogl"/>
+                    <constraint firstItem="d7X-2b-GLn" firstAttribute="leading" secondItem="OXk-55-Hbn" secondAttribute="trailing" constant="32" id="8oV-fC-Ogl"/>
                     <constraint firstItem="OXk-55-Hbn" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="YI5-Sj-jmu"/>
                     <constraint firstAttribute="trailingMargin" secondItem="d7X-2b-GLn" secondAttribute="trailing" constant="8" id="fMa-pA-6MW"/>
                     <constraint firstItem="d7X-2b-GLn" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nGj-Mv-kaZ"/>
