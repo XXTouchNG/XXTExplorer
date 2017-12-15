@@ -27,7 +27,7 @@
 }
 
 - (void)setup {
-    _separatorColor = [XXTE_COLOR colorWithAlphaComponent:0.2];
+    _separatorColor = [XXTE_COLOR colorWithAlphaComponent:0.1];
     
     self.backgroundColor = [UIColor clearColor];
     self.layer.borderColor = XXTE_COLOR.CGColor;

@@ -38,8 +38,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _searchField.frame = CGRectMake(16.0, 0.0, CGRectGetWidth(self.bounds) - 16.0 - 16.0 - 16.0 - 8.0, CGRectGetHeight(self.bounds));
-    _magnifierIcon.frame = CGRectMake(CGRectGetWidth(self.bounds) - 16.0 - 16.0, (CGRectGetHeight(self.bounds) - 16.0) / 2.0, 16.0, 16.0);
+    _searchField.frame = CGRectMake(16.0 + 16.0 + 8.0, 0.0, CGRectGetWidth(self.bounds) - 16.0 - 16.0 - 16.0 - 8.0, CGRectGetHeight(self.bounds));
+    _magnifierIcon.frame = CGRectMake(16.0, (CGRectGetHeight(self.bounds) - 16.0) / 2.0, 16.0, 16.0);
     _searchAccessoryView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds), 40.f);
 }
 
