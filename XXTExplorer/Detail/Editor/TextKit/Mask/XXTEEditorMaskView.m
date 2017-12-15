@@ -82,9 +82,12 @@
     CGRect textRect = [manager boundingRectForGlyphRange:glyphRange inTextContainer:[textView textContainer]];
     
     UIEdgeInsets textInsets = UIEdgeInsetsMake(1.8, 4.0, 2.0, 4.0);
-    CGPoint textViewOrigin = textView.frame.origin;
-    textRect.origin.x += (textViewOrigin.x / 2.0) + textView.textContainerInset.left - textInsets.left;
-    textRect.origin.y += (textViewOrigin.y / 2.0) + textView.textContainerInset.top - textInsets.top;
+    // We do not need to consider its origin because our maskView has the same bound with textView.
+//    CGPoint textViewOrigin = textView.frame.origin;
+//    textRect.origin.x += (textViewOrigin.x / 2.0) + textView.textContainerInset.left - textInsets.left;
+//    textRect.origin.y += (textViewOrigin.y / 2.0) + textView.textContainerInset.top - textInsets.top;
+    textRect.origin.x += textView.textContainerInset.left - textInsets.left;
+    textRect.origin.y += textView.textContainerInset.top - textInsets.top;
     textRect.size.width += textInsets.left + textInsets.right;
     textRect.size.height += textInsets.top + textInsets.bottom;
     

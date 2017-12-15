@@ -24,6 +24,7 @@
 #import "XXTEEditorTextView.h"
 #import "XXTEEditorTextStorage.h"
 #import "XXTEEditorLayoutManager.h"
+#import "XXTEEditorTextContainer.h"
 #import "XXTEEditorTypeSetter.h"
 #import "XXTEEditorTextInput.h"
 #import "XXTEEditorPreprocessor.h"
@@ -208,6 +209,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         [textView.vLayoutManager setInvisibleFont:theme.font];
     }
     
+    // Text Container
+    BOOL indentWrappedLines = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, NO);
+    if (textView.vLayoutManager) {
+        [textView.vLayoutManager setIndentWrappedLines:indentWrappedLines];
+    }
+    
     // Type Setter
     NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
     CGFloat tabWidth = tabWidthEnum * theme.tabWidth;
@@ -232,7 +239,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         textView.vTextInput.tabWidthString = @"\t";
     }
     
-    // Keyboard Appearance
+    // Accessories Appearance
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
         searchBar.searchField.keyboardAppearance = UIKeyboardAppearanceLight;
@@ -383,7 +390,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     // Subviews
     [self.view addSubview:self.textView];
-    self.maskView.textView = self.textView;
+    [self.maskView setTextView:self.textView];
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.toolbar];
     
@@ -497,7 +504,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         XXTEEditorLayoutManager *layoutManager = [[XXTEEditorLayoutManager alloc] init];
         layoutManager.delegate = typeSetter;
         
-        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        XXTEEditorTextContainer *textContainer = [[XXTEEditorTextContainer alloc] initWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         textContainer.widthTracksTextView = YES;
         
@@ -591,6 +598,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         toastMessage(self, [readError localizedDescription]);
         return;
     }
+    [self resetSearch];
     XXTEEditorTheme *theme = self.theme;
     XXTEEditorTextView *textView = self.textView;
     textView.editable = NO;
@@ -804,14 +812,19 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #pragma mark - Search
 
-- (void)toggleSearchBar {
+- (void)resetSearch {
     {
         if ([self.searchBar.searchField isFirstResponder]) {
             [self.searchBar.searchField resignFirstResponder];
         }
         [self.textView resetSearch];
         [self.searchBar.searchField setText:@""];
+        [self updateCountLabel];
     }
+}
+
+- (void)toggleSearchBar {
+    [self resetSearch];
     if ([self isSearchMode]) {
         [self closeSearchBarAnimated:YES];
         _searchMode = NO;

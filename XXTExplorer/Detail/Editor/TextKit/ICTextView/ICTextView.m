@@ -620,7 +620,7 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
     _maxHighlightedMatches = 100;
     _primaryHighlights = [[NSMutableArray alloc] init];
     _primaryHighlightColor = [UIColor colorWithRed:241.0/255.0 green:196.0/255.0 blue:15.0/255.0 alpha:1.0];
-    _scrollAutoRefreshDelay = 0.2;
+    _scrollAutoRefreshDelay = 0.1;
     _searchIndex = ICSearchIndexAuto;
     _searchRange = ICRangeMax;
     _secondaryHighlights = [[NSMutableOrderedSet alloc] init];

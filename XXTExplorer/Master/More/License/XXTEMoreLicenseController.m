@@ -14,11 +14,13 @@
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreLicenseCell.h"
+#import "XXTEMoreLinkCell.h"
 #import "XXTENetworkDefines.h"
 #import "XUIViewShaker.h"
 #import "XXTExplorerViewController.h"
 
 #import "XXTEShimmeringView.h"
+#import "XXTECommonWebViewController.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreLicenseSectionIndexNewLicense = 0,
@@ -151,6 +153,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell3.valueLabel.numberOfLines = 2;
     
+    XXTEMoreLinkCell *linkCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+    linkCell.titleLabel.text = NSLocalizedString(@"Buy License", nil);
+    linkCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Version", nil);
     cell4.valueLabel.text = @"";
@@ -182,7 +188,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     staticCells = @[
                     @[ cell1 ],
                     //
-                    @[ cell2, cell3 ],
+                    @[ cell2, cell3, linkCell ],
                     //
                     @[ cell4, cell5, cell6, cell7, cell8, cell9, cell10 ]
                     ];
@@ -319,10 +325,14 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreLicenseSectionIndexNewLicense) {
-            return 56.f;
+            if (indexPath.row == 0) {
+                return 56.f;
+            }
         }
         else if (indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
-            return 66.f;
+            if (indexPath.row == 0 || indexPath.row == 1) {
+                return 66.f;
+            }
         }
     }
     return 44.f;
@@ -332,7 +342,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
-            NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row]).valueLabel.text;
+            NSString *detailText =
+            ((XXTEMoreTitleValueCell *)staticCells
+             [(NSUInteger) indexPath.section]
+             [(NSUInteger) indexPath.row])
+            .valueLabel.text;
             if (detailText && detailText.length > 0) {
                 UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
@@ -344,6 +358,19 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                     toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
                     blockInteractions(blockVC, NO);
                 });
+            }
+        }
+        else if (indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
+            NSString *titleText =
+            ((XXTEMoreLinkCell *)staticCells
+             [(NSUInteger) indexPath.section]
+             [(NSUInteger) indexPath.row])
+            .titleLabel.text;
+            if (indexPath.row == 2) {
+                NSURL *url = [NSURL URLWithString:uAppDefine(@"XXTOUCH_BUY_URL")];
+                XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
+                webController.title = titleText;
+                [self.navigationController pushViewController:webController animated:YES];
             }
         }
     }

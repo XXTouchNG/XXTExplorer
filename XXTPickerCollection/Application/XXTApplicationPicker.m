@@ -60,7 +60,9 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 @implementation XXTApplicationPicker {
     NSString *_pickerSubtitle;
+    XXTP_START_IGNORE_PARTIAL
     UISearchDisplayController *_searchDisplayController;
+    XXTP_END_IGNORE_PARTIAL
 }
 
 @synthesize pickerTask = _pickerTask;
@@ -79,9 +81,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #pragma mark - Default Style
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+    XXTP_START_IGNORE_PARTIAL
     if (self.searchDisplayController.active) {
         return UIStatusBarStyleDefault;
     }
+    XXTP_END_IGNORE_PARTIAL
     return UIStatusBarStyleLightContent;
 }
 
@@ -125,12 +129,14 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     searchBar.barTintColor = [UIColor whiteColor];
     searchBar.tintColor = XXTE_COLOR;
 
+    XXTP_START_IGNORE_PARTIAL
     UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     searchDisplayController.searchResultsDelegate = self;
     searchDisplayController.searchResultsDataSource = self;
     searchDisplayController.delegate = self;
     _searchDisplayController = searchDisplayController;
-
+    XXTP_END_IGNORE_PARTIAL
+    
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
@@ -377,31 +383,37 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 
 #pragma mark - UISearchDisplayDelegate
 
+XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
     XXTPickerNavigationController *navController = ((XXTPickerNavigationController *)self.navigationController);
     [navController.popupBar setHidden:YES];
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
     XXTPickerNavigationController *navController = ((XXTPickerNavigationController *)self.navigationController);
     [navController.popupBar setHidden:NO];
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
 
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self reloadSearch];
     return YES;
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     [self reloadSearch];
     return YES;
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (void)reloadSearch {
     NSPredicate *predicate = nil;
     if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == kXXTApplicationSearchTypeName) {
@@ -413,6 +425,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         self.displayApplications = [[NSArray alloc] initWithArray:[self.allApplications filteredArrayUsingPredicate:predicate]];
     }
 }
+XXTP_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

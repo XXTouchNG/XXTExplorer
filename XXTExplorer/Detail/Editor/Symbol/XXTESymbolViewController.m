@@ -41,7 +41,9 @@ UISearchDisplayDelegate
 @end
 
 @implementation XXTESymbolViewController {
+    XXTE_START_IGNORE_PARTIAL
     UISearchDisplayController *_searchDisplayController;
+    XXTE_END_IGNORE_PARTIAL
 }
 
 + (BOOL)hasSymbolPatternsForLanguage:(XXTEEditorLanguage *)language {
@@ -49,9 +51,11 @@ UISearchDisplayDelegate
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+    XXTE_START_IGNORE_PARTIAL
     if (self.searchDisplayController.active) {
         return UIStatusBarStyleDefault;
     }
+    XXTE_END_IGNORE_PARTIAL
     return UIStatusBarStyleLightContent;
 }
 
@@ -80,11 +84,13 @@ UISearchDisplayDelegate
     searchBar.barTintColor = [UIColor whiteColor];
     searchBar.tintColor = XXTE_COLOR;
     
+    XXTE_START_IGNORE_PARTIAL
     UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     searchDisplayController.searchResultsDelegate = self;
     searchDisplayController.searchResultsDataSource = self;
     searchDisplayController.delegate = self;
     _searchDisplayController = searchDisplayController;
+    XXTE_END_IGNORE_PARTIAL
     
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -271,34 +277,43 @@ UISearchDisplayDelegate
 
 #pragma mark - UISearchDisplayDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTESymbolCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTESymbolCellReuseIdentifier];
 }
-
+XXTE_END_IGNORE_PARTIAL
+XXTE_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
     
 }
-
+XXTE_END_IGNORE_PARTIAL
+XXTE_START_IGNORE_PARTIAL
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
     
 }
-
+XXTE_END_IGNORE_PARTIAL
+XXTE_START_IGNORE_PARTIAL
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self reloadSearch];
     return YES;
 }
-
+XXTE_END_IGNORE_PARTIAL
+XXTE_START_IGNORE_PARTIAL
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     [self reloadSearch];
     return YES;
 }
-
+XXTE_END_IGNORE_PARTIAL
+XXTE_START_IGNORE_PARTIAL
 - (void)reloadSearch {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", self.searchDisplayController.searchBar.text];
     if (predicate) {
         self.displaySymbolsTable = [[NSArray alloc] initWithArray:[self.symbolsTable filteredArrayUsingPredicate:predicate]];
     }
 }
+XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - Memory
 
 - (void)dealloc {
 #ifdef DEBUG

@@ -62,7 +62,9 @@ UISearchDisplayDelegate
 
 @implementation XXTMultipleApplicationPicker {
     NSString *_pickerSubtitle;
+    XXTP_START_IGNORE_PARTIAL
     UISearchDisplayController *_searchDisplayController;
+    XXTP_END_IGNORE_PARTIAL
 }
 
 @synthesize pickerTask = _pickerTask;
@@ -81,9 +83,11 @@ UISearchDisplayDelegate
 #pragma mark - Default Style
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+    XXTP_START_IGNORE_PARTIAL
     if (self.searchDisplayController.active) {
         return UIStatusBarStyleDefault;
     }
+    XXTP_END_IGNORE_PARTIAL
     return UIStatusBarStyleLightContent;
 }
 
@@ -137,11 +141,13 @@ UISearchDisplayDelegate
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.barTintColor = [UIColor whiteColor];
     
+    XXTP_START_IGNORE_PARTIAL
     UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     searchDisplayController.searchResultsDelegate = self;
     searchDisplayController.searchResultsDataSource = self;
     searchDisplayController.delegate = self;
     _searchDisplayController = searchDisplayController;
+    XXTP_END_IGNORE_PARTIAL
     
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -529,29 +535,35 @@ UISearchDisplayDelegate
 
 #pragma mark - UISearchDisplayDelegate
 
+XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     [tableView setEditing:YES animated:NO];
     [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
     [self.tableView reloadData];
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
     
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self tableViewReloadSearch:controller.searchResultsTableView];
     return YES;
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     [self tableViewReloadSearch:controller.searchResultsTableView];
     return YES;
 }
-
+XXTP_END_IGNORE_PARTIAL
+XXTP_START_IGNORE_PARTIAL
 - (void)tableViewReloadSearch:(UITableView *)tableView {
     NSPredicate *predicate = nil;
     if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == kXXTApplicationSearchTypeName) {
@@ -566,6 +578,7 @@ UISearchDisplayDelegate
         [self.displayUnselectedIdentifiers addObjectsFromArray:[self.unselectedIdentifiers filteredArrayUsingPredicate:predicate]];
     }
 }
+XXTP_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

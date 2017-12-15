@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) BOOL showLineNumbers;
 @property (nonatomic, assign) BOOL showInvisibleCharacters;
+@property (nonatomic, assign) BOOL indentWrappedLines;
 
 @property (nonatomic, strong) UIColor *invisibleColor;
 @property (nonatomic, strong) UIFont *invisibleFont;
@@ -24,5 +25,7 @@
 @property (nonatomic, assign, readonly) UIEdgeInsets lineAreaInset;
 @property (nonatomic, assign, readonly) CGFloat fontPointSize;
 @property (nonatomic, assign, readonly) CGFloat lineHeightScale;
+
+- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex;
 
 @end

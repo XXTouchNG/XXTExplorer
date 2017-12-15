@@ -12,7 +12,7 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
-#define XXTE_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
+#define XXTE_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"") _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
 #define XXTE_END_IGNORE_PARTIAL _Pragma("clang diagnostic pop")
 
 #define XXTE_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
@@ -21,6 +21,17 @@
 XXTE_START_IGNORE_PARTIAL \
 (XXTE_SYSTEM_8 && self.splitViewController && self.splitViewController.collapsed != YES) \
 XXTE_END_IGNORE_PARTIAL
+
+#define XXTE_IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define XXTE_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+
+#define XXTE_SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define XXTE_SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define XXTE_SCREEN_MAX_LENGTH (MAX(XXTE_SCREEN_WIDTH, XXTE_SCREEN_HEIGHT))
+#define XXTE_SCREEN_MIN_LENGTH (MIN(XXTE_SCREEN_WIDTH, XXTE_SCREEN_HEIGHT))
+
+#define XXTE_IS_IPHONE_6_BELOW (XXTE_IS_IPHONE && XXTE_SCREEN_MAX_LENGTH < 667.0)
+#define XXTE_IS_IPHONE_6P_ABOVE (XXTE_IS_IPHONE && XXTE_SCREEN_MAX_LENGTH >= 736.0)
 
 #define XXTE_COLOR ([UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f]) // rgb(52, 152, 219)
 #define XXTE_COLOR_DANGER ([UIColor colorWithRed:231.f/255.f green:76.f/255.f blue:60.f/255.f alpha:1.f]) // rgb(231, 76, 60)

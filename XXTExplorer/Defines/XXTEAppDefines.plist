@@ -30,6 +30,8 @@
 	<string>/private/var/tmp/1ferver_need_respring</string>
 	<key>AUTH_API</key>
 	<string>https://api.xxtouch.com/api/</string>
+	<key>XXTOUCH_BUY_URL</key>
+	<string>https://www.xxtouch.com/buy</string>
 	<key>DAEMON_VERSION</key>
 	<string>1.2.0-1</string>
 	<key>UPDATE_API</key>

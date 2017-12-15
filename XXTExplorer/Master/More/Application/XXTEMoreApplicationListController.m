@@ -13,9 +13,11 @@
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 
-enum {
-    kXXTEMoreApplicationListControllerCellSection = 0,
-};
+typedef enum : NSUInteger {
+    ApplicationSectionUser = 0,
+    ApplicationSectionSystem,
+    ApplicationSectionMax
+} ApplicationSection;
 
 enum {
     kXXTEMoreApplicationSearchTypeName = 0,
@@ -43,8 +45,13 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
         >
 @property(nonatomic, strong, readonly) UITableView *tableView;
 @property(nonatomic, strong, readonly) UIRefreshControl *refreshControl;
-@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *allApplications;
-@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *displayApplications;
+//@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *allApplications;
+//@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *displayApplications;
+
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *allUserApplications;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *allSystemApplications;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *displayUserApplications;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *displaySystemApplications;
 
 XXTE_START_IGNORE_PARTIAL
 @property(nonatomic, strong, readonly) UISearchController *searchController;
@@ -64,7 +71,10 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setup {
-    
+    _allUserApplications = [[NSMutableArray alloc] init];
+    _allSystemApplications = [[NSMutableArray alloc] init];
+    _displayUserApplications = [[NSMutableArray alloc] init];
+    _displaySystemApplications = [[NSMutableArray alloc] init];
 }
 
 #pragma mark - Default Style
@@ -105,8 +115,6 @@ XXTE_END_IGNORE_PARTIAL
         applicationWorkspace;
     });
 #pragma clang diagnostic pop
-    
-    _allApplications = @[];
     
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -174,75 +182,93 @@ XXTE_END_IGNORE_PARTIAL
     [self asyncApplicationList:self.refreshControl];
 }
 
+- (void)removeAllApplications {
+    [self.allUserApplications removeAllObjects];
+    [self.allSystemApplications removeAllObjects];
+    [self.displayUserApplications removeAllObjects];
+    [self.displaySystemApplications removeAllObjects];
+}
+
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @strongify(self);
-        _allApplications = ({
-            NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
-            NSMutableArray <LSApplicationProxy *> *allApplications = nil;
-            if (applicationIdentifiers) {
-                allApplications = [NSMutableArray arrayWithCapacity:applicationIdentifiers.count];
-                [applicationIdentifiers enumerateObjectsUsingBlock:^(NSString * _Nonnull bid, NSUInteger idx, BOOL * _Nonnull stop) {
-                    LSApplicationProxy *proxy = [LSApplicationProxy applicationProxyForIdentifier:bid];
-                    [allApplications addObject:proxy];
-                }];
-            } else {
+        [self removeAllApplications];
+        NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
+        NSMutableArray <LSApplicationProxy *> *allApplications = nil;
+        if (applicationIdentifiers) {
+            allApplications = [NSMutableArray arrayWithCapacity:applicationIdentifiers.count];
+            [applicationIdentifiers enumerateObjectsUsingBlock:^(NSString * _Nonnull bid, NSUInteger idx, BOOL * _Nonnull stop) {
+                LSApplicationProxy *proxy = [LSApplicationProxy applicationProxyForIdentifier:bid];
+                [allApplications addObject:proxy];
+            }];
+        } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                SEL selectorAll = NSSelectorFromString(@"allApplications");
-                allApplications = [self.applicationWorkspace performSelector:selectorAll];
+            SEL selectorAll = NSSelectorFromString(@"allApplications");
+            allApplications = [self.applicationWorkspace performSelector:selectorAll];
 #pragma clang diagnostic pop
-            }
-            NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
-            NSArray <NSString *> *blacklistIdentifiers = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
-            NSOrderedSet <NSString *> *blacklistApplications = [[NSOrderedSet alloc] initWithArray:blacklistIdentifiers];
-            NSMutableArray <NSDictionary *> *filteredApplications = [NSMutableArray arrayWithCapacity:allApplications.count];
-            for (LSApplicationProxy *appProxy in allApplications) {
-                @autoreleasepool {
-                    NSString *applicationBundleID = appProxy.applicationIdentifier;
-                    BOOL shouldAdd = ![blacklistApplications containsObject:applicationBundleID];
-                    if (shouldAdd) {
-                        NSString *applicationBundlePath = [appProxy.resourcesDirectoryURL path];
-                        NSString *applicationContainerPath = nil;
-                        NSString *applicationName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
-                        if (!applicationName) {
-                            applicationName = appProxy.localizedName;
-                        }
-                        NSData *applicationIconImageData = CFBridgingRelease(SBSCopyIconImagePNGDataForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
-                        UIImage *applicationIconImage = [UIImage imageWithData:applicationIconImageData];
-                        if (@available(iOS 8.0, *)) {
-                            if ([appProxy respondsToSelector:@selector(dataContainerURL)]) {
-                                applicationContainerPath = [[appProxy dataContainerURL] path];
-                            }
-                        } else {
-                            if ([appProxy respondsToSelector:@selector(containerURL)]) {
-                                applicationContainerPath = [[appProxy containerURL] path];
-                            }
-                        }
-                        NSMutableDictionary *applicationDetail = [[NSMutableDictionary alloc] init];
-                        if (applicationBundleID) {
-                            applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] = applicationBundleID;
-                        }
-                        if (applicationName) {
-                            applicationDetail[kXXTEMoreApplicationDetailKeyName] = applicationName;
-                        }
-                        if (applicationBundlePath) {
-                            applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath] = applicationBundlePath;
-                        }
-                        if (applicationContainerPath) {
-                            applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath] = applicationContainerPath;
-                        }
-                        if (applicationIconImage) {
-                            applicationDetail[kXXTEMoreApplicationDetailKeyIconImage] = applicationIconImage;
-                        }
-                        [filteredApplications addObject:[applicationDetail copy]];
+        }
+        NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
+        NSArray <NSString *> *blacklistIdentifiers = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
+        NSOrderedSet <NSString *> *blacklistApplications = [[NSOrderedSet alloc] initWithArray:blacklistIdentifiers];
+        for (LSApplicationProxy *appProxy in allApplications) {
+            @autoreleasepool {
+                NSString *applicationBundleID = appProxy.applicationIdentifier;
+                BOOL shouldAdd = ![blacklistApplications containsObject:applicationBundleID];
+                if (!shouldAdd) {
+                    continue;
+                }
+                NSString *applicationBundlePath = [appProxy.resourcesDirectoryURL path];
+                NSString *applicationContainerPath = nil;
+                NSString *applicationName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
+                if (!applicationName) {
+                    applicationName = appProxy.localizedName;
+                }
+                NSData *applicationIconImageData = CFBridgingRelease(SBSCopyIconImagePNGDataForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
+                UIImage *applicationIconImage = [UIImage imageWithData:applicationIconImageData];
+                if (@available(iOS 8.0, *)) {
+                    if ([appProxy respondsToSelector:@selector(dataContainerURL)]) {
+                        applicationContainerPath = [[appProxy dataContainerURL] path];
+                    }
+                } else {
+                    if ([appProxy respondsToSelector:@selector(containerURL)]) {
+                        applicationContainerPath = [[appProxy containerURL] path];
                     }
                 }
+                if (applicationContainerPath.length == 0) {
+                    applicationContainerPath = @"";
+                }
+                NSMutableDictionary *applicationDetail = [[NSMutableDictionary alloc] init];
+                if (applicationBundleID)
+                {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyBundleID] = applicationBundleID;
+                }
+                if (applicationName)
+                {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyName] = applicationName;
+                }
+                if (applicationBundlePath)
+                {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath] = applicationBundlePath;
+                }
+                if (applicationContainerPath)
+                {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath] = applicationContainerPath;
+                }
+                if (applicationIconImage)
+                {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyIconImage] = applicationIconImage;
+                }
+                BOOL systemApp = [applicationBundlePath hasPrefix:@"/Applications"];
+                if (systemApp) {
+                    [self.allSystemApplications addObject:[applicationDetail copy]];
+                } else {
+                    [self.allUserApplications addObject:[applicationDetail copy]];
+                }
             }
-            filteredApplications;
-        });
+        }
         dispatch_async_on_main_queue(^{
             [self.tableView reloadData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -256,21 +282,35 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Data Source
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == kXXTEMoreApplicationListControllerCellSection) {
-        return XXTEMoreApplicationCellHeight;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return ApplicationSectionMax;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == ApplicationSectionSystem) {
+        return NSLocalizedString(@"System Applications", nil);
+    } else if (section == ApplicationSectionUser) {
+        return NSLocalizedString(@"User Applications", nil);
     }
-    return 0;
+    return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return XXTEMoreApplicationCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.searchController.active == NO) {
-        if (section == kXXTEMoreApplicationListControllerCellSection) {
-            return self.allApplications.count;
+        if (section == ApplicationSectionSystem) {
+            return self.allSystemApplications.count;
+        } else if (section == ApplicationSectionUser) {
+            return self.allUserApplications.count;
         }
     } else {
-        if (section == kXXTEMoreApplicationListControllerCellSection) {
-            return self.displayApplications.count;
+        if (section == ApplicationSectionSystem) {
+            return self.displaySystemApplications.count;
+        } else if (section == ApplicationSectionUser) {
+            return self.displayUserApplications.count;
         }
     }
     return 0;
@@ -283,13 +323,18 @@ XXTE_END_IGNORE_PARTIAL
                                          reuseIdentifier:kXXTEMoreApplicationCellReuseIdentifier];
     }
     NSDictionary *applicationDetail = nil;
+    NSUInteger indexRow = (NSUInteger) indexPath.row;
     if (self.searchController.active == NO) {
-        if (indexPath.section == kXXTEMoreApplicationListControllerCellSection) {
-            applicationDetail = self.allApplications[(NSUInteger) indexPath.row];
+        if (indexPath.section == ApplicationSectionSystem) {
+            applicationDetail = self.allSystemApplications[indexRow];
+        } else if (indexPath.section == ApplicationSectionUser) {
+            applicationDetail = self.allUserApplications[indexRow];
         }
     } else {
-        if (indexPath.section == kXXTEMoreApplicationListControllerCellSection) {
-            applicationDetail = self.displayApplications[(NSUInteger) indexPath.row];
+        if (indexPath.section == ApplicationSectionSystem) {
+            applicationDetail = self.displaySystemApplications[indexRow];
+        } else if (indexPath.section == ApplicationSectionUser) {
+            applicationDetail = self.displayUserApplications[indexRow];
         }
     }
     [cell setApplicationName:applicationDetail[kXXTEMoreApplicationDetailKeyName]];
@@ -303,19 +348,36 @@ XXTE_END_IGNORE_PARTIAL
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     NSDictionary *applicationDetail = nil;
+    NSUInteger indexRow = (NSUInteger) indexPath.row;
     if (self.searchController.active == NO) {
-        if (indexPath.section == kXXTEMoreApplicationListControllerCellSection) {
-            applicationDetail = self.allApplications[(NSUInteger) indexPath.row];
+        if (indexPath.section == ApplicationSectionSystem) {
+            applicationDetail = self.allSystemApplications[indexRow];
+        } else if (indexPath.section == ApplicationSectionUser) {
+            applicationDetail = self.allUserApplications[indexRow];
         }
     } else {
-        if (indexPath.section == kXXTEMoreApplicationListControllerCellSection) {
-            applicationDetail = self.displayApplications[(NSUInteger) indexPath.row];
+        if (indexPath.section == ApplicationSectionSystem) {
+            applicationDetail = self.displaySystemApplications[indexRow];
+        } else if (indexPath.section == ApplicationSectionUser) {
+            applicationDetail = self.displayUserApplications[indexRow];
         }
     }
 
     XXTEMoreApplicationDetailController *applicationDetailController = [[XXTEMoreApplicationDetailController alloc] initWithStyle:UITableViewStyleGrouped];
     applicationDetailController.applicationDetail = applicationDetail;
     [self.navigationController pushViewController:applicationDetailController animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font = [UIFont systemFontOfSize:14.0];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
+    if (tableView.style == UITableViewStylePlain) {
+        UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+        footer.textLabel.font = [UIFont systemFontOfSize:12.0];
+    }
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -346,7 +408,10 @@ XXTE_END_IGNORE_PARTIAL
         predicate = [NSPredicate predicateWithFormat:@"kXXTEMoreApplicationDetailKeyBundleID CONTAINS[cd] %@", searchText];
     }
     if (predicate) {
-        _displayApplications = [[NSArray alloc] initWithArray:[self.allApplications filteredArrayUsingPredicate:predicate]];
+        [self.displayUserApplications removeAllObjects];
+        [self.displaySystemApplications removeAllObjects];
+        [self.displayUserApplications addObjectsFromArray:[self.allUserApplications filteredArrayUsingPredicate:predicate]];
+        [self.displaySystemApplications addObjectsFromArray:[self.allSystemApplications filteredArrayUsingPredicate:predicate]];
     }
     [self.tableView reloadData];
 }

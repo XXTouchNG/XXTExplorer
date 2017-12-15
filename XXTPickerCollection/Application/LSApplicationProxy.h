@@ -20,6 +20,7 @@
 - (NSURL *)resourcesDirectoryURL;
 - (NSURL *)containerURL;
 - (NSURL *)dataContainerURL;
+- (BOOL)isSystemApplication;
 
 @property (nonatomic, readonly) NSString *applicationIdentifier;
 
