@@ -33,7 +33,7 @@ All Rights Reserved.</string>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>DefaultValue</key>
-			<string>1.2.0-1</string>
+			<string>1.2-2</string>
 			<key>Title</key>
 			<string>Version</string>
 			<key>Key</key>

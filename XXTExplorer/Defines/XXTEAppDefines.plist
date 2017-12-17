@@ -33,7 +33,7 @@
 	<key>XXTOUCH_BUY_URL</key>
 	<string>https://www.xxtouch.com/buy</string>
 	<key>DAEMON_VERSION</key>
-	<string>1.2.0-1</string>
+	<string>1.2-2</string>
 	<key>UPDATE_API</key>
 	<string>https://apt.xxtouch.com/Packages.gz</string>
 	<key>LOCAL_API</key>

@@ -24,7 +24,7 @@
 			<string>About</string>
 			<key>label</key>
 			<string>XXTouch
-v1.2.0-1</string>
+v1.2-2</string>
 			<key>value</key>
 			<string>https://www.xxtouch.com
 2016-2017 © XXTouch Team.
@@ -68,7 +68,7 @@ All Rights Reserved.</string>
 			<key>args</key>
 			<dict>
 				<key>subject</key>
-				<string>[Feedback] XXTouch v1.2.0-1</string>
+				<string>[Feedback] XXTouch v1.2-2</string>
 				<key>toRecipients</key>
 				<array>
 					<string>bug@xxtouch.com</string>
