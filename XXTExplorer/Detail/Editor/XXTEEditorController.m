@@ -91,6 +91,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 @property (nonatomic, strong) NSArray <NSLayoutConstraint *> *closedSearchBarConstraints;
 @property (nonatomic, strong) NSArray <NSLayoutConstraint *> *expandedSearchBarConstraints;
 
+@property (nonatomic, assign) BOOL shouldReloadTextViewWidth;
+
 @end
 
 @implementation XXTEEditorController
@@ -120,6 +122,15 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
     self.automaticallyAdjustsScrollViewInsets = NO; // !important
+    
+    _shouldReloadAll = NO;
+    _shouldReloadAttributes = NO;
+    _shouldSaveDocument = NO;
+    _shouldFocusTextView = NO;
+    _shouldRefreshNagivationBar = NO;
+    _shouldHighlightRange = NO;
+    _isRendering = NO;
+    
 }
 
 - (void)reloadAll {
@@ -275,6 +286,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     
     // Set Render Flags
+    [self setNeedsReloadTextViewWidth];
+    [self reloadTextViewWidthIfNecessary];
     [textView setNeedsDisplay];
     [self setNeedsRefreshNavigationBar];
     
@@ -371,7 +384,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
-//    textView.frame = self.containerView.bounds;
+    [self reloadTextViewWidthIfNecessary];
 }
 
 #pragma mark - Layout
@@ -1027,6 +1040,72 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         }
     } else {
         countLabel.text = NSLocalizedString(@"0/0", nil);
+    }
+}
+
+#pragma mark - TextView Width
+
+- (void)setNeedsReloadTextViewWidth {
+    self.shouldReloadTextViewWidth = YES;
+}
+
+- (void)reloadTextViewWidthIfNecessary {
+    if (self.shouldReloadTextViewWidth) {
+        [self reloadTextViewWidth];
+        self.shouldReloadTextViewWidth = NO;
+    }
+}
+
+- (void)reloadTextViewWidth {
+    CGFloat newWidth = CGRectGetWidth(self.view.bounds);
+    BOOL autoWrap = XXTEDefaultsBool(XXTEEditorAutoWordWrap, YES);
+    if (NO == autoWrap) {
+        NSInteger columnW = XXTEDefaultsInt(XXTEEditorWrapColumn, 160);
+        if (columnW < 10 || columnW > 10000)
+        {
+            columnW = 160;
+        }
+        newWidth = [self textView:self.textView widthForTheme:self.theme columnWidth:columnW];
+    }
+    self.textViewWidthConstraint.constant = newWidth;
+}
+
+- (CGFloat)textView:(XXTEEditorTextView *)textView widthForTheme:(XXTEEditorTheme *)theme columnWidth:(NSInteger)colWidth {
+    UIFont *calFont = theme.font;
+    if (!calFont) return 0.0;
+    
+    NSString *calString = [@"" stringByPaddingToLength:colWidth withString:@"0" startingAtIndex:0];
+    
+    // content width
+    CGFloat contentW = [calString sizeWithAttributes:@{ NSFontAttributeName: calFont }].width;
+    // content inset
+    UIEdgeInsets calInsetsA = textView.contentInset;
+    // expected container inset
+    UIEdgeInsets calInsetsB = textView.xxteTextContainerInset;
+    // scroll indicator width
+    CGFloat calIndicatorW = 2.33;
+    // line fragment padding
+    CGFloat lineFP = textView.textContainer.lineFragmentPadding;
+    
+    return ceil((contentW) +
+                (calInsetsA.left + calInsetsA.right) +
+                (calInsetsB.left + calInsetsB.right) +
+                (calIndicatorW) +
+                (lineFP * 2));
+}
+
+#pragma mark - Rotation
+
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
+    [self setNeedsReloadTextViewWidth];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if (XXTE_SYSTEM_8) {
+        
+    } else { // to be compatible with iOS 7
+        [self setNeedsReloadTextViewWidth];
     }
 }
 

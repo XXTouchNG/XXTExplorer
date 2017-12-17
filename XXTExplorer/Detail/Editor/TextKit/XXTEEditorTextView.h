@@ -23,4 +23,6 @@
 @property (nonatomic, strong) XXTEEditorTypeSetter *vTypeSetter;
 @property (nonatomic, strong) XXTEEditorTextInput *vTextInput;
 
+@property (nonatomic, assign, readonly) UIEdgeInsets xxteTextContainerInset;
+
 @end

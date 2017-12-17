@@ -10,6 +10,6 @@
 
 @interface XXTEEditorWrapColumnCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet UITextField *valueField;
 
 @end

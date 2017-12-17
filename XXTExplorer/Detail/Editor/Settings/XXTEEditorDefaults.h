@@ -46,11 +46,4 @@ typedef enum : NSUInteger {
     XXTEEditorTabWidthValue_8 = 8,
 } XXTEEditorTabWidthValue;
 
-typedef enum : NSUInteger {
-    XXTEEditorWordColumnValue_40 = 40,
-    XXTEEditorWordColumnValue_80 = 80,
-    XXTEEditorWordColumnValue_160 = 160,
-    XXTEEditorWordColumnValue_240 = 240,
-} XXTEEditorWordColumnValue;
-
 #endif /* XXTEEditorDefaults_h */

@@ -50,6 +50,14 @@ static inline double XXTEDefaultsDouble(NSString *key, double defaultValue) {
     return ([storedValue doubleValue]);
 }
 
+static inline double XXTEDefaultsInt(NSString *key, int defaultValue) {
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue intValue]);
+}
+
 static inline id XXTEBuiltInDefaultsObject(NSString *key) {
     return (XXTEAppDelegate.builtInDefaults[key]);
 }

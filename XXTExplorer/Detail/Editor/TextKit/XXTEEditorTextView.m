@@ -88,15 +88,19 @@
 
 - (void)reloadContainerInsetsIfNeeded {
     if (self.shouldReloadContainerInsets) {
-        UIEdgeInsets insets = UIEdgeInsetsZero;
-        if (self.showLineNumbers) {
-            insets = UIEdgeInsetsMake(8, (self.vLayoutManager).gutterWidth + 2, 8, 8);
-        } else {
-            insets = UIEdgeInsetsMake(8, 8, 8, 8);
-        }
-        [self setTextContainerInset:insets];
+        [self setTextContainerInset:[self xxteTextContainerInset]];
         self.shouldReloadContainerInsets = NO;
     }
+}
+
+- (UIEdgeInsets)xxteTextContainerInset {
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (self.showLineNumbers) {
+        insets = UIEdgeInsetsMake(8.0, (self.vLayoutManager).gutterWidth + 2.0, 8.0, 8.0);
+    } else {
+        insets = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
+    }
+    return insets;
 }
 
 @end

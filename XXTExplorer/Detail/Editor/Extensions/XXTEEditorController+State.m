@@ -45,19 +45,22 @@
     if (textInput != self.textView) {
         return;
     }
-    if ([aNotification.name isEqualToString:UITextViewTextDidBeginEditingNotification]) {
-        // Begin
-        [self invalidateSyntaxCaches];
-    } else if ([aNotification.name isEqualToString:UITextViewTextDidEndEditingNotification]) {
-        // End
-        [self saveDocumentIfNecessary];
-        if (self.navigationController) {
-            [self reloadAttributesIfNecessary];
-        }
-    } else if ([aNotification.name isEqualToString:UITextViewTextDidChangeNotification]) {
-        // Changed
-        if ([textInput isKindOfClass:[XXTEEditorTextView class]]) {
-            XXTEEditorTextView *textView = (XXTEEditorTextView *)textInput;
+    if ([textInput isKindOfClass:[XXTEEditorTextView class]]) {
+        XXTEEditorTextView *textView = (XXTEEditorTextView *)textInput;
+        if ([aNotification.name isEqualToString:UITextViewTextDidBeginEditingNotification]) {
+            // Begin
+            if ([textView isEditable]) {
+                [self invalidateSyntaxCaches];
+                [self setNeedsReloadAttributes];
+            }
+        } else if ([aNotification.name isEqualToString:UITextViewTextDidEndEditingNotification]) {
+            // End
+            [self saveDocumentIfNecessary];
+            if (self.navigationController) {
+                [self reloadAttributesIfNecessary];
+            }
+        } else if ([aNotification.name isEqualToString:UITextViewTextDidChangeNotification]) {
+            // Changed
             if ([textView isEditable]) {
                 [self setNeedsSaveDocument];
                 [self setNeedsReloadAttributes];

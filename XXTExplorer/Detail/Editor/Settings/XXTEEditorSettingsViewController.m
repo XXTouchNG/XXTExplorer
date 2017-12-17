@@ -56,7 +56,7 @@
 }
 
 - (void)setup {
-    
+    self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
 - (void)viewDidLoad {
@@ -67,6 +67,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -83,7 +84,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.editor renderNavigationBarTheme:YES];
-    [super viewWillAppear:animated];
+    [super viewWillAppear:animated]; // good for UITableViewController to handle keyboard events
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -226,6 +227,7 @@
         XXTEDefaultsSetBasic(XXTEEditorIndentWrappedLines, optionSwitch.on);
         [self.editor setNeedsReload];
     }];
+#endif
     
     XXTEMoreSwitchCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell10.titleLabel.text = NSLocalizedString(@"Auto Word Wrap", nil);
@@ -238,48 +240,18 @@
     
     XXTEEditorWrapColumnCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorWrapColumnCell class]) owner:nil options:nil] lastObject];
     cell11.titleLabel.text = NSLocalizedString(@"Word Column", nil);
-    XXTEEditorWordColumnValue columnValue = XXTEDefaultsEnum(XXTEEditorWrapColumn, XXTEEditorWordColumnValue_160);
-    NSUInteger columnIndex = 2;
-    switch (columnValue) {
-        case XXTEEditorWordColumnValue_40:
-            columnIndex = 0;
-            break;
-        case XXTEEditorWordColumnValue_80:
-            columnIndex = 1;
-            break;
-        case XXTEEditorWordColumnValue_160:
-            columnIndex = 2;
-            break;
-        case XXTEEditorWordColumnValue_240:
-            columnIndex = 3;
-            break;
-        default:
-            break;
-    }
-    cell11.segmentedControl.selectedSegmentIndex = columnIndex;
-    [cell11.segmentedControl addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
-        UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-        NSUInteger columnValue = XXTEEditorWordColumnValue_160;
-        switch (segmentedControl.selectedSegmentIndex) {
-            case 0:
-                columnValue = XXTEEditorWordColumnValue_40;
-                break;
-            case 1:
-                columnValue = XXTEEditorWordColumnValue_80;
-                break;
-            case 2:
-                columnValue = XXTEEditorWordColumnValue_160;
-                break;
-            case 3:
-                columnValue = XXTEEditorWordColumnValue_240;
-                break;
-            default:
-                break;
+    int columnValue = XXTEDefaultsInt(XXTEEditorWrapColumn, 160);
+    cell11.valueField.text = [NSString stringWithFormat:@"%d", columnValue];
+    [cell11.valueField addActionforControlEvents:UIControlEventEditingDidEnd respond:^(UIControl *sender) {
+        UITextField *valueField = (UITextField *)sender;
+        int columnValue = [valueField.text intValue];
+        if (columnValue < 10 || columnValue > 10000)
+        {
+            columnValue = 160; // restore to default value
         }
         XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
         [self.editor setNeedsReload];
     }];
-#endif
     
     XXTEMoreSwitchCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell12.titleLabel.text = NSLocalizedString(@"Read Only", nil);
@@ -354,9 +326,13 @@
                     @[ cell3, cell4 ],
                     layoutSection,
                     @[ cell7, cell8, tabCell ],
+                    @[
 #ifdef DEBUG
-                    @[ cell9, cell10, cell11 ],
+                        cell9,
 #endif
+                        cell10,
+                        cell11
+                        ],
                     @[ cell12, cell13, cell14, cell15, cell16 ],
                     @[ cell17, cell18 ]
                     ];
