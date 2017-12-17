@@ -93,7 +93,7 @@
     
     CALayer *highlightLayer = [CALayer layer];
     [highlightLayer setFrame:textRect];
-    [highlightLayer setCornerRadius:8.0f];
+    [highlightLayer setCornerRadius:(textRect.size.height * 0.2f)];
     [highlightLayer setBackgroundColor:[self.maskColor CGColor]];
     [highlightLayer setOpacity:0.66f];
     [highlightLayer setBorderWidth:1.f];

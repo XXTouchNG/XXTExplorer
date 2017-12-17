@@ -260,13 +260,14 @@
             }
         }
         
-        NSString *sortField = XXTEDefaultsObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeDisplayName);
-        NSUInteger sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
+        XXTExplorerViewEntryListSortField sortField = XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
+        XXTExplorerViewEntryListSortOrder sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
+        NSString *sortFieldString = XXTExplorerViewEntryListSortFieldString(sortField);
         NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2) {
             if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {
-                return [obj1[sortField] compare:obj2[sortField]];
+                return [obj1[sortFieldString] compare:obj2[sortFieldString]];
             } else {
-                return [obj2[sortField] compare:obj1[sortField]];
+                return [obj2[sortFieldString] compare:obj1[sortFieldString]];
             }
         };
         

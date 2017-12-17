@@ -138,11 +138,11 @@
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
             if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
-                XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeName);
+                XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldDisplayName);
                 toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
             } else {
                 XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
-                XXTEDefaultsSetObject(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryAttributeCreationDate);
+                XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
                  toastMessage(self, NSLocalizedString(@"Sort by Creation Date Descend", nil));
             }
             [self updateToolbarButton];

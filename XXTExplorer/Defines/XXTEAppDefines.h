@@ -27,15 +27,27 @@ static inline id XXTEDefaultsObject(NSString *key, id defaultValue) {
 }
 
 static inline BOOL XXTEDefaultsBool(NSString *key, BOOL defaultValue) {
-    return ([XXTEDefaultsObject(key, @(defaultValue)) boolValue]);
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue boolValue]);
 }
 
 static inline NSUInteger XXTEDefaultsEnum(NSString *key, NSUInteger defaultValue) {
-    return ([XXTEDefaultsObject(key, @(defaultValue)) unsignedIntegerValue]);
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue unsignedIntegerValue]);
 }
 
 static inline double XXTEDefaultsDouble(NSString *key, double defaultValue) {
-    return ([XXTEDefaultsObject(key, @(defaultValue)) doubleValue]);
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue doubleValue]);
 }
 
 static inline id XXTEBuiltInDefaultsObject(NSString *key) {

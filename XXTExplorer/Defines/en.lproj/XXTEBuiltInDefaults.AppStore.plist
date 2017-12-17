@@ -30,6 +30,43 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerViewEntryListSortFieldKey</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Explorer Sort Field</string>
+			<key>description</key>
+			<string>The sort field and order determine the order of items in the explorer.</string>
+			<key>options</key>
+			<array>
+				<string>Creation Date</string>
+				<string>Modification Date</string>
+				<string>Display Name</string>
+				<string>Item Type</string>
+				<string>Item Size</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortOrderKey</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Explorer Sort Order</string>
+			<key>description</key>
+			<string>The sort field and order determine the order of items in the explorer.</string>
+			<key>options</key>
+			<array>
+				<string>Ascend</string>
+				<string>Descend</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
 			<true/>
@@ -110,30 +147,6 @@
 				<string>Off</string>
 				<string>On</string>
 			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<false/>
-			<key>key</key>
-			<string>XXTExplorerViewEntryListSortFieldKey</string>
-			<key>default</key>
-			<string>XXTExplorerViewEntryAttributeCreationDate</string>
-			<key>title</key>
-			<string></string>
-			<key>description</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<false/>
-			<key>key</key>
-			<string>XXTExplorerViewEntryListSortOrderKey</string>
-			<key>default</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string></string>
-			<key>New item</key>
-			<string></string>
 		</dict>
 	</array>
 </dict>

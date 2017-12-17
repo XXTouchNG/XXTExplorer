@@ -33,6 +33,7 @@
 
 #pragma mark - Search
 
-- (void)toggleSearchBar;
+- (void)toggleSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated;
+@property (nonatomic, assign, getter=isSearchMode) BOOL searchMode;
 
 @end

@@ -49,7 +49,7 @@
 //    searchController.editor = self;
 //    [self.navigationController pushViewController:searchController animated:YES];
     
-    [self toggleSearchBar];
+    [self toggleSearchBar:sender animated:YES];
 }
 
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {

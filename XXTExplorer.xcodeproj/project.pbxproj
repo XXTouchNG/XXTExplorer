@@ -1278,6 +1278,7 @@
 		0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerNavigationController.h; sourceTree = "<group>"; };
 		0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F65AEE91FE58CCE005BECB4 /* Archive-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Archive-Info.plist"; sourceTree = "<group>"; };
 		0F6679DC1F5162880072C177 /* XXTESnippetViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESnippetViewerController.h; sourceTree = "<group>"; };
 		0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESnippetViewerController.m; sourceTree = "<group>"; };
 		0F6679DF1F51635C0072C177 /* NSString+HTMLEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTMLEscape.h"; sourceTree = "<group>"; };
@@ -1613,7 +1614,6 @@
 		D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchBar.m; sourceTree = "<group>"; };
 		D60FE64B1FE2344600954818 /* RevealServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevealServer.framework; path = Frameworks/RevealServer.framework; sourceTree = "<group>"; };
 		D60FE7D11FE2369300954818 /* XXTExplorer-Archive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XXTExplorer-Archive.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D60FE7D21FE2369300954818 /* Archive-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Archive-Info.plist"; path = "/Users/darwin/Projects/XXTExplorer/XXTExplorer/Supporting Files/Archive-Info.plist"; sourceTree = "<absolute>"; };
 		D617D1D31F7B4BC0009F4B59 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D61D5DD01F6F64B400CDF16D /* XXTESwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeButton.h; sourceTree = "<group>"; };
 		D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeButton.m; sourceTree = "<group>"; };
@@ -2545,7 +2545,7 @@
 				0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */,
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
 				0FC598A61FB216A1001F918B /* Info.AppStore.plist */,
-				D60FE7D21FE2369300954818 /* Archive-Info.plist */,
+				0F65AEE91FE58CCE005BECB4 /* Archive-Info.plist */,
 				0FE1629C1F3C8FFC003064B2 /* InfoPlist.strings */,
 				0F3508C21F166A69000403FD /* Localizable.strings */,
 				0FE1E4361F189A1600055E02 /* Meta.strings */,

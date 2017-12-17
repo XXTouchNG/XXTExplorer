@@ -3,8 +3,6 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#import <objc/runtime.h>
-#import <objc/message.h>
 #import <sys/stat.h>
 #import "XXTEDownloadViewController.h"
 #import "XXTEMoreAddressCell.h"
@@ -21,13 +19,16 @@ typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexMax
 } kXXTExplorerCreateItemViewSectionIndex;
 
-@interface XXTEDownloadViewController () <LGAlertViewDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface XXTEDownloadViewController () <NSURLConnectionDelegate, NSURLConnectionDataDelegate, LGAlertViewDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *downloadButtonItem;
 
 @property (nonatomic, strong, readonly) NSURL *sourceURL;
 @property (nonatomic, strong, readonly) NSString *targetPath;
+
+@property (nonatomic, strong, readonly) NSString *temporarilyPath;
+@property (nonatomic, assign) BOOL overwrite;
 
 @property (nonatomic, strong, readonly) NSFileManager *downloadFileManager;
 //@property (nonatomic, strong, readonly) NSMutableData *downloadData;
@@ -66,6 +67,7 @@ typedef enum : NSUInteger {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         _sourceURL = url;
         _targetPath = path;
+        _temporarilyPath = [path stringByAppendingPathExtension:@"xxtdownload"];
         [self setup];
     }
     return self;
@@ -266,36 +268,23 @@ typedef enum : NSUInteger {
     NSString *targetPath = self.targetPath;
     NSString *targetName = [targetPath lastPathComponent];
     struct stat targetStat;
-    if (0 == lstat([targetPath UTF8String], &targetStat)) {
+    if (0 == lstat([targetPath fileSystemRepresentation], &targetStat)) {
         LGAlertView *existsAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Overwrite Confirm", nil)
                                                                   message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" exists, overwrite it?", nil), targetName]
                                                                     style:LGAlertViewStyleActionSheet
                                                              buttonTitles:nil
                                                         cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                    destructiveButtonTitle:NSLocalizedString(@"Yes", nil)
-                                                                 delegate:self];
-        objc_setAssociatedObject(existsAlertView, @selector(alertView:overwritePath:), targetPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                                                            actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                [alertView1 dismissAnimated];
+                                                            } destructiveHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                self.overwrite = YES;
+                                                                [self alertViewLaunch:alertView1];
+                                                            }];
         [existsAlertView showAnimated];
     } else {
-        [self alertView:nil overwritePath:targetPath];
+        [self alertViewLaunch:nil];
     }
-}
-
-- (void)alertViewDestructed:(LGAlertView *)alertView {
-    SEL selectors[] = {
-        @selector(alertView:overwritePath:)
-    };
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    for (int i = 0; i < sizeof(selectors) / sizeof(SEL); i++) {
-        SEL selector = selectors[i];
-        id obj = objc_getAssociatedObject(alertView, selector);
-        if (obj) {
-            [self performSelector:selector withObject:alertView withObject:obj];
-            break;
-        }
-    }
-#pragma clang diagnostic pop
 }
 
 - (void)alertViewCancelled:(LGAlertView *)alertView {
@@ -325,22 +314,28 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)alertView:(nullable LGAlertView *)alertView overwritePath:(NSString *)path {
+- (void)alertViewLaunch:(nullable LGAlertView *)alertView {
     NSURL *sourceURL = self.sourceURL;
-    NSString *targetPath = path;
+    NSString *temporarilyPath = self.temporarilyPath;
+    NSString *temporarilyName = [temporarilyPath lastPathComponent];
+    NSString *targetPath = self.targetPath;
     NSString *targetName = [targetPath lastPathComponent];
-    { // Remove old file
+    { // Remove old temporarily file
         NSError *removeError = nil;
-        BOOL removeResult = [self.downloadFileManager removeItemAtPath:targetPath error:&removeError];
+        BOOL removeResult = [self.downloadFileManager removeItemAtPath:temporarilyPath error:&removeError];
         struct stat targetStat;
-        if (0 == lstat([targetPath UTF8String], &targetStat) && !removeResult) {
-            LGAlertView *removeAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Overwrite Failed", nil)
-                                                                      message:[NSString stringWithFormat:NSLocalizedString(@"Cannot overwrite file \"%@\".\n%@", nil), targetName, [removeError localizedDescription]]
+        if (0 == lstat([temporarilyPath fileSystemRepresentation], &targetStat) && !removeResult) {
+            LGAlertView *removeAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Create Failed", nil)
+                                                                      message:[NSString stringWithFormat:NSLocalizedString(@"Cannot create temporarily file \"%@\".\n%@", nil), temporarilyName, [removeError localizedDescription]]
                                                                         style:LGAlertViewStyleActionSheet
                                                                  buttonTitles:nil
                                                             cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                        destructiveButtonTitle:nil
-                                                                     delegate:self];
+                                                                actionHandler:nil
+                                                                cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                    [alertView1 dismissAnimated];
+                                                                }
+                                                           destructiveHandler:nil];
             if (alertView && alertView.isShowing) {
                 [alertView transitionToAlertView:removeAlertView completionHandler:nil];
             } else {
@@ -349,18 +344,22 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    { // Create and Open file for writing
-        // Create new file
-        BOOL createResult = [self.downloadFileManager createFileAtPath:targetPath contents:[NSData data] attributes:nil];
-        NSFileHandle *downloadFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:self.targetPath];
+    { // Create and Open temporarily file for writing
+        // Create new temporarily file
+        BOOL createResult = [self.downloadFileManager createFileAtPath:temporarilyPath contents:[NSData data] attributes:nil];
+        NSFileHandle *downloadFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:temporarilyPath];
         if (!createResult || !downloadFileHandle) {
             LGAlertView *handleAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Creation Failed", nil)
-                                                                      message:[NSString stringWithFormat:NSLocalizedString(@"Cannot open file \"%@\" for writing.", nil), targetName]
+                                                                      message:[NSString stringWithFormat:NSLocalizedString(@"Cannot open file \"%@\" for writing.", nil), temporarilyName]
                                                                         style:LGAlertViewStyleActionSheet
                                                                  buttonTitles:nil
                                                             cancelButtonTitle:NSLocalizedString(@"Retry", nil)
                                                        destructiveButtonTitle:nil
-                                                                     delegate:self];
+                                                                actionHandler:nil
+                                                                cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                    [alertView1 dismissAnimated];
+                                                                }
+                                                           destructiveHandler:nil];
             if (alertView && alertView.isShowing) {
                 [alertView transitionToAlertView:handleAlertView completionHandler:nil];
             } else {
@@ -371,7 +370,16 @@ typedef enum : NSUInteger {
         self.downloadFileHandle = downloadFileHandle;
     }
     { // Start Download Single File
-        LGAlertView *downloadAlertView = [[LGAlertView alloc] initWithProgressViewAndTitle:NSLocalizedString(@"Download", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Download \"%@\" from \"%@\".", nil), targetName, [sourceURL host]] style:LGAlertViewStyleActionSheet progress:0.0 progressLabelText:NSLocalizedString(@"Connecting...", nil) buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil delegate:self];
+        LGAlertView *downloadAlertView =
+        [[LGAlertView alloc] initWithProgressViewAndTitle:NSLocalizedString(@"Download", nil)
+                                                  message:[NSString stringWithFormat:NSLocalizedString(@"Download \"%@\" from \"%@\".", nil), targetName, [sourceURL host]]
+                                                    style:LGAlertViewStyleActionSheet
+                                                 progress:0.0
+                                        progressLabelText:NSLocalizedString(@"Connecting...", nil)
+                                             buttonTitles:nil
+                                        cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                   destructiveButtonTitle:nil
+                                                 delegate:self];
         if (alertView && alertView.isShowing) {
             [alertView transitionToAlertView:downloadAlertView completionHandler:nil];
         } else {
@@ -392,6 +400,7 @@ typedef enum : NSUInteger {
     self.downloadURLConnection = connection;
     [connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [connection start];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 #pragma mark - NSURLConnectionDelegate
@@ -399,15 +408,34 @@ typedef enum : NSUInteger {
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     busyOperationProgressFlag = NO;
     self.downloadURLConnection = nil;
-    if (self.downloadFileHandle) {
+    if (self.downloadFileHandle)
+    {
         [self.downloadFileHandle closeFile];
         self.downloadFileHandle = nil;
+        // clean temporarily file
+        NSString *temporarilyPath = self.temporarilyPath;
+        if (temporarilyPath)
+        {
+            NSError *cleanError = nil;
+            [self.downloadFileManager removeItemAtPath:temporarilyPath error:&cleanError];
+        }
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     NSURL *sourceURL = self.sourceURL;
     NSString *sourceURLString = [sourceURL absoluteString];
-    { // fail with error
-        LGAlertView *downloadFailedAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Failed", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Cannot download from url \"%@\".\n%@", nil), sourceURLString, [error localizedDescription]] style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Retry", nil) destructiveButtonTitle:nil delegate:self];
+    if (error) { // fail with error
+        LGAlertView *downloadFailedAlertView =
+        [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Failed", nil)
+                                   message:[NSString stringWithFormat:NSLocalizedString(@"Cannot download from url \"%@\".\n%@", nil), sourceURLString, [error localizedDescription]]
+                                     style:LGAlertViewStyleActionSheet
+                              buttonTitles:nil
+                         cancelButtonTitle:NSLocalizedString(@"Retry", nil)
+                    destructiveButtonTitle:nil
+                             actionHandler:nil
+                             cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                 [alertView1 dismissAnimated];
+                             }
+                        destructiveHandler:nil];
         if (self.currentAlertView && self.currentAlertView.isShowing) {
             [self.currentAlertView transitionToAlertView:downloadFailedAlertView completionHandler:nil];
         } else {
@@ -415,6 +443,7 @@ typedef enum : NSUInteger {
         }
         self.currentAlertView = nil;
     }
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -471,6 +500,7 @@ typedef enum : NSUInteger {
     {
         [self downloadFinished:self.currentAlertView];
     }
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
@@ -478,8 +508,61 @@ typedef enum : NSUInteger {
 }
 
 - (void)downloadFinished:(LGAlertView *)alertView {
+    NSString *temporarilyPath = self.temporarilyPath;
+    NSString *temporarilyName = [temporarilyPath lastPathComponent];
     NSString *targetPath = self.targetPath;
     NSString *targetName = [targetPath lastPathComponent];
+    if (self.overwrite) {
+        { // Remove old file
+            NSError *removeError = nil;
+            BOOL removeResult = [self.downloadFileManager removeItemAtPath:targetPath error:&removeError];
+            struct stat targetStat;
+            if (0 == lstat([targetPath fileSystemRepresentation], &targetStat) && !removeResult) {
+                LGAlertView *removeAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Overwrite Failed", nil)
+                                                                          message:[NSString stringWithFormat:NSLocalizedString(@"Cannot overwrite file \"%@\".\n%@", nil), targetName, [removeError localizedDescription]]
+                                                                            style:LGAlertViewStyleActionSheet
+                                                                     buttonTitles:nil
+                                                                cancelButtonTitle:NSLocalizedString(@"Retry", nil)
+                                                           destructiveButtonTitle:nil
+                                                                    actionHandler:nil
+                                                                    cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                        [alertView1 dismissAnimated];
+                                                                    }
+                                                               destructiveHandler:nil];
+                if (alertView && alertView.isShowing) {
+                    [alertView transitionToAlertView:removeAlertView completionHandler:nil];
+                } else {
+                    [removeAlertView showAnimated];
+                }
+                return;
+            }
+        }
+    } else {
+        // TODO: rename?
+    }
+    {
+        NSError *moveError = nil;
+        BOOL moveResult = [self.downloadFileManager moveItemAtPath:temporarilyPath toPath:targetPath error:&moveError];
+        if (!moveResult) {
+            LGAlertView *moveAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Move Failed", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Cannot move temporarily file \"%@\" to \"%@\".\n%@", nil), temporarilyName, targetName, [moveError localizedDescription]]
+                                                                      style:LGAlertViewStyleActionSheet
+                                                               buttonTitles:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Retry", nil)
+                                                     destructiveButtonTitle:nil
+                                                              actionHandler:nil
+                                                              cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                  [alertView1 dismissAnimated];
+                                                              }
+                                                         destructiveHandler:nil];
+            if (alertView && alertView.isShowing) {
+                [alertView transitionToAlertView:moveAlertView completionHandler:nil];
+            } else {
+                [moveAlertView showAnimated];
+            }
+            return;
+        }
+    }
     {
         self.currentAlertView = nil;
         LGAlertView *finishAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Finished", nil)
@@ -494,6 +577,7 @@ typedef enum : NSUInteger {
         } else {
             [finishAlertView showAnimated];
         }
+        return;
     }
 }
 

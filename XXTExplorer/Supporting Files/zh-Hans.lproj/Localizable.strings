@@ -252,6 +252,9 @@
 "Cannot create file \"%@\": %@." = "无法创建文件 \"%@\": %@.";
 
 /* No comment provided by engineer. */
+"Cannot create temporarily file \"%@\".\n%@" = "无法创建临时文件 \"%@\".\n%@";
+
+/* No comment provided by engineer. */
 "Cannot decompress data." = "无法解压数据.";
 
 /* No comment provided by engineer. */
@@ -277,6 +280,9 @@
 
 /* No comment provided by engineer. */
 "Cannot load movie \"%@\": %@" = "无法加载视频 \"%@\": %@";
+
+/* No comment provided by engineer. */
+"Cannot move temporarily file \"%@\" to \"%@\".\n%@" = "无法移动临时文件 \"%@\" 到 \"%@\".\n%@";
 
 /* No comment provided by engineer. */
 "Cannot open \"%@\"." = "无法打开 \"%@\".";
@@ -421,6 +427,9 @@
 
 /* No comment provided by engineer. */
 "Counting" = "计数";
+
+/* No comment provided by engineer. */
+"Create Failed" = "创建失败";
 
 /* No comment provided by engineer. */
 "Create Item" = "创建项目";
@@ -784,6 +793,9 @@
 
 /* No comment provided by engineer. */
 "Move %@ to \"%@\"" = "移动 %@ 到 \"%@\"";
+
+/* No comment provided by engineer. */
+"Move Failed" = "移动失败";
 
 /* No comment provided by engineer. */
 "Move to \"%@\"" = "移动到 \"%@\"";

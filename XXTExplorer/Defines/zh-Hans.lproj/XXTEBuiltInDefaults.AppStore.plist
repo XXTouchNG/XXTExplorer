@@ -30,6 +30,43 @@
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerViewEntryListSortFieldKey</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>文件列表排序字段</string>
+			<key>description</key>
+			<string>排序字段与排序方式决定了文件列表中项目的顺序.</string>
+			<key>options</key>
+			<array>
+				<string>创建日期</string>
+				<string>修改日期</string>
+				<string>显示名称</string>
+				<string>项目类型</string>
+				<string>项目尺寸</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewEntryListSortOrderKey</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>文件列表排序方式</string>
+			<key>description</key>
+			<string>排序字段与排序方式决定了文件列表中项目的顺序.</string>
+			<key>options</key>
+			<array>
+				<string>升序</string>
+				<string>降序</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
 			<true/>
@@ -110,30 +147,6 @@
 				<string>关闭</string>
 				<string>开启</string>
 			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<false/>
-			<key>key</key>
-			<string>XXTExplorerViewEntryListSortFieldKey</string>
-			<key>default</key>
-			<string>XXTExplorerViewEntryAttributeCreationDate</string>
-			<key>title</key>
-			<string></string>
-			<key>description</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<false/>
-			<key>key</key>
-			<string>XXTExplorerViewEntryListSortOrderKey</string>
-			<key>default</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string></string>
-			<key>New item</key>
-			<string></string>
 		</dict>
 	</array>
 </dict>

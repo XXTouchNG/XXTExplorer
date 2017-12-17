@@ -38,6 +38,14 @@ typedef enum : NSUInteger {
 } XXTExplorerViewEntryListSortOrder;
 
 typedef enum : NSUInteger {
+    XXTExplorerViewEntryListSortFieldCreationDate = 0,
+    XXTExplorerViewEntryListSortFieldModificationnDate,
+    XXTExplorerViewEntryListSortFieldDisplayName,
+    XXTExplorerViewEntryListSortFieldItemType,
+    XXTExplorerViewEntryListSortFieldItemSize
+} XXTExplorerViewEntryListSortField;
+
+typedef enum : NSUInteger {
     XXTExplorerPasteboardDetectTypeNone = 0,
     XXTExplorerPasteboardDetectTypeURL,
     XXTExplorerPasteboardDetectTypeLicense,
@@ -101,5 +109,28 @@ static NSString * const XXTExplorerPasteboardName = @"XXTExplorerPasteboardName"
 #pragma mark - Bindings
 
 static NSString * const XXTExplorerViewEntryBindingKey = @"XXTExplorerViewEntryBindingKey";
+
+static NSString * const XXTExplorerViewEntryListSortFieldString(XXTExplorerViewEntryListSortField field) {
+    switch (field) {
+        case XXTExplorerViewEntryListSortFieldCreationDate:
+            return XXTExplorerViewEntryAttributeCreationDate;
+            break;
+        case XXTExplorerViewEntryListSortFieldModificationnDate:
+            return XXTExplorerViewEntryAttributeModificationDate;
+            break;
+        case XXTExplorerViewEntryListSortFieldDisplayName:
+            return XXTExplorerViewEntryAttributeDisplayName;
+            break;
+        case XXTExplorerViewEntryListSortFieldItemType:
+            return XXTExplorerViewEntryAttributeExtension;
+            break;
+        case XXTExplorerViewEntryListSortFieldItemSize:
+            return XXTExplorerViewEntryAttributeSize;
+            break;
+        default:
+            break;
+    }
+    return XXTExplorerViewEntryAttributeCreationDate;
+}
 
 #endif /* XXTExplorerDefaults_h */

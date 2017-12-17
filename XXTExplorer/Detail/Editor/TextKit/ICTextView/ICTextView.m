@@ -453,12 +453,19 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 - (UIView *)addHighlightAtRect:(CGRect)frame
 {
     UIView *highlight = [[UIView alloc] initWithFrame:frame];
-    highlight.alpha = 0.66;
     CGFloat cornerRadius = self.highlightCornerRadius;
-    highlight.layer.cornerRadius = (cornerRadius < 0.0 ? frame.size.height * 0.2f : cornerRadius);
-    highlight.backgroundColor = self.secondaryHighlightColor;
+    CALayer *highlightLayer = highlight.layer;
+    [highlightLayer setCornerRadius:(cornerRadius < 0.0 ? frame.size.height * 0.2f : cornerRadius)];
+    [highlightLayer setBackgroundColor:self.secondaryHighlightColor.CGColor];
+    [highlightLayer setOpacity:0.66f];
+    // Optimized for performance...
+//    [highlightLayer setBorderWidth:1.f];
+//    [highlightLayer setBorderColor:[[UIColor whiteColor] CGColor]];
+//    [highlightLayer setShadowColor:[[UIColor blackColor] CGColor]];
+//    [highlightLayer setShadowOffset:CGSizeZero];
+//    [highlightLayer setShadowOpacity:0.25f];
+//    [highlightLayer setShadowRadius:8.0f];
     [self.secondaryHighlights addObject:highlight];
-//    [self insertSubview:highlight belowSubview:self.textSubview];
     [self addSubview:highlight];
     return highlight;
 }

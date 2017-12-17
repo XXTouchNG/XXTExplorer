@@ -84,7 +84,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 @property (nonatomic, assign) BOOL shouldHighlightRange;
 @property (nonatomic, assign) NSRange highlightRange;
 
-@property (nonatomic, assign, getter=isSearchMode) BOOL searchMode;
 @property (nonatomic, strong) XXTEEditorSearchBar *searchBar;
 @property (nonatomic, strong) NSArray <NSLayoutConstraint *> *closedSearchBarConstraints;
 @property (nonatomic, strong) NSArray <NSLayoutConstraint *> *expandedSearchBarConstraints;
@@ -583,7 +582,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - Getters
 
 - (BOOL)isEditing {
-    return self.textView.isFirstResponder;
+    return self.textView.isFirstResponder || self.searchBar.searchField.isFirstResponder;
 }
 
 #pragma mark - Content
@@ -823,29 +822,30 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
 }
 
-- (void)toggleSearchBar {
+- (void)toggleSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated {
     [self resetSearch];
     if ([self isSearchMode]) {
-        [self closeSearchBarAnimated:YES];
+        [self closeSearchBar:sender animated:animated];
         _searchMode = NO;
     } else {
-        [self expandSearchBarAnimated:YES];
+        [self expandSearchBar:sender animated:animated];
         _searchMode = YES;
     }
 }
 
-- (void)expandSearchBarAnimated:(BOOL)animated {
+- (void)expandSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated {
     if (animated) {
         [self.searchBar setHidden:NO];
+        [self.searchBar.searchField becomeFirstResponder];
         [self.view layoutIfNeeded];
         [self.view removeConstraints:[self closedSearchBarConstraints]];
         [self.view addConstraints:[self expandedSearchBarConstraints]];
-        self.searchButtonItem.enabled = NO;
+        sender.enabled = NO;
         [UIView animateWithDuration:.2
                          animations:^{
                              [self.view layoutIfNeeded];
                          } completion:^(BOOL finished) {
-                             self.searchButtonItem.enabled = YES;
+                             sender.enabled = YES;
                          }];
     } else {
         [self.view removeConstraints:[self closedSearchBarConstraints]];
@@ -853,18 +853,18 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
 }
 
-- (void)closeSearchBarAnimated:(BOOL)animated {
+- (void)closeSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated {
     if (animated) {
         [self.view layoutIfNeeded];
         [self.view removeConstraints:[self expandedSearchBarConstraints]];
         [self.view addConstraints:[self closedSearchBarConstraints]];
-        self.searchButtonItem.enabled = NO;
+        sender.enabled = NO;
         [UIView animateWithDuration:.2
                          animations:^{
                              [self.view layoutIfNeeded];
                          } completion:^(BOOL finished) {
                              [self.searchBar setHidden:YES];
-                             self.searchButtonItem.enabled = YES;
+                             sender.enabled = YES;
                          }];
     } else {
         [self.view removeConstraints:[self expandedSearchBarConstraints]];
