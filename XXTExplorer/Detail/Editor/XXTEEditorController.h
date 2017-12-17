@@ -25,7 +25,6 @@
 - (void)setNeedsFocusTextView;
 - (void)setNeedsHighlightRange:(NSRange)range;
 
-- (void)reloadConstraints;
 - (void)reloadAttributesIfNecessary;
 
 - (void)invalidateSyntaxCaches;

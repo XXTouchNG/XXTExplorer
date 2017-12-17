@@ -43,7 +43,6 @@
         if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
             [self.navigationController setNavigationBarHidden:YES animated:YES];
         }
-        [self reloadConstraints];
     }
 }
 
@@ -86,7 +85,6 @@
         if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
             [self.navigationController setNavigationBarHidden:NO animated:YES];
         }
-        [self reloadConstraints];
     }
     
     UIEdgeInsets insets = UIEdgeInsetsZero;

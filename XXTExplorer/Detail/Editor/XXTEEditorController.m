@@ -58,6 +58,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, UITextFieldDelegate, XXTEEditorSearchAccessoryViewDelegate>
 
+@property (nonatomic, strong) UIScrollView *containerView;
+@property (nonatomic, strong) NSLayoutConstraint *textViewWidthConstraint;
+
 @property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
@@ -116,11 +119,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO; // !important
 }
 
 - (void)reloadAll {
     [self prepareForView];
-    [self reloadConstraints];
     [self reloadTextView];
     [self reloadContent];
     [self reloadAttributes];
@@ -155,10 +158,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 }
 
 #pragma mark - AFTER -viewDidLoad
-
-- (void)reloadConstraints {
-    
-}
 
 - (void)reloadTextView {
     if (![self isViewLoaded]) return;
@@ -295,7 +294,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [self configure];
     
     [self prepareForView];
-    [self reloadConstraints];
     [self reloadTextView];
     [self reloadContent];
     [self reloadAttributes];
@@ -373,6 +371,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
+//    textView.frame = self.containerView.bounds;
 }
 
 #pragma mark - Layout
@@ -387,64 +386,90 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     self.navigationItem.leftBarButtonItem = self.myBackButtonItem;
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
-    // Subviews
-    [self.view addSubview:self.textView];
     [self.maskView setTextView:self.textView];
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.toolbar];
     
+    // Subviews
+    [self.containerView addSubview:self.textView];
+    [self.containerView addSubview:self.maskView];
+    [self.view addSubview:self.containerView];
+    [self.view addSubview:self.toolbar];
     [self.view addSubview:self.searchBar];
-    [self.view addConstraints:[self closedSearchBarConstraints]];
     
     // Constraints
-    if (XXTE_PAD)
+    [self.view addConstraints:[self closedSearchBarConstraints]];
     {
         NSArray <NSLayoutConstraint *> *constraints =
         @[
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
           ];
         [self.view addConstraints:constraints];
     }
-    else
+    {
+        NSLayoutConstraint *textViewWidthConstraint = [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1 constant:self.containerView.bounds.size.width];
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.containerView attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.containerView attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.containerView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.containerView attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.containerView attribute:NSLayoutAttributeHeight multiplier:1 constant:0],
+          textViewWidthConstraint,
+          ];
+        [self.containerView addConstraints:constraints];
+        self.textViewWidthConstraint = textViewWidthConstraint;
+    }
     {
         NSArray <NSLayoutConstraint *> *constraints =
         @[
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          ];
+        [self.containerView addConstraints:constraints];
+    }
+    {
+        NSLayoutConstraint *bottomConstraint = nil;
+        if (@available(iOS 11.0, *))
+        {
+            bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        } else {
+            bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        }
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:kXXTEEditorToolbarHeight],
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          bottomConstraint,
           ];
         [self.view addConstraints:constraints];
     }
-    
-    NSLayoutConstraint *bottomConstraint = nil;
-    if (@available(iOS 11.0, *)) {
-        bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    } else {
-        bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    }
-    NSArray <NSLayoutConstraint *> *constraints =
-    @[
-      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:kXXTEEditorToolbarHeight],
-      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-      bottomConstraint,
-      ];
-    [self.view addConstraints:constraints];
 }
 
 #pragma mark - UIView Getters
+
+- (UIScrollView *)containerView {
+    if (!_containerView) {
+        UIScrollView *containerView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        containerView.translatesAutoresizingMaskIntoConstraints = NO;
+        containerView.scrollEnabled = YES;
+        containerView.pagingEnabled = NO;
+        containerView.bounces = NO;
+        containerView.backgroundColor = [UIColor clearColor];
+        containerView.showsVerticalScrollIndicator = NO;
+        containerView.scrollsToTop = NO;
+        containerView.delegate = self;
+        if (@available(iOS 11.0, *)) {
+            containerView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+        _containerView = containerView;
+    }
+    return _containerView;
+}
 
 - (UIBarButtonItem *)myBackButtonItem {
     if (!_myBackButtonItem) {
@@ -517,6 +542,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         XXTEEditorTextView *textView = [[XXTEEditorTextView alloc] initWithFrame:self.view.bounds textContainer:textContainer];
         textView.delegate = textInput;
         textView.selectable = YES;
+        textView.scrollsToTop = YES;
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.translatesAutoresizingMaskIntoConstraints = NO;
         textView.returnKeyType = UIReturnKeyDefault;
@@ -672,11 +698,19 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self renderSyntaxOnScreen];
+    if (scrollView == self.textView) {
+        [self renderSyntaxOnScreen];
+    } else if (scrollView == self.containerView) {
+        
+    }
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
-    [self renderSyntaxOnScreen];
+    if (scrollView == self.textView) {
+        [self renderSyntaxOnScreen];
+    } else if (scrollView == self.containerView) {
+        
+    }
 }
 
 #pragma mark - Render Engine
