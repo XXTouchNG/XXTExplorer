@@ -140,6 +140,120 @@
 		0F8811661FB6AF640004F20C /* XXTESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */; };
 		0F8B4E1C1FBAF8E1009ED646 /* xml.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */; };
 		0F8B4E1D1FBAF8E1009ED646 /* xml.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */; };
+		0F8ECD241FE7FE0800A5457C /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
+		0F8ECD261FE8016200A5457C /* Cobalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD251FE8016100A5457C /* Cobalt.png */; };
+		0F8ECD281FE8016900A5457C /* Blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD271FE8016900A5457C /* Blackboard.png */; };
+		0F8ECD401FE802A900A5457C /* Tomorrow Night (Bright).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */; };
+		0F8ECD411FE802A900A5457C /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2A1FE802A400A5457C /* A.png */; };
+		0F8ECD421FE802A900A5457C /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2B1FE802A500A5457C /* Dawn.png */; };
+		0F8ECD431FE802A900A5457C /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2C1FE802A500A5457C /* Twilight.png */; };
+		0F8ECD441FE802A900A5457C /* Eiffel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2D1FE802A500A5457C /* Eiffel.png */; };
+		0F8ECD451FE802A900A5457C /* Ciapre (Black).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */; };
+		0F8ECD461FE802A900A5457C /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
+		0F8ECD471FE802A900A5457C /* Kimbie (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */; };
+		0F8ECD481FE802A900A5457C /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
+		0F8ECD491FE802A900A5457C /* Oceanic (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */; };
+		0F8ECD4A1FE802A900A5457C /* Solarized (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD331FE802A600A5457C /* Solarized (Light).png */; };
+		0F8ECD4B1FE802A900A5457C /* Tomorrow Night (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */; };
+		0F8ECD4C1FE802A900A5457C /* Tomorrow Night (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */; };
+		0F8ECD4D1FE802A900A5457C /* OneHalf (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */; };
+		0F8ECD4E1FE802A900A5457C /* Ciapre.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD371FE802A700A5457C /* Ciapre.png */; };
+		0F8ECD4F1FE802A900A5457C /* OneHalf (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD381FE802A700A5457C /* OneHalf (Light).png */; };
+		0F8ECD501FE802A900A5457C /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
+		0F8ECD511FE802A900A5457C /* Nothing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3A1FE802A800A5457C /* Nothing.png */; };
+		0F8ECD521FE802A900A5457C /* Solarized (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */; };
+		0F8ECD531FE802A900A5457C /* Sunburst.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3C1FE802A800A5457C /* Sunburst.png */; };
+		0F8ECD541FE802A900A5457C /* IDLE.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3D1FE802A800A5457C /* IDLE.png */; };
+		0F8ECD551FE802A900A5457C /* Kimbie (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */; };
+		0F8ECD561FE802A900A5457C /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
+		0F8ECD5B1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */; };
+		0F8ECD5C1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */; };
+		0F8ECD5D1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */; };
+		0F8ECD5E1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */; };
+		0F8ECD5F1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */; };
+		0F8ECD601FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */; };
+		0F8ECD611FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */; };
+		0F8ECD621FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */; };
+		0F8ECD631FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */; };
+		0F8ECD641FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */; };
+		0F8ECD651FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */; };
+		0F8ECD661FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */; };
+		0F8ECD6B1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */; };
+		0F8ECD6C1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */; };
+		0F8ECD6D1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */; };
+		0F8ECD6E1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */; };
+		0F8ECD6F1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */; };
+		0F8ECD701FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */; };
+		0F8ECD711FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */; };
+		0F8ECD721FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */; };
+		0F8ECD731FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */; };
+		0F8ECD741FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */; };
+		0F8ECD751FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */; };
+		0F8ECD761FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */; };
+		0F8ECD7B1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */; };
+		0F8ECD7C1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */; };
+		0F8ECD7D1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */; };
+		0F8ECD7E1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */; };
+		0F8ECD7F1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */; };
+		0F8ECD801FE81AEA00A5457C /* Hack-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */; };
+		0F8ECD811FE81AEA00A5457C /* Hack-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */; };
+		0F8ECD821FE81AEA00A5457C /* Hack-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */; };
+		0F8ECD831FE81AEA00A5457C /* Hack-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */; };
+		0F8ECD841FE81AEA00A5457C /* Hack-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */; };
+		0F8ECD851FE81AEA00A5457C /* Hack-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */; };
+		0F8ECD861FE81AEA00A5457C /* Hack-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */; };
+		0F8ECD871FE81C1700A5457C /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2A1FE802A400A5457C /* A.png */; };
+		0F8ECD881FE81C1700A5457C /* Blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD271FE8016900A5457C /* Blackboard.png */; };
+		0F8ECD891FE81C1700A5457C /* Ciapre (Black).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */; };
+		0F8ECD8A1FE81C1700A5457C /* Ciapre.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD371FE802A700A5457C /* Ciapre.png */; };
+		0F8ECD8B1FE81C1700A5457C /* Cobalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD251FE8016100A5457C /* Cobalt.png */; };
+		0F8ECD8C1FE81C1700A5457C /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2B1FE802A500A5457C /* Dawn.png */; };
+		0F8ECD8D1FE81C1700A5457C /* Eiffel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2D1FE802A500A5457C /* Eiffel.png */; };
+		0F8ECD8E1FE81C1700A5457C /* IDLE.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3D1FE802A800A5457C /* IDLE.png */; };
+		0F8ECD8F1FE81C1700A5457C /* Kimbie (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */; };
+		0F8ECD901FE81C1700A5457C /* Kimbie (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */; };
+		0F8ECD911FE81C1700A5457C /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
+		0F8ECD921FE81C1700A5457C /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
+		0F8ECD931FE81C1700A5457C /* Nothing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3A1FE802A800A5457C /* Nothing.png */; };
+		0F8ECD941FE81C1700A5457C /* Oceanic (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */; };
+		0F8ECD951FE81C1700A5457C /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
+		0F8ECD961FE81C1700A5457C /* OneHalf (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */; };
+		0F8ECD971FE81C1700A5457C /* OneHalf (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD381FE802A700A5457C /* OneHalf (Light).png */; };
+		0F8ECD981FE81C1700A5457C /* Solarized (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */; };
+		0F8ECD991FE81C1700A5457C /* Solarized (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD331FE802A600A5457C /* Solarized (Light).png */; };
+		0F8ECD9A1FE81C1700A5457C /* Sunburst.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3C1FE802A800A5457C /* Sunburst.png */; };
+		0F8ECD9B1FE81C1700A5457C /* Tomorrow Night (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */; };
+		0F8ECD9C1FE81C1700A5457C /* Tomorrow Night (Bright).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */; };
+		0F8ECD9D1FE81C1700A5457C /* Tomorrow Night (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */; };
+		0F8ECD9E1FE81C1700A5457C /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
+		0F8ECD9F1FE81C1700A5457C /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
+		0F8ECDA01FE81C1700A5457C /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2C1FE802A500A5457C /* Twilight.png */; };
+		0F8ECDA11FE81C1F00A5457C /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2A1FE802A400A5457C /* A.png */; };
+		0F8ECDA21FE81C1F00A5457C /* Blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD271FE8016900A5457C /* Blackboard.png */; };
+		0F8ECDA31FE81C1F00A5457C /* Ciapre (Black).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */; };
+		0F8ECDA41FE81C1F00A5457C /* Ciapre.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD371FE802A700A5457C /* Ciapre.png */; };
+		0F8ECDA51FE81C1F00A5457C /* Cobalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD251FE8016100A5457C /* Cobalt.png */; };
+		0F8ECDA61FE81C1F00A5457C /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2B1FE802A500A5457C /* Dawn.png */; };
+		0F8ECDA71FE81C1F00A5457C /* Eiffel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2D1FE802A500A5457C /* Eiffel.png */; };
+		0F8ECDA81FE81C1F00A5457C /* IDLE.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3D1FE802A800A5457C /* IDLE.png */; };
+		0F8ECDA91FE81C1F00A5457C /* Kimbie (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */; };
+		0F8ECDAA1FE81C1F00A5457C /* Kimbie (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */; };
+		0F8ECDAB1FE81C1F00A5457C /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
+		0F8ECDAC1FE81C1F00A5457C /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
+		0F8ECDAD1FE81C1F00A5457C /* Nothing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3A1FE802A800A5457C /* Nothing.png */; };
+		0F8ECDAE1FE81C1F00A5457C /* Oceanic (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */; };
+		0F8ECDAF1FE81C1F00A5457C /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
+		0F8ECDB01FE81C1F00A5457C /* OneHalf (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */; };
+		0F8ECDB11FE81C1F00A5457C /* OneHalf (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD381FE802A700A5457C /* OneHalf (Light).png */; };
+		0F8ECDB21FE81C1F00A5457C /* Solarized (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */; };
+		0F8ECDB31FE81C1F00A5457C /* Solarized (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD331FE802A600A5457C /* Solarized (Light).png */; };
+		0F8ECDB41FE81C1F00A5457C /* Sunburst.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3C1FE802A800A5457C /* Sunburst.png */; };
+		0F8ECDB51FE81C1F00A5457C /* Tomorrow Night (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */; };
+		0F8ECDB61FE81C1F00A5457C /* Tomorrow Night (Bright).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */; };
+		0F8ECDB71FE81C1F00A5457C /* Tomorrow Night (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */; };
+		0F8ECDB81FE81C1F00A5457C /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
+		0F8ECDB91FE81C1F00A5457C /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
+		0F8ECDBA1FE81C1F00A5457C /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2C1FE802A500A5457C /* Twilight.png */; };
 		0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */; };
 		0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
@@ -1334,6 +1448,44 @@
 		0F8811631FB6AF640004F20C /* XXTESegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESegmentedControl.h; sourceTree = "<group>"; };
 		0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedControl.m; sourceTree = "<group>"; };
 		0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml.tmLanguage; sourceTree = "<group>"; };
+		0F8ECD231FE7FE0800A5457C /* Mac Classic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Mac Classic.png"; sourceTree = "<group>"; };
+		0F8ECD251FE8016100A5457C /* Cobalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cobalt.png; sourceTree = "<group>"; };
+		0F8ECD271FE8016900A5457C /* Blackboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blackboard.png; sourceTree = "<group>"; };
+		0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tomorrow Night (Bright).png"; sourceTree = "<group>"; };
+		0F8ECD2A1FE802A400A5457C /* A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A.png; sourceTree = "<group>"; };
+		0F8ECD2B1FE802A500A5457C /* Dawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dawn.png; sourceTree = "<group>"; };
+		0F8ECD2C1FE802A500A5457C /* Twilight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twilight.png; sourceTree = "<group>"; };
+		0F8ECD2D1FE802A500A5457C /* Eiffel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Eiffel.png; sourceTree = "<group>"; };
+		0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ciapre (Black).png"; sourceTree = "<group>"; };
+		0F8ECD2F1FE802A500A5457C /* Oceanic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Oceanic.png; sourceTree = "<group>"; };
+		0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Kimbie (Dark).png"; sourceTree = "<group>"; };
+		0F8ECD311FE802A600A5457C /* Tomorrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tomorrow.png; sourceTree = "<group>"; };
+		0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Oceanic (Eighties).png"; sourceTree = "<group>"; };
+		0F8ECD331FE802A600A5457C /* Solarized (Light).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Solarized (Light).png"; sourceTree = "<group>"; };
+		0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tomorrow Night (Eighties).png"; sourceTree = "<group>"; };
+		0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tomorrow Night (Blue).png"; sourceTree = "<group>"; };
+		0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OneHalf (Dark).png"; sourceTree = "<group>"; };
+		0F8ECD371FE802A700A5457C /* Ciapre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ciapre.png; sourceTree = "<group>"; };
+		0F8ECD381FE802A700A5457C /* OneHalf (Light).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OneHalf (Light).png"; sourceTree = "<group>"; };
+		0F8ECD391FE802A700A5457C /* Tomorrow Night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tomorrow Night.png"; sourceTree = "<group>"; };
+		0F8ECD3A1FE802A800A5457C /* Nothing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Nothing.png; sourceTree = "<group>"; };
+		0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Solarized (Dark).png"; sourceTree = "<group>"; };
+		0F8ECD3C1FE802A800A5457C /* Sunburst.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sunburst.png; sourceTree = "<group>"; };
+		0F8ECD3D1FE802A800A5457C /* IDLE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IDLE.png; sourceTree = "<group>"; };
+		0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Kimbie (Light).png"; sourceTree = "<group>"; };
+		0F8ECD3F1FE802A900A5457C /* Monokai.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Monokai.png; sourceTree = "<group>"; };
+		0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anonymous_Pro_BI.ttf; sourceTree = "<group>"; };
+		0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anonymous_Pro.ttf; sourceTree = "<group>"; };
+		0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anonymous_Pro_I.ttf; sourceTree = "<group>"; };
+		0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anonymous_Pro_B.ttf; sourceTree = "<group>"; };
+		0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DejaVuSansMono-Bold.ttf"; sourceTree = "<group>"; };
+		0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DejaVuSansMono.ttf; sourceTree = "<group>"; };
+		0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DejaVuSansMono-Oblique.ttf"; sourceTree = "<group>"; };
+		0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DejaVuSansMono-BoldOblique.ttf"; sourceTree = "<group>"; };
+		0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hack-BoldItalic.ttf"; sourceTree = "<group>"; };
+		0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hack-Bold.ttf"; sourceTree = "<group>"; };
+		0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hack-Italic.ttf"; sourceTree = "<group>"; };
+		0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hack-Regular.ttf"; sourceTree = "<group>"; };
 		0F8EDCC51FB1F779003C92D6 /* XXTouch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTouch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8EDCCC1FB203AF003C92D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/XXTEBuiltInDefaults.AppStore.plist; sourceTree = "<group>"; };
 		0F8EDCCD1FB203BD003C92D6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.AppStore.plist"; sourceTree = "<group>"; };
@@ -2569,10 +2721,12 @@
 		0FB008EC1F43464500097E9C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				D6686F281F4AC4D3004403D0 /* Font */,
-				D6686F291F4AC4DA004403D0 /* Theme */,
 				D6686F2A1F4AC4E2004403D0 /* View */,
 				0FB009131F44780B00097E9C /* XXTEEditorDefaults.h */,
+				D6686F3D1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.h */,
+				D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */,
+				D6686F401F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.h */,
+				D6686F411F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m */,
 				D6686F251F4AC4CE004403D0 /* XXTEEditorSettingsViewController.h */,
 				D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */,
 			);
@@ -2783,6 +2937,8 @@
 		0FE162A11F3C9355003064B2 /* SyntaxKit */ = {
 			isa = PBXGroup;
 			children = (
+				D660855C1F3C663E00E87B3C /* Font */,
+				D62DD6241F3D52E900A34850 /* Theme */,
 				52512B2C18D96DFB613EAD70 /* SKAttributedParser.h */,
 				5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */,
 				0F86B3101F474EC4003CC228 /* SKAttributedParsingOperation.h */,
@@ -3108,35 +3264,59 @@
 		D62DD6241F3D52E900A34850 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				0FB0090D1F4364C300097E9C /* A.tmTheme */,
-				D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */,
-				0FD973F51F4B1D8B00133162 /* Ciapre (Black).tmTheme */,
-				0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */,
-				D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */,
-				D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */,
-				D60A26B21F3DB7BE00E013E2 /* Eiffel.tmTheme */,
-				D60A26B41F3DB7BE00E013E2 /* IDLE.tmTheme */,
-				0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */,
-				0FB009081F4364AF00097E9C /* Kimbie (Light).tmTheme */,
-				D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */,
-				D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */,
-				0FB0090B1F4364B800097E9C /* Nothing.tmTheme */,
-				0FD973F31F4B1D7B00133162 /* Oceanic (Eighties).tmTheme */,
-				0FB009011F43573500097E9C /* Oceanic.tmTheme */,
-				0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */,
-				0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */,
 				0FB009051F4359FF00097E9C /* SKTheme.plist */,
+				0FB0090D1F4364C300097E9C /* A.tmTheme */,
+				0F8ECD2A1FE802A400A5457C /* A.png */,
+				D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */,
+				0F8ECD271FE8016900A5457C /* Blackboard.png */,
+				0FD973F51F4B1D8B00133162 /* Ciapre (Black).tmTheme */,
+				0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */,
+				0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */,
+				0F8ECD371FE802A700A5457C /* Ciapre.png */,
+				D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */,
+				0F8ECD251FE8016100A5457C /* Cobalt.png */,
+				D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */,
+				0F8ECD2B1FE802A500A5457C /* Dawn.png */,
+				D60A26B21F3DB7BE00E013E2 /* Eiffel.tmTheme */,
+				0F8ECD2D1FE802A500A5457C /* Eiffel.png */,
+				D60A26B41F3DB7BE00E013E2 /* IDLE.tmTheme */,
+				0F8ECD3D1FE802A800A5457C /* IDLE.png */,
+				0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */,
+				0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */,
+				0FB009081F4364AF00097E9C /* Kimbie (Light).tmTheme */,
+				0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */,
+				D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */,
+				0F8ECD231FE7FE0800A5457C /* Mac Classic.png */,
+				D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */,
+				0F8ECD3F1FE802A900A5457C /* Monokai.png */,
+				0FB0090B1F4364B800097E9C /* Nothing.tmTheme */,
+				0F8ECD3A1FE802A800A5457C /* Nothing.png */,
+				0FD973F31F4B1D7B00133162 /* Oceanic (Eighties).tmTheme */,
+				0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */,
+				0FB009011F43573500097E9C /* Oceanic.tmTheme */,
+				0F8ECD2F1FE802A500A5457C /* Oceanic.png */,
+				0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */,
+				0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */,
+				0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */,
+				0F8ECD381FE802A700A5457C /* OneHalf (Light).png */,
 				D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */,
+				0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */,
 				D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */,
+				0F8ECD331FE802A600A5457C /* Solarized (Light).png */,
 				D60A26BB1F3DB7BE00E013E2 /* Sunburst.tmTheme */,
+				0F8ECD3C1FE802A800A5457C /* Sunburst.png */,
 				0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */,
+				0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */,
 				0FD973EA1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme */,
+				0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */,
 				0FD973EB1F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme */,
+				0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */,
 				0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */,
+				0F8ECD391FE802A700A5457C /* Tomorrow Night.png */,
 				0FD973ED1F4B1D3700133162 /* Tomorrow.tmTheme */,
+				0F8ECD311FE802A600A5457C /* Tomorrow.png */,
 				D60A26BC1F3DB7BE00E013E2 /* Twilight.tmTheme */,
-				D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */,
-				D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */,
+				0F8ECD2C1FE802A500A5457C /* Twilight.png */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -3175,13 +3355,13 @@
 				0FB388E21FA860AA00B41E44 /* Statistics */,
 				0F9888C81FA7538D00ED33E7 /* Toolbar */,
 				0FB009141F45ABA000097E9C /* Extensions */,
-				D660855C1F3C663E00E87B3C /* Font */,
 				0F6B6A4D1F5F9C6C0095A760 /* Keyboard */,
 				D62DD6231F3D52E000A34850 /* Language */,
 				0FB008EC1F43464500097E9C /* Settings */,
-				0FE162A11F3C9355003064B2 /* SyntaxKit */,
 				0FE162A21F3C9370003064B2 /* TextKit */,
-				D62DD6241F3D52E900A34850 /* Theme */,
+				0FE162A11F3C9355003064B2 /* SyntaxKit */,
+				D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */,
+				D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */,
 				D66085651F3C691100E87B3C /* XXTEEditorController.h */,
 				D66085661F3C691100E87B3C /* XXTEEditorController.m */,
 			);
@@ -3191,35 +3371,29 @@
 		D660855C1F3C663E00E87B3C /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				D6686F431F4AE74E004403D0 /* SKFont.plist */,
+				0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */,
+				0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */,
+				0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */,
+				0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */,
 				D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */,
 				D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */,
 				D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */,
 				D66085601F3C666700E87B3C /* CamingoCode-Regular.ttf */,
-				D6686F431F4AE74E004403D0 /* SKFont.plist */,
 				D66085611F3C666700E87B3C /* SourceCodePro-Bold.otf */,
 				D66085621F3C666700E87B3C /* SourceCodePro-BoldIt.otf */,
 				D66085631F3C666700E87B3C /* SourceCodePro-It.otf */,
 				D66085641F3C666700E87B3C /* SourceCodePro-Regular.otf */,
+				0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */,
+				0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */,
+				0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */,
+				0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */,
+				0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */,
+				0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */,
+				0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */,
+				0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */,
 			);
 			path = Font;
-			sourceTree = "<group>";
-		};
-		D6686F281F4AC4D3004403D0 /* Font */ = {
-			isa = PBXGroup;
-			children = (
-				D6686F3D1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.h */,
-				D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */,
-			);
-			path = Font;
-			sourceTree = "<group>";
-		};
-		D6686F291F4AC4DA004403D0 /* Theme */ = {
-			isa = PBXGroup;
-			children = (
-				D6686F401F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.h */,
-				D6686F411F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m */,
-			);
-			path = Theme;
 			sourceTree = "<group>";
 		};
 		D6686F2A1F4AC4E2004403D0 /* View */ = {
@@ -3684,15 +3858,20 @@
 			files = (
 				0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */,
 				0F97F1DC1FB30CFB007CA883 /* XXTEMoreReferences.bundle in Resources */,
+				0F8ECD7F1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
+				0F8ECD431FE802A900A5457C /* Twilight.png in Resources */,
 				0F8EDC6C1FB1F779003C92D6 /* CamingoCode-Bold.ttf in Resources */,
 				0F8EDC6E1FB1F779003C92D6 /* CamingoCode-BoldItalic.ttf in Resources */,
 				0F8EDC6F1FB1F779003C92D6 /* CamingoCode-Italic.ttf in Resources */,
+				0F8ECD501FE802A900A5457C /* Tomorrow Night.png in Resources */,
 				0F8EDC701FB1F779003C92D6 /* Tomorrow Night (Bright).tmTheme in Resources */,
+				0F8ECD6C1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */,
 				0F8EDC711FB1F779003C92D6 /* CamingoCode-Regular.ttf in Resources */,
 				0F8EDC721FB1F779003C92D6 /* XUIFileCell.xib in Resources */,
 				0F8EDC731FB1F779003C92D6 /* SourceCodePro-Bold.otf in Resources */,
 				0F072DC11FBB311600597EE2 /* txt.tmLanguage in Resources */,
 				0F8EDC741FB1F779003C92D6 /* SourceCodePro-BoldIt.otf in Resources */,
+				0F8ECD721FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */,
 				0F8EDCD11FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist in Resources */,
 				0F8EDC761FB1F779003C92D6 /* SourceCodePro-It.otf in Resources */,
 				0F8EDC771FB1F779003C92D6 /* SourceCodePro-Regular.otf in Resources */,
@@ -3700,9 +3879,14 @@
 				0F8EDC791FB1F779003C92D6 /* Tomorrow.tmTheme in Resources */,
 				0F8EDC7A1FB1F779003C92D6 /* Kimbie (Light).tmTheme in Resources */,
 				0F8EDC7B1FB1F779003C92D6 /* XXTImagePickerPhotoCell.xib in Resources */,
+				0F8ECD821FE81AEA00A5457C /* Hack-Italic.ttf in Resources */,
 				0F8EDC7C1FB1F779003C92D6 /* XXTEMoreTitleValueCell.xib in Resources */,
 				0F8EDC7D1FB1F779003C92D6 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0F8EDC7E1FB1F779003C92D6 /* Meta.strings in Resources */,
+				0F8ECD521FE802A900A5457C /* Solarized (Dark).png in Resources */,
+				0F8ECD751FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */,
+				0F8ECD411FE802A900A5457C /* A.png in Resources */,
+				0F8ECD651FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */,
 				0F8EDC7F1FB1F779003C92D6 /* LaunchScreen.storyboard in Resources */,
 				0F8EDC801FB1F779003C92D6 /* Blackboard.tmTheme in Resources */,
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
@@ -3710,32 +3894,52 @@
 				0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F8EDC851FB1F779003C92D6 /* strings.tmLanguage in Resources */,
+				0F8ECD4A1FE802A900A5457C /* Solarized (Light).png in Resources */,
+				0F8ECD621FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */,
 				0F8EDC861FB1F779003C92D6 /* Solarized (Dark).tmTheme in Resources */,
 				0F8EDC871FB1F779003C92D6 /* IDLE.tmTheme in Resources */,
 				0F8EDC881FB1F779003C92D6 /* Tomorrow Night.tmTheme in Resources */,
 				0F8EDC891FB1F779003C92D6 /* Nothing.tmTheme in Resources */,
+				0F8ECD541FE802A900A5457C /* IDLE.png in Resources */,
 				0F8EDC8B1FB1F779003C92D6 /* Eiffel.tmTheme in Resources */,
 				0F8EDC8C1FB1F779003C92D6 /* XXTEMoreLicenseCell.xib in Resources */,
 				0F8EDC8D1FB1F779003C92D6 /* json.tmLanguage in Resources */,
+				0F8ECD4B1FE802A900A5457C /* Tomorrow Night (Eighties).png in Resources */,
 				0FFC8F0E1FCA94E80012C170 /* XXTEInstallerLoadingView.xib in Resources */,
 				0F8EDC8F1FB1F779003C92D6 /* Twilight.tmTheme in Resources */,
+				0F8ECD7C1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */,
+				0F8ECD451FE802A900A5457C /* Ciapre (Black).png in Resources */,
+				0F8ECD4F1FE802A900A5457C /* OneHalf (Light).png in Resources */,
+				0F8ECD481FE802A900A5457C /* Tomorrow.png in Resources */,
+				0F8ECD511FE802A900A5457C /* Nothing.png in Resources */,
+				0F8ECD6F1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */,
 				0F8EDC911FB1F779003C92D6 /* XXTEMoreAddressCell.xib in Resources */,
+				0F8ECD5C1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */,
 				0F8EDC921FB1F779003C92D6 /* Kimbie (Dark).tmTheme in Resources */,
+				0F8ECD471FE802A900A5457C /* Kimbie (Dark).png in Resources */,
+				0F8ECD4C1FE802A900A5457C /* Tomorrow Night (Blue).png in Resources */,
 				0F8EDC931FB1F779003C92D6 /* Solarized (Light).tmTheme in Resources */,
 				0F8EDCC91FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist in Resources */,
+				0F8ECD531FE802A900A5457C /* Sunburst.png in Resources */,
 				0F8EDC941FB1F779003C92D6 /* Ciapre (Black).tmTheme in Resources */,
 				0F8EDC961FB1F779003C92D6 /* XXTEAssets.xcassets in Resources */,
 				0F8EDC971FB1F779003C92D6 /* OneHalf (Dark).tmTheme in Resources */,
+				0F8ECD421FE802A900A5457C /* Dawn.png in Resources */,
 				0F8EDC981FB1F779003C92D6 /* XXTEItemTemplate.lua in Resources */,
 				0F8EDC991FB1F779003C92D6 /* XXTEEditorWrapColumnCell.xib in Resources */,
 				0F8EDC9A1FB1F779003C92D6 /* SKTheme.plist in Resources */,
 				0F8EDC9B1FB1F779003C92D6 /* XUIAboutCell.xib in Resources */,
+				0F8ECD401FE802A900A5457C /* Tomorrow Night (Bright).png in Resources */,
+				0F8ECD851FE81AEA00A5457C /* Hack-Regular.ttf in Resources */,
 				0F8EDC9C1FB1F779003C92D6 /* XXTEEditorTabWidthCell.xib in Resources */,
 				0F8EDC9D1FB1F779003C92D6 /* Dawn.tmTheme in Resources */,
+				0F8ECD551FE802A900A5457C /* Kimbie (Light).png in Resources */,
+				0F8ECD491FE802A900A5457C /* Oceanic (Eighties).png in Resources */,
 				0F8EDC9E1FB1F779003C92D6 /* Localizable.strings in Resources */,
 				0F8EDC9F1FB1F779003C92D6 /* .gitignore in Resources */,
 				0F8EDCA01FB1F779003C92D6 /* Sunburst.tmTheme in Resources */,
 				0F8EDCA11FB1F779003C92D6 /* Tomorrow Night (Eighties).tmTheme in Resources */,
+				0F8ECD4D1FE802A900A5457C /* OneHalf (Dark).png in Resources */,
 				0F8B4E1D1FBAF8E1009ED646 /* xml.tmLanguage in Resources */,
 				0F8EDCA31FB1F779003C92D6 /* Monokai.tmTheme in Resources */,
 				0F8EDCA41FB1F779003C92D6 /* Oceanic (Eighties).tmTheme in Resources */,
@@ -3743,6 +3947,7 @@
 				0F8EDCA61FB1F779003C92D6 /* XXTEMoreLinkCell.xib in Resources */,
 				0F8EDCA71FB1F779003C92D6 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0F97F1D41FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip in Resources */,
+				0F8ECD561FE802A900A5457C /* Monokai.png in Resources */,
 				0F8EDCA81FB1F779003C92D6 /* XXTEMoreSwitchCell.xib in Resources */,
 				0F8EDCA91FB1F779003C92D6 /* Oceanic.tmTheme in Resources */,
 				0F8EDCAA1FB1F779003C92D6 /* InfoPlist.strings in Resources */,
@@ -3750,18 +3955,25 @@
 				0F8EDCAC1FB1F779003C92D6 /* SKLanguage.plist in Resources */,
 				0F8EDCAD1FB1F779003C92D6 /* XXTImagePickerAlbumCell.xib in Resources */,
 				0F8EDCAE1FB1F779003C92D6 /* XUIAnimatedImageCell.xib in Resources */,
+				0F8ECD281FE8016900A5457C /* Blackboard.png in Resources */,
 				0F8EDCAF1FB1F779003C92D6 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				0F8EDCB01FB1F779003C92D6 /* A.tmTheme in Resources */,
 				0F8EDCB11FB1F779003C92D6 /* OneHalf (Light).tmTheme in Resources */,
+				0F8ECD441FE802A900A5457C /* Eiffel.png in Resources */,
 				0F8EDCB21FB1F779003C92D6 /* XXTPickerCollection.strings in Resources */,
 				0F8EDCB31FB1F779003C92D6 /* SKFont.plist in Resources */,
+				0F8ECD5F1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */,
 				0F8EDCB41FB1F779003C92D6 /* Cobalt.tmTheme in Resources */,
 				0F97F1D61FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip in Resources */,
 				0F8EDCB71FB1F779003C92D6 /* lua.tmLanguage in Resources */,
 				0F8EDCB81FB1F779003C92D6 /* Tomorrow Night (Blue).tmTheme in Resources */,
 				0F8EDCB91FB1F779003C92D6 /* XXTEEditorFontSizeCell.xib in Resources */,
+				0F8ECD261FE8016200A5457C /* Cobalt.png in Resources */,
 				0F8EDCBA1FB1F779003C92D6 /* XXTImagePickerController.xib in Resources */,
 				0F8EDCBB1FB1F779003C92D6 /* XXTEEditorThemeCell.xib in Resources */,
+				0F8ECD461FE802A900A5457C /* Oceanic.png in Resources */,
+				0F8ECD241FE7FE0800A5457C /* Mac Classic.png in Resources */,
+				0F8ECD4E1FE802A900A5457C /* Ciapre.png in Resources */,
 				0F8EDCBC1FB1F779003C92D6 /* SKCaptureCollection.h in Resources */,
 				0F8EDCBD1FB1F779003C92D6 /* Settings.bundle in Resources */,
 			);
@@ -3771,16 +3983,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F8ECD871FE81C1700A5457C /* A.png in Resources */,
+				0F8ECD881FE81C1700A5457C /* Blackboard.png in Resources */,
+				0F8ECD891FE81C1700A5457C /* Ciapre (Black).png in Resources */,
+				0F8ECD8A1FE81C1700A5457C /* Ciapre.png in Resources */,
+				0F8ECD8B1FE81C1700A5457C /* Cobalt.png in Resources */,
+				0F8ECD8C1FE81C1700A5457C /* Dawn.png in Resources */,
+				0F8ECD8D1FE81C1700A5457C /* Eiffel.png in Resources */,
+				0F8ECD8E1FE81C1700A5457C /* IDLE.png in Resources */,
+				0F8ECD8F1FE81C1700A5457C /* Kimbie (Dark).png in Resources */,
+				0F8ECD901FE81C1700A5457C /* Kimbie (Light).png in Resources */,
+				0F8ECD911FE81C1700A5457C /* Mac Classic.png in Resources */,
+				0F8ECD921FE81C1700A5457C /* Monokai.png in Resources */,
+				0F8ECD931FE81C1700A5457C /* Nothing.png in Resources */,
+				0F8ECD941FE81C1700A5457C /* Oceanic (Eighties).png in Resources */,
+				0F8ECD951FE81C1700A5457C /* Oceanic.png in Resources */,
+				0F8ECD961FE81C1700A5457C /* OneHalf (Dark).png in Resources */,
+				0F8ECD971FE81C1700A5457C /* OneHalf (Light).png in Resources */,
+				0F8ECD981FE81C1700A5457C /* Solarized (Dark).png in Resources */,
+				0F8ECD991FE81C1700A5457C /* Solarized (Light).png in Resources */,
+				0F8ECD9A1FE81C1700A5457C /* Sunburst.png in Resources */,
+				0F8ECD9B1FE81C1700A5457C /* Tomorrow Night (Blue).png in Resources */,
+				0F8ECD9C1FE81C1700A5457C /* Tomorrow Night (Bright).png in Resources */,
+				0F8ECD9D1FE81C1700A5457C /* Tomorrow Night (Eighties).png in Resources */,
+				0F8ECD9E1FE81C1700A5457C /* Tomorrow Night.png in Resources */,
+				0F8ECD9F1FE81C1700A5457C /* Tomorrow.png in Resources */,
+				0F8ECDA01FE81C1700A5457C /* Twilight.png in Resources */,
 				0F97F1DB1FB30CED007CA883 /* XXTEMoreReferences.bundle in Resources */,
 				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
+				0F8ECD841FE81AEA00A5457C /* Hack-Regular.ttf in Resources */,
 				0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */,
 				0FD973EF1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme in Resources */,
+				0F8ECD7B1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */,
 				D60A26A21F3DA24B00E013E2 /* CamingoCode-Regular.ttf in Resources */,
 				D6863CE81F7E340A00A45CF7 /* XUIFileCell.xib in Resources */,
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
+				0F8ECD811FE81AEA00A5457C /* Hack-Italic.ttf in Resources */,
 				D60A26A41F3DA24B00E013E2 /* SourceCodePro-BoldIt.otf in Resources */,
 				D60A26A51F3DA24B00E013E2 /* SourceCodePro-It.otf in Resources */,
 				D60A26A61F3DA24B00E013E2 /* SourceCodePro-Regular.otf in Resources */,
@@ -3792,6 +4033,7 @@
 				0F8EDCCF1FB209DC003C92D6 /* Settings.Pro.bundle in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
+				0F8ECD7E1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
 				D69532FA1F8F79DB00A24B9B /* LaunchScreen.storyboard in Resources */,
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
@@ -3809,12 +4051,17 @@
 				0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */,
 				D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */,
 				D60A26CF1F3DB7BE00E013E2 /* Twilight.tmTheme in Resources */,
+				0F8ECD741FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */,
 				0FFC8F0D1FCA94E80012C170 /* XXTEInstallerLoadingView.xib in Resources */,
+				0F8ECD6E1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */,
+				0F8ECD711FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */,
 				0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				0FB009091F4364AF00097E9C /* Kimbie (Dark).tmTheme in Resources */,
+				0F8ECD5E1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */,
 				D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */,
 				0FD973F61F4B1D8B00133162 /* Ciapre (Black).tmTheme in Resources */,
+				0F8ECD5B1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
 				D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */,
 				0FB009111F43685E00097E9C /* OneHalf (Dark).tmTheme in Resources */,
@@ -3829,8 +4076,10 @@
 				D60A26CE1F3DB7BE00E013E2 /* Sunburst.tmTheme in Resources */,
 				0FD973F01F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
+				0F8ECD611FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */,
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
 				0FD973F41F4B1D7B00133162 /* Oceanic (Eighties).tmTheme in Resources */,
+				0F8ECD6B1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */,
 				0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
@@ -3841,6 +4090,7 @@
 				D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */,
 				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
 				0FBAFF3F1F6E5378008B3189 /* XXTImagePickerAlbumCell.xib in Resources */,
+				0F8ECD641FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */,
 				0F8B4E1C1FBAF8E1009ED646 /* xml.tmLanguage in Resources */,
 				D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
@@ -3862,16 +4112,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F8ECDA11FE81C1F00A5457C /* A.png in Resources */,
+				0F8ECDA21FE81C1F00A5457C /* Blackboard.png in Resources */,
+				0F8ECDA31FE81C1F00A5457C /* Ciapre (Black).png in Resources */,
+				0F8ECDA41FE81C1F00A5457C /* Ciapre.png in Resources */,
+				0F8ECDA51FE81C1F00A5457C /* Cobalt.png in Resources */,
+				0F8ECDA61FE81C1F00A5457C /* Dawn.png in Resources */,
+				0F8ECDA71FE81C1F00A5457C /* Eiffel.png in Resources */,
+				0F8ECDA81FE81C1F00A5457C /* IDLE.png in Resources */,
+				0F8ECDA91FE81C1F00A5457C /* Kimbie (Dark).png in Resources */,
+				0F8ECDAA1FE81C1F00A5457C /* Kimbie (Light).png in Resources */,
+				0F8ECDAB1FE81C1F00A5457C /* Mac Classic.png in Resources */,
+				0F8ECDAC1FE81C1F00A5457C /* Monokai.png in Resources */,
+				0F8ECDAD1FE81C1F00A5457C /* Nothing.png in Resources */,
+				0F8ECDAE1FE81C1F00A5457C /* Oceanic (Eighties).png in Resources */,
+				0F8ECDAF1FE81C1F00A5457C /* Oceanic.png in Resources */,
+				0F8ECDB01FE81C1F00A5457C /* OneHalf (Dark).png in Resources */,
+				0F8ECDB11FE81C1F00A5457C /* OneHalf (Light).png in Resources */,
+				0F8ECDB21FE81C1F00A5457C /* Solarized (Dark).png in Resources */,
+				0F8ECDB31FE81C1F00A5457C /* Solarized (Light).png in Resources */,
+				0F8ECDB41FE81C1F00A5457C /* Sunburst.png in Resources */,
+				0F8ECDB51FE81C1F00A5457C /* Tomorrow Night (Blue).png in Resources */,
+				0F8ECDB61FE81C1F00A5457C /* Tomorrow Night (Bright).png in Resources */,
+				0F8ECDB71FE81C1F00A5457C /* Tomorrow Night (Eighties).png in Resources */,
+				0F8ECDB81FE81C1F00A5457C /* Tomorrow Night.png in Resources */,
+				0F8ECDB91FE81C1F00A5457C /* Tomorrow.png in Resources */,
+				0F8ECDBA1FE81C1F00A5457C /* Twilight.png in Resources */,
 				D60FE7771FE2369300954818 /* XXTEMoreReferences.bundle in Resources */,
 				D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */,
+				0F8ECD861FE81AEA00A5457C /* Hack-Regular.ttf in Resources */,
 				D60FE7791FE2369300954818 /* XXTApplicationCell.xib in Resources */,
 				D60FE77A1FE2369300954818 /* CamingoCode-Bold.ttf in Resources */,
 				D60FE77B1FE2369300954818 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60FE77C1FE2369300954818 /* CamingoCode-Italic.ttf in Resources */,
 				D60FE77D1FE2369300954818 /* Tomorrow Night (Bright).tmTheme in Resources */,
+				0F8ECD7D1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */,
 				D60FE77E1FE2369300954818 /* CamingoCode-Regular.ttf in Resources */,
 				D60FE77F1FE2369300954818 /* XUIFileCell.xib in Resources */,
 				D60FE7801FE2369300954818 /* SourceCodePro-Bold.otf in Resources */,
+				0F8ECD831FE81AEA00A5457C /* Hack-Italic.ttf in Resources */,
 				D60FE7811FE2369300954818 /* SourceCodePro-BoldIt.otf in Resources */,
 				D60FE7821FE2369300954818 /* SourceCodePro-It.otf in Resources */,
 				D60FE7831FE2369300954818 /* SourceCodePro-Regular.otf in Resources */,
@@ -3883,6 +4162,7 @@
 				D60FE7891FE2369300954818 /* Settings.Pro.bundle in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
+				0F8ECD801FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
 				D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */,
 				D60FE78D1FE2369300954818 /* Blackboard.tmTheme in Resources */,
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
@@ -3900,12 +4180,17 @@
 				D60FE79A1FE2369300954818 /* json.tmLanguage in Resources */,
 				D60FE79B1FE2369300954818 /* xxte-white-icons.plist in Resources */,
 				D60FE79C1FE2369300954818 /* Twilight.tmTheme in Resources */,
+				0F8ECD761FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */,
 				D60FE79D1FE2369300954818 /* XXTEInstallerLoadingView.xib in Resources */,
+				0F8ECD701FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */,
+				0F8ECD731FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */,
 				D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */,
 				D60FE79F1FE2369300954818 /* XXTEMoreAddressCell.xib in Resources */,
 				D60FE7A01FE2369300954818 /* Kimbie (Dark).tmTheme in Resources */,
+				0F8ECD601FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */,
 				D60FE7A11FE2369300954818 /* Solarized (Light).tmTheme in Resources */,
 				D60FE7A21FE2369300954818 /* Ciapre (Black).tmTheme in Resources */,
+				0F8ECD5D1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */,
 				D60FE7A31FE2369300954818 /* XXTEAppDefines.plist in Resources */,
 				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
 				D60FE7A51FE2369300954818 /* OneHalf (Dark).tmTheme in Resources */,
@@ -3920,8 +4205,10 @@
 				D60FE7AE1FE2369300954818 /* Sunburst.tmTheme in Resources */,
 				D60FE7AF1FE2369300954818 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */,
+				0F8ECD631FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */,
 				D60FE7B11FE2369300954818 /* Monokai.tmTheme in Resources */,
 				D60FE7B21FE2369300954818 /* Oceanic (Eighties).tmTheme in Resources */,
+				0F8ECD6D1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */,
 				D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */,
 				D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */,
 				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
@@ -3932,6 +4219,7 @@
 				D60FE7BA1FE2369300954818 /* Mac Classic.tmTheme in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				D60FE7BC1FE2369300954818 /* XXTImagePickerAlbumCell.xib in Resources */,
+				0F8ECD661FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */,
 				D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */,
 				D60FE7BE1FE2369300954818 /* XUIAnimatedImageCell.xib in Resources */,
 				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,

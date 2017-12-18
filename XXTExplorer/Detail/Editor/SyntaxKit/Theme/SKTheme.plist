@@ -6,157 +6,157 @@
 		<key>name</key>
 		<string>Mac Classic</string>
 		<key>preview</key>
-		<string></string>
+		<string>Mac Classic.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Blackboard</string>
 		<key>preview</key>
-		<string></string>
+		<string>Blackboard.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Cobalt</string>
 		<key>preview</key>
-		<string></string>
+		<string>Cobalt.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Dawn</string>
 		<key>preview</key>
-		<string></string>
+		<string>Dawn.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Eiffel</string>
 		<key>preview</key>
-		<string></string>
+		<string>Eiffel.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>IDLE</string>
 		<key>preview</key>
-		<string></string>
+		<string>IDLE.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Sunburst</string>
 		<key>preview</key>
-		<string></string>
+		<string>Sunburst.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Twilight</string>
 		<key>preview</key>
-		<string></string>
+		<string>Twilight.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Monokai</string>
 		<key>preview</key>
-		<string></string>
+		<string>Monokai.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Solarized (Dark)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Solarized (Dark).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Solarized (Light)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Solarized (Light).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Ciapre</string>
 		<key>preview</key>
-		<string></string>
+		<string>Ciapre.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Ciapre (Black)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Ciapre (Black).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Oceanic</string>
 		<key>preview</key>
-		<string></string>
+		<string>Oceanic.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Oceanic (Eighties)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Oceanic (Eighties).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Kimbie (Dark)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Kimbie (Dark).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Kimbie (Light)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Kimbie (Light).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Nothing</string>
 		<key>preview</key>
-		<string></string>
+		<string>Nothing.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>A</string>
 		<key>preview</key>
-		<string></string>
+		<string>A.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>OneHalf (Dark)</string>
 		<key>preview</key>
-		<string></string>
+		<string>OneHalf (Dark).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>OneHalf (Light)</string>
 		<key>preview</key>
-		<string></string>
+		<string>OneHalf (Light).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow</string>
 		<key>preview</key>
-		<string></string>
+		<string>Tomorrow.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night</string>
 		<key>preview</key>
-		<string></string>
+		<string>Tomorrow Night.png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night (Blue)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Tomorrow Night (Blue).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night (Bright)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Tomorrow Night (Bright).png</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night (Eighties)</string>
 		<key>preview</key>
-		<string></string>
+		<string>Tomorrow Night (Eighties).png</string>
 	</dict>
 </array>
 </plist>

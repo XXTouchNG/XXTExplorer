@@ -63,7 +63,7 @@
 #pragma mark - UITableViewDelegate / DataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 66.f;
+    return XXTEEditorThemeCellHeight;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -80,15 +80,18 @@
         NSString *themeName = theme[@"name"];
         XXTEEditorThemeCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEEditorThemeCellReuseIdentifier forIndexPath:indexPath];
         cell.titleLabel.text = themeName;
-        if ([theme[@"preview"] isKindOfClass:[UIImage class]]) {
-            cell.previewImageView.image = theme[@"preview"];
-        } else {
-            cell.previewImageView.image = nil;
+        id previewValue = theme[@"preview"];
+        if ([previewValue isKindOfClass:[UIImage class]]) {
+            cell.previewImageView.image = previewValue;
+        } else if ([previewValue isKindOfClass:[NSString class]]) {
+            cell.previewImageView.image = [UIImage imageNamed:previewValue];
         }
         if ([themeName isEqualToString:self.selectedThemeName]) {
             cell.titleLabel.textColor = XXTE_COLOR;
+            cell.selectFlagView.hidden = NO;
         } else {
             cell.titleLabel.textColor = [UIColor blackColor];
+            cell.selectFlagView.hidden = YES;
         }
         return cell;
     }
@@ -104,9 +107,11 @@
         
         for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
             cell.titleLabel.textColor = [UIColor blackColor];
+            cell.selectFlagView.hidden = YES;
         }
         XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
         selectCell.titleLabel.textColor = XXTE_COLOR;
+        selectCell.selectFlagView.hidden = NO;
         
         if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {
             [_delegate themeSettingsViewControllerSettingsDidChanged:self];

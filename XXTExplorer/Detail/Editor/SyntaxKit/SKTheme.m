@@ -65,6 +65,23 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
     return self.attributes[SKLanguageGlobalScope];
 }
 
+- (NSArray <NSString *> *)fontNamesForFontFamilyAnyOfFontName:(NSString *)tFontName {
+    if (!tFontName) return nil;
+    NSString *fontArrsPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SKFont" ofType:@"plist"];
+    NSArray <NSString *> *result = nil;
+    NSArray <NSArray *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
+    for (NSArray <NSString *> *fontNames in fontArrs) {
+        if (![fontNames isKindOfClass:[NSArray class]]) continue;
+        if (fontNames.count <= 0) continue;
+        NSString *fontName = fontNames[0];
+        if ([tFontName isEqualToString:fontName]) {
+            result = fontNames;
+        }
+    }
+    if (result.count != 4) return nil;
+    return result;
+}
+
 #pragma mark - Initializer
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *,id> *)dictionary font:(UIFont *)font {
@@ -82,23 +99,12 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
         {
             return nil;
         }
-        NSString *fontFamily = [font familyName];
+        NSArray <NSString *> *fontNames = [self fontNamesForFontFamilyAnyOfFontName:font.fontName];
+        NSAssert(fontNames, @"Cannot initialize required font faces (%@).", font.fontName);
         CGFloat fontSize = [font pointSize];
-        UIFont *boldFont = [UIFont fontWithDescriptor:[UIFontDescriptor fontDescriptorWithFontAttributes:
-                                                       @{
-                                                         @"NSFontFamilyAttribute" : fontFamily,
-                                                         @"NSFontFaceAttribute" : @"Bold"
-                                                         }] size:fontSize];
-        UIFont *italicFont = [UIFont fontWithDescriptor:[UIFontDescriptor fontDescriptorWithFontAttributes:
-                                                         @{
-                                                           @"NSFontFamilyAttribute" : fontFamily,
-                                                           @"NSFontFaceAttribute" : @"Italic"
-                                                           }] size:fontSize];
-        UIFont *boldItalicFont = [UIFont fontWithDescriptor:[UIFontDescriptor fontDescriptorWithFontAttributes:
-                                                             @{
-                                                               @"NSFontFamilyAttribute" : fontFamily,
-                                                               @"NSFontFaceAttribute" : @"Bold Italic"
-                                                               }] size:fontSize];
+        UIFont *boldFont = [UIFont fontWithName:fontNames[1] size:fontSize];
+        UIFont *italicFont = [UIFont fontWithName:fontNames[2] size:fontSize];
+        UIFont *boldItalicFont = [UIFont fontWithName:fontNames[3] size:fontSize];
         if (!boldFont || !italicFont || !boldItalicFont) {
             return nil;
         }

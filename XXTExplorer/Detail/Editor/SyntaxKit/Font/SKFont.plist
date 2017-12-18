@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<string>CourierNewPSMT</string>
+		<string>CourierNewPS-BoldMT</string>
+		<string>CourierNewPS-ItalicMT</string>
+		<string>CourierNewPS-BoldItalicMT</string>
+	</array>
+	<array>
+		<string>Menlo-Regular</string>
+		<string>Menlo-Bold</string>
+		<string>Menlo-Italic</string>
+		<string>Menlo-BoldItalic</string>
+	</array>
+	<array>
+		<string>SourceCodePro-Regular</string>
+		<string>SourceCodePro-Bold</string>
+		<string>SourceCodePro-It</string>
+		<string>SourceCodePro-BoldIt</string>
+	</array>
+	<array>
+		<string>CamingoCode-Regular</string>
+		<string>CamingoCode-Bold</string>
+		<string>CamingoCode-Italic</string>
+		<string>CamingoCode-BoldItalic</string>
+	</array>
+	<array>
+		<string>AnonymousPro</string>
+		<string>AnonymousPro-Bold</string>
+		<string>AnonymousPro-Italic</string>
+		<string>AnonymousPro-BoldItalic</string>
+	</array>
+	<array>
+		<string>DejaVuSansMono</string>
+		<string>DejaVuSansMono-Bold</string>
+		<string>DejaVuSansMono-Oblique</string>
+		<string>DejaVuSansMono-BoldOblique</string>
+	</array>
+	<array>
+		<string>Hack-Regular</string>
+		<string>Hack-Bold</string>
+		<string>Hack-Italic</string>
+		<string>Hack-BoldItalic</string>
+	</array>
+</array>
+</plist>

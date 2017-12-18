@@ -88,10 +88,10 @@
     _gutterWidth = gutterWidth;
 }
 
-//- (BOOL)indentWrappedLines {
-//    return NO;
+- (BOOL)indentWrappedLines {
+    return NO;
     // this method has some bugs so we had to disable it temporarily
-//}
+}
 
 #pragma mark - Convenience
 
