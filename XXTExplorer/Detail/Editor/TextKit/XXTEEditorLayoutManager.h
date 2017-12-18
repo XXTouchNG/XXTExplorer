@@ -26,6 +26,7 @@
 @property (nonatomic, assign, readonly) CGFloat fontPointSize;
 @property (nonatomic, assign, readonly) CGFloat lineHeightScale;
 
-- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex;
+//- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex;
+- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex textContainer:(NSTextContainer *)container;
 
 @end

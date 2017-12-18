@@ -30,7 +30,7 @@
 #import "XXTEEditorThemeSettingsViewController.h"
 #import "XXTEEditorFontSettingsViewController.h"
 
-@interface XXTEEditorSettingsViewController () <XXTEEditorFontSizeViewDelegate, XXTEEditorFontSettingsViewControllerDelegate, XXTEEditorThemeSettingsViewControllerDelegate>
+@interface XXTEEditorSettingsViewController () <XXTEEditorFontSizeViewDelegate, XXTEEditorFontSettingsViewControllerDelegate, XXTEEditorThemeSettingsViewControllerDelegate, UITextFieldDelegate>
 
 @end
 
@@ -252,6 +252,7 @@
         XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
         [self.editor setNeedsReload];
     }];
+    cell11.valueField.delegate = self;
     
     XXTEMoreSwitchCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell12.titleLabel.text = NSLocalizedString(@"Read Only", nil);
@@ -431,6 +432,13 @@
     XXTEDefaultsSetObject(XXTEEditorThemeName, controller.selectedThemeName);
     ((XXTEMoreTitleValueCell *)staticCells[1][0]).valueLabel.text = controller.selectedThemeName;
     [self.editor setNeedsReload];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark - Memory

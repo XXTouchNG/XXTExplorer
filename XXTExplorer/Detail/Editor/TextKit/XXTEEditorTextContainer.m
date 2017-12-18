@@ -51,7 +51,7 @@
     // Offset must be done *after layout computation* in UMLayoutManager's -setLineFragmentRect:forGlyphRange:usedRect:
     
     if ([[self xxteLayoutManager] indentWrappedLines]) {
-        UIEdgeInsets insets = [[self xxteLayoutManager] insetsForLineStartingAtCharacterIndex: characterIndex];
+        UIEdgeInsets insets = [[self xxteLayoutManager] insetsForLineStartingAtCharacterIndex: characterIndex textContainer:self];
         rect.size.width -= insets.left + insets.right;
     }
     

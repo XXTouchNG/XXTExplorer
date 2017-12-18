@@ -1096,10 +1096,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #pragma mark - Rotation
 
+XXTE_START_IGNORE_PARTIAL
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     [self setNeedsReloadTextViewWidth];
 }
+XXTE_END_IGNORE_PARTIAL
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (XXTE_SYSTEM_8) {

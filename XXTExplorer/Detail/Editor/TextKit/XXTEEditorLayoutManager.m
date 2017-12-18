@@ -88,10 +88,10 @@
     _gutterWidth = gutterWidth;
 }
 
-- (BOOL)indentWrappedLines {
-    return NO;
+//- (BOOL)indentWrappedLines {
+//    return NO;
     // this method has some bugs so we had to disable it temporarily
-}
+//}
 
 #pragma mark - Convenience
 
@@ -268,7 +268,7 @@
 
 #pragma mark - Layout Computation
 
-- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex
+- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex textContainer:(NSTextContainer *)container
 {
     CGFloat leftInset = 0;
     
@@ -304,8 +304,11 @@
         if (wrappingCharIndex != NSNotFound) {
             NSUInteger firstTextGlyphIndex = [self glyphIndexForCharacterAtIndex:wrappingCharIndex];
             
+            CGFloat lastPosX = [self locationForGlyphAtIndex:firstTextGlyphIndex].x;
+            CGFloat firstPosX = [self locationForGlyphAtIndex:firstGlyphIndex].x;
+            
             // The additional indent is the distance from the first to the last character
-            leftInset += [self locationForGlyphAtIndex:firstTextGlyphIndex].x - [self locationForGlyphAtIndex:firstGlyphIndex].x;
+            leftInset += lastPosX - firstPosX;
         }
     }
     
@@ -317,7 +320,7 @@
 {
     // IMPORTANT: Perform the shift of the X-coordinate that cannot be done in NSTextContainer's -lineFragmentRectForProposedRect:atIndex:writingDirection:remainingRect:
     if ([self indentWrappedLines]) {
-        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: [self characterIndexForGlyphAtIndex: glyphRange.location]];
+        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: [self characterIndexForGlyphAtIndex: glyphRange.location] textContainer:nil];
         
         fragmentRect.origin.x += insets.left;
         usedRect.origin.x += insets.left;
@@ -330,7 +333,7 @@
 {
     // Etxra line fragment rect must be indented just like every other line fragment rect
     if ([self indentWrappedLines]) {
-        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: self.textStorage.length];
+        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: self.textStorage.length textContainer:container];
         
         fragmentRect.origin.x += insets.left;
         usedRect.origin.x += insets.left;
