@@ -21,6 +21,8 @@
 #import "XXTEScanViewController.h"
 #import "XXTENavigationController.h"
 #import "XXTExplorerCreateItemViewController.h"
+#import "XXTEMoreViewController.h"
+#import "XXTEMoreNavigationController.h"
 
 #import <LGAlertView/LGAlertView.h>
 
@@ -89,6 +91,7 @@
 #endif
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
     }
 }
 
@@ -104,8 +107,12 @@
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:buttonItem userInfo:userInfo]];
         }
 #else
-        if (NO) {
-            
+        if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSettings]) {
+            XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
+            masterNavigationControllerRight.modalPresentationStyle = UIModalPresentationFormSheet;
+            masterNavigationControllerRight.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self.navigationController presentViewController:masterNavigationControllerRight animated:YES completion:nil];
         }
 #endif
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {

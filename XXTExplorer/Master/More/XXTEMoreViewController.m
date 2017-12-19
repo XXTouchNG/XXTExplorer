@@ -71,13 +71,15 @@
 
 #endif
 
+@interface XXTEMoreViewController ()
 #ifndef APPSTORE
-@interface XXTEMoreViewController () <LGAlertViewDelegate>
+<LGAlertViewDelegate>
 @property (weak, nonatomic) UISwitch *remoteAccessSwitch;
 @property (weak, nonatomic) UIActivityIndicatorView *remoteAccessIndicator;
-
-@end
+#else
+@property (nonatomic, strong) UIBarButtonItem *closeItem;
 #endif
+@end
 
 @implementation XXTEMoreViewController {
     BOOL isFirstTimeLoaded;
@@ -131,6 +133,11 @@
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+    }
+    
+    if (nil == self.tabBarController && self == self.navigationController.viewControllers[0])
+    {
+        self.navigationItem.rightBarButtonItem = self.closeItem;
     }
     
     [self reloadStaticTableViewData];
@@ -894,5 +901,21 @@
     }
 }
 #endif
+
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)closeItem {
+    if (!_closeItem) {
+        UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(closeItemTapped:)];
+        _closeItem = closeItem;
+    }
+    return _closeItem;
+}
+
+#pragma mark - UIControl Actions
+
+- (void)closeItemTapped:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

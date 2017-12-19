@@ -78,12 +78,18 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
     
     // Master - More Controller
+#ifndef APPSTORE
     XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
     XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
+#endif
     
     // Master Controller
     XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
+#ifndef APPSTORE
     masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
+#else
+    masterViewController.viewControllers = @[masterNavigationControllerLeft];
+#endif
     
     {
         if (@available(iOS 8.0, *)) {

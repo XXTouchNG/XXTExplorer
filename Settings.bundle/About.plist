@@ -79,19 +79,6 @@ All Rights Reserved.</string>
 				</array>
 			</dict>
 		</dict>
-		<dict>
-			<key>cell</key>
-			<string>Button</string>
-			<key>label</key>
-			<string>Official QQ Group</string>
-			<key>action</key>
-			<string>OpenURL:</string>
-			<key>args</key>
-			<dict>
-				<key>url</key>
-				<string>https://jq.qq.com/?_wv=1027&amp;k=5m6QaQh</string>
-			</dict>
-		</dict>
 	</array>
 	<key>stringsTable</key>
 	<string>About</string>

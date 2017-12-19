@@ -14,6 +14,8 @@ static NSString * const XXTExplorerToolbarStatusReadonly = @"XXTExplorerToolbarS
 
 #ifndef APPSTORE
     static NSString * const XXTExplorerToolbarButtonTypeScan = @"XXTExplorerToolbarButtonTypeScan";
+#else
+    static NSString * const XXTExplorerToolbarButtonTypeSettings = @"XXTExplorerToolbarButtonTypeSettings";
 #endif
 static NSString * const XXTExplorerToolbarButtonTypeCompress = @"XXTExplorerToolbarButtonTypeCompress";
 static NSString * const XXTExplorerToolbarButtonTypeAddItem = @"XXTExplorerToolbarButtonTypeAddItem";

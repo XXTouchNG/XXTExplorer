@@ -56,6 +56,7 @@
 #else
     NSArray <NSString *> *buttonTypes =
     @[
+      XXTExplorerToolbarButtonTypeSettings,
       XXTExplorerToolbarButtonTypeCompress,
       XXTExplorerToolbarButtonTypeAddItem,
       XXTExplorerToolbarButtonTypeSort,
@@ -101,6 +102,8 @@
           buttons[XXTExplorerToolbarButtonTypeSort],
           flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypePaste],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSettings],
           fixedSpace,
           ];
 #endif
@@ -148,6 +151,8 @@
           buttons[XXTExplorerToolbarButtonTypeSort],
           flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypePaste],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSettings],
           ];
 #endif
         

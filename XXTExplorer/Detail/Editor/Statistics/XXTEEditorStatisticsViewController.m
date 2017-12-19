@@ -117,7 +117,11 @@
 
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[ NSLocalizedString(@"Basic", nil), NSLocalizedString(@"Format", nil), NSLocalizedString(@"Counting", nil) ];
+#ifdef DEBUG
     staticSectionFooters = @[ @"", NSLocalizedString(@"Editing any properties in this section is not supported.", nil), @"" ];
+#else
+    staticSectionFooters = @[ @"", @"", @"" ];
+#endif
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Filename", nil);

@@ -8,13 +8,9 @@
 	<string>1.2-2</string>
 	<key>REQUIRED_SUBDIRECTORIES</key>
 	<array>
-		<string>caches</string>
 		<string>log</string>
 		<string>uicfg</string>
-		<string>lib</string>
-		<string>web</string>
 		<string>res</string>
-		<string>bin</string>
 		<string>home</string>
 		<string>snippets</string>
 	</array>
