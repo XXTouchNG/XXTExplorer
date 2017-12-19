@@ -58,7 +58,7 @@
     _invisibleFont = [UIFont systemFontOfSize:14.f];
     _lineAreaInset = UIEdgeInsetsMake(0.0, 8.0, 0.0, 10.0);
     _lineHeightScale = 1.05;
-    _numberOfDigits = 4;
+    _numberOfDigits = 3;
     
     [self reloadGutterWidth];
     
@@ -81,6 +81,14 @@
 
 - (void)setLineHeightScale:(CGFloat)lineHeightScale {
     _lineHeightScale = lineHeightScale;
+    [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+}
+
+- (void)setNumberOfDigits:(NSUInteger)numberOfDigits {
+    numberOfDigits += 1; // +1 more digit
+    if (numberOfDigits < 3) numberOfDigits = 3; // at least 3 digits
+    _numberOfDigits = numberOfDigits;
+    [self reloadGutterWidth];
     [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
 }
 
