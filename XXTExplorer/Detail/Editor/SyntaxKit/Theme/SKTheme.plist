@@ -7,156 +7,208 @@
 		<string>Mac Classic</string>
 		<key>preview</key>
 		<string>Mac Classic.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Blackboard</string>
 		<key>preview</key>
 		<string>Blackboard.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Cobalt</string>
 		<key>preview</key>
 		<string>Cobalt.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Dawn</string>
 		<key>preview</key>
 		<string>Dawn.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Eiffel</string>
 		<key>preview</key>
 		<string>Eiffel.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>IDLE</string>
 		<key>preview</key>
 		<string>IDLE.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Sunburst</string>
 		<key>preview</key>
 		<string>Sunburst.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Twilight</string>
 		<key>preview</key>
 		<string>Twilight.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Monokai</string>
 		<key>preview</key>
 		<string>Monokai.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Solarized (Dark)</string>
 		<key>preview</key>
 		<string>Solarized (Dark).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Solarized (Light)</string>
 		<key>preview</key>
 		<string>Solarized (Light).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Ciapre</string>
 		<key>preview</key>
 		<string>Ciapre.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Ciapre (Black)</string>
 		<key>preview</key>
 		<string>Ciapre (Black).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Oceanic</string>
 		<key>preview</key>
 		<string>Oceanic.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Oceanic (Eighties)</string>
 		<key>preview</key>
 		<string>Oceanic (Eighties).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Kimbie (Dark)</string>
 		<key>preview</key>
 		<string>Kimbie (Dark).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Kimbie (Light)</string>
 		<key>preview</key>
 		<string>Kimbie (Light).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Nothing</string>
 		<key>preview</key>
 		<string>Nothing.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>A</string>
 		<key>preview</key>
 		<string>A.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>OneHalf (Dark)</string>
 		<key>preview</key>
 		<string>OneHalf (Dark).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>OneHalf (Light)</string>
 		<key>preview</key>
 		<string>OneHalf (Light).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow</string>
 		<key>preview</key>
 		<string>Tomorrow.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night</string>
 		<key>preview</key>
 		<string>Tomorrow Night.png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night (Blue)</string>
 		<key>preview</key>
 		<string>Tomorrow Night (Blue).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night (Bright)</string>
 		<key>preview</key>
 		<string>Tomorrow Night (Bright).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>Tomorrow Night (Eighties)</string>
 		<key>preview</key>
 		<string>Tomorrow Night (Eighties).png</string>
+		<key>location</key>
+		<string></string>
 	</dict>
 </array>
 </plist>

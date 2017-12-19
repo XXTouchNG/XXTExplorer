@@ -10,11 +10,11 @@
 
 @interface XXTEEditorFontSizeView ()
 @property (nonatomic, strong) UIButton *upView;
+@property (nonatomic, strong) UILabel *upTriView;
 @property (nonatomic, strong) UIButton *downView;
+@property (nonatomic, strong) UILabel *downTriView;
 @property (nonatomic, strong) UILabel *sizeLabel;
 @property (nonatomic, strong) UILabel *ptLabel;
-@property (nonatomic, strong) UILabel *upTriView;
-@property (nonatomic, strong) UILabel *downTriView;
 @property (nonatomic, strong) UIColor *separatorColor;
 
 @end
@@ -37,7 +37,7 @@
     [self addSubview:self.sizeLabel];
     [self addSubview:self.ptLabel];
     
-    UIButton *upView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height / 2)];
+    UIButton *upView = [[UIButton alloc] init];
     upView.showsTouchWhenHighlighted = YES;
     [upView addTarget:self action:@selector(increaseFontSize:) forControlEvents:UIControlEventTouchUpInside];
     upView.backgroundColor = [UIColor clearColor];
@@ -46,12 +46,12 @@
     upTriView.textColor = XXTE_COLOR;
     upTriView.text = @"▲";
     [upTriView sizeToFit];
-    upTriView.center = CGPointMake(upView.bounds.size.width / 6 * 5, upView.bounds.size.height / 2);
+    self.upTriView = upTriView;
     [upView addSubview:upTriView];
     [self addSubview:upView];
     self.upView = upView;
     
-    UIButton *downView = [[UIButton alloc] initWithFrame:CGRectMake(0, self.bounds.size.height / 2, self.bounds.size.width, self.bounds.size.height / 2)];
+    UIButton *downView = [[UIButton alloc] init];
     downView.showsTouchWhenHighlighted = YES;
     [downView addTarget:self action:@selector(decreaseFontSize:) forControlEvents:UIControlEventTouchUpInside];
     downView.backgroundColor = [UIColor clearColor];
@@ -60,8 +60,8 @@
     downTriView.textColor = XXTE_COLOR;
     downTriView.text = @"▼";
     [downTriView sizeToFit];
-    downTriView.center = CGPointMake(downView.bounds.size.width / 6 * 5, downView.bounds.size.height / 2);
     [downView addSubview:downTriView];
+    self.downTriView = downTriView;
     [self addSubview:downView];
     self.downView = downView;
     
@@ -70,8 +70,21 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.sizeLabel.center = CGPointMake(self.bounds.size.width / 2 - self.sizeLabel.bounds.size.width / 2, self.bounds.size.height / 2);
-    self.ptLabel.frame = CGRectMake(self.bounds.size.width / 2 + 4, self.sizeLabel.frame.origin.y + self.sizeLabel.bounds.size.height - self.ptLabel.bounds.size.height, self.bounds.size.width, self.bounds.size.height);
+    
+    self.upView.frame =
+    CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height / 2);
+    self.downView.frame =
+    CGRectMake(0, self.bounds.size.height / 2, self.bounds.size.width, self.bounds.size.height / 2);
+    
+    self.upTriView.center =
+    CGPointMake(self.upView.bounds.size.width / 6 * 5, self.upView.bounds.size.height / 2);
+    self.downTriView.center =
+    CGPointMake(self.downView.bounds.size.width / 6 * 5, self.downView.bounds.size.height / 2);
+    
+    self.sizeLabel.center =
+    CGPointMake(self.bounds.size.width / 2 - self.sizeLabel.bounds.size.width / 2, self.bounds.size.height / 2);
+    self.ptLabel.frame =
+    CGRectMake(self.bounds.size.width / 2 + 4, self.sizeLabel.frame.origin.y + self.sizeLabel.bounds.size.height - self.ptLabel.bounds.size.height, self.ptLabel.bounds.size.width, self.ptLabel.bounds.size.height);
 }
 
 - (void)increaseFontSize:(UIButton *)btn {

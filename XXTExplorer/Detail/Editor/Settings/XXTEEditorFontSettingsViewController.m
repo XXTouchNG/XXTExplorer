@@ -34,9 +34,10 @@
 
 - (void)setup {
     NSString *fontArrsPath = [[NSBundle mainBundle] pathForResource:@"SKFont" ofType:@"plist"];
-    NSArray <NSArray *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
+    NSArray <NSDictionary *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
     NSMutableArray <UIFont *> *fonts = [[NSMutableArray alloc] init];
-    for (NSArray <NSString *> *fontNames in fontArrs) {
+    for (NSDictionary *fontDict in fontArrs) {
+        NSArray <NSString *> *fontNames = fontDict[@"fonts"];
         if (![fontNames isKindOfClass:[NSArray class]]) continue;
         if (fontNames.count <= 0) continue;
         NSString *fontName = fontNames[0];

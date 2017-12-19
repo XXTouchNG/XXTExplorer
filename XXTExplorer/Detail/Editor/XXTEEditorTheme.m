@@ -67,7 +67,7 @@
         NSArray <UIFont *> *rawFonts = [self fontsForFontFamilyAnyOfFontName:font.fontName ofSize:font.pointSize];
         SKTheme *rawTheme = [[SKTheme alloc] initWithDictionary:themeDictionary baseFonts:rawFonts];
         assert(rawTheme);
-        _rawTheme = rawTheme;
+        _skTheme = rawTheme;
     }
     return self;
 }
@@ -139,8 +139,9 @@
     if (!tFontName) return nil;
     NSString *fontArrsPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SKFont" ofType:@"plist"];
     NSArray <NSString *> *retFontNames = nil;
-    NSArray <NSArray *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
-    for (NSArray <NSString *> *fontNames in fontArrs) {
+    NSArray <NSDictionary *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
+    for (NSDictionary *fontDict in fontArrs) {
+        NSArray <NSString *> *fontNames = fontDict[@"fonts"];
         if (![fontNames isKindOfClass:[NSArray class]]) continue;
         if (fontNames.count <= 0) continue;
         NSString *fontName = fontNames[0];

@@ -154,7 +154,7 @@ UISearchDisplayDelegate
     if (!string) {
         return NO;
     }
-    SKLanguage *language = self.editor.language.rawLanguage;
+    SKLanguage *language = self.editor.language.skLanguage;
     if (!language) {
         return NO;
     }

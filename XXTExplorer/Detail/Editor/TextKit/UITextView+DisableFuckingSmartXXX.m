@@ -26,6 +26,7 @@ XXTE_START_IGNORE_PARTIAL
 }
 XXTE_END_IGNORE_PARTIAL
 
+/*
 - (UITextAutocorrectionType)autocorrectionType {
     return UITextAutocorrectionTypeNo;
 }
@@ -33,5 +34,6 @@ XXTE_END_IGNORE_PARTIAL
 - (UITextAutocapitalizationType)autocapitalizationType {
     return UITextAutocapitalizationTypeNone;
 }
+ */
 
 @end

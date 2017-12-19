@@ -16,7 +16,7 @@ extern NSString * const kTextMateCommentMultilineEnd;
 
 @interface XXTEEditorLanguage : NSObject
 
-@property (nonatomic, strong, readonly) SKLanguage *rawLanguage;
+@property (nonatomic, strong, readonly) SKLanguage *skLanguage;
 
 @property (nonatomic, strong, readonly) NSDictionary *comments;
 @property (nonatomic, strong, readonly) NSDictionary *indent;

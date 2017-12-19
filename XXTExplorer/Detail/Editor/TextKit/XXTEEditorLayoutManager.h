@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) UIFont *lineNumberFont;
 @property (nonatomic, strong) UIColor *lineNumberColor;
+@property (nonatomic, assign) NSUInteger numberOfDigits;
 
 @property (nonatomic, assign, readonly) CGFloat gutterWidth;
 

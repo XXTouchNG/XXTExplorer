@@ -10,6 +10,8 @@
 
 @interface XXTEEditorPreprocessor : NSObject
 
-+ (NSString *)preprocessedStringWithContentsOfFile:(NSString *)path Error:(NSError **)error;
++ (NSString *)preprocessedStringWithContentsOfFile:(NSString *)path
+                                     NumberOfLines:(NSUInteger *)num
+                                             Error:(NSError **)error;
 
 @end

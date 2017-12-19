@@ -110,7 +110,7 @@ static NSString * const XXTExplorerPasteboardName = @"XXTExplorerPasteboardName"
 
 static NSString * const XXTExplorerViewEntryBindingKey = @"XXTExplorerViewEntryBindingKey";
 
-static NSString * const XXTExplorerViewEntryListSortFieldString(XXTExplorerViewEntryListSortField field) {
+static inline NSString * XXTExplorerViewEntryListSortFieldString(XXTExplorerViewEntryListSortField field) {
     switch (field) {
         case XXTExplorerViewEntryListSortFieldCreationDate:
             return XXTExplorerViewEntryAttributeCreationDate;

@@ -134,9 +134,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 }
 
 - (void)reloadAll {
+    NSString *newContent = [self loadContent];
     [self prepareForView];
     [self reloadTextView];
-    [self reloadContent];
+    [self reloadContent:newContent];
     [self reloadAttributes];
 }
 
@@ -185,9 +186,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     
     // Parser
-    if (self.language.rawLanguage && self.theme.rawTheme)
+    if (self.language.skLanguage && self.theme.skTheme)
     {
-        SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.rawLanguage theme:self.theme.rawTheme];
+        SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.skLanguage theme:self.theme.skTheme];
         if (!parser) {
             // TODO: fatal error
         }
@@ -235,11 +236,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     // Layout Manager
     [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     if (textView.vLayoutManager) {
-        [textView setGutterLineColor:theme.foregroundColor];
+        UIColor *gutterColor = [theme.foregroundColor colorWithAlphaComponent:.45];
+        
+        [textView setGutterLineColor:gutterColor];
         [textView setGutterBackgroundColor:theme.backgroundColor];
         
         [textView.vLayoutManager setLineNumberFont:theme.font];
-        [textView.vLayoutManager setLineNumberColor:theme.foregroundColor];
+        [textView.vLayoutManager setLineNumberColor:gutterColor];
         
         [textView.vLayoutManager setShowInvisibleCharacters:showInvisibleCharacters];
         [textView.vLayoutManager setInvisibleColor:theme.invisibleColor];
@@ -334,9 +337,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     [self configure];
     
+    NSString *newContent = [self loadContent];
     [self prepareForView];
     [self reloadTextView];
-    [self reloadContent];
+    [self reloadContent:newContent];
     [self reloadAttributes];
     
     XXTE_START_IGNORE_PARTIAL
@@ -654,24 +658,36 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #pragma mark - Content
 
-- (void)reloadContent {
+static inline NSUInteger GetNumberOfDigits(NSUInteger i)
+{
+    return i > 0 ? (NSUInteger)log10 ((double) i) + 1 : 1;
+}
+
+- (NSString *)loadContent {
     NSString *entryPath = self.entryPath;
-    if (!entryPath) return;
-    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    if (!entryPath) return nil;
+    NSUInteger numberOfLines = 0;
     NSError *readError = nil;
-    NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:self.entryPath Error:&readError];
+    NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Error:&readError];
     if (readError) {
         toastMessage(self, [readError localizedDescription]);
-        return;
+        return nil;
     }
+    [_textView.vLayoutManager setNumberOfDigits:GetNumberOfDigits(numberOfLines)];
+    return string;
+}
+
+- (void)reloadContent:(NSString *)content {
+    if (!content) return;
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     [self resetSearch];
     XXTEEditorTheme *theme = self.theme;
     XXTEEditorTextView *textView = self.textView;
-    textView.editable = NO;
+    [textView setEditable:NO];
     [textView setFont:theme.font];
     [textView setTextColor:theme.foregroundColor];
-    [textView setText:string];
-    textView.editable = !isReadOnlyMode;
+    [textView setText:content];
+    [textView setEditable:!isReadOnlyMode];
     [textView setSelectedRange:NSMakeRange(0, 0)];
 }
 

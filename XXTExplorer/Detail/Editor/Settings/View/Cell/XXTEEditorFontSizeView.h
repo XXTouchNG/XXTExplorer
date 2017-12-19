@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#define MAX_FONT_SIZE 24
-#define MIN_FONT_SIZE 10
+#define MAX_FONT_SIZE 32
+#define MIN_FONT_SIZE 8
 
 @class XXTEEditorFontSizeView;
 

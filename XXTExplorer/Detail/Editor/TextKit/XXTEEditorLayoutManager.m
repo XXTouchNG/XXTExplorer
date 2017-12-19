@@ -56,8 +56,9 @@
     _lineNumberFont = [UIFont systemFontOfSize:14.0];
     _invisibleColor = [UIColor lightGrayColor];
     _invisibleFont = [UIFont systemFontOfSize:14.f];
-    _lineAreaInset = UIEdgeInsetsMake(0.0, 8.0, 0.0, 8.0);
+    _lineAreaInset = UIEdgeInsetsMake(0.0, 8.0, 0.0, 10.0);
     _lineHeightScale = 1.05;
+    _numberOfDigits = 4;
     
     [self reloadGutterWidth];
     
@@ -84,7 +85,8 @@
 }
 
 - (void)reloadGutterWidth {
-    CGFloat gutterWidth = _lineAreaInset.left + _lineAreaInset.right + [@"00000" sizeWithAttributes:@{ NSFontAttributeName: self.lineNumberFont }].width;
+    NSString *digits = [@"" stringByPaddingToLength:self.numberOfDigits withString:@"0" startingAtIndex:0];
+    CGFloat gutterWidth = _lineAreaInset.left + _lineAreaInset.right + [digits sizeWithAttributes:@{ NSFontAttributeName: self.lineNumberFont }].width;
     _gutterWidth = gutterWidth;
 }
 

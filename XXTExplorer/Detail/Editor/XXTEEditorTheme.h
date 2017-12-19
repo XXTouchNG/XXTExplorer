@@ -12,7 +12,7 @@
 
 @interface XXTEEditorTheme : NSObject
 
-@property (nonatomic, strong, readonly) SKTheme *rawTheme;
+@property (nonatomic, strong, readonly) SKTheme *skTheme;
 
 @property (nonatomic, strong, readonly) UIColor *backgroundColor;
 @property (nonatomic, strong, readonly) UIColor *foregroundColor;
