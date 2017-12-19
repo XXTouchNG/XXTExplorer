@@ -88,10 +88,11 @@
     } else {
 #ifndef APPSTORE
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan enabled:YES];
+#else
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
 #endif
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
     }
 }
 

@@ -135,10 +135,12 @@
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
     }
     
+#ifdef APPSTORE
     if (nil == self.tabBarController && self == self.navigationController.viewControllers[0])
     {
         self.navigationItem.rightBarButtonItem = self.closeItem;
     }
+#endif
     
     [self reloadStaticTableViewData];
     
@@ -904,6 +906,7 @@
 
 #pragma mark - UIView Getters
 
+#ifdef APPSTORE
 - (UIBarButtonItem *)closeItem {
     if (!_closeItem) {
         UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(closeItemTapped:)];
@@ -911,11 +914,14 @@
     }
     return _closeItem;
 }
+#endif
 
 #pragma mark - UIControl Actions
 
+#ifdef APPSTORE
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+#endif
 
 @end
