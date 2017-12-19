@@ -12,6 +12,8 @@
 #import "XXTEMoreUserDefaultsController.h"
 #import "XXTEUIViewController.h"
 
+#import "XXTENotificationCenterDefines.h"
+
 #ifndef APPSTORE
     #import <objc/runtime.h>
     #import <objc/message.h>
@@ -920,6 +922,9 @@
 
 #ifdef APPSTORE
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
+    if (XXTE_PAD) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #endif
