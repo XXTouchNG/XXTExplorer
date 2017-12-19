@@ -28,6 +28,6 @@ typedef NSDictionary <NSString *, id> * SKAttributes;
 @property (nonatomic, strong, readonly, getter=getSelectionColor) UIColor *selectionColor;
 
 // MARK: - Initializers
-- (instancetype)initWithDictionary:(NSDictionary <NSString *, id> *)dictionary font:(UIFont *)font;
+- (instancetype)initWithDictionary:(NSDictionary <NSString *, id> *)dictionary baseFonts:(NSArray <UIFont *> *)baseFonts;
 
 @end

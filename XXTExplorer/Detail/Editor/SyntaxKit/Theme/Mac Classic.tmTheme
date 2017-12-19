@@ -25,6 +25,10 @@
 				<string>#00000012</string>
 				<key>selection</key>
 				<string>#4D97FF54</string>
+                <key>barTint</key>
+                <string>#3498DB</string>
+                <key>barText</key>
+                <string>#FFFFFF</string>
 			</dict>
 		</dict>
 		<dict>

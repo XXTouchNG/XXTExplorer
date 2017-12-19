@@ -20,12 +20,15 @@
 @property (nonatomic, strong, readonly) UIColor *invisibleColor;
 @property (nonatomic, strong, readonly) UIColor *caretColor;
 
+@property (nonatomic, strong, readonly) UIColor *barTintColor;
+@property (nonatomic, strong, readonly) UIColor *barTextColor;
+
 @property (nonatomic, strong, readonly) NSString *name;
 @property (nonatomic, strong, readonly) UIFont *font;
 
 @property (nonatomic, assign) CGFloat tabWidth;
 
-- (instancetype)initWithName:(NSString *)name font:(UIFont *)font;
+- (instancetype)initWithName:(NSString *)name baseFont:(UIFont *)font;
 - (NSDictionary *)defaultAttributes;
 
 @end

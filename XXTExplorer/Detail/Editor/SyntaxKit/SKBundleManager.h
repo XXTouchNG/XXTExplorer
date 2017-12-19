@@ -59,7 +59,7 @@ typedef NSURL * (^SKBundleLocationCallback)(NSString *, SKTextMateFileType);
 
 // MARK: - Public
 - (SKLanguage *)languageWithIdentifier:(NSString *)identifier;
-- (SKTheme *)themeWithIdentifier:(NSString *)identifier font:(UIFont *)font;
+- (SKTheme *)themeWithIdentifier:(NSString *)identifier baseFonts:(NSArray <UIFont *> *)baseFonts;
 
 /// Clears the language cache. Use if low on memory.
 - (void)clearLanguageCache;

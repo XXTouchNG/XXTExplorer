@@ -168,40 +168,28 @@
 		0F8ECD561FE802A900A5457C /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
 		0F8ECD5B1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */; };
 		0F8ECD5C1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */; };
-		0F8ECD5D1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD571FE80D0F00A5457C /* Anonymous_Pro_BI.ttf */; };
 		0F8ECD5E1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */; };
 		0F8ECD5F1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */; };
-		0F8ECD601FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD581FE80D0F00A5457C /* Anonymous_Pro.ttf */; };
 		0F8ECD611FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */; };
 		0F8ECD621FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */; };
-		0F8ECD631FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD591FE80D0F00A5457C /* Anonymous_Pro_I.ttf */; };
 		0F8ECD641FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */; };
 		0F8ECD651FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */; };
-		0F8ECD661FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD5A1FE80D0F00A5457C /* Anonymous_Pro_B.ttf */; };
 		0F8ECD6B1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */; };
 		0F8ECD6C1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */; };
-		0F8ECD6D1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD671FE80F8D00A5457C /* DejaVuSansMono-Bold.ttf */; };
 		0F8ECD6E1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */; };
 		0F8ECD6F1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */; };
-		0F8ECD701FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD681FE80F8E00A5457C /* DejaVuSansMono.ttf */; };
 		0F8ECD711FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */; };
 		0F8ECD721FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */; };
-		0F8ECD731FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD691FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf */; };
 		0F8ECD741FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */; };
 		0F8ECD751FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */; };
-		0F8ECD761FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD6A1FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf */; };
 		0F8ECD7B1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */; };
 		0F8ECD7C1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */; };
-		0F8ECD7D1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD771FE81AE900A5457C /* Hack-BoldItalic.ttf */; };
 		0F8ECD7E1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */; };
 		0F8ECD7F1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */; };
-		0F8ECD801FE81AEA00A5457C /* Hack-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD781FE81AE900A5457C /* Hack-Bold.ttf */; };
 		0F8ECD811FE81AEA00A5457C /* Hack-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */; };
 		0F8ECD821FE81AEA00A5457C /* Hack-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */; };
-		0F8ECD831FE81AEA00A5457C /* Hack-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD791FE81AEA00A5457C /* Hack-Italic.ttf */; };
 		0F8ECD841FE81AEA00A5457C /* Hack-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */; };
 		0F8ECD851FE81AEA00A5457C /* Hack-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */; };
-		0F8ECD861FE81AEA00A5457C /* Hack-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD7A1FE81AEA00A5457C /* Hack-Regular.ttf */; };
 		0F8ECD871FE81C1700A5457C /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2A1FE802A400A5457C /* A.png */; };
 		0F8ECD881FE81C1700A5457C /* Blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD271FE8016900A5457C /* Blackboard.png */; };
 		0F8ECD891FE81C1700A5457C /* Ciapre (Black).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */; };
@@ -228,32 +216,6 @@
 		0F8ECD9E1FE81C1700A5457C /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
 		0F8ECD9F1FE81C1700A5457C /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
 		0F8ECDA01FE81C1700A5457C /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2C1FE802A500A5457C /* Twilight.png */; };
-		0F8ECDA11FE81C1F00A5457C /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2A1FE802A400A5457C /* A.png */; };
-		0F8ECDA21FE81C1F00A5457C /* Blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD271FE8016900A5457C /* Blackboard.png */; };
-		0F8ECDA31FE81C1F00A5457C /* Ciapre (Black).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */; };
-		0F8ECDA41FE81C1F00A5457C /* Ciapre.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD371FE802A700A5457C /* Ciapre.png */; };
-		0F8ECDA51FE81C1F00A5457C /* Cobalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD251FE8016100A5457C /* Cobalt.png */; };
-		0F8ECDA61FE81C1F00A5457C /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2B1FE802A500A5457C /* Dawn.png */; };
-		0F8ECDA71FE81C1F00A5457C /* Eiffel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2D1FE802A500A5457C /* Eiffel.png */; };
-		0F8ECDA81FE81C1F00A5457C /* IDLE.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3D1FE802A800A5457C /* IDLE.png */; };
-		0F8ECDA91FE81C1F00A5457C /* Kimbie (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */; };
-		0F8ECDAA1FE81C1F00A5457C /* Kimbie (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */; };
-		0F8ECDAB1FE81C1F00A5457C /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
-		0F8ECDAC1FE81C1F00A5457C /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
-		0F8ECDAD1FE81C1F00A5457C /* Nothing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3A1FE802A800A5457C /* Nothing.png */; };
-		0F8ECDAE1FE81C1F00A5457C /* Oceanic (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */; };
-		0F8ECDAF1FE81C1F00A5457C /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
-		0F8ECDB01FE81C1F00A5457C /* OneHalf (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */; };
-		0F8ECDB11FE81C1F00A5457C /* OneHalf (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD381FE802A700A5457C /* OneHalf (Light).png */; };
-		0F8ECDB21FE81C1F00A5457C /* Solarized (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */; };
-		0F8ECDB31FE81C1F00A5457C /* Solarized (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD331FE802A600A5457C /* Solarized (Light).png */; };
-		0F8ECDB41FE81C1F00A5457C /* Sunburst.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3C1FE802A800A5457C /* Sunburst.png */; };
-		0F8ECDB51FE81C1F00A5457C /* Tomorrow Night (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */; };
-		0F8ECDB61FE81C1F00A5457C /* Tomorrow Night (Bright).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */; };
-		0F8ECDB71FE81C1F00A5457C /* Tomorrow Night (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */; };
-		0F8ECDB81FE81C1F00A5457C /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
-		0F8ECDB91FE81C1F00A5457C /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
-		0F8ECDBA1FE81C1F00A5457C /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2C1FE802A500A5457C /* Twilight.png */; };
 		0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */; };
 		0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
@@ -740,6 +702,16 @@
 		D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */; };
 		D60A26D51F3DB85100E013E2 /* Solarized (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */; };
 		D60A26D61F3DB85100E013E2 /* Solarized (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */; };
+		D60D0A021FE8BCB100289725 /* Eiffel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2D1FE802A500A5457C /* Eiffel.png */; };
+		D60D0A031FE8BCB100289725 /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
+		D60D0A041FE8BCB100289725 /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
+		D60D0A051FE8BCB100289725 /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
+		D60D0A061FE8BCB100289725 /* OneHalf (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */; };
+		D60D0A071FE8BCB100289725 /* OneHalf (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD381FE802A700A5457C /* OneHalf (Light).png */; };
+		D60D0A081FE8BCB100289725 /* Solarized (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */; };
+		D60D0A091FE8BCB100289725 /* Solarized (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD331FE802A600A5457C /* Solarized (Light).png */; };
+		D60D0A0A1FE8BCB100289725 /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
+		D60D0A0B1FE8BCB100289725 /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
 		D60FE6491FE226F000954818 /* XXTEEditorSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */; };
 		D60FE64A1FE226F000954818 /* XXTEEditorSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */; };
 		D60FE6511FE2369300954818 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
@@ -1037,11 +1009,6 @@
 		D60FE7771FE2369300954818 /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */; };
 		D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
 		D60FE7791FE2369300954818 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
-		D60FE77A1FE2369300954818 /* CamingoCode-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */; };
-		D60FE77B1FE2369300954818 /* CamingoCode-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */; };
-		D60FE77C1FE2369300954818 /* CamingoCode-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */; };
-		D60FE77D1FE2369300954818 /* Tomorrow Night (Bright).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EA1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme */; };
-		D60FE77E1FE2369300954818 /* CamingoCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D66085601F3C666700E87B3C /* CamingoCode-Regular.ttf */; };
 		D60FE77F1FE2369300954818 /* XUIFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6863CE51F7E340A00A45CF7 /* XUIFileCell.xib */; };
 		D60FE7801FE2369300954818 /* SourceCodePro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D66085611F3C666700E87B3C /* SourceCodePro-Bold.otf */; };
 		D60FE7811FE2369300954818 /* SourceCodePro-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D66085621F3C666700E87B3C /* SourceCodePro-BoldIt.otf */; };
@@ -1049,35 +1016,27 @@
 		D60FE7831FE2369300954818 /* SourceCodePro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D66085641F3C666700E87B3C /* SourceCodePro-Regular.otf */; };
 		D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */; };
 		D60FE7851FE2369300954818 /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973ED1F4B1D3700133162 /* Tomorrow.tmTheme */; };
-		D60FE7861FE2369300954818 /* Kimbie (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009081F4364AF00097E9C /* Kimbie (Light).tmTheme */; };
 		D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3D1F6E5378008B3189 /* XXTImagePickerPhotoCell.xib */; };
 		D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
 		D60FE7891FE2369300954818 /* Settings.Pro.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */; };
 		D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */; };
 		D60FE78B1FE2369300954818 /* Meta.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE1E4361F189A1600055E02 /* Meta.strings */; };
 		D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
-		D60FE78D1FE2369300954818 /* Blackboard.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */; };
 		D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
-		D60FE78F1FE2369300954818 /* Ciapre.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */; };
 		D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		D60FE7911FE2369300954818 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
 		D60FE7921FE2369300954818 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
 		D60FE7931FE2369300954818 /* strings.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F349BB21F62F474004143B7 /* strings.tmLanguage */; };
 		D60FE7941FE2369300954818 /* Solarized (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */; };
-		D60FE7951FE2369300954818 /* IDLE.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B41F3DB7BE00E013E2 /* IDLE.tmTheme */; };
 		D60FE7961FE2369300954818 /* Tomorrow Night.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */; };
-		D60FE7971FE2369300954818 /* Nothing.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090B1F4364B800097E9C /* Nothing.tmTheme */; };
 		D60FE7981FE2369300954818 /* Eiffel.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B21F3DB7BE00E013E2 /* Eiffel.tmTheme */; };
 		D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
 		D60FE79A1FE2369300954818 /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
 		D60FE79B1FE2369300954818 /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E141631F50330400D78CB9 /* xxte-white-icons.plist */; };
-		D60FE79C1FE2369300954818 /* Twilight.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26BC1F3DB7BE00E013E2 /* Twilight.tmTheme */; };
 		D60FE79D1FE2369300954818 /* XXTEInstallerLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFC8F0C1FCA94E80012C170 /* XXTEInstallerLoadingView.xib */; };
 		D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */; };
 		D60FE79F1FE2369300954818 /* XXTEMoreAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD69211F04038600B2F0EC /* XXTEMoreAddressCell.xib */; };
-		D60FE7A01FE2369300954818 /* Kimbie (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */; };
 		D60FE7A11FE2369300954818 /* Solarized (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */; };
-		D60FE7A21FE2369300954818 /* Ciapre (Black).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973F51F4B1D8B00133162 /* Ciapre (Black).tmTheme */; };
 		D60FE7A31FE2369300954818 /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */; };
 		D60FE7A51FE2369300954818 /* OneHalf (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */; };
@@ -1086,14 +1045,10 @@
 		D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009051F4359FF00097E9C /* SKTheme.plist */; };
 		D60FE7A91FE2369300954818 /* XUIAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5341F0A88600016016A /* XUIAboutCell.xib */; };
 		D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973FC1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib */; };
-		D60FE7AB1FE2369300954818 /* Dawn.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */; };
 		D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
 		D60FE7AD1FE2369300954818 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
-		D60FE7AE1FE2369300954818 /* Sunburst.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26BB1F3DB7BE00E013E2 /* Sunburst.tmTheme */; };
-		D60FE7AF1FE2369300954818 /* Tomorrow Night (Eighties).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EB1F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme */; };
 		D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D60FE7B11FE2369300954818 /* Monokai.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */; };
-		D60FE7B21FE2369300954818 /* Oceanic (Eighties).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973F31F4B1D7B00133162 /* Oceanic (Eighties).tmTheme */; };
 		D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F707E781FB094110052A4B5 /* XXTESymbolCell.xib */; };
 		D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD692B1F0403B000B2F0EC /* XXTEMoreLinkCell.xib */; };
 		D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
@@ -1107,13 +1062,10 @@
 		D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */; };
 		D60FE7BE1FE2369300954818 /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
 		D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
-		D60FE7C01FE2369300954818 /* A.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090D1F4364C300097E9C /* A.tmTheme */; };
 		D60FE7C11FE2369300954818 /* OneHalf (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */; };
 		D60FE7C21FE2369300954818 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
 		D60FE7C31FE2369300954818 /* SKFont.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6686F431F4AE74E004403D0 /* SKFont.plist */; };
-		D60FE7C41FE2369300954818 /* Cobalt.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */; };
 		D60FE7C51FE2369300954818 /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
-		D60FE7C61FE2369300954818 /* Tomorrow Night (Blue).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */; };
 		D60FE7C71FE2369300954818 /* XXTEEditorFontSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6686F311F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib */; };
 		D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */; };
 		D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */; };
@@ -2937,6 +2889,7 @@
 		0FE162A11F3C9355003064B2 /* SyntaxKit */ = {
 			isa = PBXGroup;
 			children = (
+				D62DD6231F3D52E000A34850 /* Language */,
 				D660855C1F3C663E00E87B3C /* Font */,
 				D62DD6241F3D52E900A34850 /* Theme */,
 				52512B2C18D96DFB613EAD70 /* SKAttributedParser.h */,
@@ -3250,8 +3203,6 @@
 			isa = PBXGroup;
 			children = (
 				0FD974021F4B3C3200133162 /* SKLanguage.plist */,
-				0F51CB141F61191900150D6D /* XXTEEditorLanguage.h */,
-				0F51CB151F61191900150D6D /* XXTEEditorLanguage.m */,
 				0FEB74511F3EB88400B58A4F /* json.tmLanguage */,
 				D645F9D31F42A68C00E3247B /* lua.tmLanguage */,
 				0F349BB21F62F474004143B7 /* strings.tmLanguage */,
@@ -3356,12 +3307,13 @@
 				0F9888C81FA7538D00ED33E7 /* Toolbar */,
 				0FB009141F45ABA000097E9C /* Extensions */,
 				0F6B6A4D1F5F9C6C0095A760 /* Keyboard */,
-				D62DD6231F3D52E000A34850 /* Language */,
 				0FB008EC1F43464500097E9C /* Settings */,
 				0FE162A21F3C9370003064B2 /* TextKit */,
 				0FE162A11F3C9355003064B2 /* SyntaxKit */,
 				D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */,
 				D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */,
+				0F51CB141F61191900150D6D /* XXTEEditorLanguage.h */,
+				0F51CB151F61191900150D6D /* XXTEEditorLanguage.m */,
 				D66085651F3C691100E87B3C /* XXTEEditorController.h */,
 				D66085661F3C691100E87B3C /* XXTEEditorController.m */,
 			);
@@ -4112,85 +4064,47 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F8ECDA11FE81C1F00A5457C /* A.png in Resources */,
-				0F8ECDA21FE81C1F00A5457C /* Blackboard.png in Resources */,
-				0F8ECDA31FE81C1F00A5457C /* Ciapre (Black).png in Resources */,
-				0F8ECDA41FE81C1F00A5457C /* Ciapre.png in Resources */,
-				0F8ECDA51FE81C1F00A5457C /* Cobalt.png in Resources */,
-				0F8ECDA61FE81C1F00A5457C /* Dawn.png in Resources */,
-				0F8ECDA71FE81C1F00A5457C /* Eiffel.png in Resources */,
-				0F8ECDA81FE81C1F00A5457C /* IDLE.png in Resources */,
-				0F8ECDA91FE81C1F00A5457C /* Kimbie (Dark).png in Resources */,
-				0F8ECDAA1FE81C1F00A5457C /* Kimbie (Light).png in Resources */,
-				0F8ECDAB1FE81C1F00A5457C /* Mac Classic.png in Resources */,
-				0F8ECDAC1FE81C1F00A5457C /* Monokai.png in Resources */,
-				0F8ECDAD1FE81C1F00A5457C /* Nothing.png in Resources */,
-				0F8ECDAE1FE81C1F00A5457C /* Oceanic (Eighties).png in Resources */,
-				0F8ECDAF1FE81C1F00A5457C /* Oceanic.png in Resources */,
-				0F8ECDB01FE81C1F00A5457C /* OneHalf (Dark).png in Resources */,
-				0F8ECDB11FE81C1F00A5457C /* OneHalf (Light).png in Resources */,
-				0F8ECDB21FE81C1F00A5457C /* Solarized (Dark).png in Resources */,
-				0F8ECDB31FE81C1F00A5457C /* Solarized (Light).png in Resources */,
-				0F8ECDB41FE81C1F00A5457C /* Sunburst.png in Resources */,
-				0F8ECDB51FE81C1F00A5457C /* Tomorrow Night (Blue).png in Resources */,
-				0F8ECDB61FE81C1F00A5457C /* Tomorrow Night (Bright).png in Resources */,
-				0F8ECDB71FE81C1F00A5457C /* Tomorrow Night (Eighties).png in Resources */,
-				0F8ECDB81FE81C1F00A5457C /* Tomorrow Night.png in Resources */,
-				0F8ECDB91FE81C1F00A5457C /* Tomorrow.png in Resources */,
-				0F8ECDBA1FE81C1F00A5457C /* Twilight.png in Resources */,
+				D60D0A021FE8BCB100289725 /* Eiffel.png in Resources */,
+				D60D0A031FE8BCB100289725 /* Mac Classic.png in Resources */,
+				D60D0A041FE8BCB100289725 /* Monokai.png in Resources */,
+				D60D0A051FE8BCB100289725 /* Oceanic.png in Resources */,
+				D60D0A061FE8BCB100289725 /* OneHalf (Dark).png in Resources */,
+				D60D0A071FE8BCB100289725 /* OneHalf (Light).png in Resources */,
+				D60D0A081FE8BCB100289725 /* Solarized (Dark).png in Resources */,
+				D60D0A091FE8BCB100289725 /* Solarized (Light).png in Resources */,
+				D60D0A0A1FE8BCB100289725 /* Tomorrow Night.png in Resources */,
+				D60D0A0B1FE8BCB100289725 /* Tomorrow.png in Resources */,
 				D60FE7771FE2369300954818 /* XXTEMoreReferences.bundle in Resources */,
 				D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */,
-				0F8ECD861FE81AEA00A5457C /* Hack-Regular.ttf in Resources */,
 				D60FE7791FE2369300954818 /* XXTApplicationCell.xib in Resources */,
-				D60FE77A1FE2369300954818 /* CamingoCode-Bold.ttf in Resources */,
-				D60FE77B1FE2369300954818 /* CamingoCode-BoldItalic.ttf in Resources */,
-				D60FE77C1FE2369300954818 /* CamingoCode-Italic.ttf in Resources */,
-				D60FE77D1FE2369300954818 /* Tomorrow Night (Bright).tmTheme in Resources */,
-				0F8ECD7D1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */,
-				D60FE77E1FE2369300954818 /* CamingoCode-Regular.ttf in Resources */,
 				D60FE77F1FE2369300954818 /* XUIFileCell.xib in Resources */,
 				D60FE7801FE2369300954818 /* SourceCodePro-Bold.otf in Resources */,
-				0F8ECD831FE81AEA00A5457C /* Hack-Italic.ttf in Resources */,
 				D60FE7811FE2369300954818 /* SourceCodePro-BoldIt.otf in Resources */,
 				D60FE7821FE2369300954818 /* SourceCodePro-It.otf in Resources */,
 				D60FE7831FE2369300954818 /* SourceCodePro-Regular.otf in Resources */,
 				D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */,
 				D60FE7851FE2369300954818 /* Tomorrow.tmTheme in Resources */,
-				D60FE7861FE2369300954818 /* Kimbie (Light).tmTheme in Resources */,
 				D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */,
 				D60FE7891FE2369300954818 /* Settings.Pro.bundle in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
-				0F8ECD801FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
 				D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */,
-				D60FE78D1FE2369300954818 /* Blackboard.tmTheme in Resources */,
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
-				D60FE78F1FE2369300954818 /* Ciapre.tmTheme in Resources */,
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
 				D60FE7911FE2369300954818 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
 				D60FE7921FE2369300954818 /* XUIAdapter_xui.xuic in Resources */,
 				D60FE7931FE2369300954818 /* strings.tmLanguage in Resources */,
 				D60FE7941FE2369300954818 /* Solarized (Dark).tmTheme in Resources */,
-				D60FE7951FE2369300954818 /* IDLE.tmTheme in Resources */,
 				D60FE7961FE2369300954818 /* Tomorrow Night.tmTheme in Resources */,
-				D60FE7971FE2369300954818 /* Nothing.tmTheme in Resources */,
 				D60FE7981FE2369300954818 /* Eiffel.tmTheme in Resources */,
 				D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */,
 				D60FE79A1FE2369300954818 /* json.tmLanguage in Resources */,
 				D60FE79B1FE2369300954818 /* xxte-white-icons.plist in Resources */,
-				D60FE79C1FE2369300954818 /* Twilight.tmTheme in Resources */,
-				0F8ECD761FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */,
 				D60FE79D1FE2369300954818 /* XXTEInstallerLoadingView.xib in Resources */,
-				0F8ECD701FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */,
-				0F8ECD731FE80F8E00A5457C /* DejaVuSansMono-Oblique.ttf in Resources */,
 				D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */,
 				D60FE79F1FE2369300954818 /* XXTEMoreAddressCell.xib in Resources */,
-				D60FE7A01FE2369300954818 /* Kimbie (Dark).tmTheme in Resources */,
-				0F8ECD601FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */,
 				D60FE7A11FE2369300954818 /* Solarized (Light).tmTheme in Resources */,
-				D60FE7A21FE2369300954818 /* Ciapre (Black).tmTheme in Resources */,
-				0F8ECD5D1FE80D0F00A5457C /* Anonymous_Pro_BI.ttf in Resources */,
 				D60FE7A31FE2369300954818 /* XXTEAppDefines.plist in Resources */,
 				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
 				D60FE7A51FE2369300954818 /* OneHalf (Dark).tmTheme in Resources */,
@@ -4199,16 +4113,10 @@
 				D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */,
 				D60FE7A91FE2369300954818 /* XUIAboutCell.xib in Resources */,
 				D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */,
-				D60FE7AB1FE2369300954818 /* Dawn.tmTheme in Resources */,
 				D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */,
 				D60FE7AD1FE2369300954818 /* .gitignore in Resources */,
-				D60FE7AE1FE2369300954818 /* Sunburst.tmTheme in Resources */,
-				D60FE7AF1FE2369300954818 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */,
-				0F8ECD631FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */,
 				D60FE7B11FE2369300954818 /* Monokai.tmTheme in Resources */,
-				D60FE7B21FE2369300954818 /* Oceanic (Eighties).tmTheme in Resources */,
-				0F8ECD6D1FE80F8E00A5457C /* DejaVuSansMono-Bold.ttf in Resources */,
 				D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */,
 				D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */,
 				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
@@ -4219,17 +4127,13 @@
 				D60FE7BA1FE2369300954818 /* Mac Classic.tmTheme in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				D60FE7BC1FE2369300954818 /* XXTImagePickerAlbumCell.xib in Resources */,
-				0F8ECD661FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */,
 				D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */,
 				D60FE7BE1FE2369300954818 /* XUIAnimatedImageCell.xib in Resources */,
 				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
-				D60FE7C01FE2369300954818 /* A.tmTheme in Resources */,
 				D60FE7C11FE2369300954818 /* OneHalf (Light).tmTheme in Resources */,
 				D60FE7C21FE2369300954818 /* XXTPickerCollection.strings in Resources */,
 				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
-				D60FE7C41FE2369300954818 /* Cobalt.tmTheme in Resources */,
 				D60FE7C51FE2369300954818 /* lua.tmLanguage in Resources */,
-				D60FE7C61FE2369300954818 /* Tomorrow Night (Blue).tmTheme in Resources */,
 				D60FE7C71FE2369300954818 /* XXTEEditorFontSizeCell.xib in Resources */,
 				D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */,
 				D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */,

@@ -141,14 +141,35 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 }
 
 - (void)prepareForView {
-    // Theme
-    NSString *themeName = XXTEDefaultsObject(XXTEEditorThemeName, @"Mac Classic");
-    NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+    
+    static NSString * const XXTEDefaultFontName = @"CourierNewPSMT";
+    
+    // Font
+    NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, XXTEDefaultFontName);
     CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
-    UIFont *font = [UIFont fontWithName:fontName size:fontSize]; // config
-    if (themeName && fontName && font)
+    UIFont *font = nil;
+    if (fontName) {
+        font = [UIFont fontWithName:fontName size:fontSize];
+        if (!font) { // not exists, new version?
+            XXTEDefaultsSetObject(XXTEEditorFontName, nil); // reset font
+            font = [UIFont fontWithName:XXTEDefaultFontName size:fontSize];
+        }
+        NSAssert(font, @"Cannot load default font from system.");
+    }
+    
+    static NSString * const XXTEDefaultThemeName = @"Mac Classic";
+    
+    // Theme
+    NSString *themeName = XXTEDefaultsObject(XXTEEditorThemeName, XXTEDefaultThemeName);
+    if (themeName &&
+        fontName && font)
     {
-        XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithName:themeName font:font];
+        XXTEEditorTheme *theme = [[XXTEEditorTheme alloc] initWithName:themeName baseFont:font];
+        if (!theme) { // not registered, new version?
+            XXTEDefaultsSetObject(XXTEEditorThemeName, nil); // reset theme
+            theme = [[XXTEEditorTheme alloc] initWithName:XXTEDefaultThemeName baseFont:font];
+        }
+        NSAssert(theme, @"Cannot load default theme from main bundle.");
         _theme = theme;
     }
     
@@ -157,6 +178,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     if (entryExtension.length > 0)
     {
         XXTEEditorLanguage *language = [[XXTEEditorLanguage alloc] initWithExtension:entryExtension];
+        if (!language) { // no such language?
+            // TODO: fatal error
+        }
         _language = language;
     }
     
@@ -164,8 +188,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     if (self.language.rawLanguage && self.theme.rawTheme)
     {
         SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.rawLanguage theme:self.theme.rawTheme];
+        if (!parser) {
+            // TODO: fatal error
+        }
         _parser = parser;
     }
+    
 }
 
 #pragma mark - AFTER -viewDidLoad
@@ -292,10 +320,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [self setNeedsRefreshNavigationBar];
     
     // Other Views
-    self.toolbar.tintColor = theme.foregroundColor;
-    self.toolbar.barTintColor = theme.backgroundColor;
+    self.toolbar.tintColor = theme.barTextColor;
+    self.toolbar.barTintColor = theme.barTintColor;
     for (UIBarButtonItem *item in self.toolbar.items) {
-        item.tintColor = theme.foregroundColor;
+        item.tintColor = theme.barTextColor;
     }
 }
 
@@ -621,7 +649,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - Getters
 
 - (BOOL)isEditing {
-    return self.textView.isFirstResponder || self.searchBar.searchField.isFirstResponder;
+    return _textView.isFirstResponder || _searchBar.searchField.isFirstResponder;
 }
 
 #pragma mark - Content

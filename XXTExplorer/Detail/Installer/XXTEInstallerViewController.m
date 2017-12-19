@@ -187,9 +187,13 @@ typedef enum : NSUInteger {
         XXTEMoreSwitchCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
         cell.titleLabel.text = NSLocalizedString(@"Remove after installation", nil);
         cell.optionSwitch.on = self.removeAfterInstallation;
-        [cell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
-            self.removeAfterInstallation = ((UISwitch *)sender).on;
-        }];
+        {
+            @weakify(self);
+            [cell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+                @strongify(self);
+                self.removeAfterInstallation = ((UISwitch *)sender).on;
+            }];
+        }
         
         XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
         section.identifier = @"";

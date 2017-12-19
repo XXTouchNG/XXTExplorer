@@ -19,7 +19,15 @@
 @implementation XXTEEditorController (NavigationBar)
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    if ([self isDarkMode]) {
+    BOOL prefersLightStatusBar = YES;
+    if ([self shouldNavigationBarHidden]) {
+        prefersLightStatusBar = [self isDarkMode];
+    } else {
+        UIColor *newColor = self.theme.barTintColor;
+        if (!newColor) newColor = XXTE_COLOR;
+        prefersLightStatusBar = [newColor xui_isDarkColor];
+    }
+    if (prefersLightStatusBar) {
         return UIStatusBarStyleLightContent;
     } else {
         return UIStatusBarStyleDefault;
@@ -38,11 +46,17 @@
 }
 
 - (BOOL)xxte_prefersNavigationBarHidden {
-    return [self prefersNavigationBarHidden];
+    return [self shouldNavigationBarHidden];
 }
 
-- (BOOL)prefersNavigationBarHidden {
-    if (XXTE_PAD || NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO))
+- (BOOL)prefersNavigationBarHidden
+{
+    return [self shouldNavigationBarHidden];
+}
+
+- (BOOL)shouldNavigationBarHidden {
+    if (XXTE_PAD ||
+        NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO))
     {
         return NO;
     }
@@ -53,23 +67,23 @@
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
 //    if (XXTE_PAD) return;
-    UIColor *backgroundColor = XXTE_COLOR;
-    UIColor *foregroundColor = [UIColor whiteColor];
+    UIColor *barTintColor = XXTE_COLOR;
+    UIColor *barTitleColor = [UIColor whiteColor];
     XXTEEditorTheme *theme = self.theme;
     UINavigationController *navigation = self.navigationController;
     if (restore == NO && theme) {
-        if (theme.foregroundColor)
-            foregroundColor = theme.foregroundColor;
-        if (theme.backgroundColor)
-            backgroundColor = theme.backgroundColor;
+        if (theme.barTextColor)
+            barTitleColor = theme.barTextColor;
+        if (theme.barTintColor)
+            barTintColor = theme.barTintColor;
     }
-    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    navigation.navigationBar.tintColor = foregroundColor;
-    navigation.navigationBar.barTintColor = backgroundColor;
-    navigation.navigationItem.leftBarButtonItem.tintColor = foregroundColor;
-    navigation.navigationItem.rightBarButtonItem.tintColor = foregroundColor;
-    self.navigationItem.leftBarButtonItem.tintColor = foregroundColor;
-    self.navigationItem.rightBarButtonItem.tintColor = foregroundColor;
+    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
+    navigation.navigationBar.tintColor = barTitleColor;
+    navigation.navigationBar.barTintColor = barTintColor;
+    navigation.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
+    navigation.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    self.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
+    self.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
     
     [self setNeedsStatusBarAppearanceUpdate];
 }

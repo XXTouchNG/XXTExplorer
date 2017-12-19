@@ -36,7 +36,17 @@
 - (void)setup {
     NSString *rawThemesPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
     NSArray <NSDictionary *> *rawThemes = [[NSArray alloc] initWithContentsOfFile:rawThemesPath];
-    _themes = rawThemes;
+    NSMutableArray <NSDictionary *> *availableThemes = [[NSMutableArray alloc] init];
+    for (NSDictionary *rawTheme in rawThemes) {
+        NSString *themeName = rawTheme[@"name"];
+        if ([themeName isKindOfClass:[NSString class]]) {
+            if ([[NSBundle mainBundle] pathForResource:themeName ofType:@"tmTheme"])
+            {
+                [availableThemes addObject:rawTheme];
+            }
+        }
+    }
+    _themes = [availableThemes copy];
 }
 
 #pragma mark - Life Cycle

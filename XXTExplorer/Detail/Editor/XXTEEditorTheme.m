@@ -19,15 +19,17 @@
 
 @implementation XXTEEditorTheme
 
-- (instancetype)initWithName:(NSString *)name font:(UIFont *)font {
+- (instancetype)initWithName:(NSString *)name baseFont:(UIFont *)font {
     if (self = [super init]) {
-        _font = font ? font : [UIFont systemFontOfSize:14.0];
+        _font = font ? font : [UIFont fontWithName:@"CourierNewPSMT" size:14.0];
         _name = name ? name : @"";
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;
         _caretColor = XXTE_COLOR;
         _selectionColor = XXTE_COLOR;
         _invisibleColor = UIColor.blackColor;
+        _barTintColor = nil;
+        _barTextColor = nil;
         
         NSString *themeMetasPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
         assert(themeMetasPath);
@@ -35,19 +37,23 @@
         assert([themeMetas isKindOfClass:[NSArray class]]);
         BOOL registered = NO;
         for (NSDictionary *themeMeta in themeMetas) {
-            if ([themeMeta[@"name"] isEqualToString:name]) {
-                registered = YES;
-                break;
+            NSString *themeName = themeMeta[@"name"];
+            if ([themeName isKindOfClass:[NSString class]] &&
+                [themeName isEqualToString:name]) {
+                if ([[NSBundle mainBundle] pathForResource:themeName ofType:@"tmTheme"])
+                {
+                    registered = YES;
+                    break;
+                }
             }
         }
-        assert(registered);
+        if (!registered) return nil; // not registered, reset to default
         
         NSString *themePath = [[NSBundle mainBundle] pathForResource:name ofType:@"tmTheme"];
-        assert(themePath);
         NSDictionary *themeDictionary = [[NSDictionary alloc] initWithContentsOfFile:themePath];
-        assert([themeDictionary isKindOfClass:[NSDictionary class]]);
+        NSAssert([themeDictionary isKindOfClass:[NSDictionary class]], @"Malformed textmate theme: \"%@\".", themePath);
         NSArray <NSDictionary *> *themeSettings = themeDictionary[@"settings"];
-        assert([themeSettings isKindOfClass:[NSArray class]]);
+        NSAssert([themeSettings isKindOfClass:[NSArray class]], @"Malformed textmate theme: \"%@\".", themePath);
         NSDictionary *globalTheme = nil;
         for (NSDictionary *themeSetting in themeSettings) {
             if (!themeSetting[@"scope"]) {
@@ -55,10 +61,11 @@
                 break;
             }
         }
-        assert([globalTheme isKindOfClass:[NSDictionary class]]);
+        NSAssert([globalTheme isKindOfClass:[NSDictionary class]], @"Cannot find global table for theme: \"%@\".", themePath);
         [self setupWithDictionary:globalTheme];
         
-        SKTheme *rawTheme = [[SKTheme alloc] initWithDictionary:themeDictionary font:font];
+        NSArray <UIFont *> *rawFonts = [self fontsForFontFamilyAnyOfFontName:font.fontName ofSize:font.pointSize];
+        SKTheme *rawTheme = [[SKTheme alloc] initWithDictionary:themeDictionary baseFonts:rawFonts];
         assert(rawTheme);
         _rawTheme = rawTheme;
     }
@@ -80,6 +87,24 @@
     
     UIColor *invisibleColor = [UIColor colorWithHex:dictionary[@"invisibles"]];
     _invisibleColor = invisibleColor;
+    
+    UIColor *navigationBarColor = nil;
+    if (dictionary[@"barTint"]) {
+        navigationBarColor = [UIColor colorWithHex:dictionary[@"barTint"]];
+    }
+    if (!navigationBarColor) {
+        navigationBarColor = backgroundColor; // fall back to background color
+    }
+    _barTintColor = navigationBarColor;
+    
+    UIColor *navigationTitleColor = nil;
+    if (dictionary[@"barText"]) {
+        navigationTitleColor = [UIColor colorWithHex:dictionary[@"barText"]];
+    }
+    if (!navigationTitleColor) {
+        navigationTitleColor = foregroundColor; // fall back to background color
+    }
+    _barTextColor = navigationTitleColor;
     
     UIFont *font = self.font;
     NSDictionary *defaultAttributes = @{
@@ -106,6 +131,36 @@
              NSFontAttributeName: self.font,
              NSParagraphStyleAttributeName: self.paragraphStyle,
              };
+}
+
+#pragma mark - Fonts
+
+- (NSArray <UIFont *> *)fontsForFontFamilyAnyOfFontName:(NSString *)tFontName ofSize:(CGFloat)size {
+    if (!tFontName) return nil;
+    NSString *fontArrsPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SKFont" ofType:@"plist"];
+    NSArray <NSString *> *retFontNames = nil;
+    NSArray <NSArray *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
+    for (NSArray <NSString *> *fontNames in fontArrs) {
+        if (![fontNames isKindOfClass:[NSArray class]]) continue;
+        if (fontNames.count <= 0) continue;
+        NSString *fontName = fontNames[0];
+        if (
+            [fontName isKindOfClass:[NSString class]] &&
+            [tFontName isEqualToString:fontName]
+            ) {
+            retFontNames = fontNames;
+            break;
+        }
+    }
+    if (retFontNames.count != 4) return nil;
+    NSMutableArray <UIFont *> *retFonts = [[NSMutableArray alloc] init];
+    for (NSString *retFontName in retFontNames) {
+        UIFont *retFont = [UIFont fontWithName:retFontName size:size];
+        if (retFont) {
+            [retFonts addObject:retFont];
+        }
+    }
+    return [retFonts copy];
 }
 
 @end

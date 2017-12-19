@@ -49,6 +49,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, assign) kXXTExplorerCreateItemViewItemType selectedItemType;
 @property (nonatomic, strong) XUIViewShaker *itemNameShaker;
+@property (nonatomic, assign) BOOL editAfterCreatingItem;
 
 @end
 
@@ -58,7 +59,6 @@ typedef enum : NSUInteger {
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
     NSArray <NSNumber *> *staticSectionRowNum;
-    BOOL _editAfterCreatingItem;
 }
 
 + (NSDateFormatter *)itemTemplateDateFormatter {
@@ -173,11 +173,15 @@ typedef enum : NSUInteger {
     
     XXTEMoreSwitchCell *cell1_2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell1_2.titleLabel.text = NSLocalizedString(@"Edit After Creating Item", nil);
-    cell1_2.optionSwitch.on = _editAfterCreatingItem;
-    [cell1_2.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
-        UISwitch *optionSwitch = (UISwitch *)sender;
-        _editAfterCreatingItem = optionSwitch.on;
-    }];
+    cell1_2.optionSwitch.on = self.editAfterCreatingItem;
+    {
+        @weakify(self);
+        [cell1_2.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
+            UISwitch *optionSwitch = (UISwitch *)sender;
+            self.editAfterCreatingItem = optionSwitch.on;
+        }];
+    }
     
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;

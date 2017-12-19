@@ -65,26 +65,9 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
     return self.attributes[SKLanguageGlobalScope];
 }
 
-- (NSArray <NSString *> *)fontNamesForFontFamilyAnyOfFontName:(NSString *)tFontName {
-    if (!tFontName) return nil;
-    NSString *fontArrsPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SKFont" ofType:@"plist"];
-    NSArray <NSString *> *result = nil;
-    NSArray <NSArray *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
-    for (NSArray <NSString *> *fontNames in fontArrs) {
-        if (![fontNames isKindOfClass:[NSArray class]]) continue;
-        if (fontNames.count <= 0) continue;
-        NSString *fontName = fontNames[0];
-        if ([tFontName isEqualToString:fontName]) {
-            result = fontNames;
-        }
-    }
-    if (result.count != 4) return nil;
-    return result;
-}
-
 #pragma mark - Initializer
 
-- (instancetype)initWithDictionary:(NSDictionary<NSString *,id> *)dictionary font:(UIFont *)font {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *,id> *)dictionary baseFonts:(NSArray <UIFont *> *)baseFonts {
     self = [super init];
     if (self)
     {
@@ -92,22 +75,20 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
         NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:uuidString];
         NSString *name = dictionary[@"name"];
         NSArray <NSDictionary <NSString *, id> *> *rawSettings = dictionary[@"settings"];
-        if (![uuid isKindOfClass:[NSUUID class]] ||
+        if (
+            ![uuid isKindOfClass:[NSUUID class]] ||
             ![name isKindOfClass:[NSString class]] ||
             ![rawSettings isKindOfClass:[NSArray class]] ||
-            ![font isKindOfClass:[UIFont class]])
+            ![baseFonts isKindOfClass:[NSArray class]] ||
+            baseFonts.count != 4
+            )
         {
             return nil;
         }
-        NSArray <NSString *> *fontNames = [self fontNamesForFontFamilyAnyOfFontName:font.fontName];
-        NSAssert(fontNames, @"Cannot initialize required font faces (%@).", font.fontName);
-        CGFloat fontSize = [font pointSize];
-        UIFont *boldFont = [UIFont fontWithName:fontNames[1] size:fontSize];
-        UIFont *italicFont = [UIFont fontWithName:fontNames[2] size:fontSize];
-        UIFont *boldItalicFont = [UIFont fontWithName:fontNames[3] size:fontSize];
-        if (!boldFont || !italicFont || !boldItalicFont) {
-            return nil;
-        }
+        UIFont *regularFont = baseFonts[0];
+        UIFont *boldFont = baseFonts[1];
+        UIFont *italicFont = baseFonts[2];
+        UIFont *boldItalicFont = baseFonts[3];
         _uuid = uuid;
         _name = name;
         NSMutableDictionary <NSString *, SKAttributes> *attributes = [[NSMutableDictionary alloc] init];
@@ -141,7 +122,7 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
                         setting[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
                     }
                     else if ([valueStyle isEqualToString:SKThemeFontStyleRegular]) {
-                        setting[NSFontAttributeName] = font;
+                        setting[NSFontAttributeName] = regularFont;
                     }
                 }
             }

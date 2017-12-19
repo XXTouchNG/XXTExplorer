@@ -69,14 +69,14 @@ static SKBundleManager *defaultManager = nil;
     return rawLanguage;
 }
 
-- (SKTheme *)themeWithIdentifier:(NSString *)identifier font:(UIFont *)font {
+- (SKTheme *)themeWithIdentifier:(NSString *)identifier baseFonts:(NSArray <UIFont *> *)baseFonts {
     SKTheme *theme = self.cachedThemes[identifier];
     if (theme) return theme;
     NSURL *dictURL = self.bundleCallback(identifier, SKTextMateFileTypeTheme);
     if ([dictURL isKindOfClass:[NSURL class]]) {
         NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfURL:dictURL];
         if ([plist isKindOfClass:[NSDictionary class]]) {
-            SKTheme *newTheme = [[SKTheme alloc] initWithDictionary:plist font:font];
+            SKTheme *newTheme = [[SKTheme alloc] initWithDictionary:plist baseFonts:baseFonts];
             if (newTheme) {
                 self.cachedThemes[identifier] = newTheme;
                 return newTheme;

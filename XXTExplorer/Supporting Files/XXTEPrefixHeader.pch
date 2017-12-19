@@ -33,7 +33,7 @@ XXTE_END_IGNORE_PARTIAL
 #define XXTE_IS_IPHONE_6_BELOW (XXTE_IS_IPHONE && XXTE_SCREEN_MAX_LENGTH < 667.0)
 #define XXTE_IS_IPHONE_6P_ABOVE (XXTE_IS_IPHONE && XXTE_SCREEN_MAX_LENGTH >= 736.0)
 
-#define XXTE_COLOR ([UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f]) // rgb(52, 152, 219)
+#define XXTE_COLOR ([UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f]) // rgb(52, 152, 219), #3498DB
 #define XXTE_COLOR_DANGER ([UIColor colorWithRed:231.f/255.f green:76.f/255.f blue:60.f/255.f alpha:1.f]) // rgb(231, 76, 60)
 #define XXTE_COLOR_SUCCESS ([UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:134.f/255.f alpha:1.f]) // rgb(26, 188, 134)
 
