@@ -493,7 +493,6 @@
 		0F8EDCB91FB1F779003C92D6 /* XXTEEditorFontSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6686F311F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib */; };
 		0F8EDCBA1FB1F779003C92D6 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */; };
 		0F8EDCBB1FB1F779003C92D6 /* XXTEEditorThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */; };
-		0F8EDCBC1FB1F779003C92D6 /* SKCaptureCollection.h in Resources */ = {isa = PBXBuildFile; fileRef = 5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */; };
 		0F8EDCBD1FB1F779003C92D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D63F36601F7A42DB00E2386C /* Settings.bundle */; };
 		0F8EDCC91FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCCB1FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist */; };
 		0F8EDCCF1FB209DC003C92D6 /* Settings.Pro.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */; };
@@ -625,7 +624,6 @@
 		5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 525121AA050C36B577A99998 /* SKCaptureCollection.m */; };
 		52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512BB9102561239EEDF606 /* XXTEMailComposeViewController.m */; };
 		52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */; };
-		52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */ = {isa = PBXBuildFile; fileRef = 5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */; };
 		52512CB22B66C2C399BAF27D /* SKCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251293D44AFD758EEA8E4B2 /* SKCapture.m */; };
 		52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 525126AA8416F9D88F2E89F7 /* SKBundleManager.m */; };
 		52512E40750E7BF6394042D8 /* SKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512DF49CDDF706A91B90B2 /* SKParser.m */; };
@@ -1039,7 +1037,6 @@
 		D60FE7C71FE2369300954818 /* XXTEEditorFontSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6686F311F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib */; };
 		D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */; };
 		D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */; };
-		D60FE7CA1FE2369300954818 /* SKCaptureCollection.h in Resources */ = {isa = PBXBuildFile; fileRef = 5251274AED8CB15CC4F616D1 /* SKCaptureCollection.h */; };
 		D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D617D1D31F7B4BC0009F4B59 /* libc++.tbd */; };
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
@@ -3898,7 +3895,6 @@
 				0F8ECD461FE802A900A5457C /* Oceanic.png in Resources */,
 				0F8ECD241FE7FE0800A5457C /* Mac Classic.png in Resources */,
 				0F8ECD4E1FE802A900A5457C /* Ciapre.png in Resources */,
-				0F8EDCBC1FB1F779003C92D6 /* SKCaptureCollection.h in Resources */,
 				0F8EDCBD1FB1F779003C92D6 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4028,7 +4024,6 @@
 				D6686F331F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib in Resources */,
 				0FBAFF421F6E5378008B3189 /* XXTImagePickerController.xib in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
-				52512B62F03C5675AF31CF9E /* SKCaptureCollection.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4097,7 +4092,6 @@
 				D60FE7C71FE2369300954818 /* XXTEEditorFontSizeCell.xib in Resources */,
 				D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */,
 				D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */,
-				D60FE7CA1FE2369300954818 /* SKCaptureCollection.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,11 +16,13 @@
 
 @end
 
-@interface XXTEEditorSearchAccessoryView : UIToolbar
+@interface XXTEEditorSearchAccessoryView : UIInputView
 
 @property (nonatomic, weak) id <XXTEEditorSearchAccessoryViewDelegate> accessoryDelegate;
-@property (nonatomic, strong) UILabel *countLabel;
+@property (nonatomic, assign) UIBarStyle barStyle;
 
-- (void)reloadItemTintColor;
+@property (nonatomic, strong) UIBarButtonItem *prevItem;
+@property (nonatomic, strong) UIBarButtonItem *nextItem;
+@property (nonatomic, strong) UILabel *countLabel;
 
 @end

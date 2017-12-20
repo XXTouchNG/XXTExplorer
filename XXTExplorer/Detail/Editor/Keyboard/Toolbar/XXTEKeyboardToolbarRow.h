@@ -14,29 +14,25 @@ typedef enum : NSUInteger {
 } XXTEKeyboardToolbarRowStyle;
 
 typedef enum : NSUInteger {
-    XXTEKeyboardToolbarRowDevicePhone = 0,
-    XXTEKeyboardToolbarRowDeviceTablet,
-} XXTEKeyboardToolbarRowDevice;
-
-typedef enum : NSUInteger {
-    XXTEKeyboardToolbarRowButtonTab = 0,
-    XXTEKeyboardToolbarRowButtonUndo,
-    XXTEKeyboardToolbarRowButtonPicker,
-    XXTEKeyboardToolbarRowButtonRedo,
-    XXTEKeyboardToolbarRowButtonDismiss,
-} XXTEKeyboardToolbarRowButton;
+    XXTEKeyboardToolbarRowButtonTypeUndo = 0,
+    XXTEKeyboardToolbarRowButtonTypeRedo,
+    XXTEKeyboardToolbarRowButtonTypeDismiss,
+} XXTEKeyboardToolbarRowButtonType;
 
 @class XXTEKeyboardToolbarRow;
 
 @protocol XXTEKeyboardToolbarRowDelegate <NSObject>
-- (void)keyboardRow:(XXTEKeyboardToolbarRow *)keyboardRow buttonTappedAtIndex:(NSUInteger)index;
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapUndo:(UIBarButtonItem *)sender;
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapRedo:(UIBarButtonItem *)sender;
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapDismiss:(UIBarButtonItem *)sender;
 @end
 
 @interface XXTEKeyboardToolbarRow : UIInputView
 
-@property (nonatomic, strong) NSString *tabString;
 @property (nonatomic, assign, setter=setStyle:) XXTEKeyboardToolbarRowStyle style;
-@property (nonatomic, assign, readonly) XXTEKeyboardToolbarRowDevice device;
-@property (nonatomic, weak) id <UITextInput> textInput;
+@property (nonatomic, weak) id <XXTEKeyboardToolbarRowDelegate> delegate;
+@property (nonatomic, strong) UIBarButtonItem *undoItem;
+@property (nonatomic, strong) UIBarButtonItem *redoItem;
+@property (nonatomic, strong) UIBarButtonItem *dismissItem;
 
 @end

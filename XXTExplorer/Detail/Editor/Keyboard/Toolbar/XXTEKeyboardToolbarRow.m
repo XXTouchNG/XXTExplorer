@@ -38,26 +38,9 @@
 }
 
 - (void)setup {
-    XXTEKeyboardToolbarRowDevice device = XXTEKeyboardToolbarRowDevicePhone;
-    switch ([UIDevice currentDevice].userInterfaceIdiom) {
-        case UIUserInterfaceIdiomPhone:
-            device = XXTEKeyboardToolbarRowDevicePhone;
-            break;
-        case UIUserInterfaceIdiomPad:
-            device = XXTEKeyboardToolbarRowDeviceTablet;
-            break;
-        default:
-            break;
-    }
-    _device = device;
-    
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     CGFloat barWidth = MIN(screenSize.width, screenSize.height);
     CGFloat barHeight = 44.f;
-    if (device == XXTEKeyboardToolbarRowDeviceTablet)
-    {
-        barHeight = 72.f;
-    }
     
     self.frame = CGRectMake(0, 0, barWidth, barHeight);
     self.backgroundColor = [UIColor clearColor];
@@ -68,7 +51,9 @@
 
 - (void)configureSubviews {
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [self.toolbar setItems:@[flexibleItem]];
+    UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedItem.width = 20.0;
+    [self.toolbar setItems:@[self.undoItem, fixedItem, self.redoItem, flexibleItem, self.dismissItem]];
     [self addSubview:self.toolbar];
 }
 
@@ -77,19 +62,82 @@
 - (UIToolbar *)toolbar {
     if (!_toolbar) {
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
+        toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [toolbar setBackgroundImage:[UIImage new]
                  forToolbarPosition:UIToolbarPositionAny
                          barMetrics:UIBarMetricsDefault];
         [toolbar setBackgroundColor:[UIColor clearColor]];
+        [toolbar setTranslucent:YES];
         _toolbar = toolbar;
     }
     return _toolbar;
 }
 
+- (UIBarButtonItem *)dismissItem {
+    if (!_dismissItem) {
+        UIBarButtonItem *dismissItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEKeyboardDismiss"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissItemTapped:)];
+        _dismissItem = dismissItem;
+    }
+    return _dismissItem;
+}
+
+- (UIBarButtonItem *)undoItem {
+    if (!_undoItem) {
+        UIBarButtonItem *undoItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEKeyboardUndo"] style:UIBarButtonItemStylePlain target:self action:@selector(undoItemTapped:)];
+        undoItem.enabled = NO;
+        _undoItem = undoItem;
+    }
+    return _undoItem;
+}
+
+- (UIBarButtonItem *)redoItem {
+    if (!_redoItem) {
+        UIBarButtonItem *redoItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEKeyboardRedo"] style:UIBarButtonItemStylePlain target:self action:@selector(redoItemTapped:)];
+        redoItem.enabled = NO;
+        _redoItem = redoItem;
+    }
+    return _redoItem;
+}
+
+#pragma mark - Setters
+
+- (void)setStyle:(XXTEKeyboardToolbarRowStyle)style {
+    _style = style;
+    UIToolbar *toolbar = self.toolbar;
+    if (style == XXTEKeyboardToolbarRowStyleLight) {
+        toolbar.barStyle = UIBarStyleDefault;
+    } else {
+        toolbar.barStyle = UIBarStyleBlack;
+    }
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+    [super setTintColor:tintColor];
+    UIToolbar *toolbar = self.toolbar;
+    toolbar.tintColor = tintColor;
+    for (UIBarButtonItem *item in toolbar.items) {
+        item.tintColor = tintColor;
+    }
+}
+
 #pragma mark - Actions
 
 - (void)dismissItemTapped:(UIBarButtonItem *)sender {
-    
+    if ([_delegate respondsToSelector:@selector(keyboardToolbarRow:didTapDismiss:)]) {
+        [_delegate keyboardToolbarRow:self didTapDismiss:sender];
+    }
+}
+
+- (void)undoItemTapped:(UIBarButtonItem *)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardToolbarRow:didTapUndo:)]) {
+        [_delegate keyboardToolbarRow:self didTapUndo:sender];
+    }
+}
+
+- (void)redoItemTapped:(UIBarButtonItem *)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardToolbarRow:didTapRedo:)]) {
+        [_delegate keyboardToolbarRow:self didTapRedo:sender];
+    }
 }
 
 @end

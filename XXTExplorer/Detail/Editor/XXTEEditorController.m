@@ -36,6 +36,8 @@
 
 // Keyboard
 #import "XXTEKeyboardRow.h"
+#import "XXTEKeyboardToolbarRow.h"
+
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
 
 // Extensions
@@ -56,12 +58,14 @@
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, UITextFieldDelegate, XXTEEditorSearchAccessoryViewDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
 
 @property (nonatomic, strong) UIScrollView *containerView;
 @property (nonatomic, strong) NSLayoutConstraint *textViewWidthConstraint;
 
 @property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
+@property (nonatomic, strong) XXTEKeyboardToolbarRow *keyboardToolbarRow;
+@property (nonatomic, strong) XXTEEditorSearchAccessoryView *searchAccessoryView;
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
@@ -205,7 +209,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     // Config
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, NO); // config
-    BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, YES); // config
+    BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, NO); // config
     BOOL showInvisibleCharacters = XXTEDefaultsBool(XXTEEditorShowInvisibleCharacters, NO); // config
     
     // Theme Appearance
@@ -216,18 +220,15 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     XXTEEditorSearchBar *searchBar = self.searchBar;
     searchBar.backgroundColor = theme.backgroundColor;
     searchBar.tintColor = theme.foregroundColor;
-    searchBar.searchField.tintColor = theme.caretColor;
-    searchBar.searchField.textColor = theme.foregroundColor;
+    searchBar.textColor = theme.foregroundColor;
     
     // TextView
     XXTEEditorTextView *textView = self.textView;
     textView.keyboardType = UIKeyboardTypeDefault;
-    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
     textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
     textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
     textView.backgroundColor = [UIColor clearColor];
-//    textView.backgroundColor = theme.backgroundColor;
     textView.editable = !isReadOnlyMode;
     textView.tintColor = theme.caretColor;
     
@@ -266,6 +267,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     // Keyboard Row
     XXTEKeyboardRow *keyboardRow = self.keyboardRow;
+    XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
+    
     NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
     BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
     if (softTabEnabled)
@@ -279,34 +282,45 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         textView.vTextInput.tabWidthString = @"\t";
     }
     
-    // Accessories Appearance
+    // Accessories
+    XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
-        searchBar.searchField.keyboardAppearance = UIKeyboardAppearanceLight;
-        searchBar.searchAccessoryView.barStyle = UIBarStyleDefault;
+        searchBar.keyboardAppearance = UIKeyboardAppearanceLight;
+        searchAccessoryView.barStyle = UIBarStyleDefault;
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
-        keyboardRow.colorStyle = XXTEKeyboardRowStyleLight;
+        
+        [keyboardRow setColorStyle:XXTEKeyboardRowStyleLight];
+        [keyboardToolbarRow setStyle:XXTEKeyboardToolbarRowStyleLight];
     }
     else
     {
-        searchBar.searchField.keyboardAppearance = UIKeyboardAppearanceDark;
-        searchBar.searchAccessoryView.barStyle = UIBarStyleBlack;
+        searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
+        searchAccessoryView.barStyle = UIBarStyleBlack;
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
-        keyboardRow.colorStyle = XXTEKeyboardRowStyleDark;
+        
+        [keyboardRow setColorStyle:XXTEKeyboardRowStyleDark];
+        [keyboardToolbarRow setStyle:XXTEKeyboardToolbarRowStyleDark];
     }
     
-    searchBar.searchAccessoryView.tintColor = theme.foregroundColor;
-    [searchBar.searchAccessoryView reloadItemTintColor];
+    searchAccessoryView.tintColor = theme.foregroundColor;
+    keyboardToolbarRow.tintColor = theme.foregroundColor;
     
-    if (isKeyboardRowEnabled && NO == isReadOnlyMode)
-    {
-        keyboardRow.textInput = textView;
-        textView.inputAccessoryView = self.keyboardRow;
-    }
-    else
-    {
+    if (isReadOnlyMode || XXTE_IS_IPAD) {
         keyboardRow.textInput = nil;
         textView.inputAccessoryView = nil;
+        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    } else {
+        if (isKeyboardRowEnabled) {
+            keyboardRow.textInput = textView;
+            textView.inputAccessoryView = self.keyboardRow;
+            textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+        } else {
+            keyboardRow.textInput = nil;
+            textView.inputAccessoryView = self.keyboardToolbarRow;
+            textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+        }
     }
     
     // Shared Menu
@@ -316,18 +330,18 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         [self dismissMenuActions];
     }
     
-    // Set Render Flags
-    [self setNeedsReloadTextViewWidth];
-    [self reloadTextViewWidthIfNecessary];
-    [textView setNeedsDisplay];
-    [self setNeedsRefreshNavigationBar];
-    
     // Other Views
     self.toolbar.tintColor = theme.barTextColor;
     self.toolbar.barTintColor = theme.barTintColor;
     for (UIBarButtonItem *item in self.toolbar.items) {
         item.tintColor = theme.barTextColor;
     }
+    
+    // Set Render Flags
+    [self setNeedsReloadTextViewWidth];
+    [self reloadTextViewWidthIfNecessary];
+    [textView setNeedsDisplay];
+    [self setNeedsRefreshNavigationBar];
 }
 
 #pragma mark - Life Cycle
@@ -357,6 +371,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)viewWillAppear:(BOOL)animated {
     [self registerStateNotifications];
     [self registerKeyboardNotifications];
+    
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidUndoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidRedoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
+    }
+    
     [self renderNavigationBarTheme:NO];
     [super viewWillAppear:animated];
 }
@@ -388,6 +409,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)viewWillDisappear:(BOOL)animated {
     [self dismissKeyboardNotifications];
     [self dismissStateNotifications];
+    
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
+    }
+    
     [super viewWillDisappear:animated];
 }
 
@@ -634,6 +662,24 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     return _keyboardRow;
 }
 
+- (XXTEKeyboardToolbarRow *)keyboardToolbarRow {
+    if (!_keyboardToolbarRow) {
+        XXTEKeyboardToolbarRow *keyboardToolbarRow = [[XXTEKeyboardToolbarRow alloc] init];
+        keyboardToolbarRow.delegate = self;
+        _keyboardToolbarRow = keyboardToolbarRow;
+    }
+    return _keyboardToolbarRow;
+}
+
+- (XXTEEditorSearchAccessoryView *)searchAccessoryView {
+    if (!_searchAccessoryView) {
+        XXTEEditorSearchAccessoryView *searchAccessoryView = [[XXTEEditorSearchAccessoryView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44.f)];
+        searchAccessoryView.accessoryDelegate = self;
+        _searchAccessoryView = searchAccessoryView;
+    }
+    return _searchAccessoryView;
+}
+
 - (XXTEEditorToolbar *)toolbar {
     if (!_toolbar) {
         XXTEEditorToolbar *toolbar = [[XXTEEditorToolbar alloc] init];
@@ -653,7 +699,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - Getters
 
 - (BOOL)isEditing {
-    return _textView.isFirstResponder || _searchBar.searchField.isFirstResponder;
+    return _textView.isFirstResponder || _searchBar.isFirstResponder;
 }
 
 #pragma mark - Content
@@ -689,6 +735,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [textView setText:content];
     [textView setEditable:!isReadOnlyMode];
     [textView setSelectedRange:NSMakeRange(0, 0)];
+    
+    XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
+    keyboardToolbarRow.redoItem.enabled = NO;
+    keyboardToolbarRow.undoItem.enabled = NO;
+    {
+        [textView.undoManager removeAllActions]; // reset undo manager
+    }
 }
 
 #pragma mark - Attributes
@@ -904,11 +957,11 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)resetSearch {
     {
-        if ([self.searchBar.searchField isFirstResponder]) {
-            [self.searchBar.searchField resignFirstResponder];
+        if ([self.searchBar isFirstResponder]) {
+            [self.searchBar resignFirstResponder];
         }
         [self.textView resetSearch];
-        [self.searchBar.searchField setText:@""];
+        [self.searchBar setText:@""];
         [self updateCountLabel];
     }
 }
@@ -927,7 +980,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)expandSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated {
     if (animated) {
         [self.searchBar setHidden:NO];
-        [self.searchBar.searchField becomeFirstResponder];
+        [self.searchBar becomeFirstResponder];
         [self.view layoutIfNeeded];
         [self.view removeConstraints:[self closedSearchBarConstraints]];
         [self.view addConstraints:[self expandedSearchBarConstraints]];
@@ -999,26 +1052,25 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.translatesAutoresizingMaskIntoConstraints = NO;
         searchBar.hidden = YES;
-        searchBar.searchField.delegate = self;
-        [searchBar.searchField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-        searchBar.searchAccessoryView.accessoryDelegate = self;
+        searchBar.inputAccessoryView = self.searchAccessoryView;
+        searchBar.delegate = self;
         _searchBar = searchBar;
     }
     return _searchBar;
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - XXTEEditorSearchBarDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar textFieldShouldReturn:(UITextField *)textField {
     [self searchNextMatch];
     return YES;
 }
 
-- (void)textFieldDidChange:(UITextField *)textField {
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar textFieldDidChange:(UITextField *)textField {
     [self searchNextMatch];
 }
 
-- (BOOL)textFieldShouldClear:(UITextField *)textField {
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar textFieldShouldClear:(UITextField *)textField {
     [self searchNextMatch];
     return YES;
 }
@@ -1047,7 +1099,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)searchMatchInDirection:(ICTextViewSearchDirection)direction
 {
-    NSString *searchString = self.searchBar.searchField.text;
+    NSString *searchString = self.searchBar.text;
     
     BOOL caseSensitive = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
     if (!caseSensitive) {
@@ -1073,7 +1125,11 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)updateCountLabel
 {
     ICTextView *textView = self.textView;
-    UILabel *countLabel = self.searchBar.searchAccessoryView.countLabel;
+    
+    XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    UIBarButtonItem *prevItem = searchAccessoryView.prevItem;
+    UIBarButtonItem *nextItem = searchAccessoryView.nextItem;
+    UILabel *countLabel = searchAccessoryView.countLabel;
     
     NSUInteger numberOfMatches = textView.numberOfMatches;
     if (numberOfMatches > 0) {
@@ -1081,9 +1137,21 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         if (idx != NSNotFound) {
             countLabel.text = numberOfMatches ? [NSString stringWithFormat:NSLocalizedString(@"%lu/%lu", nil), (unsigned long)idx + 1, (unsigned long)numberOfMatches] : NSLocalizedString(@"0/0", nil);
             [countLabel sizeToFit];
+            if (idx == 0) {
+                prevItem.enabled = NO;
+                nextItem.enabled = YES;
+            } else if (idx == numberOfMatches - 1) {
+                prevItem.enabled = YES;
+                nextItem.enabled = NO;
+            } else {
+                prevItem.enabled = YES;
+                nextItem.enabled = YES;
+            }
         }
     } else {
         countLabel.text = NSLocalizedString(@"0/0", nil);
+        prevItem.enabled = NO;
+        nextItem.enabled = NO;
     }
 }
 
@@ -1152,6 +1220,50 @@ XXTE_END_IGNORE_PARTIAL
         
     } else { // to be compatible with iOS 7
         [self setNeedsReloadTextViewWidth];
+    }
+}
+
+#pragma mark - XXTEKeyboardToolbarRowDelegate
+
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapUndo:(UIBarButtonItem *)sender {
+    NSUndoManager *undoManager = [self.textView undoManager];
+    if (undoManager.canUndo) {
+        [undoManager undo];
+    }
+}
+
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapRedo:(UIBarButtonItem *)sender {
+    NSUndoManager *undoManager = [self.textView undoManager];
+    if (undoManager.canRedo) {
+        [undoManager redo];
+    }
+}
+
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapDismiss:(UIBarButtonItem *)sender {
+    [self.textView resignFirstResponder];
+}
+
+- (void)handleUndoManagerNotification:(NSNotification *)aNotification {
+    NSString *notificationName = aNotification.name;
+    if ([notificationName isEqualToString:NSUndoManagerDidCloseUndoGroupNotification]
+        || [notificationName isEqualToString:NSUndoManagerDidUndoChangeNotification]
+        || [notificationName isEqualToString:NSUndoManagerDidRedoChangeNotification]
+        ) {
+        NSUndoManager *undoManager = aNotification.object;
+        if (undoManager == self.textView.undoManager)
+        {
+            XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
+            if (undoManager.canRedo) {
+                keyboardToolbarRow.redoItem.enabled = YES;
+            } else {
+                keyboardToolbarRow.redoItem.enabled = NO;
+            }
+            if (undoManager.canUndo) {
+                keyboardToolbarRow.undoItem.enabled = YES;
+            } else {
+                keyboardToolbarRow.undoItem.enabled = NO;
+            }
+        } // you may receive undoManager from TextField(s)
     }
 }
 
