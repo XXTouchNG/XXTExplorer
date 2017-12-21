@@ -76,7 +76,7 @@
     return [super canPerformAction:action withSender:sender];
 }
 
-- (void)menuActionCodeBlocks:(UIMenuItem *)sender {
+- (void)menuActionCodeBlocks:(UIMenuItem *)senderOrNil {
     NSString *snippetPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"snippets"];
     XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:snippetPath];
     itemPicker.delegate = self;

@@ -97,8 +97,8 @@
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Word Wrap", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Search", nil) ];
-    staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Word Wrap", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Text", nil), NSLocalizedString(@"Search", nil) ];
+    staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"", @"" ];
     
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
     double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
@@ -163,12 +163,9 @@
     fullScreenCell.titleLabel.text = NSLocalizedString(@"Auto Fullscreen", nil);
     fullScreenCell.optionSwitch.on = XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO);
     {
-        @weakify(self);
         [fullScreenCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
-            @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorFullScreenWhenEditing, optionSwitch.on);
-            [self.editor setNeedsReload];
         }];
     }
     
@@ -181,7 +178,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoIndent, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -194,7 +191,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSoftTabs, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -303,20 +300,33 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorReadOnly, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
     XXTEMoreSwitchCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell13.titleLabel.text = NSLocalizedString(@"Accessory Keyboard", nil);
-    cell13.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, NO);
+    cell13.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO);
     {
         @weakify(self);
         [cell13.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
-            XXTEDefaultsSetBasic(XXTEEditorKeyboardRowEnabled, optionSwitch.on);
-            [self.editor setNeedsReload];
+            XXTEDefaultsSetBasic(XXTEEditorKeyboardRowAccessoryEnabled, optionSwitch.on);
+            [self.editor setNeedsSoftReload];
+        }];
+    }
+    
+    XXTEMoreSwitchCell *cellBrackets = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cellBrackets.titleLabel.text = NSLocalizedString(@"Auto Insert Brackets", nil);
+    cellBrackets.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoBrackets, NO);
+    {
+        @weakify(self);
+        [cellBrackets.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
+            UISwitch *optionSwitch = (UISwitch *)sender;
+            XXTEDefaultsSetBasic(XXTEEditorAutoBrackets, optionSwitch.on);
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -329,7 +339,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoCorrection, optionSwitch.on ? UITextAutocorrectionTypeYes : UITextAutocorrectionTypeNo);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -342,7 +352,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoCapitalization, optionSwitch.on ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -355,7 +365,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSpellChecking, optionSwitch.on ? UITextSpellCheckingTypeYes : UITextSpellCheckingTypeNo);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -398,7 +408,8 @@
                         cell10,
                         cell11
                         ],
-                    @[ cell12, cell13, cell14, cell15, cell16 ],
+                    @[ cell12, cell13 ],
+                    @[ cellBrackets, cell14, cell15, cell16 ],
                     @[ cell17, cell18 ]
                     ];
 }

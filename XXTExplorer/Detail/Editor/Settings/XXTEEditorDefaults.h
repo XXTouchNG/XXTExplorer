@@ -18,7 +18,8 @@ static NSString * const XXTEEditorThemeName = @"XXTEEditorThemeName"; // NSStrin
 
 static NSString * const XXTEEditorHighlightEnabled = @"XXTEEditorHighlightEnabled"; // NSNumber - Bool
 static NSString * const XXTEEditorLineNumbersEnabled = @"XXTEEditorLineNumbersEnabled"; // NSNumber - Bool
-static NSString * const XXTEEditorKeyboardRowEnabled = @"XXTEEditorKeyboardRowEnabled"; // NSNumber - Bool
+
+static NSString * const XXTEEditorKeyboardRowAccessoryEnabled = @"XXTEEditorKeyboardRowAccessoryEnabled"; // NSNumber - Bool
 static NSString * const XXTEEditorShowInvisibleCharacters = @"XXTEEditorShowInvisibleCharacters"; // NSNumber - Bool
 
 static NSString * const XXTEEditorIndentWrappedLines = @"XXTEEditorIndentWrappedLines"; // NSNumber - Bool
@@ -28,6 +29,7 @@ static NSString * const XXTEEditorWrapColumn = @"XXTEEditorWrapColumn"; // NSNum
 static NSString * const XXTEEditorAutoCorrection = @"XXTEEditorAutoCorrection"; // NSNumber - Enum
 static NSString * const XXTEEditorSpellChecking = @"XXTEEditorSpellChecking"; // NSNumber - Enum
 static NSString * const XXTEEditorAutoCapitalization = @"XXTEEditorAutoCapitalization"; // NSNumber - Enum
+static NSString * const XXTEEditorAutoBrackets = @"XXTEEditorAutoBrackets"; // NSNumber - Bool
 
 static NSString * const XXTEEditorFontName = @"XXTEEditorFontName"; // NSString
 static NSString * const XXTEEditorFontSize = @"XXTEEditorFontSize"; // NSNumber

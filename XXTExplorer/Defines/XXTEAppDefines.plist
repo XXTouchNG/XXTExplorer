@@ -31,7 +31,7 @@
 	<key>AUTH_API</key>
 	<string>https://api.xxtouch.com/api/</string>
 	<key>XXTOUCH_BUY_URL</key>
-	<string>https://www.xxtouch.com/buy</string>
+	<string>https://www.xxtouch.com/buy/</string>
 	<key>DAEMON_VERSION</key>
 	<string>1.2-2</string>
 	<key>UPDATE_API</key>

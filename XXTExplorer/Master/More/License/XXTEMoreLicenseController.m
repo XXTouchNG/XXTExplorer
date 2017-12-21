@@ -32,11 +32,13 @@ typedef enum : NSUInteger {
 typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 @interface XXTEMoreLicenseController () <UITextFieldDelegate, LGAlertViewDelegate>
+
 @property (nonatomic, weak) UITextField *licenseField;
 @property (nonatomic, strong) XUIViewShaker *licenseShaker;
 @property (nonatomic, strong) NSString *licenseCode;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
+@property (nonatomic, strong) NSDictionary *dataDictionary;
 
 @end
 
@@ -208,6 +210,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
             ((XXTEMoreTitleValueCell *)staticCells[2][4]).valueLabel.text = dataDictionary[@"devsn"];
             ((XXTEMoreTitleValueCell *)staticCells[2][5]).valueLabel.text = dataDictionary[@"devmac"];
             ((XXTEMoreTitleValueCell *)staticCells[2][6]).valueLabel.text = dataDictionary[@"deviceid"];
+            self.dataDictionary = dataDictionary;
         }
         NSDictionary *sendDictionary = @{
                                          @"did": dataDictionary[@"deviceid"],
@@ -367,10 +370,21 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
              [(NSUInteger) indexPath.row])
             .titleLabel.text;
             if (indexPath.row == 2) {
-                NSURL *url = [NSURL URLWithString:uAppDefine(@"XXTOUCH_BUY_URL")];
-                XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
-                webController.title = titleText;
-                [self.navigationController pushViewController:webController animated:YES];
+                NSString *urlString = uAppDefine(@"XXTOUCH_BUY_URL");
+                if (urlString) {
+                    NSURL *url = nil;
+                    NSDictionary *dataDict = self.dataDictionary;
+                    if (dataDict)
+                    {
+                        NSString *paraString = [dataDict stringFromQueryComponents];
+                        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", urlString, paraString]];
+                    } else {
+                        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", urlString]];
+                    }
+                    XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
+                    webController.title = titleText;
+                    [self.navigationController pushViewController:webController animated:YES];
+                }
             }
         }
     }

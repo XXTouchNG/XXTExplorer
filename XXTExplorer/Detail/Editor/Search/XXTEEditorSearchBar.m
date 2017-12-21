@@ -91,12 +91,7 @@
 - (UIButton *)cancelButton {
     if (!_cancelButton) {
         UIButton *cancelButton = [[UIButton alloc] init];
-        UIFont *font = nil;
-        if (@available(iOS 8.2, *)) {
-            font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightLight];
-        } else {
-            font = [UIFont systemFontOfSize:14.0];
-        }
+        UIFont *font = [UIFont systemFontOfSize:14.0];
         cancelButton.titleLabel.font = font;
         [cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];

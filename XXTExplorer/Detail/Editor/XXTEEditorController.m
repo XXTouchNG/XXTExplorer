@@ -87,6 +87,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
 @property (nonatomic, assign) BOOL shouldRefreshNagivationBar;
 @property (nonatomic, assign) BOOL shouldReloadAll;
+@property (nonatomic, assign) BOOL shouldReloadSoft;
 
 @property (nonatomic, assign) BOOL shouldHighlightRange;
 @property (nonatomic, assign) NSRange highlightRange;
@@ -128,6 +129,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     self.automaticallyAdjustsScrollViewInsets = NO; // !important
     
     _shouldReloadAll = NO;
+    _shouldReloadSoft = NO;
     _shouldReloadAttributes = NO;
     _shouldSaveDocument = NO;
     _shouldFocusTextView = NO;
@@ -140,9 +142,14 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)reloadAll {
     NSString *newContent = [self loadContent];
     [self prepareForView];
-    [self reloadTextView];
+    [self reloadTextViewLayout];
+    [self reloadTextViewProperties];
     [self reloadContent:newContent];
     [self reloadAttributes];
+}
+
+- (void)reloadSoft {
+    [self reloadTextViewProperties];
 }
 
 - (void)prepareForView {
@@ -203,13 +210,77 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #pragma mark - AFTER -viewDidLoad
 
-- (void)reloadTextView {
+- (void)reloadTextViewProperties {
+    if (![self isViewLoaded]) return;
+    
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    
+    // TextView
+    XXTEEditorTextView *textView = self.textView;
+    textView.keyboardType = UIKeyboardTypeDefault;
+    textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
+    textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
+    textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
+    textView.editable = !isReadOnlyMode;
+    
+    if (textView.vTextInput) {
+        textView.vTextInput.language = self.language;
+        textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
+        textView.vTextInput.autoBrackets = XXTEDefaultsBool(XXTEEditorAutoBrackets, NO);
+    }
+    
+    XXTEKeyboardRow *keyboardRow = self.keyboardRow;
+    
+    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
+    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
+    BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
+    if (softTabEnabled)
+    {
+        keyboardRow.tabString = tabWidthString;
+        textView.vTextInput.tabWidthString = tabWidthString;
+    }
+    else
+    {
+        keyboardRow.tabString = @"\t";
+        textView.vTextInput.tabWidthString = @"\t";
+    }
+    
+    XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
+    BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
+    
+    if (isReadOnlyMode || XXTE_IS_IPAD) // iPad, or read-only
+    {
+        keyboardRow.textInput = nil;
+        textView.inputAccessoryView = nil;
+        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    } else {
+        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+        if (isKeyboardRowEnabled) {
+            keyboardRow.textInput = textView;
+            textView.inputAccessoryView = keyboardRow;
+        } else {
+            keyboardRow.textInput = nil;
+            textView.inputAccessoryView = keyboardToolbarRow;
+        }
+    }
+    
+    // Shared Menu
+    if (NO == isReadOnlyMode && nil != self.language)
+    {
+        [self registerMenuActions];
+    }
+    else
+    {
+        [self dismissMenuActions];
+    }
+    
+}
+
+- (void)reloadTextViewLayout {
     if (![self isViewLoaded]) return;
     
     // Config
-    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, NO); // config
-    BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowEnabled, NO); // config
     BOOL showInvisibleCharacters = XXTEDefaultsBool(XXTEEditorShowInvisibleCharacters, NO); // config
     
     // Theme Appearance
@@ -224,14 +295,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     // TextView
     XXTEEditorTextView *textView = self.textView;
-    textView.keyboardType = UIKeyboardTypeDefault;
-    textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
-    textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
-    textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
     textView.backgroundColor = [UIColor clearColor];
-    textView.editable = !isReadOnlyMode;
     textView.tintColor = theme.caretColor;
-    
     textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
     
     // Layout Manager
@@ -257,33 +322,20 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     
     // Type Setter
-    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
+    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
     CGFloat tabWidth = tabWidthEnum * theme.tabWidth;
-    textView.vTypeSetter.tabWidth = tabWidth;
-    
-    // Text Input
-    textView.vTextInput.language = self.language;
-    textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
+    if (textView.vTypeSetter) {
+        textView.vTypeSetter.tabWidth = tabWidth;
+    }
     
     // Keyboard Row
     XXTEKeyboardRow *keyboardRow = self.keyboardRow;
     XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
-    
-    NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
-    BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
-    if (softTabEnabled)
-    {
-        keyboardRow.tabString = tabWidthString;
-        textView.vTextInput.tabWidthString = tabWidthString;
-    }
-    else
-    {
-        keyboardRow.tabString = @"\t";
-        textView.vTextInput.tabWidthString = @"\t";
-    }
+    keyboardToolbarRow.tintColor = theme.foregroundColor;
     
     // Accessories
     XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    searchAccessoryView.tintColor = theme.foregroundColor;
     
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
@@ -304,36 +356,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         [keyboardToolbarRow setStyle:XXTEKeyboardToolbarRowStyleDark];
     }
     
-    searchAccessoryView.tintColor = theme.foregroundColor;
-    keyboardToolbarRow.tintColor = theme.foregroundColor;
-    
-    if (isReadOnlyMode || XXTE_IS_IPAD) {
-        keyboardRow.textInput = nil;
-        textView.inputAccessoryView = nil;
-        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-    } else {
-        if (isKeyboardRowEnabled) {
-            keyboardRow.textInput = textView;
-            textView.inputAccessoryView = self.keyboardRow;
-            textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-        } else {
-            keyboardRow.textInput = nil;
-            textView.inputAccessoryView = self.keyboardToolbarRow;
-            textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-        }
-    }
-    
-    // Shared Menu
-    if (NO == isReadOnlyMode && nil != self.language) {
-        [self registerMenuActions];
-    } else {
-        [self dismissMenuActions];
-    }
-    
     // Other Views
-    self.toolbar.tintColor = theme.barTextColor;
-    self.toolbar.barTintColor = theme.barTintColor;
-    for (UIBarButtonItem *item in self.toolbar.items) {
+    XXTEEditorToolbar *toolbar = self.toolbar;
+    toolbar.tintColor = theme.barTextColor;
+    toolbar.barTintColor = theme.barTintColor;
+    for (UIBarButtonItem *item in toolbar.items) {
         item.tintColor = theme.barTextColor;
     }
     
@@ -353,7 +380,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     NSString *newContent = [self loadContent];
     [self prepareForView];
-    [self reloadTextView];
+    [self reloadTextViewLayout];
+    [self reloadTextViewProperties];
     [self reloadContent:newContent];
     [self reloadAttributes];
     
@@ -375,6 +403,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidUndoChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidRedoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
     }
     
@@ -384,10 +413,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.shouldReloadAll) {
-        self.shouldReloadAll = NO;
-        [self reloadAll];
-    }
+    [self reloadAllIfNecessary];
+    [self reloadSoftIfNecessary];
     if (self.shouldRefreshNagivationBar) {
         self.shouldRefreshNagivationBar = NO;
         [UIView animateWithDuration:.4f delay:.2f options:0 animations:^{
@@ -413,6 +440,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
     }
     
@@ -725,8 +753,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)reloadContent:(NSString *)content {
     if (!content) return;
+    
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     [self resetSearch];
+    
     XXTEEditorTheme *theme = self.theme;
     XXTEEditorTextView *textView = self.textView;
     [textView setEditable:NO];
@@ -739,9 +769,11 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
     keyboardToolbarRow.redoItem.enabled = NO;
     keyboardToolbarRow.undoItem.enabled = NO;
+    keyboardToolbarRow.snippetItem.enabled = (!isReadOnlyMode && self.language != nil);
     {
         [textView.undoManager removeAllActions]; // reset undo manager
     }
+    
 }
 
 #pragma mark - Attributes
@@ -772,12 +804,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
             });
         });
     }
-}
-
-- (void)reloadAttributesIfNecessary {
-    if (!self.shouldReloadAttributes) return;
-    self.shouldReloadAttributes = NO;
-    [self reloadAttributes];
 }
 
 #pragma mark - NSTextStorageDelegate
@@ -907,50 +933,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     self.renderedSet = nil;
 }
 
-#pragma mark - Lazy Flags
-
-- (void)setNeedsReload {
-    self.shouldReloadAll = YES;
-}
-
-- (void)setNeedsSaveDocument {
-    self.shouldSaveDocument = YES;
-}
-
-- (void)setNeedsReloadAttributes {
-    self.shouldReloadAttributes = YES;
-}
-
-- (void)setNeedsFocusTextView {
-    self.shouldFocusTextView = YES;
-}
-
-- (void)setNeedsRefreshNavigationBar {
-    self.shouldRefreshNagivationBar = YES;
-}
-
 #pragma mark - Highlight
-
-- (void)setNeedsHighlightRange:(NSRange)range {
-    self.highlightRange = range;
-    self.shouldHighlightRange = YES;
-}
 
 - (void)highlightRangeIfNeeded {
     if (self.shouldHighlightRange) {
         self.shouldHighlightRange = NO;
         [self.maskView flashWithRange:self.highlightRange];
     }
-}
-
-#pragma mark - Save Document
-
-- (void)saveDocumentIfNecessary {
-    if (!self.shouldSaveDocument || !self.textView.editable) return;
-    self.shouldSaveDocument = NO;
-    NSString *documentString = self.textView.textStorage.string;
-    NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
-    [documentData writeToFile:self.entryPath atomically:YES];
 }
 
 #pragma mark - Search
@@ -1157,17 +1146,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 #pragma mark - TextView Width
 
-- (void)setNeedsReloadTextViewWidth {
-    self.shouldReloadTextViewWidth = YES;
-}
-
-- (void)reloadTextViewWidthIfNecessary {
-    if (self.shouldReloadTextViewWidth) {
-        [self reloadTextViewWidth];
-        self.shouldReloadTextViewWidth = NO;
-    }
-}
-
 - (void)reloadTextViewWidth {
     CGFloat newWidth = CGRectGetWidth(self.view.bounds);
     BOOL autoWrap = XXTEDefaultsBool(XXTEEditorAutoWordWrap, YES);
@@ -1243,9 +1221,14 @@ XXTE_END_IGNORE_PARTIAL
     [self.textView resignFirstResponder];
 }
 
+- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapSnippet:(UIBarButtonItem *)sender {
+    [self menuActionCodeBlocks:nil];
+}
+
 - (void)handleUndoManagerNotification:(NSNotification *)aNotification {
     NSString *notificationName = aNotification.name;
-    if ([notificationName isEqualToString:NSUndoManagerDidCloseUndoGroupNotification]
+    if ([notificationName isEqualToString:NSUndoManagerDidOpenUndoGroupNotification]
+        || [notificationName isEqualToString:NSUndoManagerDidCloseUndoGroupNotification]
         || [notificationName isEqualToString:NSUndoManagerDidUndoChangeNotification]
         || [notificationName isEqualToString:NSUndoManagerDidRedoChangeNotification]
         ) {
@@ -1266,6 +1249,79 @@ XXTE_END_IGNORE_PARTIAL
         } // you may receive undoManager from TextField(s)
     }
 }
+
+#pragma mark - Lazy Flags
+
+- (void)setNeedsReload {
+    self.shouldReloadAll = YES;
+}
+
+- (void)setNeedsSoftReload {
+    self.shouldReloadSoft = YES;
+}
+
+- (void)setNeedsSaveDocument {
+    self.shouldSaveDocument = YES;
+}
+
+- (void)setNeedsReloadAttributes {
+    self.shouldReloadAttributes = YES;
+}
+
+- (void)setNeedsFocusTextView {
+    self.shouldFocusTextView = YES;
+}
+
+- (void)setNeedsRefreshNavigationBar {
+    self.shouldRefreshNagivationBar = YES;
+}
+
+- (void)setNeedsHighlightRange:(NSRange)range {
+    self.highlightRange = range;
+    self.shouldHighlightRange = YES;
+}
+
+- (void)setNeedsReloadTextViewWidth {
+    self.shouldReloadTextViewWidth = YES;
+}
+
+#pragma mark - Lazy Load
+
+- (void)reloadAllIfNecessary {
+    if (self.shouldReloadAll) {
+        self.shouldReloadAll = NO;
+        [self reloadAll];
+    }
+}
+
+- (void)reloadSoftIfNecessary {
+    if (self.shouldReloadSoft) {
+        self.shouldReloadSoft = NO;
+        [self reloadSoft];
+    }
+}
+
+- (void)reloadAttributesIfNecessary {
+    if (!self.shouldReloadAttributes) return;
+    self.shouldReloadAttributes = NO;
+    [self reloadAttributes];
+}
+
+- (void)saveDocumentIfNecessary {
+    if (!self.shouldSaveDocument || !self.textView.editable) return;
+    self.shouldSaveDocument = NO;
+    NSString *documentString = self.textView.textStorage.string;
+    NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
+    [documentData writeToFile:self.entryPath atomically:YES];
+}
+
+- (void)reloadTextViewWidthIfNecessary {
+    if (self.shouldReloadTextViewWidth) {
+        [self reloadTextViewWidth];
+        self.shouldReloadTextViewWidth = NO;
+    }
+}
+
 
 #pragma mark - Memory
 

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) XXTEEditorToolbar *toolbar;
 
 - (void)setNeedsReload;
+- (void)setNeedsSoftReload;
 - (void)setNeedsReloadAttributes;
 - (void)setNeedsSaveDocument;
 - (void)setNeedsFocusTextView;
