@@ -47,7 +47,8 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     
-    if (text.length == 1) {
+    if (text.length == 1 &&
+        range.length == 0) { // receive ASCII from keyboard input
         if (self.autoIndent) {
             if ([text isEqualToString:@"\n"]) {
                 // Just like what Textastic do

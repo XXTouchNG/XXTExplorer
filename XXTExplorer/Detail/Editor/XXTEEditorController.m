@@ -137,6 +137,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     _shouldHighlightRange = NO;
     _isRendering = NO;
     
+    [self registerUndoNotifications];
 }
 
 - (void)reloadAll {
@@ -400,13 +401,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [self registerStateNotifications];
     [self registerKeyboardNotifications];
     
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidUndoChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidRedoChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
-    }
-    
     [self renderNavigationBarTheme:NO];
     [super viewWillAppear:animated];
 }
@@ -436,13 +430,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)viewWillDisappear:(BOOL)animated {
     [self dismissKeyboardNotifications];
     [self dismissStateNotifications];
-    
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
-    }
     
     [super viewWillDisappear:animated];
 }
@@ -1225,6 +1212,25 @@ XXTE_END_IGNORE_PARTIAL
     [self menuActionCodeBlocks:nil];
 }
 
+
+- (void)registerUndoNotifications {
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidUndoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidRedoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUndoManagerNotification:) name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
+    }
+}
+
+- (void)dismissUndoNotifications {
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidCloseUndoGroupNotification object:nil];
+    }
+}
+
 - (void)handleUndoManagerNotification:(NSNotification *)aNotification {
     NSString *notificationName = aNotification.name;
     if ([notificationName isEqualToString:NSUndoManagerDidOpenUndoGroupNotification]
@@ -1331,6 +1337,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)dealloc {
+    [self dismissUndoNotifications];
 #ifdef DEBUG
     NSLog(@"- [XXTEEditorController dealloc]");
 #endif

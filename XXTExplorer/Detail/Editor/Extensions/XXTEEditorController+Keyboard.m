@@ -37,6 +37,14 @@
 }
 
 - (void)keyboardWillAppear:(NSNotification *)aNotification {
+    NSDictionary* info = [aNotification userInfo];
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return;
+        }
+    }
+    
     if (XXTE_PAD) {
         
     } else {
@@ -50,8 +58,14 @@
 - (void)keyboardDidAppear:(NSNotification *)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return;
+        }
+    }
     
+    CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
          insets = self.view.safeAreaInsets;
@@ -79,6 +93,14 @@
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
+    NSDictionary* info = [aNotification userInfo];
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return;
+        }
+    }
+    
     if (XXTE_PAD) {
         
     } else {
@@ -99,6 +121,14 @@
 
 - (void)keyboardDidDisappear:(NSNotification *)aNotification
 {
+    NSDictionary* info = [aNotification userInfo];
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return;
+        }
+    }
+    
     [self saveDocumentIfNecessary];
 }
 
