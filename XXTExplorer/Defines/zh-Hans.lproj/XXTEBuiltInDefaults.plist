@@ -339,6 +339,25 @@
 				<string>开启</string>
 			</array>
 		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>record_volume</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>录制音量键</string>
+			<key>description</key>
+			<string>在录制模式下, 忽略或录制音量物理按键的操作.</string>
+			<key>options</key>
+			<array>
+				<string>不录制</string>
+				<string>仅录制音量 +</string>
+				<string>仅录制音量 -</string>
+				<string>同时录制音量 +/-</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

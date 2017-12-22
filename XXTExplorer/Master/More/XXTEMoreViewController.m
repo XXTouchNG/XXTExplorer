@@ -26,7 +26,6 @@
     #import "XXTEMoreApplicationListController.h"
     #import "XXTEMoreLicenseController.h"
     #import "XXTEMoreActivationController.h"
-    #import "XXTEMoreRecordingController.h"
     #import "XXTENotificationCenterDefines.h"
     #import "XXTEMoreBootScriptController.h"
 #endif
@@ -45,7 +44,6 @@
 
     typedef enum : NSUInteger {
         kXXTEMoreSectionSettingsRowIndexActivationConfig = 0,
-        kXXTEMoreSectionSettingsRowIndexRecordingConfig,
         kXXTEMoreSectionSettingsRowIndexBootScript,
         kXXTEMoreSectionSettingsRowIndexUserDefaults,
     } kXXTEMoreSectionSettingsRowIndex;
@@ -202,9 +200,9 @@
     staticCells[0][2] = cellAddress2;
     
     if (webServerUrl && bonjourWebServerUrl) {
-        staticSectionRowNum = @[ @3, @1, @1, @4, @6, @2 ];
+        staticSectionRowNum = @[ @3, @1, @1, @3, @6, @2 ];
     } else {
-        staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
+        staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2 ];
     }
 }
 #endif
@@ -256,7 +254,7 @@
                              NSLocalizedString(@"System", nil),
                              NSLocalizedString(@"Help", nil)];
     staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil), @"", @"", @"", @"", @"" ];
-    staticSectionRowNum = @[ @1, @1, @1, @4, @6, @2 ];
+    staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2 ];
     
 #else
     
@@ -284,11 +282,6 @@
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell4.iconImage = [UIImage imageNamed:@"XXTEMoreIconActivationConfig"];
     cell4.titleLabel.text = NSLocalizedString(@"Activation Config", nil);
-    
-    XXTEMoreLinkCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
-    cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell5.iconImage = [UIImage imageNamed:@"XXTEMoreIconRecordingConfig"];
-    cell5.titleLabel.text = NSLocalizedString(@"Recording Config", nil);
     
     XXTEMoreLinkCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -367,7 +360,7 @@
                     //
                     [@[ cell3 ] mutableCopy],
                     //
-                    [@[ cell4, cell5, cell6, cell7 ] mutableCopy],
+                    [@[ cell4, cell6, cell7 ] mutableCopy],
                     //
                     [@[ cell8, cell9, cell10, cell11, cell12, cell13 ] mutableCopy],
                     //
@@ -501,9 +494,6 @@
             if (indexPath.row == kXXTEMoreSectionSettingsRowIndexActivationConfig) {
                 XXTEMoreActivationController *activationController = [[XXTEMoreActivationController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:activationController animated:YES];
-            } else if (indexPath.row == kXXTEMoreSectionSettingsRowIndexRecordingConfig) {
-                XXTEMoreRecordingController *recordingController = [[XXTEMoreRecordingController alloc] initWithStyle:UITableViewStyleGrouped];
-                [self.navigationController pushViewController:recordingController animated:YES];
             } else if (indexPath.row == kXXTEMoreSectionSettingsRowIndexBootScript) {
                 XXTEMoreBootScriptController *bootController = [[XXTEMoreBootScriptController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:bootController animated:YES];

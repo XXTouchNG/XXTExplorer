@@ -38,7 +38,6 @@
 		0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
-		0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
@@ -836,7 +835,6 @@
 		D60FE6DE1FE2369300954818 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		D60FE6DF1FE2369300954818 /* XXTExplorerViewController+PasteboardOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA981F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m */; };
 		D60FE6E01FE2369300954818 /* XXTExplorerViewController+ArchiverOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA921F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m */; };
-		D60FE6E11FE2369300954818 /* XXTEMoreRecordingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */; };
 		D60FE6E31FE2369300954818 /* XXTEEditorStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB388E41FA860E800B41E44 /* XXTEEditorStatisticsViewController.m */; };
 		D60FE6E41FE2369300954818 /* XXTEInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F061ED70E4800798B4B /* XXTEInsetsLabel.m */; };
 		D60FE6E51FE2369300954818 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA9B1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m */; };
@@ -1199,8 +1197,6 @@
 		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEScanViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
 		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
-		0F2184BE1F0FBE01001BD8BD /* XXTEMoreRecordingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreRecordingController.h; sourceTree = "<group>"; };
-		0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreRecordingController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBar.h"; sourceTree = "<group>"; };
 		0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+StatusBar.m"; sourceTree = "<group>"; };
 		0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImagePickerController.h; sourceTree = "<group>"; };
@@ -2101,15 +2097,6 @@
 			path = Scan;
 			sourceTree = "<group>";
 		};
-		0F2184BD1F0FBDB3001BD8BD /* Recording */ = {
-			isa = PBXGroup;
-			children = (
-				0F2184BE1F0FBE01001BD8BD /* XXTEMoreRecordingController.h */,
-				0F2184BF1F0FBE01001BD8BD /* XXTEMoreRecordingController.m */,
-			);
-			path = Recording;
-			sourceTree = "<group>";
-		};
 		0F2CD3501F3B5C9D00110772 /* Agents */ = {
 			isa = PBXGroup;
 			children = (
@@ -2449,7 +2436,6 @@
 				D629C20F1F061D5F0030C6DA /* Application */,
 				0F6063DA1F11262E0087822E /* Boot */,
 				0F10A91A1F07FB8A008BA792 /* License */,
-				0F2184BD1F0FBDB3001BD8BD /* Recording */,
 				0F35F2061F1068CC00B5B327 /* UserDefaults */,
 				0F61E16C1ED78EA8003DCC78 /* XXTEMoreNavigationController.h */,
 				0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */,
@@ -4720,7 +4706,6 @@
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F6AEA931F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
-				0F2184C01F0FBE01001BD8BD /* XXTEMoreRecordingController.m in Sources */,
 				0FB388E51FA860E800B41E44 /* XXTEEditorStatisticsViewController.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
@@ -5001,7 +4986,6 @@
 				D60FE6DE1FE2369300954818 /* XXTExplorerViewHomeCell.m in Sources */,
 				D60FE6DF1FE2369300954818 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				D60FE6E01FE2369300954818 /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
-				D60FE6E11FE2369300954818 /* XXTEMoreRecordingController.m in Sources */,
 				D60FE6E31FE2369300954818 /* XXTEEditorStatisticsViewController.m in Sources */,
 				D60FE6E41FE2369300954818 /* XXTEInsetsLabel.m in Sources */,
 				D60FE6E51FE2369300954818 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,

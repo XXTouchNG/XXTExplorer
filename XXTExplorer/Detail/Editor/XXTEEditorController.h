@@ -31,8 +31,6 @@
 - (void)invalidateSyntaxCaches;
 - (void)saveDocumentIfNecessary;
 
-- (void)updateUndoControlButtons;
-
 #pragma mark - Search
 
 - (void)toggleSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated;

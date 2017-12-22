@@ -389,11 +389,14 @@
         }];
     }
     
-    NSArray *layoutSection = nil;
+    NSArray *layoutSection = @[];
+    NSArray *keyboardSection = @[];
     if (XXTE_PAD) {
         layoutSection = @[ cell5, cell6 ];
+        keyboardSection = @[ cell12, cell13 ];
     } else {
         layoutSection = @[ fullScreenCell, cell5, cell6 ];
+        keyboardSection = @[ cell12 ];
     }
     
     staticCells = @[
@@ -408,7 +411,7 @@
                         cell10,
                         cell11
                         ],
-                    @[ cell12, cell13 ],
+                    keyboardSection,
                     @[ cellBrackets, cell14, cell15, cell16 ],
                     @[ cell17, cell18 ]
                     ];

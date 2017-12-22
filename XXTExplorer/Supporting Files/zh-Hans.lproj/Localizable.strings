@@ -201,6 +201,9 @@
 "Auto Indent" = "自动缩进";
 
 /* No comment provided by engineer. */
+"Auto Insert Brackets" = "自动配对括号";
+
+/* No comment provided by engineer. */
 "Auto Word Wrap" = "自动折行";
 
 /* No comment provided by engineer. */
@@ -508,12 +511,6 @@
 
 /* No comment provided by engineer. */
 "Dismiss" = "忽略";
-
-/* No comment provided by engineer. */
-"Do not record \"Volume +\" action." = "请勿录制 \"音量 +\" 动作.";
-
-/* No comment provided by engineer. */
-"Do not record \"Volume -\" action." = "请勿录制 \"音量 -\" 动作.";
 
 /* No comment provided by engineer. */
 "Documents" = "文档";
@@ -999,15 +996,6 @@
 "Reboot Now" = "立即重启";
 
 /* No comment provided by engineer. */
-"Record \"Volume +\" action." = "录制 \"音量 +\" 动作.";
-
-/* No comment provided by engineer. */
-"Record \"Volume -\" action." = "录制 \"音量 -\" 动作.";
-
-/* No comment provided by engineer. */
-"Recording Config" = "录制设置";
-
-/* No comment provided by engineer. */
 "Regular Expression" = "正则表达式";
 
 /* No comment provided by engineer. */
@@ -1128,12 +1116,6 @@
 "Shift Right" = "增加缩进";
 
 /* No comment provided by engineer. */
-"Should Record \"Volume +\"" = "是否录制 \"音量 +\"";
-
-/* No comment provided by engineer. */
-"Should Record \"Volume -\"" = "是否录制 \"音量 -\"";
-
-/* No comment provided by engineer. */
 "Show Invisible Characters" = "显示控制字符";
 
 /* No comment provided by engineer. */
@@ -1218,6 +1200,9 @@
 
 /* No comment provided by engineer. */
 "Test" = "测试";
+
+/* No comment provided by engineer. */
+"Text" = "文本";
 
 /* No comment provided by engineer. */
 "Text Content" = "文本内容";
@@ -1388,9 +1373,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"Auto Insert Brackets" = "";
-
-/* No comment provided by engineer. */
-"Text" = "";

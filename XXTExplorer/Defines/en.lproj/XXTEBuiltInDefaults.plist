@@ -339,6 +339,25 @@
 				<string>On</string>
 			</array>
 		</dict>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>record_volume</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Record Volume Keys</string>
+			<key>description</key>
+			<string>In record mode, volume button hardware operations can be ignored or recorded.</string>
+			<key>options</key>
+			<array>
+				<string>None</string>
+				<string>Record Volume +</string>
+				<string>Record Volume -</string>
+				<string>Record Both Volume +/-</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>
