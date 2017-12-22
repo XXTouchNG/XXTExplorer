@@ -15,8 +15,6 @@
 
 #pragma mark - Defaults
 
-//static NSUInteger const XXTExplorerMaximumEntryCount = 1000;
-
 static NSString * const XXTExplorerViewBuiltInitialPath = @"EXPLORER_INITIAL_PATH";
 static NSString * const XXTExplorerViewBuiltHomeSeries = @"EXPLORER_HOME_SERIES";
 
@@ -31,7 +29,11 @@ static NSString * const XXTExplorerAllowOpenMethodKey = @"XXTExplorerAllowOpenMe
 static NSString * const XXTExplorerViewEntryHideOperationLabelKey = @"XXTExplorerViewEntryHideOperationLabelKey";
 static NSString * const XXTExplorerPasteboardDetectOnActive = @"XXTExplorerPasteboardDetectOnActive";
 
-// XXTExplorerViewEntryListSortOrderKey
+#pragma mark - Item Picker Defaults
+
+static NSString * const XXTExplorerViewItemPickerSortFieldKey = @"XXTExplorerViewItemPickerSortFieldKey";
+static NSString * const XXTExplorerViewItemPickerSortOrderKey = @"XXTExplorerViewItemPickerSortOrderKey";
+
 typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortOrderAsc = 0,
     XXTExplorerViewEntryListSortOrderDesc,

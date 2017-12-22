@@ -9,6 +9,7 @@
 #import "XXTExplorerItemPicker.h"
 
 #import "XXTExplorerDefaults.h"
+#import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 
 #import "XXTExplorerToolbar.h"
@@ -30,10 +31,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *entryPath = self.entryPath;
-    if (entryPath) {
-        NSString *entryName = [entryPath lastPathComponent];
-        self.title = entryName;
+    if (self.title.length == 0) {
+        if (self == self.navigationController.viewControllers[0]) {
+            
+        } else {
+            NSString *entryPath = self.entryPath;
+            if (entryPath) {
+                NSString *entryName = [entryPath lastPathComponent];
+                self.title = entryName;
+            }
+        }
     }
     
     self.navigationItem.rightBarButtonItem = nil;
@@ -206,10 +213,26 @@
     }
 }
 
-#pragma mark - Block Inherit
+#pragma mark - Item Picker Inherit
 
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
-    
+    [refreshControl endRefreshing];
+}
+
+- (XXTExplorerViewEntryListSortField)explorerSortField {
+    return XXTEDefaultsEnum(XXTExplorerViewItemPickerSortFieldKey, XXTExplorerViewEntryListSortFieldDisplayName);
+}
+
+- (XXTExplorerViewEntryListSortOrder)explorerSortOrder {
+    return XXTEDefaultsEnum(XXTExplorerViewItemPickerSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
+}
+
+- (void)setExplorerSortField:(XXTExplorerViewEntryListSortField)explorerSortField {
+    XXTEDefaultsSetBasic(XXTExplorerViewItemPickerSortFieldKey, explorerSortField);
+}
+
+- (void)setExplorerSortOrder:(XXTExplorerViewEntryListSortOrder)explorerSortOrder {
+    XXTEDefaultsSetBasic(XXTExplorerViewItemPickerSortOrderKey, explorerSortOrder);
 }
 
 @end

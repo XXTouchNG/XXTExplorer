@@ -7,9 +7,7 @@
 //
 
 #import "XXTExplorerViewController.h"
-
 #import "XXTENetworkDefines.h"
-#import "XXTExplorerDefaults.h"
 
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
@@ -86,18 +84,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    if (self == self.navigationController.viewControllers[0]) {
+    
+    if (self.title.length == 0) {
+        if (self == self.navigationController.viewControllers[0]) {
 #ifndef APPSTORE
-        self.title = NSLocalizedString(@"My Scripts", nil);
+            self.title = NSLocalizedString(@"My Scripts", nil);
 #else
-        self.title = NSLocalizedString(@"Files", nil);
+            self.title = NSLocalizedString(@"Files", nil);
 #endif
-    } else {
-        NSString *entryPath = self.entryPath;
-        if (entryPath) {
-            NSString *entryName = [entryPath lastPathComponent];
-            self.title = entryName;
+        } else {
+            NSString *entryPath = self.entryPath;
+            if (entryPath) {
+                NSString *entryName = [entryPath lastPathComponent];
+                self.title = entryName;
+            }
         }
     }
 
@@ -197,7 +197,7 @@
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-#pragma mark - NSFileManager
+#pragma mark - Item Picker Inherit
 
 - (BOOL)showsHomeSeries {
     return YES;
@@ -206,6 +206,24 @@
 - (BOOL)shouldDisplayEntry:(NSDictionary *)entryAttributes {
     return YES;
 }
+
+- (XXTExplorerViewEntryListSortField)explorerSortField {
+    return XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
+}
+
+- (XXTExplorerViewEntryListSortOrder)explorerSortOrder {
+    return XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
+}
+
+- (void)setExplorerSortField:(XXTExplorerViewEntryListSortField)explorerSortField {
+    XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortFieldKey, explorerSortField);
+}
+
+- (void)setExplorerSortOrder:(XXTExplorerViewEntryListSortOrder)explorerSortOrder {
+    XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, explorerSortOrder);
+}
+
+#pragma mark - NSFileManager
 
 - (BOOL)loadEntryListDataWithError:(NSError **)error {
     
@@ -260,8 +278,9 @@
             }
         }
         
-        XXTExplorerViewEntryListSortField sortField = XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
-        XXTExplorerViewEntryListSortOrder sortOrder = XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
+        XXTExplorerViewEntryListSortField sortField = self.explorerSortField;
+        XXTExplorerViewEntryListSortOrder sortOrder = self.explorerSortOrder;
+        
         NSString *sortFieldString = XXTExplorerViewEntryListSortFieldString(sortField);
         NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2) {
             if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {

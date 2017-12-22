@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTExplorerDefaults.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -22,6 +23,9 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
 @property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
+
+@property (nonatomic, assign) XXTExplorerViewEntryListSortField explorerSortField;
+@property (nonatomic, assign) XXTExplorerViewEntryListSortOrder explorerSortOrder;
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;

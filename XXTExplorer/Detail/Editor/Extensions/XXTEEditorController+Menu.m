@@ -79,6 +79,7 @@
 - (void)menuActionCodeBlocks:(UIMenuItem *)senderOrNil {
     NSString *snippetPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"snippets"];
     XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:snippetPath];
+    itemPicker.title = NSLocalizedString(@"Code Snippets", nil);
     itemPicker.delegate = self;
     itemPicker.allowedExtensions = @[ @"snippet" ];
     XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:itemPicker];

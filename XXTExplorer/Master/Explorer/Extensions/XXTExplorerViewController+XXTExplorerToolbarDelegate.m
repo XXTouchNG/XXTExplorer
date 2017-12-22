@@ -60,7 +60,7 @@
 }
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
-    if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) == XXTExplorerViewEntryListSortOrderAsc) {
+    if (self.explorerSortOrder == XXTExplorerViewEntryListSortOrderAsc) {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:YES];
     } else {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusSelected enabled:YES];
@@ -144,14 +144,14 @@
             XXTE_END_IGNORE_PARTIAL
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
-            if (XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc) != XXTExplorerViewEntryListSortOrderAsc) {
-                XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderAsc);
-                XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldDisplayName);
+            if (self.explorerSortOrder != XXTExplorerViewEntryListSortOrderAsc) {
+                self.explorerSortField = XXTExplorerViewEntryListSortFieldDisplayName;
+                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderAsc;
                 toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
             } else {
-                XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
-                XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
-                 toastMessage(self, NSLocalizedString(@"Sort by Creation Date Descend", nil));
+                self.explorerSortField = XXTExplorerViewEntryListSortFieldCreationDate;
+                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderDesc;
+                toastMessage(self, NSLocalizedString(@"Sort by Creation Date Descend", nil));
             }
             [self updateToolbarButton];
             [self loadEntryListData];

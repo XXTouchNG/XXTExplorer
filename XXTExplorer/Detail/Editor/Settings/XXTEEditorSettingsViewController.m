@@ -393,10 +393,10 @@
     NSArray *keyboardSection = @[];
     if (XXTE_PAD) {
         layoutSection = @[ cell5, cell6 ];
-        keyboardSection = @[ cell12, cell13 ];
+        keyboardSection = @[ cell12 ];
     } else {
         layoutSection = @[ fullScreenCell, cell5, cell6 ];
-        keyboardSection = @[ cell12 ];
+        keyboardSection = @[ cell12, cell13 ];
     }
     
     staticCells = @[
