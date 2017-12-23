@@ -322,6 +322,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    [cell setShowsReorderControl:NO];
     return cell;
 }
 

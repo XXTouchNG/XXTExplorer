@@ -10,9 +10,13 @@
 #import "XXTBasePicker.h"
 #import "XXTPickerFactory.h"
 
+#import <objc/runtime.h>
+
 static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
+static const void *ObjectTagKey = &ObjectTagKey;
 
 @interface XXTPickerNavigationController () <UINavigationControllerDelegate>
+@property (nonatomic, assign) BOOL viewTransitionInProgress;
 
 @end
 
@@ -30,6 +34,7 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
 
 - (instancetype)init {
     if (self = [super init]) {
+        self.delegate = self;
         [self setupAppearance];
     }
     return self;
@@ -130,6 +135,7 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
             [UIView animateWithDuration:.2f animations:^{
                 self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom);
             } completion:^(BOOL finished) {
+                
             }];
         }
     } else {
@@ -140,6 +146,76 @@ static CGFloat const XXTPickerNavigationPreviewBarHeight = 44.f;
                 if (finished) self.popupBar.hidden = YES;
             }];
         }
+    }
+    self.viewTransitionInProgress = NO;
+}
+
+#pragma mark - Consistent
+
+- (void)setViewTransitionInProgress:(BOOL)property {
+    _viewTransitionInProgress = property;
+}
+
+- (BOOL)isViewTransitionInProgress {
+    return _viewTransitionInProgress;
+}
+
+#pragma mark - Intercept Pop, Push, PopToRootVC
+/// @name Intercept Pop, Push, PopToRootVC
+
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
+    if (self.viewTransitionInProgress) return nil;
+    if (animated) {
+        self.viewTransitionInProgress = YES;
+    }
+    //-- This is not a recursion, due to method swizzling the call below calls the original  method.
+    return [super popToRootViewControllerAnimated:animated];
+}
+
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.viewTransitionInProgress) return nil;
+    if (animated) {
+        self.viewTransitionInProgress = YES;
+    }
+    //-- This is not a recursion, due to method swizzling the call below calls the original  method.
+    return [super popToViewController:viewController animated:animated];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    if (self.viewTransitionInProgress) return nil;
+    if (animated) {
+        self.viewTransitionInProgress = YES;
+    }
+    //-- This is not a recursion, due to method swizzling the call below calls the original  method.
+    return [super popViewControllerAnimated:animated];
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //-- If we are already pushing a view controller, we dont push another one.
+    if (self.isViewTransitionInProgress == NO) {
+        //-- This is not a recursion, due to method swizzling the call below calls the original  method.
+        [super pushViewController:viewController animated:animated];
+        if (animated) {
+            self.viewTransitionInProgress = YES;
+        }
+    }
+}
+
+// If the user doesnt complete the swipe-to-go-back gesture, we need to intercept it and set the flag to NO again.
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    id<UIViewControllerTransitionCoordinator> tc = navigationController.topViewController.transitionCoordinator;
+    [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        self.viewTransitionInProgress = NO;
+        //--Reenable swipe back gesture.
+        self.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)viewController;
+        [self.interactivePopGestureRecognizer setEnabled:YES];
+    }];
+    //-- Method swizzling wont work in the case of a delegate so:
+    //-- forward this method to the original delegate if there is one different than ourselves.
+    if (navigationController.delegate != self) {
+        [navigationController.delegate navigationController:navigationController
+                                     willShowViewController:viewController
+                                                   animated:animated];
     }
 }
 

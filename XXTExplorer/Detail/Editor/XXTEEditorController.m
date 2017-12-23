@@ -249,19 +249,26 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
     BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
     
-    if (isReadOnlyMode || XXTE_IS_IPAD) // iPad, or read-only
+    if (isReadOnlyMode) // iPad, or read-only
     {
         keyboardRow.textInput = nil;
         textView.inputAccessoryView = nil;
         textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-    } else {
-        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-        if (isKeyboardRowEnabled) {
-            keyboardRow.textInput = textView;
-            textView.inputAccessoryView = keyboardRow;
-        } else {
+    }
+    else {
+        if (XXTE_PAD && XXTE_SYSTEM_9) {
             keyboardRow.textInput = nil;
-            textView.inputAccessoryView = keyboardToolbarRow;
+            textView.inputAccessoryView = nil;
+            textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+        } else {
+            textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+            if (isKeyboardRowEnabled) {
+                keyboardRow.textInput = textView;
+                textView.inputAccessoryView = keyboardRow;
+            } else {
+                keyboardRow.textInput = nil;
+                textView.inputAccessoryView = keyboardToolbarRow;
+            }
         }
     }
     

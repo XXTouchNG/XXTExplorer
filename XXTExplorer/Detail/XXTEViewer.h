@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 #import "XXTEDetailViewController.h"
+#import "UINavigationController+RestoreWorkspace.h"
 
 @protocol XXTEViewer <XXTEDetailViewController>
 

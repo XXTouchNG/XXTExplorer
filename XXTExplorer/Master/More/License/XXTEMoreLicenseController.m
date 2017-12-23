@@ -155,9 +155,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell3.valueLabel.numberOfLines = 2;
     
+#ifdef DEBUG
     XXTEMoreLinkCell *linkCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     linkCell.titleLabel.text = NSLocalizedString(@"Buy License", nil);
     linkCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+#endif
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Version", nil);
@@ -190,7 +192,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     staticCells = @[
                     @[ cell1 ],
                     //
+#ifdef DEBUG
                     @[ cell2, cell3, linkCell ],
+#else
+                    @[ cell2, cell3, /* linkCell */ ],
+#endif
                     //
                     @[ cell4, cell5, cell6, cell7, cell8, cell9, cell10 ]
                     ];

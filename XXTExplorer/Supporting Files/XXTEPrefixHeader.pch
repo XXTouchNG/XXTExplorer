@@ -15,7 +15,8 @@
 #define XXTE_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"") _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
 #define XXTE_END_IGNORE_PARTIAL _Pragma("clang diagnostic pop")
 
-#define XXTE_SYSTEM_8 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_0)
+#define XXTE_SYSTEM_8 (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_8_0)
+#define XXTE_SYSTEM_9 (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_9_0)
 #define XXTE_PAD ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone)
 #define XXTE_COLLAPSED \
 XXTE_START_IGNORE_PARTIAL \

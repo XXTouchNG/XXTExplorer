@@ -339,7 +339,9 @@
             UIView *sourceView = ((UIGestureRecognizer *)sender).view;
             popoverController.sourceView = sourceView;
             popoverController.sourceRect = sourceView.frame;
-            popoverController.canOverlapSourceViewRect = YES;
+            if (@available(iOS 9.0, *)) {
+                popoverController.canOverlapSourceViewRect = YES;
+            }
         } else {
             return;
         }

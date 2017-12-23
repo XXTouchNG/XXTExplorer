@@ -501,6 +501,9 @@
 		0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */; };
 		0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
+		0F9387EF1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9387EE1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m */; };
+		0F9387F01FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9387EE1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m */; };
+		0F9387F11FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9387EE1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m */; };
 		0F97F1CB1FB2A7EA007CA883 /* XXTEMoreApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */; };
 		0F97F1CC1FB2A7EA007CA883 /* XXTEMoreApplicationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2271F063AE20030C6DA /* XXTEMoreApplicationDetailController.m */; };
 		0F97F1CD1FB2A7EA007CA883 /* XXTEMoreApplicationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C2241F06362C0030C6DA /* XXTEMoreApplicationListController.m */; };
@@ -1412,6 +1415,8 @@
 		0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+LGAlertViewDelegate.m"; sourceTree = "<group>"; };
 		0F9273241F375F7800109096 /* XXTExplorerViewController+SharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+SharedInstance.h"; sourceTree = "<group>"; };
 		0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+SharedInstance.m"; sourceTree = "<group>"; };
+		0F9387ED1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RestoreWorkspace.h"; sourceTree = "<group>"; };
+		0F9387EE1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RestoreWorkspace.m"; sourceTree = "<group>"; };
 		0F97F1D31FB30223007CA883 /* 493711B6-F9C0-4508-A505-F63386F09191.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "493711B6-F9C0-4508-A505-F63386F09191.zip"; sourceTree = "<group>"; };
 		0F97F1D51FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip"; sourceTree = "<group>"; };
 		0F9888C91FA753AE00ED33E7 /* XXTEEditorToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorToolbar.h; sourceTree = "<group>"; };
@@ -2969,6 +2974,8 @@
 				0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */,
 				0F4EE36C1FC1A979003FF5FD /* XXTEInstallerViewController.h */,
 				0F4EE36D1FC1A979003FF5FD /* XXTEInstallerViewController.m */,
+				0F9387ED1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.h */,
+				0F9387EE1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m */,
 			);
 			path = Installer;
 			sourceTree = "<group>";
@@ -4541,6 +4548,7 @@
 				0F8EDC471FB1F779003C92D6 /* loadlib.c in Sources */,
 				D68F11FD1FE1291400D86555 /* XXTEShield.m in Sources */,
 				0F8EDC481FB1F779003C92D6 /* lobject.c in Sources */,
+				0F9387F01FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
 				0F8EDC491FB1F779003C92D6 /* lopcodes.c in Sources */,
 				0F8EDC4A1FB1F779003C92D6 /* loslib.c in Sources */,
 				0F8EDC4B1FB1F779003C92D6 /* lparser.c in Sources */,
@@ -4612,6 +4620,7 @@
 				0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */,
 				0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */,
 				0F457F381F87948A001F0951 /* XXTEMasterViewController+Notifications.m in Sources */,
+				0F9387EF1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
 				0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				0FFC8F021FCA8E730012C170 /* XXTEXPAPackageExtractor.m in Sources */,
@@ -4892,6 +4901,7 @@
 				D60FE6801FE2369300954818 /* XXTEMoreLicenseController.m in Sources */,
 				D60FE6811FE2369300954818 /* XXTESymbolViewController.m in Sources */,
 				D60FE6821FE2369300954818 /* XXTEMasterViewController+Notifications.m in Sources */,
+				0F9387F11FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
 				D60FE6831FE2369300954818 /* XXTExplorerEntryImageReader.m in Sources */,
 				D60FE6841FE2369300954818 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				D60FE6851FE2369300954818 /* XXTEXPAPackageExtractor.m in Sources */,

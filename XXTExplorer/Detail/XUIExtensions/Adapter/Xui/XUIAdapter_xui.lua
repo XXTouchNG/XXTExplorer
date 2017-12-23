@@ -25,6 +25,8 @@
 
 local opt = ...
 
+_XUI_VERSION = "1.0"
+
 local __G = _G
 local _ENV = {
     math = {

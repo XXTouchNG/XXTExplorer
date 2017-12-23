@@ -90,7 +90,6 @@
     self.subtitleLabel.attributedText = subtitle;
 }
 
-
 - (void)setProgress:(float)progress {
     self.progressView.progress = progress;
 }

@@ -389,13 +389,18 @@
         }];
     }
     
-    NSArray *layoutSection = @[];
-    NSArray *keyboardSection = @[];
+    NSArray *layoutSection = nil;
+    NSArray *keyboardSection = nil;
+    
     if (XXTE_PAD) {
         layoutSection = @[ cell5, cell6 ];
-        keyboardSection = @[ cell12 ];
     } else {
         layoutSection = @[ fullScreenCell, cell5, cell6 ];
+    }
+    
+    if (XXTE_PAD && XXTE_SYSTEM_9) {
+        keyboardSection = @[ cell12 ];
+    } else {
         keyboardSection = @[ cell12, cell13 ];
     }
     

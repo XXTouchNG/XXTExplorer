@@ -10,4 +10,6 @@
 
 @interface XXTESplitViewController : UISplitViewController
 
+- (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender;
+
 @end

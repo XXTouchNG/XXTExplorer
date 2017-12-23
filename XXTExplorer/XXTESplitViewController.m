@@ -12,6 +12,9 @@
 
 #import "XXTEUserInterfaceDefines.h"
 
+#import "XXTEWorkspaceViewController.h"
+#import "XXTENavigationController.h"
+
 @interface XXTESplitViewController () <UISplitViewControllerDelegate>
 
 @end
@@ -77,6 +80,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender {
+    if (@available(iOS 8.0, *)) {
+        XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+        XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+        [self showDetailViewController:detailNavigationController sender:sender];
+    }
 }
 
 #pragma mark - UISplitViewDelegate

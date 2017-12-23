@@ -597,7 +597,15 @@ typedef enum : NSUInteger {
     }
     
     [self performCleanAfterInstallation];
-    [self.navigationController popViewControllerAnimated:YES];
+    self.installButtonItem.enabled = NO;
+    if (XXTE_COLLAPSED) {
+        if (self == self.navigationController.viewControllers[0]) {
+            [self.navigationController restoreWorkspaceViewController];
+        }
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (void)performCleanAfterInstallation {

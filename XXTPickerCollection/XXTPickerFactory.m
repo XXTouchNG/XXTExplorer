@@ -52,7 +52,7 @@
         }
         if (shouldFinish) {
             if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
-                    [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+                [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
         }
     }
@@ -84,7 +84,8 @@
         if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldEnterNextStep:)]) {
             shouldEnter = [_delegate pickerFactory:self taskShouldEnterNextStep:pickerTask];
         }
-        if (shouldEnter && nextPicker) {
+        if (shouldEnter && nextPicker)
+        {
             [viewController.navigationController pushViewController:nextPicker animated:YES];
         }
     }
@@ -93,7 +94,8 @@
 
 - (void)performFinished:(UIViewController *)viewController {
     
-    if ([viewController respondsToSelector:@selector(pickerResult)] && [viewController respondsToSelector:@selector(pickerTask)]) {
+    if ([viewController respondsToSelector:@selector(pickerResult)] &&
+        [viewController respondsToSelector:@selector(pickerTask)]) {
         id pickerResult = [viewController performSelector:@selector(pickerResult)];
         if (!pickerResult) {
             return;
