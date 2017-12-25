@@ -492,9 +492,7 @@
 		0F8EDCB91FB1F779003C92D6 /* XXTEEditorFontSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6686F311F4ACEB6004403D0 /* XXTEEditorFontSizeCell.xib */; };
 		0F8EDCBA1FB1F779003C92D6 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */; };
 		0F8EDCBB1FB1F779003C92D6 /* XXTEEditorThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */; };
-		0F8EDCBD1FB1F779003C92D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D63F36601F7A42DB00E2386C /* Settings.bundle */; };
 		0F8EDCC91FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCCB1FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist */; };
-		0F8EDCCF1FB209DC003C92D6 /* Settings.Pro.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */; };
 		0F8EDCD11FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCD01FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist */; };
 		0F8EDCD31FB2130D003C92D6 /* XXTExplorerEntryLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */; };
 		0F8EDCD41FB2132D003C92D6 /* XXTEExecutableViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */; };
@@ -521,6 +519,9 @@
 		0F97F1DB1FB30CED007CA883 /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */; };
 		0F97F1DC1FB30CFB007CA883 /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */; };
 		0F9888CB1FA753AE00ED33E7 /* XXTEEditorToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */; };
+		0FA1A4FD1FF13CA00021648B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FA1A4FC1FF13CA00021648B /* Settings.bundle */; };
+		0FA1A4FF1FF13CAC0021648B /* Settings.Pro.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FA1A4FE1FF13CAC0021648B /* Settings.Pro.bundle */; };
+		0FA1A5001FF13CAC0021648B /* Settings.Pro.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FA1A4FE1FF13CAC0021648B /* Settings.Pro.bundle */; };
 		0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABEE1ED641A3003EAD7D /* main.m */; };
 		0FA7ABF21ED641A3003EAD7D /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
 		0FAAB58D1EDA319700897680 /* XXTExplorerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB58C1EDA319700897680 /* XXTExplorerFooterView.m */; };
@@ -992,7 +993,6 @@
 		D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */; };
 		D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3D1F6E5378008B3189 /* XXTImagePickerPhotoCell.xib */; };
 		D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
-		D60FE7891FE2369300954818 /* Settings.Pro.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */; };
 		D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */; };
 		D60FE78B1FE2369300954818 /* Meta.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE1E4361F189A1600055E02 /* Meta.strings */; };
 		D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
@@ -1310,7 +1310,6 @@
 		0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerNavigationController.h; sourceTree = "<group>"; };
 		0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0F65AEE91FE58CCE005BECB4 /* Archive-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Archive-Info.plist"; sourceTree = "<group>"; };
 		0F6679DC1F5162880072C177 /* XXTESnippetViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESnippetViewerController.h; sourceTree = "<group>"; };
 		0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESnippetViewerController.m; sourceTree = "<group>"; };
 		0F6679DF1F51635C0072C177 /* NSString+HTMLEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTMLEscape.h"; sourceTree = "<group>"; };
@@ -1407,7 +1406,6 @@
 		0F8EDCC51FB1F779003C92D6 /* XXTouch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTouch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8EDCCC1FB203AF003C92D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/XXTEBuiltInDefaults.AppStore.plist; sourceTree = "<group>"; };
 		0F8EDCCD1FB203BD003C92D6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.AppStore.plist"; sourceTree = "<group>"; };
-		0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.Pro.bundle; sourceTree = SOURCE_ROOT; };
 		0F8EDCD01FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.AppStore.plist; sourceTree = "<group>"; };
 		0F92731E1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"; sourceTree = "<group>"; };
 		0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XXTExplorerViewController+XXTESwipeTableCellDelegate.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1421,6 +1419,9 @@
 		0F97F1D51FB306D6007CA883 /* 50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "50BDCBCF-BF33-455E-9EE1-64E0FBBE0380.zip"; sourceTree = "<group>"; };
 		0F9888C91FA753AE00ED33E7 /* XXTEEditorToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorToolbar.h; sourceTree = "<group>"; };
 		0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorToolbar.m; sourceTree = "<group>"; };
+		0FA1A4FC1FF13CA00021648B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0FA1A4FE1FF13CAC0021648B /* Settings.Pro.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.Pro.bundle; sourceTree = "<group>"; };
+		0FA1A5011FF13CD10021648B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = "Base.lproj/Archive-Info.plist"; sourceTree = "<group>"; };
 		0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA7ABEE1ED641A3003EAD7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDelegate.h; sourceTree = "<group>"; };
@@ -1716,7 +1717,6 @@
 		D63340611FD6529200B08B4E /* XXTEImageViewerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
 		D63340621FD6529200B08B4E /* XXTEImageViewerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
 		D63B58DA1F56684F00D26475 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		D63F36601F7A42DB00E2386C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		D642B8BF1F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+XXTCheckUpdate.h"; sourceTree = "<group>"; };
 		D642B8C01F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+XXTCheckUpdate.m"; sourceTree = "<group>"; };
 		D642B8C21F906F260006621B /* XXTEUIViewController+XXTResetDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+XXTResetDefaults.h"; sourceTree = "<group>"; };
@@ -2005,14 +2005,13 @@
 			path = Archive;
 			sourceTree = "<group>";
 		};
-		0F072D8C1FB6B15300597EE2 /* ViewControllers */ = {
+		0F072D8C1FB6B15300597EE2 /* ItemPicker */ = {
 			isa = PBXGroup;
 			children = (
-				0F072D8D1FB6B16000597EE2 /* Segment */,
 				0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */,
 				0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */,
 			);
-			path = ViewControllers;
+			path = ItemPicker;
 			sourceTree = "<group>";
 		};
 		0F072D8D1FB6B16000597EE2 /* Segment */ = {
@@ -2116,8 +2115,10 @@
 			isa = PBXGroup;
 			children = (
 				D68F11F91FE128F200D86555 /* XXShield */,
+				0F072D8D1FB6B16000597EE2 /* Segment */,
 				0F61E1641ED7875A003DCC78 /* Views */,
-				0F072D8C1FB6B15300597EE2 /* ViewControllers */,
+				0F072D8C1FB6B15300597EE2 /* ItemPicker */,
+				D6E140971F5032AB00D78CB9 /* PickerCollection */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
 			);
 			path = Common;
@@ -2564,7 +2565,6 @@
 				59918F7D2218C7F23C834EB4 /* Pods */,
 				0FA7ABEB1ED641A3003EAD7D /* Products */,
 				0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */,
-				D6E140971F5032AB00D78CB9 /* XXTPickerCollection */,
 				525124A3753CAD3DB3A0D077 /* .gitignore */,
 			);
 			sourceTree = "<group>";
@@ -2593,7 +2593,6 @@
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
-				0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */,
 			);
 			path = XXTExplorer;
 			sourceTree = "<group>";
@@ -2604,11 +2603,11 @@
 				D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */,
 				0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */,
 				D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */,
-				D63F36601F7A42DB00E2386C /* Settings.bundle */,
-				0F8EDCCE1FB209DC003C92D6 /* Settings.Pro.bundle */,
+				0FA1A4FC1FF13CA00021648B /* Settings.bundle */,
+				0FA1A4FE1FF13CAC0021648B /* Settings.Pro.bundle */,
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
 				0FC598A61FB216A1001F918B /* Info.AppStore.plist */,
-				0F65AEE91FE58CCE005BECB4 /* Archive-Info.plist */,
+				0FA1A5021FF13CD10021648B /* Archive-Info.plist */,
 				0FE1629C1F3C8FFC003064B2 /* InfoPlist.strings */,
 				0F3508C21F166A69000403FD /* Localizable.strings */,
 				0FE1E4361F189A1600055E02 /* Meta.strings */,
@@ -2616,6 +2615,7 @@
 				0FA7ABEE1ED641A3003EAD7D /* main.m */,
 				0FC598A91FB2189A001F918B /* main.AppStore.m */,
 				D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */,
+				0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -3514,7 +3514,7 @@
 			path = AnimatedImage;
 			sourceTree = "<group>";
 		};
-		D6E140971F5032AB00D78CB9 /* XXTPickerCollection */ = {
+		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
 				D6E140981F5032AB00D78CB9 /* Application */,
@@ -3536,7 +3536,7 @@
 				0FFBC1301F5C391300690C8F /* XXTPickerSnippet.h */,
 				0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */,
 			);
-			path = XXTPickerCollection;
+			path = PickerCollection;
 			sourceTree = "<group>";
 		};
 		D6E140981F5032AB00D78CB9 /* Application */ = {
@@ -3804,6 +3804,7 @@
 				0F8EDC7F1FB1F779003C92D6 /* LaunchScreen.storyboard in Resources */,
 				0F8EDC801FB1F779003C92D6 /* Blackboard.tmTheme in Resources */,
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
+				0FA1A4FD1FF13CA00021648B /* Settings.bundle in Resources */,
 				0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */,
 				0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */,
@@ -3888,7 +3889,6 @@
 				0F8ECD461FE802A900A5457C /* Oceanic.png in Resources */,
 				0F8ECD241FE7FE0800A5457C /* Mac Classic.png in Resources */,
 				0F8ECD4E1FE802A900A5457C /* Ciapre.png in Resources */,
-				0F8EDCBD1FB1F779003C92D6 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3943,7 +3943,6 @@
 				0FB0090A1F4364AF00097E9C /* Kimbie (Light).tmTheme in Resources */,
 				0FBAFF441F6E5378008B3189 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,
-				0F8EDCCF1FB209DC003C92D6 /* Settings.Pro.bundle in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
 				0F8ECD7E1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
@@ -4007,6 +4006,7 @@
 				0F8B4E1C1FBAF8E1009ED646 /* xml.tmLanguage in Resources */,
 				D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */,
 				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
+				0FA1A4FF1FF13CAC0021648B /* Settings.Pro.bundle in Resources */,
 				0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */,
 				0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */,
 				D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */,
@@ -4035,11 +4035,11 @@
 				D60FE7801FE2369300954818 /* SourceCodePro-Bold.otf in Resources */,
 				D60FE7811FE2369300954818 /* SourceCodePro-BoldIt.otf in Resources */,
 				D60FE7821FE2369300954818 /* SourceCodePro-It.otf in Resources */,
+				0FA1A5001FF13CAC0021648B /* Settings.Pro.bundle in Resources */,
 				D60FE7831FE2369300954818 /* SourceCodePro-Regular.otf in Resources */,
 				D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */,
 				D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */,
-				D60FE7891FE2369300954818 /* Settings.Pro.bundle in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
 				D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */,
@@ -5150,6 +5150,14 @@
 			name = XXTEBuiltInDefaults.AppStore.plist;
 			sourceTree = "<group>";
 		};
+		0FA1A5021FF13CD10021648B /* Archive-Info.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0FA1A5011FF13CD10021648B /* Base */,
+			);
+			name = "Archive-Info.plist";
+			sourceTree = "<group>";
+		};
 		0FC598A61FB216A1001F918B /* Info.AppStore.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -5215,7 +5223,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.AppStore;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -5330,7 +5338,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.AppStore;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -5487,7 +5495,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
@@ -5580,7 +5588,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
@@ -5622,7 +5630,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
@@ -5665,7 +5673,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = XXTExplorer/XXTExplorer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
