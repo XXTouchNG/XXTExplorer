@@ -2,15 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>theme</key>
-	<dict>
-		<key>tintColor</key>
-		<string>#3498db</string>
-		<key>navigationBarColor</key>
-		<string>#3498db</string>
-		<key>selectedColor</key>
-		<string>#3498db18</string>
-	</dict>
 	<key>items</key>
 	<array>
 		<dict>
@@ -24,7 +15,7 @@
 			<string>About</string>
 			<key>label</key>
 			<string>XXTouch
-v1.2-3</string>
+v1.2-4</string>
 			<key>value</key>
 			<string>https://www.xxtouch.com
 2016-2017 © XXTouch Team.
@@ -59,31 +50,27 @@ All Rights Reserved.</string>
 			<string></string>
 		</dict>
 		<dict>
-			<key>cell</key>
-			<string>Button</string>
-			<key>label</key>
-			<string>Mail Feedback</string>
 			<key>action</key>
 			<string>SendMail:</string>
 			<key>args</key>
 			<dict>
-				<key>subject</key>
-				<string>[Feedback] XXTouch v1.2-3</string>
-				<key>toRecipients</key>
-				<array>
-					<string>bug@xxtouch.com</string>
-				</array>
 				<key>ccRecipients</key>
 				<array>
 					<string>i.82@qq.com</string>
 				</array>
+				<key>subject</key>
+				<string>[Feedback] XXTouch v1.2-4</string>
+				<key>toRecipients</key>
+				<array>
+					<string>bug@xxtouch.com</string>
+				</array>
 			</dict>
-		</dict>
-		<dict>
 			<key>cell</key>
 			<string>Button</string>
 			<key>label</key>
-			<string>Official QQ Group</string>
+			<string>Mail Feedback</string>
+		</dict>
+		<dict>
 			<key>action</key>
 			<string>OpenURL:</string>
 			<key>args</key>
@@ -91,6 +78,10 @@ All Rights Reserved.</string>
 				<key>url</key>
 				<string>https://jq.qq.com/?_wv=1027&amp;k=5m6QaQh</string>
 			</dict>
+			<key>cell</key>
+			<string>Button</string>
+			<key>label</key>
+			<string>Official QQ Group</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -99,28 +90,37 @@ All Rights Reserved.</string>
 			<string></string>
 		</dict>
 		<dict>
-			<key>cell</key>
-			<string>Button</string>
-			<key>label</key>
-			<string>Check Update</string>
 			<key>action</key>
 			<string>XXTCheckUpdate:</string>
 			<key>args</key>
 			<dict/>
-		</dict>
-		<dict>
 			<key>cell</key>
 			<string>Button</string>
 			<key>label</key>
-			<string>Reset Defaults</string>
+			<string>Check Update</string>
+		</dict>
+		<dict>
 			<key>action</key>
 			<string>XXTResetDefaults:</string>
 			<key>args</key>
 			<dict/>
+			<key>cell</key>
+			<string>Button</string>
+			<key>label</key>
+			<string>Reset Defaults</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>
 	<string>About</string>
+	<key>theme</key>
+	<dict>
+		<key>navigationBarColor</key>
+		<string>#3498db</string>
+		<key>selectedColor</key>
+		<string>#3498db18</string>
+		<key>tintColor</key>
+		<string>#3498db</string>
+	</dict>
 	<key>title</key>
 	<string>About</string>
 </dict>

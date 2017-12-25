@@ -1,8 +1,15 @@
 #!/bin/bash
 
+if [ $# != 1 ] ; then 
+echo "Usage: $0 DaemonVersion"
+exit 1; 
+fi 
+
+# 1
 BVER="${1}"
 
-find . -name "*.plist" -exec plutil -lint {} \;
+# 2
+find . -name "*.plist" -exec plutil -lint {} \; > /dev/null
 
 # 3
 plutil -replace "DAEMON_VERSION" -string "${BVER}" "XXTExplorer/Defines/XXTEAppDefines.plist"
@@ -27,7 +34,7 @@ plutil -insert "items.6" -xml "<dict><key>cell</key><string>Button</string><key>
 plutil -insert "items.6" -xml "<dict><key>cell</key><string>Button</string><key>label</key><string>Mail Feedback</string><key>action</key><string>SendMail:</string><key>args</key><dict><key>subject</key><string>[Feedback] XXTouch v${BVER}</string><key>toRecipients</key><array><string>bug@xxtouch.com</string></array><key>ccRecipients</key><array><string>i.82@qq.com</string></array></dict></dict>" "Settings.Pro.bundle/About.plist"
 
 # 6
-plutil -remove "PreferenceSpecifiers.6" "Settings.bundle/About.plist"
-plutil -remove "PreferenceSpecifiers.6" "Settings.Pro.bundle/About.plist"
-plutil -insert "PreferenceSpecifiers.6" -xml "<dict><key>Type</key><string>PSTitleValueSpecifier</string><key>DefaultValue</key><string>${BVER}</string><key>Title</key><string>Version</string><key>Key</key><string>sbVersion</string></dict>" "Settings.bundle/About.plist"
-plutil -insert "PreferenceSpecifiers.6" -xml "<dict><key>Type</key><string>PSTitleValueSpecifier</string><key>DefaultValue</key><string>${BVER}</string><key>Title</key><string>Version</string><key>Key</key><string>sbVersion</string></dict>" "Settings.Pro.bundle/About.plist"
+plutil -remove "PreferenceSpecifiers.3" "Settings.bundle/Root.plist"
+plutil -remove "PreferenceSpecifiers.3" "Settings.Pro.bundle/Root.plist"
+plutil -insert "PreferenceSpecifiers.3" -xml "<dict><key>Type</key><string>PSTitleValueSpecifier</string><key>DefaultValue</key><string>${BVER}</string><key>Title</key><string>Version</string><key>Key</key><string>sbVersion</string></dict>" "Settings.bundle/Root.plist"
+plutil -insert "PreferenceSpecifiers.3" -xml "<dict><key>Type</key><string>PSTitleValueSpecifier</string><key>DefaultValue</key><string>${BVER}</string><key>Title</key><string>Version</string><key>Key</key><string>sbVersion</string></dict>" "Settings.Pro.bundle/Root.plist"
