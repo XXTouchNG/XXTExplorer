@@ -683,6 +683,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
         [dateFormatter setDateFormat:@"yyyy-MM-dd\nHH:mm:ss"];
         
         NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
@@ -745,11 +746,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     CGFloat scale = 3.0;
     
     NSString *licenseCode = self.licenseField.text;
-    UIFont *licenseFont = [UIFont fontWithName:@"CamingoCode-Regular" size:36.0 * scale];
+    UIFont *licenseFont = [UIFont fontWithName:@"Menlo-Regular" size:32.0 * scale];
     if (!licenseCode || !licenseFont) return;
     
     NSString *deviceSN = licenseDictionary[@"data"][@"deviceSerialNumber"];
-    UIFont *deviceSNFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    UIFont *deviceSNFont = [UIFont fontWithName:@"Menlo-Regular" size:14.0 * scale];
     if (!deviceSN || !deviceSNFont) return;
     
     NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
@@ -783,7 +784,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     }
     
     NSString *nowString = [NSString stringWithFormat:@"%@ %@", nowDateString, intervalString];
-    UIFont *nowFont = [UIFont fontWithName:@"CamingoCode-Regular" size:14.0 * scale];
+    UIFont *nowFont = [UIFont fontWithName:@"Menlo-Regular" size:14.0 * scale];
     if (!nowString || !nowFont) return;
     
     CGPDFDocumentRef pdf = CGPDFDocumentCreateWithURL((CFURLRef)previewURL);
@@ -809,9 +810,16 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         CGContextRestoreGState(ctx);
         
         // Drawing commands
-        [licenseCode drawAtPoint:CGPointMake(37.0 * scale, 197.0 * scale) withAttributes:@{ NSFontAttributeName: licenseFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:.92f alpha:1.f] }];
-        [deviceSN drawAtPoint:CGPointMake(345.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: deviceSNFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
-        [nowString drawAtPoint:CGPointMake(12.0 * scale, 256.0 * scale) withAttributes:@{ NSFontAttributeName: nowFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] }];
+        NSDictionary *licenseCodeAttr = @{ NSFontAttributeName: licenseFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:.92f alpha:1.f] };
+        CGSize licenseSize = [licenseCode sizeWithAttributes:licenseCodeAttr];
+        [licenseCode drawAtPoint:CGPointMake(pageFrame.size.width / 2.0 - licenseSize.width / 2.0, 197.0 * scale) withAttributes:licenseCodeAttr];
+        
+        NSDictionary *deviceSNAttr = @{ NSFontAttributeName: deviceSNFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] };
+        CGSize deviceSNSize = [deviceSN sizeWithAttributes:deviceSNAttr];
+        [deviceSN drawAtPoint:CGPointMake(pageFrame.size.width - 12.0 * scale - deviceSNSize.width, 256.0 * scale) withAttributes:deviceSNAttr];
+        
+        NSDictionary *nowAttr = @{ NSFontAttributeName: nowFont, NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:.33f] };
+        [nowString drawAtPoint:CGPointMake(12.0 * scale, 256.0 * scale) withAttributes:nowAttr];
         
     }
     
