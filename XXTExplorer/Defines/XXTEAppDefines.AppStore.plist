@@ -5,7 +5,7 @@
 	<key>PRODUCT_NAME</key>
 	<string>X.X.T.E.</string>
 	<key>DAEMON_VERSION</key>
-	<string>1.2-2</string>
+	<string>1.2-3</string>
 	<key>REQUIRED_SUBDIRECTORIES</key>
 	<array>
 		<string>log</string>

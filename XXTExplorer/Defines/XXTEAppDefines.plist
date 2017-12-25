@@ -2,65 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>PRODUCT_NAME</key>
-	<string>XXTouch</string>
-	<key>CHANNEL_ID</key>
-	<string>Cydia™</string>
+	<key>ACTIVATOR_URL</key>
+	<string>cydia://package/libactivator</string>
+	<key>ADD1S_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
 	<key>ALIYUN_APPKEY</key>
 	<string>23559128</string>
 	<key>ALIYUN_APPSECRERT</key>
 	<string>5f3cadc6a99078eb0ef3b5dccec5fec7</string>
 	<key>APP_CONNECTION_TIMEOUT</key>
 	<real>10</real>
-	<key>XXTOUCH_APP_PATH</key>
-	<string>/Applications/XXTExplorer.app</string>
-	<key>UPDATE_PACKAGE</key>
-	<string>com.1func.xxtouch.ios</string>
-	<key>REMOTE_API</key>
-	<string>http://%@:46952/</string>
-	<key>CYDIA_URL</key>
-	<string>cydia://url/https://cydia.saurik.com/api/share#?source=https://apt.xxtouch.com/&amp;package=com.1func.xxtouch.ios</string>
-	<key>ACTIVATOR_URL</key>
-	<string>cydia://package/libactivator</string>
-	<key>FEVER_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/lua/scripts</string>
-	<key>MAIN_PATH</key>
-	<string>/private/var/mobile/Media/1ferver</string>
-	<key>RESPRING_CHECK_PATH</key>
-	<string>/private/var/tmp/1ferver_need_respring</string>
 	<key>AUTH_API</key>
 	<string>https://api.xxtouch.com/api/</string>
-	<key>XXTOUCH_BUY_URL</key>
-	<string>https://www.xxtouch.com/buy/</string>
-	<key>DAEMON_VERSION</key>
-	<string>1.2-2</string>
-	<key>UPDATE_API</key>
-	<string>https://apt.xxtouch.com/Packages.gz</string>
-	<key>LOCAL_API</key>
-	<string>http://127.0.0.1:46952/</string>
-	<key>ADD1S_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
-	<key>REQUIRED_SUBDIRECTORIES</key>
+	<key>AVAILABLE_BUNDLE_READER</key>
 	<array>
-		<string>caches</string>
-		<string>log</string>
-		<string>uicfg</string>
-		<string>lib</string>
-		<string>web</string>
-		<string>res</string>
-		<string>bin</string>
-		<string>lua</string>
-		<string>lua/scripts</string>
-		<string>snippets</string>
-	</array>
-	<key>INITIAL_RESOURCES</key>
-	<array>
-		<dict>
-			<key>from</key>
-			<string>B4FDE60B-30B3-4035-B874-619C896626BE</string>
-			<key>to</key>
-			<string>snippets</string>
-		</dict>
+		<string>XXTExplorerEntryXPPReader</string>
 	</array>
 	<key>AVAILABLE_VIEWER</key>
 	<array>
@@ -77,15 +33,59 @@
 		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>
 	</array>
-	<key>AVAILABLE_BUNDLE_READER</key>
-	<array>
-		<string>XXTExplorerEntryXPPReader</string>
-	</array>
-	<key>LOG_PATH</key>
-	<string>log</string>
-	<key>LICENSE_LOG_PATH</key>
-	<string>log/bind_code.log</string>
+	<key>CHANNEL_ID</key>
+	<string>Cydia™</string>
+	<key>CYDIA_URL</key>
+	<string>cydia://url/https://cydia.saurik.com/api/share#?source=https://apt.xxtouch.com/&amp;package=com.1func.xxtouch.ios</string>
+	<key>DAEMON_VERSION</key>
+	<string>1.2-4</string>
 	<key>EXPLORER_INITIAL_PATH</key>
 	<string>lua/scripts</string>
+	<key>FEVER_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/lua/scripts</string>
+	<key>INITIAL_RESOURCES</key>
+	<array>
+		<dict>
+			<key>from</key>
+			<string>B4FDE60B-30B3-4035-B874-619C896626BE</string>
+			<key>to</key>
+			<string>snippets</string>
+		</dict>
+	</array>
+	<key>LICENSE_LOG_PATH</key>
+	<string>log/bind_code.log</string>
+	<key>LOCAL_API</key>
+	<string>http://127.0.0.1:46952/</string>
+	<key>LOG_PATH</key>
+	<string>log</string>
+	<key>MAIN_PATH</key>
+	<string>/private/var/mobile/Media/1ferver</string>
+	<key>PRODUCT_NAME</key>
+	<string>XXTouch</string>
+	<key>REMOTE_API</key>
+	<string>http://%@:46952/</string>
+	<key>REQUIRED_SUBDIRECTORIES</key>
+	<array>
+		<string>caches</string>
+		<string>log</string>
+		<string>uicfg</string>
+		<string>lib</string>
+		<string>web</string>
+		<string>res</string>
+		<string>bin</string>
+		<string>lua</string>
+		<string>lua/scripts</string>
+		<string>snippets</string>
+	</array>
+	<key>RESPRING_CHECK_PATH</key>
+	<string>/private/var/tmp/1ferver_need_respring</string>
+	<key>UPDATE_API</key>
+	<string>https://apt.xxtouch.com/Packages.gz</string>
+	<key>UPDATE_PACKAGE</key>
+	<string>com.1func.xxtouch.ios</string>
+	<key>XXTOUCH_APP_PATH</key>
+	<string>/Applications/XXTExplorer.app</string>
+	<key>XXTOUCH_BUY_URL</key>
+	<string>https://www.xxtouch.com/buy/</string>
 </dict>
 </plist>
