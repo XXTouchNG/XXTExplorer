@@ -5651,7 +5651,7 @@
 					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WARNING_CFLAGS = "-Wpartial-availability";
@@ -5693,7 +5693,7 @@
 					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WARNING_CFLAGS = "-Wpartial-availability";
