@@ -5642,7 +5642,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "XXTExplorer/Supporting Files/XXTEPrefixHeader.pch";
-				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Archive-Info.plist";
+				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Base.lproj/Archive-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -5684,7 +5684,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PREFIX_HEADER = "XXTExplorer/Supporting Files/XXTEPrefixHeader.pch";
-				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Archive-Info.plist";
+				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Base.lproj/Archive-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
