@@ -117,31 +117,36 @@
         }
 #endif
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
-            XXTE_START_IGNORE_PARTIAL
-            if (@available(iOS 8.0, *)) {
-                UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
-                controller.delegate = self;
-                [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
-                                         image:nil
-                                         order:UIDocumentMenuOrderFirst
-                                       handler:^{
-                                           [self presentImagePickerController:buttonItem];
-                                       }];
-                [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
-                                         image:nil
-                                         order:UIDocumentMenuOrderFirst
-                                       handler:^{
-                                           [self presentNewDocumentViewController:buttonItem];
-                                       }];
-                controller.modalPresentationStyle = UIModalPresentationPopover;
-                UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
-                popoverController.barButtonItem = buttonItem;
-                popoverController.backgroundColor = [UIColor whiteColor];
-                [self.navigationController presentViewController:controller animated:YES completion:nil];
+            BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, YES);
+            if (allowsImport) {
+                XXTE_START_IGNORE_PARTIAL
+                if (@available(iOS 8.0, *)) {
+                    UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+                    controller.delegate = self;
+                    [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
+                                             image:nil
+                                             order:UIDocumentMenuOrderFirst
+                                           handler:^{
+                                               [self presentImagePickerController:buttonItem];
+                                           }];
+                    [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
+                                             image:nil
+                                             order:UIDocumentMenuOrderFirst
+                                           handler:^{
+                                               [self presentNewDocumentViewController:buttonItem];
+                                           }];
+                    controller.modalPresentationStyle = UIModalPresentationPopover;
+                    UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
+                    popoverController.barButtonItem = buttonItem;
+                    popoverController.backgroundColor = [UIColor whiteColor];
+                    [self.navigationController presentViewController:controller animated:YES completion:nil];
+                } else {
+                    [self presentNewDocumentViewController:buttonItem];
+                }
+                XXTE_END_IGNORE_PARTIAL
             } else {
                 [self presentNewDocumentViewController:buttonItem];
             }
-            XXTE_END_IGNORE_PARTIAL
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
             if (self.explorerSortOrder != XXTExplorerViewEntryListSortOrderAsc) {

@@ -82,6 +82,23 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerAllowsImportFromAlbum</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Allows Import from Album</string>
+			<key>description</key>
+			<string>Disable this feature to avoid calling helper application.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<true/>
 			<key>key</key>
 			<string>XXTExplorerViewEntryListHideDotItemKey</string>
