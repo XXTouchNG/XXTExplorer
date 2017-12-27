@@ -168,7 +168,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+#ifdef APPSTORE
     [self setTabBarVisible:NO animated:YES completion:nil];
+#endif
 }
 
 #pragma mark - Agents
