@@ -57,6 +57,9 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
+#ifdef APPSTORE
+    self.hidesBottomBarWhenPushed = YES;
+#endif
     {
         NSArray *explorerUserDefaults = XXTEBuiltInDefaultsObject(@"EXPLORER_USER_DEFAULTS");
         for (NSDictionary *explorerUserDefault in explorerUserDefaults) {

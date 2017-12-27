@@ -12,6 +12,9 @@
 
 @interface XXTEMasterViewController : UITabBarController
 
+- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
+- (BOOL)tabBarIsVisible;
+
 #ifndef APPSTORE
 - (void)checkUpdate;
 #endif

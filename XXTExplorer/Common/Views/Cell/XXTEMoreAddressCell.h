@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTEAutoLabel.h"
 
 static NSString * const XXTEMoreAddressCellReuseIdentifier = @"XXTEMoreAddressCellReuseIdentifier";
 
 @interface XXTEMoreAddressCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet XXTEAutoLabel *addressLabel;
 
 @end

@@ -85,6 +85,9 @@
 		0F5EB5351F0A88600016016A /* XUIAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5331F0A88600016016A /* XUIAboutCell.m */; };
 		0F5EB5361F0A88600016016A /* XUIAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EB5341F0A88600016016A /* XUIAboutCell.xib */; };
 		0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */; };
+		0F5FE3C51FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5FE3C41FF3F7DF00D54F26 /* XXTEAutoLabel.m */; };
+		0F5FE3C61FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5FE3C41FF3F7DF00D54F26 /* XXTEAutoLabel.m */; };
+		0F5FE3C71FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5FE3C41FF3F7DF00D54F26 /* XXTEAutoLabel.m */; };
 		0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
 		0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */; };
 		0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */; };
@@ -1293,6 +1296,8 @@
 		0F5EB5341F0A88600016016A /* XUIAboutCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XUIAboutCell.xib; sourceTree = "<group>"; };
 		0F5EB53D1F0A9EF40016016A /* XXTECommonWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTECommonWebViewController.h; sourceTree = "<group>"; };
 		0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECommonWebViewController.m; sourceTree = "<group>"; };
+		0F5FE3C31FF3F7DF00D54F26 /* XXTEAutoLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAutoLabel.h; sourceTree = "<group>"; };
+		0F5FE3C41FF3F7DF00D54F26 /* XXTEAutoLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEAutoLabel.m; sourceTree = "<group>"; };
 		0F6063D81F111E2E0087822E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		0F6063DB1F1129960087822E /* XXTEMoreBootScriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreBootScriptController.h; sourceTree = "<group>"; };
 		0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreBootScriptController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2454,6 +2459,8 @@
 		0F61E1641ED7875A003DCC78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0F5FE3C31FF3F7DF00D54F26 /* XXTEAutoLabel.h */,
+				0F5FE3C41FF3F7DF00D54F26 /* XXTEAutoLabel.m */,
 				0FCC2ACC1F13114300C50A48 /* Cell */,
 				0FCC2ACB1F13112C00C50A48 /* Gesture */,
 				0FBAFF451F6E6F58008B3189 /* StatusBar */,
@@ -4347,6 +4354,7 @@
 				0F8EDB631FB1F779003C92D6 /* XXTEEditorPreprocessor.m in Sources */,
 				0F8EDB641FB1F779003C92D6 /* XXTImagePickerPhotoCell.m in Sources */,
 				0F8EDB651FB1F779003C92D6 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
+				0F5FE3C61FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */,
 				0F8EDB661FB1F779003C92D6 /* UINavigationController+StatusBar.m in Sources */,
 				0F8EDB671FB1F779003C92D6 /* UIImagePickerController+StatusBar.m in Sources */,
 				0F8EDB681FB1F779003C92D6 /* XXTExplorerItemDetailViewController.m in Sources */,
@@ -4633,6 +4641,7 @@
 				0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
+				0F5FE3C51FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */,
 				D6E141281F5032AB00D78CB9 /* XXTPixelCropView.m in Sources */,
 				0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */,
 				0F51CB191F61289600150D6D /* XXTEEditorTypeSetter.m in Sources */,
@@ -4914,6 +4923,7 @@
 				D60FE68C1FE2369300954818 /* ICRegularExpression.m in Sources */,
 				D60FE68D1FE2369300954818 /* XXTECommonWebViewController.m in Sources */,
 				D60FE68E1FE2369300954818 /* XXTEMoreAddressCell.m in Sources */,
+				0F5FE3C71FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */,
 				D60FE68F1FE2369300954818 /* XXTPixelCropView.m in Sources */,
 				D60FE6901FE2369300954818 /* XXTEMoreNavigationController.m in Sources */,
 				D60FE6911FE2369300954818 /* XXTEEditorTypeSetter.m in Sources */,

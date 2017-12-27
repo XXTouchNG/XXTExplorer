@@ -39,7 +39,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.addressLabel.preferredMaxLayoutWidth = self.addressLabel.bounds.size.width;
+    self.addressLabel.preferredMaxLayoutWidth = self.bounds.size.width;
 }
 
 @end
