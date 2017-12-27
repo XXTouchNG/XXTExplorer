@@ -42,6 +42,9 @@
 "%lu/%lu" = "%lu/%lu";
 
 /* No comment provided by engineer. */
+"(0)" = "(0)";
+
+/* No comment provided by engineer. */
 "(Un)Comment" = "切换注释";
 
 /* No comment provided by engineer. */
@@ -1373,6 +1376,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"(0)" = "(0)";

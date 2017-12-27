@@ -1,0 +1,23 @@
+return {
+  title = "只是脚本包内的另一个 UI";
+  header = "另一个 UI";
+  subheader = "由 XXTouch 提供的优雅的脚本配置界面解决方案";
+  defaults = "com.yourcompany.A-Script-Bundle"; -- 配置存储的位置，读取配置的时候需要用到
+  theme = {
+    navigationBarColor = '0x3498db'; -- 记得加上引号
+  };
+  items = {
+    {
+      cell = "Group";
+      label = "开关";
+    };
+    {
+      default = true;
+      label = "启用另一个功能";
+      cell = "Switch";
+      key = "enabled2"; -- 该项存储的键，读取该键配置时需要用到
+      icon = "res/16.png";
+    };
+  };
+};
+

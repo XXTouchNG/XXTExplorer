@@ -21,6 +21,7 @@
 #import "XXTENavigationController.h"
 #import "XXTExplorerEntryImageReader.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTEAppDefines.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <LGAlertView/LGAlertView.h>
@@ -314,43 +315,48 @@
 #pragma mark - Tap Gestures
 
 - (void)placeholderViewTapped:(id)sender {
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.image"] inMode:UIDocumentPickerModeImport];
-        controller.delegate = self;
-        [controller addOptionWithTitle:NSLocalizedStringFromTable(@"Photos Library", @"XXTPickerCollection", nil)
-                                 image:nil
-                                 order:UIDocumentMenuOrderFirst
-                               handler:^{
-                                   [self selectImageFromCameraRoll];
-                               }];
-        [controller addOptionWithTitle:NSLocalizedStringFromTable(@"File System", @"XXTPickerCollection", nil)
-                                 image:nil
-                                 order:UIDocumentMenuOrderFirst
-                               handler:^{
-                                   [self selectImageFromFileSystem];
-                               }];
-        controller.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
-        if ([sender isKindOfClass:[UIBarButtonItem class]]) {
-            UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
-            popoverController.barButtonItem = barButtonItem;
-        } else if ([sender isKindOfClass:[UIGestureRecognizer class]]) {
-            UIView *sourceView = ((UIGestureRecognizer *)sender).view;
-            popoverController.sourceView = sourceView;
-            popoverController.sourceRect = sourceView.frame;
-            if (@available(iOS 9.0, *)) {
-                popoverController.canOverlapSourceViewRect = YES;
+    BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, YES);
+    if (allowsImport) {
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 8.0, *)) {
+            UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.image"] inMode:UIDocumentPickerModeImport];
+            controller.delegate = self;
+            [controller addOptionWithTitle:NSLocalizedStringFromTable(@"Photos Library", @"XXTPickerCollection", nil)
+                                     image:nil
+                                     order:UIDocumentMenuOrderFirst
+                                   handler:^{
+                                       [self selectImageFromCameraRoll];
+                                   }];
+            [controller addOptionWithTitle:NSLocalizedStringFromTable(@"File System", @"XXTPickerCollection", nil)
+                                     image:nil
+                                     order:UIDocumentMenuOrderFirst
+                                   handler:^{
+                                       [self selectImageFromFileSystem];
+                                   }];
+            controller.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
+            if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+                UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
+                popoverController.barButtonItem = barButtonItem;
+            } else if ([sender isKindOfClass:[UIGestureRecognizer class]]) {
+                UIView *sourceView = ((UIGestureRecognizer *)sender).view;
+                popoverController.sourceView = sourceView;
+                popoverController.sourceRect = sourceView.frame;
+                if (@available(iOS 9.0, *)) {
+                    popoverController.canOverlapSourceViewRect = YES;
+                }
+            } else {
+                return;
             }
+            popoverController.backgroundColor = [UIColor whiteColor];
+            [self.navigationController presentViewController:controller animated:YES completion:nil];
         } else {
-            return;
+            [self selectImageFromCameraRoll];
         }
-        popoverController.backgroundColor = [UIColor whiteColor];
-        [self.navigationController presentViewController:controller animated:YES completion:nil];
+        XXTE_END_IGNORE_PARTIAL
     } else {
         [self selectImageFromCameraRoll];
     }
-    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)tripleFingerTapped:(UITapGestureRecognizer *)sender {

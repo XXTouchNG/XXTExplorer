@@ -1,0 +1,121 @@
+return {
+  defaults = "com.yourcompany.A-Script-Bundle"; -- 配置存储的位置，读取配置的时候需要用到
+  title = "一个子页面";
+  items = {
+    {
+      cell = "Group";
+      label = "图像";
+    };
+    {
+      cell = "Image";
+      path = "res/bd_logo1_31bdc765.png";
+      height = 160;
+    };
+    {
+      cell = "AnimatedImage";
+      path = "res/b6d21727a66f856f79dc9b6ef8e7b4d6.gif";
+      height = 250;
+    };
+    {
+      cell = "Group";
+      label = "开关";
+    };
+    {
+      default = true;
+      cell = "Switch";
+      key = "switch1";
+      label = "子页面的一个开关";
+    };
+    {
+      cell = "TitleValue";
+      label = "版本";
+      value = "1.2";
+    };
+    {
+      cell = "TitleValue";
+      label = "动态控件，取值和上面的开关关联";
+      key = "switch1";
+    };
+    {
+      cell = "Group";
+      label = "选择器";
+    };
+    {
+      cell = "Button";
+      label = "打开二维码扫描器";
+      key = "qr1";
+      action = "ScanQRCode:";
+      kwargs = {};
+    };
+    {
+      cell = "TitleValue";
+      label = "扫码内容";
+      key = "qr1";
+    };
+    {
+      cell = "TitleValue";
+      label = "应用程序选择器";
+      key = "apppicker";
+      snippet = "snippets/app.snippet";
+    };
+    {
+      cell = "TitleValue";
+      label = "多个应用选择器";
+      key = "appspicker";
+      snippet = "snippets/apps.snippet";
+    };
+    {
+      cell = "TitleValue";
+      label = "地理位置选择器";
+      key = "locationpicker";
+      snippet = "snippets/location.snippet";
+    };
+    {
+      cell = "TitleValue";
+      label = "按键选择器";
+      key = "keypicker";
+      snippet = "snippets/key.snippet";
+    };
+    {
+      cell = "TitleValue";
+      label = "选择器综合测试";
+      key = "testpicker";
+      snippet = "snippets/test.snippet";
+    };
+    {
+      cell = "File";
+      key = "file1";
+      allowedExtensions = { "lua"; "xxt"; "xpp" };
+    };
+    {
+      cell = "Group";
+      label = "时间与日期";
+    };
+    {
+      cell = "DateTime";
+      key = "datetime1";
+    };
+    {
+      cell = "Group";
+      label = "动作";
+    };
+    {
+      cell = "Button";
+      action = "LaunchScript:";
+      label = "运行一个脚本";
+      args = {
+        path = "sub/xui-script.lua";
+      };
+    };
+    {
+      cell = "Group";
+      label = "文本域";
+    };
+    {
+      default = "You can enter any text here...";
+      cell = "Textarea";
+      key = "textarea";
+      label = "一个文本域";
+    };
+  };
+};

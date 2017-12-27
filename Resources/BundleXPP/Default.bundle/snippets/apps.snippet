@@ -1,0 +1,16 @@
+
+return {
+	name = '选择多个应用',
+	arguments = {
+		{
+			type = 'apps',
+			default = (function()
+				local t = plist.read('/private/var/mobile/Media/1ferver/uicfg/com.yourcompany.A-Script-Bundle.plist') or {}
+				return t.appspicker
+			end)(),
+		},
+	},
+	generator = function(bids)
+		return bids
+	end,
+}

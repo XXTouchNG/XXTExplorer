@@ -1,0 +1,17 @@
+
+return {
+	name = "测试片段",
+	arguments = {
+		{
+			type = "key",
+			subtitle = "选择一个按键",
+			default = (function()
+				local t = plist.read('/private/var/mobile/Media/1ferver/uicfg/com.yourcompany.A-Script-Bundle.plist') or {}
+				return t.keypicker
+			end)(),
+		},
+	},
+	generator = function(key)
+		return key
+	end,
+}

@@ -1,0 +1,18 @@
+
+return {
+	name = "测试片段",
+	arguments = {
+		{type = "pos", title = "标题", subtitle = "选一个点"},
+ 		{type = "color", title = "标题", subtitle = "取一处颜色"},
+		{type = "poscolor", title = "标题", subtitle = "再取一处位置及颜色"},
+		{type = "poscolors", title = "标题", subtitle = "取多处位置和颜色"},
+		{type = "rect", title = "标题", subtitle = "取区域"},
+		{type = "app", title = "标题", subtitle = "选择一个 App"},
+		{type = "apps", title = "标题", subtitle = "选择几个 App"},
+		{type = "loc", subtitle = "选择一个 GPS 位置"},
+		{type = "key", subtitle = "选择一个按键"},
+	},
+	generator = function(...)
+		return {...}
+	end,
+}

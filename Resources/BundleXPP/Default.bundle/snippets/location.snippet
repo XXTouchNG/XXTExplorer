@@ -1,0 +1,17 @@
+
+return {
+	name = '位置',
+	arguments = {
+		{
+			type = 'loc',
+			subtitle = '选择一个位置',
+			default = (function()
+				local t = plist.read('/private/var/mobile/Media/1ferver/uicfg/com.yourcompany.A-Script-Bundle.plist') or {}
+				return t.locationpicker
+			end)(),
+		},
+	},
+	generator = function(loc)
+		return loc
+	end,
+}
