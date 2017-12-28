@@ -7,7 +7,12 @@
 //
 
 #import "XXTEViewer.h"
-#import <XUI/XUIViewController.h>
+
+typedef enum : NSUInteger {
+    XXTEObjectContainerDisplayModeNone = 0,
+    XXTEObjectContainerDisplayModeCount,
+    XXTEObjectContainerDisplayModeDescription,
+} XXTEObjectContainerDisplayMode;
 
 /**
  *
@@ -19,7 +24,7 @@
  * it will push another XXTEObjectViewController and set its RootObject to the value of that cell.
  *
  **/
-@interface XXTEObjectViewController : XUIViewController <UITableViewDelegate, UITableViewDataSource, XXTEViewer>
+@interface XXTEObjectViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, XXTEViewer>
 
 + (NSArray <Class> *)supportedTypes;
 
@@ -27,6 +32,8 @@
 @property (nonatomic, copy, readonly) id RootObject;
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, assign) UITableViewStyle tableViewStyle;
+
+@property (nonatomic, assign) XXTEObjectContainerDisplayMode containerDisplayMode;
 
 /**
  * Create a new instance with the root object.

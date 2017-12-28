@@ -121,10 +121,16 @@
     else
     {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if ([pairValue respondsToSelector:@selector(count)]) {
-            NSUInteger childCount = [pairValue count];
-            cell.valueLabel.textColor = XXTE_COLOR;
-            cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
+        if (self.containerDisplayMode == XXTEObjectContainerDisplayModeNone) {
+            cell.valueLabel.text = @"";
+        } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeCount) {
+            if ([pairValue respondsToSelector:@selector(count)]) {
+                NSUInteger childCount = [pairValue count];
+                cell.valueLabel.textColor = XXTE_COLOR;
+                cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
+            }
+        } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeDescription) {
+            cell.valueLabel.text = [[[pairValue description] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
         }
     }
 }
@@ -163,9 +169,10 @@
             else
             {
                 XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:pairValue];
-                objectViewController.tableViewStyle = self.tableViewStyle;
                 objectViewController.title = cell.titleLabel.text;
                 objectViewController.entryBundle = self.entryBundle;
+                objectViewController.tableViewStyle = self.tableViewStyle;
+                objectViewController.containerDisplayMode = self.containerDisplayMode;
                 [self.navigationController pushViewController:objectViewController animated:YES];
             }
         }

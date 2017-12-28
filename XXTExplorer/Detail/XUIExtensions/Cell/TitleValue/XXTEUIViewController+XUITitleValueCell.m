@@ -46,7 +46,8 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
         XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:extendedValue];
         objectViewController.title = titleValueCell.textLabel.text;
         objectViewController.entryBundle = self.bundle;
-        objectViewController.cellFactory.theme = self.theme;
+        objectViewController.tableViewStyle = self.theme.tableViewStyle;
+        objectViewController.containerDisplayMode = XXTEObjectContainerDisplayModeCount;
         [self.navigationController pushViewController:objectViewController animated:YES];
     }
 }

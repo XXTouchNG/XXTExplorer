@@ -23,7 +23,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="65.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="382" translatesAutoresizingMaskIntoConstraints="NO" id="AOl-0S-nyh" customClass="XXTEAutoLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOl-0S-nyh" customClass="XXTEAutoLabel">
                         <rect key="frame" x="28" y="13" width="334" height="40"/>
                         <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="15"/>
                         <nil key="textColor"/>

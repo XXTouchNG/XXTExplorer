@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

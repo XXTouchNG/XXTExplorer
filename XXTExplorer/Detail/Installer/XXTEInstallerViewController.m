@@ -485,9 +485,10 @@ typedef enum : NSUInteger {
                  [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
             XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
-            objectViewController.tableViewStyle = UITableViewStylePlain;
-            objectViewController.entryBundle = self.temporarilyEntryBundle;
             objectViewController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
+            objectViewController.entryBundle = self.temporarilyEntryBundle;
+            objectViewController.tableViewStyle = UITableViewStylePlain;
+            objectViewController.containerDisplayMode = XXTEObjectContainerDisplayModeDescription;
             [self.navigationController pushViewController:objectViewController animated:YES];
         }
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
