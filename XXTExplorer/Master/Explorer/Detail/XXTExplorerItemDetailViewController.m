@@ -246,12 +246,83 @@ static int sizingCancelFlag = 0;
         if (cell1) section1.cells = @[ cell1 ];
         section1.cellHeights = @[ @(50.f) ];
         section1.sectionTitle = NSLocalizedString(@"Filename", nil);
-        section1.sectionFooter = NSLocalizedString(@"Tap to edit filename.", nil);
         
         if (section1) [mutableDynamicSections addObject:section1];
     }
     
-    // #2.1 - Where (Required)
+    // #2 - Extended
+    if (!entrySymlink)
+    {
+        NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
+        NSMutableArray <NSNumber *> *extendedHeights = [[NSMutableArray alloc] init];
+        NSMutableArray *extendedObjects = [[NSMutableArray alloc] init];
+        if (entryReader &&
+            entryReader.metaDictionary &&
+            entryReader.metaKeys) {
+            
+            NSArray <Class> *supportedTypes = [NSObject xui_baseTypes];
+            NSDictionary *extendedDictionary = entryReader.metaDictionary;
+            NSArray <NSString *> *displayExtendedKeys = entryReader.metaKeys;
+            
+            for (NSString *extendedKey in displayExtendedKeys)
+            {
+                id extendedValue = extendedDictionary[extendedKey];
+                if (!extendedValue) continue;
+                
+                Class valueClass = [extendedValue class];
+                BOOL supportedValue = NO;
+                for (Class supportedType in supportedTypes) {
+                    if ([valueClass isSubclassOfClass:supportedType]) {
+                        supportedValue = YES;
+                        break;
+                    }
+                }
+                if (supportedValue)
+                {
+                    XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
+                    NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    if (!localizedKey)
+                    localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    cell.titleLabel.text = localizedKey;
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    cell.valueLabel.text = [extendedValue xui_stringValue];
+                    
+                    if (cell) [extendedCells addObject:cell];
+                    [extendedHeights addObject:@(44.f)];
+                    [extendedObjects addObject:[NSNull null]];
+                }
+                else
+                {
+                    XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+                    NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    if (!localizedKey)
+                    localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
+                    cell.titleLabel.text = localizedKey;
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    
+                    if (cell) [extendedCells addObject:cell];
+                    [extendedHeights addObject:@(44.f)];
+                    [extendedObjects addObject:extendedValue];
+                }
+                
+            }
+        }
+        
+        if (extendedCells.count > 0) {
+            XXTExplorerDynamicSection *section5 = [[XXTExplorerDynamicSection alloc] init];
+            section5.identifier = kXXTEDynamicSectionIdentifierSectionExtended;
+            section5.cells = [[NSArray alloc] initWithArray:extendedCells];
+            section5.cellHeights = [[NSArray alloc] initWithArray:extendedHeights];
+            section5.relatedObjects = [[NSArray alloc] initWithArray:extendedObjects];
+            section5.sectionTitle = NSLocalizedString(@"Extended", nil);
+            section5.sectionFooter = @"";
+            
+            if (section5) [mutableDynamicSections addObject:section5];
+        }
+        
+    }
+    
+    // #3 - Where (Required)
     
     {
         XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
@@ -267,7 +338,7 @@ static int sizingCancelFlag = 0;
         if (section2) [mutableDynamicSections addObject:section2];
     }
     
-    // #3 - Original (Correct Symbolic Link)
+    // #4 - Original (Correct Symbolic Link)
     
     if (entrySymlink && !entryMaskBrokenSymlink)
     {
@@ -302,7 +373,7 @@ static int sizingCancelFlag = 0;
         
     }
     
-    // #4 - General (Required)
+    // #5 - General (Required)
     
     {
         NSDateFormatter *previewFormatter = [[NSDateFormatter alloc] init];
@@ -412,78 +483,6 @@ static int sizingCancelFlag = 0;
         section4.sectionFooter = @"";
         
         if (section4) [mutableDynamicSections addObject:section4];
-        
-    }
-    
-    // #5 - Extended
-    if (!entrySymlink)
-    {
-        NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
-        NSMutableArray <NSNumber *> *extendedHeights = [[NSMutableArray alloc] init];
-        NSMutableArray *extendedObjects = [[NSMutableArray alloc] init];
-        if (entryReader &&
-            entryReader.metaDictionary &&
-            entryReader.metaKeys) {
-            
-            NSArray <Class> *supportedTypes = [NSObject xui_baseTypes];
-            NSDictionary *extendedDictionary = entryReader.metaDictionary;
-            NSArray <NSString *> *displayExtendedKeys = entryReader.metaKeys;
-            
-            for (NSString *extendedKey in displayExtendedKeys)
-            {
-                id extendedValue = extendedDictionary[extendedKey];
-                if (!extendedValue) continue;
-                
-                Class valueClass = [extendedValue class];
-                BOOL supportedValue = NO;
-                for (Class supportedType in supportedTypes) {
-                    if ([valueClass isSubclassOfClass:supportedType]) {
-                        supportedValue = YES;
-                        break;
-                    }
-                }
-                if (supportedValue)
-                {
-                    XXTEMoreTitleValueCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
-                    NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
-                    if (!localizedKey)
-                        localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
-                    cell.titleLabel.text = localizedKey;
-                    cell.accessoryType = UITableViewCellAccessoryNone;
-                    cell.valueLabel.text = [extendedValue xui_stringValue];
-                    
-                    if (cell) [extendedCells addObject:cell];
-                    [extendedHeights addObject:@(44.f)];
-                    [extendedObjects addObject:[NSNull null]];
-                }
-                else
-                {
-                    XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
-                    NSString *localizedKey = [mainBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
-                    if (!localizedKey)
-                        localizedKey = [entryBundle localizedStringForKey:(extendedKey) value:nil table:(@"Meta")];
-                    cell.titleLabel.text = localizedKey;
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                    
-                    if (cell) [extendedCells addObject:cell];
-                    [extendedHeights addObject:@(44.f)];
-                    [extendedObjects addObject:extendedValue];
-                }
-                
-            }
-        }
-        
-        if (extendedCells.count > 0) {
-            XXTExplorerDynamicSection *section5 = [[XXTExplorerDynamicSection alloc] init];
-            section5.identifier = kXXTEDynamicSectionIdentifierSectionExtended;
-            section5.cells = [[NSArray alloc] initWithArray:extendedCells];
-            section5.cellHeights = [[NSArray alloc] initWithArray:extendedHeights];
-            section5.relatedObjects = [[NSArray alloc] initWithArray:extendedObjects];
-            section5.sectionTitle = NSLocalizedString(@"Extended", nil);
-            section5.sectionFooter = @"";
-            
-            if (section5) [mutableDynamicSections addObject:section5];
-        }
         
     }
     
@@ -765,8 +764,10 @@ static int sizingCancelFlag = 0;
                  [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
             id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
             XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
-            objectViewController.entryBundle = self.entryBundle;
             objectViewController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
+            objectViewController.entryBundle = self.entryBundle;
+            objectViewController.tableViewStyle = UITableViewStyleGrouped;
+            objectViewController.containerDisplayMode = XXTEObjectContainerDisplayModeDescription;
             [self.navigationController pushViewController:objectViewController animated:YES];
         }
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {

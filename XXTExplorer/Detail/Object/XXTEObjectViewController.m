@@ -117,13 +117,7 @@
     }
     
     _tableView = ({
-        XUITheme *theme = self.theme;
-        UITableView *tableView = nil;
-        if (theme) {
-            tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:theme.tableViewStyle];
-        } else {
-            tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:self.tableViewStyle];
-        }
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:self.tableViewStyle];
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

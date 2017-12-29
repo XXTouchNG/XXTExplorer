@@ -87,7 +87,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Lessica/TOWebViewController.git
 
 SPEC CHECKSUMS:
-  Bugly: 00c8701f2bebab4887771ba43afbf51334009742
+  Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: c4268dea4295b585d711055dbcd87bfa82badd5f

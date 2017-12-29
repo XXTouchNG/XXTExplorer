@@ -351,11 +351,11 @@
             popoverController.backgroundColor = [UIColor whiteColor];
             [self.navigationController presentViewController:controller animated:YES completion:nil];
         } else {
-            [self selectImageFromCameraRoll];
+            [self selectImageFromFileSystem];
         }
         XXTE_END_IGNORE_PARTIAL
     } else {
-        [self selectImageFromCameraRoll];
+        [self selectImageFromFileSystem];
     }
 }
 

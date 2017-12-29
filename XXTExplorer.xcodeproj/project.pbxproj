@@ -1063,6 +1063,9 @@
 		D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
 		D645F9D41F42A68C00E3247B /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
 		D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */; };
+		D64C42FB1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
+		D64C42FC1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
+		D64C42FD1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
 		D6686F271F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */; };
 		D6686F2D1F4AC920004403D0 /* XXTEEditorFontSizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F2C1F4AC920004403D0 /* XXTEEditorFontSizeView.m */; };
@@ -1743,6 +1746,8 @@
 		D645F9D31F42A68C00E3247B /* lua.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = lua.tmLanguage; sourceTree = "<group>"; };
 		D645F9D51F42A77A00E3247B /* XXTEEditorTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextStorage.h; sourceTree = "<group>"; };
 		D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextStorage.m; sourceTree = "<group>"; };
+		D64C42F91FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+DisableFuckingSmartXXX.h"; sourceTree = "<group>"; };
+		D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+DisableFuckingSmartXXX.m"; sourceTree = "<group>"; };
 		D660855D1F3C666700E87B3C /* CamingoCode-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Bold.ttf"; sourceTree = "<group>"; };
 		D660855E1F3C666700E87B3C /* CamingoCode-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-BoldItalic.ttf"; sourceTree = "<group>"; };
 		D660855F1F3C666700E87B3C /* CamingoCode-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CamingoCode-Italic.ttf"; sourceTree = "<group>"; };
@@ -2465,6 +2470,10 @@
 				0FCC2ACB1F13112C00C50A48 /* Gesture */,
 				0FBAFF451F6E6F58008B3189 /* StatusBar */,
 				0FCC2ACA1F13112200C50A48 /* Toast */,
+				D64C42F91FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.h */,
+				D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */,
+				0F71A2721FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.h */,
+				0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2917,8 +2926,6 @@
 				0FB2209B1F824A9200156C3B /* XXTEEditorPreprocessor.m */,
 				D6F3EBDE1FE3A12600197858 /* XXTEEditorTextContainer.h */,
 				D6F3EBDF1FE3A12600197858 /* XXTEEditorTextContainer.m */,
-				0F71A2721FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.h */,
-				0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */,
 			);
 			path = TextKit;
 			sourceTree = "<group>";
@@ -4375,6 +4382,7 @@
 				0F8EDB781FB1F779003C92D6 /* XXTImagePickerController.m in Sources */,
 				0F8EDB791FB1F779003C92D6 /* XXTPickerSnippet.m in Sources */,
 				0F8EDB7A1FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
+				D64C42FC1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */,
 				0F8EDB7B1FB1F779003C92D6 /* XXTExplorerEntryWebReader.m in Sources */,
 				0F8EDB7C1FB1F779003C92D6 /* XXTPixelImage.m in Sources */,
 				0F8EDB7D1FB1F779003C92D6 /* XXTPixelColor.m in Sources */,
@@ -4790,6 +4798,7 @@
 				D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */,
 				0F71A2741FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				0F40C1AC1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */,
+				D64C42FB1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */,
 				52512FE25BE41A7BDF59743D /* SKPattern.m in Sources */,
 				D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */,
 				D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */,
@@ -5072,6 +5081,7 @@
 				D60FE7231FE2369300954818 /* XXTPickerNavigationController.m in Sources */,
 				0F71A2761FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				D60FE7241FE2369300954818 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */,
+				D64C42FD1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */,
 				D60FE7251FE2369300954818 /* SKPattern.m in Sources */,
 				D60FE7261FE2369300954818 /* XUIAnimatedImageCell.m in Sources */,
 				D6CB81BA1FE262320033EA2F /* XXTEEditorSearchField.m in Sources */,
@@ -5283,7 +5293,6 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/XXShield-iOS8.0\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
-					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -5397,7 +5406,6 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/XXShield-iOS8.0\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
-					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5532,7 +5540,6 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
-					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -5624,7 +5631,6 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
-					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5666,7 +5672,6 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/XXShield-iOS7.0\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS7.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
-					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
@@ -5708,7 +5713,6 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/XXShield-iOS7.0\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS7.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
-					"$(PROJECT_DIR)/XXTPickerCollection/Application",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
