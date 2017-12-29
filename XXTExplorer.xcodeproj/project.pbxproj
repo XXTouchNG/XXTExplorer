@@ -1369,7 +1369,7 @@
 		0F8811601FB6AF430004F20C /* XXTESegmentedButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedButton.m; sourceTree = "<group>"; };
 		0F8811631FB6AF640004F20C /* XXTESegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESegmentedControl.h; sourceTree = "<group>"; };
 		0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedControl.m; sourceTree = "<group>"; };
-		0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml.tmLanguage; sourceTree = "<group>"; };
+		0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = xml.tmLanguage; sourceTree = "<group>"; };
 		0F8ECD231FE7FE0800A5457C /* Mac Classic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Mac Classic.png"; sourceTree = "<group>"; };
 		0F8ECD251FE8016100A5457C /* Cobalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cobalt.png; sourceTree = "<group>"; };
 		0F8ECD271FE8016900A5457C /* Blackboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blackboard.png; sourceTree = "<group>"; };

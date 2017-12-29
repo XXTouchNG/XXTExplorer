@@ -300,7 +300,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGRect rx = [UIScreen mainScreen].bounds;
+    CGRect rx = collectionView.bounds;
     CGFloat totalWidth = MIN(rx.size.width, rx.size.height);
     CGFloat width = (totalWidth - (4 * (_nColumnCount - 1))) / _nColumnCount;
     return CGSizeMake(width, width);

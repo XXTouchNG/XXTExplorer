@@ -38,7 +38,7 @@
 @end
 
 @implementation XXTEScanViewController {
-    BOOL firstTimeLoaded;
+//    BOOL firstTimeLoaded;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -88,7 +88,7 @@
     }
 
     [self fetchVideoPermission];
-    [self reloadCaptureSceneWithSize:self.view.bounds.size];
+//    [self reloadCaptureSceneWithSize:self.view.bounds.size];
 }
 
 - (void)reloadCaptureSceneWithSize:(CGSize)toSize {
@@ -170,9 +170,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (firstTimeLoaded) {
+//    if (firstTimeLoaded) {
         [self reloadCaptureSceneWithSize:self.view.bounds.size];
-    }
+//    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -181,9 +181,9 @@
         blockInteractionsWithDelay(self, NO, .6f);
         [self performSelector:@selector(startAnimation) withObject:nil afterDelay:.6f];
     }
-    if (!firstTimeLoaded) {
-        firstTimeLoaded = YES;
-    }
+//    if (!firstTimeLoaded) {
+//        firstTimeLoaded = YES;
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -390,7 +390,7 @@
         imagePicker.navigationBar.barTintColor = XXTE_COLOR;
         imagePicker.navigationBar.tintColor = [UIColor whiteColor];
         imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-        imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;
+        imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
         imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
     } else {

@@ -22,8 +22,15 @@
     controller.delegate = self;
     controller.nResultType = XXT_PICKER_RESULT_ASSET;
     controller.nMaxCount = XXT_NO_LIMIT_SELECT;
-    controller.nColumnCount = 4;
-    controller.modalPresentationStyle = UIModalPresentationPageSheet;
+    if (XXTE_PAD) {
+        controller.nColumnCount = 6;
+    } else if (XXTE_IS_IPHONE_6_BELOW) {
+        controller.nColumnCount = 3;
+    } else {
+        controller.nColumnCount = 4;
+    }
+    controller.modalPresentationStyle = UIModalPresentationFormSheet;
+    controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
@@ -37,6 +44,9 @@
 - (void)didSelectPhotosFromImagePickerController:(XXTImagePickerController *)picker
                                           result:(NSArray *)aSelected
 {
+    if (aSelected.count == 0) {
+        return; // do not accept or dismiss
+    }
     UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     [picker dismissViewControllerAnimated:YES completion:^{
