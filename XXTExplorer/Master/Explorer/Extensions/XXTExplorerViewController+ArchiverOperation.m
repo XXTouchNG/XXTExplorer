@@ -20,6 +20,15 @@
 #import <sys/stat.h>
 #import <objc/runtime.h>
 
+#ifdef APPSTORE
+#import <UnrarKit/UnrarKit.h>
+#endif
+
+typedef enum : NSUInteger {
+    XXTEArchiveTypeZip = 0,
+    XXTEArchiveTypeRar,
+} XXTEArchiveType;
+
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
 @end
@@ -207,6 +216,13 @@
     });
 }
 
+static int32_t const kZipArchiveHeaderLocalDirMagic = 0x04034b50;
+static int32_t const kZipArchiveHeaderCentralDirMagic = 0x02014b50;
+
+#ifdef APPSTORE
+static int32_t const kRarArchiveHeaderMagic = 0x21726152;
+#endif
+
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath {
     
     // entryPath UTF-8 representation
@@ -292,6 +308,12 @@
         return 0;
     };
     
+#ifdef APPSTORE
+    BOOL (^did_extract_rar)(URKFileInfo *, CGFloat) = ^BOOL(URKFileInfo *currentFile, CGFloat percentArchiveDecompressed) {
+        return (did_extract(currentFile.filename.fileSystemRepresentation, &percentArchiveDecompressed) == 0);
+    };
+#endif
+    
     void (^completionBlock)(BOOL, NSArray <NSString *> *, NSError *) = ^(BOOL result, NSArray <NSString *> *createdEntries, NSError *error) {
         @strongify(self);
         if (error) {
@@ -330,6 +352,38 @@
         }];
     };
     
+    FILE *fp = fopen(entryPath.fileSystemRepresentation, "rb");
+    if (!fp) {
+        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot open archive file \"%@\".", nil), entryPath]}];
+        completionBlock(NO, @[], checkError);
+        return;
+    }
+    int32_t header_magic;
+    size_t numOfUnits = fread(&header_magic, 4, 1, fp);
+    if (numOfUnits <= 0) {
+        fclose(fp);
+        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot recognize the format of archive file \"%@\".", nil), entryPath]}];
+        completionBlock(NO, @[], checkError);
+        return;
+    }
+    XXTEArchiveType archiveType;
+    if (header_magic == kZipArchiveHeaderLocalDirMagic ||
+        header_magic == kZipArchiveHeaderCentralDirMagic) {
+        archiveType = XXTEArchiveTypeZip;
+    }
+#ifdef APPSTORE
+    else if (header_magic == kRarArchiveHeaderMagic) {
+        archiveType = XXTEArchiveTypeRar;
+    }
+#endif
+    else {
+        fclose(fp);
+        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot process archive file \"%@\" (0x%02x).", nil), entryPath, header_magic]}];
+        completionBlock(NO, @[], checkError);
+        return;
+    }
+    fclose(fp);
+    
     // busy lock
     if (self.busyOperationProgressFlag)
         return;
@@ -355,10 +409,34 @@
                 
             } else {
                 
-                int arg = 2;
-                int status = zip_extract(from, to, will_extract, did_extract, &arg);
-                
-                result = (status == 0);
+                if (archiveType == XXTEArchiveTypeZip) {
+                    int arg = 2;
+                    int status = zip_extract(from, to, will_extract, did_extract, &arg);
+                    
+                    result = (status == 0);
+                }
+#ifdef APPSTORE
+                else if (archiveType == XXTEArchiveTypeRar) {
+                    
+                    NSString *fromPath = [[NSString alloc] initWithUTF8String:from];
+                    URKArchive *rarArchive = [[URKArchive alloc] initWithPath:fromPath error:&error];
+                    
+                    result = (error == nil);
+                    if ([rarArchive isPasswordProtected]) {
+                        result = NO;
+                        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\": Password protected archive is not supported.", nil), entryPath]}];
+                    } else {
+                        if (rarArchive) {
+                            NSString *toPath = [[NSString alloc] initWithUTF8String:to];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                            result = [rarArchive extractFilesTo:toPath overwrite:YES progress:did_extract_rar error:&error];
+#pragma clang diagnostic pop
+                        }
+                    }
+                    
+                }
+#endif
                 
                 // error handling
                 if (NO == result) {
@@ -366,7 +444,7 @@
                     if (!self.busyOperationProgressFlag) {
                         error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unarchiving process terminated: User interrupt occurred.", nil)}];
                     } else {
-                        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:status userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath]}];
+                        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath]}];
                     }
                     
                 }

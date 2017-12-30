@@ -14,6 +14,10 @@
 #import "NSString+QueryItems.h"
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
 
+#import "XXTExplorerEntryParser.h"
+#import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTEUserInterfaceDefines.h"
+
 @implementation XXTExplorerViewController (Notification)
 
 - (void)registerNotifications {
@@ -31,6 +35,9 @@
     if ([aNotification.name isEqualToString:XXTENotificationEvent]) {
         NSDictionary *userInfo = aNotification.userInfo;
         NSString *eventType = userInfo[XXTENotificationEventType];
+        if (![eventType isKindOfClass:[NSString class]]) {
+            return;
+        }
         if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] ||
             [eventType isEqualToString:XXTENotificationEventTypeFormSheetDismissed]
             ) {
@@ -38,9 +45,31 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             NSString *movedPath = aNotification.object;
             if (movedPath) {
-                [self.tableView reloadData]; // fix indexPath misplace
+                [self.tableView reloadData];
+                // fix indexPath misplace
+                
                 if ([movedPath isKindOfClass:[NSString class]]) {
-                    [self selectCellEntryAtPath:movedPath];
+                    
+                    // instant view/run
+                    NSNumber *instantRun = userInfo[XXTENotificationViewImmediately];
+                    
+                    if ([instantRun isKindOfClass:[NSNumber class]] &&
+                        [instantRun boolValue] == YES)
+                    {
+                        NSError *entryError = nil;
+                        NSDictionary *entryAttributes = [[self.class explorerEntryParser] entryOfPath:movedPath withError:&entryError];
+                        
+                        if (!entryError) {
+                            [self performViewerActionForEntry:entryAttributes];
+                        } else {
+                            toastMessage(self, entryError.localizedDescription);
+                        }
+                    }
+                    else
+                    {
+                        // select moved path
+                        [self selectCellEntryAtPath:movedPath];
+                    }
                 }
             }
         }
@@ -56,8 +85,10 @@
 
 - (void)selectCellEntryAtPath:(NSString *)entryPath {
     NSIndexPath *indexPath = [self indexPathForEntryAtPath:entryPath];
-    [self setEditing:YES animated:YES];
-    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    if (indexPath != nil) {
+        [self setEditing:YES animated:YES];
+        [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
     [self updateToolbarStatus];
 }
 

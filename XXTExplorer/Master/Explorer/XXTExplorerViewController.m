@@ -467,13 +467,12 @@
                     }
                 }
                 else if (
-                           [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
-                           [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
+                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
                 {
                     if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
                         if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
-                            UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
-                            [self tableView:tableView showDetailController:viewer];
+                            [self performViewerActionForEntry:entryAttributes];
                         } else {
                             XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryAttributes];
                             openWithController.delegate = self;
@@ -526,6 +525,11 @@
             }
         }
     }
+}
+
+- (void)performViewerActionForEntry:(NSDictionary *)entryAttributes {
+    UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
+    [self tableView:self.tableView showDetailController:viewer];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

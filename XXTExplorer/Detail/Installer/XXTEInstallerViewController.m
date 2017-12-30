@@ -551,12 +551,12 @@ typedef enum : NSUInteger {
         NSString *bundleTestPath = [[self.entryPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:bundleTestName];
         struct stat testStat;
         if (0 == lstat(bundleTestPath.UTF8String, &testStat)) {
-            LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Replace", nil)
-                                                             message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), bundleTestName]
+            LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Overwrite Confirm", nil)
+                                                             message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" exists, overwrite or rename it?", nil), bundleTestName]
                                                                style:LGAlertViewStyleActionSheet
                                                         buttonTitles:@[ NSLocalizedString(@"Rename", nil) ]
                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                              destructiveButtonTitle:NSLocalizedString(@"Replace Now", nil)
+                                              destructiveButtonTitle:NSLocalizedString(@"Overwrite", nil)
                                                        actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
                                                            [alertView dismissAnimated];
                                                            if (index == 0)

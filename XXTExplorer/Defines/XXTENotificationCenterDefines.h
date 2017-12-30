@@ -15,6 +15,7 @@ static NSString * const XXTENotificationShortcut = @"XXTENotificationShortcut";
 // XXTENotificationEvent
 
 static NSString * const XXTENotificationEventType = @"XXTENotificationEventType";
+static NSString * const XXTENotificationViewImmediately = @"XXTENotificationViewImmediately"; // NSNumber - Bool
 static NSString * const XXTENotificationDetailDisplayMode = @"XXTENotificationDetailDisplayMode"; // NSNumber
 
 // Global - XXTENotificationEventType

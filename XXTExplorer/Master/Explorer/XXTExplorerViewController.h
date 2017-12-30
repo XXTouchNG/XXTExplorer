@@ -55,4 +55,8 @@ typedef enum : NSUInteger {
 - (BOOL)showsHomeSeries;
 - (BOOL)shouldDisplayEntry:(NSDictionary *)entryAttributes;
 
+#pragma mark - fast open
+
+- (void)performViewerActionForEntry:(NSDictionary *)entryAttributes;
+
 @end

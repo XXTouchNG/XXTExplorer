@@ -7,11 +7,13 @@
 #import "XXTEDownloadViewController.h"
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreLinkCell.h"
+#import "XXTEMoreSwitchCell.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
 #import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
+#import "UIControl+BlockTarget.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexSource = 0,
@@ -35,6 +37,10 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSFileHandle *downloadFileHandle;
 @property (nonatomic, strong) NSURLConnection *downloadURLConnection;
 @property (nonatomic, weak) LGAlertView *currentAlertView;
+
+/*
+@property (nonatomic, assign) BOOL viewImmediately;
+ */
 
 @end
 
@@ -74,6 +80,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
+//    _viewImmediately = YES;
     busyOperationProgressFlag = NO;
     _downloadFileManager = [[NSFileManager alloc] init];
 //    _downloadData = [[NSMutableData alloc] initWithLength:0];
@@ -127,9 +134,22 @@ typedef enum : NSUInteger {
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell2.addressLabel.text = self.targetPath;
     
+    /*
+    XXTEMoreSwitchCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cell3.titleLabel.text = NSLocalizedString(@"Instant View / Run", nil);
+    cell3.optionSwitch.on = self.viewImmediately;
+    {
+        @weakify(self);
+        [cell3.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
+            self.viewImmediately = ((UISwitch *)sender).on;
+        }];
+    }
+    */
+    
     staticCells = @[
                     @[ cell1 ],
-                    @[ cell2 ]
+                    @[ cell2, /* cell3 */ ]
                     ];
 }
 
@@ -270,12 +290,19 @@ typedef enum : NSUInteger {
     struct stat targetStat;
     if (0 == lstat([targetPath fileSystemRepresentation], &targetStat)) {
         LGAlertView *existsAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Overwrite Confirm", nil)
-                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" exists, overwrite it?", nil), targetName]
+                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" exists, overwrite or rename it?", nil), targetName]
                                                                     style:LGAlertViewStyleActionSheet
-                                                             buttonTitles:nil
+                                                             buttonTitles:@[ NSLocalizedString(@"Rename", nil) ]
                                                         cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                   destructiveButtonTitle:NSLocalizedString(@"Yes", nil)
-                                                            actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                   destructiveButtonTitle:NSLocalizedString(@"Overwrite", nil)
+                                                            actionHandler:^(LGAlertView * _Nonnull alertView1, NSUInteger index, NSString * _Nullable title) {
+                                                                [alertView1 dismissAnimated];
+                                                                if (index == 0)
+                                                                {
+                                                                    self.overwrite = NO;
+                                                                    [self alertViewLaunch:alertView1];
+                                                                }
+                                                            } cancelHandler:^(LGAlertView * _Nonnull alertView1) {
                                                                 [alertView1 dismissAnimated];
                                                             } destructiveHandler:^(LGAlertView * _Nonnull alertView1) {
                                                                 self.overwrite = YES;
@@ -303,13 +330,14 @@ typedef enum : NSUInteger {
 
 - (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title
 {
-    if (index == 0) {
+    if (index == 0 || index == 1) {
         [alertView dismissAnimated];
         if (XXTE_PAD) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
+        BOOL instantRun = (index == 0);
         [self dismissViewControllerAnimated:YES completion:^{
-            
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self.targetPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved, XXTENotificationViewImmediately: @(instantRun)}]];
         }];
     }
 }
@@ -538,7 +566,24 @@ typedef enum : NSUInteger {
             }
         }
     } else {
-        // TODO: rename?
+        // Rename: modify target path
+        NSString *currentPath = [targetPath stringByDeletingLastPathComponent];
+        NSString *lastComponent = [targetPath lastPathComponent];
+        NSString *lastComponentName = [lastComponent stringByDeletingPathExtension];
+        NSString *lastComponentExt = [lastComponent pathExtension];
+        NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+        NSUInteger testedIndex = 2;
+        struct stat inboxTestStat;
+        while (0 == lstat(testedPath.UTF8String, &inboxTestStat)) {
+            lastComponent = [[NSString stringWithFormat:@"%@-%lu", lastComponentName, (unsigned long)testedIndex] stringByAppendingPathExtension:lastComponentExt];
+            testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+            testedIndex++;
+        }
+        {
+            _targetPath = testedPath;
+            targetPath = testedPath;
+            targetName = [targetPath lastPathComponent];
+        }
     }
     {
         NSError *moveError = nil;
@@ -568,7 +613,7 @@ typedef enum : NSUInteger {
         LGAlertView *finishAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Finished", nil)
                                                                   message:[NSString stringWithFormat:NSLocalizedString(@"Successfully saved to \"%@\"", nil), targetName]
                                                                     style:LGAlertViewStyleActionSheet
-                                                             buttonTitles:@[ NSLocalizedString(@"Done", nil) ]
+                                                             buttonTitles:@[ NSLocalizedString(@"Instant View / Run", nil), NSLocalizedString(@"Done", nil) ]
                                                         cancelButtonTitle:nil
                                                    destructiveButtonTitle:nil
                                                                  delegate:self];
