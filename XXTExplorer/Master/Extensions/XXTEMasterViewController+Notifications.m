@@ -75,7 +75,22 @@
     }
     else if ([aNotification.name isEqualToString:XXTENotificationEvent])
     {
-        if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
+        if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
+            if (self.viewControllers.count == 2 &&
+                self.selectedIndex != kMasterViewControllerIndexExplorer)
+            {
+                // switch to explorer
+                [self setSelectedIndex:kMasterViewControllerIndexExplorer];
+                NSMutableDictionary *mutableInfo = [aNotification.userInfo mutableCopy];
+                if (!mutableInfo[XXTENotificationForwardedBy]) {
+                    mutableInfo[XXTENotificationForwardedBy] = self;
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:aNotification.name object:aNotification.object userInfo:[mutableInfo copy]];
+                        // post this notification again
+                    });
+                }
+            }
+        } else if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
             NSURL *inboxURL = aNotification.object;
             @weakify(self);
             UIViewController *blockVC = blockInteractions(self, YES);

@@ -10,6 +10,11 @@
 
 @class XXTEAPTHelper, XXTEUpdateAgent;
 
+typedef enum : NSUInteger {
+    kMasterViewControllerIndexExplorer = 0,
+    kMasterViewControllerIndexMore,
+} kMasterViewControllerIndex;
+
 @interface XXTEMasterViewController : UITabBarController
 
 - (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;

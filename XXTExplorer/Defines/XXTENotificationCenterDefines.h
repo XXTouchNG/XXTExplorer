@@ -11,6 +11,7 @@
 
 static NSString * const XXTENotificationEvent = @"XXTENotificationEvent";
 static NSString * const XXTENotificationShortcut = @"XXTENotificationShortcut";
+static NSString * const XXTENotificationForwardedBy = @"XXTENotificationForwardedBy";
 
 // XXTENotificationEvent
 
