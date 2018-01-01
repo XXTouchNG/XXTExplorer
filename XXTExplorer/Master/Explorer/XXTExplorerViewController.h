@@ -21,8 +21,8 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
 
-@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *entryList;
-@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *homeEntryList;
+@property (nonatomic, copy, readonly) NSMutableArray <NSDictionary *> *entryList;
+@property (nonatomic, copy, readonly) NSMutableArray <NSDictionary *> *homeEntryList;
 
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField explorerSortField;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder explorerSortOrder;

@@ -57,6 +57,8 @@
 }
 
 - (void)setupWithPath:(NSString *)path {
+    _homeEntryList = [[NSMutableArray alloc] init];
+    _entryList = [[NSMutableArray alloc] init];
 #ifdef APPSTORE
     self.hidesBottomBarWhenPushed = YES;
 #endif
@@ -236,17 +238,18 @@
 #else
         BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO);
 #endif
-        
+        [self.homeEntryList removeAllObjects];
         if ([self showsHomeSeries] &&
              homeEnabled &&
                 self == self.navigationController.viewControllers[0]) {
-            _homeEntryList = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
-        } else {
-            _homeEntryList = nil;
+            NSArray <NSDictionary *> *entrySeries = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
+            if (entrySeries) {
+                [self.homeEntryList addObjectsFromArray:entrySeries];
+            }
         }
     }
 
-    _entryList = ({
+    NSArray <NSDictionary *> *newEntryList = ({
         BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
         NSError *localError = nil;
         NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
@@ -305,8 +308,9 @@
         
         entryAttributesList;
     });
-    if (error && *error) _entryList = @[]; // clean entry list if error exists
-
+    [self.entryList removeAllObjects];
+    [self.entryList addObjectsFromArray:newEntryList];
+    
     NSUInteger itemCount = self.entryList.count;
     NSString *itemCountString = nil;
     if (itemCount == 0) {

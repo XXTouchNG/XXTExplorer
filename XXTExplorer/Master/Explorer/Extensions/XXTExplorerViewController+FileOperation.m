@@ -554,11 +554,19 @@
         }
         UIViewController *blockController = blockInteractions(self, YES);
         [alertView1 dismissAnimated:YES completionHandler:^{
-            [self loadEntryListData];
+            UITableView *tableView = self.tableView;
             if (error) {
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self loadEntryListData];
+                [tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             } else {
-                [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                NSMutableIndexSet *indexSet = [[NSMutableIndexSet alloc] init];
+                for (NSIndexPath *indexPath in deletedPaths) {
+                    [indexSet addIndex:indexPath.row];
+                }
+                [self.entryList removeObjectsAtIndexes:[indexSet copy]];
+                [tableView beginUpdates];
+                [tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [tableView endUpdates];
             }
             blockInteractions(blockController, NO);
         }];
@@ -659,11 +667,19 @@
         }
         UIViewController *blockController = blockInteractions(self, YES);
         [alertView1 dismissAnimated:YES completionHandler:^{
-            [self loadEntryListData];
+            UITableView *tableView = self.tableView;
             if (error) {
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self loadEntryListData];
+                [tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             } else {
-                [self.tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                NSMutableIndexSet *indexSet = [[NSMutableIndexSet alloc] init];
+                for (NSIndexPath *indexPath in deletedPaths) {
+                    [indexSet addIndex:indexPath.row];
+                }
+                [self.entryList removeObjectsAtIndexes:[indexSet copy]];
+                [tableView beginUpdates];
+                [tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [tableView endUpdates];
             }
             blockInteractions(blockController, NO);
         }];

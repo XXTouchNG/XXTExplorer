@@ -174,19 +174,19 @@
 "Applications" = "应用程序";
 
 /* No comment provided by engineer. */
-"Archive" = "档案";
+"Archive" = "归档";
 
 /* No comment provided by engineer. */
-"Archive %@ to \"%@\"" = "档案 %@ 到 \"%@\"";
+"Archive %@ to \"%@\"" = "归档 %@ 到 \"%@\"";
 
 /* No comment provided by engineer. */
-"Archive %@?" = "档案 %@?";
+"Archive %@?" = "归档 %@?";
 
 /* No comment provided by engineer. */
-"Archive Confirm" = "档案确认";
+"Archive Confirm" = "归档确认";
 
 /* No comment provided by engineer. */
-"Archiving process terminated: User interrupt occurred." = "档案进程终止: 用户结束操作.";
+"Archiving process terminated: User interrupt occurred." = "归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Ask you for a choice." = "询问用户的选择.";
@@ -246,7 +246,7 @@
 "Cannot connect to video device." = "无法连接到视频设备.";
 
 /* No comment provided by engineer. */
-"Cannot create archive file \"%@\"." = "无法创建档案文件 \"%@\".";
+"Cannot create archive file \"%@\"." = "无法创建归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot create destination directory \"%@\"." = "无法创建目标目录 \"%@\".";
@@ -294,7 +294,7 @@
 "Cannot open \"%@\"." = "无法打开 \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot open archive file \"%@\"." = "无法打开档案文件 \"%@\".";
+"Cannot open archive file \"%@\"." = "无法打开归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot open file \"%@\" for writing." = "无法打开文件以供写入 \"%@\".";
@@ -309,19 +309,19 @@
 "Cannot perform operation \"%@\" on Pasteboard URL \"%@\"." = "无法执行操作 \"%@\": 剪贴板链接 \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot process archive file \"%@\" (0x%02x)." = "无法处理档案文件 \"%@\" (0x%02x).";
+"Cannot process archive file \"%@\" (0x%02x)." = "无法处理归档文件 \"%@\" (0x%02x).";
 
 /* No comment provided by engineer. */
-"Cannot read archive file \"%@\"." = "无法读取档案文件 \"%@\".";
+"Cannot read archive file \"%@\"." = "无法读取归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot read archive file \"%@\": Password protected archive is not supported." = "无法读取档案文件 \"%@\": 不支持密码保护档案.";
+"Cannot read archive file \"%@\": Password protected archive is not supported." = "无法读取归档文件 \"%@\": 不支持密码保护归档.";
 
 /* No comment provided by engineer. */
 "Cannot read template \"%@\"." = "无法读取模板 \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot recognize the format of archive file \"%@\"." = "无法识别档案文件格式 \"%@\".";
+"Cannot recognize the format of archive file \"%@\"." = "无法识别归档文件格式 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot restart daemon: %@" = "无法重启守护进程: %@";
@@ -426,7 +426,7 @@
 "Continue" = "继续";
 
 /* No comment provided by engineer. */
-"Continue as Archive" = "作为档案继续";
+"Continue as Archive" = "作为归档继续";
 
 /* No comment provided by engineer. */
 "Copied to the pasteboard." = "已复制到剪贴板.";
@@ -1300,13 +1300,13 @@
 "Type" = "类型";
 
 /* No comment provided by engineer. */
-"Unarchive" = "解档案";
+"Unarchive" = "解归档";
 
 /* No comment provided by engineer. */
 "Unarchive \"%@\" to current directory?" = "解压 \"%@\" 到当前目录?";
 
 /* No comment provided by engineer. */
-"Unarchive Confirm" = "解档案确认";
+"Unarchive Confirm" = "解归档确认";
 
 /* No comment provided by engineer. */
 "Unarchiver" = "解压器";
@@ -1315,7 +1315,7 @@
 "Unarchiving \"%@\" to \"%@\"" = "解压 \"%@\" 到 \"%@\"";
 
 /* No comment provided by engineer. */
-"Unarchiving process terminated: User interrupt occurred." = "解档案进程终止: 用户结束操作.";
+"Unarchiving process terminated: User interrupt occurred." = "解归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Unicode (UTF-8)" = "Unicode (UTF-8)";
