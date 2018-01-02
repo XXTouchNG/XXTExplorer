@@ -29,6 +29,16 @@ typedef enum : NSUInteger {
     kXXTEMoreLicenseSectionIndexMax
 } kXXTEMoreLicenseSectionIndex;
 
+typedef enum : NSUInteger {
+    kXXTEMoreLicenseDeviceRowIndexVersion = 0,
+    kXXTEMoreLicenseDeviceRowIndexiOSVersion,
+    kXXTEMoreLicenseDeviceRowIndexDeviceType,
+    kXXTEMoreLicenseDeviceRowIndexDeviceName,
+    kXXTEMoreLicenseDeviceRowIndexDeviceSerial,
+    kXXTEMoreLicenseDeviceRowIndexMacAddress,
+    kXXTEMoreLicenseDeviceRowIndexUDID
+} kXXTEMoreLicenseDeviceRowIndex;
+
 typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 @interface XXTEMoreLicenseController () <UITextFieldDelegate, LGAlertViewDelegate>
@@ -99,7 +109,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
     XXTE_END_IGNORE_PARTIAL
-
+    
     if ([self.navigationController.viewControllers firstObject] == self) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     }
@@ -357,16 +367,32 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
              [(NSUInteger) indexPath.row])
             .valueLabel.text;
             if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
-                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                        [[UIPasteboard generalPasteboard] setString:detailText];
-                        fulfill(nil);
+                @weakify(self);
+                void (^copyBlock)(NSString *) = ^(NSString *textToCopy) {
+                    @strongify(self);
+                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            [[UIPasteboard generalPasteboard] setString:textToCopy];
+                            fulfill(nil);
+                        });
+                    }].finally(^() {
+                        toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                        blockInteractions(blockVC, NO);
                     });
-                }].finally(^() {
-                    toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(blockVC, NO);
-                });
+                };
+                if (indexPath.row == kXXTEMoreLicenseDeviceRowIndexUDID) {
+                    LGAlertView *copyAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Unique ID", nil) message:detailText style:LGAlertViewStyleActionSheet buttonTitles:@[ NSLocalizedString(@"Copy", ni) ] cancelButtonTitle:NSLocalizedString(@"Cancel", ni;) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                        [alertView dismissAnimated:YES completionHandler:^{
+                            copyBlock(detailText);
+                        }];
+                    } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                        [alertView dismissAnimated];
+                    } destructiveHandler:nil];
+                    [copyAlert showAnimated];
+                } else {
+                    copyBlock(detailText);
+                }
             }
         }
         else if (indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
