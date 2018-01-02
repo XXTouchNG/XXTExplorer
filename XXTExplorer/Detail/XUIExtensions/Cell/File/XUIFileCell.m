@@ -116,8 +116,8 @@
     return [[NSString alloc] initWithString:mutableDescription];
 }
 
-- (void)setTheme:(XUITheme *)theme {
-    [super setTheme:theme];
+- (void)setInternalTheme:(XUITheme *)theme {
+    [super setInternalTheme:theme];
     self.nameLabel.textColor = theme.labelColor;
     self.descriptionLabel.textColor = theme.valueColor;
 }
