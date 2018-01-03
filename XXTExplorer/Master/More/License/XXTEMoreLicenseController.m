@@ -361,12 +361,18 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTEMoreLicenseSectionIndexDevice) {
+            NSString *titleText =
+            ((XXTEMoreTitleValueCell *)staticCells
+             [(NSUInteger) indexPath.section]
+             [(NSUInteger) indexPath.row])
+            .titleLabel.text;
             NSString *detailText =
             ((XXTEMoreTitleValueCell *)staticCells
              [(NSUInteger) indexPath.section]
              [(NSUInteger) indexPath.row])
             .valueLabel.text;
-            if (detailText && detailText.length > 0) {
+            if (titleText && titleText.length > 0 &&
+                detailText && detailText.length > 0) {
                 @weakify(self);
                 void (^copyBlock)(NSString *) = ^(NSString *textToCopy) {
                     @strongify(self);
@@ -381,8 +387,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                         blockInteractions(blockVC, NO);
                     });
                 };
-                if (indexPath.row == kXXTEMoreLicenseDeviceRowIndexUDID) {
-                    LGAlertView *copyAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Unique ID", nil) message:detailText style:LGAlertViewStyleActionSheet buttonTitles:@[ NSLocalizedString(@"Copy", ni) ] cancelButtonTitle:NSLocalizedString(@"Cancel", ni;) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                if (indexPath.row == kXXTEMoreLicenseDeviceRowIndexDeviceSerial ||
+                    indexPath.row == kXXTEMoreLicenseDeviceRowIndexMacAddress ||
+                    indexPath.row == kXXTEMoreLicenseDeviceRowIndexUDID) {
+                    LGAlertView *copyAlert = [[LGAlertView alloc] initWithTitle:titleText message:detailText style:LGAlertViewStyleActionSheet buttonTitles:@[ NSLocalizedString(@"Copy", ni) ] cancelButtonTitle:NSLocalizedString(@"Cancel", ni;) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
                         [alertView dismissAnimated:YES completionHandler:^{
                             copyBlock(detailText);
                         }];
