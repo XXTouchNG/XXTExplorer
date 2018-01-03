@@ -10,7 +10,7 @@
 #import "XXTExplorerEntryXPPMeta.h"
 #import "XXTEExecutableViewer.h"
 
-#import "LuaNSValue.h"
+#import "XXTLuaNSValue.h"
 #import <dlfcn.h>
 
 @interface NSBundle (FlushCaches)

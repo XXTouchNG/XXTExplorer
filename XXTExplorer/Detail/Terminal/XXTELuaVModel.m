@@ -13,7 +13,7 @@
 
 #import "XXTELuaVModel.h"
 #import "XXTEAppDelegate.h"
-#import "LuaNSValue.h"
+#import "XXTLuaNSValue.h"
 
 static NSString * const XXTETerminalHandlerOutput = @"TerminalOutput-%@.pipe";
 static NSString * const XXTETerminalHandlerError = @"TerminalError-%@.pipe";

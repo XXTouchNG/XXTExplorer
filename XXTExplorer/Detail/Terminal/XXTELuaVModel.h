@@ -6,7 +6,7 @@
 //  Copyright © 2016 Zheng. All rights reserved.
 //
 
-#import "LuaNSValue.h"
+#import "XXTLuaNSValue.h"
 #import <Foundation/Foundation.h>
 
 @class XXTELuaVModel;

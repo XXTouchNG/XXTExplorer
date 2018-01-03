@@ -25,6 +25,9 @@
 		0F072DBE1FB9F54D00597EE2 /* XUIAdapter_xuic.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F072DBC1FB9F54D00597EE2 /* XUIAdapter_xuic.m */; };
 		0F072DC01FBB311600597EE2 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F072DBF1FBB311500597EE2 /* txt.tmLanguage */; };
 		0F072DC11FBB311600597EE2 /* txt.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F072DBF1FBB311500597EE2 /* txt.tmLanguage */; };
+		0F08BC121FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */; };
+		0F08BC131FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */; };
+		0F08BC141FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */; };
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
 		0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */; };
 		0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */; };
@@ -223,7 +226,7 @@
 		0F8EDB6A1FB1F779003C92D6 /* XXTEEditorThemeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F411F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m */; };
 		0F8EDB6B1FB1F779003C92D6 /* UIDocumentPickerViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */; };
 		0F8EDB6C1FB1F779003C92D6 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
-		0F8EDB6D1FB1F779003C92D6 /* LuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* LuaNSValue.m */; };
+		0F8EDB6D1FB1F779003C92D6 /* XXTLuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* XXTLuaNSValue.m */; };
 		0F8EDB6E1FB1F779003C92D6 /* XXTEMoreLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD692A1F0403B000B2F0EC /* XXTEMoreLinkCell.m */; };
 		0F8EDB701FB1F779003C92D6 /* XXTEEditorController+Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD974001F4B37FE00133162 /* XXTEEditorController+Menu.m */; };
 		0F8EDB711FB1F779003C92D6 /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
@@ -607,7 +610,7 @@
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
 		0FFBC12C1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12A1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.m */; };
 		0FFBC12D1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFBC12B1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib */; };
-		0FFBC1321F5C391300690C8F /* LuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* LuaNSValue.m */; };
+		0FFBC1321F5C391300690C8F /* XXTLuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* XXTLuaNSValue.m */; };
 		0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */; };
 		0FFC8F021FCA8E730012C170 /* XXTEXPAPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFC8F011FCA8E730012C170 /* XXTEXPAPackageExtractor.m */; };
 		0FFC8F031FCA8E730012C170 /* XXTEXPAPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFC8F011FCA8E730012C170 /* XXTEXPAPackageExtractor.m */; };
@@ -727,7 +730,7 @@
 		D60FE66A1FE2369300954818 /* XXTEEditorThemeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F411F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m */; };
 		D60FE66B1FE2369300954818 /* UIDocumentPickerViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F707E821FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m */; };
 		D60FE66C1FE2369300954818 /* XXTEMoreUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */; };
-		D60FE66D1FE2369300954818 /* LuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* LuaNSValue.m */; };
+		D60FE66D1FE2369300954818 /* XXTLuaNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12F1F5C391300690C8F /* XXTLuaNSValue.m */; };
 		D60FE66E1FE2369300954818 /* XXTEMoreLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD692A1F0403B000B2F0EC /* XXTEMoreLinkCell.m */; };
 		D60FE66F1FE2369300954818 /* XXTExplorerDynamicSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFC8F131FCB14C20012C170 /* XXTExplorerDynamicSection.m */; };
 		D60FE6701FE2369300954818 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
@@ -1183,6 +1186,8 @@
 		0F072DBB1FB9F54D00597EE2 /* XUIAdapter_xuic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAdapter_xuic.h; sourceTree = "<group>"; };
 		0F072DBC1FB9F54D00597EE2 /* XUIAdapter_xuic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAdapter_xuic.m; sourceTree = "<group>"; };
 		0F072DBF1FBB311500597EE2 /* txt.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = txt.tmLanguage; sourceTree = "<group>"; };
+		0F08BC101FFD1A9D00B83972 /* XXTLuaFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTLuaFunction.h; sourceTree = "<group>"; };
+		0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTLuaFunction.m; sourceTree = "<group>"; };
 		0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XXTEItemTemplate.lua; sourceTree = "<group>"; };
 		0F0F76261F361509006EA102 /* XXTEPackageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageViewerController.h; sourceTree = "<group>"; };
 		0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEPackageViewerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1566,8 +1571,8 @@
 		0FFBC1291F5BD85F00690C8F /* XXTEEditorWrapColumnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorWrapColumnCell.h; sourceTree = "<group>"; };
 		0FFBC12A1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorWrapColumnCell.m; sourceTree = "<group>"; };
 		0FFBC12B1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEEditorWrapColumnCell.xib; sourceTree = "<group>"; };
-		0FFBC12E1F5C391300690C8F /* LuaNSValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaNSValue.h; sourceTree = "<group>"; };
-		0FFBC12F1F5C391300690C8F /* LuaNSValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LuaNSValue.m; sourceTree = "<group>"; };
+		0FFBC12E1F5C391300690C8F /* XXTLuaNSValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTLuaNSValue.h; sourceTree = "<group>"; };
+		0FFBC12F1F5C391300690C8F /* XXTLuaNSValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTLuaNSValue.m; sourceTree = "<group>"; };
 		0FFBC1301F5C391300690C8F /* XXTPickerSnippet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerSnippet.h; sourceTree = "<group>"; };
 		0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerSnippet.m; sourceTree = "<group>"; };
 		0FFC8F001FCA8E730012C170 /* XXTEXPAPackageExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEXPAPackageExtractor.h; sourceTree = "<group>"; };
@@ -2050,6 +2055,17 @@
 				0F072DB41FB9EC8B00597EE2 /* xxtea.c */,
 			);
 			path = Encryption;
+			sourceTree = "<group>";
+		};
+		0F08BC0F1FFD1A8000B83972 /* Lua */ = {
+			isa = PBXGroup;
+			children = (
+				0FFBC12E1F5C391300690C8F /* XXTLuaNSValue.h */,
+				0FFBC12F1F5C391300690C8F /* XXTLuaNSValue.m */,
+				0F08BC101FFD1A9D00B83972 /* XXTLuaFunction.h */,
+				0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */,
+			);
+			path = Lua;
 			sourceTree = "<group>";
 		};
 		0F0F76291F36150F006EA102 /* Reader */ = {
@@ -3533,14 +3549,13 @@
 		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
+				0F08BC0F1FFD1A8000B83972 /* Lua */,
 				D6E140981F5032AB00D78CB9 /* Application */,
 				0FBAFF321F6E5378008B3189 /* Image */,
 				D6E140AE1F5032AB00D78CB9 /* KeyEvent */,
 				D6E140B31F5032AB00D78CB9 /* Location */,
 				D6E140B61F5032AB00D78CB9 /* Pixel */,
 				D6E140DB1F5032AB00D78CB9 /* Resources */,
-				0FFBC12E1F5C391300690C8F /* LuaNSValue.h */,
-				0FFBC12F1F5C391300690C8F /* LuaNSValue.m */,
 				D6E141091F5032AB00D78CB9 /* XXTBasePicker.h */,
 				D6E1410B1F5032AB00D78CB9 /* XXTPickerDefine.h */,
 				D6E1410C1F5032AB00D78CB9 /* XXTPickerFactory.h */,
@@ -4374,7 +4389,7 @@
 				0F8EDB6A1FB1F779003C92D6 /* XXTEEditorThemeSettingsViewController.m in Sources */,
 				0F8EDB6B1FB1F779003C92D6 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				0F8EDB6C1FB1F779003C92D6 /* XXTEMoreUserDefaultsController.m in Sources */,
-				0F8EDB6D1FB1F779003C92D6 /* LuaNSValue.m in Sources */,
+				0F8EDB6D1FB1F779003C92D6 /* XXTLuaNSValue.m in Sources */,
 				0F8EDB6E1FB1F779003C92D6 /* XXTEMoreLinkCell.m in Sources */,
 				0F8EDB701FB1F779003C92D6 /* XXTEEditorController+Menu.m in Sources */,
 				0F8EDB711FB1F779003C92D6 /* XXTESwipeTableCell.m in Sources */,
@@ -4403,6 +4418,7 @@
 				0F8EDB8A1FB1F779003C92D6 /* ICRegularExpression.m in Sources */,
 				0F8EDB8B1FB1F779003C92D6 /* XXTECommonWebViewController.m in Sources */,
 				0F8EDB8C1FB1F779003C92D6 /* XXTEMoreAddressCell.m in Sources */,
+				0F08BC131FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */,
 				0F8EDB8D1FB1F779003C92D6 /* XXTPixelCropView.m in Sources */,
 				0F8EDB8E1FB1F779003C92D6 /* XXTEMoreNavigationController.m in Sources */,
 				0F8EDB8F1FB1F779003C92D6 /* XXTEEditorTypeSetter.m in Sources */,
@@ -4619,7 +4635,7 @@
 				D6686F421F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m in Sources */,
 				0F707E831FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */,
-				0FFBC1321F5C391300690C8F /* LuaNSValue.m in Sources */,
+				0FFBC1321F5C391300690C8F /* XXTLuaNSValue.m in Sources */,
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
 				0FFC8F141FCB14C20012C170 /* XXTExplorerDynamicSection.m in Sources */,
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
@@ -4711,6 +4727,7 @@
 				D6F3EBE01FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
+				0F08BC121FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */,
 				0F50AEBB1F30DBAB0098211C /* XXTExplorerEntryObjectReader.m in Sources */,
 				0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
@@ -4902,7 +4919,7 @@
 				D60FE66A1FE2369300954818 /* XXTEEditorThemeSettingsViewController.m in Sources */,
 				D60FE66B1FE2369300954818 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				D60FE66C1FE2369300954818 /* XXTEMoreUserDefaultsController.m in Sources */,
-				D60FE66D1FE2369300954818 /* LuaNSValue.m in Sources */,
+				D60FE66D1FE2369300954818 /* XXTLuaNSValue.m in Sources */,
 				D60FE66E1FE2369300954818 /* XXTEMoreLinkCell.m in Sources */,
 				D60FE66F1FE2369300954818 /* XXTExplorerDynamicSection.m in Sources */,
 				D60FE6701FE2369300954818 /* XXTEMoreLicenseCell.m in Sources */,
@@ -4994,6 +5011,7 @@
 				D6F3EBE21FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D60FE6C51FE2369300954818 /* XXTEMoreTitleValueCell.m in Sources */,
 				D60FE6C61FE2369300954818 /* XXTExplorerViewController.m in Sources */,
+				0F08BC141FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */,
 				D60FE6C71FE2369300954818 /* XXTExplorerEntryObjectReader.m in Sources */,
 				D60FE6C81FE2369300954818 /* XXTEKeyboardRow.m in Sources */,
 				D60FE6C91FE2369300954818 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,

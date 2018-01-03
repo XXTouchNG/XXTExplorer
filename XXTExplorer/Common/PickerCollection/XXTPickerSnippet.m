@@ -18,7 +18,7 @@
 #import "XXTApplicationPicker.h"
 #import "XXTMultipleApplicationPicker.h"
 
-#import "LuaNSValue.h"
+#import "XXTLuaNSValue.h"
 
 @interface XXTPickerSnippet ()
 @property (nonatomic, strong) NSMutableArray *results;

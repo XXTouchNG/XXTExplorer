@@ -10,7 +10,7 @@
 #import "XXTESnippetViewerController.h"
 #import "XXTEEditorController.h"
 
-#import "LuaNSValue.h"
+#import "XXTLuaNSValue.h"
 
 @interface XXTExplorerEntrySnippetReader ()
 

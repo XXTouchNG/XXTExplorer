@@ -22,6 +22,10 @@
 #import "XXTEShimmeringView.h"
 #import "XXTECommonWebViewController.h"
 
+#import "XXTEAppDefines.h"
+
+static NSString * const kXXTEMoreLicenseCachedLicense = @"kXXTEMoreLicenseCachedLicense";
+
 typedef enum : NSUInteger {
     kXXTEMoreLicenseSectionIndexNewLicense = 0,
     kXXTEMoreLicenseSectionIndexCurrentLicense,
@@ -213,6 +217,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 }
 
 - (void)reloadDynamicTableViewDataWithCompletion:(XXTERefreshControlHandler)handler {
+    NSDictionary *cachedLicense = XXTEDefaultsObject(kXXTEMoreLicenseCachedLicense, nil);
+    if (cachedLicense)
+    {
+        [self updateLicenseDictionary:cachedLicense];
+    }
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
     .then(convertJsonString)
@@ -240,12 +249,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     })
     .then(sendCloudApiRequest)
     .then(^(NSDictionary *licenseDictionary) {
-        if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
-            NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
-            NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
-            [self updateCellExpirationTime:expirationInterval
-                               nowInterval:nowInterval];
-        }
+        XXTEDefaultsSetObject(kXXTEMoreLicenseCachedLicense, licenseDictionary);
+        [self updateLicenseDictionary:licenseDictionary];
     })
     .catch(^(NSError *serverError) {
         if (serverError.code == -1004) {
@@ -260,6 +265,23 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
             handler();
         }
     });
+}
+
+- (void)updateLicenseDictionary:(NSDictionary *)licenseDictionary {
+    if ([licenseDictionary isKindOfClass:[NSDictionary class]] &&
+        [licenseDictionary[@"code"] isKindOfClass:[NSNumber class]] &&
+        [licenseDictionary[@"code"] isEqualToNumber:@0]) {
+        NSDictionary *licenseData = licenseDictionary[@"data"];
+        if ([licenseData isKindOfClass:[NSDictionary class]] &&
+            [licenseData[@"expireDate"] isKindOfClass:[NSNumber class]] &&
+            [licenseData[@"nowDate"] isKindOfClass:[NSNumber class]]
+            ) {
+            NSTimeInterval expirationInterval = [licenseData[@"expireDate"] doubleValue];
+            NSTimeInterval nowInterval = [licenseData[@"nowDate"] doubleValue];
+            [self updateCellExpirationTime:expirationInterval
+                               nowInterval:nowInterval];
+        }
+    }
 }
 
 #pragma mark - UIView Getters

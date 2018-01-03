@@ -1,8 +1,42 @@
+//
+//  XXTLuaNSValue.m
+//  XXTExplorer
+//
+//  Created by Zheng on 03/01/2018.
+//  Copyright © 2018 Zheng. All rights reserved.
+//
 
-#include "LuaNSValue.h"
-#include "xui32.h"
+#import "XXTLuaNSValue.h"
+#import <UIKit/UIKit.h>
+
+#import "xui32.h"
+#import "XXTLuaFunction.h"
+
+#import <sys/utsname.h>
+#import "XXTEAppDefines.h"
+
+#pragma mark - Errors
 
 NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
+
+BOOL lua_checkCode(lua_State *L, int code, NSError **error) {
+    if (LUA_OK != code) {
+        const char *cErrString = lua_tostring(L, -1);
+        NSString *errString = [NSString stringWithUTF8String:cErrString];
+        NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: errString,
+                                         NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Error", nil),
+                                         };
+        lua_pop(L, 1);
+        if (error != nil)
+            *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain
+                                         code:code
+                                     userInfo:errDictionary];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - NSValue
 
 void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level, int include_func)
 {
@@ -413,6 +447,8 @@ int luaopen_plist(lua_State *L)
     return 1;
 }
 
+#pragma mark - XUI
+
 int l_decodeXUI(lua_State *L)
 {
     size_t l;
@@ -443,6 +479,92 @@ int luaopen_xui(lua_State *L)
     return 1;
 }
 
+#pragma mark - Screen
+
+int l_screen_size(lua_State *L)
+{
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    CGFloat physicalWidth = screenRect.size.width * scale;
+    CGFloat physicalHeight = screenRect.size.height * scale;
+    
+    CGFloat width = MIN(physicalWidth, physicalHeight);
+    CGFloat height = MAX(physicalWidth, physicalHeight);
+    
+    lua_pushnumber(L, width);
+    lua_pushnumber(L, height);
+    return 2;
+}
+
+int luaopen_screen(lua_State *L)
+{
+    lua_createtable(L, 0, 2);
+    lua_pushcfunction(L, l_screen_size);
+    lua_setfield(L, -2, "size");
+    lua_pushliteral(L, "0.1");
+    lua_setfield(L, -2, "_VERSION");
+    return 1;
+}
+
+#pragma mark - Device
+
+int l_device_type(lua_State *L)
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    lua_pushstring(L, systemInfo.machine);
+    return 1;
+}
+
+int l_device_name(lua_State *L)
+{
+    NSString *deviceName = [[UIDevice currentDevice] name];
+    lua_pushstring(L, [deviceName UTF8String]);
+    return 1;
+}
+
+int luaopen_device(lua_State *L)
+{
+    lua_createtable(L, 0, 2);
+    lua_pushcfunction(L, l_device_type);
+    lua_setfield(L, -2, "type");
+    lua_pushliteral(L, "0.1");
+    lua_setfield(L, -2, "_VERSION");
+    return 1;
+}
+
+#pragma mark - System
+
+int l_sys_version(lua_State *L)
+{
+    NSString *systemVersion = [UIDevice currentDevice].systemVersion;
+    lua_pushstring(L, [systemVersion UTF8String]);
+    return 1;
+}
+
+int l_sys_xtversion(lua_State *L)
+{
+    NSString *xtVersion = uAppDefine(@"DAEMON_VERSION");
+    NSString *versionString = [xtVersion stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+    lua_pushstring(L, [versionString UTF8String]);
+    return 1;
+}
+
+int luaopen_sys(lua_State *L)
+{
+    lua_createtable(L, 0, 2);
+    lua_pushcfunction(L, l_sys_version);
+    lua_setfield(L, -2, "version");
+    lua_pushcfunction(L, l_sys_xtversion);
+    lua_setfield(L, -2, "xtversion");
+    lua_pushliteral(L, "0.1");
+    lua_setfield(L, -2, "_VERSION");
+    return 1;
+}
+
+#pragma mark - Libs
+
 void lua_openNSValueLibs(lua_State *L)
 {
     luaL_requiref(L, "json", luaopen_json, YES);
@@ -451,7 +573,15 @@ void lua_openNSValueLibs(lua_State *L)
     lua_pop(L, 1);
     luaL_requiref(L, "xui", luaopen_xui, YES);
     lua_pop(L, 1);
+    luaL_requiref(L, "sys", luaopen_sys, YES);
+    lua_pop(L, 1);
+    luaL_requiref(L, "screen", luaopen_screen, YES);
+    lua_pop(L, 1);
+    luaL_requiref(L, "device", luaopen_device, YES);
+    lua_pop(L, 1);
 }
+
+#pragma mark - Helpers
 
 void lua_setPath(lua_State* L, const char *key, const char *path)
 {
@@ -469,22 +599,7 @@ void lua_setPath(lua_State* L, const char *key, const char *path)
     lua_pop(L, 1); // get rid of package table from top of stack
 }
 
-BOOL lua_checkCode(lua_State *L, int code, NSError **error) {
-    if (LUA_OK != code) {
-        const char *cErrString = lua_tostring(L, -1);
-        NSString *errString = [NSString stringWithUTF8String:cErrString];
-        NSDictionary *errDictionary = @{ NSLocalizedDescriptionKey: errString,
-                                         NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Error", nil),
-                                         };
-        lua_pop(L, 1);
-        if (error != nil)
-            *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain
-                                         code:code
-                                     userInfo:errDictionary];
-        return NO;
-    }
-    return YES;
-}
+#pragma mark - Linehook
 
 static void ____lua_setmaxline_hook(lua_State *L, lua_Debug *ar)
 {
@@ -504,127 +619,3 @@ void lua_setMaxLine(lua_State *L, lua_Integer maxline)
     *line_count_ptr = maxline;
     lua_sethook(L, ____lua_setmaxline_hook, LUA_MASKLINE, 0);
 }
-
-@implementation XXTLuaFunction
-{
-@private
-    lua_State *m_L;
-    int m_refIndex;
-}
-
--(id)init
-{
-    self = [super init];
-    m_L = NULL;
-    m_refIndex = 0;
-    return self;
-}
-
--(void)dealloc
-{
-    if (m_L != NULL) {
-        luaL_unref(m_L, LUA_REGISTRYINDEX, m_refIndex);
-    }
-#if !__has_feature(objc_arc)
-    [super dealloc];
-#endif
-}
-
--(id)copyWithZone:(NSZone *)zone
-{
-    XXTLuaFunction *func = [[[self class] allocWithZone:zone] init];
-    if (m_L != NULL) {
-        lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_refIndex);
-        [func bindFunction:-1 inLuaState:m_L];
-        lua_pop(m_L, 1);
-    }
-    return func;
-}
-
--(BOOL)bindFunction:(int)idx inLuaState:(lua_State *)L
-{
-    if (L != NULL && lua_type(L, idx) == LUA_TFUNCTION) {
-        m_L = L;
-        lua_pushvalue(m_L, idx);
-        m_refIndex = luaL_ref(m_L, LUA_REGISTRYINDEX);
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-+(id)bindFunction:(int)idx inLuaState:(lua_State *)L
-{
-    XXTLuaFunction *func = [[self alloc] init];
-    if ([func bindFunction:idx inLuaState:L]) {
-#if !__has_feature(objc_arc)
-        [func autorelease];
-#endif
-        return func;
-    } else {
-#if !__has_feature(objc_arc)
-        [func release];
-#endif
-        return nil;
-    }
-}
-
--(BOOL)pushMeToLuaState:(lua_State *)L
-{
-    if (m_L != NULL && L == m_L) {
-        int type = lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_refIndex);
-        if (type == LUA_TFUNCTION) {
-            return YES;
-        } else {
-            lua_pop(m_L, 1);
-            return NO;
-        }
-    } else {
-        return NO;
-    }
-}
-
--(NSArray *)callWithArguments:(NSArray *)args error:(NSError **)error
-{
-    if (m_L != NULL) {
-        int last_top = lua_gettop(m_L);
-        int type = lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_refIndex);
-        if (type == LUA_TFUNCTION) {
-            if (args == nil) {
-                args = @[];
-            }
-            for (id arg in args) {
-                lua_pushNSValuex(m_L, arg, 0, YES);
-            }
-            int ret_stat = lua_pcall(m_L, (int)[args count], 1, 0);
-            int nresults = lua_gettop(m_L) - last_top;
-            if (!lua_checkCode(m_L, ret_stat, error)) {
-                return nil;
-            } else {
-                NSMutableArray *results = [NSMutableArray array];
-                for (int i = 0; i < nresults; ++i) {
-                    id value = lua_toNSValuex(m_L, i + 1, 0, YES);
-                    if (value != nil) {
-                        [results addObject:value];
-                    } else {
-                        [results addObject:[NSNull null]];
-                    }
-                }
-                lua_pop(m_L, nresults);
-                return results;
-            }
-        } else {
-            if (error != nil) {
-                *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain code:1001 userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"expected function got %s", lua_typename(m_L, type)]}];
-            }
-            return nil;
-        }
-    } else {
-        if (error != nil) {
-            *error = [NSError errorWithDomain:kXXTELuaVModelErrorDomain code:1000 userInfo:@{NSLocalizedFailureReasonErrorKey: @"not initialized"}];
-        }
-        return nil;
-    }
-}
-
-@end

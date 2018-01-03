@@ -10,7 +10,7 @@
 #import "XXTEAppDelegate.h"
 
 #import "XUIBaseCell.h"
-#import "LuaNSValue.h"
+#import "XXTLuaNSValue.h"
 
 #import "XUI.h"
 #import "xui32.h"

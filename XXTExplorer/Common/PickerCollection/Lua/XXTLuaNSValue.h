@@ -1,3 +1,10 @@
+//
+//  XXTLuaNSValue.h
+//  XXTExplorer
+//
+//  Created by Zheng on 03/01/2018.
+//  Copyright © 2018 Zheng. All rights reserved.
+//
 
 #ifndef LUA_NSVALUE_H
 #define LUA_NSVALUE_H
@@ -15,15 +22,6 @@
         #import "lauxlib.h"
 
 #endif
-
-@interface XXTLuaFunction : NSObject <NSCopying>
--(id)init;
--(id)copyWithZone:(NSZone *)zone;
-+(id)bindFunction:(int)idx inLuaState:(lua_State *)L;
--(BOOL)bindFunction:(int)idx inLuaState:(lua_State *)L;
--(BOOL)pushMeToLuaState:(lua_State *)L;
--(NSArray *)callWithArguments:(NSArray *)args error:(NSError **)error;
-@end
 
 #ifdef __cplusplus
         extern "C" {
