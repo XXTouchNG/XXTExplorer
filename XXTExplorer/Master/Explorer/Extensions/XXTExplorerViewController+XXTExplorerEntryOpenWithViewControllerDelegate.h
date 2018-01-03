@@ -12,6 +12,8 @@
 
 @interface XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate) <XXTExplorerEntryOpenWithViewControllerDelegate>
 
-- (void)tableView:(UITableView *)tableView showDetailController:(UIViewController <XXTEViewer> *)viewer;
+- (void)tableView:(UITableView *)tableView showDetailController:(UIViewController *)viewer;
+- (void)tableView:(UITableView *)tableView showFormSheetController:(UIViewController *)controller;
+- (void)linkHistoryEntryAtPath:(NSString *)entryPath;
 
 @end

@@ -15,8 +15,18 @@
 
 @implementation XXTECommonWebViewController
 
+@synthesize entryPath = _entryPath;
+
 - (instancetype)init {
     if (self = [super init]) {
+        [self configure];
+    }
+    return self;
+}
+
+- (instancetype)initWithPath:(NSString *)path {
+    if (self = [super init]) {
+        _entryPath = path;
         [self configure];
     }
     return self;

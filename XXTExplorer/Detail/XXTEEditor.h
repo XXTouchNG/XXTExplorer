@@ -17,9 +17,6 @@
 + (NSString *)editorName;
 + (NSArray <NSString *> *)suggestedExtensions;
 
-@property (nonatomic, copy, readonly) NSString *entryPath;
-- (instancetype)initWithPath:(NSString *)path;
-
 @end
 
 #endif /* XXTEEditor_h */

@@ -16,19 +16,28 @@
 
 #endif
 
+@interface XXTLuaFunction : NSObject <NSCopying>
+-(id)init;
+-(id)copyWithZone:(NSZone *)zone;
++(id)bindFunction:(int)idx inLuaState:(lua_State *)L;
+-(BOOL)bindFunction:(int)idx inLuaState:(lua_State *)L;
+-(BOOL)pushMeToLuaState:(lua_State *)L;
+-(NSArray *)callWithArguments:(NSArray *)args error:(NSError **)error;
+@end
+
 #ifdef __cplusplus
         extern "C" {
 #endif
 
         int lua_table_is_array(lua_State *L, int index);
 
-        void lua_pushNSDictionaryx(lua_State *L, NSDictionary *dict, int level);
-        void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level);
-        void lua_pushNSValuex(lua_State *L, id value, int level);
+        void lua_pushNSDictionaryx(lua_State *L, NSDictionary *dict, int level, int include_func);
+        void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level, int include_func);
+        void lua_pushNSValuex(lua_State *L, id value, int level, int include_func);
 
-        NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *result, int level);
-        NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *result, int level);
-        id lua_toNSValuex(lua_State *L, int index, int level);
+        NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *result, int level, int include_func);
+        NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *result, int level, int include_func);
+        id lua_toNSValuex(lua_State *L, int index, int level, int include_func);
 
         int luaopen_json(lua_State *L);
         int luaopen_plist(lua_State *L);
@@ -42,13 +51,13 @@
         }
 #endif
 
-#define lua_pushNSDictionary(L, V) lua_pushNSDictionaryx((L), (V), 0)
-#define lua_pushNSArray(L, V) lua_pushNSArrayx((L), (V), 0)
-#define lua_pushNSValue(L, V) lua_pushNSValuex((L), (V), 0)
+#define lua_pushNSDictionary(L, V) lua_pushNSDictionaryx((L), (V), 0, 1)
+#define lua_pushNSArray(L, V) lua_pushNSArrayx((L), (V), 0, 1)
+#define lua_pushNSValue(L, V) lua_pushNSValuex((L), (V), 0, 1)
 
-#define lua_toNSDictionary(L, IDX) lua_toNSDictionaryx((L), (IDX), nil, 0)
-#define lua_toNSArray(L, IDX) lua_toNSArrayx((L), (IDX), nil, 0)
-#define lua_toNSValue(L, IDX) lua_toNSValuex((L), (IDX), 0)
+#define lua_toNSDictionary(L, IDX) lua_toNSDictionaryx((L), (IDX), nil, 0, 1)
+#define lua_toNSArray(L, IDX) lua_toNSArrayx((L), (IDX), nil, 0, 1)
+#define lua_toNSValue(L, IDX) lua_toNSValuex((L), (IDX), 0, 1)
 
 #define LUA_NSVALUE_MAX_DEPTH 50
 

@@ -17,10 +17,20 @@
 
 @implementation XXTEWorkspaceViewController
 
+@synthesize entryPath = _entryPath;
+
 #pragma mark - Initializers
 
 - (instancetype)init {
     if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithPath:(NSString *)path {
+    if (self = [super init]) {
+        _entryPath = path;
         [self setup];
     }
     return self;

@@ -213,18 +213,32 @@
 }
 
 - (XXTExplorerViewEntryListSortField)explorerSortField {
+    if (_internalMode) {
+        return _internalSortField;
+    }
     return XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
 }
 
 - (XXTExplorerViewEntryListSortOrder)explorerSortOrder {
+    if (_internalMode) {
+        return _internalSortOrder;
+    }
     return XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
 }
 
 - (void)setExplorerSortField:(XXTExplorerViewEntryListSortField)explorerSortField {
+    if (self.internalMode) {
+        _internalSortField = explorerSortField;
+        return;
+    }
     XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortFieldKey, explorerSortField);
 }
 
 - (void)setExplorerSortOrder:(XXTExplorerViewEntryListSortOrder)explorerSortOrder {
+    if (self.internalMode) {
+        _internalSortOrder = explorerSortOrder;
+        return;
+    }
     XXTEDefaultsSetBasic(XXTExplorerViewEntryListSortOrderKey, explorerSortOrder);
 }
 
@@ -459,16 +473,8 @@
                 NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
                 NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
                 if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
-                { // Directory or Symbolic Link Directory
-                    // We'd better try to access it before we enter it.
-                    NSError *accessError = nil;
-                    [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
-                    if (accessError) {
-                        toastMessage(self, [accessError localizedDescription]);
-                    } else {
-                        XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
-                        [self.navigationController pushViewController:explorerViewController animated:YES];
-                    }
+                {
+                    [self performDictionaryActionForEntry:entryAttributes];
                 }
                 else if (
                          [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
@@ -527,6 +533,42 @@
                     [self.navigationController pushViewController:explorerViewController animated:YES];
                 }
             }
+        }
+    }
+}
+
+- (void)performDictionaryActionForEntry:(NSDictionary *)entryAttributes {
+    NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+    { // Directory or Symbolic Link Directory
+        // We'd better try to access it before we enter it.
+        NSError *accessError = nil;
+        [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
+        if (accessError) {
+            toastMessage(self, [accessError localizedDescription]);
+        } else {
+            XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
+            [self.navigationController pushViewController:explorerViewController animated:YES];
+        }
+    }
+}
+
+- (void)performHistoryActionForEntry:(NSDictionary *)entryAttributes {
+    NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+    {
+        NSError *accessError = nil;
+        [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
+        if (accessError) {
+            toastMessage(self, [accessError localizedDescription]);
+        } else {
+            XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
+            explorerViewController.internalMode = YES;
+            explorerViewController.internalSortField = XXTExplorerViewEntryListSortFieldCreationDate;
+            explorerViewController.internalSortOrder = XXTExplorerViewEntryListSortOrderDesc;
+            [self.navigationController pushViewController:explorerViewController animated:YES];
         }
     }
 }

@@ -13,6 +13,9 @@
 
 @protocol XXTEDetailViewController <NSObject>
 
+@property (nonatomic, copy, readonly) NSString *entryPath;
+- (instancetype)initWithPath:(NSString *)path;
+
 @end
 
 #endif /* XXTEDetailViewController_h */

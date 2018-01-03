@@ -27,6 +27,10 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField explorerSortField;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder explorerSortOrder;
 
+@property (nonatomic, assign) BOOL internalMode;
+@property (nonatomic, assign) XXTExplorerViewEntryListSortField internalSortField;
+@property (nonatomic, assign) XXTExplorerViewEntryListSortOrder internalSortOrder;
+
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 @property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
@@ -57,6 +61,8 @@ typedef enum : NSUInteger {
 
 #pragma mark - fast open
 
+- (void)performDictionaryActionForEntry:(NSDictionary *)entryAttributes;
+- (void)performHistoryActionForEntry:(NSDictionary *)entryAttributes;
 - (void)performViewerActionForEntry:(NSDictionary *)entryAttributes;
 
 @end

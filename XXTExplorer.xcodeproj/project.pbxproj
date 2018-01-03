@@ -1143,6 +1143,8 @@
 		D6F3EBE01FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F3EBDF1FE3A12600197858 /* XXTEEditorTextContainer.m */; };
 		D6F3EBE11FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F3EBDF1FE3A12600197858 /* XXTEEditorTextContainer.m */; };
 		D6F3EBE21FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F3EBDF1FE3A12600197858 /* XXTEEditorTextContainer.m */; };
+		D6FA3C211FFCB74E00EADE49 /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
+		D6FA3C221FFCB74E00EADE49 /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
 		D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F2B1F0E3372000BAB42 /* XXTEMoreActivationController.m */; };
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
@@ -4342,6 +4344,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6FA3C211FFCB74E00EADE49 /* NSData+SHA1.m in Sources */,
+				D6FA3C221FFCB74E00EADE49 /* NSString+SHA1.m in Sources */,
 				D6F3EBE11FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */,
 				0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */,

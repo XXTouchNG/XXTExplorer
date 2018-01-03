@@ -1348,6 +1348,9 @@
 "Version" = "版本";
 
 /* No comment provided by engineer. */
+"View History" = "历史记录";
+
+/* No comment provided by engineer. */
 "Warning: Bootscript could leave system at a unpredictable state. You can hold \"Volume +\" before booting to stop vulnerable script from being launched." = "警告: 开机启动项会使系统处于不可预料的状态, 你可以在开机前按住 \"音量 +\" 以防止有害脚本加载.";
 
 /* No comment provided by engineer. */

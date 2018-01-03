@@ -20,8 +20,6 @@
 + (Class)relatedReader;
 
 @property (nonatomic, assign) BOOL awakeFromOutside;
-@property (nonatomic, copy, readonly) NSString *entryPath;
-- (instancetype)initWithPath:(NSString *)path;
 
 @end
 

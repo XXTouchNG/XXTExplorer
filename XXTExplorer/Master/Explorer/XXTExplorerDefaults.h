@@ -16,6 +16,7 @@
 #pragma mark - Defaults
 
 static NSString * const XXTExplorerViewBuiltInitialPath = @"EXPLORER_INITIAL_PATH";
+static NSString * const XXTExplorerViewBuiltHistoryPath = @"EXPLORER_HISTORY_PATH";
 static NSString * const XXTExplorerViewBuiltHomeSeries = @"EXPLORER_HOME_SERIES";
 
 static NSString * const XXTExplorerViewEntryHomeEnabledKey = @"XXTExplorerViewEntryHomeEnabledKey";

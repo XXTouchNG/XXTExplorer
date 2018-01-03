@@ -10,6 +10,7 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTExplorerViewController+FileOperation.h"
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
+#import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 
 #import "XXTExplorerDefaults.h"
 #import "XXTEAppDefines.h"
@@ -117,10 +118,7 @@
         if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
             UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
             if (configurator) {
-                XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:configurator];
-                navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
-                navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-                [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
+                [self tableView:self.tableView showFormSheetController:configurator];
             } else {
                 toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]));
             }
@@ -131,18 +129,9 @@
     }
     else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionEdit]) {
         if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
-            UIViewController *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
+            UIViewController <XXTEEditor> *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
             if (editor) {
-                if (XXTE_COLLAPSED) {
-                    XXTE_START_IGNORE_PARTIAL
-                    if (@available(iOS 8.0, *)) {
-                        XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:editor];
-                        [self.splitViewController showDetailViewController:navigationController sender:self];
-                    }
-                    XXTE_END_IGNORE_PARTIAL
-                } else {
-                    [self.navigationController pushViewController:editor animated:YES];
-                }
+                [self tableView:self.tableView showDetailController:editor];
             }
         } else {
             toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryName]));

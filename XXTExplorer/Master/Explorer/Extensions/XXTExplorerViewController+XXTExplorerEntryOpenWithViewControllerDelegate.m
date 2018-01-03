@@ -24,6 +24,9 @@
 
 #import "XXTExplorerEntryService.h"
 #import "XXTExplorerViewCell.h"
+#import "NSString+SHA1.h"
+
+#import <sys/stat.h>
 
 @implementation XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate)
 
@@ -34,12 +37,14 @@
         NSDictionary *entry = controller.entry;
         NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
         UIViewController *detailController = [[self.class explorerEntryService] viewerWithName:controllerName forEntryPath:entryPath];
-        [self tableView:self.tableView showDetailController:(UIViewController <XXTEViewer> *)detailController];
+        [self tableView:self.tableView showDetailController:detailController];
     }];
 }
 
-- (void)tableView:(UITableView *)tableView showDetailController:(UIViewController <XXTEViewer> *)viewer {
-    if (viewer) {
+- (void)tableView:(UITableView *)tableView showDetailController:(UIViewController *)controller {
+    if ([controller isKindOfClass:[UIViewController class]] &&
+        [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
+        UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]])
         {
 #ifndef APPSTORE
@@ -84,6 +89,51 @@
             } else {
                 [self.navigationController pushViewController:viewer animated:YES];
             }
+        }
+        NSString *entryPath = viewer.entryPath;
+        [self linkHistoryEntryAtPath:entryPath];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView showFormSheetController:(UIViewController *)controller {
+    if ([controller isKindOfClass:[UIViewController class]] &&
+        [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
+        UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
+        {
+            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
+            navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+            navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
+        }
+//        NSString *entryPath = viewer.entryPath;
+//        [self linkHistoryEntryAtPath:entryPath];
+    }
+}
+
+- (void)linkHistoryEntryAtPath:(NSString *)entryPath {
+    if (self.internalMode)
+    {
+        return;
+    }
+    NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
+    NSString *historyPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:historyRelativePath];
+    NSString *pathHash = [entryPath sha1String];
+    if (pathHash.length > 8) {
+        NSString *pathSubhash = [pathHash substringToIndex:7];
+        NSString *entryName = [entryPath lastPathComponent];
+        NSString *entryLinkName = [pathSubhash stringByAppendingFormat:@"@%@", entryName];
+        NSString *entryLinkPath = [historyPath stringByAppendingPathComponent:entryLinkName];
+        BOOL linkResult = NO;
+        NSError *linkError = nil;
+        if (entryLinkPath.length > 0 && entryPath.length > 0) {
+            NSFileManager *manager = [[self class] explorerFileManager];
+            BOOL cleanResult = NO;
+            NSError *cleanError = nil;
+            struct stat cleanStat;
+            if (0 == lstat(entryLinkPath.fileSystemRepresentation, &cleanStat)) {
+                cleanResult = [manager removeItemAtPath:entryLinkPath error:&cleanError];
+            }
+            linkResult = [manager createSymbolicLinkAtURL:[NSURL fileURLWithPath:entryLinkPath] withDestinationURL:[NSURL fileURLWithPath:entryPath] error:&linkError];
         }
     }
 }

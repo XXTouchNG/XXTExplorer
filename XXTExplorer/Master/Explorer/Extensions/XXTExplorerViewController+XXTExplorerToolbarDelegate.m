@@ -30,6 +30,8 @@
 #import <objc/message.h>
 
 #import "XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h"
+#import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTExplorerEntryParser.h"
 
 @interface XXTExplorerViewController ()
 
@@ -60,10 +62,13 @@
 }
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
-    if (self.explorerSortOrder == XXTExplorerViewEntryListSortOrderAsc) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:YES];
-    } else {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusSelected enabled:YES];
+    {
+        BOOL sortEnabled = (self.internalMode == NO);
+        if (self.explorerSortOrder == XXTExplorerViewEntryListSortOrderAsc) {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:sortEnabled];
+        } else {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusSelected enabled:sortEnabled];
+        }
     }
 }
 
@@ -92,7 +97,11 @@
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
 #endif
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
+        if (self.internalMode) {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:NO];
+        } else {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
+        }
     }
 }
 
@@ -123,6 +132,14 @@
                 if (@available(iOS 8.0, *)) {
                     UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
                     controller.delegate = self;
+                    if (!self.internalMode) {
+                        [controller addOptionWithTitle:NSLocalizedString(@"View History", nil)
+                                                 image:nil
+                                                 order:UIDocumentMenuOrderFirst
+                                               handler:^{
+                                                   [self presentHistoryViewController:buttonItem];
+                                               }];
+                    }
                     [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
                                              image:nil
                                              order:UIDocumentMenuOrderFirst
@@ -319,6 +336,18 @@
     createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
+}
+
+- (void)presentHistoryViewController:(UIBarButtonItem *)buttonItem {
+    NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
+    NSString *historyPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:historyRelativePath];
+    NSError *entryError = nil;
+    NSDictionary *entryAttributes = [[self.class explorerEntryParser] entryOfPath:historyPath withError:&entryError];
+    if (!entryError) {
+        [self performHistoryActionForEntry:entryAttributes];
+    } else {
+        toastMessage(self, entryError.localizedDescription);
+    }
 }
 
 @end
