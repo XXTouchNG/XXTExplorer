@@ -25,7 +25,7 @@
 
 local opt = ...
 
-_XUI_VERSION = "1.0"
+_XUI_VERSION = "1.1"
 
 local __G = _G
 local _ENV = {
