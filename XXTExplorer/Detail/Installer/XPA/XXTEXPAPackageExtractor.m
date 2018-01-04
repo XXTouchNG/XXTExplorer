@@ -24,14 +24,16 @@
     if (self = [super init]) {
         _packagePath = path;
         
-        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEXPAPackageExtractor"];
+        NSString *cachesLocation = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"];
+        
+        NSString *temporarilyLocation = [cachesLocation stringByAppendingPathComponent:@"_XXTEXPAPackageExtractor"];
         _temporarilyLocation = temporarilyLocation;
         [self cleanTemporarilyFilesAtLocation:temporarilyLocation];
         
         struct stat temporarilyLocationStat;
-        if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat)) {
-            if (0 != mkdir([temporarilyLocation UTF8String], 0755)) {
-                NSLog(@"Cannot create temporarily directory \"%@\".", temporarilyLocation);
+        if (0 != lstat([temporarilyLocation fileSystemRepresentation], &temporarilyLocationStat)) {
+            if (0 != mkdir([temporarilyLocation fileSystemRepresentation], 0755)) {
+                [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot create temporarily directory \"%@\".", nil), temporarilyLocation]];
                 return nil;
             }
         }
@@ -41,11 +43,11 @@
         NSString *temporarilyPath = [temporarilyLocation stringByAppendingPathComponent:temporarilyName];
         struct stat temporarilyStat;
         if (0 == lstat([temporarilyPath UTF8String], &temporarilyStat)) {
-            NSLog(@"Temporarily directory \"%@\" already exists.", temporarilyPath);
+            [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily directory \"%@\" already exists.", nil), temporarilyPath]];
             return nil;
         }
         if (0 != mkdir([temporarilyPath UTF8String], 0755)) {
-            NSLog(@"Cannot create temporarily directory \"%@\".", temporarilyPath);
+            [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot create temporarily directory \"%@\".", nil), temporarilyPath]];
             return nil;
         }
         _metaPath = temporarilyPath;
@@ -104,12 +106,13 @@
 - (void)cleanTemporarilyFilesAtLocation:(NSString *)pathClean {
     if (!pathClean) return;
     NSError *cleanError = nil;
-    BOOL cleanStatus = [[NSFileManager defaultManager] removeItemAtPath:pathClean error:&cleanError];
+    BOOL cleanStatus =
+    [[NSFileManager defaultManager] removeItemAtPath:pathClean error:&cleanError];
     if (cleanStatus) {
-        NSLog(@"Temporarily XPP Bundle cleaned: \"%@\".", pathClean);
+//        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily XPP Bundle cleaned: \"%@\".", nil), pathClean]];
     } else {
         if (cleanError) {
-            NSLog(@"Cannot clean temporarily XPP Bundle: \"%@\", reason: %@", pathClean, cleanError.localizedDescription);
+//            [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot clean temporarily XPP Bundle: \"%@\", reason: %@.", nil), pathClean, cleanError.localizedDescription]];
         }
     }
 }
