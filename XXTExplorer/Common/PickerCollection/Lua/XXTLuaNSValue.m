@@ -15,6 +15,10 @@
 #import <sys/utsname.h>
 #import "XXTEAppDefines.h"
 
+#import "UIView+XXTEToast.h"
+#import "UIViewController+topMostViewController.h"
+#import "XXTEUserInterfaceDefines.h"
+
 #pragma mark - Errors
 
 NSString * const kXXTELuaVModelErrorDomain = @"kXXTELuaVModelErrorDomain";
@@ -551,6 +555,19 @@ int l_sys_xtversion(lua_State *L)
     return 1;
 }
 
+int l_sys_toast(lua_State *L)
+{
+    const char *msg = luaL_checkstring(L, 1);
+    int direction = luaL_optnumber(L, 2, 0);
+    if (direction) {
+        
+    }
+    NSString *toastMsg = [NSString stringWithUTF8String:msg];
+    UIViewController *controller = [[[[UIApplication sharedApplication] delegate].window rootViewController] topMostViewController];
+    toastMessageWithDelay(controller, toastMsg, 2.8);
+    return 0;
+}
+
 int luaopen_sys(lua_State *L)
 {
     lua_createtable(L, 0, 2);
@@ -558,6 +575,8 @@ int luaopen_sys(lua_State *L)
     lua_setfield(L, -2, "version");
     lua_pushcfunction(L, l_sys_xtversion);
     lua_setfield(L, -2, "xtversion");
+    lua_pushcfunction(L, l_sys_toast);
+    lua_setfield(L, -2, "toast");
     lua_pushliteral(L, "0.1");
     lua_setfield(L, -2, "_VERSION");
     return 1;

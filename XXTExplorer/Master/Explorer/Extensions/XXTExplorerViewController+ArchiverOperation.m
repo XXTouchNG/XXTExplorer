@@ -49,16 +49,25 @@ typedef enum : NSUInteger {
 }
 
 - (void)alertView:(LGAlertView *)alertView archiveEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
-    NSMutableArray <NSString *> *entryNames = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
+    NSMutableArray <NSDictionary *> *entryDetails = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
-        NSDictionary *entryDetail = self.entryList[indexPath.row];
+        if (indexPath.section == XXTExplorerViewSectionIndexList) {
+            NSDictionary *entryDetail = self.entryList[indexPath.row];
+            [entryDetails addObject:entryDetail];
+        }
+    }
+    NSMutableArray <NSString *> *entryNames = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
+    for (NSDictionary *entryDetail in entryDetails) {
         [entryNames addObject:entryDetail[XXTExplorerViewEntryAttributeName]];
     }
-    if (entryNames.count == 1)
+    if (entryNames.count == 1 && entryDetails.count == 1)
     {
+        NSDictionary *entryDetail = entryDetails[0];
         NSString *entryName = entryNames[0];
         NSString *entryBaseExtension = [[entryName pathExtension] lowercaseString];
-        if ([entryBaseExtension isEqualToString:@"xpp"])
+        NSString *entryType = entryDetail[XXTExplorerViewEntryAttributeType];
+        if ([entryType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+            [entryBaseExtension isEqualToString:@"xpp"])
         {
             LGAlertView *alertView1 =
             [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Package Operation", nil)

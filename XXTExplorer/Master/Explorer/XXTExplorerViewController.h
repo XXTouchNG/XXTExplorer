@@ -27,7 +27,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField explorerSortField;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder explorerSortOrder;
 
-@property (nonatomic, assign) BOOL internalMode;
+@property (nonatomic, assign) BOOL historyMode;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField internalSortField;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder internalSortOrder;
 

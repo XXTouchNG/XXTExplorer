@@ -213,21 +213,21 @@
 }
 
 - (XXTExplorerViewEntryListSortField)explorerSortField {
-    if (_internalMode) {
+    if (_historyMode) {
         return _internalSortField;
     }
     return XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
 }
 
 - (XXTExplorerViewEntryListSortOrder)explorerSortOrder {
-    if (_internalMode) {
+    if (_historyMode) {
         return _internalSortOrder;
     }
     return XXTEDefaultsEnum(XXTExplorerViewEntryListSortOrderKey, XXTExplorerViewEntryListSortOrderDesc);
 }
 
 - (void)setExplorerSortField:(XXTExplorerViewEntryListSortField)explorerSortField {
-    if (self.internalMode) {
+    if (self.historyMode) {
         _internalSortField = explorerSortField;
         return;
     }
@@ -235,7 +235,7 @@
 }
 
 - (void)setExplorerSortOrder:(XXTExplorerViewEntryListSortOrder)explorerSortOrder {
-    if (self.internalMode) {
+    if (self.historyMode) {
         _internalSortOrder = explorerSortOrder;
         return;
     }
@@ -565,7 +565,7 @@
             toastMessage(self, [accessError localizedDescription]);
         } else {
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
-            explorerViewController.internalMode = YES;
+            explorerViewController.historyMode = YES;
             explorerViewController.internalSortField = XXTExplorerViewEntryListSortFieldCreationDate;
             explorerViewController.internalSortOrder = XXTExplorerViewEntryListSortOrderDesc;
             [self.navigationController pushViewController:explorerViewController animated:YES];

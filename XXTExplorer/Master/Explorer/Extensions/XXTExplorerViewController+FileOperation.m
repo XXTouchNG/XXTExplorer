@@ -633,7 +633,9 @@
 - (void)alertView:(LGAlertView *)alertView removeEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
     NSMutableArray <NSString *> *entryPaths = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
-        [entryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
+        if (indexPath.section == XXTExplorerViewSectionIndexList) {
+            [entryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
+        }
     }
     NSUInteger entryCount = entryPaths.count;
     NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];

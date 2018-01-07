@@ -33,6 +33,8 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTExplorerEntryParser.h"
 
+#import "XXTEDispatchDefines.h"
+
 @interface XXTExplorerViewController ()
 
 @end
@@ -63,7 +65,7 @@
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
     {
-        BOOL sortEnabled = (self.internalMode == NO);
+        BOOL sortEnabled = (self.historyMode == NO);
         if (self.explorerSortOrder == XXTExplorerViewEntryListSortOrderAsc) {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:sortEnabled];
         } else {
@@ -87,7 +89,11 @@
         } else {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:NO];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:NO];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:NO];
+            if (self.historyMode) {
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:YES];
+            } else {
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:NO];
+            }
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
         }
     } else {
@@ -97,7 +103,7 @@
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
 #endif
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
-        if (self.internalMode) {
+        if (self.historyMode) {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:NO];
         } else {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
@@ -132,7 +138,7 @@
                 if (@available(iOS 8.0, *)) {
                     UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
                     controller.delegate = self;
-                    if (!self.internalMode) {
+                    if (!self.historyMode) {
                         [controller addOptionWithTitle:NSLocalizedString(@"View History", nil)
                                                  image:nil
                                                  order:UIDocumentMenuOrderFirst
@@ -254,8 +260,11 @@
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
                 NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
-                NSString *entryBaseExtension = [firstAttributes[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-                if ([entryBaseExtension isEqualToString:@"xpp"]) {
+                NSString *entryExtension = firstAttributes[XXTExplorerViewEntryAttributeExtension];
+                NSString *entryBaseExtension = [entryExtension lowercaseString];
+                NSString *entryType = firstAttributes[XXTExplorerViewEntryAttributeType];
+                if ([entryType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+                    [entryBaseExtension isEqualToString:@"xpp"]) {
                     isXPP = YES;
                 }
                 formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes[XXTExplorerViewEntryAttributeName]];
@@ -308,6 +317,24 @@
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+            if (self.historyMode) {
+                if (selectedIndexPaths.count == 0) {
+                    LGAlertView *alertViewClear = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Confirm", nil)
+                                                                              message:NSLocalizedString(@"Clear all history?\nThis operation cannot be revoked.", nil)
+                                                                                style:LGAlertViewStyleActionSheet
+                                                                         buttonTitles:@[ ]
+                                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                               destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                                       actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                           [alertView1 dismissAnimated];
+                                                                       } destructiveHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                           [alertView1 dismissAnimated];
+                                                                           [self removeAllEntryContents];
+                                                                       }];
+                    [alertViewClear showAnimated];
+                    return;
+                }
+            }
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
@@ -316,15 +343,15 @@
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
             }
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
+            LGAlertView *alertViewDelete = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                                 message:[NSString stringWithFormat:NSLocalizedString(@"Delete %@?\nThis operation cannot be revoked.", nil), formatString]
                                                                   style:LGAlertViewStyleActionSheet
                                                            buttonTitles:@[ ]
                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                  destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                                delegate:self];
-            objc_setAssociatedObject(alertView, @selector(alertView:removeEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [alertView showAnimated:YES completionHandler:nil];
+            objc_setAssociatedObject(alertViewDelete, @selector(alertView:removeEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [alertViewDelete showAnimated:YES completionHandler:nil];
         }
     }
 }
@@ -348,6 +375,38 @@
     } else {
         toastMessage(self, entryError.localizedDescription);
     }
+}
+
+- (void)removeAllEntryContents {
+    if (!self.historyMode) {
+        return;
+    }
+    NSString *entryPath = self.entryPath;
+    NSError *localError = nil;
+    NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&localError];
+    if (localError) {
+        toastMessage(self, localError.localizedDescription);
+        return;
+    }
+    [self setEditing:NO animated:YES];
+    UIViewController *blockController = blockInteractions(self, YES);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        for (NSString *entrySubdirectoryName in entrySubdirectoryPathList) {
+            @autoreleasepool {
+                NSError *removeError = nil;
+                NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
+                BOOL removeResult = [self.class.explorerFileManager removeItemAtPath:entrySubdirectoryPath error:&removeError];
+                if (!removeResult) {
+                    
+                }
+            }
+        }
+        dispatch_async_on_main_queue(^{
+            [self loadEntryListData];
+            [self.tableView reloadData];
+            blockInteractions(blockController, NO);
+        });
+    });
 }
 
 @end

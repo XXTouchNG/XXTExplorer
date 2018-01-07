@@ -111,7 +111,7 @@
 }
 
 - (void)linkHistoryEntryAtPath:(NSString *)entryPath {
-    if (self.internalMode)
+    if (self.historyMode)
     {
         return;
     }

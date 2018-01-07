@@ -11,7 +11,6 @@
 
 #import "UIView+XXTEToast.h"
 
-
 static inline UIViewController *blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay) {
     UIViewController *parentController = viewController.tabBarController;
     if (!parentController) {
