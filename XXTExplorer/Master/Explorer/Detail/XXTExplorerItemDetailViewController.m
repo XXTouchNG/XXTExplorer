@@ -33,6 +33,10 @@
 #import "NSObject+XUIStringValue.h"
 #import "XXTExplorerDynamicSection.h"
 
+#import "XXTExplorerItemOwnerViewController.h"
+#import "XXTExplorerItemGroupViewController.h"
+#import "XXTExplorerPermissionViewController.h"
+
 static int sizingCancelFlag = 0;
 
 @interface NSFileManager (DeepSize)
@@ -496,11 +500,17 @@ static int sizingCancelFlag = 0;
         if (entryPWInfo != NULL && entryGRInfo != NULL) {
             XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell7.titleLabel.text = NSLocalizedString(@"Owner", nil);
-            cell7.valueLabel.text = [[NSString alloc] initWithUTF8String:entryPWInfo->pw_name];
+            if (entryPWInfo->pw_name) {
+                cell7.valueLabel.text = [[NSString alloc] initWithUTF8String:entryPWInfo->pw_name];
+            }
+            cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             XXTEMoreTitleValueCell *cell8 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell8.titleLabel.text = NSLocalizedString(@"Group", nil);
-            cell8.valueLabel.text = [[NSString alloc] initWithUTF8String:entryGRInfo->gr_name];
+            if (entryGRInfo->gr_name) {
+                cell8.valueLabel.text = [[NSString alloc] initWithUTF8String:entryGRInfo->gr_name];
+            }
+            cell8.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             XXTExplorerDynamicSection *section6 = [[XXTExplorerDynamicSection alloc] init];
             section6.identifier = kXXTEDynamicSectionIdentifierSectionOwner;
@@ -547,10 +557,14 @@ static int sizingCancelFlag = 0;
         cell11.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
         
+        XXTEMoreLinkCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+        cell12.titleLabel.text = NSLocalizedString(@"Set Permission", nil);
+        cell12.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
         XXTExplorerDynamicSection *section7 = [[XXTExplorerDynamicSection alloc] init];
         section7.identifier = kXXTEDynamicSectionIdentifierSectionPermission;
-        if (cell9 && cell10 && cell11) section7.cells = @[ cell9, cell10, cell11/*, cell12*/ ];
-        section7.cellHeights = @[ @(44.f), @(44.f), @(44.f)/*, @(44.f)*/ ];
+        if (cell9 && cell10 && cell11) section7.cells = @[ cell9, cell10, cell11, cell12 ];
+        section7.cellHeights = @[ @(44.f), @(44.f), @(44.f), @(44.f) ];
         section7.sectionTitle = NSLocalizedString(@"Permission", nil);
         section7.sectionFooter = @"";
         
@@ -747,6 +761,7 @@ static int sizingCancelFlag = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
+        NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
         NSString *sectionIdentifier = self.dynamicSections[indexPath.section].identifier;
         UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
         if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOpenWith]) {
@@ -760,29 +775,52 @@ static int sizingCancelFlag = 0;
                 }
             }
         }
-        else if ([cell isKindOfClass:[XXTEMoreLinkCell class]] &&
-                 [sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
-            id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
-            XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
-            objectViewController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
-            objectViewController.entryBundle = self.entryBundle;
-            objectViewController.tableViewStyle = UITableViewStyleGrouped;
-            objectViewController.containerDisplayMode = XXTEObjectContainerDisplayModeDescription;
-            [self.navigationController pushViewController:objectViewController animated:YES];
+        else if ([cell isKindOfClass:[XXTEMoreLinkCell class]]) {
+            if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionExtended]) {
+                id relatedObject = self.dynamicSections[indexPath.section].relatedObjects[indexPath.row];
+                XXTEObjectViewController *objectViewController = [[XXTEObjectViewController alloc] initWithRootObject:relatedObject];
+                objectViewController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
+                objectViewController.entryBundle = self.entryBundle;
+                objectViewController.tableViewStyle = UITableViewStyleGrouped;
+                objectViewController.containerDisplayMode = XXTEObjectContainerDisplayModeDescription;
+                [self.navigationController pushViewController:objectViewController animated:YES];
+            } else if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionPermission]) {
+#ifndef APPSTORE
+                if (indexPath.row == 3) {
+                    XXTExplorerPermissionViewController *permissionController = [[XXTExplorerPermissionViewController alloc] initWithPath:entryPath];
+                    permissionController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
+                    [self.navigationController pushViewController:permissionController animated:YES];
+                }
+#endif
+            }
         }
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
-            NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
-            if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
-                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                        [[UIPasteboard generalPasteboard] setString:detailText];
-                        fulfill(nil);
+            if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOwner]) {
+#ifndef APPSTORE
+                if (indexPath.row == 0) {
+                    XXTExplorerItemOwnerViewController *ownerController = [[XXTExplorerItemOwnerViewController alloc] initWithPath:entryPath];
+                    ownerController.title = ((XXTEMoreTitleValueCell *)cell).titleLabel.text;
+                    [self.navigationController pushViewController:ownerController animated:YES];
+                } else if (indexPath.row == 1) {
+                    XXTExplorerItemGroupViewController *groupController = [[XXTExplorerItemGroupViewController alloc] initWithPath:entryPath];
+                    groupController.title = ((XXTEMoreTitleValueCell *)cell).titleLabel.text;
+                    [self.navigationController pushViewController:groupController animated:YES];
+                }
+#endif
+            } else {
+                NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
+                if (detailText && detailText.length > 0) {
+                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            [[UIPasteboard generalPasteboard] setString:detailText];
+                            fulfill(nil);
+                        });
+                    }].finally(^() {
+                        toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                        blockInteractions(blockVC, NO);
                     });
-                }].finally(^() {
-                    toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(blockVC, NO);
-                });
+                }
             }
         }
         else if ([cell isKindOfClass:[XXTEMoreAddressCell class]]) {

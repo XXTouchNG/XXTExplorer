@@ -92,7 +92,10 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.title = [self.class viewerName];
+    if (self.title.length == 0) {
+        self.title = [self.class viewerName];
+    }
+    
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.loadingView];
     [self.navigationItem setRightBarButtonItem:self.installButtonItem];

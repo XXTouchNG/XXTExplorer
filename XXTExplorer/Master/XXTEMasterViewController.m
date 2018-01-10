@@ -421,4 +421,8 @@
     return self.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
 }
 
+- (void)dealloc {
+    
+}
+
 @end

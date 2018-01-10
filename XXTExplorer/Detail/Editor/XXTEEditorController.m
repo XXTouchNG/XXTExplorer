@@ -472,10 +472,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - Layout
 
 - (void)configure {
-    NSString *entryPath = self.entryPath;
-    if (entryPath) {
-        NSString *entryName = [entryPath lastPathComponent];
-        self.title = entryName;
+    if (self.title.length == 0) {
+        NSString *entryPath = self.entryPath;
+        if (entryPath) {
+            NSString *entryName = [entryPath lastPathComponent];
+            self.title = entryName;
+        }
     }
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = self.myBackButtonItem;
@@ -650,7 +652,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
             textView.smartDashesType = UITextSmartDashesTypeNo;
             textView.smartQuotesType = UITextSmartQuotesTypeNo;
             textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-//            textView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
             // Fallback on earlier versions
         }

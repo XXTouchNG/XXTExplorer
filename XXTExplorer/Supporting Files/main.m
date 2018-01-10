@@ -91,6 +91,9 @@ void plugin_i_love_xxtouch() {
 
 int main(int argc, char * argv[]) {
     
+    setuid(0);
+    setgid(0);
+    
 #ifndef DEBUG
     // If enabled the program should exit with code 055 in GDB
     // Program exited with code 055.

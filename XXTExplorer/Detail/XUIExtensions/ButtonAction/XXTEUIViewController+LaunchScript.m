@@ -27,8 +27,19 @@
     if (!scriptPath) {
         return @(NO);
     }
+    NSString *bundlePath = [self.bundle bundlePath];
+    if (!bundlePath) {
+        return @(NO);
+    }
+    NSMutableDictionary <NSString *, NSString *> *launchArgs = [[NSMutableDictionary alloc] init];
+    for (NSString *argKey in args) {
+        if ([args[argKey] isKindOfClass:[NSString class]]) {
+            launchArgs[argKey] = args[argKey];
+        }
+    }
+    launchArgs[@"bundle_path"] = bundlePath;
     UIViewController *blockVC = blockInteractions(self, YES);
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{@"filename": scriptPath, @"envp": uAppConstEnvp()}]
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{ @"filename": scriptPath, @"envp": uAppConstEnvp(), @"args": [launchArgs copy], }]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if ([jsonDirectory[@"code"] isEqualToNumber:@(0)]) {

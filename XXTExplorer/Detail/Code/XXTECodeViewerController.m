@@ -66,8 +66,10 @@
     
     NSString *entryPath = self.entryPath;
     NSString *entryName = [entryPath lastPathComponent];
-    if (entryName) {
-        self.title = entryName;
+    if (self.title.length == 0) {
+        if (entryName) {
+            self.title = entryName;
+        }
     }
     
     NSError *templateError = nil;

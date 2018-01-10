@@ -110,10 +110,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *entryPath = self.entryPath;
-    if (entryPath) {
-        NSString *entryName = [entryPath lastPathComponent];
-        self.title = entryName;
+    if (self.title.length == 0) {
+        NSString *entryPath = self.entryPath;
+        if (entryPath) {
+            NSString *entryName = [entryPath lastPathComponent];
+            self.title = entryName;
+        }
     }
     
     _tableView = ({

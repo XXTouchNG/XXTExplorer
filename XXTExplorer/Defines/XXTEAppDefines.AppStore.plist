@@ -18,6 +18,7 @@
 		<string>XXTEInstallerViewController</string>
 		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>
+		<string>XXTELogViewController</string>
 	</array>
 	<key>DAEMON_VERSION</key>
 	<string>1.2-4</string>

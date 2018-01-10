@@ -49,11 +49,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (self.entryPath) {
-        NSString *entryName = [self.entryPath lastPathComponent];
-        self.title = entryName;
-    } else {
-        self.title = NSLocalizedString(@"Console", nil);
+    if (self.title.length == 0) {
+        if (self.entryPath) {
+            NSString *entryName = [self.entryPath lastPathComponent];
+            self.title = entryName;
+        } else {
+            self.title = NSLocalizedString(@"Console", nil);
+        }
     }
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = self.launchItem;

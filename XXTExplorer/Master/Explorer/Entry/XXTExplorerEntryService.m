@@ -122,6 +122,11 @@
     return [self viewerWithName:viewerName forEntryPath:entryPath];
 }
 
+- (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)viewerName forEntry:(NSDictionary *)entry {
+    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    return [self viewerWithName:viewerName forEntryPath:entryPath];
+}
+
 - (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry {
     NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
     XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];

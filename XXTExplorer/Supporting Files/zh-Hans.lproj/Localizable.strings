@@ -174,6 +174,9 @@
 "Applications" = "应用程序";
 
 /* No comment provided by engineer. */
+"Apply Recursively" = "递归应用";
+
+/* No comment provided by engineer. */
 "Archive" = "归档";
 
 /* No comment provided by engineer. */
@@ -312,6 +315,9 @@
 "Cannot overwrite file \"%@\".\n%@" = "无法覆盖文件 \"%@\".\n%@";
 
 /* No comment provided by engineer. */
+"Cannot parse log with UTF-8 encoding: \"%@\"." = "无法以 UTF-8 编码解析日志: \"%@\".";
+
+/* No comment provided by engineer. */
 "Cannot perform operation \"%@\" on Pasteboard URL \"%@\"." = "无法执行操作 \"%@\": 剪贴板链接 \"%@\".";
 
 /* No comment provided by engineer. */
@@ -393,10 +399,16 @@
 "Clean UI Caches" = "清理 UI 缓存";
 
 /* No comment provided by engineer. */
+"Clear" = "清空";
+
+/* No comment provided by engineer. */
 "Clear all history?\nThis operation cannot be revoked." = "清除所有历史记录? \n该操作无法被撤销.";
 
 /* No comment provided by engineer. */
 "Clear Confirm" = "清除确认";
+
+/* No comment provided by engineer. */
+"Clear Now" = "立即清除";
 
 /* No comment provided by engineer. */
 "Clear Pasteboard" = "清空剪贴板";
@@ -600,6 +612,9 @@
 "Everyone" = "任何人";
 
 /* No comment provided by engineer. */
+"Execute" = "执行";
+
+/* No comment provided by engineer. */
 "Expired At" = "过期时间";
 
 /* No comment provided by engineer. */
@@ -795,6 +810,9 @@
 "Location" = "位置";
 
 /* No comment provided by engineer. */
+"Log Viewer" = "日志查看器";
+
+/* No comment provided by engineer. */
 "LUA" = "LUA";
 
 /* No comment provided by engineer. */
@@ -864,10 +882,10 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -1020,6 +1038,9 @@
 "QRCode" = "二维码";
 
 /* No comment provided by engineer. */
+"Read" = "读";
+
+/* No comment provided by engineer. */
 "Read Only" = "只读模式";
 
 /* No comment provided by engineer. */
@@ -1057,6 +1078,9 @@
 
 /* No comment provided by engineer. */
 "Remove after installation" = "安装成功后移除安装包";
+
+/* No comment provided by engineer. */
+"Remove all logs in \"%@\"?" = "移除 \"%@\" 中的所有日志?";
 
 /* No comment provided by engineer. */
 "Removing process terminated: User interrupt occurred." = "删除进程终止: 用户结束操作.";
@@ -1140,6 +1164,15 @@
 "Serial Number" = "序列号";
 
 /* No comment provided by engineer. */
+"Set GID" = "设置 GID";
+
+/* No comment provided by engineer. */
+"Set Permission" = "设置权限";
+
+/* No comment provided by engineer. */
+"Set UID" = "设置 UID";
+
+/* No comment provided by engineer. */
 "Settings" = "设置";
 
 /* No comment provided by engineer. */
@@ -1176,6 +1209,9 @@
 "Source URL has been copied to the pasteboard." = "源 URL 已被复制到剪贴板.";
 
 /* No comment provided by engineer. */
+"Special" = "特殊";
+
+/* No comment provided by engineer. */
 "Spell Checking" = "拼写检查";
 
 /* No comment provided by engineer. */
@@ -1183,6 +1219,9 @@
 
 /* No comment provided by engineer. */
 "Status" = "状态";
+
+/* No comment provided by engineer. */
+"Sticky" = "粘滞";
 
 /*
  * ./XXTEAppDelegate.m
@@ -1399,6 +1438,9 @@
 "Workspace" = "工作区";
 
 /* No comment provided by engineer. */
+"Write" = "写";
+
+/* No comment provided by engineer. */
 "XUI Error" = "XUI 错误";
 
 /* No comment provided by engineer. */
@@ -1412,3 +1454,12 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
+
+/* No comment provided by engineer. */
+"Error Log" = "";
+
+/* No comment provided by engineer. */
+"Log" = "";
+
+/* No comment provided by engineer. */
+"System Log" = "";

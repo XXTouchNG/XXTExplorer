@@ -11,5 +11,6 @@
 @interface UIViewController (topMostViewController)
 
 - (UIViewController *)topMostViewController;
+- (void)dismissModalStackAnimated:(BOOL)animated;
 
 @end

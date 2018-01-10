@@ -28,6 +28,8 @@
 #import "XXTENetworkDefines.h"
 #import "XXTEShield.h"
 
+#import "UIViewController+topMostViewController.h"
+
 static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
 static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 
@@ -73,39 +75,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
     
-    // Master - Explorer Controller
-    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
-    XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
-    
-    // Master - More Controller
-#ifndef APPSTORE
-    XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
-#endif
-    
-    // Master Controller
-    XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
-#ifndef APPSTORE
-    masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
-#else
-    masterViewController.viewControllers = @[masterNavigationControllerLeft];
-#endif
-    
-    {
-        if (@available(iOS 8.0, *)) {
-            // Detail Controller
-            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
-            
-            // Split Controller
-            XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
-            splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-            
-            mainWindow.rootViewController = splitViewController;
-        } else {
-            mainWindow.rootViewController = masterViewController;
-        }
-    }
+    [self reloadWorkspace];
     
     return YES;
 }
@@ -299,6 +269,10 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         NSDictionary *userInfo =
         @{XXTENotificationShortcutInterface: xxtCommandInterface,
           XXTENotificationShortcutUserData: xxtUserData};
+        BOOL canHandleNative = [self application:application handleNativeEvents:userInfo];
+        if (canHandleNative) {
+            return YES;
+        }
         if (delay) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
@@ -334,6 +308,59 @@ XXTE_START_IGNORE_PARTIAL
 }
 XXTE_END_IGNORE_PARTIAL
 #endif
+
+- (BOOL)application:(UIApplication *)application handleNativeEvents:(NSDictionary *)userInfo {
+    NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
+    if ([shortcutInterface isEqualToString:@"workspace"]) {
+        UIViewController *rootController = self.window.rootViewController;
+        UIViewController *controller = rootController.topMostViewController;
+        [controller dismissModalStackAnimated:YES];
+        return YES;
+    }
+    return NO;
+}
+
+- (void)dismissTopMostViewController {
+    
+}
+
+- (void)reloadWorkspace {
+    UIWindow *mainWindow = self.window;
+    
+    // Master - Explorer Controller
+    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
+    XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
+    
+    // Master - More Controller
+#ifndef APPSTORE
+    XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
+#endif
+    
+    // Master Controller
+    XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
+#ifndef APPSTORE
+    masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
+#else
+    masterViewController.viewControllers = @[masterNavigationControllerLeft];
+#endif
+    
+    {
+        if (@available(iOS 8.0, *)) {
+            // Detail Controller
+            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+            
+            // Split Controller
+            XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
+            splitViewController.viewControllers = @[masterViewController, detailNavigationController];
+            
+            mainWindow.rootViewController = splitViewController;
+        } else {
+            mainWindow.rootViewController = masterViewController;
+        }
+    }
+}
 
 #pragma mark - App Defines
 

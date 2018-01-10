@@ -25,6 +25,7 @@
 #pragma mark - Controller Methods
 
 - (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry;
+- (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)viewerName forEntry:(NSDictionary *)entry;
 - (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry;
 - (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry;
 - (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry configurationName:(NSString *)name;

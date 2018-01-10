@@ -49,4 +49,8 @@
     self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"More", nil) image:[UIImage imageNamed:@"XXTEMoreTabbarIcon"] tag:1];
 }
 
+- (void)dealloc {
+    
+}
+
 @end

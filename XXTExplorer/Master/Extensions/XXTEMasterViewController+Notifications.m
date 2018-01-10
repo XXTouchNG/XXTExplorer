@@ -25,6 +25,8 @@
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
+#import "UIViewController+topMostViewController.h"
+
 #ifndef APPSTORE
     #import "XXTENetworkDefines.h"
     #import "XXTEMoreLicenseController.h"

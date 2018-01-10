@@ -37,4 +37,12 @@
     return [self.presentedViewController topMostViewController];
 }
 
+- (void)dismissModalStackAnimated:(BOOL)animated {
+    UIViewController *vc = self.presentingViewController;
+    while (vc.presentingViewController) {
+        vc = vc.presentingViewController;
+    }
+    [vc dismissViewControllerAnimated:animated completion:nil];
+}
+
 @end
