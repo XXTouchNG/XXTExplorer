@@ -94,7 +94,7 @@ static void * activatorHandler = nil;
     }
     XXTE_END_IGNORE_PARTIAL
     
-    self.title = NSLocalizedString(@"Activation Config", nil);
+    self.title = NSLocalizedString(@"Shortcut Config", nil);
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

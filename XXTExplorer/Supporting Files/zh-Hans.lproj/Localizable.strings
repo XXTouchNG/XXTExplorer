@@ -144,9 +144,6 @@
 "Activating license \"%@\" and bind to current device..." = "激活授权 \"%@\" 并绑定至当前设备...";
 
 /* No comment provided by engineer. */
-"Activation Config" = "激活设置";
-
-/* No comment provided by engineer. */
 "Activator" = "Activator";
 
 /* No comment provided by engineer. */
@@ -609,6 +606,9 @@
 "Error" = "错误";
 
 /* No comment provided by engineer. */
+"Error Log" = "错误日志";
+
+/* No comment provided by engineer. */
 "Everyone" = "任何人";
 
 /* No comment provided by engineer. */
@@ -808,6 +808,9 @@
 
 /* No comment provided by engineer. */
 "Location" = "位置";
+
+/* No comment provided by engineer. */
+"Log" = "日志";
 
 /* No comment provided by engineer. */
 "Log Viewer" = "日志查看器";
@@ -1140,6 +1143,9 @@
 "Scan result has been saved." = "扫描结果已保存.";
 
 /* No comment provided by engineer. */
+"Script Log" = "脚本日志";
+
+/* No comment provided by engineer. */
 "Search" = "搜索";
 
 /* No comment provided by engineer. */
@@ -1180,6 +1186,9 @@
 
 /* No comment provided by engineer. */
 "Shift Right" = "增加缩进";
+
+/* No comment provided by engineer. */
+"Shortcut Config" = "快捷键设置";
 
 /* No comment provided by engineer. */
 "Show Invisible Characters" = "显示控制字符";
@@ -1290,6 +1299,9 @@
 
 /* No comment provided by engineer. */
 "The content displayed in this page cannot be the proof of your purchase." = "该页面所显示内容不能作为您的购买凭据.";
+
+/* No comment provided by engineer. */
+"The content of log file \"%@\" is empty." = "日志文件 \"%@\" 的内容为空.";
 
 /* No comment provided by engineer. */
 "The daemon has been restarted." = "守护进程重启完成.";
@@ -1454,12 +1466,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"Error Log" = "";
-
-/* No comment provided by engineer. */
-"Log" = "";
-
-/* No comment provided by engineer. */
-"System Log" = "";

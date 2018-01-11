@@ -99,7 +99,12 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse log with UTF-8 encoding: \"%@\".", nil), entryPath]);
         return;
     }
-    [self.logTextView setText:stringPart];
+    if (stringPart.length == 0) {
+        [self.logTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of log file \"%@\" is empty.", nil), entryPath]];
+    } else {
+        [self.logTextView setText:stringPart];
+    }
+    
     [self.logTextView setSelectedRange:NSMakeRange(0, 0)];
 }
 
@@ -147,13 +152,12 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
     if (!entryPath) {
         return;
     }
-    UITextView *textView = self.logTextView;
     LGAlertView *clearAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Confirm", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Remove all logs in \"%@\"?", nil), entryPath] style:LGAlertViewStyleActionSheet buttonTitles:@[ ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Clear Now", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
         [[NSData data] writeToFile:entryPath atomically:YES];
-        [textView setText:@""];
+        [self loadTextDataFromEntry];
     }];
     [clearAlert showAnimated];
 }

@@ -304,7 +304,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTEMoreLinkCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell4.iconImage = [UIImage imageNamed:@"XXTEMoreIconActivationConfig"];
-    cell4.titleLabel.text = NSLocalizedString(@"Activation Config", nil);
+    cell4.titleLabel.text = NSLocalizedString(@"Shortcut Config", nil);
     
     XXTEMoreLinkCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell6.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -349,7 +349,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTEMoreLinkCell *cellLog = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cellLog.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cellLog.iconImage = [UIImage imageNamed:@"XXTEMoreIconLog"];
-    cellLog.titleLabel.text = NSLocalizedString(@"System Log", nil);
+    cellLog.titleLabel.text = NSLocalizedString(@"Script Log", nil);
     
     XXTEMoreLinkCell *cellErrorLog = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cellErrorLog.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
