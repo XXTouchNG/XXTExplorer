@@ -46,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"More", nil) image:[UIImage imageNamed:@"XXTEMoreTabbarIcon"] tag:1];
+    self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"More", nil) image:[UIImage imageNamed:@"XXTEMoreTabbarIcon"] tag:2];
 }
 
 - (void)dealloc {

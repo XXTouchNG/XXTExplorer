@@ -44,7 +44,7 @@
               @"conf", // Nginx
               @"py", // Python
               @"lua", // Lua
-              @"txt", @"log", // Plain Text
+              @"txt", // Plain Text
               @"strings", // Strings
               ];
 }
@@ -56,7 +56,10 @@
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
-        self.showActionButton = NO;
+        if (path) {
+            self.url = [NSURL fileURLWithPath:path];
+        }
+        self.showActionButton = YES;
     }
     return self;
 }

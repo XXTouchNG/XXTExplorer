@@ -160,8 +160,8 @@
     CGFloat buttonWidth = 80.0;
     cell.allowsButtonsWithDifferentWidth = YES;
     swipeSettings.transition = XXTESwipeTransitionBorder;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.fillOnTrigger = NO;
+//    expansionSettings.buttonIndex = 0;
+//    expansionSettings.fillOnTrigger = NO;
     BOOL hidesLabel = XXTEDefaultsBool(XXTExplorerViewEntryHideOperationLabelKey, NO);
     UIEdgeInsets buttonInsets = hidesLabel ? UIEdgeInsetsMake(0, 24.0, 0, 24.0) : UIEdgeInsetsMake(0, 8.0, 0, 8.0);
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";

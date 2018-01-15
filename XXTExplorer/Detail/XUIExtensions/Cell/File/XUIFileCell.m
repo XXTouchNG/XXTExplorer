@@ -57,6 +57,7 @@
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
+    self.accessoryType = UITableViewCellAccessoryNone;
     
     _xui_height = @(XUIFileCellHeight); // standard height for file cell
     _xui_allowedExtensions = @[ @"lua", @"xxt", @"xpp" ];

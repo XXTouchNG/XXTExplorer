@@ -11,13 +11,13 @@
 
 @interface XXTESegmentedControl ()
     
-    @property (nonatomic, strong) NSMutableArray <NSString *> *items;
-    @property (nonatomic, strong) NSMutableArray <XXTESegmentedButton *> *buttons;
-    
-    @property (nonatomic, strong) UIView *indicatorContainer;
-    @property (nonatomic, strong) UIView *indicatorView;
-    
-    @end
+@property (nonatomic, strong) NSMutableArray <NSString *> *items;
+@property (nonatomic, strong) NSMutableArray <XXTESegmentedButton *> *buttons;
+
+@property (nonatomic, strong) UIView *indicatorContainer;
+@property (nonatomic, strong) UIView *indicatorView;
+
+@end
 
 @implementation XXTESegmentedControl {
     NSUInteger _selectedSegmentIndex;
@@ -72,7 +72,7 @@
     _selectedTitleColor = [UIColor whiteColor];
     _titleColor = [UIColor whiteColor];
     
-    _titleFont = [UIFont boldSystemFontOfSize:16.0];
+    _titleFont = [UIFont boldSystemFontOfSize:17.0];
     
     _animationDelay = 0.33;
     _scrollsToSelectedSegment = YES;

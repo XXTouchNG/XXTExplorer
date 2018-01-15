@@ -63,7 +63,14 @@
 }
 
 - (void)setupAppearance {
-    [[UITabBar appearanceWhenContainedIn:[self class], nil] setTintColor:XXTE_COLOR];
+    UITabBar *tabBarAppearance = [UITabBar appearanceWhenContainedIn:[self class], nil];
+    [tabBarAppearance setTintColor:XXTE_COLOR];
+    
+    if (@available(iOS 11.0, *)) {
+        self.tabBar.translucent = YES;
+    } else {
+        self.tabBar.translucent = NO;
+    }
     
     LGAlertView *alertAppearance = [LGAlertView appearanceWhenContainedIn:[self class], nil];
     alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.25];

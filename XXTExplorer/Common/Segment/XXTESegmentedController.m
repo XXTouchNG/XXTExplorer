@@ -8,11 +8,11 @@
 
 #import "XXTESegmentedController.h"
 
-@interface XXTESegmentedController () <UIScrollViewDelegate>
-    @property (nonatomic, strong) NSArray <UIViewController *> *preparedViewControllers;
-    @property (nonatomic, assign) NSUInteger selectedIndex;
-    
-    @end
+@interface XXTESegmentedController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@property (nonatomic, strong) NSArray <UIViewController *> *preparedViewControllers;
+@property (nonatomic, assign) NSUInteger selectedIndex;
+
+@end
 
 @implementation XXTESegmentedController {
     BOOL _isFirstLoading;
@@ -77,30 +77,29 @@
 #pragma mark - Rotation
     
 - (void)willAnimateRotationToInterfaceOrientation:(__unused UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-    {
-        [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-        CGSize navigationBarSize = self.navigationController.navigationBar.frame.size;
-        UIView *titleView = self.navigationItem.titleView;
-        CGRect titleViewFrame = titleView.frame;
-        titleViewFrame.size = navigationBarSize;
-        self.navigationItem.titleView.frame = titleViewFrame;
-    }
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    CGSize navigationBarSize = self.navigationController.navigationBar.frame.size;
+    UIView *titleView = self.navigationItem.titleView;
+    CGRect titleViewFrame = titleView.frame;
+    titleViewFrame.size = navigationBarSize;
+    self.navigationItem.titleView.frame = titleViewFrame;
+}
     
 #pragma mark - Life Cycle
     
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.extendedLayoutIncludesOpaqueBars = NO;
     
-    [self.segmentedControl setFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+    [self.segmentedControl setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 0)];
     [self.pageScrollView setFrame:self.view.bounds];
-    
-    [self.navigationItem setTitleView:self.segmentedControl];
     [self.view addSubview:self.pageScrollView];
     
     [self updateControllers];
+    [self.navigationItem setTitleView:self.segmentedControl];
 }
     
 - (void)updateControllers {
@@ -287,6 +286,12 @@
             [controller endAppearanceTransition];
         }
     }
+}
+
+#pragma mark - Gesture Delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return NO;
 }
     
 #pragma mark - Memory

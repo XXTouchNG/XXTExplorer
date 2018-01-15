@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="290px" height="290px" viewBox="0 0 290 290" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>RMPaw</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval-3" fill="#37A3FF" cx="145" cy="145" r="145"></circle>
+        <g id="Group" transform="translate(156.000000, 162.000000) rotate(-30.000000) translate(-156.000000, -162.000000) translate(11.000000, 50.000000)" fill="#FFFFFF">
+            <ellipse id="Oval" cx="144.5" cy="158" rx="86.5" ry="66"></ellipse>
+            <ellipse id="Oval-2" transform="translate(144.860001, 36.001177) rotate(90.000000) translate(-144.860001, -36.001177) " cx="144.860001" cy="36.0011773" rx="36.0011773" ry="25.8600006"></ellipse>
+            <ellipse id="Oval-2" transform="translate(247.832699, 72.323125) rotate(125.000000) translate(-247.832699, -72.323125) " cx="247.832699" cy="72.323125" rx="36.0011773" ry="25.8600006"></ellipse>
+            <ellipse id="Oval-2" transform="translate(42.167301, 72.323125) rotate(55.000000) translate(-42.167301, -72.323125) " cx="42.1673006" cy="72.323125" rx="36.0011773" ry="25.8600006"></ellipse>
+        </g>
+    </g>
+</svg>

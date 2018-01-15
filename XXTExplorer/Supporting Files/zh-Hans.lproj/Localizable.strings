@@ -87,7 +87,7 @@
 "\"Activator\" is active, configure activation behaviours below." = "\"Activator\" 已激活, 请在下方配置激活行为. ";
 
 /* No comment provided by engineer. */
-"\"Activator\" is active, configure activation behaviours here." = "\"Activator\" 已激活, 请在此配置激活行为. ";
+"\"Activator\" is active, configure activation behaviours in \"Activator\"." = "\"Activator\" 已激活, 请在 \"Activator\" 中配置激活行为. ";
 
 /* No comment provided by engineer. */
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" 已关闭, 在 \"更多 > 用户偏好设置\" 中可以重新开启它.";
@@ -190,6 +190,12 @@
 
 /* No comment provided by engineer. */
 "Ask you for a choice." = "询问用户的选择.";
+
+/* No comment provided by engineer. */
+"Author" = "作者";
+
+/* No comment provided by engineer. */
+"Author: %@" = "作者: %@";
 
 /* No comment provided by engineer. */
 "Auto Capitalization" = "自动大写";
@@ -426,6 +432,9 @@
 "Configure" = "配置";
 
 /* No comment provided by engineer. */
+"Configure \"Activator\"" = "配置 \"Activator\"";
+
+/* No comment provided by engineer. */
 "Confirm" = "确认";
 
 /* No comment provided by engineer. */
@@ -439,6 +448,9 @@
 
 /* No comment provided by engineer. */
 "Console" = "终端";
+
+/* No comment provided by engineer. */
+"Contact" = "联系";
 
 /* No comment provided by engineer. */
 "Container Path" = "容器路径";
@@ -481,6 +493,9 @@
 
 /* No comment provided by engineer. */
 "Created At" = "创建于";
+
+/* No comment provided by engineer. */
+"Created at %@." = "创建于 %@.";
 
 /* No comment provided by engineer. */
 "Creation Failed" = "创建失败";
@@ -570,6 +585,12 @@
 "Download terminated: User interrupt occurred." = "下载终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
+"Download Times" = "下载次数";
+
+/* No comment provided by engineer. */
+"Download Times: %lu" = "下载次数: %lu";
+
+/* No comment provided by engineer. */
 "Edit" = "编辑";
 
 /* No comment provided by engineer. */
@@ -586,6 +607,9 @@
 
 /* No comment provided by engineer. */
 "Enable Boot Script" = "启用开机启动项";
+
+/* No comment provided by engineer. */
+"Enable Shortcut" = "启用快捷键";
 
 /* No comment provided by engineer. */
 "Encoding" = "编码";
@@ -696,13 +720,16 @@
 "Indent Wrapped Lines" = "折行缩进";
 
 /* No comment provided by engineer. */
+"Information" = "信息";
+
+/* No comment provided by engineer. */
 "Inside" = "内容";
 
 /* No comment provided by engineer. */
 "Install" = "安装";
 
 /* No comment provided by engineer. */
-"Install Activator" = "安装 Activator";
+"Install \"Activator\"" = "安装 Activator";
 
 /* No comment provided by engineer. */
 "Install via %@" = "通过 %@ 安装";
@@ -715,6 +742,9 @@
 
 /* No comment provided by engineer. */
 "Interface Viewer" = "界面查看器";
+
+/* No comment provided by engineer. */
+"Internal Shortcut" = "内置快捷键";
 
 /* No comment provided by engineer. */
 "Invalid package data." = "无效的列表数据.";
@@ -748,6 +778,9 @@
 
 /* No comment provided by engineer. */
 "Kind" = "类型";
+
+/* No comment provided by engineer. */
+"Latest" = "最新";
 
 /* No comment provided by engineer. */
 "Latest Version" = "最新版本";
@@ -885,10 +918,16 @@
 "New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No" = "否";
 
 /* No comment provided by engineer. */
 "No action" = "无动作";
+
+/* No comment provided by engineer. */
+"No Action" = "无动作";
+
+/* No comment provided by engineer. */
+"No description." = "暂无描述.";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -1011,6 +1050,9 @@
 "Pop-up Menu" = "弹出菜单";
 
 /* No comment provided by engineer. */
+"Popular" = "热门";
+
+/* No comment provided by engineer. */
 "Press & Hold \"Volume +\"" = "按住 \"音量 +\"";
 
 /* No comment provided by engineer. */
@@ -1035,10 +1077,16 @@
 "pt" = "pt";
 
 /* No comment provided by engineer. */
+"Purchase Now" = "立即购买";
+
+/* No comment provided by engineer. */
 "QR Scan" = "二维码扫描";
 
 /* No comment provided by engineer. */
 "QRCode" = "二维码";
+
+/* No comment provided by engineer. */
+"Ranking" = "评分";
 
 /* No comment provided by engineer. */
 "Read" = "读";
@@ -1131,6 +1179,9 @@
 "Retry" = "重试";
 
 /* No comment provided by engineer. */
+"RuanMao Cloud" = "软猫云";
+
+/* No comment provided by engineer. */
 "Save to Camera Roll" = "保存到相机胶卷";
 
 /* No comment provided by engineer. */
@@ -1168,6 +1219,9 @@
 
 /* No comment provided by engineer. */
 "Serial Number" = "序列号";
+
+/* No comment provided by engineer. */
+"Server message: %@." = "服务端消息: %@.";
 
 /* No comment provided by engineer. */
 "Set GID" = "设置 GID";
@@ -1271,6 +1325,9 @@
 "Tap here to add a file." = "轻按以添加文件.";
 
 /* No comment provided by engineer. */
+"Tap to load more..." = "轻按以加载更多...";
+
+/* No comment provided by engineer. */
 "Target Path" = "目标路径";
 
 /* No comment provided by engineer. */
@@ -1352,6 +1409,9 @@
 "Title" = "标题";
 
 /* No comment provided by engineer. */
+"Trail" = "试用";
+
+/* No comment provided by engineer. */
 "Trash" = "删除";
 
 "Try Again" = "重试";
@@ -1399,7 +1459,16 @@
 "Unknown" = "未知";
 
 /* No comment provided by engineer. */
+"Unknown server response (%@)." = "未知的服务端响应 (%@).";
+
+/* No comment provided by engineer. */
+"Unknown server response type (%@)." = "未知的服务端响应类型 (%@).";
+
+/* No comment provided by engineer. */
 "Unsupported Pasteboard URL: \"%@\"." = "不支持的剪贴板链接: \"%@\".";
+
+/* No comment provided by engineer. */
+"Untitled" = "未命名";
 
 /* No comment provided by engineer. */
 "Use this viewer to open all documents like this one." = "使用该查看器查看所有此类型文档.";
@@ -1411,10 +1480,16 @@
 "User Defaults" = "用户偏好设置";
 
 /* No comment provided by engineer. */
+"v1.0" = "v1.0";
+
+/* No comment provided by engineer. */
 "Value" = "值";
 
 /* No comment provided by engineer. */
 "Version" = "版本";
+
+/* No comment provided by engineer. */
+"Version: v%.2f" = "版本: v%.2f";
 
 /* No comment provided by engineer. */
 "View History" = "历史记录";

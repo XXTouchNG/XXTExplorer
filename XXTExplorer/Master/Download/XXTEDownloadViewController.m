@@ -14,6 +14,7 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
 #import "UIControl+BlockTarget.h"
+#import "NSString+XQueryComponents.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexSource = 0,
@@ -38,6 +39,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSURLConnection *downloadURLConnection;
 @property (nonatomic, weak) LGAlertView *currentAlertView;
 
+@property (nonatomic, strong) NSURLConnection *pretestConnection;
+
 /*
 @property (nonatomic, assign) BOOL viewImmediately;
  */
@@ -53,6 +56,7 @@ typedef enum : NSUInteger {
     BOOL busyOperationProgressFlag;
     long long expectedFileSize;
     long long receivedFileSize;
+    UIViewController *_blockController;
 }
 
 - (instancetype)init {
@@ -120,6 +124,19 @@ typedef enum : NSUInteger {
     }
     
     [self reloadStaticTableViewData];
+    if (self.allowsAutoDetection) {
+        [self performPretest];
+    } else {
+        [self skipPretest];
+    }
+}
+
+- (void)fixTargetPathWithFileName:(NSString *)filename {
+    NSString *targetParentPath = [self.targetPath stringByDeletingLastPathComponent];
+    NSString *fixedTargetPath = [targetParentPath stringByAppendingPathComponent:filename];
+    _targetPath = fixedTargetPath;
+    [self reloadStaticTableViewData];
+    [self.tableView reloadData];
 }
 
 - (void)reloadStaticTableViewData {
@@ -153,6 +170,22 @@ typedef enum : NSUInteger {
                     ];
 }
 
+- (void)performPretest {
+    self.downloadButtonItem.enabled = NO;
+    _blockController = blockInteractions(self, YES);
+    NSURL *sourceURL = self.sourceURL;
+    NSMutableURLRequest *headReq = [[NSMutableURLRequest alloc] initWithURL:sourceURL];
+    [headReq setHTTPMethod:@"HEAD"];
+    NSURLConnection *headConnection = [[NSURLConnection alloc] initWithRequest:headReq delegate:self startImmediately:NO];
+    self.pretestConnection = headConnection;
+    [headConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [headConnection start];
+}
+
+- (void)skipPretest {
+    self.downloadButtonItem.enabled = YES;
+    self.pretestConnection = nil;
+}
 
 #pragma mark - UIView Getters
 
@@ -169,6 +202,7 @@ typedef enum : NSUInteger {
     if (!_downloadButtonItem) {
         UIBarButtonItem *downloadButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(confirmDownload:)];
         downloadButtonItem.tintColor = [UIColor whiteColor];
+        downloadButtonItem.enabled = NO;
         _downloadButtonItem = downloadButtonItem;
     }
     return _downloadButtonItem;
@@ -434,101 +468,168 @@ typedef enum : NSUInteger {
 #pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    busyOperationProgressFlag = NO;
-    self.downloadURLConnection = nil;
-    if (self.downloadFileHandle)
-    {
-        [self.downloadFileHandle closeFile];
-        self.downloadFileHandle = nil;
-        // clean temporarily file
-        NSString *temporarilyPath = self.temporarilyPath;
-        if (temporarilyPath)
+    if (connection == self.downloadURLConnection) {
+        busyOperationProgressFlag = NO;
+        self.downloadURLConnection = nil;
+        if (self.downloadFileHandle)
         {
-            NSError *cleanError = nil;
-            [self.downloadFileManager removeItemAtPath:temporarilyPath error:&cleanError];
+            [self.downloadFileHandle closeFile];
+            self.downloadFileHandle = nil;
+            // clean temporarily file
+            NSString *temporarilyPath = self.temporarilyPath;
+            if (temporarilyPath)
+            {
+                NSError *cleanError = nil;
+                [self.downloadFileManager removeItemAtPath:temporarilyPath error:&cleanError];
+            }
         }
-    }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    NSURL *sourceURL = self.sourceURL;
-    NSString *sourceURLString = [sourceURL absoluteString];
-    if (error) { // fail with error
-        LGAlertView *downloadFailedAlertView =
-        [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Failed", nil)
-                                   message:[NSString stringWithFormat:NSLocalizedString(@"Cannot download from url \"%@\".\n%@", nil), sourceURLString, [error localizedDescription]]
-                                     style:LGAlertViewStyleActionSheet
-                              buttonTitles:nil
-                         cancelButtonTitle:NSLocalizedString(@"Retry", nil)
-                    destructiveButtonTitle:nil
-                             actionHandler:nil
-                             cancelHandler:^(LGAlertView * _Nonnull alertView1) {
-                                 [alertView1 dismissAnimated];
-                             }
-                        destructiveHandler:nil];
-        if (self.currentAlertView && self.currentAlertView.isShowing) {
-            [self.currentAlertView transitionToAlertView:downloadFailedAlertView completionHandler:nil];
-        } else {
-            [downloadFailedAlertView showAnimated];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        NSURL *sourceURL = self.sourceURL;
+        NSString *sourceURLString = [sourceURL absoluteString];
+        if (error) { // fail with error
+            LGAlertView *downloadFailedAlertView =
+            [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Failed", nil)
+                                       message:[NSString stringWithFormat:NSLocalizedString(@"Cannot download from url \"%@\".\n%@", nil), sourceURLString, [error localizedDescription]]
+                                         style:LGAlertViewStyleActionSheet
+                                  buttonTitles:nil
+                             cancelButtonTitle:NSLocalizedString(@"Retry", nil)
+                        destructiveButtonTitle:nil
+                                 actionHandler:nil
+                                 cancelHandler:^(LGAlertView * _Nonnull alertView1) {
+                                     [alertView1 dismissAnimated];
+                                 }
+                            destructiveHandler:nil];
+            if (self.currentAlertView && self.currentAlertView.isShowing) {
+                [self.currentAlertView transitionToAlertView:downloadFailedAlertView completionHandler:nil];
+            } else {
+                [downloadFailedAlertView showAnimated];
+            }
+            self.currentAlertView = nil;
         }
-        self.currentAlertView = nil;
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    } else if (connection == self.pretestConnection) {
+        self.pretestConnection = nil;
+        self.downloadButtonItem.enabled = YES;
+        blockInteractions(_blockController, NO);
+        _blockController = nil;
     }
-    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
+
+- (NSURLRequest *)connection:(NSURLConnection *)connection
+             willSendRequest:(NSURLRequest *)request
+            redirectResponse:(NSURLResponse *)redirectResponse
+{
+    if (connection == self.pretestConnection) {
+        if ([[request HTTPMethod] isEqualToString:@"HEAD"])
+            return request;
+        
+        NSMutableURLRequest *newRequest = [request mutableCopy];
+        [newRequest setHTTPMethod:@"HEAD"];
+        
+        return newRequest;
+    }
+    return request;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    if (!busyOperationProgressFlag) {
-        return;
-    }
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if (httpResponse.statusCode != 200) {
-        // TODO: not supported http response
-    }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    {
-        [self.downloadFileHandle seekToFileOffset:0];
-        expectedFileSize = [response expectedContentLength];
-        receivedFileSize = 0.0;
-    }
-    {
-        if (self.currentAlertView && self.currentAlertView.isShowing) {
-            [self.currentAlertView setProgress:0.0];
-            [self.currentAlertView setProgressLabelText:@"0 %"];
+    if (connection == self.downloadURLConnection) {
+        if (!busyOperationProgressFlag) {
+            return;
+        }
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.statusCode != 200) {
+            // TODO: not supported http response
+        }
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        {
+            [self.downloadFileHandle seekToFileOffset:0];
+            expectedFileSize = [response expectedContentLength];
+            receivedFileSize = 0.0;
+        }
+        {
+            if (self.currentAlertView && self.currentAlertView.isShowing) {
+                [self.currentAlertView setProgress:0.0];
+                [self.currentAlertView setProgressLabelText:@"0 %"];
+            }
+        }
+    } else if (connection == self.pretestConnection) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSDictionary *headers = httpResponse.allHeaderFields;
+        if (headers && headers[@"Content-Disposition"]) {
+            NSString *contentDispositionString = headers[@"Content-Disposition"];
+            NSArray <NSString *> *contentDisposition = [contentDispositionString componentsSeparatedByString:@";"];
+            if (contentDisposition.count > 1) {
+                NSString *contentDispositionMethod = [contentDisposition[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                if ([contentDispositionMethod isEqualToString:@"attachment"]) {
+                    NSRegularExpression *nameRegexp = [NSRegularExpression regularExpressionWithPattern:@"name=\"((\\\\.|[^\\\"])*?)\"" options:0 error:nil];
+                    NSRegularExpression *fileNameRegexp = [NSRegularExpression regularExpressionWithPattern:@"filename=\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"" options:0 error:nil];
+                    if (nameRegexp && fileNameRegexp) {
+                        NSTextCheckingResult *nameCheck = [nameRegexp firstMatchInString:contentDispositionString options:0 range:NSMakeRange(0, contentDispositionString.length)];
+                        NSTextCheckingResult *fileNameCheck = [fileNameRegexp firstMatchInString:contentDispositionString options:0 range:NSMakeRange(0, contentDispositionString.length)];
+                        NSString *attachmentName = nil;
+                        NSString *attachmentFileName = nil;
+                        if (nameCheck.numberOfRanges > 1) {
+                            NSRange nameSubRange = [nameCheck rangeAtIndex:1];
+                            attachmentName = [[contentDispositionString substringWithRange:nameSubRange] stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+                        }
+                        if (fileNameCheck.numberOfRanges > 1) {
+                            NSRange fileNameSubRange = [fileNameCheck rangeAtIndex:1];
+                            attachmentFileName = [[contentDispositionString substringWithRange:fileNameSubRange] stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+                        }
+                        if (attachmentFileName.length > 0) {
+                            [self fixTargetPathWithFileName:attachmentFileName];
+                        } else if (attachmentName.length > 0) {
+                            [self fixTargetPathWithFileName:attachmentName];
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData {
-    if (!busyOperationProgressFlag) {
-        return;
-    }
-    float progressive = (float)receivedFileSize / (float)expectedFileSize;
-    {
-        if (self.downloadFileHandle) {
-            [self.downloadFileHandle writeData:receivedData];
+    if (connection == self.downloadURLConnection) {
+        if (!busyOperationProgressFlag) {
+            return;
         }
-        receivedFileSize += receivedData.length;
-    }
-    {
-        if (self.currentAlertView && self.currentAlertView.isShowing) {
-            [self.currentAlertView setProgress:progressive];
-            [self.currentAlertView setProgressLabelText:[NSString stringWithFormat:@"%.2f %%", (float)progressive * 100]];
+        float progressive = (float)receivedFileSize / (float)expectedFileSize;
+        {
+            if (self.downloadFileHandle) {
+                [self.downloadFileHandle writeData:receivedData];
+            }
+            receivedFileSize += receivedData.length;
+        }
+        {
+            if (self.currentAlertView && self.currentAlertView.isShowing) {
+                [self.currentAlertView setProgress:progressive];
+                [self.currentAlertView setProgressLabelText:[NSString stringWithFormat:@"%.2f %%", (float)progressive * 100]];
+            }
         }
     }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    busyOperationProgressFlag = NO;
-    self.downloadURLConnection = nil;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    {
-        if (self.downloadFileHandle) {
-            [self.downloadFileHandle closeFile];
-            self.downloadFileHandle = nil;
+    if (connection == self.downloadURLConnection) {
+        busyOperationProgressFlag = NO;
+        self.downloadURLConnection = nil;
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        {
+            if (self.downloadFileHandle) {
+                [self.downloadFileHandle closeFile];
+                self.downloadFileHandle = nil;
+            }
         }
+        {
+            [self downloadFinished:self.currentAlertView];
+        }
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    } else if (connection == self.pretestConnection) {
+        self.pretestConnection = nil;
+        self.downloadButtonItem.enabled = YES;
+        blockInteractions(_blockController, NO);
+        _blockController = nil;
     }
-    {
-        [self downloadFinished:self.currentAlertView];
-    }
-    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {

@@ -10,13 +10,20 @@
 #import <sys/stat.h>
 
 #import "XXTEAppDelegate.h"
+
 #import "XXTESplitViewController.h"
 #import "XXTENavigationController.h"
+
 #import "XXTExplorerNavigationController.h"
 #import "XXTEMoreNavigationController.h"
+#import "RMCloudNavigationController.h"
+
 #import "XXTEMasterViewController.h"
+
 #import "XXTExplorerViewController.h"
 #import "XXTEMoreViewController.h"
+#import "RMCloudViewController.h"
+
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENotificationCenterDefines.h"
 
@@ -331,6 +338,12 @@ XXTE_END_IGNORE_PARTIAL
     XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
     
+    // Master - Cloud Controller
+#ifndef APPSTORE
+    RMCloudViewController *cloudViewController = [[RMCloudViewController alloc] init];
+    RMCloudNavigationController *cloudNavigationController = [[RMCloudNavigationController alloc] initWithRootViewController:cloudViewController];
+#endif
+    
     // Master - More Controller
 #ifndef APPSTORE
     XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -340,7 +353,7 @@ XXTE_END_IGNORE_PARTIAL
     // Master Controller
     XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
 #ifndef APPSTORE
-    masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
+    masterViewController.viewControllers = @[masterNavigationControllerLeft, cloudNavigationController, masterNavigationControllerRight];
 #else
     masterViewController.viewControllers = @[masterNavigationControllerLeft];
 #endif

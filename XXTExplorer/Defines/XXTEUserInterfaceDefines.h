@@ -12,6 +12,7 @@
 #import "UIView+XXTEToast.h"
 
 static inline UIViewController *blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay) {
+    if (!viewController) return nil;
     UIViewController *parentController = viewController.tabBarController;
     if (!parentController) {
         parentController = viewController.navigationController;

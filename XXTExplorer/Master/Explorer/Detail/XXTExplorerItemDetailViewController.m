@@ -494,6 +494,7 @@ static int sizingCancelFlag = 0;
     
     // #6 - Owner
     
+    /*
     {
         struct passwd *entryPWInfo = getpwuid(entryStat.st_uid);
         struct group *entryGRInfo = getgrgid(entryStat.st_gid);
@@ -522,6 +523,7 @@ static int sizingCancelFlag = 0;
             if (section6) [mutableDynamicSections addObject:section6];
         }
     }
+     */
     
 #endif
     
@@ -529,6 +531,7 @@ static int sizingCancelFlag = 0;
     
     // #7 - Perimssion
     
+    /*
     {
         NSString *userReadFlag = (entryStat.st_mode & S_IRUSR) ? @"r" : @"-";
         NSString *userWriteFlag = (entryStat.st_mode & S_IWUSR) ? @"w" : @"-";
@@ -570,6 +573,7 @@ static int sizingCancelFlag = 0;
         
         if (section7) [mutableDynamicSections addObject:section7];
     }
+    */
     
 #endif
     

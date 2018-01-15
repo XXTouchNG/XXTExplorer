@@ -103,7 +103,7 @@
     XXTEMoreSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Enable Boot Script", nil);
     cell1.iconImage = [UIImage imageNamed:@"XXTEMoreIconBootScript"];
-    [cell1.optionSwitch addTarget:self action:@selector(bootScriptOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+    [cell1.optionSwitch addTarget:self action:@selector(optionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.bootScriptSwitch = cell1.optionSwitch;
     
     XXTEMoreAddressCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
@@ -268,7 +268,7 @@
 
 #pragma mark - UIControl Actions
 
-- (void)bootScriptOptionSwitchChanged:(UISwitch *)sender {
+- (void)optionSwitchChanged:(UISwitch *)sender {
     if (sender == self.bootScriptSwitch) {
         BOOL changeToStatus = sender.on;
         NSString *changeToCommand = nil;

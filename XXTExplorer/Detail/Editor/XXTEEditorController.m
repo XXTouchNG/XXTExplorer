@@ -91,6 +91,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @property (nonatomic, assign) BOOL shouldHighlightRange;
 @property (nonatomic, assign) NSRange highlightRange;
+@property (nonatomic, assign, getter=isHighlightEnabled) BOOL highlightEnabled;
 
 @property (nonatomic, strong) XXTEEditorSearchBar *searchBar;
 @property (nonatomic, strong) NSArray <NSLayoutConstraint *> *closedSearchBarConstraints;
@@ -775,8 +776,8 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)reloadAttributes {
     [self invalidateSyntaxCaches];
-    BOOL isHighlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
-    if (isHighlightEnabled) {
+    self.highlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
+    if ([self isHighlightEnabled]) {
         NSString *wholeString = self.textView.text;
         UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 0.6);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -806,6 +807,9 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
     if (!self.textView.editable) return;
+    if (![self isHighlightEnabled]) {
+        return;
+    }
     if (editedMask & NSTextStorageEditedCharacters) {
         NSString *text = textStorage.string;
         NSUInteger s, e;

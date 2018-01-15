@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="364px" height="340px" viewBox="0 0 364 340" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>RMPaw</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="18.6907328%" y1="0%" x2="78.5802802%" y2="91.3591056%" id="linearGradient-1">
+            <stop stop-color="#68D0FF" offset="0%"></stop>
+            <stop stop-color="#37A3FF" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="171" cy="153" r="145"></circle>
+        <filter x="-4.5%" y="-3.8%" width="109.0%" height="109.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.66 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Oval-3">
+            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+        </g>
+        <g id="Group" transform="translate(182.000000, 170.000000) rotate(-30.000000) translate(-182.000000, -170.000000) translate(37.000000, 58.000000)" fill="#FFFFFF">
+            <ellipse id="Oval" cx="144.5" cy="158" rx="86.5" ry="66"></ellipse>
+            <ellipse id="Oval-2" transform="translate(144.860001, 36.001177) rotate(90.000000) translate(-144.860001, -36.001177) " cx="144.860001" cy="36.0011773" rx="36.0011773" ry="25.8600006"></ellipse>
+            <ellipse id="Oval-2" transform="translate(247.832699, 72.323125) rotate(125.000000) translate(-247.832699, -72.323125) " cx="247.832699" cy="72.323125" rx="36.0011773" ry="25.8600006"></ellipse>
+            <ellipse id="Oval-2" transform="translate(42.167301, 72.323125) rotate(55.000000) translate(-42.167301, -72.323125) " cx="42.1673006" cy="72.323125" rx="36.0011773" ry="25.8600006"></ellipse>
+        </g>
+    </g>
+</svg>

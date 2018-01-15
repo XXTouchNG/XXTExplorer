@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RMCloudLinkCell">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxa-fL-mBb">
+                        <rect key="frame" x="20" y="13.5" width="322" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="boP-Ro-dVy">
+                        <rect key="frame" x="374" y="12" width="20" height="20"/>
+                        <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="myS-xf-mHe"/>
+                            <constraint firstAttribute="height" constant="20" id="zpA-hC-bgQ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="boP-Ro-dVy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AOf-tf-Msv"/>
+                    <constraint firstItem="boP-Ro-dVy" firstAttribute="leading" secondItem="qxa-fL-mBb" secondAttribute="trailing" constant="32" id="JrT-0g-UWo"/>
+                    <constraint firstAttribute="trailing" secondItem="boP-Ro-dVy" secondAttribute="trailing" constant="20" id="bAA-wF-HHS"/>
+                    <constraint firstItem="qxa-fL-mBb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uPR-Xp-wwG"/>
+                    <constraint firstItem="qxa-fL-mBb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="wWZ-yS-hpO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="linkIconImageView" destination="boP-Ro-dVy" id="Dhq-oy-ScV"/>
+                <outlet property="titleTextLabel" destination="qxa-fL-mBb" id="CA6-Dm-IC9"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

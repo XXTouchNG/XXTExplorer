@@ -34,7 +34,10 @@
     NSURL *preprocessedURL = [self preprocessLocalFileForWKWebView:fileURL];
     if (self = [super initWithURL:preprocessedURL]) {
         _entryPath = path;
-        self.showActionButton = NO;
+        if (path) {
+            self.url = [NSURL fileURLWithPath:path];
+        }
+        self.showActionButton = YES;
     }
     return self;
 }

@@ -154,7 +154,11 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTE_END_IGNORE_PARTIAL
     
     if (@available(iOS 11.0, *)) {
+#ifdef APPSTORE
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+#else
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+#endif
     }
     
 #ifdef APPSTORE

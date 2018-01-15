@@ -2,13 +2,14 @@ xcodeproj 'XXTExplorer'
 
 def shared_pods
 
-    pod 'XUI', :path => '../XUI'
-    # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
+    # pod 'XUI', :path => '../XUI'
+    pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
 
     # pod 'TOWebViewController', '~> 2.2.6'
     # pod 'TOWebViewController', :path => '../TOWebViewController'
-    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView'
-
+    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView', :inhibit_warnings => true
+    
+    pod 'OMGHTTPURLRQ', :inhibit_warnings => true
     pod 'PromiseKit', '~> 1.7', :inhibit_warnings => true
     # pod 'PromiseKit', :path => '../PromiseKit', :inhibit_warnings => true
 
@@ -32,16 +33,24 @@ target 'XXTouch' do
     shared_pods
     
     # pod 'UnrarKit', :path => '../UnrarKit'
-    pod 'UnrarKit', :git => 'https://github.com/Lessica/UnrarKit.git', :branch => 'v2.9'
+    pod 'UnrarKit', :git => 'https://github.com/Lessica/UnrarKit.git', :branch => 'v2.9', :inhibit_warnings => true
+    # pod 'LzmaSDK-ObjC', :path => '../LzmaSDKObjC'
+end
+
+def shared_cloud
+    pod 'JSONModel', '~> 1.7.0', :inhibit_warnings => true
+    pod 'YYWebImage', '~> 1.0.5', :inhibit_warnings => true
 end
 
 target 'XXTExplorer' do
     platform :ios, '8.0'
     shared_pods
+    shared_cloud
 end
 
 target 'XXTExplorer-Archive' do
     platform :ios, '7.0'
     shared_pods
+    shared_cloud
 end
 

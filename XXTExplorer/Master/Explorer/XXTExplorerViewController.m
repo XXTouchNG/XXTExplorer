@@ -109,7 +109,11 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     if (@available(iOS 11.0, *)) {
+#ifdef APPSTORE
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+#else
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+#endif
     }
 
     _tableView = ({
@@ -146,7 +150,9 @@
     _refreshControl = ({
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         if (@available(iOS 11.0, *)) {
+#ifdef APPSTORE
             refreshControl.tintColor = [UIColor whiteColor];
+#endif
         }
         [refreshControl addTarget:self action:@selector(refreshEntryListView:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
@@ -783,9 +789,9 @@
     entryCell.entryTitleLabel.text = entryDisplayName;
     entryCell.entrySubtitleLabel.text = entryDescription;
     entryCell.entryIconImageView.image = entryIconImage;
-    if (entryCell.accessoryType != UITableViewCellAccessoryDetailDisclosureButton)
+    if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton)
     {
-        entryCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
     }
 }
 

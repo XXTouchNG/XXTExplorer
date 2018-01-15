@@ -7,7 +7,16 @@
 
 
 @implementation XXTEModeSettingsController {}
+
 - (BOOL)showsAd {
     return NO;
 }
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+#if (TARGET_OS_SIMULATOR)
+    self.view.backgroundColor = [UIColor whiteColor];
+#endif
+}
+
 @end

@@ -84,7 +84,11 @@
     }
     self.navigationItem.rightBarButtonItem = self.albumItem;
     if (@available(iOS 11.0, *)) {
+#ifdef APPSTORE
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+#else
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+#endif
     }
 
     [self fetchVideoPermission];

@@ -18,6 +18,7 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
 
 @property (nonatomic, strong) UITextView *logTextView;
 @property (nonatomic, strong) UIBarButtonItem *clearItem;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -67,8 +68,19 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
     
+    if (@available(iOS 10.0, *)) {
+        [self.logTextView setRefreshControl:self.refreshControl];
+    }
+    
     [self.view addSubview:self.logTextView];
     [self loadTextDataFromEntry];
+}
+
+- (void)reloadTextDataFromEntry:(UIRefreshControl *)sender {
+    [self loadTextDataFromEntry];
+    if ([sender isRefreshing]) {
+        [sender endRefreshing];
+    }
 }
 
 - (void)loadTextDataFromEntry {
@@ -143,6 +155,15 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
         _clearItem = clearItem;
     }
     return _clearItem;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        [refreshControl addTarget:self action:@selector(reloadTextDataFromEntry:) forControlEvents:UIControlEventValueChanged];
+        _refreshControl = refreshControl;
+    }
+    return _refreshControl;
 }
 
 #pragma mark - Actions

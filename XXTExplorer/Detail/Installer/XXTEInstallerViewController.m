@@ -523,6 +523,7 @@ typedef enum : NSUInteger {
         footer.textLabel.font = [UIFont systemFontOfSize:12.0];
     }
 }
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         return self.dynamicSections[(NSUInteger) section].sectionTitle;

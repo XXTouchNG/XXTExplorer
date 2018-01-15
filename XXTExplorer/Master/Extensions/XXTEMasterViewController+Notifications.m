@@ -151,8 +151,7 @@
                             { // Download
                                 dispatch_async_on_main_queue(^{
                                     NSString *pasteboardString = [pasteboardURL absoluteString];
-                                    NSString *saveName = [pasteboardString lastPathComponent];
-                                    BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"download", @"url": pasteboardString, @"path": saveName }];
+                                    BOOL performResult = [self performShortcut:nil jsonOperation:@{ @"event": @"download", @"url": pasteboardString }];
                                     if (!performResult) {
                                         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot perform operation \"%@\" on Pasteboard URL \"%@\".", nil), NSLocalizedString(@"Download", nil), pasteboardURL]);
                                     }
@@ -277,8 +276,9 @@
     }
     else if ([jsonEvent isEqualToString:@"down_script"] ||
              [jsonEvent isEqualToString:@"download"]) {
-        if (![jsonDictionary[@"path"] isKindOfClass:[NSString class]] ||
-            ![jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
+        
+        // check URL
+        if (![jsonDictionary[@"url"] isKindOfClass:[NSString class]]) {
             return NO;
         }
         NSString *rawSourceURLString = jsonDictionary[@"url"];
@@ -286,9 +286,18 @@
             return NO;
         }
         NSURL *sourceURL = [NSURL URLWithString:[rawSourceURLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-        NSString *rawTargetPathString = jsonDictionary[@"path"];
-        if (rawTargetPathString.length == 0) {
+        
+        // check Path
+        if ((jsonDictionary[@"path"] && ![jsonDictionary[@"path"] isKindOfClass:[NSString class]])) {
             return NO;
+        } // optional
+        BOOL targetAutoDetection = NO;
+        NSString *rawTargetPathString = jsonDictionary[@"path"];
+        if (rawTargetPathString.length > 0) {
+            targetAutoDetection = NO;
+        } else {
+            rawTargetPathString = [rawSourceURLString lastPathComponent];
+            targetAutoDetection = YES;
         }
         NSString *targetPath = [rawTargetPathString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
         NSString *targetFullPath = nil;
@@ -306,6 +315,7 @@
             @strongify(self);
             blockInteractions(blockVC, NO);
             XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
+            downloadController.allowsAutoDetection = targetAutoDetection;
             XXTENavigationController *downloadNavigationController = [[XXTENavigationController alloc] initWithRootViewController:downloadController];
             downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

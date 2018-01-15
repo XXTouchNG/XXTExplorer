@@ -21,6 +21,13 @@
 #import "LASettingsViewController+MyShowsAd.h"
 
 #import "XXTEAppDefines.h"
+#import "XXTEMoreSwitchCell.h"
+
+typedef enum : NSUInteger {
+    XXTEMoreActivationSectionInternalSwitch = 0,
+    XXTEMoreActivationSectionInternalMethods,
+    XXTEMoreActivationSectionActivator,
+} XXTEMoreActivationSection;
 
 static NSString * const kXXTEActivatorLibraryPath = @"/usr/lib/libactivator.dylib";
 static NSString * const kXXTEActivatorListenerRunOrStop = @"com.1func.xxtouch.run_or_stop";
@@ -28,6 +35,10 @@ static NSString * const kXXTEActivatorListenerRunOrStopWithAlert = @"com.1func.x
 static void * activatorHandler = nil;
 
 @interface XXTEMoreActivationController () <XXTEMoreActivationOperationControllerDelegate>
+
+@property (nonatomic, assign, getter=isShortcutEnabled) BOOL shortcutEnabled;
+@property (nonatomic, strong) UISwitch *activationSwitch;
+
 @property (nonatomic, assign) BOOL activatorExists;
 
 @end
@@ -56,8 +67,16 @@ static void * activatorHandler = nil;
 }
 
 - (void)setup {
-    operationKeyNames = @[@"click_volume_up", @"click_volume_down", @"hold_volume_up", @"hold_volume_down"];
-    operationStatus = [@{@"click_volume_up": @(0), @"click_volume_down": @(0), @"hold_volume_up": @(0), @"hold_volume_down": @(0)} mutableCopy];
+    operationKeyNames = @[
+                          @"click_volume_up",
+                          @"click_volume_down",
+                          @"hold_volume_up",
+                          @"hold_volume_down"];
+    operationStatus = [@{
+                         @"click_volume_up": @(0),
+                         @"click_volume_down": @(0),
+                         @"hold_volume_up": @(0),
+                         @"hold_volume_down": @(0)} mutableCopy];
     
     activatorHandler = NULL;
     if (0 == access([kXXTEActivatorLibraryPath UTF8String], R_OK)) {
@@ -83,6 +102,9 @@ static void * activatorHandler = nil;
     } else {
         _activatorExists = NO;
     }
+#ifdef DEBUG
+    _activatorExists = NO;
+#endif
 }
 
 - (void)viewDidLoad {
@@ -144,10 +166,10 @@ static void * activatorHandler = nil;
 }
 
 - (void)updateOperationStatusDisplay {
-    ((XXTEMoreTitleDescriptionCell *)staticCells[0][0]).descriptionLabel.text = [self operationDescriptionWithKey:@"click_volume_up"];
-    ((XXTEMoreTitleDescriptionCell *)staticCells[0][1]).descriptionLabel.text = [self operationDescriptionWithKey:@"click_volume_down"];
-    ((XXTEMoreTitleDescriptionCell *)staticCells[0][2]).descriptionLabel.text = [self operationDescriptionWithKey:@"hold_volume_up"];
-    ((XXTEMoreTitleDescriptionCell *)staticCells[0][3]).descriptionLabel.text = [self operationDescriptionWithKey:@"hold_volume_down"];
+    ((XXTEMoreTitleDescriptionCell *)staticCells[XXTEMoreActivationSectionInternalMethods][0]).descriptionLabel.text = [self operationDescriptionWithKey:@"click_volume_up"];
+    ((XXTEMoreTitleDescriptionCell *)staticCells[XXTEMoreActivationSectionInternalMethods][1]).descriptionLabel.text = [self operationDescriptionWithKey:@"click_volume_down"];
+    ((XXTEMoreTitleDescriptionCell *)staticCells[XXTEMoreActivationSectionInternalMethods][2]).descriptionLabel.text = [self operationDescriptionWithKey:@"hold_volume_up"];
+    ((XXTEMoreTitleDescriptionCell *)staticCells[XXTEMoreActivationSectionInternalMethods][3]).descriptionLabel.text = [self operationDescriptionWithKey:@"hold_volume_down"];
 }
 
 - (NSString *)operationDescriptionWithKey:(NSString *)key {
@@ -166,13 +188,27 @@ static void * activatorHandler = nil;
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[@"", @""];
+    staticSectionTitles = @[@"", NSLocalizedString(@"Internal Shortcut", nil), NSLocalizedString(@"Activator", nil)];
     if (self.activatorExists) {
-        staticSectionFooters = @[@"", NSLocalizedString(@"\"Activator\" is active, configure activation behaviours here.", nil)];
+        staticSectionFooters = @[NSLocalizedString(@"\"Activator\" is active, configure activation behaviours in \"Activator\".", nil), @"", @""];
     } else {
-        staticSectionFooters = @[@"", NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks.", nil)];
+        staticSectionFooters = @[@"", @"", NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks.", nil)];
     }
-
+    
+    XXTEMoreSwitchCell *switchCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    switchCell.titleLabel.text = NSLocalizedString(@"Enable Shortcut", nil);
+    switchCell.iconImage = [UIImage imageNamed:@"XXTEMoreIconActivationConfig"];
+    UISwitch *mainSwitch = switchCell.optionSwitch;
+    if (self.activatorExists) {
+        mainSwitch.on = NO;
+        mainSwitch.enabled = NO;
+    } else {
+        mainSwitch.on = NO;
+        mainSwitch.enabled = YES;
+        [mainSwitch addTarget:self action:@selector(optionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+    }
+    self.activationSwitch = mainSwitch;
+    
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell1.titleLabel.text = NSLocalizedString(@"Press \"Volume +\"", nil);
@@ -198,11 +234,12 @@ static void * activatorHandler = nil;
     cellActivator.iconImage = [UIImage imageNamed:@"ActivatorIcon"];
     cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
     if (self.activatorExists) {
-        cellActivator.titleLabel.text = NSLocalizedString(@"Activator", nil);
+        cellActivator.titleLabel.text = NSLocalizedString(@"Configure \"Activator\"", nil);
     } else {
-        cellActivator.titleLabel.text = NSLocalizedString(@"Install Activator", nil);
+        cellActivator.titleLabel.text = NSLocalizedString(@"Install \"Activator\"", nil);
     }
     staticCells = @[
+                    @[ switchCell ],
                     @[ cell1, cell2, cell3, cell4 ],
                     @[ cellActivator ],
                     ];
@@ -229,13 +266,24 @@ static void * activatorHandler = nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 66.f;
+    if (tableView == self.tableView) {
+        if (indexPath.section == XXTEMoreActivationSectionInternalSwitch) {
+            return 66.f;
+        }
+        else if (indexPath.section == XXTEMoreActivationSectionInternalMethods) {
+            return 66.f;
+        }
+        else if (indexPath.section == XXTEMoreActivationSectionActivator) {
+            return 66.f;
+        }
+    }
+    return 44.f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        if (indexPath.section == 0) {
+        if (indexPath.section == XXTEMoreActivationSectionInternalMethods) {
             if (NO == self.activatorExists) {
                 XXTEMoreTitleDescriptionCell *cell = (XXTEMoreTitleDescriptionCell *) staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
                 XXTEMoreActivationOperationController *operationController = [[XXTEMoreActivationOperationController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -246,7 +294,7 @@ static void * activatorHandler = nil;
             } else {
                 toastMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
             }
-        } else if (indexPath.section == 1) {
+        } else if (indexPath.section == XXTEMoreActivationSectionActivator) {
             if (self.activatorExists) {
 #if !(TARGET_OS_SIMULATOR)
                 XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] initWithMode:nil];
@@ -287,6 +335,15 @@ static void * activatorHandler = nil;
         return staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
     }
     return [UITableViewCell new];
+}
+
+#pragma mark - Actions
+
+- (void)optionSwitchChanged:(UISwitch *)sender {
+    if (sender == self.activationSwitch) {
+        BOOL changeToStatus = sender.on;
+        
+    }
 }
 
 #pragma mark - XXTEMoreActivationOperationControllerDelegate
