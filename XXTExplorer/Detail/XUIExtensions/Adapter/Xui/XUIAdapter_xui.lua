@@ -527,22 +527,19 @@ function ValueCheckers.DateTime(item, value, index)
     if item.max ~= nil and type(item.max) ~= 'number' then
         error(string.format('%q: items[%d](%q).max (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.max)))
     end
+    if item.format ~= nil and type(item.format) ~= 'string' then
+        error(string.format('%q: items[%d](%q).format (opt.string expected got %s)', opt.XUIPath, index, item.key, type(item.format)))
+    end
+    if item.min ~= nil and item.max ~= nil and item.max <= item.min then
+        error(string.format('%q: items[%d](%q).max (max <= min)', opt.XUIPath, index, item.key))
+    end
     if item.default == nil then
         item.default = os.time()
     end
-    if item.default ~= nil and type(item.default) ~= 'number' then
-        error(string.format('%q: items[%d](%q).default (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
+    if item.default ~= nil and type(item.default) ~= 'number' and type(item.default) ~= 'string' then
+        error(string.format('%q: items[%d](%q).default (opt.number or opt.string expected got %s)', opt.XUIPath, index, item.key, type(item.default)))
     end
-    if item.min ~= nil and item.default < item.min then
-        error(string.format('%q: items[%d](%q).default (default < min)', opt.XUIPath, index, item.key))
-    end
-    if item.max ~= nil and item.default > item.max then
-        error(string.format('%q: items[%d](%q).default (default > max)', opt.XUIPath, index, item.key))
-    end
-    value = tonumber(value) or item.default
-    if (item.min ~= nil and value < item.min) or (item.max ~= nil and value > item.max) then
-        value = item.default
-    end
+    value = value or item.default
     return value
 end
 

@@ -100,6 +100,13 @@ XXTE_START_IGNORE_PARTIAL
 }
 XXTE_END_IGNORE_PARTIAL
 
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+    [super didMoveToParentViewController:parent];
+    if (parent == nil) {
+        [PMKOperationQueue() cancelAllOperations];
+    }
+}
+
 #pragma mark - Request
 
 - (void)loadProjectDetail {
