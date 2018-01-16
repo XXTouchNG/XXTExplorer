@@ -43,6 +43,8 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) RMCloudProjectDetailCell *headerCell;
 @property (nonatomic, strong) RMCloudProjectDescriptionCell *descriptionCell;
+@property (nonatomic, strong) RMCloudExpandableCell *expandableSizingCell;
+@property (nonatomic, strong) RMCloudExpandedCell *expandedSizingCell;
 
 @property (nonatomic, strong) RMProject *project;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
@@ -172,6 +174,22 @@ XXTE_END_IGNORE_PARTIAL
     return _descriptionCell;
 }
 
+- (RMCloudExpandableCell *)expandableSizingCell {
+    if (!_expandableSizingCell) {
+        RMCloudExpandableCell *expandableSizingCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudExpandableCell class]) owner:nil options:nil] lastObject];
+        _expandableSizingCell = expandableSizingCell;
+    }
+    return _expandableSizingCell;
+}
+
+- (RMCloudExpandedCell *)expandedSizingCell {
+    if (!_expandedSizingCell) {
+        RMCloudExpandedCell *expandedSizingCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudExpandedCell class]) owner:nil options:nil] lastObject];
+        _expandedSizingCell = expandedSizingCell;
+    }
+    return _expandedSizingCell;
+}
+
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -211,8 +229,19 @@ XXTE_END_IGNORE_PARTIAL
                     return [self tableView:tableView heightForAutoResizingCell:self.headerCell];
                 } else if (indexPath.section == RMCloudDetailSectionDescription) {
                     return [self tableView:tableView heightForAutoResizingCell:self.descriptionCell];
-                } else {
-                    return UITableViewAutomaticDimension;
+                } else if (indexPath.section == RMCloudDetailSectionInformation) {
+                    BOOL isExpanded = [self tableView:tableView isExpandedCellAtIndexPath:indexPath];
+                    UITableViewCell <RMCloudExpandable> *sizingExpandableCell = nil;
+                    if (isExpanded) {
+                        sizingExpandableCell = self.expandedSizingCell;
+                    } else {
+                        sizingExpandableCell = self.expandableSizingCell;
+                    }
+                    [self configureExpandableCell:sizingExpandableCell atIndexPath:indexPath];
+                    return [self tableView:tableView heightForAutoResizingCell:sizingExpandableCell];
+                }
+                else {
+                    return 44.f;
                 }
             }
         }
@@ -265,57 +294,9 @@ XXTE_END_IGNORE_PARTIAL
     } else if (indexPath.section == RMCloudDetailSectionInformation) {
         RMProject *project = self.project;
         if (project) {
-            if (indexPath.row == RMCloudInformationRowAuthor ||
-                indexPath.row == RMCloudInformationRowVersion ||
-                indexPath.row == RMCloudInformationRowDownloadTimes ||
-                indexPath.row == RMCloudInformationRowTrail ||
-                indexPath.row == RMCloudInformationRowContact) {
-                UITableViewCell <RMCloudExpandable> *cell = nil;
-                if (indexPath.row == RMCloudInformationRowAuthor)
-                {
-                    cell = [self tableView:tableView cellForExpandedState:self.authorNameExpanded];
-                    cell.titleTextLabel.text = NSLocalizedString(@"Author", nil);
-                    NSString *authorName = self.project.authorName;
-                    if (authorName.length) {
-                        cell.valueTextLabel.text = authorName;
-                    }
-                }
-                else if (indexPath.row == RMCloudInformationRowVersion)
-                {
-                    cell = [self tableView:tableView cellForExpandedState:self.projectVersionExpanded];
-                    cell.titleTextLabel.text = NSLocalizedString(@"Version", nil);
-                    cell.valueTextLabel.text = [NSString stringWithFormat:@"v%.2f", project.projectVersion];
-                }
-                else if (indexPath.row == RMCloudInformationRowDownloadTimes)
-                {
-                    cell = [self tableView:tableView cellForExpandedState:self.downloadTimesExpanded];
-                    cell.titleTextLabel.text = NSLocalizedString(@"Download Times", nil);
-                    cell.valueTextLabel.text = [NSString stringWithFormat:@"%lu", project.downloadTimes];
-                }
-                else if (indexPath.row == RMCloudInformationRowTrail)
-                {
-                    cell = [self tableView:tableView cellForExpandedState:self.trailTypeExpanded];
-                    cell.titleTextLabel.text = NSLocalizedString(@"Trail", nil);
-                    NSString *trailString = [self.project localizedTrailDescription];
-                    if (trailString.length) {
-                        cell.valueTextLabel.text = trailString;
-                    }
-                }
-                else if (indexPath.row == RMCloudInformationRowContact)
-                {
-                    cell = [self tableView:tableView cellForExpandedState:self.contactStringExpanded];
-                    cell.titleTextLabel.text = NSLocalizedString(@"Contact", nil);
-                    NSString *contactString = self.project.contactString;
-                    if (contactString.length) {
-                        cell.valueTextLabel.text = contactString;
-                    }
-                }
-                if (indexPath.row == 0) {
-                    cell.topSepatator.hidden = YES;
-                } else {
-                    cell.topSepatator.hidden = NO;
-                }
-                cell.bottomSepatator.hidden = NO;
+            if ([self tableView:tableView isExpandableCellAtIndexPath:indexPath]) {
+                UITableViewCell <RMCloudExpandable> *cell = [self tableView:tableView cellForExpandedState:[self tableView:tableView isExpandedCellAtIndexPath:indexPath]];
+                [self configureExpandableCell:cell atIndexPath:indexPath];
                 return cell;
             }
             else if (indexPath.row == RMCloudInformationRowBuy) {
@@ -323,16 +304,79 @@ XXTE_END_IGNORE_PARTIAL
                 if (cell == nil) {
                     cell = [[RMCloudLinkCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudLinkCellReuseIdentifier];
                 }
-                if (indexPath.row == RMCloudInformationRowBuy) {
-                    cell.titleTextLabel.text = NSLocalizedString(@"Purchase Now", nil);
-                    cell.linkIconImageView.image = [[UIImage imageNamed:@"RMCloudLinkPurchase"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                }
-                cell.bottomSepatator.hidden = YES;
+                [self configureLinkableCell:cell atIndexPath:indexPath];
                 return cell;
             }
         }
     }
     return [UITableViewCell new];
+}
+
+- (void)configureLinkableCell:(RMCloudLinkCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == RMCloudInformationRowBuy) {
+        cell.titleTextLabel.text = NSLocalizedString(@"Purchase Now", nil);
+        cell.linkIconImageView.image = [[UIImage imageNamed:@"RMCloudLinkPurchase"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
+    if (indexPath.row == 0) {
+        cell.topSepatator.hidden = YES;
+    } else {
+        cell.topSepatator.hidden = NO;
+    }
+    if (indexPath.row == RMCloudInformationRowMax - 1) {
+        cell.bottomSepatator.hidden = YES;
+    } else {
+        cell.bottomSepatator.hidden = NO;
+    }
+}
+
+- (void)configureExpandableCell:(UITableViewCell <RMCloudExpandable> *)cell atIndexPath:(NSIndexPath *)indexPath {
+    RMProject *project = self.project;
+    if (project) {
+        if (indexPath.row == RMCloudInformationRowAuthor)
+        {
+            cell.titleTextLabel.text = NSLocalizedString(@"Author", nil);
+            NSString *authorName = self.project.authorName;
+            if (authorName.length) {
+                cell.valueTextLabel.text = authorName;
+            }
+        }
+        else if (indexPath.row == RMCloudInformationRowVersion)
+        {
+            cell.titleTextLabel.text = NSLocalizedString(@"Version", nil);
+            cell.valueTextLabel.text = [NSString stringWithFormat:@"v%.2f", project.projectVersion];
+        }
+        else if (indexPath.row == RMCloudInformationRowDownloadTimes)
+        {
+            cell.titleTextLabel.text = NSLocalizedString(@"Download Times", nil);
+            cell.valueTextLabel.text = [NSString stringWithFormat:@"%lu", project.downloadTimes];
+        }
+        else if (indexPath.row == RMCloudInformationRowTrail)
+        {
+            cell.titleTextLabel.text = NSLocalizedString(@"Trail", nil);
+            NSString *trailString = [self.project localizedTrailDescription];
+            if (trailString.length) {
+                cell.valueTextLabel.text = trailString;
+            }
+        }
+        else if (indexPath.row == RMCloudInformationRowContact)
+        {
+            cell.titleTextLabel.text = NSLocalizedString(@"Contact", nil);
+            NSString *contactString = self.project.contactString;
+            if (contactString.length) {
+                cell.valueTextLabel.text = contactString;
+            }
+        }
+        if (indexPath.row == 0) {
+            cell.topSepatator.hidden = YES;
+        } else {
+            cell.topSepatator.hidden = NO;
+        }
+        if (indexPath.row == RMCloudInformationRowMax - 1) {
+            cell.bottomSepatator.hidden = YES;
+        } else {
+            cell.bottomSepatator.hidden = NO;
+        }
+    }
 }
 
 - (UITableViewCell <RMCloudExpandable> *)tableView:(UITableView *)tableView cellForExpandedState:(BOOL)expanded {
@@ -382,45 +426,19 @@ XXTE_END_IGNORE_PARTIAL
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == RMCloudDetailSectionInformation) {
-            BOOL shouldExpand = NO;
-            if (indexPath.row == RMCloudInformationRowAuthor) {
-                if (NO == self.authorNameExpanded) {
-                    shouldExpand = YES;
-                }
-                self.authorNameExpanded = YES;
-            }
-            else if (indexPath.row == RMCloudInformationRowVersion) {
-                if (NO == self.projectVersionExpanded) {
-                    shouldExpand = YES;
-                }
-                self.projectVersionExpanded = YES;
-            }
-            else if (indexPath.row == RMCloudInformationRowDownloadTimes) {
-                if (NO == self.downloadTimesExpanded) {
-                    shouldExpand = YES;
-                }
-                self.downloadTimesExpanded = YES;
-            }
-            else if (indexPath.row == RMCloudInformationRowTrail) {
-                if (NO == self.trailTypeExpanded) {
-                    shouldExpand = YES;
-                }
-                self.trailTypeExpanded = YES;
-            }
-            else if (indexPath.row == RMCloudInformationRowContact) {
-                if (NO == self.contactStringExpanded) {
-                    shouldExpand = YES;
-                }
-                self.contactStringExpanded = YES;
-            }
-            if (shouldExpand) {
-                [self.tableView reloadData];
-            } else {
-                if (indexPath.row == RMCloudInformationRowAuthor ||
-                    indexPath.row == RMCloudInformationRowVersion ||
-                    indexPath.row == RMCloudInformationRowDownloadTimes ||
-                    indexPath.row == RMCloudInformationRowTrail ||
-                    indexPath.row == RMCloudInformationRowContact) {
+            BOOL shouldExpand = ([self tableView:tableView isExpandedCellAtIndexPath:indexPath] == NO);
+            [self tableView:tableView expandCellAtIndexPath:indexPath];
+            if ([self tableView:tableView isExpandableCellAtIndexPath:indexPath]) {
+                if (shouldExpand) {
+                    if (@available(iOS 9.0, *)) {
+                        [tableView reloadData];
+                    } else {
+                        CGPoint origOffset = tableView.contentOffset;
+                        [tableView reloadData];
+                        [tableView layoutIfNeeded]; // fixed for iOS 8
+                        [tableView setContentOffset:origOffset animated:NO];
+                    }
+                } else {
                     UITableViewCell <RMCloudExpandable> *cell = [tableView cellForRowAtIndexPath:indexPath];
                     NSString *titleText = cell.titleTextLabel.text;
                     NSString *detailText = cell.valueTextLabel.text;
@@ -444,6 +462,60 @@ XXTE_END_IGNORE_PARTIAL
                     }
                 }
             }
+        }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView isExpandableCellAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == RMCloudDetailSectionInformation) {
+        if (indexPath.row == RMCloudInformationRowAuthor ||
+            indexPath.row == RMCloudInformationRowVersion ||
+            indexPath.row == RMCloudInformationRowDownloadTimes ||
+            indexPath.row == RMCloudInformationRowTrail ||
+            indexPath.row == RMCloudInformationRowContact) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)tableView:(UITableView *)tableView isExpandedCellAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == RMCloudDetailSectionInformation) {
+        if (indexPath.row == RMCloudInformationRowAuthor) {
+            return self.authorNameExpanded;
+        }
+        else if (indexPath.row == RMCloudInformationRowVersion) {
+            return self.projectVersionExpanded;
+        }
+        else if (indexPath.row == RMCloudInformationRowDownloadTimes) {
+            return self.downloadTimesExpanded;
+        }
+        else if (indexPath.row == RMCloudInformationRowTrail) {
+            return self.trailTypeExpanded;
+        }
+        else if (indexPath.row == RMCloudInformationRowContact) {
+            return self.contactStringExpanded;
+        }
+    }
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView expandCellAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == RMCloudDetailSectionInformation) {
+        if (indexPath.row == RMCloudInformationRowAuthor) {
+            self.authorNameExpanded = YES;
+        }
+        else if (indexPath.row == RMCloudInformationRowVersion) {
+            self.projectVersionExpanded = YES;
+        }
+        else if (indexPath.row == RMCloudInformationRowDownloadTimes) {
+            self.downloadTimesExpanded = YES;
+        }
+        else if (indexPath.row == RMCloudInformationRowTrail) {
+            self.trailTypeExpanded = YES;
+        }
+        else if (indexPath.row == RMCloudInformationRowContact) {
+            self.contactStringExpanded = YES;
         }
     }
 }

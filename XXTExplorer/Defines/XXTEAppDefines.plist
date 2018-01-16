@@ -89,6 +89,12 @@
 	</array>
 	<key>RESPRING_CHECK_PATH</key>
 	<string>/private/var/tmp/1ferver_need_respring</string>
+	<key>RMCLOUD_API</key>
+	<string>http://auth.mall-software.net/api/OpenAPI</string>
+	<key>RMCLOUD_PLATFORM</key>
+	<string>2</string>
+	<key>RMCLOUD_TOKEN</key>
+	<string>3487C956F68D360C</string>
 	<key>UPDATE_API</key>
 	<string>https://apt.xxtouch.com/Packages.gz</string>
 	<key>UPDATE_PACKAGE</key>

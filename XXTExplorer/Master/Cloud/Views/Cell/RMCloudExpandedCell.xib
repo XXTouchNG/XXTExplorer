@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-I8-Nn9">
-                        <rect key="frame" x="20" y="13" width="67" height="17"/>
+                        <rect key="frame" x="20" y="13" width="350" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="mp0-na-Zgl"/>
                         </constraints>
@@ -27,7 +27,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNW-ZN-tjY">
-                        <rect key="frame" x="20" y="38" width="374" height="33"/>
+                        <rect key="frame" x="20" y="38" width="350" height="33"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="900" constant="21" id="8b0-06-Exh"/>
                         </constraints>
@@ -51,12 +51,21 @@
                             <constraint firstAttribute="height" constant="0.25" id="ZjL-ZU-CB5"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTEAddressPasteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WNV-Ix-vQC">
+                        <rect key="frame" x="378" y="34" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="NAE-I8-Axg"/>
+                            <constraint firstAttribute="height" constant="16" id="mY4-wx-SVe"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="osO-Mi-2B1" secondAttribute="bottom" id="Bag-so-PwC"/>
                     <constraint firstItem="alZ-ZX-sqj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Csk-I9-AsK"/>
+                    <constraint firstAttribute="trailing" secondItem="WNV-Ix-vQC" secondAttribute="trailing" constant="20" id="Dgy-MX-GZ8"/>
+                    <constraint firstItem="WNV-Ix-vQC" firstAttribute="leading" secondItem="YNW-ZN-tjY" secondAttribute="trailing" constant="8" id="FUB-vq-8SO"/>
+                    <constraint firstItem="WNV-Ix-vQC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Iqh-Oe-u3j"/>
                     <constraint firstItem="osO-Mi-2B1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Jof-AV-Arn"/>
-                    <constraint firstAttribute="trailing" secondItem="YNW-ZN-tjY" secondAttribute="trailing" constant="20" id="Q4b-et-yeA"/>
                     <constraint firstAttribute="trailing" secondItem="alZ-ZX-sqj" secondAttribute="trailing" id="bX7-hV-rcT"/>
                     <constraint firstItem="YNW-ZN-tjY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="fhZ-Az-433"/>
                     <constraint firstAttribute="trailing" secondItem="osO-Mi-2B1" secondAttribute="trailing" id="oeI-Om-KF9"/>
@@ -65,6 +74,7 @@
                     <constraint firstAttribute="bottom" secondItem="YNW-ZN-tjY" secondAttribute="bottom" constant="13.5" id="ug6-VB-t5w"/>
                     <constraint firstItem="YNW-ZN-tjY" firstAttribute="top" secondItem="QQa-I8-Nn9" secondAttribute="bottom" constant="8" id="y5E-K3-Ffj"/>
                     <constraint firstItem="QQa-I8-Nn9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="yD2-Le-2yh"/>
+                    <constraint firstItem="YNW-ZN-tjY" firstAttribute="trailing" secondItem="QQa-I8-Nn9" secondAttribute="trailing" id="zn8-1M-g9E"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="4096" minY="0.0" maxX="4096" maxY="0.0"/>
@@ -77,4 +87,7 @@
             <point key="canvasLocation" x="34" y="53.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="XXTEAddressPasteIcon" width="24" height="24"/>
+    </resources>
 </document>

@@ -11,10 +11,11 @@
 
 #import <Foundation/Foundation.h>
 #import "NSString+XQueryComponents.h"
+#import "XXTEAppDefines.h"
 
-static NSString * const RMApiBaseUrl = @"http://auth.mall-software.net/api/OpenAPI";
-static NSString * const RMApiBaseToken = @"3487C956F68D360C";
-static NSString * const RMApiBasePlatformID = @"2";
+static NSString * const RMApiBaseUrlKey = @"RMCLOUD_API";
+static NSString * const RMApiBaseTokenKey = @"RMCLOUD_TOKEN";
+static NSString * const RMApiBasePlatformIDKey = @"RMCLOUD_PLATFORM";
 
 typedef NSString * RMApiAction;
 typedef NSDictionary * RMArguments;
@@ -22,7 +23,7 @@ typedef NSDictionary * RMArguments;
 static inline NSString *RMApiUrl(RMApiAction action, RMArguments args) {
     if (action.length == 0) return nil;
     NSString *argString = [args stringFromQueryComponents];
-    return [NSString stringWithFormat:@"%@/%@/?authtoken=%@&pid=%@&%@", RMApiBaseUrl, action, RMApiBaseToken, RMApiBasePlatformID, argString];
+    return [NSString stringWithFormat:@"%@/%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseUrlKey), action, uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
 }
 
 #endif /* RMHandler_h */

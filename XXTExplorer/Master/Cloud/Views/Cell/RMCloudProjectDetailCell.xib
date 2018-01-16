@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,14 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g2o-Bd-Ner">
-                        <rect key="frame" x="12" y="20" width="120" height="120"/>
+                        <rect key="frame" x="12" y="20" width="124" height="124"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="120" id="6Ba-vN-hCt"/>
                             <constraint firstAttribute="width" secondItem="g2o-Bd-Ner" secondAttribute="height" multiplier="1:1" id="YcW-mz-dTD"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XXTouch Editor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdy-Py-VHr">
-                        <rect key="frame" x="148" y="20" width="246" height="26.5"/>
+                        <rect key="frame" x="152" y="20" width="242" height="26.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="3eG-wD-iSI"/>
                         </constraints>
@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBe-3H-yEC">
-                        <rect key="frame" x="148" y="54" width="246" height="49.5"/>
+                        <rect key="frame" x="152" y="54" width="242" height="49.5"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="900" constant="40" id="zJQ-0N-Oau"/>
                         </constraints>
@@ -46,7 +46,7 @@ Expires in 81 days</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTI-Xz-U8U">
-                        <rect key="frame" x="148" y="119.5" width="84" height="28"/>
+                        <rect key="frame" x="152" y="119.5" width="84" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="84" id="5u1-fK-xcV"/>
                             <constraint firstAttribute="height" constant="28" id="fWX-uR-a6Y"/>
@@ -62,6 +62,7 @@ Expires in 81 days</string>
                     <constraint firstAttribute="bottom" secondItem="zTI-Xz-U8U" secondAttribute="bottom" constant="12" id="SII-Zs-aZL"/>
                     <constraint firstItem="g2o-Bd-Ner" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Yk3-tZ-IUv"/>
                     <constraint firstItem="Kdy-Py-VHr" firstAttribute="leading" secondItem="g2o-Bd-Ner" secondAttribute="trailing" constant="16" id="bdX-jy-0Vz"/>
+                    <constraint firstItem="g2o-Bd-Ner" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="ezE-0R-OWX"/>
                     <constraint firstItem="g2o-Bd-Ner" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="hEb-M6-oPK"/>
                     <constraint firstItem="zTI-Xz-U8U" firstAttribute="top" secondItem="MBe-3H-yEC" secondAttribute="bottom" constant="16" id="iwl-O5-0zX"/>
                     <constraint firstItem="zTI-Xz-U8U" firstAttribute="leading" secondItem="Kdy-Py-VHr" secondAttribute="leading" id="lKf-Ta-qAz"/>
