@@ -222,6 +222,23 @@
 	<array>
 		<dict>
 			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>device_control_toggle</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>启用快捷键</string>
+			<key>description</key>
+			<string>允许设备控制快捷键事件启动或停止选中的脚本.</string>
+			<key>options</key>
+			<array>
+				<string>关闭</string>
+				<string>开启</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<true/>
 			<key>key</key>
 			<string>no_nosim_alert</string>

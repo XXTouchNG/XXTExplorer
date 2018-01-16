@@ -383,7 +383,7 @@ XXTE_END_IGNORE_PARTIAL
             block(YES);
             self.userDefaults[modifyKey] = @(index);
         } else {
-            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot set user defaults: %@", nil), jsonDictionary[@"message"]];
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot save changes: %@", nil), jsonDictionary[@"message"]];
         }
         return [PMKPromise promiseWithValue:editedUserDefaults];
     }).then(^ (NSDictionary *saveDictionary) {

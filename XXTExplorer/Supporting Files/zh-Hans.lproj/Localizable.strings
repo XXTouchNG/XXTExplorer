@@ -84,7 +84,7 @@
 "\"%@\"" = "\"%@\"";
 
 /* No comment provided by engineer. */
-"\"Activator\" is active, configure activation behaviours below." = "\"Activator\" 已激活, 请在下方配置激活行为. ";
+"\"Activator\" is active, configure activation behaviours below." = "\"Activator\" 已激活, 请在下方配置激活行为.";
 
 /* No comment provided by engineer. */
 "\"Activator\" is active, configure activation behaviours in \"Activator\"." = "\"Activator\" 已激活, 请在 \"Activator\" 中配置激活行为. ";
@@ -342,19 +342,13 @@
 "Cannot restart daemon: %@" = "无法重启守护进程: %@";
 
 /* No comment provided by engineer. */
-"Cannot select boot script: %@" = "无法选择开机启动项: %@";
+"Cannot save changes: %@" = "无法保存更改: %@";
 
 /* No comment provided by engineer. */
 "Cannot select script: %@" = "无法选中脚本: %@";
 
 /* No comment provided by engineer. */
-"Cannot set user defaults: %@" = "无法修改用户偏好设置: %@";
-
-/* No comment provided by engineer. */
 "Cannot stop script: %@" = "无法停止脚本: %@";
-
-/* No comment provided by engineer. */
-"Cannot switch boot script: %@" = "无法切换开机启动项: %@";
 
 /* No comment provided by engineer. */
 "Cannot sync with daemon: %@" = "无法与守护进程同步: %@";
@@ -561,6 +555,9 @@
 "Directory" = "目录";
 
 /* No comment provided by engineer. */
+"Disable this feature to ignore all shortcut events that can launch or stop selected script." = "关闭以上功能将忽略所有内置快捷键以及 Activator 启停脚本事件.";
+
+/* No comment provided by engineer. */
 "Dismiss" = "忽略";
 
 /* No comment provided by engineer. */
@@ -582,6 +579,9 @@
 "Download Finished" = "下载完成";
 
 /* No comment provided by engineer. */
+"Download terminated, unsupported server response: %@ (%ld)." = "下载终止, 不支持的服务端响应: %@ (%ld).";
+
+/* No comment provided by engineer. */
 "Download terminated: User interrupt occurred." = "下载终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
@@ -601,6 +601,9 @@
 
 /* No comment provided by engineer. */
 "Empty response." = "响应数据为空.";
+
+/* No comment provided by engineer. */
+"Empty server response (%@)." = "服务端响应数据为空 (%@).";
 
 /* No comment provided by engineer. */
 "Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key." = "启用 \"软缩进\" 将在按下 Tab 键时插入指定数量的空格而不是缩进符 (\\t). ";
@@ -921,10 +924,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -934,6 +937,9 @@
 
 /* No comment provided by engineer. */
 "No Result" = "无结果";
+
+/* No comment provided by engineer. */
+"No script can be found.\nTap here to find more scripts." = "您还一个脚本都没有.\n轻按此处寻找更多脚本.";
 
 /* No comment provided by engineer. */
 "No symbol definition found for this language." = "找不到当前语言的符号定义.";
@@ -1365,6 +1371,9 @@
 
 /* No comment provided by engineer. */
 "The information below is provided by the third party script author." = "以下信息由第三方脚本作者提供.";
+
+/* No comment provided by engineer. */
+"The information on this page is provided by RuanMao Cloud." = "此页面信息由软猫云提供.";
 
 /* No comment provided by engineer. */
 "The member type of \"%@\" should be \"%@\"." = "\"%@\" 的成员类型应该为 \"%@\".";

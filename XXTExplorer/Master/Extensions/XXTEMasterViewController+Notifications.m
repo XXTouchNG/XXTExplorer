@@ -78,7 +78,7 @@
     else if ([aNotification.name isEqualToString:XXTENotificationEvent])
     {
         if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
-            if (self.viewControllers.count == 2 &&
+            if (self.viewControllers.count >= kMasterViewControllerIndexExplorer &&
                 self.selectedIndex != kMasterViewControllerIndexExplorer)
             {
                 // switch to explorer
@@ -353,6 +353,15 @@
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scanViewController];
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentViewController:navController animated:YES completion:nil];
+        return YES;
+    }
+    else if ([jsonEvent isEqualToString:@"cloud"]) {
+        if (self.viewControllers.count >= kMasterViewControllerIndexCloud &&
+            self.selectedIndex != kMasterViewControllerIndexCloud)
+        {
+            // switch to cloud
+            [self setSelectedIndex:kMasterViewControllerIndexCloud];
+        }
         return YES;
     }
 #endif

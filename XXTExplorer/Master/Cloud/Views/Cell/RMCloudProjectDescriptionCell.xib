@@ -44,6 +44,8 @@
                     <constraint firstAttribute="trailing" secondItem="f7H-u9-WAf" secondAttribute="trailing" constant="20" id="n7b-fR-oj4"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+            <inset key="separatorInset" minX="4096" minY="0.0" maxX="4096" maxY="0.0"/>
             <connections>
                 <outlet property="descriptionTextLabel" destination="WFu-Oh-EnK" id="T8l-qJ-3uj"/>
             </connections>

@@ -70,6 +70,8 @@ Expires in 81 days</string>
                     <constraint firstAttribute="trailing" secondItem="Kdy-Py-VHr" secondAttribute="trailing" constant="20" id="tie-YH-3iN"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+            <inset key="separatorInset" minX="4096" minY="0.0" maxX="4096" maxY="0.0"/>
             <connections>
                 <outlet property="descriptionTextLabel" destination="MBe-3H-yEC" id="573-LK-0aJ"/>
                 <outlet property="downloadButton" destination="zTI-Xz-U8U" id="APk-ek-bWG"/>

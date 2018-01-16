@@ -14,6 +14,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>3rd/MWPhotoBrowser</string>
+			<key>Title</key>
+			<string>MWPhotoBrowser</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>3rd/OMGHTTPURLRQ</string>
 			<key>Title</key>
 			<string>OMGHTTPURLRQ</string>
@@ -38,17 +46,17 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>3rd/YYImage</string>
+			<string>3rd/UnrarKit</string>
 			<key>Title</key>
-			<string>YYImage</string>
+			<string>UnrarKit</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>3rd/MWPhotoBrowser</string>
+			<string>3rd/YYKit</string>
 			<key>Title</key>
-			<string>MWPhotoBrowser</string>
+			<string>YYImage</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

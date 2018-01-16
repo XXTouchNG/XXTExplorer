@@ -40,8 +40,10 @@ static NSErrorDomain RMModelErrorDomain = @"RMModelErrorDomain";
             resolve([self promiseModelWithDictionary:retData]);
         } else if ([retData isKindOfClass:[NSArray class]]) {
             resolve([self promiseModelsWithList:retData]);
-        } else if (!retData) {
-            
+        } else if ([retData isKindOfClass:[NSString class]]) {
+            resolve(retData);
+        } else if (!retData || [retData isKindOfClass:[NSNull class]]) {
+            resolve(RMError(NSLocalizedString(@"Empty server response (%@).", nil), @(255)));
         } else {
             resolve(RMError(NSLocalizedString(@"Unknown server response type (%@).", nil), NSStringFromClass([retData class])));
         }

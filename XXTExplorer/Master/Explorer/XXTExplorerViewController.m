@@ -34,7 +34,9 @@
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
-@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
+#import "XXTENotificationCenterDefines.h"
+
+@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerFooterViewDelegate>
 
 @end
 
@@ -163,6 +165,7 @@
     [self configureToolbar];
     _footerView = ({
         XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
+        entryFooterView.delegate = self;
         entryFooterView;
     });
     [self.tableView setTableFooterView:self.footerView];
@@ -330,27 +333,7 @@
     });
     [self.entryList removeAllObjects];
     [self.entryList addObjectsFromArray:newEntryList];
-    
-    NSUInteger itemCount = self.entryList.count;
-    NSString *itemCountString = nil;
-    if (itemCount == 0) {
-        itemCountString = NSLocalizedString(@"No item", nil);
-    } else if (itemCount == 1) {
-        itemCountString = NSLocalizedString(@"1 item", nil);
-    } else {
-        itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long) itemCount];
-    }
-    NSString *usageString = nil;
-    NSError *usageError = nil;
-    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
-    if (!usageError) {
-        NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
-        if (deviceFreeSpace != nil) {
-            usageString = [NSByteCountFormatter stringFromByteCount:[deviceFreeSpace unsignedLongLongValue] countStyle:NSByteCountFormatterCountStyleFile];
-        }
-    }
-    NSString *finalFooterString = [NSString stringWithFormat:NSLocalizedString(@"%@, %@ free", nil), itemCountString, usageString];
-    [self.footerView.footerLabel setText:finalFooterString];
+    [self reloadFooterView];
     
     if (error && *error) {
         return NO;
@@ -363,6 +346,34 @@
     [self loadEntryListDataWithError:&entryLoadError];
     if (entryLoadError) {
         toastMessage(self, [entryLoadError localizedDescription]);
+    }
+}
+
+- (void)reloadFooterView {
+    NSUInteger itemCount = self.entryList.count;
+    if ([self.class.initialPath isEqualToString:self.entryPath] && itemCount == 0) {
+        [self.footerView setEmptyMode:YES];
+    } else {
+        [self.footerView setEmptyMode:NO];
+        NSString *itemCountString = nil;
+        if (itemCount == 0) {
+            itemCountString = NSLocalizedString(@"No item", nil);
+        } else if (itemCount == 1) {
+            itemCountString = NSLocalizedString(@"1 item", nil);
+        } else {
+            itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long) itemCount];
+        }
+        NSString *usageString = nil;
+        NSError *usageError = nil;
+        NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
+        if (!usageError) {
+            NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
+            if (deviceFreeSpace != nil) {
+                usageString = [NSByteCountFormatter stringFromByteCount:[deviceFreeSpace unsignedLongLongValue] countStyle:NSByteCountFormatterCountStyleFile];
+            }
+        }
+        NSString *finalFooterString = [NSString stringWithFormat:NSLocalizedString(@"%@, %@ free", nil), itemCountString, usageString];
+        [self.footerView.footerLabel setText:finalFooterString];
     }
 }
 
@@ -863,6 +874,7 @@
         [self.toolbar updateStatus:XXTExplorerToolbarStatusDefault];
     }
     [self updateToolbarStatus];
+    [self reloadFooterView];
 }
 
 #pragma mark - Scroll to Rect
@@ -875,6 +887,17 @@
         }
     }
     return nil;
+}
+
+#pragma mark - XXTExplorerFooterViewDelegate
+
+- (void)footerView:(XXTExplorerFooterView *)view emptyButtonTapped:(UIButton *)sender {
+    if (view == self.footerView) {
+        NSDictionary *userInfo =
+        @{XXTENotificationShortcutInterface: @"cloud",
+          XXTENotificationShortcutUserData: @{  }};
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
+    }
 }
 
 #pragma mark - Memory

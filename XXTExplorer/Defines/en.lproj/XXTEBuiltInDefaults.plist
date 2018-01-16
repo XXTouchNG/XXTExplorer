@@ -222,6 +222,23 @@
 	<array>
 		<dict>
 			<key>enabled</key>
+			<false/>
+			<key>key</key>
+			<string>device_control_toggle</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Enable Shortcut</string>
+			<key>description</key>
+			<string>Allows device control shortcut events to launch or stop selected script.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<true/>
 			<key>key</key>
 			<string>no_nosim_alert</string>

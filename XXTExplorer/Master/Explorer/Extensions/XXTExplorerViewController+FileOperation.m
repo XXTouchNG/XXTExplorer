@@ -567,6 +567,7 @@
                 [tableView beginUpdates];
                 [tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
                 [tableView endUpdates];
+                [self reloadFooterView];
             }
             blockInteractions(blockController, NO);
         }];
@@ -682,6 +683,7 @@
                 [tableView beginUpdates];
                 [tableView deleteRowsAtIndexPaths:deletedPaths withRowAnimation:UITableViewRowAnimationAutomatic];
                 [tableView endUpdates];
+                [self reloadFooterView];
             }
             blockInteractions(blockController, NO);
         }];

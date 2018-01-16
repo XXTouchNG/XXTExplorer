@@ -31,18 +31,43 @@
                             <constraint firstAttribute="height" constant="20" id="zpA-hC-bgQ"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znd-PS-Zeq">
+                        <rect key="frame" x="20" y="0.0" width="394" height="0.5"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.25" id="bPy-zG-gei"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8I-vy-XQv">
+                        <rect key="frame" x="20" y="43" width="394" height="0.5"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.25" id="Qj5-4L-bRU"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="boP-Ro-dVy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AOf-tf-Msv"/>
+                    <constraint firstAttribute="bottom" secondItem="j8I-vy-XQv" secondAttribute="bottom" id="FKk-UJ-HsE"/>
+                    <constraint firstAttribute="trailing" secondItem="j8I-vy-XQv" secondAttribute="trailing" id="GcN-pd-ng9"/>
+                    <constraint firstItem="znd-PS-Zeq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="J2f-ZJ-LYz"/>
                     <constraint firstItem="boP-Ro-dVy" firstAttribute="leading" secondItem="qxa-fL-mBb" secondAttribute="trailing" constant="32" id="JrT-0g-UWo"/>
                     <constraint firstAttribute="trailing" secondItem="boP-Ro-dVy" secondAttribute="trailing" constant="20" id="bAA-wF-HHS"/>
+                    <constraint firstItem="znd-PS-Zeq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k66-MS-9m5"/>
+                    <constraint firstItem="j8I-vy-XQv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="mgr-aJ-d0Y"/>
                     <constraint firstItem="qxa-fL-mBb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uPR-Xp-wwG"/>
+                    <constraint firstAttribute="trailing" secondItem="znd-PS-Zeq" secondAttribute="trailing" id="v6q-R8-8De"/>
                     <constraint firstItem="qxa-fL-mBb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="wWZ-yS-hpO"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="4096" minY="0.0" maxX="4096" maxY="0.0"/>
             <connections>
+                <outlet property="bottomSepatator" destination="j8I-vy-XQv" id="Cfw-tX-FJD"/>
                 <outlet property="linkIconImageView" destination="boP-Ro-dVy" id="Dhq-oy-ScV"/>
                 <outlet property="titleTextLabel" destination="qxa-fL-mBb" id="CA6-Dm-IC9"/>
+                <outlet property="topSepatator" destination="znd-PS-Zeq" id="nGF-TH-HAM"/>
             </connections>
         </tableViewCell>
     </objects>

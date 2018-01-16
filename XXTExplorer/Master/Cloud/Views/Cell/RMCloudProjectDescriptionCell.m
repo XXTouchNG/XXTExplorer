@@ -9,7 +9,6 @@
 #import "RMCloudProjectDescriptionCell.h"
 
 @interface RMCloudProjectDescriptionCell ()
-@property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
 
 @end
 

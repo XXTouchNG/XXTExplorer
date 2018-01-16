@@ -539,6 +539,8 @@ typedef enum : NSUInteger {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.statusCode != 200) {
             // TODO: not supported http response
+            [self connection:connection didFailWithError:[NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Download terminated, unsupported server response: %@ (%ld).", nil), [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode], httpResponse.statusCode]}]];
+            return;
         }
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         {
@@ -593,17 +595,25 @@ typedef enum : NSUInteger {
         if (!busyOperationProgressFlag) {
             return;
         }
-        float progressive = (float)receivedFileSize / (float)expectedFileSize;
         {
             if (self.downloadFileHandle) {
                 [self.downloadFileHandle writeData:receivedData];
             }
             receivedFileSize += receivedData.length;
         }
-        {
-            if (self.currentAlertView && self.currentAlertView.isShowing) {
-                [self.currentAlertView setProgress:progressive];
-                [self.currentAlertView setProgressLabelText:[NSString stringWithFormat:@"%.2f %%", (float)progressive * 100]];
+        if (expectedFileSize <= 0) {
+            {
+                if (self.currentAlertView && self.currentAlertView.isShowing) {
+                    [self.currentAlertView setProgressLabelText:[NSString stringWithFormat:@"%lld bytes received.", receivedFileSize]];
+                }
+            }
+        } else {
+            float progressive = (float)receivedFileSize / (float)expectedFileSize;
+            {
+                if (self.currentAlertView && self.currentAlertView.isShowing) {
+                    [self.currentAlertView setProgress:progressive];
+                    [self.currentAlertView setProgressLabelText:[NSString stringWithFormat:@"%.2f %%", (float)progressive * 100]];
+                }
             }
         }
     }

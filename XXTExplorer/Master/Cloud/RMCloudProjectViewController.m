@@ -17,6 +17,9 @@
 #import "RMCloudExpandedCell.h"
 #import "RMCloudLinkCell.h"
 
+#import "XXTENotificationCenterDefines.h"
+#import "XXTExplorerViewController+SharedInstance.h"
+
 typedef enum : NSUInteger {
     RMCloudDetailSectionHeader = 0,
     RMCloudDetailSectionDescription,
@@ -37,8 +40,18 @@ typedef enum : NSUInteger {
 @interface RMCloudProjectViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) RMCloudProjectDetailCell *headerCell;
+@property (nonatomic, strong) RMCloudProjectDescriptionCell *descriptionCell;
+
 @property (nonatomic, strong) RMProject *project;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
+
+@property (nonatomic, assign) BOOL authorNameExpanded;
+@property (nonatomic, assign) BOOL projectVersionExpanded;
+@property (nonatomic, assign) BOOL downloadTimesExpanded;
+@property (nonatomic, assign) BOOL trailTypeExpanded;
+@property (nonatomic, assign) BOOL contactStringExpanded;
 
 @end
 
@@ -105,7 +118,9 @@ XXTE_END_IGNORE_PARTIAL
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.backgroundColor = [UIColor whiteColor];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -130,6 +145,31 @@ XXTE_END_IGNORE_PARTIAL
         _pawAnimation = pawAnimation;
     }
     return _pawAnimation;
+}
+
+- (RMCloudProjectDetailCell *)headerCell {
+    if (!_headerCell) {
+        RMCloudProjectDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudProjectDetailCell class]) owner:nil options:nil] lastObject];
+        RMProject *project = self.project;
+        if (project) {
+            [cell setProject:project];
+        }
+        [cell.downloadButton addTarget:self action:@selector(downloadButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        _headerCell = cell;
+    }
+    return _headerCell;
+}
+
+- (RMCloudProjectDescriptionCell *)descriptionCell {
+    if (!_descriptionCell) {
+        RMCloudProjectDescriptionCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudProjectDescriptionCell class]) owner:nil options:nil] lastObject];
+        RMProject *project = self.project;
+        if (project) {
+            [cell setProject:project];
+        }
+        _descriptionCell = cell;
+    }
+    return _descriptionCell;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -161,16 +201,20 @@ XXTE_END_IGNORE_PARTIAL
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (indexPath.section == RMCloudDetailSectionHeader || indexPath.section == RMCloudDetailSectionDescription)
+        if (indexPath.section == RMCloudDetailSectionHeader || indexPath.section == RMCloudDetailSectionDescription || indexPath.section == RMCloudDetailSectionInformation)
         {
             if (@available(iOS 8.0, *)) {
                 return UITableViewAutomaticDimension;
-            } else {
-                return [self tableView:tableView heightForAutoResizingCell:[tableView cellForRowAtIndexPath:indexPath]];
             }
-        }
-        else if (indexPath.section == RMCloudDetailSectionInformation) {
-            return 44.f;
+            else {
+                if (indexPath.section == RMCloudDetailSectionHeader) {
+                    return [self tableView:tableView heightForAutoResizingCell:self.headerCell];
+                } else if (indexPath.section == RMCloudDetailSectionDescription) {
+                    return [self tableView:tableView heightForAutoResizingCell:self.descriptionCell];
+                } else {
+                    return UITableViewAutomaticDimension;
+                }
+            }
         }
     }
     return 0;
@@ -215,25 +259,9 @@ XXTE_END_IGNORE_PARTIAL
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == RMCloudDetailSectionHeader) {
-        RMCloudProjectDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:RMCloudProjectDetailCellReuseIdentifier];
-        if (cell == nil) {
-            cell = [[RMCloudProjectDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudProjectDetailCellReuseIdentifier];
-        }
-        RMProject *project = self.project;
-        if (project) {
-            [cell setProject:project];
-        }
-        return cell;
+        return self.headerCell;
     } else if (indexPath.section == RMCloudDetailSectionDescription) {
-        RMCloudProjectDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:RMCloudProjectDescriptionCellReuseIdentifier];
-        if (cell == nil) {
-            cell = [[RMCloudProjectDescriptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudProjectDescriptionCellReuseIdentifier];
-        }
-        RMProject *project = self.project;
-        if (project) {
-            [cell setProject:project];
-        }
-        return cell;
+        return self.descriptionCell;
     } else if (indexPath.section == RMCloudDetailSectionInformation) {
         RMProject *project = self.project;
         if (project) {
@@ -242,12 +270,10 @@ XXTE_END_IGNORE_PARTIAL
                 indexPath.row == RMCloudInformationRowDownloadTimes ||
                 indexPath.row == RMCloudInformationRowTrail ||
                 indexPath.row == RMCloudInformationRowContact) {
-                RMCloudExpandableCell *cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandableCellReuseIdentifier];
-                if (cell == nil) {
-                    cell = [[RMCloudExpandableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudExpandableCellReuseIdentifier];
-                }
+                UITableViewCell <RMCloudExpandable> *cell = nil;
                 if (indexPath.row == RMCloudInformationRowAuthor)
                 {
+                    cell = [self tableView:tableView cellForExpandedState:self.authorNameExpanded];
                     cell.titleTextLabel.text = NSLocalizedString(@"Author", nil);
                     NSString *authorName = self.project.authorName;
                     if (authorName.length) {
@@ -256,16 +282,19 @@ XXTE_END_IGNORE_PARTIAL
                 }
                 else if (indexPath.row == RMCloudInformationRowVersion)
                 {
+                    cell = [self tableView:tableView cellForExpandedState:self.projectVersionExpanded];
                     cell.titleTextLabel.text = NSLocalizedString(@"Version", nil);
                     cell.valueTextLabel.text = [NSString stringWithFormat:@"v%.2f", project.projectVersion];
                 }
                 else if (indexPath.row == RMCloudInformationRowDownloadTimes)
                 {
+                    cell = [self tableView:tableView cellForExpandedState:self.downloadTimesExpanded];
                     cell.titleTextLabel.text = NSLocalizedString(@"Download Times", nil);
                     cell.valueTextLabel.text = [NSString stringWithFormat:@"%lu", project.downloadTimes];
                 }
                 else if (indexPath.row == RMCloudInformationRowTrail)
                 {
+                    cell = [self tableView:tableView cellForExpandedState:self.trailTypeExpanded];
                     cell.titleTextLabel.text = NSLocalizedString(@"Trail", nil);
                     NSString *trailString = [self.project localizedTrailDescription];
                     if (trailString.length) {
@@ -274,12 +303,19 @@ XXTE_END_IGNORE_PARTIAL
                 }
                 else if (indexPath.row == RMCloudInformationRowContact)
                 {
+                    cell = [self tableView:tableView cellForExpandedState:self.contactStringExpanded];
                     cell.titleTextLabel.text = NSLocalizedString(@"Contact", nil);
                     NSString *contactString = self.project.contactString;
                     if (contactString.length) {
                         cell.valueTextLabel.text = contactString;
                     }
                 }
+                if (indexPath.row == 0) {
+                    cell.topSepatator.hidden = YES;
+                } else {
+                    cell.topSepatator.hidden = NO;
+                }
+                cell.bottomSepatator.hidden = NO;
                 return cell;
             }
             else if (indexPath.row == RMCloudInformationRowBuy) {
@@ -291,6 +327,7 @@ XXTE_END_IGNORE_PARTIAL
                     cell.titleTextLabel.text = NSLocalizedString(@"Purchase Now", nil);
                     cell.linkIconImageView.image = [[UIImage imageNamed:@"RMCloudLinkPurchase"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                 }
+                cell.bottomSepatator.hidden = YES;
                 return cell;
             }
         }
@@ -298,28 +335,123 @@ XXTE_END_IGNORE_PARTIAL
     return [UITableViewCell new];
 }
 
+- (UITableViewCell <RMCloudExpandable> *)tableView:(UITableView *)tableView cellForExpandedState:(BOOL)expanded {
+    UITableViewCell <RMCloudExpandable> *cell = nil;
+    if (expanded) {
+        cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandedCellReuseIdentifier];
+        if (cell == nil) {
+            cell = [[RMCloudExpandedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudExpandedCellReuseIdentifier];
+        }
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandableCellReuseIdentifier];
+        if (cell == nil) {
+            cell = [[RMCloudExpandableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudExpandableCellReuseIdentifier];
+        }
+    }
+    return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == RMCloudDetailSectionHeader) {
+        return nil;
+    }
+    return [UITableViewHeaderFooterView new];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [UITableViewHeaderFooterView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == RMCloudDetailSectionHeader) {
+        return CGFLOAT_MIN;
+    }
     return 32.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section == RMCloudDetailSectionHeader) {
         return 16.f;
+    } else if (section == RMCloudDetailSectionInformation) {
+        return 48.f;
     }
     return 16.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (tableView == self.tableView) {
+        if (indexPath.section == RMCloudDetailSectionInformation) {
+            BOOL shouldExpand = NO;
+            if (indexPath.row == RMCloudInformationRowAuthor) {
+                if (NO == self.authorNameExpanded) {
+                    shouldExpand = YES;
+                }
+                self.authorNameExpanded = YES;
+            }
+            else if (indexPath.row == RMCloudInformationRowVersion) {
+                if (NO == self.projectVersionExpanded) {
+                    shouldExpand = YES;
+                }
+                self.projectVersionExpanded = YES;
+            }
+            else if (indexPath.row == RMCloudInformationRowDownloadTimes) {
+                if (NO == self.downloadTimesExpanded) {
+                    shouldExpand = YES;
+                }
+                self.downloadTimesExpanded = YES;
+            }
+            else if (indexPath.row == RMCloudInformationRowTrail) {
+                if (NO == self.trailTypeExpanded) {
+                    shouldExpand = YES;
+                }
+                self.trailTypeExpanded = YES;
+            }
+            else if (indexPath.row == RMCloudInformationRowContact) {
+                if (NO == self.contactStringExpanded) {
+                    shouldExpand = YES;
+                }
+                self.contactStringExpanded = YES;
+            }
+            if (shouldExpand) {
+                [self.tableView reloadData];
+            } else {
+                if (indexPath.row == RMCloudInformationRowAuthor ||
+                    indexPath.row == RMCloudInformationRowVersion ||
+                    indexPath.row == RMCloudInformationRowDownloadTimes ||
+                    indexPath.row == RMCloudInformationRowTrail ||
+                    indexPath.row == RMCloudInformationRowContact) {
+                    UITableViewCell <RMCloudExpandable> *cell = [tableView cellForRowAtIndexPath:indexPath];
+                    NSString *titleText = cell.titleTextLabel.text;
+                    NSString *detailText = cell.valueTextLabel.text;
+                    if (titleText && titleText.length > 0 &&
+                        detailText && detailText.length > 0) {
+                        @weakify(self);
+                        void (^copyBlock)(NSString *) = ^(NSString *textToCopy) {
+                            @strongify(self);
+                            UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                            [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                                    [[UIPasteboard generalPasteboard] setString:textToCopy];
+                                    fulfill(nil);
+                                });
+                            }].finally(^() {
+                                toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                                blockInteractions(blockVC, NO);
+                            });
+                        };
+                        copyBlock(detailText);
+                    }
+                }
+            }
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     header.textLabel.font = [UIFont boldSystemFontOfSize:20.0];
+    header.textLabel.textColor = [UIColor blackColor];
     UIView *bgView = [[UIView alloc] init];
     header.backgroundView = bgView;
     bgView.backgroundColor = [UIColor clearColor];
@@ -327,6 +459,8 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+    footer.textLabel.font = [UIFont systemFontOfSize:12.0];
+    footer.textLabel.textColor = [UIColor lightGrayColor];
     UIView *bgView = [[UIView alloc] init];
     footer.backgroundView = bgView;
     bgView.backgroundColor = [UIColor clearColor];
@@ -347,7 +481,48 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (self.project) {
+        if (tableView == self.tableView) {
+            if (section == RMCloudDetailSectionInformation) {
+                return NSLocalizedString(@"The information on this page is provided by RuanMao Cloud.", nil);
+            }
+        }
+    }
     return nil;
+}
+
+#pragma mark - Action
+
+- (void)downloadButtonTapped:(UIButton *)sender {
+    RMProject *project = self.project;
+    if (!project) {
+        return;
+    }
+    UIViewController *blockController = blockInteractions(self, YES);
+    [project downloadURL]
+    .then(^(NSString *downloadURL) {
+        if (downloadURL) {
+            NSURL *sourceURL = [NSURL URLWithString:downloadURL];
+            NSString *scheme = sourceURL.scheme;
+            if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
+            {
+                NSDictionary *internalArgs =
+                @{
+                  @"url": downloadURL,
+                  };
+                NSDictionary *userInfo =
+                @{XXTENotificationShortcutInterface: @"download",
+                  XXTENotificationShortcutUserData: internalArgs};
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
+            }
+        }
+    })
+    .catch(^ (NSError *error) {
+        toastMessage(self, error.localizedDescription);
+    })
+    .finally(^() {
+        blockInteractions(blockController, NO);
+    });
 }
 
 #pragma mark - Memory

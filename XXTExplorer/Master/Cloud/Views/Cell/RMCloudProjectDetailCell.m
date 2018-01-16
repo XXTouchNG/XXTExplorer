@@ -10,10 +10,6 @@
 #import <YYWebImage/YYWebImage.h>
 
 @interface RMCloudProjectDetailCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UILabel *titleTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
-@property (weak, nonatomic) IBOutlet UIButton *downloadButton;
 
 @end
 

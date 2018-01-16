@@ -13,5 +13,6 @@ static NSString * const RMCloudProjectDescriptionCellReuseIdentifier = @"RMCloud
 
 @interface RMCloudProjectDescriptionCell : UITableViewCell
 @property (nonatomic, strong) RMProject *project;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
 
 @end

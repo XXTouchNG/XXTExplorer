@@ -20,6 +20,10 @@
     
     self.titleTextLabel.text = @"";
     self.valueTextLabel.text = @"";
+    
+    UIView *selectionBackground = [[UIView alloc] init];
+    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    self.selectedBackgroundView = selectionBackground;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

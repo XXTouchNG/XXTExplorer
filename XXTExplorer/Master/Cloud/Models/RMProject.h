@@ -35,6 +35,11 @@ typedef enum : NSUInteger {
 // NSArray <RMProject *> *models
 + (PMKPromise *)sortedList:(RMApiActionSortBy)sortBy atPage:(NSUInteger)idx itemsPerPage:(NSUInteger)ipp;
 + (PMKPromise *)filteredListWithKeyword:(NSString *)kw atPage:(NSUInteger)idx itemsPerPage:(NSUInteger)ipp;
+
+// RMProject *model
 + (PMKPromise *)projectWithID:(NSUInteger)projectID;
+
+// NSString *downloadURL
+- (PMKPromise *)downloadURL;
 
 @end

@@ -9,6 +9,11 @@
 #import "XXTExplorerFooterView.h"
 #import "XXTEInsetsLabel.h"
 
+@interface XXTExplorerFooterView ()
+@property (nonatomic, strong) UIButton *boxEmptyButton;
+
+@end
+
 @implementation XXTExplorerFooterView
 
 @synthesize footerLabel = _footerLabel;
@@ -36,14 +41,18 @@
 
 - (void)setup {
     [self addSubview:self.footerLabel];
+    [self addSubview:self.boxEmptyButton];
     CGRect newFrame = self.frame;
     newFrame.size.height = 92.f;
     self.frame = newFrame;
+    self.footerLabel.hidden = YES;
+    self.boxEmptyButton.hidden = YES;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self.footerLabel setFrame:self.contentView.bounds];
+    [self.boxEmptyButton setFrame:self.contentView.bounds];
 }
 
 - (UILabel *)footerLabel {
@@ -52,13 +61,15 @@
         textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textLabel.textColor = XXTE_COLOR;
         textLabel.backgroundColor = [UIColor whiteColor];
+        UIFont *font = nil;
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 8.2, *)) {
-            textLabel.font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
+            font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
         } else {
-            textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
+            font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
         }
         XXTE_END_IGNORE_PARTIAL
+        textLabel.font = font;
         textLabel.edgeInsets = UIEdgeInsetsMake(0.0, 12.f, 24.0, 12.f);
         textLabel.numberOfLines = 1;
         textLabel.lineBreakMode = NSLineBreakByClipping;
@@ -66,6 +77,50 @@
         _footerLabel = textLabel;
     }
     return _footerLabel;
+}
+
+- (UIButton *)boxEmptyButton {
+    if (!_boxEmptyButton) {
+        UIFont *font = nil;
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 8.2, *)) {
+            font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
+        } else {
+            font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
+        }
+        XXTE_END_IGNORE_PARTIAL
+        UIButton *boxButton = [[UIButton alloc] initWithFrame:self.contentView.bounds];
+        boxButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        boxButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+        [boxButton setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 0.0, 32.0)];
+        [boxButton setImage:[[UIImage imageNamed:@"XXTEBoxEmpty"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        NSString *boxString = NSLocalizedString(@"No script can be found.\nTap here to find more scripts.", nil);
+        [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor lightGrayColor]}] forState:UIControlStateNormal];
+        [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor darkGrayColor]}] forState:UIControlStateHighlighted];
+        [boxButton setTintColor:[UIColor lightGrayColor]];
+        [boxButton addTarget:self action:@selector(emptyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        _boxEmptyButton = boxButton;
+    }
+    return _boxEmptyButton;
+}
+
+#pragma mark - Empty Mode
+
+- (void)setEmptyMode:(BOOL)emptyMode {
+    _emptyMode = emptyMode;
+    if (emptyMode) {
+        self.footerLabel.hidden = YES;
+        self.boxEmptyButton.hidden = NO;
+    } else {
+        self.footerLabel.hidden = NO;
+        self.boxEmptyButton.hidden = YES;
+    }
+}
+
+- (void)emptyButtonTapped:(UIButton *)sender {
+    if ([_delegate respondsToSelector:@selector(footerView:emptyButtonTapped:)]) {
+        [_delegate footerView:self emptyButtonTapped:sender];
+    }
 }
 
 @end

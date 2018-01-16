@@ -7,14 +7,9 @@
 //
 
 #import "RMCloudProjectCell.h"
-#import <YYImage/YYImage.h>
 #import <YYWebImage/YYWebImage.h>
 
 @interface RMCloudProjectCell ()
-@property (weak, nonatomic) IBOutlet UILabel *titleTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
-@property (weak, nonatomic) IBOutlet UIButton *downloadButton;
-@property (weak, nonatomic) IBOutlet YYAnimatedImageView *iconImageView;
 
 @end
 
@@ -38,6 +33,8 @@
     
     downloadBtn.showsTouchWhenHighlighted = YES;
     [downloadBtn setTitle:NSLocalizedString(@"Download", nil) forState:UIControlStateNormal];
+    
+    [downloadBtn addTarget:self action:@selector(downloadButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -59,6 +56,14 @@
     NSURL *imageURL = [NSURL URLWithString:project.projectLogo];
     if (imageURL) {
         [self.iconImageView yy_setImageWithURL:imageURL options:YYWebImageOptionProgressive | YYWebImageOptionShowNetworkActivity];
+    }
+}
+
+#pragma mark - Actions
+
+- (void)downloadButtonTapped:(UIButton *)sender {
+    if ([_delegate respondsToSelector:@selector(projectCell:downloadButtonTapped:)]) {
+        [_delegate projectCell:self downloadButtonTapped:sender];
     }
 }
 

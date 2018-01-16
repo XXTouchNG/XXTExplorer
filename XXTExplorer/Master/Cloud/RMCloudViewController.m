@@ -38,7 +38,10 @@
     [self setViewControllers:@[ controller1, controller2 ]];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
+    
+#ifdef DEBUG
     self.navigationItem.rightBarButtonItem = self.searchItem;
+#endif
 }
 
 #pragma mark - Life Cycle

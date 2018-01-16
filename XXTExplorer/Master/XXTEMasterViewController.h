@@ -12,7 +12,9 @@
 
 typedef enum : NSUInteger {
     kMasterViewControllerIndexExplorer = 0,
+    kMasterViewControllerIndexCloud,
     kMasterViewControllerIndexMore,
+    kMasterViewControllerIndexMax,
 } kMasterViewControllerIndex;
 
 @interface XXTEMasterViewController : UITabBarController

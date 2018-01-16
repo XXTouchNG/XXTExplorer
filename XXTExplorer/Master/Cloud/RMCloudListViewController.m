@@ -13,6 +13,8 @@
 #import "RMCloudProjectViewController.h"
 #import "RMCloudLoadingView.h"
 
+#import "XXTENotificationCenterDefines.h"
+
 typedef enum : NSUInteger {
     RMCloudListSectionProject = 0,
     RMCloudListSectionMore,
@@ -21,7 +23,7 @@ typedef enum : NSUInteger {
 
 static NSUInteger const RMCloudListItemsPerPage = 20;
 
-@interface RMCloudListViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
+@interface RMCloudListViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, RMCloudProjectCellDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -196,6 +198,7 @@ XXTE_END_IGNORE_PARTIAL
         }
         if (project) {
             [cell setProject:project];
+            [cell setDelegate:self];
         }
         return cell;
     } else if (indexPath.section == RMCloudListSectionMore) {
@@ -209,7 +212,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [UIView new];
+    return [UITableViewHeaderFooterView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -229,6 +232,40 @@ XXTE_END_IGNORE_PARTIAL
     } else if (indexPath.section == RMCloudListSectionMore) {
         [self loadMoreProjests:nil];
     }
+}
+
+#pragma mark - RMCloudProjectCellDelegate
+
+- (void)projectCell:(RMCloudProjectCell *)cell downloadButtonTapped:(UIButton *)button {
+    RMProject *project = cell.project;
+    if (!project) {
+        return;
+    }
+    UIViewController *blockController = blockInteractions(self, YES);
+    [project downloadURL]
+    .then(^(NSString *downloadURL) {
+        if (downloadURL) {
+            NSURL *sourceURL = [NSURL URLWithString:downloadURL];
+            NSString *scheme = sourceURL.scheme;
+            if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
+            {
+                NSDictionary *internalArgs =
+                @{
+                  @"url": downloadURL,
+                  };
+                NSDictionary *userInfo =
+                @{XXTENotificationShortcutInterface: @"download",
+                  XXTENotificationShortcutUserData: internalArgs};
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
+            }
+        }
+    })
+    .catch(^ (NSError *error) {
+        toastMessage(self, error.localizedDescription);
+    })
+    .finally(^() {
+        blockInteractions(blockController, NO);
+    });
 }
 
 #pragma mark - Gesture Delegate

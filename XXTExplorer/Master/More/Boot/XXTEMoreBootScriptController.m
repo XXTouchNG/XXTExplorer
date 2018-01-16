@@ -295,9 +295,9 @@
                 }
                 [self updateBootScriptDisplay];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-                [self.bootScriptSwitch setOn:changeToStatus animated:YES];
+                [sender setOn:changeToStatus animated:YES];
             } else {
-                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot switch boot script: %@", nil), jsonDictionary[@"message"]];
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot save changes: %@", nil), jsonDictionary[@"message"]];
             }
         }).catch(^(NSError *serverError) {
             if (serverError.code == -1004) {
@@ -305,7 +305,7 @@
             } else {
                 toastMessage(self, [serverError localizedDescription]);
             }
-            [self.bootScriptSwitch setOn:!changeToStatus animated:YES];
+            [sender setOn:!changeToStatus animated:YES];
         }).finally(^() {
             blockInteractions(blockVC, NO);
         });
@@ -324,7 +324,7 @@
             [self updateBootScriptDisplay];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         } else {
-            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select boot script: %@", nil), jsonDictionary[@"message"]];
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot save changes: %@", nil), jsonDictionary[@"message"]];
         }
     }).catch(^(NSError *serverError) {
         if (serverError.code == -1004) {

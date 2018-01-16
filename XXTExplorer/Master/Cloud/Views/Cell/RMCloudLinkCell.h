@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RMCloudExpandable.h"
 
 static NSString * const RMCloudLinkCellReuseIdentifier = @"RMCloudLinkCellReuseIdentifier";
 
-@interface RMCloudLinkCell : UITableViewCell
+@interface RMCloudLinkCell : UITableViewCell <RMCloudExpandable>
 @property (weak, nonatomic) IBOutlet UILabel *titleTextLabel;
+@property (weak, nonatomic) UILabel *valueTextLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *linkIconImageView;
+@property (weak, nonatomic) IBOutlet UIView *topSepatator;
+@property (weak, nonatomic) IBOutlet UIView *bottomSepatator;
 
 @end

@@ -10,7 +10,17 @@
 
 static NSString *XXTExplorerEntryFooterViewReuseIdentifier = @"XXTExplorerEntryFooterViewReuseIdentifier";
 
+@class XXTExplorerFooterView;
+
+@protocol XXTExplorerFooterViewDelegate <NSObject>
+- (void)footerView:(XXTExplorerFooterView *)view emptyButtonTapped:(UIButton *)sender;
+
+@end
+
 @interface XXTExplorerFooterView : UITableViewHeaderFooterView
+
+@property (nonatomic, weak) id <XXTExplorerFooterViewDelegate> delegate;
+@property (nonatomic, assign) BOOL emptyMode;
 @property (nonatomic, strong, readonly) UILabel *footerLabel;
 
 @end

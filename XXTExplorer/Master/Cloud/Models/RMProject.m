@@ -87,6 +87,15 @@
     return [self promiseGETRequest:RMApiUrl(@"ScriptDetails", args)];
 }
 
+- (PMKPromise *)downloadURL {
+    NSUInteger projectID = self.projectID;
+    if (!projectID) return nil;
+    NSDictionary *args =
+    @{ @"projectid": [NSString stringWithFormat:@"%lu", projectID],
+       };
+    return [[self class] promiseGETRequest:RMApiUrl(@"GetScriptUrl", args)];
+}
+
 - (NSString *)localizedTrailDescription {
     if (self.trailType == 0) {
         return NSLocalizedString(@"No", nil);

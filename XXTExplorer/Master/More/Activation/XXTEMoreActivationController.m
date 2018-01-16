@@ -137,32 +137,50 @@ static void * activatorHandler = nil;
 
 - (void)reloadDynamicTableViewData {
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
-            .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
-                return jsonDictionary[@"data"];
-            })
-            .then(^(NSDictionary *dataDictionary) {
-                [[operationStatus allKeys] enumerateObjectsUsingBlock:^(NSString *optionKeyName, NSUInteger idx, BOOL *stop) {
-                    if (dataDictionary[optionKeyName]) {
-                        NSInteger operationType = [dataDictionary[optionKeyName] integerValue];
-                        operationStatus[optionKeyName] = @(operationType);
-                    }
-                }];
-            })
-            .then(^() {
-                [self updateOperationStatusDisplay];
-            })
-            .catch(^(NSError *serverError) {
-                if (serverError.code == -1004) {
-                    toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-                } else {
-                    toastMessage(self, [serverError localizedDescription]);
-                }
-            })
-            .finally(^() {
-                blockInteractions(blockVC, NO);
-                [self.tableView reloadData];
-            });
+    [PMKPromise promiseWithValue:self]
+    .then(^(id value) {
+        return [NSURLConnection POST:uAppDaemonCommandUrl(@"get_user_conf") JSON:@{}];
+    })
+    .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        return jsonDictionary[@"data"];
+    })
+    .then(^(NSDictionary *dataDictionary) {
+        NSString *optionKeyName = @"device_control_toggle";
+        if (dataDictionary[optionKeyName]) {
+            BOOL operationType = [dataDictionary[optionKeyName] boolValue];
+            self.shortcutEnabled = operationType;
+            [self.activationSwitch setOn:operationType];
+        }
+        return self;
+    })
+    .then(^(id value) {
+        return [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}];
+    })
+    .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+        return jsonDictionary[@"data"];
+    })
+    .then(^(NSDictionary *dataDictionary) {
+        [[operationStatus allKeys] enumerateObjectsUsingBlock:^(NSString *optionKeyName, NSUInteger idx, BOOL *stop) {
+            if (dataDictionary[optionKeyName]) {
+                NSInteger operationType = [dataDictionary[optionKeyName] integerValue];
+                operationStatus[optionKeyName] = @(operationType);
+            }
+        }];
+    })
+    .then(^() {
+        [self updateOperationStatusDisplay];
+    })
+    .catch(^(NSError *serverError) {
+        if (serverError.code == -1004) {
+            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+        } else {
+            toastMessage(self, [serverError localizedDescription]);
+        }
+    })
+    .finally(^() {
+        blockInteractions(blockVC, NO);
+        [self.tableView reloadData];
+    });
 }
 
 - (void)updateOperationStatusDisplay {
@@ -189,24 +207,19 @@ static void * activatorHandler = nil;
 
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[@"", NSLocalizedString(@"Internal Shortcut", nil), NSLocalizedString(@"Activator", nil)];
-    if (self.activatorExists) {
-        staticSectionFooters = @[NSLocalizedString(@"\"Activator\" is active, configure activation behaviours in \"Activator\".", nil), @"", @""];
-    } else {
-        staticSectionFooters = @[@"", @"", NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks.", nil)];
+    NSString *activatorInstallTip = @"";
+    if (NO == self.activatorExists) {
+        activatorInstallTip = NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks.", nil);
     }
+    staticSectionFooters = @[NSLocalizedString(@"Disable this feature to ignore all shortcut events that can launch or stop selected script.", nil), @"", activatorInstallTip];
     
     XXTEMoreSwitchCell *switchCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     switchCell.titleLabel.text = NSLocalizedString(@"Enable Shortcut", nil);
     switchCell.iconImage = [UIImage imageNamed:@"XXTEMoreIconActivationConfig"];
     UISwitch *mainSwitch = switchCell.optionSwitch;
-    if (self.activatorExists) {
-        mainSwitch.on = NO;
-        mainSwitch.enabled = NO;
-    } else {
-        mainSwitch.on = NO;
-        mainSwitch.enabled = YES;
-        [mainSwitch addTarget:self action:@selector(optionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-    }
+    mainSwitch.on = YES;
+    mainSwitch.enabled = YES;
+    [mainSwitch addTarget:self action:@selector(optionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.activationSwitch = mainSwitch;
     
     XXTEMoreTitleDescriptionCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
@@ -342,7 +355,26 @@ static void * activatorHandler = nil;
 - (void)optionSwitchChanged:(UISwitch *)sender {
     if (sender == self.activationSwitch) {
         BOOL changeToStatus = sender.on;
-        
+        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+        @weakify(self);
+        [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:@{ @"device_control_toggle": @(changeToStatus) }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+            @strongify(self);
+            if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+                self.shortcutEnabled = changeToStatus;
+                [sender setOn:changeToStatus animated:YES];
+            } else {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot save changes: %@", nil), jsonDictionary[@"message"]];
+            }
+        }).catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                toastMessage(self, [serverError localizedDescription]);
+            }
+            [sender setOn:!changeToStatus animated:YES];
+        }).finally(^() {
+            blockInteractions(blockVC, NO);
+        });
     }
 }
 

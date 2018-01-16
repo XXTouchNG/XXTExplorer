@@ -1315,6 +1315,7 @@
 		0F469CEE200CFEC60042F1BF /* RMCloudLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudLinkCell.h; sourceTree = "<group>"; };
 		0F469CEF200CFEC60042F1BF /* RMCloudLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudLinkCell.m; sourceTree = "<group>"; };
 		0F469CF0200CFEC60042F1BF /* RMCloudLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudLinkCell.xib; sourceTree = "<group>"; };
+		0F469CF5200DFBB60042F1BF /* RMCloudExpandable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudExpandable.h; sourceTree = "<group>"; };
 		0F4BB0B01EDB78F10072B7A3 /* XXTExplorerEntryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryParser.h; sourceTree = "<group>"; };
 		0F4BB0B11EDB78F10072B7A3 /* XXTExplorerEntryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryParser.m; sourceTree = "<group>"; };
 		0F4D59881F19E48A00CCA383 /* XXTExplorerEntryLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryLauncher.h; sourceTree = "<group>"; };
@@ -2994,6 +2995,7 @@
 				0F469CEE200CFEC60042F1BF /* RMCloudLinkCell.h */,
 				0F469CEF200CFEC60042F1BF /* RMCloudLinkCell.m */,
 				0F469CF0200CFEC60042F1BF /* RMCloudLinkCell.xib */,
+				0F469CF5200DFBB60042F1BF /* RMCloudExpandable.h */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
