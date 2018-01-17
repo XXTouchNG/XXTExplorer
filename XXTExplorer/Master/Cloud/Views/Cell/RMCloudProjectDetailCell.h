@@ -18,5 +18,6 @@ static NSString * const RMCloudProjectDetailCellReuseIdentifier = @"RMCloudProje
 @property (weak, nonatomic) IBOutlet UILabel *titleTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
 @property (weak, nonatomic) IBOutlet UIButton *downloadButton;
+@property (weak, nonatomic) IBOutlet UIView *additionalArea;
 
 @end

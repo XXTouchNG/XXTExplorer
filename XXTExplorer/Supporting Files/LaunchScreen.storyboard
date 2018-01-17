@@ -34,8 +34,8 @@
             <objects>
                 <navigationController id="A8E-mk-ZRk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="XXTExplorerTabbarIcon" id="Rwm-3N-h9z"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="vjv-fW-25E">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="vjv-fW-25E">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,7 +63,7 @@
                         <viewControllerLayoutGuide type="bottom" id="It2-jB-52v"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JDO-oQ-hjQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -82,7 +82,7 @@
                         <viewControllerLayoutGuide type="bottom" id="nMD-Nk-a77"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GZd-FD-I2s">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
@@ -101,7 +101,7 @@
                         <viewControllerLayoutGuide type="bottom" id="gQ1-1g-tJz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fTe-hu-Env">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
@@ -116,8 +116,8 @@
             <objects>
                 <navigationController id="mre-Ji-jkd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="RMCloudTabbarIcon" id="63x-gd-UFH"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="3Qf-26-cY4">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="3Qf-26-cY4">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -140,8 +140,8 @@
             <objects>
                 <navigationController id="BkR-Qj-wNG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="XXTEMoreTabbarIcon" id="FLF-IA-p6q"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="Ges-eq-684">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Ges-eq-684">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -162,7 +162,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RMCloudTabbarIcon" width="24" height="24"/>
+        <image name="RMCloudTabbarIcon" width="23" height="22"/>
         <image name="XXTEMoreTabbarIcon" width="24" height="24"/>
         <image name="XXTExplorerTabbarIcon" width="24" height="23"/>
     </resources>

@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f7H-u9-WAf">
-                        <rect key="frame" x="16" y="8" width="382" height="119.5"/>
+                        <rect key="frame" x="20" y="8" width="374" height="119.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WFu-Oh-EnK">
-                                <rect key="frame" x="0.0" y="0.0" width="382" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WFu-Oh-EnK">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -39,9 +40,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="f7H-u9-WAf" secondAttribute="bottom" constant="8" id="EQp-MI-Zib"/>
+                    <constraint firstItem="f7H-u9-WAf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="NcJ-VA-zUM"/>
                     <constraint firstItem="f7H-u9-WAf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="cck-NJ-kwn"/>
-                    <constraint firstItem="f7H-u9-WAf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ljV-kZ-NHm"/>
-                    <constraint firstAttribute="trailing" secondItem="f7H-u9-WAf" secondAttribute="trailing" constant="16" id="n7b-fR-oj4"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="f7H-u9-WAf" secondAttribute="trailing" id="qjw-QM-Oz0"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>

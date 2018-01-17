@@ -34,6 +34,8 @@
     #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
     #import "XXTExplorerDefaults.h"
+    #import "RMCloudNavigationController.h"
+    #import "RMCloudProjectViewController.h"
 #endif
 
 @implementation XXTEMasterViewController (Notifications)
@@ -356,11 +358,25 @@
         return YES;
     }
     else if ([jsonEvent isEqualToString:@"cloud"]) {
-        if (self.viewControllers.count >= kMasterViewControllerIndexCloud &&
-            self.selectedIndex != kMasterViewControllerIndexCloud)
+        if (self.viewControllers.count >= kMasterViewControllerIndexCloud)
         {
-            // switch to cloud
-            [self setSelectedIndex:kMasterViewControllerIndexCloud];
+            NSString *projectID = jsonDictionary[@"project"];
+            if ([projectID isKindOfClass:[NSString class]]) {
+                NSInteger numberID = [projectID integerValue];
+                if (numberID > 0) {
+                    RMCloudProjectViewController *projectController = [[RMCloudProjectViewController alloc] initWithProjectID:numberID];
+                    RMCloudNavigationController *navController = [[RMCloudNavigationController alloc] initWithRootViewController:projectController];
+                    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+                    navController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                    [self presentViewController:navController animated:YES completion:nil];
+                    return YES;
+                }
+            }
+            if (self.selectedIndex != kMasterViewControllerIndexCloud) {
+                // switch to cloud
+                [self setSelectedIndex:kMasterViewControllerIndexCloud];
+                return YES;
+            }
         }
         return YES;
     }

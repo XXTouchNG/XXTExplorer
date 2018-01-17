@@ -1452,6 +1452,7 @@
 		0F8811631FB6AF640004F20C /* XXTESegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESegmentedControl.h; sourceTree = "<group>"; };
 		0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedControl.m; sourceTree = "<group>"; };
 		0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = xml.tmLanguage; sourceTree = "<group>"; };
+		0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = XXTExplorer.entitlements; sourceTree = "<group>"; };
 		0F8ECD231FE7FE0800A5457C /* Mac Classic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Mac Classic.png"; sourceTree = "<group>"; };
 		0F8ECD251FE8016100A5457C /* Cobalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cobalt.png; sourceTree = "<group>"; };
 		0F8ECD271FE8016900A5457C /* Blackboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blackboard.png; sourceTree = "<group>"; };
@@ -1574,7 +1575,6 @@
 		0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEObjectViewController.m; sourceTree = "<group>"; };
 		0FB7B8A2200099D30047CE84 /* UIViewController+topMostViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+topMostViewController.h"; sourceTree = "<group>"; };
 		0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+topMostViewController.m"; sourceTree = "<group>"; };
-		0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XXTExplorer.entitlements; sourceTree = "<group>"; };
 		0FBAFF161F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentMenuDelegate.h"; sourceTree = "<group>"; };
 		0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UIDocumentMenuDelegate.m"; sourceTree = "<group>"; };
 		0FBAFF191F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentPickerDelegate.h"; sourceTree = "<group>"; };
@@ -2786,7 +2786,7 @@
 				0FA7ABEE1ED641A3003EAD7D /* main.m */,
 				0FC598A91FB2189A001F918B /* main.AppStore.m */,
 				D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */,
-				0FBAFF151F6E3CE8008B3189 /* XXTExplorer.entitlements */,
+				0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";

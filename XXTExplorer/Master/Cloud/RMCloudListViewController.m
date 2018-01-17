@@ -55,6 +55,10 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudProjectCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudProjectCellReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudMoreCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudMoreCellReuseIdentifier];
     [self.view addSubview:self.tableView];

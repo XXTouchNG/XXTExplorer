@@ -924,10 +924,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1496,9 +1496,6 @@
 
 /* No comment provided by engineer. */
 "Version" = "版本";
-
-/* No comment provided by engineer. */
-"Version: v%.2f" = "版本: v%.2f";
 
 /* No comment provided by engineer. */
 "View History" = "历史记录";

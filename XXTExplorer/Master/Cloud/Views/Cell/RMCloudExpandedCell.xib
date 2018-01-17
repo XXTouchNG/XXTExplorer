@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +27,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNW-ZN-tjY">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNW-ZN-tjY">
                         <rect key="frame" x="20" y="38" width="350" height="33"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="900" constant="21" id="8b0-06-Exh"/>
@@ -62,18 +63,18 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="osO-Mi-2B1" secondAttribute="bottom" id="Bag-so-PwC"/>
                     <constraint firstItem="alZ-ZX-sqj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Csk-I9-AsK"/>
-                    <constraint firstAttribute="trailing" secondItem="WNV-Ix-vQC" secondAttribute="trailing" constant="20" id="Dgy-MX-GZ8"/>
                     <constraint firstItem="WNV-Ix-vQC" firstAttribute="leading" secondItem="YNW-ZN-tjY" secondAttribute="trailing" constant="8" id="FUB-vq-8SO"/>
                     <constraint firstItem="WNV-Ix-vQC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Iqh-Oe-u3j"/>
                     <constraint firstItem="osO-Mi-2B1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Jof-AV-Arn"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WNV-Ix-vQC" secondAttribute="trailing" id="ZpE-5R-H65"/>
                     <constraint firstAttribute="trailing" secondItem="alZ-ZX-sqj" secondAttribute="trailing" id="bX7-hV-rcT"/>
-                    <constraint firstItem="YNW-ZN-tjY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="fhZ-Az-433"/>
+                    <constraint firstItem="YNW-ZN-tjY" firstAttribute="leading" secondItem="QQa-I8-Nn9" secondAttribute="leading" id="dL1-Pl-Bik"/>
+                    <constraint firstItem="QQa-I8-Nn9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="da9-xK-2SR"/>
                     <constraint firstAttribute="trailing" secondItem="osO-Mi-2B1" secondAttribute="trailing" id="oeI-Om-KF9"/>
                     <constraint firstItem="QQa-I8-Nn9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="qTR-Qf-kRp"/>
                     <constraint firstItem="alZ-ZX-sqj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tC0-v9-aCr"/>
                     <constraint firstAttribute="bottom" secondItem="YNW-ZN-tjY" secondAttribute="bottom" constant="13.5" id="ug6-VB-t5w"/>
                     <constraint firstItem="YNW-ZN-tjY" firstAttribute="top" secondItem="QQa-I8-Nn9" secondAttribute="bottom" constant="8" id="y5E-K3-Ffj"/>
-                    <constraint firstItem="QQa-I8-Nn9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="yD2-Le-2yh"/>
                     <constraint firstItem="YNW-ZN-tjY" firstAttribute="trailing" secondItem="QQa-I8-Nn9" secondAttribute="trailing" id="zn8-1M-g9E"/>
                 </constraints>
             </tableViewCellContentView>

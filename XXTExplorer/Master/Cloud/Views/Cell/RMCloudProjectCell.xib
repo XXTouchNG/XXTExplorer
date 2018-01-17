@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -69,9 +70,9 @@
                 <constraints>
                     <constraint firstItem="sxM-sy-edR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="5Xm-jm-FLC"/>
                     <constraint firstAttribute="bottom" secondItem="sxM-sy-edR" secondAttribute="bottom" constant="8" id="8JY-qW-bmY"/>
-                    <constraint firstItem="qpO-YA-vNw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="I0C-G2-Oi6"/>
+                    <constraint firstItem="qpO-YA-vNw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="I0C-G2-Oi6"/>
                     <constraint firstItem="c9A-Ar-sss" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VXE-46-laO"/>
-                    <constraint firstAttribute="trailing" secondItem="c9A-Ar-sss" secondAttribute="trailing" constant="20" id="dHF-gg-8rE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="c9A-Ar-sss" secondAttribute="trailing" id="dHF-gg-8rE"/>
                     <constraint firstItem="qpO-YA-vNw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ebx-D7-IbY"/>
                     <constraint firstItem="sxM-sy-edR" firstAttribute="leading" secondItem="qpO-YA-vNw" secondAttribute="trailing" constant="16" id="l6Z-Z4-xKD"/>
                     <constraint firstItem="c9A-Ar-sss" firstAttribute="leading" secondItem="sxM-sy-edR" secondAttribute="trailing" constant="8" id="vnu-f3-MwP"/>

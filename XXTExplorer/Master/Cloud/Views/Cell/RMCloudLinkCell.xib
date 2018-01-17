@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -54,12 +55,12 @@
                     <constraint firstAttribute="trailing" secondItem="j8I-vy-XQv" secondAttribute="trailing" id="GcN-pd-ng9"/>
                     <constraint firstItem="znd-PS-Zeq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="J2f-ZJ-LYz"/>
                     <constraint firstItem="boP-Ro-dVy" firstAttribute="leading" secondItem="qxa-fL-mBb" secondAttribute="trailing" constant="32" id="JrT-0g-UWo"/>
-                    <constraint firstAttribute="trailing" secondItem="boP-Ro-dVy" secondAttribute="trailing" constant="20" id="bAA-wF-HHS"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="boP-Ro-dVy" secondAttribute="trailing" id="bAA-wF-HHS"/>
                     <constraint firstItem="znd-PS-Zeq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k66-MS-9m5"/>
                     <constraint firstItem="j8I-vy-XQv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="mgr-aJ-d0Y"/>
                     <constraint firstItem="qxa-fL-mBb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uPR-Xp-wwG"/>
                     <constraint firstAttribute="trailing" secondItem="znd-PS-Zeq" secondAttribute="trailing" id="v6q-R8-8De"/>
-                    <constraint firstItem="qxa-fL-mBb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="wWZ-yS-hpO"/>
+                    <constraint firstItem="qxa-fL-mBb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="wWZ-yS-hpO"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="4096" minY="0.0" maxX="4096" maxY="0.0"/>

@@ -37,6 +37,12 @@
     [downloadBtn setTitle:NSLocalizedString(@"Download", nil) forState:UIControlStateNormal];
     [downloadBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [downloadBtn setBackgroundColor:XXTE_COLOR];
+    
+    if (XXTE_IS_IPHONE_6_BELOW || XXTE_IS_IPAD) {
+        self.additionalArea.hidden = YES;
+    } else {
+        self.additionalArea.hidden = NO;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -51,7 +57,7 @@
     _project = project;
     self.titleTextLabel.text = project.projectName;
     NSMutableString *descriptionString = [[NSMutableString alloc] init];
-    [descriptionString appendFormat:NSLocalizedString(@"Version: v%.2f", nil), project.projectVersion];
+    [descriptionString appendString:project.authorName];
     [descriptionString appendString:@"\n"];
     self.descriptionTextLabel.text = [descriptionString copy];
     NSURL *imageURL = [NSURL URLWithString:project.projectLogo];

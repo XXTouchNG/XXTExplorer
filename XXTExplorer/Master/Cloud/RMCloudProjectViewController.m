@@ -55,6 +55,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) BOOL trailTypeExpanded;
 @property (nonatomic, assign) BOOL contactStringExpanded;
 
+@property (nonatomic, strong) UIBarButtonItem *closeItem;
+
 @end
 
 @implementation RMCloudProjectViewController
@@ -71,10 +73,22 @@ typedef enum : NSUInteger {
     
 }
 
+- (BOOL)standAloneMode {
+    return [self.navigationController.viewControllers firstObject] == self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if ([self standAloneMode]) {
+        self.navigationItem.leftBarButtonItem = self.closeItem;
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudProjectDetailCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudProjectDetailCellReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudProjectDescriptionCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudProjectDescriptionCellReuseIdentifier];
@@ -113,6 +127,9 @@ XXTE_END_IGNORE_PARTIAL
     [RMProject projectWithID:self.projectID]
     .then(^ (RMProject *model) {
         self.project = model;
+        if (self.title.length <= 0) {
+            self.title = model.projectName;
+        }
         [self.tableView reloadData];
     })
     .catch(^ (NSError *error) {
@@ -195,6 +212,14 @@ XXTE_END_IGNORE_PARTIAL
         _expandedSizingCell = expandedSizingCell;
     }
     return _expandedSizingCell;
+}
+
+- (UIBarButtonItem *)closeItem {
+    if (!_closeItem) {
+        UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeItemTapped:)];
+        _closeItem = closeItem;
+    }
+    return _closeItem;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -602,6 +627,13 @@ XXTE_END_IGNORE_PARTIAL
     .finally(^() {
         blockInteractions(blockController, NO);
     });
+}
+
+- (void)closeItemTapped:(UIBarButtonItem *)sender {
+    if (XXTE_PAD) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Memory
