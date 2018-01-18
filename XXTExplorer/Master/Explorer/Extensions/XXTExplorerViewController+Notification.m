@@ -64,10 +64,9 @@
                         } else {
                             toastMessage(self, entryError.localizedDescription);
                         }
-                    }
-                    else
-                    {
-                        // select moved path
+                        
+                        [self scrollToCellEntryAtPath:movedPath];
+                    } else {
                         [self selectCellEntryAtPath:movedPath];
                     }
                 }
@@ -83,13 +82,28 @@
 
 #pragma mark - Select Moved Cell
 
-- (void)selectCellEntryAtPath:(NSString *)entryPath {
+- (void)scrollToCellEntryAtPath:(NSString *)entryPath shouldSelect:(BOOL)select {
+    UITableView *tableView = self.tableView;
     NSIndexPath *indexPath = [self indexPathForEntryAtPath:entryPath];
     if (indexPath != nil) {
-        [self setEditing:YES animated:YES];
-        [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        if (select) {
+            [self setEditing:YES animated:YES];
+            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        } else {
+            [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        }
     }
-    [self updateToolbarStatus];
+    if (select) {
+        [self updateToolbarStatus];
+    }
+}
+
+- (void)scrollToCellEntryAtPath:(NSString *)entryPath {
+    [self scrollToCellEntryAtPath:entryPath shouldSelect:NO];
+}
+
+- (void)selectCellEntryAtPath:(NSString *)entryPath {
+    [self scrollToCellEntryAtPath:entryPath shouldSelect:YES];
 }
 
 - (void)selectCellEntriesAtPaths:(NSArray <NSString *> *)entryPaths {

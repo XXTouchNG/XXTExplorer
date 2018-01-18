@@ -15,6 +15,7 @@
 #import "XXTENotificationCenterDefines.h"
 #import "UIControl+BlockTarget.h"
 #import "NSString+XQueryComponents.h"
+#import "XXTExplorerViewController+SharedInstance.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexSource = 0,
@@ -76,6 +77,11 @@ typedef enum : NSUInteger {
 - (instancetype)initWithSourceURL:(NSURL *)url targetPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         _sourceURL = url;
+        if (path.length == 0) {
+            NSString *initialPath = [XXTExplorerViewController initialPath];
+            NSString *initialName = [url lastPathComponent];
+            path = [initialPath stringByAppendingPathComponent:initialName];
+        }
         _targetPath = path;
         _temporarilyPath = [path stringByAppendingPathExtension:@"xxtdownload"];
         [self setup];
@@ -143,7 +149,7 @@ typedef enum : NSUInteger {
     staticSectionTitles = @[ NSLocalizedString(@"Source URL", nil),
                              NSLocalizedString(@"Target Path", nil)
                              ];
-    staticSectionFooters = @[ @"", NSLocalizedString(@"Please confirm these information.\n\nThe source is provided by third party script author.\nTap \"Download\" if you can make sure that the source is trusted.", nil) ];
+    staticSectionFooters = @[ @"", NSLocalizedString(@"Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page.\nTap \"Download\" if you can make sure that the source is trusted.", nil) ];
     
     XXTEMoreAddressCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell1.addressLabel.text = [self.sourceURL absoluteString];
@@ -719,22 +725,31 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    {
-        self.currentAlertView = nil;
-        LGAlertView *finishAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Finished", nil)
-                                                                  message:[NSString stringWithFormat:NSLocalizedString(@"Successfully saved to \"%@\"", nil), targetName]
-                                                                    style:LGAlertViewStyleActionSheet
-                                                             buttonTitles:@[ NSLocalizedString(@"Instant View / Run", nil), NSLocalizedString(@"Done", nil) ]
-                                                        cancelButtonTitle:nil
-                                                   destructiveButtonTitle:nil
-                                                                 delegate:self];
+    self.currentAlertView = nil;
+    NSString *instantTitle = NSLocalizedString(@"Instant View / Run", nil);
+    LGAlertView *finishAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Finished", nil)
+                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Successfully saved to \"%@\"", nil), targetName]
+                                                                style:LGAlertViewStyleActionSheet
+                                                         buttonTitles:@[ instantTitle, NSLocalizedString(@"Done", nil) ]
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                             delegate:self];
+    if (self.autoInstantView) {
+        if (alertView && alertView.isShowing) {
+            @weakify(self);
+            [alertView dismissAnimated:YES completionHandler:^{
+                @strongify(self);
+                [self alertView:finishAlertView clickedButtonAtIndex:0 title:instantTitle];
+            }];
+        }
+    } else {
         if (alertView && alertView.isShowing) {
             [alertView transitionToAlertView:finishAlertView];
         } else {
             [finishAlertView showAnimated];
         }
-        return;
     }
+    return;
 }
 
 #pragma mark - Memory

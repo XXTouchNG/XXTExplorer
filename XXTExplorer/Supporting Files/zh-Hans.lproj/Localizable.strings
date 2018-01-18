@@ -1044,7 +1044,7 @@
 "Plain Text (*.txt)" = "Plain Text (*.txt)";
 
 /* No comment provided by engineer. */
-"Please confirm these information.\n\nThe source is provided by third party script author.\nTap \"Download\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方脚本作者提供.\n如果你信任该数据源, 轻按 \"下载\" 以继续.";
+"Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page.\nTap \"Download\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方作者提供, 如果你遇到任何问题, 请通过前一页面下方的联系方式联系其作者解决.\n如果你信任该数据源, 轻按 \"下载\" 以继续.";
 
 /* No comment provided by engineer. */
 "Please download this image from iCloud." = "请从 iCloud 下载该图片.";

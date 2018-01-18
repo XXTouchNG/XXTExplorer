@@ -256,6 +256,7 @@ XXTE_END_IGNORE_PARTIAL
                 NSDictionary *internalArgs =
                 @{
                   @"url": downloadURL,
+                  @"instantView": @"true"
                   };
                 NSDictionary *userInfo =
                 @{XXTENotificationShortcutInterface: @"download",

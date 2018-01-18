@@ -9,6 +9,7 @@
 // supports single file, single thread download with progress bar and error handling.
 
 @property (nonatomic, assign) BOOL allowsAutoDetection;
+@property (nonatomic, assign) BOOL autoInstantView;
 - (instancetype)initWithSourceURL:(NSURL *)url targetPath:(NSString *)path;
 
 @end

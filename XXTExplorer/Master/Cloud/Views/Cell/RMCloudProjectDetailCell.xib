@@ -64,6 +64,16 @@
                             <constraint firstAttribute="trailing" secondItem="Bf0-yF-M9a" secondAttribute="trailing" id="e3X-vq-xjI"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-QB-ns7">
+                        <rect key="frame" x="253.5" y="118" width="28" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="B86-zU-aOa"/>
+                            <constraint firstAttribute="height" constant="28" id="Uwz-M9-Wkr"/>
+                        </constraints>
+                        <state key="normal" image="RMCloudButtonMorew">
+                            <color key="titleColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="aJv-Bq-8O2" firstAttribute="top" secondItem="Kdy-Py-VHr" secondAttribute="bottom" constant="4" id="BfG-cU-dtu"/>
@@ -73,9 +83,11 @@
                     <constraint firstAttribute="trailingMargin" secondItem="Kdy-Py-VHr" secondAttribute="trailing" id="UN3-nh-9iV"/>
                     <constraint firstItem="g2o-Bd-Ner" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Yk3-tZ-IUv"/>
                     <constraint firstItem="zTI-Xz-U8U" firstAttribute="top" secondItem="aJv-Bq-8O2" secondAttribute="bottom" constant="4" id="YkP-Wt-OkI"/>
+                    <constraint firstItem="dtB-QB-ns7" firstAttribute="bottom" secondItem="zTI-Xz-U8U" secondAttribute="bottom" id="a9R-MJ-c5g"/>
                     <constraint firstItem="aJv-Bq-8O2" firstAttribute="trailing" secondItem="Kdy-Py-VHr" secondAttribute="trailing" id="aBT-5D-rtB"/>
                     <constraint firstItem="Kdy-Py-VHr" firstAttribute="leading" secondItem="g2o-Bd-Ner" secondAttribute="trailing" constant="16" id="bdX-jy-0Vz"/>
                     <constraint firstAttribute="bottom" secondItem="g2o-Bd-Ner" secondAttribute="bottom" priority="900" constant="20" id="cgt-aW-Or0"/>
+                    <constraint firstItem="dtB-QB-ns7" firstAttribute="leading" secondItem="zTI-Xz-U8U" secondAttribute="trailing" constant="16" id="dqH-ZW-tEE"/>
                     <constraint firstItem="g2o-Bd-Ner" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="ezE-0R-OWX"/>
                     <constraint firstItem="g2o-Bd-Ner" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="hEb-M6-oPK"/>
                     <constraint firstItem="zTI-Xz-U8U" firstAttribute="leading" secondItem="Kdy-Py-VHr" secondAttribute="leading" id="lKf-Ta-qAz"/>
@@ -93,4 +105,7 @@
             <point key="canvasLocation" x="36" y="79"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="RMCloudButtonMorew" width="28" height="28"/>
+    </resources>
 </document>

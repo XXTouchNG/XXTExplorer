@@ -311,6 +311,11 @@
             targetFullPath = [topmostExplorerViewController.entryPath stringByAppendingPathComponent:targetPath];
         }
         NSString *targetFixedPath = [targetFullPath stringByRemovingPercentEncoding];
+        
+        BOOL autoInstantRun = NO;
+        if ([jsonDictionary[@"instantView"] isKindOfClass:[NSString class]]) {
+            autoInstantRun = [jsonDictionary[@"instantView"] isEqualToString:@"true"];
+        }
         UIViewController *blockVC = blockInteractions(self, YES);
         @weakify(self);
         void (^ completionBlock)(void) = ^() {
@@ -318,6 +323,7 @@
             blockInteractions(blockVC, NO);
             XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:targetFixedPath];
             downloadController.allowsAutoDetection = targetAutoDetection;
+            downloadController.autoInstantView = autoInstantRun;
             XXTENavigationController *downloadNavigationController = [[XXTENavigationController alloc] initWithRootViewController:downloadController];
             downloadNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             downloadNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

@@ -19,6 +19,7 @@
 
 #import "XXTENotificationCenterDefines.h"
 #import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTEDownloadViewController.h"
 
 typedef enum : NSUInteger {
     RMCloudDetailSectionHeader = 0,
@@ -610,14 +611,22 @@ XXTE_END_IGNORE_PARTIAL
             NSString *scheme = sourceURL.scheme;
             if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
             {
-                NSDictionary *internalArgs =
-                @{
-                  @"url": downloadURL,
-                  };
-                NSDictionary *userInfo =
-                @{XXTENotificationShortcutInterface: @"download",
-                  XXTENotificationShortcutUserData: internalArgs};
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
+                if ([self standAloneMode]) {
+                    XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:nil];
+                    downloadController.allowsAutoDetection = YES;
+                    downloadController.autoInstantView = YES;
+                    [self.navigationController pushViewController:downloadController animated:YES];
+                } else {
+                    NSDictionary *internalArgs =
+                    @{
+                      @"url": downloadURL,
+                      @"instantView": @"true"
+                      };
+                    NSDictionary *userInfo =
+                    @{XXTENotificationShortcutInterface: @"download",
+                      XXTENotificationShortcutUserData: internalArgs};
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
+                }
             }
         }
     })

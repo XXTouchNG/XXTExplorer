@@ -13,6 +13,7 @@
 - (void)registerNotifications;
 - (void)removeNotifications;
 
+- (void)scrollToCellEntryAtPath:(NSString *)entryPath;
 - (void)selectCellEntryAtPath:(NSString *)entryPath;
 - (void)selectCellEntriesAtPaths:(NSArray <NSString *> *)entryPaths;
 

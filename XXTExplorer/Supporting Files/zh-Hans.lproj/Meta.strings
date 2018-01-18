@@ -19,7 +19,7 @@
 "MinimumXXTVersion" = "最低 XXTouch 版本";
 "SupportedResolutions" = "支持的分辨率";
 "SupportedDeviceTypes" = "支持的设备类型";
-"PackageControl" = "软件包控制";
+"PackageControl" = "版权信息";
 "AuthorName" = "作者";
 "AuthorEmail" = "邮箱";
 "Description" = "描述";
