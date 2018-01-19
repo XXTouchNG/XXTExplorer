@@ -22,6 +22,10 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTEDownloadViewController.h"
 
+#import "XXTEAppDefines.h"
+#import "XXTENetworkDefines.h"
+#import <LGAlertView/LGAlertView.h>
+
 typedef enum : NSUInteger {
     RMCloudDetailSectionHeader = 0,
     RMCloudDetailSectionDescription,
@@ -39,7 +43,7 @@ typedef enum : NSUInteger {
     RMCloudInformationRowMax
 } RMCloudInformationRow;
 
-@interface RMCloudProjectViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface RMCloudProjectViewController () <UITableViewDelegate, UITableViewDataSource, LGAlertViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -528,6 +532,11 @@ XXTE_END_IGNORE_PARTIAL
                         copyBlock(detailText);
                     }
                 }
+            } else {
+                if (indexPath.row == RMCloudInformationRowBuy) {
+                    LGAlertView *buyAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Redirect Confirm", nil) message:NSLocalizedString(@"You will be redirected to the page hosted by RuanMao Cloud.\nFollow that page to finish your order.", nil) style:LGAlertViewStyleAlert buttonTitles:@[ ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Continue", nil) delegate:self];
+                    [buyAlert showAnimated];
+                }
             }
         }
     }
@@ -677,6 +686,68 @@ XXTE_END_IGNORE_PARTIAL
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Actions
+
+- (void)buyAction {
+    RMProject *project = self.project;
+    if (project.applicationID.length > 0) {
+        NSDictionary *urlMappingDict =
+        @{ @"devsn": @"sn",
+           @"zeversion": @"zeversion",
+           @"sysversion": @"sysversion",
+           @"devname": @"devname",
+           @"devmac": @"devmac",
+           @"deviceid": @"udid",
+           @"devtype": @"devtype",
+           };
+        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+        [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
+        .then(convertJsonString)
+        .then(^(NSDictionary *jsonDictionary) {
+            NSDictionary *dataDictionary = jsonDictionary[@"data"];
+            if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
+                NSMutableDictionary *urlDict = [[NSMutableDictionary alloc] init];
+                for (NSString *dataKey in dataDictionary) {
+                    NSString *dataValue = dataDictionary[dataKey];
+                    NSString *mappedKey = urlMappingDict[dataKey];
+                    urlDict[mappedKey] = dataValue;
+                }
+                urlDict[@"appid"] = project.applicationID;
+                NSString *buyURLString = RMBuyUrl([urlDict copy]);
+                NSURL *buyURL = [NSURL URLWithString:buyURLString];
+                UIApplication *sharedApplication = [UIApplication sharedApplication];
+                if ([sharedApplication canOpenURL:buyURL]) {
+                    [sharedApplication openURL:buyURL];
+                }
+            }
+        })
+        .catch(^(NSError *serverError) {
+            if (serverError.code == -1004) {
+                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
+            } else {
+                toastMessage(self, [serverError localizedDescription]);
+            }
+        })
+        .finally(^() {
+            blockInteractions(blockVC, NO);
+        });
+    }
+}
+
+#pragma mark - LGAlertViewDelegate
+
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+}
+
+- (void)alertViewDestructed:(LGAlertView *)alertView {
+    @weakify(self);
+    [alertView dismissAnimated:YES completionHandler:^{
+        @strongify(self);
+        [self buyAction];
+    }];
 }
 
 #pragma mark - Memory

@@ -29,8 +29,7 @@
     iconImageView.layer.cornerRadius = 18.f;
     
     UIButton *downloadBtn = self.downloadButton;
-    downloadBtn.layer.borderColor = XXTE_COLOR.CGColor;
-    downloadBtn.layer.borderWidth = .5f;
+    downloadBtn.layer.masksToBounds = YES;
     downloadBtn.layer.cornerRadius = 14.f;
     
     downloadBtn.showsTouchWhenHighlighted = YES;

@@ -36,6 +36,7 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
 
 @implementation RMCloudListViewController {
     BOOL _isRequesting;
+    BOOL _firstLoaded;
     NSUInteger _currentPage;
 }
 
@@ -50,6 +51,7 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
     _projects = [[NSMutableArray alloc] init];
     _isRequesting = NO;
     _currentPage = 0;
+    _firstLoaded = NO;
 }
 
 - (void)viewDidLoad {
@@ -121,13 +123,16 @@ XXTE_END_IGNORE_PARTIAL
             [self.projects addObjectsFromArray:models];
             [self.tableView reloadData];
             _currentPage = _currentPage + 1;
+            _firstLoaded = YES;
         }
     })
     .catch(^ (NSError *error) {
         toastMessage(self, error.localizedDescription);
         if (error) {
-            self.tableView.hidden = YES;
-            self.comingSoonView.hidden = NO;
+            if (NO == _firstLoaded) {
+                self.tableView.hidden = YES;
+                self.comingSoonView.hidden = NO;
+            }
         }
     })
     .finally(^ () {

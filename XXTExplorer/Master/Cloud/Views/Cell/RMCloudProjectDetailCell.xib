@@ -37,13 +37,13 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTI-Xz-U8U">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTI-Xz-U8U">
                         <rect key="frame" x="153.5" y="118" width="84" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="84" id="5u1-fK-xcV"/>
                             <constraint firstAttribute="height" constant="28" id="fWX-uR-a6Y"/>
                         </constraints>
-                        <state key="normal" title="Download">
+                        <state key="normal" title="Download" backgroundImage="RMCloudDownloadButton">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -64,7 +64,7 @@
                             <constraint firstAttribute="trailing" secondItem="Bf0-yF-M9a" secondAttribute="trailing" id="e3X-vq-xjI"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-QB-ns7">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-QB-ns7">
                         <rect key="frame" x="253.5" y="118" width="28" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="B86-zU-aOa"/>
@@ -107,5 +107,6 @@
     </objects>
     <resources>
         <image name="RMCloudButtonMorew" width="28" height="28"/>
+        <image name="RMCloudDownloadButton" width="84" height="28"/>
     </resources>
 </document>

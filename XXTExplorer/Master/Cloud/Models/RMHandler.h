@@ -13,10 +13,14 @@
 #import "NSString+XQueryComponents.h"
 #import "XXTEAppDefines.h"
 
-static NSString * const RMApiBaseUrlKey = @"RMCLOUD_API";
-static NSString * const RMApiBaseDebugUrlKey = @"RMCLOUD_DEBUG_API";
+static NSString * const RMApiBaseScheme = @"RMCLOUD_SCHEME";
+static NSString * const RMApiBaseHostKey = @"RMCLOUD_HOST";
+static NSString * const RMApiBaseDebugHostKey = @"RMCLOUD_DEBUG_HOST";
+static NSString * const RMApiBaseOpenPath = @"RMCLOUD_OPENAPI";
 static NSString * const RMApiBaseTokenKey = @"RMCLOUD_TOKEN";
 static NSString * const RMApiBasePlatformIDKey = @"RMCLOUD_PLATFORM";
+
+static NSString * const RMApiBuyPath = @"RMCLOUD_API_BUY";
 
 typedef NSString * RMApiAction;
 typedef NSDictionary * RMArguments;
@@ -25,9 +29,18 @@ static inline NSString *RMApiUrl(RMApiAction action, RMArguments args) {
     if (action.length == 0) return nil;
     NSString *argString = [args stringFromQueryComponents];
 #ifdef DEBUG
-    return [NSString stringWithFormat:@"%@/%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseDebugUrlKey), action, uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
+    return [NSString stringWithFormat:@"%@://%@%@/%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseScheme), uAppDefine(RMApiBaseDebugHostKey), uAppDefine(RMApiBaseOpenPath), action, uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
 #else
-    return [NSString stringWithFormat:@"%@/%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseUrlKey), action, uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
+    return [NSString stringWithFormat:@"%@://%@%@/%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseScheme), uAppDefine(RMApiBaseHostKey), uAppDefine(RMApiBaseOpenPath), action, uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
+#endif
+}
+
+static inline NSString *RMBuyUrl(RMArguments args) {
+    NSString *argString = [args stringFromQueryComponents];
+#ifdef DEBUG
+    return [NSString stringWithFormat:@"%@://%@%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseScheme), uAppDefine(RMApiBaseDebugHostKey), uAppDefine(RMApiBuyPath), uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
+#else
+    return [NSString stringWithFormat:@"%@://%@%@/?authtoken=%@&pid=%@&%@", uAppDefine(RMApiBaseScheme), uAppDefine(RMApiBaseHostKey), uAppDefine(RMApiBuyPath), uAppDefine(RMApiBaseTokenKey), uAppDefine(RMApiBasePlatformIDKey), argString];
 #endif
 }
 

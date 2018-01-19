@@ -18,14 +18,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="67.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9A-Ar-sss">
-                        <rect key="frame" x="310" y="20" width="84" height="28"/>
+                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9A-Ar-sss">
+                        <rect key="frame" x="361" y="22" width="33" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="28" id="HnN-bt-btM"/>
-                            <constraint firstAttribute="width" constant="84" id="eUw-ba-JCt"/>
+                            <constraint firstAttribute="height" constant="24" id="HnN-bt-btM"/>
+                            <constraint firstAttribute="width" constant="33" id="eUw-ba-JCt"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="Download"/>
+                        <state key="normal" title="Download" image="RMCloudDownload"/>
+                        <state key="highlighted" image="RMCloudDownload"/>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qpO-YA-vNw" customClass="YYAnimatedImageView">
                         <rect key="frame" x="20" y="14" width="40" height="40"/>
@@ -35,10 +35,10 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sxM-sy-edR">
-                        <rect key="frame" x="76" y="8" width="226" height="51.5"/>
+                        <rect key="frame" x="76" y="8" width="277" height="51.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Item Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9E-hk-3bO">
-                                <rect key="frame" x="0.0" y="0.0" width="226" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="277" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="xwX-Uf-Mgn"/>
                                 </constraints>
@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, world!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-nh-Lu4">
-                                <rect key="frame" x="0.0" y="30" width="226" height="14.5"/>
+                                <rect key="frame" x="0.0" y="30" width="277" height="14.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14.5" id="kml-db-o3U"/>
                                 </constraints>
@@ -87,4 +87,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="RMCloudDownload" width="35" height="25"/>
+    </resources>
 </document>

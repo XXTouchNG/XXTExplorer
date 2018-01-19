@@ -18,6 +18,7 @@ typedef enum : NSUInteger {
 
 @interface RMProject : RMModel
 
+@property (nonatomic, copy) NSString *applicationID;
 @property (nonatomic, assign) NSUInteger projectID;
 @property (nonatomic, copy) NSString *projectName;
 @property (nonatomic, copy) NSString *projectLogo;

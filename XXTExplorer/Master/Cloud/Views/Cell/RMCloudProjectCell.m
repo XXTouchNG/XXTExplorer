@@ -40,10 +40,6 @@
     self.descriptionTextLabel.text = NSLocalizedString(@"No description.", nil);
     
     UIButton *downloadBtn = self.downloadButton;
-    downloadBtn.layer.borderColor = XXTE_COLOR.CGColor;
-    downloadBtn.layer.borderWidth = .5f;
-    downloadBtn.layer.cornerRadius = 14.f;
-    
     downloadBtn.showsTouchWhenHighlighted = YES;
     [downloadBtn setTitle:NSLocalizedString(@"Download", nil) forState:UIControlStateNormal];
     

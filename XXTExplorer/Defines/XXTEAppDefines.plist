@@ -89,12 +89,18 @@
 	</array>
 	<key>RESPRING_CHECK_PATH</key>
 	<string>/private/var/tmp/1ferver_need_respring</string>
-	<key>RMCLOUD_API</key>
-	<string>http://auth.mall-software.net/api/OpenAPI</string>
-	<key>RMCLOUD_DEBUG_API</key>
-	<string>http://application.mall-software.net/api/OpenAPI</string>
+	<key>RMCLOUD_API_BUY</key>
+	<string>/Open/Insourcing</string>
+	<key>RMCLOUD_DEBUG_HOST</key>
+	<string>application.mall-software.net</string>
+	<key>RMCLOUD_HOST</key>
+	<string>auth.mall-software.net</string>
+	<key>RMCLOUD_OPENAPI</key>
+	<string>/api/OpenAPI</string>
 	<key>RMCLOUD_PLATFORM</key>
 	<string>2</string>
+	<key>RMCLOUD_SCHEME</key>
+	<string>http</string>
 	<key>RMCLOUD_TOKEN</key>
 	<string>3487C956F68D360C</string>
 	<key>UPDATE_API</key>

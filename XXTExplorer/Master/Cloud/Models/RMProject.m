@@ -25,6 +25,7 @@
                                                                   @"projectRemark": @"Remark",
                                                                   @"trailType": @"TrailType",
                                                                   @"contactString": @"Contact",
+                                                                  @"applicationID": @"AppID",
                                                                   }];
 }
 
@@ -40,6 +41,7 @@
     @"projectRemark",
     @"trailType",
     @"contactString",
+    @"applicationID",
     ];
     if ([optionalProperty containsObject:propertyName])
         return YES;
