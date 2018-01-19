@@ -51,6 +51,7 @@
     NSArray <NSString *> *ignoredProperty =
     @[
       @"localizedTrailDescription",
+      @"createdAtNSDate",
       ];
     if ([ignoredProperty containsObject:propertyName])
         return YES;
@@ -102,6 +103,26 @@
     } else {
         return NSLocalizedString(@"Yes", nil);
     }
+}
+
++ (NSDateFormatter *)sharedFormatter {
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (!formatter) {
+            formatter = [[NSDateFormatter alloc] init];
+            [formatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
+            [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+        }
+    });
+    return formatter;
+}
+
+- (NSDate *)createdAtNSDate {
+    if (!self.createdAt) {
+        return nil;
+    }
+    return [[[self class] sharedFormatter] dateFromString:self.createdAt];
 }
 
 @end

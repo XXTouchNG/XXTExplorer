@@ -60,7 +60,7 @@ typedef enum : NSUInteger {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
             [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-            [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+            [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
             dateFormatter;
         });
     }

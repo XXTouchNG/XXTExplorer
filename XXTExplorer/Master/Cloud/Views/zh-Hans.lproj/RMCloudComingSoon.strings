@@ -1,0 +1,6 @@
+
+/* Class = "UILabel"; text = "We'll be back."; ObjectID = "N6f-Lz-Yum"; */
+"N6f-Lz-Yum.text" = "请稍候";
+
+/* Class = "UILabel"; text = "We're busy updating our service \nfor you and will be back soon."; ObjectID = "d2j-uL-16q"; */
+"d2j-uL-16q.text" = "服务器似乎开小差了, \n我们正在努力恢复服务.";

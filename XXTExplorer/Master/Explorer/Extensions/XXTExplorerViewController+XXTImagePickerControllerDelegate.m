@@ -83,7 +83,7 @@
                 {
                     [self.tableView reloadData];
                 }
-                [self selectCellEntriesAtPaths:importedPaths];
+                [self selectCellEntriesAtPaths:importedPaths animated:NO];
                 blockInteractions(blockVC, NO);
             });
         });

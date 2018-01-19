@@ -24,6 +24,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy) NSString *authorName;
 @property (nonatomic, assign) float projectVersion;
 @property (nonatomic, copy) NSString *createdAt;
+@property (nonatomic, strong) NSDate *createdAtNSDate;
 @property (nonatomic, assign) NSUInteger deviceCount;
 @property (nonatomic, assign) float averageRating;
 @property (nonatomic, assign) NSUInteger downloadTimes;

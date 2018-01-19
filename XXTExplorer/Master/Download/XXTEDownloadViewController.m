@@ -736,11 +736,8 @@ typedef enum : NSUInteger {
                                                              delegate:self];
     if (self.autoInstantView) {
         if (alertView && alertView.isShowing) {
-            @weakify(self);
-            [alertView dismissAnimated:YES completionHandler:^{
-                @strongify(self);
-                [self alertView:finishAlertView clickedButtonAtIndex:0 title:instantTitle];
-            }];
+            [self alertView:finishAlertView clickedButtonAtIndex:0 title:instantTitle];
+            [alertView dismissAnimated:YES completionHandler:nil];
         }
     } else {
         if (alertView && alertView.isShowing) {

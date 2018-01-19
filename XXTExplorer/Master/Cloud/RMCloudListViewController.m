@@ -12,6 +12,7 @@
 #import "RMCloudMoreCell.h"
 #import "RMCloudProjectViewController.h"
 #import "RMCloudLoadingView.h"
+#import "RMCloudComingSoon.h"
 
 #import "XXTENotificationCenterDefines.h"
 
@@ -29,6 +30,7 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSMutableArray <RMProject *> *projects;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
+@property (nonatomic, strong) RMCloudComingSoon *comingSoonView;
 
 @end
 
@@ -54,6 +56,7 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.comingSoonView];
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
@@ -85,17 +88,30 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Fetch Database
 
+- (void)retryInitialLoading:(UIGestureRecognizer *)sender {
+    [self.comingSoonView setHidden:YES];
+    [self.tableView setHidden:NO];
+    [self.pawAnimation setHidden:NO];
+    [self loadInitialProjects:self.refreshControl];
+}
+
 - (void)loadInitialProjects:(UIRefreshControl *)refreshControl {
     if (_isRequesting) {
+        if ([refreshControl isRefreshing]) {
+            [refreshControl endRefreshing];
+        }
         return;
     }
     _currentPage = 0;
     [self.projects removeAllObjects];
-    [self loadMoreProjests:refreshControl];
+    [self loadMoreProjects:refreshControl];
 }
 
-- (void)loadMoreProjests:(UIRefreshControl *)refreshControl {
+- (void)loadMoreProjects:(UIRefreshControl *)refreshControl {
     if (_isRequesting) {
+        if ([refreshControl isRefreshing]) {
+            [refreshControl endRefreshing];
+        }
         return;
     }
     _isRequesting = YES;
@@ -109,13 +125,17 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^ (NSError *error) {
         toastMessage(self, error.localizedDescription);
+        if (error) {
+            self.tableView.hidden = YES;
+            self.comingSoonView.hidden = NO;
+        }
     })
     .finally(^ () {
         if ([refreshControl isRefreshing]) {
             [refreshControl endRefreshing];
         }
         _isRequesting = NO;
-        self.pawAnimation.hidden = YES;
+        [self.pawAnimation setHidden:YES];
     });
 }
 
@@ -157,6 +177,19 @@ XXTE_END_IGNORE_PARTIAL
         _pawAnimation = pawAnimation;
     }
     return _pawAnimation;
+}
+
+- (RMCloudComingSoon *)comingSoonView {
+    if (!_comingSoonView) {
+        RMCloudComingSoon *comingSoonView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudComingSoon class]) owner:nil options:nil] lastObject];
+        comingSoonView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
+        comingSoonView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        comingSoonView.hidden = YES;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retryInitialLoading:)];
+        [comingSoonView addGestureRecognizer:tapGesture];
+        _comingSoonView = comingSoonView;
+    }
+    return _comingSoonView;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -234,7 +267,7 @@ XXTE_END_IGNORE_PARTIAL
         controller.title = project.projectName;
         [self.navigationController pushViewController:controller animated:YES];
     } else if (indexPath.section == RMCloudListSectionMore) {
-        [self loadMoreProjests:nil];
+        [self loadMoreProjects:nil];
     }
 }
 

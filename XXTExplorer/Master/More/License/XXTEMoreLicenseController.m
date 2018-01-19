@@ -625,7 +625,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
         NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
@@ -740,7 +740,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
         [dateFormatter setDateFormat:@"yyyy-MM-dd\nHH:mm:ss"];
         
         NSString *expirationDateString = [dateFormatter stringFromDate:expirationDate];
@@ -814,7 +814,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSString *nowDateString = [dateFormatter stringFromDate:nowDate];

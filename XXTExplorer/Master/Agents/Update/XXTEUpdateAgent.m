@@ -35,7 +35,7 @@ static NSString * const XXTEUpdateAgentIgnoreDatePrefix = @"Date %@"; // +dateSt
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.timeStyle = NSDateFormatterNoStyle;
         dateFormatter.dateStyle = NSDateFormatterShortStyle;
-        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
         _dateFormatter = dateFormatter;
     }
     return self;

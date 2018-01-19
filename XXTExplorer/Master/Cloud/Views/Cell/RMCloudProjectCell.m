@@ -15,6 +15,19 @@
 
 @implementation RMCloudProjectCell
 
++ (NSDateFormatter *)sharedFormatter {
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (!formatter) {
+            formatter = [[NSDateFormatter alloc] init];
+            [formatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+        }
+    });
+    return formatter;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -48,11 +61,7 @@
 - (void)setProject:(RMProject *)project {
     _project = project;
     self.titleTextLabel.text = project.projectName;
-    if (project.projectRemark.length > 0) {
-        self.descriptionTextLabel.text = project.projectRemark;
-    } else {
-        self.descriptionTextLabel.text = NSLocalizedString(@"No description.", nil);
-    }
+    self.descriptionTextLabel.text = [NSString stringWithFormat:@"v%.2f | %@ | %@", project.projectVersion, [[[self class] sharedFormatter] stringFromDate:project.createdAtNSDate], project.authorName];
     NSURL *imageURL = [NSURL URLWithString:project.projectLogo];
     if (imageURL) {
         [self.iconImageView yy_setImageWithURL:imageURL options:YYWebImageOptionProgressive | YYWebImageOptionShowNetworkActivity];

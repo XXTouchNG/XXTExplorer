@@ -24,7 +24,7 @@ def shared_pods
     # pod 'Masonry', '~> 1.0.2', :inhibit_warnings => true
     pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true
 
-    pod 'XXShield', :inhibit_warnings => true
+    # pod 'XXShield', :inhibit_warnings => true
     pod 'Bugly', :inhibit_warnings => true
 end
 

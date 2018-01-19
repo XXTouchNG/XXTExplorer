@@ -38,17 +38,21 @@
         [self loadEntryListData];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
         if (controller.editImmediately) {
-            NSError *entryError = nil;
-            NSDictionary *entryAttributes = [[self.class explorerEntryParser] entryOfPath:path withError:&entryError];
-            if (!entryError) {
-                [self performUnchangedButtonAction:@"Edit" forEntry:entryAttributes];
-            } else {
-                toastMessage(self, entryError.localizedDescription);
+            if (path) {
+                NSError *entryError = nil;
+                NSDictionary *entryAttributes = [[self.class explorerEntryParser] entryOfPath:path withError:&entryError];
+                if (!entryError) {
+                    [self performUnchangedButtonAction:@"Edit" forEntry:entryAttributes];
+                } else {
+                    toastMessage(self, entryError.localizedDescription);
+                }
+                [self.tableView reloadData];
+                [self selectCellEntryAtPath:path animated:NO];
             }
         } else {
             if (path) {
                 [self.tableView reloadData];
-                [self selectCellEntryAtPath:path];
+                [self selectCellEntryAtPath:path animated:YES];
             }
         }
         blockInteractions(blockController, NO);

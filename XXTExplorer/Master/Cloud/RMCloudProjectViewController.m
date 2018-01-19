@@ -11,6 +11,7 @@
 #import "RMCloudProjectDescriptionCell.h"
 #import "RMProject.h"
 #import "RMCloudLoadingView.h"
+#import "RMCloudComingSoon.h"
 
 #import "XXTEUserInterfaceDefines.h"
 #import "RMCloudExpandableCell.h"
@@ -49,6 +50,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) RMProject *project;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
+@property (nonatomic, strong) RMCloudComingSoon *comingSoonView;
 
 @property (nonatomic, assign) BOOL authorNameExpanded;
 @property (nonatomic, assign) BOOL projectVersionExpanded;
@@ -60,7 +62,9 @@ typedef enum : NSUInteger {
 
 @end
 
-@implementation RMCloudProjectViewController
+@implementation RMCloudProjectViewController {
+    BOOL _isRequesting;
+}
 
 - (instancetype)initWithProjectID:(NSUInteger)projectID {
     if (self = [super init]) {
@@ -71,7 +75,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    
+    _isRequesting = NO;
 }
 
 - (BOOL)standAloneMode {
@@ -82,6 +86,7 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.comingSoonView];
     
     if ([self standAloneMode]) {
         self.navigationItem.leftBarButtonItem = self.closeItem;
@@ -124,7 +129,18 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Request
 
+- (void)retryInitialLoading:(UIGestureRecognizer *)sender {
+    [self.comingSoonView setHidden:YES];
+    [self.tableView setHidden:NO];
+    [self.pawAnimation setHidden:NO];
+    [self loadProjectDetail];
+}
+
 - (void)loadProjectDetail {
+    if (_isRequesting) {
+        return;
+    }
+    _isRequesting = YES;
     [RMProject projectWithID:self.projectID]
     .then(^ (RMProject *model) {
         self.project = model;
@@ -135,9 +151,14 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^ (NSError *error) {
         toastMessage(self, error.localizedDescription);
+        if (error) {
+            self.tableView.hidden = YES;
+            self.comingSoonView.hidden = NO;
+        }
     })
     .finally(^ () {
-        self.pawAnimation.hidden = YES;
+        _isRequesting = NO;
+        [self.pawAnimation setHidden:YES];
     });
 }
 
@@ -221,6 +242,19 @@ XXTE_END_IGNORE_PARTIAL
         _closeItem = closeItem;
     }
     return _closeItem;
+}
+
+- (RMCloudComingSoon *)comingSoonView {
+    if (!_comingSoonView) {
+        RMCloudComingSoon *comingSoonView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudComingSoon class]) owner:nil options:nil] lastObject];
+        comingSoonView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
+        comingSoonView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        comingSoonView.hidden = YES;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retryInitialLoading:)];
+        [comingSoonView addGestureRecognizer:tapGesture];
+        _comingSoonView = comingSoonView;
+    }
+    return _comingSoonView;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource

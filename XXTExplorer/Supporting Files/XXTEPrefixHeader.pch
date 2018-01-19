@@ -12,6 +12,8 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
+#define XXTE_STANDARD_LOCALE @"en_US_POSIX"
+
 #define XXTE_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"") _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
 #define XXTE_END_IGNORE_PARTIAL _Pragma("clang diagnostic pop")
 
