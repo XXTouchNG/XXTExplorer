@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-I8-Nn9">
-                        <rect key="frame" x="20" y="13" width="350" height="17"/>
+                        <rect key="frame" x="28" y="13" width="334" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="mp0-na-Zgl"/>
                         </constraints>
@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNW-ZN-tjY">
-                        <rect key="frame" x="20" y="38" width="350" height="33"/>
+                        <rect key="frame" x="28" y="38" width="334" height="33"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="900" constant="21" id="8b0-06-Exh"/>
                         </constraints>
@@ -53,7 +53,7 @@
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTEAddressPasteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WNV-Ix-vQC">
-                        <rect key="frame" x="378" y="34" width="16" height="16"/>
+                        <rect key="frame" x="370" y="34" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="NAE-I8-Axg"/>
                             <constraint firstAttribute="height" constant="16" id="mY4-wx-SVe"/>
@@ -66,10 +66,10 @@
                     <constraint firstItem="WNV-Ix-vQC" firstAttribute="leading" secondItem="YNW-ZN-tjY" secondAttribute="trailing" constant="8" id="FUB-vq-8SO"/>
                     <constraint firstItem="WNV-Ix-vQC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Iqh-Oe-u3j"/>
                     <constraint firstItem="osO-Mi-2B1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Jof-AV-Arn"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="WNV-Ix-vQC" secondAttribute="trailing" id="ZpE-5R-H65"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WNV-Ix-vQC" secondAttribute="trailing" constant="8" id="ZpE-5R-H65"/>
                     <constraint firstAttribute="trailing" secondItem="alZ-ZX-sqj" secondAttribute="trailing" id="bX7-hV-rcT"/>
                     <constraint firstItem="YNW-ZN-tjY" firstAttribute="leading" secondItem="QQa-I8-Nn9" secondAttribute="leading" id="dL1-Pl-Bik"/>
-                    <constraint firstItem="QQa-I8-Nn9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="da9-xK-2SR"/>
+                    <constraint firstItem="QQa-I8-Nn9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="da9-xK-2SR"/>
                     <constraint firstAttribute="trailing" secondItem="osO-Mi-2B1" secondAttribute="trailing" id="oeI-Om-KF9"/>
                     <constraint firstItem="QQa-I8-Nn9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="qTR-Qf-kRp"/>
                     <constraint firstItem="alZ-ZX-sqj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tC0-v9-aCr"/>

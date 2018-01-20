@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9A-Ar-sss">
-                        <rect key="frame" x="361" y="22" width="33" height="24"/>
+                        <rect key="frame" x="353" y="22" width="33" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="HnN-bt-btM"/>
                             <constraint firstAttribute="width" constant="33" id="eUw-ba-JCt"/>
@@ -28,17 +28,17 @@
                         <state key="highlighted" image="RMCloudDownload"/>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qpO-YA-vNw" customClass="YYAnimatedImageView">
-                        <rect key="frame" x="20" y="14" width="40" height="40"/>
+                        <rect key="frame" x="28" y="14" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="TfD-AH-ANb"/>
                             <constraint firstAttribute="height" constant="40" id="mi9-uX-8C7"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sxM-sy-edR">
-                        <rect key="frame" x="76" y="8" width="277" height="51.5"/>
+                        <rect key="frame" x="84" y="8" width="261" height="51.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Item Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9E-hk-3bO">
-                                <rect key="frame" x="0.0" y="0.0" width="277" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="261" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="xwX-Uf-Mgn"/>
                                 </constraints>
@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, world!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-nh-Lu4">
-                                <rect key="frame" x="0.0" y="30" width="277" height="14.5"/>
+                                <rect key="frame" x="0.0" y="30" width="261" height="14.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14.5" id="kml-db-o3U"/>
                                 </constraints>
@@ -70,9 +70,9 @@
                 <constraints>
                     <constraint firstItem="sxM-sy-edR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="5Xm-jm-FLC"/>
                     <constraint firstAttribute="bottom" secondItem="sxM-sy-edR" secondAttribute="bottom" constant="8" id="8JY-qW-bmY"/>
-                    <constraint firstItem="qpO-YA-vNw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="I0C-G2-Oi6"/>
+                    <constraint firstItem="qpO-YA-vNw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="I0C-G2-Oi6"/>
                     <constraint firstItem="c9A-Ar-sss" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VXE-46-laO"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="c9A-Ar-sss" secondAttribute="trailing" id="dHF-gg-8rE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="c9A-Ar-sss" secondAttribute="trailing" constant="8" id="dHF-gg-8rE"/>
                     <constraint firstItem="qpO-YA-vNw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ebx-D7-IbY"/>
                     <constraint firstItem="sxM-sy-edR" firstAttribute="leading" secondItem="qpO-YA-vNw" secondAttribute="trailing" constant="16" id="l6Z-Z4-xKD"/>
                     <constraint firstItem="c9A-Ar-sss" firstAttribute="leading" secondItem="sxM-sy-edR" secondAttribute="trailing" constant="8" id="vnu-f3-MwP"/>

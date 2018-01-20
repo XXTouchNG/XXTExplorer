@@ -712,7 +712,11 @@ XXTE_END_IGNORE_PARTIAL
                 for (NSString *dataKey in dataDictionary) {
                     NSString *dataValue = dataDictionary[dataKey];
                     NSString *mappedKey = urlMappingDict[dataKey];
-                    urlDict[mappedKey] = dataValue;
+                    if (mappedKey) {
+                        urlDict[mappedKey] = dataValue;
+                    } else {
+                        urlDict[dataKey] = dataValue;
+                    }
                 }
                 urlDict[@"appid"] = project.applicationID;
                 NSString *buyURLString = RMBuyUrl([urlDict copy]);
