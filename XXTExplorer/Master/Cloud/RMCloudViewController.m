@@ -29,6 +29,14 @@
     self.lazyload = YES;
     self.title = NSLocalizedString(@"RuanMao Cloud", nil);
     
+    if (XXTE_IS_IPHONE_6_BELOW) {
+        self.segmentedControl.segmentMargin = 12.0;
+    } else if (XXTE_IS_IPHONE_6P_ABOVE) {
+        self.segmentedControl.segmentMargin = 24.0;
+    } else {
+        self.segmentedControl.segmentMargin = 18.0;
+    }
+    
     RMCloudListViewController *controller1 = [[RMCloudListViewController alloc] init];
     controller1.title = NSLocalizedString(@"Latest", nil);
     controller1.sortBy = RMApiActionSortByCreatedAtDesc;

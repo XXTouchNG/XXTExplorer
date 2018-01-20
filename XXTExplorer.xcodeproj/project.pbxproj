@@ -2248,6 +2248,13 @@
 			path = Agents;
 			sourceTree = "<group>";
 		};
+		0F2DAE4920131468001593C9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		0F2E49E51F4CA10600BD11AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -2949,6 +2956,7 @@
 		0FCAF3DA200874B7002FB774 /* Cloud */ = {
 			isa = PBXGroup;
 			children = (
+				0F2DAE4920131468001593C9 /* Search */,
 				0FCAF3F2200898AF002FB774 /* Models */,
 				0FCAF3F0200895C6002FB774 /* Views */,
 				0FCAF3DB200874D1002FB774 /* RMCloudViewController.h */,
