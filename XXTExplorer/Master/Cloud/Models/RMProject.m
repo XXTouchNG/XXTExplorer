@@ -66,7 +66,7 @@
        @"pindex": [NSString stringWithFormat:@"%lu", idx],
        @"pagesize": [NSString stringWithFormat:@"%lu", ipp],
        };
-    return [self promiseGETRequest:RMApiUrl(@"FindScript", args)];
+    return [self promiseGETRequest:RMApiUrl(RMApiActionFindScript, args)];
 }
 
 + (PMKPromise *)filteredListWithKeyword:(NSString *)kw atPage:(NSUInteger)idx itemsPerPage:(NSUInteger)ipp
@@ -79,7 +79,7 @@
        @"fit": @"0.3",
        @"word": kw,
      };
-    return [self promiseGETRequest:RMApiUrl(@"FindScript", args)];
+    return [self promiseGETRequest:RMApiUrl(RMApiActionFindScript, args)];
 }
 
 + (PMKPromise *)projectWithID:(NSUInteger)projectID {
@@ -87,7 +87,7 @@
     NSDictionary *args =
     @{ @"projectid": [NSString stringWithFormat:@"%lu", projectID],
        };
-    return [self promiseGETRequest:RMApiUrl(@"ScriptDetails", args)];
+    return [self promiseGETRequest:RMApiUrl(RMApiActionScriptDetails, args)];
 }
 
 - (PMKPromise *)downloadURL {
@@ -96,7 +96,7 @@
     NSDictionary *args =
     @{ @"projectid": [NSString stringWithFormat:@"%lu", projectID],
        };
-    return [[self class] promiseGETRequest:RMApiUrl(@"GetScriptUrl", args)];
+    return [[self class] promiseGETRequest:RMApiUrl(RMApiActionGetScriptUrl, args)];
 }
 
 - (NSString *)localizedTrailDescription {

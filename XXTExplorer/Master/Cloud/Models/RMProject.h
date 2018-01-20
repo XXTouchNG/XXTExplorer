@@ -10,6 +10,9 @@
 #import "RMHandler.h"
 
 static RMApiAction const RMApiActionFindScript = @"FindScript";
+static RMApiAction const RMApiActionScriptDetails = @"ScriptDetails";
+static RMApiAction const RMApiActionGetScriptUrl = @"GetScriptUrl";
+
 typedef enum : NSUInteger {
     RMApiActionSortByCreatedAtDesc = 1,
     RMApiActionSortByDownloadTimesDesc = 2,

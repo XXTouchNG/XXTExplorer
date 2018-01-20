@@ -47,6 +47,14 @@
 		0F2CD3571F3B5CAB00110772 /* XXTEAPTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3521F3B5CAB00110772 /* XXTEAPTHelper.m */; };
 		0F2CD3581F3B5CAB00110772 /* XXTEAPTPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */; };
 		0F2CD3591F3B5CAB00110772 /* XXTEUpdateAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */; };
+		0F2DAE4C2013156B001593C9 /* RMCloudSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DAE4B2013156B001593C9 /* RMCloudSearchViewController.m */; };
+		0F2DAE4D2013156B001593C9 /* RMCloudSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DAE4B2013156B001593C9 /* RMCloudSearchViewController.m */; };
+		0F2DAE532013158C001593C9 /* RMCloudTrendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DAE512013158C001593C9 /* RMCloudTrendsCell.m */; };
+		0F2DAE542013158C001593C9 /* RMCloudTrendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DAE512013158C001593C9 /* RMCloudTrendsCell.m */; };
+		0F2DAE552013158C001593C9 /* RMCloudTrendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F2DAE522013158C001593C9 /* RMCloudTrendsCell.xib */; };
+		0F2DAE562013158C001593C9 /* RMCloudTrendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F2DAE522013158C001593C9 /* RMCloudTrendsCell.xib */; };
+		0F2DAE5A2013173D001593C9 /* RMHotWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DAE592013173D001593C9 /* RMHotWord.m */; };
+		0F2DAE5B2013173D001593C9 /* RMHotWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DAE592013173D001593C9 /* RMHotWord.m */; };
 		0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F349BB21F62F474004143B7 /* strings.tmLanguage */; };
 		0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F3508C01F166A69000403FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
@@ -1283,6 +1291,13 @@
 		0F2CD3541F3B5CAB00110772 /* XXTEAPTPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEAPTPackage.m; sourceTree = "<group>"; };
 		0F2CD3551F3B5CAB00110772 /* XXTEUpdateAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEUpdateAgent.h; sourceTree = "<group>"; };
 		0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdateAgent.m; sourceTree = "<group>"; };
+		0F2DAE4A2013156B001593C9 /* RMCloudSearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudSearchViewController.h; sourceTree = "<group>"; };
+		0F2DAE4B2013156B001593C9 /* RMCloudSearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudSearchViewController.m; sourceTree = "<group>"; };
+		0F2DAE502013158C001593C9 /* RMCloudTrendsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudTrendsCell.h; sourceTree = "<group>"; };
+		0F2DAE512013158C001593C9 /* RMCloudTrendsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudTrendsCell.m; sourceTree = "<group>"; };
+		0F2DAE522013158C001593C9 /* RMCloudTrendsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudTrendsCell.xib; sourceTree = "<group>"; };
+		0F2DAE582013173D001593C9 /* RMHotWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMHotWord.h; sourceTree = "<group>"; };
+		0F2DAE592013173D001593C9 /* RMHotWord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMHotWord.m; sourceTree = "<group>"; };
 		0F349BB21F62F474004143B7 /* strings.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = strings.tmLanguage; sourceTree = "<group>"; };
 		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
 		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
@@ -2251,8 +2266,39 @@
 		0F2DAE4920131468001593C9 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				0F2DAE5720131726001593C9 /* Models */,
+				0F2DAE4E2013156E001593C9 /* Views */,
+				0F2DAE4A2013156B001593C9 /* RMCloudSearchViewController.h */,
+				0F2DAE4B2013156B001593C9 /* RMCloudSearchViewController.m */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		0F2DAE4E2013156E001593C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0F2DAE4F20131576001593C9 /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0F2DAE4F20131576001593C9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0F2DAE502013158C001593C9 /* RMCloudTrendsCell.h */,
+				0F2DAE512013158C001593C9 /* RMCloudTrendsCell.m */,
+				0F2DAE522013158C001593C9 /* RMCloudTrendsCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		0F2DAE5720131726001593C9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0F2DAE582013173D001593C9 /* RMHotWord.h */,
+				0F2DAE592013173D001593C9 /* RMHotWord.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		0F2E49E51F4CA10600BD11AA /* Common */ = {
@@ -2956,9 +3002,9 @@
 		0FCAF3DA200874B7002FB774 /* Cloud */ = {
 			isa = PBXGroup;
 			children = (
-				0F2DAE4920131468001593C9 /* Search */,
 				0FCAF3F2200898AF002FB774 /* Models */,
 				0FCAF3F0200895C6002FB774 /* Views */,
+				0F2DAE4920131468001593C9 /* Search */,
 				0FCAF3DB200874D1002FB774 /* RMCloudViewController.h */,
 				0FCAF3DC200874D1002FB774 /* RMCloudViewController.m */,
 				0FCAF3E820088860002FB774 /* RMCloudListViewController.h */,
@@ -4218,6 +4264,7 @@
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
+				0F2DAE552013158C001593C9 /* RMCloudTrendsCell.xib in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
 				0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
@@ -4304,6 +4351,7 @@
 				D60FE77F1FE2369300954818 /* XUIFileCell.xib in Resources */,
 				D60FE7801FE2369300954818 /* SourceCodePro-Bold.otf in Resources */,
 				D60FE7811FE2369300954818 /* SourceCodePro-BoldIt.otf in Resources */,
+				0F2DAE562013158C001593C9 /* RMCloudTrendsCell.xib in Resources */,
 				D60FE7821FE2369300954818 /* SourceCodePro-It.otf in Resources */,
 				0FA1A5001FF13CAC0021648B /* Settings.Pro.bundle in Resources */,
 				D60FE7831FE2369300954818 /* SourceCodePro-Regular.otf in Resources */,
@@ -4962,6 +5010,7 @@
 				D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */,
 				0F707E7D1FB09A920052A4B5 /* XXTESymbolTypeView.m in Sources */,
 				0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */,
+				0F2DAE4C2013156B001593C9 /* RMCloudSearchViewController.m in Sources */,
 				0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */,
 				0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */,
 				D6863D391F7E574F00A45CF7 /* XUIAdapter_xui.m in Sources */,
@@ -5071,6 +5120,7 @@
 				0F00CAF31F66F7A500692913 /* XXTEKeyboardButton.m in Sources */,
 				D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */,
 				5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */,
+				0F2DAE532013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
 				D6863CE71F7E340A00A45CF7 /* XXTEUIViewController+XUIFileCell.m in Sources */,
 				0F88115D1FB6AF220004F20C /* XXTESegmentedController.m in Sources */,
@@ -5115,6 +5165,7 @@
 				B03129A83F3BF69AC89BC4CE /* lauxlib.c in Sources */,
 				B0312B4FE33A641307325C7A /* lbaselib.c in Sources */,
 				B0312E7DB009E7FB2A5FB5DF /* lbitlib.c in Sources */,
+				0F2DAE5A2013173D001593C9 /* RMHotWord.m in Sources */,
 				B0312DF40FB983A6683D34FE /* lcode.c in Sources */,
 				B0312E0B03F5361610C9837D /* lcorolib.c in Sources */,
 				0F1C3EB91FA8376200B5146C /* ICTextView.m in Sources */,
@@ -5266,6 +5317,7 @@
 				D60FE6B01FE2369300954818 /* XXTPositionPicker.m in Sources */,
 				D60FE6B11FE2369300954818 /* XXTESymbolTypeView.m in Sources */,
 				D60FE6B21FE2369300954818 /* XXTExplorerViewCell.m in Sources */,
+				0F2DAE4D2013156B001593C9 /* RMCloudSearchViewController.m in Sources */,
 				D60FE6B31FE2369300954818 /* XXTEWorkspaceViewController.m in Sources */,
 				D60FE6B41FE2369300954818 /* XXTEPackageViewerController.m in Sources */,
 				D60FE6B51FE2369300954818 /* XUIAdapter_xui.m in Sources */,
@@ -5375,6 +5427,7 @@
 				D60FE7181FE2369300954818 /* XXTEKeyboardButton.m in Sources */,
 				D60FE7191FE2369300954818 /* XXTRectanglePicker.m in Sources */,
 				D60FE71A1FE2369300954818 /* SKScopedString.m in Sources */,
+				0F2DAE542013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				D60FE71B1FE2369300954818 /* SKResultSet.m in Sources */,
 				D60FE71C1FE2369300954818 /* XXTEUIViewController+XUIFileCell.m in Sources */,
 				D60FE71D1FE2369300954818 /* XXTESegmentedController.m in Sources */,
@@ -5419,6 +5472,7 @@
 				D60FE73C1FE2369300954818 /* lauxlib.c in Sources */,
 				D60FE73E1FE2369300954818 /* lbaselib.c in Sources */,
 				D60FE73F1FE2369300954818 /* lbitlib.c in Sources */,
+				0F2DAE5B2013173D001593C9 /* RMHotWord.m in Sources */,
 				D60FE7401FE2369300954818 /* lcode.c in Sources */,
 				D60FE7411FE2369300954818 /* lcorolib.c in Sources */,
 				D60FE7421FE2369300954818 /* ICTextView.m in Sources */,
