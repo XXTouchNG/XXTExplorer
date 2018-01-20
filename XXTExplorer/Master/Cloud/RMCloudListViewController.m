@@ -57,6 +57,10 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (self.searchWord.length > 0) {
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"Search \"%@\"", nil), self.searchWord];
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.comingSoonView];
     
@@ -117,7 +121,13 @@ XXTE_END_IGNORE_PARTIAL
         return;
     }
     _isRequesting = YES;
-    [RMProject sortedList:self.sortBy atPage:(_currentPage + 1) itemsPerPage:RMCloudListItemsPerPage]
+    PMKPromise *filterPromise = nil;
+    if (self.searchWord.length > 0) {
+        filterPromise = [RMProject filteredListWithKeyword:self.searchWord atPage:(_currentPage + 1) itemsPerPage:RMCloudListItemsPerPage];
+    } else {
+        filterPromise = [RMProject sortedList:self.sortBy atPage:(_currentPage + 1) itemsPerPage:RMCloudListItemsPerPage];
+    }
+    filterPromise
     .then(^ (NSArray <RMProject *> *models) {
         if (models.count > 0) {
             [self.projects addObjectsFromArray:models];
@@ -128,7 +138,7 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^ (NSError *error) {
         toastMessage(self, error.localizedDescription);
-        if (error) {
+        if (error.code != RMApiErrorCode) {
             if (NO == _firstLoaded) {
                 self.tableView.hidden = YES;
                 self.comingSoonView.hidden = NO;

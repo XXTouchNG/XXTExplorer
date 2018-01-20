@@ -28,6 +28,8 @@
     self.tagView.defaultConfig.tagBorderWidth = 1.f;
     self.tagView.defaultConfig.tagSelectedBorderWidth = 1.f;
     
+    self.tagView.defaultConfig.tagTextFont = [UIFont systemFontOfSize:14.0];
+    
     // Alignment
     self.tagView.alignment = XUITagCollectionAlignmentLeft;
     
@@ -42,7 +44,7 @@
 }
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(CGRectGetWidth(self.bounds), self.tagView.intrinsicContentSize.height + 24.f + 1.f);
+    return CGSizeMake(CGRectGetWidth(self.bounds), self.tagView.intrinsicContentSize.height + 44.f + 1.f);
 }
 
 #pragma mark - Setters

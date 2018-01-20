@@ -1209,7 +1209,13 @@
 "Search" = "搜索";
 
 /* No comment provided by engineer. */
+"Search \"%@\"" = "搜索 \"%@\"";
+
+/* No comment provided by engineer. */
 "Search Application" = "搜索应用程序";
+
+/* No comment provided by engineer. */
+"Search RuanMao Cloud" = "搜索软猫云";
 
 /* No comment provided by engineer. */
 "Search Symbol" = "搜索符号";
@@ -1553,3 +1559,6 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
+
+/* No comment provided by engineer. */
+"Internal server error (%@)." = "";

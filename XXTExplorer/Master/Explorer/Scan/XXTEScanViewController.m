@@ -463,7 +463,7 @@
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {
         NSString *scannedResult = nil;
-        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil];
         NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
         for (NSUInteger index = 0; index < features.count; index++) {
             CIQRCodeFeature *feature = features[index];

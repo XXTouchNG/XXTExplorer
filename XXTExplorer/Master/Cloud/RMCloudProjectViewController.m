@@ -155,7 +155,7 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^ (NSError *error) {
         toastMessage(self, error.localizedDescription);
-        if (error) {
+        if (error.code != RMApiErrorCode) {
             self.tableView.hidden = YES;
             self.comingSoonView.hidden = NO;
         }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,18 +18,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uh0-9p-CCa" customClass="XUITextTagCollectionView">
-                        <rect key="frame" x="16" y="12" width="382" height="95.5"/>
+                        <rect key="frame" x="16" y="20" width="382" height="75.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="uh0-9p-CCa" secondAttribute="bottom" constant="12" id="24M-7E-gUN"/>
-                    <constraint firstItem="uh0-9p-CCa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="4E5-yx-KZY"/>
+                    <constraint firstAttribute="bottom" secondItem="uh0-9p-CCa" secondAttribute="bottom" priority="900" constant="24" id="24M-7E-gUN"/>
+                    <constraint firstItem="uh0-9p-CCa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="4E5-yx-KZY"/>
                     <constraint firstItem="uh0-9p-CCa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="7M7-ZB-mDC"/>
                     <constraint firstAttribute="trailing" secondItem="uh0-9p-CCa" secondAttribute="trailing" constant="16" id="wJw-ij-GDV"/>
                 </constraints>
             </tableViewCellContentView>
-            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="tagView" destination="uh0-9p-CCa" id="lb1-aF-URc"/>
             </connections>

@@ -76,7 +76,7 @@
     @{ @"sort": @"1",
        @"pindex": [NSString stringWithFormat:@"%lu", idx],
        @"pagesize": [NSString stringWithFormat:@"%lu", ipp],
-       @"fit": @"0.3",
+       @"fit": @"0.5",
        @"word": kw,
      };
     return [self promiseGETRequest:RMApiUrl(RMApiActionFindScript, args)];

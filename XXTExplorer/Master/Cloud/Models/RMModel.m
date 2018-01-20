@@ -7,17 +7,23 @@
 //
 
 #import "RMModel.h"
+#import "RMHandler.h"
 
 static NSErrorDomain RMModelErrorDomain = @"RMModelErrorDomain";
-#define RMError(format, ...) [NSError errorWithDomain:RMModelErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString((format), nil), __VA_ARGS__] }]
+#define RMError(format, ...) [NSError errorWithDomain:RMModelErrorDomain code:RMApiErrorCode userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString((format), nil), __VA_ARGS__] }]
+#define RMFatalError(format, ...) [NSError errorWithDomain:RMModelErrorDomain code:RMApiFatalErrorCode userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString((format), nil), __VA_ARGS__] }]
 
 @implementation RMModel
 
 + (PMKPromise *)promiseResponse:(NSDictionary *)resp {
     return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
-        if (![resp[@"code"] isKindOfClass:[NSNumber class]])
+        if (resp[@"code"] == nil) {
+            resolve(RMFatalError(NSLocalizedString(@"Internal server error (%@).", nil), @(RMApiFatalErrorCode)));
+            return;
+        }
+        if (NO == [resp[@"code"] isKindOfClass:[NSNumber class]])
         {
-            resolve(RMError(NSLocalizedString(@"Unknown server response (%@).", nil), @(-1)));
+            resolve(RMError(NSLocalizedString(@"Unknown server response (%@).", nil), @(RMApiErrorCode)));
             return;
         }
         NSInteger retCode = [resp[@"code"] integerValue];
@@ -79,7 +85,7 @@ static NSErrorDomain RMModelErrorDomain = @"RMModelErrorDomain";
 }
 
 + (PMKPromise *)promiseGETRequest:(NSString *)url {
-    return [NSURLConnection GET:url]
+    return [NSURLConnection GET:url query:@{}]
     .then(^(NSDictionary *reqResult) {
         return [[self class] promiseResponse:reqResult];
     });

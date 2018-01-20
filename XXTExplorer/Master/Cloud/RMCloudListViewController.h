@@ -11,5 +11,6 @@
 
 @interface RMCloudListViewController : UIViewController
 @property (nonatomic, assign) RMApiActionSortBy sortBy;
+@property (nonatomic, copy) NSString *searchWord;
 
 @end

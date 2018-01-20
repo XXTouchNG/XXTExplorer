@@ -8,6 +8,7 @@
 
 #import "RMCloudViewController.h"
 #import "RMCloudListViewController.h"
+#import "RMCloudSearchViewController.h"
 
 @interface RMCloudViewController ()
 @property (nonatomic, strong) UIBarButtonItem *searchItem;
@@ -77,7 +78,8 @@
 }
 
 - (void)searchItemTapped:(UIBarButtonItem *)sender {
-    
+    RMCloudSearchViewController *searchController = [[RMCloudSearchViewController alloc] init];
+    [self.navigationController pushViewController:searchController animated:YES];
 }
 
 #pragma mark - Memory

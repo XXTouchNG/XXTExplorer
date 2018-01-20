@@ -64,7 +64,7 @@
                             <constraint firstAttribute="trailing" secondItem="Bf0-yF-M9a" secondAttribute="trailing" id="e3X-vq-xjI"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-QB-ns7">
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-QB-ns7">
                         <rect key="frame" x="269.5" y="118" width="28" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="B86-zU-aOa"/>

@@ -22,6 +22,9 @@ static NSString * const RMApiBasePlatformIDKey = @"RMCLOUD_PLATFORM";
 
 static NSString * const RMApiBuyPath = @"RMCLOUD_API_BUY";
 
+static NSInteger const RMApiErrorCode = 46952;
+static NSInteger const RMApiFatalErrorCode = 46953;
+
 typedef NSString * RMApiAction;
 typedef NSDictionary * RMArguments;
 

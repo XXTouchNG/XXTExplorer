@@ -14,4 +14,6 @@ static RMApiAction const RMApiActionHotTrends = @"HotTrends";
 @interface RMHotWord : RMModel
 @property (nonatomic, copy) NSString *word;
 
++ (PMKPromise *)hotTrendsWithAmount:(NSUInteger)amount;
+
 @end
