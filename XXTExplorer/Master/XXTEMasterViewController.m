@@ -384,7 +384,7 @@
     LGAlertView *alertView = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Check Update", nil)
                                                                             message:nil
                                                                               style:LGAlertViewStyleActionSheet
-                                                                  progressLabelText:NSLocalizedString(@"Connect to the APT server...", nil)
+                                                                  progressLabelText:NSLocalizedString(@"Connect to the update server...", nil)
                                                                        buttonTitles:nil
                                                                   cancelButtonTitle:nil
                                                              destructiveButtonTitle:nil

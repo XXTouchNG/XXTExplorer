@@ -432,7 +432,7 @@
 "Confirm" = "确认";
 
 /* No comment provided by engineer. */
-"Connect to the APT server..." = "连接到源服务器...";
+"Connect to the update server..." = "连接到更新服务器...";
 
 /* No comment provided by engineer. */
 "Connect to Wi-fi network." = "请连接到无线局域网.";
