@@ -16,3 +16,6 @@ xcodebuild archive -workspace XXTExplorer.xcworkspace -scheme XXTExplorer-Archiv
 
 # 3
 xcodebuild -exportArchive -archivePath Releases/${PACKAGE_NAME}.xcarchive -exportPath Releases/${PACKAGE_NAME} -exportOptionsPlist DefaultExportOptions.plist -allowProvisioningUpdates | xcpretty --color
+
+# 4
+open Releases
