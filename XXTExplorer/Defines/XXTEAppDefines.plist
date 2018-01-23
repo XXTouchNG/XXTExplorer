@@ -36,8 +36,6 @@
 	</array>
 	<key>CHANNEL_ID</key>
 	<string>Cydia™</string>
-	<key>CYDIA_URL</key>
-	<string>cydia://url/https://cydia.saurik.com/api/share#?source=https://apt.xxtouch.com/&amp;package=com.1func.xxtouch.ios</string>
 	<key>DAEMON_ERROR_LOG_PATH</key>
 	<string>log/script_error.log</string>
 	<key>DAEMON_LOG_PATH</key>
@@ -104,9 +102,9 @@
 	<key>RMCLOUD_TOKEN</key>
 	<string>3487C956F68D360C</string>
 	<key>UPDATE_API</key>
-	<string>https://apt.xxtouch.com/Packages.gz</string>
-	<key>UPDATE_PACKAGE</key>
-	<string>com.1func.xxtouch.ios</string>
+	<string>https://www.xxtouch.com/check-update?p=%@</string>
+	<key>UPDATE_PRODUCT</key>
+	<string>xxtouch</string>
 	<key>XXTOUCH_APP_PATH</key>
 	<string>/Applications/XXTExplorer.app</string>
 	<key>XXTOUCH_BUY_URL</key>

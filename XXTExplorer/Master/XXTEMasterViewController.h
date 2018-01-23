@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTEAPTHelper, XXTEUpdateAgent;
+@class XXTEJSONHelper, XXTEUpdateAgent;
 
 typedef enum : NSUInteger {
     kMasterViewControllerIndexExplorer = 0,

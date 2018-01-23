@@ -67,11 +67,7 @@
 
 - (UIBarButtonItem *)searchItem {
     if (!_searchItem) {
-#ifdef DEBUG
         UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"RMSearchIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(searchItemTapped:)];
-#else
-        UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
-#endif
         _searchItem = searchItem;
     }
     return _searchItem;

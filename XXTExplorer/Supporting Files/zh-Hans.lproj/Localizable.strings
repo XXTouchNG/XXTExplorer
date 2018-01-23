@@ -1562,3 +1562,6 @@
 
 /* No comment provided by engineer. */
 "Internal server error (%@)." = "";
+
+/* No comment provided by engineer. */
+"New version found: v%@\nCurrent version: v%@\n%@" = "";

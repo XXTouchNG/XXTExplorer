@@ -18,20 +18,19 @@
     #import "XXTERespringAgent.h"
     #import "XXTEDaemonAgent.h"
 
-    #import "XXTEAPTHelper.h"
-    #import "XXTEAPTPackage.h"
+    #import "XXTEJSONHelper.h"
+    #import "XXTEJSONPackage.h"
     #import "XXTEUpdateAgent.h"
 #endif
 
 #ifndef APPSTORE
-@interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEAPTHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
+@interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEJSONHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
 
 @property(nonatomic, assign) BOOL checkUpdateInBackground;
 @property(nonatomic, weak) LGAlertView *alertView;
 @property(nonatomic, strong) XXTEDaemonAgent *daemonAgent;
 
-@property (nonatomic, strong) NSString *packageIdentifier;
-@property (nonatomic, strong) XXTEAPTHelper *aptHelper;
+@property (nonatomic, strong) XXTEJSONHelper *jsonHelper;
 @property (nonatomic, strong) XXTEUpdateAgent *updateAgent;
 
 @end
@@ -182,17 +181,15 @@
 
 #ifndef APPSTORE
 - (void)setupAgents {
-    NSString *packageIdentifier = uAppDefine(@"UPDATE_PACKAGE");
-    self.packageIdentifier = packageIdentifier;
-    
+    NSString *productName = uAppDefine(@"UPDATE_PRODUCT");
     NSString *repositoryURLString = uAppDefine(@"UPDATE_API");
-    NSURL *repositoryURL = [NSURL URLWithString:repositoryURLString];
+    NSURL *repositoryURL = [NSURL URLWithString:[NSString stringWithFormat:repositoryURLString, productName]];
     
-    XXTEAPTHelper *aptHelper = [[XXTEAPTHelper alloc] initWithRepositoryURL:repositoryURL];
-    aptHelper.delegate = self;
-    self.aptHelper = aptHelper;
+    XXTEJSONHelper *jsonHelper = [[XXTEJSONHelper alloc] initWithRepositoryURL:repositoryURL];
+    jsonHelper.delegate = self;
+    self.jsonHelper = jsonHelper;
     
-    XXTEUpdateAgent *updateAgent = [[XXTEUpdateAgent alloc] initWithBundleIdentifier:packageIdentifier];
+    XXTEUpdateAgent *updateAgent = [[XXTEUpdateAgent alloc] initWithBundleIdentifier:productName];
     updateAgent.delegate = self;
     self.updateAgent = updateAgent;
     
@@ -232,15 +229,14 @@
 }
 #endif
 
-#pragma mark - XXTEAPTHelperDelegate
+#pragma mark - XXTEJSONHelperDelegate
 
 #ifndef APPSTORE
-- (void)aptHelperDidSyncReady:(XXTEAPTHelper *)helper {
+- (void)jsonHelperDidSyncReady:(XXTEJSONHelper *)helper {
     dispatch_async_on_main_queue(^{
         NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
-        NSString *packageIdentifier = self.packageIdentifier;
-        XXTEAPTPackage *packageModel = helper.packageMap[packageIdentifier];
-        NSString *packageVersion = packageModel.apt_Version;
+        XXTEJSONPackage *packageModel = helper.respPackage;
+        NSString *packageVersion = packageModel.latestVersion;
         if ([currentVersion isEqualToString:packageVersion]) {
             if (YES == self.checkUpdateInBackground) {
                 
@@ -284,7 +280,7 @@
 #endif
 
 #ifndef APPSTORE
-- (void)aptHelper:(XXTEAPTHelper *)helper didSyncFailWithError:(NSError *)error {
+- (void)jsonHelper:(XXTEJSONHelper *)helper didSyncFailWithError:(NSError *)error {
     dispatch_async_on_main_queue(^{
         if (NO == self.checkUpdateInBackground) {
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
@@ -338,12 +334,16 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
     if (index == 0) {
-        NSString *cydiaUrlString = uAppDefine(@"CYDIA_URL");
-        NSURL *cydiaUrl = [NSURL URLWithString:cydiaUrlString];
-        if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl]) {
-            [[UIApplication sharedApplication] openURL:cydiaUrl];
-        } else {
-            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaUrlString]));
+        XXTEJSONHelper *helper = self.jsonHelper;
+        XXTEJSONPackage *packageModel = helper.respPackage;
+        NSString *cydiaUrlString = packageModel.cydiaURL;
+        if (cydiaUrlString) {
+            NSURL *cydiaUrl = [NSURL URLWithString:cydiaUrlString];
+            if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl]) {
+                [[UIApplication sharedApplication] openURL:cydiaUrl];
+            } else {
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaUrlString]));
+            }
         }
     } else if (index == 1) {
         [self.updateAgent ignoreThisDay];
@@ -355,10 +355,9 @@
 #ifndef APPSTORE
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     [alertView dismissAnimated];
-    NSString *packageIdentifier = self.packageIdentifier;
-    XXTEAPTHelper *helper = self.aptHelper;
-    XXTEAPTPackage *packageModel = helper.packageMap[packageIdentifier];
-    NSString *packageVersion = packageModel.apt_Version;
+    XXTEJSONHelper *helper = self.jsonHelper;
+    XXTEJSONPackage *packageModel = helper.respPackage;
+    NSString *packageVersion = packageModel.latestVersion;
     [self.updateAgent ignoreVersion:packageVersion];
     [self.updateAgent ignoreThisDay];
 }
@@ -374,7 +373,7 @@
 - (void)checkUpdateBackground {
     self.checkUpdateInBackground = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self.aptHelper sync];
+        [self.jsonHelper sync];
     });
 }
 #endif
@@ -397,7 +396,7 @@
         [alertView showAnimated];
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.aptHelper sync];
+        [self.jsonHelper sync];
     });
 }
 #endif
