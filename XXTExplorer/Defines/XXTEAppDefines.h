@@ -74,5 +74,6 @@ static inline NSUInteger XXTEBuiltInDefaultsObjectEnum(NSString *key) {
 #define XXTEDefaultsSetObject(key, obj) ([XXTEAppDelegate.userDefaults setObject:(obj) forKey:(key)])
 
 static NSString * const kXXTErrorDomain = @"com.darwindev.XXTExplorer.error";
+static NSString * const kXXTDaemonVersionKey = @"DAEMON_VERSION";
 
 #endif /* XXTEAppDefines_h */

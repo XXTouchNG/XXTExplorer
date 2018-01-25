@@ -13,6 +13,9 @@
 #import "XXTLuaNSValue.h"
 #import <dlfcn.h>
 
+#import "NSString+VersionValue.h"
+#import "XXTEAppDefines.h"
+
 @interface NSBundle (FlushCaches)
 
 - (BOOL)flushCaches;
@@ -209,6 +212,113 @@
     }
     [pathBundle flushCaches];
     return pathBundle;
+}
+
+- (BOOL)isSupportedDaemon {
+    NSDictionary *meta = self.metaDictionary;
+    NSString *xtVersion = meta[kXXTEMinimumXXTVersion];
+    if ([xtVersion isKindOfClass:[NSString class]]) {
+        NSString *currentXtVersion = uAppDefine(kXXTDaemonVersionKey);
+        if ([currentXtVersion compareVersion:xtVersion] == NSOrderedAscending) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)isSupportedSystem {
+    NSDictionary *meta = self.metaDictionary;
+    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+    NSString *minSysVersion = meta[kXXTEMinimumSystemVersion];
+    if ([minSysVersion isKindOfClass:[NSString class]]) {
+        if ([systemVersion compareVersion:minSysVersion] == NSOrderedAscending) {
+            return NO;
+        }
+    }
+    NSString *maxSysVersion = meta[kXXTEMaximumSystemVersion];
+    if ([maxSysVersion isKindOfClass:[NSString class]]) {
+        if ([systemVersion compareVersion:maxSysVersion] == NSOrderedDescending) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)isSupportedResolution {
+    NSDictionary *meta = self.metaDictionary;
+    NSArray *supportedResolution = meta[kXXTESupportedResolutions];
+    if (![supportedResolution isKindOfClass:[NSArray class]]) {
+        return YES;
+    }
+    
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    CGFloat physicalWidth = screenRect.size.width * scale;
+    CGFloat physicalHeight = screenRect.size.height * scale;
+    
+    CGFloat width = MIN(physicalWidth, physicalHeight);
+    CGFloat height = MAX(physicalWidth, physicalHeight);
+    
+    for (id supportedResObj in supportedResolution) {
+        if ([supportedResObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *supportedResDict = (NSDictionary *)supportedResObj;
+            if (!([supportedResDict[@"width"] isKindOfClass:[NSNumber class]] || [supportedResDict[@"width"] isKindOfClass:[NSString class]])
+                ||
+                !([supportedResDict[@"height"] isKindOfClass:[NSNumber class]] || [supportedResDict[@"height"] isKindOfClass:[NSString class]])) {
+                continue;
+            }
+            CGFloat resObjWidth = [supportedResDict[@"width"] floatValue];
+            CGFloat resObjHeight = [supportedResDict[@"height"] floatValue];
+            if (fabs(resObjWidth - width) < 1e-6 && fabs(resObjHeight - height) < 1e-6) {
+                return YES;
+            }
+        } else if ([supportedResObj isKindOfClass:[NSString class]]) {
+            NSString *supportedResStr = (NSString *)supportedResObj;
+            NSScanner *resScanner = [NSScanner scannerWithString:supportedResStr];
+            NSInteger resObjWidthInt = 0, resObjHeightInt = 0;
+            BOOL valid_a = [resScanner scanInteger:&resObjWidthInt];
+            [resScanner scanCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString:@" ,x"] intoString:nil];
+            BOOL valid_b = [resScanner scanInteger:&resObjHeightInt];
+            if (!valid_a || !valid_b) {
+                continue;
+            }
+            CGFloat resObjWidth = (CGFloat)resObjWidthInt;
+            CGFloat resObjHeight = (CGFloat)resObjHeightInt;
+            if (fabs(resObjWidth - width) < 1e-6 && fabs(resObjHeight - height) < 1e-6) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+
+- (NSString *)localizedUnsupportedReason {
+    NSDictionary *meta = self.metaDictionary;
+    if (![self isSupportedResolution]) {
+        return NSLocalizedString(@"This XPP Bundle does not support the resolution of this device.\nYou can find the supported resolutions in extended item properties.", nil);
+    } else if (![self isSupportedSystem]) {
+        NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+        NSString *minSysVersion = meta[kXXTEMinimumSystemVersion];
+        NSString *maxSysVersion = meta[kXXTEMaximumSystemVersion];
+        if (!minSysVersion) {
+            minSysVersion = @"...";
+        }
+        if (!maxSysVersion) {
+            maxSysVersion = @"...";
+        }
+        return [NSString stringWithFormat:NSLocalizedString(@"Configure this XPP Bundle requires iOS version between (%@, %@), not %@.\nYou can find the required iOS version in extended item properties.", nil), minSysVersion, maxSysVersion, systemVersion];
+    } else if (![self isSupportedDaemon]) {
+        NSString *currentXtVersion = uAppDefine(kXXTDaemonVersionKey);
+        NSString *xtVersion = meta[kXXTEMinimumXXTVersion];
+        if (!xtVersion) {
+            xtVersion = @"...";
+        }
+        return [NSString stringWithFormat:NSLocalizedString(@"Configure this XPP Bundle requires XXT version greater than or equal to %@, not %@.\nYou can upgrade to the latest release in \"More\" > \"About\" > \"Check Update\".", nil), xtVersion, currentXtVersion];
+    }
+    
+    return nil;
 }
 
 @end

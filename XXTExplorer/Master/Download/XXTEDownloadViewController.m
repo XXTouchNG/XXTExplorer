@@ -149,7 +149,7 @@ typedef enum : NSUInteger {
     staticSectionTitles = @[ NSLocalizedString(@"Source URL", nil),
                              NSLocalizedString(@"Target Path", nil)
                              ];
-    staticSectionFooters = @[ @"", NSLocalizedString(@"Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page. Tap \"Download\" if you can make sure that the source is trusted.", nil) ];
+    staticSectionFooters = @[ @"", NSLocalizedString(@"Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page. Tap \"Save\" if you can make sure that the source is trusted.", nil) ];
     
     XXTEMoreAddressCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     cell1.addressLabel.text = [self.sourceURL absoluteString];

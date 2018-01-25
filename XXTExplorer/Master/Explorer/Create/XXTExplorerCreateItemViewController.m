@@ -409,7 +409,7 @@ typedef enum : NSUInteger {
             }
             
             NSString *deviceName = [[UIDevice currentDevice] name];
-            NSString *versionString = [NSString stringWithFormat:@"%@ V%@", uAppDefine(@"PRODUCT_NAME"), uAppDefine(@"DAEMON_VERSION")];
+            NSString *versionString = [NSString stringWithFormat:@"%@ V%@", uAppDefine(@"PRODUCT_NAME"), uAppDefine(kXXTDaemonVersionKey)];
             NSString *longDateString = [self.class.itemTemplateDateFormatter stringFromDate:[NSDate date]];
             NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:[NSDate date]];
             NSString *yearString = [@([dateComponents year]) stringValue];

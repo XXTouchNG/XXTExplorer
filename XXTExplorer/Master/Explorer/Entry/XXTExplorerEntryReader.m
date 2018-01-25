@@ -45,4 +45,24 @@
     return nil;
 }
 
+- (BOOL)isSupportedDaemon {
+    return YES;
+}
+
+- (BOOL)isSupportedSystem {
+    return YES;
+}
+
+- (BOOL)isSupportedResolution {
+    return YES;
+}
+
+- (BOOL)isSupported {
+    return [self isSupportedSystem] && [self isSupportedDaemon] && [self isSupportedResolution];
+}
+
+- (NSString *)localizedUnsupportedReason {
+    return nil;
+}
+
 @end

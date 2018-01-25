@@ -27,6 +27,7 @@
 #import "XXTExplorerEntryService.h"
 
 #import "XXTExplorerViewCell.h"
+#import "XXTExplorerEntryLauncher.h"
 
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
@@ -115,15 +116,24 @@
         handled = YES;
     }
     else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionConfigure]) {
-        if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
-            UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
-            if (configurator) {
-                [self tableView:self.tableView showFormSheetController:configurator];
+        XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+        NSString *unsupportedReason = [entryReader localizedUnsupportedReason];
+        if (unsupportedReason == nil) {
+            if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
+                UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
+                if (configurator) {
+                    [self tableView:self.tableView showFormSheetController:configurator];
+                } else {
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]));
+                }
             } else {
-                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]));
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]));
             }
         } else {
-            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]));
+            LGAlertView *unsupportedAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Warning", nil) message:unsupportedReason style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                [alertView dismissAnimated];
+            } destructiveHandler:nil];
+            [unsupportedAlert showAnimated];
         }
         handled = YES;
     }

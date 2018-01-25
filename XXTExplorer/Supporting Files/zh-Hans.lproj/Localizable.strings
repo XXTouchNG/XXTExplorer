@@ -225,7 +225,7 @@
 "Boot script path has been copied to the pasteboard." = "开机启动项路径已被复制到剪贴板.";
 
 /* No comment provided by engineer. */
-"Bundle ID" = "标识符";
+"Bundle ID" = "Bundle 标识符";
 
 /* No comment provided by engineer. */
 "Bundle Path" = "Bundle 路径";
@@ -249,7 +249,7 @@
 "Cannot check update: %@" = "无法检查更新: %@";
 
 /* No comment provided by engineer. */
-"Cannot clean temporarily XPP Bundle: \"%@\", reason: %@." = "无法清理临时 XPP Bundle: \"%@\", 错误原因: %@.";
+"Cannot clean temporarily XPP Bundle: \"%@\", reason: %@." = "无法清理临时 XPP 脚本包: \"%@\", 错误原因: %@.";
 
 /* No comment provided by engineer. */
 "Cannot connect to video device." = "无法连接到视频设备.";
@@ -427,6 +427,12 @@
 
 /* No comment provided by engineer. */
 "Configure \"Activator\"" = "配置 \"Activator\"";
+
+/* No comment provided by engineer. */
+"Configure this XPP Bundle requires iOS version between (%@, %@), not %@.\nYou can find the required iOS version in extended item properties." = "配置该脚本包需要 iOS 版本 (%@, %@), 不支持当前值 %@.\n你可以在项目扩展属性中检查必需的 iOS 版本.";
+
+/* No comment provided by engineer. */
+"Configure this XPP Bundle requires XXT version greater than or equal to %@, not %@.\nYou can upgrade to the latest release in \"More\" > \"About\" > \"Check Update\"." = "配置该脚本包需要 XXT 版本至少为 %@, 不支持当前值 %@.\n你可以在 \"更多\" > \"关于\" > \"检查更新\" 中尝试更新到最新的发行版本.";
 
 /* No comment provided by engineer. */
 "Confirm" = "确认";
@@ -747,6 +753,9 @@
 "Interface Viewer" = "界面查看器";
 
 /* No comment provided by engineer. */
+"Internal server error (%@)." = "内部服务器错误 (%@).";
+
+/* No comment provided by engineer. */
 "Internal Shortcut" = "内置快捷键";
 
 /* No comment provided by engineer. */
@@ -759,7 +768,7 @@
 "Invalid url parameters." = "无效的 URL 参数.";
 
 /* No comment provided by engineer. */
-"Invalid XPP Bundle: \"%@\"." = "无效的 XPP Bundle: \"%@\".";
+"Invalid XPP Bundle: \"%@\"." = "无效的 XPP 脚本包: \"%@\".";
 
 /* No comment provided by engineer. */
 "iOS Version" = "iOS 版本";
@@ -915,10 +924,10 @@
 "New License" = "新授权";
 
 /* No comment provided by engineer. */
-"New Version" = "新版本";
+"New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
 
 /* No comment provided by engineer. */
-"New version found: v%@\nCurrent version: v%@" = "发现新版本: v%@\n当前版本: v%@";
+"New Version: %@" = "新版本: %@";
 
 /* No comment provided by engineer. */
 "No" = "否";
@@ -1044,7 +1053,7 @@
 "Plain Text (*.txt)" = "Plain Text (*.txt)";
 
 /* No comment provided by engineer. */
-"Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page. Tap \"Download\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方作者提供, 如果你遇到任何问题, 请通过前一页面下方的联系方式联系其作者解决. 如果你信任该数据源, 轻按 \"下载\" 以继续.";
+"Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page. Tap \"Save\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方作者提供, 如果你遇到任何问题, 请通过前一页面下方的联系方式联系其作者解决. 如果你信任该数据源, 轻按 \"存储\" 以继续.";
 
 /* No comment provided by engineer. */
 "Please download this image from iCloud." = "请从 iCloud 下载该图片.";
@@ -1352,7 +1361,7 @@
 "Temporarily directory \"%@\" already exists." = "临时目录 \"%@\" 已经存在.";
 
 /* No comment provided by engineer. */
-"Temporarily XPP Bundle cleaned: \"%@\"." = "已清理临时 XPP Bundle: \"%@\".";
+"Temporarily XPP Bundle cleaned: \"%@\"." = "已清理临时 XPP 脚本包: \"%@\".";
 
 /* No comment provided by engineer. */
 "Test" = "测试";
@@ -1419,6 +1428,9 @@
 
 /* No comment provided by engineer. */
 "This page is provided by the script producer." = "该页所示内容由脚本开发商提供.";
+
+/* No comment provided by engineer. */
+"This XPP Bundle does not support the resolution of this device.\nYou can find the supported resolutions in extended item properties." = "该脚本包不支持当前设备的分辨率.\n你可以在项目扩展属性中检查支持的分辨率.";
 
 /* No comment provided by engineer. */
 "Thread terminated." = "线程终止";
@@ -1510,6 +1522,9 @@
 "View History" = "历史记录";
 
 /* No comment provided by engineer. */
+"Warning" = "警告";
+
+/* No comment provided by engineer. */
 "Warning: Bootscript could leave system at a unpredictable state. You can hold \"Volume +\" before booting to stop vulnerable script from being launched." = "警告: 开机启动项会使系统处于不可预料的状态, 你可以在开机前按住 \"音量 +\" 以防止有害脚本加载.";
 
 /* No comment provided by engineer. */
@@ -1559,9 +1574,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"Internal server error (%@)." = "";
-
-/* No comment provided by engineer. */
-"New version found: v%@\nCurrent version: v%@\n%@" = "";

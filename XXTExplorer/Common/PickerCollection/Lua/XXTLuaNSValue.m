@@ -549,7 +549,7 @@ int l_sys_version(lua_State *L)
 
 int l_sys_xtversion(lua_State *L)
 {
-    NSString *xtVersion = uAppDefine(@"DAEMON_VERSION");
+    NSString *xtVersion = uAppDefine(kXXTDaemonVersionKey);
     NSString *versionString = [xtVersion stringByReplacingOccurrencesOfString:@"-" withString:@"."];
     lua_pushstring(L, [versionString UTF8String]);
     return 1;

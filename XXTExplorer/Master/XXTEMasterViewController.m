@@ -18,19 +18,19 @@
     #import "XXTERespringAgent.h"
     #import "XXTEDaemonAgent.h"
 
-    #import "XXTEJSONHelper.h"
-    #import "XXTEJSONPackage.h"
+    #import "XXTEUpdateHelper.h"
+    #import "XXTEUpdatePackage.h"
     #import "XXTEUpdateAgent.h"
 #endif
 
 #ifndef APPSTORE
-@interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEJSONHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
+@interface XXTEMasterViewController () <XXTEDaemonAgentDelegate, XXTEUpdateHelperDelegate, XXTEUpdateAgentDelegate, LGAlertViewDelegate>
 
 @property(nonatomic, assign) BOOL checkUpdateInBackground;
 @property(nonatomic, weak) LGAlertView *alertView;
 @property(nonatomic, strong) XXTEDaemonAgent *daemonAgent;
 
-@property (nonatomic, strong) XXTEJSONHelper *jsonHelper;
+@property (nonatomic, strong) XXTEUpdateHelper *jsonHelper;
 @property (nonatomic, strong) XXTEUpdateAgent *updateAgent;
 
 @end
@@ -185,7 +185,7 @@
     NSString *repositoryURLString = uAppDefine(@"UPDATE_API");
     NSURL *repositoryURL = [NSURL URLWithString:[NSString stringWithFormat:repositoryURLString, productName]];
     
-    XXTEJSONHelper *jsonHelper = [[XXTEJSONHelper alloc] initWithRepositoryURL:repositoryURL];
+    XXTEUpdateHelper *jsonHelper = [[XXTEUpdateHelper alloc] initWithRepositoryURL:repositoryURL];
     jsonHelper.delegate = self;
     self.jsonHelper = jsonHelper;
     
@@ -229,14 +229,15 @@
 }
 #endif
 
-#pragma mark - XXTEJSONHelperDelegate
+#pragma mark - XXTEUpdateHelperDelegate
 
 #ifndef APPSTORE
-- (void)jsonHelperDidSyncReady:(XXTEJSONHelper *)helper {
+- (void)jsonHelperDidSyncReady:(XXTEUpdateHelper *)helper {
     dispatch_async_on_main_queue(^{
-        NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
-        XXTEJSONPackage *packageModel = helper.respPackage;
+        NSString *currentVersion = uAppDefine(kXXTDaemonVersionKey);
+        XXTEUpdatePackage *packageModel = helper.respPackage;
         NSString *packageVersion = packageModel.latestVersion;
+        NSString *packageDescription = packageModel.updateDescription;
         if ([currentVersion isEqualToString:packageVersion]) {
             if (YES == self.checkUpdateInBackground) {
                 
@@ -260,8 +261,8 @@
         BOOL shouldRemind = [self.updateAgent shouldRemindWithVersion:packageVersion];
         if (NO == self.checkUpdateInBackground || shouldRemind) {
             NSString *channelId = uAppDefine(@"CHANNEL_ID");
-            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"New Version", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"New version found: v%@\nCurrent version: v%@", nil), packageVersion, currentVersion]
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"New Version: %@", nil), packageVersion]
+                                                                message:[NSString stringWithFormat:@"%@", packageDescription]
                                                                   style:LGAlertViewStyleActionSheet
                                                            buttonTitles:@[
                                                                           [NSString stringWithFormat:NSLocalizedString(@"Install via %@", nil), channelId], NSLocalizedString(@"Remind me tomorrow", nil)
@@ -280,7 +281,7 @@
 #endif
 
 #ifndef APPSTORE
-- (void)jsonHelper:(XXTEJSONHelper *)helper didSyncFailWithError:(NSError *)error {
+- (void)jsonHelper:(XXTEUpdateHelper *)helper didSyncFailWithError:(NSError *)error {
     dispatch_async_on_main_queue(^{
         if (NO == self.checkUpdateInBackground) {
             LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil)
@@ -334,8 +335,8 @@
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
     if (index == 0) {
-        XXTEJSONHelper *helper = self.jsonHelper;
-        XXTEJSONPackage *packageModel = helper.respPackage;
+        XXTEUpdateHelper *helper = self.jsonHelper;
+        XXTEUpdatePackage *packageModel = helper.respPackage;
         NSString *cydiaUrlString = packageModel.cydiaURL;
         if (cydiaUrlString) {
             NSURL *cydiaUrl = [NSURL URLWithString:cydiaUrlString];
@@ -355,8 +356,8 @@
 #ifndef APPSTORE
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     [alertView dismissAnimated];
-    XXTEJSONHelper *helper = self.jsonHelper;
-    XXTEJSONPackage *packageModel = helper.respPackage;
+    XXTEUpdateHelper *helper = self.jsonHelper;
+    XXTEUpdatePackage *packageModel = helper.respPackage;
     NSString *packageVersion = packageModel.latestVersion;
     [self.updateAgent ignoreVersion:packageVersion];
     [self.updateAgent ignoreThisDay];

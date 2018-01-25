@@ -3,8 +3,8 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#import "XXTEJSONHelper.h"
-#import "XXTEJSONPackage.h"
+#import "XXTEUpdateHelper.h"
+#import "XXTEUpdatePackage.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
@@ -12,20 +12,20 @@
 #import <sys/stat.h>
 #import "XXTEAppDefines.h"
 
-@interface XXTEJSONHelper ()
+@interface XXTEUpdateHelper ()
 
 @property (nonatomic, strong, readonly) NSString *temporarilyLocation;
 
 @end
 
-@implementation XXTEJSONHelper {
+@implementation XXTEUpdateHelper {
 
 }
 
 - (instancetype)initWithRepositoryURL:(NSURL *)repositoryURL {
     if (self = [super init]) {
         _repositoryURL = repositoryURL;
-        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEJSONHelper"];
+        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateHelper"];
         struct stat temporarilyLocationStat;
         if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
             if (0 != mkdir([temporarilyLocation UTF8String], 0755))
@@ -59,7 +59,7 @@
 + (PMKPromise *)syncPromiseWithDictionary:(NSDictionary *)apiResp {
     return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
         NSError *apiError = nil;
-        XXTEJSONPackage *model = [[XXTEJSONPackage alloc] initWithDictionary:apiResp error:&apiError];
+        XXTEUpdatePackage *model = [[XXTEUpdatePackage alloc] initWithDictionary:apiResp error:&apiError];
         if (model) {
             resolve(model);
             return;
@@ -80,7 +80,7 @@
     .then(^(NSDictionary *apiResp) {
         return [[self class] syncPromiseWithDictionary:apiResp];
     })
-    .then(^(XXTEJSONPackage *package) {
+    .then(^(XXTEUpdatePackage *package) {
         self.respPackage = package;
         if ([_delegate respondsToSelector:@selector(jsonHelperDidSyncReady:)]) {
             [_delegate jsonHelperDidSyncReady:self];

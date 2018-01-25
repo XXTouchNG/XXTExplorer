@@ -89,7 +89,7 @@ static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
 static inline NSDictionary *uAppConstEnvp() {
     NSString *languageCode = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
     if (!languageCode) languageCode = @"en";
-    NSString *versionString = uAppDefine(@"DAEMON_VERSION");
+    NSString *versionString = uAppDefine(kXXTDaemonVersionKey);
     if (!versionString) versionString = @"";
     return @{ @"XXTOUCH_LAUNCH_VIA": @"APPLICATION", @"XXTOUCH_LANGUAGE": languageCode, @"XXTOUCH_VERSION": versionString };
 }

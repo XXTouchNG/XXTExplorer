@@ -107,7 +107,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     // Copy Initial Resources
     {
         BOOL shouldCopyResources = NO;
-        NSString *currentVersion = uAppDefine(@"DAEMON_VERSION");
+        NSString *currentVersion = uAppDefine(kXXTDaemonVersionKey);
         NSString *versionFlag = [NSString stringWithFormat:XXTELaunchedVersion, currentVersion];
         if (XXTEDefaultsObject(versionFlag, nil) == nil) {
             shouldCopyResources = YES;

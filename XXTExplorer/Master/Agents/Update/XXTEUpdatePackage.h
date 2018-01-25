@@ -5,7 +5,7 @@
 
 #import <JSONModel/JSONModel.h>
 
-@interface XXTEJSONPackage : JSONModel
+@interface XXTEUpdatePackage : JSONModel
 
 @property (nonatomic, strong) NSString *latestVersion;
 @property (nonatomic, strong) NSString *updateDescription;

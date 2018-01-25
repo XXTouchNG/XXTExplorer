@@ -3,9 +3,9 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#import "XXTEJSONPackage.h"
+#import "XXTEUpdatePackage.h"
 
-@implementation XXTEJSONPackage
+@implementation XXTEUpdatePackage
 
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:

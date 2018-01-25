@@ -42,4 +42,10 @@ static NSString * const kXXTEFileTypeImageNameFormat = @"XXTEFileType-%@";
 @property (nonatomic, assign, readonly) BOOL configurable;
 @property (nonatomic, copy, readonly) NSString *configurationName;
 
+- (BOOL)isSupportedDaemon;
+- (BOOL)isSupportedSystem;
+- (BOOL)isSupportedResolution;
+- (BOOL)isSupported;
+- (NSString *)localizedUnsupportedReason;
+
 @end
