@@ -2,8 +2,8 @@ xcodeproj 'XXTExplorer'
 
 def shared_pods
 
-    # pod 'XUI', :path => '../XUI'
-    pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
+    pod 'XUI', :path => '../XUI'
+    # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
 
     # pod 'TOWebViewController', '~> 2.2.6'
     # pod 'TOWebViewController', :path => '../TOWebViewController'
@@ -18,8 +18,8 @@ def shared_pods
     pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
 
     # pod 'MWPhotoBrowser', '~> 2.1.2', :inhibit_warnings => true
-    # pod 'MWPhotoBrowser', :path => '../MWPhotoBrowser', :inhibit_warnings => true
-    pod 'MWPhotoBrowser', :git => 'https://github.com/Lessica/MWPhotoBrowser.git', :inhibit_warnings => true
+    pod 'MWPhotoBrowser', :path => '../MWPhotoBrowser', :inhibit_warnings => true
+    # pod 'MWPhotoBrowser', :git => 'https://github.com/Lessica/MWPhotoBrowser.git', :inhibit_warnings => true
 
     # pod 'Masonry', '~> 1.0.2', :inhibit_warnings => true
     pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true

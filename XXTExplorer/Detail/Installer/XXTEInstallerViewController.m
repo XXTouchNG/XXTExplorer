@@ -53,6 +53,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSBundle *temporarilyEntryBundle;
 @property (nonatomic, assign) BOOL removeAfterInstallation;
 
+@property (nonatomic, strong) NSDictionary *entryDetail;
+
 @end
 
 @implementation XXTEInstallerViewController
@@ -415,6 +417,7 @@ typedef enum : NSUInteger {
     XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
     NSString *xppPath = [parentPath stringByAppendingPathComponent:xppItem];
     NSDictionary *entryDetail = [entryParser entryOfPath:xppPath withError:nil];
+    self.entryDetail = entryDetail;
     if (![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
         ![entryDetail[XXTExplorerViewEntryAttributeEntryReader] isKindOfClass:[XXTExplorerEntryXPPReader class]]) {
         [self displayErrorMessageInLoadingView:[NSString stringWithFormat:NSLocalizedString(@"Invalid XPP Bundle: \"%@\".", nil), xppPath]];
@@ -550,6 +553,17 @@ typedef enum : NSUInteger {
 
 - (void)installButtonItemTapped:(UIBarButtonItem *)sender {
     if (!self.temporarilyEntryBundle) return;
+    if (!self.entryDetail) return;
+    XXTExplorerEntryReader *entryReader = self.entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+    if (!entryReader) return;
+    NSString *unsupportedReason = [entryReader localizedUnsupportedReason];
+    if (unsupportedReason != nil) {
+        LGAlertView *unsupportedAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Warning", nil) message:unsupportedReason style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+            [alertView dismissAnimated];
+        } destructiveHandler:nil];
+        [unsupportedAlert showAnimated];
+        return;
+    }
     if (sender == self.installButtonItem) {
         NSString *bundleTestName = [[self.temporarilyEntryBundle bundlePath] lastPathComponent];
         NSString *bundleTestPath = [[self.entryPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:bundleTestName];

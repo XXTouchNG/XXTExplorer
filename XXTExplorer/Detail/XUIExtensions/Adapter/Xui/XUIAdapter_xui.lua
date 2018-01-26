@@ -230,6 +230,17 @@ function ValueCheckers.TitleValue(item, value, index)
     end
 end
 
+function ValueCheckers.Link(item, value, index)
+    if item.default == nil then
+        item.default = ''
+    end
+    if value ~= nil then
+        return value
+    else
+        return item.default
+    end
+end
+
 function ValueCheckers.EditableList(item, value, index)
     if type(item.default) ~= 'table' then
         item.default = {}
