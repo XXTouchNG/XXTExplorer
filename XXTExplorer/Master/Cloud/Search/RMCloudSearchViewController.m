@@ -109,6 +109,7 @@ XXTE_END_IGNORE_PARTIAL
         UISearchBar *searchBar = self.searchController.searchBar;
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         searchBar.placeholder = NSLocalizedString(@"Search RuanMao Cloud", nil);
+        searchBar.scopeButtonTitles = @[ ];
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -124,17 +125,6 @@ XXTE_END_IGNORE_PARTIAL
     
     [self loadHotTrends];
 }
-
-XXTE_START_IGNORE_PARTIAL
-- (void)viewSafeAreaInsetsDidChange {
-    [super viewSafeAreaInsetsDidChange];
-    if (@available(iOS 11.0, *)) {
-        self.tableView.contentInset =
-        self.tableView.scrollIndicatorInsets =
-        self.view.safeAreaInsets;
-    }
-}
-XXTE_END_IGNORE_PARTIAL
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     [super didMoveToParentViewController:parent];
@@ -190,9 +180,6 @@ XXTE_END_IGNORE_PARTIAL
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
-        if (@available(iOS 11.0, *)) {
-            tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
         XXTE_END_IGNORE_PARTIAL
         _tableView = tableView;

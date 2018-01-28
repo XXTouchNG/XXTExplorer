@@ -40,3 +40,6 @@
 "VideoDuration" = "视频时长";
 "AudioMediaType" = "音频类型";
 "AudioDuration" = "音频时长";
+
+"width" = "宽度";
+"height" = "高度";
