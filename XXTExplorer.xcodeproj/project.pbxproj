@@ -4074,8 +4074,8 @@
 			projectRoot = "";
 			targets = (
 				0FA7ABE91ED641A3003EAD7D /* XXTExplorer */,
-				0F8EDB551FB1F779003C92D6 /* XXTouch */,
 				D60FE64E1FE2369300954818 /* XXTExplorer-Archive */,
+				0F8EDB551FB1F779003C92D6 /* XXTouch */,
 			);
 		};
 /* End PBXProject section */
@@ -4511,13 +4511,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/XUI-iOS8.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/XUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4531,14 +4533,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle,
-				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/UnrarKit/UnrarKitResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/XUI-iOS8.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UnrarKitResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/XUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4585,13 +4590,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS7.0/XUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/XUI-iOS7.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/XUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -6104,7 +6111,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Debug;
@@ -6194,7 +6201,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Release;

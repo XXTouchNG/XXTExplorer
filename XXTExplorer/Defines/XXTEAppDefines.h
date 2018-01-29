@@ -11,7 +11,7 @@
 
 #import "XXTEAppDelegate.h"
 
-static const char * sharedEnvp[] = { "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL };
+static const char * sharedEnvp[] = { "PATH=/bootstrap/usr/local/bin:/bootstrap/usr/sbin:/bootstrap/usr/bin:/bootstrap/sbin:/bootstrap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL };
 
 static inline id uAppDefine(NSString *key) {
     return XXTEAppDelegate.appDefines[key];

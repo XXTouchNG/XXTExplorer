@@ -942,6 +942,9 @@
 "No description." = "暂无描述.";
 
 /* No comment provided by engineer. */
+"No file can be found.\nImport file via File Sharing or iTunes." = "您还一个文件都没有.\n请通过文件共享或 iTunes 导入文件.";
+
+/* No comment provided by engineer. */
 "No item" = "无项目";
 
 /* No comment provided by engineer. */
