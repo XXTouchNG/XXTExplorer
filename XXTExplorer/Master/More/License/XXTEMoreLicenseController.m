@@ -24,6 +24,8 @@
 
 #import "XXTEAppDefines.h"
 #import "XXTEPermissionDefines.h"
+#import "XXTEUserInterfaceDefines.h"
+#import "NSString+XQueryComponents.h"
 
 static NSString * const kXXTEMoreLicenseCachedLicense = @"kXXTEMoreLicenseCachedLicense";
 

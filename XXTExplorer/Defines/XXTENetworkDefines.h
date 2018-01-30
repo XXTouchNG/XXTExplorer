@@ -9,89 +9,32 @@
 #ifndef XXTENetworkDefines_h
 #define XXTENetworkDefines_h
 
-#import "XXTEAppDefines.h"
-#import "NSString+XQueryComponents.h"
-#import "NSString+SHA1.h"
-#import "XXTECloudApiSdk.h"
-#import "XXTEUserInterfaceDefines.h"
+#import <Foundation/Foundation.h>
 
-#ifndef APPSTORE
-static id (^convertJsonString)(id) =
-^id (id obj) {
-    if ([obj isKindOfClass:[NSString class]]) {
-        NSString *jsonString = obj;
-        NSError *serverError = nil;
-        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&serverError];
-        if (serverError) {
-            @throw [serverError localizedDescription];
-        }
-        return jsonDictionary;
-    } else if ([obj isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *jsonDictionary = obj;
-        return jsonDictionary;
-    }
-    return @{};
-};
+#ifdef __cplusplus
+extern "C" {
 #endif
-
+    
 #ifndef APPSTORE
-static id (^sendCloudApiRequest)(NSArray *objs) =
-^(NSArray *objs) {
-    NSString *commandUrl = objs[0];
-    NSDictionary *sendDictionary = objs[1];
-    NSMutableDictionary *sendMutableDictionary = [[NSMutableDictionary alloc] initWithDictionary:sendDictionary];
-    NSString *signatureString = [[sendDictionary stringFromQueryComponents] sha1String];
-    sendMutableDictionary[@"sign"] = signatureString;
-    NSURL *sendUrl = [NSURL URLWithString:commandUrl];
-    NSURLRequest *request = [XXTECloudApiSdk buildRequest:[NSString stringWithFormat:@"%@://", [sendUrl scheme]]
-                                                   method:@"POST"
-                                                     host:[sendUrl host]
-                                                     path:[sendUrl path]
-                                               pathParams:nil
-                                              queryParams:nil
-                                               formParams:[sendMutableDictionary copy]
-                                                     body:nil
-                                       requestContentType:@"application/x-www-form-urlencoded"
-                                        acceptContentType:@"application/json"
-                                             headerParams:nil];
-    NSHTTPURLResponse *licenseResponse = nil;
-    NSError *licenseError = nil;
-    NSData *licenseReceived = [NSURLConnection sendSynchronousRequest:request returningResponse:&licenseResponse error:&licenseError];
-    if (licenseError) {
-        @throw [licenseError localizedDescription];
-    }
-    NSDictionary *returningHeadersDict = [licenseResponse allHeaderFields];
-    if (licenseResponse.statusCode != 200 &&
-        returningHeadersDict[@"X-Ca-Error-Message"])
-    {
-        @throw [NSString stringWithFormat:NSLocalizedString(@"Aliyun gateway error: %@", nil), returningHeadersDict[@"X-Ca-Error-Message"]];
-    }
-    NSDictionary *licenseDictionary = [NSJSONSerialization JSONObjectWithData:licenseReceived options:0 error:&licenseError];
-    if (licenseError) {
-        @throw [licenseError localizedDescription];
-    }
-    return licenseDictionary;
-};
+    static id (^convertJsonString)(id);
 #endif
-
+    
 #ifndef APPSTORE
-static inline NSString *uAppDaemonCommandUrl(NSString *command) {
-    return ([uAppDefine(@"LOCAL_API") stringByAppendingString:command]);
+    static id (^sendCloudApiRequest)(NSArray *objs);
+#endif
+    
+#ifndef APPSTORE
+    NSString *uAppDaemonCommandUrl(NSString *command);
+#endif
+    
+#ifndef APPSTORE
+    NSString *uAppLicenseServerCommandUrl(NSString *command);
+#endif
+    
+    NSDictionary *uAppConstEnvp(void);
+    
+#ifdef __cplusplus
 }
 #endif
-
-#ifndef APPSTORE
-static inline NSString *uAppLicenseServerCommandUrl(NSString *command) {
-    return ([uAppDefine(@"AUTH_API") stringByAppendingString:command]);
-}
-#endif
-
-static inline NSDictionary *uAppConstEnvp() {
-    NSString *languageCode = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
-    if (!languageCode) languageCode = @"en";
-    NSString *versionString = uAppDefine(kXXTDaemonVersionKey);
-    if (!versionString) versionString = @"";
-    return @{ @"XXTOUCH_LAUNCH_VIA": @"APPLICATION", @"XXTOUCH_LANGUAGE": languageCode, @"XXTOUCH_VERSION": versionString };
-}
 
 #endif /* XXTENetworkDefines_h */

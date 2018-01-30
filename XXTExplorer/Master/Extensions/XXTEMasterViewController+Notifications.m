@@ -9,6 +9,7 @@
 #import <sys/stat.h>
 #import "XXTEMasterViewController+Notifications.h"
 
+#import "XXTEAppDefines.h"
 #import "XXTEDispatchDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENotificationCenterDefines.h"
@@ -28,13 +29,14 @@
 #import "UIViewController+topMostViewController.h"
 
 #ifndef APPSTORE
+    #import "XXTExplorerDefaults.h"
     #import "XXTENetworkDefines.h"
     #import "XXTEPermissionDefines.h"
+
     #import "XXTEMoreLicenseController.h"
     #import "XXTEDownloadViewController.h"
     #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
-    #import "XXTExplorerDefaults.h"
     #import "RMCloudNavigationController.h"
     #import "RMCloudProjectViewController.h"
 #endif
@@ -138,7 +140,7 @@
 #ifndef APPSTORE
             
 #ifndef DEBUG
-            XXTExplorerPasteboardDetectType detectType = XXTEDefaultsEnum(XXTExplorerPasteboardDetectOnActive, XXTExplorerPasteboardDetectTypeNone);
+            XXTExplorerPasteboardDetectType detectType = XXTEDefaultsEnum(XXTExplorerPasteboardDetectOnActiveKey, XXTExplorerPasteboardDetectTypeNone);
 #else
             XXTExplorerPasteboardDetectType detectType = XXTExplorerPasteboardDetectTypeAll;
 #endif

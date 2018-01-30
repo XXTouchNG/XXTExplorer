@@ -677,6 +677,9 @@
 		0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1E4491F18FD5000055E02 /* XXTExplorerEntryCodeReader.m */; };
 		0FE5B1281F6956CF00034424 /* SKAttributedRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE5B1271F6956CF00034424 /* SKAttributedRenderer.m */; };
 		0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */; };
+		0FEA24542020A90B00AA60DC /* XXTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA24532020A90B00AA60DC /* XXTEUtils.m */; };
+		0FEA24552020A90B00AA60DC /* XXTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA24532020A90B00AA60DC /* XXTEUtils.m */; };
+		0FEA24562020A90B00AA60DC /* XXTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA24532020A90B00AA60DC /* XXTEUtils.m */; };
 		0FEB74521F3EB88400B58A4F /* json.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0FEB74511F3EB88400B58A4F /* json.tmLanguage */; };
 		0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FECB2261EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib */; };
@@ -1693,6 +1696,7 @@
 		0FE5B1261F6956CF00034424 /* SKAttributedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAttributedRenderer.h; sourceTree = "<group>"; };
 		0FE5B1271F6956CF00034424 /* SKAttributedRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAttributedRenderer.m; sourceTree = "<group>"; };
 		0FE65E2C1F533043005F81FB /* XXTEPremiumPreview.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = XXTEPremiumPreview.pdf; sourceTree = "<group>"; };
+		0FEA24532020A90B00AA60DC /* XXTEUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEUtils.m; sourceTree = "<group>"; };
 		0FEB74511F3EB88400B58A4F /* json.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = json.tmLanguage; sourceTree = "<group>"; };
 		0FECB2241EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewHomeCell.h; sourceTree = "<group>"; };
 		0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewHomeCell.m; sourceTree = "<group>"; };
@@ -3322,15 +3326,16 @@
 			children = (
 				0FE65E231F528EF1005F81FB /* Resources */,
 				0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */,
+				0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */,
+				0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */,
 				D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */,
 				0F8EDCD01FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist */,
 				D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */,
 				0F8EDCCB1FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist */,
-				0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */,
-				D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */,
-				0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */,
 				0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */,
+				D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */,
 				D6E1E1DF2020489B00324198 /* XXTEPermissionDefines.h */,
+				0FEA24532020A90B00AA60DC /* XXTEUtils.m */,
 			);
 			path = Defines;
 			sourceTree = "<group>";
@@ -4513,15 +4518,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/XUI-iOS8.0/XUI.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/XUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4535,17 +4538,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/UnrarKit/UnrarKitResources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/XUI-iOS8.0/XUI.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UnrarKitResources.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/XUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4592,15 +4592,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/XUI-iOS7.0/XUI.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS7.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/XUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4770,6 +4768,7 @@
 				0F8EDBBB1FB1F779003C92D6 /* XUIEntryReader.m in Sources */,
 				0F8EDBBC1FB1F779003C92D6 /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */,
 				0F8811621FB6AF430004F20C /* XXTESegmentedButton.m in Sources */,
+				0FEA24562020A90B00AA60DC /* XXTEUtils.m in Sources */,
 				0F8EDBBD1FB1F779003C92D6 /* XXTExplorerItemNameCell.m in Sources */,
 				0F8EDBBE1FB1F779003C92D6 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
 				0F8EDBBF1FB1F779003C92D6 /* XXTPixelPreview.m in Sources */,
@@ -4942,6 +4941,7 @@
 				0FAD691D1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				0FB2209C1F824A9200156C3B /* XXTEEditorPreprocessor.m in Sources */,
 				0FBAFF431F6E5378008B3189 /* XXTImagePickerPhotoCell.m in Sources */,
+				0FEA24542020A90B00AA60DC /* XXTEUtils.m in Sources */,
 				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
 				0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */,
@@ -5250,6 +5250,7 @@
 				D60FE6611FE2369300954818 /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D60FE6621FE2369300954818 /* XXTEEditorPreprocessor.m in Sources */,
 				D60FE6631FE2369300954818 /* XXTImagePickerPhotoCell.m in Sources */,
+				0FEA24552020A90B00AA60DC /* XXTEUtils.m in Sources */,
 				D60FE6651FE2369300954818 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				D60FE6661FE2369300954818 /* UINavigationController+StatusBar.m in Sources */,
 				D60FE6671FE2369300954818 /* UIImagePickerController+StatusBar.m in Sources */,

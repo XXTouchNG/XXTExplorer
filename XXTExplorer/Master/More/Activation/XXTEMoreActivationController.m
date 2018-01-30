@@ -7,12 +7,12 @@
 //
 
 #import "XXTEMoreActivationController.h"
+
+#import "XXTEMoreSwitchCell.h"
 #import "XXTEMoreTitleDescriptionCell.h"
 #import "XXTEMoreActivationOperationController.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
-#import "UIView+XXTEToast.h"
-#import "XXTENetworkDefines.h"
 
 #import <objc/runtime.h>
 #import "libactivator.h"
@@ -21,7 +21,8 @@
 #import "LASettingsViewController+MyShowsAd.h"
 
 #import "XXTEAppDefines.h"
-#import "XXTEMoreSwitchCell.h"
+#import "XXTENetworkDefines.h"
+#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     XXTEMoreActivationSectionInternalSwitch = 0,

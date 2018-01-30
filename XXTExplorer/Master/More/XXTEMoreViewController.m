@@ -25,7 +25,11 @@
     #import <LGAlertView/LGAlertView.h>
     #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
+
+    #import "XXTEAppDefines.h"
     #import "XXTENetworkDefines.h"
+    #import "XXTEUserInterfaceDefines.h"
+
     #import "XXTEMoreApplicationListController.h"
     #import "XXTEMoreLicenseController.h"
     #import "XXTEMoreActivationController.h"

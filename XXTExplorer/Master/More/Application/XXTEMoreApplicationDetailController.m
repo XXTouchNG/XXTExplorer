@@ -15,7 +15,9 @@
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreActionCell.h"
+
 #import "XXTENetworkDefines.h"
+#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreApplicationDetailSectionIndexDetail = 0,

@@ -28,8 +28,9 @@ static NSString * const XXTExplorerViewEntrySelectLaunchedScriptKey = @"XXTExplo
 static NSString * const XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey = @"XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey";
 static NSString * const XXTExplorerAllowOpenMethodKey = @"XXTExplorerAllowOpenMethodKey";
 static NSString * const XXTExplorerViewEntryHideOperationLabelKey = @"XXTExplorerViewEntryHideOperationLabelKey";
-static NSString * const XXTExplorerPasteboardDetectOnActive = @"XXTExplorerPasteboardDetectOnActive";
+static NSString * const XXTExplorerPasteboardDetectOnActiveKey = @"XXTExplorerPasteboardDetectOnActiveKey";
 static NSString * const XXTExplorerAllowsImportFromAlbum = @"XXTExplorerAllowsImportFromAlbum";
+static NSString * const XXTExplorerFixFileOwnerAutomaticallyKey = @"XXTExplorerFixFileOwnerAutomaticallyKey";
 
 #pragma mark - Item Picker Defaults
 

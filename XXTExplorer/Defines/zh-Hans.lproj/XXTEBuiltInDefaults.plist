@@ -202,7 +202,7 @@
 			<key>enabled</key>
 			<string>YES</string>
 			<key>key</key>
-			<string>XXTExplorerPasteboardDetectOnActive</string>
+			<string>XXTExplorerPasteboardDetectOnActiveKey</string>
 			<key>default</key>
 			<integer>0</integer>
 			<key>title</key>
@@ -215,6 +215,23 @@
 				<string>仅检查可供下载的 URL</string>
 				<string>仅检查授权码</string>
 				<string>全部检查</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerFixFileOwnerAutomaticallyKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>自动修复文件所有者</string>
+			<key>description</key>
+			<string>如果可能, 通过命令行 &quot;chown&quot; 以自动修复文件的所有者属性.</string>
+			<key>options</key>
+			<array>
+				<string>关闭</string>
+				<string>开启</string>
 			</array>
 		</dict>
 	</array>

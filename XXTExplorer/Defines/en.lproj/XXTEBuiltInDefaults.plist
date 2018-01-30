@@ -202,7 +202,7 @@
 			<key>enabled</key>
 			<string>YES</string>
 			<key>key</key>
-			<string>XXTExplorerPasteboardDetectOnActive</string>
+			<string>XXTExplorerPasteboardDetectOnActiveKey</string>
 			<key>default</key>
 			<integer>0</integer>
 			<key>title</key>
@@ -215,6 +215,23 @@
 				<string>Detect Downloadable URL</string>
 				<string>Detect License String</string>
 				<string>Detect All</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerFixFileOwnerAutomaticallyKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Fix File Owner Automatically</string>
+			<key>description</key>
+			<string>Fix the owner of file with the command &quot;chown&quot; if possible.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
 			</array>
 		</dict>
 	</array>

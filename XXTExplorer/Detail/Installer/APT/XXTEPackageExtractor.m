@@ -9,7 +9,9 @@
 #import <spawn.h>
 #import <sys/stat.h>
 #import "XXTEPackageExtractor.h"
+
 #import "XXTEAppDefines.h"
+#import "XXTEPermissionDefines.h"
 
 @interface XXTEPackageExtractor ()
 
@@ -48,8 +50,8 @@
     posix_spawn_file_actions_addopen(&action, STDOUT_FILENO, [temporarilyPath UTF8String], O_WRONLY, 0);
     int status = 0;
     pid_t pid = 0;
-    const char* binary = [uAppDefine(@"ADD1S_PATH") UTF8String];
-    const char* args[] = { binary, "/usr/bin/dpkg", "-i", [packagePath UTF8String], NULL };
+    const char *binary = add1s_binary();
+    const char *args[] = { binary, "/usr/bin/dpkg", "-i", [packagePath UTF8String], NULL };
     posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)sharedEnvp);
     posix_spawn_file_actions_destroy(&action);
     if (pid == 0) {
@@ -109,7 +111,7 @@
     }
     int status = 0;
     pid_t pid = 0;
-    const char* binary = [uAppDefine(@"ADD1S_PATH") UTF8String];
+    const char *binary = add1s_binary();
     const char* args[] = { binary, "/usr/bin/dpkg", "-e", [packagePath UTF8String], [temporarilyPath UTF8String], NULL };
     posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
     if (pid == 0) {
@@ -143,8 +145,8 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^() {
         pid_t pid = 0;
-        const char* binary = [uAppDefine(@"ADD1S_PATH") UTF8String];
-        const char* args[] = {binary, "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
+        const char *binary = add1s_binary();
+        const char *args[] = {binary, "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
         posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
         waitpid(pid, &status, 0);
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -34,7 +34,10 @@
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
+#import "XXTEAppDefines.h"
 #import "XXTENotificationCenterDefines.h"
+#import "XXTEUserInterfaceDefines.h"
+#import "XXTEPermissionDefines.h"
 
 @interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerFooterViewDelegate>
 
@@ -273,9 +276,12 @@
     }
 
     NSArray <NSDictionary *> *newEntryList = ({
+        NSString *entryPath = self.entryPath;
+        promiseFixPermission(entryPath, NO);
+        
         BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
         NSError *localError = nil;
-        NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:self.entryPath error:&localError];
+        NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&localError];
         if (localError && error) {
             *error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: localError.localizedDescription}];
         }
@@ -289,7 +295,7 @@
                 if (hidesDot && [entrySubdirectoryName hasPrefix:@"."]) {
                     continue;
                 }
-                NSString *entrySubdirectoryPath = [self.entryPath stringByAppendingPathComponent:entrySubdirectoryName];
+                NSString *entrySubdirectoryPath = [entryPath stringByAppendingPathComponent:entrySubdirectoryName];
                 NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
                 if (localError && error) {
                     continue;

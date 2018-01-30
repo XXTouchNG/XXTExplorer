@@ -10,6 +10,7 @@
 #import "XXTExplorerViewController+ArchiverOperation.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
+#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTENetworkDefines.h"
