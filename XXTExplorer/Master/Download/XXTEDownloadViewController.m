@@ -17,6 +17,8 @@
 #import "NSString+XQueryComponents.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
+#import "XXTEPermissionDefines.h"
+
 typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexSource = 0,
     kXXTExplorerDownloadViewSectionIndexTarget,
@@ -659,6 +661,7 @@ typedef enum : NSUInteger {
     NSString *targetName = [targetPath lastPathComponent];
     if (self.overwrite) {
         { // Remove old file
+            promiseFixPermission(targetPath, NO); // fix permission
             NSError *removeError = nil;
             BOOL removeResult = [self.downloadFileManager removeItemAtPath:targetPath error:&removeError];
             struct stat targetStat;

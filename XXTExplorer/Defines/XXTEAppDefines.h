@@ -10,6 +10,7 @@
 #define XXTEAppDefines_h
 
 #import "XXTEAppDelegate.h"
+//#define RMCLOUD_ENABLED 1
 
 static const char * sharedEnvp[] = { "PATH=/bootstrap/usr/local/bin:/bootstrap/usr/sbin:/bootstrap/usr/bin:/bootstrap/sbin:/bootstrap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL };
 

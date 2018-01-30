@@ -2021,6 +2021,7 @@
 		D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerPreviewBar.m; sourceTree = "<group>"; };
 		D6E141621F50330400D78CB9 /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
 		D6E141631F50330400D78CB9 /* xxte-white-icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xxte-white-icons.plist"; sourceTree = "<group>"; };
+		D6E1E1DF2020489B00324198 /* XXTEPermissionDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEPermissionDefines.h; sourceTree = "<group>"; };
 		D6E560421F50353200E0F997 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D6E560441F50353900E0F997 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D6E560461F50354400E0F997 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -3329,6 +3330,7 @@
 				D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */,
 				0FEFFFFA1EE09D680098D4BB /* XXTENotificationCenterDefines.h */,
 				0F4F66FC1F11EF9C0042C449 /* XXTEUserInterfaceDefines.h */,
+				D6E1E1DF2020489B00324198 /* XXTEPermissionDefines.h */,
 			);
 			path = Defines;
 			sourceTree = "<group>";

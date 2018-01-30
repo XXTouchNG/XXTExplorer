@@ -29,6 +29,7 @@
 
 #ifndef APPSTORE
     #import "XXTENetworkDefines.h"
+    #import "XXTEPermissionDefines.h"
     #import "XXTEMoreLicenseController.h"
     #import "XXTEDownloadViewController.h"
     #import <PromiseKit/PromiseKit.h>
@@ -119,6 +120,7 @@
                     testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
                     testedIndex++;
                 }
+                promiseFixPermission(currentPath, NO); // fix permission
                 BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
                 dispatch_async_on_main_queue(^{
                     blockInteractions(blockVC, NO);
@@ -363,6 +365,7 @@
         [self presentViewController:navController animated:YES completion:nil];
         return YES;
     }
+#ifdef RMCLOUD_ENABLED
     else if ([jsonEvent isEqualToString:@"cloud"]) {
         if (self.viewControllers.count >= kMasterViewControllerIndexCloud)
         {
@@ -386,6 +389,7 @@
         }
         return YES;
     }
+#endif
 #endif
     return NO;
 }

@@ -23,6 +23,7 @@
 #import "XXTECommonWebViewController.h"
 
 #import "XXTEAppDefines.h"
+#import "XXTEPermissionDefines.h"
 
 static NSString * const kXXTEMoreLicenseCachedLicense = @"kXXTEMoreLicenseCachedLicense";
 
@@ -700,6 +701,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                                                         contents:[NSData data]
                                                       attributes:nil];
             }
+            promiseFixPermission(licenseLogFullPath, NO);
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:licenseLogFullPath];
             [fileHandle seekToEndOfFile];
             [fileHandle writeData:[licenseLog dataUsingEncoding:NSUTF8StringEncoding]];

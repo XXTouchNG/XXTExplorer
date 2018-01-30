@@ -20,6 +20,8 @@
 #import "XXTEMoreSwitchCell.h"
 #import "UIControl+BlockTarget.h"
 
+#import "XXTEPermissionDefines.h"
+
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,
     kXXTExplorerCreateItemViewSectionIndexType,
@@ -359,7 +361,8 @@ typedef enum : NSUInteger {
     if ([self.nameField isFirstResponder]) {
         [self.nameField resignFirstResponder];
     }
-    if (self.entryPath.length == 0) {
+    NSString *entryPath = self.entryPath;
+    if (entryPath.length == 0) {
         return;
     }
     NSString *itemName = self.nameField.text;
@@ -379,7 +382,7 @@ typedef enum : NSUInteger {
     NSString *itemExtension = [[itemName pathExtension] lowercaseString];
     NSFileManager *createItemManager = [[NSFileManager alloc] init];
     struct stat itemStat;
-    NSString *itemPath = [self.entryPath stringByAppendingPathComponent:itemName];
+    NSString *itemPath = [entryPath stringByAppendingPathComponent:itemName];
     if (/* [createItemManager fileExistsAtPath:itemPath] */ 0 == lstat([itemPath UTF8String], &itemStat)) {
         toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" already exists.", nil), itemName]));
         [self.itemNameShaker shake];
@@ -424,7 +427,7 @@ typedef enum : NSUInteger {
             templateData = [newTemplate dataUsingEncoding:NSUTF8StringEncoding];
             
         }
-        
+        promiseFixPermission(entryPath, NO);
         BOOL createResult = [createItemManager createFileAtPath:itemPath contents:templateData attributes:nil];
         if (!createResult) {
             toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot create file \"%@\".", nil), itemName]));

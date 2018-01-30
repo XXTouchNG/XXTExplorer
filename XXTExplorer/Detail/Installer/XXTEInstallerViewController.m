@@ -36,6 +36,8 @@
 #import "XXTEMoreSwitchCell.h"
 #import "UIControl+BlockTarget.h"
 
+#import "XXTEPermissionDefines.h"
+
 typedef enum : NSUInteger {
     XXTEInstallerViewControllerReplacementTypeNone = 0,
     XXTEInstallerViewControllerReplacementTypeRename,
@@ -602,6 +604,7 @@ typedef enum : NSUInteger {
     NSString *bundleTestPath = [[self.entryPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:bundleTestName];
     
     if (type == XXTEInstallerViewControllerReplacementTypeOverride) {
+        promiseFixPermission(bundleTestPath, YES); // fix permission
         NSError *removeError = nil;
         BOOL result = [[NSFileManager defaultManager] removeItemAtPath:bundleTestPath error:&removeError];
         if (!result) {

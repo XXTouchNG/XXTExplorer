@@ -56,6 +56,8 @@
 #import "ICRangeUtils.h"
 #import "ICRegularExpression.h"
 
+#import "XXTEPermissionDefines.h"
+
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
@@ -1330,7 +1332,9 @@ XXTE_END_IGNORE_PARTIAL
     self.shouldSaveDocument = NO;
     NSString *documentString = self.textView.textStorage.string;
     NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
-    [documentData writeToFile:self.entryPath atomically:YES];
+    NSString *entryPath = self.entryPath;
+    promiseFixPermission(entryPath, NO); // fix permission
+    [documentData writeToFile:entryPath atomically:YES];
 }
 
 - (void)reloadTextViewWidthIfNecessary {

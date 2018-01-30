@@ -328,7 +328,7 @@ XXTE_END_IGNORE_PARTIAL
     XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
     
     // Master - Cloud Controller
-#ifndef APPSTORE
+#if (!defined APPSTORE) && (defined RMCLOUD_ENABLED)
     RMCloudViewController *cloudViewController = [[RMCloudViewController alloc] init];
     RMCloudNavigationController *cloudNavigationController = [[RMCloudNavigationController alloc] initWithRootViewController:cloudViewController];
 #endif
@@ -342,7 +342,11 @@ XXTE_END_IGNORE_PARTIAL
     // Master Controller
     XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
 #ifndef APPSTORE
+#ifdef RMCLOUD_ENABLED
     masterViewController.viewControllers = @[masterNavigationControllerLeft, cloudNavigationController, masterNavigationControllerRight];
+#else
+    masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
+#endif
 #else
     masterViewController.viewControllers = @[masterNavigationControllerLeft];
 #endif

@@ -25,6 +25,8 @@
 #import <sys/stat.h>
 #import "xui32.h"
 
+#import "XXTEPermissionDefines.h"
+
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
 @end
@@ -94,6 +96,7 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            promiseFixPermission(currentPath, NO); // fix permission
             if (entryReader.encryptionType == XXTExplorerEntryReaderEncryptionTypeRemote) {
                 [NSURLConnection POST:uAppDaemonCommandUrl(@"encript_file") JSON:@{ @"in_file": entryPath, @"out_file": encryptedPath }]
                 .then(convertJsonString)
@@ -219,6 +222,7 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            promiseFixPermission(destinationPath, NO); // fix permission
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:storedPaths];
@@ -363,6 +367,7 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            promiseFixPermission(destinationPath, NO); // fix permission
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:storedPaths];
@@ -494,6 +499,7 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            promiseFixPermission(destinationPath, NO); // fix permission
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             for (NSString *storedPath in storedPaths) {
@@ -579,6 +585,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             @strongify(self);
+            promiseFixPermission(entryPath, YES); // fix permission
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSMutableArray <NSString *> *recursiveSubpaths = [@[entryPath] mutableCopy];
@@ -694,6 +701,10 @@
     self.busyOperationProgressFlag = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            for (NSString *fixPath in entryPaths)
+            {
+                promiseFixPermission(fixPath, YES); // fix permission
+            }
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSMutableArray <NSString *> *recursiveSubpaths = [[NSMutableArray alloc] initWithArray:entryPaths];
             NSError *error = nil;
