@@ -39,7 +39,7 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
 #endif
 #ifndef DEBUG
     const char *binary = add1s_binary();
-    BOOL fixEnabled = XXTEBuiltInDefaultsObjectBool(XXTExplorerFixFileOwnerAutomaticallyKey, YES);
+    BOOL fixEnabled = XXTEDefaultsBool(XXTExplorerFixFileOwnerAutomaticallyKey, YES);
     if (fixEnabled) {
         int status = 0;
         if (resursive) {
@@ -64,7 +64,7 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
 #pragma mark - Networking
 
 #ifndef APPSTORE
-static id (^convertJsonString)(id) =
+id (^convertJsonString)(id) =
 ^id (id obj) {
     if ([obj isKindOfClass:[NSString class]]) {
         NSString *jsonString = obj;
@@ -83,7 +83,7 @@ static id (^convertJsonString)(id) =
 #endif
 
 #ifndef APPSTORE
-static id (^sendCloudApiRequest)(NSArray *objs) =
+id (^sendCloudApiRequest)(NSArray *objs) =
 ^(NSArray *objs) {
     NSString *commandUrl = objs[0];
     NSDictionary *sendDictionary = objs[1];

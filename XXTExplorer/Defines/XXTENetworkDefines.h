@@ -16,11 +16,11 @@ extern "C" {
 #endif
     
 #ifndef APPSTORE
-    static id (^convertJsonString)(id);
+    extern id (^convertJsonString)(id);
 #endif
     
 #ifndef APPSTORE
-    static id (^sendCloudApiRequest)(NSArray *objs);
+    extern id (^sendCloudApiRequest)(NSArray *objs);
 #endif
     
 #ifndef APPSTORE
