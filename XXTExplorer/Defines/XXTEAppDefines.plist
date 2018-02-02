@@ -109,5 +109,11 @@
 	<string>/Applications/XXTExplorer.app</string>
 	<key>XXTOUCH_BUY_URL</key>
 	<string>https://www.xxtouch.com/buy/</string>
+	<key>TRUSTED_HOSTS</key>
+	<array>
+		<string>www.xxtouch.com</string>
+		<string>www.mall-software.com</string>
+		<string>82flex.com</string>
+	</array>
 </dict>
 </plist>

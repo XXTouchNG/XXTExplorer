@@ -603,7 +603,11 @@
     XXTPixelPickerType type = [[self class] cropViewType];
     if (type != kXXTPixelCropViewTypeRect && _locked == NO) {
         if (@available(iOS 10.0, *)) {
-            UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+            static UIImpactFeedbackGenerator *feedbackGenerator = nil;
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+            });
             [feedbackGenerator impactOccurred];
         }
     }

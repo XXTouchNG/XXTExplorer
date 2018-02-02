@@ -483,7 +483,11 @@
     if (!output) return;
     
     if (@available(iOS 10.0, *)) {
-        UINotificationFeedbackGenerator *feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+        static UINotificationFeedbackGenerator *feedbackGenerator = nil;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+        });
         [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
     }
 

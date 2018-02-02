@@ -227,6 +227,17 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
     textView.editable = !isReadOnlyMode;
     
+    // Set the fucking smart types again
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 11.0, *)) {
+        textView.smartDashesType = UITextSmartDashesTypeNo;
+        textView.smartQuotesType = UITextSmartQuotesTypeNo;
+        textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
+    } else {
+        // Fallback on earlier versions
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
     if (textView.vTextInput) {
         textView.vTextInput.language = self.language;
         textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);

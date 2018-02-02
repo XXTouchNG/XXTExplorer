@@ -67,7 +67,7 @@ DEPENDENCIES:
   - MWPhotoBrowser (from `../MWPhotoBrowser`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7)
-  - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
+  - TOWebViewController (from `../TOWebViewController`)
   - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
   - XUI (from `../XUI`)
   - YYImage (~> 1.0.4)
@@ -80,8 +80,7 @@ EXTERNAL SOURCES:
   MWPhotoBrowser:
     :path: ../MWPhotoBrowser
   TOWebViewController:
-    :branch: WKWebView
-    :git: https://github.com/Lessica/TOWebViewController.git
+    :path: ../TOWebViewController
   UnrarKit:
     :branch: v2.9
     :git: https://github.com/Lessica/UnrarKit.git
@@ -92,9 +91,6 @@ CHECKOUT OPTIONS:
   LGAlertView:
     :commit: ee0e4294b4dcffdab829b4d0c5a6fa523a1c0c94
     :git: https://github.com/Lessica/LGAlertView.git
-  TOWebViewController:
-    :commit: e4fc21a5a54abbca3a7c0b50b0cdee99219a7e0e
-    :git: https://github.com/Lessica/TOWebViewController.git
   UnrarKit:
     :commit: 6b946a71aecc6654cc0510f63177f72e7fba5ae6
     :git: https://github.com/Lessica/UnrarKit.git
@@ -103,16 +99,16 @@ SPEC CHECKSUMS:
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
-  MWPhotoBrowser: 8d2689f6cc9e4f4e3386834d4b159fadbacba0e4
+  MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: 54c81b179bd5fd223879b29569f88be17a58ec23
   PromiseKit: 8f6a1afd32ac303ece7ef74c84a5ff239cee39f3
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
-  XUI: 003532a3cf6c1af5280e9fa864f0d9ea6092cae5
+  XUI: 962106a41a26f8c1fd640906412aa78e1ea48b2f
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 576f0e2cf07c246a2c82081165091f020094111d
+PODFILE CHECKSUM: ec6be46d6ebd973c358d51a48442ab860a5a7515
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.3.1
