@@ -5,7 +5,7 @@
 	<key>ACTIVATOR_URL</key>
 	<string>cydia://package/libactivator</string>
 	<key>ADD1S_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/bin/add1s</string>
+	<string>/usr/bin/1ferver/add1s</string>
 	<key>ALIYUN_APPKEY</key>
 	<string>23559128</string>
 	<key>ALIYUN_APPSECRERT</key>
@@ -101,6 +101,12 @@
 	<string>http</string>
 	<key>RMCLOUD_TOKEN</key>
 	<string>3487C956F68D360C</string>
+	<key>TRUSTED_HOSTS</key>
+	<array>
+		<string>www.xxtouch.com</string>
+		<string>www.mall-software.com</string>
+		<string>82flex.com</string>
+	</array>
 	<key>UPDATE_API</key>
 	<string>https://www.xxtouch.com/check-update?p=%@</string>
 	<key>UPDATE_PRODUCT</key>
@@ -109,11 +115,5 @@
 	<string>/Applications/XXTExplorer.app</string>
 	<key>XXTOUCH_BUY_URL</key>
 	<string>https://www.xxtouch.com/buy/</string>
-	<key>TRUSTED_HOSTS</key>
-	<array>
-		<string>www.xxtouch.com</string>
-		<string>www.mall-software.com</string>
-		<string>82flex.com</string>
-	</array>
 </dict>
 </plist>
