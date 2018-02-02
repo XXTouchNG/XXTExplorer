@@ -111,7 +111,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         NSString *versionFlag = [NSString stringWithFormat:XXTELaunchedVersion, currentVersion];
         if (XXTEDefaultsObject(versionFlag, nil) == nil) {
             shouldCopyResources = YES;
-            XXTEDefaultsSetObject(versionFlag, @(YES));
+            XXTEDefaultsSetBasic(versionFlag, YES);
         }
         if (shouldCopyResources)
         {

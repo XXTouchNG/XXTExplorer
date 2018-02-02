@@ -79,13 +79,20 @@ typedef enum : NSUInteger {
 - (instancetype)initWithSourceURL:(NSURL *)url targetPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         _sourceURL = url;
-        if (path.length == 0) {
-            NSString *initialPath = [XXTExplorerViewController initialPath];
+        NSString *newPath = path;
+        NSString *initialPath = [XXTExplorerViewController initialPath];
+        if (path.length == 0)
+        {
             NSString *initialName = [url lastPathComponent];
-            path = [initialPath stringByAppendingPathComponent:initialName];
+            newPath = [initialPath stringByAppendingPathComponent:initialName];
         }
-        _targetPath = path;
-        _temporarilyPath = [path stringByAppendingPathExtension:@"xxtdownload"];
+        else if (NO == [path isAbsolutePath])
+        {
+            NSString *initialName = [path mutableCopy];
+            newPath = [initialPath stringByAppendingPathComponent:[initialName copy]];
+        }
+        _targetPath = newPath;
+        _temporarilyPath = [newPath stringByAppendingPathExtension:@"xxtdownload"];
         [self setup];
     }
     return self;

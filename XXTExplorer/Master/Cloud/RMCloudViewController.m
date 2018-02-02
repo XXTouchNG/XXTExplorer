@@ -48,7 +48,9 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
     
-    self.navigationItem.rightBarButtonItem = self.searchItem;
+    if (@available(iOS 8.0, *)) {
+        self.navigationItem.rightBarButtonItem = self.searchItem;
+    }
 }
 
 #pragma mark - Life Cycle

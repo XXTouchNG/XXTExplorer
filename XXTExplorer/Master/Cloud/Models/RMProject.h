@@ -19,6 +19,13 @@ typedef enum : NSUInteger {
     RMApiActionSortByRatingDesc = 3,
 } RMApiActionSortBy;
 
+@interface RMProjectDownloadModel : RMModel
+
+@property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSString *path;
+
+@end
+
 @interface RMProject : RMModel
 
 @property (nonatomic, copy) NSString *applicationID;
@@ -44,7 +51,7 @@ typedef enum : NSUInteger {
 // RMProject *model
 + (PMKPromise *)projectWithID:(NSUInteger)projectID;
 
-// NSString *downloadURL
+// NSString *downloadURL or RMProjectDownloadModel *downloadModel
 - (PMKPromise *)downloadURL;
 
 @end

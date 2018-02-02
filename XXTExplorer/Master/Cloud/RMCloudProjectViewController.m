@@ -9,7 +9,9 @@
 #import "RMCloudProjectViewController.h"
 #import "RMCloudProjectDetailCell.h"
 #import "RMCloudProjectDescriptionCell.h"
+
 #import "RMProject.h"
+
 #import "RMCloudLoadingView.h"
 #import "RMCloudComingSoon.h"
 
@@ -648,26 +650,38 @@ XXTE_END_IGNORE_PARTIAL
     }
     UIViewController *blockController = blockInteractions(self, YES);
     [project downloadURL]
-    .then(^(NSString *downloadURL) {
+    .then(^(id model) {
+        NSString *downloadURL = nil;
+        NSString *downloadPath = nil;
+        if ([model isKindOfClass:[NSString class]]) {
+            downloadURL = (NSString *)model;
+        } else if ([model isKindOfClass:[RMProjectDownloadModel class]]) {
+            RMProjectDownloadModel *downloadModel = (RMProjectDownloadModel *)model;
+            downloadURL = downloadModel.url;
+            downloadPath = downloadModel.path;
+        }
         if (downloadURL) {
             NSURL *sourceURL = [NSURL URLWithString:downloadURL];
             NSString *scheme = sourceURL.scheme;
             if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
             {
                 if ([self standAloneMode]) {
-                    XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:nil];
+                    XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:downloadPath];
                     downloadController.allowsAutoDetection = YES;
                     downloadController.autoInstantView = YES;
                     [self.navigationController pushViewController:downloadController animated:YES];
                 } else {
-                    NSDictionary *internalArgs =
-                    @{
+                    NSMutableDictionary *internalArgs =
+                    [@{
                       @"url": downloadURL,
                       @"instantView": @"true"
-                      };
+                      } mutableCopy];
+                    if (downloadPath) {
+                        internalArgs[@"path"] = downloadPath;
+                    }
                     NSDictionary *userInfo =
                     @{XXTENotificationShortcutInterface: @"download",
-                      XXTENotificationShortcutUserData: internalArgs};
+                      XXTENotificationShortcutUserData: [internalArgs copy]};
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
                 }
             }
@@ -719,6 +733,8 @@ XXTE_END_IGNORE_PARTIAL
                     }
                 }
                 urlDict[@"appid"] = project.applicationID;
+                urlDict[@"projectid"] = [NSString stringWithFormat:@"%lu", project.projectID];
+                urlDict[@"callback"] = XXTSchemeCloudProjectID(project.projectID);
                 NSString *buyURLString = RMBuyUrl([urlDict copy]);
                 NSURL *buyURL = [NSURL URLWithString:buyURLString];
                 UIApplication *sharedApplication = [UIApplication sharedApplication];

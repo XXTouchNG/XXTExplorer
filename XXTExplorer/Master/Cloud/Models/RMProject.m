@@ -8,6 +8,18 @@
 
 #import "RMProject.h"
 
+@implementation RMProjectDownloadModel
+
++ (JSONKeyMapper *)keyMapper
+{
+    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
+                                                                  @"url": @"url",
+                                                                  @"path": @"path"
+                                                                  }];
+}
+
+@end
+
 @implementation RMProject
 
 + (JSONKeyMapper *)keyMapper
@@ -96,7 +108,7 @@
     NSDictionary *args =
     @{ @"projectid": [NSString stringWithFormat:@"%lu", projectID],
        };
-    return [[self class] promiseGETRequest:RMApiUrl(RMApiActionGetScriptUrl, args)];
+    return [[RMProjectDownloadModel class] promiseGETRequest:RMApiUrl(RMApiActionGetScriptUrl, args)];
 }
 
 - (NSString *)localizedTrailDescription {

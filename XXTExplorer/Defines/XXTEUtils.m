@@ -206,3 +206,7 @@ void toastMessageWithDelay(UIViewController *viewController, NSString *message, 
 void toastMessage(UIViewController *viewController, NSString *message) {
     toastMessageWithDelay(viewController, message, 2.0);
 }
+
+NSString *XXTSchemeCloudProjectID(NSUInteger projectID) {
+    return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", projectID];
+}

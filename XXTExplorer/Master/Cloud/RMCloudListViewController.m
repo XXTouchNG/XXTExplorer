@@ -295,20 +295,32 @@ XXTE_END_IGNORE_PARTIAL
     }
     UIViewController *blockController = blockInteractions(self, YES);
     [project downloadURL]
-    .then(^(NSString *downloadURL) {
+    .then(^(id model) {
+        NSString *downloadURL = nil;
+        NSString *downloadPath = nil;
+        if ([model isKindOfClass:[NSString class]]) {
+            downloadURL = (NSString *)model;
+        } else if ([model isKindOfClass:[RMProjectDownloadModel class]]) {
+            RMProjectDownloadModel *downloadModel = (RMProjectDownloadModel *)model;
+            downloadURL = downloadModel.url;
+            downloadPath = downloadModel.path;
+        }
         if (downloadURL) {
             NSURL *sourceURL = [NSURL URLWithString:downloadURL];
             NSString *scheme = sourceURL.scheme;
             if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
             {
-                NSDictionary *internalArgs =
-                @{
-                  @"url": downloadURL,
-                  @"instantView": @"true"
-                  };
+                NSMutableDictionary *internalArgs =
+                [@{
+                   @"url": downloadURL,
+                   @"instantView": @"true"
+                   } mutableCopy];
+                if (downloadPath) {
+                    internalArgs[@"path"] = downloadPath;
+                }
                 NSDictionary *userInfo =
                 @{XXTENotificationShortcutInterface: @"download",
-                  XXTENotificationShortcutUserData: internalArgs};
+                  XXTENotificationShortcutUserData: [internalArgs copy]};
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
             }
         }

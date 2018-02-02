@@ -35,7 +35,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) RMCloudComingSoon *comingSoonView;
 
 XXTE_START_IGNORE_PARTIAL
-@property(nonatomic, strong, readonly) UISearchController *searchController;
+@property (nonatomic, strong, readonly) UISearchController *searchController;
 XXTE_END_IGNORE_PARTIAL
 
 @end

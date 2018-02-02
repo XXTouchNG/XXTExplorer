@@ -33,6 +33,8 @@ extern "C" {
     
     NSDictionary *uAppConstEnvp(void);
     
+    NSString *XXTSchemeCloudProjectID(NSUInteger projectID);
+    
 #ifdef __cplusplus
 }
 #endif
