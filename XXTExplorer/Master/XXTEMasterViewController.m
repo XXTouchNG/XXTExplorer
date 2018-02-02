@@ -13,6 +13,7 @@
 #import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEDispatchDefines.h"
+#import "UIView+XXTEToast.h"
 
 #ifndef APPSTORE
     #import "XXTERespringAgent.h"

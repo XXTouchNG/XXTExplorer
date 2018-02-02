@@ -440,7 +440,7 @@
             .catch(^(NSError *error) {
                 [self.maskView setHidden:YES];
                 [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
-                [self.navigationController.view makeToast:[error localizedDescription] duration:CGFLOAT_MAX position:XXTEToastPositionCenter];
+                toastMessageWithDelay(self, [error localizedDescription], CGFLOAT_MAX);
             });
 }
 

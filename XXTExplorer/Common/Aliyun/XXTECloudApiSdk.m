@@ -336,7 +336,7 @@ completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock 
 }
 @end
 
-@implementation XXTECloudApiSdk (private)
+@implementation XXTECloudApiSdk (Private)
 
 
 /**

@@ -10,8 +10,9 @@
 #import "XXTEMoreTitleDescriptionCell.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
-#import "UIView+XXTEToast.h"
+
 #import "XXTENetworkDefines.h"
+#import "XXTEUserInterfaceDefines.h"
 
 @interface XXTEMoreActivationOperationController ()
 

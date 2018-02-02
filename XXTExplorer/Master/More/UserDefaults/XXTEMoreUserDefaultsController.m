@@ -15,6 +15,7 @@
 
 #ifndef APPSTORE
     #import "XXTENetworkDefines.h"
+    #import "XXTEUserInterfaceDefines.h"
     #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #endif

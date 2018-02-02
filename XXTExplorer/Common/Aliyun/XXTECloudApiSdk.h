@@ -243,7 +243,7 @@ completionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))completionBlock;
 @end
 
 
-@interface XXTECloudApiSdk (private)
+@interface XXTECloudApiSdk (Private)
 
 
 /**
