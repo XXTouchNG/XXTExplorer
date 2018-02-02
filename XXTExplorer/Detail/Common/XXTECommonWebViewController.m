@@ -50,6 +50,22 @@
     } else {
         self.hidesBottomBarWhenPushed = NO;
     }
+    
+    @weakify(self);
+    self.wk_shouldStartLoadRequestHandler = ^BOOL(NSURLRequest *request, WKNavigationType navigationType) {
+        @strongify(self);
+        NSURL *url = request.URL;
+        if ([url.scheme isEqualToString:@"xxt"]) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                if ([[UIApplication sharedApplication] canOpenURL:url])
+                {
+                    [[UIApplication sharedApplication] openURL:url];
+                }
+            }];
+            return NO;
+        }
+        return YES;
+    };
 }
 
 - (void)viewDidLoad {

@@ -6,8 +6,8 @@ def shared_pods
     # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
 
     # pod 'TOWebViewController', '~> 2.2.6'
-    # pod 'TOWebViewController', :path => '../TOWebViewController'
-    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView', :inhibit_warnings => true
+    pod 'TOWebViewController', :path => '../TOWebViewController'
+    # pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView', :inhibit_warnings => true
     
     pod 'OMGHTTPURLRQ', :inhibit_warnings => true
     pod 'PromiseKit', '~> 1.7', :inhibit_warnings => true

@@ -4540,7 +4540,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
