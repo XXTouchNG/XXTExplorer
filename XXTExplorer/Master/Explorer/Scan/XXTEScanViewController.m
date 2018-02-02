@@ -6,19 +6,25 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import "XXTEScanViewController.h"
+
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import "XXTEScanViewController.h"
+
 #import <AVFoundation/AVFoundation.h>
-#import "XXTEScanLineAnimation.h"
-#import "XXTEDispatchDefines.h"
+
 #import <PromiseKit/PromiseKit.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-#import "XXTEUserInterfaceDefines.h"
 #import <LGAlertView/LGAlertView.h>
+
+#import "XXTEScanLineAnimation.h"
 #import "XXTEImagePickerController.h"
-#import "XXTENotificationCenterDefines.h"
+
 #import "XXTEAppDefines.h"
+#import "XXTENetworkDefines.h"
+#import "XXTEDispatchDefines.h"
+#import "XXTEUserInterfaceDefines.h"
+#import "XXTENotificationCenterDefines.h"
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
 @property(nonatomic, strong) AVCaptureSession *scanSession;
@@ -494,7 +500,8 @@
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];
     if (url.scheme.length > 0 && [[UIApplication sharedApplication] canOpenURL:url]) {
-        if (self.shouldConfirm == NO || [[url scheme] isEqualToString:@"xxt"]) {
+        if (self.shouldConfirm == NO || [[url scheme] isEqualToString:@"xxt"] || [self isTrustedHost:[url host]])
+        {
             [self alertView:nil openURL:url];
             return;
         }
@@ -619,6 +626,11 @@
                                          destructiveButtonTitle:nil
                                                        delegate:self];
     [alertView showAnimated];
+}
+
+- (BOOL)isTrustedHost:(NSString *)host {
+    NSArray <NSString *> *trustedHosts = uAppDefine(XXTETrustedHostsKey);
+    return ([trustedHosts containsObject:host]);
 }
 
 #pragma mark - Memory

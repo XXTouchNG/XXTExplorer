@@ -39,4 +39,6 @@ extern "C" {
 }
 #endif
 
+static NSString * const XXTETrustedHostsKey = @"TRUSTED_HOSTS";
+
 #endif /* XXTENetworkDefines_h */
