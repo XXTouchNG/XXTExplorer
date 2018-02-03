@@ -40,9 +40,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) float averageRating;
 @property (nonatomic, assign) NSUInteger downloadTimes;
 @property (nonatomic, copy) NSString *projectRemark;
-@property (nonatomic, assign) NSUInteger trailType;
+@property (nonatomic, assign) NSUInteger trialType;
 @property (nonatomic, copy) NSString *contactString;
-@property (nonatomic, copy) NSString *localizedTrailDescription;
+@property (nonatomic, copy) NSString *localizedTrialDescription;
 
 // NSArray <RMProject *> *models
 + (PMKPromise *)sortedList:(RMApiActionSortBy)sortBy atPage:(NSUInteger)idx itemsPerPage:(NSUInteger)ipp;

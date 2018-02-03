@@ -35,7 +35,7 @@
                                                                   @"averageRating": @"AvgScore",
                                                                   @"downloadTimes": @"Download",
                                                                   @"projectRemark": @"Remark",
-                                                                  @"trailType": @"TrailType",
+                                                                  @"trialType": @"TrialType",
                                                                   @"contactString": @"Contact",
                                                                   @"applicationID": @"AppID",
                                                                   }];
@@ -51,7 +51,7 @@
     @"averageRating",
     @"downloadTimes",
     @"projectRemark",
-    @"trailType",
+    @"trialType",
     @"contactString",
     @"applicationID",
     ];
@@ -64,7 +64,7 @@
 {
     NSArray <NSString *> *ignoredProperty =
     @[
-      @"localizedTrailDescription",
+      @"localizedTrialDescription",
       @"createdAtNSDate",
       ];
     if ([ignoredProperty containsObject:propertyName])
@@ -111,8 +111,8 @@
     return [[RMProjectDownloadModel class] promiseGETRequest:RMApiUrl(RMApiActionGetScriptUrl, args)];
 }
 
-- (NSString *)localizedTrailDescription {
-    if (self.trailType == 0) {
+- (NSString *)localizedTrialDescription {
+    if (self.trialType == 0) {
         return NSLocalizedString(@"No", nil);
     } else {
         return NSLocalizedString(@"Yes", nil);

@@ -149,7 +149,7 @@ end
 fixPermission(opt.XUIPath)
 
 if type(opt.bundlePath) == 'string' and (opt.bundlePath:has_surfix('.xpp') or opt.bundlePath:has_surfix('.xpp/')) then
-    fixPermission(opt.XUIPath)
+    fixPermission(opt.bundlePath)
 end
 
 local function loadXUIFile(filename)

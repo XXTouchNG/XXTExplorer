@@ -61,7 +61,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) BOOL authorNameExpanded;
 @property (nonatomic, assign) BOOL projectVersionExpanded;
 @property (nonatomic, assign) BOOL downloadTimesExpanded;
-@property (nonatomic, assign) BOOL trailTypeExpanded;
+@property (nonatomic, assign) BOOL trialTypeExpanded;
 @property (nonatomic, assign) BOOL contactStringExpanded;
 
 @property (nonatomic, strong) UIBarButtonItem *closeItem;
@@ -425,8 +425,8 @@ XXTE_END_IGNORE_PARTIAL
         }
         else if (indexPath.row == RMCloudInformationRowTrail)
         {
-            cell.titleTextLabel.text = NSLocalizedString(@"Trail", nil);
-            NSString *trailString = [self.project localizedTrailDescription];
+            cell.titleTextLabel.text = NSLocalizedString(@"Trial", nil);
+            NSString *trailString = [self.project localizedTrialDescription];
             if (trailString.length) {
                 cell.valueTextLabel.text = trailString;
             }
@@ -569,7 +569,7 @@ XXTE_END_IGNORE_PARTIAL
             return self.downloadTimesExpanded;
         }
         else if (indexPath.row == RMCloudInformationRowTrail) {
-            return self.trailTypeExpanded;
+            return self.trialTypeExpanded;
         }
         else if (indexPath.row == RMCloudInformationRowContact) {
             return self.contactStringExpanded;
@@ -590,7 +590,7 @@ XXTE_END_IGNORE_PARTIAL
             self.downloadTimesExpanded = YES;
         }
         else if (indexPath.row == RMCloudInformationRowTrail) {
-            self.trailTypeExpanded = YES;
+            self.trialTypeExpanded = YES;
         }
         else if (indexPath.row == RMCloudInformationRowContact) {
             self.contactStringExpanded = YES;

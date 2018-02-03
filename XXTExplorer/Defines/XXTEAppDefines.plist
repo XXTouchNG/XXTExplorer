@@ -90,7 +90,7 @@
 	<key>RMCLOUD_API_BUY</key>
 	<string>/Open/Insourcing</string>
 	<key>RMCLOUD_DEBUG_HOST</key>
-	<string>application.mall-software.net</string>
+	<string>dev.mall-software.net</string>
 	<key>RMCLOUD_HOST</key>
 	<string>dev.mall-software.net</string>
 	<key>RMCLOUD_OPENAPI</key>
