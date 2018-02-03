@@ -92,7 +92,7 @@
 	<key>RMCLOUD_DEBUG_HOST</key>
 	<string>application.mall-software.net</string>
 	<key>RMCLOUD_HOST</key>
-	<string>auth.mall-software.net</string>
+	<string>dev.mall-software.net</string>
 	<key>RMCLOUD_OPENAPI</key>
 	<string>/api/OpenAPI</string>
 	<key>RMCLOUD_PLATFORM</key>

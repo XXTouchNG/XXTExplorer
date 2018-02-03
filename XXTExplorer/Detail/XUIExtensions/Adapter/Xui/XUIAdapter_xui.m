@@ -103,15 +103,20 @@
 - (NSDictionary *)rootEntryWithError:(NSError *__autoreleasing *)error {
     NSString *path = self.path;
     NSBundle *bundle = self.bundle;
+    NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *rootPath = [XXTEAppDelegate sharedRootPath];
     
-    if (!path || !bundle || !rootPath) return nil;
+    if (!path || !bundle || !rootPath || !mainBundle) return nil;
     id value = nil;
     
     @synchronized (self) {
         lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
-            id args = @{ @"event": @"load", @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
+            id args = @{ @"event": @"load",
+                         @"bundlePath": [bundle bundlePath],
+                         @"XUIPath": path,
+                         @"rootPath": rootPath,
+                         @"appPath": [mainBundle bundlePath] };
             lua_pushNSValue(L, args);
             int entryResult = lua_pcall(L, 1, 1, 0);
             if (lua_checkCode(L, entryResult, error)) {
@@ -142,14 +147,22 @@
     
     NSString *path = self.path;
     NSBundle *bundle = self.bundle;
+    NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *rootPath = [XXTEAppDelegate sharedRootPath];
     
-    if (!path || !bundle || !rootPath) return;
+    if (!path || !bundle || !rootPath || !mainBundle) return;
     
     @synchronized (self) {
         lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
         if (lua_type(L, -1) == LUA_TFUNCTION) {
-            id args = @{ @"event": @"save", @"defaultsId": identifier, @"key": key, @"value": saveObj, @"bundlePath": [bundle bundlePath], @"XUIPath": path, @"rootPath": rootPath };
+            id args = @{ @"event": @"save",
+                         @"defaultsId": identifier,
+                         @"key": key,
+                         @"value": saveObj,
+                         @"bundlePath": [bundle bundlePath],
+                         @"XUIPath": path,
+                         @"rootPath": rootPath,
+                         @"appPath": [mainBundle bundlePath] };
             lua_pushNSValue(L, args);
             int entryResult = lua_pcall(L, 1, 0, 0);
             NSError *saveError = nil;

@@ -25,7 +25,7 @@
 
 local opt = ...
 
-_XUI_VERSION = "1.1"
+_XUI_VERSION = "1.2"
 
 local __G = _G
 local _ENV = {
@@ -126,14 +126,31 @@ local function sh_escape(path)
     return path
 end
 
+function string.has_prefix(str, prefix)
+    if (str:sub(1, #prefix) == prefix) then
+        return true
+    else
+        return false
+    end
+end
+
+function string.has_surfix(str, surfix)
+    if (str:sub(-(#surfix), -1) == surfix) then
+        return true
+    else
+        return false
+    end
+end
+
 local function fixPermission(path)
-    io.popen(
-        opt.rootPath..'/bin/add1s chmod -R 644 '..sh_escape(path)..'; '..
-        opt.rootPath..'/bin/add1s chown -R mobile:mobile '..sh_escape(path)
-    )
+    os.execute('add1s chown -R mobile:mobile '..sh_escape(path))
 end
 
 fixPermission(opt.XUIPath)
+
+if type(opt.bundlePath) == 'string' and (opt.bundlePath:has_surfix('.xpp') or opt.bundlePath:has_surfix('.xpp/')) then
+    fixPermission(opt.XUIPath)
+end
 
 local function loadXUIFile(filename)
     local f, err = io.open(filename, 'r+b')

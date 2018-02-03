@@ -409,12 +409,17 @@ int l_fromPlist(lua_State *L)
     const char *filename_cstr = luaL_checkstring(L, 1);
     @autoreleasepool {
         NSString *filename = [NSString stringWithUTF8String:filename_cstr];
-        if (filename) {
-            NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
-            if (dict) {
-                lua_pushNSDictionaryx(L, dict, 0, NO);
+        if (filename != nil) {
+            id value = [NSDictionary dictionaryWithContentsOfFile:filename];
+            if (value != nil) {
+                lua_pushNSDictionaryx(L, value, 0, NO);
             } else {
-                lua_pushnil(L);
+                value = [NSArray arrayWithContentsOfFile:filename];
+                if (value != nil) {
+                    lua_pushNSArrayx(L, value, 0, NO);
+                } else {
+                    lua_pushnil(L);
+                }
             }
         } else {
             lua_pushnil(L);
@@ -428,10 +433,10 @@ int l_toPlist(lua_State *L)
     const char *filename_cstr = luaL_checkstring(L, 1);
     luaL_checktype(L, 2, LUA_TTABLE);
     @autoreleasepool {
-        NSDictionary *dict = lua_toNSDictionaryx(L, 2, nil, 0, NO);
+        id value = lua_toNSValuex(L, 2, 0, NO);
         NSString *filename = [NSString stringWithUTF8String:filename_cstr];
-        if (dict != nil && filename != nil) {
-            lua_pushboolean(L, [dict writeToFile:filename atomically:YES]);
+        if (filename != nil && ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]])) {
+            lua_pushboolean(L, [value writeToFile:filename atomically:YES]);
         } else {
             lua_pushboolean(L, NO);
         }
@@ -446,7 +451,7 @@ int luaopen_plist(lua_State *L)
     lua_setfield(L, -2, "read");
     lua_pushcfunction(L, l_toPlist);
     lua_setfield(L, -2, "write");
-    lua_pushliteral(L, "0.3");
+    lua_pushliteral(L, "0.4");
     lua_setfield(L, -2, "_VERSION");
     return 1;
 }

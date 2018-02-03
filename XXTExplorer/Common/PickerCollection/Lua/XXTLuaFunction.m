@@ -16,7 +16,7 @@
     int m_refIndex;
 }
 
--(id)init
+- (id)init
 {
     self = [super init];
     m_L = NULL;
@@ -24,7 +24,7 @@
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     if (m_L != NULL) {
         luaL_unref(m_L, LUA_REGISTRYINDEX, m_refIndex);
@@ -34,7 +34,7 @@
 #endif
 }
 
--(id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
     XXTLuaFunction *func = [[[self class] allocWithZone:zone] init];
     if (m_L != NULL) {
@@ -45,7 +45,7 @@
     return func;
 }
 
--(BOOL)bindFunction:(int)idx inLuaState:(lua_State *)L
+- (BOOL)bindFunction:(int)idx inLuaState:(lua_State *)L
 {
     if (L != NULL && lua_type(L, idx) == LUA_TFUNCTION) {
         m_L = L;
@@ -57,7 +57,7 @@
     }
 }
 
-+(id)bindFunction:(int)idx inLuaState:(lua_State *)L
++ (id)bindFunction:(int)idx inLuaState:(lua_State *)L
 {
     XXTLuaFunction *func = [[self alloc] init];
     if ([func bindFunction:idx inLuaState:L]) {
@@ -73,7 +73,7 @@
     }
 }
 
--(BOOL)pushMeToLuaState:(lua_State *)L
+- (BOOL)pushMeToLuaState:(lua_State *)L
 {
     if (m_L != NULL && L == m_L) {
         int type = lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_refIndex);
@@ -88,7 +88,7 @@
     }
 }
 
--(NSArray *)callWithArguments:(NSArray *)args error:(NSError **)error
+- (NSArray *)callWithArguments:(NSArray *)args error:(NSError **)error
 {
     if (m_L != NULL) {
         int last_top = lua_gettop(m_L);
