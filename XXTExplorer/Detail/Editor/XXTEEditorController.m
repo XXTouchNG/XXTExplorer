@@ -671,6 +671,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         }
         XXTE_END_IGNORE_PARTIAL
         
+        textView.keyboardType = UIKeyboardTypeDefault;
+        textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        textView.autocorrectionType = UITextAutocorrectionTypeNo; // config
+        textView.spellCheckingType = UITextSpellCheckingTypeNo; // config
+        
         textView.vTextStorage = textStorage;
         textView.vTypeSetter = typeSetter;
         textView.vLayoutManager = layoutManager;

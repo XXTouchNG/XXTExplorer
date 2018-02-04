@@ -45,6 +45,9 @@
         extern NSString * const kXXTELuaVModelErrorDomain;
         BOOL lua_checkCode(lua_State *L, int code, NSError **error);
         void lua_setMaxLine(lua_State *L, lua_Integer maxline);
+        
+        int xxt_system(const char *ctx);
+        
 #ifdef __cplusplus
         }
 #endif

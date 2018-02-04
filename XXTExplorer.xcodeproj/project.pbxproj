@@ -1177,6 +1177,8 @@
 		D69532FA1F8F79DB00A24B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
 		D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */; };
 		D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
+		D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
+		D69D43EC2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */; };
 		D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
@@ -1959,6 +1961,8 @@
 		D69532FD1F904DE300A24B9B /* XUIAnimatedImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAnimatedImageCell.h; sourceTree = "<group>"; };
 		D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAnimatedImageCell.m; sourceTree = "<group>"; };
 		D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XUIAnimatedImageCell.xib; sourceTree = "<group>"; };
+		D69D43E92026EA4600AD62C1 /* XXTEUIViewController+RunCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+RunCommand.h"; sourceTree = "<group>"; };
+		D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+RunCommand.m"; sourceTree = "<group>"; };
 		D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libactivator.tbd; sourceTree = "<group>"; };
 		D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		D6CB81B61FE262320033EA2F /* XXTEEditorSearchField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchField.h; sourceTree = "<group>"; };
@@ -3767,6 +3771,8 @@
 				D6863C571F7E275800A45CF7 /* XXTEUIViewController+LaunchScript.m */,
 				D6863C581F7E275800A45CF7 /* XXTEUIViewController+ScanQRCode.h */,
 				D6863C5B1F7E275800A45CF7 /* XXTEUIViewController+ScanQRCode.m */,
+				D69D43E92026EA4600AD62C1 /* XXTEUIViewController+RunCommand.h */,
+				D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */,
 			);
 			path = ButtonAction;
 			sourceTree = "<group>";
@@ -4973,6 +4979,7 @@
 				0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */,
 				0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */,
+				D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */,
 				D6686F421F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m in Sources */,
@@ -5284,6 +5291,7 @@
 				D60FE6651FE2369300954818 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
 				D60FE6661FE2369300954818 /* UINavigationController+StatusBar.m in Sources */,
 				D60FE6671FE2369300954818 /* UIImagePickerController+StatusBar.m in Sources */,
+				D69D43EC2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */,
 				D60FE6681FE2369300954818 /* XXTExplorerItemDetailViewController.m in Sources */,
 				D60FE6691FE2369300954818 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */,
 				D60FE66A1FE2369300954818 /* XXTEEditorThemeSettingsViewController.m in Sources */,

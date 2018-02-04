@@ -23,6 +23,7 @@
 #import <stdlib.h>
 #import <unistd.h>
 #import <sys/types.h>
+#import <sys/stat.h>
 #import <spawn.h>
 
 #pragma mark - Errors
@@ -579,52 +580,6 @@ int l_sys_toast(lua_State *L)
     return 0;
 }
 
-static int xxt_system(const char *ctx)
-{
-    const char *binsh_path = NULL;
-
-    BOOL isDir;
-
-    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/bootstrap/bin/sh" isDirectory:&isDir] && !isDir) {
-        binsh_path = "/bootstrap/bin/sh";
-    } else {
-        binsh_path = "/bin/sh";
-    }
-
-    const char *args[] = {
-        binsh_path,
-        "-c",
-        ctx,
-        NULL
-    };
-
-    const char *envp[] = {
-        "PATH=/bootstrap/usr/local/bin:/bootstrap/usr/sbin:/bootstrap/usr/bin:/bootstrap/sbin:/bootstrap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games:/usr/bin/1ferver",
-        NULL
-    };
-
-    pid_t pid;
-    if (posix_spawn(&pid, binsh_path, NULL, NULL, (char **)args, (char **)envp) != 0) {
-        return -1;
-    } else {
-        int status = 0;
-        waitpid(pid, &status, 0);
-        return status;
-    }
-}
-
-static int lua_xxt_os_execute (lua_State *L)
-{
-    const char *cmd = luaL_optstring(L, 1, NULL);
-    int stat = xxt_system(cmd);
-    if (cmd != NULL)
-        return luaL_execresult(L, stat);
-    else {
-        lua_pushboolean(L, stat);  /* true if there is a shell */
-        return 1;
-    }
-}
-
 int luaopen_sys(lua_State *L)
 {
     lua_createtable(L, 0, 2);
@@ -637,6 +592,48 @@ int luaopen_sys(lua_State *L)
     lua_pushliteral(L, "0.1");
     lua_setfield(L, -2, "_VERSION");
     return 1;
+}
+
+#pragma mark - OS
+
+int xxt_system(const char *ctx)
+{
+    const char *binsh_path = NULL;
+    
+    struct stat bStat;
+    if (0 == lstat("/bootstrap/bin/sh", &bStat)) {
+        binsh_path = "/bootstrap/bin/sh";
+    } else {
+        binsh_path = "/bin/sh";
+    }
+    
+    const char *args[] = {
+        binsh_path,
+        "-c",
+        ctx,
+        NULL
+    };
+    
+    pid_t pid;
+    if (posix_spawn(&pid, binsh_path, NULL, NULL, (char **)args, (char **)sharedEnvp) != 0) {
+        return -1;
+    } else {
+        int status = 0;
+        waitpid(pid, &status, 0);
+        return status;
+    }
+}
+
+int lua_xxt_os_execute (lua_State *L)
+{
+    const char *cmd = luaL_optstring(L, 1, NULL);
+    int stat = xxt_system(cmd);
+    if (cmd != NULL)
+        return luaL_execresult(L, stat);
+    else {
+        lua_pushboolean(L, stat);  /* true if there is a shell */
+        return 1;
+    }
 }
 
 #pragma mark - Libs

@@ -152,6 +152,15 @@ if type(opt.bundlePath) == 'string' and (string.has_surfix(opt.bundlePath, '.xpp
     fixPermission(opt.bundlePath)
 end
 
+__G.xui = {
+    bundle_path = function()
+        return opt.bundlePath
+    end;
+    xui_path = function()
+        return opt.XUIPath
+    end;
+}
+
 local function loadXUIFile(filename)
     local f, err = io.open(filename, 'r+b')
     if (f) then

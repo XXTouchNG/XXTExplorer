@@ -420,6 +420,9 @@
 "Code Viewer" = "代码查看器";
 
 /* No comment provided by engineer. */
+"Command exit with code: %@" = "命令运行结束: %@";
+
+/* No comment provided by engineer. */
 "Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory." = "编译并加密 \"%@\"?\n加密脚本将保存到当前目录.";
 
 /* No comment provided by engineer. */
