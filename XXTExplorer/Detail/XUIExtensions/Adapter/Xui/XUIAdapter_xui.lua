@@ -148,7 +148,7 @@ end
 
 fixPermission(opt.XUIPath)
 
-if type(opt.bundlePath) == 'string' and (opt.bundlePath:has_surfix('.xpp') or opt.bundlePath:has_surfix('.xpp/')) then
+if type(opt.bundlePath) == 'string' and (string.has_surfix(opt.bundlePath, '.xpp') or string.has_surfix(opt.bundlePath, '.xpp/')) then
     fixPermission(opt.bundlePath)
 end
 

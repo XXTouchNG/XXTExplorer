@@ -3,7 +3,9 @@
 if [ $# != 1 ] ; then 
 echo "Usage: $0 DaemonVersion"
 exit 1; 
-fi 
+fi
+
+YEAR=`date +%Y`
 
 # 1
 BVER="${1}"
@@ -20,11 +22,11 @@ plutil -remove "items.1" "XXTExplorer/Supporting Files/Settings.bundle/About.pli
 plutil -remove "items.1" "XXTExplorer/Supporting Files/Settings.Pro.bundle/About.plist"
 plutil -insert "items.1" -xml "<dict><key>cell</key><string>About</string><key>label</key><string>XXTouch Editor
 v${BVER}</string><key>value</key><string>https://www.xxtouch.com
-2016-2017 © XXTouch Team.
+2016-${YEAR} © XXTouch Team.
 All Rights Reserved.</string></dict>" "XXTExplorer/Supporting Files/Settings.bundle/About.plist"
 plutil -insert "items.1" -xml "<dict><key>cell</key><string>About</string><key>label</key><string>XXTouch
 v${BVER}</string><key>value</key><string>https://www.xxtouch.com
-2016-2017 © XXTouch Team.
+2016-${YEAR} © XXTouch Team.
 All Rights Reserved.</string></dict>" "XXTExplorer/Supporting Files/Settings.Pro.bundle/About.plist"
 
 # 5
