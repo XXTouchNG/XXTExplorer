@@ -714,6 +714,9 @@
 "Help" = "帮助";
 
 /* No comment provided by engineer. */
+"Here is our new script market." = "欢迎访问我们全新的脚本商城.";
+
+/* No comment provided by engineer. */
 "Hide" = "隐藏";
 
 /* No comment provided by engineer. */
@@ -1450,6 +1453,9 @@
 "Try Again" = "重试";
 
 /* No comment provided by engineer. */
+"Try it!" = "试试看";
+
+/* No comment provided by engineer. */
 "Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi." = "启用远程访问以: \n- 访问 Web/WebDAV 服务. \n- 通过无线局域网向设备上传文件.";
 
 /* No comment provided by engineer. */
@@ -1571,6 +1577,9 @@
 
 /* No comment provided by engineer. */
 "You should respring your device to continue using this application." = "注销此设备以继续使用该应用程序.";
+
+/* No comment provided by engineer. */
+"You will be redirected to the ordering page.\nFollow that page to finish your order." = "即将跳转到外部支付页面.\n该页面将指导你完成购买.";
 
 /* No comment provided by engineer. */
 "You will be redirected to the page hosted by RuanMao Cloud.\nFollow that page to finish your order." = "即将跳转到由软猫云提供的页面.\n该页面将指导你完成购买.";

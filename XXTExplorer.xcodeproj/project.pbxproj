@@ -1121,6 +1121,12 @@
 		D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D617D1D31F7B4BC0009F4B59 /* libc++.tbd */; };
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
+		D622FDB12026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */; };
+		D622FDB22026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */; };
+		D622FDB32026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */; };
+		D622FDB62026AD2D00E78969 /* XXTEMasterViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB52026AD2D00E78969 /* XXTEMasterViewController+Guide.m */; };
+		D622FDB72026AD2D00E78969 /* XXTEMasterViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB52026AD2D00E78969 /* XXTEMasterViewController+Guide.m */; };
+		D622FDB82026AD2D00E78969 /* XXTEMasterViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB52026AD2D00E78969 /* XXTEMasterViewController+Guide.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22A1F063B830030C6DA /* XXTEMoreTitleValueCell.m */; };
 		D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
@@ -1843,6 +1849,10 @@
 		D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeButton.m; sourceTree = "<group>"; };
 		D61D5DD21F6F64B400CDF16D /* XXTESwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeTableCell.h; sourceTree = "<group>"; };
 		D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeTableCell.m; sourceTree = "<group>"; };
+		D622FDAF2026ABCE00E78969 /* XXTExplorerViewController+Guide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+Guide.h"; sourceTree = "<group>"; };
+		D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+Guide.m"; sourceTree = "<group>"; };
+		D622FDB42026AD2D00E78969 /* XXTEMasterViewController+Guide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEMasterViewController+Guide.h"; sourceTree = "<group>"; };
+		D622FDB52026AD2D00E78969 /* XXTEMasterViewController+Guide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEMasterViewController+Guide.m"; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
 		D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreApplicationCell.xib; sourceTree = "<group>"; };
@@ -2393,6 +2403,8 @@
 		0F457F351F87946B001F0951 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D622FDB42026AD2D00E78969 /* XXTEMasterViewController+Guide.h */,
+				D622FDB52026AD2D00E78969 /* XXTEMasterViewController+Guide.m */,
 				0F457F361F87948A001F0951 /* XXTEMasterViewController+Notifications.h */,
 				0F457F371F87948A001F0951 /* XXTEMasterViewController+Notifications.m */,
 			);
@@ -3007,6 +3019,8 @@
 				0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */,
 				0F40C1AA1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h */,
 				0F40C1AB1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m */,
+				D622FDAF2026ABCE00E78969 /* XXTExplorerViewController+Guide.h */,
+				D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4518,6 +4532,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
@@ -4538,6 +4556,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 				$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle,
@@ -4592,6 +4614,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
+				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS7.0/XUI.bundle",
@@ -4804,6 +4830,7 @@
 				0F8EDBE01FB1F779003C92D6 /* XXTEEditorStatisticsViewController.m in Sources */,
 				0F8EDBE11FB1F779003C92D6 /* XXTEInsetsLabel.m in Sources */,
 				0F8EDBE21FB1F779003C92D6 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
+				D622FDB82026AD2D00E78969 /* XXTEMasterViewController+Guide.m in Sources */,
 				0F5C01C91FB4123B00BB3D09 /* XXTEEditorMaskView.m in Sources */,
 				0F8EDBE31FB1F779003C92D6 /* NSString+HTMLEscape.m in Sources */,
 				0F8EDBE41FB1F779003C92D6 /* XXTColorPicker.m in Sources */,
@@ -4914,6 +4941,7 @@
 				0F8EDC551FB1F779003C92D6 /* lutf8lib.c in Sources */,
 				0F8EDC561FB1F779003C92D6 /* lvm.c in Sources */,
 				0F8EDC571FB1F779003C92D6 /* lzio.c in Sources */,
+				D622FDB32026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5017,6 +5045,7 @@
 				D6E1412D1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m in Sources */,
 				D6E1412E1F5032AB00D78CB9 /* XXTPixelResizeControl.m in Sources */,
 				0F5EB5351F0A88600016016A /* XUIAboutCell.m in Sources */,
+				D622FDB62026AD2D00E78969 /* XXTEMasterViewController+Guide.m in Sources */,
 				D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */,
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
 				0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m in Sources */,
@@ -5141,6 +5170,7 @@
 				0F2DAE532013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
 				D6863CE71F7E340A00A45CF7 /* XXTEUIViewController+XUIFileCell.m in Sources */,
+				D622FDB12026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */,
 				0F88115D1FB6AF220004F20C /* XXTESegmentedController.m in Sources */,
 				5251242F0537AF64E7895EDB /* SKResult.m in Sources */,
 				D6863C621F7E275900A45CF7 /* XXTEUIViewController+LaunchScript.m in Sources */,
@@ -5326,6 +5356,7 @@
 				D60FE6A41FE2369300954818 /* XXTPixelPreviewRootViewController.m in Sources */,
 				D60FE6A61FE2369300954818 /* XXTPixelResizeControl.m in Sources */,
 				D60FE6A71FE2369300954818 /* XUIAboutCell.m in Sources */,
+				D622FDB72026AD2D00E78969 /* XXTEMasterViewController+Guide.m in Sources */,
 				D60FE6A81FE2369300954818 /* XXTPickerPreviewBar.m in Sources */,
 				D60FE6A91FE2369300954818 /* XXTEDaemonAgent.m in Sources */,
 				D60FE6AA1FE2369300954818 /* XXTEKeyboardToolbarRow.m in Sources */,
@@ -5450,6 +5481,7 @@
 				0F2DAE542013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				D60FE71B1FE2369300954818 /* SKResultSet.m in Sources */,
 				D60FE71C1FE2369300954818 /* XXTEUIViewController+XUIFileCell.m in Sources */,
+				D622FDB22026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */,
 				D60FE71D1FE2369300954818 /* XXTESegmentedController.m in Sources */,
 				D60FE71E1FE2369300954818 /* SKResult.m in Sources */,
 				D60FE71F1FE2369300954818 /* XXTEUIViewController+LaunchScript.m in Sources */,

@@ -172,11 +172,9 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell3.valueLabel.numberOfLines = 2;
     
-#ifdef DEBUG
     XXTEMoreLinkCell *linkCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     linkCell.titleLabel.text = NSLocalizedString(@"Buy License", nil);
     linkCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-#endif
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Version", nil);
@@ -206,17 +204,24 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     cell10.titleLabel.text = NSLocalizedString(@"Unique ID", nil);
     cell10.valueLabel.text = @"";
     
-    staticCells = @[
-                    @[ cell1 ],
-                    //
-#ifdef DEBUG
-                    @[ cell2, cell3, linkCell ],
-#else
-                    @[ cell2, cell3, /* linkCell */ ],
-#endif
-                    //
-                    @[ cell4, cell5, cell6, cell7, cell8, cell9, cell10 ]
-                    ];
+    NSString *urlString = uAppDefine(@"XXTOUCH_BUY_URL");
+    if (urlString.length == 0) {
+        staticCells = @[
+                        @[ cell1 ],
+                        //
+                        @[ cell2, cell3 ],
+                        //
+                        @[ cell4, cell5, cell6, cell7, cell8, cell9, cell10 ]
+                        ];
+    } else {
+        staticCells = @[
+                        @[ cell1 ],
+                        //
+                        @[ cell2, cell3, linkCell ],
+                        //
+                        @[ cell4, cell5, cell6, cell7, cell8, cell9, cell10 ]
+                        ];
+    }
 }
 
 - (void)reloadDynamicTableViewDataWithCompletion:(XXTERefreshControlHandler)handler {
@@ -429,11 +434,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
             }
         }
         else if (indexPath.section == kXXTEMoreLicenseSectionIndexCurrentLicense) {
-            NSString *titleText =
-            ((XXTEMoreLinkCell *)staticCells
-             [(NSUInteger) indexPath.section]
-             [(NSUInteger) indexPath.row])
-            .titleLabel.text;
             if (indexPath.row == 2) {
                 NSString *urlString = uAppDefine(@"XXTOUCH_BUY_URL");
                 if (urlString) {
@@ -441,14 +441,23 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                     NSDictionary *dataDict = self.dataDictionary;
                     if (dataDict)
                     {
-                        NSString *paraString = [dataDict stringFromQueryComponents];
+                        NSMutableDictionary *mutableDict = [dataDict mutableCopy];
+                        mutableDict[@"callback"] = XXTSchemeLicense;
+                        NSString *paraString = [[mutableDict copy] stringFromQueryComponents];
                         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", urlString, paraString]];
                     } else {
                         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", urlString]];
                     }
-                    XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
-                    webController.title = titleText;
-                    [self.navigationController pushViewController:webController animated:YES];
+                    LGAlertView *buyAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Redirect Confirm", nil) message:NSLocalizedString(@"You will be redirected to the ordering page.\nFollow that page to finish your order.", nil) style:LGAlertViewStyleAlert buttonTitles:@[ ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Continue", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                        [alertView dismissAnimated];
+                    } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                        [alertView dismissAnimated];
+                        UIApplication *sharedApplication = [UIApplication sharedApplication];
+                        if ([sharedApplication canOpenURL:url]) {
+                            [sharedApplication openURL:url];
+                        }
+                    }];
+                    [buyAlert showAnimated];
                 }
             }
         }

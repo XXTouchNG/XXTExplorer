@@ -12,7 +12,9 @@
 
 typedef enum : NSUInteger {
     kMasterViewControllerIndexExplorer = 0,
+#ifdef RMCLOUD_ENABLED
     kMasterViewControllerIndexCloud,
+#endif
     kMasterViewControllerIndexMore,
     kMasterViewControllerIndexMax,
 } kMasterViewControllerIndex;
@@ -21,6 +23,7 @@ typedef enum : NSUInteger {
 
 - (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
 - (BOOL)tabBarIsVisible;
+- (CGRect)rectOfTabBarItemAtIndex:(NSUInteger)idx;
 
 #ifndef APPSTORE
 - (void)checkUpdate;

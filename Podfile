@@ -26,6 +26,8 @@ def shared_pods
 
     # pod 'XXShield', :inhibit_warnings => true
     pod 'Bugly', :inhibit_warnings => true
+    
+    pod 'EAFeatureGuideView', :path => '../EAFeatureGuideView'
 end
 
 target 'XXTouch' do

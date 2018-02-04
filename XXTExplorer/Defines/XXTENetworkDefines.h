@@ -39,6 +39,7 @@ extern "C" {
 }
 #endif
 
+static NSString * const XXTSchemeLicense = @"xxt://license/?code=%@";
 static NSString * const XXTETrustedHostsKey = @"TRUSTED_HOSTS";
 
 #endif /* XXTENetworkDefines_h */

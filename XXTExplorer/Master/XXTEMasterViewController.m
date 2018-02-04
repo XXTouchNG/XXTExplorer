@@ -15,6 +15,8 @@
 #import "XXTEDispatchDefines.h"
 #import "UIView+XXTEToast.h"
 
+#import "XXTEMasterViewController+Guide.h"
+
 #ifndef APPSTORE
     #import "XXTERespringAgent.h"
     #import "XXTEDaemonAgent.h"
@@ -39,6 +41,7 @@
 
 @implementation XXTEMasterViewController {
     BOOL firstTimeLoaded;
+    BOOL firstTimeGuided;
 }
 
 #pragma mark - Initializers
@@ -153,7 +156,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-}
+} // do not write any stuff inside this method...
 
 - (void)viewWillAppear:(BOOL)animated {
     [self registerNotifications];
@@ -176,6 +179,10 @@
 #ifdef APPSTORE
     [self setTabBarVisible:NO animated:YES completion:nil];
 #endif
+    if (!firstTimeGuided) {
+        [self showGuide];
+        firstTimeGuided = YES;
+    }
 }
 
 #pragma mark - Agents
@@ -425,6 +432,15 @@
 //Getter to know the current state
 - (BOOL)tabBarIsVisible {
     return self.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+}
+
+- (CGRect)rectOfTabBarItemAtIndex:(NSUInteger)idx {
+    CGFloat tabBarWidth = CGRectGetWidth(self.tabBar.frame);
+    NSUInteger itemCount = self.tabBar.items.count;
+    CGFloat tabWidth = tabBarWidth / itemCount;
+    CGFloat tabHeight = CGRectGetHeight(self.tabBar.frame);
+    CGRect tabFrame = CGRectMake((idx) * tabWidth, 0, tabWidth, tabHeight);
+    return [self.tabBar convertRect:tabFrame toView:self.view];
 }
 
 - (void)dealloc {

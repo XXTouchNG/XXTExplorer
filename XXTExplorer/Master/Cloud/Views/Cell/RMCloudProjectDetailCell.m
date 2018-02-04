@@ -27,6 +27,7 @@
     iconImageView.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.1].CGColor;
     iconImageView.layer.borderWidth = .5f;
     iconImageView.layer.cornerRadius = 18.f;
+    iconImageView.layer.masksToBounds = YES;
     
     UIButton *downloadBtn = self.downloadButton;
     downloadBtn.layer.masksToBounds = YES;
