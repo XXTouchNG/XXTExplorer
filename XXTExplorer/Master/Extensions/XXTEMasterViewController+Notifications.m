@@ -27,11 +27,11 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 
 #import "UIViewController+topMostViewController.h"
+#import "XXTEPermissionDefines.h"
 
 #ifndef APPSTORE
     #import "XXTExplorerDefaults.h"
     #import "XXTENetworkDefines.h"
-    #import "XXTEPermissionDefines.h"
 
     #import "XXTEMoreLicenseController.h"
     #import "XXTEDownloadViewController.h"
