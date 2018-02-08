@@ -35,6 +35,8 @@
     #import "XXTEMoreActivationController.h"
     #import "XXTENotificationCenterDefines.h"
     #import "XXTEMoreBootScriptController.h"
+
+    #import "XXTEConfirmTextInputObject.h"
 #endif
 
 #ifndef APPSTORE
@@ -574,15 +576,29 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                 [alertView showAnimated:YES completionHandler:nil];
             }
             else if (indexPath.row == kXXTEMoreSectionSystemRowIndexCleanAll) {
-                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clean All", nil)
-                                                                    message:NSLocalizedString(@"This operation will kill all user applications, and remove all the documents and caches of them.", nil)
-                                                                      style:LGAlertViewStyleActionSheet
-                                                               buttonTitles:@[  ]
-                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                     destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
-                                                                   delegate:self];
+                LGAlertView *alertView = [[LGAlertView alloc] initWithTextFieldsAndTitle:NSLocalizedString(@"Clean All", nil)
+                                                                                 message:NSLocalizedString(@"This operation will kill all user applications, and remove all the documents and caches of them.\nPlease enter \"CLEAR\" to continue.", nil)
+                                                                      numberOfTextFields:1
+                                                                  textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
+                                                                      if (index == 0) {
+                                                                          textField.clearButtonMode = UITextFieldViewModeNever;
+                                                                          textField.placeholder = NSLocalizedString(@"Please enter \"CLEAR\".", nil);
+                                                                      }
+                                                                  } buttonTitles:@[ ]
+                                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                                  destructiveButtonTitle:NSLocalizedString(@"Clean Now", nil)
+                                                                                delegate:self];
+                [alertView setDestructiveButtonEnabled:NO];
                 objc_setAssociatedObject(alertView, @selector(alertView:cleanAll:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated:YES completionHandler:nil];
+                // Change default delegate of TextField
+                XXTEConfirmTextInputObject *confirmDelegate = [[XXTEConfirmTextInputObject alloc] init];
+                [confirmDelegate setConfirmString:@"CLEAR"];
+                [confirmDelegate setTextInput:[alertView.textFieldsArray firstObject]];
+                [confirmDelegate setConfirmHandler:^(UITextField *textInput) {
+                    [alertView setDestructiveButtonEnabled:YES];
+                }];
+                objc_setAssociatedObject(alertView, NSStringFromClass([XXTEConfirmTextInputObject class]).UTF8String, confirmDelegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             }
             else if (indexPath.row == kXXTEMoreSectionSystemRowIndexRespringDevice) {
                 LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Respring Device", nil)
@@ -772,6 +788,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 #ifndef APPSTORE
 - (void)alertViewCancelled:(LGAlertView *)alertView {
     [alertView dismissAnimated];
+    objc_removeAssociatedObjects(alertView);
 }
 #endif
 

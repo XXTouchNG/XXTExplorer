@@ -1068,6 +1068,9 @@
 "Please download this image from iCloud." = "请从 iCloud 下载该图片.";
 
 /* No comment provided by engineer. */
+"Please enter \"CLEAR\"." = "请输入 \"CLEAR\".";
+
+/* No comment provided by engineer. */
 "Please setup \"Mail\" to send mail feedback directly." = "请设置邮件客户端以直接发送电子邮件进行反馈.";
 
 /* No comment provided by engineer. */
@@ -1421,7 +1424,7 @@
 "This operation will kill all applications and reset icon caches, which may cause icons to disappear." = "该操作将强行关闭所有应用程序并重置图标缓存, 这可能造成图标丢失.";
 
 /* No comment provided by engineer. */
-"This operation will kill all user applications, and remove all the documents and caches of them." = "该操作将强行关闭所有应用程序, 并且移除这些应用的所有文档及数据.";
+"This operation will kill all user applications, and remove all the documents and caches of them.\nPlease enter \"CLEAR\" to continue." = "该操作将强行关闭所有应用程序, 并且移除这些应用的所有文档及数据.\n请输入 \"CLEAR\" 以继续清理.";
 
 /* No comment provided by engineer. */
 "This operation will kill SpringBoard and all user applications." = "该操作将注销设备并强行关闭所有应用程序.";
