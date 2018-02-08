@@ -1176,6 +1176,9 @@
 		D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */; };
 		D693D8BB202BEFA80060A352 /* XXTEConfirmTextInputObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8BA202BEFA80060A352 /* XXTEConfirmTextInputObject.m */; };
 		D693D8BC202BEFA80060A352 /* XXTEConfirmTextInputObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8BA202BEFA80060A352 /* XXTEConfirmTextInputObject.m */; };
+		D693D8C4202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
+		D693D8C5202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
+		D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
 		D69532FA1F8F79DB00A24B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
 		D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */; };
 		D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
@@ -1961,6 +1964,8 @@
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
 		D693D8B9202BEFA80060A352 /* XXTEConfirmTextInputObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEConfirmTextInputObject.h; sourceTree = "<group>"; };
 		D693D8BA202BEFA80060A352 /* XXTEConfirmTextInputObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEConfirmTextInputObject.m; sourceTree = "<group>"; };
+		D693D8C2202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorFuckSmartPunctuation.h; sourceTree = "<group>"; };
+		D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorFuckSmartPunctuation.m; sourceTree = "<group>"; };
 		D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D69532FD1F904DE300A24B9B /* XUIAnimatedImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAnimatedImageCell.h; sourceTree = "<group>"; };
 		D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAnimatedImageCell.m; sourceTree = "<group>"; };
@@ -3266,6 +3271,8 @@
 				0FB2209B1F824A9200156C3B /* XXTEEditorPreprocessor.m */,
 				D6F3EBDE1FE3A12600197858 /* XXTEEditorTextContainer.h */,
 				D6F3EBDF1FE3A12600197858 /* XXTEEditorTextContainer.m */,
+				D693D8C2202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.h */,
+				D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */,
 			);
 			path = TextKit;
 			sourceTree = "<group>";
@@ -4837,6 +4844,7 @@
 				0F8EDBDA1FB1F779003C92D6 /* XXTEArchiveViewer.m in Sources */,
 				0F8EDBDB1FB1F779003C92D6 /* XXTExplorerToolbar.m in Sources */,
 				0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */,
+				D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */,
 				0F8EDBDD1FB1F779003C92D6 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F8EDBDE1FB1F779003C92D6 /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
 				0F8EDBE01FB1F779003C92D6 /* XXTEEditorStatisticsViewController.m in Sources */,
@@ -5103,6 +5111,7 @@
 				0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */,
 				0F4419F91F17E14F00967980 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */,
+				D693D8C4202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */,
 				0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */,
 				D6686F321F4ACEB6004403D0 /* XXTEEditorFontSizeCell.m in Sources */,
 				0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */,
@@ -5416,6 +5425,7 @@
 				D60FE6CA1FE2369300954818 /* NSString+XQueryComponents.m in Sources */,
 				D60FE6CB1FE2369300954818 /* XXTExplorerEntryMediaReader.m in Sources */,
 				D60FE6CC1FE2369300954818 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
+				D693D8C5202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */,
 				D60FE6CD1FE2369300954818 /* XXTExplorerHeaderView.m in Sources */,
 				D60FE6CE1FE2369300954818 /* XXTEEditorFontSizeCell.m in Sources */,
 				D60FE6CF1FE2369300954818 /* XXTEMoreViewController.m in Sources */,

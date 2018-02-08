@@ -230,7 +230,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     {
         [self updateLicenseDictionary:cachedLicense];
     }
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDictionary) {
@@ -406,7 +406,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                 @weakify(self);
                 void (^copyBlock)(NSString *) = ^(NSString *textToCopy) {
                     @strongify(self);
-                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                    UIViewController *blockVC = blockInteractions(self, YES);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:textToCopy];

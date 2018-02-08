@@ -581,6 +581,10 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                                                                       numberOfTextFields:1
                                                                   textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
                                                                       if (index == 0) {
+                                                                          textField.autocorrectionType = UITextAutocorrectionTypeNo;
+                                                                          textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+                                                                          textField.spellCheckingType = UITextSpellCheckingTypeNo;
+                                                                          textField.enablesReturnKeyAutomatically = YES;
                                                                           textField.clearButtonMode = UITextFieldViewModeNever;
                                                                           textField.placeholder = NSLocalizedString(@"Please enter \"CLEAR\".", nil);
                                                                       }

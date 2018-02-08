@@ -45,7 +45,8 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    return NO;
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)dealloc {
