@@ -361,26 +361,31 @@
         [self.footerView setEmptyMode:YES];
     } else {
         [self.footerView setEmptyMode:NO];
-        NSString *itemCountString = nil;
-        if (itemCount == 0) {
-            itemCountString = NSLocalizedString(@"No item", nil);
-        } else if (itemCount == 1) {
-            itemCountString = NSLocalizedString(@"1 item", nil);
-        } else {
-            itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long) itemCount];
-        }
-        NSString *usageString = nil;
-        NSError *usageError = nil;
-        NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
-        if (!usageError) {
-            NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
-            if (deviceFreeSpace != nil) {
-                usageString = [NSByteCountFormatter stringFromByteCount:[deviceFreeSpace unsignedLongLongValue] countStyle:NSByteCountFormatterCountStyleFile];
-            }
-        }
-        NSString *finalFooterString = [NSString stringWithFormat:NSLocalizedString(@"%@, %@ free", nil), itemCountString, usageString];
-        [self.footerView.footerLabel setText:finalFooterString];
+        [self updateFooterView];
     }
+}
+
+- (void)updateFooterView {
+    NSUInteger itemCount = self.entryList.count;
+    NSString *itemCountString = nil;
+    if (itemCount == 0) {
+        itemCountString = NSLocalizedString(@"No item", nil);
+    } else if (itemCount == 1) {
+        itemCountString = NSLocalizedString(@"1 item", nil);
+    } else {
+        itemCountString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long) itemCount];
+    }
+    NSString *usageString = nil;
+    NSError *usageError = nil;
+    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
+    if (!usageError) {
+        NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
+        if (deviceFreeSpace != nil) {
+            usageString = [NSByteCountFormatter stringFromByteCount:[deviceFreeSpace unsignedLongLongValue] countStyle:NSByteCountFormatterCountStyleFile];
+        }
+    }
+    NSString *finalFooterString = [NSString stringWithFormat:NSLocalizedString(@"%@, %@ free", nil), itemCountString, usageString];
+    [self.footerView.footerLabel setText:finalFooterString];
 }
 
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {

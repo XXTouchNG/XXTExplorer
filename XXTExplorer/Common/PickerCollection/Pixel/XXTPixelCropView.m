@@ -10,10 +10,7 @@
 #import "XXTPixelFlagView.h"
 #import "XXTPickerFactory.h"
 
-static const CGFloat MarginTop = 81.f;
-//static const CGFloat MarginBottom = 81.f;
-static const CGFloat MarginLeft = 37.f;
-//static const CGFloat MarginRight = MarginLeft;
+static const UIEdgeInsets XXTPixelCropMargin = { 81.f, 37.f, 81.f, 37.f };
 
 @interface XXTPixelCropView ()
         <
@@ -153,12 +150,18 @@ static const CGFloat MarginLeft = 37.f;
     if (!self.image) {
         return;
     }
+    
+    UIEdgeInsets cropMargin = XXTPixelCropMargin;
+    if (@available(iOS 11.0, *)) {
+        cropMargin.top += self.safeAreaInsets.top;
+        cropMargin.bottom += self.safeAreaInsets.bottom;
+    }
 
     UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    self.editingRect = CGRectInset(self.bounds, MarginLeft, MarginTop);
+    self.editingRect = UIEdgeInsetsInsetRect(self.bounds, cropMargin);
 
     if (!self.imageView) {
-        self.insetRect = CGRectInset(self.bounds, MarginLeft, MarginTop);
+        self.insetRect = UIEdgeInsetsInsetRect(self.bounds, cropMargin);
 
         [self setupImageView];
     }

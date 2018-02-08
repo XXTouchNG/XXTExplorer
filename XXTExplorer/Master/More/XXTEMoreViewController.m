@@ -586,6 +586,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                                                                           textField.spellCheckingType = UITextSpellCheckingTypeNo;
                                                                           textField.enablesReturnKeyAutomatically = YES;
                                                                           textField.clearButtonMode = UITextFieldViewModeNever;
+                                                                          textField.textAlignment = NSTextAlignmentCenter;
                                                                           textField.placeholder = NSLocalizedString(@"Please enter \"CLEAR\".", nil);
                                                                       }
                                                                   } buttonTitles:@[ ]

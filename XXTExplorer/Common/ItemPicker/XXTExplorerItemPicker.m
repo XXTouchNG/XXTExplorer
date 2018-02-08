@@ -15,6 +15,7 @@
 #import "XXTExplorerToolbar.h"
 #import "XXTESwipeTableCell.h"
 #import "XXTExplorerViewCell.h"
+#import "XXTExplorerFooterView.h"
 
 @interface XXTExplorerItemPicker () <XXTESwipeTableCellDelegate>
 
@@ -53,6 +54,7 @@
     }
     
     [self.toolbar updateStatus:XXTExplorerToolbarStatusReadonly];
+    [self.footerView setEmptyMode:NO];
 }
 
 - (BOOL)showsHomeSeries {
@@ -214,6 +216,10 @@
 }
 
 #pragma mark - Item Picker Inherit
+
+- (void)reloadFooterView {
+    [self updateFooterView];
+}
 
 - (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
     [refreshControl endRefreshing];
