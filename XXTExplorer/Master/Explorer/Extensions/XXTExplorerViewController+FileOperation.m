@@ -268,6 +268,10 @@
                                 if (!rmdirResult) {
                                     // TODO: pause by rmdir error
                                 }
+                                BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
+                                if (!mkdirResult) {
+                                    // TODO: pause by mkdir error
+                                }
                             }
                             continue;
                         }
