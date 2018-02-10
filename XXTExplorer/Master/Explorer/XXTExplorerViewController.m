@@ -228,7 +228,7 @@
     if (_historyMode) {
         return _internalSortField;
     }
-    return XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldCreationDate);
+    return XXTEDefaultsEnum(XXTExplorerViewEntryListSortFieldKey, XXTExplorerViewEntryListSortFieldModificationDate);
 }
 
 - (XXTExplorerViewEntryListSortOrder)explorerSortOrder {
@@ -594,7 +594,7 @@
         } else {
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
             explorerViewController.historyMode = YES;
-            explorerViewController.internalSortField = XXTExplorerViewEntryListSortFieldCreationDate;
+            explorerViewController.internalSortField = XXTExplorerViewEntryListSortFieldModificationDate;
             explorerViewController.internalSortOrder = XXTExplorerViewEntryListSortOrderDesc;
             [self.navigationController pushViewController:explorerViewController animated:YES];
         }

@@ -20,6 +20,15 @@
 
 @implementation XXTEXPAPackageExtractor
 
++ (dispatch_queue_t)packageQueue {
+    static dispatch_queue_t queue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("com.xxtouch.PackageSerialQueue", DISPATCH_QUEUE_SERIAL);
+    });
+    return queue;
+}
+
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _packagePath = path;
@@ -86,7 +95,7 @@
         return 0;
     };
     self.busyOperationProgressFlag = YES;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    dispatch_async([self.class packageQueue], ^{
         @strongify(self);
         int arg = 2;
         int status = zip_extract([packagePath UTF8String], [temporarilyPath UTF8String], will_extract, did_extract, &arg);
@@ -105,20 +114,22 @@
 
 - (void)cleanTemporarilyFilesAtLocation:(NSString *)pathClean {
     if (!pathClean) return;
-    NSError *cleanError = nil;
-    BOOL cleanStatus =
-    [[NSFileManager defaultManager] removeItemAtPath:pathClean error:&cleanError];
-    if (cleanStatus) {
-//        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily XPP Bundle cleaned: \"%@\".", nil), pathClean]];
-    } else {
-        if (cleanError) {
-//            [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot clean temporarily XPP Bundle: \"%@\", reason: %@.", nil), pathClean, cleanError.localizedDescription]];
+    dispatch_async([self.class packageQueue], ^{
+        NSError *cleanError = nil;
+        BOOL cleanStatus =
+        [[NSFileManager defaultManager] removeItemAtPath:pathClean error:&cleanError];
+        if (cleanStatus) {
+            
+        } else {
+            if (cleanError) {
+                
+            }
         }
-    }
+    });
 }
 
 - (void)dealloc {
-    [self cleanTemporarilyFilesAtLocation:self.temporarilyLocation];
+    
 }
 
 @end

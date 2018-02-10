@@ -160,7 +160,7 @@
             entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeUnsupported];
         }
     }
-    NSString *entryDescription = [self.class.entryDateFormatter stringFromDate:entrySubdirectoryAttributes[NSFileCreationDate]];
+    NSString *entryDescription = [self.class.entryDateFormatter stringFromDate:entrySubdirectoryAttributes[NSFileModificationDate]];
     NSDictionary *entryAttributes =
     @{
       XXTExplorerViewEntryAttributeIconImage: entryIconImage,

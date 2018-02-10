@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,22 @@
 		0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
+		0F222A14202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
+		0F222A15202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
+		0F222A16202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
+		0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
+		0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
+		0F222A1D202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
+		0F222A20202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */; };
+		0F222A21202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */; };
+		0F222A25202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */; };
+		0F222A26202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */; };
+		0F222A27202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */; };
+		0F222A28202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */; };
+		0F222A2C202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */; };
+		0F222A2D202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */; };
+		0F222A2E202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */; };
+		0F222A2F202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */; };
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
@@ -478,7 +494,6 @@
 		0F8EDC7C1FB1F779003C92D6 /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
 		0F8EDC7D1FB1F779003C92D6 /* XXTEMoreRemoteSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */; };
 		0F8EDC7E1FB1F779003C92D6 /* Meta.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE1E4361F189A1600055E02 /* Meta.strings */; };
-		0F8EDC7F1FB1F779003C92D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
 		0F8EDC801FB1F779003C92D6 /* Blackboard.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */; };
 		0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
 		0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */; };
@@ -1075,7 +1090,6 @@
 		D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
 		D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */; };
 		D60FE78B1FE2369300954818 /* Meta.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE1E4361F189A1600055E02 /* Meta.strings */; };
-		D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
 		D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C2301F063E270030C6DA /* XXTEMoreActionCell.xib */; };
 		D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */; };
 		D60FE7911FE2369300954818 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
@@ -1179,7 +1193,6 @@
 		D693D8C4202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
 		D693D8C5202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
 		D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
-		D69532FA1F8F79DB00A24B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */; };
 		D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */; };
 		D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
 		D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
@@ -1298,6 +1311,17 @@
 		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEScanViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
 		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
+		0F222A17202F1C0F00EF2C27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DetailCloseItem.h"; sourceTree = "<group>"; };
+		0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DetailCloseItem.m"; sourceTree = "<group>"; };
+		0F222A1E202F3DCB00EF2C27 /* RMCloudCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudCollectionViewController.h; sourceTree = "<group>"; };
+		0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudCollectionViewController.m; sourceTree = "<group>"; };
+		0F222A22202F3E7800EF2C27 /* RMCloudProjectCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudProjectCollectionCell.h; sourceTree = "<group>"; };
+		0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudProjectCollectionCell.m; sourceTree = "<group>"; };
+		0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudProjectCollectionCell.xib; sourceTree = "<group>"; };
+		0F222A29202F3ED900EF2C27 /* RMCloudMoreCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudMoreCollectionCell.h; sourceTree = "<group>"; };
+		0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudMoreCollectionCell.m; sourceTree = "<group>"; };
+		0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudMoreCollectionCell.xib; sourceTree = "<group>"; };
 		0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBar.h"; sourceTree = "<group>"; };
 		0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+StatusBar.m"; sourceTree = "<group>"; };
 		0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImagePickerController.h; sourceTree = "<group>"; };
@@ -1966,7 +1990,6 @@
 		D693D8BA202BEFA80060A352 /* XXTEConfirmTextInputObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEConfirmTextInputObject.m; sourceTree = "<group>"; };
 		D693D8C2202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorFuckSmartPunctuation.h; sourceTree = "<group>"; };
 		D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorFuckSmartPunctuation.m; sourceTree = "<group>"; };
-		D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D69532FD1F904DE300A24B9B /* XUIAnimatedImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAnimatedImageCell.h; sourceTree = "<group>"; };
 		D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAnimatedImageCell.m; sourceTree = "<group>"; };
 		D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XUIAnimatedImageCell.xib; sourceTree = "<group>"; };
@@ -2588,6 +2611,8 @@
 				0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */,
 				0F5EB53D1F0A9EF40016016A /* XXTECommonWebViewController.h */,
 				0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */,
+				0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */,
+				0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2879,7 +2904,7 @@
 				0FA7AC081ED644FA003EAD7D /* XXTEPrefixHeader.pch */,
 				0FA7ABEE1ED641A3003EAD7D /* main.m */,
 				0FC598A91FB2189A001F918B /* main.AppStore.m */,
-				D69532F91F8F79C000A24B9B /* LaunchScreen.storyboard */,
+				0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */,
 				0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */,
 			);
 			path = "Supporting Files";
@@ -3050,6 +3075,8 @@
 				0FCAF3DC200874D1002FB774 /* RMCloudViewController.m */,
 				0FCAF3E820088860002FB774 /* RMCloudListViewController.h */,
 				0FCAF3E920088860002FB774 /* RMCloudListViewController.m */,
+				0F222A1E202F3DCB00EF2C27 /* RMCloudCollectionViewController.h */,
+				0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */,
 				0FCAF3DF200874E9002FB774 /* RMCloudNavigationController.h */,
 				0FCAF3E0200874E9002FB774 /* RMCloudNavigationController.m */,
 				0FCAF40B200A3A69002FB774 /* RMCloudProjectViewController.h */,
@@ -3077,9 +3104,15 @@
 				0FCAF3FD2009AE59002FB774 /* RMCloudProjectCell.h */,
 				0FCAF3FE2009AE59002FB774 /* RMCloudProjectCell.m */,
 				0FCAF3FF2009AE59002FB774 /* RMCloudProjectCell.xib */,
+				0F222A22202F3E7800EF2C27 /* RMCloudProjectCollectionCell.h */,
+				0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */,
+				0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */,
 				0FCAF404200A1D14002FB774 /* RMCloudMoreCell.h */,
 				0FCAF405200A1D14002FB774 /* RMCloudMoreCell.m */,
 				0FCAF406200A1D14002FB774 /* RMCloudMoreCell.xib */,
+				0F222A29202F3ED900EF2C27 /* RMCloudMoreCollectionCell.h */,
+				0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */,
+				0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */,
 				0FCAF40F200A48C5002FB774 /* RMCloudProjectDetailCell.h */,
 				0FCAF410200A48C5002FB774 /* RMCloudProjectDetailCell.m */,
 				0FCAF411200A48C5002FB774 /* RMCloudProjectDetailCell.xib */,
@@ -4100,7 +4133,7 @@
 				};
 			};
 			buildConfigurationList = 0FA7ABE51ED641A3003EAD7D /* Build configuration list for PBXProject "XXTExplorer" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -4156,7 +4189,7 @@
 				0F8ECD751FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */,
 				0F8ECD411FE802A900A5457C /* A.png in Resources */,
 				0F8ECD651FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */,
-				0F8EDC7F1FB1F779003C92D6 /* LaunchScreen.storyboard in Resources */,
+				0F222A16202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */,
 				0F8EDC801FB1F779003C92D6 /* Blackboard.tmTheme in Resources */,
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
 				0FA1A4FD1FF13CA00021648B /* Settings.bundle in Resources */,
@@ -4307,7 +4340,7 @@
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
 				0F8ECD7E1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
-				D69532FA1F8F79DB00A24B9B /* LaunchScreen.storyboard in Resources */,
+				0F222A14202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */,
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
@@ -4343,8 +4376,10 @@
 				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
 				0FFBC12D1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib in Resources */,
 				0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */,
+				0F222A27202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */,
 				0F5EB5361F0A88600016016A /* XUIAboutCell.xib in Resources */,
 				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
+				0F222A2E202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */,
 				D60A26C41F3DB7BE00E013E2 /* Dawn.tmTheme in Resources */,
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
@@ -4391,6 +4426,7 @@
 				D60D0A021FE8BCB100289725 /* Eiffel.png in Resources */,
 				D60D0A031FE8BCB100289725 /* Mac Classic.png in Resources */,
 				D60D0A041FE8BCB100289725 /* Monokai.png in Resources */,
+				0F222A28202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */,
 				D60D0A051FE8BCB100289725 /* Oceanic.png in Resources */,
 				D60FE7771FE2369300954818 /* XXTEMoreReferences.bundle in Resources */,
 				D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */,
@@ -4409,7 +4445,7 @@
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FCAF4032009AE59002FB774 /* RMCloudProjectCell.xib in Resources */,
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
-				D60FE78C1FE2369300954818 /* LaunchScreen.storyboard in Resources */,
+				0F222A15202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */,
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
 				D60FE7911FE2369300954818 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
@@ -4446,6 +4482,7 @@
 				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
 				0F469CE6200CE2C10042F1BF /* RMCloudExpandableCell.xib in Resources */,
 				D60FE7BA1FE2369300954818 /* Mac Classic.tmTheme in Resources */,
+				0F222A2F202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				D60FE7BC1FE2369300954818 /* XXTImagePickerAlbumCell.xib in Resources */,
 				D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */,
@@ -4896,6 +4933,7 @@
 				0F8EDC0F1FB1F779003C92D6 /* XXTEEditorTextView.m in Sources */,
 				0F8EDC101FB1F779003C92D6 /* XXTEMailComposeViewController.m in Sources */,
 				0F072DB81FB9EC8B00597EE2 /* crc.c in Sources */,
+				0F222A1D202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				0F8EDC111FB1F779003C92D6 /* XXTPositionColorModel.m in Sources */,
 				0F8EDC141FB1F779003C92D6 /* SKCapture.m in Sources */,
 				0F8EDC151FB1F779003C92D6 /* XXTEEditorWrapColumnCell.m in Sources */,
@@ -5054,6 +5092,7 @@
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
+				0F222A2C202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */,
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
@@ -5097,7 +5136,9 @@
 				0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */,
 				0FCAF3FB2008A9B9002FB774 /* RMModel.m in Sources */,
 				0F072DB91FB9EC8B00597EE2 /* xxtea.c in Sources */,
+				0F222A20202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */,
 				D6863D211F7E3B9100A45CF7 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
+				0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
 				0FBECD672005FEE300068437 /* XXTELogReader.m in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
@@ -5193,6 +5234,7 @@
 				0F2DAE532013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
 				D6863CE71F7E340A00A45CF7 /* XXTEUIViewController+XUIFileCell.m in Sources */,
+				0F222A25202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */,
 				D622FDB12026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */,
 				0F88115D1FB6AF220004F20C /* XXTESegmentedController.m in Sources */,
 				5251242F0537AF64E7895EDB /* SKResult.m in Sources */,
@@ -5368,6 +5410,7 @@
 				D60FE6971FE2369300954818 /* XXTExplorerEntryXPPReader.m in Sources */,
 				D60FE6981FE2369300954818 /* XXTEPackageExtractor.m in Sources */,
 				D60FE6991FE2369300954818 /* XXTPixelPlaceholderView.m in Sources */,
+				0F222A2D202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */,
 				D60FE69A1FE2369300954818 /* XXTETurtleBezierPath.m in Sources */,
 				D60FE69B1FE2369300954818 /* XXTEEditorController.m in Sources */,
 				D60FE69C1FE2369300954818 /* XXTEEditorController+State.m in Sources */,
@@ -5411,7 +5454,9 @@
 				D60FE6BF1FE2369300954818 /* XXTExplorerItemNameCell.m in Sources */,
 				0FCAF3FC2008A9B9002FB774 /* RMModel.m in Sources */,
 				D60FE6C01FE2369300954818 /* xxtea.c in Sources */,
+				0F222A21202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */,
 				D60FE6C11FE2369300954818 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
+				0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D60FE6C21FE2369300954818 /* XXTPixelPreview.m in Sources */,
 				0FBECD692005FEE300068437 /* XXTELogReader.m in Sources */,
 				D60FE6C41FE2369300954818 /* XXTExplorerEntryParser.m in Sources */,
@@ -5507,6 +5552,7 @@
 				0F2DAE542013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				D60FE71B1FE2369300954818 /* SKResultSet.m in Sources */,
 				D60FE71C1FE2369300954818 /* XXTEUIViewController+XUIFileCell.m in Sources */,
+				0F222A26202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */,
 				D622FDB22026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */,
 				D60FE71D1FE2369300954818 /* XXTESegmentedController.m in Sources */,
 				D60FE71E1FE2369300954818 /* SKResult.m in Sources */,
@@ -5596,6 +5642,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F222A17202F1C0F00EF2C27 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		0F3508C21F166A69000403FD /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

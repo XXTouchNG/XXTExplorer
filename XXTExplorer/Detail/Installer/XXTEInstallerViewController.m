@@ -104,13 +104,11 @@ typedef enum : NSUInteger {
     [self.view addSubview:self.loadingView];
     [self.navigationItem setRightBarButtonItem:self.installButtonItem];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.extractor extractMetaData];
-    });
+    [self.extractor extractMetaData];
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
-        [self.navigationItem setLeftBarButtonItem:self.splitViewController.displayModeButtonItem];
+        [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
     }
     XXTE_END_IGNORE_PARTIAL
     

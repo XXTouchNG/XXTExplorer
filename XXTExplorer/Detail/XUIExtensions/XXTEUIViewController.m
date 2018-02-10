@@ -55,6 +55,15 @@
     if (self.awakeFromOutside) {
         [self.navigationItem setLeftBarButtonItem:nil];
         [self.navigationItem setRightBarButtonItem:nil];
+    } else {
+        // navigation items
+        if ([self.navigationController.viewControllers firstObject] == self)
+        {
+            if (XXTE_COLLAPSED)
+            {
+                [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
+            }
+        }
     }
 }
 

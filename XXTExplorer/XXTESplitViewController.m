@@ -52,7 +52,12 @@
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_PAD) {
         if (@available(iOS 8.0, *)) {
+#ifdef APPSTORE
+            self.preferredDisplayMode = UISplitViewControllerDisplayModeAutomatic;
+#else
             self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+#endif
+            self.maximumPrimaryColumnWidth = 320.0;
         }
     }
     XXTE_END_IGNORE_PARTIAL
@@ -90,6 +95,10 @@
     }
 }
 
+- (void)restoreWorkspaceViewControllerFromDetailCloseItem:(UIBarButtonItem *)sender {
+    [self restoreWorkspaceViewControllerFromViewController:self];
+}
+
 #pragma mark - UISplitViewDelegate
 
 XXTE_START_IGNORE_PARTIAL
@@ -103,5 +112,14 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 // DO NOT OVERRIDE preferredDisplayMode
+
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)detailCloseItem {
+    if (!_detailCloseItem) {
+        _detailCloseItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XUICloseIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(restoreWorkspaceViewControllerFromDetailCloseItem:)];
+    }
+    return _detailCloseItem;
+}
 
 @end

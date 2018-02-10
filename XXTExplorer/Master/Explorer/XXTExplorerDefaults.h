@@ -44,7 +44,7 @@ typedef enum : NSUInteger {
 
 typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortFieldCreationDate = 0,
-    XXTExplorerViewEntryListSortFieldModificationnDate,
+    XXTExplorerViewEntryListSortFieldModificationDate,
     XXTExplorerViewEntryListSortFieldDisplayName,
     XXTExplorerViewEntryListSortFieldItemType,
     XXTExplorerViewEntryListSortFieldItemSize
@@ -120,7 +120,7 @@ static inline NSString * XXTExplorerViewEntryListSortFieldString(XXTExplorerView
         case XXTExplorerViewEntryListSortFieldCreationDate:
             return XXTExplorerViewEntryAttributeCreationDate;
             break;
-        case XXTExplorerViewEntryListSortFieldModificationnDate:
+        case XXTExplorerViewEntryListSortFieldModificationDate:
             return XXTExplorerViewEntryAttributeModificationDate;
             break;
         case XXTExplorerViewEntryListSortFieldDisplayName:
@@ -135,7 +135,7 @@ static inline NSString * XXTExplorerViewEntryListSortFieldString(XXTExplorerView
         default:
             break;
     }
-    return XXTExplorerViewEntryAttributeCreationDate;
+    return XXTExplorerViewEntryAttributeModificationDate;
 }
 
 #endif /* XXTExplorerDefaults_h */

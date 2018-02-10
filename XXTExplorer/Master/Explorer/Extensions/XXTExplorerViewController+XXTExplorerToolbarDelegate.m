@@ -177,9 +177,9 @@
                 self.explorerSortOrder = XXTExplorerViewEntryListSortOrderAsc;
                 toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
             } else {
-                self.explorerSortField = XXTExplorerViewEntryListSortFieldCreationDate;
+                self.explorerSortField = XXTExplorerViewEntryListSortFieldModificationDate;
                 self.explorerSortOrder = XXTExplorerViewEntryListSortOrderDesc;
-                toastMessage(self, NSLocalizedString(@"Sort by Creation Date Descend", nil));
+                toastMessage(self, NSLocalizedString(@"Sort by Modification Date Descend", nil));
             }
             [self updateToolbarButton];
             [self loadEntryListData];

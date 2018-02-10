@@ -11,5 +11,6 @@
 @interface XXTESplitViewController : UISplitViewController
 
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender;
+@property (nonatomic, strong) UIBarButtonItem *detailCloseItem;
 
 @end

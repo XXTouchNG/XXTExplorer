@@ -939,10 +939,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1296,7 +1296,7 @@
 "Soft Tabs" = "软缩进";
 
 /* No comment provided by engineer. */
-"Sort by Creation Date Descend" = "按创建日期降序排列";
+"Sort by Modification Date Descend" = "按修改日期降序排列";
 
 /* No comment provided by engineer. */
 "Sort by Name Ascend" = "按名称升序排列";

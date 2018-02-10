@@ -177,7 +177,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 #ifdef APPSTORE
-    [self setTabBarVisible:NO animated:YES completion:nil];
+    if (!XXTE_PAD) {
+        [self setTabBarVisible:NO animated:YES completion:nil];
+    }
 #endif
     if (!firstTimeGuided) {
         [self showGuide];

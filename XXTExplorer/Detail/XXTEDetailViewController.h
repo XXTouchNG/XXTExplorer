@@ -16,6 +16,9 @@
 @property (nonatomic, copy, readonly) NSString *entryPath;
 - (instancetype)initWithPath:(NSString *)path;
 
+- (NSArray <UIBarButtonItem *> *)splitButtonItems;
+- (UIBarButtonItem *)splitDetailCloseItem;
+
 @end
 
 #endif /* XXTEDetailViewController_h */
