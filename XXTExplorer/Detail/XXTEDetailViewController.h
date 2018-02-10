@@ -10,6 +10,7 @@
 #define XXTEDetailViewController_h
 
 #import <UIKit/UIKit.h>
+#import "UIViewController+DetailCloseItem.h"
 
 @protocol XXTEDetailViewController <NSObject>
 
