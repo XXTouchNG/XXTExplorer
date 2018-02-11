@@ -158,7 +158,7 @@
 }
     
 - (void)layoutControllers {
-    CGRect bounds = self.view.bounds;
+    CGRect bounds = self.pageScrollView.bounds;
     CGFloat offset = CGRectGetWidth(bounds) * self.selectedIndex;
     [self.pageScrollView setContentOffset:CGPointMake(offset, 0) animated:YES];
     

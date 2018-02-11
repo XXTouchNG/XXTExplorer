@@ -1133,6 +1133,8 @@
 		D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3A1F6E5378008B3189 /* XXTImagePickerController.xib */; };
 		D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */; };
 		D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D617D1D31F7B4BC0009F4B59 /* libc++.tbd */; };
+		D61D40E42030404200F8E2B2 /* RMCloudBroadcastView.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D40E32030404200F8E2B2 /* RMCloudBroadcastView.m */; };
+		D61D40E52030404200F8E2B2 /* RMCloudBroadcastView.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D40E32030404200F8E2B2 /* RMCloudBroadcastView.m */; };
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
 		D622FDB12026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */; };
@@ -1876,6 +1878,8 @@
 		D60FE7D11FE2369300954818 /* XXTExplorer-Archive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XXTExplorer-Archive.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61616FA1FE8F76F009F10FF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D617D1D31F7B4BC0009F4B59 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		D61D40E22030404200F8E2B2 /* RMCloudBroadcastView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudBroadcastView.h; sourceTree = "<group>"; };
+		D61D40E32030404200F8E2B2 /* RMCloudBroadcastView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudBroadcastView.m; sourceTree = "<group>"; };
 		D61D5DD01F6F64B400CDF16D /* XXTESwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeButton.h; sourceTree = "<group>"; };
 		D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeButton.m; sourceTree = "<group>"; };
 		D61D5DD21F6F64B400CDF16D /* XXTESwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeTableCell.h; sourceTree = "<group>"; };
@@ -3094,6 +3098,8 @@
 				0F5D6BFE2010DF1500BD1DDC /* RMCloudComingSoon.h */,
 				0F5D6BFF2010DF1500BD1DDC /* RMCloudComingSoon.m */,
 				0F5D6C082010E3A600BD1DDC /* RMCloudComingSoon.xib */,
+				D61D40E22030404200F8E2B2 /* RMCloudBroadcastView.h */,
+				D61D40E32030404200F8E2B2 /* RMCloudBroadcastView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5220,6 +5226,7 @@
 				D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */,
 				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,
 				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
+				D61D40E42030404200F8E2B2 /* RMCloudBroadcastView.m in Sources */,
 				0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */,
 				D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */,
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
@@ -5538,6 +5545,7 @@
 				D60FE70D1FE2369300954818 /* XXTLocationPicker.m in Sources */,
 				D60FE70E1FE2369300954818 /* UIColor+inverseColor.m in Sources */,
 				D60FE70F1FE2369300954818 /* XXTPositionColorPicker.m in Sources */,
+				D61D40E52030404200F8E2B2 /* RMCloudBroadcastView.m in Sources */,
 				D60FE7101FE2369300954818 /* XXTExplorerEntrySnippetReader.m in Sources */,
 				D60FE7111FE2369300954818 /* XXTEEditorTextView.m in Sources */,
 				D60FE7121FE2369300954818 /* XXTEMailComposeViewController.m in Sources */,

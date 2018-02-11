@@ -101,6 +101,27 @@
 	<string>http</string>
 	<key>RMCLOUD_TOKEN</key>
 	<string>3487C956F68D360C</string>
+	<key>RMCLOUD_ADS</key>
+	<array>
+		<dict>
+			<key>image</key>
+			<string>https://www.mall-software.com/Images/IndexAds/ads1.jpg</string>
+			<key>url</key>
+			<string>https://www.mall-software.com/</string>
+		</dict>
+		<dict>
+			<key>image</key>
+			<string>https://www.mall-software.com/Images/IndexAds/ads2.jpg</string>
+			<key>url</key>
+			<string>https://www.mall-software.com/</string>
+		</dict>
+		<dict>
+			<key>image</key>
+			<string>https://www.mall-software.com/Images/IndexAds/ads3.jpg</string>
+			<key>url</key>
+			<string>https://www.mall-software.com/</string>
+		</dict>
+	</array>
 	<key>TRUSTED_HOSTS</key>
 	<array>
 		<string>www.xxtouch.com</string>

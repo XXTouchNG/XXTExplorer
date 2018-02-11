@@ -13,16 +13,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="252" id="KGk-i7-Jjw" customClass="RMCloudProjectDetailCell">
-            <rect key="frame" x="0.0" y="0.0" width="418" height="168"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="RMCloudProjectDetailCell">
+            <rect key="frame" x="0.0" y="0.0" width="418" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="418" height="167.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="418" height="165.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g2o-Bd-Ner">
                         <rect key="frame" x="28" y="20" width="125.5" height="126"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="72" id="PEm-lC-al6"/>
                             <constraint firstAttribute="width" secondItem="g2o-Bd-Ner" secondAttribute="height" multiplier="1:1" id="YcW-mz-dTD"/>
                         </constraints>
                     </imageView>
@@ -86,9 +87,9 @@
                     <constraint firstItem="dtB-QB-ns7" firstAttribute="bottom" secondItem="zTI-Xz-U8U" secondAttribute="bottom" id="a9R-MJ-c5g"/>
                     <constraint firstItem="aJv-Bq-8O2" firstAttribute="trailing" secondItem="Kdy-Py-VHr" secondAttribute="trailing" id="aBT-5D-rtB"/>
                     <constraint firstItem="Kdy-Py-VHr" firstAttribute="leading" secondItem="g2o-Bd-Ner" secondAttribute="trailing" constant="16" id="bdX-jy-0Vz"/>
-                    <constraint firstAttribute="bottom" secondItem="g2o-Bd-Ner" secondAttribute="bottom" priority="900" constant="20" id="cgt-aW-Or0"/>
+                    <constraint firstAttribute="bottom" secondItem="g2o-Bd-Ner" secondAttribute="bottom" constant="20" id="cgt-aW-Or0"/>
                     <constraint firstItem="dtB-QB-ns7" firstAttribute="leading" secondItem="zTI-Xz-U8U" secondAttribute="trailing" constant="16" id="dqH-ZW-tEE"/>
-                    <constraint firstItem="g2o-Bd-Ner" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="ezE-0R-OWX"/>
+                    <constraint firstItem="g2o-Bd-Ner" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" priority="990" id="ezE-0R-OWX"/>
                     <constraint firstItem="g2o-Bd-Ner" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="hEb-M6-oPK"/>
                     <constraint firstItem="zTI-Xz-U8U" firstAttribute="leading" secondItem="Kdy-Py-VHr" secondAttribute="leading" id="lKf-Ta-qAz"/>
                 </constraints>
