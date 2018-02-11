@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class RMCloudBroadcastView;
+
+@protocol RMCloudBroadcastViewDelegate <NSObject>
+- (void)broadcastViewDidTapped:(RMCloudBroadcastView *)view;
+@end
+
 @interface RMCloudBroadcastView : UIView
+
+@property (nonatomic, weak) id <RMCloudBroadcastViewDelegate> delegate;
+- (void)reloadScrollViewWithText:(NSString *)text;
 
 @end

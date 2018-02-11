@@ -122,6 +122,8 @@
 			<string>https://www.mall-software.com/</string>
 		</dict>
 	</array>
+	<key>RSS_URL</key>
+	<string>https://club.xxtouch.com/forum.php?mod=guide&amp;view=hot&amp;rss=1</string>
 	<key>TRUSTED_HOSTS</key>
 	<array>
 		<string>www.xxtouch.com</string>

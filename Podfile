@@ -6,7 +6,7 @@ def shared_pods
     # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
 
     # pod 'TOWebViewController', '~> 2.2.6'
-    pod 'TOWebViewController', :path => '../TOWebViewController'
+    pod 'TOWebViewController', :path => '../TOWebViewController', :inhibit_warnings => true
     # pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView', :inhibit_warnings => true
     
     pod 'OMGHTTPURLRQ', :inhibit_warnings => true
@@ -42,7 +42,8 @@ end
 def shared_cloud
     pod 'JSONModel', '~> 1.7.0', :inhibit_warnings => true
     pod 'YYWebImage', '~> 1.0.5', :inhibit_warnings => true
-    pod 'TXScrollLabelView', :inhibit_warnings => true
+    pod 'MarqueeLabel', :inhibit_warnings => true
+    pod 'MWFeedParser', :inhibit_warnings => true
 end
 
 target 'XXTExplorer' do

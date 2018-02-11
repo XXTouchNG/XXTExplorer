@@ -9,12 +9,10 @@
 #import "RMCloudViewController.h"
 #import "RMCloudListViewController.h"
 #import "RMCloudSearchViewController.h"
-
-#import "RMCloudBroadcastView.h"
+#import "XXTEAppDefines.h"
 
 @interface RMCloudViewController ()
 @property (nonatomic, strong) UIBarButtonItem *searchItem;
-@property (nonatomic, strong) RMCloudBroadcastView *broadcastView;
 
 @end
 
@@ -66,26 +64,6 @@
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
-    
-    [self.view addSubview:self.broadcastView];
-    [self configureConstraints];
-}
-
-- (void)configureConstraints {
-    self.pageScrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.broadcastView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSArray <NSLayoutConstraint *> *constraints =
-  @[
-    [NSLayoutConstraint constraintWithItem:self.broadcastView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.broadcastView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.broadcastView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.broadcastView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.pageScrollView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.broadcastView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:22.0],
-    [NSLayoutConstraint constraintWithItem:self.pageScrollView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.pageScrollView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.pageScrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:0.0],
-    ];
-    [self.view addConstraints:constraints];
 }
 
 #pragma mark - UIView Getters
@@ -96,14 +74,6 @@
         _searchItem = searchItem;
     }
     return _searchItem;
-}
-
-- (RMCloudBroadcastView *)broadcastView {
-    if (!_broadcastView) {
-        _broadcastView = [[RMCloudBroadcastView alloc] init];
-        _broadcastView.translatesAutoresizingMaskIntoConstraints = NO;
-    }
-    return _broadcastView;
 }
 
 - (void)searchItemTapped:(UIBarButtonItem *)sender {

@@ -32,6 +32,7 @@ typedef enum : NSUInteger {
     RMCloudDetailSectionHeader = 0,
     RMCloudDetailSectionDescription,
     RMCloudDetailSectionInformation,
+    RMCloudDetailSectionBlank,
     RMCloudDetailSectionMax
 } RMCloudDetailSection;
 

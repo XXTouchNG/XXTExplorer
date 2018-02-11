@@ -7,10 +7,10 @@
 //
 
 #import "RMCloudBroadcastView.h"
-#import <TXScrollLabelView/TXScrollLabelView.h>
+#import <MarqueeLabel/MarqueeLabel.h>
 
-@interface RMCloudBroadcastView () <UIScrollViewDelegate>
-@property (nonatomic, strong) TXScrollLabelView *scrollView;
+@interface RMCloudBroadcastView ()
+@property (nonatomic, strong) MarqueeLabel *scrollView;
 
 @end
 
@@ -35,20 +35,38 @@
 }
 
 - (void)setupUI {
+    self.backgroundColor = XXTE_COLOR_SUCCESS;
     [self addSubview:self.scrollView];
-    [self.scrollView beginScrolling];
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDidTapped:)];
+    [self addGestureRecognizer:gesture];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.scrollView.frame = self.bounds;
+    _scrollView.frame = CGRectMake(8.0, 0.0, CGRectGetWidth(self.bounds) - 16.0, CGRectGetHeight(self.bounds));
 }
 
-#pragma mark - UIView Getters
+- (void)reloadScrollViewWithText:(NSString *)text {
+    self.scrollView.text = text;
+}
 
-- (TXScrollLabelView *)scrollView {
+- (void)scrollViewDidTapped:(UITapGestureRecognizer *)sender {
+    if ([_delegate respondsToSelector:@selector(broadcastViewDidTapped:)]) {
+        [_delegate broadcastViewDidTapped:self];
+    }
+}
+
+- (MarqueeLabel *)scrollView {
     if (!_scrollView) {
-        
+        MarqueeLabel *scrollView = [[MarqueeLabel alloc] init];
+        [scrollView setRate:20.0];
+        [scrollView setFadeLength:16.0];
+        [scrollView setBackgroundColor:[UIColor clearColor]];
+        [scrollView setFont:[UIFont systemFontOfSize:12.0]];
+        [scrollView setTextColor:[UIColor whiteColor]];
+        [scrollView setTextAlignment:NSTextAlignmentLeft];
+        _scrollView = scrollView;
     }
     return _scrollView;
 }

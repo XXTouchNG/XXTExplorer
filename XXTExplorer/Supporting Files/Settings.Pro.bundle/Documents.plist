@@ -19,7 +19,7 @@
 			<key>label</key>
 			<string>User&apos;s Guide</string>
 			<key>url</key>
-			<string>https://www.zybuluo.com/xxtouch/note/378784</string>
+			<string>https://www.xxtouch.com/docs/manual</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -27,7 +27,7 @@
 			<key>label</key>
 			<string>Update Logs</string>
 			<key>url</key>
-			<string>https://www.zybuluo.com/xxtouch/note/386289</string>
+			<string>https://www.xxtouch.com/docs/updates</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -35,7 +35,7 @@
 			<key>label</key>
 			<string>Developer Reference</string>
 			<key>url</key>
-			<string>https://www.zybuluo.com/xxtouch/note/370734</string>
+			<string>https://www.xxtouch.com/docs/dev</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -43,7 +43,7 @@
 			<key>label</key>
 			<string>Open API Reference</string>
 			<key>url</key>
-			<string>https://www.zybuluo.com/xxtouch/note/386268</string>
+			<string>https://www.xxtouch.com/docs/openapi</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -51,7 +51,7 @@
 			<key>label</key>
 			<string>Code Snippet Reference</string>
 			<key>url</key>
-			<string>https://www.zybuluo.com/xxtouch/note/969475</string>
+			<string>https://www.xxtouch.com/docs/codesnippet</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -59,7 +59,7 @@
 			<key>label</key>
 			<string>XXTouch UI (XUI) Reference</string>
 			<key>url</key>
-			<string>https://www.zybuluo.com/xxtouch/note/716787</string>
+			<string>https://www.xxtouch.com/docs/xui</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>

@@ -16,6 +16,8 @@
 #import <PromiseKit/PromiseKit.h>
 #import <NSURLConnection+PromiseKit.h>
 
+#import <WebKit/WebKit.h>
+
 @implementation XXTEUIViewController (XXTResetDefaults)
 
 - (NSNumber *)xui_XXTResetDefaults:(XUIButtonCell *)cell {
@@ -35,7 +37,10 @@
 
 - (void)performResetDefaultsAtRemote {
     UIViewController *blockVC = blockInteractions(self, YES);
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"reset_defaults") JSON:@{}]
+    [self promiseCleanCacheAndCookie]
+    .then(^(id val) {
+        return [NSURLConnection POST:uAppDaemonCommandUrl(@"reset_defaults") JSON:@{}];
+    })
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if (jsonDirectory[@"code"]) {
@@ -55,6 +60,29 @@
     .finally(^() {
         blockInteractions(blockVC, NO);
     });
+}
+
+- (PMKPromise *)promiseCleanCacheAndCookie {
+    return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
+        NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        for (NSHTTPCookie *cookie in [storage cookies]) {
+            [storage deleteCookie:cookie];
+        }
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        NSURLCache *cache = [NSURLCache sharedURLCache];
+        [cache removeAllCachedResponses];
+        [cache setDiskCapacity:0];
+        [cache setMemoryCapacity:0];
+        if (@available(iOS 9.0, *)) {
+            NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+            NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0.0];
+            [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+                resolve(@(YES));
+            }];
+        } else {
+            resolve(@(NO));
+        }
+    }];
 }
 
 @end
