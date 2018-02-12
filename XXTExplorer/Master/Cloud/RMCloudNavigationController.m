@@ -16,6 +16,9 @@
 
 #import "XXTECommonWebViewController.h"
 #import "XXTENavigationController.h"
+#import "XXTEUserInterfaceDefines.h"
+
+static NSString * const RMCloudShowRSSBarKey = @"RMCloudShowRSSBarKey";
 
 @interface RMCloudNavigationController () <MWFeedParserDelegate, RMCloudBroadcastViewDelegate, UINavigationControllerDelegate>
 
@@ -50,18 +53,24 @@
     return self;
 }
 
+- (BOOL)shouldShowRSSFeed {
+    return XXTEDefaultsBool(RMCloudShowRSSBarKey, YES);
+}
+
 - (void)setup {
     _feeds = [[NSMutableArray alloc] init];
     _feedItems = [[NSMutableArray alloc] init];
     
-    NSString *feedURLString = uAppDefine(@"RSS_URL");
-    if (feedURLString.length > 0) {
-        NSURL *feedURL = [NSURL URLWithString:feedURLString];
-        MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
-        feedParser.delegate = self;
-        feedParser.feedParseType = ParseTypeItemsOnly;
-        feedParser.connectionType = ConnectionTypeAsynchronously;
-        [feedParser parse];
+    if ([self shouldShowRSSFeed]) {
+        NSString *feedURLString = uAppDefine(@"RSS_URL");
+        if (feedURLString.length > 0) {
+            NSURL *feedURL = [NSURL URLWithString:feedURLString];
+            MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
+            feedParser.delegate = self;
+            feedParser.feedParseType = ParseTypeItemsOnly;
+            feedParser.connectionType = ConnectionTypeAsynchronously;
+            [feedParser parse];
+        }
     }
     
     self.delegate = self;
@@ -88,7 +97,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self generateRandomFeed];
+    if ([self shouldShowRSSFeed]) {
+        [self showBroadcastAnimated:NO];
+        [self generateRandomFeed];
+    } else {
+        [self hideBroadcastAnimated:NO];
+    }
 }
 
 - (void)configureConstraints {
@@ -153,12 +167,19 @@
     }
 }
 
+- (void)broadcastViewDidClosed:(RMCloudBroadcastView *)view {
+    [self hideBroadcastAnimated:YES];
+    XXTEDefaultsSetBasic(RMCloudShowRSSBarKey, NO);
+    toastMessage(self, NSLocalizedString(@"\"RSS Feed\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+}
+
 #pragma mark - UIView Getters
 
 - (RMCloudBroadcastView *)broadcastView {
     if (!_broadcastView) {
         _broadcastView = [[RMCloudBroadcastView alloc] init];
         _broadcastView.translatesAutoresizingMaskIntoConstraints = NO;
+        _broadcastView.hidden = YES;
         _broadcastView.delegate = self;
     }
     return _broadcastView;
@@ -194,14 +215,20 @@
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if ([viewController isKindOfClass:[XXTECommonWebViewController class]]) {
-        [self hideBroadcastAnimated:NO];
+    if ([self shouldShowRSSFeed]) {
+        if ([viewController isKindOfClass:[XXTECommonWebViewController class]])
+        {
+            [self hideBroadcastAnimated:NO];
+        }
     }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (NO == [viewController isKindOfClass:[XXTECommonWebViewController class]]) {
-        [self showBroadcastAnimated:YES];
+    if ([self shouldShowRSSFeed]) {
+        if (NO == [viewController isKindOfClass:[XXTECommonWebViewController class]])
+        {
+            [self showBroadcastAnimated:YES];
+        }
     }
 }
 

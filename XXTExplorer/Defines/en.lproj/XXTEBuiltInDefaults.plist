@@ -29,15 +29,66 @@
 	<array>
 		<dict>
 			<key>key</key>
+			<string>GLOBAL_DEFAULTS</string>
+			<key>title</key>
+			<string>Global Config</string>
+		</dict>
+		<dict>
+			<key>key</key>
 			<string>EXPLORER_USER_DEFAULTS</string>
 			<key>title</key>
 			<string>Explorer Config</string>
 		</dict>
 		<dict>
 			<key>key</key>
+			<string>RMCLOUD_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>RMCloud Config</string>
+		</dict>
+		<dict>
+			<key>key</key>
 			<string>REMOTE_USER_DEFAULTS</string>
 			<key>title</key>
 			<string>Daemon Config</string>
+		</dict>
+	</array>
+	<key>GLOBAL_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerPasteboardDetectOnActiveKey</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Detect Available Content in Pasteboard on Active</string>
+			<key>description</key>
+			<string>Detect license string or downloadable url in general pasteboard when application becomes active.</string>
+			<key>options</key>
+			<array>
+				<string>Detect None</string>
+				<string>Detect Downloadable URL</string>
+				<string>Detect License String</string>
+				<string>Detect All</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerFixFileOwnerAutomaticallyKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>Fix File Owner Automatically</string>
+			<key>description</key>
+			<string>Fix the owner of file with the command &quot;chown&quot; if possible.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
 		</dict>
 	</array>
 	<key>EXPLORER_USER_DEFAULTS</key>
@@ -198,36 +249,20 @@
 				<string>On</string>
 			</array>
 		</dict>
+	</array>
+	<key>RMCLOUD_USER_DEFAULTS</key>
+	<array>
 		<dict>
 			<key>enabled</key>
 			<string>YES</string>
 			<key>key</key>
-			<string>XXTExplorerPasteboardDetectOnActiveKey</string>
-			<key>default</key>
-			<integer>0</integer>
-			<key>title</key>
-			<string>Detect Available Content in Pasteboard on Active</string>
-			<key>description</key>
-			<string>Detect license string or downloadable url in general pasteboard when application becomes active.</string>
-			<key>options</key>
-			<array>
-				<string>Detect None</string>
-				<string>Detect Downloadable URL</string>
-				<string>Detect License String</string>
-				<string>Detect All</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<string>YES</string>
-			<key>key</key>
-			<string>XXTExplorerFixFileOwnerAutomaticallyKey</string>
+			<string>RMCloudShowRSSBarKey</string>
 			<key>default</key>
 			<true/>
 			<key>title</key>
-			<string>Fix File Owner Automatically</string>
+			<string>Show RSS Bar</string>
 			<key>description</key>
-			<string>Fix the owner of file with the command &quot;chown&quot; if possible.</string>
+			<string>Show RSS bar at the bottom of all RMCloud pages.</string>
 			<key>options</key>
 			<array>
 				<string>Off</string>

@@ -1135,6 +1135,7 @@
 		D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D617D1D31F7B4BC0009F4B59 /* libc++.tbd */; };
 		D61D40E42030404200F8E2B2 /* RMCloudBroadcastView.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D40E32030404200F8E2B2 /* RMCloudBroadcastView.m */; };
 		D61D40E52030404200F8E2B2 /* RMCloudBroadcastView.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D40E32030404200F8E2B2 /* RMCloudBroadcastView.m */; };
+		D61D40E62031677800F8E2B2 /* XXTEMoreRemoteSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */; };
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
 		D622FDB12026ABCE00E78969 /* XXTExplorerViewController+Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = D622FDB02026ABCE00E78969 /* XXTExplorerViewController+Guide.m */; };
@@ -1154,6 +1155,7 @@
 		D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
 		D63340641FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
 		D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63B58DA1F56684F00D26475 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D63E89E32031694B00A865DA /* XXTEWebDAVClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D63E89E22031694B00A865DA /* XXTEWebDAVClient.m */; };
 		D642B8C11F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C01F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m */; };
 		D642B8C41F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; };
 		D642B8C71F906FEA0006621B /* XXTEUIViewController+SendMail.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C61F906FEA0006621B /* XXTEUIViewController+SendMail.m */; };
@@ -1912,6 +1914,8 @@
 		D63340611FD6529200B08B4E /* XXTEImageViewerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
 		D63340621FD6529200B08B4E /* XXTEImageViewerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
 		D63B58DA1F56684F00D26475 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D63E89E12031694B00A865DA /* XXTEWebDAVClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEWebDAVClient.h; sourceTree = "<group>"; };
+		D63E89E22031694B00A865DA /* XXTEWebDAVClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEWebDAVClient.m; sourceTree = "<group>"; };
 		D642B8BF1F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+XXTCheckUpdate.h"; sourceTree = "<group>"; };
 		D642B8C01F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+XXTCheckUpdate.m"; sourceTree = "<group>"; };
 		D642B8C21F906F260006621B /* XXTEUIViewController+XXTResetDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+XXTResetDefaults.h"; sourceTree = "<group>"; };
@@ -2364,15 +2368,12 @@
 		0F2E49E51F4CA10600BD11AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				0F072D8D1FB6B16000597EE2 /* Segment */,
-				0F61E1641ED7875A003DCC78 /* Views */,
-				0F072D8C1FB6B15300597EE2 /* ItemPicker */,
-				D6E140971F5032AB00D78CB9 /* PickerCollection */,
+				D63E89E02031693A00A865DA /* WebDAV */,
+				D63E89DF2031692F00A865DA /* Category */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
-				0FB7B8A2200099D30047CE84 /* UIViewController+topMostViewController.h */,
-				0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */,
-				0F7B52BC201994CA00D91702 /* NSString+VersionValue.h */,
-				0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */,
+				0F61E1641ED7875A003DCC78 /* Views */,
+				D63E89DE2031690E00A865DA /* ViewControllers */,
+				D6E140971F5032AB00D78CB9 /* PickerCollection */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3645,6 +3646,35 @@
 			path = Daemon;
 			sourceTree = "<group>";
 		};
+		D63E89DE2031690E00A865DA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0F072D8C1FB6B15300597EE2 /* ItemPicker */,
+				0F072D8D1FB6B16000597EE2 /* Segment */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D63E89DF2031692F00A865DA /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0FB7B8A2200099D30047CE84 /* UIViewController+topMostViewController.h */,
+				0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */,
+				0F7B52BC201994CA00D91702 /* NSString+VersionValue.h */,
+				0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		D63E89E02031693A00A865DA /* WebDAV */ = {
+			isa = PBXGroup;
+			children = (
+				D63E89E12031694B00A865DA /* XXTEWebDAVClient.h */,
+				D63E89E22031694B00A865DA /* XXTEWebDAVClient.m */,
+			);
+			path = WebDAV;
+			sourceTree = "<group>";
+		};
 		D643A2551F4D1B39005B9A59 /* Activator */ = {
 			isa = PBXGroup;
 			children = (
@@ -4594,10 +4624,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0/XUI.bundle",
@@ -4618,10 +4648,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 				$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle,
@@ -4676,10 +4706,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
-				"${PODS_ROOT}/../../EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@2x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_background@3x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@2x.png",
+				"${PODS_ROOT}/EAFeatureGuideView/EAFeatureGuideView/Resources/icon_ea_indicator@3x.png",
 				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
 				"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS7.0/XUI.bundle",
@@ -4756,6 +4786,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D61D40E62031677800F8E2B2 /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D6FA3C211FFCB74E00EADE49 /* NSData+SHA1.m in Sources */,
 				D6FA3C221FFCB74E00EADE49 /* NSString+SHA1.m in Sources */,
 				D6F3EBE11FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
@@ -4773,6 +4804,7 @@
 				0F4EE36F1FC1A979003FF5FD /* XXTEInstallerViewController.m in Sources */,
 				0F8EDB5C1FB1F779003C92D6 /* XXTESnippetViewerController.m in Sources */,
 				0F8EDB5E1FB1F779003C92D6 /* XXTESwipeButton.m in Sources */,
+				D63E89E32031694B00A865DA /* XXTEWebDAVClient.m in Sources */,
 				0F8EDB5F1FB1F779003C92D6 /* XXTEEditorTextInput.m in Sources */,
 				0F8EDB601FB1F779003C92D6 /* XXTEBaseObjectViewController.m in Sources */,
 				0F8EDB631FB1F779003C92D6 /* XXTEEditorPreprocessor.m in Sources */,

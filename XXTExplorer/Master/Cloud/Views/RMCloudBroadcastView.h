@@ -12,6 +12,7 @@
 
 @protocol RMCloudBroadcastViewDelegate <NSObject>
 - (void)broadcastViewDidTapped:(RMCloudBroadcastView *)view;
+- (void)broadcastViewDidClosed:(RMCloudBroadcastView *)view;
 @end
 
 @interface RMCloudBroadcastView : UIView

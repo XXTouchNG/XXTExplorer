@@ -139,11 +139,7 @@
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
 #ifndef APPSTORE
             
-#ifndef DEBUG
             XXTExplorerPasteboardDetectType detectType = XXTEDefaultsEnum(XXTExplorerPasteboardDetectOnActiveKey, XXTExplorerPasteboardDetectTypeNone);
-#else
-            XXTExplorerPasteboardDetectType detectType = XXTExplorerPasteboardDetectTypeAll;
-#endif
             
             if (detectType != XXTExplorerPasteboardDetectTypeNone) {
                 

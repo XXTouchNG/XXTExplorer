@@ -47,9 +47,8 @@
     controller2.sortBy = RMApiActionSortByDownloadTimesDesc;
     [self setViewControllers:@[ controller1, controller2 ]];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
-    
     if (@available(iOS 8.0, *)) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
         self.navigationItem.rightBarButtonItem = self.searchItem;
     }
 }
