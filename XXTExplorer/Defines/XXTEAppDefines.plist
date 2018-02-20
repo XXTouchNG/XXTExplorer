@@ -87,20 +87,6 @@
 	</array>
 	<key>RESPRING_CHECK_PATH</key>
 	<string>/private/var/tmp/1ferver_need_respring</string>
-	<key>RMCLOUD_API_BUY</key>
-	<string>/Open/Insourcing</string>
-	<key>RMCLOUD_DEBUG_HOST</key>
-	<string>dev.mall-software.net</string>
-	<key>RMCLOUD_HOST</key>
-	<string>dev.mall-software.net</string>
-	<key>RMCLOUD_OPENAPI</key>
-	<string>/api/OpenAPI</string>
-	<key>RMCLOUD_PLATFORM</key>
-	<string>2</string>
-	<key>RMCLOUD_SCHEME</key>
-	<string>http</string>
-	<key>RMCLOUD_TOKEN</key>
-	<string>3487C956F68D360C</string>
 	<key>RMCLOUD_ADS</key>
 	<array>
 		<dict>
@@ -122,8 +108,20 @@
 			<string>https://www.mall-software.com/</string>
 		</dict>
 	</array>
-	<key>RSS_URL</key>
-	<string>https://club.xxtouch.com/forum.php?mod=guide&amp;view=hot&amp;rss=1</string>
+	<key>RMCLOUD_API_BUY</key>
+	<string>/Open/Insourcing</string>
+	<key>RMCLOUD_DEBUG_HOST</key>
+	<string>dev.mall-software.net</string>
+	<key>RMCLOUD_HOST</key>
+	<string>dev.mall-software.net</string>
+	<key>RMCLOUD_OPENAPI</key>
+	<string>/api/OpenAPI</string>
+	<key>RMCLOUD_PLATFORM</key>
+	<string>2</string>
+	<key>RMCLOUD_SCHEME</key>
+	<string>http</string>
+	<key>RMCLOUD_TOKEN</key>
+	<string>3487C956F68D360C</string>
 	<key>TRUSTED_HOSTS</key>
 	<array>
 		<string>www.xxtouch.com</string>
