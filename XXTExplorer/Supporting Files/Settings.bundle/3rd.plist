@@ -60,6 +60,14 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/GCDWebServer</string>
+			<key>Title</key>
+			<string>GCDWebServer</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
 	</array>
 </dict>
 </plist>

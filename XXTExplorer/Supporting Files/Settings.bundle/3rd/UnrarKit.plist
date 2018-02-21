@@ -6,7 +6,9 @@
 	<array>
 		<dict>
 			<key>FooterText</key>
-			<string>© Dov Frankel, All rights reserved.
+			<string>BSD 2-Clause &quot;Simplified&quot; License
+
+© Dov Frankel, All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

@@ -46,7 +46,7 @@ def shared_cloud
     pod 'JSONModel', '~> 1.7.0', :inhibit_warnings => true
     pod 'YYWebImage', '~> 1.0.5', :inhibit_warnings => true
     # pod 'MarqueeLabel', :inhibit_warnings => true
-    pod 'MWFeedParser', :inhibit_warnings => true
+    # pod 'MWFeedParser', :inhibit_warnings => true
 end
 
 target 'XXTExplorer' do
