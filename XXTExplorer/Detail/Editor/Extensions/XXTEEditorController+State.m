@@ -34,9 +34,12 @@
 - (void)handleApplicationNotifications:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
-    if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidEnterBackground])
-    {
-        [self saveDocumentIfNecessary];
+    if ([aNotification.name isEqualToString:XXTENotificationEvent]) {
+        if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidEnterBackground] ||
+            [eventType isEqualToString:XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace])
+        {
+            [self saveDocumentIfNecessary];
+        }
     }
 }
 

@@ -70,6 +70,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
+    [self renderNavigationBarTheme:YES];
     [super viewWillAppear:animated];
 }
 
@@ -151,6 +152,34 @@ XXTE_START_IGNORE_PARTIAL
     }
 }
 XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - Theme
+
+- (void)renderNavigationBarTheme:(BOOL)restore {
+    UIColor *barTintColor = XXTE_COLOR;
+    UIColor *barTitleColor = [UIColor whiteColor];
+    UINavigationController *navigation = self.navigationController;
+    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
+    navigation.navigationBar.tintColor = barTitleColor;
+    navigation.navigationBar.barTintColor = barTintColor;
+    navigation.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
+    navigation.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    for (UIBarButtonItem *item in navigation.navigationItem.leftBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
+    for (UIBarButtonItem *item in navigation.navigationItem.rightBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
+    self.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
+    self.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
+    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
+    [self setNeedsStatusBarAppearanceUpdate];
+}
 
 #pragma mark - Memory
 

@@ -66,7 +66,6 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-//    if (XXTE_PAD) return;
     UIColor *barTintColor = XXTE_COLOR;
     UIColor *barTitleColor = [UIColor whiteColor];
     XXTEEditorTheme *theme = self.theme;
@@ -82,9 +81,20 @@
     navigation.navigationBar.barTintColor = barTintColor;
     navigation.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
     navigation.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    for (UIBarButtonItem *item in navigation.navigationItem.leftBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
+    for (UIBarButtonItem *item in navigation.navigationItem.rightBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
     self.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
     self.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
-    
+    for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
+    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
+        item.tintColor = barTitleColor;
+    }
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
