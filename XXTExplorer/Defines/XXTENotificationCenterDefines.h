@@ -27,6 +27,7 @@ static NSString * const XXTENotificationEventTypeApplicationDidExtractResource =
 static NSString * const XXTENotificationEventTypeApplicationDidEnterBackground = @"XXTENotificationEventTypeApplicationDidEnterBackground";
 
 static NSString * const XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode = @"XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode";
+static NSString * const XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace = @"XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace";
 
 static NSString * const XXTENotificationEventTypeFormSheetDismissed = @"XXTENotificationEventTypeFormSheetDismissed";
 

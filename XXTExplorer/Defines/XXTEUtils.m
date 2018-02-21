@@ -208,5 +208,5 @@ void toastMessage(UIViewController *viewController, NSString *message) {
 }
 
 NSString *XXTSchemeCloudProjectID(NSUInteger projectID) {
-    return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", projectID];
+    return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", (unsigned long)projectID];
 }

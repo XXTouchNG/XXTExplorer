@@ -171,15 +171,17 @@ XXTE_END_IGNORE_PARTIAL
     
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-        NSArray <NSDictionary *> *metaArray = ((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]);
-        if ([metaArray isKindOfClass:[NSArray class]]) {
-            [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
-                id key = entry[@"key"];
-                id value = XXTEDefaultsObject(key, nil);
-                if (value) {
-                    self.userDefaults[key] = value;
-                }
-            }];
+        for (NSString *metaKey in self.defaultsMeta) {
+            NSArray <NSDictionary *> *metaArray = self.defaultsMeta[metaKey];
+            if ([metaArray isKindOfClass:[NSArray class]]) {
+                [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
+                    id key = entry[@"key"];
+                    id value = XXTEDefaultsObject(key, nil);
+                    if (value) {
+                        self.userDefaults[key] = value;
+                    }
+                }];
+            }
         }
         fulfill(nil);
     }];
@@ -209,15 +211,17 @@ XXTE_END_IGNORE_PARTIAL
     
 #else
     
-    NSArray <NSDictionary *> *metaArray = ((NSArray *)self.defaultsMeta[@"EXPLORER_USER_DEFAULTS"]);
-    if ([metaArray isKindOfClass:[NSArray class]]) {
-        [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
-            id key = entry[@"key"];
-            id value = XXTEDefaultsObject(key, nil);
-            if (value) {
-                self.userDefaults[key] = value;
-            }
-        }];
+    for (NSString *metaKey in self.defaultsMeta) {
+        NSArray <NSDictionary *> *metaArray = self.defaultsMeta[metaKey];
+        if ([metaArray isKindOfClass:[NSArray class]]) {
+            [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
+                id key = entry[@"key"];
+                id value = XXTEDefaultsObject(key, nil);
+                if (value) {
+                    self.userDefaults[key] = value;
+                }
+            }];
+        }
     }
     [self.tableView reloadData];
     
@@ -379,7 +383,8 @@ XXTE_END_IGNORE_PARTIAL
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
-    .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
             block(YES);
             self.userDefaults[modifyKey] = @(index);
@@ -387,11 +392,13 @@ XXTE_END_IGNORE_PARTIAL
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot save changes: %@", nil), jsonDictionary[@"message"]];
         }
         return [PMKPromise promiseWithValue:editedUserDefaults];
-    }).then(^ (NSDictionary *saveDictionary) {
+    })
+    .then(^(NSDictionary *saveDictionary) {
         [saveDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             XXTEDefaultsSetObject(key, obj);
         }];
-    }).catch(^(NSError *serverError) {
+    })
+    .catch(^(NSError *serverError) {
         block(NO);
         if (serverError.code == -1004) {
             toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));

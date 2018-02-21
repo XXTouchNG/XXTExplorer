@@ -85,10 +85,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do extra operations
 }
 
-- (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender {
-    if (@available(iOS 8.0, *)) {
+- (void)viewWillAppear:(BOOL)animated {
+    [self registerNotifications];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self removeNotifications];
+    [super viewWillDisappear:animated];
+}
+
+- (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender
+{
+    if (@available(iOS 8.0, *))
+    {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace}]];
         XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
         XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
         [self showDetailViewController:detailNavigationController sender:sender];
@@ -120,6 +134,27 @@ XXTE_END_IGNORE_PARTIAL
         _detailCloseItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XUICloseIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(restoreWorkspaceViewControllerFromDetailCloseItem:)];
     }
     return _detailCloseItem;
+}
+
+#pragma mark - Notifications
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationShortcut object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)handleApplicationNotification:(NSNotification *)aNotification {
+    NSDictionary *userInfo = aNotification.userInfo;
+    if ([aNotification.name isEqualToString:XXTENotificationShortcut]) {
+        NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
+        if ([shortcutInterface isEqualToString:@"workspace"])
+        {
+            [self restoreWorkspaceViewControllerFromViewController:self];
+        }
+    }
 }
 
 @end

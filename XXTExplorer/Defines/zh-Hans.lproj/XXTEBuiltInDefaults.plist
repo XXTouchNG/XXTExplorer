@@ -29,6 +29,12 @@
 	<array>
 		<dict>
 			<key>key</key>
+			<string>GLOBAL_DEFAULTS</string>
+			<key>title</key>
+			<string>全局设置</string>
+		</dict>
+		<dict>
+			<key>key</key>
 			<string>EXPLORER_USER_DEFAULTS</string>
 			<key>title</key>
 			<string>文件管理器设置</string>
@@ -38,6 +44,45 @@
 			<string>REMOTE_USER_DEFAULTS</string>
 			<key>title</key>
 			<string>守护进程设置</string>
+		</dict>
+	</array>
+	<key>GLOBAL_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerPasteboardDetectOnActiveKey</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>唤醒时检查剪贴板可用内容</string>
+			<key>description</key>
+			<string>当应用程序启动或从后台唤醒时, 检查剪贴板中的授权码或可供下载的 URL.</string>
+			<key>options</key>
+			<array>
+				<string>不检查</string>
+				<string>仅检查可供下载的 URL</string>
+				<string>仅检查授权码</string>
+				<string>全部检查</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<string>YES</string>
+			<key>key</key>
+			<string>XXTExplorerFixFileOwnerAutomaticallyKey</string>
+			<key>default</key>
+			<true/>
+			<key>title</key>
+			<string>自动修复文件所有者</string>
+			<key>description</key>
+			<string>如果可能, 通过命令行 &quot;chown&quot; 以自动修复文件的所有者属性.</string>
+			<key>options</key>
+			<array>
+				<string>关闭</string>
+				<string>开启</string>
+			</array>
 		</dict>
 	</array>
 	<key>EXPLORER_USER_DEFAULTS</key>
@@ -192,42 +237,6 @@
 			<string>选择启动的脚本</string>
 			<key>description</key>
 			<string>自动选中在文件管理器中启动过的脚本.</string>
-			<key>options</key>
-			<array>
-				<string>关闭</string>
-				<string>开启</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<string>YES</string>
-			<key>key</key>
-			<string>XXTExplorerPasteboardDetectOnActiveKey</string>
-			<key>default</key>
-			<integer>0</integer>
-			<key>title</key>
-			<string>唤醒时检查剪贴板可用内容</string>
-			<key>description</key>
-			<string>当应用程序启动或从后台唤醒时, 检查剪贴板中的授权码或可供下载的 URL.</string>
-			<key>options</key>
-			<array>
-				<string>不检查</string>
-				<string>仅检查可供下载的 URL</string>
-				<string>仅检查授权码</string>
-				<string>全部检查</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<string>YES</string>
-			<key>key</key>
-			<string>XXTExplorerFixFileOwnerAutomaticallyKey</string>
-			<key>default</key>
-			<true/>
-			<key>title</key>
-			<string>自动修复文件所有者</string>
-			<key>description</key>
-			<string>如果可能, 通过命令行 &quot;chown&quot; 以自动修复文件的所有者属性.</string>
 			<key>options</key>
 			<array>
 				<string>关闭</string>

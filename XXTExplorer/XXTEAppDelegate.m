@@ -265,8 +265,8 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         NSDictionary *userInfo =
         @{XXTENotificationShortcutInterface: xxtCommandInterface,
           XXTENotificationShortcutUserData: xxtUserData};
-        BOOL canHandleNative = [self application:application handleNativeEvents:userInfo];
-        if (canHandleNative) {
+        BOOL handleNativeOnly = [self application:application handleNativeEvents:userInfo];
+        if (handleNativeOnly) {
             return YES;
         }
         if (delay) {
@@ -311,7 +311,7 @@ XXTE_END_IGNORE_PARTIAL
         UIViewController *rootController = self.window.rootViewController;
         UIViewController *controller = rootController.topMostViewController;
         [controller dismissModalStackAnimated:YES];
-        return YES;
+        return NO;
     }
     return NO;
 }

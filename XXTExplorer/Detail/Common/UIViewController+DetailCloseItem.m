@@ -16,7 +16,8 @@
 }
 
 - (UIBarButtonItem *)splitDetailCloseItem {
-    if ([self.splitViewController isKindOfClass:[XXTESplitViewController class]]) {
+    if ([self.splitViewController isKindOfClass:[XXTESplitViewController class]])
+    {
         XXTESplitViewController *splitController = (XXTESplitViewController *)self.splitViewController;
         return splitController.detailCloseItem;
     }

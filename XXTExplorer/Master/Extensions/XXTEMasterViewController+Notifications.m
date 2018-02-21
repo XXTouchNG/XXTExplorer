@@ -139,11 +139,7 @@
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
 #ifndef APPSTORE
             
-#ifndef DEBUG
             XXTExplorerPasteboardDetectType detectType = XXTEDefaultsEnum(XXTExplorerPasteboardDetectOnActiveKey, XXTExplorerPasteboardDetectTypeNone);
-#else
-            XXTExplorerPasteboardDetectType detectType = XXTExplorerPasteboardDetectTypeAll;
-#endif
             
             if (detectType != XXTExplorerPasteboardDetectTypeNone) {
                 
@@ -228,7 +224,10 @@
     if (![jsonEvent isKindOfClass:[NSString class]]) {
         return NO;
     }
-    if ([jsonEvent isEqualToString:@"xui"]) {
+    if ([jsonEvent isEqualToString:@"workspace"]) {
+        return YES; // handled by split view controller
+    }
+    else if ([jsonEvent isEqualToString:@"xui"]) {
         NSString *bundlePath = jsonDictionary[@"bundle"];
         if (![bundlePath isKindOfClass:[NSString class]])
         {
