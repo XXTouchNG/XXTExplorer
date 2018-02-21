@@ -36,8 +36,8 @@
 
 #import "UIViewController+topMostViewController.h"
 
-static NSString * const XXTEShortcutAction = @"XXTEShortcutAction";
-static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
+static NSString * const kXXTEShortcutAction = @"XXTEShortcutAction";
+static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 
 @interface XXTEAppDelegate ()
 
@@ -108,7 +108,7 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     {
         BOOL shouldCopyResources = NO;
         NSString *currentVersion = uAppDefine(kXXTDaemonVersionKey);
-        NSString *versionFlag = [NSString stringWithFormat:XXTELaunchedVersion, currentVersion];
+        NSString *versionFlag = [NSString stringWithFormat:kXXTELaunchedVersion, currentVersion];
         if (XXTEDefaultsObject(versionFlag, nil) == nil) {
             shouldCopyResources = YES;
             XXTEDefaultsSetBasic(versionFlag, YES);
@@ -150,11 +150,11 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
-            UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ XXTEShortcutAction: @"stop" }];
+            UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ kXXTEShortcutAction: @"stop" }];
             UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
-            UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ XXTEShortcutAction: @"launch" }];
+            UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ kXXTEShortcutAction: @"launch" }];
             UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
-            UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ XXTEShortcutAction : @"scan" }];
+            UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ kXXTEShortcutAction : @"scan" }];
             [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
         }
         XXTE_END_IGNORE_PARTIAL
@@ -168,6 +168,15 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
         XXTE_END_IGNORE_PARTIAL
     }
 #endif
+    
+    {
+        NSInteger launchedTimes = XXTEDefaultsInt(kXXTELaunchedTimes, 0);
+        launchedTimes++;
+#ifdef DEBUG
+        NSLog(@"Launched %ld times.", (long)launchedTimes);
+#endif
+        XXTEDefaultsSetBasic(kXXTELaunchedTimes, launchedTimes);
+    }
     
     return YES;
 }
@@ -292,8 +301,8 @@ static NSString * const XXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 #ifndef APPSTORE
 XXTE_START_IGNORE_PARTIAL
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
-    if (shortcutItem.userInfo[XXTEShortcutAction]) {
-        NSString *shortcutAction = (NSString *)shortcutItem.userInfo[XXTEShortcutAction];
+    if (shortcutItem.userInfo[kXXTEShortcutAction]) {
+        NSString *shortcutAction = (NSString *)shortcutItem.userInfo[kXXTEShortcutAction];
         NSDictionary *userInfo =
         @{XXTENotificationShortcutInterface: shortcutAction,
           XXTENotificationShortcutUserData: [NSNull null]};

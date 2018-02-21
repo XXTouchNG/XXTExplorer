@@ -164,6 +164,7 @@
 		0F71A2741FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
 		0F71A2751FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
 		0F71A2761FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
+		0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61616FA1FE8F76F009F10FF /* StoreKit.framework */; };
 		0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
 		0F7B52BE201994CA00D91702 /* NSString+VersionValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */; };
 		0F7B52BF201994CA00D91702 /* NSString+VersionValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */; };
@@ -2104,6 +2105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */,
 				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,
 				0F8EDC591FB1F779003C92D6 /* Photos.framework in Frameworks */,
 				0F8EDC5A1FB1F779003C92D6 /* AssetsLibrary.framework in Frameworks */,

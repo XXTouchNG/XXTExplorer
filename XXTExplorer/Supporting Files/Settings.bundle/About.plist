@@ -70,6 +70,19 @@ All Rights Reserved.</string>
 			<key>label</key>
 			<string>Mail Feedback</string>
 		</dict>
+		<dict>
+			<key>action</key>
+			<string>OpenURL:</string>
+			<key>args</key>
+			<dict>
+				<key>url</key>
+				<string>itms-apps://itunes.apple.com/app/id1160374967?action=write-review</string>
+			</dict>
+			<key>cell</key>
+			<string>Button</string>
+			<key>label</key>
+			<string>Rate XXTouch</string>
+		</dict>
 	</array>
 	<key>stringsTable</key>
 	<string>About</string>

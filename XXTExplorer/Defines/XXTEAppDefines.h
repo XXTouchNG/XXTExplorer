@@ -50,12 +50,12 @@ static inline double XXTEDefaultsDouble(NSString *key, double defaultValue) {
     return ([storedValue doubleValue]);
 }
 
-static inline double XXTEDefaultsInt(NSString *key, int defaultValue) {
+static inline NSInteger XXTEDefaultsInt(NSString *key, int defaultValue) {
     id storedValue = XXTEDefaultsObject(key, @(defaultValue));
     if (![storedValue isKindOfClass:[NSNumber class]]) {
         return defaultValue;
     }
-    return ([storedValue intValue]);
+    return ([storedValue integerValue]);
 }
 
 static inline id XXTEBuiltInDefaultsObject(NSString *key) {
@@ -75,5 +75,6 @@ static inline NSUInteger XXTEBuiltInDefaultsObjectEnum(NSString *key) {
 
 static NSString * const kXXTErrorDomain = @"com.darwindev.XXTExplorer.error";
 static NSString * const kXXTDaemonVersionKey = @"DAEMON_VERSION";
+static NSString * const kXXTELaunchedTimes = @"XXTELaunchedTimes";
 
 #endif /* XXTEAppDefines_h */

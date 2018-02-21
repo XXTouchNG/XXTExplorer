@@ -15,6 +15,11 @@
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENavigationController.h"
 
+#import <StoreKit/StoreKit.h>
+#import "XXTEAppDefines.h"
+
+static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed";
+
 @interface XXTESplitViewController () <UISplitViewControllerDelegate>
 
 @end
@@ -98,6 +103,24 @@
     [super viewWillDisappear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (@available(iOS 10.3, *)) {
+        if ([SKStoreReviewController respondsToSelector:@selector(requestReview)])
+        {
+            NSInteger launchedTimes = XXTEDefaultsInt(kXXTELaunchedTimes, 0);
+            if (launchedTimes >= 15)
+            {
+                BOOL promptDisplayed = XXTEDefaultsBool(kXXTERatingPromptDisplayed, NO);
+                if (!promptDisplayed) {
+                    [SKStoreReviewController requestReview];
+                    XXTEDefaultsSetBasic(kXXTERatingPromptDisplayed, YES);
+                }
+            }
+        }
+    }
+}
+
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender
 {
     if (@available(iOS 8.0, *))
@@ -120,6 +143,16 @@ XXTE_START_IGNORE_PARTIAL
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:svc userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode, XXTENotificationDetailDisplayMode: @(displayMode)}]];
 }
 XXTE_END_IGNORE_PARTIAL
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController showViewController:(UIViewController *)vc sender:(id)sender {
+    [self restoreTheme];
+    return NO;
+}
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController showDetailViewController:(UIViewController *)vc sender:(id)sender {
+    [self restoreTheme];
+    return NO;
+}
 
 - (UIViewController *)primaryViewControllerForCollapsingSplitViewController:(UISplitViewController *)splitViewController {
     return (splitViewController.viewControllers.count > 0) ? splitViewController.viewControllers[0] : nil;
@@ -155,6 +188,13 @@ XXTE_END_IGNORE_PARTIAL
             [self restoreWorkspaceViewControllerFromViewController:self];
         }
     }
+}
+
+#pragma mark - Theme
+
+- (void)restoreTheme {
+    self.displayModeButtonItem.tintColor = [UIColor whiteColor];
+    self.detailCloseItem.tintColor = [UIColor whiteColor];
 }
 
 @end
