@@ -64,9 +64,6 @@
 - (void)setupWithPath:(NSString *)path {
     _homeEntryList = [[NSMutableArray alloc] init];
     _entryList = [[NSMutableArray alloc] init];
-#ifdef APPSTORE
-    self.hidesBottomBarWhenPushed = YES;
-#endif
     {
         NSArray *explorerUserDefaults = XXTEBuiltInDefaultsObject(@"EXPLORER_USER_DEFAULTS");
         for (NSDictionary *explorerUserDefault in explorerUserDefaults) {

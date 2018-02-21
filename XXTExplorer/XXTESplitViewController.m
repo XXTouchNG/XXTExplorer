@@ -105,6 +105,7 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+#ifdef APPSTORE
     if (@available(iOS 10.3, *)) {
         if ([SKStoreReviewController respondsToSelector:@selector(requestReview)])
         {
@@ -119,6 +120,7 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
             }
         }
     }
+#endif
 }
 
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender

@@ -636,6 +636,15 @@ int lua_xxt_os_execute (lua_State *L)
     }
 }
 
+int lua_xxt_os_tmpname (lua_State *L)
+{
+    NSString *identifier = [[NSProcessInfo processInfo] globallyUniqueString];
+    NSString *tmpNameString = [NSString stringWithFormat:@"lua_%@", identifier];
+    NSString *tmpPathString = [NSTemporaryDirectory() stringByAppendingPathComponent:tmpNameString];
+    lua_pushstring(L, [tmpPathString UTF8String]);
+    return 1;
+}
+
 #pragma mark - Libs
 
 void lua_openNSValueLibs(lua_State *L)
@@ -655,6 +664,10 @@ void lua_openNSValueLibs(lua_State *L)
     lua_getglobal(L, "os");
     lua_pushcfunction(L, lua_xxt_os_execute);
     lua_setfield(L, -2, "execute");
+    lua_pop(L, 1);
+    lua_getglobal(L, "os");
+    lua_pushcfunction(L, lua_xxt_os_tmpname);
+    lua_setfield(L, -2, "tmpname");
     lua_pop(L, 1);
 }
 

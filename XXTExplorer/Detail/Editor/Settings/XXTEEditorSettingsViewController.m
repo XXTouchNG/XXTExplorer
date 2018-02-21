@@ -274,7 +274,7 @@
     XXTEEditorWrapColumnCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorWrapColumnCell class]) owner:nil options:nil] lastObject];
     cell11.titleLabel.text = NSLocalizedString(@"Word Column", nil);
     NSInteger columnValue = XXTEDefaultsInt(XXTEEditorWrapColumn, 160);
-    cell11.valueField.text = [NSString stringWithFormat:@"%d", columnValue];
+    cell11.valueField.text = [NSString stringWithFormat:@"%ld", (long)columnValue];
     cell11.valueField.delegate = self;
     {
         @weakify(self);

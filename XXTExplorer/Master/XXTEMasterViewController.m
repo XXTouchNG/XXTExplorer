@@ -408,37 +408,39 @@
 #endif
 
 // pass a param to describe the state change, an animated flag and a completion block matching UIView animations completion
-- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
-    
-    // bail if the current state matches the desired state
-    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
-    
-    // get a frame calculation ready
-    CGRect frame = self.tabBar.frame;
-    CGFloat height = frame.size.height;
-    CGFloat offsetY = (visible)? -height : height;
-    
-    // zero duration means no animation
-    CGFloat duration = (animated)? 0.3 : 0.0;
-    
-    [UIView animateWithDuration:duration animations:^{
-        self.tabBar.frame = CGRectOffset(frame, 0, offsetY);
-    } completion:completion];
-}
 
-//Getter to know the current state
-- (BOOL)tabBarIsVisible {
-    return self.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
-}
+//- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
+//    
+//    // bail if the current state matches the desired state
+//    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
+//    
+//    // get a frame calculation ready
+//    CGRect frame = self.tabBar.frame;
+//    CGFloat height = frame.size.height;
+//    CGFloat offsetY = (visible)? -height : height;
+//    
+//    // zero duration means no animation
+//    CGFloat duration = (animated)? 0.3 : 0.0;
+//    
+//    [UIView animateWithDuration:duration animations:^{
+//        self.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+//    } completion:completion];
+//}
 
-- (CGRect)rectOfTabBarItemAtIndex:(NSUInteger)idx {
-    CGFloat tabBarWidth = CGRectGetWidth(self.tabBar.frame);
-    NSUInteger itemCount = self.tabBar.items.count;
-    CGFloat tabWidth = tabBarWidth / itemCount;
-    CGFloat tabHeight = CGRectGetHeight(self.tabBar.frame);
-    CGRect tabFrame = CGRectMake((idx) * tabWidth, 0, tabWidth, tabHeight);
-    return [self.tabBar convertRect:tabFrame toView:self.view];
-}
+// Getter to know the current state
+
+//- (BOOL)tabBarIsVisible {
+//    return self.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+//}
+//
+//- (CGRect)rectOfTabBarItemAtIndex:(NSUInteger)idx {
+//    CGFloat tabBarWidth = CGRectGetWidth(self.tabBar.frame);
+//    NSUInteger itemCount = self.tabBar.items.count;
+//    CGFloat tabWidth = tabBarWidth / itemCount;
+//    CGFloat tabHeight = CGRectGetHeight(self.tabBar.frame);
+//    CGRect tabFrame = CGRectMake((idx) * tabWidth, 0, tabWidth, tabHeight);
+//    return [self.tabBar convertRect:tabFrame toView:self.view];
+//}
 
 - (void)dealloc {
     
