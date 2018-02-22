@@ -15,8 +15,6 @@
 #import "XXTEDispatchDefines.h"
 #import "UIView+XXTEToast.h"
 
-#import "XXTEMasterViewController+Guide.h"
-
 #ifndef APPSTORE
     #import "XXTERespringAgent.h"
     #import "XXTEDaemonAgent.h"
@@ -41,7 +39,6 @@
 
 @implementation XXTEMasterViewController {
     BOOL firstTimeLoaded;
-    BOOL firstTimeGuided;
 }
 
 #pragma mark - Initializers
@@ -172,14 +169,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [self removeNotifications];
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (!firstTimeGuided) {
-        [self showGuide];
-        firstTimeGuided = YES;
-    }
 }
 
 #pragma mark - Agents

@@ -21,10 +21,6 @@ typedef enum : NSUInteger {
 
 @interface XXTEMasterViewController : UITabBarController
 
-- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
-- (BOOL)tabBarIsVisible;
-- (CGRect)rectOfTabBarItemAtIndex:(NSUInteger)idx;
-
 #ifndef APPSTORE
 - (void)checkUpdate;
 #endif
