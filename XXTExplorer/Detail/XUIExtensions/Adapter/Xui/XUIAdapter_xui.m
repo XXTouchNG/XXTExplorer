@@ -58,7 +58,9 @@
             if (!adapterPath) {
                 return NO; // NSAssert(adapterPath, @"LuaVM: XUIAdapter not found.");
             }
-            xui_32 *xui = XUICreateWithContentsOfFile(adapterPath.UTF8String);
+            
+            lua_createArgTable(L, adapterPath.fileSystemRepresentation);
+            xui_32 *xui = XUICreateWithContentsOfFile(adapterPath.fileSystemRepresentation);
             
             if (!xui) {
                 return NO; // NSAssert(xui, @"LuaVM: Cannot decode XUIAdapter.");

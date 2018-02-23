@@ -75,8 +75,9 @@
             lua_setMaxLine(L, LUA_MAX_LINE_C);
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
+            lua_createArgTable(L, path.fileSystemRepresentation);
             
-            int luaResult = luaL_loadfile(L, [path UTF8String]);
+            int luaResult = luaL_loadfile(L, path.fileSystemRepresentation);
             if (!lua_checkCode(L, luaResult, errorPtr))
                 return NO;
             

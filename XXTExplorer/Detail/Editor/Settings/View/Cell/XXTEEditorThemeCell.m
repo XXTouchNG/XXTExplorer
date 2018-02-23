@@ -15,12 +15,6 @@
     // Initialization code
     
     UIImageView *imageView = self.previewImageView;
-    imageView.layer.masksToBounds = YES;
-    imageView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-    imageView.layer.borderWidth = 1.f;
-    imageView.layer.cornerRadius = 8.f;
-    imageView.layer.shouldRasterize = YES;
-    imageView.layer.rasterizationScale = [UIScreen mainScreen].scale;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     UIView *selectionBackground = [[UIView alloc] init];

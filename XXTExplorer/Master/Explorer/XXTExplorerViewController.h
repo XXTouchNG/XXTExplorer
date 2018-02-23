@@ -50,7 +50,8 @@ typedef enum : NSUInteger {
 #pragma mark - reload
 
 - (void)loadEntryListData;
-- (void)refreshEntryListView:(UIRefreshControl *)refreshControl;
+- (void)reloadEntryListView;
+- (void)refreshControlTriggered:(UIRefreshControl *)refreshControl;
 - (void)reconfigureCellAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForEntryAtPath:(NSString *)entryPath;
 - (void)reloadFooterView;

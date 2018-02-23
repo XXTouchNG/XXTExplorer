@@ -68,6 +68,8 @@
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
+    
+    self.navigationItem.rightBarButtonItem = self.previewItem;
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -133,14 +135,24 @@
 
 - (UIBarButtonItem *)previewItem {
     if (!_previewItem) {
-        UIBarButtonItem *previewItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Preview", nil) style:UIBarButtonItemStylePlain target:self action:@selector(previewItemTapped:)];
+        UIBarButtonItem *previewItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEEditorThemeTarget"] style:UIBarButtonItemStylePlain target:self action:@selector(previewItemTapped:)];
         _previewItem = previewItem;
     }
     return _previewItem;
 }
 
 - (void)previewItemTapped:(UIBarButtonItem *)sender {
-    
+    if (!self.selectedThemeName) return;
+    NSUInteger idx = 0;
+    for (NSDictionary *theme in self.themes) {
+        NSString *themeName = theme[@"name"];
+        if ([self.selectedThemeName isEqualToString:themeName]) {
+            break;
+        }
+        idx++;
+    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
 #pragma mark - Memory

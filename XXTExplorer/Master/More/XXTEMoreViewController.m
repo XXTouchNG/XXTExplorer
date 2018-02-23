@@ -268,11 +268,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                 }
             }
         }).catch(^(NSError *serverError) {
-            if (serverError.code == -1004) {
-                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-            } else {
-                toastMessage(self, [serverError localizedDescription]);
-            }
+            toastDaemonError(self, serverError);
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
@@ -755,11 +751,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                 [self.remoteAccessSwitch setOn:changeToStatus animated:YES];
             }
         }).catch(^(NSError *serverError) {
-            if (serverError.code == -1004) {
-                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-            } else {
-                toastMessage(self, [serverError localizedDescription]);
-            }
+            toastDaemonError(self, serverError);
             [self.remoteAccessSwitch setOn:!changeToStatus animated:YES];
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
@@ -869,11 +861,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             toastMessage(self, jsonDictionary[@"message"]);
         }
     }).catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });
@@ -889,11 +877,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });
@@ -909,11 +893,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });
@@ -929,11 +909,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });
@@ -949,11 +925,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             toastMessage(self, ([NSString stringWithFormat:@"Operation succeed: %@", jsonDictionary[@"message"]]));
         }
     }).catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });

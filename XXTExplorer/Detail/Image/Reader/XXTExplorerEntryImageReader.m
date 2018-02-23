@@ -75,6 +75,9 @@
 
 - (NSDictionary <NSString *, id> *)metaDictionary {
     if (!_metaDictionary) {
+#ifdef DEBUG
+        NSLog(@"Load meta info: %@", self.entryPath);
+#endif
         CFStringRef imageKeys[2];
         CFTypeRef imageValues[2];
         imageKeys[0] = kCGImageSourceShouldCache;

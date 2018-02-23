@@ -75,7 +75,7 @@
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive] ||
                  [eventType isEqualToString:XXTENotificationEventTypeApplicationDidExtractResource] ||
                  [eventType isEqualToString:XXTENotificationEventTypeSelectedScriptPathChanged]) {
-            [self refreshEntryListView:nil];
+            [self reloadEntryListView];
         }
     }
 }

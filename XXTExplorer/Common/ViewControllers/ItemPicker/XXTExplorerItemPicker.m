@@ -221,7 +221,7 @@
     [self updateFooterView];
 }
 
-- (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
+- (void)refreshControlTriggered:(UIRefreshControl *)refreshControl {
     [refreshControl endRefreshing];
 }
 

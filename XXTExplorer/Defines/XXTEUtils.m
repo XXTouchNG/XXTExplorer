@@ -207,6 +207,10 @@ void toastMessage(UIViewController *viewController, NSString *message) {
     toastMessageWithDelay(viewController, message, 2.0);
 }
 
+void toastError(UIViewController *viewController, NSError *error) {
+    toastMessageWithDelay(viewController, [error localizedDescription], 2.0);
+}
+
 NSString *XXTSchemeCloudProjectID(NSUInteger projectID) {
     return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", (unsigned long)projectID];
 }

@@ -261,11 +261,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         [self updateLicenseDictionary:licenseDictionary];
     })
     .catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     })
     .finally(^() {
         blockInteractions(blockVC, NO);

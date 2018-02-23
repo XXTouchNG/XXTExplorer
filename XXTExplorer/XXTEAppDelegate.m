@@ -38,6 +38,7 @@
 
 static NSString * const kXXTEShortcutAction = @"XXTEShortcutAction";
 static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";
+static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName-%@";
 
 @interface XXTEAppDelegate ()
 
@@ -106,42 +107,47 @@ static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     
     // Copy Initial Resources
     {
-        BOOL shouldCopyResources = NO;
-        NSString *currentVersion = uAppDefine(kXXTDaemonVersionKey);
-        NSString *versionFlag = [NSString stringWithFormat:kXXTELaunchedVersion, currentVersion];
-        if (XXTEDefaultsObject(versionFlag, nil) == nil) {
-            shouldCopyResources = YES;
-            XXTEDefaultsSetBasic(versionFlag, YES);
-        }
-        if (shouldCopyResources)
-        {
-            // Extract in Background
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                NSString *rootPath = [[self class] sharedRootPath];
-                NSArray <NSDictionary *> *copyResources = uAppDefine(@"INITIAL_RESOURCES");
-                for (NSDictionary *copyResource in copyResources) {
-                    NSString *from = copyResource[@"from"];
-                    NSString *fromPath = [[NSBundle mainBundle] pathForResource:from ofType:@"zip"];
-                    NSString *to = copyResource[@"to"];
-                    NSString *toPath = [rootPath stringByAppendingPathComponent:to];
-                    int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
-                        return zip_extract_override;
-                    };
-                    int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
-                        NSLog(@"Extract \"%s\"...", filename);
-                        return 0;
-                    };
-                    int arg = 2;
-                    int status = zip_extract(fromPath.UTF8String, toPath.UTF8String, will_extract, extract_callback, &arg);
-                    BOOL result = (status == 0);
+        // Extract in Background
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSString *rootPath = [[self class] sharedRootPath];
+            NSArray <NSDictionary *> *copyResources = uAppDefine(@"INITIAL_RESOURCES");
+            for (NSDictionary *copyResource in copyResources) {
+                NSString *from = copyResource[@"from"];
+                if (![from isKindOfClass:[NSString class]]) {
+                    continue;
+                }
+                NSString *fromPath = [[NSBundle mainBundle] pathForResource:from ofType:@"zip"];
+                NSString *to = copyResource[@"to"];
+                if (![to isKindOfClass:[NSString class]]) {
+                    continue;
+                }
+                BOOL shouldCopyResources = NO;
+                NSString *resourceFlag = [NSString stringWithFormat:kXXTEExtractedResourceName, from];
+                if (XXTEDefaultsObject(resourceFlag, nil) == nil) {
+                    shouldCopyResources = YES;
+                    XXTEDefaultsSetBasic(resourceFlag, YES);
+                }
+                if (!shouldCopyResources) {
+                    continue;
+                }
+                NSString *toPath = [rootPath stringByAppendingPathComponent:to];
+                int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
+                    return zip_extract_override;
+                };
+                int (^extract_callback)(const char *, void *) = ^int(const char *filename, void *arg) {
+                    NSLog(@"Extract \"%s\"...", filename);
+                    return 0;
+                };
+                int arg = 2;
+                int status = zip_extract(fromPath.UTF8String, toPath.UTF8String, will_extract, extract_callback, &arg);
+                BOOL result = (status == 0);
+                if (result) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        if (result) {
-                            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:application userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeApplicationDidExtractResource}]];
-                        }
+                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:application userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeApplicationDidExtractResource}]];
                     });
                 }
-            });
-        }
+            }
+        });
     }
     
 #ifndef APPSTORE
@@ -169,6 +175,16 @@ static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";
     }
 #endif
     
+    // Launched Version
+    {
+        NSString *currentVersion = uAppDefine(kXXTDaemonVersionKey);
+        NSString *versionFlag = [NSString stringWithFormat:kXXTELaunchedVersion, currentVersion];
+        if (XXTEDefaultsObject(versionFlag, nil) == nil) {
+            XXTEDefaultsSetBasic(versionFlag, YES);
+        }
+    }
+    
+    // Launched Times
     {
         NSInteger launchedTimes = XXTEDefaultsInt(kXXTELaunchedTimes, 0);
         launchedTimes++;

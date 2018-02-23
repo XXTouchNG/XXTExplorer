@@ -68,7 +68,7 @@
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastDaemonError(self, error);
         } else {
             [self setEditing:YES animated:YES];
         }

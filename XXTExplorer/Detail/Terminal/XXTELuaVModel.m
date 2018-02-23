@@ -137,13 +137,14 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 
 #pragma mark - check code and error
 
-- (void)setCurrentPath:(NSString *)dirPath {
-    chdir([dirPath UTF8String]);
-    NSString *sPath = [NSString stringWithFormat:@"%@", [dirPath stringByAppendingPathComponent:@"?.lua"]];
-    NSString *cPath = [NSString stringWithFormat:@"%@", [dirPath stringByAppendingPathComponent:@"?.so"]];
+- (void)setCurrentPath:(NSString *)dir {
+    if (!dir) return;
+    chdir(dir.fileSystemRepresentation);
+    NSString *sp = [dir stringByAppendingPathComponent:@"?.lua"];
+    NSString *cp = [dir stringByAppendingPathComponent:@"?.so"];
     @synchronized (self) {
-        lua_setPath(L, "path", sPath.UTF8String);
-        lua_setPath(L, "cpath", cPath.UTF8String);
+        lua_setPath(L, "path", sp.fileSystemRepresentation);
+        lua_setPath(L, "cpath", cp.fileSystemRepresentation);
     }
 }
 
@@ -152,7 +153,8 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 - (BOOL)loadFileFromPath:(NSString *)path error:(NSError **)error
 {
     [self setCurrentPath:[path stringByDeletingLastPathComponent]];
-    const char *cString = [path UTF8String];
+    const char *cString = path.fileSystemRepresentation;
+    lua_createArgTable(L, cString);
     int load_stat = luaL_loadfile(L, cString);
     if (!lua_checkCode(L, load_stat, error)) {
         return NO;

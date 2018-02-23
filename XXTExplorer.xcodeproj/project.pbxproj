@@ -1247,7 +1247,21 @@
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
 		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
+		D6FD914D203E9CC800CC0362 /* lfs.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D6FD914B203E9CAC00CC0362 /* lfs.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D6FD9143203E987900CC0362 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				D6FD914D203E9CC800CC0362 /* lfs.so in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0D2B1570999C111DB43AA7B8 /* Pods-XXTExplorer-Archive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer-Archive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2085,6 +2099,7 @@
 		D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreTitleDescriptionCell.xib; sourceTree = "<group>"; };
 		D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationOperationController.h; sourceTree = "<group>"; };
 		D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationOperationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D6FD914B203E9CAC00CC0362 /* lfs.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = lfs.so; sourceTree = "<group>"; };
 		E15A559CFF7426B35A2959FE /* Pods-XXTouch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouch.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch.release.xcconfig"; sourceTree = "<group>"; };
 		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
@@ -2867,6 +2882,7 @@
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
 				0F61E1601ED78712003DCC78 /* Master */,
+				D6FD914A203E9CAC00CC0362 /* Libraries */,
 				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
@@ -4052,6 +4068,14 @@
 			path = Activation;
 			sourceTree = "<group>";
 		};
+		D6FD914A203E9CAC00CC0362 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				D6FD914B203E9CAC00CC0362 /* lfs.so */,
+			);
+			path = Libraries;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4067,6 +4091,7 @@
 				4D89EE81A6D019938A6B5ABF /* [CP] Embed Pods Frameworks */,
 				CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */,
 				D60FE7D71FE23BAD00954818 /* Integrate Reveal Server */,
+				D6FD9143203E987900CC0362 /* CopyFiles */,
 			);
 			buildRules = (
 			);

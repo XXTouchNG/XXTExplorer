@@ -198,11 +198,7 @@ XXTE_END_IGNORE_PARTIAL
         }];
     })
     .catch(^(NSError *serverError) {
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     })
     .finally(^() {
         blockInteractions(blockVC, NO);
@@ -400,11 +396,7 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^(NSError *serverError) {
         block(NO);
-        if (serverError.code == -1004) {
-            toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-        } else {
-            toastMessage(self, [serverError localizedDescription]);
-        }
+        toastDaemonError(self, serverError);
     })
     .finally(^() {
         blockInteractions(blockVC, NO);

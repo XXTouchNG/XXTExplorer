@@ -178,6 +178,7 @@
         lua_setMaxLine(L, LUA_MAX_LINE);
         luaL_openlibs(L);
         lua_openNSValueLibs(L); // performance?
+        lua_createArgTable(L, path.fileSystemRepresentation);
 
         int luaResult = luaL_loadfile(L, [path UTF8String]);
         if (lua_checkCode(L, luaResult, nil))

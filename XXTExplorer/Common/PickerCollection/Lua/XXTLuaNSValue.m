@@ -399,7 +399,7 @@ int l_toJSON(lua_State *L)
 
 int luaopen_json(lua_State *L)
 {
-    lua_createtable(L, 0, 2);
+    lua_createtable(L, 0, 4);
     lua_pushcfunction(L, l_fromJSON);
     lua_setfield(L, -2, "decode");
     lua_pushcfunction(L, l_toJSON);
@@ -453,7 +453,7 @@ int l_toPlist(lua_State *L)
 
 int luaopen_plist(lua_State *L)
 {
-    lua_createtable(L, 0, 2);
+    lua_createtable(L, 0, 3);
     lua_pushcfunction(L, l_fromPlist);
     lua_setfield(L, -2, "read");
     lua_pushcfunction(L, l_toPlist);
@@ -582,7 +582,7 @@ int l_sys_toast(lua_State *L)
 
 int luaopen_sys(lua_State *L)
 {
-    lua_createtable(L, 0, 2);
+    lua_createtable(L, 0, 4);
     lua_pushcfunction(L, l_sys_version);
     lua_setfield(L, -2, "version");
     lua_pushcfunction(L, l_sys_xtversion);
@@ -645,6 +645,10 @@ int lua_xxt_os_tmpname (lua_State *L)
     return 1;
 }
 
+int lua_xxt_os_exit (lua_State *L) {
+    return luaL_error(L, "os.exit is not available on platform iOS");
+}
+
 #pragma mark - Libs
 
 void lua_openNSValueLibs(lua_State *L)
@@ -661,14 +665,53 @@ void lua_openNSValueLibs(lua_State *L)
     lua_pop(L, 1);
     luaL_requiref(L, "device", luaopen_device, YES);
     lua_pop(L, 1);
-    lua_getglobal(L, "os");
-    lua_pushcfunction(L, lua_xxt_os_execute);
-    lua_setfield(L, -2, "execute");
-    lua_pop(L, 1);
-    lua_getglobal(L, "os");
-    lua_pushcfunction(L, lua_xxt_os_tmpname);
-    lua_setfield(L, -2, "tmpname");
-    lua_pop(L, 1);
+    {
+        lua_getglobal(L, "os");
+        lua_pushcfunction(L, lua_xxt_os_execute);
+        lua_setfield(L, -2, "execute");
+        lua_pop(L, 1);
+    }
+    {
+        lua_getglobal(L, "os");
+        lua_pushcfunction(L, lua_xxt_os_tmpname);
+        lua_setfield(L, -2, "tmpname");
+        lua_pop(L, 1);
+    }
+    {
+        lua_getglobal(L, "os");
+        lua_pushcfunction(L, lua_xxt_os_exit);
+        lua_setfield(L, -2, "exit");
+        lua_pop(L, 1);
+    }
+    {
+        NSString *loc = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"lib"];
+        NSString *sp = [loc stringByAppendingPathComponent:@"?.lua"];
+        NSString *cp = [loc stringByAppendingPathComponent:@"?.so"];
+        lua_setPath(L, "path", sp.fileSystemRepresentation);
+        lua_setPath(L, "cpath", cp.fileSystemRepresentation);
+    }
+    {
+        NSString *loc = [[NSBundle mainBundle] bundlePath];
+        NSString *sp = [loc stringByAppendingPathComponent:@"?.lua"];
+        NSString *cp = [loc stringByAppendingPathComponent:@"?.so"];
+        lua_setPath(L, "path", sp.fileSystemRepresentation);
+        lua_setPath(L, "cpath", cp.fileSystemRepresentation);
+    }
+}
+
+void lua_createArgTable(lua_State *L, const char *path)
+{
+    static NSString *fakePath = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fakePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"bin/lua"];
+    });
+    lua_createtable(L, 1, 0);
+    lua_pushstring(L, fakePath.fileSystemRepresentation);
+    lua_rawseti(L, -2, 1);
+    lua_pushstring(L, path);
+    lua_rawseti(L, -2, 2);
+    lua_setglobal(L, "arg");
 }
 
 #pragma mark - Helpers

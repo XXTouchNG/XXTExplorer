@@ -156,7 +156,7 @@
             refreshControl.tintColor = [UIColor whiteColor];
 #endif
         }
-        [refreshControl addTarget:self action:@selector(refreshEntryListView:) forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(refreshControlTriggered:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
         refreshControl;
     });
@@ -183,7 +183,7 @@
         [self loadEntryListData];
         [self.tableView reloadData];
     } else {
-        [self refreshEntryListView:nil];
+        [self refreshControlTriggered:nil];
     }
 }
 
@@ -385,7 +385,12 @@
     [self.footerView.footerLabel setText:finalFooterString];
 }
 
-- (void)refreshEntryListView:(UIRefreshControl *)refreshControl {
+- (void)reloadEntryListView {
+    [self loadEntryListData];
+    [self.tableView reloadData];
+}
+
+- (void)refreshControlTriggered:(UIRefreshControl *)refreshControl {
 #ifndef APPSTORE
     
     if ([self.class isFetchingSelectedScript] == NO) {
@@ -407,11 +412,7 @@
             }
         })
         .catch(^(NSError *serverError) {
-            if (serverError.code == -1004) {
-                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-            } else {
-                toastMessage(self, [serverError localizedDescription]);
-            }
+            toastDaemonError(self, serverError);
         })
         .finally(^() {
             if (refreshControl && [refreshControl isRefreshing]) {

@@ -49,13 +49,7 @@
         }
     })
     .catch(^(NSError *error) {
-        if (error) {
-            if (error.code == -1004) {
-                toastMessage(self, NSLocalizedString(@"Could not connect to the daemon.", nil));
-            } else {
-                toastMessage(self, [error localizedDescription]);
-            }
-        }
+        toastDaemonError(self, error);
     })
     .finally(^() {
         blockInteractions(blockVC, NO);
