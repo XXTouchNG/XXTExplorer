@@ -118,26 +118,6 @@
     [self applyResults:allResults callback:callback];
 }
 
-// MARK: - Expression Escape
-
-- (NSString *)escapedExpressionStringForString:(NSString *)string
-{
-    if (!string) return nil;
-    static char const* special = "\\|([{}]).?*+^$";
-    const char *stringBuffer = string.UTF8String;
-    NSMutableString *outString = [[NSMutableString alloc] init];
-    for (unsigned long i = 0; i < strlen(stringBuffer); i++)
-    {
-        const char ch = stringBuffer[i];
-        if (strchr(special, ch))
-        {
-            [outString appendString:@"\\"];
-        }
-        [outString appendFormat:@"%c", ch];
-    }
-    return [outString copy];
-}
-
 // MARK: - Expression Caches
 
 - (NSRegularExpression *)cachedExpressionForExpressionString:(NSRegularExpressionString *)expressionString
@@ -155,9 +135,29 @@
     return cachedPattern;
 }
 
+// MARK: - Expression Escape
+
++ (NSString *)escapedExpressionStringForString:(NSString *)string
+{
+    if (!string) return nil;
+    static char const* special = "\\|([{}]).?*+^$";
+    const char *stringBuffer = string.UTF8String;
+    NSMutableString *outString = [[NSMutableString alloc] init];
+    for (unsigned long i = 0; i < strlen(stringBuffer); i++)
+    {
+        const char ch = stringBuffer[i];
+        if (strchr(special, ch))
+        {
+            [outString appendString:@"\\"];
+        }
+        [outString appendFormat:@"%c", ch];
+    }
+    return [outString copy];
+}
+
 // MARK: - Back References
 
-- (BOOL)expressionStringHasBackReferences:(NSRegularExpressionString *)expressionString
++ (BOOL)expressionStringHasBackReferences:(NSString *)expressionString
 {
     if (!expressionString) return NO;
     BOOL escape = NO;
@@ -172,11 +172,11 @@
     return NO;
 }
 
-- (NSString *)expandExpressionStringBackReferences:(NSRegularExpressionString *)expressionString
-                                     withResultSet:(SKResultSet *)resultSet
++ (NSString *)expandExpressionStringBackReferences:(NSString *)expressionString
+                                         withMatch:(NSTextCheckingResult *)rawResult
+                                        withString:(NSString *)toParse
 {
     if (!expressionString) return nil;
-    NSTextCheckingResult *rawResult = [resultSet.results.firstObject rawResult];
     if (!rawResult) return nil;
     BOOL escape = NO;
     const char *expressionBuffer = expressionString.UTF8String;
@@ -191,7 +191,7 @@
                 NSRange rawReferenceRange = [rawResult rangeAtIndex:i];
                 if (rawReferenceRange.location != NSNotFound)
                 {
-                    NSString *rawReference = [self.toParse.string substringWithRange:rawReferenceRange];
+                    NSString *rawReference = [toParse substringWithRange:rawReferenceRange];
                     NSString *escapedReference = [self escapedExpressionStringForString:rawReference];
                     if (escapedReference)
                         [res appendString:escapedReference];
@@ -206,6 +206,13 @@
             [res appendFormat:@"%c", ch];
     }
     return [res copy];
+}
+
+- (NSString *)expandExpressionStringBackReferences:(NSRegularExpressionString *)expressionString
+                                     withResultSet:(SKResultSet *)resultSet {
+    if (!resultSet) return nil;
+    NSTextCheckingResult *rawResult = [resultSet.results.firstObject rawResult];
+    return [[self class] expandExpressionStringBackReferences:expressionString withMatch:rawResult withString:self.toParse.string];
 }
 
 // Algorithmic notes:
@@ -241,7 +248,7 @@
             SKPatternMatch *bestMatchForMiddle = [self matchPatterns:pattern.subpatterns inRange:range1];
             NSString *patternEndExpr = pattern.patternEnd;
             NSRegularExpression *patternEnd = nil;
-            if ([self expressionStringHasBackReferences:patternEndExpr])
+            if ([[self class] expressionStringHasBackReferences:patternEndExpr])
             {
                 NSString *expandedEndExpr = [self expandExpressionStringBackReferences:patternEndExpr withResultSet:begin];
                 patternEnd = [self cachedExpressionForExpressionString:expandedEndExpr];

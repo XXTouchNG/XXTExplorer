@@ -41,6 +41,7 @@
  **/
 
 #import <Foundation/NSRange.h>
+#import <Foundation/NSTextCheckingResult.h>
 
 #pragma mark Constants
 
@@ -51,6 +52,7 @@ extern NSRange const ICRangeZero;
 #pragma mark - Blocks
 
 extern NSComparisonResult (^ICRangeComparator)(NSValue *rangeValue1, NSValue *rangeValue2);
+extern NSComparisonResult (^ICMatchComparator)(NSTextCheckingResult *rangeValue1, NSTextCheckingResult *rangeValue2);
 
 #pragma mark - Functions
 

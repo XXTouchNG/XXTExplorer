@@ -11,8 +11,10 @@
 @interface XXTEEditorSearchBar () <UITextFieldDelegate>
 
 @property (nonatomic, strong) UIImageView *magnifierIcon;
+@property (nonatomic, strong) UIImageView *replaceIcon;
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) XXTEEditorSearchField *searchField;
+@property (nonatomic, strong) XXTEEditorSearchField *replaceField;
 
 @end
 
@@ -38,28 +40,44 @@
     self.tintColor = [UIColor blackColor];
     
     [self addSubview:self.searchField];
+    [self addSubview:self.replaceField];
     [self addSubview:self.magnifierIcon];
+    [self addSubview:self.replaceIcon];
     [self addSubview:self.cancelButton];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    CGFloat width = CGRectGetWidth(self.bounds);
+    CGFloat cancelWidth = CGRectGetWidth(_cancelButton.bounds);
+    CGFloat fieldWidth = width - cancelWidth - 72.0;
+    CGFloat fieldHeight = XXTEEditorSearchBarHeight / 2.0;
     _searchField.frame =
-    CGRectMake(16.0 + 16.0 + 8.0,
+    CGRectMake(40.0,
                0.0,
-               CGRectGetWidth(self.bounds) - 16.0 - 16.0 - 16.0 - 8.0 - CGRectGetWidth(_cancelButton.bounds) - 16.0,
-               CGRectGetHeight(self.bounds));
+               fieldWidth,
+               fieldHeight);
+    _replaceField.frame =
+    CGRectMake(40.0,
+               fieldHeight * 1,
+               fieldWidth,
+               fieldHeight);
     _magnifierIcon.frame =
     CGRectMake(16.0,
-               (CGRectGetHeight(self.bounds) - 16.0) / 2.0,
+               fieldHeight / 2.0 - 8.0,
+               16.0,
+               16.0);
+    _replaceIcon.frame =
+    CGRectMake(16.0,
+               fieldHeight * 1 + fieldHeight / 2.0 - 8.0,
                16.0,
                16.0);
     _cancelButton.frame =
-    CGRectMake(CGRectGetWidth(self.bounds) - CGRectGetWidth(_cancelButton.bounds) - 16.0,
+    CGRectMake(width - cancelWidth - 16.0,
                0.0,
-               CGRectGetWidth(_cancelButton.bounds),
-               44.f);
+               cancelWidth,
+               CGRectGetHeight(self.bounds));
 }
 
 #pragma mark - UIView Getters
@@ -69,6 +87,8 @@
         XXTEEditorSearchField *searchField = [[XXTEEditorSearchField alloc] init];
         searchField.placeholder = NSLocalizedString(@"Search...", nil);
         searchField.delegate = self;
+        searchField.returnKeyType = UIReturnKeyNext;
+        searchField.clearButtonMode = UITextFieldViewModeWhileEditing;
         [searchField addTarget:self
                         action:@selector(textFieldDidChange:)
               forControlEvents:UIControlEventEditingChanged];
@@ -77,15 +97,41 @@
     return _searchField;
 }
 
+- (XXTEEditorSearchField *)replaceField {
+    if (!_replaceField) {
+        XXTEEditorSearchField *replaceField = [[XXTEEditorSearchField alloc] init];
+        replaceField.placeholder = NSLocalizedString(@"Replace...", nil);
+        replaceField.delegate = self;
+        replaceField.returnKeyType = UIReturnKeyNext;
+        replaceField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [replaceField addTarget:self
+                        action:@selector(textFieldDidChange:)
+              forControlEvents:UIControlEventEditingChanged];
+        _replaceField = replaceField;
+    }
+    return _replaceField;
+}
+
 - (UIImageView *)magnifierIcon {
     if (!_magnifierIcon) {
         UIImageView *magnifierIcon = [[UIImageView alloc] init];
         magnifierIcon.contentMode = UIViewContentModeScaleAspectFit;
         magnifierIcon.backgroundColor = [UIColor clearColor];
-        magnifierIcon.image = [[UIImage imageNamed:@"XXTEEditorSearchBarIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        magnifierIcon.image = [[UIImage imageNamed:@"XXTEEditorSearchBarIconSearch"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _magnifierIcon = magnifierIcon;
     }
     return _magnifierIcon;
+}
+
+- (UIImageView *)replaceIcon {
+    if (!_replaceIcon) {
+        UIImageView *replaceIcon = [[UIImageView alloc] init];
+        replaceIcon.contentMode = UIViewContentModeScaleAspectFit;
+        replaceIcon.backgroundColor = [UIColor clearColor];
+        replaceIcon.image = [[UIImage imageNamed:@"XXTEEditorSearchBarIconReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _replaceIcon = replaceIcon;
+    }
+    return _replaceIcon;
 }
 
 - (UIButton *)cancelButton {
@@ -111,7 +157,9 @@
 - (void)setTintColor:(UIColor *)tintColor {
     [super setTintColor:tintColor];
     self.magnifierIcon.tintColor = tintColor;
+    self.replaceIcon.tintColor = tintColor;
     self.searchField.tintColor = tintColor;
+    self.replaceField.tintColor = tintColor;
     [self.cancelButton setTitleColor:tintColor forState:UIControlStateNormal];
     [self.cancelButton setTitleColor:[tintColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.cancelButton setTitleColor:[tintColor colorWithAlphaComponent:0.3] forState:UIControlStateDisabled];
@@ -121,50 +169,77 @@
 
 - (void)drawRect:(CGRect)rect {
     if (_separatorColor) {
+        CGFloat lineOffset = CGRectGetMaxX(_searchField.frame);
         CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(ctx, 0.5);
         CGContextSetStrokeColorWithColor(ctx, _separatorColor.CGColor);
-        CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));
-        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
+        CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect) - 0.5);
+        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect) - 0.5);
+        CGContextStrokePath(ctx);
+        CGContextMoveToPoint(ctx, lineOffset, CGRectGetMinY(rect));
+        CGContextAddLineToPoint(ctx, lineOffset, CGRectGetMaxY(rect) - 0.5);
         CGContextStrokePath(ctx);
     }
 }
 
 #pragma mark - Getters
 
-- (NSString *)text {
+- (NSString *)searchText {
     return self.searchField.text;
 }
 
-- (void)setText:(NSString *)text {
+- (void)setSearchText:(NSString *)text {
     [self.searchField setText:text];
 }
 
-- (UIColor *)textColor {
-    return self.searchField.textColor;
+- (NSString *)replaceText {
+    return self.replaceField.text;
+}
+
+- (void)setReplaceText:(NSString *)replaceText {
+    [self.replaceField setText:replaceText];
 }
 
 - (void)setTextColor:(UIColor *)textColor {
+    _textColor = textColor;
     [self.searchField setTextColor:textColor];
+    [self.replaceField setTextColor:textColor];
 }
 
-- (UIView *)inputAccessoryView {
+- (UIView *)searchInputAccessoryView {
     return self.searchField.inputAccessoryView;
 }
 
-- (void)setInputAccessoryView:(UIView *)inputAccessoryView {
+- (void)setSearchInputAccessoryView:(UIView *)inputAccessoryView {
     [self.searchField setInputAccessoryView:inputAccessoryView];
 }
 
-- (UIKeyboardAppearance)keyboardAppearance {
+- (UIView *)replaceInputAccessoryView {
+    return self.replaceInputAccessoryView.inputAccessoryView;
+}
+
+- (void)setReplaceInputAccessoryView:(UIView *)replaceInputAccessoryView {
+    [self.replaceField setInputAccessoryView:replaceInputAccessoryView];
+}
+
+- (UIKeyboardAppearance)searchKeyboardAppearance {
     return self.searchField.keyboardAppearance;
 }
 
-- (void)setKeyboardAppearance:(UIKeyboardAppearance)keyboardAppearance {
+- (void)setSearchKeyboardAppearance:(UIKeyboardAppearance)keyboardAppearance {
     [self.searchField setKeyboardAppearance:keyboardAppearance];
 }
 
+- (UIKeyboardAppearance)replaceKeyboardAppearance {
+    return self.replaceField.keyboardAppearance;
+}
+
+- (void)setReplaceKeyboardAppearance:(UIKeyboardAppearance)replaceKeyboardAppearance {
+    [self.replaceField setKeyboardAppearance:replaceKeyboardAppearance];
+}
+
 - (BOOL)isFirstResponder {
-    return self.searchField.isFirstResponder;
+    return (self.searchField.isFirstResponder || self.replaceField.isFirstResponder);
 }
 
 - (BOOL)becomeFirstResponder {
@@ -172,7 +247,9 @@
 }
 
 - (BOOL)resignFirstResponder {
-    return [self.searchField resignFirstResponder];
+    BOOL a = [self.searchField resignFirstResponder];
+    BOOL b = [self.replaceField resignFirstResponder];
+    return (a && b);
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -183,39 +260,105 @@
 
 - (void)cancelButtonTapped:(UIButton *)sender {
     [self.searchField resignFirstResponder];
+    [self.replaceField resignFirstResponder];
     [self updateCancelButton];
+    if ([_delegate respondsToSelector:@selector(searchBarDidCancel:)]) {
+        [_delegate searchBarDidCancel:self];
+    }
 }
 
 - (void)updateCancelButton {
-    self.cancelButton.enabled = (self.searchField.isFirstResponder);
+    self.cancelButton.enabled = (self.searchField.isFirstResponder || self.replaceField.isFirstResponder);
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if ([_delegate respondsToSelector:@selector(searchBar:textFieldShouldReturn:)]) {
-        return [_delegate searchBar:self textFieldShouldReturn:textField];
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldShouldReturn:)]) {
+            return [_delegate searchBar:self searchFieldShouldReturn:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldShouldReturn:)]) {
+            return [_delegate searchBar:self replaceFieldShouldReturn:textField];
+        }
     }
     return YES;
 }
 
 - (void)textFieldDidChange:(UITextField *)textField {
-    if ([_delegate respondsToSelector:@selector(searchBar:textFieldDidChange:)]) {
-        [_delegate searchBar:self textFieldDidChange:textField];
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldDidChange:)]) {
+            [_delegate searchBar:self searchFieldDidChange:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldDidChange:)]) {
+            [_delegate searchBar:self replaceFieldDidChange:textField];
+        }
     }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self updateCancelButton];
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldDidBeginEditing:)]) {
+            return [_delegate searchBar:self searchFieldDidBeginEditing:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldDidBeginEditing::)]) {
+            return [_delegate searchBar:self replaceFieldDidBeginEditing:textField];
+        }
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [self updateCancelButton];
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldDidEndEditing:)]) {
+            return [_delegate searchBar:self searchFieldDidEndEditing:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldDidEndEditing:)]) {
+            return [_delegate searchBar:self replaceFieldDidEndEditing:textField];
+        }
+    }
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldShouldBeginEditing:)]) {
+            return [_delegate searchBar:self searchFieldShouldBeginEditing:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldShouldBeginEditing:)]) {
+            return [_delegate searchBar:self replaceFieldShouldBeginEditing:textField];
+        }
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldShouldEndEditing:)]) {
+            return [_delegate searchBar:self searchFieldShouldEndEditing:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldShouldEndEditing:)]) {
+            return [_delegate searchBar:self replaceFieldShouldEndEditing:textField];
+        }
+    }
+    return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if ([_delegate respondsToSelector:@selector(searchBar:textFieldShouldClear:)]) {
-        return [_delegate searchBar:self textFieldShouldClear:textField];
+    if (textField == self.searchField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:searchFieldShouldClear:)]) {
+            return [_delegate searchBar:self searchFieldShouldClear:textField];
+        }
+    } else if (textField == self.replaceField) {
+        if ([_delegate respondsToSelector:@selector(searchBar:replaceFieldShouldClear:)]) {
+            return [_delegate searchBar:self replaceFieldShouldClear:textField];
+        }
     }
     return YES;
 }

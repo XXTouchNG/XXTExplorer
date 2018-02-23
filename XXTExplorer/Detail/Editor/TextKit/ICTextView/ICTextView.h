@@ -148,6 +148,7 @@ typedef enum
 
 /// Range of the string found during last search ({ NSNotFound, 0 } if not found).
 - (NSRange)rangeOfFoundString;
+- (NSTextCheckingResult *)matchOfFoundString;
 
 #pragma mark - Search
 

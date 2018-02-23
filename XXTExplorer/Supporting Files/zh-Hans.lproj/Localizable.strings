@@ -1176,7 +1176,13 @@
 "Replace" = "替换";
 
 /* No comment provided by engineer. */
+"Replace All" = "全部替换";
+
+/* No comment provided by engineer. */
 "Replace Now" = "立即替换";
+
+/* No comment provided by engineer. */
+"Replace..." = "替换...";
 
 /* No comment provided by engineer. */
 "Reset" = "重置";

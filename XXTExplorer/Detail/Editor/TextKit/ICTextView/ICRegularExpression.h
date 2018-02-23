@@ -63,6 +63,7 @@
 - (id)initWithString:(NSString *)string pattern:(NSString *)pattern options:(NSRegularExpressionOptions)options error:(NSError *__autoreleasing *)error;
 
 - (NSRange)rangeOfCurrentMatch;
+- (NSTextCheckingResult *)currentMatch;
 - (NSRange)rangeOfFirstMatch;
 - (NSRange)rangeOfFirstMatchInRange:(NSRange)range;
 - (NSRange)rangeOfLastMatch;
@@ -71,6 +72,6 @@
 - (NSRange)rangeOfNextMatch;
 - (NSRange)rangeOfPreviousMatch;
 
-- (NSArray *)rangesOfMatchesInRange:(NSRange)range;
+- (NSArray <NSValue *> *)rangesOfMatchesInRange:(NSRange)range;
 
 @end

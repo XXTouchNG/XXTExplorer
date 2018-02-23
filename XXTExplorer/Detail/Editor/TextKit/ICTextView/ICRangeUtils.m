@@ -63,3 +63,22 @@ NSComparisonResult (^ICRangeComparator)(NSValue *rangeValue1, NSValue *rangeValu
     
     return result;
 };
+
+NSComparisonResult (^ICMatchComparator)(NSTextCheckingResult *rangeValue1, NSTextCheckingResult *rangeValue2) = ^NSComparisonResult(NSTextCheckingResult *rangeValue1, NSTextCheckingResult *rangeValue2)
+{
+    NSRange range1 = rangeValue1.range;
+    NSRange range2 = rangeValue2.range;
+    
+    NSComparisonResult result = NSOrderedSame;
+    
+    if (range1.location < range2.location)
+        result = NSOrderedAscending;
+    else if (range1.location > range2.location)
+        result = NSOrderedDescending;
+    else if (range1.length < range2.length)
+        result = NSOrderedAscending;
+    else if (range1.length > range2.length)
+        result = NSOrderedDescending;
+    
+    return result;
+};

@@ -2723,10 +2723,6 @@
 				0FCC2ACB1F13112C00C50A48 /* Gesture */,
 				0FBAFF451F6E6F58008B3189 /* StatusBar */,
 				0FCC2ACA1F13112200C50A48 /* Toast */,
-				D64C42F91FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.h */,
-				D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */,
-				0F71A2721FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.h */,
-				0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3656,6 +3652,10 @@
 		D63E89DF2031692F00A865DA /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				D64C42F91FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.h */,
+				D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */,
+				0F71A2721FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.h */,
+				0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */,
 				0FB7B8A2200099D30047CE84 /* UIViewController+topMostViewController.h */,
 				0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */,
 				0F7B52BC201994CA00D91702 /* NSString+VersionValue.h */,

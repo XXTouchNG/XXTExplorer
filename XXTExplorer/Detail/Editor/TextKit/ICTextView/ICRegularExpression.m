@@ -43,7 +43,8 @@
 
 @interface ICRegularExpression ()
 
-@property (nonatomic, strong, readonly) NSMutableArray *cachedMatchRanges;
+@property (nonatomic, strong, readonly) NSMutableArray <NSValue *> *cachedMatchRanges;
+@property (nonatomic, strong, readonly) NSMutableArray <NSTextCheckingResult *> *cachedMatches;
 @property (nonatomic, strong, readonly) NSRegularExpression *regex;
 
 @property (nonatomic, readwrite) NSUInteger indexOfCurrentMatch;
@@ -57,22 +58,35 @@
 #pragma mark - Properties
 
 // cachedMatchRanges
-@synthesize cachedMatchRanges = _cachedMatchRanges;
+@synthesize cachedMatchRanges = _cachedMatchRanges, cachedMatches = _cachedMatches;
 
-- (NSMutableArray *)cachedMatchRanges
+- (NSMutableArray *)cachedMatches
 {
-    if (!_cachedMatchRanges)
+    if (!_cachedMatches)
     {
-        NSMutableArray *cachedMatchRanges = [[NSMutableArray alloc] init];
+        NSMutableArray *cachedMatches = [[NSMutableArray alloc] init];
         NSString *string = self.string;
         [self.regex enumerateMatchesInString:string
                                      options:(NSMatchingOptions)0
                                        range:NSMakeRange(0,string.length)
                                   usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
                                       ICUnusedParameter(flags, stop);
-                                      [cachedMatchRanges addObject:[NSValue valueWithRange:result.range]];
+                                      [cachedMatches addObject:result];
                                   }];
         
+        _cachedMatches = cachedMatches;
+    }
+    return _cachedMatches;
+}
+
+- (NSMutableArray <NSValue *> *)cachedMatchRanges
+{
+    if (!_cachedMatchRanges)
+    {
+        NSMutableArray *cachedMatchRanges = [[NSMutableArray alloc] init];
+        [self.cachedMatches enumerateObjectsUsingBlock:^(NSTextCheckingResult * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [cachedMatchRanges addObject:[NSValue valueWithRange:obj.range]];
+        }];
         _cachedMatchRanges = cachedMatchRanges;
     }
     return _cachedMatchRanges;
@@ -147,6 +161,10 @@
     return [self rangeOfMatchAtIndex:self.indexOfCurrentMatch];
 }
 
+- (NSTextCheckingResult *)currentMatch {
+    return [self matchAtIndex:self.indexOfCurrentMatch];
+}
+
 - (NSRange)rangeOfFirstMatch
 {
     return [self rangeOfMatchAtIndex:0];
@@ -165,6 +183,21 @@
 - (NSRange)rangeOfLastMatchInRange:(NSRange)range
 {
     return [self rangeOfMatchAtIndex:[self indexOfLastMatchInRange:range]];
+}
+
+- (NSTextCheckingResult *)matchAtIndex:(NSUInteger)index
+{
+    NSTextCheckingResult *returnMatch = nil;
+    
+    if (index < self.numberOfMatches)
+    {
+        self.indexOfCurrentMatch = index;
+        returnMatch = [self.cachedMatches objectAtIndex:index];
+    }
+    else
+        self.indexOfCurrentMatch = NSNotFound;
+    
+    return returnMatch;
 }
 
 - (NSRange)rangeOfMatchAtIndex:(NSUInteger)index

@@ -13,7 +13,8 @@
 @protocol XXTEEditorSearchAccessoryViewDelegate <NSObject>
 - (void)searchAccessoryViewShouldMatchPrev:(XXTEEditorSearchAccessoryView *)accessoryView;
 - (void)searchAccessoryViewShouldMatchNext:(XXTEEditorSearchAccessoryView *)accessoryView;
-
+- (void)searchAccessoryViewShouldReplace:(XXTEEditorSearchAccessoryView *)accessoryView;
+- (void)searchAccessoryViewShouldReplaceAll:(XXTEEditorSearchAccessoryView *)accessoryView;
 @end
 
 @interface XXTEEditorSearchAccessoryView : UIInputView
@@ -23,6 +24,10 @@
 
 @property (nonatomic, strong) UIBarButtonItem *prevItem;
 @property (nonatomic, strong) UIBarButtonItem *nextItem;
+@property (nonatomic, strong) UIBarButtonItem *replaceItem;
+@property (nonatomic, strong) UIBarButtonItem *replaceAllItem;
 @property (nonatomic, strong) UILabel *countLabel;
+
+@property (nonatomic, assign) BOOL replaceMode;
 
 @end

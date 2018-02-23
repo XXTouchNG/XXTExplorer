@@ -56,6 +56,9 @@
 #import "ICRangeUtils.h"
 #import "ICRegularExpression.h"
 
+// Replace
+#import "SKParser.h"
+
 #import "XXTEPermissionDefines.h"
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
@@ -314,6 +317,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     searchBar.backgroundColor = theme.backgroundColor;
     searchBar.tintColor = theme.foregroundColor;
     searchBar.textColor = theme.foregroundColor;
+    searchBar.separatorColor = [theme.foregroundColor colorWithAlphaComponent:0.2];
     
     // TextView
     XXTEEditorTextView *textView = self.textView;
@@ -361,7 +365,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     if (NO == [self isDarkMode] || XXTE_PAD)
     {
-        searchBar.keyboardAppearance = UIKeyboardAppearanceLight;
+        searchBar.searchKeyboardAppearance = UIKeyboardAppearanceLight;
+        searchBar.replaceKeyboardAppearance = UIKeyboardAppearanceLight;
         searchAccessoryView.barStyle = UIBarStyleDefault;
         textView.keyboardAppearance = UIKeyboardAppearanceLight;
         
@@ -370,7 +375,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     else
     {
-        searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
+        searchBar.searchKeyboardAppearance = UIKeyboardAppearanceDark;
+        searchBar.replaceKeyboardAppearance = UIKeyboardAppearanceDark;
         searchAccessoryView.barStyle = UIBarStyleBlack;
         textView.keyboardAppearance = UIKeyboardAppearanceDark;
         
@@ -660,6 +666,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
         textView.textAlignment = NSTextAlignmentLeft;
         textView.allowsEditingTextAttributes = NO;
+        
+        textView.circularSearch = YES;
+        textView.scrollPosition = ICTextViewScrollPositionMiddle;
         
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 11.0, *)) {
@@ -967,7 +976,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
             [self.searchBar resignFirstResponder];
         }
         [self.textView resetSearch];
-        [self.searchBar setText:@""];
         [self updateCountLabel];
     }
 }
@@ -976,14 +984,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [self resetSearch];
     if ([self isSearchMode]) {
         [self closeSearchBar:sender animated:animated];
-        _searchMode = NO;
     } else {
         [self expandSearchBar:sender animated:animated];
-        _searchMode = YES;
     }
 }
 
 - (void)expandSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated {
+    [self.searchBar setSearchText:@""];
+    [self.searchBar setReplaceText:@""];
     if (animated) {
         [self.searchBar setHidden:NO];
         [self.searchBar becomeFirstResponder];
@@ -1001,6 +1009,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         [self.view removeConstraints:[self closedSearchBarConstraints]];
         [self.view addConstraints:[self expandedSearchBarConstraints]];
     }
+    _searchMode = YES;
 }
 
 - (void)closeSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated {
@@ -1020,6 +1029,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         [self.view removeConstraints:[self expandedSearchBarConstraints]];
         [self.view addConstraints:[self closedSearchBarConstraints]];
     }
+    _searchMode = NO;
 }
 
 - (NSArray <NSLayoutConstraint *> *)expandedSearchBarConstraints {
@@ -1058,7 +1068,8 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.translatesAutoresizingMaskIntoConstraints = NO;
         searchBar.hidden = YES;
-        searchBar.inputAccessoryView = self.searchAccessoryView;
+        searchBar.searchInputAccessoryView = self.searchAccessoryView;
+        searchBar.replaceInputAccessoryView = self.searchAccessoryView;
         searchBar.delegate = self;
         _searchBar = searchBar;
     }
@@ -1067,64 +1078,150 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 #pragma mark - XXTEEditorSearchBarDelegate
 
-- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar textFieldShouldReturn:(UITextField *)textField {
-    [self searchNextMatch];
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldReturn:(UITextField *)textField {
+    [self searchNextMatch:searchBar.searchText];
     return YES;
 }
 
-- (void)searchBar:(XXTEEditorSearchBar *)searchBar textFieldDidChange:(UITextField *)textField {
-    [self searchNextMatch];
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldDidChange:(UITextField *)textField {
+    [self searchNextMatch:searchBar.searchText];
 }
 
-- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar textFieldShouldClear:(UITextField *)textField {
-    [self searchNextMatch];
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldClear:(UITextField *)textField {
+    [self searchNextMatch:searchBar.searchText];
     return YES;
+}
+
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldReturn:(UITextField *)textField {
+    [self searchNextMatch:searchBar.searchText];
+    return YES;
+}
+
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldDidChange:(UITextField *)textField {
+    // nothing to do...
+}
+
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldClear:(UITextField *)textField {
+    // nothing to do...
+    return YES;
+}
+
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldBeginEditing:(UITextField *)textField {
+    self.searchAccessoryView.replaceMode = NO;
+    return YES;
+}
+
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldBeginEditing:(UITextField *)textField {
+    self.searchAccessoryView.replaceMode = YES;
+    return YES;
+}
+
+- (void)searchBarDidCancel:(XXTEEditorSearchBar *)searchBar {
+    [self resetSearch];
+    [self closeSearchBar:nil animated:YES];
 }
 
 #pragma mark - XXTEEditorSearchAccessoryViewDelegate
 
 - (void)searchAccessoryViewShouldMatchPrev:(XXTEEditorSearchAccessoryView *)accessoryView {
-    [self searchPreviousMatch];
+    [self searchPreviousMatch:self.searchBar.searchText];
 }
 
 - (void)searchAccessoryViewShouldMatchNext:(XXTEEditorSearchAccessoryView *)accessoryView {
-    [self searchNextMatch];
+    [self searchNextMatch:self.searchBar.searchText];
+}
+
+- (void)searchAccessoryViewShouldReplace:(XXTEEditorSearchAccessoryView *)accessoryView {
+    [self replaceNextMatch:self.searchBar.searchText replacement:self.searchBar.replaceText];
+}
+
+- (void)searchAccessoryViewShouldReplaceAll:(XXTEEditorSearchAccessoryView *)accessoryView {
+    [self replaceAll:self.searchBar.searchText replacement:self.searchBar.replaceText];
 }
 
 #pragma mark - ICTextView
 
-- (void)searchNextMatch
+- (void)searchNextMatch:(NSString *)target
 {
-    [self searchMatchInDirection:ICTextViewSearchDirectionForward];
+    [self searchMatch:target inDirection:ICTextViewSearchDirectionForward];
 }
 
-- (void)searchPreviousMatch
+- (void)replaceNextMatch:(NSString *)target replacement:(NSString *)replacement
 {
-    [self searchMatchInDirection:ICTextViewSearchDirectionBackward];
+    BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+    XXTEEditorTextView *textView = self.textView;
+    NSTextCheckingResult *match = [textView matchOfFoundString];
+    if (match.range.location != NSNotFound &&
+        match.range.length > 0) {
+        UITextPosition *beginPos = [textView positionFromPosition:textView.beginningOfDocument offset:match.range.location];
+        UITextPosition *endPos = [textView positionFromPosition:beginPos offset:match.range.length];
+        UITextRange *textRange = [textView textRangeFromPosition:beginPos toPosition:endPos];
+        if (useRegular && match.numberOfRanges >= 2) {
+            NSString *expandedRepl = [SKParser expandExpressionStringBackReferences:replacement withMatch:match withString:textView.text];
+            [textView replaceRange:textRange withText:expandedRepl];
+        } else {
+            [textView replaceRange:textRange withText:replacement];
+        }
+        [self searchNextMatch:target];
+    }
 }
 
-- (void)searchMatchInDirection:(ICTextViewSearchDirection)direction
+- (void)replaceAll:(NSString *)target replacement:(NSString *)replacement
 {
-    NSString *searchString = self.searchBar.text;
-    
+    BOOL caseSensitive = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
+    BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+    NSStringCompareOptions searchOptions;
+    if (caseSensitive) {
+        searchOptions = NSCaseInsensitiveSearch;
+    } else {
+        searchOptions = 0;
+    }
+    NSRegularExpressionOptions replaceOptions;
+    if (caseSensitive) {
+        replaceOptions = NSRegularExpressionCaseInsensitive;
+    } else {
+        replaceOptions = 0;
+    }
+    XXTEEditorTextView *textView = self.textView;
+    NSTextCheckingResult *match = [textView matchOfFoundString];
+    if (match.range.location != NSNotFound &&
+        match.range.length > 0) {
+        if (useRegular) {
+            
+        } else {
+            NSString *newString = [textView.text stringByReplacingOccurrencesOfString:target withString:replacement options:searchOptions range:NSMakeRange(0, textView.text.length)];
+            [textView setText:newString];
+            [self reloadAttributes];
+        }
+        [self searchNextMatch:target];
+    }
+}
+
+- (void)searchPreviousMatch:(NSString *)target
+{
+    [self searchMatch:target inDirection:ICTextViewSearchDirectionBackward];
+}
+
+- (void)searchMatch:(NSString *)target inDirection:(ICTextViewSearchDirection)direction
+{
     BOOL caseSensitive = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
     if (!caseSensitive) {
         self.textView.searchOptions = NSRegularExpressionCaseInsensitive;
     } else {
         self.textView.searchOptions = 0;
     }
-    
-    if (searchString.length) {
+    if (target.length) {
         BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+        BOOL searchSucceed = NO;
         if (useRegular) {
-            [self.textView scrollToMatch:searchString searchDirection:direction];
+            searchSucceed = [self.textView scrollToMatch:target searchDirection:direction];
         } else {
-            [self.textView scrollToString:searchString searchDirection:direction];
+            searchSucceed = [self.textView scrollToString:target searchDirection:direction];
         }
+        
     } else {
         [self.textView resetSearch];
     }
-    
     [self updateCountLabel];
 }
 

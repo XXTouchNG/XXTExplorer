@@ -224,6 +224,12 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
     return (regex ? ICRangeOffset(regex.rangeOfCurrentMatch, self.cachedRange.location) : ICRangeNotFound);
 }
 
+- (NSTextCheckingResult *)matchOfFoundString
+{
+    ICRegularExpression *regex = self.regex;
+    return (regex ? regex.currentMatch : nil);
+}
+
 #pragma mark - Search
 
 - (void)resetSearch

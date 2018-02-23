@@ -765,7 +765,9 @@ static int sizingCancelFlag = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
+#ifndef APPSTORE
         NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
+#endif
         NSString *sectionIdentifier = self.dynamicSections[indexPath.section].identifier;
         UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
         if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOpenWith]) {

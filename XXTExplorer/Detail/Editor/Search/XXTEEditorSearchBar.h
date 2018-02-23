@@ -10,14 +10,32 @@
 #import "XXTEEditorSearchField.h"
 #import "XXTEEditorSearchAccessoryView.h"
 
-static CGFloat const XXTEEditorSearchBarHeight = 44.f;
+static CGFloat const XXTEEditorSearchBarHeight = 88.f;
 
 @class XXTEEditorSearchBar;
 
 @protocol XXTEEditorSearchBarDelegate <NSObject>
-- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar textFieldShouldReturn:(UITextField *)textField;
-- (void)searchBar:(XXTEEditorSearchBar *)searchBar textFieldDidChange:(UITextField *)textField;
-- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar textFieldShouldClear:(UITextField *)textField;
+
+@optional
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldReturn:(UITextField *)textField;
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldDidChange:(UITextField *)textField;
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldClear:(UITextField *)textField;
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldBeginEditing:(UITextField *)textField;
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldDidBeginEditing:(UITextField *)textField;
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldEndEditing:(UITextField *)textField;
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldDidEndEditing:(UITextField *)textField;
+
+@optional
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldReturn:(UITextField *)textField;
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldDidChange:(UITextField *)textField;
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldClear:(UITextField *)textField;
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldBeginEditing:(UITextField *)textField;
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldDidBeginEditing:(UITextField *)textField;
+- (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldEndEditing:(UITextField *)textField;
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldDidEndEditing:(UITextField *)textField;
+
+@optional
+- (void)searchBarDidCancel:(XXTEEditorSearchBar *)searchBar;
 
 @end
 
@@ -26,9 +44,14 @@ static CGFloat const XXTEEditorSearchBarHeight = 44.f;
 @property (nonatomic, weak) id <XXTEEditorSearchBarDelegate> delegate;
 
 @property (nonatomic, strong) UIColor *separatorColor;
-@property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) UIColor *textColor;
-@property (nonatomic, strong) UIView *inputAccessoryView;
-@property (nonatomic, assign) UIKeyboardAppearance keyboardAppearance;
+
+@property (nonatomic, strong) NSString *searchText;
+@property (nonatomic, strong) UIView *searchInputAccessoryView;
+@property (nonatomic, assign) UIKeyboardAppearance searchKeyboardAppearance;
+
+@property (nonatomic, strong) NSString *replaceText;
+@property (nonatomic, strong) UIView *replaceInputAccessoryView;
+@property (nonatomic, assign) UIKeyboardAppearance replaceKeyboardAppearance;
 
 @end

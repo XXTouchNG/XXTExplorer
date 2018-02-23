@@ -43,4 +43,13 @@ typedef void (^SKParserCallback)(NSString *scopeName, NSRange range);
 - (void)parseString:(NSString *)string inRange:(NSRange)range matchCallback:(SKParserCallback)callback;
 - (void)parseInRange:(NSRange)range matchCallback:(SKParserCallback)callback;
 
+// MARK: - Helper
+
++ (NSString *)escapedExpressionStringForString:(NSString *)string;
++ (BOOL)expressionStringHasBackReferences:(NSString *)expressionString;
++ (NSString *)expandExpressionStringBackReferences:(NSString *)expressionString
+                                         withMatch:(NSTextCheckingResult *)rawResult
+                                        withString:(NSString *)toParse;
+
+
 @end

@@ -10,6 +10,9 @@
 
 @interface XXTEEditorSearchAccessoryView ()
 @property (nonatomic, strong) UIToolbar *toolbar;
+@property (nonatomic, strong) UIBarButtonItem *counter;
+@property (nonatomic, strong) UIBarButtonItem *fixedSpace;
+@property (nonatomic, strong) UIBarButtonItem *flexibleSpace;
 
 @end
 
@@ -32,7 +35,7 @@
 - (void)setup {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    _flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UILabel *countLabel = [[UILabel alloc] init];
     countLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:16.0];
@@ -42,11 +45,11 @@
     [countLabel sizeToFit];
     _countLabel = countLabel;
     
-    UIBarButtonItem *counter = [[UIBarButtonItem alloc] initWithCustomView:countLabel];
-    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    fixedSpace.width = 16.0;
-    [self.toolbar setItems:@[self.prevItem, fixedSpace, self.nextItem, flexibleSpace, counter]];
+    _counter = [[UIBarButtonItem alloc] initWithCustomView:countLabel];
+    _fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    _fixedSpace.width = 16.0;
     
+    [self setReplaceMode:NO];
     [self addSubview:self.toolbar];
 }
 
@@ -59,6 +62,18 @@
 - (void)searchNextMatch {
     if ([_accessoryDelegate respondsToSelector:@selector(searchAccessoryViewShouldMatchNext:)]) {
         [_accessoryDelegate searchAccessoryViewShouldMatchNext:self];
+    }
+}
+
+- (void)replaceAction {
+    if ([_accessoryDelegate respondsToSelector:@selector(searchAccessoryViewShouldReplace:)]) {
+        [_accessoryDelegate searchAccessoryViewShouldReplace:self];
+    }
+}
+
+- (void)replaceAllAction {
+    if ([_accessoryDelegate respondsToSelector:@selector(searchAccessoryViewShouldReplaceAll:)]) {
+        [_accessoryDelegate searchAccessoryViewShouldReplaceAll:self];
     }
 }
 
@@ -124,6 +139,33 @@
         _nextItem = nextButtonItem;
     }
     return _nextItem;
+}
+
+- (UIBarButtonItem *)replaceItem {
+    if (!_replaceItem) {
+        UIBarButtonItem *replaceItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(replaceAction)];
+        _replaceItem = replaceItem;
+    }
+    return _replaceItem;
+}
+
+- (UIBarButtonItem *)replaceAllItem {
+    if (!_replaceAllItem) {
+        UIBarButtonItem *replaceAllItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceAll"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(replaceAllAction)];
+        _replaceAllItem = replaceAllItem;
+    }
+    return _replaceAllItem;
+}
+
+#pragma mark - Setters
+
+- (void)setReplaceMode:(BOOL)replaceMode {
+    _replaceMode = replaceMode;
+    if (!replaceMode) {
+        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.counter]];
+    } else {
+        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.replaceItem, self.replaceAllItem, self.fixedSpace, self.counter]];
+    }
 }
 
 @end
