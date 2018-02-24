@@ -152,6 +152,9 @@ typedef enum
 
 #pragma mark - Search
 
+/// Resets search, starts from self defined index.
+- (void)setSearchIndex:(NSUInteger)idx;
+
 /// Resets search, starts from top.
 - (void)resetSearch;
 

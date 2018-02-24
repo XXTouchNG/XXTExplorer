@@ -45,6 +45,8 @@ typedef void (^SKParserCallback)(NSString *scopeName, NSRange range);
 
 // MARK: - Helper
 
++ (NSString *)convertToBackReferencedString:(NSString *)inputString;
++ (NSString *)convertToICUBackReferencedString:(NSString *)inputString;
 + (NSString *)escapedExpressionStringForString:(NSString *)string;
 + (BOOL)expressionStringHasBackReferences:(NSString *)expressionString;
 + (NSString *)expandExpressionStringBackReferences:(NSString *)expressionString

@@ -1108,11 +1108,15 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldBeginEditing:(UITextField *)textField {
     self.searchAccessoryView.replaceMode = NO;
+    [self.textView resetSearch];
+    [self searchNextMatch:searchBar.searchText];
     return YES;
 }
 
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldBeginEditing:(UITextField *)textField {
     self.searchAccessoryView.replaceMode = YES;
+    [self.textView resetSearch];
+    [self searchNextMatch:searchBar.searchText];
     return YES;
 }
 
@@ -1162,7 +1166,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         } else {
             [textView replaceRange:textRange withText:replacement];
         }
+        [textView setSearchIndex:match.range.location];
         [self searchNextMatch:target];
+    } else {
+        // cannot find matching contents
     }
 }
 
@@ -1172,24 +1179,36 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
     NSStringCompareOptions searchOptions;
     if (caseSensitive) {
-        searchOptions = NSCaseInsensitiveSearch;
-    } else {
         searchOptions = 0;
+    } else {
+        searchOptions = NSCaseInsensitiveSearch;
     }
     NSRegularExpressionOptions replaceOptions;
     if (caseSensitive) {
-        replaceOptions = NSRegularExpressionCaseInsensitive;
-    } else {
         replaceOptions = 0;
+    } else {
+        replaceOptions = NSRegularExpressionCaseInsensitive;
     }
     XXTEEditorTextView *textView = self.textView;
     NSTextCheckingResult *match = [textView matchOfFoundString];
     if (match.range.location != NSNotFound &&
         match.range.length > 0) {
-        if (useRegular) {
-            
-        } else {
-            NSString *newString = [textView.text stringByReplacingOccurrencesOfString:target withString:replacement options:searchOptions range:NSMakeRange(0, textView.text.length)];
+        NSString *text = textView.text;
+        NSRange textRange = NSMakeRange(0, text.length);
+        if (useRegular)
+        {
+            NSError *regexError = nil;
+            NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:target options:replaceOptions error:&regexError];
+            if (regex)
+            {
+                NSString *newString = [regex stringByReplacingMatchesInString:text options:0 range:textRange withTemplate:[SKParser convertToICUBackReferencedString:replacement]];
+                [textView setText:newString];
+                [self reloadAttributes];
+            }
+        }
+        else
+        {
+            NSString *newString = [text stringByReplacingOccurrencesOfString:target withString:replacement options:searchOptions range:textRange];
             [textView setText:newString];
             [self reloadAttributes];
         }
@@ -1218,7 +1237,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         } else {
             searchSucceed = [self.textView scrollToString:target searchDirection:direction];
         }
-        
     } else {
         [self.textView resetSearch];
     }

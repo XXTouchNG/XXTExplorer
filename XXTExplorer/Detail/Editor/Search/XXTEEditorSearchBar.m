@@ -179,6 +179,9 @@
         CGContextMoveToPoint(ctx, lineOffset, CGRectGetMinY(rect));
         CGContextAddLineToPoint(ctx, lineOffset, CGRectGetMaxY(rect) - 0.5);
         CGContextStrokePath(ctx);
+        CGContextMoveToPoint(ctx, 0.0, CGRectGetMaxY(rect) / 2.0);
+        CGContextAddLineToPoint(ctx, lineOffset, CGRectGetMaxY(rect) / 2.0);
+        CGContextStrokePath(ctx);
     }
 }
 

@@ -172,6 +172,62 @@
     return NO;
 }
 
++ (NSString *)convertToICUBackReferencedString:(NSString *)inputString
+{
+    if (!inputString) return nil;
+    BOOL escape = NO;
+    const char *inputBuffer = inputString.UTF8String;
+    
+    NSMutableString *res = [[NSMutableString alloc] init];
+    for (unsigned long i = 0; i < strlen(inputBuffer); i++) {
+        const char ch = inputBuffer[i];
+        if (escape && isdigit(ch)) {
+            [res appendFormat:@"$%c", ch];
+            escape = NO;
+            continue;
+        }
+        if (!(escape = !escape && ch == '\\'))
+            [res appendFormat:@"%c", ch];
+    }
+    
+    return [res copy];
+}
+
++ (NSString *)convertToBackReferencedString:(NSString *)inputString
+{
+    if (!inputString) return nil;
+    
+    BOOL escape = NO;
+    BOOL capture = NO;
+    const char *inputBuffer = inputString.UTF8String;
+    
+    NSMutableString *res = [[NSMutableString alloc] init];
+    for (unsigned long i = 0; i < strlen(inputBuffer); i++) {
+        const char ch = inputBuffer[i];
+        if (!escape && capture && isdigit(ch)) {
+            capture = NO;
+            [res appendFormat:@"\\%c", ch];
+            continue;
+        }
+        if (escape) {
+            [res appendFormat:@"%c", ch];
+            escape = NO;
+            continue;
+        }
+        if (!escape && ch == '$') {
+            capture = YES;
+            continue;
+        }
+        if (ch == '\\') {
+            escape = YES;
+            continue;
+        }
+        [res appendFormat:@"%c", ch];
+    }
+    
+    return [res copy];
+}
+
 + (NSString *)expandExpressionStringBackReferences:(NSString *)expressionString
                                          withMatch:(NSTextCheckingResult *)rawResult
                                         withString:(NSString *)toParse

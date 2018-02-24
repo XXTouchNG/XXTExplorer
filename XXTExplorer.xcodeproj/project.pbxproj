@@ -1278,12 +1278,6 @@
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		0F0654BB1EE483A0005B6C5F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		0F072D8E1FB6B2D100597EE2 /* XXTEEditorSearchFindController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchFindController.h; sourceTree = "<group>"; };
-		0F072D8F1FB6B2D100597EE2 /* XXTEEditorSearchFindController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchFindController.m; sourceTree = "<group>"; };
-		0F072D921FB6B2E200597EE2 /* XXTEEditorSearchReplaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchReplaceController.h; sourceTree = "<group>"; };
-		0F072D931FB6B2E200597EE2 /* XXTEEditorSearchReplaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchReplaceController.m; sourceTree = "<group>"; };
-		0F072D9A1FB6BA2200597EE2 /* XXTEEditorSearchSettingsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchSettingsController.h; sourceTree = "<group>"; };
-		0F072D9B1FB6BA2200597EE2 /* XXTEEditorSearchSettingsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchSettingsController.m; sourceTree = "<group>"; };
 		0F072DA51FB9D52000597EE2 /* XXTExplorerEntryReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryReader.h; sourceTree = "<group>"; };
 		0F072DA61FB9D52000597EE2 /* XXTExplorerEntryReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryReader.m; sourceTree = "<group>"; };
 		0F072DAF1FB9EC8B00597EE2 /* xui32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xui32.c; sourceTree = "<group>"; };
@@ -1392,10 +1386,6 @@
 		0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryLauncher.m; sourceTree = "<group>"; };
 		0F4D598B1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryUnarchiver.h; sourceTree = "<group>"; };
 		0F4D598C1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryUnarchiver.m; sourceTree = "<group>"; };
-		0F4EE3561FBDE7BF003FF5FD /* XXTEEditorSearchHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchHeaderView.h; sourceTree = "<group>"; };
-		0F4EE3571FBDE7BF003FF5FD /* XXTEEditorSearchHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchHeaderView.m; sourceTree = "<group>"; };
-		0F4EE35E1FBDE93B003FF5FD /* XXTEEditorSearchTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchTextField.h; sourceTree = "<group>"; };
-		0F4EE35F1FBDE93B003FF5FD /* XXTEEditorSearchTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchTextField.m; sourceTree = "<group>"; };
 		0F4EE36C1FC1A979003FF5FD /* XXTEInstallerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEInstallerViewController.h; sourceTree = "<group>"; };
 		0F4EE36D1FC1A979003FF5FD /* XXTEInstallerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEInstallerViewController.m; sourceTree = "<group>"; };
 		0F4EE3701FC1A9C7003FF5FD /* XXTExplorerEntryXPAPackageReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPAPackageReader.h; sourceTree = "<group>"; };
@@ -1512,8 +1502,6 @@
 		0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringLayer.m; sourceTree = "<group>"; };
 		0F8093F31F5470A9003D5894 /* XXTEShimmeringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEShimmeringView.h; sourceTree = "<group>"; };
 		0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringView.m; sourceTree = "<group>"; };
-		0F81BE931FB54258002EE457 /* XXTEEditorSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchController.h; sourceTree = "<group>"; };
-		0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchController.m; sourceTree = "<group>"; };
 		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
@@ -2467,17 +2455,6 @@
 			path = Entry;
 			sourceTree = "<group>";
 		};
-		0F4EE3551FBDE774003FF5FD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0F4EE3561FBDE7BF003FF5FD /* XXTEEditorSearchHeaderView.h */,
-				0F4EE3571FBDE7BF003FF5FD /* XXTEEditorSearchHeaderView.m */,
-				0F4EE35E1FBDE93B003FF5FD /* XXTEEditorSearchTextField.h */,
-				0F4EE35F1FBDE93B003FF5FD /* XXTEEditorSearchTextField.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		0F4EE3741FC1DAC0003FF5FD /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2796,22 +2773,6 @@
 				0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */,
 			);
 			path = Shimmering;
-			sourceTree = "<group>";
-		};
-		0F81BE921FB54235002EE457 /* NewSearch */ = {
-			isa = PBXGroup;
-			children = (
-				0F4EE3551FBDE774003FF5FD /* View */,
-				0F81BE931FB54258002EE457 /* XXTEEditorSearchController.h */,
-				0F81BE941FB54258002EE457 /* XXTEEditorSearchController.m */,
-				0F072D8E1FB6B2D100597EE2 /* XXTEEditorSearchFindController.h */,
-				0F072D8F1FB6B2D100597EE2 /* XXTEEditorSearchFindController.m */,
-				0F072D921FB6B2E200597EE2 /* XXTEEditorSearchReplaceController.h */,
-				0F072D931FB6B2E200597EE2 /* XXTEEditorSearchReplaceController.m */,
-				0F072D9A1FB6BA2200597EE2 /* XXTEEditorSearchSettingsController.h */,
-				0F072D9B1FB6BA2200597EE2 /* XXTEEditorSearchSettingsController.m */,
-			);
-			path = NewSearch;
 			sourceTree = "<group>";
 		};
 		0F98514820033EA900FFD9E8 /* Owner */ = {
@@ -3693,7 +3654,6 @@
 			isa = PBXGroup;
 			children = (
 				D60FE6461FE226D400954818 /* Search */,
-				0F81BE921FB54235002EE457 /* NewSearch */,
 				0F3D5DF61FAEC4120083196D /* Symbol */,
 				0FB388E21FA860AA00B41E44 /* Statistics */,
 				0F9888C81FA7538D00ED33E7 /* Toolbar */,

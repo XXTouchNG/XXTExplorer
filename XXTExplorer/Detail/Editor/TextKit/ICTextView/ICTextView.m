@@ -962,6 +962,10 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
     [super setFrame:frame];
 }
 
+- (void)setSearchIndex:(NSUInteger)idx {
+    _searchIndex = idx;
+}
+
 #pragma mark - Fixes
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
