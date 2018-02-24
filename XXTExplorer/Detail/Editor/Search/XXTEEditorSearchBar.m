@@ -264,14 +264,9 @@
 - (void)cancelButtonTapped:(UIButton *)sender {
     [self.searchField resignFirstResponder];
     [self.replaceField resignFirstResponder];
-    [self updateCancelButton];
     if ([_delegate respondsToSelector:@selector(searchBarDidCancel:)]) {
         [_delegate searchBarDidCancel:self];
     }
-}
-
-- (void)updateCancelButton {
-    self.cancelButton.enabled = (self.searchField.isFirstResponder || self.replaceField.isFirstResponder);
 }
 
 #pragma mark - UITextFieldDelegate
@@ -302,7 +297,6 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self updateCancelButton];
     if (textField == self.searchField) {
         if ([_delegate respondsToSelector:@selector(searchBar:searchFieldDidBeginEditing:)]) {
             return [_delegate searchBar:self searchFieldDidBeginEditing:textField];
@@ -315,7 +309,6 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self updateCancelButton];
     if (textField == self.searchField) {
         if ([_delegate respondsToSelector:@selector(searchBar:searchFieldDidEndEditing:)]) {
             return [_delegate searchBar:self searchFieldDidEndEditing:textField];
