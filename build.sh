@@ -14,7 +14,7 @@ echo "Update adapter..."
 
 # 1
 echo "Bump version..."
-./bump_version.sh ${DAEMON_VERSION}
+./bump_version.sh XXTExplorer-Archive ${DAEMON_VERSION}
 
 # 2
 echo "Trigger build..."

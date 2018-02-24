@@ -12,7 +12,12 @@
 @implementation UIViewController (DetailCloseItem)
 
 - (NSArray <UIBarButtonItem *> *)splitButtonItems {
-    return @[self.splitViewController.displayModeButtonItem, self.splitDetailCloseItem];
+    if (@available(iOS 8_0, *)) {
+        return @[self.splitViewController.displayModeButtonItem, self.splitDetailCloseItem];
+    } else {
+        // Fallback on earlier versions
+        return @[];
+    }
 }
 
 - (UIBarButtonItem *)splitDetailCloseItem {

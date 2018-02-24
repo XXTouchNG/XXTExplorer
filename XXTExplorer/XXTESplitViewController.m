@@ -195,7 +195,9 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Theme
 
 - (void)restoreTheme {
-    self.displayModeButtonItem.tintColor = [UIColor whiteColor];
+    if (@available(iOS 8.0, *)) {
+        self.displayModeButtonItem.tintColor = [UIColor whiteColor];
+    }
     self.detailCloseItem.tintColor = [UIColor whiteColor];
 }
 

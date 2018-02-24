@@ -52,20 +52,24 @@
     }
     
     @weakify(self);
-    self.wk_shouldStartLoadRequestHandler = ^BOOL(NSURLRequest *request, WKNavigationType navigationType) {
-        @strongify(self);
-        NSURL *url = request.URL;
-        if ([url.scheme isEqualToString:@"xxt"]) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                if ([[UIApplication sharedApplication] canOpenURL:url])
-                {
-                    [[UIApplication sharedApplication] openURL:url];
-                }
-            }];
-            return NO;
-        }
-        return YES;
-    };
+    if (@available(iOS 8.0, *)) {
+        self.wk_shouldStartLoadRequestHandler = ^BOOL(NSURLRequest *request, WKNavigationType navigationType) {
+            @strongify(self);
+            NSURL *url = request.URL;
+            if ([url.scheme isEqualToString:@"xxt"]) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    if ([[UIApplication sharedApplication] canOpenURL:url])
+                    {
+                        [[UIApplication sharedApplication] openURL:url];
+                    }
+                }];
+                return NO;
+            }
+            return YES;
+        };
+    } else {
+        // Fallback on earlier versions
+    }
 }
 
 - (void)viewDidLoad {
