@@ -108,11 +108,12 @@
         [toolbar setBackgroundImage:nil
                  forToolbarPosition:UIToolbarPositionAny
                          barMetrics:UIBarMetricsDefault];
-    } else {
+    } else if (barStyle == UIBarStyleBlack) {
         [toolbar setBackgroundImage:[UIImage new]
                  forToolbarPosition:UIToolbarPositionAny
                          barMetrics:UIBarMetricsDefault];
     }
+    [self reloadReplaceImages];
 }
 
 - (UIBarButtonItem *)prevItem {
@@ -155,6 +156,16 @@
         _replaceAllItem = replaceAllItem;
     }
     return _replaceAllItem;
+}
+
+- (void)reloadReplaceImages {
+    if (_barStyle == UIBarStyleDefault) {
+        [self.replaceItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [self.replaceAllItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceAll"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    } else if (_barStyle == UIBarStyleBlack) {
+        [self.replaceItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        [self.replaceAllItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceAll"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    }
 }
 
 #pragma mark - Setters
