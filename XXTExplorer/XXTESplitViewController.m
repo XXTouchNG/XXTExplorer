@@ -57,11 +57,7 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_PAD) {
         if (@available(iOS 8.0, *)) {
-#ifdef APPSTORE
-            self.preferredDisplayMode = UISplitViewControllerDisplayModeAutomatic;
-#else
             self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-#endif
             self.maximumPrimaryColumnWidth = 320.0;
         }
     }

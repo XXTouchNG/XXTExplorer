@@ -100,7 +100,7 @@ CHECKOUT OPTIONS:
     :commit: ff155a14a9a02a34add13ae6509f859827794dd3
     :git: https://github.com/Lessica/MWPhotoBrowser.git
   TOWebViewController:
-    :commit: 02466e6f4fe982e3dd0c5de092d1be768ce6bee5
+    :commit: d48ee0ef2645b1ec8e7e59870cb9f93c3fc23f0f
     :git: https://github.com/Lessica/TOWebViewController.git
   UnrarKit:
     :commit: 6b946a71aecc6654cc0510f63177f72e7fba5ae6

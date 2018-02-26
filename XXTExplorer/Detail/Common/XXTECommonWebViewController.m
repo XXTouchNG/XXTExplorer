@@ -40,6 +40,10 @@
 }
 
 - (void)configure { // do not override [super setup]
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     self.loadingBarTintColor = XXTE_COLOR_SUCCESS;
     self.showLoadingBar = YES;
     self.showUrlWhileLoading = NO;
@@ -84,20 +88,7 @@
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
-    }
-    XXTE_END_IGNORE_PARTIAL
-    
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && self == self.navigationController.viewControllers[0]) {
-        self.applicationLeftBarButtonItems = @[ self.splitViewController.displayModeButtonItem ];
+        [self setApplicationLeftBarButtonItems:self.splitButtonItems];
     }
     XXTE_END_IGNORE_PARTIAL
 }

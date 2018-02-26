@@ -74,12 +74,6 @@
             self.title = entryName;
         }
     }
-
-    XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
-        [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
-    }
-    XXTE_END_IGNORE_PARTIAL
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
