@@ -18,7 +18,12 @@
 #import <StoreKit/StoreKit.h>
 #import "XXTEAppDefines.h"
 
+#import "XXTEMasterViewController.h"
+#import "XXTExplorerViewController.h"
+
 static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed";
+
+@class XXTEMasterViewController;
 
 @interface XXTESplitViewController () <UISplitViewControllerDelegate>
 
@@ -195,6 +200,44 @@ XXTE_END_IGNORE_PARTIAL
         self.displayModeButtonItem.tintColor = [UIColor whiteColor];
     }
     self.detailCloseItem.tintColor = [UIColor whiteColor];
+}
+
+#pragma mark - Getters
+
+- (XXTEMasterViewController *)xxteMasterViewController {
+    UIViewController *firstVC = [self.viewControllers firstObject];
+    if ([firstVC isKindOfClass:[XXTEMasterViewController class]]) {
+        XXTEMasterViewController *masterVC = (XXTEMasterViewController *)firstVC;
+        return masterVC;
+    }
+    return nil;
+}
+
+- (XXTExplorerViewController *)masterExplorerViewController {
+    return self.xxteMasterViewController.topmostExplorerViewController;
+}
+
+- (UIViewController <XXTEDetailViewController> *)xxteDetailViewController {
+    UINavigationController *lastNav = [self.viewControllers lastObject];
+    if ([lastNav isKindOfClass:[UINavigationController class]]) {
+        UIViewController *lastVC = [lastNav.viewControllers firstObject];
+        if ([lastVC conformsToProtocol:@protocol(XXTEDetailViewController)]) {
+            UIViewController <XXTEDetailViewController> *detailVC = (UIViewController <XXTEDetailViewController> *)lastVC;
+            return detailVC;
+        }
+    }
+    return nil;
+}
+
+- (NSString *)masterExplorerEntryPath {
+    return self.masterExplorerViewController.entryPath;
+}
+
+- (NSString *)detailEntryPath {
+    if ([self.xxteDetailViewController respondsToSelector:@selector(entryPath)]) {
+        return self.xxteDetailViewController.entryPath;
+    }
+    return nil;
 }
 
 @end

@@ -30,13 +30,7 @@
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
     if (self = [super initWithRootViewController:rootViewController]) {
-        static BOOL alreadyInitialized = NO;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            NSAssert(NO == alreadyInitialized, @"XXTExplorerNavigationController is a singleton.");
-            alreadyInitialized = YES;
-            [self setup];
-        });
+        [self setup];
     }
     return self;
 }

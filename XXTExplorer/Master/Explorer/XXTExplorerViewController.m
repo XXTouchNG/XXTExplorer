@@ -39,7 +39,10 @@
 #import "XXTEUserInterfaceDefines.h"
 #import "XXTEPermissionDefines.h"
 
-@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, XXTExplorerFooterViewDelegate>
+#import "XXTExplorerItemPreviewController.h"
+
+@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UIViewControllerPreviewingDelegate, XXTExplorerFooterViewDelegate>
+@property (nonatomic, strong) id<UIViewControllerPreviewing> previewingContext;
 
 @end
 
@@ -182,14 +185,14 @@
     if (firstTimeLoaded) {
         [self loadEntryListData];
         [self.tableView reloadData];
-    } else {
+    } else if (self.navigationController != nil) {
         [self refreshControlTriggered:nil];
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!firstTimeLoaded) {
+    if (!firstTimeLoaded && self.navigationController != nil) {
         firstTimeLoaded = YES;
     }
 }
@@ -201,6 +204,23 @@
         [self setEditing:NO animated:YES];
     }
 }
+
+XXTE_START_IGNORE_PARTIAL
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            // retain the context to avoid registering more than once
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
+}
+XXTE_END_IGNORE_PARTIAL
 
 - (void)restoreTheme {
     UIColor *backgroundColor = XXTE_COLOR;
@@ -493,13 +513,13 @@
             if ([tableView isEditing]) {
                 [self updateToolbarStatus];
             } else {
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 NSDictionary *entryAttributes = self.entryList[indexPath.row];
                 NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
                 NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
                 NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
                 if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
                 {
+                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     [self performDictionaryActionForEntry:entryAttributes];
                 }
                 else if (
@@ -508,8 +528,14 @@
                 {
                     if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
                         if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
+                            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                            if (!XXTE_COLLAPSED)
+                            {
+                                
+                            } // TODO: remain selected state when being viewed in collapsed detail view controller
                             [self performViewerActionForEntry:entryAttributes];
                         } else {
+                            [tableView deselectRowAtIndexPath:indexPath animated:YES];
                             XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryAttributes];
                             openWithController.delegate = self;
                             XXTENavigationController *navController = [[XXTENavigationController alloc] initWithRootViewController:openWithController];
@@ -526,44 +552,74 @@
                         }
                     } else {
                         // TODO: not readable, unlock?
+                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
                         toastMessage(self, NSLocalizedString(@"Access denied.", nil));
                     }
                 } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
                 { // broken symlink
+                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]));
                 }
                 else
                 { // not supported
+                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
                 }
             }
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             if ([tableView isEditing]) {
-
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
             } else {
                 NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
-                NSString *directoryRelativePath = entryAttributes[@"path"];
-                NSString *directoryPath = nil;
-                if ([directoryRelativePath isAbsolutePath]) {
-                    directoryPath = directoryRelativePath;
-                } else {
-                    directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
-                }
-                NSError *accessError = nil;
-                [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
-                if (accessError) {
-                    toastMessage(self, [accessError localizedDescription]);
-                } else {
-                    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
-                    [self.navigationController pushViewController:explorerViewController animated:YES];
-                }
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                [self performHomeActionForEntry:entryAttributes];
             }
         }
     }
 }
 
-- (void)performDictionaryActionForEntry:(NSDictionary *)entryAttributes {
+// Home Action
+
+- (UIViewController *)prepareForHomeActionForEntry:(NSDictionary *)entryAttributes error:(NSError **)error {
+    NSString *directoryRelativePath = entryAttributes[@"path"];
+    NSString *directoryPath = nil;
+    if ([directoryRelativePath isAbsolutePath]) {
+        directoryPath = directoryRelativePath;
+    } else {
+        directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
+    }
+    NSError *accessError = nil;
+    [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
+    if (accessError) {
+        if (error) *error = accessError;
+    } else {
+        XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:directoryPath];
+        return explorerViewController;
+    }
+    return nil;
+}
+
+- (void)performHomeActionForEntry:(NSDictionary *)entryAttributes {
+    NSError *prepareError = nil;
+    UIViewController *controller = [self prepareForHomeActionForEntry:entryAttributes error:&prepareError];
+    if (controller) {
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if (prepareError) {
+        toastMessage(self, [prepareError localizedDescription]);
+    }
+}
+
+// Item Action
+
+- (UIViewController *)prepareForItemPreviewActionForEntry:(NSDictionary *)entryAttributes {
+    XXTExplorerItemPreviewController *controller = [[XXTExplorerItemPreviewController alloc] initWithNibName:NSStringFromClass([XXTExplorerItemPreviewController class]) bundle:nil];
+    controller.entryAttributes = entryAttributes;
+    return controller;
+}
+
+// Directory Action
+
+- (UIViewController *)prepareForDictionaryActionForEntry:(NSDictionary *)entryAttributes error:(NSError **)error {
     NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
     NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
@@ -572,13 +628,26 @@
         NSError *accessError = nil;
         [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
         if (accessError) {
-            toastMessage(self, [accessError localizedDescription]);
+            if (error) *error = accessError;
         } else {
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
-            [self.navigationController pushViewController:explorerViewController animated:YES];
+            return explorerViewController;
         }
     }
+    return nil;
 }
+
+- (void)performDictionaryActionForEntry:(NSDictionary *)entryAttributes {
+    NSError *prepareError = nil;
+    UIViewController *controller = [self prepareForDictionaryActionForEntry:entryAttributes error:&prepareError];
+    if (controller) {
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if (prepareError) {
+        toastMessage(self, [prepareError localizedDescription]);
+    }
+}
+
+// History Action
 
 - (void)performHistoryActionForEntry:(NSDictionary *)entryAttributes {
     NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
@@ -599,10 +668,14 @@
     }
 }
 
+// Viewer Action
+
 - (void)performViewerActionForEntry:(NSDictionary *)entryAttributes {
     UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
     [self tableView:self.tableView showDetailController:viewer];
 }
+
+// Accessory Action
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -908,6 +981,50 @@
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
     }
 }
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    UIViewController *presentController = nil;
+    if ([viewControllerToCommit isKindOfClass:[self class]])
+    {
+        presentController = viewControllerToCommit;
+    }
+    if (presentController)
+    {
+        [self.navigationController pushViewController:presentController animated:NO];
+    }
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    UITableView *tableView = self.tableView;
+    if ([tableView isEditing]) {
+        return nil;
+    }
+    NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:location];
+    if (!indexPath) return nil;
+    if (@available(iOS 9.0, *)) {
+        previewingContext.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
+    }
+    NSError *prepareError = nil;
+    if (XXTExplorerViewSectionIndexList == indexPath.section) {
+        NSDictionary *entryAttributes = self.entryList[indexPath.row];
+        UIViewController *controller = [self prepareForDictionaryActionForEntry:entryAttributes error:&prepareError];
+        if (!controller) {
+            controller = [self prepareForItemPreviewActionForEntry:entryAttributes];
+        }
+        return controller;
+    } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
+        NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
+        UIViewController *controller = [self prepareForHomeActionForEntry:entryAttributes error:&prepareError];
+        return controller;
+    }
+    return nil;
+}
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

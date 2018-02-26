@@ -78,6 +78,8 @@
                0.0,
                cancelWidth,
                CGRectGetHeight(self.bounds));
+    
+    [self setNeedsDisplay];
 }
 
 #pragma mark - UIView Getters
@@ -141,6 +143,8 @@
         cancelButton.titleLabel.font = font;
         [cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+        [cancelButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter]; // fixed
         [cancelButton sizeToFit];
         _cancelButton = cancelButton;
     }

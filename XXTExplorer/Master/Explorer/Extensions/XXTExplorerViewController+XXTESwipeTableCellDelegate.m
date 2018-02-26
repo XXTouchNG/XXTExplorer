@@ -165,8 +165,9 @@
     return handled;
 }
 
-- (NSArray *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
-              swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings {
+- (NSArray <XXTESwipeButton *> *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
+              swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings
+{
     CGFloat buttonWidth = 80.0;
     cell.allowsButtonsWithDifferentWidth = YES;
     swipeSettings.transition = XXTESwipeTransitionBorder;

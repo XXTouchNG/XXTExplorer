@@ -1195,6 +1195,12 @@
 		D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D69D43EC2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D6A850762043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */; };
+		D6A850772043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */; };
+		D6A850782043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */; };
+		D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
+		D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
+		D6A8507B2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
 		D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */; };
 		D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
 		D6CB81B91FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
@@ -1992,6 +1998,9 @@
 		D69D43E92026EA4600AD62C1 /* XXTEUIViewController+RunCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+RunCommand.h"; sourceTree = "<group>"; };
 		D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+RunCommand.m"; sourceTree = "<group>"; };
 		D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libactivator.tbd; sourceTree = "<group>"; };
+		D6A850732043DED5008745EB /* XXTExplorerItemPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemPreviewController.h; sourceTree = "<group>"; };
+		D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemPreviewController.m; sourceTree = "<group>"; };
+		D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTExplorerItemPreviewController.xib; sourceTree = "<group>"; };
 		D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		D6CB81B61FE262320033EA2F /* XXTEEditorSearchField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchField.h; sourceTree = "<group>"; };
 		D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchField.m; sourceTree = "<group>"; };
@@ -2625,6 +2634,10 @@
 		0F61E1611ED7871F003DCC78 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */,
+				0F4419F01F1797CF00967980 /* XXTEViewer.h */,
+				0FC477591F376A0500B8F28E /* XXTEEditor.h */,
+				D6A850712043BD67008745EB /* Workspace */,
 				0F5EB53C1F0A9ED80016016A /* Common */,
 				0F56900B1F1B01E5009AF9FE /* Archive */,
 				0F5690101F1B097B009AF9FE /* Executable */,
@@ -2639,11 +2652,6 @@
 				D66085581F3C65F900E87B3C /* Editor */,
 				0FBECD5E2005FE7700068437 /* Log */,
 				D6863C501F7E275800A45CF7 /* XUIExtensions */,
-				0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */,
-				0FC477591F376A0500B8F28E /* XXTEEditor.h */,
-				0F4419F01F1797CF00967980 /* XXTEViewer.h */,
-				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
-				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -2651,6 +2659,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				D6A850722043DE6C008745EB /* Preview */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
 				0F0654B81EE48395005B6C5F /* Archive */,
 				0FBAFF471F6E6FC6008B3189 /* Common */,
@@ -3894,6 +3903,25 @@
 			path = AnimatedImage;
 			sourceTree = "<group>";
 		};
+		D6A850712043BD67008745EB /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */,
+				0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */,
+			);
+			path = Workspace;
+			sourceTree = "<group>";
+		};
+		D6A850722043DE6C008745EB /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				D6A850732043DED5008745EB /* XXTExplorerItemPreviewController.h */,
+				D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */,
+				D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
 		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -4237,6 +4265,7 @@
 				0F8ECD4D1FE802A900A5457C /* OneHalf (Dark).png in Resources */,
 				0F8B4E1D1FBAF8E1009ED646 /* xml.tmLanguage in Resources */,
 				0F8EDCA31FB1F779003C92D6 /* Monokai.tmTheme in Resources */,
+				D6A8507B2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
 				0F8EDCA41FB1F779003C92D6 /* Oceanic (Eighties).tmTheme in Resources */,
 				0F8EDCA51FB1F779003C92D6 /* XXTESymbolCell.xib in Resources */,
 				0F8EDCA61FB1F779003C92D6 /* XXTEMoreLinkCell.xib in Resources */,
@@ -4312,6 +4341,7 @@
 				0FCAF4022009AE59002FB774 /* RMCloudProjectCell.xib in Resources */,
 				0F97F1D21FB2A7FB007CA883 /* XXTApplicationCell.xib in Resources */,
 				D60A269F1F3DA24B00E013E2 /* CamingoCode-Bold.ttf in Resources */,
+				D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
 				D60A26A01F3DA24B00E013E2 /* CamingoCode-BoldItalic.ttf in Resources */,
 				D60A26A11F3DA24B00E013E2 /* CamingoCode-Italic.ttf in Resources */,
 				0FD973EF1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme in Resources */,
@@ -4425,6 +4455,7 @@
 				D60FE7791FE2369300954818 /* XXTApplicationCell.xib in Resources */,
 				D60FE77F1FE2369300954818 /* XUIFileCell.xib in Resources */,
 				D60FE7801FE2369300954818 /* SourceCodePro-Bold.otf in Resources */,
+				D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
 				D60FE7811FE2369300954818 /* SourceCodePro-BoldIt.otf in Resources */,
 				0F2DAE562013158C001593C9 /* RMCloudTrendsCell.xib in Resources */,
 				D60FE7821FE2369300954818 /* SourceCodePro-It.otf in Resources */,
@@ -4843,6 +4874,7 @@
 				0F8EDBC41FB1F779003C92D6 /* XXTEKeyboardRow.m in Sources */,
 				0F8EDBC51FB1F779003C92D6 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				0F8EDBC71FB1F779003C92D6 /* NSString+XQueryComponents.m in Sources */,
+				D6A850782043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
 				0F8EDBC81FB1F779003C92D6 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FBECD622005FEB100068437 /* XXTELogViewController.m in Sources */,
@@ -5058,6 +5090,7 @@
 				0F7B52BE201994CA00D91702 /* NSString+VersionValue.m in Sources */,
 				0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
+				D6A850762043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
 				0FCAF3EA20088860002FB774 /* RMCloudListViewController.m in Sources */,
 				0FAD69221F04038600B2F0EC /* XXTEMoreAddressCell.m in Sources */,
 				0F5FE3C51FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */,
@@ -5374,6 +5407,7 @@
 				0F7B52C0201994CA00D91702 /* NSString+VersionValue.m in Sources */,
 				D60FE68C1FE2369300954818 /* ICRegularExpression.m in Sources */,
 				D60FE68D1FE2369300954818 /* XXTECommonWebViewController.m in Sources */,
+				D6A850772043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
 				0FCAF3EB20088860002FB774 /* RMCloudListViewController.m in Sources */,
 				D60FE68E1FE2369300954818 /* XXTEMoreAddressCell.m in Sources */,
 				0F5FE3C71FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */,

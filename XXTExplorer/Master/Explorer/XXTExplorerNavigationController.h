@@ -11,6 +11,9 @@
 @class XXTExplorerViewController;
 
 @interface XXTExplorerNavigationController : XXTENavigationController
-- (XXTExplorerViewController *)topmostExplorerViewController;
+
+#pragma mark - Convenience Getters
+
+@property (nonatomic, strong, readonly) XXTExplorerViewController *topmostExplorerViewController;
 
 @end

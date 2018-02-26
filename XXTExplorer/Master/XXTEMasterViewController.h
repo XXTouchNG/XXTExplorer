@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTEUpdateHelper, XXTEUpdateAgent;
+@class XXTExplorerViewController, XXTEUpdateHelper, XXTEUpdateAgent;
 
 typedef enum : NSUInteger {
     kMasterViewControllerIndexExplorer = 0,
@@ -24,5 +24,9 @@ typedef enum : NSUInteger {
 #ifndef APPSTORE
 - (void)checkUpdate;
 #endif
+
+#pragma mark - Convenience Getters
+
+@property (nonatomic, strong, readonly) XXTExplorerViewController *topmostExplorerViewController;
 
 @end

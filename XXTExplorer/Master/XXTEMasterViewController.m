@@ -15,6 +15,8 @@
 #import "XXTEDispatchDefines.h"
 #import "UIView+XXTEToast.h"
 
+#import "XXTExplorerNavigationController.h"
+
 #ifndef APPSTORE
     #import "XXTERespringAgent.h"
     #import "XXTEDaemonAgent.h"
@@ -394,6 +396,19 @@
     });
 }
 #endif
+
+#pragma mark - Getters
+
+- (XXTExplorerViewController *)topmostExplorerViewController {
+    UIViewController *firstFirstVC = [self.viewControllers firstObject];
+    if ([firstFirstVC isKindOfClass:[XXTExplorerNavigationController class]]) {
+        XXTExplorerNavigationController *navVC = (XXTExplorerNavigationController *)firstFirstVC;
+        return [navVC topmostExplorerViewController];
+    }
+    return nil;
+}
+
+#pragma mark - Memory
 
 - (void)dealloc {
     

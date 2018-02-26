@@ -7,10 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTEDetailViewController.h"
+
+@class XXTEMasterViewController, XXTExplorerViewController;
 
 @interface XXTESplitViewController : UISplitViewController
 
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender;
 @property (nonatomic, strong) UIBarButtonItem *detailCloseItem;
+
+#pragma mark - Convinence Getters
+
+@property (nonatomic, strong, readonly) XXTEMasterViewController *xxteMasterViewController;
+@property (nonatomic, strong, readonly) UIViewController <XXTEDetailViewController> *xxteDetailViewController;
+@property (nonatomic, strong, readonly) XXTExplorerViewController *masterExplorerViewController;
+
+@property (nonatomic, strong, readonly) NSString *masterExplorerEntryPath;
+@property (nonatomic, strong, readonly) NSString *detailEntryPath;
 
 @end

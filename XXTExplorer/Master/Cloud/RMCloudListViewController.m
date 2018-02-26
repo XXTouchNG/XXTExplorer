@@ -24,13 +24,14 @@ typedef enum : NSUInteger {
 
 static NSUInteger const RMCloudListItemsPerPage = 20;
 
-@interface RMCloudListViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, RMCloudProjectCellDelegate>
+@interface RMCloudListViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UIViewControllerPreviewingDelegate, RMCloudProjectCellDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSMutableArray <RMProject *> *projects;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
 @property (nonatomic, strong) RMCloudComingSoon *comingSoonView;
+@property (nonatomic, strong) id<UIViewControllerPreviewing> previewingContext;
 
 @end
 
@@ -68,12 +69,13 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudProjectCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudProjectCellReuseIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudMoreCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudMoreCellReuseIdentifier];
-    [self.view addSubview:self.tableView];
+    UITableView *tableView = self.tableView;
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudProjectCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudProjectCellReuseIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([RMCloudMoreCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:RMCloudMoreCellReuseIdentifier];
+    [self.view addSubview:tableView];
     
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
-    [tableViewController setTableView:self.tableView];
+    [tableViewController setTableView:tableView];
     [tableViewController setRefreshControl:self.refreshControl];
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
     [self.view addSubview:self.pawAnimation];
@@ -88,6 +90,23 @@ XXTE_START_IGNORE_PARTIAL
         self.tableView.contentInset =
         self.tableView.scrollIndicatorInsets =
         self.view.safeAreaInsets;
+    }
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            // retain the context to avoid registering more than once
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
     }
 }
 XXTE_END_IGNORE_PARTIAL
@@ -275,15 +294,22 @@ XXTE_END_IGNORE_PARTIAL
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == RMCloudListSectionProject) {
         RMProject *project = nil;
-        if (indexPath.row < self.projects.count) {
+        if (indexPath.row < self.projects.count)
+        {
             project = self.projects[indexPath.row];
         }
-        RMCloudProjectViewController *controller = [[RMCloudProjectViewController alloc] initWithProjectID:project.projectID];
-        controller.title = project.projectName;
+        UIViewController *controller = [self preparePushForProject:project];
         [self.navigationController pushViewController:controller animated:YES];
     } else if (indexPath.section == RMCloudListSectionMore) {
         [self loadMoreProjects:nil];
     }
+}
+
+- (UIViewController *)preparePushForProject:(RMProject *)project {
+    if (!project) return nil;
+    RMCloudProjectViewController *controller = [[RMCloudProjectViewController alloc] initWithProjectID:project.projectID];
+    controller.title = project.projectName;
+    return controller;
 }
 
 #pragma mark - RMCloudProjectCellDelegate
@@ -338,6 +364,38 @@ XXTE_END_IGNORE_PARTIAL
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return NO;
 }
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:NO];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    UITableView *tableView = self.tableView;
+    if ([tableView isEditing]) {
+        return nil;
+    }
+    NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:location];
+    if (!indexPath) return nil;
+    if (@available(iOS 9.0, *)) {
+        previewingContext.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
+    }
+    if (indexPath.section == RMCloudListSectionProject) {
+        RMProject *project = nil;
+        if (indexPath.row < self.projects.count)
+        {
+            project = self.projects[indexPath.row];
+        }
+        UIViewController *controller = [self preparePushForProject:project];
+        return controller;
+    }
+    return nil;
+}
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

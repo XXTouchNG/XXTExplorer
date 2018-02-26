@@ -15,6 +15,9 @@
 "%@\n(%@ on disk)" = "%@\n(%@ on disk)";
 
 /* No comment provided by engineer. */
+"%@\n\nCreated at: %@\nModified at: %@" = "%@\n\n创建于 %@\n修改于 %@";
+
+/* No comment provided by engineer. */
 "%@\nActivated At: %@" = "%1$@\n激活时间: %2$@";
 
 /* No comment provided by engineer. */
@@ -1258,6 +1261,9 @@
 
 /* No comment provided by engineer. */
 "Select Boot Script" = "选择开机启动项";
+
+/* No comment provided by engineer. */
+"Select item from the left panel" = "请从左侧面板中选择项目";
 
 /* No comment provided by engineer. */
 "Selected" = "已选择";

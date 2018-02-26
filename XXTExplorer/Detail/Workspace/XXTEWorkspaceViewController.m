@@ -10,8 +10,8 @@
 #import "XXTENotificationCenterDefines.h"
 
 @interface XXTEWorkspaceViewController ()
-@property (nonatomic, strong) UIImageView *arrowPlaceholderImageView;
 @property (nonatomic, strong) UIImageView *logoPlaceholderImageView;
+@property (nonatomic, strong) UILabel *guideLabel;
 
 @end
 
@@ -46,14 +46,8 @@
     self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.arrowPlaceholderImageView.hidden = (self.splitViewController.displayMode != UISplitViewControllerDisplayModePrimaryHidden);
-    }
-    XXTE_END_IGNORE_PARTIAL
-    
-    [self.view addSubview:self.arrowPlaceholderImageView];
     [self.view addSubview:self.logoPlaceholderImageView];
+    [self.view addSubview:self.guideLabel];
     
     [self makeViewConstraints];
 
@@ -69,14 +63,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
     [self renderNavigationBarTheme:YES];
     [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewWillDisappear:animated];
 }
 
 - (void)makeViewConstraints {
@@ -112,20 +100,41 @@
                                   attribute:NSLayoutAttributeHeight
                                  multiplier:1
                                    constant:128.f]];
+    [self.view addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.guideLabel
+                                  attribute:NSLayoutAttributeCenterX
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.logoPlaceholderImageView
+                                  attribute:NSLayoutAttributeCenterX
+                                 multiplier:1
+                                   constant:0.0]];
+    [self.view addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.guideLabel
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.logoPlaceholderImageView
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1
+                                   constant:16.0]];
+    [self.guideLabel addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.guideLabel
+                                  attribute:NSLayoutAttributeWidth
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:nil
+                                  attribute:NSLayoutAttributeWidth
+                                 multiplier:1
+                                   constant:256.f]];
+    [self.guideLabel addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.guideLabel
+                                  attribute:NSLayoutAttributeHeight
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:nil
+                                  attribute:NSLayoutAttributeHeight
+                                 multiplier:1
+                                   constant:16.f]];
 }
 
 #pragma mark - UIView Getters
-
-- (UIImageView *)arrowPlaceholderImageView {
-    if (!_arrowPlaceholderImageView) {
-        UIImageView *arrowPlaceholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 128.f, 128.f)];
-        arrowPlaceholderImageView.contentMode = UIViewContentModeScaleAspectFill;
-        arrowPlaceholderImageView.tintColor = [UIColor colorWithRed: 189.0/255.0 green: 195.0/255.0 blue: 199.0/255.0 alpha: 1.0];
-        arrowPlaceholderImageView.image = [UIImage new];
-        _arrowPlaceholderImageView = arrowPlaceholderImageView;
-    }
-    return _arrowPlaceholderImageView;
-}
 
 - (UIImageView *)logoPlaceholderImageView {
     if (!_logoPlaceholderImageView) {
@@ -139,19 +148,20 @@
     return _logoPlaceholderImageView;
 }
 
-#pragma mark - Notifications
-
-XXTE_START_IGNORE_PARTIAL
-- (void)handleApplicationNotification:(NSNotification *)aNotification {
-    NSDictionary *userInfo = aNotification.userInfo;
-    NSString *eventType = userInfo[XXTENotificationEventType];
-    NSString *displayModeValue = userInfo[XXTENotificationDetailDisplayMode];
-    if ([eventType isEqualToString:XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode] && displayModeValue) {
-        UISplitViewControllerDisplayMode displayMode = [((NSNumber *)displayModeValue) integerValue];
-        self.arrowPlaceholderImageView.hidden = (displayMode == UISplitViewControllerDisplayModeAllVisible);
+- (UILabel *)guideLabel {
+    if (!_guideLabel) {
+        _guideLabel = [[UILabel alloc] init];
+        _guideLabel.font = [UIFont systemFontOfSize:14.0];
+        _guideLabel.textColor = [UIColor colorWithRed: 189.0/255.0 green: 195.0/255.0 blue: 199.0/255.0 alpha: 1.0];
+        _guideLabel.numberOfLines = 1;
+        _guideLabel.textAlignment = NSTextAlignmentCenter;
+        _guideLabel.text = NSLocalizedString(@"Select item from the left panel", nil);
+        _guideLabel.translatesAutoresizingMaskIntoConstraints = NO;
     }
+    return _guideLabel;
 }
-XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - Notifications
 
 #pragma mark - Theme
 
