@@ -57,10 +57,10 @@
                         [instantRun boolValue] == YES)
                     {
                         NSError *entryError = nil;
-                        NSDictionary *entryAttributes = [[self.class explorerEntryParser] entryOfPath:movedPath withError:&entryError];
+                        NSDictionary *entryDetail = [[self.class explorerEntryParser] entryOfPath:movedPath withError:&entryError];
                         
                         if (!entryError) {
-                            [self performViewerActionForEntry:entryAttributes];
+                            [self performViewerActionForEntry:entryDetail];
                         } else {
                             toastMessage(self, entryError.localizedDescription);
                         }

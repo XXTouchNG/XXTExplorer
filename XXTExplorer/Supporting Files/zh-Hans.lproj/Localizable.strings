@@ -465,6 +465,9 @@
 "Container Path" = "容器路径";
 
 /* No comment provided by engineer. */
+"Contents" = "内容";
+
+/* No comment provided by engineer. */
 "Continue" = "继续";
 
 /* No comment provided by engineer. */
@@ -744,9 +747,6 @@
 "Information" = "信息";
 
 /* No comment provided by engineer. */
-"Inside" = "内容";
-
-/* No comment provided by engineer. */
 "Install" = "安装";
 
 /* No comment provided by engineer. */
@@ -820,6 +820,9 @@
 
 /* No comment provided by engineer. */
 "Launch or stop the selected script directly." = "直接启动或停止当前选中脚本.";
+
+/* No comment provided by engineer. */
+"Launch Selected Script" = "启动选中脚本";
 
 /* No comment provided by engineer. */
 "Launcher" = "启动器";
@@ -945,10 +948,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1117,6 +1120,9 @@
 
 /* No comment provided by engineer. */
 "QRCode" = "二维码";
+
+/* No comment provided by engineer. */
+"QRCode Scan" = "二维码扫描";
 
 /* No comment provided by engineer. */
 "Ranking" = "评分";
@@ -1341,6 +1347,9 @@
  * ./XXTEAppDelegate.m
  */
 "Stop" = "停止";
+
+/* No comment provided by engineer. */
+"Stop Current Script" = "停止当前脚本";
 
 /* No comment provided by engineer. */
 "Successfully saved to \"%@\"." = "成功保存到 \"%@\".";

@@ -169,7 +169,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     }
     
 #ifdef APPSTORE
-    if (nil == self.tabBarController && self == self.navigationController.viewControllers[0])
+    if (nil == self.tabBarController && self == [self.navigationController.viewControllers firstObject])
     {
         self.navigationItem.rightBarButtonItem = self.closeItem;
     }

@@ -10,16 +10,45 @@
 
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
+
 #import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryParser.h"
 
 @interface XXTExplorerItemPreviewController ()
+
 @property (weak, nonatomic) IBOutlet UIImageView *entryIconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *entryTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *entrySubtitleLabel;
 
+@property (nonatomic, strong) XXTExplorerEntryParser *entryParser;
+
 @end
 
 @implementation XXTExplorerItemPreviewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+    XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
+    _entryParser = entryParser;
+}
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,12 +58,23 @@
 }
 
 - (void)reloadEntryIfNeeded {
-    if (self.entryAttributes) {
-        [self configureWithEntry:self.entryAttributes];
+    NSString *entryPath = self.entryPath;
+    if (entryPath)
+    {
+        NSDictionary *entry = [self.entryParser entryOfPath:entryPath withError:nil];
+        [self configureWithEntry:entry];
+        _entry = entry;
     }
 }
 
 #pragma mark - Getters
+
+- (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
+    if ([_previewActionDelegate respondsToSelector:@selector(itemPreviewController:previewActionsForEntry:)]) {
+        return [_previewActionDelegate itemPreviewController:self previewActionsForEntry:self.entry];
+    }
+    return @[];
+}
 
 + (NSDateFormatter *)entryDateFormatter {
     static NSDateFormatter *entryDateFormatter = nil;
@@ -54,8 +94,8 @@
 
 #pragma mark - Setters
 
-- (void)setEntryAttributes:(NSDictionary *)entryAttributes {
-    _entryAttributes = entryAttributes;
+- (void)setEntryPath:(NSString *)entryPath {
+    _entryPath = entryPath;
     [self reloadEntryIfNeeded];
 }
 
@@ -78,7 +118,8 @@
     NSString *readableSize = [NSByteCountFormatter stringFromByteCount:[entryDetail[XXTExplorerViewEntryAttributeSize] longLongValue] countStyle:NSByteCountFormatterCountStyleFile];
     NSString *creationDateString = [self.class.entryDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeCreationDate]];
     NSString *modificationDateString = [self.class.entryDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeModificationDate]];
-    NSString *entryDescription = [NSString stringWithFormat:NSLocalizedString(@"%@\n\nCreated at: %@\nModified at: %@", nil), readableSize, creationDateString, modificationDateString];
+    NSString *entryDescriptionFormat = NSLocalizedString(@"%@\n\nCreated at: %@\nModified at: %@", nil);
+    NSString *entryDescription = [NSString stringWithFormat:entryDescriptionFormat, readableSize, creationDateString, modificationDateString];
     UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
     if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
         XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
@@ -91,7 +132,7 @@
             }
         }
         if (entryReader.entryDescription) {
-            entryDescription = entryReader.entryDescription;
+            entryDescription = [NSString stringWithFormat:entryDescriptionFormat, entryReader.entryDescription, creationDateString, modificationDateString];
         }
         if (entryReader.entryIconImage) {
             entryIconImage = entryReader.entryIconImage;
@@ -100,6 +141,14 @@
     self.entryTitleLabel.text = entryDisplayName;
     self.entrySubtitleLabel.text = entryDescription;
     self.entryIconImageView.image = entryIconImage;
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
+#endif
 }
 
 @end

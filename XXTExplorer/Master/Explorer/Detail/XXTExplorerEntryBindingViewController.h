@@ -21,6 +21,9 @@
 @property (nonatomic, copy, readonly) NSDictionary *entry;
 @property (nonatomic, weak) id <XXTExplorerEntryBindingViewControllerDelegate> delegate;
 
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
 - (instancetype)initWithEntry:(NSDictionary *)entry;
 
 @end

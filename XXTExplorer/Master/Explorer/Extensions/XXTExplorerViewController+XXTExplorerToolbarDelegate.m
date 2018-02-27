@@ -42,6 +42,7 @@
 @implementation XXTExplorerViewController (XXTExplorerToolbarDelegate)
 
 - (void)configureToolbar {
+    if (self.isPreviewed) return;
     XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     toolbar.tapDelegate = self;
@@ -369,9 +370,9 @@
     NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
     NSString *historyPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:historyRelativePath];
     NSError *entryError = nil;
-    NSDictionary *entryAttributes = [[self.class explorerEntryParser] entryOfPath:historyPath withError:&entryError];
+    NSDictionary *entryDetail = [[self.class explorerEntryParser] entryOfPath:historyPath withError:&entryError];
     if (!entryError) {
-        [self performHistoryActionForEntry:entryAttributes];
+        [self performHistoryActionForEntry:entryDetail];
     } else {
         toastMessage(self, entryError.localizedDescription);
     }

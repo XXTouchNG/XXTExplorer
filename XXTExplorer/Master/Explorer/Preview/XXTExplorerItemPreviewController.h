@@ -8,7 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXTExplorerItemPreviewController;
+
+@protocol XXTExplorerItemPreviewDelegate <NSObject>
+
+@end
+
+@protocol XXTExplorerItemPreviewActionDelegate <NSObject>
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <UIPreviewAction *> *)itemPreviewController:(XXTExplorerItemPreviewController *)controller previewActionsForEntry:(NSDictionary *)entry;
+XXTE_END_IGNORE_PARTIAL
+
+@end
+
 @interface XXTExplorerItemPreviewController : UIViewController
-@property (nonatomic, strong) NSDictionary *entryAttributes;
+
+- (instancetype)init NS_UNAVAILABLE;
+
+@property (nonatomic, copy) NSString *entryPath;
+@property (nonatomic, copy, readonly) NSDictionary *entry;
+
+@property (nonatomic, weak) id <XXTExplorerItemPreviewDelegate> previewDelegate;
+@property (nonatomic, weak) id <XXTExplorerItemPreviewActionDelegate> previewActionDelegate;
+@property (nonatomic, weak) id previewActionSender;
 
 @end

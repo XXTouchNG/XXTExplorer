@@ -156,11 +156,11 @@ static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
-            UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:nil icon:stopIcon userInfo:@{ kXXTEShortcutAction: @"stop" }];
+            UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:NSLocalizedString(@"Stop Current Script", nil) icon:stopIcon userInfo:@{ kXXTEShortcutAction: @"stop" }];
             UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
-            UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:nil icon:launchIcon userInfo:@{ kXXTEShortcutAction: @"launch" }];
+            UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:NSLocalizedString(@"Launch Selected Script", nil) icon:launchIcon userInfo:@{ kXXTEShortcutAction: @"launch" }];
             UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
-            UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:nil icon:scanIcon userInfo:@{ kXXTEShortcutAction : @"scan" }];
+            UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:NSLocalizedString(@"QRCode Scan", nil) icon:scanIcon userInfo:@{ kXXTEShortcutAction : @"scan" }];
             [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
         }
         XXTE_END_IGNORE_PARTIAL

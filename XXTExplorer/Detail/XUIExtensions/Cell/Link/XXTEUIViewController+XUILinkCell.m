@@ -31,9 +31,9 @@
         }
         else {
             NSError *entryError = nil;
-            NSDictionary *entryAttributes = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
-            if (!entryError && [self.class.entryService hasViewerForEntry:entryAttributes]) {
-                UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryAttributes];
+            NSDictionary *entryDetail = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
+            if (!entryError && [self.class.entryService hasViewerForEntry:entryDetail]) {
+                UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryDetail];
                 detailController = viewer;
             }
         }

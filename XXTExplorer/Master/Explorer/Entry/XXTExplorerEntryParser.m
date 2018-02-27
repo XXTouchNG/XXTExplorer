@@ -161,7 +161,7 @@
         }
     }
     NSString *entryDescription = [self.class.entryDateFormatter stringFromDate:entrySubdirectoryAttributes[NSFileModificationDate]];
-    NSDictionary *entryAttributes =
+    NSDictionary *entryDetail =
     @{
       XXTExplorerViewEntryAttributeIconImage: entryIconImage,
       XXTExplorerViewEntryAttributeDisplayName: entryBaseName,
@@ -175,8 +175,8 @@
       XXTExplorerViewEntryAttributeExtension: entryBaseExtension,
       XXTExplorerViewEntryAttributeDescription: entryDescription,
       };
-    NSDictionary *extraEntryAttributes = [self parseExternalEntry:entryAttributes];
-    return extraEntryAttributes;
+    NSDictionary *extraEntryDetail = [self parseExternalEntry:entryDetail];
+    return extraEntryDetail;
 }
 
 - (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {

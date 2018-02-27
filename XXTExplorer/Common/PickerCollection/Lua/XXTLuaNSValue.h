@@ -65,6 +65,6 @@
 
 #define LUA_MAX_LINE 10000
 #define LUA_MAX_LINE_B 100000
-#define LUA_MAX_LINE_C 1000000
+#define LUA_MAX_LINE_C 10000000
 
 #endif

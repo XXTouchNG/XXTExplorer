@@ -22,5 +22,7 @@
 @property (nonatomic, weak) id <XXTExplorerEntryOpenWithViewControllerDelegate> delegate;
 
 - (instancetype)initWithEntry:(NSDictionary *)entry;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
 @end

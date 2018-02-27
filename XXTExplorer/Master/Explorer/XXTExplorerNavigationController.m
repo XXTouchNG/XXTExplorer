@@ -39,6 +39,8 @@
     
 }
 
+#pragma mark - Life Cycle
+
 - (UIViewController *)childViewControllerForStatusBarStyle {
     return self.topViewController;
 }
@@ -59,11 +61,15 @@
 #endif
 }
 
+#pragma mark - Memory
+
 - (void)dealloc {
 #ifdef DEBUG
     NSLog(@"- [XXTExplorerNavigationController dealloc]");
 #endif
 }
+
+#pragma mark - Convinence Getters
 
 - (XXTExplorerViewController *)topmostExplorerViewController {
     __block XXTExplorerViewController *topmostExplorerViewController = nil;
@@ -75,5 +81,11 @@
     }];
     return topmostExplorerViewController;
 }
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
+    return [[self topmostExplorerViewController] previewActionItems];
+}
+XXTE_END_IGNORE_PARTIAL
 
 @end

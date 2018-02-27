@@ -9,22 +9,25 @@
 #import <pwd.h>
 #import <grp.h>
 #import <sys/stat.h>
+
 #import "XXTExplorerItemDetailViewController.h"
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionCell.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XUIViewShaker.h"
-#import "XXTEAppDefines.h"
-#import "XXTEDispatchDefines.h"
-
-#import "XXTExplorerDefaults.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreLinkCell.h"
+
+#import "XUIViewShaker.h"
+#import "XXTEAppDefines.h"
+#import "XXTEDispatchDefines.h"
+#import "XXTENotificationCenterDefines.h"
+#import "XXTEUserInterfaceDefines.h"
+#import "XXTExplorerDefaults.h"
+
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <PromiseKit/PromiseKit.h>
+
 #import "XXTExplorerEntryParser.h"
-#import "XXTENotificationCenterDefines.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBindingViewController.h"
 #import "XXTExplorerViewController.h"
@@ -134,20 +137,6 @@ static int sizingCancelFlag = 0;
 }
 
 #pragma mark - Setup
-
-- (instancetype)init {
-    if (self = [super init]) {
-        [self setup];
-    }
-    return self;
-}
-
-- (instancetype)initWithStyle:(UITableViewStyle)style {
-    if (self = [super initWithStyle:style]) {
-        [self setup];
-    }
-    return self;
-}
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {

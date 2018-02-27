@@ -102,7 +102,7 @@
         [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
         handled = YES;
     }
-    else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionInside]) {
+    else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionContents]) {
         if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
             NSError *accessError = nil;
             [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
@@ -164,6 +164,66 @@
     }
     return handled;
 }
+
+XXTE_START_IGNORE_PARTIAL
+- (void (^)(UIPreviewAction *, UIViewController *))unchangedPreviewAction:(NSString *)buttonAction forEntry:(NSDictionary *)entryDetail {
+    if (!entryDetail) return nil;
+    @weakify(self);
+    void (^actionBlock)(UIPreviewAction *, UIViewController *) = ^void(UIPreviewAction *action, UIViewController *previewViewController) {
+        @strongify(self);
+        [self performUnchangedButtonAction:buttonAction forEntry:entryDetail];
+    };
+    return [actionBlock copy];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void (^)(UIPreviewAction *, UIViewController *))previewAction:(NSString *)buttonAction forEntryCell:(XXTESwipeTableCell *)entryCell {
+    if (!entryCell) return nil;
+    @weakify(self);
+    void (^actionBlock)(UIPreviewAction *, UIViewController *) = ^void(UIPreviewAction *action, UIViewController *previewViewController) {
+        @strongify(self);
+        [self performButtonAction:buttonAction forEntryCell:entryCell];
+    };
+    return [actionBlock copy];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <UIPreviewAction *> *)previewActionsForEntry:(NSDictionary *)entryDetail forEntryCell:(XXTESwipeTableCell *)entryCell {
+    NSMutableArray <UIPreviewAction *> *actions = [[NSMutableArray alloc] init];
+    XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+#ifndef APPSTORE
+    if (entryReader.executable) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Launch", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionLaunch forEntry:entryDetail]]];
+    }
+#endif
+    if ([entryReader respondsToSelector:@selector(configurable)]) {
+        if (entryReader.configurable) {
+            [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Configure", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionConfigure forEntry:entryDetail]]];
+        }
+    }
+    if (entryReader.editable) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Edit", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionEdit forEntry:entryDetail]]];
+    }
+    if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Contents", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionContents forEntry:entryDetail]]];
+    }
+#ifndef APPSTORE
+    if (entryReader.encryptionType != XXTExplorerEntryReaderEncryptionTypeNone)
+    {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Encrypt", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionEncrypt forEntry:entryDetail]]];
+    }
+#endif
+    {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Property", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionProperty forEntry:entryDetail]]];
+    }
+    {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Trash", nil) style:UIPreviewActionStyleDestructive handler:[self previewAction:XXTExplorerEntryButtonActionTrash forEntryCell:entryCell]]];
+    }
+    return [actions copy];
+}
+XXTE_END_IGNORE_PARTIAL
 
 - (NSArray <XXTESwipeButton *> *)swipeTableCell:(XXTESwipeTableCell *)cell swipeButtonsForDirection:(XXTESwipeDirection)direction
               swipeSettings:(XXTESwipeSettings *)swipeSettings expansionSettings:(XXTESwipeExpansionSettings *)expansionSettings
@@ -228,14 +288,14 @@
         if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
-                buttonTitle = NSLocalizedString(@"Inside", nil);
+                buttonTitle = NSLocalizedString(@"Contents", nil);
             } else {
                 buttonTitle = @"";
             }
             XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconInside"]
                                                        backgroundColor:colorSeries
                                                                 insets:buttonInsets];
-            objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionInside, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionContents, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
 #ifndef APPSTORE
@@ -254,18 +314,21 @@
             [swipeButtons addObject:button];
         }
 #endif
-        NSString *buttonTitle = nil;
-        if (!hidesLabel) {
-            buttonTitle = NSLocalizedString(@"Property", nil);
-        } else {
-            buttonTitle = @"";
+        {
+            NSString *buttonTitle = nil;
+            if (!hidesLabel) {
+                buttonTitle = NSLocalizedString(@"Property", nil);
+            } else {
+                buttonTitle = @"";
+            }
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconProperty"]
+                                                       backgroundColor:colorSeries
+                                                                insets:buttonInsets];
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionProperty, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:button];
         }
-        XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconProperty"]
-                                                   backgroundColor:colorSeries
-                                                            insets:buttonInsets];
-        objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionProperty, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [swipeButtons addObject:button];
         
+        // Configure Colors & Width
         CGFloat stepValue = 0.6 / swipeButtons.count;
         for (NSUInteger idx = 0; idx < swipeButtons.count; idx++) {
             XXTESwipeButton *buttonItem = swipeButtons[idx];
@@ -278,6 +341,7 @@
         }
         
         return [swipeButtons copy];
+        
     } else if (direction == XXTESwipeDirectionRightToLeft) {
         NSString *buttonTitle = nil;
         if (!hidesLabel) {

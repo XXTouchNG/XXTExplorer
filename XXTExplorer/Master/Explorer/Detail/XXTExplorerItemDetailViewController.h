@@ -10,6 +10,9 @@
 
 @interface XXTExplorerItemDetailViewController : UITableViewController
 
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
+
 - (instancetype)initWithPath:(NSString *)path;
 
 @end

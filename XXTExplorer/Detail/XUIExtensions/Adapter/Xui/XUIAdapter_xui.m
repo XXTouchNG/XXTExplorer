@@ -172,6 +172,11 @@
             {
                 
             }
+            if (saveError) {
+#ifdef DEBUG
+                NSLog(@"%@", [saveError localizedDescription]);
+#endif
+            }
         }
         lua_pop(L, -1);
     }

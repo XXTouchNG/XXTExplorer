@@ -40,8 +40,13 @@
 #import "XXTEPermissionDefines.h"
 
 #import "XXTExplorerItemPreviewController.h"
+#import "XXTExplorerNavigationController.h"
 
-@interface XXTExplorerViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UIViewControllerPreviewingDelegate, XXTExplorerFooterViewDelegate>
+@interface XXTExplorerViewController ()
+<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate,
+UIViewControllerPreviewingDelegate, XXTExplorerFooterViewDelegate,
+XXTExplorerItemPreviewDelegate, XXTExplorerItemPreviewActionDelegate,
+XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
 @property (nonatomic, strong) id<UIViewControllerPreviewing> previewingContext;
 
 @end
@@ -79,7 +84,8 @@
     }
     {
         if (!path) {
-            if (![self.class.explorerFileManager fileExistsAtPath:self.class.initialPath]) {
+            if (![self.class.explorerFileManager fileExistsAtPath:self.class.initialPath])
+            {
                 NSError *createDirectoryError = nil;
                 BOOL createDirectoryResult = [self.class.explorerFileManager createDirectoryAtPath:self.class.initialPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError];
                 if (!createDirectoryResult) {
@@ -90,13 +96,17 @@
         }
         _entryPath = path;
     }
+    {
+        NSDictionary *entry = [[[self class] explorerEntryParser] entryOfPath:path withError:nil];
+        _entry = entry;
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if (self.title.length == 0) {
-        if (self == self.navigationController.viewControllers[0]) {
+        if (self == [self.navigationController.viewControllers firstObject] && !self.isPreviewed) {
 #ifndef APPSTORE
             self.title = NSLocalizedString(@"My Scripts", nil);
 #else
@@ -111,7 +121,10 @@
         }
     }
 
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if (!self.isPreviewed)
+    {
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    }
     
     if (@available(iOS 11.0, *)) {
 #ifdef APPSTORE
@@ -185,14 +198,14 @@
     if (firstTimeLoaded) {
         [self loadEntryListData];
         [self.tableView reloadData];
-    } else if (self.navigationController != nil) {
+    } else if (!self.isPreviewed) {
         [self refreshControlTriggered:nil];
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!firstTimeLoaded && self.navigationController != nil) {
+    if (!firstTimeLoaded && !self.isPreviewed) {
         firstTimeLoaded = YES;
     }
 }
@@ -225,9 +238,10 @@ XXTE_END_IGNORE_PARTIAL
 - (void)restoreTheme {
     UIColor *backgroundColor = XXTE_COLOR;
     UIColor *foregroundColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    self.navigationController.navigationBar.tintColor = foregroundColor;
-    self.navigationController.navigationBar.barTintColor = backgroundColor;
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
+    navigationBar.tintColor = foregroundColor;
+    navigationBar.barTintColor = backgroundColor;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -237,7 +251,7 @@ XXTE_END_IGNORE_PARTIAL
     return YES;
 }
 
-- (BOOL)shouldDisplayEntry:(NSDictionary *)entryAttributes {
+- (BOOL)shouldDisplayEntry:(NSDictionary *)entryDetail {
     return YES;
 }
 
@@ -282,9 +296,8 @@ XXTE_END_IGNORE_PARTIAL
         BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO);
 #endif
         [self.homeEntryList removeAllObjects];
-        if ([self showsHomeSeries] &&
-             homeEnabled &&
-                self == self.navigationController.viewControllers[0]) {
+        if ([self showsHomeSeries] && homeEnabled &&
+            (self == [self.navigationController.viewControllers firstObject]) && !self.isPreviewed) {
             NSArray <NSDictionary *> *entrySeries = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
             if (entrySeries) {
                 [self.homeEntryList addObjectsFromArray:entrySeries];
@@ -313,19 +326,19 @@ XXTE_END_IGNORE_PARTIAL
                     continue;
                 }
                 NSString *entrySubdirectoryPath = [entryPath stringByAppendingPathComponent:entrySubdirectoryName];
-                NSDictionary *entryAttributes = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
+                NSDictionary *entryDetail = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
                 if (localError && error) {
                     continue;
                 }
-                if ([self shouldDisplayEntry:entryAttributes] == NO) {
+                if ([self shouldDisplayEntry:entryDetail] == NO) {
                     continue;
                 }
-                if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
-                    [entryDirectoryAttributesList addObject:entryAttributes];
-                } else if ([entryAttributes[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
-                    [entryBundleAttributesList addObject:entryAttributes];
+                if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+                    [entryDirectoryAttributesList addObject:entryDetail];
+                } else if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                    [entryBundleAttributesList addObject:entryDetail];
                 } else {
-                    [entryOtherAttributesList addObject:entryAttributes];
+                    [entryOtherAttributesList addObject:entryDetail];
                 }
             }
         }
@@ -346,13 +359,13 @@ XXTE_END_IGNORE_PARTIAL
         [entryBundleAttributesList sortUsingComparator:comparator];
         [entryOtherAttributesList sortUsingComparator:comparator];
 
-        NSMutableArray <NSDictionary *> *entryAttributesList = [[NSMutableArray alloc] initWithCapacity:entrySubdirectoryPathList.count];
+        NSMutableArray <NSDictionary *> *entryDetailList = [[NSMutableArray alloc] initWithCapacity:entrySubdirectoryPathList.count];
         
-        [entryAttributesList addObjectsFromArray:entryDirectoryAttributesList];
-        [entryAttributesList addObjectsFromArray:entryBundleAttributesList];
-        [entryAttributesList addObjectsFromArray:entryOtherAttributesList];
+        [entryDetailList addObjectsFromArray:entryDirectoryAttributesList];
+        [entryDetailList addObjectsFromArray:entryBundleAttributesList];
+        [entryDetailList addObjectsFromArray:entryOtherAttributesList];
         
-        entryAttributesList;
+        entryDetailList;
     });
     [self.entryList removeAllObjects];
     [self.entryList addObjectsFromArray:newEntryList];
@@ -513,30 +526,30 @@ XXTE_END_IGNORE_PARTIAL
             if ([tableView isEditing]) {
                 [self updateToolbarStatus];
             } else {
-                NSDictionary *entryAttributes = self.entryList[indexPath.row];
-                NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
-                NSString *entryName = entryAttributes[XXTExplorerViewEntryAttributeName];
-                NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+                NSDictionary *entryDetail = self.entryList[indexPath.row];
+                NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
+                NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
+                NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
                 if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
                 {
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    [self performDictionaryActionForEntry:entryAttributes];
+                    [self performDictionaryActionForEntry:entryDetail];
                 }
                 else if (
                          [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
                          [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
                 {
                     if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
-                        if ([self.class.explorerEntryService hasViewerForEntry:entryAttributes]) {
+                        if ([self.class.explorerEntryService hasViewerForEntry:entryDetail]) {
                             [tableView deselectRowAtIndexPath:indexPath animated:YES];
                             if (!XXTE_COLLAPSED)
                             {
                                 
                             } // TODO: remain selected state when being viewed in collapsed detail view controller
-                            [self performViewerActionForEntry:entryAttributes];
+                            [self performViewerActionForEntry:entryDetail];
                         } else {
                             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                            XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryAttributes];
+                            XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryDetail];
                             openWithController.delegate = self;
                             XXTENavigationController *navController = [[XXTENavigationController alloc] initWithRootViewController:openWithController];
                             XXTE_START_IGNORE_PARTIAL
@@ -570,9 +583,9 @@ XXTE_END_IGNORE_PARTIAL
             if ([tableView isEditing]) {
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
             } else {
-                NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
+                NSDictionary *entryDetail = self.homeEntryList[indexPath.row];
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                [self performHomeActionForEntry:entryAttributes];
+                [self performHomeActionForEntry:entryDetail];
             }
         }
     }
@@ -580,8 +593,8 @@ XXTE_END_IGNORE_PARTIAL
 
 // Home Action
 
-- (UIViewController *)prepareForHomeActionForEntry:(NSDictionary *)entryAttributes error:(NSError **)error {
-    NSString *directoryRelativePath = entryAttributes[@"path"];
+- (XXTExplorerViewController *)prepareForHomeActionForEntry:(NSDictionary *)entryDetail error:(NSError **)error {
+    NSString *directoryRelativePath = entryDetail[@"path"];
     NSString *directoryPath = nil;
     if ([directoryRelativePath isAbsolutePath]) {
         directoryPath = directoryRelativePath;
@@ -599,9 +612,9 @@ XXTE_END_IGNORE_PARTIAL
     return nil;
 }
 
-- (void)performHomeActionForEntry:(NSDictionary *)entryAttributes {
+- (void)performHomeActionForEntry:(NSDictionary *)entryDetail {
     NSError *prepareError = nil;
-    UIViewController *controller = [self prepareForHomeActionForEntry:entryAttributes error:&prepareError];
+    UIViewController *controller = [self prepareForHomeActionForEntry:entryDetail error:&prepareError];
     if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
     } else if (prepareError) {
@@ -611,17 +624,17 @@ XXTE_END_IGNORE_PARTIAL
 
 // Item Action
 
-- (UIViewController *)prepareForItemPreviewActionForEntry:(NSDictionary *)entryAttributes {
+- (XXTExplorerItemPreviewController *)prepareForItemPreviewActionForEntry:(NSDictionary *)entryDetail {
     XXTExplorerItemPreviewController *controller = [[XXTExplorerItemPreviewController alloc] initWithNibName:NSStringFromClass([XXTExplorerItemPreviewController class]) bundle:nil];
-    controller.entryAttributes = entryAttributes;
+    controller.entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     return controller;
 }
 
 // Directory Action
 
-- (UIViewController *)prepareForDictionaryActionForEntry:(NSDictionary *)entryAttributes error:(NSError **)error {
-    NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+- (XXTExplorerViewController *)prepareForDictionaryActionForEntry:(NSDictionary *)entryDetail error:(NSError **)error {
+    NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
     { // Directory or Symbolic Link Directory
         // We'd better try to access it before we enter it.
@@ -637,9 +650,9 @@ XXTE_END_IGNORE_PARTIAL
     return nil;
 }
 
-- (void)performDictionaryActionForEntry:(NSDictionary *)entryAttributes {
+- (void)performDictionaryActionForEntry:(NSDictionary *)entryDetail {
     NSError *prepareError = nil;
-    UIViewController *controller = [self prepareForDictionaryActionForEntry:entryAttributes error:&prepareError];
+    UIViewController *controller = [self prepareForDictionaryActionForEntry:entryDetail error:&prepareError];
     if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
     } else if (prepareError) {
@@ -649,9 +662,9 @@ XXTE_END_IGNORE_PARTIAL
 
 // History Action
 
-- (void)performHistoryActionForEntry:(NSDictionary *)entryAttributes {
-    NSString *entryMaskType = entryAttributes[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryPath = entryAttributes[XXTExplorerViewEntryAttributePath];
+- (void)performHistoryActionForEntry:(NSDictionary *)entryDetail {
+    NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
+    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
     if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
     {
         NSError *accessError = nil;
@@ -670,8 +683,8 @@ XXTE_END_IGNORE_PARTIAL
 
 // Viewer Action
 
-- (void)performViewerActionForEntry:(NSDictionary *)entryAttributes {
-    UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryAttributes];
+- (void)performViewerActionForEntry:(NSDictionary *)entryDetail {
+    UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryDetail];
     [self tableView:self.tableView showDetailController:viewer];
 }
 
@@ -712,7 +725,8 @@ XXTE_END_IGNORE_PARTIAL
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == section) {
             XXTExplorerHeaderView *entryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
-            if (!entryHeaderView) {
+            if (!entryHeaderView)
+            {
                 entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
             }
             NSString *rootPath = [XXTEAppDelegate sharedRootPath];
@@ -959,6 +973,12 @@ XXTE_END_IGNORE_PARTIAL
     [self reloadFooterView];
 }
 
+#pragma mark - Preview
+
+- (BOOL)isPreviewed {
+    return self.previewDelegate != nil;
+}
+
 #pragma mark - Scroll to Rect
 
 - (NSIndexPath *)indexPathForEntryAtPath:(NSString *)entryPath {
@@ -991,7 +1011,17 @@ XXTE_START_IGNORE_PARTIAL
     {
         presentController = viewControllerToCommit;
     }
-    if (presentController)
+    else if ([viewControllerToCommit isKindOfClass:[UINavigationController class]])
+    {
+        UINavigationController *navController = (UINavigationController *)viewControllerToCommit;
+        UIViewController *rootController = [navController.viewControllers firstObject];
+        if ([rootController isKindOfClass:[self class]]) {
+            XXTExplorerViewController *nextController = (XXTExplorerViewController *)rootController;
+            XXTExplorerViewController *newNextController = [[XXTExplorerViewController alloc] initWithEntryPath:nextController.entryPath];
+            presentController = newNextController;
+        }
+    }
+    if ([presentController isKindOfClass:[UIViewController class]])
     {
         [self.navigationController pushViewController:presentController animated:NO];
     }
@@ -1009,20 +1039,71 @@ XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
         previewingContext.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
     }
+    UITableViewCell *previewCell = [tableView cellForRowAtIndexPath:indexPath];
     NSError *prepareError = nil;
     if (XXTExplorerViewSectionIndexList == indexPath.section) {
-        NSDictionary *entryAttributes = self.entryList[indexPath.row];
-        UIViewController *controller = [self prepareForDictionaryActionForEntry:entryAttributes error:&prepareError];
-        if (!controller) {
-            controller = [self prepareForItemPreviewActionForEntry:entryAttributes];
+        NSDictionary *entryDetail = self.entryList[indexPath.row];
+        XXTExplorerViewController *controller =
+        [self prepareForDictionaryActionForEntry:entryDetail error:&prepareError];
+        if (controller)
+        { // Directory Preview
+            controller.previewDelegate = self;
+            controller.previewActionDelegate = self;
+            controller.previewActionSender = previewCell;
+            XXTExplorerNavigationController *navController =
+            [[XXTExplorerNavigationController alloc] initWithRootViewController:controller];
+            return navController;
         }
-        return controller;
-    } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
-        NSDictionary *entryAttributes = self.homeEntryList[indexPath.row];
-        UIViewController *controller = [self prepareForHomeActionForEntry:entryAttributes error:&prepareError];
-        return controller;
+        else
+        { // Item Preview
+            XXTExplorerItemPreviewController *itemController =
+            [self prepareForItemPreviewActionForEntry:entryDetail];
+            itemController.previewDelegate = self;
+            itemController.previewActionDelegate = self;
+            itemController.previewActionSender = previewCell;
+            return itemController;
+        }
+    } else if (XXTExplorerViewSectionIndexHome == indexPath.section)
+    { // Home Preview
+        NSDictionary *entryDetail = self.homeEntryList[indexPath.row];
+        XXTExplorerViewController *controller =
+        [self prepareForHomeActionForEntry:entryDetail error:&prepareError];
+        controller.previewDelegate = self;
+        // controller.previewActionDelegate = self;
+        // controller.previewActionSender = previewCell;
+        // !!! You cannot perform any action in home preview !!!
+        XXTExplorerNavigationController *navController =
+        [[XXTExplorerNavigationController alloc] initWithRootViewController:controller];
+        return navController;
     }
     return nil;
+}
+XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - XXTExplorerItemPreviewActionDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <UIPreviewAction *> *)itemPreviewController:(XXTExplorerItemPreviewController *)controller previewActionsForEntry:(NSDictionary *)entry
+{
+    return [self previewActionsForEntry:entry forEntryCell:controller.previewActionSender];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
+    if ([_previewActionDelegate respondsToSelector:@selector(itemPreviewController:previewActionsForEntry:)]) {
+        return [_previewActionDelegate directoryPreviewController:self previewActionsForEntry:self.entry];
+    }
+    return @[];
+}
+XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - XXTExplorerDirectoryPreviewActionDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <UIPreviewAction *> *)directoryPreviewController:(XXTExplorerViewController *)controller previewActionsForEntry:(NSDictionary *)entry
+{
+    return [self previewActionsForEntry:entry forEntryCell:controller.previewActionSender];
 }
 XXTE_END_IGNORE_PARTIAL
 

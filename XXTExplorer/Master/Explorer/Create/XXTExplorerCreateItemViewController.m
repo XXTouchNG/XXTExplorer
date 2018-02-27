@@ -37,7 +37,6 @@ typedef enum : NSUInteger {
 
 @interface XXTExplorerCreateItemViewController () <UITextFieldDelegate>
 
-@property (nonatomic, copy, readonly) NSString *entryPath;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
 @property (nonatomic, strong) UITextField *nameField;

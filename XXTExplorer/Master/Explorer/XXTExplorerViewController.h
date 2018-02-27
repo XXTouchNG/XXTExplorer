@@ -15,11 +15,24 @@ typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexMax
 } XXTExplorerViewSectionIndex;
 
-@class XXTExplorerToolbar, XXTExplorerFooterView;
+@class XXTExplorerToolbar, XXTExplorerFooterView, XXTExplorerViewController;
+
+@protocol XXTExplorerDirectoryPreviewDelegate <NSObject>
+
+@end
+
+@protocol XXTExplorerDirectoryPreviewActionDelegate <NSObject>
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray <UIPreviewAction *> *)directoryPreviewController:(XXTExplorerViewController *)controller previewActionsForEntry:(NSDictionary *)entry;
+XXTE_END_IGNORE_PARTIAL
+
+@end
 
 @interface XXTExplorerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
+@property (nonatomic, copy, readonly) NSDictionary *entry;
 
 @property (nonatomic, copy, readonly) NSMutableArray <NSDictionary *> *entryList;
 @property (nonatomic, copy, readonly) NSMutableArray <NSDictionary *> *homeEntryList;
@@ -45,6 +58,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - init
 
++ (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithEntryPath:(NSString *)path;
 
 #pragma mark - reload
@@ -60,12 +74,19 @@ typedef enum : NSUInteger {
 #pragma mark - picker
 
 - (BOOL)showsHomeSeries;
-- (BOOL)shouldDisplayEntry:(NSDictionary *)entryAttributes;
+- (BOOL)shouldDisplayEntry:(NSDictionary *)entryDetail;
 
 #pragma mark - fast open
 
-- (void)performDictionaryActionForEntry:(NSDictionary *)entryAttributes;
-- (void)performHistoryActionForEntry:(NSDictionary *)entryAttributes;
-- (void)performViewerActionForEntry:(NSDictionary *)entryAttributes;
+- (void)performDictionaryActionForEntry:(NSDictionary *)entryDetail;
+- (void)performHistoryActionForEntry:(NSDictionary *)entryDetail;
+- (void)performViewerActionForEntry:(NSDictionary *)entryDetail;
+
+#pragma mark - previewing
+
+@property (nonatomic, weak) id <XXTExplorerDirectoryPreviewDelegate> previewDelegate;
+@property (nonatomic, weak) id <XXTExplorerDirectoryPreviewActionDelegate> previewActionDelegate;
+@property (nonatomic, weak) id previewActionSender;
+@property (nonatomic, assign, readonly) BOOL isPreviewed; // previewActionDelegate != nil
 
 @end

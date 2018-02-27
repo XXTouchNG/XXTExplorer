@@ -23,6 +23,11 @@
 @property (nonatomic, assign) BOOL editImmediately;
 
 + (NSDateFormatter *)itemTemplateDateFormatter;
+
+@property (nonatomic, copy, readonly) NSString *entryPath;
 - (instancetype)initWithEntryPath:(NSString *)entryPath;
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
 @end

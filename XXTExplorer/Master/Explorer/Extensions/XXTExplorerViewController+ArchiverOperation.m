@@ -184,8 +184,8 @@ typedef enum : NSUInteger {
                     BOOL isDirectory = NO;
                     BOOL fileExists = [fileManager1 fileExistsAtPath:enumPath isDirectory:&isDirectory];
                     if (fileExists) {
-                        NSDictionary *entryAttributes = [fileManager1 attributesOfItemAtPath:enumPath error:&error];
-                        if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                        NSDictionary *entryDetail = [fileManager1 attributesOfItemAtPath:enumPath error:&error];
+                        if ([entryDetail[NSFileType] isEqualToString:NSFileTypeDirectory]) {
                             if (isDirectory) {
                                 NSArray <NSString *> *groupSubnames = [fileManager1 contentsOfDirectoryAtPath:enumPath error:&error];
                                 if (groupSubnames.count == 0) {

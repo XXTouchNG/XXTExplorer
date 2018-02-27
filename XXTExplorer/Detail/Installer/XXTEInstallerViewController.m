@@ -107,7 +107,7 @@ typedef enum : NSUInteger {
     [self.extractor extractMetaData];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+    if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
     }
     XXTE_END_IGNORE_PARTIAL
@@ -619,7 +619,7 @@ typedef enum : NSUInteger {
     [self performCleanAfterInstallation];
     self.installButtonItem.enabled = NO;
     if (XXTE_COLLAPSED) {
-        if (self == self.navigationController.viewControllers[0]) {
+        if (self == [self.navigationController.viewControllers firstObject]) {
             [self.navigationController restoreWorkspaceViewController];
         }
     } else {

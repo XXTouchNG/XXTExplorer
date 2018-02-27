@@ -244,8 +244,8 @@
                     continue;
                 }
                 if (fileExists) {
-                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
-                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                    NSDictionary *entryDetail = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryDetail[NSFileType] isEqualToString:NSFileTypeDirectory]) {
                         if (isDirectory) {
                             NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
                             if (groupSubnames.count != 0) {
@@ -393,8 +393,8 @@
                     continue;
                 }
                 if (fileExists) {
-                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
-                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                    NSDictionary *entryDetail = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryDetail[NSFileType] isEqualToString:NSFileTypeDirectory]) {
                         if (isDirectory) {
                             NSArray <NSString *> *groupSubnames = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
                             NSMutableArray <NSString *> *groupSubpathsAppended = [[NSMutableArray alloc] initWithCapacity:groupSubnames.count];
@@ -603,8 +603,8 @@
                 BOOL isDirectory = NO;
                 BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
                 if (fileExists) {
-                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
-                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                    NSDictionary *entryDetail = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryDetail[NSFileType] isEqualToString:NSFileTypeDirectory]) {
                         if (isDirectory) {
                             NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
                             if (groupSubpaths.count != 0) {
@@ -723,8 +723,8 @@
                 BOOL isDirectory = NO;
                 BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
                 if (fileExists) {
-                    NSDictionary *entryAttributes = [fileManager attributesOfItemAtPath:enumPath error:&error];
-                    if ([entryAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                    NSDictionary *entryDetail = [fileManager attributesOfItemAtPath:enumPath error:&error];
+                    if ([entryDetail[NSFileType] isEqualToString:NSFileTypeDirectory]) {
                         if (isDirectory) {
                             NSArray <NSString *> *groupSubpaths = [fileManager contentsOfDirectoryAtPath:enumPath error:&error];
                             if (groupSubpaths.count != 0) {

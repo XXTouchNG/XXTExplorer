@@ -1201,6 +1201,9 @@
 		D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
 		D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
 		D6A8507B2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
+		D6A8508520453F3E008745EB /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A8508420453F3E008745EB /* NotificationCenter.framework */; };
+		D6A8508920453F3E008745EB /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A8508820453F3E008745EB /* TodayViewController.m */; };
+		D6A8508C20453F3E008745EB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6A8508A20453F3E008745EB /* MainInterface.storyboard */; };
 		D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */; };
 		D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
 		D6CB81B91FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
@@ -1239,6 +1242,12 @@
 		D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */; };
 		D6E141641F50330400D78CB9 /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E141621F50330400D78CB9 /* SpringBoardServices */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D6E141651F50330400D78CB9 /* xxte-white-icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E141631F50330400D78CB9 /* xxte-white-icons.plist */; };
+		D6E18DCC20454679007144F9 /* TodayRemoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E18DCA20454679007144F9 /* TodayRemoteCell.m */; };
+		D6E18DCD20454679007144F9 /* TodayRemoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E18DCB20454679007144F9 /* TodayRemoteCell.xib */; };
+		D6E18DD02045481E007144F9 /* TodayIconWifi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E18DCE2045481E007144F9 /* TodayIconWifi@2x.png */; };
+		D6E18DD12045481E007144F9 /* TodayIconWifi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E18DCF2045481E007144F9 /* TodayIconWifi@3x.png */; };
+		D6E18DD420454889007144F9 /* TodayIconBonjour@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E18DD220454888007144F9 /* TodayIconBonjour@3x.png */; };
+		D6E18DD520454889007144F9 /* TodayIconBonjour@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E18DD320454889007144F9 /* TodayIconBonjour@2x.png */; };
 		D6E560431F50353200E0F997 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560421F50353200E0F997 /* MapKit.framework */; };
 		D6E560451F50353900E0F997 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560441F50353900E0F997 /* AVFoundation.framework */; };
 		D6E560471F50354400E0F997 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E560461F50354400E0F997 /* MediaPlayer.framework */; };
@@ -2001,6 +2010,12 @@
 		D6A850732043DED5008745EB /* XXTExplorerItemPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemPreviewController.h; sourceTree = "<group>"; };
 		D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemPreviewController.m; sourceTree = "<group>"; };
 		D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTExplorerItemPreviewController.xib; sourceTree = "<group>"; };
+		D6A8508320453F3E008745EB /* RemoteToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RemoteToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6A8508420453F3E008745EB /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		D6A8508720453F3E008745EB /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		D6A8508820453F3E008745EB /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		D6A8508B20453F3E008745EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		D6A8509520454019008745EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
 		D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		D6CB81B61FE262320033EA2F /* XXTEEditorSearchField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchField.h; sourceTree = "<group>"; };
 		D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchField.m; sourceTree = "<group>"; };
@@ -2076,6 +2091,15 @@
 		D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPickerPreviewBar.m; sourceTree = "<group>"; };
 		D6E141621F50330400D78CB9 /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
 		D6E141631F50330400D78CB9 /* xxte-white-icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xxte-white-icons.plist"; sourceTree = "<group>"; };
+		D6E18DC3204540E3007144F9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
+		D6E18DC920454679007144F9 /* TodayRemoteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayRemoteCell.h; sourceTree = "<group>"; };
+		D6E18DCA20454679007144F9 /* TodayRemoteCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayRemoteCell.m; sourceTree = "<group>"; };
+		D6E18DCB20454679007144F9 /* TodayRemoteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodayRemoteCell.xib; sourceTree = "<group>"; };
+		D6E18DCE2045481E007144F9 /* TodayIconWifi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TodayIconWifi@2x.png"; sourceTree = "<group>"; };
+		D6E18DCF2045481E007144F9 /* TodayIconWifi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TodayIconWifi@3x.png"; sourceTree = "<group>"; };
+		D6E18DD220454888007144F9 /* TodayIconBonjour@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TodayIconBonjour@3x.png"; sourceTree = "<group>"; };
+		D6E18DD320454889007144F9 /* TodayIconBonjour@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TodayIconBonjour@2x.png"; sourceTree = "<group>"; };
+		D6E18DD620454E7C007144F9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Info.plist"; sourceTree = "<group>"; };
 		D6E1E1DF2020489B00324198 /* XXTEPermissionDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEPermissionDefines.h; sourceTree = "<group>"; };
 		D6E560421F50353200E0F997 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D6E560441F50353900E0F997 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2168,6 +2192,14 @@
 				D60FE7741FE2369300954818 /* libactivator.tbd in Frameworks */,
 				D60FE7751FE2369300954818 /* libPods-XXTExplorer.a in Frameworks */,
 				89BF00097A9A80630E30D9FE /* libPods-XXTExplorer-Archive.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6A8508020453F3E008745EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6A8508520453F3E008745EB /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2821,6 +2853,7 @@
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
+				D6A8508620453F3E008745EB /* RemoteToday */,
 				4480A4E60973939464BE0D72 /* Frameworks */,
 				59918F7D2218C7F23C834EB4 /* Pods */,
 				0FA7ABEB1ED641A3003EAD7D /* Products */,
@@ -2835,6 +2868,7 @@
 				0FA7ABEA1ED641A3003EAD7D /* XXTExplorer.app */,
 				0F8EDCC51FB1F779003C92D6 /* XXTouch.app */,
 				D60FE7D11FE2369300954818 /* XXTExplorer-Archive.app */,
+				D6A8508320453F3E008745EB /* RemoteToday.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3407,6 +3441,7 @@
 				E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */,
 				AD648480DA696CAD33102457 /* libPods-XXTouch.a */,
 				2518A55552AF2DC7D103A498 /* libPods-XXTExplorer-Archive.a */,
+				D6A8508420453F3E008745EB /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3922,6 +3957,24 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
+		D6A8508620453F3E008745EB /* RemoteToday */ = {
+			isa = PBXGroup;
+			children = (
+				D6A8508720453F3E008745EB /* TodayViewController.h */,
+				D6A8508820453F3E008745EB /* TodayViewController.m */,
+				D6A8508A20453F3E008745EB /* MainInterface.storyboard */,
+				D6A8509620454019008745EB /* Info.plist */,
+				D6E18DC920454679007144F9 /* TodayRemoteCell.h */,
+				D6E18DCA20454679007144F9 /* TodayRemoteCell.m */,
+				D6E18DCB20454679007144F9 /* TodayRemoteCell.xib */,
+				D6E18DCE2045481E007144F9 /* TodayIconWifi@2x.png */,
+				D6E18DCF2045481E007144F9 /* TodayIconWifi@3x.png */,
+				D6E18DD320454889007144F9 /* TodayIconBonjour@2x.png */,
+				D6E18DD220454888007144F9 /* TodayIconBonjour@3x.png */,
+			);
+			path = RemoteToday;
+			sourceTree = "<group>";
+		};
 		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -4122,6 +4175,23 @@
 			productReference = D60FE7D11FE2369300954818 /* XXTExplorer-Archive.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D6A8508220453F3E008745EB /* RemoteToday */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6A8509320453F3F008745EB /* Build configuration list for PBXNativeTarget "RemoteToday" */;
+			buildPhases = (
+				D6A8507F20453F3E008745EB /* Sources */,
+				D6A8508020453F3E008745EB /* Frameworks */,
+				D6A8508120453F3E008745EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RemoteToday;
+			productName = RemoteToday;
+			productReference = D6A8508320453F3E008745EB /* RemoteToday.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4150,6 +4220,10 @@
 						DevelopmentTeam = GXZ23M5TP2;
 						ProvisioningStyle = Automatic;
 					};
+					D6A8508220453F3E008745EB = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 0FA7ABE51ED641A3003EAD7D /* Build configuration list for PBXProject "XXTExplorer" */;
@@ -4169,6 +4243,7 @@
 				0FA7ABE91ED641A3003EAD7D /* XXTExplorer */,
 				D60FE64E1FE2369300954818 /* XXTExplorer-Archive */,
 				0F8EDB551FB1F779003C92D6 /* XXTouch */,
+				D6A8508220453F3E008745EB /* RemoteToday */,
 			);
 		};
 /* End PBXProject section */
@@ -4518,6 +4593,19 @@
 				D60FE7C71FE2369300954818 /* XXTEEditorFontSizeCell.xib in Resources */,
 				D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */,
 				D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6A8508120453F3E008745EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6E18DD420454889007144F9 /* TodayIconBonjour@3x.png in Resources */,
+				D6E18DD520454889007144F9 /* TodayIconBonjour@2x.png in Resources */,
+				D6E18DCD20454679007144F9 /* TodayRemoteCell.xib in Resources */,
+				D6A8508C20453F3E008745EB /* MainInterface.storyboard in Resources */,
+				D6E18DD02045481E007144F9 /* TodayIconWifi@2x.png in Resources */,
+				D6E18DD12045481E007144F9 /* TodayIconWifi@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5649,6 +5737,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D6A8507F20453F3E008745EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6A8508920453F3E008745EB /* TodayViewController.m in Sources */,
+				D6E18DCC20454679007144F9 /* TodayRemoteCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -5728,6 +5825,24 @@
 			);
 			name = Meta.strings;
 			path = .;
+			sourceTree = "<group>";
+		};
+		D6A8508A20453F3E008745EB /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6A8508B20453F3E008745EB /* Base */,
+				D6E18DC3204540E3007144F9 /* zh-Hans */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		D6A8509620454019008745EB /* Info.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6A8509520454019008745EB /* Base */,
+				D6E18DD620454E7C007144F9 /* zh-Hans */,
+			);
+			name = Info.plist;
 			sourceTree = "<group>";
 		};
 		D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */ = {
@@ -6158,6 +6273,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
@@ -6249,6 +6365,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
@@ -6331,6 +6448,58 @@
 			};
 			name = Release;
 		};
+		D6A8509120453F3F008745EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = RemoteToday/Base.lproj/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer.RemoteToday;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D6A8509220453F3F008745EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = RemoteToday/Base.lproj/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer.RemoteToday;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6366,6 +6535,15 @@
 			buildConfigurations = (
 				D60FE7CF1FE2369300954818 /* Debug */,
 				D60FE7D01FE2369300954818 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6A8509320453F3F008745EB /* Build configuration list for PBXNativeTarget "RemoteToday" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6A8509120453F3F008745EB /* Debug */,
+				D6A8509220453F3F008745EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -706,7 +706,7 @@ void lua_createArgTable(lua_State *L, const char *path)
     dispatch_once(&onceToken, ^{
         fakePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"bin/lua"];
     });
-    lua_createtable(L, 1, 0);
+    lua_createtable(L, 2, 0);
     lua_pushstring(L, fakePath.fileSystemRepresentation);
     lua_rawseti(L, -2, 1);
     lua_pushstring(L, path);

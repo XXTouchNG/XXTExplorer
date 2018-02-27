@@ -74,7 +74,7 @@
     });
 
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && self.navigationController.viewControllers[0] == self) {
+    if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
     }
     XXTE_END_IGNORE_PARTIAL
