@@ -705,6 +705,10 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Actions
 
+- (void)previewBuyAction {
+    
+}
+
 - (void)buyAction {
     RMProject *project = self.project;
     if (project.applicationID.length > 0) {
@@ -765,6 +769,24 @@ XXTE_END_IGNORE_PARTIAL
         @strongify(self);
         [self buyAction];
     }];
+}
+
+#pragma mark - Preview
+
+- (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
+    NSMutableArray <UIPreviewAction *> *items = [[NSMutableArray alloc] init];
+    @weakify(self);
+    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:NSLocalizedString(@"Download", nil) style:UIPreviewActionStyleDefault handler:^(UIPreviewAction *action, UIViewController *previewViewController) {
+        @strongify(self);
+        [self downloadButtonTapped:nil];
+    }];
+//    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:NSLocalizedString(@"Purchase Now", nil) style:UIPreviewActionStyleDefault handler:^(UIPreviewAction *action, UIViewController *previewViewController) {
+//        @strongify(self);
+//        [self buyAction];
+//    }];
+    [items addObject:action1];
+//    [items addObject:action2];
+    return [items copy];
 }
 
 #pragma mark - Memory

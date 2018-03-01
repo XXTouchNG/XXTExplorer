@@ -369,7 +369,9 @@ XXTE_END_IGNORE_PARTIAL
 
 XXTE_START_IGNORE_PARTIAL
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self.navigationController pushViewController:viewControllerToCommit animated:NO];
+    if ([viewControllerToCommit isKindOfClass:[RMCloudProjectViewController class]]) {
+        [self.navigationController pushViewController:viewControllerToCommit animated:NO];
+    }
 }
 XXTE_END_IGNORE_PARTIAL
 
