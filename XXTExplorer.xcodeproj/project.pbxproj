@@ -47,12 +47,6 @@
 		0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1D202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
-		0F222A20202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */; };
-		0F222A21202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */; };
-		0F222A25202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */; };
-		0F222A26202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */; };
-		0F222A27202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */; };
-		0F222A28202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */; };
 		0F222A2C202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */; };
 		0F222A2D202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */; };
 		0F222A2E202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */; };
@@ -1324,11 +1318,6 @@
 		0F222A17202F1C0F00EF2C27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DetailCloseItem.h"; sourceTree = "<group>"; };
 		0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DetailCloseItem.m"; sourceTree = "<group>"; };
-		0F222A1E202F3DCB00EF2C27 /* RMCloudCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudCollectionViewController.h; sourceTree = "<group>"; };
-		0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudCollectionViewController.m; sourceTree = "<group>"; };
-		0F222A22202F3E7800EF2C27 /* RMCloudProjectCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudProjectCollectionCell.h; sourceTree = "<group>"; };
-		0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudProjectCollectionCell.m; sourceTree = "<group>"; };
-		0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudProjectCollectionCell.xib; sourceTree = "<group>"; };
 		0F222A29202F3ED900EF2C27 /* RMCloudMoreCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudMoreCollectionCell.h; sourceTree = "<group>"; };
 		0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudMoreCollectionCell.m; sourceTree = "<group>"; };
 		0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudMoreCollectionCell.xib; sourceTree = "<group>"; };
@@ -3044,8 +3033,6 @@
 				0FCAF3DC200874D1002FB774 /* RMCloudViewController.m */,
 				0FCAF3E820088860002FB774 /* RMCloudListViewController.h */,
 				0FCAF3E920088860002FB774 /* RMCloudListViewController.m */,
-				0F222A1E202F3DCB00EF2C27 /* RMCloudCollectionViewController.h */,
-				0F222A1F202F3DCB00EF2C27 /* RMCloudCollectionViewController.m */,
 				0FCAF3DF200874E9002FB774 /* RMCloudNavigationController.h */,
 				0FCAF3E0200874E9002FB774 /* RMCloudNavigationController.m */,
 				0FCAF40B200A3A69002FB774 /* RMCloudProjectViewController.h */,
@@ -3073,9 +3060,6 @@
 				0FCAF3FD2009AE59002FB774 /* RMCloudProjectCell.h */,
 				0FCAF3FE2009AE59002FB774 /* RMCloudProjectCell.m */,
 				0FCAF3FF2009AE59002FB774 /* RMCloudProjectCell.xib */,
-				0F222A22202F3E7800EF2C27 /* RMCloudProjectCollectionCell.h */,
-				0F222A23202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m */,
-				0F222A24202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib */,
 				0FCAF404200A1D14002FB774 /* RMCloudMoreCell.h */,
 				0FCAF405200A1D14002FB774 /* RMCloudMoreCell.m */,
 				0FCAF406200A1D14002FB774 /* RMCloudMoreCell.xib */,
@@ -4400,7 +4384,6 @@
 				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
 				0FFBC12D1F5BD85F00690C8F /* XXTEEditorWrapColumnCell.xib in Resources */,
 				0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */,
-				0F222A27202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */,
 				0F5EB5361F0A88600016016A /* XUIAboutCell.xib in Resources */,
 				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
 				0F222A2E202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */,
@@ -4450,7 +4433,6 @@
 				D60D0A021FE8BCB100289725 /* Eiffel.png in Resources */,
 				D60D0A031FE8BCB100289725 /* Mac Classic.png in Resources */,
 				D60D0A041FE8BCB100289725 /* Monokai.png in Resources */,
-				0F222A28202F3E7800EF2C27 /* RMCloudProjectCollectionCell.xib in Resources */,
 				D60D0A051FE8BCB100289725 /* Oceanic.png in Resources */,
 				D60FE7771FE2369300954818 /* XXTEMoreReferences.bundle in Resources */,
 				D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */,
@@ -5150,7 +5132,6 @@
 				0FCC2AC71F130BE600C50A48 /* XXTExplorerItemNameCell.m in Sources */,
 				0FCAF3FB2008A9B9002FB774 /* RMModel.m in Sources */,
 				0F072DB91FB9EC8B00597EE2 /* xxtea.c in Sources */,
-				0F222A20202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */,
 				D6863D211F7E3B9100A45CF7 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
 				0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
@@ -5248,7 +5229,6 @@
 				0F2DAE532013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
 				D6863CE71F7E340A00A45CF7 /* XXTEUIViewController+XUIFileCell.m in Sources */,
-				0F222A25202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */,
 				0F88115D1FB6AF220004F20C /* XXTESegmentedController.m in Sources */,
 				5251242F0537AF64E7895EDB /* SKResult.m in Sources */,
 				D6863C621F7E275900A45CF7 /* XXTEUIViewController+LaunchScript.m in Sources */,
@@ -5467,7 +5447,6 @@
 				D60FE6BF1FE2369300954818 /* XXTExplorerItemNameCell.m in Sources */,
 				0FCAF3FC2008A9B9002FB774 /* RMModel.m in Sources */,
 				D60FE6C01FE2369300954818 /* xxtea.c in Sources */,
-				0F222A21202F3DCB00EF2C27 /* RMCloudCollectionViewController.m in Sources */,
 				D60FE6C11FE2369300954818 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
 				0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D60FE6C21FE2369300954818 /* XXTPixelPreview.m in Sources */,
@@ -5565,7 +5544,6 @@
 				0F2DAE542013158C001593C9 /* RMCloudTrendsCell.m in Sources */,
 				D60FE71B1FE2369300954818 /* SKResultSet.m in Sources */,
 				D60FE71C1FE2369300954818 /* XXTEUIViewController+XUIFileCell.m in Sources */,
-				0F222A26202F3E7800EF2C27 /* RMCloudProjectCollectionCell.m in Sources */,
 				D60FE71D1FE2369300954818 /* XXTESegmentedController.m in Sources */,
 				D60FE71E1FE2369300954818 /* SKResult.m in Sources */,
 				D60FE71F1FE2369300954818 /* XXTEUIViewController+LaunchScript.m in Sources */,
