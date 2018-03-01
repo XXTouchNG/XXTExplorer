@@ -122,6 +122,7 @@ XXTE_END_IGNORE_PARTIAL
     
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.pawAnimation];
+    [self.view addSubview:self.comingSoonView];
     
     [self loadHotTrends];
 }
@@ -157,9 +158,15 @@ XXTE_END_IGNORE_PARTIAL
     })
     .catch(^ (NSError *error) {
         toastMessage(self, error.localizedDescription);
-        if (error) {
-            self.tableView.hidden = YES;
-            self.comingSoonView.hidden = NO;
+        if (error.code != RMApiErrorCode) {
+            UITableView *tableView = self.tableView;
+            RMCloudComingSoon *comingSoonView = self.comingSoonView;
+            comingSoonView.titleLabel.text =
+            [NSString stringWithFormat:NSLocalizedString(@"Error", nil)];
+            comingSoonView.descriptionLabel.text =
+            [NSString stringWithFormat:@"%@ (%ld)", [error localizedDescription], (long)[error code]];
+            tableView.hidden = YES;
+            comingSoonView.hidden = NO;
         }
     })
     .finally(^ () {

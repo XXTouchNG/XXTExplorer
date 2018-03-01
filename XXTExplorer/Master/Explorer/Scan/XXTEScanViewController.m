@@ -289,7 +289,7 @@
     return _scanDevice;
 }
 
-- (AVCaptureDeviceInput *)scanInput {
+- (AVCaptureDeviceInput *) scanInput {
     if (!_scanInput) {
         NSError *err = nil;
         AVCaptureDeviceInput *scanInput = [AVCaptureDeviceInput deviceInputWithDevice:self.scanDevice error:&err];
@@ -455,10 +455,13 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     if (metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *metadataObject = metadataObjects[0];
-        NSString *stringValue = metadataObject.stringValue;
-        if (stringValue.length > 0) {
-            [self pauseScan];
-            [self handleOutput:stringValue];
+        if (metadataObject.type == AVMetadataObjectTypeQRCode) {
+            // TODO: use metadataObject.corners to draw code overlay
+            NSString *stringValue = metadataObject.stringValue;
+            if (stringValue.length > 0) {
+                [self pauseScan];
+                [self handleOutput:stringValue];
+            }
         }
     }
 }

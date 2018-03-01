@@ -19,6 +19,7 @@
 #import "NSString+SHA1.h"
 #import "XXTECloudApiSdk.h"
 
+#import <pwd.h>
 #import <spawn.h>
 #import <sys/stat.h>
 
@@ -35,28 +36,56 @@ const char *add1s_binary() {
 
 int promiseFixPermission(NSString *path, BOOL resursive) {
 #ifdef APPSTORE
-    return 0;
-#endif
-#ifndef DEBUG
+    return 0; // app store version, skipped
+#else
+    static NSString *realRootPath = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        const char *root_path = [[XXTEAppDelegate sharedRootPath] fileSystemRepresentation];
+        const char *resolved_root_path = realpath(root_path, NULL);
+        realRootPath = [[NSString alloc] initWithUTF8String:resolved_root_path];
+    });
+    const char *original_path = [path fileSystemRepresentation];
+    const char *resolved_path = realpath(original_path, NULL);
+    if (resolved_path)
+    {
+        NSString *resolvedPath = [[NSString alloc] initWithUTF8String:resolved_path];
+        if (NO == [resolvedPath hasPrefix:realRootPath])
+        {
+            return -1; // not in root path, skipped
+        }
+    }
+    struct stat entryStat;
+    if (lstat(original_path, &entryStat) != 0) return -2;
+    struct passwd *entryPWInfo = getpwuid(entryStat.st_uid);
+    if (entryPWInfo != NULL) {
+        if (entryPWInfo->pw_name) {
+            NSString *pwName = [[NSString alloc] initWithUTF8String:entryPWInfo->pw_name];
+            if ([pwName isEqualToString:@"mobile"]) {
+                return 0; // already mobile owner, skipped
+            }
+        }
+    }
     const char *binary = add1s_binary();
     BOOL fixEnabled = XXTEDefaultsBool(XXTExplorerFixFileOwnerAutomaticallyKey, YES);
     if (fixEnabled) {
         int status = 0;
-        if (resursive) {
+        if (resursive)
+        {
             pid_t pid = 0;
-            const char* args[] = {binary, "chown", "-R", "mobile:mobile", [path fileSystemRepresentation], NULL};
+            const char* args[] = {binary, "chown", "-R", "mobile:mobile", original_path, NULL};
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
             waitpid(pid, &status, 0);
-        } else {
+        }
+        else
+        {
             pid_t pid = 0;
-            const char* args[] = {binary, "chown", "mobile:mobile", [path fileSystemRepresentation], NULL};
+            const char* args[] = {binary, "chown", "mobile:mobile", original_path, NULL};
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
             waitpid(pid, &status, 0);
         }
         return status;
     }
-    return 0;
-#else
     return 0;
 #endif
 }

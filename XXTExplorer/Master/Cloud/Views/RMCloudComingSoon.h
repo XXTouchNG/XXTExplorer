@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface RMCloudComingSoon : UIView
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @end
