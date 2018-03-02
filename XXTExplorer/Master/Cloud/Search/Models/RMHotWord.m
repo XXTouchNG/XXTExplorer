@@ -19,7 +19,7 @@
 
 + (PMKPromise *)hotTrendsWithAmount:(NSUInteger)amount {
     NSDictionary *args =
-    @{ @"num": [NSString stringWithFormat:@"%lu", amount],
+    @{ @"num": [NSString stringWithFormat:@"%lu", (unsigned long)amount],
        };
     return [self promiseGETRequest:RMApiUrl(RMApiActionHotTrends, args)];
 }

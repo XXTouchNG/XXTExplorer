@@ -428,7 +428,7 @@ XXTE_END_IGNORE_PARTIAL
         else if (indexPath.row == RMCloudInformationRowDownloadTimes)
         {
             cell.titleTextLabel.text = NSLocalizedString(@"Download Times", nil);
-            cell.valueTextLabel.text = [NSString stringWithFormat:@"%lu", project.downloadTimes];
+            cell.valueTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)project.downloadTimes];
         }
         else if (indexPath.row == RMCloudInformationRowTrail)
         {
@@ -744,7 +744,7 @@ XXTE_END_IGNORE_PARTIAL
                     }
                 }
                 urlDict[@"appid"] = project.applicationID;
-                urlDict[@"projectid"] = [NSString stringWithFormat:@"%lu", project.projectID];
+                urlDict[@"projectid"] = [NSString stringWithFormat:@"%lu", (unsigned long)project.projectID];
                 urlDict[@"callback"] = XXTSchemeCloudProjectID(project.projectID);
                 NSString *buyURLString = RMBuyUrl([urlDict copy]);
                 NSURL *buyURL = [NSURL URLWithString:buyURLString];

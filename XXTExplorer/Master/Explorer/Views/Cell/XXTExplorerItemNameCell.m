@@ -8,11 +8,22 @@
 
 #import "XXTExplorerItemNameCell.h"
 
+@interface XXTExplorerItemNameCell ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *guideWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
+
+@end
+
 @implementation XXTExplorerItemNameCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    if (XXTE_IS_IPHONE_6_BELOW) {
+        self.guideWidthConstraint.constant = 0.0;
+        self.rightConstraint.constant = 0.0;
+    }
     
     self.nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 }

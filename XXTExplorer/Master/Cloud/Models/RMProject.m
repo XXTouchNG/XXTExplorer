@@ -74,9 +74,9 @@
 
 + (PMKPromise *)sortedList:(RMApiActionSortBy)sortBy atPage:(NSUInteger)idx itemsPerPage:(NSUInteger)ipp {
     NSDictionary *args =
-    @{ @"sort": [NSString stringWithFormat:@"%lu", sortBy],
-       @"pindex": [NSString stringWithFormat:@"%lu", idx],
-       @"pagesize": [NSString stringWithFormat:@"%lu", ipp],
+    @{ @"sort": [NSString stringWithFormat:@"%lu", (unsigned long)sortBy],
+       @"pindex": [NSString stringWithFormat:@"%lu", (unsigned long)idx],
+       @"pagesize": [NSString stringWithFormat:@"%lu", (unsigned long)ipp],
        };
     return [self promiseGETRequest:RMApiUrl(RMApiActionFindScript, args)];
 }
@@ -86,8 +86,8 @@
     if (!kw) return nil;
     NSDictionary *args =
     @{ @"sort": @"1",
-       @"pindex": [NSString stringWithFormat:@"%lu", idx],
-       @"pagesize": [NSString stringWithFormat:@"%lu", ipp],
+       @"pindex": [NSString stringWithFormat:@"%lu", (unsigned long)idx],
+       @"pagesize": [NSString stringWithFormat:@"%lu", (unsigned long)ipp],
        @"fit": @"0.5",
        @"word": kw,
      };
@@ -97,7 +97,7 @@
 + (PMKPromise *)projectWithID:(NSUInteger)projectID {
     if (!projectID) return nil;
     NSDictionary *args =
-    @{ @"projectid": [NSString stringWithFormat:@"%lu", projectID],
+    @{ @"projectid": [NSString stringWithFormat:@"%lu", (unsigned long)projectID],
        };
     return [self promiseGETRequest:RMApiUrl(RMApiActionScriptDetails, args)];
 }
@@ -106,7 +106,7 @@
     NSUInteger projectID = self.projectID;
     if (!projectID) return nil;
     NSDictionary *args =
-    @{ @"projectid": [NSString stringWithFormat:@"%lu", projectID],
+    @{ @"projectid": [NSString stringWithFormat:@"%lu", (unsigned long)projectID],
        };
     return [[RMProjectDownloadModel class] promiseGETRequest:RMApiUrl(RMApiActionGetScriptUrl, args)];
 }

@@ -85,7 +85,7 @@ static const void *ObjectTagKey = &ObjectTagKey;
     [super viewDidLayoutSubviews];
     if (!isFirstLoaded) {
         isFirstLoaded = YES;
-        self.popupBar.frame = CGRectMake(0, self.view.bounds.size.height - (XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom), self.view.bounds.size.width, XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom);
+        self.popupBar.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - (XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom), CGRectGetWidth(self.view.bounds), XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom);
     }
 }
 
@@ -97,7 +97,7 @@ static const void *ObjectTagKey = &ObjectTagKey;
 
 - (XXTPickerPreviewBar *)popupBar {
     if (!_popupBar) {
-        XXTPickerPreviewBar *popupBar = [[XXTPickerPreviewBar alloc] init];
+        XXTPickerPreviewBar *popupBar = [[XXTPickerPreviewBar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds) - (XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom), CGRectGetWidth(self.view.bounds), XXTPickerNavigationPreviewBarHeight + self.safeAreaInsets.bottom)];
         popupBar.userInteractionEnabled = YES;
         popupBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(previewBarTapped:)];
@@ -122,10 +122,12 @@ static const void *ObjectTagKey = &ObjectTagKey;
             [self.view bringSubviewToFront:self.popupBar];
             if ([pickerController respondsToSelector:@selector(tableView)]) {
                 UITableViewController *tablePickerController = (UITableViewController *)viewController;
-                UIEdgeInsets insets = tablePickerController.tableView.contentInset;
-                insets.bottom = self.popupBar.bounds.size.height;
-                tablePickerController.tableView.contentInset =
-                tablePickerController.tableView.scrollIndicatorInsets = insets;
+                UIEdgeInsets insets1 = tablePickerController.tableView.contentInset;
+                insets1.bottom = CGRectGetHeight(self.popupBar.bounds);
+                UIEdgeInsets insets2 = tablePickerController.tableView.scrollIndicatorInsets;
+                insets2.bottom = CGRectGetHeight(self.popupBar.bounds);
+                tablePickerController.tableView.contentInset = insets1;
+                tablePickerController.tableView.scrollIndicatorInsets = insets2;
             }
         }
     }
