@@ -81,6 +81,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)performDictionaryActionForEntry:(NSDictionary *)entryDetail;
 - (void)performHistoryActionForEntry:(NSDictionary *)entryDetail;
 - (void)performViewerActionForEntry:(NSDictionary *)entryDetail;
+- (void)performViewerActionForEntry:(NSDictionary *)entryDetail animated:(BOOL)animated;
 
 #pragma mark - previewing
 

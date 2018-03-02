@@ -60,7 +60,7 @@
                         NSDictionary *entryDetail = [[self.class explorerEntryParser] entryOfPath:movedPath withError:&entryError];
                         
                         if (!entryError) {
-                            [self performViewerActionForEntry:entryDetail];
+                            [self performViewerActionForEntry:entryDetail animated:NO];
                         } else {
                             toastMessage(self, entryError.localizedDescription);
                         }

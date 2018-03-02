@@ -89,12 +89,19 @@
                 // switch to explorer
                 [self setSelectedIndex:kMasterViewControllerIndexExplorer];
                 NSMutableDictionary *mutableInfo = [aNotification.userInfo mutableCopy];
-                if (!mutableInfo[XXTENotificationForwardedBy]) {
+                if (!mutableInfo[XXTENotificationForwardedBy])
+                {
                     mutableInfo[XXTENotificationForwardedBy] = self;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    NSTimeInterval delaySeconds = [mutableInfo[XXTENotificationForwardDelay] doubleValue];
+                    if (delaySeconds > 0.01)
+                    {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [[NSNotificationCenter defaultCenter] postNotificationName:aNotification.name object:aNotification.object userInfo:[mutableInfo copy]];
+                        });
+                    } else {
                         [[NSNotificationCenter defaultCenter] postNotificationName:aNotification.name object:aNotification.object userInfo:[mutableInfo copy]];
-                        // post this notification again
-                    });
+                    }
+                    // post this notification again
                 }
             }
         } else if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {

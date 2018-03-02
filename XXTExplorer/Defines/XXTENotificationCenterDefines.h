@@ -11,7 +11,8 @@
 
 static NSString * const XXTENotificationEvent = @"XXTENotificationEvent";
 static NSString * const XXTENotificationShortcut = @"XXTENotificationShortcut";
-static NSString * const XXTENotificationForwardedBy = @"XXTENotificationForwardedBy";
+static NSString * const XXTENotificationForwardDelay = @"XXTENotificationForwardDelay"; // NSNumber *
+static NSString * const XXTENotificationForwardedBy = @"XXTENotificationForwardedBy"; // id
 
 // XXTENotificationEvent
 

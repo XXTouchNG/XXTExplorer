@@ -43,6 +43,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView showDetailController:(UIViewController *)controller {
+    [self tableView:tableView showDetailController:controller animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView showDetailController:(UIViewController *)controller animated:(BOOL)animated {
     if ([controller isKindOfClass:[UIViewController class]] &&
         [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
         UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
@@ -84,7 +88,7 @@
                 }
                 XXTE_END_IGNORE_PARTIAL
             } else {
-                [self.navigationController pushViewController:viewer animated:YES];
+                [self.navigationController pushViewController:viewer animated:animated];
             }
         }
         NSString *entryPath = viewer.entryPath;

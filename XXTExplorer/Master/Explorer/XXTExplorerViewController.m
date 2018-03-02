@@ -684,8 +684,12 @@ XXTE_END_IGNORE_PARTIAL
 // Viewer Action
 
 - (void)performViewerActionForEntry:(NSDictionary *)entryDetail {
+    [self performViewerActionForEntry:entryDetail animated:YES];
+}
+
+- (void)performViewerActionForEntry:(NSDictionary *)entryDetail animated:(BOOL)animated {
     UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryDetail];
-    [self tableView:self.tableView showDetailController:viewer];
+    [self tableView:self.tableView showDetailController:viewer animated:animated];
 }
 
 // Accessory Action
