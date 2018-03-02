@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTExplorerEntry.h"
 
 @interface XXTExplorerEntryParser : NSObject
-
-+ (NSDateFormatter *)entryDateFormatter;
-- (NSDictionary *)entryOfPath:(NSString *)path withError:(NSError **)error;
+- (XXTExplorerEntry *)entryOfPath:(NSString *)path withError:(NSError **)error;
 
 @end

@@ -194,8 +194,8 @@
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
-                NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
-                formatString = [NSString stringWithFormat:NSLocalizedString(@"\"%@\"", nil), firstAttributes[XXTExplorerViewEntryAttributeName]];
+                XXTExplorerEntry *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
+                formatString = [NSString stringWithFormat:NSLocalizedString(@"\"%@\"", nil), firstAttributes.localizedDisplayName];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
             }
@@ -260,15 +260,14 @@
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
-                NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
-                NSString *entryExtension = firstAttributes[XXTExplorerViewEntryAttributeExtension];
+                XXTExplorerEntry *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
+                NSString *entryExtension = firstAttributes.entryExtension;
                 NSString *entryBaseExtension = [entryExtension lowercaseString];
-                NSString *entryType = firstAttributes[XXTExplorerViewEntryAttributeType];
-                if ([entryType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+                if (firstAttributes.isDirectory &&
                     [entryBaseExtension isEqualToString:@"xpp"]) {
                     isXPP = YES;
                 }
-                formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes[XXTExplorerViewEntryAttributeName]];
+                formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes.localizedDisplayName];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
             }
@@ -291,12 +290,17 @@
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
             NSMutableArray <NSURL *> *shareUrls = [[NSMutableArray alloc] init];
             for (NSIndexPath *indexPath in selectedIndexPaths) {
-                NSDictionary *entryDetail = self.entryList[indexPath.row];
-                if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+                XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+                if (entryDetail.isDirectory) {
                     [shareUrls removeAllObjects];
                     break;
                 } else {
-                    [shareUrls addObject:[NSURL fileURLWithPath:entryDetail[XXTExplorerViewEntryAttributePath]]];
+                    if (entryDetail.entryPath) {
+                        NSURL *url = [NSURL fileURLWithPath:entryDetail.entryPath];
+                        if (url) {
+                            [shareUrls addObject:url];
+                        }
+                    }
                 }
             }
             if (shareUrls.count != 0) {
@@ -339,8 +343,8 @@
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
-                NSDictionary *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
-                formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes[XXTExplorerViewEntryAttributeName]];
+                XXTExplorerEntry *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
+                formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes.localizedDisplayName];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
             }
@@ -370,7 +374,7 @@
     NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
     NSString *historyPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:historyRelativePath];
     NSError *entryError = nil;
-    NSDictionary *entryDetail = [[self.class explorerEntryParser] entryOfPath:historyPath withError:&entryError];
+    XXTExplorerEntry *entryDetail = [[self.class explorerEntryParser] entryOfPath:historyPath withError:&entryError];
     if (!entryError) {
         [self performHistoryActionForEntry:entryDetail];
     } else {

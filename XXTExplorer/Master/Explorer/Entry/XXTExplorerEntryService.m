@@ -88,16 +88,16 @@
     _bindingDictionary = nil; // clear binding cache
 }
 
-- (BOOL)hasViewerForEntry:(NSDictionary *)entry {
-    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+- (BOOL)hasViewerForEntry:(XXTExplorerEntry *)entry {
+    NSString *entryBaseExtension = entry.entryExtension;
     NSDictionary *bindingDictionary = XXTEDefaultsObject(XXTExplorerViewEntryBindingKey, nil);
     NSString *viewerName = bindingDictionary[entryBaseExtension];
     Class testClass = viewerName.length > 0 ? NSClassFromString(viewerName) : nil;
     return testClass && [testClass isSubclassOfClass:[UIViewController class]];
 }
 
-- (BOOL)hasEditorForEntry:(NSDictionary *)entry {
-    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+- (BOOL)hasEditorForEntry:(XXTExplorerEntry *)entry {
+    XXTExplorerEntryReader *reader = entry.entryReader;
     if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]] && reader.editable) {
         Class testClass = [[reader class] relatedEditor];
         if (testClass && [testClass isSubclassOfClass:[UIViewController class]]) {
@@ -107,29 +107,29 @@
     return NO;
 }
 
-- (BOOL)hasConfiguratorForEntry:(NSDictionary *)entry {
-    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+- (BOOL)hasConfiguratorForEntry:(XXTExplorerEntry *)entry {
+    XXTExplorerEntryReader *reader = entry.entryReader;
     if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]]) {
         return reader && reader.configurable;;
     }
     return NO;
 }
 
-- (UIViewController <XXTEViewer> *)viewerForEntry:(NSDictionary *)entry {
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+- (UIViewController <XXTEViewer> *)viewerForEntry:(XXTExplorerEntry *)entry {
+    NSString *entryPath = entry.entryPath;
+    NSString *entryBaseExtension = entry.entryExtension;
     NSString *viewerName = self.bindingDictionary[entryBaseExtension];
     return [self viewerWithName:viewerName forEntryPath:entryPath];
 }
 
-- (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)viewerName forEntry:(NSDictionary *)entry {
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+- (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)viewerName forEntry:(XXTExplorerEntry *)entry {
+    NSString *entryPath = entry.entryPath;
     return [self viewerWithName:viewerName forEntryPath:entryPath];
 }
 
-- (UIViewController <XXTEEditor> *)editorForEntry:(NSDictionary *)entry {
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+- (UIViewController <XXTEEditor> *)editorForEntry:(XXTExplorerEntry *)entry {
+    NSString *entryPath = entry.entryPath;
+    XXTExplorerEntryReader *reader = entry.entryReader;
     if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]] && reader.editable) {
         Class editorClass = [[reader class] relatedEditor];
         if (editorClass && [editorClass isSubclassOfClass:[UIViewController class]]) {
@@ -142,12 +142,12 @@
     return nil;
 }
 
-- (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry {
+- (UIViewController <XXTEViewer> *)configuratorForEntry:(XXTExplorerEntry *)entry {
     return [self configuratorForEntry:entry configurationName:nil];
 }
 
-- (UIViewController <XXTEViewer> *)configuratorForEntry:(NSDictionary *)entry configurationName:(NSString *)name {
-    XXTExplorerEntryReader *reader = entry[XXTExplorerViewEntryAttributeEntryReader];
+- (UIViewController <XXTEViewer> *)configuratorForEntry:(XXTExplorerEntry *)entry configurationName:(NSString *)name {
+    XXTExplorerEntryReader *reader = entry.entryReader;
     if (reader &&
         [reader isKindOfClass:[XXTExplorerEntryReader class]] &&
         reader.configurable &&

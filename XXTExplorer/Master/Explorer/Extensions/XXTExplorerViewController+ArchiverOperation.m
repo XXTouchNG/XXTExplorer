@@ -49,29 +49,27 @@ typedef enum : NSUInteger {
 }
 
 - (void)alertView:(LGAlertView *)alertView archiveEntriesAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
-    NSMutableArray <NSDictionary *> *entryDetails = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
+    NSMutableArray <XXTExplorerEntry *> *entryDetails = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
         if (indexPath.section == XXTExplorerViewSectionIndexList) {
-            NSDictionary *entryDetail = self.entryList[indexPath.row];
+            XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
             [entryDetails addObject:entryDetail];
         }
     }
     NSMutableArray <NSString *> *entryNames = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
-    for (NSDictionary *entryDetail in entryDetails) {
-        [entryNames addObject:entryDetail[XXTExplorerViewEntryAttributeName]];
+    for (XXTExplorerEntry *entryDetail in entryDetails) {
+        [entryNames addObject:entryDetail.entryName];
     }
     if (entryNames.count == 1 && entryDetails.count == 1)
     {
-        NSDictionary *entryDetail = entryDetails[0];
-        NSString *entryName = entryNames[0];
-        NSString *entryBaseExtension = [[entryName pathExtension] lowercaseString];
-        NSString *entryType = entryDetail[XXTExplorerViewEntryAttributeType];
-        if ([entryType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
+        XXTExplorerEntry *entryDetail = entryDetails[0];
+        NSString *entryBaseExtension = entryDetail.entryExtension;
+        if (entryDetail.isDirectory &&
             [entryBaseExtension isEqualToString:@"xpp"])
         {
             LGAlertView *alertView1 =
             [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Package Operation", nil)
-                                       message:[NSString stringWithFormat:NSLocalizedString(@"Choose an package operation for \"%@\".", nil), entryName]
+                                       message:[NSString stringWithFormat:NSLocalizedString(@"Choose an package operation for \"%@\".", nil), entryDetail.localizedDisplayName]
                                          style:LGAlertViewStyleActionSheet
                                   buttonTitles:@[ NSLocalizedString(@"Continue as Archive", nil) ]
                              cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
@@ -147,8 +145,8 @@ typedef enum : NSUInteger {
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (nil == error) {
                 for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                    NSDictionary *entryDetail = self.entryList[i];
-                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:archivePath]) {
+                    XXTExplorerEntry *entryDetail = self.entryList[i];
+                    if ([entryDetail.entryPath isEqualToString:archivePath]) {
                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
                         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                         break;
@@ -336,11 +334,11 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (nil == error) {
                 for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                    NSDictionary *entryDetail = self.entryList[i];
+                    XXTExplorerEntry *entryDetail = self.entryList[i];
                     BOOL contains = NO;
                     for (NSString *createdEntry in createdEntries) {
-                        NSString *listPath = entryDetail[XXTExplorerViewEntryAttributePath];
-                        BOOL isDirectory = [entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
+                        NSString *listPath = entryDetail.entryPath;
+                        BOOL isDirectory = entryDetail.isDirectory;
                         if (
                             [createdEntry isEqualToString:listPath] ||
                             (isDirectory && [createdEntry hasPrefix:[listPath stringByAppendingString:@"/"]])

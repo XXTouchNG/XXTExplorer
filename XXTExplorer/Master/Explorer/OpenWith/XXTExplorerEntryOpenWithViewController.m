@@ -7,13 +7,16 @@
 //
 
 #import "XXTExplorerEntryOpenWithViewController.h"
-#import "XXTEAppDefines.h"
-#import "XXTExplorerDefaults.h"
-#import "XXTExplorerEntryService.h"
-#import "XXTExplorerViewCell.h"
+
 #import "XXTEViewer.h"
+#import "XXTEAppDefines.h"
 #import "XXTEUserInterfaceDefines.h"
+#import "XXTExplorerDefaults.h"
+
 #import "XXTExplorerEntryReader.h"
+#import "XXTExplorerEntryService.h"
+
+#import "XXTExplorerViewCell.h"
 
 typedef enum : NSUInteger {
     kXXTEOpenWithSectionIndexSuggested = 0,
@@ -36,7 +39,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - Setup
 
-- (instancetype)initWithEntry:(NSDictionary *)entry {
+- (instancetype)initWithEntry:(XXTExplorerEntry *)entry {
     if (self = [super initWithStyle:UITableViewStylePlain]) {
         _entry = entry;
         [self setup];
@@ -45,7 +48,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    NSString *entryBaseExtension = [self.entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+    NSString *entryBaseExtension = self.entry.entryExtension;
     NSArray <Class> *registeredViewers = [[XXTExplorerEntryService sharedInstance] registeredViewers];
     NSMutableArray <Class> *suggestedViewers = [[NSMutableArray alloc] init];
     NSMutableArray <Class> *otherViewers = [[NSMutableArray alloc] init];

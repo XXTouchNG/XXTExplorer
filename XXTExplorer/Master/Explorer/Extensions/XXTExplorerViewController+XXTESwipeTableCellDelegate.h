@@ -17,13 +17,15 @@ static NSString * const XXTExplorerEntryButtonActionEdit = @"Edit";
 static NSString * const XXTExplorerEntryButtonActionEncrypt = @"Encrypt";
 static NSString * const XXTExplorerEntryButtonActionTrash = @"Trash";
 
+@class XXTExplorerEntry;
+
 @interface XXTExplorerViewController (XXTESwipeTableCellDelegate) <XXTESwipeTableCellDelegate>
 
 XXTE_START_IGNORE_PARTIAL
-- (NSArray <UIPreviewAction *> *)previewActionsForEntry:(NSDictionary *)entryDetail forEntryCell:(XXTESwipeTableCell *)entryCell;
+- (NSArray <UIPreviewAction *> *)previewActionsForEntry:(XXTExplorerEntry *)entryDetail forEntryCell:(XXTESwipeTableCell *)entryCell;
 XXTE_END_IGNORE_PARTIAL
 
 - (BOOL)performButtonAction:(NSString *)buttonAction forEntryCell:(XXTESwipeTableCell *)cell;
-- (BOOL)performUnchangedButtonAction:(NSString *)buttonAction forEntry:(NSDictionary *)entryDetail;
+- (BOOL)performUnchangedButtonAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entryDetail;
 
 @end

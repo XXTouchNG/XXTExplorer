@@ -1202,6 +1202,9 @@
 		D6CB81BD1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81BC1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m */; };
 		D6CB81BE1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81BC1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m */; };
 		D6CB81BF1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81BC1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m */; };
+		D6CCD4122048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
+		D6CCD4132048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
+		D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -1996,6 +1999,8 @@
 		D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchField.m; sourceTree = "<group>"; };
 		D6CB81BB1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchAccessoryView.h; sourceTree = "<group>"; };
 		D6CB81BC1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchAccessoryView.m; sourceTree = "<group>"; };
+		D6CCD4102048E16E009C2072 /* XXTExplorerEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntry.h; sourceTree = "<group>"; };
+		D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntry.m; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -2649,6 +2654,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				D6CCD40F2048E152009C2072 /* Model */,
 				D6A850722043DE6C008745EB /* Preview */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
 				0F0654B81EE48395005B6C5F /* Archive */,
@@ -3908,6 +3914,15 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
+		D6CCD40F2048E152009C2072 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D6CCD4102048E16E009C2072 /* XXTExplorerEntry.h */,
+				D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -4833,6 +4848,7 @@
 				0F8EDBAB1FB1F779003C92D6 /* XXTEEditorTextStorage.m in Sources */,
 				0F8EDBAC1FB1F779003C92D6 /* XXTPixelCropRectView.m in Sources */,
 				0F8EDBAD1FB1F779003C92D6 /* XXTENavigationController.m in Sources */,
+				D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */,
 				0F8EDBAE1FB1F779003C92D6 /* XXTExplorerViewController+FileOperation.m in Sources */,
 				0F8EDBAF1FB1F779003C92D6 /* XXTPositionPicker.m in Sources */,
 				0F8EDBB01FB1F779003C92D6 /* XXTESymbolTypeView.m in Sources */,
@@ -5031,6 +5047,7 @@
 				D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */,
 				0FCC2AD31F135AA100C50A48 /* XXTExplorerItemDetailViewController.m in Sources */,
 				0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */,
+				D6CCD4122048E16E009C2072 /* XXTExplorerEntry.m in Sources */,
 				D6686F421F4AE33C004403D0 /* XXTEEditorThemeSettingsViewController.m in Sources */,
 				0F707E831FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */,
@@ -5346,6 +5363,7 @@
 				D69D43EC2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */,
 				D60FE6681FE2369300954818 /* XXTExplorerItemDetailViewController.m in Sources */,
 				D60FE6691FE2369300954818 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */,
+				D6CCD4132048E16E009C2072 /* XXTExplorerEntry.m in Sources */,
 				D60FE66A1FE2369300954818 /* XXTEEditorThemeSettingsViewController.m in Sources */,
 				D60FE66B1FE2369300954818 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				D60FE66C1FE2369300954818 /* XXTEMoreUserDefaultsController.m in Sources */,

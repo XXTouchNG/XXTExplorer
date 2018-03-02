@@ -38,7 +38,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - Setup
 
-- (instancetype)initWithEntry:(NSDictionary *)entry {
+- (instancetype)initWithEntry:(XXTExplorerEntry *)entry {
     if (self = [super initWithStyle:UITableViewStylePlain]) {
         _entry = entry;
         [self setup];
@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    NSString *entryBaseExtension = [self.entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+    NSString *entryBaseExtension = self.entry.entryExtension;
     NSDictionary *bindingDictionary = [[XXTExplorerEntryService sharedInstance] bindingDictionary];
     NSString *bindedViewerName = bindingDictionary[entryBaseExtension];
     NSArray <Class> *registeredViewers = [[XXTExplorerEntryService sharedInstance] registeredViewers];
@@ -159,7 +159,7 @@ typedef enum : NSUInteger {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        NSString *entryBaseExtension = [self.entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+        NSString *entryBaseExtension = self.entry.entryExtension;
         NSString *bindToViewerName = nil;
         if (indexPath.section == kXXTEBindingSectionIndexSuggested) {
             bindToViewerName = NSStringFromClass(self.suggestedViewers[indexPath.row]);
@@ -233,7 +233,7 @@ typedef enum : NSUInteger {
             if (indexPath.section == kXXTEBindingSectionIndexNone) {
                 cell.entryTitleLabel.text = NSLocalizedString(@"None", nil);
                 cell.entrySubtitleLabel.text = NSLocalizedString(@"Restore to default.", nil);
-                cell.entryIconImageView.image = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeRegular];
+                cell.entryIconImageView.image = [UIImage imageNamed:EntryMaskTypeRegular];
             }
         }
         if ([indexPath isEqual:self.selectedIndexPath])

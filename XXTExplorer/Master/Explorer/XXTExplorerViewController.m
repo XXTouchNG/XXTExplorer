@@ -97,7 +97,7 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
         _entryPath = path;
     }
     {
-        NSDictionary *entry = [[[self class] explorerEntryParser] entryOfPath:path withError:nil];
+        XXTExplorerEntry *entry = [[[self class] explorerEntryParser] entryOfPath:path withError:nil];
         _entry = entry;
     }
 }
@@ -305,7 +305,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     }
 
-    NSArray <NSDictionary *> *newEntryList = ({
+    NSArray <XXTExplorerEntry *> *newEntryList = ({
         NSString *entryPath = self.entryPath;
         promiseFixPermission(entryPath, NO);
         
@@ -316,9 +316,9 @@ XXTE_END_IGNORE_PARTIAL
             *error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: localError.localizedDescription}];
         }
         
-        NSMutableArray <NSDictionary *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
-        NSMutableArray <NSDictionary *> *entryBundleAttributesList = [[NSMutableArray alloc] init];
-        NSMutableArray <NSDictionary *> *entryOtherAttributesList = [[NSMutableArray alloc] init];
+        NSMutableArray <XXTExplorerEntry *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
+        NSMutableArray <XXTExplorerEntry *> *entryBundleAttributesList = [[NSMutableArray alloc] init];
+        NSMutableArray <XXTExplorerEntry *> *entryOtherAttributesList = [[NSMutableArray alloc] init];
         
         for (NSString *entrySubdirectoryName in entrySubdirectoryPathList) {
             @autoreleasepool {
@@ -326,16 +326,16 @@ XXTE_END_IGNORE_PARTIAL
                     continue;
                 }
                 NSString *entrySubdirectoryPath = [entryPath stringByAppendingPathComponent:entrySubdirectoryName];
-                NSDictionary *entryDetail = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
+                XXTExplorerEntry *entryDetail = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
                 if (localError && error) {
                     continue;
                 }
                 if ([self shouldDisplayEntry:entryDetail] == NO) {
                     continue;
                 }
-                if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory]) {
+                if (entryDetail.isMaskedDirectory) {
                     [entryDirectoryAttributesList addObject:entryDetail];
-                } else if ([entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                } else if (entryDetail.isBundle) {
                     [entryBundleAttributesList addObject:entryDetail];
                 } else {
                     [entryOtherAttributesList addObject:entryDetail];
@@ -346,12 +346,13 @@ XXTE_END_IGNORE_PARTIAL
         XXTExplorerViewEntryListSortField sortField = self.explorerSortField;
         XXTExplorerViewEntryListSortOrder sortOrder = self.explorerSortOrder;
         
-        NSString *sortFieldString = XXTExplorerViewEntryListSortFieldString(sortField);
-        NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2) {
+        NSString *sortFieldString = XXTExplorerSortField2AttributeName(sortField);
+        NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2)
+        {
             if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {
-                return [obj1[sortFieldString] compare:obj2[sortFieldString]];
+                return [[obj1 valueForKey:sortFieldString] compare:[obj2 valueForKey:sortFieldString]];
             } else {
-                return [obj2[sortFieldString] compare:obj1[sortFieldString]];
+                return [[obj2 valueForKey:sortFieldString] compare:[obj1 valueForKey:sortFieldString]];
             }
         };
         
@@ -359,7 +360,7 @@ XXTE_END_IGNORE_PARTIAL
         [entryBundleAttributesList sortUsingComparator:comparator];
         [entryOtherAttributesList sortUsingComparator:comparator];
 
-        NSMutableArray <NSDictionary *> *entryDetailList = [[NSMutableArray alloc] initWithCapacity:entrySubdirectoryPathList.count];
+        NSMutableArray <XXTExplorerEntry *> *entryDetailList = [[NSMutableArray alloc] initWithCapacity:entrySubdirectoryPathList.count];
         
         [entryDetailList addObjectsFromArray:entryDirectoryAttributesList];
         [entryDetailList addObjectsFromArray:entryBundleAttributesList];
@@ -526,18 +527,16 @@ XXTE_END_IGNORE_PARTIAL
             if ([tableView isEditing]) {
                 [self updateToolbarStatus];
             } else {
-                NSDictionary *entryDetail = self.entryList[indexPath.row];
-                NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
-                NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
-                NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
-                if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+                XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+                NSString *entryPath = entryDetail.entryPath;
+                if (entryDetail.isMaskedDirectory)
                 {
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     [self performDictionaryActionForEntry:entryDetail];
                 }
                 else if (
-                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
-                         [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle])
+                         entryDetail.isMaskedRegular ||
+                         entryDetail.isBundle)
                 {
                     if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
                         if ([self.class.explorerEntryService hasViewerForEntry:entryDetail]) {
@@ -568,10 +567,10 @@ XXTE_END_IGNORE_PARTIAL
                         [tableView deselectRowAtIndexPath:indexPath animated:YES];
                         toastMessage(self, NSLocalizedString(@"Access denied.", nil));
                     }
-                } else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
+                } else if (entryDetail.isBrokenSymlink)
                 { // broken symlink
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]));
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryDetail.localizedDisplayName]));
                 }
                 else
                 { // not supported
@@ -624,18 +623,17 @@ XXTE_END_IGNORE_PARTIAL
 
 // Item Action
 
-- (XXTExplorerItemPreviewController *)prepareForItemPreviewActionForEntry:(NSDictionary *)entryDetail {
+- (XXTExplorerItemPreviewController *)prepareForItemPreviewActionForEntry:(XXTExplorerEntry *)entryDetail {
     XXTExplorerItemPreviewController *controller = [[XXTExplorerItemPreviewController alloc] initWithNibName:NSStringFromClass([XXTExplorerItemPreviewController class]) bundle:nil];
-    controller.entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
+    controller.entryPath = entryDetail.entryPath;
     return controller;
 }
 
 // Directory Action
 
-- (XXTExplorerViewController *)prepareForDictionaryActionForEntry:(NSDictionary *)entryDetail error:(NSError **)error {
-    NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+- (XXTExplorerViewController *)prepareForDictionaryActionForEntry:(XXTExplorerEntry *)entryDetail error:(NSError **)error {
+    NSString *entryPath = entryDetail.entryPath;
+    if (entryDetail.isMaskedDirectory)
     { // Directory or Symbolic Link Directory
         // We'd better try to access it before we enter it.
         NSError *accessError = nil;
@@ -650,7 +648,7 @@ XXTE_END_IGNORE_PARTIAL
     return nil;
 }
 
-- (void)performDictionaryActionForEntry:(NSDictionary *)entryDetail {
+- (void)performDictionaryActionForEntry:(XXTExplorerEntry *)entryDetail {
     NSError *prepareError = nil;
     UIViewController *controller = [self prepareForDictionaryActionForEntry:entryDetail error:&prepareError];
     if (controller) {
@@ -662,10 +660,9 @@ XXTE_END_IGNORE_PARTIAL
 
 // History Action
 
-- (void)performHistoryActionForEntry:(NSDictionary *)entryDetail {
-    NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+- (void)performHistoryActionForEntry:(XXTExplorerEntry *)entryDetail {
+    NSString *entryPath = entryDetail.entryPath;
+    if (entryDetail.isMaskedDirectory)
     {
         NSError *accessError = nil;
         [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
@@ -683,11 +680,11 @@ XXTE_END_IGNORE_PARTIAL
 
 // Viewer Action
 
-- (void)performViewerActionForEntry:(NSDictionary *)entryDetail {
+- (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail {
     [self performViewerActionForEntry:entryDetail animated:YES];
 }
 
-- (void)performViewerActionForEntry:(NSDictionary *)entryDetail animated:(BOOL)animated {
+- (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail animated:(BOOL)animated {
     UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryDetail];
     [self tableView:self.tableView showDetailController:viewer animated:animated];
 }
@@ -774,7 +771,7 @@ XXTE_END_IGNORE_PARTIAL
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == indexPath.section) {
-            NSDictionary *entryDetail = self.entryList[indexPath.row];
+            XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
             XXTExplorerViewCell *entryCell = [tableView dequeueReusableCellWithIdentifier:XXTExplorerViewCellReuseIdentifier];
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
@@ -827,7 +824,7 @@ XXTE_END_IGNORE_PARTIAL
     if (indexPath.section == XXTExplorerViewSectionIndexList) {
         if (indexPath.row < self.entryList.count) {
             XXTExplorerViewCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
-            NSDictionary *entryDetail = self.entryList[indexPath.row];
+            XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
             [self configureCell:entryCell withEntry:entryDetail];
         }
     }
@@ -840,18 +837,16 @@ XXTE_END_IGNORE_PARTIAL
     }
 }
 
-- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(NSDictionary *)entryDetail {
+- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entryDetail {
     entryCell.delegate = self;
     entryCell.entryTitleLabel.textColor = [UIColor blackColor];
     entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-    if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+    if (entryDetail.isBrokenSymlink) {
         // broken symlink
         entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
         entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_DANGER;
         entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
-    } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-               ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+    } else if (entryDetail.isSymlink) {
         // symlink
         entryCell.entryTitleLabel.textColor = XXTE_COLOR;
         entryCell.entrySubtitleLabel.textColor = XXTE_COLOR;
@@ -861,45 +856,25 @@ XXTE_END_IGNORE_PARTIAL
         entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     }
-    if (![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] &&
-        [self.class.selectedScriptPath isEqualToString:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+    if (!entryDetail.isMaskedDirectory &&
+        [self.class.selectedScriptPath isEqualToString:entryDetail.entryPath]) {
         // selected script itself
         entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
         entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_SUCCESS;
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
     } else if ((
-                [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory] ||
-                [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]
+                entryDetail.isMaskedDirectory ||
+                entryDetail.isBundle
                 ) &&
-               [self.class.selectedScriptPath hasPrefix:entryDetail[XXTExplorerViewEntryAttributePath]]) {
+               [self.class.selectedScriptPath hasPrefix:entryDetail.entryPath]) {
         // selected script in directory / bundle
         entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
         entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_SUCCESS;
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
     }
-    NSString *entryDisplayName = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
-    NSString *entryDescription = entryDetail[XXTExplorerViewEntryAttributeDescription];
-    UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
-    if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
-        XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-        if (entryReader.entryDisplayName) {
-            entryDisplayName = entryReader.entryDisplayName;
-        } else {
-            if (XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES))
-            {
-                entryDisplayName = [entryDisplayName stringByDeletingPathExtension];
-            }
-        }
-        if (entryReader.entryDescription) {
-            entryDescription = entryReader.entryDescription;
-        }
-        if (entryReader.entryIconImage) {
-            entryIconImage = entryReader.entryIconImage;
-        }
-    }
-    entryCell.entryTitleLabel.text = entryDisplayName;
-    entryCell.entrySubtitleLabel.text = entryDescription;
-    entryCell.entryIconImageView.image = entryIconImage;
+    entryCell.entryTitleLabel.text = entryDetail.localizedDisplayName;
+    entryCell.entrySubtitleLabel.text = entryDetail.localizedDescription;
+    entryCell.entryIconImageView.image = entryDetail.localizedDisplayIconImage;
     if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton)
     {
         entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
@@ -987,8 +962,8 @@ XXTE_END_IGNORE_PARTIAL
 
 - (NSIndexPath *)indexPathForEntryAtPath:(NSString *)entryPath {
     for (NSUInteger idx = 0; idx < self.entryList.count; idx++) {
-        NSDictionary *entryDetail = self.entryList[idx];
-        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:entryPath]) {
+        XXTExplorerEntry *entryDetail = self.entryList[idx];
+        if ([entryDetail.entryPath isEqualToString:entryPath]) {
             return [NSIndexPath indexPathForRow:idx inSection:XXTExplorerViewSectionIndexList];
         }
     }
@@ -1046,7 +1021,7 @@ XXTE_START_IGNORE_PARTIAL
     UITableViewCell *previewCell = [tableView cellForRowAtIndexPath:indexPath];
     NSError *prepareError = nil;
     if (XXTExplorerViewSectionIndexList == indexPath.section) {
-        NSDictionary *entryDetail = self.entryList[indexPath.row];
+        XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
         XXTExplorerViewController *controller =
         [self prepareForDictionaryActionForEntry:entryDetail error:&prepareError];
         if (controller)
@@ -1087,7 +1062,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - XXTExplorerItemPreviewActionDelegate
 
 XXTE_START_IGNORE_PARTIAL
-- (NSArray <UIPreviewAction *> *)itemPreviewController:(XXTExplorerItemPreviewController *)controller previewActionsForEntry:(NSDictionary *)entry
+- (NSArray <UIPreviewAction *> *)itemPreviewController:(XXTExplorerItemPreviewController *)controller previewActionsForEntry:(XXTExplorerEntry *)entry
 {
     return [self previewActionsForEntry:entry forEntryCell:controller.previewActionSender];
 }
@@ -1105,7 +1080,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - XXTExplorerDirectoryPreviewActionDelegate
 
 XXTE_START_IGNORE_PARTIAL
-- (NSArray <UIPreviewAction *> *)directoryPreviewController:(XXTExplorerViewController *)controller previewActionsForEntry:(NSDictionary *)entry
+- (NSArray <UIPreviewAction *> *)directoryPreviewController:(XXTExplorerViewController *)controller previewActionsForEntry:(XXTExplorerEntry *)entry
 {
     return [self previewActionsForEntry:entry forEntryCell:controller.previewActionSender];
 }

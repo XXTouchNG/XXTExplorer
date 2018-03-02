@@ -31,7 +31,7 @@
         }
         else {
             NSError *entryError = nil;
-            NSDictionary *entryDetail = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
+            XXTExplorerEntry *entryDetail = [self.class.entryParser entryOfPath:detailPath withError:&entryError];
             if (!entryError && [self.class.entryService hasViewerForEntry:entryDetail]) {
                 UIViewController <XXTEViewer> *viewer = [self.class.entryService viewerForEntry:entryDetail];
                 detailController = viewer;

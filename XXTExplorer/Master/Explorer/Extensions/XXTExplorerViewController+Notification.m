@@ -57,7 +57,7 @@
                         [instantRun boolValue] == YES)
                     {
                         NSError *entryError = nil;
-                        NSDictionary *entryDetail = [[self.class explorerEntryParser] entryOfPath:movedPath withError:&entryError];
+                        XXTExplorerEntry *entryDetail = [[self.class explorerEntryParser] entryOfPath:movedPath withError:&entryError];
                         
                         if (!entryError) {
                             [self performViewerActionForEntry:entryDetail animated:NO];

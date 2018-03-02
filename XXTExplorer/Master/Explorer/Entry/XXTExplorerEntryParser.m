@@ -7,6 +7,7 @@
 //
 
 #import <sys/stat.h>
+
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryParser.h"
@@ -17,6 +18,8 @@
 #import "XXTExplorerEntryLauncher.h"
 #import "XXTExplorerEntryUnarchiver.h"
 
+#import "XXTExplorerEntry.h"
+
 @interface XXTExplorerEntryParser ()
 @property (nonatomic, strong, readonly) NSFileManager *parserFileManager;
 
@@ -24,22 +27,6 @@
 
 @implementation XXTExplorerEntryParser {
     
-}
-
-+ (NSDateFormatter *)entryDateFormatter {
-    static NSDateFormatter *entryDateFormatter = nil;
-    static dispatch_once_t token;
-    dispatch_once(&token, ^{
-        if (!entryDateFormatter) {
-            entryDateFormatter = ({
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-                [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-                dateFormatter;
-            });
-        }
-    });
-    return entryDateFormatter;
 }
 
 + (XXTExplorerEntryService *)parserEntryService {
@@ -80,7 +67,7 @@
     _parserFileManager = [[NSFileManager alloc] init];
 }
 
-- (NSDictionary *)entryOfPath:(NSString *)entrySubdirectoryPath withError:(NSError *__autoreleasing *)error {
+- (XXTExplorerEntry *)entryOfPath:(NSString *)entrySubdirectoryPath withError:(NSError *__autoreleasing *)error {
     NSError *localError = nil;
     NSDictionary <NSString *, id> *entrySubdirectoryAttributes = [self.parserFileManager attributesOfItemAtPath:entrySubdirectoryPath error:&localError];
     if (localError)
@@ -91,28 +78,19 @@
         return nil;
     }
     NSString *entryNSFileType = entrySubdirectoryAttributes[NSFileType];
-    NSString *entryBaseName = [entrySubdirectoryPath lastPathComponent];
-    NSString *entryBaseExtension = [entryBaseName pathExtension];
     UIImage *entryIconImage = nil;
     NSString *entryBaseType = nil;
-    if ([entryNSFileType isEqualToString:NSFileTypeRegular])
-    {
-        entryBaseType = XXTExplorerViewEntryAttributeTypeRegular;
-    }
-    else if ([entryNSFileType isEqualToString:NSFileTypeDirectory])
-    {
-        entryBaseType = XXTExplorerViewEntryAttributeTypeDirectory;
-    }
-    else if ([entryNSFileType isEqualToString:NSFileTypeSymbolicLink])
-    {
-        entryBaseType = XXTExplorerViewEntryAttributeTypeSymlink;
-    }
-    else
-    {
-        entryBaseType = XXTExplorerViewEntryAttributeTypeUnsupported;
+    if ([entryNSFileType isEqualToString:NSFileTypeRegular]) {
+        entryBaseType = EntryTypeRegular;
+    } else if ([entryNSFileType isEqualToString:NSFileTypeDirectory]) {
+        entryBaseType = EntryTypeDirectory;
+    } else if ([entryNSFileType isEqualToString:NSFileTypeSymbolicLink]) {
+        entryBaseType = EntryTypeSymlink;
+    } else {
+        entryBaseType = EntryTypeUnsupported;
     }
     NSString *entryMaskType = entryBaseType;
-    if ([entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink])
+    if ([entryBaseType isEqualToString:EntryTypeSymlink])
     {
         const char *entrySubdirectoryPathCString = [entrySubdirectoryPath UTF8String];
         struct stat entrySubdirectoryPathCStatStruct;
@@ -121,71 +99,54 @@
         {
             if (S_ISDIR(entrySubdirectoryPathCStatStruct.st_mode))
             {
-                entryMaskType = XXTExplorerViewEntryAttributeTypeDirectory;
+                entryMaskType = EntryMaskTypeDirectory;
             }
             else if (S_ISREG(entrySubdirectoryPathCStatStruct.st_mode))
             {
-                entryMaskType = XXTExplorerViewEntryAttributeTypeRegular;
+                entryMaskType = EntryMaskTypeRegular;
             }
             else
             {
-                entryMaskType = XXTExplorerViewEntryAttributeTypeUnsupported;
+                entryMaskType = EntryMaskTypeUnsupported;
             }
             // MaskType cannot be symlink
         } else {
             if (errno == ENOENT || errno == EMLINK) {
-                entryMaskType = XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink;
+                entryMaskType = EntryMaskTypeBrokenSymlink;
             }
         }
     }
     if (!entryIconImage) {
-        if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
-        {
-            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeRegular];
-        }
-        else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
-        {
-            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeDirectory];
-        }
-        else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink])
-        {
-            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeSymlink];
-        }
-        else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
-        {
-            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink];
-        }
-        else
-        {
-            entryIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeTypeUnsupported];
+        if ([entryMaskType isEqualToString:EntryMaskTypeRegular]) {
+            entryIconImage = [UIImage imageNamed:EntryMaskTypeRegular];
+        } else if ([entryMaskType isEqualToString:EntryMaskTypeDirectory]) {
+            entryIconImage = [UIImage imageNamed:EntryMaskTypeDirectory];
+        } else if ([entryMaskType isEqualToString:EntryMaskTypeSymlink]) {
+            entryIconImage = [UIImage imageNamed:EntryMaskTypeSymlink];
+        } else if ([entryMaskType isEqualToString:EntryMaskTypeBrokenSymlink]) {
+            entryIconImage = [UIImage imageNamed:EntryMaskTypeBrokenSymlink];
+        } else {
+            entryIconImage = [UIImage imageNamed:EntryMaskTypeUnsupported];
         }
     }
-    NSString *entryDescription = [self.class.entryDateFormatter stringFromDate:entrySubdirectoryAttributes[NSFileModificationDate]];
-    NSDictionary *entryDetail =
-    @{
-      XXTExplorerViewEntryAttributeIconImage: entryIconImage,
-      XXTExplorerViewEntryAttributeDisplayName: entryBaseName,
-      XXTExplorerViewEntryAttributeName: entryBaseName,
-      XXTExplorerViewEntryAttributePath: entrySubdirectoryPath,
-      XXTExplorerViewEntryAttributeCreationDate: entrySubdirectoryAttributes[NSFileCreationDate],
-      XXTExplorerViewEntryAttributeModificationDate: entrySubdirectoryAttributes[NSFileModificationDate],
-      XXTExplorerViewEntryAttributeSize: entrySubdirectoryAttributes[NSFileSize],
-      XXTExplorerViewEntryAttributeType: entryBaseType,
-      XXTExplorerViewEntryAttributeMaskType: entryMaskType,
-      XXTExplorerViewEntryAttributeExtension: entryBaseExtension,
-      XXTExplorerViewEntryAttributeDescription: entryDescription,
-      };
-    NSDictionary *extraEntryDetail = [self parseExternalEntry:entryDetail];
+    XXTExplorerEntry *entryDetail = [[XXTExplorerEntry alloc] init];
+    entryDetail.iconImage = entryIconImage;
+    entryDetail.entryPath = entrySubdirectoryPath;
+    entryDetail.creationDate = entrySubdirectoryAttributes[NSFileCreationDate];
+    entryDetail.modificationDate = entrySubdirectoryAttributes[NSFileModificationDate];
+    entryDetail.entrySize = entrySubdirectoryAttributes[NSFileSize];
+    entryDetail.entryType = entryBaseType;
+    entryDetail.entryMaskType = entryMaskType;
+    XXTExplorerEntry *extraEntryDetail = [self parseExternalEntry:entryDetail];
     return extraEntryDetail;
 }
 
-- (NSDictionary *)parseExternalEntry:(NSDictionary *)entry {
+- (XXTExplorerEntry *)parseExternalEntry:(XXTExplorerEntry *)entry {
     NSDictionary *bindingDictionary = [self.class.parserEntryService bindingDictionary];
-    NSMutableDictionary *newEntry = [entry mutableCopy];
-    NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    NSString *entryBaseExtension = [entry[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular])
+    NSString *entryMaskType = entry.entryMaskType;
+    NSString *entryPath = entry.entryPath;
+    NSString *entryBaseExtension = entry.entryExtension;
+    if ([entryMaskType isEqualToString:EntryMaskTypeRegular])
     {
         // Find binded viewers
         NSString *bindedViewerName = bindingDictionary[entryBaseExtension];
@@ -195,12 +156,12 @@
                 Class relatedReaderClass = [((Class <XXTEViewer>)bindedViewerClass) relatedReader];
                 if (relatedReaderClass) {
                     XXTExplorerEntryReader *relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];
-                    newEntry[XXTExplorerViewEntryAttributeEntryReader] = relatedReader;
+                    entry.entryReader = relatedReader;
                 }
             }
         }
     }
-    else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+    else if ([entryMaskType isEqualToString:EntryMaskTypeDirectory])
     {
         for (Class readerClass in [self.class bundleReaders]) {
             BOOL supported = NO;
@@ -212,17 +173,17 @@
             }
             if (supported) {
                 XXTExplorerEntryReader *bundleReader = [[readerClass alloc] initWithPath:entryPath];
-                newEntry[XXTExplorerViewEntryAttributeMaskType] = XXTExplorerViewEntryAttributeMaskTypeBundle;
-                newEntry[XXTExplorerViewEntryAttributeEntryReader] = bundleReader;
-                UIImage *bundleIconImage = [UIImage imageNamed:XXTExplorerViewEntryAttributeMaskTypeBundle];
+                entry.entryMaskType = EntryMaskTypeBundle;
+                entry.entryReader = bundleReader;
+                UIImage *bundleIconImage = [UIImage imageNamed:EntryMaskTypeBundle];
                 if (bundleIconImage) {
-                    newEntry[XXTExplorerViewEntryAttributeIconImage] = bundleIconImage;
+                    entry.iconImage = bundleIconImage;
                 }
                 break;
             }
         }
     }
-    return [[NSDictionary alloc] initWithDictionary:newEntry];
+    return entry;
 }
 
 @end

@@ -36,12 +36,12 @@
 #pragma mark - File Operations
 
 #ifndef APPSTORE
-- (void)alertView:(LGAlertView *)alertView encryptEntry:(NSDictionary *)entryDetail {
+- (void)alertView:(LGAlertView *)alertView encryptEntry:(XXTExplorerEntry *)entryDetail {
     NSString *currentPath = self.entryPath;
-    XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
+    XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
     NSString *encryptionExtension = entryReader.encryptionExtension;
     if (!encryptionExtension) return;
-    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
+    NSString *entryPath = entryDetail.entryPath;
     NSString *entryName = [entryPath lastPathComponent];
     NSString *encryptedName = [entryName stringByDeletingPathExtension];
     NSString *encryptedNameWithExt = [encryptedName stringByAppendingPathExtension:encryptionExtension];
@@ -78,8 +78,8 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (nil == error) {
                 for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                    NSDictionary *entryDetail = self.entryList[i];
-                    if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:encryptedPath]) {
+                    XXTExplorerEntry *entryDetail = self.entryList[i];
+                    if ([entryDetail.entryPath isEqualToString:encryptedPath]) {
                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:XXTExplorerViewSectionIndexList];
                         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                         break;
@@ -199,10 +199,10 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (nil == error) {
                 for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                    NSDictionary *entryDetail = self.entryList[i];
+                    XXTExplorerEntry *entryDetail = self.entryList[i];
                     BOOL shouldSelect = NO;
                     for (NSString *resultPath in resultPaths) {
-                        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                        if ([entryDetail.entryPath isEqualToString:resultPath]) {
                             shouldSelect = YES;
                         }
                     }
@@ -348,10 +348,10 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (nil == error) {
                 for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                    NSDictionary *entryDetail = self.entryList[i];
+                    XXTExplorerEntry *entryDetail = self.entryList[i];
                     BOOL shouldSelect = NO;
                     for (NSString *resultPath in resultPaths) {
-                        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                        if ([entryDetail.entryPath isEqualToString:resultPath]) {
                             shouldSelect = YES;
                         }
                     }
@@ -480,10 +480,10 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             if (nil == error) {
                 for (NSUInteger i = 0; i < self.entryList.count; i++) {
-                    NSDictionary *entryDetail = self.entryList[i];
+                    XXTExplorerEntry *entryDetail = self.entryList[i];
                     BOOL shouldSelect = NO;
                     for (NSString *resultPath in resultPaths) {
-                        if ([entryDetail[XXTExplorerViewEntryAttributePath] isEqualToString:resultPath]) {
+                        if ([entryDetail.entryPath isEqualToString:resultPath]) {
                             shouldSelect = YES;
                         }
                     }
@@ -535,13 +535,12 @@
 
 - (void)alertView:(LGAlertView *)alertView removeEntryCell:(UITableViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSDictionary *entryDetail = self.entryList[indexPath.row];
-    NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
-    NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
+    XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+    NSString *entryPath = entryDetail.entryPath;
     NSUInteger entryCount = 1;
     NSMutableArray <NSIndexPath *> *deletedPaths = [[NSMutableArray alloc] initWithCapacity:entryCount];
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Delete", nil)
-                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Deleting \"%@\"", nil), entryName]
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Deleting \"%@\"", nil), [entryDetail localizedDisplayName]]
                                                                                style:LGAlertViewStyleActionSheet
                                                                    progressLabelText:entryPath
                                                                         buttonTitles:nil
@@ -646,7 +645,7 @@
     NSMutableArray <NSString *> *entryPaths = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
         if (indexPath.section == XXTExplorerViewSectionIndexList) {
-            [entryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
+            [entryPaths addObject:self.entryList[indexPath.row].entryPath];
         }
     }
     NSUInteger entryCount = entryPaths.count;

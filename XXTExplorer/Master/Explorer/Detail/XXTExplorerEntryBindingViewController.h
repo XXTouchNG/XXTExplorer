@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTExplorerEntryBindingViewController;
+@class XXTExplorerEntryBindingViewController, XXTExplorerEntry;
 
 @protocol XXTExplorerEntryBindingViewControllerDelegate <NSObject>
 
@@ -18,12 +18,12 @@
 
 @interface XXTExplorerEntryBindingViewController : UITableViewController
 
-@property (nonatomic, copy, readonly) NSDictionary *entry;
+@property (nonatomic, copy, readonly) XXTExplorerEntry *entry;
 @property (nonatomic, weak) id <XXTExplorerEntryBindingViewControllerDelegate> delegate;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-- (instancetype)initWithEntry:(NSDictionary *)entry;
+- (instancetype)initWithEntry:(XXTExplorerEntry *)entry;
 
 @end

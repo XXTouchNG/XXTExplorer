@@ -61,11 +61,10 @@
     return NO;
 }
 
-- (BOOL)shouldDisplayEntry:(NSDictionary *)entryDetail {
-    NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
-    NSString *entryBaseExtension = [entryDetail[XXTExplorerViewEntryAttributeExtension] lowercaseString];
-    if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
-        [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]) {
+- (BOOL)shouldDisplayEntry:(XXTExplorerEntry *)entryDetail {
+    NSString *entryBaseExtension = entryDetail.entryExtension;
+    if (entryDetail.isBundle ||
+        entryDetail.isMaskedRegular) {
         if ([self.allowedExtensions containsObject:entryBaseExtension] == NO) {
             return NO;
         }
@@ -80,11 +79,9 @@
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == indexPath.section)
         {
-            NSDictionary *entryDetail = self.entryList[indexPath.row];
-            NSString *entryMaskType = entryDetail[XXTExplorerViewEntryAttributeMaskType];
-            NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
-            NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
-            if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory])
+            XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+            NSString *entryPath = entryDetail.entryPath;
+            if (entryDetail.isMaskedDirectory)
             { // Directory or Symbolic Link Directory
                 // We'd better try to access it before we enter it.
                 NSError *accessError = nil;
@@ -101,11 +98,11 @@
                 }
             }
             else if (
-                     [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle] ||
-                     [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular]
+                     entryDetail.isBundle ||
+                     entryDetail.isMaskedRegular
                      )
             { // Bundle or Regular
-                NSString *entryBaseExtension = [entryDetail[XXTExplorerViewEntryAttributeExtension] lowercaseString];
+                NSString *entryBaseExtension = entryDetail.entryExtension;
                 BOOL extensionPermitted = NO;
                 for (NSString *obj in self.allowedExtensions) {
                     if ([entryBaseExtension isEqualToString:obj]) {
@@ -114,7 +111,7 @@
                     }
                 }
                 if (extensionPermitted) {
-                    NSString *selectedPath = entryDetail[XXTExplorerViewEntryAttributePath];
+                    NSString *selectedPath = entryDetail.entryPath;
                     if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
                         [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
                     }
@@ -122,9 +119,9 @@
                     toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]));
                 }
             }
-            else if ([entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink])
+            else if (entryDetail.isBrokenSymlink)
             {
-                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryName]));
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryDetail.localizedDisplayName]));
             }
             else
             {
@@ -146,8 +143,8 @@
     if (tableView == self.tableView) {
         if (indexPath.section == XXTExplorerViewSectionIndexList) {
             XXTExplorerViewCell *cell = (XXTExplorerViewCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
-            NSDictionary *entryDetail = self.entryList[indexPath.row];
-            NSString *entryPath = entryDetail[XXTExplorerViewEntryAttributePath];
+            XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+            NSString *entryPath = entryDetail.entryPath;
             if ([entryPath isEqualToString:self.selectedBootScriptPath]) {
                 cell.entryTitleLabel.textColor = XXTE_COLOR;
                 cell.entrySubtitleLabel.textColor = XXTE_COLOR;

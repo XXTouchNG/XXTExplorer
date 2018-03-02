@@ -11,7 +11,6 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerViewController+SharedInstance.h"
-#import "XXTExplorerEntryReader.h"
 
 @interface XUIFileCell ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -73,24 +72,12 @@
     }
     NSString *filePath = xui_value;
     if (filePath) {
-        NSDictionary *entryDetail = [XXTExplorerViewController.explorerEntryParser entryOfPath:filePath withError:nil];
+        XXTExplorerEntry *entryDetail = [XXTExplorerViewController.explorerEntryParser entryOfPath:filePath withError:nil];
         if (entryDetail)
         {
-            NSString *entryDisplayName = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
-            NSString *entryDescription = entryDetail[XXTExplorerViewEntryAttributeDescription];
-            UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
-            if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
-                XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-                if (entryReader.entryDisplayName) {
-                    entryDisplayName = entryReader.entryDisplayName;
-                }
-                if (entryReader.entryDescription) {
-                    entryDescription = entryReader.entryDescription;
-                }
-                if (entryReader.entryIconImage) {
-                    entryIconImage = entryReader.entryIconImage;
-                }
-            }
+            NSString *entryDisplayName = [entryDetail localizedDisplayName];
+            NSString *entryDescription = [entryDetail localizedDescription];
+            UIImage *entryIconImage = [entryDetail localizedDisplayIconImage];
             self.nameLabel.text = entryDisplayName;
             self.descriptionLabel.text = entryDescription;
             self.iconImageView.image = entryIconImage;

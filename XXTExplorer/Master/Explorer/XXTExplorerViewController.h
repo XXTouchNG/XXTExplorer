@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XXTExplorerDefaults.h"
+#import "XXTExplorerEntry.h"
 
 typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexHome = 0,
@@ -24,7 +24,7 @@ typedef enum : NSUInteger {
 @protocol XXTExplorerDirectoryPreviewActionDelegate <NSObject>
 
 XXTE_START_IGNORE_PARTIAL
-- (NSArray <UIPreviewAction *> *)directoryPreviewController:(XXTExplorerViewController *)controller previewActionsForEntry:(NSDictionary *)entry;
+- (NSArray <UIPreviewAction *> *)directoryPreviewController:(XXTExplorerViewController *)controller previewActionsForEntry:(XXTExplorerEntry *)entry;
 XXTE_END_IGNORE_PARTIAL
 
 @end
@@ -32,9 +32,9 @@ XXTE_END_IGNORE_PARTIAL
 @interface XXTExplorerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
-@property (nonatomic, copy, readonly) NSDictionary *entry;
+@property (nonatomic, copy, readonly) XXTExplorerEntry *entry;
 
-@property (nonatomic, copy, readonly) NSMutableArray <NSDictionary *> *entryList;
+@property (nonatomic, copy, readonly) NSMutableArray <XXTExplorerEntry *> *entryList;
 @property (nonatomic, copy, readonly) NSMutableArray <NSDictionary *> *homeEntryList;
 
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField explorerSortField;
@@ -74,14 +74,14 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - picker
 
 - (BOOL)showsHomeSeries;
-- (BOOL)shouldDisplayEntry:(NSDictionary *)entryDetail;
+- (BOOL)shouldDisplayEntry:(XXTExplorerEntry *)entryDetail;
 
 #pragma mark - fast open
 
-- (void)performDictionaryActionForEntry:(NSDictionary *)entryDetail;
-- (void)performHistoryActionForEntry:(NSDictionary *)entryDetail;
-- (void)performViewerActionForEntry:(NSDictionary *)entryDetail;
-- (void)performViewerActionForEntry:(NSDictionary *)entryDetail animated:(BOOL)animated;
+- (void)performDictionaryActionForEntry:(XXTExplorerEntry *)entryDetail;
+- (void)performHistoryActionForEntry:(XXTExplorerEntry *)entryDetail;
+- (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail;
+- (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail animated:(BOOL)animated;
 
 #pragma mark - previewing
 

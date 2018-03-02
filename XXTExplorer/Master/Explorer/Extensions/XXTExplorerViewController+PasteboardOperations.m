@@ -31,7 +31,7 @@
 - (void)alertView:(LGAlertView *)alertView copyPasteboardItemsAtIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
     NSMutableArray <NSString *> *selectedEntryPaths = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
-        [selectedEntryPaths addObject:self.entryList[indexPath.row][XXTExplorerViewEntryAttributePath]];
+        [selectedEntryPaths addObject:self.entryList[indexPath.row].entryPath];
     }
     [self setEditing:NO animated:YES];
     UIViewController *blockController = blockInteractions(self, YES);

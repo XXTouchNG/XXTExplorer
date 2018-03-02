@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTExplorerItemPreviewController;
+@class XXTExplorerItemPreviewController, XXTExplorerEntry;
 
 @protocol XXTExplorerItemPreviewDelegate <NSObject>
 
@@ -17,7 +17,7 @@
 @protocol XXTExplorerItemPreviewActionDelegate <NSObject>
 
 XXTE_START_IGNORE_PARTIAL
-- (NSArray <UIPreviewAction *> *)itemPreviewController:(XXTExplorerItemPreviewController *)controller previewActionsForEntry:(NSDictionary *)entry;
+- (NSArray <UIPreviewAction *> *)itemPreviewController:(XXTExplorerItemPreviewController *)controller previewActionsForEntry:(XXTExplorerEntry *)entry;
 XXTE_END_IGNORE_PARTIAL
 
 @end
@@ -27,7 +27,7 @@ XXTE_END_IGNORE_PARTIAL
 - (instancetype)init NS_UNAVAILABLE;
 
 @property (nonatomic, copy) NSString *entryPath;
-@property (nonatomic, copy, readonly) NSDictionary *entry;
+@property (nonatomic, copy, readonly) XXTExplorerEntry *entry;
 
 @property (nonatomic, weak) id <XXTExplorerItemPreviewDelegate> previewDelegate;
 @property (nonatomic, weak) id <XXTExplorerItemPreviewActionDelegate> previewActionDelegate;

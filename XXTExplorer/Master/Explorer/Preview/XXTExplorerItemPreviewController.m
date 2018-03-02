@@ -61,7 +61,7 @@
     NSString *entryPath = self.entryPath;
     if (entryPath)
     {
-        NSDictionary *entry = [self.entryParser entryOfPath:entryPath withError:nil];
+        XXTExplorerEntry *entry = [self.entryParser entryOfPath:entryPath withError:nil];
         [self configureWithEntry:entry];
         _entry = entry;
     }
@@ -76,22 +76,6 @@
     return @[];
 }
 
-+ (NSDateFormatter *)entryDateFormatter {
-    static NSDateFormatter *entryDateFormatter = nil;
-    static dispatch_once_t token;
-    dispatch_once(&token, ^{
-        if (!entryDateFormatter) {
-            entryDateFormatter = ({
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-                [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-                dateFormatter;
-            });
-        }
-    });
-    return entryDateFormatter;
-}
-
 #pragma mark - Setters
 
 - (void)setEntryPath:(NSString *)entryPath {
@@ -99,14 +83,12 @@
     [self reloadEntryIfNeeded];
 }
 
-- (void)configureWithEntry:(NSDictionary *)entryDetail {
-    if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-        [entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+- (void)configureWithEntry:(XXTExplorerEntry *)entryDetail {
+    if (entryDetail.isBrokenSymlink) {
         // broken symlink
         self.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
         self.entrySubtitleLabel.textColor = XXTE_COLOR_DANGER;
-    } else if ([entryDetail[XXTExplorerViewEntryAttributeType] isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink] &&
-               ![entryDetail[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink]) {
+    } else if (entryDetail.isSymlink) {
         // symlink
         self.entryTitleLabel.textColor = XXTE_COLOR;
         self.entrySubtitleLabel.textColor = XXTE_COLOR;
@@ -114,28 +96,17 @@
         self.entryTitleLabel.textColor = [UIColor blackColor];
         self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
     }
-    NSString *entryDisplayName = entryDetail[XXTExplorerViewEntryAttributeDisplayName];
-    NSString *readableSize = [NSByteCountFormatter stringFromByteCount:[entryDetail[XXTExplorerViewEntryAttributeSize] longLongValue] countStyle:NSByteCountFormatterCountStyleFile];
-    NSString *creationDateString = [self.class.entryDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeCreationDate]];
-    NSString *modificationDateString = [self.class.entryDateFormatter stringFromDate:entryDetail[XXTExplorerViewEntryAttributeModificationDate]];
+    NSString *entryDisplayName = [entryDetail localizedDisplayName];
+    NSString *readableSize = [entryDetail localizedStringOfEntrySize];
+    NSString *creationDateString = [entryDetail localizedStringOfCreationDate];
+    NSString *modificationDateString = [entryDetail localizedStringOfModificationDate];
     NSString *entryDescriptionFormat = NSLocalizedString(@"%@\n\nCreated at: %@\nModified at: %@", nil);
     NSString *entryDescription = [NSString stringWithFormat:entryDescriptionFormat, readableSize, creationDateString, modificationDateString];
-    UIImage *entryIconImage = entryDetail[XXTExplorerViewEntryAttributeIconImage];
-    if (entryDetail[XXTExplorerViewEntryAttributeEntryReader]) {
-        XXTExplorerEntryReader *entryReader = entryDetail[XXTExplorerViewEntryAttributeEntryReader];
-        if (entryReader.entryDisplayName) {
-            entryDisplayName = entryReader.entryDisplayName;
-        } else {
-            if (XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES))
-            {
-                entryDisplayName = [entryDisplayName stringByDeletingPathExtension];
-            }
-        }
+    UIImage *entryIconImage = [entryDetail localizedDisplayIconImage];
+    if (entryDetail.entryReader) {
+        XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
         if (entryReader.entryDescription) {
             entryDescription = [NSString stringWithFormat:entryDescriptionFormat, entryReader.entryDescription, creationDateString, modificationDateString];
-        }
-        if (entryReader.entryIconImage) {
-            entryIconImage = entryReader.entryIconImage;
         }
     }
     self.entryTitleLabel.text = entryDisplayName;

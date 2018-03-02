@@ -119,7 +119,7 @@ static int sizingCancelFlag = 0;
 
 @interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate>
 
-@property (nonatomic, strong) NSDictionary *entry;
+@property (nonatomic, strong) XXTExplorerEntry *entry;
 @property (nonatomic, strong) NSBundle *entryBundle;
 
 @property (nonatomic, strong) UITextField *nameField;
@@ -199,26 +199,19 @@ static int sizingCancelFlag = 0;
 
 - (void)reloadStaticTableViewData {
     // Prepare
-    NSDictionary *entry = self.entry;
+    XXTExplorerEntry *entry = self.entry;
     if (!entry) return;
     
     NSFileManager *previewManager = [[NSFileManager alloc] init];
     NSMutableArray <XXTExplorerDynamicSection *> *mutableDynamicSections = [[NSMutableArray alloc] init];
     
-    XXTExplorerEntryReader *entryReader = entry[XXTExplorerViewEntryAttributeEntryReader];
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
-    NSString *entryBaseType = entry[XXTExplorerViewEntryAttributeType];
+    XXTExplorerEntryReader *entryReader = entry.entryReader;
+    NSString *entryPath = entry.entryPath;
     BOOL entryReadable = [previewManager isReadableFileAtPath:entryPath];
-    BOOL entryRegular = [entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeRegular];
-    BOOL entryDirectory = [entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeDirectory];
-    BOOL entrySymlink = [entryBaseType isEqualToString:XXTExplorerViewEntryAttributeTypeSymlink];
-    NSString *entryMaskType = entry[XXTExplorerViewEntryAttributeMaskType];
-    BOOL entryMaskBundle = [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle];
-    BOOL entryMaskBrokenSymlink = [entryMaskType isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBrokenSymlink];
     
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSBundle *entryBundle = nil;
-    if (entryMaskBundle)
+    if (entry.isBundle)
         entryBundle = [NSBundle bundleWithPath:entryPath];
     entryBundle = (entryBundle != nil) ? entryBundle : mainBundle;
     self.entryBundle = entryBundle;
@@ -230,7 +223,7 @@ static int sizingCancelFlag = 0;
     {
         XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
         cell1.nameField.delegate = self;
-        cell1.nameField.text = entry[XXTExplorerViewEntryAttributeName];
+        cell1.nameField.text = entry.entryName;
         self.nameField = cell1.nameField;
         self.itemNameShaker = [[XUIViewShaker alloc] initWithView:self.nameField];
         
@@ -244,7 +237,7 @@ static int sizingCancelFlag = 0;
     }
     
     // #2 - Extended
-    if (!entrySymlink)
+    if (!entry.isSymlink)
     {
         NSMutableArray <UITableViewCell *> *extendedCells = [[NSMutableArray alloc] init];
         NSMutableArray <NSNumber *> *extendedHeights = [[NSMutableArray alloc] init];
@@ -333,7 +326,7 @@ static int sizingCancelFlag = 0;
     
     // #4 - Original (Correct Symbolic Link)
     
-    if (entrySymlink && !entryMaskBrokenSymlink)
+    if (entry.isSymlink && !entry.isBrokenSymlink)
     {
         NSError *originalError = nil;
         NSString *originalPath = [previewManager destinationOfSymbolicLinkAtPath:entryPath error:&originalError];
@@ -382,21 +375,21 @@ static int sizingCancelFlag = 0;
             cell4.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             
             NSString *entryExtensionDescription = nil;
-            if (entryRegular)
+            if (entry.isRegular)
                 entryExtensionDescription = NSLocalizedString(@"Regular File", nil);
-            else if (entryDirectory)
+            else if (entry.isDirectory)
                 entryExtensionDescription = NSLocalizedString(@"Directory", nil);
-            else if (entrySymlink)
+            else if (entry.isSymlink)
                 entryExtensionDescription = NSLocalizedString(@"Symbolic Link", nil);
             else
                 entryExtensionDescription = NSLocalizedString(@"Unknown", nil);
-            if (!entrySymlink && (entryRegular || entryMaskBundle) && [entryReader entryExtensionDescription])
+            if (!entry.isSymlink && (entry.isRegular || entry.isBundle) && [entryReader entryExtensionDescription])
                 entryExtensionDescription = NSLocalizedString(entryReader.entryExtensionDescription, nil);
             
-            if (entryRegular && entryReadable)
+            if (entry.isRegular && entryReadable)
             {
                 NSString *MIMEString = @"application/octet-stream";
-                CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry[XXTExplorerViewEntryAttributeExtension], NULL);
+                CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)entry.entryExtension, NULL);
                 CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
                 if (UTI) CFRelease(UTI);
                 if (MIMEType != NULL) {
@@ -417,7 +410,7 @@ static int sizingCancelFlag = 0;
             XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell5.titleLabel.text = NSLocalizedString(@"Size", nil);
             
-            if (entryDirectory)
+            if (entry.isDirectory)
             { // Async Sizing
                 cell5.valueLabel.text = NSLocalizedString(@"Calculating...\n", nil);
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -434,8 +427,7 @@ static int sizingCancelFlag = 0;
             }
             else
             {
-                NSNumber *entrySize = entry[XXTExplorerViewEntryAttributeSize];
-                cell5.valueLabel.text = [self formattedSizeLabelText:entrySize];
+                cell5.valueLabel.text = [self formattedSizeLabelText:entry.entrySize];
             }
             
             cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -445,10 +437,9 @@ static int sizingCancelFlag = 0;
         }
         
         {
-            NSDate *entryCreationDate = entry[XXTExplorerViewEntryAttributeCreationDate];
             XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell6.titleLabel.text = NSLocalizedString(@"Created At", nil);
-            cell6.valueLabel.text = [previewFormatter stringFromDate:entryCreationDate];
+            cell6.valueLabel.text = [previewFormatter stringFromDate:entry.creationDate];
             cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell6.valueLabel.numberOfLines = 2;
             
@@ -457,10 +448,9 @@ static int sizingCancelFlag = 0;
         }
         
         {
-            NSDate *entryModificationDate = entry[XXTExplorerViewEntryAttributeModificationDate];
             XXTEMoreTitleValueCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
             cell7.titleLabel.text = NSLocalizedString(@"Modified At", nil);
-            cell7.valueLabel.text = [previewFormatter stringFromDate:entryModificationDate];
+            cell7.valueLabel.text = [previewFormatter stringFromDate:entry.modificationDate];
             cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell7.valueLabel.numberOfLines = 2;
             
@@ -574,9 +564,9 @@ static int sizingCancelFlag = 0;
     BOOL allowOpenMethod = XXTEDefaultsBool(XXTExplorerAllowOpenMethodKey, NO);
 #endif
     
-    if (entryRegular && allowOpenMethod)
+    if (entry.isRegular && allowOpenMethod)
     {
-        NSString *entryExtension = entry[XXTExplorerViewEntryAttributeExtension];
+        NSString *entryExtension = entry.entryExtension;
         if (entryExtension.length > 0) {
             NSString *enteyViewerDescription = nil;
             if (entryReader.entryViewerDescription)
@@ -654,8 +644,8 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     NSFileManager *renameManager = [[NSFileManager alloc] init];
-    NSDictionary *entry = self.entry;
-    NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+    XXTExplorerEntry *entry = self.entry;
+    NSString *entryPath = entry.entryPath;
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
     if (entryParentPath.length == 0) {
         return;
@@ -755,15 +745,15 @@ static int sizingCancelFlag = 0;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
 #ifndef APPSTORE
-        NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
+        NSString *entryPath = self.entry.entryPath;
 #endif
         NSString *sectionIdentifier = self.dynamicSections[indexPath.section].identifier;
         UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
         if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOpenWith]) {
             if (indexPath.row == 0) {
-                NSDictionary *entry = self.entry;
-                if ([entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeTypeRegular] ||
-                    [entry[XXTExplorerViewEntryAttributeMaskType] isEqualToString:XXTExplorerViewEntryAttributeMaskTypeBundle]) {
+                XXTExplorerEntry *entry = self.entry;
+                if (entry.isMaskedRegular ||
+                    entry.isBundle) {
                     XXTExplorerEntryBindingViewController *bindingViewController = [[XXTExplorerEntryBindingViewController alloc] initWithEntry:entry];
                     bindingViewController.delegate = self;
                     [self.navigationController pushViewController:bindingViewController animated:YES];
@@ -884,7 +874,7 @@ static int sizingCancelFlag = 0;
 - (void)textFieldDidChangeWithNotificaton:(NSNotification *)aNotification {
     UITextField *textField = (UITextField *)aNotification.object;
     if (textField.text.length > 0) {
-        if ([textField.text isEqualToString:self.entry[XXTExplorerViewEntryAttributeName]]) {
+        if ([textField.text isEqualToString:self.entry.entryName]) {
             self.doneButtonItem.enabled = NO;
         } else {
             self.doneButtonItem.enabled = YES;
@@ -898,7 +888,7 @@ static int sizingCancelFlag = 0;
 
 - (void)bindingViewController:(XXTExplorerEntryBindingViewController *)controller
             bindingDidChanged:(NSString *)controllerName {
-    NSString *entryPath = self.entry[XXTExplorerViewEntryAttributePath];
+    NSString *entryPath = self.entry.entryPath;
     self.entry = [self.entryParser entryOfPath:entryPath withError:nil];
     [self reloadStaticTableViewData];
     [self.tableView reloadData];

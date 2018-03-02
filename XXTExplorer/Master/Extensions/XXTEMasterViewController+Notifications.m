@@ -404,7 +404,7 @@
 
 - (BOOL)performAction:(id)sender presentConfiguratorForBundleAtPath:(NSString *)bundlePath configurationName:(NSString *)name interactiveMode:(BOOL)interactive {
     NSError *entryError = nil;
-    NSDictionary *entryDetail = [[XXTExplorerViewController explorerEntryParser] entryOfPath:bundlePath withError:&entryError];
+    XXTExplorerEntry *entryDetail = [[XXTExplorerViewController explorerEntryParser] entryOfPath:bundlePath withError:&entryError];
     if (entryError) {
         toastMessageWithDelay(self, ([entryError localizedDescription]), 5.0);
         return NO;
@@ -412,7 +412,7 @@
     if (!entryDetail) {
         return NO;
     }
-    NSString *entryName = entryDetail[XXTExplorerViewEntryAttributeName];
+    NSString *entryName = entryDetail.entryName;
     if (![[XXTExplorerViewController explorerEntryService] hasConfiguratorForEntry:entryDetail]) {
         toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]), 5.0);
         return NO;

@@ -40,7 +40,7 @@
         if (controller.editImmediately) {
             if (path) {
                 NSError *entryError = nil;
-                NSDictionary *entryDetail = [[self.class explorerEntryParser] entryOfPath:path withError:&entryError];
+                XXTExplorerEntry *entryDetail = [[self.class explorerEntryParser] entryOfPath:path withError:&entryError];
                 if (!entryError) {
                     [self performUnchangedButtonAction:@"Edit" forEntry:entryDetail];
                 } else {

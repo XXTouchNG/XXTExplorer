@@ -35,8 +35,8 @@
 
 - (void)openWithViewController:(XXTExplorerEntryOpenWithViewController *)controller viewerDidSelected:(NSString *)controllerName {
     [controller dismissViewControllerAnimated:YES completion:^{
-        NSDictionary *entry = controller.entry;
-        NSString *entryPath = entry[XXTExplorerViewEntryAttributePath];
+        XXTExplorerEntry *entry = controller.entry;
+        NSString *entryPath = entry.entryPath;
         UIViewController *detailController = [[self.class explorerEntryService] viewerWithName:controllerName forEntryPath:entryPath];
         [self tableView:self.tableView showDetailController:detailController];
     }];
