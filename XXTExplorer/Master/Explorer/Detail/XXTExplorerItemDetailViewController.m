@@ -401,9 +401,8 @@ static int sizingCancelFlag = 0;
                 cell4.valueLabel.text = entryExtensionDescription;
             }
             
-            cell4.valueLabel.numberOfLines = 2;
             if (cell4) [sectionCells1 addObject:cell4];
-            [sectionHeights1 addObject:@(66.f)];
+            [sectionHeights1 addObject:@(-1)];
         }
         
         {
@@ -431,9 +430,9 @@ static int sizingCancelFlag = 0;
             }
             
             cell5.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            cell5.valueLabel.numberOfLines = 2;
+            
             if (cell5) [sectionCells1 addObject:cell5];
-            [sectionHeights1 addObject:@(66.f)];
+            [sectionHeights1 addObject:@(-1)];
         }
         
         {
@@ -441,10 +440,9 @@ static int sizingCancelFlag = 0;
             cell6.titleLabel.text = NSLocalizedString(@"Created At", nil);
             cell6.valueLabel.text = [previewFormatter stringFromDate:entry.creationDate];
             cell6.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            cell6.valueLabel.numberOfLines = 2;
             
             if (cell6) [sectionCells1 addObject:cell6];
-            [sectionHeights1 addObject:@(66.f)];
+            [sectionHeights1 addObject:@(-1)];
         }
         
         {
@@ -452,10 +450,9 @@ static int sizingCancelFlag = 0;
             cell7.titleLabel.text = NSLocalizedString(@"Modified At", nil);
             cell7.valueLabel.text = [previewFormatter stringFromDate:entry.modificationDate];
             cell7.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            cell7.valueLabel.numberOfLines = 2;
             
             if (cell7) [sectionCells1 addObject:cell7];
-            [sectionHeights1 addObject:@(66.f)];
+            [sectionHeights1 addObject:@(-1)];
         }
     
         XXTExplorerDynamicSection *section4 = [[XXTExplorerDynamicSection alloc] init];

@@ -170,7 +170,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     cell3.titleLabel.text = NSLocalizedString(@"Expired At", nil);
     cell3.valueLabel.text = @"\n";
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell3.valueLabel.numberOfLines = 2;
     
     XXTEMoreLinkCell *linkCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     linkCell.titleLabel.text = NSLocalizedString(@"Buy License", nil);

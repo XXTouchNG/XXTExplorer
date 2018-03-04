@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTEAutoLabel.h"
 
 static NSString * const XXTEMoreTitleValueCellReuseIdentifier = @"XXTEMoreTitleValueCellReuseIdentifier";
 
 @interface XXTEMoreTitleValueCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet XXTEAutoLabel *valueLabel;
 
 @end

@@ -1519,6 +1519,9 @@
 "Unarchiving process terminated: User interrupt occurred." = "解归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
+"Undefined" = "未定义";
+
+/* No comment provided by engineer. */
 "Unicode (UTF-8)" = "Unicode (UTF-8)";
 
 /* No comment provided by engineer. */

@@ -134,7 +134,6 @@
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Modified At", nil);
     cell3.valueLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell3.valueLabel.numberOfLines = 2;
     self.modificationLabel = cell3.valueLabel;
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -210,6 +209,8 @@
     {
         if (self.editor.language) {
             self.syntaxDefinitionLabel.text = self.editor.language.displayName;
+        } else {
+            self.syntaxDefinitionLabel.text = NSLocalizedString(@"Undefined", nil);
         }
     }
     {

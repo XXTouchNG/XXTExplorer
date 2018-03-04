@@ -245,7 +245,7 @@ typedef enum : NSUInteger {
                 cell.valueLabel.text = [generalValue xui_stringValue];
                 
                 if (cell) [cells addObject:cell];
-                [heights addObject:@(44.f)];
+                [heights addObject:@(-1)];
                 [objects addObject:[NSNull null]];
             }
             else
@@ -316,7 +316,7 @@ typedef enum : NSUInteger {
                 cell.valueLabel.text = [extendedValue xui_stringValue];
                 
                 if (cell) [cells addObject:cell];
-                [heights addObject:@(44.f)];
+                [heights addObject:@(-1)];
                 [objects addObject:[NSNull null]];
             }
             else
