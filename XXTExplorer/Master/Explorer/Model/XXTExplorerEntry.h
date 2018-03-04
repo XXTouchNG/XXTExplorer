@@ -24,11 +24,11 @@ extern NSString * const EntryMaskTypeSymlink;
 extern NSString * const EntryMaskTypeBundle;
 extern NSString * const EntryMaskTypeBrokenSymlink;
 
-extern NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSortField field);
-
 @class XXTExplorerEntryReader;
 
 @interface XXTExplorerEntry : NSObject
+
++ (NSString *)sortField2AttributeName:(XXTExplorerViewEntryListSortField)field;
 
 @property (nonatomic, strong) UIImage *iconImage; // default image
 @property (nonatomic, copy) NSString *entryPath;
@@ -44,12 +44,12 @@ extern NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSor
 
 #pragma mark - Display Icon Image
 
-@property (nonatomic, strong, readonly) UIImage *displayIconImage;
+- (UIImage *)displayIconImage;
 - (UIImage *)localizedDisplayIconImage;
 
 #pragma mark - Display Name
 
-@property (nonatomic, copy, readonly) NSString *displayName;
+- (NSString *)displayName;
 - (NSString *)localizedDisplayName;
 
 #pragma mark - Type Getters

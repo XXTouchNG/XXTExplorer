@@ -13,11 +13,13 @@
 
 @interface XXTExplorerEntryService : NSObject
 
-@property (nonatomic, strong) NSDictionary *bindingDictionary;
-@property (nonatomic, strong) NSArray <Class> *registeredViewers;
+@property (nonatomic, strong, readonly) NSDictionary *bindingDictionary;
+@property (nonatomic, strong, readonly) NSArray <Class> *registeredViewers;
 
 + (instancetype)sharedInstance;
 - (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName;
+
+- (BOOL)isRegisteredExtension:(NSString *)ext;
 
 - (BOOL)hasViewerForEntry:(XXTExplorerEntry *)entry;
 - (BOOL)hasEditorForEntry:(XXTExplorerEntry *)entry;

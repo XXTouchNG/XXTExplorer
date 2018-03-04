@@ -21,6 +21,8 @@
 
 @implementation XXTExplorerEntryService
 
+@synthesize bindingDictionary = _bindingDictionary, registeredViewers = _registeredViewers;
+
 + (instancetype)sharedInstance {
     static XXTExplorerEntryService *sharedInstance = nil;
     static dispatch_once_t once;
@@ -86,6 +88,11 @@
     NSDictionary *saveBindingDictionary = [[NSDictionary alloc] initWithDictionary:mutableBindingDictionary];
     XXTEDefaultsSetObject(XXTExplorerViewEntryBindingKey, saveBindingDictionary);
     _bindingDictionary = nil; // clear binding cache
+}
+
+- (BOOL)isRegisteredExtension:(NSString *)ext {
+    if (ext.length == 0) return NO;
+    return [self.bindingDictionary.allKeys containsObject:ext];
 }
 
 - (BOOL)hasViewerForEntry:(XXTExplorerEntry *)entry {

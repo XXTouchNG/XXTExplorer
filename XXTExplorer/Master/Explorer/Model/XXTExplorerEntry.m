@@ -8,7 +8,9 @@
 
 #import "XXTExplorerEntry.h"
 #import "XXTExplorerEntryReader.h"
+
 #import "XXTEAppDefines.h"
+#import "XXTExplorerEntryService.h"
 
 NSString * const EntryTypeUnsupported = @"EntryTypeUnsupported";
 NSString * const EntryTypeRegular = @"EntryTypeRegular";
@@ -22,7 +24,9 @@ NSString * const EntryMaskTypeSymlink = EntryTypeSymlink;
 NSString * const EntryMaskTypeBundle = @"EntryMaskTypeBundle";
 NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
 
-NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSortField field) {
+@implementation XXTExplorerEntry
+
++ (NSString *)sortField2AttributeName:(XXTExplorerViewEntryListSortField)field {
     switch (field) {
         case XXTExplorerViewEntryListSortFieldCreationDate:
             return @"creationDate";
@@ -31,7 +35,7 @@ NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSortField 
             return @"modificationDate";
             break;
         case XXTExplorerViewEntryListSortFieldDisplayName:
-            return @"localizedDisplayName";
+            return @"displayName";
             break;
         case XXTExplorerViewEntryListSortFieldItemType:
             return @"entryExtension";
@@ -45,8 +49,6 @@ NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSortField 
     return @"modificationDate";
 }
 
-@implementation XXTExplorerEntry
-
 - (NSString *)entryName {
     return [self.entryPath lastPathComponent];
 }
@@ -57,17 +59,32 @@ NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSortField 
 
 #pragma mark - Display Icon Image
 
-- (UIImage *)localizedDisplayIconImage {
+- (UIImage *)displayIconImage {
     if (self.entryReader.entryIconImage) {
         return self.entryReader.entryIconImage;
-    }
-    if (self.displayIconImage) {
-        return self.displayIconImage;
     }
     return self.iconImage;
 }
 
+- (UIImage *)localizedDisplayIconImage {
+    if (self.entryReader.entryIconImage) {
+        return self.entryReader.entryIconImage;
+    }
+    // external processing
+    return self.iconImage;
+}
+
 #pragma mark - Display Name
+
+- (NSString *)displayName {
+    if (self.entryReader.entryDisplayName) {
+        return self.entryReader.entryDisplayName;
+    }
+    if (self.entryReader.entryName) {
+        return self.entryReader.entryName;
+    }
+    return self.entryName;
+}
 
 - (NSString *)localizedDisplayName {
     if (self.entryReader.entryDisplayName) {
@@ -76,13 +93,17 @@ NSString * XXTExplorerSortField2AttributeName(XXTExplorerViewEntryListSortField 
     if (self.entryReader.entryName) {
         return self.entryReader.entryName;
     }
-    if (self.displayName) {
-        return self.displayName;
-    }
-    BOOL hideNameExtension = XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES);
+    BOOL hideNameExtension =
+    XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES);
     if (hideNameExtension)
     {
-        return [self.entryName stringByDeletingPathExtension];
+        NSString *nameExtension =
+        [self.entryName pathExtension];
+        BOOL isKnownExtension =
+        [[XXTExplorerEntryService sharedInstance] isRegisteredExtension:nameExtension];
+        if (isKnownExtension) {
+            return [self.entryName stringByDeletingPathExtension];
+        }
     }
     return self.entryName;
 }

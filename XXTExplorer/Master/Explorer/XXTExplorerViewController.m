@@ -346,7 +346,7 @@ XXTE_END_IGNORE_PARTIAL
         XXTExplorerViewEntryListSortField sortField = self.explorerSortField;
         XXTExplorerViewEntryListSortOrder sortOrder = self.explorerSortOrder;
         
-        NSString *sortFieldString = XXTExplorerSortField2AttributeName(sortField);
+        NSString *sortFieldString = [XXTExplorerEntry sortField2AttributeName:sortField];
         NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2)
         {
             if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {
