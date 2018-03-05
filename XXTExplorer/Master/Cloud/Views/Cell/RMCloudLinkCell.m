@@ -18,6 +18,9 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.titleTextLabel.textColor = XXTE_COLOR;
+    self.valueTextLabel.textColor = [UIColor blackColor];
+    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;

@@ -41,16 +41,10 @@
 		0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
-		0F222A14202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
-		0F222A15202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
 		0F222A16202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
 		0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1D202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
-		0F222A2C202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */; };
-		0F222A2D202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */; };
-		0F222A2E202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */; };
-		0F222A2F202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */; };
 		0F264C5C1F148C4900662664 /* UINavigationController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */; };
 		0F264C5F1F148CD100662664 /* XXTEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F264C5E1F148CD100662664 /* XXTEImagePickerController.m */; };
 		0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2916141F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m */; };
@@ -1205,6 +1199,8 @@
 		D6CCD4122048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6CCD4132048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
+		D6CCD418204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */; };
+		D6CCD419204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -1321,9 +1317,6 @@
 		0F222A17202F1C0F00EF2C27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DetailCloseItem.h"; sourceTree = "<group>"; };
 		0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DetailCloseItem.m"; sourceTree = "<group>"; };
-		0F222A29202F3ED900EF2C27 /* RMCloudMoreCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudMoreCollectionCell.h; sourceTree = "<group>"; };
-		0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudMoreCollectionCell.m; sourceTree = "<group>"; };
-		0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudMoreCollectionCell.xib; sourceTree = "<group>"; };
 		0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBar.h"; sourceTree = "<group>"; };
 		0F264C5B1F148C4900662664 /* UINavigationController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+StatusBar.m"; sourceTree = "<group>"; };
 		0F264C5D1F148CD100662664 /* XXTEImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEImagePickerController.h; sourceTree = "<group>"; };
@@ -2001,6 +1994,7 @@
 		D6CB81BC1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchAccessoryView.m; sourceTree = "<group>"; };
 		D6CCD4102048E16E009C2072 /* XXTExplorerEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntry.h; sourceTree = "<group>"; };
 		D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntry.m; sourceTree = "<group>"; };
+		D6CCD417204CDE69009C2072 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.Pro.storyboard; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -2871,6 +2865,7 @@
 				0FA7ABEE1ED641A3003EAD7D /* main.m */,
 				0FC598A91FB2189A001F918B /* main.AppStore.m */,
 				0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */,
+				D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */,
 				0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */,
 			);
 			path = "Supporting Files";
@@ -3069,9 +3064,6 @@
 				0FCAF404200A1D14002FB774 /* RMCloudMoreCell.h */,
 				0FCAF405200A1D14002FB774 /* RMCloudMoreCell.m */,
 				0FCAF406200A1D14002FB774 /* RMCloudMoreCell.xib */,
-				0F222A29202F3ED900EF2C27 /* RMCloudMoreCollectionCell.h */,
-				0F222A2A202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m */,
-				0F222A2B202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib */,
 				0FCAF40F200A48C5002FB774 /* RMCloudProjectDetailCell.h */,
 				0FCAF410200A48C5002FB774 /* RMCloudProjectDetailCell.m */,
 				0FCAF411200A48C5002FB774 /* RMCloudProjectDetailCell.xib */,
@@ -4325,6 +4317,7 @@
 				0F8ECD961FE81C1700A5457C /* OneHalf (Dark).png in Resources */,
 				0F8ECD971FE81C1700A5457C /* OneHalf (Light).png in Resources */,
 				0F8ECD981FE81C1700A5457C /* Solarized (Dark).png in Resources */,
+				D6CCD418204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */,
 				0F8ECD991FE81C1700A5457C /* Solarized (Light).png in Resources */,
 				0F8ECD9A1FE81C1700A5457C /* Sunburst.png in Resources */,
 				0F8ECD9B1FE81C1700A5457C /* Tomorrow Night (Blue).png in Resources */,
@@ -4363,7 +4356,6 @@
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
 				0F8ECD7E1FE81AEA00A5457C /* Hack-Bold.ttf in Resources */,
-				0F222A14202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */,
 				D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */,
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
@@ -4401,7 +4393,6 @@
 				0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */,
 				0F5EB5361F0A88600016016A /* XUIAboutCell.xib in Resources */,
 				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
-				0F222A2E202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */,
 				D60A26C41F3DB7BE00E013E2 /* Dawn.tmTheme in Resources */,
 				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
@@ -4465,9 +4456,9 @@
 				D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
+				D6CCD419204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */,
 				0FCAF4032009AE59002FB774 /* RMCloudProjectCell.xib in Resources */,
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
-				0F222A15202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */,
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
 				D60FE7911FE2369300954818 /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */,
@@ -4504,7 +4495,6 @@
 				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
 				0F469CE6200CE2C10042F1BF /* RMCloudExpandableCell.xib in Resources */,
 				D60FE7BA1FE2369300954818 /* Mac Classic.tmTheme in Resources */,
-				0F222A2F202F3ED900EF2C27 /* RMCloudMoreCollectionCell.xib in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				D60FE7BC1FE2369300954818 /* XXTImagePickerAlbumCell.xib in Resources */,
 				D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */,
@@ -5106,7 +5096,6 @@
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
 				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
-				0F222A2C202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */,
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
@@ -5422,7 +5411,6 @@
 				D60FE6971FE2369300954818 /* XXTExplorerEntryXPPReader.m in Sources */,
 				D60FE6981FE2369300954818 /* XXTEPackageExtractor.m in Sources */,
 				D60FE6991FE2369300954818 /* XXTPixelPlaceholderView.m in Sources */,
-				0F222A2D202F3ED900EF2C27 /* RMCloudMoreCollectionCell.m in Sources */,
 				D60FE69A1FE2369300954818 /* XXTETurtleBezierPath.m in Sources */,
 				D60FE69B1FE2369300954818 /* XXTEEditorController.m in Sources */,
 				D60FE69C1FE2369300954818 /* XXTEEditorController+State.m in Sources */,
@@ -5726,6 +5714,14 @@
 			);
 			name = Meta.strings;
 			path = .;
+			sourceTree = "<group>";
+		};
+		D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6CCD417204CDE69009C2072 /* Base */,
+			);
+			name = LaunchScreen.Pro.storyboard;
 			sourceTree = "<group>";
 		};
 		D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */ = {
