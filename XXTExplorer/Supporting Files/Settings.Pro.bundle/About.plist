@@ -30,22 +30,22 @@ All Rights Reserved.</string>
 		<dict>
 			<key>cell</key>
 			<string>Link</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconHome.png</string>
 			<key>label</key>
 			<string>Official Site</string>
 			<key>url</key>
 			<string>https://www.xxtouch.com</string>
-			<key>icon</key>
-			<string>res/XXTEAboutIconHome.png</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>Link</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconCopyright.png</string>
 			<key>label</key>
 			<string>Copyright &amp; User Agreement</string>
 			<key>url</key>
 			<string>Root.plist</string>
-			<key>icon</key>
-			<string>res/XXTEAboutIconCopyright.png</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -71,12 +71,12 @@ All Rights Reserved.</string>
 			</dict>
 			<key>cell</key>
 			<string>Button</string>
-			<key>label</key>
-			<string>Mail Feedback</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconMail.png</string>
-			<key>iconRenderingMode</key>
-			<string>AlwaysTemplate</string>
+            <key>iconRenderingMode</key>
+            <string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Mail Feedback</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -88,12 +88,12 @@ All Rights Reserved.</string>
 			</dict>
 			<key>cell</key>
 			<string>Button</string>
-			<key>label</key>
-			<string>Official QQ Group</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconGroup.png</string>
 			<key>iconRenderingMode</key>
 			<string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Official QQ Group</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -108,12 +108,12 @@ All Rights Reserved.</string>
 			<dict/>
 			<key>cell</key>
 			<string>Button</string>
-			<key>label</key>
-			<string>Check Update</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconUpdate.png</string>
 			<key>iconRenderingMode</key>
 			<string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Check Update</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -122,12 +122,12 @@ All Rights Reserved.</string>
 			<dict/>
 			<key>cell</key>
 			<string>Button</string>
-			<key>label</key>
-			<string>Reset Defaults</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconRecover.png</string>
 			<key>iconRenderingMode</key>
 			<string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Reset Defaults</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>
