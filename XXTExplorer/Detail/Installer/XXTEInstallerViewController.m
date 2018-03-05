@@ -14,9 +14,6 @@
 
 #import "XXTEInstallerLoadingView.h"
 
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerDefaults.h"
@@ -36,7 +33,6 @@
 #import "XXTEMoreSwitchCell.h"
 #import "UIControl+BlockTarget.h"
 
-#import "XXTEPermissionDefines.h"
 
 typedef enum : NSUInteger {
     XXTEInstallerViewControllerReplacementTypeNone = 0,

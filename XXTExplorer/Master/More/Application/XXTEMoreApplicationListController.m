@@ -10,8 +10,6 @@
 #import "XXTEMoreApplicationCell.h"
 #import "XXTEMoreApplicationDetailController.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
-#import "XXTEDispatchDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     ApplicationSectionUser = 0,
@@ -170,7 +168,7 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = XXTE_COLOR;
+        searchBar.tintColor = XXTColorDefault();
         searchBar.delegate = self;
         searchBar;
     });
@@ -340,7 +338,7 @@ XXTE_END_IGNORE_PARTIAL
     [cell setApplicationName:applicationDetail[kXXTEMoreApplicationDetailKeyName]];
     [cell setApplicationBundleID:applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];
     [cell setApplicationIconImage:applicationDetail[kXXTEMoreApplicationDetailKeyIconImage]];
-    [cell setTintColor:XXTE_COLOR];
+    [cell setTintColor:XXTColorDefault()];
     return cell;
 }
 

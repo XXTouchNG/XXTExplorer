@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerViewController.h"
-#import "XXTENetworkDefines.h"
 
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
@@ -34,10 +33,6 @@
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTENotificationCenterDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEPermissionDefines.h"
 
 #import "XXTExplorerItemPreviewController.h"
 #import "XXTExplorerNavigationController.h"
@@ -236,7 +231,7 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 - (void)restoreTheme {
-    UIColor *backgroundColor = XXTE_COLOR;
+    UIColor *backgroundColor = XXTColorDefault();
     UIColor *foregroundColor = [UIColor whiteColor];
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
@@ -408,7 +403,7 @@ XXTE_END_IGNORE_PARTIAL
     }
     NSString *usageString = nil;
     NSError *usageError = nil;
-    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:[XXTEAppDelegate sharedRootPath] error:&usageError];
+    NSDictionary *fileSystemAttributes = [self.class.explorerFileManager attributesOfFileSystemForPath:XXTERootPath() error:&usageError];
     if (!usageError) {
         NSNumber *deviceFreeSpace = fileSystemAttributes[NSFileSystemFreeSize];
         if (deviceFreeSpace != nil) {
@@ -598,7 +593,7 @@ XXTE_END_IGNORE_PARTIAL
     if ([directoryRelativePath isAbsolutePath]) {
         directoryPath = directoryRelativePath;
     } else {
-        directoryPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:directoryRelativePath];
+        directoryPath = [XXTERootPath() stringByAppendingPathComponent:directoryRelativePath];
     }
     NSError *accessError = nil;
     [self.class.explorerFileManager contentsOfDirectoryAtPath:directoryPath error:&accessError];
@@ -730,7 +725,7 @@ XXTE_END_IGNORE_PARTIAL
             {
                 entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
             }
-            NSString *rootPath = [XXTEAppDelegate sharedRootPath];
+            NSString *rootPath = XXTERootPath();
             NSRange rootRange = [self.entryPath rangeOfString:rootPath];
             if (rootRange.location == 0) {
                 NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
@@ -843,13 +838,13 @@ XXTE_END_IGNORE_PARTIAL
     entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
     if (entryDetail.isBrokenSymlink) {
         // broken symlink
-        entryCell.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
-        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_DANGER;
+        entryCell.entryTitleLabel.textColor = XXTColorDanger();
+        entryCell.entrySubtitleLabel.textColor = XXTColorDanger();
         entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
     } else if (entryDetail.isSymlink) {
         // symlink
-        entryCell.entryTitleLabel.textColor = XXTE_COLOR;
-        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR;
+        entryCell.entryTitleLabel.textColor = XXTColorDefault();
+        entryCell.entrySubtitleLabel.textColor = XXTColorDefault();
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     } else {
         entryCell.entryTitleLabel.textColor = [UIColor blackColor];
@@ -859,8 +854,8 @@ XXTE_END_IGNORE_PARTIAL
     if (!entryDetail.isMaskedDirectory &&
         [self.class.selectedScriptPath isEqualToString:entryDetail.entryPath]) {
         // selected script itself
-        entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
-        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_SUCCESS;
+        entryCell.entryTitleLabel.textColor = XXTColorSuccess();
+        entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
     } else if ((
                 entryDetail.isMaskedDirectory ||
@@ -868,8 +863,8 @@ XXTE_END_IGNORE_PARTIAL
                 ) &&
                [self.class.selectedScriptPath hasPrefix:entryDetail.entryPath]) {
         // selected script in directory / bundle
-        entryCell.entryTitleLabel.textColor = XXTE_COLOR_SUCCESS;
-        entryCell.entrySubtitleLabel.textColor = XXTE_COLOR_SUCCESS;
+        entryCell.entryTitleLabel.textColor = XXTColorSuccess();
+        entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
     }
     entryCell.entryTitleLabel.text = entryDetail.localizedDisplayName;

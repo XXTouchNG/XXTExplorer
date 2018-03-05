@@ -70,8 +70,8 @@
 
 - (void)initControls {
     // side buttons
-    _btUp.backgroundColor = XXTE_COLOR;
-    _btDown.backgroundColor = XXTE_COLOR;
+    _btUp.backgroundColor = XXTColorDefault();
+    _btDown.backgroundColor = XXTColorDefault();
 
     CALayer *layer1 = [_btDown layer];
     [layer1 setMasksToBounds:YES];
@@ -118,7 +118,7 @@
 #pragma mark - for bottom menu
 
 - (void)initBottomMenu {
-    _vBottomMenu.backgroundColor = XXTE_COLOR;
+    _vBottomMenu.backgroundColor = XXTColorDefault();
     [_btSelectAlbum setTitleColor:XXT_BOTTOM_TEXT_COLOR forState:UIControlStateNormal];
     [_btSelectAlbum setTitleColor:XXT_BOTTOM_TEXT_COLOR forState:UIControlStateDisabled];
 

@@ -19,10 +19,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.addressLabel.textColor = [UIColor blackColor];
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;
     
     if (XXTE_IS_IPHONE_6_BELOW) {

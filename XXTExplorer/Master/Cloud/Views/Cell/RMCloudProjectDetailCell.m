@@ -38,7 +38,7 @@
     downloadBtn.showsTouchWhenHighlighted = YES;
     [downloadBtn setTitle:NSLocalizedString(@"Download", nil) forState:UIControlStateNormal];
     [downloadBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [downloadBtn setBackgroundColor:XXTE_COLOR];
+    [downloadBtn setBackgroundColor:XXTColorDefault()];
     
     if (XXTE_IS_IPHONE_6_BELOW || XXTE_IS_IPAD) {
         self.additionalArea.hidden = YES;

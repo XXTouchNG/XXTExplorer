@@ -8,15 +8,12 @@
 
 #import "XXTESplitViewController.h"
 #import <LGAlertView/LGAlertView.h>
-#import "XXTENotificationCenterDefines.h"
 
-#import "XXTEUserInterfaceDefines.h"
 
 #import "XXTEWorkspaceViewController.h"
 #import "XXTENavigationController.h"
 
 #import <StoreKit/StoreKit.h>
-#import "XXTEAppDefines.h"
 
 #import "XXTEMasterViewController.h"
 #import "XXTExplorerViewController.h"
@@ -60,7 +57,7 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 
 - (void)setupAppearance {
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         if (@available(iOS 8.0, *)) {
             self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
             self.maximumPrimaryColumnWidth = 320.0;

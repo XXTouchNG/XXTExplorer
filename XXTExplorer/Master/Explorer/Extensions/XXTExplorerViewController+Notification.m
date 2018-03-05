@@ -9,14 +9,12 @@
 #import "XXTExplorerViewController+Notification.h"
 
 #import "XXTExplorerDefaults.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "NSString+QueryItems.h"
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
 
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerViewController+SharedInstance.h"
-#import "XXTEUserInterfaceDefines.h"
 
 @implementation XXTExplorerViewController (Notification)
 

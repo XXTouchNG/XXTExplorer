@@ -7,7 +7,6 @@
 //
 
 #import "XXTEWorkspaceViewController.h"
-#import "XXTENotificationCenterDefines.h"
 
 @interface XXTEWorkspaceViewController ()
 @property (nonatomic, strong) UIImageView *logoPlaceholderImageView;
@@ -166,7 +165,7 @@
 #pragma mark - Theme
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    UIColor *barTintColor = XXTE_COLOR;
+    UIColor *barTintColor = XXTColorDefault();
     UIColor *barTitleColor = [UIColor whiteColor];
     UINavigationController *navigation = self.navigationController;
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];

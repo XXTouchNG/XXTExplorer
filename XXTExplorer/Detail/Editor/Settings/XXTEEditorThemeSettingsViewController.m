@@ -99,7 +99,7 @@
             cell.previewImageView.image = [UIImage imageNamed:previewValue];
         }
         if ([themeName isEqualToString:self.selectedThemeName]) {
-            cell.titleLabel.textColor = XXTE_COLOR;
+            cell.titleLabel.textColor = XXTColorDefault();
             cell.selectFlagView.hidden = NO;
         } else {
             cell.titleLabel.textColor = [UIColor blackColor];
@@ -122,7 +122,7 @@
             cell.selectFlagView.hidden = YES;
         }
         XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectCell.titleLabel.textColor = XXTE_COLOR;
+        selectCell.titleLabel.textColor = XXTColorDefault();
         selectCell.selectFlagView.hidden = NO;
         
         if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {

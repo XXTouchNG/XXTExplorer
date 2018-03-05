@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h"
-#import "XXTEUserInterfaceDefines.h"
 
 #import "XXTExplorerViewController+Notification.h"
 #import "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"
@@ -22,7 +21,7 @@
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
-        if (XXTE_PAD) {
+        if (XXTE_IS_IPAD) {
             [self loadEntryListData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
         }

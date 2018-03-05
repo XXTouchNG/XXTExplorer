@@ -10,7 +10,6 @@
 #import "XXTEEditorSettingsViewController.h"
 #import "XXTEEditorStatisticsViewController.h"
 #import "XXTESymbolViewController.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "XXTENavigationController.h"
 
 #import "XXTEEditorTextView.h"

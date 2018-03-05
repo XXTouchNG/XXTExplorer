@@ -20,9 +20,6 @@
 #import "XXTEModeSettingsController.h"
 #import "LASettingsViewController+MyShowsAd.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTENetworkDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     XXTEMoreActivationSectionInternalSwitch = 0,

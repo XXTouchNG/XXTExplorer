@@ -52,12 +52,12 @@ static const void *ObjectTagKey = &ObjectTagKey;
 - (void)setupAppearance {
     UINavigationBar *barAppearance = [UINavigationBar appearance];
     [barAppearance setTintColor:[UIColor whiteColor]];
-    [barAppearance setBarTintColor:XXTE_COLOR];
+    [barAppearance setBarTintColor:XXTColorDefault()];
     [barAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];
-    [navigationBarAppearance setBarTintColor:XXTE_COLOR];
+    [navigationBarAppearance setBarTintColor:XXTColorDefault()];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {

@@ -9,10 +9,6 @@
 #import <sys/stat.h>
 #import "XXTEMasterViewController+Notifications.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEDispatchDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "XXTEViewer.h"
 #import "XXTExplorerDefaults.h"
@@ -27,12 +23,10 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 
 #import "UIViewController+topMostViewController.h"
-#import "XXTEPermissionDefines.h"
 
 #ifndef APPSTORE
     #import "XXTExplorerDefaults.h"
-    #import "XXTENetworkDefines.h"
-
+    
     #import "XXTEMoreLicenseController.h"
     #import "XXTEDownloadViewController.h"
     #import <PromiseKit/PromiseKit.h>

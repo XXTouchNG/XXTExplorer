@@ -8,9 +8,6 @@
 
 #import "XXTESymbolViewController.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 #import "XXTEEditorDefaults.h"
 
 // Parent
@@ -82,7 +79,7 @@ UISearchDisplayDelegate
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.barTintColor = [UIColor whiteColor];
-    searchBar.tintColor = XXTE_COLOR;
+    searchBar.tintColor = XXTColorDefault();
     
     XXTE_START_IGNORE_PARTIAL
     UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];

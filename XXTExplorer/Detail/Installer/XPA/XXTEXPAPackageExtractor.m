@@ -8,8 +8,6 @@
 
 #import <sys/stat.h>
 #import "XXTEXPAPackageExtractor.h"
-#import "XXTEAppDefines.h"
-#import "XXTEDispatchDefines.h"
 
 #import "zip.h"
 
@@ -33,7 +31,7 @@
     if (self = [super init]) {
         _packagePath = path;
         
-        NSString *cachesLocation = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"];
+        NSString *cachesLocation = [XXTERootPath() stringByAppendingPathComponent:@"caches"];
         
         NSString *temporarilyLocation = [cachesLocation stringByAppendingPathComponent:@"_XXTEXPAPackageExtractor"];
         _temporarilyLocation = temporarilyLocation;

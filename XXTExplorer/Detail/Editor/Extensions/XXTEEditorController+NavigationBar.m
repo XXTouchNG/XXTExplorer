@@ -8,7 +8,6 @@
 
 #import "XXTEEditorController+NavigationBar.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
 
 #import "XXTEEditorTheme.h"
@@ -24,7 +23,7 @@
         prefersLightStatusBar = [self isDarkMode];
     } else {
         UIColor *newColor = self.theme.barTintColor;
-        if (!newColor) newColor = XXTE_COLOR;
+        if (!newColor) newColor = XXTColorDefault();
         prefersLightStatusBar = [newColor xui_isDarkColor];
     }
     if (prefersLightStatusBar) {
@@ -37,7 +36,7 @@
 - (BOOL)isDarkMode
 {
     UIColor *newColor = self.theme.backgroundColor;
-    if (!newColor) newColor = XXTE_COLOR;
+    if (!newColor) newColor = XXTColorDefault();
     return [newColor xui_isDarkColor];
 }
 
@@ -55,7 +54,7 @@
 }
 
 - (BOOL)shouldNavigationBarHidden {
-    if (XXTE_PAD ||
+    if (XXTE_IS_IPAD ||
         NO == XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO))
     {
         return NO;
@@ -66,7 +65,7 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    UIColor *barTintColor = XXTE_COLOR;
+    UIColor *barTintColor = XXTColorDefault();
     UIColor *barTitleColor = [UIColor whiteColor];
     XXTEEditorTheme *theme = self.theme;
     UINavigationController *navigation = self.navigationController;

@@ -10,7 +10,6 @@
 #import "XXTELogReader.h"
 
 #import <LGAlertView/LGAlertView.h>
-#import "XXTEUserInterfaceDefines.h"
 
 static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
 
@@ -133,7 +132,7 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
         logTextView.dataDetectorTypes = UIDataDetectorTypeNone;
         logTextView.textAlignment = NSTextAlignmentLeft;
         logTextView.allowsEditingTextAttributes = NO;
-        logTextView.tintColor = XXTE_COLOR;
+        logTextView.tintColor = XXTColorDefault();
         logTextView.font = [UIFont fontWithName:@"CourierNewPSMT" size:12.f];
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 11.0, *)) {

@@ -10,14 +10,10 @@
 #import "XXTEMoreSwitchCell.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
 #import "UIControl+BlockTarget.h"
 #import "NSString+XQueryComponents.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
-#import "XXTEPermissionDefines.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerDownloadViewSectionIndexSource = 0,
@@ -325,7 +321,7 @@ typedef enum : NSUInteger {
 #pragma mark - UIControl Actions
 
 - (void)dismissViewController:(id)sender {
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -381,7 +377,7 @@ typedef enum : NSUInteger {
 {
     if (index == 0 || index == 1) {
         [alertView dismissAnimated];
-        if (XXTE_PAD) {
+        if (XXTE_IS_IPAD) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
         BOOL instantRun = (index == 0);

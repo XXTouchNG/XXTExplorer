@@ -7,7 +7,6 @@
 //
 
 #import "XUIAdapter_xui.h"
-#import "XXTEAppDelegate.h"
 
 #import "XUIBaseCell.h"
 #import "XXTLuaNSValue.h"
@@ -106,7 +105,7 @@
     NSString *path = self.path;
     NSBundle *bundle = self.bundle;
     NSBundle *mainBundle = [NSBundle mainBundle];
-    NSString *rootPath = [XXTEAppDelegate sharedRootPath];
+    NSString *rootPath = XXTERootPath();
     
     if (!path || !bundle || !rootPath || !mainBundle) return nil;
     id value = nil;
@@ -150,7 +149,7 @@
     NSString *path = self.path;
     NSBundle *bundle = self.bundle;
     NSBundle *mainBundle = [NSBundle mainBundle];
-    NSString *rootPath = [XXTEAppDelegate sharedRootPath];
+    NSString *rootPath = XXTERootPath();
     
     if (!path || !bundle || !rootPath || !mainBundle) return;
     

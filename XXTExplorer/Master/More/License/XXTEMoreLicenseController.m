@@ -15,16 +15,12 @@
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreLicenseCell.h"
 #import "XXTEMoreLinkCell.h"
-#import "XXTENetworkDefines.h"
 #import "XUIViewShaker.h"
 #import "XXTExplorerViewController.h"
 
 #import "XXTEShimmeringView.h"
 #import "XXTECommonWebViewController.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEPermissionDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "NSString+XQueryComponents.h"
 
 static NSString * const kXXTEMoreLicenseCachedLicense = @"kXXTEMoreLicenseCachedLicense";
@@ -511,9 +507,9 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     NSString *fromString = textField.text;
     NSString *trimedString = [fromString stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (trimedString.length == 16) {
-        textField.textColor = XXTE_COLOR_SUCCESS;
+        textField.textColor = XXTColorSuccess();
     } else {
-        textField.textColor = XXTE_COLOR;
+        textField.textColor = XXTColorDefault();
     }
     if (trimedString.length == 12 || trimedString.length == 16) {
         self.doneButtonItem.enabled = YES;
@@ -700,7 +696,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     .then(^(NSString *licenseLog) {
         if (licenseLog.length > 0) {
             NSString *licenseLogPath = uAppDefine(@"LICENSE_LOG_PATH");
-            NSString *licenseLogFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:licenseLogPath];
+            NSString *licenseLogFullPath = [XXTERootPath() stringByAppendingPathComponent:licenseLogPath];
             struct stat licenseLogStat;
             if (0 != lstat([licenseLogFullPath UTF8String], &licenseLogStat)) {
                 [[NSFileManager defaultManager] createFileAtPath:licenseLogFullPath
@@ -766,18 +762,18 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     dateLabel.text = displayDateString;
     if (status >= 0) {
         statusLabelCell.valueLabel.text = NSLocalizedString(@"Outdated", nil);
-        dateLabel.textColor = XXTE_COLOR_DANGER;
+        dateLabel.textColor = XXTColorDanger();
     }
     else {
         statusLabelCell.valueLabel.text = NSLocalizedString(@"Activated", nil);
-        dateLabel.textColor = XXTE_COLOR;
+        dateLabel.textColor = XXTColorDefault();
     }
     [self.tableView reloadData];
 }
 
 - (UIImage *)generateCardImageWithLicense:(NSDictionary *)licenseDictionary {
     NSString *logPath = uAppDefine(@"LOG_PATH");
-    NSString *logFullPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:logPath];
+    NSString *logFullPath = [XXTERootPath() stringByAppendingPathComponent:logPath];
     NSString *uuidString = [[NSUUID UUID] UUIDString];
     NSString *cardPath = [[logFullPath stringByAppendingPathComponent:uuidString] stringByAppendingPathExtension:@"pdf"];
     [self createSignaturedPDFWithLicense:(NSDictionary *)licenseDictionary atPath:cardPath];

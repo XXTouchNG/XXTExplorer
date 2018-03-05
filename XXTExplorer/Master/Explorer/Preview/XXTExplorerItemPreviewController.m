@@ -8,7 +8,6 @@
 
 #import "XXTExplorerItemPreviewController.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 
 #import "XXTExplorerEntryReader.h"
@@ -44,6 +43,9 @@
 }
 
 - (void)setup {
+    self.entryTitleLabel.textColor = [UIColor blackColor];
+    self.entrySubtitleLabel.textColor = [UIColor lightGrayColor];
+    
     XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
     _entryParser = entryParser;
 }
@@ -86,12 +88,12 @@
 - (void)configureWithEntry:(XXTExplorerEntry *)entryDetail {
     if (entryDetail.isBrokenSymlink) {
         // broken symlink
-        self.entryTitleLabel.textColor = XXTE_COLOR_DANGER;
-        self.entrySubtitleLabel.textColor = XXTE_COLOR_DANGER;
+        self.entryTitleLabel.textColor = XXTColorDanger();
+        self.entrySubtitleLabel.textColor = XXTColorDanger();
     } else if (entryDetail.isSymlink) {
         // symlink
-        self.entryTitleLabel.textColor = XXTE_COLOR;
-        self.entrySubtitleLabel.textColor = XXTE_COLOR;
+        self.entryTitleLabel.textColor = XXTColorDefault();
+        self.entrySubtitleLabel.textColor = XXTColorDefault();
     } else {
         self.entryTitleLabel.textColor = [UIColor blackColor];
         self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];

@@ -9,7 +9,6 @@
 #import "RMCloudViewController.h"
 #import "RMCloudListViewController.h"
 #import "RMCloudSearchViewController.h"
-#import "XXTEAppDefines.h"
 
 @interface RMCloudViewController ()
 @property (nonatomic, strong) UIBarButtonItem *searchItem;

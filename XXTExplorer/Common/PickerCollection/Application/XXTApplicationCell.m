@@ -20,8 +20,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.appLabel.textColor = [UIColor blackColor];
+    self.bundleIDLabel.textColor = XXTColorDefault();
+    
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;
 }
 

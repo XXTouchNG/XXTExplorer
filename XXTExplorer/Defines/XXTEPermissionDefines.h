@@ -9,6 +9,8 @@
 #ifndef XXTEPermissionDefines_h
 #define XXTEPermissionDefines_h
 
+#ifdef __OBJC__
+
 #import <Foundation/Foundation.h>
 
 #ifdef __cplusplus
@@ -21,5 +23,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* __OBJC__ */
 
 #endif /* XXTEPermissionDefines_h */

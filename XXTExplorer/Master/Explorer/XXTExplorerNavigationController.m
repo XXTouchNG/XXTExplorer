@@ -9,9 +9,6 @@
 #import "XXTExplorerNavigationController.h"
 #import "XXTExplorerViewController.h"
 
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
-#import "XXTEDispatchDefines.h"
 
 #import "XXTExplorerViewController+SharedInstance.h"
 

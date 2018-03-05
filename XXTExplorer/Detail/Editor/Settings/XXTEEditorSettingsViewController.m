@@ -9,7 +9,6 @@
 #import "XXTEEditorSettingsViewController.h"
 
 // Pre-Defines
-#import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
 
 // Cells & Subviews
@@ -392,13 +391,13 @@
     NSArray *layoutSection = nil;
     NSArray *keyboardSection = nil;
     
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         layoutSection = @[ cell5, cell6 ];
     } else {
         layoutSection = @[ fullScreenCell, cell5, cell6 ];
     }
     
-    if (XXTE_PAD && XXTE_SYSTEM_9) {
+    if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
         keyboardSection = @[ cell12 ];
     } else {
         keyboardSection = @[ cell12, cell13 ];

@@ -12,7 +12,6 @@
 #import "XXTEMoreUserDefaultsController.h"
 #import "XXTEUIViewController.h"
 
-#import "XXTENotificationCenterDefines.h"
 #import "XXTENavigationController.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTExplorerEntryService.h"
@@ -21,7 +20,6 @@
 #import "XXTEMoreAddressCell.h"
 
 #import <LGAlertView/LGAlertView.h>
-#import "XXTEUserInterfaceDefines.h"
 
 #ifndef APPSTORE
     #import <objc/runtime.h>
@@ -29,14 +27,11 @@
     #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
-    #import "XXTEAppDefines.h"
-    #import "XXTENetworkDefines.h"
-
+        
     #import "XXTEMoreApplicationListController.h"
     #import "XXTEMoreLicenseController.h"
     #import "XXTEMoreActivationController.h"
-    #import "XXTENotificationCenterDefines.h"
-    #import "XXTEMoreBootScriptController.h"
+        #import "XXTEMoreBootScriptController.h"
 
     #import "XXTEConfirmTextInputObject.h"
 #else
@@ -219,7 +214,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         cellAddress1.addressLabel.textColor = [UIColor blackColor];
         cellAddress1.addressLabel.text = _webServerUrl;
     } else {
-        cellAddress1.addressLabel.textColor = XXTE_COLOR_DANGER;
+        cellAddress1.addressLabel.textColor = XXTColorDanger();
         cellAddress1.addressLabel.text = NSLocalizedString(@"Connect to Wi-fi network.", nil);
     }
     cellAddress2.addressLabel.text = _bonjourWebServerUrl.length > 0 ? _bonjourWebServerUrl : NSLocalizedString(@"N/A", nil);
@@ -568,7 +563,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                                                                       numberOfTextFields:1
                                                                   textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
                                                                       if (index == 0) {
-                                                                          textField.tintColor = XXTE_COLOR;
+                                                                          textField.tintColor = XXTColorDefault();
                                                                           textField.autocorrectionType = UITextAutocorrectionTypeNo;
                                                                           textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
                                                                           textField.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -630,7 +625,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                         logPath = uAppDefine(kXXTEDaemonErrorLogPath);
                     }
                     if (logPath) {
-                        NSString *logEntirePath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:logPath];
+                        NSString *logEntirePath = [XXTERootPath() stringByAppendingPathComponent:logPath];
                         UIViewController *detailController = [[XXTExplorerViewController explorerEntryService] viewerWithName:logViewerName forEntryPath:logEntirePath];
                         detailController.title = linkTitle;
                         [self tableView:tableView showDetailController:detailController];
@@ -1030,7 +1025,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
 #ifdef APPSTORE
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];

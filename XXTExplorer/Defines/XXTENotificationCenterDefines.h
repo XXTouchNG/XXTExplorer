@@ -9,6 +9,10 @@
 #ifndef XXTENotificationCenterDefines_h
 #define XXTENotificationCenterDefines_h
 
+#ifdef __OBJC__
+
+#import <Foundation/Foundation.h>
+
 static NSString * const XXTENotificationEvent = @"XXTENotificationEvent";
 static NSString * const XXTENotificationShortcut = @"XXTENotificationShortcut";
 static NSString * const XXTENotificationForwardDelay = @"XXTENotificationForwardDelay"; // NSNumber *
@@ -42,5 +46,7 @@ static NSString * const XXTENotificationShortcutInterfaceLauncher = @"XXTENotifi
 static NSString * const XXTENotificationShortcutInterfaceDownload = @"XXTENotificationShortcutInterfaceDownload";
 
 static NSString * const XXTENotificationShortcutUserData = @"XXTENotificationShortcutUserData";
+
+#endif /* __OBJC__ */
 
 #endif /* XXTENotificationCenterDefines_h */

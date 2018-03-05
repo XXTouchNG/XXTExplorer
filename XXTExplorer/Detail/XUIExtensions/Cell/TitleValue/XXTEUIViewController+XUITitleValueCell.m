@@ -9,8 +9,6 @@
 #import "XXTEUIViewController+XUITitleValueCell.h"
 #import "XXTEObjectViewController.h"
 
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 
 #import <objc/runtime.h>
 #import <XUI/XUICellFactory.h>

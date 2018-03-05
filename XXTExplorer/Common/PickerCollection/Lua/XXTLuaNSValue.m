@@ -13,11 +13,9 @@
 #import "XXTLuaFunction.h"
 
 #import <sys/utsname.h>
-#import "XXTEAppDefines.h"
 
 #import "UIView+XXTEToast.h"
 #import "UIViewController+topMostViewController.h"
-#import "XXTEUserInterfaceDefines.h"
 
 #import <stdio.h>
 #import <stdlib.h>
@@ -615,7 +613,7 @@ int xxt_system(const char *ctx)
     };
     
     pid_t pid;
-    if (posix_spawn(&pid, binsh_path, NULL, NULL, (char **)args, (char **)sharedEnvp) != 0) {
+    if (posix_spawn(&pid, binsh_path, NULL, NULL, (char **)args, (char **)XXTESharedEnvp()) != 0) {
         return -1;
     } else {
         int status = 0;
@@ -684,7 +682,7 @@ void lua_openNSValueLibs(lua_State *L)
         lua_pop(L, 1);
     }
     {
-        NSString *loc = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"lib"];
+        NSString *loc = [XXTERootPath() stringByAppendingPathComponent:@"lib"];
         NSString *sp = [loc stringByAppendingPathComponent:@"?.lua"];
         NSString *cp = [loc stringByAppendingPathComponent:@"?.so"];
         lua_setPath(L, "path", sp.fileSystemRepresentation);

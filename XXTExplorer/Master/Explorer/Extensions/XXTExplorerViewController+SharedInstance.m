@@ -8,7 +8,6 @@
 
 #import "XXTExplorerViewController+SharedInstance.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 
 #import "XXTExplorerEntryParser.h"
@@ -33,7 +32,7 @@ static BOOL _kXXTExplorerFetchingSelectedScript = NO;
         if (!initialPath) {
             initialPath = ({
                 NSString *initialRelativePath = uAppDefine(XXTExplorerViewBuiltInitialPath);
-                [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:initialRelativePath];
+                [XXTERootPath() stringByAppendingPathComponent:initialRelativePath];
             });
         }
     });

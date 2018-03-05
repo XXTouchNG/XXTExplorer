@@ -20,11 +20,6 @@
 #import "XXTEScanLineAnimation.h"
 #import "XXTEImagePickerController.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTENetworkDefines.h"
-#import "XXTEDispatchDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
 @property(nonatomic, strong) AVCaptureSession *scanSession;
@@ -144,7 +139,7 @@
     CGFloat bottomY = pD.y + diffAngle;
 
     CGContextSetLineWidth(ctx, lineWidthAngle);
-    CGContextSetStrokeColorWithColor(ctx, [XXTE_COLOR colorWithAlphaComponent:.75f].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [XXTColorDefault() colorWithAlphaComponent:.75f].CGColor);
 
     CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
     CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
@@ -369,7 +364,7 @@
 #pragma mark - UIControl Actions
 
 - (void)dismissScanViewController:(UIBarButtonItem *)sender {
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^() {
@@ -397,7 +392,7 @@
         imagePicker.allowsEditing = NO;
         imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
         imagePicker.navigationBar.translucent = NO;
-        imagePicker.navigationBar.barTintColor = XXTE_COLOR;
+        imagePicker.navigationBar.barTintColor = XXTColorDefault();
         imagePicker.navigationBar.tintColor = [UIColor whiteColor];
         imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
         imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;

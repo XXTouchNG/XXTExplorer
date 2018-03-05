@@ -9,8 +9,6 @@
 #import "XXTEUIViewController+SendMail.h"
 #import "XXTEMailComposeViewController.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 #import <XUI/XUIButtonCell.h>
 #import <XUI/XUILogger.h>
 

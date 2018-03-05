@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerEntryService.h"
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTEViewer.h"
 #import "XXTEEditor.h"

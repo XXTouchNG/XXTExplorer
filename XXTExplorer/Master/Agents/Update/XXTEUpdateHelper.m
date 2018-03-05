@@ -10,7 +10,6 @@
 
 #import <zlib.h>
 #import <sys/stat.h>
-#import "XXTEAppDefines.h"
 
 @interface XXTEUpdateHelper ()
 
@@ -25,7 +24,7 @@
 - (instancetype)initWithRepositoryURL:(NSURL *)repositoryURL {
     if (self = [super init]) {
         _repositoryURL = repositoryURL;
-        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateHelper"];
+        NSString *temporarilyLocation = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateHelper"];
         struct stat temporarilyLocationStat;
         if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
             if (0 != mkdir([temporarilyLocation UTF8String], 0755))

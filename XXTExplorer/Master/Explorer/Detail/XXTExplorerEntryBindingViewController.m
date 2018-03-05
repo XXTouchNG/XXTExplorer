@@ -7,12 +7,10 @@
 //
 
 #import "XXTExplorerEntryBindingViewController.h"
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryService.h"
 #import "XXTExplorerViewCell.h"
 #import "XXTEViewer.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerEntryReader.h"
 
 typedef enum : NSUInteger {

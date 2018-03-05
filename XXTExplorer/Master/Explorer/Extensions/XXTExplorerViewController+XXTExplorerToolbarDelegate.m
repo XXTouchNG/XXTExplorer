@@ -13,10 +13,7 @@
 #import "XXTExplorerViewController+XXTImagePickerControllerDelegate.h"
 #import "XXTExplorerViewController+ArchiverOperation.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "XXTEScanViewController.h"
 #import "XXTENavigationController.h"
@@ -33,7 +30,6 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTExplorerEntryParser.h"
 
-#import "XXTEDispatchDefines.h"
 
 @interface XXTExplorerViewController ()
 
@@ -372,7 +368,7 @@
 
 - (void)presentHistoryViewController:(UIBarButtonItem *)buttonItem {
     NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
-    NSString *historyPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:historyRelativePath];
+    NSString *historyPath = [XXTERootPath() stringByAppendingPathComponent:historyRelativePath];
     NSError *entryError = nil;
     XXTExplorerEntry *entryDetail = [[self.class explorerEntryParser] entryOfPath:historyPath withError:&entryError];
     if (!entryError) {

@@ -11,7 +11,6 @@
 #import "XXTEObjectViewController.h"
 #import "NSObject+XUIStringValue.h"
 #import "XXTEBaseObjectViewController.h"
-#import "XXTEUserInterfaceDefines.h"
 #import <PromiseKit/PromiseKit.h>
 
 @interface XXTEArrayObjectViewController ()
@@ -70,7 +69,7 @@
 }
 
 - (void)configureCell:(XXTEMoreTitleValueCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.tintColor = XXTE_COLOR;
+    cell.tintColor = XXTColorDefault();
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Item %lu", nil), indexPath.row];
     id elementValue = ((NSArray *)self.RootObject)[indexPath.row];
@@ -96,7 +95,7 @@
         } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeCount) {
             if ([elementValue respondsToSelector:@selector(count)]) {
                 NSUInteger childCount = [elementValue count];
-                cell.valueLabel.textColor = XXTE_COLOR;
+                cell.valueLabel.textColor = XXTColorDefault();
                 cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
             }
         } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeDescription) {

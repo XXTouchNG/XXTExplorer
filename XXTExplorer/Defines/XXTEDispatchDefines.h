@@ -9,6 +9,8 @@
 #ifndef XXTEDispatchDefines_h
 #define XXTEDispatchDefines_h
 
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
 #import <pthread.h>
 
 /**
@@ -39,5 +41,7 @@ static inline void dispatch_sync_on_main_queue(void (^block)(void)) {
         dispatch_sync(dispatch_get_main_queue(), block);
     }
 }
+
+#endif /* __OBJC__ */
 
 #endif /* XXTEDispatchDefines_h */

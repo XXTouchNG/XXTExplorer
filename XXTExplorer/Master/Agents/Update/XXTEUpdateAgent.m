@@ -8,7 +8,6 @@
 
 #import "XXTEUpdateAgent.h"
 
-#import "XXTEAppDefines.h"
 #import <sys/stat.h>
 
 static NSString * const XXTEUpdateAgentIgnoreVersionPrefix = @"Version %@"; // +versionString
@@ -26,7 +25,7 @@ static NSString * const XXTEUpdateAgentIgnoreDatePrefix = @"Date %@"; // +dateSt
 - (instancetype)initWithBundleIdentifier:(NSString *)bundleIdentifier {
     if (self = [super init]) {
         _bundleIdentifier = bundleIdentifier;
-        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateAgent"];
+        NSString *temporarilyLocation = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEUpdateAgent"];
         struct stat temporarilyLocationStat;
         if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
             if (0 != mkdir([temporarilyLocation UTF8String], 0755))

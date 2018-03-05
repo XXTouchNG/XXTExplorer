@@ -16,8 +16,6 @@
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreActionCell.h"
 
-#import "XXTENetworkDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 typedef enum : NSUInteger {
     kXXTEMoreApplicationDetailSectionIndexDetail = 0,
@@ -133,15 +131,15 @@ typedef enum : NSUInteger {
     cell4.addressLabel.text = containerPath;
     
     XXTEMoreActionCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
-    cell5.actionNameLabel.textColor = XXTE_COLOR_SUCCESS;
+    cell5.actionNameLabel.textColor = XXTColorSuccess();
     cell5.actionNameLabel.text = NSLocalizedString(@"Launch Application", nil);
     
     XXTEMoreActionCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
-    cell6.actionNameLabel.textColor = XXTE_COLOR_DANGER;
+    cell6.actionNameLabel.textColor = XXTColorDanger();
     cell6.actionNameLabel.text = NSLocalizedString(@"Clean GPS Caches", nil);
     
     XXTEMoreActionCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
-    cell7.actionNameLabel.textColor = XXTE_COLOR_DANGER;
+    cell7.actionNameLabel.textColor = XXTColorDanger();
     cell7.actionNameLabel.text = NSLocalizedString(@"Clean Application Data", nil);
     
     staticCells = @[

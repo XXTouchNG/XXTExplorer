@@ -10,7 +10,6 @@
 
 #import "XUIButtonCell.h"
 #import "XXTEScanViewController.h"
-#import "XXTEUserInterfaceDefines.h"
 
 #import <objc/runtime.h>
 

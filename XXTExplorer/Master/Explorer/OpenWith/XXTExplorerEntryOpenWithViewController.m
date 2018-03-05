@@ -9,8 +9,6 @@
 #import "XXTExplorerEntryOpenWithViewController.h"
 
 #import "XXTEViewer.h"
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerDefaults.h"
 
 #import "XXTExplorerEntryReader.h"

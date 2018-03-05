@@ -10,8 +10,6 @@
 #import <sys/stat.h>
 #import "XXTEPackageExtractor.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEPermissionDefines.h"
 
 @interface XXTEPackageExtractor ()
 
@@ -24,7 +22,7 @@
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _packagePath = path;
-        NSString *temporarilyLocation = [[[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEPackageExtractor"];
+        NSString *temporarilyLocation = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEPackageExtractor"];
         struct stat temporarilyLocationStat;
         if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
             if (0 != mkdir([temporarilyLocation UTF8String], 0755))
@@ -52,7 +50,7 @@
     pid_t pid = 0;
     const char *binary = add1s_binary();
     const char *args[] = { binary, "/usr/bin/dpkg", "-i", [packagePath UTF8String], NULL };
-    posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)sharedEnvp);
+    posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     posix_spawn_file_actions_destroy(&action);
     if (pid == 0) {
         [self callbackInstallationErrorWithReason:@"Cannot launch installer process."];
@@ -113,7 +111,7 @@
     pid_t pid = 0;
     const char *binary = add1s_binary();
     const char* args[] = { binary, "/usr/bin/dpkg", "-e", [packagePath UTF8String], [temporarilyPath UTF8String], NULL };
-    posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
+    posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     if (pid == 0) {
         [self callbackFetchingMetaDataWithErrorReason:@"Cannot launch installer process."];
         return;
@@ -147,7 +145,7 @@
         pid_t pid = 0;
         const char *binary = add1s_binary();
         const char *args[] = {binary, "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
-        posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
+        posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
         waitpid(pid, &status, 0);
         dispatch_async(dispatch_get_main_queue(), ^{
             // DO NOTHING

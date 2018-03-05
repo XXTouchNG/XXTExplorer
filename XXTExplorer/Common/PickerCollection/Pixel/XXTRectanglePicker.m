@@ -20,8 +20,6 @@
 #import "XXTExplorerItemPicker.h"
 #import "XXTENavigationController.h"
 #import "XXTExplorerEntryImageReader.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEAppDefines.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <LGAlertView/LGAlertView.h>
@@ -730,7 +728,7 @@ XXTE_END_IGNORE_PARTIAL
 
 XXTE_START_IGNORE_PARTIAL
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
-    [[UINavigationBar appearanceWhenContainedIn:[UIDocumentPickerViewController class], nil] setBarTintColor:XXTE_COLOR];
+    [[UINavigationBar appearanceWhenContainedIn:[UIDocumentPickerViewController class], nil] setBarTintColor:XXTColorDefault()];
     documentPicker.delegate = self;
     if (@available(iOS 11.0, *)) {
         documentPicker.allowsMultipleSelection = NO;

@@ -29,10 +29,11 @@
 }
 
 - (void)setup {
+    self.tintColor = XXTColorDefault();
     self.accessoryType = UITableViewCellAccessoryNone;
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;
 }
 

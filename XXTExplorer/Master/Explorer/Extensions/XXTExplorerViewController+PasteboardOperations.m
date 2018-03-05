@@ -12,7 +12,6 @@
 #import <LGAlertView/LGAlertView.h>
 
 #import "XXTExplorerDefaults.h"
-#import "XXTEUserInterfaceDefines.h"
 
 @implementation XXTExplorerViewController (PasteboardOperations)
 

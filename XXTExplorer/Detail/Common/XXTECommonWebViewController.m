@@ -7,7 +7,6 @@
 //
 
 #import "XXTECommonWebViewController.h"
-#import "XXTEUserInterfaceDefines.h"
 
 @interface XXTECommonWebViewController ()
 

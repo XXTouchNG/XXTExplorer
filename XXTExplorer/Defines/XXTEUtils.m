@@ -9,10 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEPermissionDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 #import "UIView+XXTEToast.h"
 #import "NSString+XQueryComponents.h"
@@ -22,6 +19,80 @@
 #import <pwd.h>
 #import <spawn.h>
 #import <sys/stat.h>
+
+#import "XXTEAppDelegate.h"
+
+#pragma mark - Defaults
+
+const char **XXTESharedEnvp() {
+    static const char *sharedEnvp[] = { "PATH=/bootstrap/usr/local/bin:/bootstrap/usr/sbin:/bootstrap/usr/bin:/bootstrap/sbin:/bootstrap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games:/usr/bin/1ferver", "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL };
+    return sharedEnvp;
+}
+
+id uAppDefine(NSString *key) {
+    return XXTEAppDelegate.appDefines[key];
+}
+
+id XXTEDefaultsObject(NSString *key, id defaultValue) {
+    id value = [XXTEAppDelegate.userDefaults objectForKey:key];
+    if (!value && defaultValue) {
+        [XXTEAppDelegate.userDefaults setObject:defaultValue forKey:key];
+        value = defaultValue;
+    }
+    return (value);
+}
+
+BOOL XXTEDefaultsBool(NSString *key, BOOL defaultValue) {
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue boolValue]);
+}
+
+NSUInteger XXTEDefaultsEnum(NSString *key, NSUInteger defaultValue) {
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue unsignedIntegerValue]);
+}
+
+double XXTEDefaultsDouble(NSString *key, double defaultValue) {
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue doubleValue]);
+}
+
+NSInteger XXTEDefaultsInt(NSString *key, int defaultValue) {
+    id storedValue = XXTEDefaultsObject(key, @(defaultValue));
+    if (![storedValue isKindOfClass:[NSNumber class]]) {
+        return defaultValue;
+    }
+    return ([storedValue integerValue]);
+}
+
+id XXTEBuiltInDefaultsObject(NSString *key) {
+    return (XXTEAppDelegate.builtInDefaults[key]);
+}
+
+BOOL XXTEBuiltInDefaultsObjectBool(NSString *key) {
+    return ([XXTEBuiltInDefaultsObject(key) boolValue]);
+}
+
+NSUInteger XXTEBuiltInDefaultsObjectEnum(NSString *key) {
+    return ([XXTEBuiltInDefaultsObject(key) unsignedIntegerValue]);
+}
+
+void XXTEDefaultsSetObject(NSString *key, id obj) {
+    [XXTEAppDelegate.userDefaults setObject:obj forKey:key];
+}
+
+NSString *XXTERootPath() {
+    return [XXTEAppDelegate sharedRootPath];
+}
 
 #pragma mark - Permissions
 
@@ -74,14 +145,14 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
         {
             pid_t pid = 0;
             const char* args[] = {binary, "chown", "-R", "mobile:mobile", original_path, NULL};
-            posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
+            posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }
         else
         {
             pid_t pid = 0;
             const char* args[] = {binary, "chown", "mobile:mobile", original_path, NULL};
-            posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
+            posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }
         return status;
@@ -242,4 +313,31 @@ void toastError(UIViewController *viewController, NSError *error) {
 
 NSString *XXTSchemeCloudProjectID(NSUInteger projectID) {
     return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", (unsigned long)projectID];
+}
+
+UIColor *XXTColorDefault() { // rgb(52, 152, 219), #3498DB
+    static UIColor *xxtColor = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+    });
+    return xxtColor;
+}
+
+UIColor *XXTColorDanger() { // rgb(231, 76, 60)
+    static UIColor *xxtDangerColor = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        xxtDangerColor = [UIColor colorWithRed:231.f/255.f green:76.f/255.f blue:60.f/255.f alpha:1.f];
+    });
+    return xxtDangerColor;
+}
+
+UIColor *XXTColorSuccess() { // rgb(26, 188, 134)
+    static UIColor *xxtSuccessColor = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        xxtSuccessColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:134.f/255.f alpha:1.f];
+    });
+    return xxtSuccessColor;
 }

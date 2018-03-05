@@ -8,7 +8,6 @@
 
 #import "XXTETerminalTextView.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
 
 @interface XXTETerminalTextView ()
@@ -42,7 +41,7 @@
 - (void)setup {
     // Appearance
     self.backgroundColor = [UIColor whiteColor];
-    self.tintColor = XXTE_COLOR;
+    self.tintColor = XXTColorDefault();
     self.typingAttributes = self.defaultAttributes;
     
     // Property
@@ -104,7 +103,7 @@
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         _inputAttributes = @{
                              NSFontAttributeName: font,
-                             NSForegroundColorAttributeName: XXTE_COLOR,
+                             NSForegroundColorAttributeName: XXTColorDefault(),
                              };
     }
     return _inputAttributes;

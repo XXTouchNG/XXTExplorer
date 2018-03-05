@@ -9,7 +9,6 @@
 #import "XXTExplorerEntry.h"
 #import "XXTExplorerEntryReader.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerEntryService.h"
 
 NSString * const EntryTypeUnsupported = @"EntryTypeUnsupported";

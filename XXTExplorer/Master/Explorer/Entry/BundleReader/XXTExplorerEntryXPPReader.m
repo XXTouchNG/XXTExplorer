@@ -14,7 +14,6 @@
 #import <dlfcn.h>
 
 #import "NSString+VersionValue.h"
-#import "XXTEAppDefines.h"
 
 @interface NSBundle (FlushCaches)
 

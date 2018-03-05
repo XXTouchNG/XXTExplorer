@@ -11,10 +11,7 @@
 #import <PromiseKit/PromiseKit.h>
 
 // Pre-Defines
-#import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 
 // Parent
 #import "XXTEEditorController.h"

@@ -7,7 +7,6 @@
 //
 
 #import "XXTEUIViewController.h"
-#import "XXTENotificationCenterDefines.h"
 #import "XUIEntryReader.h"
 
 @interface XXTEUIViewController ()
@@ -78,7 +77,7 @@
 }
 
 - (void)dismissViewController:(id)dismissViewController {
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [super dismissViewController:dismissViewController];

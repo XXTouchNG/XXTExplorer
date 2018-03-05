@@ -11,7 +11,6 @@
 
 #import <Foundation/Foundation.h>
 #import "NSString+XQueryComponents.h"
-#import "XXTEAppDefines.h"
 
 static NSString * const RMApiBaseScheme = @"RMCLOUD_SCHEME";
 static NSString * const RMApiBaseHostKey = @"RMCLOUD_HOST";

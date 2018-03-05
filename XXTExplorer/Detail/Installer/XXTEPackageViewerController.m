@@ -9,8 +9,6 @@
 #import "XXTEPackageViewerController.h"
 #import "XXTExplorerEntryPackageReader.h"
 #import "XXTEPackageExtractor.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 
 @interface XXTEPackageViewerController () <XXTEPackageExtractorDelegate, UITextViewDelegate>
 

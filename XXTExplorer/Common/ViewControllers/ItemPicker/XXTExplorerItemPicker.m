@@ -9,8 +9,6 @@
 #import "XXTExplorerItemPicker.h"
 
 #import "XXTExplorerDefaults.h"
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 #import "XXTExplorerToolbar.h"
 #import "XXTESwipeTableCell.h"
@@ -146,13 +144,13 @@
             XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
             NSString *entryPath = entryDetail.entryPath;
             if ([entryPath isEqualToString:self.selectedBootScriptPath]) {
-                cell.entryTitleLabel.textColor = XXTE_COLOR;
-                cell.entrySubtitleLabel.textColor = XXTE_COLOR;
+                cell.entryTitleLabel.textColor = XXTColorDefault();
+                cell.entrySubtitleLabel.textColor = XXTColorDefault();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
             }
             else if ([self.selectedBootScriptPath hasPrefix:entryPath]) {
-                cell.entryTitleLabel.textColor = XXTE_COLOR;
-                cell.entrySubtitleLabel.textColor = XXTE_COLOR;
+                cell.entryTitleLabel.textColor = XXTColorDefault();
+                cell.entrySubtitleLabel.textColor = XXTColorDefault();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
             }
             else {

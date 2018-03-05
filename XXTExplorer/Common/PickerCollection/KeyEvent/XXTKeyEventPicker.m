@@ -192,7 +192,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     XXTKeyEvent *keyEvent = self.events[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", keyEvent.title, keyEvent.command];
     cell.textLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:16.0f];
-    cell.tintColor = XXTE_COLOR;
+    cell.tintColor = XXTColorDefault();
     if ([self.selectedCommand isEqualToString:keyEvent.command]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {

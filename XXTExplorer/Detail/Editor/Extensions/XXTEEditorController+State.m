@@ -8,7 +8,6 @@
 
 #import "XXTEEditorController+State.h"
 
-#import "XXTENotificationCenterDefines.h"
 #import "XXTEEditorTextView.h"
 
 @implementation XXTEEditorController (State)

@@ -12,11 +12,7 @@
 
 #import <LGAlertView/LGAlertView.h>
 
-#import "XXTEAppDefines.h"
-#import "XXTENetworkDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEDispatchDefines.h"
 #import "XXTExplorerEntryReader.h"
 
 #import <PromiseKit/PromiseKit.h>
@@ -25,7 +21,6 @@
 #import <sys/stat.h>
 #import "xui32.h"
 
-#import "XXTEPermissionDefines.h"
 
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 

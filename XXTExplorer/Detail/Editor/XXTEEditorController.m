@@ -10,11 +10,7 @@
 #import "XXTECodeViewerController.h"
 
 // Pre-Defines
-#import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
-#import "XXTEDispatchDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 // Theme & Language
 #import "XXTEEditorTheme.h"
@@ -59,7 +55,6 @@
 // Replace
 #import "SKParser.h"
 
-#import "XXTEPermissionDefines.h"
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
@@ -273,7 +268,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
     }
     else {
-        if (XXTE_PAD && XXTE_SYSTEM_9) {
+        if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
             keyboardRow.textInput = nil;
             textView.inputAccessoryView = nil;
             textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
@@ -363,7 +358,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
     searchAccessoryView.tintColor = theme.foregroundColor;
     
-    if (NO == [self isDarkMode] || XXTE_PAD)
+    if (NO == [self isDarkMode] || XXTE_IS_IPAD)
     {
         searchBar.searchKeyboardAppearance = UIKeyboardAppearanceLight;
         searchBar.replaceKeyboardAppearance = UIKeyboardAppearanceLight;

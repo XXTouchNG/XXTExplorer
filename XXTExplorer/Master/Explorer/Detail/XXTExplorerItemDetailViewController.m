@@ -18,10 +18,6 @@
 #import "XXTEMoreLinkCell.h"
 
 #import "XUIViewShaker.h"
-#import "XXTEAppDefines.h"
-#import "XXTEDispatchDefines.h"
-#import "XXTENotificationCenterDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "XXTExplorerDefaults.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -628,7 +624,7 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -683,7 +679,7 @@ static int sizingCancelFlag = 0;
         BOOL result = [renameResult boolValue];
         if (result) {
             sizingCancelFlag = 1;
-            if (XXTE_PAD) {
+            if (XXTE_IS_IPAD) {
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
             }
             [self dismissViewControllerAnimated:YES completion:^{

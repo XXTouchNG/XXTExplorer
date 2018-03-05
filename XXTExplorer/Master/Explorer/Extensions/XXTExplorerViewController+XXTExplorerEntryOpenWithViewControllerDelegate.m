@@ -10,10 +10,7 @@
 #import "XXTExplorerViewController+ArchiverOperation.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENetworkDefines.h"
 
 #import "XXTEArchiveViewer.h"
 #import "XXTEExecutableViewer.h"
@@ -117,7 +114,7 @@
         return;
     }
     NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
-    NSString *historyPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:historyRelativePath];
+    NSString *historyPath = [XXTERootPath() stringByAppendingPathComponent:historyRelativePath];
     NSString *pathHash = [entryPath sha1String];
     if (pathHash.length > 8) {
         NSString *pathSubhash = [pathHash substringToIndex:7];

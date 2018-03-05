@@ -31,12 +31,12 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-    
     [self setup];
 }
 
 - (void)setup {
+    self.tintColor = XXTColorDefault();
+    
     self.flagIconImageView.layer.shadowOffset = CGSizeMake(0, 0);
     self.flagIconImageView.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:1.f].CGColor;
     self.flagIconImageView.layer.shadowOpacity = .3f;
@@ -46,7 +46,7 @@
     self.accessoryType = UITableViewCellAccessoryDetailButton;
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;
 }
 
@@ -89,15 +89,15 @@
     XXTExplorerViewCellFlagType flagType = self.flagType;
     if (flagType == XXTExplorerViewCellFlagTypeSelected
         || flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
-        return XXTE_COLOR_SUCCESS;
+        return XXTColorSuccess();
     } else if (flagType == XXTExplorerViewCellFlagTypeForbidden
                || flagType == XXTExplorerViewCellFlagTypeBroken) {
-        return XXTE_COLOR_DANGER;
+        return XXTColorDanger();
     } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript
                || flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
-        return XXTE_COLOR;
+        return XXTColorDefault();
     }
-    return XXTE_COLOR;
+    return XXTColorDefault();
 }
 
 @end

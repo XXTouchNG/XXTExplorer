@@ -21,13 +21,17 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.titleLabel.textColor = [UIColor blackColor];
+    self.descriptionLabel.textColor = XXTColorDefault();
+    self.valueLabel.textColor = [UIColor lightGrayColor];
+    
     self.titleLabel.text = @"";
     self.descriptionLabel.text = @"";
     self.valueLabel.text = @"";
     self.iconImage = nil;
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTE_COLOR colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
     self.selectedBackgroundView = selectionBackground;
 }
 

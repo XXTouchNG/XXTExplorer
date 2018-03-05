@@ -27,10 +27,10 @@
 }
 
 - (void)setup {
-    _separatorColor = [XXTE_COLOR colorWithAlphaComponent:0.1];
+    _separatorColor = [XXTColorDefault() colorWithAlphaComponent:0.1];
     
     self.backgroundColor = [UIColor clearColor];
-    self.layer.borderColor = XXTE_COLOR.CGColor;
+    self.layer.borderColor = XXTColorDefault().CGColor;
     self.layer.borderWidth = 1.f;
     self.layer.cornerRadius = 6.f;
     
@@ -43,7 +43,7 @@
     upView.backgroundColor = [UIColor clearColor];
     UILabel *upTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     upTriView.font = [UIFont systemFontOfSize:14.f];
-    upTriView.textColor = XXTE_COLOR;
+    upTriView.textColor = XXTColorDefault();
     upTriView.text = @"▲";
     [upTriView sizeToFit];
     self.upTriView = upTriView;
@@ -57,7 +57,7 @@
     downView.backgroundColor = [UIColor clearColor];
     UILabel *downTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     downTriView.font = [UIFont systemFontOfSize:14.f];
-    downTriView.textColor = XXTE_COLOR;
+    downTriView.textColor = XXTColorDefault();
     downTriView.text = @"▼";
     [downTriView sizeToFit];
     [downView addSubview:downTriView];
@@ -112,7 +112,7 @@
     if (!_ptLabel) {
         UILabel *ptLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         ptLabel.font = [UIFont boldSystemFontOfSize:14.f];
-        ptLabel.textColor = XXTE_COLOR;
+        ptLabel.textColor = XXTColorDefault();
         ptLabel.text = NSLocalizedString(@"pt", nil);
         [ptLabel sizeToFit];
         _ptLabel = ptLabel;
@@ -124,7 +124,7 @@
     if (!_sizeLabel) {
         UILabel *sizeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         sizeLabel.font = [UIFont boldSystemFontOfSize:36.f];
-        sizeLabel.textColor = XXTE_COLOR;
+        sizeLabel.textColor = XXTColorDefault();
         _sizeLabel = sizeLabel;
     }
     return _sizeLabel;

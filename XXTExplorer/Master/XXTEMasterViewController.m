@@ -10,9 +10,6 @@
 #import <LGAlertView/LGAlertView.h>
 #import "XXTEMasterViewController+Notifications.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 #import "UIView+XXTEToast.h"
 
 #import "XXTExplorerNavigationController.h"
@@ -64,7 +61,7 @@
 
 - (void)setupAppearance {
     UITabBar *tabBarAppearance = [UITabBar appearanceWhenContainedIn:[self class], nil];
-    [tabBarAppearance setTintColor:XXTE_COLOR];
+    [tabBarAppearance setTintColor:XXTColorDefault()];
     
     if (@available(iOS 11.0, *)) {
         self.tabBar.translucent = YES;
@@ -87,17 +84,17 @@
     alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
     alertAppearance.titleTextColor = [UIColor blackColor];
     alertAppearance.messageTextColor = [UIColor blackColor];
-    alertAppearance.activityIndicatorViewColor = XXTE_COLOR;
-    alertAppearance.progressViewProgressTintColor = XXTE_COLOR;
+    alertAppearance.activityIndicatorViewColor = XXTColorDefault();
+    alertAppearance.progressViewProgressTintColor = XXTColorDefault();
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.buttonsTitleColor = XXTE_COLOR;
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTE_COLOR;
+    alertAppearance.buttonsTitleColor = XXTColorDefault();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.cancelButtonTitleColor = XXTE_COLOR;
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTE_COLOR;
+    alertAppearance.cancelButtonTitleColor = XXTColorDefault();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.destructiveButtonTitleColor = XXTE_COLOR_DANGER;
-    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTE_COLOR_DANGER;
+    alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
+    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
     alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
     alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
     alertAppearance.dismissOnAction = NO;

@@ -7,8 +7,6 @@
 //
 
 #import "XXTExplorerViewController+XXTImagePickerControllerDelegate.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
@@ -22,7 +20,7 @@
     controller.delegate = self;
     controller.nResultType = XXT_PICKER_RESULT_ASSET;
     controller.nMaxCount = XXT_NO_LIMIT_SELECT;
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         controller.nColumnCount = 6;
     } else if (XXTE_IS_IPHONE_6_BELOW) {
         controller.nColumnCount = 3;

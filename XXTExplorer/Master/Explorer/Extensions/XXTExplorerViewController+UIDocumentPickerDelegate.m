@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerViewController+UIDocumentPickerDelegate.h"
-#import "XXTENotificationCenterDefines.h"
 
 @implementation XXTExplorerViewController (UIDocumentPickerDelegate)
 

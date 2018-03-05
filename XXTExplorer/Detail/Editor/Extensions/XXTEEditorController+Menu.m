@@ -8,10 +8,7 @@
 
 #import "XXTEEditorController+Menu.h"
 
-#import "XXTEAppDefines.h"
 #import "XXTEEditorDefaults.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 
 #import "XXTEEditorTextView.h"
 
@@ -77,7 +74,7 @@
 }
 
 - (void)menuActionCodeBlocks:(UIMenuItem *)senderOrNil {
-    NSString *snippetPath = [[XXTEAppDelegate sharedRootPath] stringByAppendingPathComponent:@"snippets"];
+    NSString *snippetPath = [XXTERootPath() stringByAppendingPathComponent:@"snippets"];
     XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:snippetPath];
     itemPicker.title = NSLocalizedString(@"Code Snippets", nil);
     itemPicker.delegate = self;

@@ -14,10 +14,8 @@
 #import "RMCloudLoadingView.h"
 #import "RMCloudComingSoon.h"
 
-#import "XXTEUserInterfaceDefines.h"
 #import "RMCloudProjectViewController.h"
 
-#import "XXTENotificationCenterDefines.h"
 #import "RMCloudListViewController.h"
 
 static NSUInteger const RMCloudSearchTrendsMaximumCount = 24;
@@ -115,7 +113,7 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = XXTE_COLOR;
+        searchBar.tintColor = XXTColorDefault();
         searchBar.delegate = self;
         searchBar;
     });

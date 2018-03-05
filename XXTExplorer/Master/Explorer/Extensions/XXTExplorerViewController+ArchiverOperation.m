@@ -11,10 +11,7 @@
 
 #import <LGAlertView/LGAlertView.h>
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTEDispatchDefines.h"
 
 #import "zip.h"
 #import <sys/stat.h>

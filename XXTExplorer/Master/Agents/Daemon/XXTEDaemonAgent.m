@@ -11,8 +11,6 @@
 #import <PromiseKit/Promise.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
-#import "XXTEAppDefines.h"
-#import "XXTENetworkDefines.h"
 
 @implementation XXTEDaemonAgent
 

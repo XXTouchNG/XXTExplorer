@@ -9,14 +9,11 @@
 #import "XXTEMoreUserDefaultsController.h"
 #import "XXTEMoreTitleDescriptionCell.h"
 
-#import "XXTEAppDefines.h"
 #import "UIView+XXTEToast.h"
 #import "XXTEMoreUserDefaultsOperationController.h"
 
 #ifndef APPSTORE
-    #import "XXTENetworkDefines.h"
-    #import "XXTEUserInterfaceDefines.h"
-    #import <PromiseKit/PromiseKit.h>
+            #import <PromiseKit/PromiseKit.h>
     #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #endif
 
@@ -128,7 +125,7 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = XXTE_COLOR;
+        searchBar.tintColor = XXTColorDefault();
         searchBar.delegate = self;
         searchBar;
     });

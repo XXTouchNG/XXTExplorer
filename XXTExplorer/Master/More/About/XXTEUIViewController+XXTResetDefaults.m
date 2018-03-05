@@ -10,9 +10,6 @@
 #import <XUI/XUIButtonCell.h>
 #import <LGAlertView/LGAlertView.h>
 
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENetworkDefines.h"
 #import <PromiseKit/PromiseKit.h>
 #import <NSURLConnection+PromiseKit.h>
 

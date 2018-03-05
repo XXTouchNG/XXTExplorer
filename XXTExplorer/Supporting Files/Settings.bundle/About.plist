@@ -34,6 +34,8 @@ All Rights Reserved.</string>
 			<string>Official Site</string>
 			<key>url</key>
 			<string>https://www.xxtouch.com</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconHome.png</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -42,6 +44,8 @@ All Rights Reserved.</string>
 			<string>Copyright &amp; User Agreement</string>
 			<key>url</key>
 			<string>Root.plist</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconCopyright.png</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -69,6 +73,8 @@ All Rights Reserved.</string>
 			<string>Button</string>
 			<key>label</key>
 			<string>Mail Feedback</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconMail.png</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -82,6 +88,8 @@ All Rights Reserved.</string>
 			<string>Button</string>
 			<key>label</key>
 			<string>Rate XXTouch</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconFeedback.png</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>

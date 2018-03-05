@@ -11,8 +11,6 @@
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
-#import "XXTENetworkDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 @interface XXTEMoreActivationOperationController ()
 

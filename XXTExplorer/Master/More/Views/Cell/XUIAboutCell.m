@@ -7,7 +7,6 @@
 //
 
 #import "XUIAboutCell.h"
-#import "XXTEAppDefines.h"
 
 @interface XUIAboutCell ()
 
@@ -53,6 +52,7 @@
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.titleLabel.textColor = XXTColorDefault();
 }
 
 - (void)setXui_label:(NSString *)xui_label {

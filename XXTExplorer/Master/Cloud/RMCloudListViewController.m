@@ -7,14 +7,12 @@
 //
 
 #import "RMCloudListViewController.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "RMCloudProjectCell.h"
 #import "RMCloudMoreCell.h"
 #import "RMCloudProjectViewController.h"
 #import "RMCloudLoadingView.h"
 #import "RMCloudComingSoon.h"
 
-#import "XXTENotificationCenterDefines.h"
 
 typedef enum : NSUInteger {
     RMCloudListSectionProject = 0,

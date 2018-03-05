@@ -13,9 +13,6 @@
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 
 #import "XXTExplorerDefaults.h"
-#import "XXTEAppDefines.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENotificationCenterDefines.h"
 
 #import "XXTExplorerItemDetailViewController.h"
 #import "XXTENavigationController.h"
@@ -238,7 +235,7 @@ XXTE_END_IGNORE_PARTIAL
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
         XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
-        UIColor *colorSeries = XXTE_COLOR;
+        UIColor *colorSeries = XXTColorDefault();
 #ifndef APPSTORE
         if (entryReader.executable) {
             NSString *buttonTitle = nil;
@@ -347,7 +344,7 @@ XXTE_END_IGNORE_PARTIAL
             buttonTitle = @"";
         }
         XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconTrash"]
-                                                   backgroundColor:XXTE_COLOR_DANGER
+                                                   backgroundColor:XXTColorDanger()
                                                             insets:buttonInsets];
         if (!hidesLabel) {
             button.titleLabel.font = [UIFont systemFontOfSize:12.f];

@@ -8,7 +8,6 @@
 
 #import <sys/stat.h>
 
-#import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryReader.h"

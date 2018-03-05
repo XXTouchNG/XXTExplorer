@@ -59,7 +59,7 @@
     if (!_footerLabel) {
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
         textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        textLabel.textColor = XXTE_COLOR;
+        textLabel.textColor = XXTColorDefault();
         textLabel.backgroundColor = [UIColor whiteColor];
         UIFont *font = nil;
         XXTE_START_IGNORE_PARTIAL

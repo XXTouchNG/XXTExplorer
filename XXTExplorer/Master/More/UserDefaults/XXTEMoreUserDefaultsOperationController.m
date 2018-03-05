@@ -8,7 +8,6 @@
 
 #import "XXTEMoreUserDefaultsOperationController.h"
 #import "XXTEMoreLinkCell.h"
-#import "XXTEDispatchDefines.h"
 
 @interface XXTEMoreUserDefaultsOperationController ()
 

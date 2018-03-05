@@ -15,8 +15,6 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTExplorerItemPicker.h"
 
-#import "XXTENetworkDefines.h"
-#import "XXTEUserInterfaceDefines.h"
 
 @interface XXTEMoreBootScriptController () <XXTExplorerItemPickerDelegate>
 @property (nonatomic, strong) UISwitch *bootScriptSwitch;

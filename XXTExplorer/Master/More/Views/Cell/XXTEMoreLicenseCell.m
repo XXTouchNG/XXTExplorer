@@ -12,7 +12,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.licenseField.textColor = XXTColorDefault();
+    self.licenseField.tintColor = XXTColorDefault();
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

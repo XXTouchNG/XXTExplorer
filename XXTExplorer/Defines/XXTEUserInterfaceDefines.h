@@ -9,7 +9,8 @@
 #ifndef XXTEUserInterfaceDefines_h
 #define XXTEUserInterfaceDefines_h
 
-#import <Foundation/Foundation.h>
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,9 +19,14 @@ extern "C" {
     UIViewController *blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay);
     UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock);
     BOOL isiPhoneX(void);
+    
     void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration);
     void toastMessage(UIViewController *viewController, NSString *message);
     void toastError(UIViewController *viewController, NSError *error);
+    
+    UIColor *XXTColorDefault(void);
+    UIColor *XXTColorDanger(void);
+    UIColor *XXTColorSuccess(void);
     
 #ifdef __cplusplus
 }
@@ -29,5 +35,23 @@ extern "C" {
 #define toastDaemonError(v, e) \
     if (e.code == -1004) toastMessage(v, NSLocalizedString(@"Could not connect to the daemon.", nil)); \
     else toastError(v, e);
+
+#define XXTE_COLLAPSED \
+XXTE_START_IGNORE_PARTIAL \
+(XXTE_SYSTEM_8 && self.splitViewController && self.splitViewController.collapsed != YES) \
+XXTE_END_IGNORE_PARTIAL
+
+#define XXTE_IS_IPAD (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone)
+#define XXTE_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+
+#define XXTE_SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define XXTE_SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define XXTE_SCREEN_MAX_LENGTH (MAX(XXTE_SCREEN_WIDTH, XXTE_SCREEN_HEIGHT))
+#define XXTE_SCREEN_MIN_LENGTH (MIN(XXTE_SCREEN_WIDTH, XXTE_SCREEN_HEIGHT))
+
+#define XXTE_IS_IPHONE_6_BELOW (XXTE_IS_IPHONE && XXTE_SCREEN_MAX_LENGTH < 667.0)
+#define XXTE_IS_IPHONE_6P_ABOVE (XXTE_IS_IPHONE && XXTE_SCREEN_MAX_LENGTH >= 736.0)
+
+#endif /* __OBJC__ */
 
 #endif /* XXTEUserInterfaceDefines_h */

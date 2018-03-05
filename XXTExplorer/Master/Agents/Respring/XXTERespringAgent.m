@@ -7,8 +7,6 @@
 #import <sys/stat.h>
 #import "XXTERespringAgent.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTEPermissionDefines.h"
 
 @implementation XXTERespringAgent {
 
@@ -28,7 +26,7 @@
         pid_t pid = 0;
         const char *binary = add1s_binary();
         const char *args[] = {binary, "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
-        posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)sharedEnvp);
+        posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
         waitpid(pid, &status, 0);
         dispatch_async(dispatch_get_main_queue(), ^{
             // DO NOTHING

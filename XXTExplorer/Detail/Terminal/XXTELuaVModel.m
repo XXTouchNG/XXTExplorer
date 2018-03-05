@@ -12,7 +12,6 @@
 #include <setjmp.h>
 
 #import "XXTELuaVModel.h"
-#import "XXTEAppDelegate.h"
 #import "XXTLuaNSValue.h"
 
 static NSString * const XXTETerminalHandlerOutput = @"TerminalOutput-%@.pipe";

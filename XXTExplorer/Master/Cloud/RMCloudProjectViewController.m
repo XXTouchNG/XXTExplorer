@@ -15,17 +15,13 @@
 #import "RMCloudLoadingView.h"
 #import "RMCloudComingSoon.h"
 
-#import "XXTEUserInterfaceDefines.h"
 #import "RMCloudExpandableCell.h"
 #import "RMCloudExpandedCell.h"
 #import "RMCloudLinkCell.h"
 
-#import "XXTENotificationCenterDefines.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTEDownloadViewController.h"
 
-#import "XXTEAppDefines.h"
-#import "XXTENetworkDefines.h"
 #import <LGAlertView/LGAlertView.h>
 
 typedef enum : NSUInteger {
@@ -703,7 +699,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];

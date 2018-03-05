@@ -10,7 +10,6 @@
 #import "XXTEEditorTextView.h"
 
 #import "XXTEEditorDefaults.h"
-#import "XXTEAppDefines.h"
 
 #import "XXTEEditorToolbar.h"
 
@@ -45,7 +44,7 @@
         }
     }
     
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         
     } else {
         if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {
@@ -101,7 +100,7 @@
         }
     }
     
-    if (XXTE_PAD) {
+    if (XXTE_IS_IPAD) {
         
     } else {
         if (XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO)) {

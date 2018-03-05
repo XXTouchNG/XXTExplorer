@@ -12,7 +12,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.titleLabel.textColor = [UIColor blackColor];
+    self.segmentedControl.tintColor = XXTColorDefault();
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

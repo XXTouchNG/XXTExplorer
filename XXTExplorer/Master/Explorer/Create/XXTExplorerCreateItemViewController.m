@@ -10,17 +10,13 @@
 #import "XXTExplorerCreateItemViewController.h"
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionCell.h"
-#import "XXTEUserInterfaceDefines.h"
 #import "XUIViewShaker.h"
-#import "XXTEAppDefines.h"
 #import "XXTEMoreAddressCell.h"
 #import <PromiseKit/PromiseKit.h>
-#import "XXTENotificationCenterDefines.h"
 
 #import "XXTEMoreSwitchCell.h"
 #import "UIControl+BlockTarget.h"
 
-#import "XXTEPermissionDefines.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,

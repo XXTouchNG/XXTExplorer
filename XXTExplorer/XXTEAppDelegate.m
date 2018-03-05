@@ -25,14 +25,11 @@
 #import "RMCloudViewController.h"
 
 #import "XXTEWorkspaceViewController.h"
-#import "XXTENotificationCenterDefines.h"
 
-#import "XXTEAppDefines.h"
 
 #import "zip.h"
 #import <Bugly/Bugly.h>
 #import "XXTECloudApiSdk.h"
-#import "XXTENetworkDefines.h"
 
 #import "UIViewController+topMostViewController.h"
 
@@ -68,7 +65,7 @@ static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName
     }
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    mainWindow.tintColor = XXTE_COLOR;
+    mainWindow.tintColor = XXTColorDefault();
     mainWindow.backgroundColor = [UIColor whiteColor];
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;

@@ -12,7 +12,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.titleLabel.textColor = [UIColor blackColor];
+    self.valueField.textColor = [UIColor blackColor];
+    self.valueField.tintColor = XXTColorDefault();
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

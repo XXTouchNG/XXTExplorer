@@ -10,7 +10,6 @@
 #import "XXTETerminalViewController.h"
 #import "XXTETerminalTextView.h"
 
-#import "XXTEDispatchDefines.h"
 #import "XXTExplorerEntryTerminalReader.h"
 
 @interface XXTETerminalViewController () <UITextViewDelegate, XXTELuaVModelDelegate>

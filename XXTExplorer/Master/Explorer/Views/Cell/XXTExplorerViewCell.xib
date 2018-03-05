@@ -94,7 +94,7 @@
                     <constraint firstItem="M3F-VV-JfD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xn8-ix-wSX"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="tintColor" red="0.1019607843" green="0.63137254899999995" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="entryIconImageView" destination="HEf-By-uFg" id="dWc-7A-d35"/>

@@ -34,7 +34,7 @@
 }
 
 - (void)setup {
-    [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTintColor:XXTE_COLOR];
+    [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTintColor:XXTColorDefault()];
     
     self.backgroundColor = [UIColor whiteColor];
     

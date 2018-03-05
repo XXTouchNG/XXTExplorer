@@ -8,8 +8,6 @@
 
 #import "XXTEUIViewController+RunCommand.h"
 #import "XUIButtonCell.h"
-#import "XXTEUserInterfaceDefines.h"
-#import "XXTENetworkDefines.h"
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import <XUI/XUILogger.h>

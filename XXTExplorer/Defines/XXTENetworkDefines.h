@@ -9,6 +9,8 @@
 #ifndef XXTENetworkDefines_h
 #define XXTENetworkDefines_h
 
+#ifdef __OBJC__
+
 #import <Foundation/Foundation.h>
 
 #ifdef __cplusplus
@@ -41,5 +43,7 @@ extern "C" {
 
 static NSString * const XXTSchemeLicense = @"xxt://license/?code=%@";
 static NSString * const XXTETrustedHostsKey = @"TRUSTED_HOSTS";
+
+#endif /* __OBJC__ */
 
 #endif /* XXTENetworkDefines_h */
