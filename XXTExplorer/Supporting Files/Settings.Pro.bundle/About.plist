@@ -75,6 +75,8 @@ All Rights Reserved.</string>
 			<string>Mail Feedback</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconMail.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -90,6 +92,8 @@ All Rights Reserved.</string>
 			<string>Official QQ Group</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconGroup.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -108,6 +112,8 @@ All Rights Reserved.</string>
 			<string>Check Update</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconUpdate.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -120,6 +126,8 @@ All Rights Reserved.</string>
 			<string>Reset Defaults</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconRecover.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>

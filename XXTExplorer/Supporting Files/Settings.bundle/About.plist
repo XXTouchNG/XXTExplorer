@@ -75,6 +75,8 @@ All Rights Reserved.</string>
 			<string>Mail Feedback</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconMail.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -90,6 +92,8 @@ All Rights Reserved.</string>
 			<string>Rate XXTouch</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconFeedback.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>
