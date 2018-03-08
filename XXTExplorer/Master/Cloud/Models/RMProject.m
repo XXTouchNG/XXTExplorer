@@ -127,6 +127,7 @@
             formatter = [[NSDateFormatter alloc] init];
             [formatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
             [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+            [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
         }
     });
     return formatter;

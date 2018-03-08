@@ -870,6 +870,9 @@
 "Local Debugger" = "本地调试器";
 
 /* No comment provided by engineer. */
+"Local time is not accurate." = "设备时间异常, 请前往 \"设置 > 通用 > 日期与时间\" 校准设备时间.";
+
+/* No comment provided by engineer. */
 "Location" = "位置";
 
 /* No comment provided by engineer. */

@@ -58,6 +58,9 @@
                 NSUInteger lineStart = 0;
                 NSUInteger contentsEnd = 0;
                 [stringRef getLineStart:&lineStart end:NULL contentsEnd:&contentsEnd forRange:range];
+                if (range.location + range.length < contentsEnd) {
+                    contentsEnd = range.location + range.length;
+                }
                 NSRange lineRange = NSMakeRange(lineStart, contentsEnd - lineStart);
                 NSString *lineRef = [stringRef substringWithRange:lineRange];
                 

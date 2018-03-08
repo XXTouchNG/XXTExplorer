@@ -19,6 +19,7 @@
 #import <pwd.h>
 #import <spawn.h>
 #import <sys/stat.h>
+#import <time.h>
 
 #import "XXTEAppDelegate.h"
 
@@ -182,6 +183,18 @@ id (^convertJsonString)(id) =
 };
 #endif
 
+NSDateFormatter *RFC822DateFormatter() {
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
+        formatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:XXTE_STANDARD_LOCALE];
+    });
+    return formatter;
+}
+
 #ifndef APPSTORE
 id (^sendCloudApiRequest)(NSArray *objs) =
 ^(NSArray *objs) {
@@ -209,6 +222,17 @@ id (^sendCloudApiRequest)(NSArray *objs) =
         @throw [licenseError localizedDescription];
     }
     NSDictionary *returningHeadersDict = [licenseResponse allHeaderFields];
+    {
+        NSString *dateString = returningHeadersDict[@"Date"];
+        NSDate *newDate = [RFC822DateFormatter() dateFromString:dateString];
+        NSTimeInterval interval1 = [[NSDate date] timeIntervalSince1970];
+        NSTimeInterval interval2 = [newDate timeIntervalSince1970];
+        NSTimeInterval interval = interval1 - interval2;
+        if (interval < 0) interval = 0.0 - interval;
+        if (interval > 300) {
+            @throw NSLocalizedString(@"Local time is not accurate.", nil);
+        }
+    }
     if (licenseResponse.statusCode != 200 &&
         returningHeadersDict[@"X-Ca-Error-Message"])
     {
