@@ -41,7 +41,7 @@
 		0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */; };
 		0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */; };
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
-		0F222A16202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */; };
+		0F222A16202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard */; };
 		0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1D202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
@@ -1199,8 +1199,8 @@
 		D6CCD4122048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6CCD4132048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
-		D6CCD418204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */; };
-		D6CCD419204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */; };
+		D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */; };
+		D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -1314,7 +1314,7 @@
 		0F1DD1C21F11B6A700F1A66A /* XXTEScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEScanViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F1DD1C41F11BC9300F1A66A /* XXTEScanLineAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEScanLineAnimation.h; sourceTree = "<group>"; };
 		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
-		0F222A17202F1C0F00EF2C27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0F222A17202F1C0F00EF2C27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.AppStore.storyboard; sourceTree = "<group>"; };
 		0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DetailCloseItem.h"; sourceTree = "<group>"; };
 		0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DetailCloseItem.m"; sourceTree = "<group>"; };
 		0F264C5A1F148C4900662664 /* UINavigationController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBar.h"; sourceTree = "<group>"; };
@@ -1994,7 +1994,7 @@
 		D6CB81BC1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchAccessoryView.m; sourceTree = "<group>"; };
 		D6CCD4102048E16E009C2072 /* XXTExplorerEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntry.h; sourceTree = "<group>"; };
 		D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntry.m; sourceTree = "<group>"; };
-		D6CCD417204CDE69009C2072 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.Pro.storyboard; sourceTree = "<group>"; };
+		D6CCD417204CDE69009C2072 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -2864,8 +2864,8 @@
 				0FA7AC081ED644FA003EAD7D /* XXTEPrefixHeader.pch */,
 				0FA7ABEE1ED641A3003EAD7D /* main.m */,
 				0FC598A91FB2189A001F918B /* main.AppStore.m */,
-				0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */,
-				D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */,
+				0F222A18202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard */,
+				D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */,
 				0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */,
 			);
 			path = "Supporting Files";
@@ -4202,7 +4202,7 @@
 				0F8ECD751FE80F8E00A5457C /* DejaVuSansMono-BoldOblique.ttf in Resources */,
 				0F8ECD411FE802A900A5457C /* A.png in Resources */,
 				0F8ECD651FE80D0F00A5457C /* Anonymous_Pro_B.ttf in Resources */,
-				0F222A16202F1C0F00EF2C27 /* LaunchScreen.storyboard in Resources */,
+				0F222A16202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard in Resources */,
 				0F8EDC801FB1F779003C92D6 /* Blackboard.tmTheme in Resources */,
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
 				0FA1A4FD1FF13CA00021648B /* Settings.bundle in Resources */,
@@ -4317,7 +4317,7 @@
 				0F8ECD961FE81C1700A5457C /* OneHalf (Dark).png in Resources */,
 				0F8ECD971FE81C1700A5457C /* OneHalf (Light).png in Resources */,
 				0F8ECD981FE81C1700A5457C /* Solarized (Dark).png in Resources */,
-				D6CCD418204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */,
+				D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
 				0F8ECD991FE81C1700A5457C /* Solarized (Light).png in Resources */,
 				0F8ECD9A1FE81C1700A5457C /* Sunburst.png in Resources */,
 				0F8ECD9B1FE81C1700A5457C /* Tomorrow Night (Blue).png in Resources */,
@@ -4456,7 +4456,7 @@
 				D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
-				D6CCD419204CDE69009C2072 /* LaunchScreen.Pro.storyboard in Resources */,
+				D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
 				0FCAF4032009AE59002FB774 /* RMCloudProjectCell.xib in Resources */,
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
@@ -5638,12 +5638,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0F222A18202F1C0F00EF2C27 /* LaunchScreen.storyboard */ = {
+		0F222A18202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0F222A17202F1C0F00EF2C27 /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = LaunchScreen.AppStore.storyboard;
 			sourceTree = "<group>";
 		};
 		0F3508C21F166A69000403FD /* Localizable.strings */ = {
@@ -5716,12 +5716,12 @@
 			path = .;
 			sourceTree = "<group>";
 		};
-		D6CCD416204CDE69009C2072 /* LaunchScreen.Pro.storyboard */ = {
+		D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D6CCD417204CDE69009C2072 /* Base */,
 			);
-			name = LaunchScreen.Pro.storyboard;
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */ = {

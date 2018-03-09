@@ -43,7 +43,7 @@
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     toolbar.tapDelegate = self;
     self.toolbar = toolbar;
-    if (@available(iOS 11.0, *)) {
+    if (isOS11Above() && isAppStore()) {
         [self.tableView setTableHeaderView:toolbar];
     } else {
         [self.view addSubview:toolbar];

@@ -50,6 +50,10 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
     BOOL firstTimeLoaded;
 }
 
+@synthesize tableView = _tableView;
+@synthesize refreshControl = _refreshControl;
+@synthesize footerView = _footerView;
+
 - (instancetype)init {
     if (self = [super init]) {
         [self setupWithPath:nil];
@@ -102,11 +106,11 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
     
     if (self.title.length == 0) {
         if (self == [self.navigationController.viewControllers firstObject] && !self.isPreviewed) {
-#ifndef APPSTORE
-            self.title = NSLocalizedString(@"My Scripts", nil);
-#else
-            self.title = NSLocalizedString(@"Files", nil);
-#endif
+            if (isAppStore()) {
+                self.title = NSLocalizedString(@"Files", nil);
+            } else {
+                self.title = NSLocalizedString(@"My Scripts", nil);
+            }
         } else {
             NSString *entryPath = self.entryPath;
             if (entryPath) {
@@ -115,72 +119,34 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
             }
         }
     }
-
-    if (!self.isPreviewed)
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (isOS11Above()) {
+        if (isAppStore()) {
+            self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
+        } else {
+            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+        }
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
+    if (NO == self.isPreviewed)
     {
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
     }
     
-    if (@available(iOS 11.0, *)) {
-#ifdef APPSTORE
-        self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
-#else
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-#endif
-    }
-
-    _tableView = ({
-        CGRect tableViewFrame = CGRectZero;
-        if (@available(iOS 11.0, *)) {
-            tableViewFrame = self.view.bounds;
-        } else {
-            tableViewFrame = CGRectMake(0.0, 44.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0);
-        }
-        UITableView *tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
-        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        tableView.delegate = self;
-        tableView.dataSource = self;
-        tableView.allowsSelection = YES;
-        tableView.allowsMultipleSelection = NO;
-        tableView.allowsSelectionDuringEditing = YES;
-        tableView.allowsMultipleSelectionDuringEditing = YES;
-        XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
-        XXTE_END_IGNORE_PARTIAL
-        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
-        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
-        UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
-        cellLongPressGesture.delegate = self;
-        [tableView addGestureRecognizer:cellLongPressGesture];
-        tableView;
-    });
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.tableView];
-
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
-    _refreshControl = ({
-        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        if (@available(iOS 11.0, *)) {
-#ifdef APPSTORE
-            refreshControl.tintColor = [UIColor whiteColor];
-#endif
-        }
-        [refreshControl addTarget:self action:@selector(refreshControlTriggered:) forControlEvents:UIControlEventValueChanged];
-        [tableViewController setRefreshControl:refreshControl];
-        refreshControl;
-    });
+    [tableViewController setRefreshControl:self.refreshControl];
     [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
-
     [self configureToolbar];
-    _footerView = ({
-        XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
-        entryFooterView.delegate = self;
-        entryFooterView;
-    });
     [self.tableView setTableFooterView:self.footerView];
-
+    if (!(isOS11Above() && isAppStore())) {
+        [self setupConstraints];
+    }
+    
     [self loadEntryListData];
 }
 
@@ -211,6 +177,23 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
     if ([self isEditing]) {
         [self setEditing:NO animated:YES];
     }
+}
+
+- (void)setupConstraints {
+    self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSArray <NSLayoutConstraint *> *constraints =
+    @[
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
+      [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.toolbar attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
+      ];
+    [self.view addConstraints:constraints];
 }
 
 XXTE_START_IGNORE_PARTIAL
@@ -1080,6 +1063,60 @@ XXTE_START_IGNORE_PARTIAL
     return [self previewActionsForEntry:entry forEntryCell:controller.previewActionSender];
 }
 XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - UIView Getters
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        CGRect tableViewFrame = CGRectZero;
+        if (isOS11Above() && isAppStore()) {
+            tableViewFrame = self.view.bounds;
+        } else {
+            tableViewFrame = CGRectMake(0.0, 44.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0);
+        }
+        UITableView *tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.allowsSelection = YES;
+        tableView.allowsMultipleSelection = NO;
+        tableView.allowsSelectionDuringEditing = YES;
+        tableView.allowsMultipleSelectionDuringEditing = YES;
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 9.0, *)) {
+            tableView.cellLayoutMarginsFollowReadableWidth = NO;
+        }
+        XXTE_END_IGNORE_PARTIAL
+        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
+        UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
+        cellLongPressGesture.delegate = self;
+        [tableView addGestureRecognizer:cellLongPressGesture];
+        _tableView = tableView;
+    }
+    return _tableView;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        if (isOS11Above() && isAppStore()) {
+            refreshControl.tintColor = [UIColor whiteColor];
+        }
+        [refreshControl addTarget:self action:@selector(refreshControlTriggered:) forControlEvents:UIControlEventValueChanged];
+        _refreshControl = refreshControl;
+    }
+    return _refreshControl;
+}
+
+- (XXTExplorerFooterView *)footerView {
+    if (!_footerView) {
+        XXTExplorerFooterView *entryFooterView = [[XXTExplorerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 48.f)];
+        entryFooterView.delegate = self;
+        _footerView = entryFooterView;
+    }
+    return _footerView;
+}
 
 #pragma mark - Memory
 

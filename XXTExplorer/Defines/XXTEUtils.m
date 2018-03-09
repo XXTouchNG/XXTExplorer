@@ -365,3 +365,39 @@ UIColor *XXTColorSuccess() { // rgb(26, 188, 134)
     });
     return xxtSuccessColor;
 }
+
+BOOL isOS11Above() {
+    if (@available(iOS 11.0, *)) {
+        return YES;
+    }
+    return NO;
+}
+
+BOOL isOS10Above() {
+    if (@available(iOS 10.0, *)) {
+        return YES;
+    }
+    return NO;
+}
+
+BOOL isOS9Above() {
+    if (@available(iOS 9.0, *)) {
+        return YES;
+    }
+    return NO;
+}
+
+BOOL isOS8Above() {
+    if (@available(iOS 8.0, *)) {
+        return YES;
+    }
+    return NO;
+}
+
+BOOL isAppStore() {
+#ifdef APPSTORE
+    return YES;
+#else
+    return NO;
+#endif
+}

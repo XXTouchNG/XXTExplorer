@@ -19,6 +19,11 @@ extern "C" {
     UIViewController *blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay);
     UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock);
     BOOL isiPhoneX(void);
+    BOOL isOS11Above(void);
+    BOOL isOS10Above(void);
+    BOOL isOS9Above(void);
+    BOOL isOS8Above(void);
+    BOOL isAppStore(void);
     
     void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration);
     void toastMessage(UIViewController *viewController, NSString *message);
