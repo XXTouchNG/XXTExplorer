@@ -123,12 +123,14 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender
 {
-    if (@available(iOS 8.0, *))
-    {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace}]];
-        XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-        XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
-        [self showDetailViewController:detailNavigationController sender:sender];
+    if (XXTE_COLLAPSED) {
+        if (@available(iOS 8.0, *))
+        {
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace}]];
+            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+            [self showDetailViewController:detailNavigationController sender:sender];
+        }
     }
 }
 
