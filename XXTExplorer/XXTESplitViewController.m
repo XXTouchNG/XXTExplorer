@@ -123,7 +123,7 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender
 {
-    if (XXTE_COLLAPSED) {
+    if (XXTE_IS_IPAD) { // cannot use collapsed check here
         if (@available(iOS 8.0, *))
         {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace}]];
