@@ -27,12 +27,14 @@
     NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
     if (!shareUrl) return;
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
+    if (@available(iOS 9.0, *)) {
         UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
-        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        popoverPresentationController.barButtonItem = sender;
+        if (XXTE_IS_IPAD) {
+            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+            popoverPresentationController.barButtonItem = sender;
+        }
         [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
     } else {
         toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
