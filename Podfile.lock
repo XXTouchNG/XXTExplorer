@@ -68,10 +68,10 @@ DEPENDENCIES:
   - GCDWebServer/WebDAV
   - JSONModel (~> 1.7.0)
   - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
-  - MWPhotoBrowser (from `../MWPhotoBrowser`)
+  - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7)
-  - TOWebViewController (from `../TOWebViewController`)
+  - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
   - XUI (from `https://github.com/Lessica/XUI.git`)
   - YYImage (~> 1.0.4)
@@ -82,9 +82,10 @@ EXTERNAL SOURCES:
     :branch: old-device
     :git: https://github.com/Lessica/LGAlertView.git
   MWPhotoBrowser:
-    :path: ../MWPhotoBrowser
+    :git: https://github.com/Lessica/MWPhotoBrowser.git
   TOWebViewController:
-    :path: ../TOWebViewController
+    :branch: WKWebView
+    :git: https://github.com/Lessica/TOWebViewController.git
   UnrarKit:
     :branch: v2.9
     :git: https://github.com/Lessica/UnrarKit.git
@@ -95,6 +96,12 @@ CHECKOUT OPTIONS:
   LGAlertView:
     :commit: ee0e4294b4dcffdab829b4d0c5a6fa523a1c0c94
     :git: https://github.com/Lessica/LGAlertView.git
+  MWPhotoBrowser:
+    :commit: 8c0c06aa66ad6d3fc7d4a66102e8f3febd63123a
+    :git: https://github.com/Lessica/MWPhotoBrowser.git
+  TOWebViewController:
+    :commit: f49b677f1c41dcb9d614d0cc46685a21411070cd
+    :git: https://github.com/Lessica/TOWebViewController.git
   UnrarKit:
     :commit: 6b946a71aecc6654cc0510f63177f72e7fba5ae6
     :git: https://github.com/Lessica/UnrarKit.git
@@ -117,6 +124,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: d0c14debb30d775a655605e300b663264a40b796
+PODFILE CHECKSUM: 190d9f4de675168bd4be8ef88c9ec8cc517274d5
 
 COCOAPODS: 1.3.1
