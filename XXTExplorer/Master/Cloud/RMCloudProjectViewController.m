@@ -91,9 +91,13 @@ typedef enum : NSUInteger {
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.comingSoonView];
     
-    if ([self standAloneMode]) {
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_COLLAPSED && [self standAloneMode]) {
+        [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
+    } else {
         self.navigationItem.leftBarButtonItem = self.closeItem;
     }
+    XXTE_END_IGNORE_PARTIAL
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
@@ -668,7 +672,7 @@ XXTE_END_IGNORE_PARTIAL
             NSString *scheme = sourceURL.scheme;
             if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
             {
-                if ([self standAloneMode]) {
+                if ([self standAloneMode] && !XXTE_COLLAPSED) {
                     XXTEDownloadViewController *downloadController = [[XXTEDownloadViewController alloc] initWithSourceURL:sourceURL targetPath:downloadPath];
                     downloadController.allowsAutoDetection = YES;
                     downloadController.autoInstantView = YES;
@@ -797,6 +801,17 @@ XXTE_END_IGNORE_PARTIAL
 #ifdef DEBUG
     NSLog(@"- [RMCloudProjectViewController dealloc]");
 #endif
+}
+
+#pragma mark - Unused initilizers
+
+@synthesize entryPath = _entryPath;
+
+- (instancetype)initWithPath:(NSString *)path {
+    if (self = [super init]) {
+        _entryPath = path;
+    }
+    return self;
 }
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTEDetailViewController.h"
 
-@interface RMCloudProjectViewController : UIViewController
+@interface RMCloudProjectViewController : UIViewController <XXTEDetailViewController>
 
 @property (nonatomic, assign) NSUInteger projectID;
 - (instancetype)initWithProjectID:(NSUInteger)projectID;

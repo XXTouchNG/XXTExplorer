@@ -84,14 +84,16 @@
         self.navigationItem.leftBarButtonItem = self.dismissItem;
     }
     self.navigationItem.rightBarButtonItem = self.albumItem;
-    if (@available(iOS 11.0, *)) {
-#ifdef APPSTORE
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
-#else
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-#endif
+    XXTE_START_IGNORE_PARTIAL
+    if (isOS11Above()) {
+        if (isAppStore()) {
+            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+        } else {
+            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+        }
     }
-
+    XXTE_END_IGNORE_PARTIAL
+    
     [self fetchVideoPermission];
 //    [self reloadCaptureSceneWithSize:self.view.bounds.size];
 }
@@ -278,13 +280,33 @@
 
 - (AVCaptureDevice *)scanDevice {
     if (!_scanDevice) {
-        AVCaptureDevice *scanDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        AVCaptureDevice *scanDevice = [self backCamera];
         _scanDevice = scanDevice;
     }
     return _scanDevice;
 }
 
-- (AVCaptureDeviceInput *) scanInput {
+- (AVCaptureDevice *)frontCamera {
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices) {
+        if ([device position] == AVCaptureDevicePositionFront) {
+            return device;
+        }
+    }
+    return nil;
+}
+
+- (AVCaptureDevice *)backCamera {
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices) {
+        if ([device position] == AVCaptureDevicePositionBack) {
+            return device;
+        }
+    }
+    return nil;
+}
+
+- (AVCaptureDeviceInput *)scanInput {
     if (!_scanInput) {
         NSError *err = nil;
         AVCaptureDeviceInput *scanInput = [AVCaptureDeviceInput deviceInputWithDevice:self.scanDevice error:&err];

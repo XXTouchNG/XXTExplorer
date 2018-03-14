@@ -13,6 +13,7 @@
 #import "RMCloudLoadingView.h"
 #import "RMCloudComingSoon.h"
 
+#import "XXTENavigationController.h"
 
 typedef enum : NSUInteger {
     RMCloudListSectionProject = 0,
@@ -303,9 +304,22 @@ XXTE_END_IGNORE_PARTIAL
             project = self.projects[indexPath.row];
         }
         UIViewController *controller = [self preparePushForProject:project];
-        [self.navigationController pushViewController:controller animated:YES];
+        [self tableView:tableView showDetailViewController:controller animated:YES];
     } else if (indexPath.section == RMCloudListSectionMore) {
         [self loadMoreProjects:nil];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView showDetailViewController:(UIViewController *)controller animated:(BOOL)animated {
+    if (XXTE_COLLAPSED) {
+        XXTE_START_IGNORE_PARTIAL
+        if (@available(iOS 8.0, *)) {
+            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:controller];
+            [self.splitViewController showDetailViewController:navigationController sender:self];
+        }
+        XXTE_END_IGNORE_PARTIAL
+    } else {
+        [self.navigationController pushViewController:controller animated:animated];
     }
 }
 

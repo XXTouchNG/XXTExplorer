@@ -294,7 +294,7 @@
 "Cannot encrypt: %@" = "无法加密: %@";
 
 /* No comment provided by engineer. */
-"Cannot extract package." = "无法解压安装包.";
+"Cannot extract package, which may be a corrupted archive." = "无法解压安装包, 它可能已经损坏.";
 
 /* No comment provided by engineer. */
 "Cannot find QR Code in the image." = "图像中找不到二维码.";

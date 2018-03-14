@@ -14,10 +14,6 @@
 
 @implementation XXTEImagePickerController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 #pragma mark - Memory
 
 - (void)dealloc {

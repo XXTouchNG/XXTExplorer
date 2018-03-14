@@ -104,7 +104,7 @@
                     [_delegate packageExtractor:self didFinishFetchingMetaData:pathData];
                 }
             } else {
-                [self callbackFetchingMetaDataWithErrorReason:NSLocalizedString(@"Cannot extract package.", nil)];
+                [self callbackFetchingMetaDataWithErrorReason:NSLocalizedString(@"Cannot extract package, which may be a corrupted archive.", nil)];
             }
         });
     });
