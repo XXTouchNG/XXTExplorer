@@ -40,7 +40,12 @@
 }
 
 - (void)setup {
-    self.displayActionButton = YES;
+    if (@available(iOS 9.0, *)) {
+        self.displayActionButton = YES;
+    } else {
+        self.displayActionButton = NO;
+    }
+    
     self.displayNavArrows = YES;
     self.displaySelectionButtons = NO;
     self.zoomPhotosToFill = NO;

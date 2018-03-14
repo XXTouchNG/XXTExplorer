@@ -59,7 +59,11 @@
         if (path) {
             self.url = [NSURL fileURLWithPath:path];
         }
-        self.showActionButton = YES;
+        if (@available(iOS 9.0, *)) {
+            self.showActionButton = YES;
+        } else {
+            self.showActionButton = NO;
+        }
     }
     return self;
 }

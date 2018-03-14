@@ -65,7 +65,7 @@
 
 - (NSArray <NSString *> *)metaKeys {
     if (!_metaKeys) {
-        _metaKeys = @[ @"PixelWidth", @"PixelHeight", @"VideoDuration", @"VideoMediaType", @"VideoNominalFrameRate", @"VideoEstimatedDataRate", @"AudioMediaType", @"AudioDuration" ];
+        _metaKeys = @[ @"PixelWidth", @"PixelHeight", @"VideoMediaType", @"VideoDuration", @"VideoNominalFrameRate", @"VideoEstimatedDataRate", @"AudioMediaType", @"AudioDuration" ];
     }
     return _metaKeys;
 }
