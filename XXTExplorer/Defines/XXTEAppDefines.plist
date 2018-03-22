@@ -43,7 +43,7 @@
 	<key>DAEMON_LOG_VIEWER</key>
 	<string>XXTELogViewController</string>
 	<key>DAEMON_VERSION</key>
-	<string>1.2-5</string>
+	<string>1.2-8</string>
 	<key>EXPLORER_HISTORY_PATH</key>
 	<string>caches/history</string>
 	<key>EXPLORER_INITIAL_PATH</key>

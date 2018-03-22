@@ -15,7 +15,7 @@
 			<string>About</string>
 			<key>label</key>
 			<string>XXTouch
-v1.2-5</string>
+v1.2-8</string>
 			<key>value</key>
 			<string>https://www.xxtouch.com
 2016-2018 © XXTouch Team.
@@ -63,7 +63,7 @@ All Rights Reserved.</string>
 					<string>i.82@qq.com</string>
 				</array>
 				<key>subject</key>
-				<string>[Feedback] XXTouch v1.2-5</string>
+				<string>[Feedback] XXTouch v1.2-8</string>
 				<key>toRecipients</key>
 				<array>
 					<string>bug@xxtouch.com</string>
@@ -73,8 +73,8 @@ All Rights Reserved.</string>
 			<string>Button</string>
 			<key>icon</key>
 			<string>res/XXTEAboutIconMail.png</string>
-            <key>iconRenderingMode</key>
-            <string>AlwaysTemplate</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
 			<key>label</key>
 			<string>Mail Feedback</string>
 		</dict>
