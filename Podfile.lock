@@ -7,46 +7,46 @@ PODS:
   - LGAlertView (2.4.0)
   - MWPhotoBrowser (2.1.2):
     - YYImage (~> 1.0.4)
-  - OMGHTTPURLRQ (3.2.3):
-    - OMGHTTPURLRQ/RQ (= 3.2.3)
-  - OMGHTTPURLRQ/FormURLEncode (3.2.3)
-  - OMGHTTPURLRQ/RQ (3.2.3):
+  - OMGHTTPURLRQ (3.2.4):
+    - OMGHTTPURLRQ/RQ (= 3.2.4)
+  - OMGHTTPURLRQ/FormURLEncode (3.2.4)
+  - OMGHTTPURLRQ/RQ (3.2.4):
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
-  - OMGHTTPURLRQ/UserAgent (3.2.3)
-  - PromiseKit (1.7.4):
-    - PromiseKit/CALayer (= 1.7.4)
-    - PromiseKit/NSNotificationCenter (= 1.7.4)
-    - PromiseKit/NSURLConnection (= 1.7.4)
-    - PromiseKit/Pause (= 1.7.4)
-    - PromiseKit/UIActionSheet (= 1.7.4)
-    - PromiseKit/UIAlertView (= 1.7.4)
-    - PromiseKit/UIView (= 1.7.4)
-    - PromiseKit/UIViewController (= 1.7.4)
-    - PromiseKit/Until (= 1.7.4)
-    - PromiseKit/When (= 1.7.4)
-  - PromiseKit/CALayer (1.7.4):
+  - OMGHTTPURLRQ/UserAgent (3.2.4)
+  - PromiseKit (1.7.6):
+    - PromiseKit/CALayer (= 1.7.6)
+    - PromiseKit/NSNotificationCenter (= 1.7.6)
+    - PromiseKit/NSURLConnection (= 1.7.6)
+    - PromiseKit/Pause (= 1.7.6)
+    - PromiseKit/UIActionSheet (= 1.7.6)
+    - PromiseKit/UIAlertView (= 1.7.6)
+    - PromiseKit/UIView (= 1.7.6)
+    - PromiseKit/UIViewController (= 1.7.6)
+    - PromiseKit/Until (= 1.7.6)
+    - PromiseKit/When (= 1.7.6)
+  - PromiseKit/CALayer (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/NSNotificationCenter (1.7.4):
+  - PromiseKit/NSNotificationCenter (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/NSURLConnection (1.7.4):
+  - PromiseKit/NSURLConnection (1.7.6):
     - OMGHTTPURLRQ (~> 3.2)
     - PromiseKit/Promise
-  - PromiseKit/Pause (1.7.4):
+  - PromiseKit/Pause (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/Promise (1.7.4)
-  - PromiseKit/UIActionSheet (1.7.4):
+  - PromiseKit/Promise (1.7.6)
+  - PromiseKit/UIActionSheet (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/UIAlertView (1.7.4):
+  - PromiseKit/UIAlertView (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/UIView (1.7.4):
+  - PromiseKit/UIView (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/UIViewController (1.7.4):
+  - PromiseKit/UIViewController (1.7.6):
     - PromiseKit/Promise
-  - PromiseKit/Until (1.7.4):
+  - PromiseKit/Until (1.7.6):
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/When (1.7.4):
+  - PromiseKit/When (1.7.6):
     - PromiseKit/Promise
   - TOWebViewController (2.2.6):
     - TOWebViewController/Core (= 2.2.6)
@@ -106,7 +106,7 @@ CHECKOUT OPTIONS:
     :commit: 6b946a71aecc6654cc0510f63177f72e7fba5ae6
     :git: https://github.com/Lessica/UnrarKit.git
   XUI:
-    :commit: a756dbdf1ac1a705669d2e6a709c84dabde28ec8
+    :commit: bba34f28afea9ecdacf3adfe35a3c40a90d2d0d5
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
@@ -115,8 +115,8 @@ SPEC CHECKSUMS:
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
-  OMGHTTPURLRQ: 54c81b179bd5fd223879b29569f88be17a58ec23
-  PromiseKit: 8f6a1afd32ac303ece7ef74c84a5ff239cee39f3
+  OMGHTTPURLRQ: 9ac96bdf5c90a33f75836630729ea1adc312a9ed
+  PromiseKit: 94bcf2f44424df0384af81c6221cb3bfa3e7ed4c
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
   XUI: 962106a41a26f8c1fd640906412aa78e1ea48b2f
@@ -124,6 +124,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 190d9f4de675168bd4be8ef88c9ec8cc517274d5
+PODFILE CHECKSUM: cf349b1d179f3da5a4449002552ae998ec0b06ac
 
 COCOAPODS: 1.3.1

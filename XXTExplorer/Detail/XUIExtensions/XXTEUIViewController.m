@@ -8,6 +8,7 @@
 
 #import "XXTEUIViewController.h"
 #import "XUIEntryReader.h"
+#import <XUI/XUIListFooterView.h>
 
 @interface XXTEUIViewController ()
 
@@ -64,6 +65,7 @@
             }
         }
     }
+    self.footerView.footerIcon = [[UIImage imageNamed:@"XUIAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
