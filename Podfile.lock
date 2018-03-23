@@ -73,7 +73,7 @@ DEPENDENCIES:
   - PromiseKit (~> 1.7)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
-  - XUI (from `https://github.com/Lessica/XUI.git`)
+  - XUI (from `../XUI`)
   - YYImage (~> 1.0.4)
   - YYWebImage (~> 1.0.5)
 
@@ -90,7 +90,7 @@ EXTERNAL SOURCES:
     :branch: v2.9
     :git: https://github.com/Lessica/UnrarKit.git
   XUI:
-    :git: https://github.com/Lessica/XUI.git
+    :path: ../XUI
 
 CHECKOUT OPTIONS:
   LGAlertView:
@@ -105,9 +105,6 @@ CHECKOUT OPTIONS:
   UnrarKit:
     :commit: 6b946a71aecc6654cc0510f63177f72e7fba5ae6
     :git: https://github.com/Lessica/UnrarKit.git
-  XUI:
-    :commit: bba34f28afea9ecdacf3adfe35a3c40a90d2d0d5
-    :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
@@ -119,11 +116,11 @@ SPEC CHECKSUMS:
   PromiseKit: 94bcf2f44424df0384af81c6221cb3bfa3e7ed4c
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
-  XUI: 962106a41a26f8c1fd640906412aa78e1ea48b2f
+  XUI: 07b731e59e88ac3aab0d6026ca06e62265cc60cd
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: cf349b1d179f3da5a4449002552ae998ec0b06ac
+PODFILE CHECKSUM: 677221787380914d07ee777f4396e5b11599f33b
 
 COCOAPODS: 1.3.1
