@@ -97,7 +97,7 @@ CHECKOUT OPTIONS:
     :commit: ee0e4294b4dcffdab829b4d0c5a6fa523a1c0c94
     :git: https://github.com/Lessica/LGAlertView.git
   MWPhotoBrowser:
-    :commit: 8c0c06aa66ad6d3fc7d4a66102e8f3febd63123a
+    :commit: 9aea50ef21412dd0907de5d24ec90f8e1e869c03
     :git: https://github.com/Lessica/MWPhotoBrowser.git
   TOWebViewController:
     :commit: f49b677f1c41dcb9d614d0cc46685a21411070cd
@@ -106,7 +106,7 @@ CHECKOUT OPTIONS:
     :commit: 6b946a71aecc6654cc0510f63177f72e7fba5ae6
     :git: https://github.com/Lessica/UnrarKit.git
   XUI:
-    :commit: 7d5c7111c7d79d59312dfe592e3955e525188f33
+    :commit: dbfc5600485ecaf92f8a62f71a86e3b4e242ea7b
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
