@@ -36,6 +36,10 @@
 #import "XXTExplorerItemGroupViewController.h"
 #import "XXTExplorerPermissionViewController.h"
 
+#ifndef APPSTORE
+#import "XXTExplorerItemRepeatViewController.h"
+#endif
+
 static int sizingCancelFlag = 0;
 
 @interface NSFileManager (DeepSize)
@@ -126,6 +130,8 @@ static int sizingCancelFlag = 0;
 @property (nonatomic, strong) XXTExplorerEntryParser *entryParser;
 @property (nonatomic, strong) NSArray <XXTExplorerDynamicSection *> *dynamicSections;
 
+@property (nonatomic, assign) BOOL isRecordingScript;
+
 @end
 
 @implementation XXTExplorerItemDetailViewController {
@@ -146,7 +152,29 @@ static int sizingCancelFlag = 0;
 
 - (void)setup {
     sizingCancelFlag = 0;
+#ifndef APPSTORE
+    _isRecordingScript = [[self class] checkRecordingScript:self.entry.entryPath];
+#endif
 }
+
++ (BOOL)checkRecordingScript:(NSString *)entryPath {
+    if (!entryPath) return NO;
+    NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
+    if (!checkData) return NO;
+    NSString *checkString = [[NSString alloc] initWithData:checkData encoding:NSUTF8StringEncoding];
+    if (!checkString) return NO;
+    NSArray <NSString *> *checkArray = [checkString componentsSeparatedByString:@"\n"];
+    if (checkArray.count < 6) return NO;
+    NSString *firstLine = [checkArray firstObject];
+    NSString *lastLine = [checkArray lastObject];
+    if (![firstLine hasSuffix:@"-- record begin"])
+        return NO;
+    if (![lastLine hasSuffix:@"-- record end"])
+        return NO;
+    return YES;
+}
+
+#pragma mark - Repeat Check
 
 #pragma mark - View Methods
 
@@ -230,6 +258,21 @@ static int sizingCancelFlag = 0;
         section1.sectionTitle = NSLocalizedString(@"Filename", nil);
         
         if (section1) [mutableDynamicSections addObject:section1];
+    }
+    
+    // #0 - Repeat 
+    if (self.isRecordingScript) {
+        XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+        cell.titleLabel.text = NSLocalizedString(@"Speed and Repeat", nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
+        section.identifier = kXXTEDynamicSectionIdentifierSectionRepeat;
+        if (cell) section.cells = @[ cell ];
+        section.cellHeights = @[ @(44.f) ];
+        section.sectionTitle = NSLocalizedString(@"Playback Settings", nil);
+        
+        if (section) [mutableDynamicSections addObject:section];
     }
     
     // #2 - Extended
@@ -768,6 +811,14 @@ static int sizingCancelFlag = 0;
                     XXTExplorerPermissionViewController *permissionController = [[XXTExplorerPermissionViewController alloc] initWithPath:entryPath];
                     permissionController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
                     [self.navigationController pushViewController:permissionController animated:YES];
+                }
+#endif
+            } else if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionRepeat]) {
+#ifndef APPSTORE
+                if (indexPath.row == 0) {
+                    XXTExplorerItemRepeatViewController *repeatController = [[XXTExplorerItemRepeatViewController alloc] initWithPath:entryPath];
+                    repeatController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
+                    [self.navigationController pushViewController:repeatController animated:YES];
                 }
 #endif
             }

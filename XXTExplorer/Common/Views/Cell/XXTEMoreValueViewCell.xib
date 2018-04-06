@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" id="KGk-i7-Jjw" customClass="XXTEEditorFontSizeCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" id="KGk-i7-Jjw" customClass="XXTEMoreValueViewCell">
             <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -24,7 +24,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7EW-mg-fyB" customClass="XXTEEditorFontSizeView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7EW-mg-fyB" customClass="XXTEMoreValueView">
                         <rect key="frame" x="266" y="11" width="120" height="66"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -44,8 +44,9 @@
             <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
-                <outlet property="sizeView" destination="7EW-mg-fyB" id="cUc-ka-CYW"/>
                 <outlet property="titleLabel" destination="gVx-ed-oj6" id="96x-no-fIS"/>
+                <outlet property="valueView" destination="7EW-mg-fyB" id="cUc-ka-CYW"/>
+                <outlet property="valueViewWidthConstraint" destination="G17-QK-TrU" id="635-cJ-xPc"/>
             </connections>
         </tableViewCell>
     </objects>

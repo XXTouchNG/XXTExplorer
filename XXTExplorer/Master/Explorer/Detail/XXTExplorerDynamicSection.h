@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 static NSString * const kXXTEDynamicSectionIdentifierSectionName = @"SectionName";
+static NSString * const kXXTEDynamicSectionIdentifierSectionRepeat = @"SectionRepeat";
 static NSString * const kXXTEDynamicSectionIdentifierSectionWhere = @"SectionWhere";
 static NSString * const kXXTEDynamicSectionIdentifierSectionOriginal = @"SectionOriginal";
 static NSString * const kXXTEDynamicSectionIdentifierSectionGeneral = @"SectionGeneral";

@@ -14,5 +14,6 @@
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
 
 - (instancetype)initWithPath:(NSString *)path;
++ (BOOL)checkRecordingScript:(NSString *)entryPath;
 
 @end

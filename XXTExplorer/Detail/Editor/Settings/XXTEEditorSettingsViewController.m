@@ -12,10 +12,10 @@
 #import "XXTEEditorDefaults.h"
 
 // Cells & Subviews
-#import "XXTEEditorFontSizeView.h"
+#import "XXTEMoreValueView.h"
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreSwitchCell.h"
-#import "XXTEEditorFontSizeCell.h"
+#import "XXTEMoreValueViewCell.h"
 #import "XXTEEditorTabWidthCell.h"
 #import "XXTEEditorWrapColumnCell.h"
 #import "UIControl+BlockTarget.h"
@@ -29,7 +29,7 @@
 #import "XXTEEditorThemeSettingsViewController.h"
 #import "XXTEEditorFontSettingsViewController.h"
 
-@interface XXTEEditorSettingsViewController () <XXTEEditorFontSizeViewDelegate, XXTEEditorFontSettingsViewControllerDelegate, XXTEEditorThemeSettingsViewControllerDelegate, UITextFieldDelegate>
+@interface XXTEEditorSettingsViewController () <XXTEMoreValueViewDelegate, XXTEEditorFontSettingsViewControllerDelegate, XXTEEditorThemeSettingsViewControllerDelegate, UITextFieldDelegate>
 
 @end
 
@@ -109,10 +109,14 @@
     cell1.valueLabel.font = [font fontWithSize:17.f];
     cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    XXTEEditorFontSizeCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorFontSizeCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreValueViewCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreValueViewCell class]) owner:nil options:nil] lastObject];
     cell2.titleLabel.text = NSLocalizedString(@"Font Size", nil);
-    cell2.sizeView.fontSize = (NSUInteger)font.pointSize;
-    cell2.sizeView.delegate = self;
+    cell2.valueView.maxValue = 32.0;
+    cell2.valueView.minValue = 8.0;
+    cell2.valueView.unitString = @"pt";
+    cell2.valueView.isInteger = YES;
+    cell2.valueView.value = (NSUInteger)font.pointSize;
+    cell2.valueView.delegate = self;
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Theme", nil);
@@ -489,10 +493,10 @@
     return [UITableViewCell new];
 }
 
-#pragma mark - XXTEEditorFontSizeViewDelegate
+#pragma mark - XXTEMoreValueViewDelegate
 
-- (void)fontViewSizeDidChanged:(XXTEEditorFontSizeView *)view {
-    XXTEDefaultsSetBasic(XXTEEditorFontSize, view.fontSize);
+- (void)valueViewValueDidChanged:(XXTEMoreValueView *)view {
+    XXTEDefaultsSetBasic(XXTEEditorFontSize, view.value);
     [self.editor setNeedsReload];
 }
 

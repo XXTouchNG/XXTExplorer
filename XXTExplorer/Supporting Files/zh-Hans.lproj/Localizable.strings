@@ -327,6 +327,9 @@
 "Cannot overwrite file \"%@\".\n%@" = "无法覆盖文件 \"%@\".\n%@";
 
 /* No comment provided by engineer. */
+"Cannot parse and override specific script: \"%@\"." = "无法解析并覆盖指定脚本文件: \"%@\".";
+
+/* No comment provided by engineer. */
 "Cannot parse log with UTF-8 encoding: \"%@\"." = "无法以 UTF-8 编码解析日志: \"%@\".";
 
 /* No comment provided by engineer. */
@@ -340,6 +343,9 @@
 
 /* No comment provided by engineer. */
 "Cannot read archive file \"%@\": Password protected archive is not supported." = "无法读取归档文件 \"%@\": 不支持密码保护归档.";
+
+/* No comment provided by engineer. */
+"Cannot read or parse specific script: \"%@\"." = "无法读取或解析指定脚本文件: \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot read template \"%@\"." = "无法读取模板 \"%@\".";
@@ -747,6 +753,9 @@
 "Indent Wrapped Lines" = "折行缩进";
 
 /* No comment provided by engineer. */
+"Infinite Repeat" = "无限循环";
+
+/* No comment provided by engineer. */
 "Information" = "信息";
 
 /* No comment provided by engineer. */
@@ -870,6 +879,12 @@
 "Local Debugger" = "本地调试器";
 
 /* No comment provided by engineer. */
+"local play_speed = %@  -- Speed" = "local play_speed = %@  -- 速度 (Speed)";
+
+/* No comment provided by engineer. */
+"local play_times = %@  -- Repeat Times" = "local play_times = %@  -- 循环次数 (Repeat Times)";
+
+/* No comment provided by engineer. */
 "Local time is not accurate." = "设备时间异常, 请前往 \"设置 > 通用 > 日期与时间\" 校准设备时间.";
 
 /* No comment provided by engineer. */
@@ -954,10 +969,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1077,6 +1092,9 @@
 "Plain Text (*.txt)" = "Plain Text (*.txt)";
 
 /* No comment provided by engineer. */
+"Playback Settings" = "播放设置";
+
+/* No comment provided by engineer. */
 "Please confirm these information.\n\nThe data source is provided by third party author. If you encounter a problem, please contact its author by the contact details under the previous page. Tap \"Save\" if you can make sure that the source is trusted." = "请确认这些信息.\n\n该数据源由第三方作者提供, 如果你遇到任何问题, 请通过前一页面下方的联系方式联系其作者解决. 如果你信任该数据源, 轻按 \"存储\" 以继续.";
 
 /* No comment provided by engineer. */
@@ -1186,6 +1204,12 @@
 
 /* No comment provided by engineer. */
 "Rename" = "重命名";
+
+/* No comment provided by engineer. */
+"Repeat" = "循环";
+
+/* No comment provided by engineer. */
+"Repeat Times" = "循环次数";
 
 /* No comment provided by engineer. */
 "Replace" = "替换";
@@ -1336,6 +1360,12 @@
 
 /* No comment provided by engineer. */
 "Special" = "特殊";
+
+/* No comment provided by engineer. */
+"Speed" = "速度";
+
+/* No comment provided by engineer. */
+"Speed and Repeat" = "速度与循环";
 
 /* No comment provided by engineer. */
 "Spell Checking" = "拼写检查";
