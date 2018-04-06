@@ -15,6 +15,8 @@
 
 #import "XXTExplorerItemDetailViewController.h"
 
+#define LONGLONGMAX_STRING @"9223372036854775807"
+
 @interface XXTExplorerItemRepeatViewController () <XXTEMoreValueViewDelegate>
 @property (nonatomic, strong) XXTEMoreValueViewCell *speedValueViewCell;
 @property (nonatomic, strong) XUISwitchCell *infiniteRepeatSwitchCell;
@@ -180,6 +182,7 @@
 }
 
 - (BOOL)importRecordingScript {
+    
     NSString *entryPath = self.entryPath;
     if (!entryPath) return NO;
     NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
@@ -188,28 +191,34 @@
     if (!checkString) return NO;
     NSArray <NSString *> *checkArray = [checkString componentsSeparatedByString:@"\n"];
     if (checkArray.count < 6) return NO;
+    
     NSString *playSpeedLine = checkArray[2];
     NSString *playTimesLine = checkArray[3];
     NSTextCheckingResult *speedCheck = [[[self class] speedLineRegex] firstMatchInString:playSpeedLine options:0 range:NSMakeRange(0, playSpeedLine.length)];
     if (!speedCheck || speedCheck.numberOfRanges != 2) return NO;
     NSTextCheckingResult *timesCheck = [[[self class] repeatTimesLineRegex] firstMatchInString:playTimesLine options:0 range:NSMakeRange(0, playTimesLine.length)];
     if (!timesCheck || timesCheck.numberOfRanges != 2) return NO;
+    
     NSRange speedRange = [speedCheck rangeAtIndex:1];
     NSRange timesRange = [timesCheck rangeAtIndex:1];
     NSString *speedStr = [playSpeedLine substringWithRange:speedRange];
     NSString *timesStr = [playTimesLine substringWithRange:timesRange];
+    
     if (speedStr.length > 4) return NO;
     double speedValue = [speedStr doubleValue];
-    NSInteger timesValue = [timesStr integerValue];
-    if (speedValue - 0.1 < 0.01 || timesValue < 1) return NO;
+    if (speedValue - 0.1 < 0.01) return NO;
     self.speedValueViewCell.valueView.value = speedValue;
-    if (timesValue == UINT_MAX) {
+    
+    if ([timesStr isEqualToString:LONGLONGMAX_STRING]) {
         self.repeatTimesValueViewCell.xui_value = @(1);
         self.infiniteRepeatSwitchCell.xui_value = @(YES);
     } else {
+        NSInteger timesValue = [timesStr integerValue];
+        if (timesValue < 1) return NO;
         self.repeatTimesValueViewCell.xui_value = @(timesValue);
         self.infiniteRepeatSwitchCell.xui_value = @(NO);
     }
+    
     return YES;
 }
 
@@ -232,6 +241,7 @@
 }
 
 - (BOOL)exportRecordingScript {
+    
     NSString *entryPath = self.entryPath;
     if (!entryPath) return NO;
     NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
@@ -240,6 +250,7 @@
     if (!checkString) return NO;
     NSMutableArray <NSString *> *checkArray = [[checkString componentsSeparatedByString:@"\n"] mutableCopy];
     if (checkArray.count < 6) return NO;
+    
     NSString *playSpeedLine = checkArray[2];
     NSString *playTimesLine = checkArray[3];
     NSTextCheckingResult *speedCheck = [[[self class] speedLineRegex] firstMatchInString:playSpeedLine options:0 range:NSMakeRange(0, playSpeedLine.length)];
@@ -250,17 +261,19 @@
     NSString *playSpeedLineTemplate = NSLocalizedString(@"local play_speed = %@  -- Speed", nil);
     NSString *playTimesLineTemplate = NSLocalizedString(@"local play_times = %@  -- Repeat Times", nil);
     NSString *newPlaySpeedLine = [NSString stringWithFormat:playSpeedLineTemplate, [NSString stringWithFormat:@"%.1f", self.speedValueViewCell.valueView.value]];
-    NSUInteger timesValue = 1;
+    
+    NSString *timesValueString = nil;
     id switchVal = self.infiniteRepeatSwitchCell.xui_value;
     if ([switchVal isKindOfClass:[NSNumber class]] && [switchVal boolValue] == YES) {
-        timesValue = UINT_MAX;
+        timesValueString = LONGLONGMAX_STRING;
     } else {
         id timesVal = self.repeatTimesValueViewCell.xui_value;
         if ([timesVal isKindOfClass:[NSNumber class]]) {
-            timesValue = [timesVal unsignedIntegerValue];
+            timesValueString = [NSString stringWithFormat:@"%ld", [timesVal integerValue]];
         }
     }
-    NSString *newPlayTimesLine = [NSString stringWithFormat:playTimesLineTemplate, [NSString stringWithFormat:@"%ld", timesValue]];
+    
+    NSString *newPlayTimesLine = [NSString stringWithFormat:playTimesLineTemplate, timesValueString];
     checkArray[2] = newPlaySpeedLine;
     checkArray[3] = newPlayTimesLine;
     NSString *newContent = [checkArray componentsJoinedByString:@"\n"];
