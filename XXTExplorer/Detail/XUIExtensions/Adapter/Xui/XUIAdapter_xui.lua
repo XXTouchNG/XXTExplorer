@@ -481,6 +481,16 @@ function ValueCheckers.Slider(item, value, index)
     if item.max <= item.min then
         error(string.format('%q: items[%d](%q).max (max <= min)', opt.XUIPath, index, item.key))
     end
+    if item.step ~= nil then
+        if type(item.step) ~= 'number' then
+            error(string.format('%q: items[%d](%q).step (opt.number expected got %s)', opt.XUIPath, index, item.key, type(item.step)))
+        end
+        local length = item.max - item.min
+        if item.step > length then
+            error(string.format('%q: items[%d](%q).step (step > length)', opt.XUIPath, index, item.key))
+        end
+    end
+
     if item.default == nil then
         item.default = item.min
     end
@@ -496,6 +506,9 @@ function ValueCheckers.Slider(item, value, index)
     value = tonumber(value) or item.default
     if value < item.min or value > item.max then
         value = item.default
+    end
+    if item.step ~= nil then
+        value = item.min + math.floor(((value - item.min) / item.step)) * item.step
     end
     return value
 end
