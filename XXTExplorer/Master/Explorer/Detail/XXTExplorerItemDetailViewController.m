@@ -269,14 +269,14 @@ static int sizingCancelFlag = 0;
     // #0 - Repeat 
     if (self.isRecordingScript) {
         XXTEMoreLinkCell *cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
-        cell.titleLabel.text = NSLocalizedString(@"Speed and Repeat", nil);
+        cell.titleLabel.text = NSLocalizedString(@"Speed and Repeat Settings", nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         XXTExplorerDynamicSection *section = [[XXTExplorerDynamicSection alloc] init];
         section.identifier = kXXTEDynamicSectionIdentifierSectionRepeat;
         if (cell) section.cells = @[ cell ];
         section.cellHeights = @[ @(44.f) ];
-        section.sectionTitle = NSLocalizedString(@"Playback Settings", nil);
+        section.sectionTitle = NSLocalizedString(@"Playback", nil);
         
         if (section) [mutableDynamicSections addObject:section];
     }
