@@ -741,6 +741,9 @@
 "Hide" = "隐藏";
 
 /* No comment provided by engineer. */
+"If \"Infinite Repeat\" is enabled, \"Repeat Times\" will make no sense." = "如果 \"无限循环\" 处于启用状态, 那么 \"循环次数\" 将不起作用.";
+
+/* No comment provided by engineer. */
 "Ignore this version" = "忽略此版本";
 
 /* No comment provided by engineer. */
@@ -1365,7 +1368,7 @@
 "Speed" = "速度";
 
 /* No comment provided by engineer. */
-"Speed and Repeat" = "速度与循环";
+"Speed and Repeat" = "播放速度与循环次数设置";
 
 /* No comment provided by engineer. */
 "Spell Checking" = "拼写检查";

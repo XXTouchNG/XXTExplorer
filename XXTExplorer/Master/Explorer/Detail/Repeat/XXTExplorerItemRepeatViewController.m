@@ -9,18 +9,15 @@
 #import "XXTExplorerItemRepeatViewController.h"
 #import "XXTEMoreValueViewCell.h"
 #import "XXTEMoreValueView.h"
-#import "XXTEMoreSwitchCell.h"
+
+#import <XUI/XUISwitchCell.h>
 #import <XUI/XUIStepperCell.h>
 
 #import "XXTExplorerItemDetailViewController.h"
 
 @interface XXTExplorerItemRepeatViewController () <XXTEMoreValueViewDelegate>
-@property (nonatomic, assign) CGFloat playSpeedValue;
-@property (nonatomic, assign) NSUInteger playTimesValue;
-@property (nonatomic, assign) BOOL infiniteRepeatValue;
-
 @property (nonatomic, strong) XXTEMoreValueViewCell *speedValueViewCell;
-@property (nonatomic, strong) XXTEMoreSwitchCell *infiniteRepeatSwitchCell;
+@property (nonatomic, strong) XUISwitchCell *infiniteRepeatSwitchCell;
 @property (nonatomic, strong) XUIStepperCell *repeatTimesValueViewCell;
 @end
 
@@ -28,17 +25,11 @@
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
-        
         BOOL isRecordingScript = [XXTExplorerItemDetailViewController checkRecordingScript:path];
         if (!isRecordingScript) {
             return nil;
         }
-        
         _entryPath = path;
-        _playSpeedValue = 1.0;
-        _playTimesValue = 1;
-        _infiniteRepeatValue = NO;
-        
     }
     return self;
 }
@@ -46,6 +37,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (@available(iOS 9.0, *)) {
+        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
     if (![self importRecordingScript]) {
         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read or parse specific script: \"%@\".", nil), self.entryPath]);
     }
@@ -67,7 +61,7 @@
         _speedValueViewCell.valueView.maxValue = 3.0;
         _speedValueViewCell.valueView.minValue = 0.1;
         _speedValueViewCell.valueView.stepValue = 0.1;
-        _speedValueViewCell.valueView.value = self.playSpeedValue;
+        _speedValueViewCell.valueView.value = 1.0;
         _speedValueViewCell.valueView.isInteger = NO;
         _speedValueViewCell.valueView.unitString = @"x";
         _speedValueViewCell.valueView.delegate = self;
@@ -84,29 +78,21 @@
         _repeatTimesValueViewCell.xui_step = @(1);
         _repeatTimesValueViewCell.xui_isInteger = @(YES);
         _repeatTimesValueViewCell.xui_autoRepeat = @(YES);
-        _repeatTimesValueViewCell.xui_value = @(self.playTimesValue);
-        _repeatTimesValueViewCell.indentationLevel = 1;
-        _repeatTimesValueViewCell.indentationWidth = 8.0;
+        _repeatTimesValueViewCell.xui_value = @(1);
     }
     return _repeatTimesValueViewCell;
 }
 
-- (XXTEMoreSwitchCell *)infiniteRepeatSwitchCell {
+- (XUISwitchCell *)infiniteRepeatSwitchCell {
     if (!_infiniteRepeatSwitchCell) {
-        _infiniteRepeatSwitchCell = [[[UINib nibWithNibName:NSStringFromClass([XXTEMoreSwitchCell class]) bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
-        _infiniteRepeatSwitchCell.titleLabel.text = NSLocalizedString(@"Infinite Repeat", nil);
-        [_infiniteRepeatSwitchCell.optionSwitch addTarget:self action:@selector(infiniteRepeatSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        _infiniteRepeatSwitchCell = [[XUISwitchCell alloc] init];
+        _infiniteRepeatSwitchCell.xui_label = NSLocalizedString(@"Infinite Repeat", nil);
+        _infiniteRepeatSwitchCell.xui_value = @(NO);
     }
     return _infiniteRepeatSwitchCell;
 }
 
 #pragma mark - Actions
-
-- (void)infiniteRepeatSwitchChanged:(UISwitch *)sender {
-    if (sender == self.infiniteRepeatSwitchCell.optionSwitch) {
-        self.infiniteRepeatValue = sender.on;
-    }
-}
 
 - (void)exportAction {
     if (![self exportRecordingScript]) {
@@ -118,7 +104,7 @@
 
 - (void)valueViewValueDidChanged:(XXTEMoreValueView *)view {
     if (view == self.speedValueViewCell.valueView) {
-        self.playSpeedValue = view.value;
+        
     }
 }
 
@@ -163,6 +149,17 @@
     return @"";
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (tableView == self.tableView) {
+        if (section == 0) {
+            
+        } else if (section == 1) {
+            return NSLocalizedString(@"If \"Infinite Repeat\" is enabled, \"Repeat Times\" will make no sense.", nil);
+        }
+    }
+    return @"";
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
@@ -201,25 +198,15 @@
     double speedValue = [speedStr doubleValue];
     NSInteger timesValue = [timesStr integerValue];
     if (speedValue - 0.1 < 0.01 || timesValue < 1) return NO;
-    self.playSpeedValue = speedValue;
-    self.playTimesValue = timesValue;
-    self.infiniteRepeatValue = (timesValue == UINT_MAX);
-    [self refreshValueDisplay];
-    return YES;
-}
-
-- (void)refreshValueDisplay {
-    self.speedValueViewCell.valueView.value = self.playSpeedValue;
-    if (self.playTimesValue == UINT_MAX) {
+    self.speedValueViewCell.valueView.value = speedValue;
+    if (timesValue == UINT_MAX) {
         self.repeatTimesValueViewCell.xui_value = @(1);
+        self.infiniteRepeatSwitchCell.xui_value = @(YES);
     } else {
-        self.repeatTimesValueViewCell.xui_value = @(self.playTimesValue);
+        self.repeatTimesValueViewCell.xui_value = @(timesValue);
+        self.infiniteRepeatSwitchCell.xui_value = @(NO);
     }
-    if (self.infiniteRepeatValue) {
-        self.infiniteRepeatSwitchCell.optionSwitch.on = YES;
-    } else {
-        self.infiniteRepeatSwitchCell.optionSwitch.on = NO;
-    }
+    return YES;
 }
 
 + (NSRegularExpression *)speedLineRegex {
@@ -258,10 +245,10 @@
     
     NSString *playSpeedLineTemplate = NSLocalizedString(@"local play_speed = %@  -- Speed", nil);
     NSString *playTimesLineTemplate = NSLocalizedString(@"local play_times = %@  -- Repeat Times", nil);
-    NSString *newPlaySpeedLine = [NSString stringWithFormat:playSpeedLineTemplate, [NSString stringWithFormat:@"%.1f", self.playSpeedValue]];
-    NSUInteger timesValue = self.playTimesValue;
-    if (self.infiniteRepeatValue)
-    {
+    NSString *newPlaySpeedLine = [NSString stringWithFormat:playSpeedLineTemplate, [NSString stringWithFormat:@"%.1f", self.speedValueViewCell.valueView.value]];
+    NSUInteger timesValue = 1;
+    id switchVal = self.infiniteRepeatSwitchCell.xui_value;
+    if ([switchVal isKindOfClass:[NSNumber class]] && [switchVal boolValue] == YES) {
         timesValue = UINT_MAX;
     } else {
         id timesVal = self.repeatTimesValueViewCell.xui_value;
