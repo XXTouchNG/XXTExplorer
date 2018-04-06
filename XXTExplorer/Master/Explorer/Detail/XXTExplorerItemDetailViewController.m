@@ -145,6 +145,7 @@ static int sizingCancelFlag = 0;
         XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
         _entryParser = entryParser;
         _entry = [entryParser entryOfPath:path withError:nil];
+        _isRecordingScript = [[self class] checkRecordingScript:path];
         [self setup];
     }
     return self;
@@ -152,12 +153,12 @@ static int sizingCancelFlag = 0;
 
 - (void)setup {
     sizingCancelFlag = 0;
-#ifndef APPSTORE
-    _isRecordingScript = [[self class] checkRecordingScript:self.entry.entryPath];
-#endif
 }
 
+#ifndef APPSTORE
 + (BOOL)checkRecordingScript:(NSString *)entryPath {
+    BOOL isLuaExtension = [[entryPath pathExtension] isEqualToString:@"lua"];
+    if (!isLuaExtension) return NO;
     if (!entryPath) return NO;
     NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
     if (!checkData) return NO;
@@ -173,6 +174,11 @@ static int sizingCancelFlag = 0;
         return NO;
     return YES;
 }
+#else
++ (BOOL)checkRecordingScript:(NSString *)entryPath {
+    return NO;
+}
+#endif
 
 #pragma mark - Repeat Check
 

@@ -25,6 +25,10 @@
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
+        BOOL isLuaExtension = [[path pathExtension] isEqualToString:@"lua"];
+        if (!isLuaExtension) {
+            return nil;
+        }
         BOOL isRecordingScript = [XXTExplorerItemDetailViewController checkRecordingScript:path];
         if (!isRecordingScript) {
             return nil;
