@@ -164,11 +164,12 @@ static int sizingCancelFlag = 0;
     if (!checkData) return NO;
     NSString *checkString = [[NSString alloc] initWithData:checkData encoding:NSUTF8StringEncoding];
     if (!checkString) return NO;
+    checkString = [checkString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSArray <NSString *> *checkArray = [checkString componentsSeparatedByString:@"\n"];
     if (checkArray.count < 6) return NO;
     NSString *firstLine = [checkArray firstObject];
     NSString *lastLine = [checkArray lastObject];
-    if (![firstLine hasSuffix:@"-- record begin"])
+    if (NO == [firstLine hasPrefix:@";"] || NO == [firstLine hasSuffix:@"-- record begin"])
         return NO;
     if (![lastLine hasSuffix:@"-- record end"])
         return NO;

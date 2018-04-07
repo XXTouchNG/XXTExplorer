@@ -21,9 +21,12 @@
 @property (nonatomic, strong) XXTEMoreValueViewCell *speedValueViewCell;
 @property (nonatomic, strong) XUISwitchCell *infiniteRepeatSwitchCell;
 @property (nonatomic, strong) XUIStepperCell *repeatTimesValueViewCell;
+@property (nonatomic, strong) NSArray <NSString *> *scriptLines;
 @end
 
-@implementation XXTExplorerItemRepeatViewController
+@implementation XXTExplorerItemRepeatViewController {
+    BOOL allowsExport;
+}
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
@@ -36,6 +39,7 @@
             return nil;
         }
         _entryPath = path;
+        allowsExport = NO;
     }
     return self;
 }
@@ -48,12 +52,18 @@
     }
     if (![self importRecordingScript]) {
         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read or parse specific script: \"%@\".", nil), self.entryPath]);
+        [self.tableView setUserInteractionEnabled:NO];
+        allowsExport = NO;
+    } else {
+        allowsExport = YES;
     }
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     if (parent == nil) {
-        [self exportAction];
+        if (allowsExport) {
+            [self exportAction];
+        }
     }
 }
 
@@ -181,23 +191,30 @@
     return 44.f;
 }
 
+- (NSArray <NSString *> *)scriptLines {
+    if (!_scriptLines) {
+        NSString *entryPath = self.entryPath;
+        if (!entryPath) return nil;
+        NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
+        if (!checkData) return nil;
+        NSString *checkString = [[NSString alloc] initWithData:checkData encoding:NSUTF8StringEncoding];
+        if (!checkString) return nil;
+        NSArray <NSString *> *checkArray = [checkString componentsSeparatedByString:@"\n"];
+        if (checkArray.count < 6) return nil;
+        _scriptLines = checkArray;
+    }
+    return _scriptLines;
+}
+
 - (BOOL)importRecordingScript {
-    
-    NSString *entryPath = self.entryPath;
-    if (!entryPath) return NO;
-    NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
-    if (!checkData) return NO;
-    NSString *checkString = [[NSString alloc] initWithData:checkData encoding:NSUTF8StringEncoding];
-    if (!checkString) return NO;
-    NSArray <NSString *> *checkArray = [checkString componentsSeparatedByString:@"\n"];
-    if (checkArray.count < 6) return NO;
+    NSArray <NSString *> *checkArray = self.scriptLines;
     
     NSString *playSpeedLine = checkArray[2];
     NSString *playTimesLine = checkArray[3];
     NSTextCheckingResult *speedCheck = [[[self class] speedLineRegex] firstMatchInString:playSpeedLine options:0 range:NSMakeRange(0, playSpeedLine.length)];
-    if (!speedCheck || speedCheck.numberOfRanges != 2) return NO;
+    if (!speedCheck || speedCheck.numberOfRanges != 2) return nil;
     NSTextCheckingResult *timesCheck = [[[self class] repeatTimesLineRegex] firstMatchInString:playTimesLine options:0 range:NSMakeRange(0, playTimesLine.length)];
-    if (!timesCheck || timesCheck.numberOfRanges != 2) return NO;
+    if (!timesCheck || timesCheck.numberOfRanges != 2) return nil;
     
     NSRange speedRange = [speedCheck rangeAtIndex:1];
     NSRange timesRange = [timesCheck rangeAtIndex:1];
@@ -241,22 +258,8 @@
 }
 
 - (BOOL)exportRecordingScript {
-    
     NSString *entryPath = self.entryPath;
-    if (!entryPath) return NO;
-    NSData *checkData = [[NSData alloc] initWithContentsOfFile:entryPath options:0 error:nil];
-    if (!checkData) return NO;
-    NSString *checkString = [[NSString alloc] initWithData:checkData encoding:NSUTF8StringEncoding];
-    if (!checkString) return NO;
-    NSMutableArray <NSString *> *checkArray = [[checkString componentsSeparatedByString:@"\n"] mutableCopy];
-    if (checkArray.count < 6) return NO;
-    
-    NSString *playSpeedLine = checkArray[2];
-    NSString *playTimesLine = checkArray[3];
-    NSTextCheckingResult *speedCheck = [[[self class] speedLineRegex] firstMatchInString:playSpeedLine options:0 range:NSMakeRange(0, playSpeedLine.length)];
-    if (!speedCheck || speedCheck.numberOfRanges != 2) return NO;
-    NSTextCheckingResult *timesCheck = [[[self class] repeatTimesLineRegex] firstMatchInString:playTimesLine options:0 range:NSMakeRange(0, playTimesLine.length)];
-    if (!timesCheck || timesCheck.numberOfRanges != 2) return NO;
+    NSMutableArray <NSString *> *checkArray = [self.scriptLines mutableCopy];
     
     NSString *playSpeedLineTemplate = NSLocalizedString(@"local play_speed = %@  -- Speed", nil);
     NSString *playTimesLineTemplate = NSLocalizedString(@"local play_times = %@  -- Repeat Times", nil);
