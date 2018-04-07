@@ -92,10 +92,12 @@ typedef enum : NSUInteger {
     [self.view addSubview:self.comingSoonView];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && [self standAloneMode]) {
-        [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
-    } else {
+    if ([self standAloneMode]) {
         self.navigationItem.leftBarButtonItem = self.closeItem;
+    } else {
+        if (XXTE_COLLAPSED) {
+            [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
+        }
     }
     XXTE_END_IGNORE_PARTIAL
     

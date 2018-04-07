@@ -74,7 +74,7 @@
         _speedValueViewCell = [[[UINib nibWithNibName:NSStringFromClass([XXTEMoreValueViewCell class]) bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
         _speedValueViewCell.titleLabel.text = NSLocalizedString(@"Speed", nil);
         _speedValueViewCell.valueViewWidth = 128.0;
-        _speedValueViewCell.valueView.maxValue = 3.0;
+        _speedValueViewCell.valueView.maxValue = 9.9;
         _speedValueViewCell.valueView.minValue = 0.1;
         _speedValueViewCell.valueView.stepValue = 0.1;
         _speedValueViewCell.valueView.value = 1.0;
@@ -199,6 +199,7 @@
         if (!checkData) return nil;
         NSString *checkString = [[NSString alloc] initWithData:checkData encoding:NSUTF8StringEncoding];
         if (!checkString) return nil;
+        checkString = [checkString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSArray <NSString *> *checkArray = [checkString componentsSeparatedByString:@"\n"];
         if (checkArray.count < 6) return nil;
         _scriptLines = checkArray;
@@ -223,7 +224,7 @@
     
     if (speedStr.length > 4) return NO;
     double speedValue = [speedStr doubleValue];
-    if (speedValue - 0.1 < 0.01) return NO;
+    if (speedValue - 0.1 < 0.01 || speedValue - 9.9 > 0.01) return NO;
     self.speedValueViewCell.valueView.value = speedValue;
     
     if ([timesStr isEqualToString:LONGLONGMAX_STRING]) {
