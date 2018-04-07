@@ -144,8 +144,12 @@ static int sizingCancelFlag = 0;
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
         _entryParser = entryParser;
-        _entry = [entryParser entryOfPath:path withError:nil];
-        _isRecordingScript = [[self class] checkRecordingScript:path];
+        XXTExplorerEntry *entry = [entryParser entryOfPath:path withError:nil];
+        if (entry.isMaskedRegular)
+        {
+            _isRecordingScript = [[self class] checkRecordingScript:path];
+        }
+        _entry = entry;
         [self setup];
     }
     return self;

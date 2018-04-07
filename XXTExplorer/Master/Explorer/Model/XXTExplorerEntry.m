@@ -92,16 +92,18 @@ NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
     if (self.entryReader.entryName) {
         return self.entryReader.entryName;
     }
-    BOOL hideNameExtension =
-    XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES);
-    if (hideNameExtension)
-    {
-        NSString *nameExtension =
-        [self.entryName pathExtension];
-        BOOL isKnownExtension =
-        [[XXTExplorerEntryService sharedInstance] isRegisteredExtension:nameExtension];
-        if (isKnownExtension) {
-            return [self.entryName stringByDeletingPathExtension];
+    if (self.isMaskedRegular || self.isBundle) {
+        BOOL hideNameExtension =
+        XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES);
+        if (hideNameExtension)
+        {
+            NSString *nameExtension =
+            [self.entryName pathExtension];
+            BOOL isKnownExtension =
+            [[XXTExplorerEntryService sharedInstance] isRegisteredExtension:nameExtension];
+            if (isKnownExtension) {
+                return [self.entryName stringByDeletingPathExtension];
+            }
         }
     }
     return self.entryName;
