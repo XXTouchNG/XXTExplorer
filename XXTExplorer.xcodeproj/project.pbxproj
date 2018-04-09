@@ -130,6 +130,9 @@
 		0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
 		0F6063DD1F1129960087822E /* XXTEMoreBootScriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */; };
 		0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */; };
+		0F60B4BB207B424A00A2ABB5 /* XXTENumberTextInputObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F60B4BA207B424A00A2ABB5 /* XXTENumberTextInputObject.m */; };
+		0F60B4BC207B425000A2ABB5 /* XXTENumberTextInputObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F60B4BA207B424A00A2ABB5 /* XXTENumberTextInputObject.m */; };
+		0F60B4BD207B425100A2ABB5 /* XXTENumberTextInputObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F60B4BA207B424A00A2ABB5 /* XXTENumberTextInputObject.m */; };
 		0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
 		0F61E15F1ED78671003DCC78 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
@@ -1443,6 +1446,8 @@
 		0F6063DC1F1129960087822E /* XXTEMoreBootScriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreBootScriptController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F6063DE1F1142E90087822E /* XXTExplorerItemPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemPicker.h; sourceTree = "<group>"; };
 		0F6063DF1F1142E90087822E /* XXTExplorerItemPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerItemPicker.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F60B4B9207B424A00A2ABB5 /* XXTENumberTextInputObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENumberTextInputObject.h; sourceTree = "<group>"; };
+		0F60B4BA207B424A00A2ABB5 /* XXTENumberTextInputObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTENumberTextInputObject.m; sourceTree = "<group>"; };
 		0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESplitViewController.h; sourceTree = "<group>"; };
 		0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTESplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E15D1ED78671003DCC78 /* XXTEWorkspaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEWorkspaceViewController.h; sourceTree = "<group>"; };
@@ -2313,6 +2318,8 @@
 			children = (
 				0F1E7C032077616A008B5B6C /* XXTExplorerItemRepeatViewController.h */,
 				0F1E7C042077616A008B5B6C /* XXTExplorerItemRepeatViewController.m */,
+				0F60B4B9207B424A00A2ABB5 /* XXTENumberTextInputObject.h */,
+				0F60B4BA207B424A00A2ABB5 /* XXTENumberTextInputObject.m */,
 			);
 			path = Repeat;
 			sourceTree = "<group>";
@@ -4947,6 +4954,7 @@
 				0F8EDC0F1FB1F779003C92D6 /* XXTEEditorTextView.m in Sources */,
 				0F8EDC101FB1F779003C92D6 /* XXTEMailComposeViewController.m in Sources */,
 				0F072DB81FB9EC8B00597EE2 /* crc.c in Sources */,
+				0F60B4BD207B425100A2ABB5 /* XXTENumberTextInputObject.m in Sources */,
 				0F222A1D202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				0F8EDC111FB1F779003C92D6 /* XXTPositionColorModel.m in Sources */,
 				0F8EDC141FB1F779003C92D6 /* SKCapture.m in Sources */,
@@ -5198,6 +5206,7 @@
 				D6686F2D1F4AC920004403D0 /* XXTEMoreValueView.m in Sources */,
 				D6E1411F1F5032AB00D78CB9 /* XXTKeyEventPicker.m in Sources */,
 				0FBAFF4A1F6E701A008B3189 /* NSString+QueryItems.m in Sources */,
+				0F60B4BB207B424A00A2ABB5 /* XXTENumberTextInputObject.m in Sources */,
 				D6E141211F5032AB00D78CB9 /* UIColor+hexValue.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
 				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
@@ -5514,6 +5523,7 @@
 				D60FE6EC1FE2369300954818 /* XXTEMoreValueView.m in Sources */,
 				D60FE6ED1FE2369300954818 /* XXTKeyEventPicker.m in Sources */,
 				D60FE6EE1FE2369300954818 /* NSString+QueryItems.m in Sources */,
+				0F60B4BC207B425000A2ABB5 /* XXTENumberTextInputObject.m in Sources */,
 				D60FE6EF1FE2369300954818 /* UIColor+hexValue.m in Sources */,
 				D60FE6F01FE2369300954818 /* main.m in Sources */,
 				D60FE6F11FE2369300954818 /* XXTExplorerEntryBindingViewController.m in Sources */,

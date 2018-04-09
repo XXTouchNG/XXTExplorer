@@ -11,16 +11,20 @@
 #import "XXTEMoreValueView.h"
 
 #import <XUI/XUISwitchCell.h>
-#import <XUI/XUIStepperCell.h>
+#import <XUI/XUITitleValueCell.h>
+
+#import <LGAlertView/LGAlertView.h>
+#import "XXTENumberTextInputObject.h"
+#import <objc/runtime.h>
 
 #import "XXTExplorerItemDetailViewController.h"
 
 #define LONGLONGMAX_STRING @"9223372036854775807"
 
-@interface XXTExplorerItemRepeatViewController () <XXTEMoreValueViewDelegate>
+@interface XXTExplorerItemRepeatViewController () <XXTEMoreValueViewDelegate, LGAlertViewDelegate>
 @property (nonatomic, strong) XXTEMoreValueViewCell *speedValueViewCell;
 @property (nonatomic, strong) XUISwitchCell *infiniteRepeatSwitchCell;
-@property (nonatomic, strong) XUIStepperCell *repeatTimesValueViewCell;
+@property (nonatomic, strong) XUITitleValueCell *repeatTimesValueViewCell;
 @property (nonatomic, strong) NSArray <NSString *> *scriptLines;
 @end
 
@@ -47,9 +51,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 8.0, *)) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    }
+    XXTE_END_IGNORE_PARTIAL
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    
+    XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
         self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     }
+    XXTE_END_IGNORE_PARTIAL
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
     if (![self importRecordingScript]) {
         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read or parse specific script: \"%@\".", nil), self.entryPath]);
         [self.tableView setUserInteractionEnabled:NO];
@@ -71,39 +92,38 @@
 
 - (XXTEMoreValueViewCell *)speedValueViewCell {
     if (!_speedValueViewCell) {
-        _speedValueViewCell = [[[UINib nibWithNibName:NSStringFromClass([XXTEMoreValueViewCell class]) bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
-        _speedValueViewCell.titleLabel.text = NSLocalizedString(@"Speed", nil);
-        _speedValueViewCell.valueViewWidth = 128.0;
-        _speedValueViewCell.valueView.maxValue = 9.9;
-        _speedValueViewCell.valueView.minValue = 0.1;
-        _speedValueViewCell.valueView.stepValue = 0.1;
-        _speedValueViewCell.valueView.value = 1.0;
-        _speedValueViewCell.valueView.isInteger = NO;
-        _speedValueViewCell.valueView.unitString = @"x";
-        _speedValueViewCell.valueView.delegate = self;
+        XXTEMoreValueViewCell *cell = [[[UINib nibWithNibName:NSStringFromClass([XXTEMoreValueViewCell class]) bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
+        cell.titleLabel.text = NSLocalizedString(@"Speed", nil);
+        cell.valueViewWidth = 128.0;
+        cell.valueView.maxValue = 9.9;
+        cell.valueView.minValue = 0.1;
+        cell.valueView.stepValue = 0.1;
+        cell.valueView.value = 1.0;
+        cell.valueView.isInteger = NO;
+        cell.valueView.unitString = @"x";
+        cell.valueView.delegate = self;
+        _speedValueViewCell = cell;
     }
     return _speedValueViewCell;
 }
 
-- (XUIStepperCell *)repeatTimesValueViewCell {
+- (XUITitleValueCell *)repeatTimesValueViewCell {
     if (!_repeatTimesValueViewCell) {
-        _repeatTimesValueViewCell = [[XUIStepperCell alloc] init];
-        _repeatTimesValueViewCell.xui_label = NSLocalizedString(@"Repeat Times", nil);
-        _repeatTimesValueViewCell.xui_max = @(9999);
-        _repeatTimesValueViewCell.xui_min = @(1);
-        _repeatTimesValueViewCell.xui_step = @(1);
-        _repeatTimesValueViewCell.xui_isInteger = @(YES);
-        _repeatTimesValueViewCell.xui_autoRepeat = @(YES);
-        _repeatTimesValueViewCell.xui_value = @(1);
+        XUITitleValueCell *cell = [[XUITitleValueCell alloc] init];
+        cell.xui_label = NSLocalizedString(@"Repeat Times", nil);
+        cell.xui_value = @(1);
+        cell.selectedBackgroundView.backgroundColor = XXTColorCellSelected();
+        _repeatTimesValueViewCell = cell;
     }
     return _repeatTimesValueViewCell;
 }
 
 - (XUISwitchCell *)infiniteRepeatSwitchCell {
     if (!_infiniteRepeatSwitchCell) {
-        _infiniteRepeatSwitchCell = [[XUISwitchCell alloc] init];
-        _infiniteRepeatSwitchCell.xui_label = NSLocalizedString(@"Infinite Repeat", nil);
-        _infiniteRepeatSwitchCell.xui_value = @(NO);
+        XUISwitchCell *cell = [[XUISwitchCell alloc] init];
+        cell.xui_label = NSLocalizedString(@"Infinite Repeat", nil);
+        cell.xui_value = @(NO);
+        _infiniteRepeatSwitchCell = cell;
     }
     return _infiniteRepeatSwitchCell;
 }
@@ -148,7 +168,9 @@
         if (indexPath.row == 0) {
             return self.infiniteRepeatSwitchCell;
         } else if (indexPath.row == 1) {
-            return self.repeatTimesValueViewCell;
+            UITableViewCell *cell = self.repeatTimesValueViewCell;
+            [self resetCell:cell];
+            return cell;
         }
     }
     return [UITableViewCell new];
@@ -191,6 +213,37 @@
     return 44.f;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        if (indexPath.row == 1) {
+            id switchVal = self.infiniteRepeatSwitchCell.xui_value;
+            if ([switchVal isKindOfClass:[NSNumber class]] && [switchVal boolValue] == YES) {
+                toastMessage(self, NSLocalizedString(@"If \"Infinite Repeat\" is enabled, \"Repeat Times\" will make no sense.", nil));
+                return;
+            }
+            
+            XUITitleValueCell *cell = self.repeatTimesValueViewCell;
+            
+            LGAlertView *alertView = [LGAlertView alertViewWithTextFieldsAndTitle:NSLocalizedString(@"Repeat Times", nil) message:NSLocalizedString(@"Please enter a valid positive integer.", nil) numberOfTextFields:1 textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
+                textField.placeholder = [NSString stringWithFormat:NSLocalizedString(@"Integer (1 ~ %ld)", nil), INT_MAX];
+                textField.keyboardType = UIKeyboardTypeNumberPad;
+                textField.text = [NSString stringWithFormat:@"%@", cell.xui_value];
+            } buttonTitles:@[ NSLocalizedString(@"Save", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil];
+            [alertView setDelegate:self];
+            [alertView showAnimated:YES completionHandler:nil];
+            
+            UITextField *textField = [alertView.textFieldsArray firstObject];
+            XXTENumberTextInputObject *numberDelegate = [[XXTENumberTextInputObject alloc] init];
+            [numberDelegate setMaxLength:10];
+            [numberDelegate setTextInput:textField];
+            objc_setAssociatedObject(alertView, NSStringFromClass([XXTENumberTextInputObject class]).UTF8String, numberDelegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+    }
+}
+
+#pragma mark - Parse
+
 - (NSArray <NSString *> *)scriptLines {
     if (!_scriptLines) {
         NSString *entryPath = self.entryPath;
@@ -223,9 +276,10 @@
     NSString *timesStr = [playTimesLine substringWithRange:timesRange];
     
     if (speedStr.length > 4) return NO;
-    double speedValue = [speedStr doubleValue];
-    if (speedValue - 0.1 < 0.01 || speedValue - 9.9 > 0.01) return NO;
-    self.speedValueViewCell.valueView.value = speedValue;
+    double speedDouble = [speedStr doubleValue];
+    float speedValue = roundf(speedDouble * 100.0);
+    if (speedValue < 10 || speedValue > 990) return NO;
+    self.speedValueViewCell.valueView.value = speedValue / 100.0;
     
     if ([timesStr isEqualToString:LONGLONGMAX_STRING]) {
         self.repeatTimesValueViewCell.xui_value = @(1);
@@ -282,6 +336,43 @@
     checkArray[3] = newPlayTimesLine;
     NSString *newContent = [checkArray componentsJoinedByString:@"\n"];
     return [newContent writeToFile:entryPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+#pragma mark - LGAlertViewDelegate
+
+- (void)alertViewCancelled:(LGAlertView *)alertView {
+    [alertView dismissAnimated];
+}
+
+- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
+    if (index == 0) {
+        XUITitleValueCell *cell = self.repeatTimesValueViewCell;
+        
+        UITextField *textField = [alertView.textFieldsArray firstObject];
+        NSString *text = textField.text;
+        long long textVal = [text longLongValue];
+        
+        BOOL isNumber = ([[XXTENumberTextInputObject numberRegex] firstMatchInString:text options:0 range:NSMakeRange(0, text.length)] != nil);
+        if (!isNumber) {
+            textVal = 1;
+        }
+        if (textVal < 1) {
+            textVal = 1;
+        } else if (textVal > INT_MAX) {
+            textVal = INT_MAX;
+        }
+        
+        NSInteger newTextVal = (NSInteger)textVal;
+        cell.xui_value = @(newTextVal);
+        [self resetCell:cell];
+        
+        [alertView dismissAnimated];
+    }
+}
+
+- (void)resetCell:(UITableViewCell *)cell {
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - Memory

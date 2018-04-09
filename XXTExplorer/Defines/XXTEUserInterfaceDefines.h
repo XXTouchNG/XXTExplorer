@@ -32,6 +32,7 @@ extern "C" {
     UIColor *XXTColorDefault(void);
     UIColor *XXTColorDanger(void);
     UIColor *XXTColorSuccess(void);
+    UIColor *XXTColorCellSelected(void);
     
 #ifdef __cplusplus
 }

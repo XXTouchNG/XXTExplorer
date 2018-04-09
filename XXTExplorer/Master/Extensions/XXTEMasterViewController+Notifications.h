@@ -11,20 +11,21 @@
 
 #ifndef APPSTORE
 
-    @interface XXTEMasterViewController (Notifications) <XXTEScanViewControllerDelegate>
+@interface XXTEMasterViewController (Notifications) <XXTEScanViewControllerDelegate>
 
-    - (void)registerNotifications;
-    - (void)removeNotifications;
+- (void)registerNotifications;
+- (void)removeNotifications;
+- (void)presentWebViewControllerWithURL:(NSURL *)url;
 
-    @end
+@end
 
 #else
 
-    @interface XXTEMasterViewController (Notifications)
+@interface XXTEMasterViewController (Notifications)
 
-    - (void)registerNotifications;
-    - (void)removeNotifications;
+- (void)registerNotifications;
+- (void)removeNotifications;
 
-    @end
+@end
 
 #endif

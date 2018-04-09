@@ -511,6 +511,27 @@
 #pragma mark - XXTEScanViewControllerDelegate
 
 #ifndef APPSTORE
+- (void)presentWebViewControllerWithURL:(NSURL *)url {
+    XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
+    webController.title = NSLocalizedString(@"Loading...", nil);
+    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:webController];
+    if (webController) {
+        if (XXTE_COLLAPSED) {
+            XXTE_START_IGNORE_PARTIAL
+            if (@available(iOS 8.0, *)) {
+                [self.splitViewController showDetailViewController:navigationController sender:self];
+            }
+            XXTE_END_IGNORE_PARTIAL
+        } else {
+            [self presentViewController:navigationController animated:YES completion:^{
+                
+            }];
+        }
+    }
+}
+#endif
+
+#ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller urlOperation:(NSURL *)url {
     UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
@@ -519,22 +540,7 @@
         blockInteractions(blockVC, NO);
         BOOL internal = ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]);
         if (internal) {
-            XXTECommonWebViewController *webController = [[XXTECommonWebViewController alloc] initWithURL:url];
-            webController.title = NSLocalizedString(@"Loading...", nil);
-            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:webController];
-            if (webController) {
-                if (XXTE_COLLAPSED) {
-                    XXTE_START_IGNORE_PARTIAL
-                    if (@available(iOS 8.0, *)) {
-                        [self.splitViewController showDetailViewController:navigationController sender:self];
-                    }
-                    XXTE_END_IGNORE_PARTIAL
-                } else {
-                    [self presentViewController:navigationController animated:YES completion:^{
-                        
-                    }];
-                }
-            }
+            [self presentWebViewControllerWithURL:url];
         } else {
             if ([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];

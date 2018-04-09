@@ -777,6 +777,9 @@
 "Instant View / Run" = "立即查看";
 
 /* No comment provided by engineer. */
+"Integer (1 ~ %ld)" = "整数 (1 ~ %ld)";
+
+/* No comment provided by engineer. */
 "Interface Viewer" = "界面查看器";
 
 /* No comment provided by engineer. */
@@ -972,10 +975,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1105,6 +1108,9 @@
 
 /* No comment provided by engineer. */
 "Please enter \"CLEAR\"." = "请输入 \"CLEAR\".";
+
+/* No comment provided by engineer. */
+"Please enter a valid positive integer." = "请输入一个有效的正整数.";
 
 /* No comment provided by engineer. */
 "Please setup \"Mail\" to send mail feedback directly." = "请设置邮件客户端以直接发送电子邮件进行反馈.";
@@ -1261,6 +1267,9 @@
 
 /* No comment provided by engineer. */
 "RuanMao Cloud" = "找脚本";
+
+/* No comment provided by engineer. */
+"Save" = "保存";
 
 /* No comment provided by engineer. */
 "Save to Camera Roll" = "保存到相机胶卷";
@@ -1421,6 +1430,12 @@
 "Tabs" = "缩进符";
 
 /* No comment provided by engineer. */
+"Tap \"Install\" to continue..." = "轻按 \"安装\" 以继续...";
+
+/* No comment provided by engineer. */
+"Tap \"Respring\" to continue..." = "轻按 \"注销\" 以继续...";
+
+/* No comment provided by engineer. */
 "Tap here to add a file." = "轻按以添加文件.";
 
 /* No comment provided by engineer. */
@@ -1518,6 +1533,9 @@
 
 /* No comment provided by engineer. */
 "Trial" = "试用";
+
+/* No comment provided by engineer. */
+"Troubleshooting" = "疑难解答";
 
 "Try Again" = "重试";
 

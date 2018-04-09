@@ -23,7 +23,7 @@
     self.addressLabel.textColor = [UIColor blackColor];
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = XXTColorCellSelected();
     self.selectedBackgroundView = selectionBackground;
     
     if (XXTE_IS_IPHONE_6_BELOW) {

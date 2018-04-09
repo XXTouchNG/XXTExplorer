@@ -136,5 +136,9 @@
 	<string>/Applications/XXTExplorer.app</string>
 	<key>XXTOUCH_BUY_URL</key>
 	<string>https://www.xxtouch.com/buy/</string>
+	<key>XXTOUCH_FAQ_0017</key>
+	<string>https://kb.xxtouch.com/FAQ/faq-0017.html</string>
+	<key>XXTOUCH_FAQ_0018</key>
+	<string>https://kb.xxtouch.com/FAQ/faq-0018.html</string>
 </dict>
 </plist>

@@ -137,7 +137,7 @@
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         NSString *metaString = [[NSString alloc] initWithData:metaData encoding:NSUTF8StringEncoding];
         [self.textView insertText:metaString];
-        [self.textView insertText:@"\nTap \"Install\" to continue...\n\n"];
+        [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Tap \"Install\" to continue...", nil)]];
     });
 }
 
@@ -156,7 +156,7 @@
         self.respringButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
         [self.textView insertText:outputLog];
-        [self.textView insertText:@"\nTap \"Respring\" to continue...\n\n"];
+        [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Tap \"Respring\" to continue...", nil)]];
     });
 }
 

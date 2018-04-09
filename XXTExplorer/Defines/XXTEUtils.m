@@ -348,6 +348,15 @@ UIColor *XXTColorDefault() { // rgb(52, 152, 219), #3498DB
     return xxtColor;
 }
 
+UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)
+    static UIColor *xxtColor = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:0.1];
+    });
+    return xxtColor;
+}
+
 UIColor *XXTColorDanger() { // rgb(231, 76, 60)
     static UIColor *xxtDangerColor = nil;
     static dispatch_once_t onceToken;

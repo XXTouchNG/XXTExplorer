@@ -29,7 +29,9 @@
         [textField setText:newText];
         [textField resignFirstResponder];
         [textField setEnabled:NO];
-        self.confirmHandler(textField);
+        if (self.confirmHandler) {
+            self.confirmHandler(textField);
+        }
         return NO;
     } else if ([self.confirmString hasPrefix:newText]) {
         return YES;

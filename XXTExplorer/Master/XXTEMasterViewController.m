@@ -15,12 +15,14 @@
 #import "XXTExplorerNavigationController.h"
 
 #ifndef APPSTORE
-    #import "XXTERespringAgent.h"
-    #import "XXTEDaemonAgent.h"
 
-    #import "XXTEUpdateHelper.h"
-    #import "XXTEUpdatePackage.h"
-    #import "XXTEUpdateAgent.h"
+#import "XXTERespringAgent.h"
+#import "XXTEDaemonAgent.h"
+
+#import "XXTEUpdateHelper.h"
+#import "XXTEUpdatePackage.h"
+#import "XXTEUpdateAgent.h"
+
 #endif
 
 #ifndef APPSTORE
@@ -198,10 +200,18 @@
         LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Needs Respring", nil)
                                                             message:NSLocalizedString(@"You should respring your device to continue using this application.", nil)
                                                               style:LGAlertViewStyleAlert
-                                                       buttonTitles:@[ ]
+                                                       buttonTitles:@[ NSLocalizedString(@"Troubleshooting", nil) ]
                                                   cancelButtonTitle:nil
                                              destructiveButtonTitle:NSLocalizedString(@"Respring Now", nil)
-                                                      actionHandler:nil
+                                                      actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                          [alertView dismissAnimated];
+                                                          if (index == 0) {
+                                                              NSURL *faqURL = [NSURL URLWithString:uAppDefine(@"XXTOUCH_FAQ_0018")];
+                                                              if (faqURL) {
+                                                                  [self presentWebViewControllerWithURL:faqURL];
+                                                              }
+                                                          }
+                                                      }
                                                       cancelHandler:nil
                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
                                                      [alertView dismissAnimated];
@@ -309,10 +319,20 @@
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Sync Failed", nil)
                                                         message:[NSString stringWithFormat:NSLocalizedString(@"Cannot sync with daemon: %@", nil), error.localizedDescription]
                                                           style:LGAlertViewStyleActionSheet
-                                                   buttonTitles:@[ ]
+                                                   buttonTitles:@[ NSLocalizedString(@"Troubleshooting", nil) ]
                                               cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
                                          destructiveButtonTitle:nil
-                                                       delegate:self];
+                                                  actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                      [alertView dismissAnimated];
+                                                      if (index == 0) {
+                                                          NSURL *faqURL = [NSURL URLWithString:uAppDefine(@"XXTOUCH_FAQ_0017")];
+                                                          if (faqURL) {
+                                                              [self presentWebViewControllerWithURL:faqURL];
+                                                          }
+                                                      }
+                                                  } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                                                      [alertView dismissAnimated];
+                                                  } destructiveHandler:nil];
     if (self.alertView && self.alertView.isShowing) {
         [self.alertView transitionToAlertView:alertView completionHandler:nil];
     } else {

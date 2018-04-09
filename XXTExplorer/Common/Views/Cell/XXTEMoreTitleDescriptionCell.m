@@ -31,7 +31,7 @@
     self.iconImage = nil;
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [XXTColorDefault() colorWithAlphaComponent:0.1f];
+    selectionBackground.backgroundColor = XXTColorCellSelected();
     self.selectedBackgroundView = selectionBackground;
 }
 

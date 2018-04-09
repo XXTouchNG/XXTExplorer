@@ -7,7 +7,7 @@
 //
 
 #import "XXTEUIViewController.h"
-#import "XUILinkCell.h"
+#import <XUI/XUILinkCell.h>
 
 @interface XXTEUIViewController (XUILinkCell)
 
