@@ -11,6 +11,12 @@ DAEMON_VERSION="${2}"
 SRC_DIR="Releases/${PACKAGE_NAME}.xcarchive"
 DEST_DIR="Releases/${PACKAGE_NAME}"
 
+echo "Update repository..."
+git pull
+
+echo "Update Cocoapods..."
+pod update --verbose
+
 # 0
 echo "Update adapter..."
 ./adapter_encode.sh
