@@ -16,7 +16,7 @@
 
 #define LONGLONGMAX_STRING @"9223372036854775807"
 
-@interface XXTExplorerItemRepeatViewController () <XXTEMoreValueViewDelegate>
+@interface XXTExplorerItemRepeatViewController () <XXTEMoreValueViewDelegate, UITextFieldDelegate>
 @property (nonatomic, strong) XXTEMoreValueViewCell *speedValueViewCell;
 @property (nonatomic, strong) XXTEMoreSwitchCell *infiniteRepeatSwitchCell;
 @property (nonatomic, strong) XXTEMoreTextFieldCell *repeatTimesFieldCell;
@@ -114,6 +114,7 @@
     XXTEMoreTextFieldCell *cell2 = [[[UINib nibWithNibName:NSStringFromClass([XXTEMoreTextFieldCell class]) bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
     cell2.titleLabel.text = NSLocalizedString(@"Repeat Times", nil);
     cell2.valueField.text = @"1";
+    cell2.valueField.delegate = self;
     _repeatTimesFieldCell = cell2;
 }
 
@@ -123,6 +124,13 @@
     [self updateCells];
     self.infiniteRepeatSwitchCell.optionSwitch.on = sender.on;
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark - XXTEMoreValueViewDelegate
