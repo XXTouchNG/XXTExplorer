@@ -7,6 +7,7 @@
 //
 
 #import "XXTEMoreValueView.h"
+#import <YYWebImage/UIImage+YYWebImage.h>
 
 @interface XXTEMoreValueView ()
 @property (nonatomic, strong) UIButton *upView;
@@ -57,9 +58,10 @@
     [self addSubview:self.ptLabel];
     
     UIButton *upView = [[UIButton alloc] init];
-    upView.showsTouchWhenHighlighted = YES;
     [upView addTarget:self action:@selector(increaseValue:) forControlEvents:UIControlEventTouchUpInside];
-    upView.backgroundColor = [UIColor clearColor];
+    [upView setBackgroundImage:[UIImage yy_imageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
+    [upView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
+//    [upView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateSelected];
     UILabel *upTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     upTriView.font = [UIFont systemFontOfSize:14.f];
     upTriView.textColor = XXTColorDefault();
@@ -71,9 +73,10 @@
     self.upView = upView;
     
     UIButton *downView = [[UIButton alloc] init];
-    downView.showsTouchWhenHighlighted = YES;
     [downView addTarget:self action:@selector(decreaseValue:) forControlEvents:UIControlEventTouchUpInside];
-    downView.backgroundColor = [UIColor clearColor];
+    [downView setBackgroundImage:[UIImage yy_imageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
+    [downView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
+//    [downView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateSelected];
     UILabel *downTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     downTriView.font = [UIFont systemFontOfSize:14.f];
     downTriView.textColor = XXTColorDefault();

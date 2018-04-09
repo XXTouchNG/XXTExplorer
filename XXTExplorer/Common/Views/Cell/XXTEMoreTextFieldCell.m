@@ -1,14 +1,14 @@
 //
-//  XXTEEditorWrapColumnCell.m
+//  XXTEMoreTextFieldCell.m
 //  XXTExplorer
 //
 //  Created by Zheng on 03/09/2017.
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTEEditorWrapColumnCell.h"
+#import "XXTEMoreTextFieldCell.h"
 
-@implementation XXTEEditorWrapColumnCell
+@implementation XXTEMoreTextFieldCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

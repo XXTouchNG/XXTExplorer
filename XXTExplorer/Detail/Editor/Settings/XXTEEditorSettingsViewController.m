@@ -17,7 +17,7 @@
 #import "XXTEMoreSwitchCell.h"
 #import "XXTEMoreValueViewCell.h"
 #import "XXTEEditorTabWidthCell.h"
-#import "XXTEEditorWrapColumnCell.h"
+#import "XXTEMoreTextFieldCell.h"
 #import "UIControl+BlockTarget.h"
 
 // Parent
@@ -63,6 +63,8 @@
     
     self.clearsSelectionOnViewWillAppear = YES;
     self.title = NSLocalizedString(@"Settings", nil);
+    
+    self.tableView.delaysContentTouches = NO;
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -274,7 +276,7 @@
         }];
     }
     
-    XXTEEditorWrapColumnCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEEditorWrapColumnCell class]) owner:nil options:nil] lastObject];
+    XXTEMoreTextFieldCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTextFieldCell class]) owner:nil options:nil] lastObject];
     cell11.titleLabel.text = NSLocalizedString(@"Word Column", nil);
     NSInteger columnValue = XXTEDefaultsInt(XXTEEditorWrapColumn, 160);
     cell11.valueField.text = [NSString stringWithFormat:@"%ld", (long)columnValue];
