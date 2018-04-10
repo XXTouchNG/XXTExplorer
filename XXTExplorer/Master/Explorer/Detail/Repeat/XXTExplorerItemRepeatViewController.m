@@ -260,10 +260,10 @@
     if ([timesStr isEqualToString:LONGLONGMAX_STRING]) {
         infiniteRepeat = YES;
         timesStr = LONGLONGMAX_STRING;
-    } else if (isNumberTimes && timesStr.length > 10) {
+    } else if (isNumberTimes && timesStr.length > 18) {
         infiniteRepeat = YES;
         timesStr = LONGLONGMAX_STRING;
-    } else if (isNumberTimes && timesStr.length > 0 && timesStr.length <= 10) {
+    } else if (isNumberTimes && timesStr.length > 0 && timesStr.length <= 18) {
         infiniteRepeat = NO;
         long long timesValue = [timesStr longLongValue];
         if (timesValue < 1) return NO;
@@ -320,9 +320,9 @@
     BOOL isNumberTimes = ([[[self class] numberRegex] firstMatchInString:timesString options:0 range:NSMakeRange(0, timesString.length)] != nil);
     if (switchVal == YES) {
         timesValueString = LONGLONGMAX_STRING;
-    } else if (isNumberTimes && timesString.length > 10) {
+    } else if (isNumberTimes && timesString.length > 18) {
         return NO;
-    } else if (isNumberTimes && timesString.length > 0 && timesString.length <= 10) {
+    } else if (isNumberTimes && timesString.length > 0 && timesString.length <= 18) {
         long long timesValue = [timesString longLongValue];
         if (timesValue < 1) return NO;
         timesValueString = [NSString stringWithFormat:@"%lld", timesValue];

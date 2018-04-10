@@ -33,9 +33,9 @@
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     NSURL *preprocessedURL = [self preprocessLocalFileForWKWebView:fileURL];
     if (self = [super initWithURL:preprocessedURL]) {
-        _entryPath = path;
-        if (path) {
-            self.url = [NSURL fileURLWithPath:path];
+        _entryPath = [preprocessedURL path];
+        if (preprocessedURL) {
+            self.url = preprocessedURL;
         }
         if (@available(iOS 9.0, *)) {
             self.showActionButton = YES;
