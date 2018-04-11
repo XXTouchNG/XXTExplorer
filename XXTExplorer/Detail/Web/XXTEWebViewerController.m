@@ -31,12 +31,8 @@
 
 - (instancetype)initWithPath:(NSString *)path {
     NSURL *fileURL = [NSURL fileURLWithPath:path];
-    NSURL *preprocessedURL = [self preprocessLocalFileForWKWebView:fileURL];
-    if (self = [super initWithURL:preprocessedURL]) {
-        _entryPath = [preprocessedURL path];
-        if (preprocessedURL) {
-            self.url = preprocessedURL;
-        }
+    if (self = [super initWithURL:fileURL]) {
+        _entryPath = path;
         if (@available(iOS 9.0, *)) {
             self.showActionButton = YES;
         } else {
@@ -53,12 +49,15 @@
     BOOL reachable = [fileURL checkResourceIsReachableAndReturnError:&reachableError];
     if (reachable) {
         NSError *createTmpError = nil;
-        BOOL tmpDirCreated = [fileManager createDirectoryAtURL:tmpDirURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
-        if (tmpDirCreated) { }
-        NSString *newName = [[[NSUUID UUID] UUIDString] stringByAppendingPathExtension:fileURL.pathExtension];
-        NSURL *dstURL = [tmpDirURL URLByAppendingPathComponent:newName];
+        [fileManager createDirectoryAtURL:tmpDirURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
+        if (createTmpError) { return fileURL; }
+        NSString *randomStr = [[NSUUID UUID] UUIDString];
+        NSURL *dstURL = [tmpDirURL URLByAppendingPathComponent:randomStr];
+        [fileManager createDirectoryAtURL:dstURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
+        if (createTmpError) { return fileURL; }
+        NSURL *newFileURL = [dstURL URLByAppendingPathComponent:fileURL.lastPathComponent];
         NSError *moveError = nil;
-        BOOL fileMoved = [fileManager copyItemAtURL:fileURL toURL:dstURL error:&moveError];
+        BOOL fileMoved = [fileManager copyItemAtURL:fileURL toURL:newFileURL error:&moveError];
         if (fileMoved) {
             return dstURL;
         }
@@ -92,6 +91,6 @@
 #endif
 }
 
-@synthesize awakeFromOutside;
+@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end

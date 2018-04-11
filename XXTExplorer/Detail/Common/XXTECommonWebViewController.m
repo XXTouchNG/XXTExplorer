@@ -24,7 +24,8 @@
 }
 
 - (instancetype)initWithPath:(NSString *)path {
-    if (self = [super init]) {
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    if (self = [super initWithURL:fileURL]) {
         _entryPath = path;
         [self configure];
     }

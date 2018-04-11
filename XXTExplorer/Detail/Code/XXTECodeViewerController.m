@@ -54,11 +54,9 @@
 }
 
 - (instancetype)initWithPath:(NSString *)path {
-    if (self = [super init]) {
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    if (self = [super initWithURL:fileURL]) {
         _entryPath = path;
-        if (path) {
-            self.url = [NSURL fileURLWithPath:path];
-        }
         if (@available(iOS 9.0, *)) {
             self.showActionButton = YES;
         } else {
@@ -118,6 +116,6 @@
 #endif
 }
 
-@synthesize awakeFromOutside;
+@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end
