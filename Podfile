@@ -1,4 +1,5 @@
 xcodeproj 'XXTExplorer'
+install! 'cocoapods', :deterministic_uuids => false
 
 def shared_pods
     # pod 'XUI', :path => '../XUI'
