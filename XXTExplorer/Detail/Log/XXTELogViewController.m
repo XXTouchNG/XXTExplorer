@@ -94,7 +94,7 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
     NSError *readError = nil;
     NSFileHandle *textHandler = [NSFileHandle fileHandleForReadingFromURL:fileURL error:&readError];
     if (readError) {
-        toastMessage(self, readError.localizedDescription);
+        toastError(self, readError);
         return;
     }
     if (!textHandler) {

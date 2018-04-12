@@ -88,6 +88,7 @@
     } else {
         entryBaseType = EntryTypeUnsupported;
     }
+//    NSString *entryRealPath = entrySubdirectoryPath;
     NSString *entryMaskType = entryBaseType;
     if ([entryBaseType isEqualToString:EntryTypeSymlink])
     {

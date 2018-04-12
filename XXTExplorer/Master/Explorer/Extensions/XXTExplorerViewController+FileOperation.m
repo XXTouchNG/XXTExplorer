@@ -182,7 +182,7 @@
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:YES animated:YES];
         }
@@ -333,7 +333,7 @@
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:YES animated:YES];
         }
@@ -465,7 +465,7 @@
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:YES animated:YES];
         }
@@ -552,7 +552,7 @@
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:NO animated:YES];
         }
@@ -669,7 +669,7 @@
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:NO animated:YES];
         }

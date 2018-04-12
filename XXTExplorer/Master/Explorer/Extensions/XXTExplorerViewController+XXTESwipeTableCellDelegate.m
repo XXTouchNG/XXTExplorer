@@ -101,7 +101,7 @@
             NSError *accessError = nil;
             [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
             if (accessError) {
-                toastMessage(self, [accessError localizedDescription]);
+                toastError(self, accessError);
             } else {
                 XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
                 [self.navigationController pushViewController:explorerViewController animated:YES];

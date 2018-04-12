@@ -159,7 +159,7 @@ XXTE_END_IGNORE_PARTIAL
         [self.tableView reloadData];
     })
     .catch(^ (NSError *error) {
-        toastMessage(self, error.localizedDescription);
+        toastError(self, error);
         if (error.code != RMApiErrorCode) {
             UITableView *tableView = self.tableView;
             RMCloudComingSoon *comingSoonView = self.comingSoonView;
@@ -697,7 +697,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     })
     .catch(^ (NSError *error) {
-        toastMessage(self, error.localizedDescription);
+        toastError(self, error);
     })
     .finally(^() {
         blockInteractions(blockController, NO);

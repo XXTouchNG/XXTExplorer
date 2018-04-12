@@ -1594,6 +1594,9 @@
 "Unknown server response type (%@)." = "未知的服务端响应类型 (%@).";
 
 /* No comment provided by engineer. */
+"Unsupported package format.\nSupported formats are: deb, ipa." = "不支持的安装包格式.\n支持的格式有: deb, ipa.";
+
+/* No comment provided by engineer. */
 "Unsupported Pasteboard URL: \"%@\"." = "不支持的剪贴板链接: \"%@\".";
 
 /* No comment provided by engineer. */

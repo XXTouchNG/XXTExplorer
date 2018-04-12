@@ -360,7 +360,7 @@ XXTE_END_IGNORE_PARTIAL
     NSError *entryLoadError = nil;
     [self loadEntryListDataWithError:&entryLoadError];
     if (entryLoadError) {
-        toastMessage(self, [entryLoadError localizedDescription]);
+        toastError(self, entryLoadError);
     }
 }
 
@@ -595,7 +595,7 @@ XXTE_END_IGNORE_PARTIAL
     if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
     } else if (prepareError) {
-        toastMessage(self, [prepareError localizedDescription]);
+        toastError(self, prepareError);
     }
 }
 
@@ -632,7 +632,7 @@ XXTE_END_IGNORE_PARTIAL
     if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
     } else if (prepareError) {
-        toastMessage(self, [prepareError localizedDescription]);
+        toastError(self, prepareError);
     }
 }
 
@@ -645,7 +645,7 @@ XXTE_END_IGNORE_PARTIAL
         NSError *accessError = nil;
         [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
         if (accessError) {
-            toastMessage(self, [accessError localizedDescription]);
+            toastError(self, accessError);
         } else {
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
             explorerViewController.historyMode = YES;
@@ -850,7 +850,14 @@ XXTE_END_IGNORE_PARTIAL
         entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
     }
-    entryCell.entryTitleLabel.text = entryDetail.localizedDisplayName;
+    NSString *fixedName = entryDetail.localizedDisplayName;
+    if (self.historyMode) {
+        NSUInteger atLoc = [fixedName rangeOfString:@"@"].location + 1;
+        if (atLoc != NSNotFound && atLoc < fixedName.length) {
+            fixedName = [fixedName substringFromIndex:atLoc];
+        }
+    }
+    entryCell.entryTitleLabel.text = fixedName;
     entryCell.entrySubtitleLabel.text = entryDetail.localizedDescription;
     entryCell.entryIconImageView.image = entryDetail.localizedDisplayIconImage;
     if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton)

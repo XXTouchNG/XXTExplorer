@@ -376,26 +376,25 @@ static int sizingCancelFlag = 0;
     
     // #4 - Original (Correct Symbolic Link)
     
-    if (entry.isSymlink && !entry.isBrokenSymlink)
+    if (entry.isSymlink)
     {
-        NSError *originalError = nil;
-        NSString *originalPath = [previewManager destinationOfSymbolicLinkAtPath:entryPath error:&originalError];
+        NSString *originalPath = nil;
+        char *resolved_path = (char *)malloc(PATH_MAX + 1);
+        ssize_t resolved_len = readlink(entryPath.fileSystemRepresentation, resolved_path, PATH_MAX);
+        resolved_path[resolved_len] = '\0';
+        if (resolved_len >= 0) {
+            originalPath = [[NSString alloc] initWithUTF8String:resolved_path];
+        }
+        free(resolved_path);
         
         if (originalPath) {
-            
-            NSString *originalAbsolutePath = nil;
-            if ([originalPath isAbsolutePath]) {
-                originalAbsolutePath = originalPath;
-            } else {
-                char *resolved_path = realpath(entryPath.UTF8String, NULL);
-                if (resolved_path) {
-                    originalAbsolutePath = [[NSString alloc] initWithUTF8String:resolved_path];
-                    free(resolved_path);
-                }
-            }
-            
             XXTEMoreAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-            cell3.addressLabel.text = originalAbsolutePath;
+            cell3.addressLabel.text = originalPath;
+            if (entry.isBrokenSymlink) {
+                cell3.addressLabel.textColor = XXTColorDanger();
+            } else {
+                cell3.addressLabel.textColor = [UIColor blackColor];
+            }
             
             XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
             section3.identifier = kXXTEDynamicSectionIdentifierSectionOriginal;
@@ -406,7 +405,6 @@ static int sizingCancelFlag = 0;
             
             if (section3) [mutableDynamicSections addObject:section3];
         }
-        
     }
     
     // #5 - General (Required)
@@ -741,7 +739,7 @@ static int sizingCancelFlag = 0;
             }];
         }
     }).catch(^(NSError *systemError) {
-        toastMessage(self, [systemError localizedDescription]);
+        toastError(self, systemError);
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });

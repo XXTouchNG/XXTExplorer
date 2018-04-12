@@ -1,5 +1,5 @@
 //
-//  XXTEPackageExtractor.m
+//  XXTEDebianPackageExtractor.m
 //  XXTExplorer
 //
 //  Created by Zheng on 2017/8/5.
@@ -8,24 +8,27 @@
 
 #import <spawn.h>
 #import <sys/stat.h>
-#import "XXTEPackageExtractor.h"
+#import "XXTEDebianPackageExtractor.h"
 
 
-@interface XXTEPackageExtractor ()
+@interface XXTEDebianPackageExtractor ()
 
 @property (nonatomic, strong, readonly) NSString *temporarilyLocation;
 
 @end
 
-@implementation XXTEPackageExtractor
+@implementation XXTEDebianPackageExtractor
+
+@synthesize packagePath = _packagePath;
+@synthesize delegate = _delegate;
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _packagePath = path;
-        NSString *temporarilyLocation = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEPackageExtractor"];
+        NSString *temporarilyLocation = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"_XXTEDebianPackageExtractor"];
         struct stat temporarilyLocationStat;
-        if (0 != lstat([temporarilyLocation UTF8String], &temporarilyLocationStat))
-            if (0 != mkdir([temporarilyLocation UTF8String], 0755))
+        if (0 != lstat([temporarilyLocation fileSystemRepresentation], &temporarilyLocationStat))
+            if (0 != mkdir([temporarilyLocation fileSystemRepresentation], 0755))
                 NSLog(@"%@", [NSString stringWithFormat:@"Cannot create temporarily directory \"%@\".", temporarilyLocation]);
         _temporarilyLocation = temporarilyLocation;
     }
@@ -38,18 +41,18 @@
     NSString *temporarilyName = [NSString stringWithFormat:@".tmp_%@_%@.log", [packagePath lastPathComponent], randomUUIDString];
     NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
     struct stat temporarilyStat;
-    if (0 == lstat([temporarilyPath UTF8String], &temporarilyStat)) {
+    if (0 == lstat([temporarilyPath fileSystemRepresentation], &temporarilyStat)) {
         [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Temporarily file \"%@\" already exists.", temporarilyPath]];
         return;
     }
     [[NSData data] writeToFile:temporarilyPath atomically:YES];
     posix_spawn_file_actions_t action;
     posix_spawn_file_actions_init(&action);
-    posix_spawn_file_actions_addopen(&action, STDOUT_FILENO, [temporarilyPath UTF8String], O_WRONLY, 0);
+    posix_spawn_file_actions_addopen(&action, STDOUT_FILENO, [temporarilyPath fileSystemRepresentation], O_WRONLY, 0);
     int status = 0;
     pid_t pid = 0;
     const char *binary = add1s_binary();
-    const char *args[] = { binary, "/usr/bin/dpkg", "-i", [packagePath UTF8String], NULL };
+    const char *args[] = { binary, "/usr/bin/dpkg", "-i", [packagePath fileSystemRepresentation], NULL };
     posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     posix_spawn_file_actions_destroy(&action);
     if (pid == 0) {
@@ -58,7 +61,7 @@
     }
     waitpid(pid, &status, 0);
     struct stat temporarilyControlStat;
-    if (0 != lstat([temporarilyPath UTF8String], &temporarilyControlStat)) {
+    if (0 != lstat([temporarilyPath fileSystemRepresentation], &temporarilyControlStat)) {
         [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot find log file \"%@\".", temporarilyPath]];
         return;
     }
@@ -103,14 +106,14 @@
     NSString *temporarilyName = [NSString stringWithFormat:@".tmp_%@_%@", [packagePath lastPathComponent], randomUUIDString];
     NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
     struct stat temporarilyStat;
-    if (0 == lstat([temporarilyPath UTF8String], &temporarilyStat)) {
+    if (0 == lstat([temporarilyPath fileSystemRepresentation], &temporarilyStat)) {
         [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:@"Temporarily directory \"%@\" already exists.", temporarilyPath]];
         return;
     }
     int status = 0;
     pid_t pid = 0;
     const char *binary = add1s_binary();
-    const char* args[] = { binary, "/usr/bin/dpkg", "-e", [packagePath UTF8String], [temporarilyPath UTF8String], NULL };
+    const char *args[] = { binary, "/usr/bin/dpkg", "-e", [packagePath fileSystemRepresentation], [temporarilyPath fileSystemRepresentation], NULL };
     posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     if (pid == 0) {
         [self callbackFetchingMetaDataWithErrorReason:@"Cannot launch installer process."];
@@ -123,7 +126,7 @@
     }
     NSString *temporarilyControlPath = [temporarilyPath stringByAppendingPathComponent:@"control"];
     struct stat temporarilyControlStat;
-    if (0 != lstat([temporarilyControlPath UTF8String], &temporarilyControlStat)) {
+    if (0 != lstat([temporarilyControlPath fileSystemRepresentation], &temporarilyControlStat)) {
         [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:@"Cannot find control file \"%@\".", temporarilyControlPath]];
         return;
     }

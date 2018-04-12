@@ -132,7 +132,7 @@ typedef enum : NSUInteger {
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:YES animated:YES];
         }
@@ -321,7 +321,7 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
     void (^completionBlock)(BOOL, NSArray <NSString *> *, NSError *) = ^(BOOL result, NSArray <NSString *> *createdEntries, NSError *error) {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         } else {
             [self setEditing:YES animated:YES];
         }

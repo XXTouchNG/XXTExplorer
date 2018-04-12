@@ -48,8 +48,8 @@
 	<string>caches/history</string>
 	<key>EXPLORER_INITIAL_PATH</key>
 	<string>lua/scripts</string>
-	<key>FEVER_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/lua/scripts</string>
+	<key>INSTALLER_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/bin/1nstaller</string>
 	<key>INITIAL_RESOURCES</key>
 	<array>
 		<dict>

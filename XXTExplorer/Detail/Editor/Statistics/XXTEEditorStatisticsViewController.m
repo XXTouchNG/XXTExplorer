@@ -89,7 +89,7 @@
     NSError *error = nil;
     BOOL result = [self loadFilePropertiesWithError:&error];
     if (!result) {
-        toastMessage(self, [error localizedDescription]);
+        toastError(self, error);
     }
 }
 

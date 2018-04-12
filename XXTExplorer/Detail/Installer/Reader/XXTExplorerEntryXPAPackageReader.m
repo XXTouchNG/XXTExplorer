@@ -24,7 +24,7 @@
 }
 
 + (UIImage *)defaultImage {
-    return [UIImage imageNamed:@"XXTEFileReaderType-XPAPackage"];
+    return [UIImage imageNamed:@"XXTEFileReaderType-Package"];
 }
 
 + (Class)relatedEditor {

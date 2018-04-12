@@ -768,7 +768,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                 [davClient startWithPort:58422 error:&startError];
                 if (startError)
                 {
-                    toastMessage(self, [startError localizedDescription]);
+                    toastError(self, startError);
                     [sender setOn:NO animated:YES];
                     return;
                 }

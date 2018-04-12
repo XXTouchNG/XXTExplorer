@@ -79,7 +79,7 @@
     [controller dismissViewControllerAnimated:YES completion:^() {
         @strongify(self);
         if (error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         }
     }];
 }

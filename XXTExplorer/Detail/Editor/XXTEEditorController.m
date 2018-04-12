@@ -763,7 +763,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     NSError *readError = nil;
     NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Error:&readError];
     if (readError) {
-        toastMessage(self, [readError localizedDescription]);
+        toastError(self, readError);
         return nil;
     }
     [_textView.vLayoutManager setNumberOfDigits:GetNumberOfDigits(numberOfLines)];

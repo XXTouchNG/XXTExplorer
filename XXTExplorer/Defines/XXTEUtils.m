@@ -98,12 +98,21 @@ NSString *XXTERootPath() {
 #pragma mark - Permissions
 
 const char *add1s_binary() {
-    static const char* binary = NULL;
+    static NSString *add1s_binary = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        binary = [uAppDefine(@"ADD1S_PATH") UTF8String];
+        add1s_binary = uAppDefine(@"ADD1S_PATH");
     });
-    return binary;
+    return [add1s_binary fileSystemRepresentation];
+}
+
+const char *installer_binary() {
+    static NSString *installer_binary = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        installer_binary = uAppDefine(@"INSTALLER_PATH");
+    });
+    return [installer_binary fileSystemRepresentation];
 }
 
 int promiseFixPermission(NSString *path, BOOL resursive) {

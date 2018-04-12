@@ -31,7 +31,7 @@
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
 		0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */; };
 		0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */; };
-		0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */; };
+		0F0F76301F3617CF006EA102 /* XXTEDebianPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762F1F3617CF006EA102 /* XXTEDebianPackageExtractor.m */; };
 		0F10A9201F07FBFA008BA792 /* XXTEMoreLicenseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */; };
 		0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F10A9221F07FC32008BA792 /* XXTEMoreLicenseCell.m */; };
 		0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F10A9231F07FC32008BA792 /* XXTEMoreLicenseCell.xib */; };
@@ -593,6 +593,8 @@
 		0FAE0F0A1ED70F8700798B4B /* XXTExplorerHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F091ED70F8700798B4B /* XXTExplorerHeaderView.m */; };
 		0FAE0F131ED7204E00798B4B /* XXTExplorerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */; };
 		0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */; };
+		0FAE18CA207E6740005F9B67 /* XXTEApplePackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */; };
+		0FAE18CB207E6740005F9B67 /* XXTEApplePackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */; };
 		0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */; };
 		0FB009021F43573500097E9C /* Oceanic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009011F43573500097E9C /* Oceanic.tmTheme */; };
 		0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009051F4359FF00097E9C /* SKTheme.plist */; };
@@ -854,7 +856,7 @@
 		D60FE6951FE2369300954818 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
 		D60FE6961FE2369300954818 /* XXTExplorerEntryPackageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */; };
 		D60FE6971FE2369300954818 /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
-		D60FE6981FE2369300954818 /* XXTEPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */; };
+		D60FE6981FE2369300954818 /* XXTEDebianPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762F1F3617CF006EA102 /* XXTEDebianPackageExtractor.m */; };
 		D60FE6991FE2369300954818 /* XXTPixelPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */; };
 		D60FE69A1FE2369300954818 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
 		D60FE69B1FE2369300954818 /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
@@ -1296,8 +1298,8 @@
 		0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEPackageViewerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F0F762A1F3616D4006EA102 /* XXTExplorerEntryPackageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryPackageReader.h; sourceTree = "<group>"; };
 		0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryPackageReader.m; sourceTree = "<group>"; };
-		0F0F762E1F3617CF006EA102 /* XXTEPackageExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageExtractor.h; sourceTree = "<group>"; };
-		0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEPackageExtractor.m; sourceTree = "<group>"; };
+		0F0F762E1F3617CF006EA102 /* XXTEDebianPackageExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDebianPackageExtractor.h; sourceTree = "<group>"; };
+		0F0F762F1F3617CF006EA102 /* XXTEDebianPackageExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDebianPackageExtractor.m; sourceTree = "<group>"; };
 		0F10A91E1F07FBFA008BA792 /* XXTEMoreLicenseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseController.h; sourceTree = "<group>"; };
 		0F10A91F1F07FBFA008BA792 /* XXTEMoreLicenseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreLicenseController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F10A9211F07FC32008BA792 /* XXTEMoreLicenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreLicenseCell.h; sourceTree = "<group>"; };
@@ -1609,6 +1611,9 @@
 		0FAE0F101ED7204E00798B4B /* XXTExplorerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerViewCell.h; sourceTree = "<group>"; };
 		0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerViewCell.m; sourceTree = "<group>"; };
 		0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerViewCell.xib; sourceTree = "<group>"; };
+		0FAE18C8207E6740005F9B67 /* XXTEApplePackageExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEApplePackageExtractor.h; sourceTree = "<group>"; };
+		0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEApplePackageExtractor.m; sourceTree = "<group>"; };
+		0FAE18CD207F9E40005F9B67 /* XXTEPackageExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEPackageExtractor.h; sourceTree = "<group>"; };
 		0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Ciapre.tmTheme; sourceTree = "<group>"; };
 		0FB009011F43573500097E9C /* Oceanic.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Oceanic.tmTheme; sourceTree = "<group>"; };
 		0FB009051F4359FF00097E9C /* SKTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKTheme.plist; sourceTree = "<group>"; };
@@ -2261,8 +2266,8 @@
 		0F0F762D1F36178A006EA102 /* APT */ = {
 			isa = PBXGroup;
 			children = (
-				0F0F762E1F3617CF006EA102 /* XXTEPackageExtractor.h */,
-				0F0F762F1F3617CF006EA102 /* XXTEPackageExtractor.m */,
+				0F0F762E1F3617CF006EA102 /* XXTEDebianPackageExtractor.h */,
+				0F0F762F1F3617CF006EA102 /* XXTEDebianPackageExtractor.m */,
 			);
 			path = APT;
 			sourceTree = "<group>";
@@ -2893,6 +2898,26 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		0FAE18C7207E66F5005F9B67 /* IPA */ = {
+			isa = PBXGroup;
+			children = (
+				0FAE18C8207E6740005F9B67 /* XXTEApplePackageExtractor.h */,
+				0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */,
+			);
+			path = IPA;
+			sourceTree = "<group>";
+		};
+		0FAE18CC207F9DEC005F9B67 /* Extractors */ = {
+			isa = PBXGroup;
+			children = (
+				0FAE18CD207F9E40005F9B67 /* XXTEPackageExtractor.h */,
+				0F0F762D1F36178A006EA102 /* APT */,
+				0FAE18C7207E66F5005F9B67 /* IPA */,
+				0FFC8EFF1FCA83BE0012C170 /* XPA */,
+			);
+			path = Extractors;
+			sourceTree = "<group>";
+		};
 		0FB008EC1F43464500097E9C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3333,9 +3358,8 @@
 		0FE1E44E1F19226600055E02 /* Installer */ = {
 			isa = PBXGroup;
 			children = (
+				0FAE18CC207F9DEC005F9B67 /* Extractors */,
 				0F4EE3741FC1DAC0003FF5FD /* Views */,
-				0F0F762D1F36178A006EA102 /* APT */,
-				0FFC8EFF1FCA83BE0012C170 /* XPA */,
 				0F0F76291F36150F006EA102 /* Reader */,
 				0F0F76261F361509006EA102 /* XXTEPackageViewerController.h */,
 				0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */,
@@ -5106,7 +5130,7 @@
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
 				0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */,
 				0F3508BC1F163FE0000403FD /* XXTExplorerEntryXPPReader.m in Sources */,
-				0F0F76301F3617CF006EA102 /* XXTEPackageExtractor.m in Sources */,
+				0F0F76301F3617CF006EA102 /* XXTEDebianPackageExtractor.m in Sources */,
 				D6E1412B1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m in Sources */,
 				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
@@ -5253,6 +5277,7 @@
 				0F469CDE200C909C0042F1BF /* RMCloudLoadingView.m in Sources */,
 				5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */,
 				52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */,
+				0FAE18CA207E6740005F9B67 /* XXTEApplePackageExtractor.m in Sources */,
 				0FCAF407200A1D14002FB774 /* RMCloudMoreCell.m in Sources */,
 				52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */,
 				D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */,
@@ -5422,7 +5447,7 @@
 				D60FE6951FE2369300954818 /* XXTExplorerNavigationController.m in Sources */,
 				D60FE6961FE2369300954818 /* XXTExplorerEntryPackageReader.m in Sources */,
 				D60FE6971FE2369300954818 /* XXTExplorerEntryXPPReader.m in Sources */,
-				D60FE6981FE2369300954818 /* XXTEPackageExtractor.m in Sources */,
+				D60FE6981FE2369300954818 /* XXTEDebianPackageExtractor.m in Sources */,
 				D60FE6991FE2369300954818 /* XXTPixelPlaceholderView.m in Sources */,
 				D60FE69A1FE2369300954818 /* XXTETurtleBezierPath.m in Sources */,
 				D60FE69B1FE2369300954818 /* XXTEEditorController.m in Sources */,
@@ -5569,6 +5594,7 @@
 				0F469CDF200C909C0042F1BF /* RMCloudLoadingView.m in Sources */,
 				D60FE7201FE2369300954818 /* SKCaptureCollection.m in Sources */,
 				D60FE7211FE2369300954818 /* SKTheme.m in Sources */,
+				0FAE18CB207E6740005F9B67 /* XXTEApplePackageExtractor.m in Sources */,
 				0FCAF408200A1D14002FB774 /* RMCloudMoreCell.m in Sources */,
 				D60FE7221FE2369300954818 /* SKReferenceManager.m in Sources */,
 				D60FE7231FE2369300954818 /* XXTPickerNavigationController.m in Sources */,

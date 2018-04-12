@@ -43,7 +43,7 @@
                 if (!entryError) {
                     [self performUnchangedButtonAction:@"Edit" forEntry:entryDetail];
                 } else {
-                    toastMessage(self, entryError.localizedDescription);
+                    toastError(self, entryError);
                 }
                 [self.tableView reloadData];
                 [self selectCellEntryAtPath:path animated:NO];

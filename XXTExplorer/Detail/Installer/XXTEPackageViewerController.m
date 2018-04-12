@@ -8,7 +8,9 @@
 
 #import "XXTEPackageViewerController.h"
 #import "XXTExplorerEntryPackageReader.h"
-#import "XXTEPackageExtractor.h"
+
+#import "XXTEApplePackageExtractor.h"
+#import "XXTEDebianPackageExtractor.h"
 
 @interface XXTEPackageViewerController () <XXTEPackageExtractorDelegate, UITextViewDelegate>
 
@@ -16,7 +18,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, strong) UIBarButtonItem *installButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *respringButtonItem;
-@property (nonatomic, strong) XXTEPackageExtractor *extractor;
+@property (nonatomic, strong) id <XXTEPackageExtractor> extractor;
 
 @end
 
@@ -29,7 +31,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"deb" ];
+    return @[ @"deb", @"ipa" ];
 }
 
 + (Class)relatedReader {
@@ -40,10 +42,27 @@
     if (self = [super init]) {
         _entryPath = path;
         
-        XXTEPackageExtractor *extractor = [[XXTEPackageExtractor alloc] initWithPath:path];
-        extractor.delegate = self;
+        const char *path1 = [path fileSystemRepresentation];
+        FILE *fil = fopen(path1, "rb");
+        int32_t magic = 0x0;
+        if (fil) {
+            fread(&magic, 4, 1, fil);
+            fclose(fil);
+        }
+        if (magic == 0x72613c21) {
+            // debian package
+            XXTEDebianPackageExtractor *extractor = [[XXTEDebianPackageExtractor alloc] initWithPath:path];
+            extractor.delegate = self;
+            _extractor = extractor;
+        } else if (magic == 0x04034b50) {
+            // ipa package
+            XXTEApplePackageExtractor *extractor = [[XXTEApplePackageExtractor alloc] initWithPath:path];
+            extractor.delegate = self;
+            _extractor = extractor;
+        } else {
+            _extractor = nil;
+        }
         
-        _extractor = extractor;
     }
     return self;
 }
@@ -60,17 +79,26 @@
     }
     
     [self.view addSubview:self.textView];
-    [self.textView insertText:@"[DEBIAN/control]\n\n"];
     
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:NO];
-    [self.activityIndicatorView startAnimating];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.extractor extractMetaData];
-        dispatch_async_on_main_queue(^{
-            [self.activityIndicatorView stopAnimating];
+    id <XXTEPackageExtractor> extractor = self.extractor;
+    if (!extractor) {
+        [self.textView insertText:[NSString stringWithFormat:@"%@\n\n", NSLocalizedString(@"Unsupported package format.\nSupported formats are: deb, ipa.", nil)]];
+    } else {
+        if ([extractor isKindOfClass:[XXTEDebianPackageExtractor class]]) {
+            [self.textView insertText:@"[DEBIAN/control]\n\n"];
+        } else if ([extractor isKindOfClass:[XXTEApplePackageExtractor class]]) {
+            [self.textView insertText:@"[Ready]\n\n"];
+        }
+        [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:NO];
+        [self.activityIndicatorView startAnimating];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [self.extractor extractMetaData];
+            dispatch_async_on_main_queue(^{
+                [self.activityIndicatorView stopAnimating];
+            });
         });
-    });
-
+    }
+    
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
@@ -129,9 +157,9 @@
     return _textView;
 }
 
-#pragma mark - XXTEPackageExtractorDelegate
+#pragma mark - XXTEDebianPackageExtractorDelegate
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData {
+- (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
@@ -141,7 +169,7 @@
     });
 }
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailFetchingMetaDataWithError:(NSError *)error {
+- (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFailFetchingMetaDataWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = NO;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
@@ -151,7 +179,7 @@
     });
 }
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFinishInstallation:(NSString *)outputLog {
+- (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFinishInstallation:(NSString *)outputLog {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.respringButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
@@ -160,7 +188,7 @@
     });
 }
 
-- (void)packageExtractor:(XXTEPackageExtractor *)extractor didFailInstallationWithError:(NSError *)error {
+- (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFailInstallationWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];

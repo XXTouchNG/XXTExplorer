@@ -18,6 +18,7 @@ extern "C" {
 #endif
     
     const char *add1s_binary(void);
+    const char *installer_binary(void);
     int promiseFixPermission(NSString *path, BOOL resursive);
     
 #ifdef __cplusplus

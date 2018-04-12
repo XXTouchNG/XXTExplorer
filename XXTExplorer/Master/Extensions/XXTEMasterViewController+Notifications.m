@@ -132,7 +132,7 @@
                         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:testedPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved, XXTENotificationViewImmediately: @(NO)}]];
                         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]);
                     } else {
-                        toastMessage(self, err.localizedDescription);
+                        toastError(self, err);
                     }
                 });
             });

@@ -376,7 +376,7 @@
     if (!entryError) {
         [self performHistoryActionForEntry:entryDetail];
     } else {
-        toastMessage(self, entryError.localizedDescription);
+        toastError(self, entryError);
     }
 }
 
@@ -388,7 +388,7 @@
     NSError *localError = nil;
     NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&localError];
     if (localError) {
-        toastMessage(self, localError.localizedDescription);
+        toastError(self, localError);
         return;
     }
     [self setEditing:NO animated:YES];

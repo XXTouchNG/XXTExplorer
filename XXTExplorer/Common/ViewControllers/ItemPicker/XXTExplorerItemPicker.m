@@ -85,7 +85,7 @@
                 NSError *accessError = nil;
                 [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
                 if (accessError) {
-                    toastMessage(self, [accessError localizedDescription]);
+                    toastError(self, accessError);
                 }
                 else {
                     XXTExplorerItemPicker *explorerViewController = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];

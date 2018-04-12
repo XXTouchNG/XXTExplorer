@@ -32,7 +32,7 @@
             toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Command exit with code: %@", nil), retCode]);
         })
         .catch(^(NSError *error) {
-            toastMessage(self, [error localizedDescription]);
+            toastError(self, error);
         })
         .finally(^() {
             blockInteractions(blockVC, NO);

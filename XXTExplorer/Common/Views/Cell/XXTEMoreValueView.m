@@ -7,7 +7,7 @@
 //
 
 #import "XXTEMoreValueView.h"
-#import <YYWebImage/UIImage+YYWebImage.h>
+#import "UIImage+ColoredImage.h"
 
 @interface XXTEMoreValueView ()
 @property (nonatomic, strong) UIButton *upView;
@@ -59,9 +59,8 @@
     
     UIButton *upView = [[UIButton alloc] init];
     [upView addTarget:self action:@selector(increaseValue:) forControlEvents:UIControlEventTouchUpInside];
-    [upView setBackgroundImage:[UIImage yy_imageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
-    [upView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
-//    [upView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateSelected];
+    [upView setBackgroundImage:[UIImage imageWithUIColor:[UIColor clearColor]] forState:UIControlStateNormal];
+    [upView setBackgroundImage:[UIImage imageWithUIColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
     UILabel *upTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     upTriView.font = [UIFont systemFontOfSize:14.f];
     upTriView.textColor = XXTColorDefault();
@@ -74,9 +73,8 @@
     
     UIButton *downView = [[UIButton alloc] init];
     [downView addTarget:self action:@selector(decreaseValue:) forControlEvents:UIControlEventTouchUpInside];
-    [downView setBackgroundImage:[UIImage yy_imageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
-    [downView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
-//    [downView setBackgroundImage:[UIImage yy_imageWithColor:XXTColorCellSelected()] forState:UIControlStateSelected];
+    [downView setBackgroundImage:[UIImage imageWithUIColor:[UIColor clearColor]] forState:UIControlStateNormal];
+    [downView setBackgroundImage:[UIImage imageWithUIColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
     UILabel *downTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     downTriView.font = [UIFont systemFontOfSize:14.f];
     downTriView.textColor = XXTColorDefault();

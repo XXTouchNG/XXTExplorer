@@ -60,7 +60,7 @@
                         if (!entryError) {
                             [self performViewerActionForEntry:entryDetail animated:NO];
                         } else {
-                            toastMessage(self, entryError.localizedDescription);
+                            toastError(self, entryError);
                         }
                         
                         [self scrollToCellEntryAtPath:movedPath animated:NO];
