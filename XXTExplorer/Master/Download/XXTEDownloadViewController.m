@@ -27,9 +27,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIBarButtonItem *downloadButtonItem;
 
 @property (nonatomic, strong, readonly) NSURL *sourceURL;
-@property (nonatomic, strong, readonly) NSString *targetPath;
+@property (nonatomic, copy, readonly) NSString *targetPath;
 
-@property (nonatomic, strong, readonly) NSString *temporarilyPath;
+@property (nonatomic, copy, readonly) NSString *temporarilyPath;
 @property (nonatomic, assign) BOOL overwrite;
 
 @property (nonatomic, strong, readonly) NSFileManager *downloadFileManager;
@@ -37,6 +37,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSFileHandle *downloadFileHandle;
 @property (nonatomic, strong) NSURLConnection *downloadURLConnection;
 @property (nonatomic, weak) LGAlertView *currentAlertView;
+@property (nonatomic, weak) UIViewController *blockController;
 
 @property (nonatomic, strong) NSURLConnection *pretestConnection;
 
@@ -55,7 +56,6 @@ typedef enum : NSUInteger {
     BOOL busyOperationProgressFlag;
     long long expectedFileSize;
     long long receivedFileSize;
-    UIViewController *_blockController;
 }
 
 - (instancetype)init {
@@ -183,7 +183,7 @@ typedef enum : NSUInteger {
 
 - (void)performPretest {
     self.downloadButtonItem.enabled = NO;
-    _blockController = blockInteractions(self, YES);
+    self.blockController = blockInteractions(self, YES);
     NSURL *sourceURL = self.sourceURL;
     NSMutableURLRequest *headReq = [[NSMutableURLRequest alloc] initWithURL:sourceURL];
     [headReq setHTTPMethod:@"HEAD"];
@@ -334,6 +334,7 @@ typedef enum : NSUInteger {
     NSString *targetName = [targetPath lastPathComponent];
     struct stat targetStat;
     if (0 == lstat([targetPath fileSystemRepresentation], &targetStat)) {
+        @weakify(self);
         LGAlertView *existsAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Overwrite Confirm", nil)
                                                                   message:[NSString stringWithFormat:NSLocalizedString(@"File \"%@\" exists, overwrite or rename it?", nil), targetName]
                                                                     style:LGAlertViewStyleActionSheet
@@ -341,6 +342,7 @@ typedef enum : NSUInteger {
                                                         cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                    destructiveButtonTitle:NSLocalizedString(@"Overwrite", nil)
                                                             actionHandler:^(LGAlertView * _Nonnull alertView1, NSUInteger index, NSString * _Nullable title) {
+                                                                @strongify(self);
                                                                 [alertView1 dismissAnimated];
                                                                 if (index == 0)
                                                                 {
@@ -350,6 +352,7 @@ typedef enum : NSUInteger {
                                                             } cancelHandler:^(LGAlertView * _Nonnull alertView1) {
                                                                 [alertView1 dismissAnimated];
                                                             } destructiveHandler:^(LGAlertView * _Nonnull alertView1) {
+                                                                @strongify(self);
                                                                 self.overwrite = YES;
                                                                 [self alertViewLaunch:alertView1];
                                                             }];
@@ -381,7 +384,9 @@ typedef enum : NSUInteger {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
         BOOL instantRun = (index == 0);
+        @weakify(self);
         [self dismissViewControllerAnimated:YES completion:^{
+            @strongify(self);
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self.targetPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved, XXTENotificationViewImmediately: @(instantRun)}]];
         }];
     }
@@ -521,8 +526,8 @@ typedef enum : NSUInteger {
     } else if (connection == self.pretestConnection) {
         self.pretestConnection = nil;
         self.downloadButtonItem.enabled = YES;
-        blockInteractions(_blockController, NO);
-        _blockController = nil;
+        blockInteractions(self.blockController, NO);
+        self.blockController = nil;
     }
 }
 
@@ -648,8 +653,8 @@ typedef enum : NSUInteger {
     } else if (connection == self.pretestConnection) {
         self.pretestConnection = nil;
         self.downloadButtonItem.enabled = YES;
-        blockInteractions(_blockController, NO);
-        _blockController = nil;
+        blockInteractions(self.blockController, NO);
+        self.blockController = nil;
     }
 }
 
@@ -658,6 +663,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)downloadFinished:(LGAlertView *)alertView {
+    self.currentAlertView = nil;
     NSString *temporarilyPath = self.temporarilyPath;
     NSString *temporarilyName = [temporarilyPath lastPathComponent];
     NSString *targetPath = self.targetPath;
@@ -731,7 +737,6 @@ typedef enum : NSUInteger {
             return;
         }
     }
-    self.currentAlertView = nil;
     NSString *instantTitle = NSLocalizedString(@"Instant View / Run", nil);
     LGAlertView *finishAlertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Download Finished", nil)
                                                               message:[NSString stringWithFormat:NSLocalizedString(@"Successfully saved to \"%@\".", nil), targetName]
@@ -742,8 +747,8 @@ typedef enum : NSUInteger {
                                                              delegate:self];
     if (self.autoInstantView) {
         if (alertView && alertView.isShowing) {
-            [self alertView:finishAlertView clickedButtonAtIndex:0 title:instantTitle];
             [alertView dismissAnimated:YES completionHandler:nil];
+            [self alertView:finishAlertView clickedButtonAtIndex:0 title:instantTitle];
         }
     } else {
         if (alertView && alertView.isShowing) {
@@ -752,7 +757,6 @@ typedef enum : NSUInteger {
             [finishAlertView showAnimated];
         }
     }
-    return;
 }
 
 #pragma mark - Memory

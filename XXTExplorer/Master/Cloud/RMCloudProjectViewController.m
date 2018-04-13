@@ -377,15 +377,18 @@ XXTE_END_IGNORE_PARTIAL
         RMProject *project = self.project;
         if (project) {
             if ([self tableView:tableView isExpandableCellAtIndexPath:indexPath]) {
-                UITableViewCell <RMCloudExpandable> *cell = [self tableView:tableView cellForExpandedState:[self tableView:tableView isExpandedCellAtIndexPath:indexPath]];
+                BOOL expanded = [self tableView:tableView isExpandedCellAtIndexPath:indexPath];
+                UITableViewCell <RMCloudExpandable> *cell = nil;
+                if (expanded) {
+                    cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandedCellReuseIdentifier forIndexPath:indexPath];
+                } else {
+                    cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandableCellReuseIdentifier forIndexPath:indexPath];
+                }
                 [self configureExpandableCell:cell atIndexPath:indexPath];
                 return cell;
             }
             else if (indexPath.row == RMCloudInformationRowBuy) {
-                RMCloudLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:RMCloudLinkCellReuseIdentifier];
-                if (cell == nil) {
-                    cell = [[RMCloudLinkCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudLinkCellReuseIdentifier];
-                }
+                RMCloudLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:RMCloudLinkCellReuseIdentifier forIndexPath:indexPath];
                 [self configureLinkableCell:cell atIndexPath:indexPath];
                 return cell;
             }
@@ -461,22 +464,6 @@ XXTE_END_IGNORE_PARTIAL
     }
 }
 
-- (UITableViewCell <RMCloudExpandable> *)tableView:(UITableView *)tableView cellForExpandedState:(BOOL)expanded {
-    UITableViewCell <RMCloudExpandable> *cell = nil;
-    if (expanded) {
-        cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandedCellReuseIdentifier];
-        if (cell == nil) {
-            cell = [[RMCloudExpandedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudExpandedCellReuseIdentifier];
-        }
-    } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:RMCloudExpandableCellReuseIdentifier];
-        if (cell == nil) {
-            cell = [[RMCloudExpandableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RMCloudExpandableCellReuseIdentifier];
-        }
-    }
-    return cell;
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == RMCloudDetailSectionHeader) {
         return nil;
@@ -499,7 +486,7 @@ XXTE_END_IGNORE_PARTIAL
     if (section == RMCloudDetailSectionHeader) {
         return 16.f;
     } else if (section == RMCloudDetailSectionInformation) {
-        return 48.f;
+        return 32.f;
     }
     return 16.0;
 }

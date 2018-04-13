@@ -27,6 +27,7 @@
 		<string>XXTEWebViewerController</string>
 		<string>XXTECodeViewerController</string>
 		<string>XXTEObjectViewController</string>
+		<string>XXTEDbTableListViewController</string>
 		<string>XXTEUIViewController</string>
 		<string>XXTEPackageViewerController</string>
 		<string>XXTEInstallerViewController</string>

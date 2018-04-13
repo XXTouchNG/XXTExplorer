@@ -42,6 +42,9 @@
 "%lu Selected" = "%lu 已选择";
 
 /* No comment provided by engineer. */
+"%lu tables" = "%lu 数据表";
+
+/* No comment provided by engineer. */
 "%lu/%lu" = "%lu/%lu";
 
 /* No comment provided by engineer. */
@@ -82,6 +85,12 @@
 
 /* No comment provided by engineer. */
 "[%@]\nThe value of path \"%@\" (\"%@\") is invalid." = "[%@]\n路径的值 \"%@\" (\"%@\") 无效.";
+
+/* No comment provided by engineer. */
+"[ERROR] %@" = "[错误] %@";
+
+/* No comment provided by engineer. */
+"[FAILED] %@" = "[失败] %@";
 
 /* No comment provided by engineer. */
 "\"%@\"" = "\"%@\"";
@@ -297,10 +306,19 @@
 "Cannot extract package, which may be a corrupted archive." = "无法解压安装包, 它可能已经损坏.";
 
 /* No comment provided by engineer. */
+"Cannot find control file \"%@\"." = "找不到 control 信息文件 \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot find log file \"%@\"." = "找不到日志文件 \"%@\".";
+
+/* No comment provided by engineer. */
 "Cannot find QR Code in the image." = "图像中找不到二维码.";
 
 /* No comment provided by engineer. */
 "Cannot find top-level XPP from \"%@\"." = "无法加载顶层 XPP 项目: \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot launch installer process." = "无法启动安装进程.";
 
 /* No comment provided by engineer. */
 "Cannot launch script: %@" = "无法启动脚本: %@";
@@ -318,7 +336,13 @@
 "Cannot open archive file \"%@\"." = "无法打开归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
+"Cannot open control file \"%@\"." = "无法打开 control 信息文件 \"%@\".";
+
+/* No comment provided by engineer. */
 "Cannot open file \"%@\" for writing." = "无法打开文件以供写入 \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot open log file \"%@\"." = "无法打开日志文件 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot open: \"%@\"" = "无法打开: \"%@\"";
@@ -331,6 +355,9 @@
 
 /* No comment provided by engineer. */
 "Cannot parse log with UTF-8 encoding: \"%@\"." = "无法以 UTF-8 编码解析日志: \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot parse text with UTF-8 encoding: \"%@\"." = "无法以 UTF-8 编码解析文本: \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot perform operation \"%@\" on Pasteboard URL \"%@\"." = "无法执行操作 \"%@\": 剪贴板链接 \"%@\".";
@@ -537,6 +564,9 @@
 "Daemon Restarted" = "守护进程已重启";
 
 /* No comment provided by engineer. */
+"Database Viewer" = "数据库查看器";
+
+/* No comment provided by engineer. */
 "Debugger" = "调试器";
 
 /* No comment provided by engineer. */
@@ -675,6 +705,9 @@
 "Extended" = "扩展";
 
 /* No comment provided by engineer. */
+"External Installer" = "外部安装器";
+
+/* No comment provided by engineer. */
 "Failed to activate license \"%@\": %@" = "无法激活授权 \"%@\": %@";
 
 /* No comment provided by engineer. */
@@ -712,6 +745,9 @@
 
 /* No comment provided by engineer. */
 "Find" = "查找";
+
+/* No comment provided by engineer. */
+"FLEX" = "FLEX";
 
 /* No comment provided by engineer. */
 "Font" = "字体";
@@ -772,6 +808,9 @@
 
 /* No comment provided by engineer. */
 "Installer" = "安装器";
+
+/* No comment provided by engineer. */
+"Installer process returned non-zero code (%d)." = "安装进程返回错误代码 (%d).";
 
 /* No comment provided by engineer. */
 "Instant View / Run" = "立即查看";
@@ -924,6 +963,9 @@
 "More" = "更多";
 
 /* No comment provided by engineer. */
+"More..." = "更多...";
+
+/* No comment provided by engineer. */
 "Move" = "移动";
 
 /* No comment provided by engineer. */
@@ -975,10 +1017,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1036,6 +1078,9 @@
 
 /* No comment provided by engineer. */
 "Operation aborted." = "操作终止.";
+
+/* No comment provided by engineer. */
+"Operation completed." = "操作完成.";
 
 /* No comment provided by engineer. */
 "Operation Failed" = "操作失败";
@@ -1207,6 +1252,9 @@
 
 /* No comment provided by engineer. */
 "Remove all logs in \"%@\"?" = "移除 \"%@\" 中的所有日志?";
+
+/* No comment provided by engineer. */
+"Remove all text in \"%@\"?" = "移除 \"%@\" 中的所有文本?";
 
 /* No comment provided by engineer. */
 "Removing process terminated: User interrupt occurred." = "删除进程终止: 用户结束操作.";
@@ -1451,6 +1499,9 @@
 "Temporarily directory \"%@\" already exists." = "临时目录 \"%@\" 已经存在.";
 
 /* No comment provided by engineer. */
+"Temporarily file \"%@\" already exists." = "临时文件 \"%@\" 已存在.";
+
+/* No comment provided by engineer. */
 "Temporarily XPP Bundle cleaned: \"%@\"." = "已清理临时 XPP 脚本包: \"%@\".";
 
 /* No comment provided by engineer. */
@@ -1466,6 +1517,9 @@
 "Text Editor" = "文本编辑器";
 
 /* No comment provided by engineer. */
+"Text Viewer" = "文本查看器";
+
+/* No comment provided by engineer. */
 "The alias \"%@\" can't be opened because the original item can't be found." = "替身 \"%@\" 无法打开, 因为找不到其原身.";
 
 /* No comment provided by engineer. */
@@ -1473,6 +1527,9 @@
 
 /* No comment provided by engineer. */
 "The content of log file \"%@\" is empty." = "日志文件 \"%@\" 的内容为空.";
+
+/* No comment provided by engineer. */
+"The content of text file \"%@\" is empty." = "文本文件 \"%@\" 的内容为空.";
 
 /* No comment provided by engineer. */
 "The daemon has been restarted." = "守护进程重启完成.";

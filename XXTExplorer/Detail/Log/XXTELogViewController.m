@@ -26,11 +26,11 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return NSLocalizedString(@"Log Viewer", nil);
+    return NSLocalizedString(@"Text Viewer", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"log" ];
+    return @[ @"txt", @"log", @"ini", @"conf" ];
 }
 
 + (Class)relatedReader {
@@ -107,12 +107,14 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
     }
     NSString *stringPart = [[NSString alloc] initWithData:dataPart encoding:NSUTF8StringEncoding];
     if (!stringPart) {
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse log with UTF-8 encoding: \"%@\".", nil), entryPath]);
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse text with UTF-8 encoding: \"%@\".", nil), entryPath]);
         return;
     }
     if (stringPart.length == 0) {
-        [self.logTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of log file \"%@\" is empty.", nil), entryPath]];
+        [self.clearItem setEnabled:NO];
+        [self.logTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of text file \"%@\" is empty.", nil), entryPath]];
     } else {
+        [self.clearItem setEnabled:YES];
         [self.logTextView setText:stringPart];
     }
     
@@ -133,6 +135,7 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
         logTextView.textAlignment = NSTextAlignmentLeft;
         logTextView.allowsEditingTextAttributes = NO;
         logTextView.tintColor = XXTColorDefault();
+        logTextView.alwaysBounceVertical = YES;
         logTextView.font = [UIFont fontWithName:@"CourierNewPSMT" size:12.f];
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 11.0, *)) {
@@ -172,7 +175,7 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
     if (!entryPath) {
         return;
     }
-    LGAlertView *clearAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Confirm", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Remove all logs in \"%@\"?", nil), entryPath] style:LGAlertViewStyleActionSheet buttonTitles:@[ ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Clear Now", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+    LGAlertView *clearAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Confirm", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Remove all text in \"%@\"?", nil), entryPath] style:LGAlertViewStyleActionSheet buttonTitles:@[ ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Clear Now", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];

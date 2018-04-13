@@ -20,6 +20,7 @@
 #import "XXTEMoreAddressCell.h"
 
 #import <LGAlertView/LGAlertView.h>
+#import <FLEX/FLEXManager.h>
 
 #ifndef APPSTORE
     #import <objc/runtime.h>
@@ -100,6 +101,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 @property (nonatomic, strong) UIBarButtonItem *closeItem;
 @property (weak, nonatomic) UISwitch *remoteAccessSwitch;
 @property (weak, nonatomic) UIActivityIndicatorView *remoteAccessIndicator;
+@property (nonatomic, strong) UIBarButtonItem *flexItem;
 
 #ifdef APPSTORE
 @property (weak, nonatomic) UIViewController *blockVC;
@@ -167,6 +169,12 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     if (nil == self.tabBarController && self == [self.navigationController.viewControllers firstObject])
     {
         self.navigationItem.rightBarButtonItem = self.closeItem;
+    }
+#endif
+    
+#ifdef DEBUG
+    if (@available(iOS 8.0, *)) {
+        self.navigationItem.leftBarButtonItem = self.flexItem;
     }
 #endif
     
@@ -1011,6 +1019,14 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
 #pragma mark - UIView Getters
 
+- (UIBarButtonItem *)flexItem {
+    if (!_flexItem) {
+        UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"FLEX", nil) style:UIBarButtonItemStylePlain target:self action:@selector(flexItemTapped:)];
+        _flexItem = flexItem;
+    }
+    return _flexItem;
+}
+
 #ifdef APPSTORE
 - (UIBarButtonItem *)closeItem {
     if (!_closeItem) {
@@ -1031,6 +1047,12 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #endif
+
+- (void)flexItemTapped:(UIBarButtonItem *)sender {
+    if (@available(iOS 8.0, *)) {
+        [[FLEXManager sharedManager] showExplorer];
+    }
+}
 
 #pragma mark - Log Viewer
 

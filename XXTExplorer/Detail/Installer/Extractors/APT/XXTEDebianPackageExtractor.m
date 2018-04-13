@@ -42,7 +42,7 @@
     NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
     struct stat temporarilyStat;
     if (0 == lstat([temporarilyPath fileSystemRepresentation], &temporarilyStat)) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Temporarily file \"%@\" already exists.", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily file \"%@\" already exists.", nil), temporarilyPath]];
         return;
     }
     [[NSData data] writeToFile:temporarilyPath atomically:YES];
@@ -56,18 +56,18 @@
     posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     posix_spawn_file_actions_destroy(&action);
     if (pid == 0) {
-        [self callbackInstallationErrorWithReason:@"Cannot launch installer process."];
+        [self callbackInstallationErrorWithReason:NSLocalizedString(@"Cannot launch installer process.", nil)];
         return;
     }
     waitpid(pid, &status, 0);
     struct stat temporarilyControlStat;
     if (0 != lstat([temporarilyPath fileSystemRepresentation], &temporarilyControlStat)) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot find log file \"%@\".", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot find log file \"%@\".", nil), temporarilyPath]];
         return;
     }
     NSData *logData = [[NSData alloc] initWithContentsOfFile:temporarilyPath];
     if (!logData) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot open log file \"%@\".", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot open log file \"%@\".", nil), temporarilyPath]];
         return;
     }
     NSString *logString = [[NSString alloc] initWithData:logData encoding:NSUTF8StringEncoding];
@@ -107,7 +107,7 @@
     NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
     struct stat temporarilyStat;
     if (0 == lstat([temporarilyPath fileSystemRepresentation], &temporarilyStat)) {
-        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:@"Temporarily directory \"%@\" already exists.", temporarilyPath]];
+        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily directory \"%@\" already exists.", nil), temporarilyPath]];
         return;
     }
     int status = 0;
@@ -116,23 +116,23 @@
     const char *args[] = { binary, "/usr/bin/dpkg", "-e", [packagePath fileSystemRepresentation], [temporarilyPath fileSystemRepresentation], NULL };
     posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     if (pid == 0) {
-        [self callbackFetchingMetaDataWithErrorReason:@"Cannot launch installer process."];
+        [self callbackFetchingMetaDataWithErrorReason:NSLocalizedString(@"Cannot launch installer process.", nil)];
         return;
     }
     waitpid(pid, &status, 0);
     if (status != 0) {
-        [self callbackFetchingMetaDataWithErrorReason:@"Installer process returned non-zero code."];
+        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Installer process returned non-zero code (%d).", nil), status]];
         return;
     }
     NSString *temporarilyControlPath = [temporarilyPath stringByAppendingPathComponent:@"control"];
     struct stat temporarilyControlStat;
     if (0 != lstat([temporarilyControlPath fileSystemRepresentation], &temporarilyControlStat)) {
-        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:@"Cannot find control file \"%@\".", temporarilyControlPath]];
+        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot find control file \"%@\".", nil), temporarilyControlPath]];
         return;
     }
     NSData *controlData = [[NSData alloc] initWithContentsOfFile:temporarilyControlPath];
     if (!controlData) {
-        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:@"Cannot open control file \"%@\".", temporarilyControlPath]];
+        [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot open control file \"%@\".", nil), temporarilyControlPath]];
         return;
     }
     if (_delegate && [_delegate respondsToSelector:@selector(packageExtractor:didFinishFetchingMetaData:)]) {

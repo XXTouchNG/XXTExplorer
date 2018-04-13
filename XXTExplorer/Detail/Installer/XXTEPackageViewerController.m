@@ -27,7 +27,7 @@
 @synthesize entryPath = _entryPath;
 
 + (NSString *)viewerName {
-    return NSLocalizedString(@"Installer", nil);
+    return NSLocalizedString(@"External Installer", nil);
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
@@ -87,7 +87,7 @@
         if ([extractor isKindOfClass:[XXTEDebianPackageExtractor class]]) {
             [self.textView insertText:@"[DEBIAN/control]\n\n"];
         } else if ([extractor isKindOfClass:[XXTEApplePackageExtractor class]]) {
-            [self.textView insertText:@"[Ready]\n\n"];
+            
         }
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView] animated:NO];
         [self.activityIndicatorView startAnimating];
@@ -174,7 +174,7 @@
         self.installButtonItem.enabled = NO;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         NSString *errorString = [error localizedDescription];
-        [self.textView insertText:[NSString stringWithFormat:@"[ERROR] %@", errorString]];
+        [self.textView insertText:[NSString stringWithFormat:NSLocalizedString(@"[ERROR] %@", nil), errorString]];
         [self.textView insertText:@"\n"];
     });
 }
@@ -182,9 +182,13 @@
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFinishInstallation:(NSString *)outputLog {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.respringButtonItem.enabled = YES;
-        [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
         [self.textView insertText:outputLog];
-        [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Tap \"Respring\" to continue...", nil)]];
+        if ([extractor respondsToSelector:@selector(killBackboardd)]) {
+            [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
+            [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Tap \"Respring\" to continue...", nil)]];
+        } else {
+            [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Operation completed.", nil)]];
+        }
     });
 }
 
@@ -193,7 +197,7 @@
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         NSString *errorString = [error localizedDescription];
-        [self.textView insertText:[NSString stringWithFormat:@"[ERROR] %@", errorString]];
+        [self.textView insertText:[NSString stringWithFormat:NSLocalizedString(@"[FAILED] %@", nil), errorString]];
         [self.textView insertText:@"\n"];
     });
 }
@@ -218,7 +222,10 @@
     UIViewController *blockVC = blockInteractions(self, YES);
     [self.activityIndicatorView startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.extractor killBackboardd];
+        if ([self.extractor respondsToSelector:@selector(killBackboardd)])
+        {
+            [self.extractor killBackboardd];
+        }
         dispatch_async_on_main_queue(^{
             [self.activityIndicatorView stopAnimating];
             blockInteractions(blockVC, NO);

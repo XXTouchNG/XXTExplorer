@@ -123,14 +123,18 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         const char *root_path = [[XXTEAppDelegate sharedRootPath] fileSystemRepresentation];
-        const char *resolved_root_path = realpath(root_path, NULL);
-        realRootPath = [[NSString alloc] initWithUTF8String:resolved_root_path];
+        char *resolved_root_path = realpath(root_path, NULL);
+        if (resolved_root_path) {
+            realRootPath = [[NSString alloc] initWithUTF8String:resolved_root_path];
+            free(resolved_root_path);
+        }
     });
     const char *original_path = [path fileSystemRepresentation];
-    const char *resolved_path = realpath(original_path, NULL);
+    char *resolved_path = realpath(original_path, NULL);
     if (resolved_path)
     {
         NSString *resolvedPath = [[NSString alloc] initWithUTF8String:resolved_path];
+        free(resolved_path);
         if (NO == [resolvedPath hasPrefix:realRootPath])
         {
             return -1; // not in root path, skipped
@@ -138,10 +142,13 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
     }
     struct stat entryStat;
     if (lstat(original_path, &entryStat) != 0) return -2;
-    struct passwd *entryPWInfo = getpwuid(entryStat.st_uid);
-    if (entryPWInfo != NULL) {
-        if (entryPWInfo->pw_name) {
-            NSString *pwName = [[NSString alloc] initWithUTF8String:entryPWInfo->pw_name];
+    struct passwd pwent;
+    struct passwd *pwentp;
+    char buf[BUFSIZ];
+    getpwuid_r(entryStat.st_uid, &pwent, buf, sizeof buf, &pwentp);
+    if (pwentp != NULL) {
+        if (pwent.pw_name) {
+            NSString *pwName = [[NSString alloc] initWithUTF8String:pwent.pw_name];
             if ([pwName isEqualToString:@"mobile"]) {
                 return 0; // already mobile owner, skipped
             }

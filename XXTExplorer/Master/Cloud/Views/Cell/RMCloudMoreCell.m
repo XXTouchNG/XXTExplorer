@@ -10,7 +10,7 @@
 
 @interface RMCloudMoreCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *tapTitleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *tapTitleButton;
 
 @end
 
@@ -20,13 +20,17 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.tapTitleLabel.textColor = XXTColorDefault();
-    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();
     self.selectedBackgroundView = selectionBackground;
     
-    self.tapTitleLabel.text = NSLocalizedString(@"Tap to load more...", nil);
+    UIButton *btn = self.tapTitleButton;
+    [btn setTitle:NSLocalizedString(@"More...", nil) forState:UIControlStateNormal];
+    [btn setTitleColor:XXTColorDefault() forState:UIControlStateNormal];
+    
+    [btn.layer setCornerRadius:(CGRectGetHeight(btn.bounds) / 2.0)];
+    [btn.layer setBorderWidth:0.6];
+    [btn.layer setBorderColor:XXTColorDefault().CGColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

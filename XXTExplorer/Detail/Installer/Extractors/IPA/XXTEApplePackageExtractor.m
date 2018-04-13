@@ -41,13 +41,14 @@
     NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
     struct stat temporarilyStat;
     if (0 == lstat([temporarilyPath fileSystemRepresentation], &temporarilyStat)) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Temporarily file \"%@\" already exists.", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily file \"%@\" already exists.", nil), temporarilyPath]];
         return;
     }
     [[NSData data] writeToFile:temporarilyPath atomically:YES];
     posix_spawn_file_actions_t action;
     posix_spawn_file_actions_init(&action);
     posix_spawn_file_actions_addopen(&action, STDOUT_FILENO, [temporarilyPath fileSystemRepresentation], O_WRONLY, 0);
+//    posix_spawn_file_actions_addopen(&action, STDERR_FILENO, [temporarilyPath fileSystemRepresentation], O_WRONLY, 0);
     int status = 0;
     pid_t pid = 0;
     const char *binary = add1s_binary();
@@ -56,18 +57,18 @@
     posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
     posix_spawn_file_actions_destroy(&action);
     if (pid == 0) {
-        [self callbackInstallationErrorWithReason:@"Cannot launch installer process."];
+        [self callbackInstallationErrorWithReason:NSLocalizedString(@"Cannot launch installer process.", nil)];
         return;
     }
     waitpid(pid, &status, 0);
     struct stat temporarilyControlStat;
     if (0 != lstat([temporarilyPath fileSystemRepresentation], &temporarilyControlStat)) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot find log file \"%@\".", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot find log file \"%@\".", nil), temporarilyPath]];
         return;
     }
     NSData *logData = [[NSData alloc] initWithContentsOfFile:temporarilyPath];
     if (!logData) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:@"Cannot open log file \"%@\".", temporarilyPath]];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot open log file \"%@\".", nil), temporarilyPath]];
         return;
     }
     NSString *logString = [[NSString alloc] initWithData:logData encoding:NSUTF8StringEncoding];

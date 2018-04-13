@@ -595,6 +595,33 @@
 		0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAE0F121ED7204E00798B4B /* XXTExplorerViewCell.xib */; };
 		0FAE18CA207E6740005F9B67 /* XXTEApplePackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */; };
 		0FAE18CB207E6740005F9B67 /* XXTEApplePackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */; };
+		0FAE18E120806830005F9B67 /* XXTEMultiColumnTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D22080682E005F9B67 /* XXTEMultiColumnTableView.m */; };
+		0FAE18E220806830005F9B67 /* XXTEMultiColumnTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D22080682E005F9B67 /* XXTEMultiColumnTableView.m */; };
+		0FAE18E320806830005F9B67 /* XXTEMultiColumnTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D22080682E005F9B67 /* XXTEMultiColumnTableView.m */; };
+		0FAE18E420806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D52080682E005F9B67 /* XXTEDbTableColumnHeader.m */; };
+		0FAE18E520806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D52080682E005F9B67 /* XXTEDbTableColumnHeader.m */; };
+		0FAE18E620806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D52080682E005F9B67 /* XXTEDbTableColumnHeader.m */; };
+		0FAE18E720806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D82080682F005F9B67 /* XXTEDbTableContentViewController.m */; };
+		0FAE18E820806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D82080682F005F9B67 /* XXTEDbTableContentViewController.m */; };
+		0FAE18E920806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D82080682F005F9B67 /* XXTEDbTableContentViewController.m */; };
+		0FAE18EA20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D92080682F005F9B67 /* XXTEDbTableListViewController.m */; };
+		0FAE18EB20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D92080682F005F9B67 /* XXTEDbTableListViewController.m */; };
+		0FAE18EC20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18D92080682F005F9B67 /* XXTEDbTableListViewController.m */; };
+		0FAE18ED20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18DB2080682F005F9B67 /* XXTEDbTableLeftCell.m */; };
+		0FAE18EE20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18DB2080682F005F9B67 /* XXTEDbTableLeftCell.m */; };
+		0FAE18EF20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18DB2080682F005F9B67 /* XXTEDbTableLeftCell.m */; };
+		0FAE18F020806830005F9B67 /* XXTEDbTableContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18DE2080682F005F9B67 /* XXTEDbTableContentCell.m */; };
+		0FAE18F120806830005F9B67 /* XXTEDbTableContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18DE2080682F005F9B67 /* XXTEDbTableContentCell.m */; };
+		0FAE18F220806830005F9B67 /* XXTEDbTableContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18DE2080682F005F9B67 /* XXTEDbTableContentCell.m */; };
+		0FAE18F620806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18E020806830005F9B67 /* XXTESQLiteDatabaseManager.m */; };
+		0FAE18F720806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18E020806830005F9B67 /* XXTESQLiteDatabaseManager.m */; };
+		0FAE18F820806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18E020806830005F9B67 /* XXTESQLiteDatabaseManager.m */; };
+		0FAE18FC20806CAF005F9B67 /* XXTEDbReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18FB20806A19005F9B67 /* XXTEDbReader.m */; };
+		0FAE18FD20806CAF005F9B67 /* XXTEDbReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18FB20806A19005F9B67 /* XXTEDbReader.m */; };
+		0FAE18FE20806CB0005F9B67 /* XXTEDbReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE18FB20806A19005F9B67 /* XXTEDbReader.m */; };
+		0FAE190020809135005F9B67 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAE18FF20809135005F9B67 /* libsqlite3.tbd */; };
+		0FAE19012080913D005F9B67 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAE18FF20809135005F9B67 /* libsqlite3.tbd */; };
+		0FAE190220809143005F9B67 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FAE18FF20809135005F9B67 /* libsqlite3.tbd */; };
 		0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */; };
 		0FB009021F43573500097E9C /* Oceanic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009011F43573500097E9C /* Oceanic.tmTheme */; };
 		0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009051F4359FF00097E9C /* SKTheme.plist */; };
@@ -1614,6 +1641,24 @@
 		0FAE18C8207E6740005F9B67 /* XXTEApplePackageExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEApplePackageExtractor.h; sourceTree = "<group>"; };
 		0FAE18C9207E6740005F9B67 /* XXTEApplePackageExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEApplePackageExtractor.m; sourceTree = "<group>"; };
 		0FAE18CD207F9E40005F9B67 /* XXTEPackageExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEPackageExtractor.h; sourceTree = "<group>"; };
+		0FAE18D02080682E005F9B67 /* XXTESQLiteDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESQLiteDatabaseManager.h; sourceTree = "<group>"; };
+		0FAE18D12080682E005F9B67 /* XXTEDbTableContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDbTableContentCell.h; sourceTree = "<group>"; };
+		0FAE18D22080682E005F9B67 /* XXTEMultiColumnTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEMultiColumnTableView.m; sourceTree = "<group>"; };
+		0FAE18D32080682E005F9B67 /* XXTEDbTableContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDbTableContentViewController.h; sourceTree = "<group>"; };
+		0FAE18D42080682E005F9B67 /* XXTEDbTableListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDbTableListViewController.h; sourceTree = "<group>"; };
+		0FAE18D52080682E005F9B67 /* XXTEDbTableColumnHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDbTableColumnHeader.m; sourceTree = "<group>"; };
+		0FAE18D62080682E005F9B67 /* XXTEDbTableColumnHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDbTableColumnHeader.h; sourceTree = "<group>"; };
+		0FAE18D72080682F005F9B67 /* XXTEMultiColumnTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMultiColumnTableView.h; sourceTree = "<group>"; };
+		0FAE18D82080682F005F9B67 /* XXTEDbTableContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDbTableContentViewController.m; sourceTree = "<group>"; };
+		0FAE18D92080682F005F9B67 /* XXTEDbTableListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDbTableListViewController.m; sourceTree = "<group>"; };
+		0FAE18DB2080682F005F9B67 /* XXTEDbTableLeftCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDbTableLeftCell.m; sourceTree = "<group>"; };
+		0FAE18DC2080682F005F9B67 /* XXTEDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDatabaseManager.h; sourceTree = "<group>"; };
+		0FAE18DD2080682F005F9B67 /* XXTEDbTableLeftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDbTableLeftCell.h; sourceTree = "<group>"; };
+		0FAE18DE2080682F005F9B67 /* XXTEDbTableContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDbTableContentCell.m; sourceTree = "<group>"; };
+		0FAE18E020806830005F9B67 /* XXTESQLiteDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESQLiteDatabaseManager.m; sourceTree = "<group>"; };
+		0FAE18FA20806A19005F9B67 /* XXTEDbReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEDbReader.h; sourceTree = "<group>"; };
+		0FAE18FB20806A19005F9B67 /* XXTEDbReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEDbReader.m; sourceTree = "<group>"; };
+		0FAE18FF20809135005F9B67 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Ciapre.tmTheme; sourceTree = "<group>"; };
 		0FB009011F43573500097E9C /* Oceanic.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Oceanic.tmTheme; sourceTree = "<group>"; };
 		0FB009051F4359FF00097E9C /* SKTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SKTheme.plist; sourceTree = "<group>"; };
@@ -2103,6 +2148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FAE190220809143005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */,
 				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,
 				0F8EDC591FB1F779003C92D6 /* Photos.framework in Frameworks */,
@@ -2126,6 +2172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FAE190020809135005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0FAC07BA1F848AB200C52225 /* Photos.framework in Frameworks */,
 				0FAC07B81F848AAA00C52225 /* AssetsLibrary.framework in Frameworks */,
 				D617D1D41F7B4BC1009F4B59 /* libc++.tbd in Frameworks */,
@@ -2149,6 +2196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FAE19012080913D005F9B67 /* libsqlite3.tbd in Frameworks */,
 				D60FE7661FE2369300954818 /* Photos.framework in Frameworks */,
 				D60FE7671FE2369300954818 /* AssetsLibrary.framework in Frameworks */,
 				D60FE7681FE2369300954818 /* libc++.tbd in Frameworks */,
@@ -2644,6 +2692,7 @@
 				0F3E24841F22EC4800BC8335 /* XXTEDetailViewController.h */,
 				0F4419F01F1797CF00967980 /* XXTEViewer.h */,
 				0FC477591F376A0500B8F28E /* XXTEEditor.h */,
+				0FAE18CE208067F0005F9B67 /* Db */,
 				D6A850712043BD67008745EB /* Workspace */,
 				0F5EB53C1F0A9ED80016016A /* Common */,
 				0F56900B1F1B01E5009AF9FE /* Archive */,
@@ -2916,6 +2965,38 @@
 				0FFC8EFF1FCA83BE0012C170 /* XPA */,
 			);
 			path = Extractors;
+			sourceTree = "<group>";
+		};
+		0FAE18CE208067F0005F9B67 /* Db */ = {
+			isa = PBXGroup;
+			children = (
+				0FAE18F9208069E9005F9B67 /* Reader */,
+				0FAE18DC2080682F005F9B67 /* XXTEDatabaseManager.h */,
+				0FAE18D72080682F005F9B67 /* XXTEMultiColumnTableView.h */,
+				0FAE18D22080682E005F9B67 /* XXTEMultiColumnTableView.m */,
+				0FAE18D02080682E005F9B67 /* XXTESQLiteDatabaseManager.h */,
+				0FAE18E020806830005F9B67 /* XXTESQLiteDatabaseManager.m */,
+				0FAE18D62080682E005F9B67 /* XXTEDbTableColumnHeader.h */,
+				0FAE18D52080682E005F9B67 /* XXTEDbTableColumnHeader.m */,
+				0FAE18D12080682E005F9B67 /* XXTEDbTableContentCell.h */,
+				0FAE18DE2080682F005F9B67 /* XXTEDbTableContentCell.m */,
+				0FAE18D32080682E005F9B67 /* XXTEDbTableContentViewController.h */,
+				0FAE18D82080682F005F9B67 /* XXTEDbTableContentViewController.m */,
+				0FAE18DD2080682F005F9B67 /* XXTEDbTableLeftCell.h */,
+				0FAE18DB2080682F005F9B67 /* XXTEDbTableLeftCell.m */,
+				0FAE18D42080682E005F9B67 /* XXTEDbTableListViewController.h */,
+				0FAE18D92080682F005F9B67 /* XXTEDbTableListViewController.m */,
+			);
+			path = Db;
+			sourceTree = "<group>";
+		};
+		0FAE18F9208069E9005F9B67 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				0FAE18FA20806A19005F9B67 /* XXTEDbReader.h */,
+				0FAE18FB20806A19005F9B67 /* XXTEDbReader.m */,
+			);
+			path = Reader;
 			sourceTree = "<group>";
 		};
 		0FB008EC1F43464500097E9C /* Settings */ = {
@@ -3413,6 +3494,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0FAE18FF20809135005F9B67 /* libsqlite3.tbd */,
 				D61616FA1FE8F76F009F10FF /* StoreKit.framework */,
 				0FC598AC1FB49317001F918B /* QuartzCore.framework */,
 				0FAC07B91F848AB200C52225 /* Photos.framework */,
@@ -4827,6 +4909,7 @@
 				0F8EDB751FB1F779003C92D6 /* XXTEWebViewerController.m in Sources */,
 				0F8EDB761FB1F779003C92D6 /* XUIFileCell.m in Sources */,
 				0F8EDB771FB1F779003C92D6 /* XXTExplorerEntryCodeReader.m in Sources */,
+				0FAE18EC20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */,
 				0F8EDB781FB1F779003C92D6 /* XXTImagePickerController.m in Sources */,
 				0F8EDB791FB1F779003C92D6 /* XXTPickerSnippet.m in Sources */,
 				0F8EDB7A1FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
@@ -4868,12 +4951,15 @@
 				0F8EDBA51FB1F779003C92D6 /* XXTPixelResizeControl.m in Sources */,
 				0F8EDBA61FB1F779003C92D6 /* XUIAboutCell.m in Sources */,
 				0F8EDBA71FB1F779003C92D6 /* XXTPickerPreviewBar.m in Sources */,
+				0FAE18E320806830005F9B67 /* XXTEMultiColumnTableView.m in Sources */,
 				0F8EDBA91FB1F779003C92D6 /* XXTEKeyboardToolbarRow.m in Sources */,
 				0F8EDBAA1FB1F779003C92D6 /* XXTEUIViewController+OpenURL.m in Sources */,
 				0F8EDBAB1FB1F779003C92D6 /* XXTEEditorTextStorage.m in Sources */,
 				0F8EDBAC1FB1F779003C92D6 /* XXTPixelCropRectView.m in Sources */,
 				0F8EDBAD1FB1F779003C92D6 /* XXTENavigationController.m in Sources */,
 				D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */,
+				0FAE18FE20806CB0005F9B67 /* XXTEDbReader.m in Sources */,
+				0FAE18E620806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
 				0F8EDBAE1FB1F779003C92D6 /* XXTExplorerViewController+FileOperation.m in Sources */,
 				0F8EDBAF1FB1F779003C92D6 /* XXTPositionPicker.m in Sources */,
 				0F8EDBB01FB1F779003C92D6 /* XXTESymbolTypeView.m in Sources */,
@@ -4895,6 +4981,7 @@
 				0F8EDBC01FB1F779003C92D6 /* XXTExplorerEntryParser.m in Sources */,
 				0F8EDBC11FB1F779003C92D6 /* XXTEMoreTitleValueCell.m in Sources */,
 				0F8EDBC21FB1F779003C92D6 /* XXTExplorerViewController.m in Sources */,
+				0FAE18F220806830005F9B67 /* XXTEDbTableContentCell.m in Sources */,
 				0F8EDBC31FB1F779003C92D6 /* XXTExplorerEntryObjectReader.m in Sources */,
 				0F8EDBC41FB1F779003C92D6 /* XXTEKeyboardRow.m in Sources */,
 				0F8EDBC51FB1F779003C92D6 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
@@ -4919,6 +5006,7 @@
 				0F8EDBD81FB1F779003C92D6 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
 				0F8EDBDA1FB1F779003C92D6 /* XXTEArchiveViewer.m in Sources */,
 				0F8EDBDB1FB1F779003C92D6 /* XXTExplorerToolbar.m in Sources */,
+				0FAE18F820806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */,
 				0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */,
 				D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */,
 				0F8EDBDD1FB1F779003C92D6 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
@@ -4930,6 +5018,7 @@
 				0F8EDBE31FB1F779003C92D6 /* NSString+HTMLEscape.m in Sources */,
 				0F8EDBE41FB1F779003C92D6 /* XXTColorPicker.m in Sources */,
 				0FC598AA1FB2189A001F918B /* main.AppStore.m in Sources */,
+				0FAE18EF20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */,
 				0F072DBA1FB9EC8B00597EE2 /* xxtea.c in Sources */,
 				D6CB81BE1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */,
 				0F8EDBE61FB1F779003C92D6 /* UIViewController+XXTExplorer.m in Sources */,
@@ -5024,6 +5113,7 @@
 				0F9387F01FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
 				0F8EDC491FB1F779003C92D6 /* lopcodes.c in Sources */,
 				0F8EDC4A1FB1F779003C92D6 /* loslib.c in Sources */,
+				0FAE18E920806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */,
 				0F8EDC4B1FB1F779003C92D6 /* lparser.c in Sources */,
 				0F8EDC4C1FB1F779003C92D6 /* lstate.c in Sources */,
 				0F8EDC4D1FB1F779003C92D6 /* lstring.c in Sources */,
@@ -5085,8 +5175,10 @@
 				0FD974011F4B37FE00133162 /* XXTEEditorController+Menu.m in Sources */,
 				D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
+				0FAE18FC20806CAF005F9B67 /* XXTEDbReader.m in Sources */,
 				D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */,
 				0FE5B1281F6956CF00034424 /* SKAttributedRenderer.m in Sources */,
+				0FAE18E120806830005F9B67 /* XXTEMultiColumnTableView.m in Sources */,
 				0FE1E43B1F18DFB300055E02 /* XXTEWebViewerController.m in Sources */,
 				D6863CE61F7E340A00A45CF7 /* XUIFileCell.m in Sources */,
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
@@ -5178,6 +5270,7 @@
 				0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
 				0FBECD672005FEE300068437 /* XXTELogReader.m in Sources */,
+				0FAE18F020806830005F9B67 /* XXTEDbTableContentCell.m in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				D6F3EBE01FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */,
@@ -5211,6 +5304,7 @@
 				0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F6AEA931F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
 				0FB388E51FA860E800B41E44 /* XXTEEditorStatisticsViewController.m in Sources */,
+				0FAE18E420806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
 				0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */,
@@ -5304,6 +5398,7 @@
 				0FBAFF3E1F6E5378008B3189 /* XXTImagePickerAlbumCell.m in Sources */,
 				52512E40750E7BF6394042D8 /* SKParser.m in Sources */,
 				0F8811611FB6AF430004F20C /* XXTESegmentedButton.m in Sources */,
+				0FAE18E720806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */,
 				0F707E791FB094110052A4B5 /* XXTESymbolCell.m in Sources */,
 				525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */,
 				0F4EE3721FC1A9C7003FF5FD /* XXTExplorerEntryXPAPackageReader.m in Sources */,
@@ -5320,8 +5415,10 @@
 				0F1C3EB91FA8376200B5146C /* ICTextView.m in Sources */,
 				B0312BFDA930E7D5C8B77E30 /* lctype.c in Sources */,
 				B0312EBD513D285EA078FE4E /* ldblib.c in Sources */,
+				0FAE18F620806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */,
 				B03127AAD5F1F6762E66773C /* ldebug.c in Sources */,
 				B031295EF4666884FB8ACFD1 /* ldo.c in Sources */,
+				0FAE18ED20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */,
 				B0312B61C4C7677936D85850 /* ldump.c in Sources */,
 				D642B8C11F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m in Sources */,
 				B03124475711B2DC6F9A1E21 /* lfunc.c in Sources */,
@@ -5335,6 +5432,7 @@
 				0F8811651FB6AF640004F20C /* XXTESegmentedControl.m in Sources */,
 				B0312367E625FD7FB2D0DE79 /* loadlib.c in Sources */,
 				B03123205C26A5D2FDE8E6E1 /* lobject.c in Sources */,
+				0FAE18EA20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */,
 				B031279B4D657CEE8219C1D4 /* lopcodes.c in Sources */,
 				B0312F7F228AF24585508F52 /* loslib.c in Sources */,
 				D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */,
@@ -5402,8 +5500,10 @@
 				D60FE6711FE2369300954818 /* XXTEEditorController+Menu.m in Sources */,
 				D60FE6721FE2369300954818 /* XXTESwipeTableCell.m in Sources */,
 				D60FE6731FE2369300954818 /* UISearchController+StatusBarStyle.m in Sources */,
+				0FAE18FD20806CAF005F9B67 /* XXTEDbReader.m in Sources */,
 				D60FE6741FE2369300954818 /* XXTETerminalTextView.m in Sources */,
 				D60FE6751FE2369300954818 /* SKAttributedRenderer.m in Sources */,
+				0FAE18E220806830005F9B67 /* XXTEMultiColumnTableView.m in Sources */,
 				D60FE6761FE2369300954818 /* XXTEWebViewerController.m in Sources */,
 				D60FE6771FE2369300954818 /* XUIFileCell.m in Sources */,
 				D60FE6781FE2369300954818 /* XXTExplorerEntryCodeReader.m in Sources */,
@@ -5495,6 +5595,7 @@
 				0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D60FE6C21FE2369300954818 /* XXTPixelPreview.m in Sources */,
 				0FBECD692005FEE300068437 /* XXTELogReader.m in Sources */,
+				0FAE18F120806830005F9B67 /* XXTEDbTableContentCell.m in Sources */,
 				D60FE6C41FE2369300954818 /* XXTExplorerEntryParser.m in Sources */,
 				D6F3EBE21FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D60FE6C51FE2369300954818 /* XXTEMoreTitleValueCell.m in Sources */,
@@ -5528,6 +5629,7 @@
 				D60FE6DF1FE2369300954818 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				D60FE6E01FE2369300954818 /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
 				D60FE6E31FE2369300954818 /* XXTEEditorStatisticsViewController.m in Sources */,
+				0FAE18E520806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
 				D60FE6E41FE2369300954818 /* XXTEInsetsLabel.m in Sources */,
 				D60FE6E51FE2369300954818 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
 				D60FE6E61FE2369300954818 /* NSString+HTMLEscape.m in Sources */,
@@ -5621,6 +5723,7 @@
 				D60FE7321FE2369300954818 /* XXTImagePickerAlbumCell.m in Sources */,
 				D60FE7331FE2369300954818 /* SKParser.m in Sources */,
 				D60FE7341FE2369300954818 /* XXTESegmentedButton.m in Sources */,
+				0FAE18E820806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */,
 				D60FE7351FE2369300954818 /* XXTESymbolCell.m in Sources */,
 				D60FE7361FE2369300954818 /* SKAttributedParser.m in Sources */,
 				D60FE7371FE2369300954818 /* XXTExplorerEntryXPAPackageReader.m in Sources */,
@@ -5637,8 +5740,10 @@
 				D60FE7421FE2369300954818 /* ICTextView.m in Sources */,
 				D60FE7431FE2369300954818 /* lctype.c in Sources */,
 				D60FE7441FE2369300954818 /* ldblib.c in Sources */,
+				0FAE18F720806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */,
 				D60FE7451FE2369300954818 /* ldebug.c in Sources */,
 				D60FE7461FE2369300954818 /* ldo.c in Sources */,
+				0FAE18EE20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */,
 				D60FE7471FE2369300954818 /* ldump.c in Sources */,
 				D60FE7481FE2369300954818 /* XXTEUIViewController+XXTCheckUpdate.m in Sources */,
 				D60FE7491FE2369300954818 /* lfunc.c in Sources */,
@@ -5652,6 +5757,7 @@
 				D60FE7511FE2369300954818 /* XXTESegmentedControl.m in Sources */,
 				D60FE7521FE2369300954818 /* loadlib.c in Sources */,
 				D60FE7531FE2369300954818 /* lobject.c in Sources */,
+				0FAE18EB20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */,
 				D60FE7541FE2369300954818 /* lopcodes.c in Sources */,
 				D60FE7551FE2369300954818 /* loslib.c in Sources */,
 				D60FE7561FE2369300954818 /* XXTEImageViewerController.m in Sources */,

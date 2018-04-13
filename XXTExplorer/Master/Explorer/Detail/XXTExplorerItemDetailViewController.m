@@ -903,6 +903,17 @@ static int sizingCancelFlag = 0;
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.nameField) {
+        NSString *text = textField.text;
+        NSRange dotRange = [text rangeOfString:@"." options:NSBackwardsSearch];
+        if (dotRange.location != NSNotFound) {
+            UITextRange *prefixRange = [textField textRangeFromPosition:textField.beginningOfDocument toPosition:[textField positionFromPosition:textField.beginningOfDocument offset:dotRange.location]];
+            [textField setSelectedTextRange:prefixRange];
+        }
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.nameField) {
         if ([string rangeOfString:@"/"].location != NSNotFound || [string rangeOfString:@"\0"].location != NSNotFound) {
