@@ -34,7 +34,9 @@ static NSString *const QUERY_TABLENAMES_SQL = @"SELECT name FROM sqlite_master W
     }
     int err = sqlite3_open([_databasePath UTF8String], &_db);
     if (err != SQLITE_OK) {
+#ifdef DEBUG
         NSLog(@"error opening!: %d", err);
+#endif
         return NO;
     }
     return YES;
@@ -63,7 +65,9 @@ static NSString *const QUERY_TABLENAMES_SQL = @"SELECT name FROM sqlite_master W
             }
         }
         else if (SQLITE_OK != rc) {
+#ifdef DEBUG
             NSLog(@"error closing!: %d", rc);
+#endif
         }
     }
     while (retry);

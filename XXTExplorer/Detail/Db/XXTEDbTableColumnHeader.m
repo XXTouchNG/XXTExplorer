@@ -45,10 +45,10 @@
             _arrowLabel.text = @"";
             break;
         case XXTEDbTableColumnHeaderSortTypeAsc:
-            _arrowLabel.text = @"⬆️";
+            _arrowLabel.text = @"+";
             break;
         case XXTEDbTableColumnHeaderSortTypeDesc:
-            _arrowLabel.text = @"⬇️";
+            _arrowLabel.text = @"-";
             break;
     }
 }
