@@ -36,6 +36,7 @@
 #import "XXTEMoreActivationController.h"
 #import "XXTEMoreBootScriptController.h"
 #import "XXTEConfirmTextInputObject.h"
+#import "XXTERespringAgent.h"
 
 #else
 
@@ -917,6 +918,9 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         }
     }).catch(^(NSError *serverError) {
         toastDaemonError(self, serverError);
+        if (serverError) {
+            [XXTERespringAgent performRespring];
+        }
     }).finally(^() {
         blockInteractions(blockVC, NO);
     });
