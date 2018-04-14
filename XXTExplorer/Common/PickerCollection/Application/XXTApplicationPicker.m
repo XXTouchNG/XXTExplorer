@@ -387,10 +387,32 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     [tableView registerNib:[UINib nibWithNibName:@"XXTApplicationCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kXXTApplicationCellReuseIdentifier];
+    if (@available(iOS 11.0, *)) {
+        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
     XXTPickerNavigationController *navController = ((XXTPickerNavigationController *)self.navigationController);
     [navController.popupBar setHidden:YES];
 }
 XXTP_END_IGNORE_PARTIAL
+XXTE_START_IGNORE_PARTIAL
+- (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView {
+    [self _findAndHideSearchBarShadowInView:tableView];
+}
+- (void)_findAndHideSearchBarShadowInView:(UIView *)view {
+    NSString *usc = @"_";
+    NSString *sb = @"UISearchBar";
+    NSString *sv = @"ShadowView";
+    NSString *s = [[usc stringByAppendingString:sb] stringByAppendingString:sv];
+    
+    for (UIView *v in view.subviews)
+    {
+        if ([v isKindOfClass:NSClassFromString(s)]) {
+            v.hidden = YES;
+        }
+        [self _findAndHideSearchBarShadowInView:v];
+    }
+}
+XXTE_END_IGNORE_PARTIAL
 XXTP_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
     XXTPickerNavigationController *navController = ((XXTPickerNavigationController *)self.navigationController);
