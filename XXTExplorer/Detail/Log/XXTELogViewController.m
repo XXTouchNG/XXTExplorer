@@ -160,6 +160,12 @@ XXTE_END_IGNORE_PARTIAL
     if (!textHandler) {
         return;
     }
+    unsigned long long endOffset = [textHandler seekToEndOfFile];
+    if (endOffset > kXXTELogViewControllerMaximumBytes) {
+        [textHandler seekToFileOffset:endOffset - kXXTELogViewControllerMaximumBytes];
+    } else {
+        [textHandler seekToFileOffset:0];
+    }
     NSData *dataPart = [textHandler readDataOfLength:kXXTELogViewControllerMaximumBytes];
     [textHandler closeFile];
     if (!dataPart) {
