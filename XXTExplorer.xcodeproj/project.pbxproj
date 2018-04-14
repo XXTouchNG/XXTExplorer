@@ -161,6 +161,12 @@
 		0F7B52C0201994CA00D91702 /* NSString+VersionValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */; };
 		0F8093F51F5470A9003D5894 /* XXTEShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */; };
 		0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */; };
+		0F8147BA2081CB78009C6B6D /* XXTELogReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B92081C9A4009C6B6D /* XXTELogReader.m */; };
+		0F8147BB2081CB79009C6B6D /* XXTELogReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B92081C9A4009C6B6D /* XXTELogReader.m */; };
+		0F8147BC2081CB79009C6B6D /* XXTELogReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B92081C9A4009C6B6D /* XXTELogReader.m */; };
+		0F8147BD2081CB7C009C6B6D /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */; };
+		0F8147BE2081CB7C009C6B6D /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */; };
+		0F8147BF2081CB7D009C6B6D /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */; };
 		0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */; };
 		0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
 		0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
@@ -1527,6 +1533,8 @@
 		0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringView.m; sourceTree = "<group>"; };
 		0F8147B62081C6F0009C6B6D /* XXTELogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogViewController.h; sourceTree = "<group>"; };
 		0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogViewController.m; sourceTree = "<group>"; };
+		0F8147B82081C9A4009C6B6D /* XXTELogReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogReader.h; sourceTree = "<group>"; };
+		0F8147B92081C9A4009C6B6D /* XXTELogReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogReader.m; sourceTree = "<group>"; };
 		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
@@ -2855,6 +2863,8 @@
 		0F8147B52081C6F0009C6B6D /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				0F8147B82081C9A4009C6B6D /* XXTELogReader.h */,
+				0F8147B92081C9A4009C6B6D /* XXTELogReader.m */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -4889,6 +4899,7 @@
 			files = (
 				D61D40E62031677800F8E2B2 /* XXTEMoreRemoteSwitchCell.m in Sources */,
 				D6FA3C211FFCB74E00EADE49 /* NSData+SHA1.m in Sources */,
+				0F8147BF2081CB7D009C6B6D /* XXTELogViewController.m in Sources */,
 				D6FA3C221FFCB74E00EADE49 /* NSString+SHA1.m in Sources */,
 				D6F3EBE11FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */,
@@ -5059,6 +5070,7 @@
 				0F8EDBF71FB1F779003C92D6 /* XXTEUIViewController+XUILinkCell.m in Sources */,
 				0F8EDBF91FB1F779003C92D6 /* XXTEImagePickerController.m in Sources */,
 				0F8EDBFA1FB1F779003C92D6 /* XXTEEditorTabWidthCell.m in Sources */,
+				0F8147BC2081CB79009C6B6D /* XXTELogReader.m in Sources */,
 				0FBECD682005FEE300068437 /* XXTETextReader.m in Sources */,
 				0F71A2751FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				0F8EDBFB1FB1F779003C92D6 /* XXTExplorerEntryUnarchiver.m in Sources */,
@@ -5355,6 +5367,7 @@
 				0FD973FD1F4B2EC400133162 /* XXTEEditorTabWidthCell.m in Sources */,
 				0F4D598D1F19E4BC00CCA383 /* XXTExplorerEntryUnarchiver.m in Sources */,
 				0F4F67091F1268970042C449 /* XXTExplorerCreateItemViewController.m in Sources */,
+				0F8147BA2081CB78009C6B6D /* XXTELogReader.m in Sources */,
 				D677B10C1F4FE8AB00E741C2 /* XXTELuaVModel.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */,
@@ -5373,6 +5386,7 @@
 				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
 				0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */,
 				D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */,
+				0F8147BD2081CB7C009C6B6D /* XXTELogViewController.m in Sources */,
 				52512988E0FED8DAD883D39D /* XXTEMailComposeViewController.m in Sources */,
 				D6E1412F1F5032AB00D78CB9 /* XXTPositionColorModel.m in Sources */,
 				0F8093F61F5470A9003D5894 /* XXTEShimmeringView.m in Sources */,
@@ -5680,6 +5694,7 @@
 				D60FE6FD1FE2369300954818 /* XXTEEditorTabWidthCell.m in Sources */,
 				D60FE6FE1FE2369300954818 /* XXTExplorerEntryUnarchiver.m in Sources */,
 				D60FE6FF1FE2369300954818 /* XXTExplorerCreateItemViewController.m in Sources */,
+				0F8147BB2081CB79009C6B6D /* XXTELogReader.m in Sources */,
 				D60FE7001FE2369300954818 /* XXTELuaVModel.m in Sources */,
 				D60FE7011FE2369300954818 /* XXTEMoreSwitchCell.m in Sources */,
 				D60FE7021FE2369300954818 /* XXTETerminalViewController.m in Sources */,
@@ -5698,6 +5713,7 @@
 				D60FE70F1FE2369300954818 /* XXTPositionColorPicker.m in Sources */,
 				D60FE7101FE2369300954818 /* XXTExplorerEntrySnippetReader.m in Sources */,
 				D60FE7111FE2369300954818 /* XXTEEditorTextView.m in Sources */,
+				0F8147BE2081CB7C009C6B6D /* XXTELogViewController.m in Sources */,
 				D60FE7121FE2369300954818 /* XXTEMailComposeViewController.m in Sources */,
 				D60FE7131FE2369300954818 /* XXTPositionColorModel.m in Sources */,
 				D60FE7141FE2369300954818 /* XXTEShimmeringView.m in Sources */,

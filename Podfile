@@ -24,6 +24,7 @@ def shared_pods
     
     pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true
     pod 'Bugly', :inhibit_warnings => true
+    
     pod 'FLEX', :configurations => ['Debug'], :inhibit_warnings => true
 end
 
