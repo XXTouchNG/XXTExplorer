@@ -20,23 +20,27 @@
 #import "XXTEMoreAddressCell.h"
 
 #import <LGAlertView/LGAlertView.h>
+
+#ifdef DEBUG
 #import <FLEX/FLEXManager.h>
+#endif
 
 #ifndef APPSTORE
-    #import <objc/runtime.h>
-    #import <objc/message.h>
-    #import <PromiseKit/PromiseKit.h>
-    #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
-        
-    #import "XXTEMoreApplicationListController.h"
-    #import "XXTEMoreLicenseController.h"
-    #import "XXTEMoreActivationController.h"
-        #import "XXTEMoreBootScriptController.h"
+#import <objc/runtime.h>
+#import <objc/message.h>
+#import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
+#import "XXTEMoreApplicationListController.h"
+#import "XXTEMoreLicenseController.h"
+#import "XXTEMoreActivationController.h"
+#import "XXTEMoreBootScriptController.h"
+#import "XXTEConfirmTextInputObject.h"
 
-    #import "XXTEConfirmTextInputObject.h"
 #else
-    #import "XXTEWebDAVClient.h"
+
+#import "XXTEWebDAVClient.h"
+
 #endif
 
 #ifndef APPSTORE
@@ -1049,9 +1053,11 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 #endif
 
 - (void)flexItemTapped:(UIBarButtonItem *)sender {
+#ifdef DEBUG
     if (@available(iOS 8.0, *)) {
         [[FLEXManager sharedManager] showExplorer];
     }
+#endif
 }
 
 #pragma mark - Log Viewer
