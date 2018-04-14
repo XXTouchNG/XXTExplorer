@@ -23,6 +23,7 @@ static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, copy) NSArray <NSString *> *logContents;
 @property (nonatomic, copy) NSArray <NSString *> *displayLogContents;
+@property (nonatomic, strong) XXTELogCell *sizingCell;
 
 XXTE_START_IGNORE_PARTIAL
 @property (nonatomic, strong) UISearchDisplayController *searchDisplayController;
@@ -60,6 +61,7 @@ XXTE_END_IGNORE_PARTIAL
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
+        _sizingCell = (XXTELogCell *)[[[UINib nibWithNibName:NSStringFromClass([XXTELogCell class]) bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
     }
     return self;
 }
@@ -255,7 +257,9 @@ XXTE_END_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {
         return UITableViewAutomaticDimension;
     } else {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        XXTELogCell *cell = self.sizingCell;
+        [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
+        
         [cell setNeedsUpdateConstraints];
         [cell updateConstraintsIfNeeded];
         
@@ -271,6 +275,16 @@ XXTE_END_IGNORE_PARTIAL
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XXTELogCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTELogCellReuseIdentifier forIndexPath:indexPath];
+    [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
+    if (indexPath.row % 2 == 0) {
+        [cell setBackgroundColor:[UIColor whiteColor]];
+    } else {
+        [cell setBackgroundColor:[UIColor colorWithWhite:0.97 alpha:1.0]];
+    }
+    return cell;
+}
+
+- (void)configureCell:(XXTELogCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.logTableView) {
         if (indexPath.row < self.logContents.count) {
             [cell setLogText:self.logContents[indexPath.row]];
@@ -280,12 +294,6 @@ XXTE_END_IGNORE_PARTIAL
             [cell setLogText:self.displayLogContents[indexPath.row]];
         }
     }
-    if (indexPath.row % 2 == 0) {
-        [cell setBackgroundColor:[UIColor whiteColor]];
-    } else {
-        [cell setBackgroundColor:[UIColor colorWithWhite:0.97 alpha:1.0]];
-    }
-    return cell;
 }
 
 #pragma mark - UISearchDisplayDelegate

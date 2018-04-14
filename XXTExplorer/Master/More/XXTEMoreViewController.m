@@ -21,7 +21,7 @@
 
 #import <LGAlertView/LGAlertView.h>
 
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(ARCHIVE)
 #import <FLEX/FLEXManager.h>
 #endif
 
@@ -1053,7 +1053,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 #endif
 
 - (void)flexItemTapped:(UIBarButtonItem *)sender {
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(ARCHIVE)
     if (@available(iOS 8.0, *)) {
         [[FLEXManager sharedManager] showExplorer];
     }

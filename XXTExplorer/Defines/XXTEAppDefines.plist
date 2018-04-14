@@ -60,7 +60,7 @@
 		</dict>
 	</array>
 	<key>INSTALLER_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/bin/1nstaller</string>
+	<string>/usr/bin/1ferver/1nstaller</string>
 	<key>LICENSE_LOG_PATH</key>
 	<string>log/bind_code.log</string>
 	<key>LOCAL_API</key>

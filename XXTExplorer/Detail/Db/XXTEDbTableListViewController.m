@@ -122,17 +122,13 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (@available(iOS 8.0, *)) {
-        XXTEDbTableContentViewController *contentViewController = [[XXTEDbTableContentViewController alloc] init];
-        
-        contentViewController.contentsArray = [_dbm queryAllDataWithTableName:self.tables[indexPath.row]];
-        contentViewController.columnsArray = [_dbm queryAllColumnsWithTableName:self.tables[indexPath.row]];
-        
-        contentViewController.title = self.tables[indexPath.row];
-        [self.navigationController pushViewController:contentViewController animated:YES];
-    } else {
-        toastMessage(self, NSLocalizedString(@"This feature requires iOS 8.0 or later.", nil));
-    }
+    XXTEDbTableContentViewController *contentViewController = [[XXTEDbTableContentViewController alloc] init];
+    
+    contentViewController.contentsArray = [_dbm queryAllDataWithTableName:self.tables[indexPath.row]];
+    contentViewController.columnsArray = [_dbm queryAllColumnsWithTableName:self.tables[indexPath.row]];
+    
+    contentViewController.title = self.tables[indexPath.row];
+    [self.navigationController pushViewController:contentViewController animated:YES];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

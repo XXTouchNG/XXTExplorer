@@ -1,6 +1,6 @@
 PODS:
   - Bugly (2.5.0)
-  - FLEX (2.1.1)
+  - FLEX (2.4.0)
   - GCDWebServer/Core (3.4.2)
   - GCDWebServer/WebDAV (3.4.2):
     - GCDWebServer/Core
@@ -113,7 +113,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
-  FLEX: 27b768fcae23a313a1eb115076d429180ca9b472
+  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   GCDWebServer: 8d67ee9f634b4bb91eb4b8aee440318a5fc6debd
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d

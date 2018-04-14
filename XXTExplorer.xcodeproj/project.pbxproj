@@ -6387,6 +6387,31 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "XXTExplorer/Supporting Files/XXTEPrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PMK_CALAYER=1",
+					"$(inherited)",
+					"PMK_NSNOTIFICATIONCENTER=1",
+					"$(inherited)",
+					"PMK_NSURLCONNECTION=1",
+					"$(inherited)",
+					"PMK_PAUSE=1",
+					"$(inherited)",
+					"PMK_UIACTIONSHEET=1",
+					"$(inherited)",
+					"PMK_UIALERTVIEW=1",
+					"$(inherited)",
+					"PMK_UIVIEW=1",
+					"$(inherited)",
+					"PMK_UIVIEWCONTROLLER=1",
+					"$(inherited)",
+					"PMK_UNTIL=1",
+					"$(inherited)",
+					"PMK_WHEN=1",
+					"ARCHIVE=1",
+				);
 				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Base.lproj/Archive-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -6478,6 +6503,31 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PREFIX_HEADER = "XXTExplorer/Supporting Files/XXTEPrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PMK_CALAYER=1",
+					"$(inherited)",
+					"PMK_NSNOTIFICATIONCENTER=1",
+					"$(inherited)",
+					"PMK_NSURLCONNECTION=1",
+					"$(inherited)",
+					"PMK_PAUSE=1",
+					"$(inherited)",
+					"PMK_UIACTIONSHEET=1",
+					"$(inherited)",
+					"PMK_UIALERTVIEW=1",
+					"$(inherited)",
+					"PMK_UIVIEW=1",
+					"$(inherited)",
+					"PMK_UIVIEWCONTROLLER=1",
+					"$(inherited)",
+					"PMK_UNTIL=1",
+					"$(inherited)",
+					"PMK_WHEN=1",
+					"ARCHIVE=1",
+				);
 				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Base.lproj/Archive-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
