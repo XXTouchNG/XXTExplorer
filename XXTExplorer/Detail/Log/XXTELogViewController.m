@@ -11,7 +11,8 @@
 #import "XXTELogCell.h"
 
 #import <LGAlertView/LGAlertView.h>
-#import "XXTEBaseObjectViewController.h"
+#import <PromiseKit/PromiseKit.h>
+//#import "XXTEBaseObjectViewController.h"
 
 static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
 
@@ -222,18 +223,27 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *detailText = nil;
     if (tableView == self.logTableView) {
         if (indexPath.row < self.logContents.count) {
-            XXTEBaseObjectViewController *objectController = [[XXTEBaseObjectViewController alloc] initWithRootObject:self.logContents[indexPath.row]];
-            objectController.title = NSLocalizedString(@"Value", nil);
-            [self.navigationController pushViewController:objectController animated:YES];
+            detailText = self.logContents[indexPath.row];
         }
     } else {
-        if (indexPath.row < self.logContents.count) {
-            XXTEBaseObjectViewController *objectController = [[XXTEBaseObjectViewController alloc] initWithRootObject:self.displayLogContents[indexPath.row]];
-            objectController.title = NSLocalizedString(@"Value", nil);
-            [self.navigationController pushViewController:objectController animated:YES];
+        if (indexPath.row < self.displayLogContents.count) {
+            detailText = self.displayLogContents[indexPath.row];
         }
+    }
+    if (detailText && detailText.length > 0) {
+        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+        [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                [[UIPasteboard generalPasteboard] setString:detailText];
+                fulfill(nil);
+            });
+        }].finally(^() {
+            toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+            blockInteractions(blockVC, NO);
+        });
     }
 }
 
