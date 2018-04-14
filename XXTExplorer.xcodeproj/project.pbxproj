@@ -167,6 +167,12 @@
 		0F8147BD2081CB7C009C6B6D /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */; };
 		0F8147BE2081CB7C009C6B6D /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */; };
 		0F8147BF2081CB7D009C6B6D /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */; };
+		0F8147C82081CD49009C6B6D /* XXTELogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147C62081CD49009C6B6D /* XXTELogCell.m */; };
+		0F8147C92081CD49009C6B6D /* XXTELogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147C62081CD49009C6B6D /* XXTELogCell.m */; };
+		0F8147CA2081CD49009C6B6D /* XXTELogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147C62081CD49009C6B6D /* XXTELogCell.m */; };
+		0F8147CB2081CD49009C6B6D /* XXTELogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8147C72081CD49009C6B6D /* XXTELogCell.xib */; };
+		0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8147C72081CD49009C6B6D /* XXTELogCell.xib */; };
+		0F8147CD2081CD49009C6B6D /* XXTELogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8147C72081CD49009C6B6D /* XXTELogCell.xib */; };
 		0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */; };
 		0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
 		0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
@@ -1535,6 +1541,9 @@
 		0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogViewController.m; sourceTree = "<group>"; };
 		0F8147B82081C9A4009C6B6D /* XXTELogReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogReader.h; sourceTree = "<group>"; };
 		0F8147B92081C9A4009C6B6D /* XXTELogReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogReader.m; sourceTree = "<group>"; };
+		0F8147C52081CD49009C6B6D /* XXTELogCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogCell.h; sourceTree = "<group>"; };
+		0F8147C62081CD49009C6B6D /* XXTELogCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogCell.m; sourceTree = "<group>"; };
+		0F8147C72081CD49009C6B6D /* XXTELogCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTELogCell.xib; sourceTree = "<group>"; };
 		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
@@ -2869,6 +2878,24 @@
 			path = Reader;
 			sourceTree = "<group>";
 		};
+		0F8147C32081CD2E009C6B6D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0F8147C42081CD33009C6B6D /* Cell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0F8147C42081CD33009C6B6D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0F8147C52081CD49009C6B6D /* XXTELogCell.h */,
+				0F8147C62081CD49009C6B6D /* XXTELogCell.m */,
+				0F8147C72081CD49009C6B6D /* XXTELogCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		0F98514820033EA900FFD9E8 /* Owner */ = {
 			isa = PBXGroup;
 			children = (
@@ -3124,6 +3151,7 @@
 		0FBECD5E2005FE7700068437 /* Log */ = {
 			isa = PBXGroup;
 			children = (
+				0F8147C32081CD2E009C6B6D /* Views */,
 				0F8147B52081C6F0009C6B6D /* Reader */,
 				0F8147B62081C6F0009C6B6D /* XXTELogViewController.h */,
 				0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */,
@@ -4364,6 +4392,7 @@
 				0F8ECD621FE80D0F00A5457C /* Anonymous_Pro_I.ttf in Resources */,
 				0F8EDC861FB1F779003C92D6 /* Solarized (Dark).tmTheme in Resources */,
 				0F8EDC871FB1F779003C92D6 /* IDLE.tmTheme in Resources */,
+				0F8147CD2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
 				0F8EDC881FB1F779003C92D6 /* Tomorrow Night.tmTheme in Resources */,
 				0F8EDC891FB1F779003C92D6 /* Nothing.tmTheme in Resources */,
 				0F8ECD541FE802A900A5457C /* IDLE.png in Resources */,
@@ -4491,6 +4520,7 @@
 				0FD973EF1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme in Resources */,
 				0F8ECD7B1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */,
 				D60A26A21F3DA24B00E013E2 /* CamingoCode-Regular.ttf in Resources */,
+				0F8147CB2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
 				0F469CF3200CFEC60042F1BF /* RMCloudLinkCell.xib in Resources */,
 				D6863CE81F7E340A00A45CF7 /* XUIFileCell.xib in Resources */,
 				D60A26A31F3DA24B00E013E2 /* SourceCodePro-Bold.otf in Resources */,
@@ -4653,6 +4683,7 @@
 				D60FE7C21FE2369300954818 /* XXTPickerCollection.strings in Resources */,
 				0FCAF40A200A1D14002FB774 /* RMCloudMoreCell.xib in Resources */,
 				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
+				0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
 				D60FE7C51FE2369300954818 /* lua.tmLanguage in Resources */,
 				D60FE7C71FE2369300954818 /* XXTEMoreValueViewCell.xib in Resources */,
 				D60FE7C81FE2369300954818 /* XXTImagePickerController.xib in Resources */,
@@ -5018,6 +5049,7 @@
 				0F8EDBC51FB1F779003C92D6 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				0F8EDBC71FB1F779003C92D6 /* NSString+XQueryComponents.m in Sources */,
 				D6A850782043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
+				0F8147CA2081CD49009C6B6D /* XXTELogCell.m in Sources */,
 				0F8EDBC81FB1F779003C92D6 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FBECD622005FEB100068437 /* XXTETextViewController.m in Sources */,
@@ -5419,6 +5451,7 @@
 				D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */,
 				52512159F631F9582F89C858 /* SKRepository.m in Sources */,
 				D60FE6491FE226F000954818 /* XXTEEditorSearchBar.m in Sources */,
+				0F8147C82081CD49009C6B6D /* XXTELogCell.m in Sources */,
 				D677B1161F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m in Sources */,
 				52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */,
 				52512D2943226FC55BF53DA0 /* SKBundleManager.m in Sources */,
@@ -5746,6 +5779,7 @@
 				D6CB81BA1FE262320033EA2F /* XXTEEditorSearchField.m in Sources */,
 				D60FE7271FE2369300954818 /* SKRepository.m in Sources */,
 				D60FE7281FE2369300954818 /* XXTEEditorSearchBar.m in Sources */,
+				0F8147C92081CD49009C6B6D /* XXTELogCell.m in Sources */,
 				D60FE7291FE2369300954818 /* XXTExplorerEntryTerminalReader.m in Sources */,
 				D60FE72A1FE2369300954818 /* SKLanguage.m in Sources */,
 				D60FE72B1FE2369300954818 /* SKBundleManager.m in Sources */,
