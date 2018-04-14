@@ -33,6 +33,7 @@
 		<string>XXTEInstallerViewController</string>
 		<string>XXTETerminalViewController</string>
 		<string>XXTESnippetViewerController</string>
+		<string>XXTETextViewController</string>
 		<string>XXTELogViewController</string>
 	</array>
 	<key>CHANNEL_ID</key>

@@ -1,15 +1,15 @@
 //
-//  XXTELogReader.m
+//  XXTETextReader.m
 //  XXTExplorer
 //
 //  Created by Zheng on 10/01/2018.
 //  Copyright © 2018 Zheng. All rights reserved.
 //
 
-#import "XXTELogReader.h"
-#import "XXTELogViewController.h"
+#import "XXTETextReader.h"
+#import "XXTETextViewController.h"
 
-@implementation XXTELogReader
+@implementation XXTETextReader
 
 @synthesize metaDictionary = _metaDictionary;
 @synthesize entryPath = _entryPath;
@@ -25,11 +25,11 @@
 @synthesize encryptionType = _encryptionType;
 
 + (NSArray <NSString *> *)supportedExtensions {
-    return [XXTELogViewController suggestedExtensions];
+    return [XXTETextViewController suggestedExtensions];
 }
 
 + (UIImage *)defaultImage {
-    return [UIImage imageNamed:@"XXTEFileReaderType-Log"];
+    return [UIImage imageNamed:@"XXTEFileReaderType-Text"];
 }
 
 + (Class)relatedEditor {
@@ -57,7 +57,7 @@
         }
     }
     _entryIconImage = iconImage;
-    _entryViewerDescription = [XXTELogViewController viewerName];
+    _entryViewerDescription = [XXTETextViewController viewerName];
 }
 
 @end

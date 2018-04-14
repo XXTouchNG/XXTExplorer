@@ -11,7 +11,7 @@
 #import "XXTEDbTableLeftCell.h"
 
 @interface XXTEMultiColumnTableView ()
-<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate, XXTEDbTableContentCellDelegate>
+<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, XXTEDbTableContentCellDelegate>
 
 @property (nonatomic, strong) UIScrollView *contentScrollView;
 @property (nonatomic, strong) UIScrollView *headerScrollView;

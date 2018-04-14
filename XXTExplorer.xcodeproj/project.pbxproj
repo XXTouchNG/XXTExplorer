@@ -652,12 +652,12 @@
 		0FBAFF441F6E5378008B3189 /* XXTImagePickerPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAFF3D1F6E5378008B3189 /* XXTImagePickerPhotoCell.xib */; };
 		0FBAFF4A1F6E701A008B3189 /* NSString+QueryItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */; };
 		0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */; };
-		0FBECD612005FEB100068437 /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD602005FEB000068437 /* XXTELogViewController.m */; };
-		0FBECD622005FEB100068437 /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD602005FEB000068437 /* XXTELogViewController.m */; };
-		0FBECD632005FEB100068437 /* XXTELogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD602005FEB000068437 /* XXTELogViewController.m */; };
-		0FBECD672005FEE300068437 /* XXTELogReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTELogReader.m */; };
-		0FBECD682005FEE300068437 /* XXTELogReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTELogReader.m */; };
-		0FBECD692005FEE300068437 /* XXTELogReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTELogReader.m */; };
+		0FBECD612005FEB100068437 /* XXTETextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD602005FEB000068437 /* XXTETextViewController.m */; };
+		0FBECD622005FEB100068437 /* XXTETextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD602005FEB000068437 /* XXTETextViewController.m */; };
+		0FBECD632005FEB100068437 /* XXTETextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD602005FEB000068437 /* XXTETextViewController.m */; };
+		0FBECD672005FEE300068437 /* XXTETextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTETextReader.m */; };
+		0FBECD682005FEE300068437 /* XXTETextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTETextReader.m */; };
+		0FBECD692005FEE300068437 /* XXTETextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTETextReader.m */; };
 		0FC043B71F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */; };
 		0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */; };
 		0FC598AA1FB2189A001F918B /* main.AppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC598A91FB2189A001F918B /* main.AppStore.m */; };
@@ -1525,6 +1525,8 @@
 		0F8093F21F5470A9003D5894 /* XXTEShimmeringLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringLayer.m; sourceTree = "<group>"; };
 		0F8093F31F5470A9003D5894 /* XXTEShimmeringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEShimmeringView.h; sourceTree = "<group>"; };
 		0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEShimmeringView.m; sourceTree = "<group>"; };
+		0F8147B62081C6F0009C6B6D /* XXTELogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogViewController.h; sourceTree = "<group>"; };
+		0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogViewController.m; sourceTree = "<group>"; };
 		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
@@ -1704,10 +1706,10 @@
 		0FBAFF491F6E701A008B3189 /* NSString+QueryItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryItems.m"; sourceTree = "<group>"; };
 		0FBBA2191F475CED007BC776 /* UIColor+SKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SKColor.h"; sourceTree = "<group>"; };
 		0FBBA21A1F475CED007BC776 /* UIColor+SKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SKColor.m"; sourceTree = "<group>"; };
-		0FBECD5F2005FEB000068437 /* XXTELogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogViewController.h; sourceTree = "<group>"; };
-		0FBECD602005FEB000068437 /* XXTELogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogViewController.m; sourceTree = "<group>"; };
-		0FBECD652005FEE300068437 /* XXTELogReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogReader.h; sourceTree = "<group>"; };
-		0FBECD662005FEE300068437 /* XXTELogReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogReader.m; sourceTree = "<group>"; };
+		0FBECD5F2005FEB000068437 /* XXTETextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTETextViewController.h; sourceTree = "<group>"; };
+		0FBECD602005FEB000068437 /* XXTETextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTETextViewController.m; sourceTree = "<group>"; };
+		0FBECD652005FEE300068437 /* XXTETextReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTETextReader.h; sourceTree = "<group>"; };
+		0FBECD662005FEE300068437 /* XXTETextReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTETextReader.m; sourceTree = "<group>"; };
 		0FC043B61F6EBF1F00730FAB /* B4FDE60B-30B3-4035-B874-619C896626BE.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "B4FDE60B-30B3-4035-B874-619C896626BE.zip"; sourceTree = "<group>"; };
 		0FC043BD1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+StatusBar.h"; sourceTree = "<group>"; };
 		0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+StatusBar.m"; sourceTree = "<group>"; };
@@ -2706,6 +2708,7 @@
 				0FE1E44E1F19226600055E02 /* Installer */,
 				D677B1061F4FE85600E741C2 /* Terminal */,
 				D66085581F3C65F900E87B3C /* Editor */,
+				0F8147B42081C6E0009C6B6D /* Text */,
 				0FBECD5E2005FE7700068437 /* Log */,
 				D6863C501F7E275800A45CF7 /* XUIExtensions */,
 			);
@@ -2837,6 +2840,23 @@
 				0F8093F41F5470A9003D5894 /* XXTEShimmeringView.m */,
 			);
 			path = Shimmering;
+			sourceTree = "<group>";
+		};
+		0F8147B42081C6E0009C6B6D /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				0FBECD642005FEB400068437 /* Reader */,
+				0FBECD5F2005FEB000068437 /* XXTETextViewController.h */,
+				0FBECD602005FEB000068437 /* XXTETextViewController.m */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		0F8147B52081C6F0009C6B6D /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reader;
 			sourceTree = "<group>";
 		};
 		0F98514820033EA900FFD9E8 /* Owner */ = {
@@ -3094,9 +3114,9 @@
 		0FBECD5E2005FE7700068437 /* Log */ = {
 			isa = PBXGroup;
 			children = (
-				0FBECD642005FEB400068437 /* Reader */,
-				0FBECD5F2005FEB000068437 /* XXTELogViewController.h */,
-				0FBECD602005FEB000068437 /* XXTELogViewController.m */,
+				0F8147B52081C6F0009C6B6D /* Reader */,
+				0F8147B62081C6F0009C6B6D /* XXTELogViewController.h */,
+				0F8147B72081C6F0009C6B6D /* XXTELogViewController.m */,
 			);
 			path = Log;
 			sourceTree = "<group>";
@@ -3104,8 +3124,8 @@
 		0FBECD642005FEB400068437 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				0FBECD652005FEE300068437 /* XXTELogReader.h */,
-				0FBECD662005FEE300068437 /* XXTELogReader.m */,
+				0FBECD652005FEE300068437 /* XXTETextReader.h */,
+				0FBECD662005FEE300068437 /* XXTETextReader.m */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -4989,7 +5009,7 @@
 				D6A850782043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
 				0F8EDBC81FB1F779003C92D6 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
-				0FBECD622005FEB100068437 /* XXTELogViewController.m in Sources */,
+				0FBECD622005FEB100068437 /* XXTETextViewController.m in Sources */,
 				0F8EDBCA1FB1F779003C92D6 /* XXTExplorerHeaderView.m in Sources */,
 				0F8EDBCB1FB1F779003C92D6 /* XXTEMoreValueViewCell.m in Sources */,
 				0F8EDBCD1FB1F779003C92D6 /* XXTEMoreViewController.m in Sources */,
@@ -5039,7 +5059,7 @@
 				0F8EDBF71FB1F779003C92D6 /* XXTEUIViewController+XUILinkCell.m in Sources */,
 				0F8EDBF91FB1F779003C92D6 /* XXTEImagePickerController.m in Sources */,
 				0F8EDBFA1FB1F779003C92D6 /* XXTEEditorTabWidthCell.m in Sources */,
-				0FBECD682005FEE300068437 /* XXTELogReader.m in Sources */,
+				0FBECD682005FEE300068437 /* XXTETextReader.m in Sources */,
 				0F71A2751FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */,
 				0F8EDBFB1FB1F779003C92D6 /* XXTExplorerEntryUnarchiver.m in Sources */,
 				0F8EDBFC1FB1F779003C92D6 /* XXTExplorerCreateItemViewController.m in Sources */,
@@ -5168,7 +5188,7 @@
 				0F707E831FB0C0F30052A4B5 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				0F35F2091F1068E500B5B327 /* XXTEMoreUserDefaultsController.m in Sources */,
 				0FFBC1321F5C391300690C8F /* XXTLuaNSValue.m in Sources */,
-				0FBECD612005FEB100068437 /* XXTELogViewController.m in Sources */,
+				0FBECD612005FEB100068437 /* XXTETextViewController.m in Sources */,
 				0FAD692C1F0403B000B2F0EC /* XXTEMoreLinkCell.m in Sources */,
 				0FFC8F141FCB14C20012C170 /* XXTExplorerDynamicSection.m in Sources */,
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
@@ -5269,7 +5289,7 @@
 				D6863D211F7E3B9100A45CF7 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
 				0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D6E1412C1F5032AB00D78CB9 /* XXTPixelPreview.m in Sources */,
-				0FBECD672005FEE300068437 /* XXTELogReader.m in Sources */,
+				0FBECD672005FEE300068437 /* XXTETextReader.m in Sources */,
 				0FAE18F020806830005F9B67 /* XXTEDbTableContentCell.m in Sources */,
 				0F4BB0B21EDB78F10072B7A3 /* XXTExplorerEntryParser.m in Sources */,
 				D6F3EBE01FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
@@ -5493,7 +5513,7 @@
 				D60FE66B1FE2369300954818 /* UIDocumentPickerViewController+NavigationBar.m in Sources */,
 				D60FE66C1FE2369300954818 /* XXTEMoreUserDefaultsController.m in Sources */,
 				D60FE66D1FE2369300954818 /* XXTLuaNSValue.m in Sources */,
-				0FBECD632005FEB100068437 /* XXTELogViewController.m in Sources */,
+				0FBECD632005FEB100068437 /* XXTETextViewController.m in Sources */,
 				D60FE66E1FE2369300954818 /* XXTEMoreLinkCell.m in Sources */,
 				D60FE66F1FE2369300954818 /* XXTExplorerDynamicSection.m in Sources */,
 				D60FE6701FE2369300954818 /* XXTEMoreLicenseCell.m in Sources */,
@@ -5594,7 +5614,7 @@
 				D60FE6C11FE2369300954818 /* XXTEUIViewController+XUITitleValueCell.m in Sources */,
 				0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */,
 				D60FE6C21FE2369300954818 /* XXTPixelPreview.m in Sources */,
-				0FBECD692005FEE300068437 /* XXTELogReader.m in Sources */,
+				0FBECD692005FEE300068437 /* XXTETextReader.m in Sources */,
 				0FAE18F120806830005F9B67 /* XXTEDbTableContentCell.m in Sources */,
 				D60FE6C41FE2369300954818 /* XXTExplorerEntryParser.m in Sources */,
 				D6F3EBE21FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
