@@ -176,7 +176,7 @@
         _stderrAttributes =
         @{
           NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:14.f],
-          NSForegroundColorAttributeName: [UIColor redColor]
+          NSForegroundColorAttributeName: XXTColorDanger()
           };
     }
     return _stderrAttributes;
