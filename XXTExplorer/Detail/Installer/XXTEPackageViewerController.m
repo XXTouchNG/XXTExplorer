@@ -185,8 +185,8 @@
 #pragma mark - XXTEDebianPackageExtractorDelegate
 
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData {
-    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
+        UITextView *textView = self.textView;
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         textView.typingAttributes = self.stdoutAttributes;
@@ -200,8 +200,8 @@
 }
 
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFailFetchingMetaDataWithError:(NSError *)error {
-    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
+        UITextView *textView = self.textView;
         self.installButtonItem.enabled = NO;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         textView.typingAttributes = self.stderrAttributes;
@@ -214,24 +214,24 @@
 }
 
 - (void)packageExtractor:(id<XXTEPackageExtractor>)extractor didReceiveStandardOutput:(NSString *)outputLog {
-    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
+        UITextView *textView = self.textView;
         textView.typingAttributes = self.stdoutAttributes;
         [textView insertText:outputLog];
     });
 }
 
 - (void)packageExtractor:(id<XXTEPackageExtractor>)extractor didReceiveStandardError:(NSString *)outputLog {
-    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
+        UITextView *textView = self.textView;
         textView.typingAttributes = self.stderrAttributes;
         [textView insertText:outputLog];
     });
 }
 
 - (void)packageExtractorDidFinishInstallation:(id<XXTEPackageExtractor>)extractor {
-    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
+        UITextView *textView = self.textView;
         self.respringButtonItem.enabled = YES;
         textView.typingAttributes = self.stdoutAttributes;
         if ([extractor respondsToSelector:@selector(killBackboardd)]) {
@@ -250,8 +250,8 @@
 }
 
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFailInstallationWithError:(NSError *)error {
-    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
+        UITextView *textView = self.textView;
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
         textView.typingAttributes = self.stderrAttributes;
