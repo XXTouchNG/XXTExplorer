@@ -21,7 +21,7 @@
 
 #import <LGAlertView/LGAlertView.h>
 
-#if defined(DEBUG) && !defined(ARCHIVE)
+#if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
 #import <FLEX/FLEXManager.h>
 #endif
 
@@ -177,7 +177,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     }
 #endif
     
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
     if (@available(iOS 8.0, *)) {
         self.navigationItem.leftBarButtonItem = self.flexItem;
     }
@@ -1057,7 +1057,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 #endif
 
 - (void)flexItemTapped:(UIBarButtonItem *)sender {
-#if defined(DEBUG) && !defined(ARCHIVE)
+#if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
     if (@available(iOS 8.0, *)) {
         [[FLEXManager sharedManager] showExplorer];
     }
