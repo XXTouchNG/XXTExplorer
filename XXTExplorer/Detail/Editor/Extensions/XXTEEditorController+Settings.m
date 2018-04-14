@@ -37,7 +37,7 @@
         }
         [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
     } else {
-        toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+        toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
     }
     XXTE_END_IGNORE_PARTIAL
 }

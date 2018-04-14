@@ -50,8 +50,6 @@
 	<string>caches/history</string>
 	<key>EXPLORER_INITIAL_PATH</key>
 	<string>lua/scripts</string>
-	<key>INSTALLER_PATH</key>
-	<string>/private/var/mobile/Media/1ferver/bin/1nstaller</string>
 	<key>INITIAL_RESOURCES</key>
 	<array>
 		<dict>
@@ -61,6 +59,8 @@
 			<string>snippets</string>
 		</dict>
 	</array>
+	<key>INSTALLER_PATH</key>
+	<string>/private/var/mobile/Media/1ferver/bin/1nstaller</string>
 	<key>LICENSE_LOG_PATH</key>
 	<string>log/bind_code.log</string>
 	<key>LOCAL_API</key>

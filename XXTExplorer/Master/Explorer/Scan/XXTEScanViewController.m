@@ -421,7 +421,7 @@
         imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
     } else {
-        toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
+        toastMessage(self, NSLocalizedString(@"This feature requires iOS 8.0 or later.", nil));
     }
 }
 

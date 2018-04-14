@@ -33,14 +33,25 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.multiColumView];
-    NSArray <NSLayoutConstraint *> *constraints =
-    @[
-      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.0 constant:0.0],
-      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:0.0],
-      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
-      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
-      ];
-    [self.view addConstraints:constraints];
+    if (@available(iOS 8.0, *)) {
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+          ];
+        [self.view addConstraints:constraints];
+    } else {
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+          ];
+        [self.view addConstraints:constraints];
+    }
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;

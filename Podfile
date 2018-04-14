@@ -11,7 +11,7 @@ def shared_pods
 
     pod 'OMGHTTPURLRQ', :inhibit_warnings => true
     
-    pod 'PromiseKit', '~> 1.7', :inhibit_warnings => true
+    pod 'PromiseKit', '~> 1.7.6', :inhibit_warnings => true
     # pod 'PromiseKit', :path => '../PromiseKit', :inhibit_warnings => true
 
     # pod 'LGAlertView', '~> 2.4.0', :inhibit_warnings => true
@@ -24,8 +24,6 @@ def shared_pods
     
     pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true
     pod 'Bugly', :inhibit_warnings => true
-    
-    pod 'FLEX', :configurations => ['Debug'], :inhibit_warnings => true
 end
 
 target 'XXTouch' do
@@ -47,6 +45,8 @@ target 'XXTExplorer' do
     platform :ios, '8.0'
     shared_pods
     shared_cloud
+    
+    pod 'FLEX', :configurations => ['Debug'], :inhibit_warnings => true
 end
 
 target 'XXTExplorer-Archive' do
