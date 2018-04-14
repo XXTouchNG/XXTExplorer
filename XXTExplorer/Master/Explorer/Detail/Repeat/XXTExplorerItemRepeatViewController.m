@@ -238,9 +238,9 @@
     NSString *playSpeedLine = checkArray[2];
     NSString *playTimesLine = checkArray[3];
     NSTextCheckingResult *speedCheck = [[[self class] speedLineRegex] firstMatchInString:playSpeedLine options:0 range:NSMakeRange(0, playSpeedLine.length)];
-    if (!speedCheck || speedCheck.numberOfRanges != 2) return nil;
+    if (!speedCheck || speedCheck.numberOfRanges != 2) return NO;
     NSTextCheckingResult *timesCheck = [[[self class] repeatTimesLineRegex] firstMatchInString:playTimesLine options:0 range:NSMakeRange(0, playTimesLine.length)];
-    if (!timesCheck || timesCheck.numberOfRanges != 2) return nil;
+    if (!timesCheck || timesCheck.numberOfRanges != 2) return NO;
     
     NSRange speedRange = [speedCheck rangeAtIndex:1];
     NSRange timesRange = [timesCheck rangeAtIndex:1];

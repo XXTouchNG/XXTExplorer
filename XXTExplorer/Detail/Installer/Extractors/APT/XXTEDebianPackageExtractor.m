@@ -9,7 +9,7 @@
 #import <spawn.h>
 #import <sys/stat.h>
 #import "XXTEDebianPackageExtractor.h"
-
+#import "XXTEProcessDelegateObject.h"
 
 @interface XXTEDebianPackageExtractor ()
 
@@ -37,46 +37,46 @@
 
 - (void)installPackage {
     NSString *packagePath = self.packagePath;
-    NSString *randomUUIDString = [[NSUUID UUID] UUIDString];
-    NSString *temporarilyName = [NSString stringWithFormat:@".tmp_%@_%@.log", [packagePath lastPathComponent], randomUUIDString];
-    NSString *temporarilyPath = [self.temporarilyLocation stringByAppendingPathComponent:temporarilyName];
-    struct stat temporarilyStat;
-    if (0 == lstat([temporarilyPath fileSystemRepresentation], &temporarilyStat)) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Temporarily file \"%@\" already exists.", nil), temporarilyPath]];
-        return;
-    }
-    [[NSData data] writeToFile:temporarilyPath atomically:YES];
-    posix_spawn_file_actions_t action;
-    posix_spawn_file_actions_init(&action);
-    posix_spawn_file_actions_addopen(&action, STDOUT_FILENO, [temporarilyPath fileSystemRepresentation], O_WRONLY, 0);
+    
     int status = 0;
     pid_t pid = 0;
+    
     const char *binary = add1s_binary();
     const char *args[] = { binary, "/usr/bin/dpkg", "-i", [packagePath fileSystemRepresentation], NULL };
-    posix_spawn(&pid, binary, &action, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
-    posix_spawn_file_actions_destroy(&action);
-    if (pid == 0) {
+    
+    XXTEProcessDelegateObject *processObj = [[XXTEProcessDelegateObject alloc] init];
+    NSArray <NSValue *> *fps = [processObj processOpen:args pidPointer:&pid];
+    FILE *fp1 = [fps[0] pointerValue];
+    FILE *fp2 = [fps[1] pointerValue];
+    if (fp1 == NULL || fp2 == NULL) {
         [self callbackInstallationErrorWithReason:NSLocalizedString(@"Cannot launch installer process.", nil)];
         return;
     }
-    waitpid(pid, &status, 0);
-    struct stat temporarilyControlStat;
-    if (0 != lstat([temporarilyPath fileSystemRepresentation], &temporarilyControlStat)) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot find log file \"%@\".", nil), temporarilyPath]];
-        return;
+    
+    char buf1[BUFSIZ];
+    char buf2[BUFSIZ];
+    bzero(buf1, BUFSIZ);
+    bzero(buf2, BUFSIZ);
+    while (fgets(buf1, BUFSIZ, fp1) != NULL || fgets(buf2, BUFSIZ, fp2) != NULL) {
+        if (buf1[0] != '\0' && [_delegate respondsToSelector:@selector(packageExtractor:didReceiveStandardOutput:)]) {
+            NSString *newOutput = [[NSString alloc] initWithUTF8String:buf1];
+            [_delegate packageExtractor:self didReceiveStandardOutput:newOutput];
+        }
+        if (buf2[0] != '\0' && [_delegate respondsToSelector:@selector(packageExtractor:didReceiveStandardError:)]) {
+            NSString *newOutput = [[NSString alloc] initWithUTF8String:buf2];
+            [_delegate packageExtractor:self didReceiveStandardError:newOutput];
+        }
+        bzero(buf1, BUFSIZ);
+        bzero(buf2, BUFSIZ);
     }
-    NSData *logData = [[NSData alloc] initWithContentsOfFile:temporarilyPath];
-    if (!logData) {
-        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Cannot open log file \"%@\".", nil), temporarilyPath]];
-        return;
-    }
-    NSString *logString = [[NSString alloc] initWithData:logData encoding:NSUTF8StringEncoding];
+    status = [processObj processClose:fps pidPointer:&pid];
+    
     if (status != 0) {
-        [self callbackInstallationErrorWithReason:logString];
+        [self callbackInstallationErrorWithReason:[NSString stringWithFormat:NSLocalizedString(@"Error code: %d", nil), status]];
         return;
     }
-    if (_delegate && [_delegate respondsToSelector:@selector(packageExtractor:didFinishInstallation:)]) {
-        [_delegate packageExtractor:self didFinishInstallation:logString];
+    if (_delegate && [_delegate respondsToSelector:@selector(packageExtractorDidFinishInstallation:)]) {
+        [_delegate packageExtractorDidFinishInstallation:self];
     }
 }
 

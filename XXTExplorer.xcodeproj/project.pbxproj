@@ -173,6 +173,8 @@
 		0F8147CB2081CD49009C6B6D /* XXTELogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8147C72081CD49009C6B6D /* XXTELogCell.xib */; };
 		0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8147C72081CD49009C6B6D /* XXTELogCell.xib */; };
 		0F8147CD2081CD49009C6B6D /* XXTELogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F8147C72081CD49009C6B6D /* XXTELogCell.xib */; };
+		0F8147D32081EFF3009C6B6D /* XXTEProcessDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147D22081EFF3009C6B6D /* XXTEProcessDelegateObject.m */; };
+		0F8147D42081EFF3009C6B6D /* XXTEProcessDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8147D22081EFF3009C6B6D /* XXTEProcessDelegateObject.m */; };
 		0F81BE9D1FB54586002EE457 /* XXTEAssets.AppStore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */; };
 		0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
 		0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */ = {isa = PBXBuildFile; fileRef = 0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */; };
@@ -1544,6 +1546,8 @@
 		0F8147C52081CD49009C6B6D /* XXTELogCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELogCell.h; sourceTree = "<group>"; };
 		0F8147C62081CD49009C6B6D /* XXTELogCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELogCell.m; sourceTree = "<group>"; };
 		0F8147C72081CD49009C6B6D /* XXTELogCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTELogCell.xib; sourceTree = "<group>"; };
+		0F8147D12081EFF3009C6B6D /* XXTEProcessDelegateObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEProcessDelegateObject.h; sourceTree = "<group>"; };
+		0F8147D22081EFF3009C6B6D /* XXTEProcessDelegateObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEProcessDelegateObject.m; sourceTree = "<group>"; };
 		0F81BE9B1FB544F5002EE457 /* XXTEAssets.AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.AppStore.xcassets; sourceTree = "<group>"; };
 		0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAppDefines.h; sourceTree = "<group>"; };
 		0F8485521F489778001D265D /* SKRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRange.h; sourceTree = "<group>"; };
@@ -3017,6 +3021,8 @@
 			isa = PBXGroup;
 			children = (
 				0FAE18CD207F9E40005F9B67 /* XXTEPackageExtractor.h */,
+				0F8147D12081EFF3009C6B6D /* XXTEProcessDelegateObject.h */,
+				0F8147D22081EFF3009C6B6D /* XXTEProcessDelegateObject.m */,
 				0F0F762D1F36178A006EA102 /* APT */,
 				0FAE18C7207E66F5005F9B67 /* IPA */,
 				0FFC8EFF1FCA83BE0012C170 /* XPA */,
@@ -5251,6 +5257,7 @@
 				0FBAFF411F6E5378008B3189 /* XXTImagePickerController.m in Sources */,
 				0F072DBD1FB9F54D00597EE2 /* XUIAdapter_xuic.m in Sources */,
 				0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */,
+				0F8147D32081EFF3009C6B6D /* XXTEProcessDelegateObject.m in Sources */,
 				0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
 				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				D6E1412A1F5032AB00D78CB9 /* XXTPixelImage.m in Sources */,
@@ -5579,6 +5586,7 @@
 				D60FE6791FE2369300954818 /* XXTImagePickerController.m in Sources */,
 				D60FE67A1FE2369300954818 /* XUIAdapter_xuic.m in Sources */,
 				D60FE67B1FE2369300954818 /* XXTPickerSnippet.m in Sources */,
+				0F8147D42081EFF3009C6B6D /* XXTEProcessDelegateObject.m in Sources */,
 				D60FE67C1FE2369300954818 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
 				D60FE67D1FE2369300954818 /* XXTExplorerEntryWebReader.m in Sources */,
 				D60FE67E1FE2369300954818 /* XXTPixelImage.m in Sources */,

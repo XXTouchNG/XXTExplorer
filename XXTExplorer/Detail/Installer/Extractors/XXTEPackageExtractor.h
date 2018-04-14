@@ -29,7 +29,9 @@
 - (void)packageExtractor:(id <XXTEPackageExtractor>)extractor didFinishFetchingMetaData:(NSData *)metaData;
 - (void)packageExtractor:(id <XXTEPackageExtractor>)extractor didFailFetchingMetaDataWithError:(NSError *)error;
 
-- (void)packageExtractor:(id <XXTEPackageExtractor>)extractor didFinishInstallation:(NSString *)outputLog;
+- (void)packageExtractor:(id <XXTEPackageExtractor>)extractor didReceiveStandardOutput:(NSString *)outputLog;
+- (void)packageExtractor:(id <XXTEPackageExtractor>)extractor didReceiveStandardError:(NSString *)outputLog;
+- (void)packageExtractorDidFinishInstallation:(id <XXTEPackageExtractor>)extractor;
 - (void)packageExtractor:(id <XXTEPackageExtractor>)extractor didFailInstallationWithError:(NSError *)error;
 
 @end

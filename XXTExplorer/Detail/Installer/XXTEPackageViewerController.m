@@ -19,6 +19,8 @@
 @property (nonatomic, strong) UIBarButtonItem *installButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *respringButtonItem;
 @property (nonatomic, strong) id <XXTEPackageExtractor> extractor;
+@property (nonatomic, copy) NSDictionary *stdoutAttributes;
+@property (nonatomic, copy) NSDictionary *stderrAttributes;
 
 @end
 
@@ -145,60 +147,119 @@
     if (!_textView) {
         UITextView *textView = [[UITextView alloc] initWithFrame:self.view.bounds];
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        textView.font = [UIFont fontWithName:@"CourierNewPSMT" size:14.f];
         textView.delegate = self;
         textView.editable = NO;
         textView.autocorrectionType = UITextAutocorrectionTypeNo;
         textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
         textView.textColor = [UIColor blackColor];
-        textView.font = [UIFont fontWithName:@"CourierNewPSMT" size:14.f];
         textView.alwaysBounceVertical = YES;
+        textView.typingAttributes = self.stdoutAttributes;
         _textView = textView;
     }
     return _textView;
 }
 
+- (NSDictionary *)stdoutAttributes {
+    if (!_stdoutAttributes) {
+        _stdoutAttributes =
+        @{
+          NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:14.f],
+          NSForegroundColorAttributeName: [UIColor blackColor]
+          };
+    }
+    return _stdoutAttributes;
+}
+
+- (NSDictionary *)stderrAttributes {
+    if (!_stderrAttributes) {
+        _stderrAttributes =
+        @{
+          NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:14.f],
+          NSForegroundColorAttributeName: [UIColor redColor]
+          };
+    }
+    return _stderrAttributes;
+}
+
 #pragma mark - XXTEDebianPackageExtractorDelegate
 
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFinishFetchingMetaData:(NSData *)metaData {
+    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
+        textView.typingAttributes = self.stdoutAttributes;
         NSString *metaString = [[NSString alloc] initWithData:metaData encoding:NSUTF8StringEncoding];
-        [self.textView insertText:metaString];
-        [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Tap \"Install\" to continue...", nil)]];
+        [textView insertText:metaString];
+        [textView insertText:@"\n"];
+        [textView insertText:[NSString stringWithFormat:@"%@", NSLocalizedString(@"Tap \"Install\" to continue...", nil)]];
+        [textView insertText:@"\n"];
+        [textView insertText:@"\n"];
     });
 }
 
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFailFetchingMetaDataWithError:(NSError *)error {
+    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = NO;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
+        textView.typingAttributes = self.stderrAttributes;
         NSString *errorString = [error localizedDescription];
-        [self.textView insertText:[NSString stringWithFormat:NSLocalizedString(@"[ERROR] %@", nil), errorString]];
-        [self.textView insertText:@"\n"];
+        [textView insertText:@"\n"];
+        [textView insertText:[NSString stringWithFormat:NSLocalizedString(@"[ERROR] %@", nil), errorString]];
+        [textView insertText:@"\n"];
+        [textView insertText:@"\n"];
     });
 }
 
-- (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFinishInstallation:(NSString *)outputLog {
+- (void)packageExtractor:(id<XXTEPackageExtractor>)extractor didReceiveStandardOutput:(NSString *)outputLog {
+    UITextView *textView = self.textView;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        textView.typingAttributes = self.stdoutAttributes;
+        [textView insertText:outputLog];
+    });
+}
+
+- (void)packageExtractor:(id<XXTEPackageExtractor>)extractor didReceiveStandardError:(NSString *)outputLog {
+    UITextView *textView = self.textView;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        textView.typingAttributes = self.stderrAttributes;
+        [textView insertText:outputLog];
+    });
+}
+
+- (void)packageExtractorDidFinishInstallation:(id<XXTEPackageExtractor>)extractor {
+    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.respringButtonItem.enabled = YES;
-        [self.textView insertText:outputLog];
+        textView.typingAttributes = self.stdoutAttributes;
         if ([extractor respondsToSelector:@selector(killBackboardd)]) {
             [self.navigationItem setRightBarButtonItem:self.respringButtonItem animated:YES];
-            [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Tap \"Respring\" to continue...", nil)]];
+            [textView insertText:@"\n"];
+            [textView insertText:[NSString stringWithFormat:@"%@", NSLocalizedString(@"Tap \"Respring\" to continue...", nil)]];
+            [textView insertText:@"\n"];
+            [textView insertText:@"\n"];
         } else {
-            [self.textView insertText:[NSString stringWithFormat:@"\n%@\n\n", NSLocalizedString(@"Operation completed.", nil)]];
+            [textView insertText:@"\n"];
+            [textView insertText:[NSString stringWithFormat:@"%@", NSLocalizedString(@"Operation completed.", nil)]];
+            [textView insertText:@"\n"];
+            [textView insertText:@"\n"];
         }
     });
 }
 
 - (void)packageExtractor:(XXTEDebianPackageExtractor *)extractor didFailInstallationWithError:(NSError *)error {
+    UITextView *textView = self.textView;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.installButtonItem.enabled = YES;
         [self.navigationItem setRightBarButtonItem:self.installButtonItem animated:YES];
+        textView.typingAttributes = self.stderrAttributes;
         NSString *errorString = [error localizedDescription];
-        [self.textView insertText:[NSString stringWithFormat:NSLocalizedString(@"[FAILED] %@", nil), errorString]];
-        [self.textView insertText:@"\n"];
+        [textView insertText:@"\n"];
+        [textView insertText:[NSString stringWithFormat:NSLocalizedString(@"[FAILED] %@", nil), errorString]];
+        [textView insertText:@"\n"];
+        [textView insertText:@"\n"];
     });
 }
 

@@ -690,6 +690,9 @@
 "Error" = "错误";
 
 /* No comment provided by engineer. */
+"Error code: %d" = "错误代码: %d";
+
+/* No comment provided by engineer. */
 "Error Log" = "错误日志";
 
 /* No comment provided by engineer. */
