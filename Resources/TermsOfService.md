@@ -1,12 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>PreferenceSpecifiers</key>
-	<array>
-		<dict>
-			<key>FooterText</key>
-			<string># XXTouch 服务协议
+# XXTouch 服务协议
 
 
 ## 特别提示
@@ -89,10 +81,3 @@ XXTouch 将严格保护您的隐私。为服务用户的目的，XXTouch 可能�
 * 如本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，本协议的其余条款仍应有效并且有约束力。
 * 本协议中的标题仅为方便而设，不具法律或契约效果。
 
-</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-	</array>
-</dict>
-</plist>
