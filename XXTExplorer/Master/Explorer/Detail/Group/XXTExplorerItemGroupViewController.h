@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTExplorerEntryUpdateDelegate.h"
 
 @interface XXTExplorerItemGroupViewController : UITableViewController
 
+@property (nonatomic, weak) id <XXTExplorerEntryUpdateDelegate> delegate;
 @property (nonatomic, strong) NSString *entryPath;
 - (instancetype)initWithPath:(NSString *)path;
 

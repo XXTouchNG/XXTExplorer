@@ -172,6 +172,9 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }
+        if (WIFEXITED(status)) {
+            status = WEXITSTATUS(status);
+        }
         return status;
     }
     return 0;

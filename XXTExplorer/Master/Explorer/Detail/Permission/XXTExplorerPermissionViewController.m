@@ -24,6 +24,8 @@ typedef enum : NSUInteger {
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreSwitchCell.h"
 
+#import "XXTEProcessDelegateObject.h"
+
 @interface XXTExplorerPermissionViewController ()
 
 @property (nonatomic, strong) UIBarButtonItem *saveItem;
@@ -198,7 +200,14 @@ typedef enum : NSUInteger {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        
+        if (indexPath.section == kXXTEPermissionTypeOwner || indexPath.section == kXXTEPermissionTypeGroup || indexPath.section == kXXTEPermissionTypeEveryone || indexPath.section == kXXTEPermissionTypeSpecial) {
+            UITableViewCell *cell = staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
+            if (cell.accessoryType == UITableViewCellAccessoryNone) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+        }
     }
 }
 
@@ -219,7 +228,6 @@ typedef enum : NSUInteger {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
         UITableViewCell *cell = staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
-        
         return cell;
     }
     return [UITableViewCell new];
@@ -235,7 +243,87 @@ typedef enum : NSUInteger {
 }
 
 - (void)saveItemTapped:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    int bbit = 0;
+    for (NSUInteger idx = kXXTEPermissionTypeOwner; idx < kXXTEPermissionTypeMax; idx++) {
+        NSArray <UITableViewCell *> *cells = staticCells[idx];
+        if (idx == kXXTEPermissionTypeOwner) {
+            int bit = 0;
+            bit += cells[0].accessoryType == UITableViewCellAccessoryCheckmark ? 4 : 0;
+            bit += cells[1].accessoryType == UITableViewCellAccessoryCheckmark ? 2 : 0;
+            bit += cells[2].accessoryType == UITableViewCellAccessoryCheckmark ? 1 : 0;
+            bbit += bit * 100;
+        }
+        else if (idx == kXXTEPermissionTypeGroup) {
+            int bit = 0;
+            bit += cells[0].accessoryType == UITableViewCellAccessoryCheckmark ? 4 : 0;
+            bit += cells[1].accessoryType == UITableViewCellAccessoryCheckmark ? 2 : 0;
+            bit += cells[2].accessoryType == UITableViewCellAccessoryCheckmark ? 1 : 0;
+            bbit += bit * 10;
+        }
+        else if (idx == kXXTEPermissionTypeEveryone) {
+            int bit = 0;
+            bit += cells[0].accessoryType == UITableViewCellAccessoryCheckmark ? 4 : 0;
+            bit += cells[1].accessoryType == UITableViewCellAccessoryCheckmark ? 2 : 0;
+            bit += cells[2].accessoryType == UITableViewCellAccessoryCheckmark ? 1 : 0;
+            bbit += bit * 1;
+        }
+        else if (idx == kXXTEPermissionTypeSpecial) {
+            int bit = 0;
+            bit += cells[0].accessoryType == UITableViewCellAccessoryCheckmark ? 4 : 0;
+            bit += cells[1].accessoryType == UITableViewCellAccessoryCheckmark ? 2 : 0;
+            bit += cells[2].accessoryType == UITableViewCellAccessoryCheckmark ? 1 : 0;
+            bbit += bit * 1000;
+        }
+    }
+    
+    UIViewController *blockController = blockInteractions(self, YES);
+    @weakify(self);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        @strongify(self);
+        
+        NSString *bbitString = [NSString stringWithFormat:@"%04d", bbit];
+        
+        int status = 0;
+        pid_t pid = 0;
+        
+        const char *binary = add1s_binary();
+        const char **args = NULL;
+        if ([self shouldApplyRecursively]) {
+            args = (const char **)malloc(sizeof(const char *) * 6);
+            args[0] = binary;
+            args[1] = "chmod";
+            args[2] = "-R";
+            args[3] = [bbitString UTF8String];
+            args[4] = [self.entryPath fileSystemRepresentation];
+            args[5] = NULL;
+        } else {
+            args = (const char **)malloc(sizeof(const char *) * 5);
+            args[0] = binary;
+            args[1] = "chmod";
+            args[2] = [bbitString UTF8String];
+            args[3] = [self.entryPath fileSystemRepresentation];
+            args[4] = NULL;
+        }
+        
+        XXTEProcessDelegateObject *processObj = [[XXTEProcessDelegateObject alloc] init];
+        NSArray <NSValue *> *pipes = [processObj processOpen:args pidPointer:&pid];
+        
+        status = [processObj processClose:pipes pidPointer:&pid];
+        
+        free(args);
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            blockInteractions(blockController, NO);
+            if (status == 0) {
+                if ([_delegate respondsToSelector:@selector(explorerEntryUpdater:entryDidUpdatedAtPath:)]) {
+                    [_delegate explorerEntryUpdater:self entryDidUpdatedAtPath:self.entryPath];
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Operation failed (%d).", nil), status]);
+            }
+        });
+    });
 }
 
 - (BOOL)shouldApplyRecursively {

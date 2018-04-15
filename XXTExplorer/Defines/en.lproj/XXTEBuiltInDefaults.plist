@@ -228,6 +228,23 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerAllowEditingFileOwnerKey</string>
+			<key>default</key>
+			<false/>
+			<key>title</key>
+			<string>Allow Editing File Owner</string>
+			<key>description</key>
+			<string>Allow changing file owner/group/permission in &quot;Item Property&quot;.</string>
+			<key>options</key>
+			<array>
+				<string>Off</string>
+				<string>On</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
 			<string>YES</string>
 			<key>key</key>
 			<string>XXTExplorerViewEntrySelectLaunchedScriptKey</string>

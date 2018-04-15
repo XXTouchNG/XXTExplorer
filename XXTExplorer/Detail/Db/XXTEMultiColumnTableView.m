@@ -145,7 +145,7 @@ static const CGFloat kColumnMargin = 1;
     for (int i = 0; i < [self numberOfColumns] ; i++) {
         w = [self contentWidthForColumn:i] + [self columnMargin];
         
-        XXTEDbTableColumnHeader *cell = [[XXTEDbTableColumnHeader alloc] initWithFrame:CGRectMake(x, 0, w, [self topHeaderHeight] - 1)];
+        XXTEDbTableColumnHeader *cell = [[XXTEDbTableColumnHeader alloc] initWithFrame:CGRectMake(x, 0, w, [self topHeaderHeight] - 0.6)];
         cell.label.text = [self columnTitleForColumn:i];
         [self.headerScrollView addSubview:cell];
         

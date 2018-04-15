@@ -11,9 +11,11 @@
 #import "XXTEMoreSwitchCell.h"
 #import "XXTEMoreTitleValueCell.h"
 
-#import <pwd.h>
-#import <grp.h>
+//#import <pwd.h>
+//#import <grp.h>
 #import <sys/stat.h>
+
+#import "XXTEProcessDelegateObject.h"
 
 typedef enum : NSUInteger {
     kXXTEOwnerTypeApply = 0,
@@ -39,8 +41,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray <XXTExplorerItemOwner *> *itemOwners;
 @property (nonatomic, strong) XXTEMoreSwitchCell *applyCell;
 
-@property (nonatomic, assign) pid_t currentOwnerID;
-@property (nonatomic, assign) pid_t currentGroupID;
+@property (nonatomic, assign) uid_t currentOwnerID;
 
 @end
 
@@ -74,31 +75,47 @@ typedef enum : NSUInteger {
 
 - (void)setup {
     NSMutableArray <XXTExplorerItemOwner *> *owners = [[NSMutableArray alloc] init];
-    NSMutableArray <NSString *> *ownerNames = [[NSMutableArray alloc] init];
-    gid_t group_buf[GRPSIZ];
-    int num_groups = getgroups(GRPSIZ, group_buf);
-    for (int i = 0; i < num_groups; i++) {
-        struct group *entryGRInfo = getgrgid(group_buf[i]);
-        if (entryGRInfo && entryGRInfo->gr_name) {
-            int i = 0;
-            while (entryGRInfo->gr_mem[i]) {
-                char *member = entryGRInfo->gr_mem[i++];
-                if (member) {
-                    NSString *memberName = [[NSString alloc] initWithUTF8String:member];
-                    if (![ownerNames containsObject:memberName]) {
-                        [ownerNames addObject:memberName];
-                        struct passwd *owner_wd = getpwnam(member);
-                        if (owner_wd && owner_wd->pw_name && owner_wd->pw_uid) {
-                            XXTExplorerItemOwner *owner = [[XXTExplorerItemOwner alloc] init];
-                            owner.ownerID = owner_wd->pw_uid;
-                            owner.ownerName = memberName;
-                            [owners addObject:owner];
-                        }
-                    }
-                }
-            }
-        }
+    
+    pid_t pid = 0;
+    const char *binary = add1s_binary();
+    const char *args[] = { binary, "/bin/cat", "/etc/passwd", NULL };
+    
+    XXTEProcessDelegateObject *processObj = [[XXTEProcessDelegateObject alloc] init];
+    NSArray <NSValue *> *fps = [processObj processOpen:args pidPointer:&pid];
+    
+    FILE *fp1 = [fps[0] pointerValue];
+    if (fp1 == NULL) {
+        toastMessage(self, NSLocalizedString(@"Cannot launch inspector process.", nil));
+        return;
     }
+    NSMutableString *output = [[NSMutableString alloc] init];
+    char buf1[BUFSIZ];
+    bzero(buf1, BUFSIZ);
+    while (fgets(buf1, BUFSIZ, fp1) != NULL) {
+        [output appendString:[NSString stringWithUTF8String:buf1]];
+        bzero(buf1, BUFSIZ);
+    }
+    int status = [processObj processClose:fps pidPointer:&pid];
+    if (status != 0) {
+        toastMessage(self, NSLocalizedString(@"Cannot read \"/etc/passwd\" from inspector process.", nil));
+        return;
+    }
+    NSArray <NSString *> *outputLines = [output componentsSeparatedByString:@"\n"];
+    for (NSString *outputLine in outputLines) {
+        if ([outputLine hasPrefix:@"#"]) {
+            continue;
+        }
+        NSArray <NSString *> *names = [outputLine componentsSeparatedByString:@":"];
+        if (names.count != 7) {
+            continue;
+        }
+        XXTExplorerItemOwner *owner = [[XXTExplorerItemOwner alloc] init];
+        int ownerIntID = [names[2] intValue];
+        owner.ownerID = (uid_t)ownerIntID;
+        owner.ownerName = names[0];
+        [owners addObject:owner];
+    }
+    
     _itemOwners = [owners copy];
 }
 
@@ -240,7 +257,62 @@ typedef enum : NSUInteger {
 }
 
 - (void)saveItemTapped:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    UIViewController *blockController = blockInteractions(self, YES);
+    @weakify(self);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        @strongify(self);
+        
+        NSString *ownerName = nil;
+        for (XXTExplorerItemOwner *owner in self.itemOwners) {
+            if (owner.ownerID == self.currentOwnerID) {
+                ownerName = owner.ownerName;
+            }
+        }
+        if (!ownerName) return;
+        
+        int status = 0;
+        pid_t pid = 0;
+        
+        const char *binary = add1s_binary();
+        const char **args = NULL;
+        if ([self shouldApplyRecursively]) {
+            args = (const char **)malloc(sizeof(const char *) * 6);
+            args[0] = binary;
+            args[1] = "chown";
+            args[2] = "-R";
+            args[3] = [ownerName UTF8String];
+            args[4] = [self.entryPath fileSystemRepresentation];
+            args[5] = NULL;
+        } else {
+            args = (const char **)malloc(sizeof(const char *) * 5);
+            args[0] = binary;
+            args[1] = "chown";
+            args[2] = [ownerName UTF8String];
+            args[3] = [self.entryPath fileSystemRepresentation];
+            args[4] = NULL;
+        }
+        
+        XXTEProcessDelegateObject *processObj = [[XXTEProcessDelegateObject alloc] init];
+        NSArray <NSValue *> *pipes = [processObj processOpen:args pidPointer:&pid];
+        
+        status = [processObj processClose:pipes pidPointer:&pid];
+        
+        free(args);
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            blockInteractions(blockController, NO);
+            if (status == 0) {
+                if ([_delegate respondsToSelector:@selector(explorerEntryUpdater:entryDidUpdatedAtPath:)]) {
+                    [_delegate explorerEntryUpdater:self entryDidUpdatedAtPath:self.entryPath];
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Operation failed (%d).", nil), status]);
+            }
+        });
+        
+    });
 }
 
 - (BOOL)shouldApplyRecursively {

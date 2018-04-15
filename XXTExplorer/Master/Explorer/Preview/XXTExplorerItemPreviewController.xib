@@ -28,7 +28,7 @@
                         <constraint firstAttribute="height" constant="40" id="abM-fu-GvX"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17Q-P0-IUg">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17Q-P0-IUg">
                     <rect key="frame" x="111.5" y="64" width="77.5" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                     <nil key="textColor"/>
@@ -46,10 +46,12 @@
                 <constraint firstItem="17Q-P0-IUg" firstAttribute="top" secondItem="PHx-wy-CwB" secondAttribute="bottom" constant="8" id="N6t-fE-c3I"/>
                 <constraint firstItem="PHx-wy-CwB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="Rrw-Lm-B0C"/>
                 <constraint firstItem="Ult-fD-QVe" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="UGc-f9-dH9"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="17Q-P0-IUg" secondAttribute="trailing" constant="8" id="Zhm-g5-AKb"/>
                 <constraint firstItem="17Q-P0-IUg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="b1d-El-eMY"/>
                 <constraint firstAttribute="trailing" secondItem="Ult-fD-QVe" secondAttribute="trailing" constant="8" id="caP-Bv-DoS"/>
                 <constraint firstItem="Ult-fD-QVe" firstAttribute="top" secondItem="17Q-P0-IUg" secondAttribute="bottom" constant="4" id="ces-sC-SYy"/>
                 <constraint firstItem="Ult-fD-QVe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="dPs-WK-3gB"/>
+                <constraint firstItem="17Q-P0-IUg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="kRR-5o-G3A"/>
                 <constraint firstItem="PHx-wy-CwB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="kiu-YE-NGt"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

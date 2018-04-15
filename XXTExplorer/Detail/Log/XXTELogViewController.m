@@ -14,7 +14,7 @@
 #import <PromiseKit/PromiseKit.h>
 //#import "XXTEBaseObjectViewController.h"
 
-static NSUInteger const kXXTELogViewControllerMaximumBytes = 256 * 1024; // 200k
+static NSUInteger const kXXTELogViewControllerMaximumBytes = 200 * 1024; // 200k
 
 @interface XXTELogViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate>
 

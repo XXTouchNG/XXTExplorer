@@ -1089,6 +1089,9 @@
 "Operation Failed" = "操作失败";
 
 /* No comment provided by engineer. */
+"Operation failed (%d)." = "操作失败 (%d).";
+
+/* No comment provided by engineer. */
 "Operation succeed." = "操作成功.";
 
 /* No comment provided by engineer. */
@@ -1748,3 +1751,12 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
+
+/* No comment provided by engineer. */
+"Cannot launch inspector process." = "";
+
+/* No comment provided by engineer. */
+"Cannot read \"/etc/group\" from inspector process." = "";
+
+/* No comment provided by engineer. */
+"Cannot read \"/etc/passwd\" from inspector process." = "";

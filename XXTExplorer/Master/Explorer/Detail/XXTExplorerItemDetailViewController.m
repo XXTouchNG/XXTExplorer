@@ -117,7 +117,7 @@ static int sizingCancelFlag = 0;
 
 @end
 
-@interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate>
+@interface XXTExplorerItemDetailViewController () <UITextFieldDelegate, XXTExplorerEntryBindingViewControllerDelegate, XXTExplorerEntryUpdateDelegate>
 
 @property (nonatomic, strong) XXTExplorerEntry *entry;
 @property (nonatomic, strong) NSBundle *entryBundle;
@@ -131,6 +131,7 @@ static int sizingCancelFlag = 0;
 @property (nonatomic, strong) NSArray <XXTExplorerDynamicSection *> *dynamicSections;
 
 @property (nonatomic, assign) BOOL isRecordingScript;
+@property (nonatomic, assign) BOOL needsReload;
 
 @end
 
@@ -157,6 +158,7 @@ static int sizingCancelFlag = 0;
 
 - (void)setup {
     sizingCancelFlag = 0;
+    _needsReload = NO;
 }
 
 #ifndef APPSTORE
@@ -225,6 +227,7 @@ static int sizingCancelFlag = 0;
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChangeWithNotificaton:) name:UITextFieldTextDidChangeNotification object:self.nameField];
     [super viewWillAppear:animated];
+    [self reloadIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -514,12 +517,13 @@ static int sizingCancelFlag = 0;
         
     }
     
+    BOOL allowOwner = XXTEDefaultsBool(XXTExplorerAllowEditingFileOwnerKey, NO);
+    
 #ifndef APPSTORE
     
     // #6 - Owner
     
-    /*
-    {
+    if (allowOwner) {
         struct passwd *entryPWInfo = getpwuid(entryStat.st_uid);
         struct group *entryGRInfo = getgrgid(entryStat.st_gid);
         if (entryPWInfo != NULL && entryGRInfo != NULL) {
@@ -547,7 +551,6 @@ static int sizingCancelFlag = 0;
             if (section6) [mutableDynamicSections addObject:section6];
         }
     }
-     */
     
 #endif
     
@@ -555,8 +558,7 @@ static int sizingCancelFlag = 0;
     
     // #7 - Perimssion
     
-    /*
-    {
+    if (allowOwner) {
         NSString *userReadFlag = (entryStat.st_mode & S_IRUSR) ? @"r" : @"-";
         NSString *userWriteFlag = (entryStat.st_mode & S_IWUSR) ? @"w" : @"-";
         NSString *userExecuteFlag = (entryStat.st_mode & S_IXUSR) ? @"x" : @"-";
@@ -597,17 +599,12 @@ static int sizingCancelFlag = 0;
         
         if (section7) [mutableDynamicSections addObject:section7];
     }
-    */
     
 #endif
     
     // #8 - Open with
     
-#ifdef DEBUG
-    BOOL allowOpenMethod = XXTEDefaultsBool(XXTExplorerAllowOpenMethodKey, YES);
-#else
     BOOL allowOpenMethod = XXTEDefaultsBool(XXTExplorerAllowOpenMethodKey, NO);
-#endif
     
     if (entry.isRegular && allowOpenMethod)
     {
@@ -819,6 +816,7 @@ static int sizingCancelFlag = 0;
                 if (indexPath.row == 3) {
                     XXTExplorerPermissionViewController *permissionController = [[XXTExplorerPermissionViewController alloc] initWithPath:entryPath];
                     permissionController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
+                    permissionController.delegate = self;
                     [self.navigationController pushViewController:permissionController animated:YES];
                 }
 #endif
@@ -838,10 +836,12 @@ static int sizingCancelFlag = 0;
                 if (indexPath.row == 0) {
                     XXTExplorerItemOwnerViewController *ownerController = [[XXTExplorerItemOwnerViewController alloc] initWithPath:entryPath];
                     ownerController.title = ((XXTEMoreTitleValueCell *)cell).titleLabel.text;
+                    ownerController.delegate = self;
                     [self.navigationController pushViewController:ownerController animated:YES];
                 } else if (indexPath.row == 1) {
                     XXTExplorerItemGroupViewController *groupController = [[XXTExplorerItemGroupViewController alloc] initWithPath:entryPath];
                     groupController.title = ((XXTEMoreTitleValueCell *)cell).titleLabel.text;
+                    groupController.delegate = self;
                     [self.navigationController pushViewController:groupController animated:YES];
                 }
 #endif
@@ -952,10 +952,24 @@ static int sizingCancelFlag = 0;
 
 - (void)bindingViewController:(XXTExplorerEntryBindingViewController *)controller
             bindingDidChanged:(NSString *)controllerName {
-    NSString *entryPath = self.entry.entryPath;
-    self.entry = [self.entryParser entryOfPath:entryPath withError:nil];
-    [self reloadStaticTableViewData];
-    [self.tableView reloadData];
+    [self setNeedsReload:YES];
+}
+
+#pragma mark - XXTExplorerEntryUpdateDelegate
+
+- (void)explorerEntryUpdater:(id)sender entryDidUpdatedAtPath:(NSString *)entryPath
+{
+    [self setNeedsReload:YES];
+}
+
+- (void)reloadIfNeeded {
+    if (self.needsReload) {
+        self.needsReload = NO;
+        NSString *entryPath = self.entry.entryPath;
+        self.entry = [self.entryParser entryOfPath:entryPath withError:nil];
+        [self reloadStaticTableViewData];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Memory

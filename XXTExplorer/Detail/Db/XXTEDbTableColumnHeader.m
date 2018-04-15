@@ -30,7 +30,7 @@
         _arrowLabel.font = [UIFont systemFontOfSize:13.0];
         [self addSubview:_arrowLabel];
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 1, 2, 1, frame.size.height - 4)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 0.6, 0, 0.6, frame.size.height)];
         line.backgroundColor = [UIColor colorWithWhite:0.803 alpha:0.850];
         [self addSubview:line];
         
@@ -52,9 +52,5 @@
             break;
     }
 }
-
-
-
-
 
 @end

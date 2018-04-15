@@ -129,7 +129,7 @@
 - (CGFloat)multiColumnTableView:(XXTEMultiColumnTableView *)tableView
       heightForContentCellInRow:(NSInteger)row
 {
-    return 40.0;
+    return 36.0;
 }
 
 - (CGFloat)multiColumnTableView:(XXTEMultiColumnTableView *)tableView
@@ -140,12 +140,12 @@
 
 - (CGFloat)heightForTopHeaderInTableView:(XXTEMultiColumnTableView *)tableView
 {
-    return 40.0;
+    return 36.0;
 }
 
 - (CGFloat)widthForLeftHeaderInTableView:(XXTEMultiColumnTableView *)tableView
 {
-    NSString *str = [NSString stringWithFormat:@"%lu",(unsigned long)self.contentsArray.count];
+    NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long)self.contentsArray.count];
     NSDictionary <NSString *, id> *attrs = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0]};
     CGSize size =   [str boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 14)
                                       options:NSStringDrawingUsesLineFragmentOrigin

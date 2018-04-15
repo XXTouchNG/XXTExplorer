@@ -53,11 +53,12 @@
         return;
     }
     
-    char buf1[BUFSIZ];
-    char buf2[BUFSIZ];
-    bzero(buf1, BUFSIZ);
-    bzero(buf2, BUFSIZ);
-    while (fgets(buf1, BUFSIZ, fp1) != NULL || fgets(buf2, BUFSIZ, fp2) != NULL) {
+    int maxSize = BUFSIZ * 4;
+    char buf1[maxSize];
+    char buf2[maxSize];
+    bzero(buf1, maxSize);
+    bzero(buf2, maxSize);
+    while (fgets(buf1, maxSize, fp1) != NULL || fgets(buf2, maxSize, fp2) != NULL) {
         if (buf1[0] != '\0' && [_delegate respondsToSelector:@selector(packageExtractor:didReceiveStandardOutput:)]) {
             NSString *newOutput = [[NSString alloc] initWithUTF8String:buf1];
             [_delegate packageExtractor:self didReceiveStandardOutput:newOutput];
@@ -66,8 +67,8 @@
             NSString *newOutput = [[NSString alloc] initWithUTF8String:buf2];
             [_delegate packageExtractor:self didReceiveStandardError:newOutput];
         }
-        bzero(buf1, BUFSIZ);
-        bzero(buf2, BUFSIZ);
+        bzero(buf1, maxSize);
+        bzero(buf2, maxSize);
     }
     status = [processObj processClose:fps pidPointer:&pid];
     
@@ -120,6 +121,9 @@
         return;
     }
     waitpid(pid, &status, 0);
+    if (WIFEXITED(status)) {
+        status = WEXITSTATUS(status);
+    }
     if (status != 0) {
         [self callbackFetchingMetaDataWithErrorReason:[NSString stringWithFormat:NSLocalizedString(@"Installer process returned non-zero code (%d).", nil), status]];
         return;

@@ -1765,6 +1765,7 @@
 		0FCC2AC61F130BE600C50A48 /* XXTExplorerItemNameCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTExplorerItemNameCell.xib; sourceTree = "<group>"; };
 		0FCC2AD11F135AA100C50A48 /* XXTExplorerItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemDetailViewController.h; sourceTree = "<group>"; };
 		0FCC2AD21F135AA100C50A48 /* XXTExplorerItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerItemDetailViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0FD9211620831265008DB6EA /* XXTExplorerEntryUpdateDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryUpdateDelegate.h; sourceTree = "<group>"; };
 		0FD973E41F4B122D00133162 /* XXTEEditorThemeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorThemeCell.h; sourceTree = "<group>"; };
 		0FD973E51F4B122D00133162 /* XXTEEditorThemeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorThemeCell.m; sourceTree = "<group>"; };
 		0FD973E61F4B122D00133162 /* XXTEEditorThemeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEEditorThemeCell.xib; sourceTree = "<group>"; };
@@ -3282,6 +3283,7 @@
 		0FCC2AC31F13097100C50A48 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				0FD9211620831265008DB6EA /* XXTExplorerEntryUpdateDelegate.h */,
 				0F1E7C0220775C12008B5B6C /* Repeat */,
 				0F98514820033EA900FFD9E8 /* Owner */,
 				0F98514920033EAF00FFD9E8 /* Group */,

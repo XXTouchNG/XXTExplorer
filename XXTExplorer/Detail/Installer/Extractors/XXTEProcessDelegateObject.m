@@ -75,6 +75,10 @@
         if (errno != EINTR)
             return (-1); /* error other than EINTR from waitpid() */
     
+    if (WIFEXITED(stat)) {
+        stat = WEXITSTATUS(stat);
+    }
+    
     return (stat); /* return child's termination status */
 }
 
