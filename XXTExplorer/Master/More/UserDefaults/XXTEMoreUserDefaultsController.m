@@ -13,8 +13,8 @@
 #import "XXTEMoreUserDefaultsOperationController.h"
 
 #ifndef APPSTORE
-            #import <PromiseKit/PromiseKit.h>
-    #import <PromiseKit/NSURLConnection+PromiseKit.h>
+#import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
 #endif
 
 enum {
@@ -371,6 +371,7 @@ XXTE_END_IGNORE_PARTIAL
     NSString *modifyKey = controller.userDefaultsEntry[@"key"];
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
     editedUserDefaults[modifyKey] = @(index);
+    
 #ifndef APPSTORE
     
     UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
@@ -410,6 +411,7 @@ XXTE_END_IGNORE_PARTIAL
     [self.tableView reloadData];
     
 #endif
+    
 }
 
 #pragma mark - Memory
