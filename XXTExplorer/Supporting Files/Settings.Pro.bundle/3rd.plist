@@ -92,6 +92,38 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/OpenCV</string>
+			<key>Title</key>
+			<string>OpenCV</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/Tesseract</string>
+			<key>Title</key>
+			<string>Tesseract</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/SIAlertView</string>
+			<key>Title</key>
+			<string>SIAlertView</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/IPAInstallerConsole</string>
+			<key>Title</key>
+			<string>IPAInstallerConsole</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
 	</array>
 </dict>
 </plist>
