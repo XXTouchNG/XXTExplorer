@@ -105,7 +105,7 @@
     NSString *entryDescriptionFormat = NSLocalizedString(@"%@\n\nCreated at: %@\nModified at: %@", nil);
     NSString *entryDescription = [NSString stringWithFormat:entryDescriptionFormat, readableSize, creationDateString, modificationDateString];
     UIImage *entryIconImage = [entryDetail localizedDisplayIconImage];
-    if (entryDetail.entryReader) {
+    if (entryDetail.isRegistered) {
         XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
         if (entryReader.entryDescription) {
             entryDescription = [NSString stringWithFormat:entryDescriptionFormat, entryReader.entryDescription, creationDateString, modificationDateString];

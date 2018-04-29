@@ -83,6 +83,9 @@ XXTE_END_IGNORE_PARTIAL
 - (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail;
 - (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail animated:(BOOL)animated;
 
+- (void)performViewerExecutableActionForEntry:(XXTExplorerEntry *)entry;
+- (void)performViewerExecutableActionForEntryAtPath:(NSString *)entryPath;
+
 #pragma mark - previewing
 
 @property (nonatomic, weak) id <XXTExplorerDirectoryPreviewDelegate> previewDelegate;

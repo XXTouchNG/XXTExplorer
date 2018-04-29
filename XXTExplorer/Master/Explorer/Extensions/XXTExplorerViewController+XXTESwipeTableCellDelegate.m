@@ -12,19 +12,18 @@
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 
-#import "XXTExplorerDefaults.h"
-
-#import "XXTExplorerItemDetailViewController.h"
-#import "XXTENavigationController.h"
-
 #import <objc/runtime.h>
 #import <LGAlertView/LGAlertView.h>
 
+#import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryService.h"
-
-#import "XXTExplorerViewCell.h"
 #import "XXTExplorerEntryLauncher.h"
+
+#import "XXTExplorerItemDetailViewController.h"
+#import "XXTENavigationController.h"
+#import "XXTExplorerViewCell.h"
+
 
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
 
@@ -76,9 +75,9 @@
     return handled;
 }
 
-- (BOOL)performUnchangedButtonAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entryDetail {
+- (BOOL)performUnchangedButtonAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entry {
     BOOL handled = NO;
-    NSString *entryPath = entryDetail.entryPath;
+    NSString *entryPath = entry.entryPath;
     if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionLaunch]) {
 #ifndef APPSTORE
         NSDictionary *userInfo =
@@ -97,7 +96,7 @@
         handled = YES;
     }
     else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionContents]) {
-        if (entryDetail.isBundle) {
+        if (entry.isBundle) {
             NSError *accessError = nil;
             [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
             if (accessError) {
@@ -110,18 +109,18 @@
         handled = YES;
     }
     else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionConfigure]) {
-        XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
+        XXTExplorerEntryReader *entryReader = entry.entryReader;
         NSString *unsupportedReason = [entryReader localizedUnsupportedReason];
         if (unsupportedReason == nil) {
-            if ([self.class.explorerEntryService hasConfiguratorForEntry:entryDetail]) {
-                UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entryDetail];
+            if ([self.class.explorerEntryService hasConfiguratorForEntry:entry]) {
+                UIViewController *configurator = [self.class.explorerEntryService configuratorForEntry:entry];
                 if (configurator) {
                     [self tableView:self.tableView showFormSheetController:configurator];
                 } else {
-                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryDetail.localizedDisplayName]));
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entry.localizedDisplayName]));
                 }
             } else {
-                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryDetail.localizedDisplayName]));
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entry.localizedDisplayName]));
             }
         } else {
             LGAlertView *unsupportedAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Warning", nil) message:unsupportedReason style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
@@ -132,26 +131,26 @@
         handled = YES;
     }
     else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionEdit]) {
-        if ([self.class.explorerEntryService hasEditorForEntry:entryDetail]) {
-            UIViewController <XXTEEditor> *editor = [self.class.explorerEntryService editorForEntry:entryDetail];
+        if ([self.class.explorerEntryService hasEditorForEntry:entry]) {
+            UIViewController <XXTEEditor> *editor = [self.class.explorerEntryService editorForEntry:entry];
             if (editor) {
                 [self tableView:self.tableView showDetailController:editor];
             }
         } else {
-            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entryDetail.localizedDisplayName]));
+            toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be edited because its editor can't be found.", nil), entry.localizedDisplayName]));
         }
         handled = YES;
     }
     else if ([buttonAction isEqualToString:XXTExplorerEntryButtonActionEncrypt]) {
 #ifndef APPSTORE
         LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Encrypt Confirm", nil)
-                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory.", nil), entryDetail.localizedDisplayName]
+                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory.", nil), entry.localizedDisplayName]
                                                               style:LGAlertViewStyleActionSheet
                                                        buttonTitles:@[ ]
                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                              destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
                                                            delegate:self];
-        objc_setAssociatedObject(alertView, @selector(alertView:encryptEntry:), entryDetail, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(alertView, @selector(alertView:encryptEntry:), entry, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [alertView showAnimated:YES completionHandler:nil];
 #endif
         handled = YES;
@@ -160,12 +159,12 @@
 }
 
 XXTE_START_IGNORE_PARTIAL
-- (void (^)(UIPreviewAction *, UIViewController *))unchangedPreviewAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entryDetail {
-    if (!entryDetail) return nil;
+- (void (^)(UIPreviewAction *, UIViewController *))unchangedPreviewAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entry {
+    if (!entry) return nil;
     @weakify(self);
     void (^actionBlock)(UIPreviewAction *, UIViewController *) = ^void(UIPreviewAction *action, UIViewController *previewViewController) {
         @strongify(self);
-        [self performUnchangedButtonAction:buttonAction forEntry:entryDetail];
+        [self performUnchangedButtonAction:buttonAction forEntry:entry];
     };
     return [actionBlock copy];
 }
@@ -184,33 +183,31 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 XXTE_START_IGNORE_PARTIAL
-- (NSArray <UIPreviewAction *> *)previewActionsForEntry:(XXTExplorerEntry *)entryDetail forEntryCell:(XXTESwipeTableCell *)entryCell {
+- (NSArray <UIPreviewAction *> *)previewActionsForEntry:(XXTExplorerEntry *)entry forEntryCell:(XXTESwipeTableCell *)entryCell {
     NSMutableArray <UIPreviewAction *> *actions = [[NSMutableArray alloc] init];
-    XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
+    XXTExplorerEntryReader *entryReader = entry.entryReader;
 #ifndef APPSTORE
-    if (entryReader.executable) {
-        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Launch", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionLaunch forEntry:entryDetail]]];
+    if (entry.isExecutable) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Launch", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionLaunch forEntry:entry]]];
     }
 #endif
-    if ([entryReader respondsToSelector:@selector(configurable)]) {
-        if (entryReader.configurable) {
-            [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Configure", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionConfigure forEntry:entryDetail]]];
-        }
+    if (entry.isConfigurable) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Configure", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionConfigure forEntry:entry]]];
     }
-    if (entryReader.editable) {
-        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Edit", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionEdit forEntry:entryDetail]]];
+    if (entry.isEditable) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Edit", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionEdit forEntry:entry]]];
     }
-    if (entryDetail.isBundle) {
-        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Contents", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionContents forEntry:entryDetail]]];
+    if (entry.isBundle) {
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Contents", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionContents forEntry:entry]]];
     }
 #ifndef APPSTORE
     if (entryReader.encryptionType != XXTExplorerEntryReaderEncryptionTypeNone)
     {
-        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Encrypt", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionEncrypt forEntry:entryDetail]]];
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Encrypt", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionEncrypt forEntry:entry]]];
     }
 #endif
     {
-        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Property", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionProperty forEntry:entryDetail]]];
+        [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Property", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionProperty forEntry:entry]]];
     }
     {
         [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Trash", nil) style:UIPreviewActionStyleDestructive handler:[self previewAction:XXTExplorerEntryButtonActionTrash forEntryCell:entryCell]]];
@@ -231,13 +228,13 @@ XXTE_END_IGNORE_PARTIAL
     UIEdgeInsets buttonInsets = hidesLabel ? UIEdgeInsetsMake(0, 24.0, 0, 24.0) : UIEdgeInsetsMake(0, 8.0, 0, 8.0);
     static char *const XXTESwipeButtonAction = "XXTESwipeButtonAction";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+    XXTExplorerEntry *entry = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
-        XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
+        XXTExplorerEntryReader *entryReader = entry.entryReader;
         UIColor *colorSeries = XXTColorDefault();
 #ifndef APPSTORE
-        if (entryReader.executable) {
+        if (entry.isExecutable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Launch", nil);
@@ -251,22 +248,20 @@ XXTE_END_IGNORE_PARTIAL
             [swipeButtons addObject:button];
         }
 #endif
-        if ([entryReader respondsToSelector:@selector(configurable)]) {
-            if (entryReader.configurable) {
-                NSString *buttonTitle = nil;
-                if (!hidesLabel) {
-                    buttonTitle = NSLocalizedString(@"Configure", nil);
-                } else {
-                    buttonTitle = @"";
-                }
-                XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconConfigure"]
-                                                           backgroundColor:colorSeries
-                                                                    insets:buttonInsets];
-                objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionConfigure, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                [swipeButtons addObject:button];
+        if (entry.isConfigurable) {
+            NSString *buttonTitle = nil;
+            if (!hidesLabel) {
+                buttonTitle = NSLocalizedString(@"Configure", nil);
+            } else {
+                buttonTitle = @"";
             }
+            XXTESwipeButton *button = [XXTESwipeButton buttonWithTitle:buttonTitle icon:[UIImage imageNamed:@"XXTExplorerActionIconConfigure"]
+                                                       backgroundColor:colorSeries
+                                                                insets:buttonInsets];
+            objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionConfigure, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [swipeButtons addObject:button];
         }
-        if (entryReader.editable) {
+        if (entry.isEditable) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Edit", nil);
@@ -279,7 +274,7 @@ XXTE_END_IGNORE_PARTIAL
             objc_setAssociatedObject(button, XXTESwipeButtonAction, XXTExplorerEntryButtonActionEdit, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [swipeButtons addObject:button];
         }
-        if (entryDetail.isBundle) {
+        if (entry.isBundle) {
             NSString *buttonTitle = nil;
             if (!hidesLabel) {
                 buttonTitle = NSLocalizedString(@"Contents", nil);

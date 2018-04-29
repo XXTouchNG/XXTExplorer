@@ -6,25 +6,22 @@
 //  Copyright © 2017年 Zheng. All rights reserved.
 //
 
+#import <sys/stat.h>
+
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 #import "XXTExplorerViewController+ArchiverOperation.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
 #import "XXTExplorerDefaults.h"
+#import "XXTExplorerEntryService.h"
 
 #import "XXTEArchiveViewer.h"
 #import "XXTEExecutableViewer.h"
 
 #import "XXTENavigationController.h"
-
-#import <PromiseKit/PromiseKit.h>
-#import <PromiseKit/NSURLConnection+PromiseKit.h>
-
-#import "XXTExplorerEntryService.h"
 #import "XXTExplorerViewCell.h"
 #import "NSString+SHA1.h"
 
-#import <sys/stat.h>
 
 @implementation XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate)
 
@@ -45,35 +42,18 @@
 
 - (void)tableView:(UITableView *)tableView showDetailController:(UIViewController *)controller animated:(BOOL)animated {
     if ([controller isKindOfClass:[UIViewController class]] &&
-        [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
+        [controller conformsToProtocol:@protocol(XXTEDetailViewController)])
+    {
         UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
+        NSString *entryPath = viewer.entryPath;
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]])
         {
 #ifndef APPSTORE
-            UIViewController *blockVC = blockInteractions(self, YES);
-            [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": viewer.entryPath}]
-            .then(convertJsonString)
-            .then(^(NSDictionary *jsonDictionary) {
-                if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
-                    XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, viewer.entryPath);
-                } else {
-                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDictionary[@"message"]];
-                }
-            })
-            .catch(^(NSError *serverError) {
-                toastDaemonError(self, serverError);
-            })
-            .finally(^() {
-                blockInteractions(blockVC, NO);
-                [self loadEntryListData];
-                for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
-                    [self reconfigureCellAtIndexPath:indexPath];
-                }
-            });
+            [self performViewerExecutableActionForEntryAtPath:entryPath];
 #endif
         }
         else if ([viewer isKindOfClass:[XXTEArchiveViewer class]]) {
-            [self tableView:tableView unarchiveEntryCellTappedWithEntryPath:viewer.entryPath];
+            [self tableView:tableView unarchiveEntryCellTappedWithEntryPath:entryPath];
         }
         else
         {
@@ -88,7 +68,6 @@
                 [self.navigationController pushViewController:viewer animated:animated];
             }
         }
-        NSString *entryPath = viewer.entryPath;
         [self linkHistoryEntryAtPath:entryPath];
     }
 }
@@ -103,16 +82,11 @@
             navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
         }
-//        NSString *entryPath = viewer.entryPath;
-//        [self linkHistoryEntryAtPath:entryPath];
     }
 }
 
 - (void)linkHistoryEntryAtPath:(NSString *)entryPath {
-    if (self.historyMode)
-    {
-        return;
-    }
+    if (self.historyMode) return;
     NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
     NSString *historyPath = [XXTERootPath() stringByAppendingPathComponent:historyRelativePath];
     NSString *pathHash = [entryPath sha1String];

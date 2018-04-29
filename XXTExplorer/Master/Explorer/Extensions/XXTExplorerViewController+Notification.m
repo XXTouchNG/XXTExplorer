@@ -41,6 +41,7 @@
             ) {
             [self loadEntryListData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
             NSString *movedPath = aNotification.object;
             if (movedPath) {
                 [self.tableView reloadData];
@@ -67,6 +68,7 @@
                     } else {
                         [self selectCellEntryAtPath:movedPath animated:YES];
                     }
+                    
                 }
             }
         }

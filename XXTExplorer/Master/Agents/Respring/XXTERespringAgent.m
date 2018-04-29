@@ -28,6 +28,9 @@
         const char *args[] = {binary, "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
         posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
         waitpid(pid, &status, 0);
+        if (WIFEXITED(status)) {
+            
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             // DO NOTHING
         });

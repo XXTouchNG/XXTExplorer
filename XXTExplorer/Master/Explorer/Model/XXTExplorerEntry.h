@@ -65,6 +65,11 @@ extern NSString * const EntryMaskTypeBrokenSymlink;
 - (BOOL)isBundle;
 - (BOOL)isBrokenSymlink;
 
+- (BOOL)isRegistered;
+- (BOOL)isExecutable;
+- (BOOL)isEditable;
+- (BOOL)isConfigurable;
+
 #pragma mark - Localized Date
 
 - (NSString *)localizedStringOfCreationDate;

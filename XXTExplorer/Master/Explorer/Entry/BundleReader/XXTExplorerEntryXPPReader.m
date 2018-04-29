@@ -89,9 +89,9 @@
 }
 
 - (BOOL)setupWithPath:(NSString *)path {
-    _executable = YES;
     _editable = NO;
-    _configurable = YES;
+    _executable = NO;
+    _configurable = NO;
     
     // fetch bundle
     NSBundle *pathBundle = [self clearedBundleForPath:path];
@@ -117,29 +117,49 @@
         ![metaInfo[kXXTEBundleIdentifier] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEBundleName] ||
         ![metaInfo[kXXTEBundleName] isKindOfClass:[NSString class]] ||
-        !metaInfo[kXXTEExecutable] ||
-        ![metaInfo[kXXTEExecutable] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEBundleVersion] ||
         ![metaInfo[kXXTEBundleVersion] isKindOfClass:[NSString class]] ||
         !metaInfo[kXXTEBundleInfoDictionaryVersion] ||
         ![metaInfo[kXXTEBundleInfoDictionaryVersion] isKindOfClass:[NSString class]]
-        ) {
+        )
+    {
         return NO;
+    }
+    
+    if (metaInfo[kXXTEExecutable] &&
+        [metaInfo[kXXTEExecutable] isKindOfClass:[NSString class]])
+    {
+        _executable = YES;
+    }
+    
+    if (metaInfo[kXXTEMainInterfaceFile] &&
+        [metaInfo[kXXTEMainInterfaceFile] isKindOfClass:[NSString class]])
+    {
+        _configurable = YES;
+        _configurationName = metaInfo[kXXTEMainInterfaceFile];
     }
     
     // fetch localization
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSBundle *localizationBundle = pathBundle ? pathBundle : mainBundle;
     
-    _entryName = metaInfo[kXXTEBundleName];
-    NSString *localizedDescription = [mainBundle localizedStringForKey:(@"Version %@") value:nil table:(@"Meta")];
-    if (!localizedDescription)
-        localizedDescription = [localizationBundle localizedStringForKey:(@"Version %@") value:nil table:(@"Meta")];
-    _entryDescription = [NSString stringWithFormat:localizedDescription, metaInfo[kXXTEBundleVersion]];
+    {
+        _entryName = metaInfo[kXXTEBundleName];
+    }
+    
+    {
+        NSString *localizedDescription = [mainBundle localizedStringForKey:(@"Version %@") value:nil table:(@"Meta")];
+        if (!localizedDescription)
+            localizedDescription = [localizationBundle localizedStringForKey:(@"Version %@") value:nil table:(@"Meta")];
+        _entryDescription = [NSString stringWithFormat:localizedDescription, metaInfo[kXXTEBundleVersion]];
+    }
+    
     if (metaInfo[kXXTEBundleDisplayName] &&
-        [metaInfo[kXXTEBundleDisplayName] isKindOfClass:[NSString class]]) {
+        [metaInfo[kXXTEBundleDisplayName] isKindOfClass:[NSString class]])
+    {
         _entryDisplayName = metaInfo[kXXTEBundleDisplayName];
     }
+    
     if (metaInfo[kXXTEBundleIconFile] &&
         [metaInfo[kXXTEBundleIconFile] isKindOfClass:[NSString class]])
     {
@@ -148,15 +168,9 @@
     } else {
         _entryIconImage = [self.class defaultImage];
     }
+    
     _entryExtensionDescription = @"XXTouch Bundle";
     _entryViewerDescription = [XXTEExecutableViewer viewerName];
-    NSString *interfaceFile = metaInfo[kXXTEMainInterfaceFile];
-    if (interfaceFile)
-    {
-        _configurationName = interfaceFile;
-    } else {
-        _configurationName = nil;
-    }
     
     _metaKeys = @[ kXXTEBundleDisplayName, kXXTEBundleName, kXXTEBundleIdentifier,
                    kXXTEBundleVersion, kXXTEMinimumSystemVersion, kXXTEMaximumSystemVersion,

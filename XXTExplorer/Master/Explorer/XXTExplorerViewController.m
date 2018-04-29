@@ -517,28 +517,32 @@ XXTE_END_IGNORE_PARTIAL
             if ([tableView isEditing]) {
                 [self updateToolbarStatus];
             } else {
-                XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
-                NSString *entryPath = entryDetail.entryPath;
-                if (entryDetail.isMaskedDirectory)
+                XXTExplorerEntry *entry = self.entryList[indexPath.row];
+                NSString *entryPath = entry.entryPath;
+                if (entry.isMaskedDirectory)
                 {
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    [self performDictionaryActionForEntry:entryDetail];
+                    [self performDictionaryActionForEntry:entry];
                 }
                 else if (
-                         entryDetail.isMaskedRegular ||
-                         entryDetail.isBundle)
+                         entry.isMaskedRegular ||
+                         entry.isBundle)
                 {
-                    if ([self.class.explorerFileManager isReadableFileAtPath:entryPath]) {
-                        if ([self.class.explorerEntryService hasViewerForEntry:entryDetail]) {
+                    if ([self.class.explorerFileManager isReadableFileAtPath:entryPath])
+                    {
+                        if ([self.class.explorerEntryService hasViewerForEntry:entry])
+                        {
                             [tableView deselectRowAtIndexPath:indexPath animated:YES];
                             if (!XXTE_COLLAPSED)
                             {
                                 
                             } // TODO: remain selected state when being viewed in collapsed detail view controller
-                            [self performViewerActionForEntry:entryDetail];
-                        } else {
+                            [self performViewerActionForEntry:entry];
+                        }
+                        else
+                        {
                             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                            XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entryDetail];
+                            XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entry];
                             openWithController.delegate = self;
                             XXTENavigationController *navController = [[XXTENavigationController alloc] initWithRootViewController:openWithController];
                             XXTE_START_IGNORE_PARTIAL
@@ -557,10 +561,10 @@ XXTE_END_IGNORE_PARTIAL
                         [tableView deselectRowAtIndexPath:indexPath animated:YES];
                         toastMessage(self, NSLocalizedString(@"Access denied.", nil));
                     }
-                } else if (entryDetail.isBrokenSymlink)
+                } else if (entry.isBrokenSymlink)
                 { // broken symlink
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryDetail.localizedDisplayName]));
+                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entry.localizedDisplayName]));
                 }
                 else
                 { // not supported
@@ -670,13 +674,58 @@ XXTE_END_IGNORE_PARTIAL
 
 // Viewer Action
 
-- (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail {
-    [self performViewerActionForEntry:entryDetail animated:YES];
+- (void)performViewerActionForEntry:(XXTExplorerEntry *)entry {
+    [self performViewerActionForEntry:entry animated:YES];
 }
 
-- (void)performViewerActionForEntry:(XXTExplorerEntry *)entryDetail animated:(BOOL)animated {
-    UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entryDetail];
-    [self tableView:self.tableView showDetailController:viewer animated:animated];
+- (void)performViewerActionForEntry:(XXTExplorerEntry *)entry animated:(BOOL)animated {
+    if (entry.isExecutable)
+    { // if entry is executable, select it instead of viewer action
+#ifndef APPSTORE
+        [self performViewerExecutableActionForEntry:entry];
+#endif
+    }
+    else if (entry.isConfigurable)
+    { // if entry is configurable, configure it instead of viewer action
+        [self performUnchangedButtonAction:XXTExplorerEntryButtonActionConfigure forEntry:entry];
+    }
+    else
+    { // but, entry viewer
+        UITableView *tableView = self.tableView;
+        UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entry];
+        [self tableView:tableView showDetailController:viewer animated:animated];
+    }
+}
+
+- (void)performViewerExecutableActionForEntry:(XXTExplorerEntry *)entry
+{
+    NSString *entryPath = entry.entryPath;
+    [self performViewerExecutableActionForEntryAtPath:entryPath];
+}
+
+- (void)performViewerExecutableActionForEntryAtPath:(NSString *)entryPath
+{ // select executable entry
+    UITableView *tableView = self.tableView;
+    UIViewController *blockVC = blockInteractions(self, YES);
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}]
+    .then(convertJsonString)
+    .then(^(NSDictionary *jsonDictionary) {
+        if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
+            XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
+        } else {
+            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDictionary[@"message"]];
+        }
+    })
+    .catch(^(NSError *serverError) {
+        toastDaemonError(self, serverError);
+    })
+    .finally(^() {
+        blockInteractions(blockVC, NO);
+        [self loadEntryListData];
+        for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+            [self reconfigureCellAtIndexPath:indexPath];
+        }
+    });
 }
 
 // Accessory Action

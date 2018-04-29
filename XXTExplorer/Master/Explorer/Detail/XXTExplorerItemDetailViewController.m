@@ -24,6 +24,7 @@
 #import <PromiseKit/PromiseKit.h>
 
 #import "XXTExplorerEntryParser.h"
+#import "XXTExplorerEntryService.h"
 #import "XXTExplorerEntryReader.h"
 #import "XXTExplorerEntryBindingViewController.h"
 #import "XXTExplorerViewController.h"
@@ -517,12 +518,11 @@ static int sizingCancelFlag = 0;
         
     }
     
-    BOOL allowOwner = XXTEDefaultsBool(XXTExplorerAllowEditingFileOwnerKey, NO);
-    
 #ifndef APPSTORE
     
     // #6 - Owner
     
+    BOOL allowOwner = XXTEDefaultsBool(XXTExplorerAllowEditingFileOwnerKey, NO);
     if (allowOwner) {
         struct passwd *entryPWInfo = getpwuid(entryStat.st_uid);
         struct group *entryGRInfo = getgrgid(entryStat.st_gid);
@@ -905,11 +905,13 @@ static int sizingCancelFlag = 0;
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.nameField) {
-        NSString *text = textField.text;
-        NSRange dotRange = [text rangeOfString:@"." options:NSBackwardsSearch];
-        if (dotRange.location != NSNotFound) {
-            UITextRange *prefixRange = [textField textRangeFromPosition:textField.beginningOfDocument toPosition:[textField positionFromPosition:textField.beginningOfDocument offset:dotRange.location]];
-            [textField setSelectedTextRange:prefixRange];
+        if (self.entry.isRegistered) {
+            NSString *text = textField.text;
+            NSRange dotRange = [text rangeOfString:@"." options:NSBackwardsSearch];
+            if (dotRange.location != NSNotFound) {
+                UITextRange *prefixRange = [textField textRangeFromPosition:textField.beginningOfDocument toPosition:[textField positionFromPosition:textField.beginningOfDocument offset:dotRange.location]];
+                [textField setSelectedTextRange:prefixRange];
+            }
         }
     }
 }

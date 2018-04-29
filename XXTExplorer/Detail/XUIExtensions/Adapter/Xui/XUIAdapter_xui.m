@@ -124,8 +124,9 @@
                 value = lua_toNSValue(L, -1);
                 lua_pop(L, 1);
             }
+        } else {
+            lua_pop(L, 1);
         }
-        lua_pop(L, 1);
     }
     
     if ([value isKindOfClass:[NSDictionary class]]) {

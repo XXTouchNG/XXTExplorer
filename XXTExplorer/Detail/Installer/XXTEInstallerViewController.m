@@ -609,7 +609,7 @@ typedef enum : NSUInteger {
     
     {
         NSURL *bundleURL = [self.temporarilyEntryBundle bundleURL];
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:bundleURL userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox}]];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:bundleURL userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInbox, XXTENotificationViewImmediately: @(YES)}]];
     }
     
     [self performCleanAfterInstallation];

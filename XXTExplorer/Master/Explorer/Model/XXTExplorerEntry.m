@@ -9,8 +9,6 @@
 #import "XXTExplorerEntry.h"
 #import "XXTExplorerEntryReader.h"
 
-#import "XXTExplorerEntryService.h"
-
 NSString * const EntryTypeUnsupported = @"EntryTypeUnsupported";
 NSString * const EntryTypeRegular = @"EntryTypeRegular";
 NSString * const EntryTypeDirectory = @"EntryTypeDirectory";
@@ -97,11 +95,7 @@ NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
         XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES);
         if (hideNameExtension)
         {
-            NSString *nameExtension =
-            [self.entryName pathExtension];
-            BOOL isKnownExtension =
-            [[XXTExplorerEntryService sharedInstance] isRegisteredExtension:nameExtension];
-            if (isKnownExtension) {
+            if (self.isRegistered) {
                 return [self.entryName stringByDeletingPathExtension];
             }
         }
@@ -143,6 +137,22 @@ NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
 - (BOOL)isBrokenSymlink {
     return ([self.entryType isEqualToString:EntryTypeSymlink] &&
             [self.entryMaskType isEqualToString:EntryMaskTypeBrokenSymlink]);
+}
+
+- (BOOL)isRegistered {
+    return (self.entryReader != nil);
+}
+
+- (BOOL)isExecutable {
+    return self.entryReader.executable;
+}
+
+- (BOOL)isEditable {
+    return self.entryReader.editable;
+}
+
+- (BOOL)isConfigurable {
+    return self.entryReader.configurable;
 }
 
 #pragma mark - Localized Date

@@ -19,7 +19,7 @@
 + (instancetype)sharedInstance;
 - (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName;
 
-- (BOOL)isRegisteredExtension:(NSString *)ext;
+//- (BOOL)isRegisteredExtension:(NSString *)ext;
 
 - (BOOL)hasViewerForEntry:(XXTExplorerEntry *)entry;
 - (BOOL)hasEditorForEntry:(XXTExplorerEntry *)entry;

@@ -618,6 +618,9 @@ int xxt_system(const char *ctx)
     } else {
         int status = 0;
         waitpid(pid, &status, 0);
+//        if (WIFEXITED(status)) {
+//            status = WEXITSTATUS(status);
+//        }
         return status;
     }
 }

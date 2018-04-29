@@ -43,6 +43,9 @@
 		0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */; };
 		0F1E7C052077616A008B5B6C /* XXTExplorerItemRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1E7C042077616A008B5B6C /* XXTExplorerItemRepeatViewController.m */; };
 		0F1E7C062077616A008B5B6C /* XXTExplorerItemRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1E7C042077616A008B5B6C /* XXTExplorerItemRepeatViewController.m */; };
+		0F1F38042095C582007DB335 /* XXTEUIViewController+Reload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1F38022095C582007DB335 /* XXTEUIViewController+Reload.m */; };
+		0F1F38052095C582007DB335 /* XXTEUIViewController+Reload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1F38022095C582007DB335 /* XXTEUIViewController+Reload.m */; };
+		0F1F38062095C582007DB335 /* XXTEUIViewController+Reload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1F38022095C582007DB335 /* XXTEUIViewController+Reload.m */; };
 		0F222A16202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F222A18202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard */; };
 		0F222A1B202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
 		0F222A1C202F27F100EF2C27 /* UIViewController+DetailCloseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */; };
@@ -1361,6 +1364,8 @@
 		0F1DD1C51F11BC9300F1A66A /* XXTEScanLineAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEScanLineAnimation.m; sourceTree = "<group>"; };
 		0F1E7C032077616A008B5B6C /* XXTExplorerItemRepeatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerItemRepeatViewController.h; sourceTree = "<group>"; };
 		0F1E7C042077616A008B5B6C /* XXTExplorerItemRepeatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemRepeatViewController.m; sourceTree = "<group>"; };
+		0F1F38022095C582007DB335 /* XXTEUIViewController+Reload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+Reload.m"; sourceTree = "<group>"; };
+		0F1F38032095C582007DB335 /* XXTEUIViewController+Reload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+Reload.h"; sourceTree = "<group>"; };
 		0F222A17202F1C0F00EF2C27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.AppStore.storyboard; sourceTree = "<group>"; };
 		0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DetailCloseItem.h"; sourceTree = "<group>"; };
 		0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DetailCloseItem.m"; sourceTree = "<group>"; };
@@ -1562,7 +1567,7 @@
 		0F8811631FB6AF640004F20C /* XXTESegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESegmentedControl.h; sourceTree = "<group>"; };
 		0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESegmentedControl.m; sourceTree = "<group>"; };
 		0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = xml.tmLanguage; sourceTree = "<group>"; };
-		0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = XXTExplorer.entitlements; sourceTree = "<group>"; };
+		0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.plist.entitlements; path = XXTExplorer.entitlements; sourceTree = "<group>"; };
 		0F8ECD231FE7FE0800A5457C /* Mac Classic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Mac Classic.png"; sourceTree = "<group>"; };
 		0F8ECD251FE8016100A5457C /* Cobalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cobalt.png; sourceTree = "<group>"; };
 		0F8ECD271FE8016900A5457C /* Blackboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blackboard.png; sourceTree = "<group>"; };
@@ -3981,6 +3986,8 @@
 		D6863C551F7E275800A45CF7 /* ButtonAction */ = {
 			isa = PBXGroup;
 			children = (
+				0F1F38032095C582007DB335 /* XXTEUIViewController+Reload.h */,
+				0F1F38022095C582007DB335 /* XXTEUIViewController+Reload.m */,
 				D6863C561F7E275800A45CF7 /* XXTEUIViewController+OpenURL.h */,
 				D6863C5A1F7E275800A45CF7 /* XXTEUIViewController+OpenURL.m */,
 				D6863C591F7E275800A45CF7 /* XXTEUIViewController+LaunchScript.h */,
@@ -4952,6 +4959,7 @@
 				0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */,
 				0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */,
+				0F1F38062095C582007DB335 /* XXTEUIViewController+Reload.m in Sources */,
 				0F4EE36F1FC1A979003FF5FD /* XXTEInstallerViewController.m in Sources */,
 				0F8EDB5C1FB1F779003C92D6 /* XXTESnippetViewerController.m in Sources */,
 				0F8EDB5E1FB1F779003C92D6 /* XXTESwipeButton.m in Sources */,
@@ -5369,6 +5377,7 @@
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
 				0F6063E01F1142E90087822E /* XXTExplorerItemPicker.m in Sources */,
 				0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
+				0F1F38042095C582007DB335 /* XXTEUIViewController+Reload.m in Sources */,
 				0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */,
 				0F56900E1F1B022E009AF9FE /* XXTEArchiveViewer.m in Sources */,
 				0FFC8F0A1FCA94D90012C170 /* XXTEInstallerLoadingView.m in Sources */,
@@ -5698,6 +5707,7 @@
 				D60FE6D71FE2369300954818 /* XXTEScanViewController.m in Sources */,
 				D60FE6D81FE2369300954818 /* XXTExplorerItemPicker.m in Sources */,
 				D60FE6D91FE2369300954818 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */,
+				0F1F38052095C582007DB335 /* XXTEUIViewController+Reload.m in Sources */,
 				D60FE6DA1FE2369300954818 /* NSString+SHA1.m in Sources */,
 				D60FE6DB1FE2369300954818 /* XXTEArchiveViewer.m in Sources */,
 				D60FE6DC1FE2369300954818 /* XXTEInstallerLoadingView.m in Sources */,

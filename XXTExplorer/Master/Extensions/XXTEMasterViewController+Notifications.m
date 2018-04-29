@@ -99,22 +99,31 @@
                 }
             }
         } else if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
+            
             NSURL *inboxURL = aNotification.object;
+            
             @weakify(self);
             UIViewController *blockVC = blockInteractions(self, YES);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 @strongify(self);
+                
                 NSError *err = nil;
+                NSNumber *instantRun = userInfo[XXTENotificationViewImmediately];
+                if (!instantRun) instantRun = @(NO);
+                
                 NSString *lastComponent = [inboxURL lastPathComponent];
                 NSString *formerPath = [inboxURL path];
                 NSString *currentPath = XXTExplorerViewController.initialPath;
+                
                 XXTExplorerNavigationController *explorerNavigationController = (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
                 XXTExplorerViewController *topmostExplorerViewController = explorerNavigationController.topmostExplorerViewController;
                 if (topmostExplorerViewController) {
                     currentPath = topmostExplorerViewController.entryPath;
                 }
+                
                 NSString *lastComponentName = [lastComponent stringByDeletingPathExtension];
                 NSString *lastComponentExt = [lastComponent pathExtension];
+                
                 NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
                 NSUInteger testedIndex = 2;
                 struct stat inboxTestStat;
@@ -123,18 +132,22 @@
                     testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
                     testedIndex++;
                 }
+                
                 promiseFixPermission(currentPath, NO); // fix permission
+                
                 BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
                 dispatch_async_on_main_queue(^{
                     blockInteractions(blockVC, NO);
-                    if (result && err == nil)
-                    {
-                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:testedPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved, XXTENotificationViewImmediately: @(NO)}]];
+                    
+                    if (result && err == nil) {
+                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:testedPath userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeInboxMoved, XXTENotificationViewImmediately: instantRun}]];
                         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"File \"%@\" saved.", nil), lastComponent]);
                     } else {
                         toastError(self, err);
                     }
+                    
                 });
+                
             });
         }
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {

@@ -26,6 +26,6 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 - (BOOL)performButtonAction:(NSString *)buttonAction forEntryCell:(XXTESwipeTableCell *)cell;
-- (BOOL)performUnchangedButtonAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entryDetail;
+- (BOOL)performUnchangedButtonAction:(NSString *)buttonAction forEntry:(XXTExplorerEntry *)entry;
 
 @end

@@ -18,7 +18,11 @@
 
 + (PMKPromise *)promiseRunCommand:(NSString *)command {
     return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
-        resolve(@(xxt_system(command.UTF8String)));
+        int status = xxt_system(command.UTF8String);
+        if (WIFEXITED(status)) {
+            status = WEXITSTATUS(status);
+        }
+        resolve(@(status));
     }];
 }
 
@@ -29,7 +33,11 @@
         UIViewController *blockVC = blockInteractions(self, YES);
         [[self class] promiseRunCommand:command]
         .then(^(NSNumber *retCode) {
-            toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Command exit with code: %@", nil), retCode]);
+            if ([retCode intValue] == 0) {
+                toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+            } else {
+                toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Command exit with code: %@", nil), retCode]);
+            }
         })
         .catch(^(NSError *error) {
             toastError(self, error);
