@@ -13,35 +13,53 @@
 #import <XUI/XUI.h>
 #import <XUI/XUICellFactory.h>
 
+// to listen
+static NSString * const XUICallbackUIUpdated = @"XUICallbackUIUpdated";
+static NSString * const XUICallbackValueChanged = @"XUICallbackValueChanged";
 
-static NSString * const XUIEventUIUpdated = @"XUIEventUIUpdated";
-static NSString * const XUIEventValueChanged = @"XUIEventValueChanged";
-void XUINotificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+// to post
+static CFStringRef const XUIEventValueChanged = CFSTR("XUIEventValueChanged");
+static CFStringRef const XUIEventUIUpdated = CFSTR("XUIEventUIUpdated");
+
+void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *notificationName = (__bridge NSString *)(name);
-        if ([notificationName isEqualToString:XUIEventUIUpdated])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventUIUpdated object:nil userInfo:@{}];
-        }
-        else if ([notificationName isEqualToString:XUIEventValueChanged])
-        {
-            NSMutableArray <NSDictionary *> *changedPairs = [[NSMutableArray alloc] init];
-            NSString *valueSignalPath = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"XUIValueChanged.plist"];
-            NSArray <NSDictionary *> *valueSignalArray = [[NSArray alloc] initWithContentsOfFile:valueSignalPath];
-            for (NSDictionary *signalDict in valueSignalArray) {
-                if (![signalDict isKindOfClass:[NSDictionary class]]) {
-                    continue;
-                }
-                if (![signalDict[@"defaults"] isKindOfClass:[NSString class]] ||
-                    ![signalDict[@"key"] isKindOfClass:[NSString class]] ||
-                    ![signalDict[@"value"] isKindOfClass:[NSString class]])
-                {
-                    continue;
-                }
-                [changedPairs addObject:signalDict];
+        XUICellFactory *cellFactory = (__bridge XUICellFactory *)(object);
+        [cellFactory setNeedsReload];
+        [cellFactory reloadIfNeeded];
+    });
+}
+
+void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+    
+    static NSString *valueSignalPath = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        valueSignalPath = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"XUICallbackValueChanged.plist"];
+    });
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        XUICellFactory *cellFactory = (__bridge XUICellFactory *)(object);
+        NSMutableArray <NSDictionary *> *changedPairs = [[NSMutableArray alloc] init];
+        NSArray <NSDictionary *> *valueSignalArray = [[NSArray alloc] initWithContentsOfFile:valueSignalPath];
+        for (NSDictionary *signalDict in valueSignalArray) {
+            if (![signalDict isKindOfClass:[NSDictionary class]]) {
+                continue;
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventValueChanged object:[changedPairs copy] userInfo:@{}];
+            if (![signalDict[@"defaults"] isKindOfClass:[NSString class]] ||
+                ![signalDict[@"key"] isKindOfClass:[NSString class]] ||
+                ![signalDict[@"value"] isKindOfClass:[NSString class]])
+            {
+                continue;
+            }
+            [changedPairs addObject:signalDict];
         }
+        if (valueSignalArray.count > 0) {
+            for (NSDictionary *signalDict in valueSignalArray) {
+                [cellFactory updateRelatedCellsForConfigurationPair:signalDict];
+            }
+        }
+        
     });
 }
 
@@ -83,9 +101,15 @@ void XUINotificationCallback(CFNotificationCenterRef center, void *observer, CFS
 
 - (void)setupUI {
     self.hidesBottomBarWhenPushed = YES;
+    
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallbackValueChanged, ((__bridge CFStringRef)XUICallbackValueChanged), (__bridge const void *)(self.cellFactory), CFNotificationSuspensionBehaviorDeliverImmediately);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallbackUIUpdated, ((__bridge CFStringRef)XUICallbackUIUpdated), (__bridge const void *)(self.cellFactory), CFNotificationSuspensionBehaviorDeliverImmediately);
 }
 
 - (void)dealloc {
+    
+    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), ((__bridge CFStringRef)XUICallbackUIUpdated), (__bridge const void *)(self.cellFactory));
+    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), ((__bridge CFStringRef)XUICallbackValueChanged), (__bridge const void *)(self.cellFactory));
     
 }
 
@@ -108,15 +132,13 @@ void XUINotificationCallback(CFNotificationCenterRef center, void *observer, CFS
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallback, ((__bridge CFStringRef)XUIEventValueChanged), (__bridge const void *)(self.cellFactory), CFNotificationSuspensionBehaviorDeliverImmediately);
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallback, ((__bridge CFStringRef)XUIEventUIUpdated), (__bridge const void *)(self.cellFactory), CFNotificationSuspensionBehaviorDeliverImmediately);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventValueChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventUIUpdated object:nil];
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), ((__bridge CFStringRef)XUIEventUIUpdated), (__bridge const void *)(self.cellFactory));
-    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), ((__bridge CFStringRef)XUIEventValueChanged), (__bridge const void *)(self.cellFactory));
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
 }
@@ -139,6 +161,26 @@ void XUINotificationCallback(CFNotificationCenterRef center, void *observer, CFS
             [self dismissViewController:aNotification];
         }
     }
+}
+
+- (void)handleXUINotifications:(NSNotification *)aNotification {
+    
+    if ([aNotification.name isEqualToString:XUINotificationEventValueChanged])
+    {
+        static NSString *valueSignalPath = nil;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            valueSignalPath = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"XUIEventValueChanged.plist"];
+        });
+        
+        NSMutableArray <NSDictionary *> *signalArray = [[NSMutableArray alloc] init];
+        if (aNotification.userInfo)
+            [signalArray addObject:aNotification.userInfo];
+        [signalArray writeToFile:valueSignalPath atomically:YES];
+        
+        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), XUIEventValueChanged, /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
+    }
+    
 }
 
 @end

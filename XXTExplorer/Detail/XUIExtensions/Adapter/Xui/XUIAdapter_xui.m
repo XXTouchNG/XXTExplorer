@@ -95,10 +95,24 @@
     assert([specComponent isKindOfClass:[NSString class]] && specComponent.length > 0);
     NSString *specKey = cell.xui_key;
     if (!specKey) return;
-    assert ([specKey isKindOfClass:[NSString class]] && specKey.length > 0);
+    assert([specKey isKindOfClass:[NSString class]] && specKey.length > 0);
     id specValue = cell.xui_value;
     [self setObject:specValue forKey:specKey Defaults:specComponent];
-    [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventValueChanged object:cell userInfo:@{}];
+    
+    {
+        NSMutableDictionary <NSString *, id> *configurationPair = [[NSMutableDictionary alloc] init];
+        if (cell.xui_value) configurationPair[@"value"] = cell.xui_value;
+        if (cell.xui_key) configurationPair[@"key"] = cell.xui_key;
+        if (cell.xui_defaults) configurationPair[@"defaults"] = cell.xui_defaults;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventValueChanged object:cell userInfo:[configurationPair copy]];
+        
+        NSString *customNotificationName = cell.xui_postNotification;
+        if (customNotificationName.length)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:customNotificationName object:cell userInfo:[configurationPair copy]];
+        }
+    }
 }
 
 - (NSDictionary *)rootEntryWithError:(NSError *__autoreleasing *)error {

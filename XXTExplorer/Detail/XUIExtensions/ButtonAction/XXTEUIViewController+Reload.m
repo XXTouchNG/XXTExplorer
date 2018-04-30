@@ -16,7 +16,7 @@
 @implementation XXTEUIViewController (Reload)
 
 - (NSNumber *)xui_Reload:(XUIButtonCell *)cell {
-    [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventUIUpdated object:cell userInfo:@{}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:XUINotificationEventUIUpdated object:cell userInfo:nil];
     return @(YES);
 }
 
