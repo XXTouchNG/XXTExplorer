@@ -802,7 +802,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     self.highlightEnabled = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES); // config
     if ([self isHighlightEnabled]) {
         NSString *wholeString = self.textView.text;
-        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 0.6);
+        UIViewController *blockVC = blockInteractions(self, YES);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSMutableArray *rangesArray = [[NSMutableArray alloc] init];
             NSMutableArray *attributesArray = [[NSMutableArray alloc] init];

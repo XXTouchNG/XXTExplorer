@@ -139,6 +139,7 @@ XXTE_END_IGNORE_PARTIAL
         return;
     }
     _isRequesting = YES;
+    UIViewController *blockController = blockInteractionsWithToast(self, YES, _firstLoaded);
     PMKPromise *filterPromise = nil;
     if (self.searchWord.length > 0) {
         filterPromise = [RMProject filteredListWithKeyword:self.searchWord atPage:(_currentPage + 1) itemsPerPage:RMCloudListItemsPerPage];
@@ -175,6 +176,7 @@ XXTE_END_IGNORE_PARTIAL
         }
         _isRequesting = NO;
         [self.pawAnimation setHidden:YES];
+        blockInteractions(blockController, NO);
     });
 }
 

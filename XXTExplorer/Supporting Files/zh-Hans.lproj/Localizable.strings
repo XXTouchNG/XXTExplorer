@@ -657,7 +657,7 @@
 "Edit" = "编辑";
 
 /* No comment provided by engineer. */
-"Edit After Creating Item" = "创建项目后编辑";
+"Edit Upon Creating" = "创建项目后编辑";
 
 /* No comment provided by engineer. */
 "Editing any properties in this section is not supported." = "暂不支持更改此区域中的任何属性.";

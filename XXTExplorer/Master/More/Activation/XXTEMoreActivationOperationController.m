@@ -78,7 +78,7 @@
 //}
 
 - (void)reloadDynamicTableViewData {
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_volume_action_conf") JSON:@{}]
             .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
                 return jsonDictionary[@"data"];
@@ -162,7 +162,7 @@
     if (tableView == self.tableView) {
         if (indexPath.section == 0) {
             NSUInteger operationIndex = (NSUInteger) indexPath.row;
-            UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+            UIViewController *blockVC = blockInteractions(self, YES);
             NSString *commandUrl = [NSString stringWithFormat:uAppDaemonCommandUrl(@"set_%@_action"), operationKeyNames[self.actionIndex]];
             [NSURLConnection POST:commandUrl JSON:@{@"action": @(operationIndex)}]
                     .then(convertJsonString).then(^(NSDictionary *jsonDictionary) {

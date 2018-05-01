@@ -14,7 +14,7 @@
 #import "XXTEMoreAddressCell.h"
 #import <PromiseKit/PromiseKit.h>
 
-#import "XXTEMoreSwitchCell.h"
+#import "XXTEMoreLinkCell.h"
 #import "UIControl+BlockTarget.h"
 
 
@@ -38,7 +38,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, assign) kXXTExplorerCreateItemViewItemType selectedItemType;
 @property (nonatomic, strong) XUIViewShaker *itemNameShaker;
-@property (nonatomic, assign) BOOL editAfterCreatingItem;
+@property (nonatomic, assign) BOOL editingUponCreating;
 
 @end
 
@@ -87,7 +87,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)setup {
-    _editAfterCreatingItem = YES;
+    _editingUponCreating = YES;
 }
 
 #pragma mark - UIViewController
@@ -154,17 +154,9 @@ typedef enum : NSUInteger {
     self.nameField = cell1.nameField;
     self.itemNameShaker = [[XUIViewShaker alloc] initWithView:self.nameField];
     
-    XXTEMoreSwitchCell *cell1_2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
-    cell1_2.titleLabel.text = NSLocalizedString(@"Edit After Creating Item", nil);
-    cell1_2.optionSwitch.on = self.editAfterCreatingItem;
-    {
-        @weakify(self);
-        [cell1_2.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
-            @strongify(self);
-            UISwitch *optionSwitch = (UISwitch *)sender;
-            self.editAfterCreatingItem = optionSwitch.on;
-        }];
-    }
+    XXTEMoreLinkCell *cell1_2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
+    cell1_2.titleLabel.text = NSLocalizedString(@"Edit Upon Creating", nil);
+    cell1_2.accessoryType = self.editingUponCreating ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
@@ -199,7 +191,7 @@ typedef enum : NSUInteger {
 #pragma mark - Getters
 
 - (BOOL)editImmediately {
-    return (_editAfterCreatingItem &&
+    return (_editingUponCreating &&
             (
              self.selectedItemType == kXXTExplorerCreateItemViewItemTypeLUA ||
              self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT
@@ -286,7 +278,19 @@ typedef enum : NSUInteger {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
+        if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexName) {
+            if (indexPath.row == 1) {
+                XXTEMoreLinkCell *cell = ((XXTEMoreLinkCell *)staticCells[indexPath.section][indexPath.row]);
+                if (cell.accessoryType == UITableViewCellAccessoryNone) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    self.editingUponCreating = YES;
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    self.editingUponCreating = NO;
+                }
+            }
+        }
+        else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
             self.selectedItemType = (NSUInteger) indexPath.row;
             for (UITableViewCell *cell in tableView.visibleCells) {
                 cell.accessoryType = UITableViewCellAccessoryNone;
@@ -297,7 +301,7 @@ typedef enum : NSUInteger {
         else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];

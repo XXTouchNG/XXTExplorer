@@ -134,7 +134,7 @@ static void * activatorHandler = nil;
 }
 
 - (void)reloadDynamicTableViewData {
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     [PMKPromise promiseWithValue:self]
     .then(^(id value) {
         return [NSURLConnection POST:uAppDaemonCommandUrl(@"get_user_conf") JSON:@{}];
@@ -349,7 +349,7 @@ static void * activatorHandler = nil;
 - (void)optionSwitchChanged:(UISwitch *)sender {
     if (sender == self.activationSwitch) {
         BOOL changeToStatus = sender.on;
-        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+        UIViewController *blockVC = blockInteractions(self, YES);
         @weakify(self);
         [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:@{ @"device_control_toggle": @(changeToStatus) }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             @strongify(self);

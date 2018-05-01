@@ -287,38 +287,40 @@ NSDictionary *uAppConstEnvp(void) {
 
 #pragma mark - Interface
 
-UIViewController *blockInteractionsWithDelay(UIViewController *viewController, BOOL shouldBlock, NSTimeInterval delay) {
+UIViewController *blockInteractionsWithToast(UIViewController *viewController, BOOL shouldBlock, BOOL shouldToast) {
     if (!viewController) return nil;
-    UIViewController *parentController = viewController.tabBarController;
-    if (!parentController) {
-        parentController = viewController.navigationController;
+    NSMutableArray <UIViewController *> *viewControllerToBlock = [NSMutableArray array];
+    NSMutableArray <UIView *> *viewToBlock = [NSMutableArray array];
+    if (viewController.tabBarController.view) {
+        [viewControllerToBlock addObject:viewController.tabBarController];
+        [viewToBlock addObject:viewController.tabBarController.view];
     }
-    if (!parentController) {
-        parentController = viewController;
+    if (viewController.navigationController.view) {
+        [viewControllerToBlock addObject:viewController.navigationController];
+        [viewToBlock addObject:viewController.navigationController.view];
     }
-    UIView *viewToBlock = parentController.view;
-    [NSObject cancelPreviousPerformRequestsWithTarget:viewToBlock selector:@selector(makeToastActivity:) object:XXTEToastPositionCenter];
-    [NSObject cancelPreviousPerformRequestsWithTarget:viewToBlock selector:@selector(hideToastActivity) object:XXTEToastPositionCenter];
+    if (viewController.view) {
+        [viewControllerToBlock addObject:viewController];
+        [viewToBlock addObject:viewController.view];
+    }
     if (shouldBlock) {
-        viewToBlock.userInteractionEnabled = NO;
-        if (delay > 0) {
-            [viewToBlock performSelector:@selector(makeToastActivity:) withObject:XXTEToastPositionCenter afterDelay:delay];
-        } else {
-            [viewToBlock makeToastActivity:XXTEToastPositionCenter];
+        UIView *view = viewToBlock[0];
+        view.userInteractionEnabled = NO;
+        if (shouldToast)
+        {
+            [view makeToastActivity:XXTEToastPositionCenter];
         }
     } else {
-        if (delay > 0) {
-            [viewToBlock performSelector:@selector(hideToastActivity) withObject:nil afterDelay:delay];
-        } else {
-            [viewToBlock hideToastActivity];
+        for (UIView *view in viewToBlock) {
+            [view hideToastActivity];
+            view.userInteractionEnabled = YES;
         }
-        viewToBlock.userInteractionEnabled = YES;
     }
-    return parentController;
+    return [viewControllerToBlock firstObject];
 }
 
 UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock) {
-    return blockInteractionsWithDelay(viewController, shouldBlock, 0.0);
+    return blockInteractionsWithToast(viewController, shouldBlock, YES);
 }
 
 BOOL isiPhoneX() {

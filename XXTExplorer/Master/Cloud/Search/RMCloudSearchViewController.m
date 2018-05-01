@@ -146,6 +146,7 @@ XXTE_END_IGNORE_PARTIAL
         return;
     }
     _isRequesting = YES;
+    UIViewController *blockController = blockInteractionsWithToast(self, YES, NO);
     [RMHotWord hotTrendsWithAmount:RMCloudSearchTrendsMaximumCount]
     .then(^ (NSArray <RMHotWord *> *hotWords) {
         if (hotWords.count > 0) {
@@ -170,6 +171,7 @@ XXTE_END_IGNORE_PARTIAL
     .finally(^ () {
         _isRequesting = NO;
         [self.pawAnimation setHidden:YES];
+        blockInteractions(blockController, NO);
     });
 }
 

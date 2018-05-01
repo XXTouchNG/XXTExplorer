@@ -19,7 +19,7 @@
 			<key>label</key>
 			<string>User&apos;s Guide</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com/docs/manual</string>
+			<string>https://kb.xxtouch.com/ABC.html</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -27,39 +27,39 @@
 			<key>label</key>
 			<string>Update Logs</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com/docs/updates</string>
+			<string>https://kb.xxtouch.com/UpdateLogs.html</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>Link</string>
 			<key>label</key>
-			<string>Developer Reference</string>
+			<string>Developer References</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com/docs/dev</string>
+			<string>https://kb.xxtouch.com/Handbook/index.html</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>Link</string>
 			<key>label</key>
-			<string>Open API Reference</string>
+			<string>OpenAPI References</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com/docs/openapi</string>
+			<string>https://kb.xxtouch.com/OpenAPI/index.html</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>Link</string>
 			<key>label</key>
-			<string>Code Snippet Reference</string>
+			<string>XPP References</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com/docs/codesnippet</string>
+			<string>https://kb.xxtouch.com/XPP/index.html</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>Link</string>
 			<key>label</key>
-			<string>XXTouch UI (XUI) Reference</string>
+			<string>XUI References</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com/docs/xui</string>
+			<string>https://kb.xxtouch.com/XUI/index.html</string>
 		</dict>
 	</array>
 	<key>stringsTable</key>

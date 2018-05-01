@@ -122,7 +122,7 @@
 }
 
 - (void)reloadDynamicTableViewData {
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_startup_conf") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         @strongify(self);
@@ -217,7 +217,7 @@
             if (indexPath.row == 0) {
                 NSString *addressText = self.bootScriptPath;
                 if (addressText && addressText.length > 0) {
-                    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                    UIViewController *blockVC = blockInteractions(self, YES);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:addressText];
@@ -272,7 +272,7 @@
         else
             changeToCommand = @"set_startup_run_off";
         @weakify(self);
-        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+        UIViewController *blockVC = blockInteractions(self, YES);
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             @strongify(self);
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
@@ -306,7 +306,7 @@
 #pragma mark - XXTExplorerItemPickerDelegate
 
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_startup_script_file") JSON:@{ @"filename": path }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         @strongify(self);

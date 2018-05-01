@@ -202,7 +202,7 @@ typedef enum : NSUInteger {
         if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexDetail) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];
@@ -216,7 +216,7 @@ typedef enum : NSUInteger {
         } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                UIViewController *blockVC = blockInteractions(self, YES);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];

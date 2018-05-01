@@ -212,7 +212,7 @@ static CGFloat XXTEScanVOffset = -22.0;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     {
-        blockInteractionsWithDelay(self, NO, .6f);
+        blockInteractions(self, NO);
         [self performSelector:@selector(startAnimation) withObject:nil afterDelay:.6f];
     }
 }
@@ -441,6 +441,7 @@ static CGFloat XXTEScanVOffset = -22.0;
     BOOL loadResult = [self loadLayerFrameWithSelectedState:(!sender.selected)];
     if (!loadResult) {
         toastMessage(self, NSLocalizedString(@"Cannot connect to video device.", nil));
+        sender.enabled = YES;
         return;
     }
     sender.selected = !sender.selected;

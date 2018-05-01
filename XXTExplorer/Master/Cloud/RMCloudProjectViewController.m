@@ -150,6 +150,7 @@ XXTE_END_IGNORE_PARTIAL
         return;
     }
     _isRequesting = YES;
+    UIViewController *blockController = blockInteractionsWithToast(self, YES, NO);
     [RMProject projectWithID:self.projectID]
     .then(^ (RMProject *model) {
         self.project = model;
@@ -174,6 +175,7 @@ XXTE_END_IGNORE_PARTIAL
     .finally(^ () {
         _isRequesting = NO;
         [self.pawAnimation setHidden:YES];
+        blockInteractions(blockController, NO);
     });
 }
 
@@ -516,7 +518,7 @@ XXTE_END_IGNORE_PARTIAL
                         @weakify(self);
                         void (^copyBlock)(NSString *) = ^(NSString *textToCopy) {
                             @strongify(self);
-                            UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+                            UIViewController *blockVC = blockInteractions(self, YES);
                             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                                     [[UIPasteboard generalPasteboard] setString:textToCopy];
@@ -716,7 +718,7 @@ XXTE_END_IGNORE_PARTIAL
            @"deviceid": @"udid",
            @"devtype": @"devtype",
            };
-        UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+        UIViewController *blockVC = blockInteractions(self, YES);
         [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
         .then(convertJsonString)
         .then(^(NSDictionary *jsonDictionary) {

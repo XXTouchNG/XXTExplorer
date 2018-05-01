@@ -166,7 +166,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)loadDynamicUserDefaults {
 #ifndef APPSTORE
     
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         for (NSString *metaKey in self.defaultsMeta) {
             NSArray <NSDictionary *> *metaArray = self.defaultsMeta[metaKey];
@@ -374,7 +374,7 @@ XXTE_END_IGNORE_PARTIAL
     
 #ifndef APPSTORE
     
-    UIViewController *blockVC = blockInteractionsWithDelay(self, YES, 2.0);
+    UIViewController *blockVC = blockInteractions(self, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
     .then(convertJsonString)
