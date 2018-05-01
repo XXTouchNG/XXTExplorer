@@ -7,8 +7,9 @@
 //
 
 #import "XXTECommonWebViewController.h"
+#import <LGAlertView/LGAlertView.h>
 
-@interface XXTECommonWebViewController ()
+@interface XXTECommonWebViewController () <WKUIDelegate>
 
 @end
 
@@ -56,11 +57,12 @@
     }
     
     @weakify(self);
-    if (@available(iOS 8.0, *)) {
+    if (@available(iOS 9.0, *)) {
         self.wk_shouldStartLoadRequestHandler = ^BOOL(NSURLRequest *request, WKNavigationType navigationType) {
             @strongify(self);
             NSURL *url = request.URL;
-            if ([url.scheme isEqualToString:@"xxt"]) {
+            NSArray <NSString *> *allowedSchemes = @[@"xxt", @"cydia"];
+            if ([allowedSchemes containsObject:url.scheme]) {
                 [self dismissViewControllerAnimated:YES completion:^{
                     if ([[UIApplication sharedApplication] canOpenURL:url])
                     {
@@ -81,8 +83,11 @@
     
     if (self.webView) {
         self.webView.opaque = NO;
-    } else {
-        self.wkWebView.opaque = NO;
+    } else if (self.wkWebView) {
+        if (@available(iOS 9.0, *)) {
+            self.wkWebView.opaque = NO;
+            self.wkWebView.UIDelegate = self;
+        }
     }
 
     XXTE_START_IGNORE_PARTIAL
@@ -95,6 +100,79 @@
 
 - (void)showPlaceholderTitle {
     
+}
+
+#pragma mark - WKUIDelegate
+
+- (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
+{
+    if (webView == self.wkWebView) {
+        if (![navigationAction.targetFrame isMainFrame]) {
+            [webView loadRequest:navigationAction.request];
+        }
+    }
+    return nil;
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    if (webView == self.wkWebView) {
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"From \"%@\"", nil), webView.URL.host] message:message style:LGAlertViewStyleAlert buttonTitles:@[ NSLocalizedString(@"OK", nil) ] cancelButtonTitle:nil destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+            if (completionHandler) {
+                completionHandler();
+            }
+            [alertView dismissAnimated];
+        } cancelHandler:nil destructiveHandler:nil];
+        [alertView showAnimated];
+    }
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler
+{
+    if (webView == self.wkWebView) {
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"From \"%@\"", nil), webView.URL.host] message:message style:LGAlertViewStyleAlert buttonTitles:@[ NSLocalizedString(@"Confirm", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+            if (completionHandler) {
+                completionHandler(YES);
+            }
+            [alertView dismissAnimated];
+        } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+            if (completionHandler) {
+                completionHandler(NO);
+            }
+            [alertView dismissAnimated];
+        } destructiveHandler:nil];
+        [alertView showAnimated];
+    }
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler
+{
+    if (webView == self.wkWebView) {
+        LGAlertView *alertView = [[LGAlertView alloc] initWithTextFieldsAndTitle:[NSString stringWithFormat:NSLocalizedString(@"From \"%@\"", nil), webView.URL.host] message:prompt numberOfTextFields:1 textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
+            textField.text = defaultText;
+        } buttonTitles:@[ NSLocalizedString(@"Confirm", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+            if (completionHandler) {
+                UITextField *textField = [alertView.textFieldsArray firstObject];
+                completionHandler(textField.text);
+            }
+            [alertView dismissAnimated];
+        } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+            if (completionHandler) {
+                completionHandler(nil);
+            }
+            [alertView dismissAnimated];
+        } destructiveHandler:nil];
+        [alertView showAnimated];
+    }
+}
+
+- (void)webViewDidClose:(WKWebView *)webView {
+    if (self.navigationController && self.navigationController.topViewController && self.navigationController.topViewController != self)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Memory
