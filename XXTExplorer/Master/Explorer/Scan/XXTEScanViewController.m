@@ -19,9 +19,13 @@
 
 #import "XXTEScanLineAnimation.h"
 #import "XXTEImagePickerController.h"
+#import "UIImage+ColoredImage.h"
 
+
+static CGFloat XXTEScanVOffset = -22.0;
 
 @interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
+
 @property(nonatomic, strong) AVCaptureSession *scanSession;
 @property(nonatomic, strong) AVCaptureDevice *scanDevice;
 @property(nonatomic, strong) AVCaptureDeviceInput *scanInput;
@@ -34,22 +38,29 @@
 @property(nonatomic, assign) CGRect cropRect;
 @property(nonatomic, strong) XXTEScanLineAnimation *scanLineAnimation;
 
-@property(nonatomic, assign) BOOL layerLoaded;
+@property(nonatomic, strong) UIButton *lightButton;
+@property(nonatomic, strong) UIButton *flipButton;
 
 @end
 
 @implementation XXTEScanViewController {
-//    BOOL firstTimeLoaded;
+    
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        
+    }
+    return self;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          [self reloadCaptureSceneWithSize:size];
-//         self.visualEffectView.alpha = 1.f;
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-//         self.visualEffectView.alpha = 0.f;
+         
      }];
     
     XXTE_START_IGNORE_PARTIAL
@@ -67,7 +78,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.layerLoaded = NO;
 
     self.title = NSLocalizedString(@"Scan", nil);
     self.view.backgroundColor = [UIColor blackColor];
@@ -75,6 +85,21 @@
     self.extendedLayoutIncludesOpaqueBars = YES;
 
     [self.view addSubview:self.maskView];
+    [self.view addSubview:self.lightButton];
+    [self.view addSubview:self.flipButton];
+    
+    [self.view addConstraints:@[
+      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1.0 constant:16.0],
+      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
+      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
+      ]];
+    [self.view addConstraints:@[
+      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1.0 constant:-16.0],
+      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
+      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
+      ]];
     
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
@@ -95,7 +120,6 @@
     XXTE_END_IGNORE_PARTIAL
     
     [self fetchVideoPermission];
-//    [self reloadCaptureSceneWithSize:self.view.bounds.size];
 }
 
 - (void)reloadCaptureSceneWithSize:(CGSize)toSize {
@@ -107,9 +131,9 @@
     CGFloat minLength = MIN(oldSize.width, oldSize.height);
     CGSize size = CGSizeMake(maxLength, maxLength);
     CGFloat rectWidth = minLength / 3 * 2;
-
-    CGPoint pA = CGPointMake(size.width / 2 - rectWidth / 2, size.height / 2 - rectWidth / 2);
-    CGPoint pD = CGPointMake(size.width / 2 + rectWidth / 2, size.height / 2 + rectWidth / 2);
+    
+    CGPoint pA = CGPointMake(size.width / 2 - rectWidth / 2, (size.height / 2 - rectWidth / 2) + XXTEScanVOffset);
+    CGPoint pD = CGPointMake(size.width / 2 + rectWidth / 2, (size.height / 2 + rectWidth / 2) + XXTEScanVOffset);
 
     // Begin Context
     UIGraphicsBeginImageContextWithOptions(size, NO, scale);
@@ -164,22 +188,25 @@
     // Generate Image
     UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
     self.maskView.image = returnImage;
 
-    AVCaptureConnection *previewLayerConnection = self.scanLayer.connection;
-    if ([previewLayerConnection isVideoOrientationSupported])
-        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
+    AVCaptureConnection *layerConnection = self.scanLayer.connection;
+    if ([layerConnection isVideoOrientationSupported])
+        [layerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
     self.scanLineAnimation.animationRect = self.cropRect;
-
     self.scanLayer.frame = self.view.layer.bounds;
+    
+    [self reloadLightButtonStatus];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    if (firstTimeLoaded) {
-        [self reloadCaptureSceneWithSize:self.view.bounds.size];
-//    }
+    [self reloadCaptureSceneWithSize:self.view.bounds.size];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -188,9 +215,6 @@
         blockInteractionsWithDelay(self, NO, .6f);
         [self performSelector:@selector(startAnimation) withObject:nil afterDelay:.6f];
     }
-//    if (!firstTimeLoaded) {
-//        firstTimeLoaded = YES;
-//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -206,6 +230,8 @@
     {
         blockInteractions(self, YES);
     }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)startAnimation {
@@ -222,68 +248,75 @@
 
 - (void)continueScan {
     [self startAnimation];
-    if (self.scanSession && ![self.scanSession isRunning]) {
+    if (self.scanSession != nil && ![self.scanSession isRunning]) {
         [self.scanSession startRunning];
     }
 }
 
 - (void)pauseScan {
     [self stopAnimation];
-    if (self.scanSession && [self.scanSession isRunning]) {
+    if (self.scanSession != nil && [self.scanSession isRunning]) {
         [self.scanSession stopRunning];
     }
 }
 
-- (BOOL)loadLayerFrame {
-    if (!self.layerLoaded) {
-        if (!self.scanLayer) {
-            return NO;
-        }
-        self.layerLoaded = YES;
-        self.scanLayer.frame = self.view.layer.bounds;
-        [self.view.layer insertSublayer:self.scanLayer atIndex:0];
-        [self.scanSession startRunning];
-    }
+- (BOOL)loadLayerFrameWithSelectedState:(BOOL)state
+{
+    AVCaptureDevice *scanDevice = (state) ? [self frontCamera] : [self backCamera];
+    if (!scanDevice)
+        return NO;
+    _scanDevice = scanDevice;
+    AVCaptureSession *scanSession = [self reloadScanSessionWithCamera:scanDevice];
+    if (!scanSession)
+        return NO;
+    if (_scanLayer) [_scanLayer removeFromSuperlayer];
+    AVCaptureVideoPreviewLayer *scanLayer = [AVCaptureVideoPreviewLayer layerWithSession:scanSession];
+    if (!scanLayer)
+        return NO;
+    scanLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    scanLayer.frame = self.view.layer.bounds;
+    _scanLayer = scanLayer;
+    [self.view.layer insertSublayer:scanLayer atIndex:0];
+    [scanSession startRunning];
     return YES;
 }
 
 #pragma mark - UIView Getters
 
-- (AVCaptureSession *)scanSession {
-    if (!_scanSession) {
-        AVCaptureSession *scanSession = [[AVCaptureSession alloc] init];
-        if ([scanSession canSetSessionPreset:AVCaptureSessionPresetHigh]) {
-            [scanSession setSessionPreset:AVCaptureSessionPresetHigh];
-        }
-        if ([scanSession canAddInput:self.scanInput]) {
-            [scanSession addInput:self.scanInput];
-        } else {
-            return nil;
-        }
-        if ([scanSession canAddOutput:self.scanOutput]) {
-            [scanSession addOutput:self.scanOutput];
-        } else {
-            return nil;
-        }
-        if ([self.scanOutput.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeQRCode]) {
-            self.scanOutput.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
-        }
-        CGSize viewSize = self.view.bounds.size;
-        self.scanOutput.rectOfInterest = CGRectMake(self.cropRect.origin.y / viewSize.height,
-                self.cropRect.origin.x / viewSize.width,
-                self.cropRect.size.height / viewSize.height,
-                self.cropRect.size.width / viewSize.width);
-        _scanSession = scanSession;
+- (AVCaptureSession *)reloadScanSessionWithCamera:(AVCaptureDevice *)scanDevice {
+    if (!scanDevice) {
+        return nil;
     }
-    return _scanSession;
-}
-
-- (AVCaptureDevice *)scanDevice {
-    if (!_scanDevice) {
-        AVCaptureDevice *scanDevice = [self backCamera];
-        _scanDevice = scanDevice;
+    AVCaptureSession *scanSession = [[AVCaptureSession alloc] init];
+    if ([scanSession canSetSessionPreset:AVCaptureSessionPresetHigh]) {
+        [scanSession setSessionPreset:AVCaptureSessionPresetHigh];
     }
-    return _scanDevice;
+    NSError *inputError = nil;
+    AVCaptureDeviceInput *scanInput = [AVCaptureDeviceInput deviceInputWithDevice:scanDevice error:&inputError];
+    if (scanInput != nil && [scanSession canAddInput:scanInput]) {
+        [scanSession addInput:scanInput];
+        _scanInput = scanInput;
+    } else {
+        return nil;
+    }
+    AVCaptureMetadataOutput *scanOutput = [[AVCaptureMetadataOutput alloc] init];
+    [scanOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+    if (scanOutput != nil && [scanSession canAddOutput:scanOutput]) {
+        [scanSession addOutput:scanOutput];
+        _scanOutput = scanOutput;
+    } else {
+        return nil;
+    }
+    if ([scanOutput.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeQRCode]) {
+        scanOutput.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
+    }
+    CGSize viewSize = self.view.bounds.size;
+    scanOutput.rectOfInterest = CGRectMake(self.cropRect.origin.y / viewSize.height,
+                                           self.cropRect.origin.x / viewSize.width,
+                                           self.cropRect.size.height / viewSize.height,
+                                           self.cropRect.size.width / viewSize.width);
+    _scanSession = scanSession;
+    return scanSession;
 }
 
 - (AVCaptureDevice *)frontCamera {
@@ -304,39 +337,6 @@
         }
     }
     return nil;
-}
-
-- (AVCaptureDeviceInput *)scanInput {
-    if (!_scanInput) {
-        NSError *err = nil;
-        AVCaptureDeviceInput *scanInput = [AVCaptureDeviceInput deviceInputWithDevice:self.scanDevice error:&err];
-        if (!scanInput) {
-
-        }
-        _scanInput = scanInput;
-    }
-    return _scanInput;
-}
-
-- (AVCaptureMetadataOutput *)scanOutput {
-    if (!_scanOutput) {
-        AVCaptureMetadataOutput *scanOutput = [[AVCaptureMetadataOutput alloc] init];
-        [scanOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-        _scanOutput = scanOutput;
-    }
-    return _scanOutput;
-}
-
-- (AVCaptureVideoPreviewLayer *)scanLayer {
-    if (!_scanLayer) {
-        if (!self.scanSession) {
-            return nil;
-        }
-        AVCaptureVideoPreviewLayer *scanLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.scanSession];
-        scanLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        _scanLayer = scanLayer;
-    }
-    return _scanLayer;
 }
 
 - (UIBarButtonItem *)dismissItem {
@@ -361,7 +361,7 @@
     CGSize oldSize = self.view.bounds.size;
     CGFloat minLength = MIN(oldSize.width, oldSize.height);
     CGFloat rectWidth = minLength / 3 * 2;
-    return CGRectMake(oldSize.width / 2 - rectWidth / 2, oldSize.height / 2 - rectWidth / 2, rectWidth, rectWidth);
+    return CGRectMake(oldSize.width / 2 - rectWidth / 2, (oldSize.height / 2 - rectWidth / 2) + XXTEScanVOffset, rectWidth, rectWidth);
 }
 
 - (UIImageView *)maskView {
@@ -383,7 +383,82 @@
     return _scanLineAnimation;
 }
 
+- (UIButton *)lightButton {
+    if (!_lightButton) {
+        _lightButton = [[UIButton alloc] init];
+        [_lightButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:0.0 alpha:0.40]] forState:UIControlStateNormal];
+        [_lightButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:1.0 alpha:0.40]] forState:UIControlStateSelected];
+        [_lightButton setImage:[UIImage imageNamed:@"XXTEScanButtonLight"] forState:UIControlStateNormal];
+        _lightButton.layer.cornerRadius = 10.0;
+        _lightButton.layer.masksToBounds = YES;
+        _lightButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_lightButton addTarget:self action:@selector(lightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _lightButton;
+}
+
+- (UIButton *)flipButton {
+    if (!_flipButton) {
+        _flipButton = [[UIButton alloc] init];
+        [_flipButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:0.0 alpha:0.40]] forState:UIControlStateNormal];
+        [_flipButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:1.0 alpha:0.40]] forState:UIControlStateSelected];
+        [_flipButton setImage:[UIImage imageNamed:@"XXTEScanButtonFlip"] forState:UIControlStateNormal];
+        _flipButton.layer.cornerRadius = 10.0;
+        _flipButton.layer.masksToBounds = YES;
+        _flipButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_flipButton addTarget:self action:@selector(flipButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _flipButton;
+}
+
 #pragma mark - UIControl Actions
+
+- (void)lightButtonTapped:(UIButton *)sender {
+    AVCaptureDevice *captureDevice = self.scanDevice;
+    if (!captureDevice) return;
+    NSError *error = nil;
+    if ([captureDevice hasTorch] && [captureDevice isTorchAvailable]) {
+        BOOL locked = [captureDevice lockForConfiguration:&error];
+        if (locked) {
+            if (!sender.selected) {
+                [captureDevice setTorchMode:AVCaptureTorchModeOn];
+            } else {
+                [captureDevice setTorchMode:AVCaptureTorchModeOff];
+            }
+            [captureDevice unlockForConfiguration];
+            sender.selected = !sender.selected;
+        }
+    } else {
+        toastMessage(self, NSLocalizedString(@"Torch is not available.", nil));
+    }
+    if (error) {
+        toastError(self, error);
+    }
+}
+
+- (void)flipButtonTapped:(UIButton *)sender {
+    sender.enabled = NO;
+    BOOL loadResult = [self loadLayerFrameWithSelectedState:(!sender.selected)];
+    if (!loadResult) {
+        toastMessage(self, NSLocalizedString(@"Cannot connect to video device.", nil));
+        return;
+    }
+    sender.selected = !sender.selected;
+    [self reloadLightButtonStatus];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        sender.enabled = YES;
+    });
+}
+
+- (void)reloadLightButtonStatus {
+    if (self.flipButton.selected) {
+        self.lightButton.enabled = NO;
+        [self.lightButton setSelected:NO];
+    } else {
+        self.lightButton.enabled = YES;
+        [self.lightButton setSelected:([self.scanDevice torchMode] == AVCaptureTorchModeOn)];
+    }
+}
 
 - (void)dismissScanViewController:(UIBarButtonItem *)sender {
     if (XXTE_IS_IPAD) {
@@ -395,7 +470,7 @@
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
-    if (self.scanSession) {
+    if (self.scanSession != nil) {
         [self.scanSession stopRunning];
         self.scanSession = nil;
     }
@@ -438,12 +513,18 @@
         AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         resolve(@(status));
     }];
+    __block BOOL layerLoaded = NO;
+    @weakify(self);
     id (^ displayPermissionBlock)(NSNumber *) = ^(NSNumber *status) {
+        @strongify(self);
         AVAuthorizationStatus permissionStatus = (AVAuthorizationStatus) [status integerValue];
         if (permissionStatus == AVAuthorizationStatusAuthorized) {
-            BOOL loadResult = [self loadLayerFrame];
-            if (!loadResult) {
-                @throw NSLocalizedString(@"Cannot connect to video device.", nil);
+            if (!layerLoaded) {
+                BOOL loadResult = [self loadLayerFrameWithSelectedState:(self.flipButton.selected)];
+                if (!loadResult) {
+                    @throw NSLocalizedString(@"Cannot connect to video device.", nil);
+                }
+                layerLoaded = YES;
             }
         } else if (permissionStatus == AVAuthorizationStatusDenied) {
             self.title = NSLocalizedString(@"Access Denied", nil);
@@ -459,12 +540,14 @@
         }
         return [PMKPromise promiseWithValue:status];
     };
-    checkPermissionPromise.then(displayPermissionBlock).then(displayPermissionBlock)
-            .catch(^(NSError *error) {
-                [self.maskView setHidden:YES];
-                [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
-                toastMessageWithDelay(self, [error localizedDescription], CGFLOAT_MAX);
-            });
+    checkPermissionPromise
+    .then(displayPermissionBlock)
+    .then(displayPermissionBlock)
+    .catch(^(NSError *error) {
+        [self.maskView setHidden:YES];
+        [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
+        toastMessageWithDelay(self, [error localizedDescription], CGFLOAT_MAX);
+    });
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
@@ -611,8 +694,12 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    @weakify(self);
     [picker dismissViewControllerAnimated:YES completion:^{
-        [self performSelector:@selector(continueScan) withObject:nil afterDelay:.6f];
+        @strongify(self);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self continueScan];
+        });
     }];
 }
 
@@ -651,6 +738,12 @@
 - (BOOL)isTrustedHost:(NSString *)host {
     NSArray <NSString *> *trustedHosts = uAppDefine(XXTETrustedHostsKey);
     return ([trustedHosts containsObject:host]);
+}
+
+#pragma mark - Notifications
+
+- (void)handleEnterForeground:(NSNotification *)aNotification {
+    [self reloadLightButtonStatus];
 }
 
 #pragma mark - Memory

@@ -318,6 +318,9 @@
 "Cannot find top-level XPP from \"%@\"." = "无法加载顶层 XPP 项目: \"%@\".";
 
 /* No comment provided by engineer. */
+"Cannot launch inspector process." = "无法启动权限注入进程.";
+
+/* No comment provided by engineer. */
 "Cannot launch installer process." = "无法启动安装进程.";
 
 /* No comment provided by engineer. */
@@ -364,6 +367,9 @@
 
 /* No comment provided by engineer. */
 "Cannot process archive file \"%@\" (0x%02x)." = "无法处理归档文件 \"%@\" (0x%02x).";
+
+/* No comment provided by engineer. */
+"Cannot read \"%@\" from inspector process." = "无法从权限注入进程读取 \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot read archive file \"%@\"." = "无法读取归档文件 \"%@\".";
@@ -1601,6 +1607,9 @@
 "Title" = "标题";
 
 /* No comment provided by engineer. */
+"Torch is not available." = "闪光灯不可用.";
+
+/* No comment provided by engineer. */
 "Trash" = "删除";
 
 /* No comment provided by engineer. */
@@ -1751,12 +1760,3 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
-
-/* No comment provided by engineer. */
-"Cannot launch inspector process." = "";
-
-/* No comment provided by engineer. */
-"Cannot read \"/etc/group\" from inspector process." = "";
-
-/* No comment provided by engineer. */
-"Cannot read \"/etc/passwd\" from inspector process." = "";

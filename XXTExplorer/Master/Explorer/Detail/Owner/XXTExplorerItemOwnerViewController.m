@@ -97,7 +97,7 @@ typedef enum : NSUInteger {
     }
     int status = [processObj processClose:fps pidPointer:&pid];
     if (status != 0) {
-        toastMessage(self, NSLocalizedString(@"Cannot read \"/etc/passwd\" from inspector process.", nil));
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read \"%@\" from inspector process.", nil), @"/etc/passwd"]);
         return;
     }
     NSArray <NSString *> *outputLines = [output componentsSeparatedByString:@"\n"];
