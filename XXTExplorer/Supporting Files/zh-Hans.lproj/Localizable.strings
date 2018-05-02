@@ -1663,7 +1663,7 @@
 "Unicode (UTF-8)" = "Unicode (UTF-8)";
 
 /* No comment provided by engineer. */
-"Unique ID" = "唯一标识符";
+"Unique ID" = "唯一标识符 (UDID)";
 
 /* No comment provided by engineer. */
 "Unix (LF)" = "Unix (LF)";

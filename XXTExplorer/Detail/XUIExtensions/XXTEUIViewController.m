@@ -187,7 +187,18 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
         if (aNotification.userInfo)
             [signalArray addObject:aNotification.userInfo];
         
-        NSDictionary *payload = @{@"objects": signalArray, @"from": self.entryPath, @"envp": uAppConstEnvp()};
+        NSString *entryPath = self.entryPath;
+        if (!entryPath) entryPath = @"";
+        NSString *bundlePath = self.bundle.bundlePath;
+        if (!bundlePath) bundlePath = @"";
+        
+        NSDictionary *payload =
+  @{
+    @"objects": signalArray,
+    @"entry": entryPath,
+    @"bundle": bundlePath,
+    @"envp": uAppConstEnvp()
+    };
         [payload writeToFile:valueSignalPath atomically:YES];
         
         CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), XUIEventValueChanged, /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
