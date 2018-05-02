@@ -14,19 +14,21 @@
 #import <XUI/XUICellFactory.h>
 
 // to listen
-static NSString * const XUICallbackUIUpdated = @"XUICallbackUIUpdated";
-static NSString * const XUICallbackValueChanged = @"XUICallbackValueChanged";
+static CFStringRef const XUICallbackUIUpdated = CFSTR("XUICallbackUIUpdated");
+static CFStringRef const XUICallbackValueChanged = CFSTR("XUICallbackValueChanged");
 
 // to post
 static CFStringRef const XUIEventValueChanged = CFSTR("XUIEventValueChanged");
-static CFStringRef const XUIEventUIUpdated = CFSTR("XUIEventUIUpdated");
+//static CFStringRef const XUIEventUIUpdated = CFSTR("XUIEventUIUpdated");
 
 void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        XUICellFactory *cellFactory = (__bridge XUICellFactory *)(object);
-        [cellFactory setNeedsReload];
-        [cellFactory reloadIfNeeded];
+        XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
+        [controller.cellFactory setNeedsReload];
+        [controller.cellFactory reloadIfNeeded];
     });
+    
 }
 
 void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
@@ -39,9 +41,14 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        XUICellFactory *cellFactory = (__bridge XUICellFactory *)(object);
+        XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
+        NSDictionary *payload = [[NSDictionary alloc] initWithContentsOfFile:valueSignalPath];
+        if (!payload) return;
+        
         NSMutableArray <NSDictionary *> *changedPairs = [[NSMutableArray alloc] init];
-        NSArray <NSDictionary *> *valueSignalArray = [[NSArray alloc] initWithContentsOfFile:valueSignalPath];
+        NSArray <NSDictionary *> *valueSignalArray = payload[@"objects"];
+        if (!valueSignalArray) return;
+        
         for (NSDictionary *signalDict in valueSignalArray) {
             if (![signalDict isKindOfClass:[NSDictionary class]]) {
                 continue;
@@ -54,11 +61,14 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
             }
             [changedPairs addObject:signalDict];
         }
+        
         if (valueSignalArray.count > 0) {
             for (NSDictionary *signalDict in valueSignalArray) {
-                [cellFactory updateRelatedCellsForConfigurationPair:signalDict];
+                [controller.cellFactory updateRelatedCellsForConfigurationPair:signalDict];
             }
         }
+        
+        unlink(valueSignalPath.fileSystemRepresentation);
         
     });
 }
@@ -102,14 +112,14 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 - (void)setupUI {
     self.hidesBottomBarWhenPushed = YES;
     
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallbackValueChanged, ((__bridge CFStringRef)XUICallbackValueChanged), (__bridge const void *)(self.cellFactory), CFNotificationSuspensionBehaviorDeliverImmediately);
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallbackUIUpdated, ((__bridge CFStringRef)XUICallbackUIUpdated), (__bridge const void *)(self.cellFactory), CFNotificationSuspensionBehaviorDeliverImmediately);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallbackValueChanged, XUICallbackValueChanged, NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUINotificationCallbackUIUpdated, XUICallbackUIUpdated, NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
 }
 
 - (void)dealloc {
     
-    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), ((__bridge CFStringRef)XUICallbackUIUpdated), (__bridge const void *)(self.cellFactory));
-    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), ((__bridge CFStringRef)XUICallbackValueChanged), (__bridge const void *)(self.cellFactory));
+    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUICallbackUIUpdated, NULL);
+    CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUICallbackValueChanged, NULL);
     
 }
 
@@ -138,9 +148,9 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
     [super viewWillAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewWillDisappear:animated];
+    [super viewDidDisappear:animated];
 }
 
 - (void)dismissViewController:(id)dismissViewController {
@@ -176,7 +186,9 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
         NSMutableArray <NSDictionary *> *signalArray = [[NSMutableArray alloc] init];
         if (aNotification.userInfo)
             [signalArray addObject:aNotification.userInfo];
-        [signalArray writeToFile:valueSignalPath atomically:YES];
+        
+        NSDictionary *payload = @{@"objects": signalArray, @"from": self.entryPath, @"envp": uAppConstEnvp()};
+        [payload writeToFile:valueSignalPath atomically:YES];
         
         CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), XUIEventValueChanged, /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
     }

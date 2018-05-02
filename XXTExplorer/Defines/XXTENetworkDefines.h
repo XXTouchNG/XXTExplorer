@@ -34,6 +34,7 @@ extern "C" {
 #endif
     
     NSDictionary *uAppConstEnvp(void);
+    NSString *uAppUserAgent(void);
     
     NSString *XXTSchemeCloudProjectID(NSUInteger projectID);
     

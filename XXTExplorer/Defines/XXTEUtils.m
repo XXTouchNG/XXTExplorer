@@ -431,3 +431,7 @@ BOOL isAppStore() {
     return NO;
 #endif
 }
+
+NSString *uAppUserAgent() {
+    return [NSString stringWithFormat:@"XXTExplorer/%@", [uAppDefine(kXXTDaemonVersionKey) stringByReplacingOccurrencesOfString:@"-" withString:@"."]];
+}

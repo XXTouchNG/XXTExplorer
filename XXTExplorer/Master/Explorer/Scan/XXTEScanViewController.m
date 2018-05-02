@@ -92,13 +92,13 @@ static CGFloat XXTEScanVOffset = -22.0;
       [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1.0 constant:16.0],
       [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
       [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
+      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
       ]];
     [self.view addConstraints:@[
       [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1.0 constant:-16.0],
       [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
       [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
+      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
       ]];
     
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
@@ -389,7 +389,7 @@ static CGFloat XXTEScanVOffset = -22.0;
         [_lightButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:0.0 alpha:0.40]] forState:UIControlStateNormal];
         [_lightButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:1.0 alpha:0.40]] forState:UIControlStateSelected];
         [_lightButton setImage:[UIImage imageNamed:@"XXTEScanButtonLight"] forState:UIControlStateNormal];
-        _lightButton.layer.cornerRadius = 10.0;
+        _lightButton.layer.cornerRadius = 32.0;
         _lightButton.layer.masksToBounds = YES;
         _lightButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_lightButton addTarget:self action:@selector(lightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -403,7 +403,7 @@ static CGFloat XXTEScanVOffset = -22.0;
         [_flipButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:0.0 alpha:0.40]] forState:UIControlStateNormal];
         [_flipButton setBackgroundImage:[UIImage imageWithUIColor:[UIColor colorWithWhite:1.0 alpha:0.40]] forState:UIControlStateSelected];
         [_flipButton setImage:[UIImage imageNamed:@"XXTEScanButtonFlip"] forState:UIControlStateNormal];
-        _flipButton.layer.cornerRadius = 10.0;
+        _flipButton.layer.cornerRadius = 32.0;
         _flipButton.layer.masksToBounds = YES;
         _flipButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_flipButton addTarget:self action:@selector(flipButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
