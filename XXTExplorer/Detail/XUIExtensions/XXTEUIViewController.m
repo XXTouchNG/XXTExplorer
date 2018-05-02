@@ -26,7 +26,10 @@ void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *obse
     dispatch_async(dispatch_get_main_queue(), ^{
         XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
         [controller.cellFactory setNeedsReload];
-        [controller.cellFactory reloadIfNeeded];
+        if (controller.isBeingDisplayed)
+        { // reload immediately
+            [controller.cellFactory reloadIfNeeded];
+        }
     });
     
 }
@@ -146,11 +149,13 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventValueChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventUIUpdated object:nil];
     [super viewWillAppear:animated];
+    self.isBeingDisplayed = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
+    self.isBeingDisplayed = NO;
 }
 
 - (void)dismissViewController:(id)dismissViewController {

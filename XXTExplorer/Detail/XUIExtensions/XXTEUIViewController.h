@@ -11,4 +11,6 @@
 
 @interface XXTEUIViewController : XUIListViewController <XXTEViewer>
 
+@property (nonatomic, assign) BOOL isBeingDisplayed;
+
 @end
