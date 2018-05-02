@@ -110,7 +110,8 @@
         NSString *customNotificationName = cell.xui_postNotification;
         if (customNotificationName.length)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:customNotificationName object:cell userInfo:[configurationPair copy]];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:customNotificationName object:cell userInfo:[configurationPair copy]];
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), ((__bridge CFStringRef)customNotificationName), /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
         }
     }
 }
