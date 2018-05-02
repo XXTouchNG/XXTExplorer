@@ -78,6 +78,8 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 
 @interface XXTEUIViewController ()
 
+@property (nonatomic, assign) BOOL beingDisplayed;
+
 @end
 
 @implementation XXTEUIViewController
@@ -149,13 +151,13 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventValueChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventUIUpdated object:nil];
     [super viewWillAppear:animated];
-    self.isBeingDisplayed = YES;
+    self.beingDisplayed = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
-    self.isBeingDisplayed = NO;
+    self.beingDisplayed = NO;
 }
 
 - (void)dismissViewController:(id)dismissViewController {
@@ -204,9 +206,11 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
     @"bundle": bundlePath,
     @"envp": uAppConstEnvp()
     };
-        [payload writeToFile:valueSignalPath atomically:YES];
+        if ([payload writeToFile:valueSignalPath atomically:YES])
+        {
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), XUIEventValueChanged, /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
+        }
         
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), XUIEventValueChanged, /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
     }
     
 }
