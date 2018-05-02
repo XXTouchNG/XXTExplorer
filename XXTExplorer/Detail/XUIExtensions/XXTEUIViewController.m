@@ -14,12 +14,12 @@
 #import <XUI/XUICellFactory.h>
 
 // to listen
-static CFStringRef const XUICallbackUIUpdated = CFSTR("XUICallbackUIUpdated");
-static CFStringRef const XUICallbackValueChanged = CFSTR("XUICallbackValueChanged");
+static CFStringRef const XUICallbackUIUpdated = CFSTR("com.xxtouch.XUICallbackUIUpdated");
+static CFStringRef const XUICallbackValueChanged = CFSTR("com.xxtouch.XUICallbackValueChanged");
 
 // to post
-static CFStringRef const XUIEventValueChanged = CFSTR("XUIEventValueChanged");
-//static CFStringRef const XUIEventUIUpdated = CFSTR("XUIEventUIUpdated");
+static CFStringRef const XUIEventValueChanged = CFSTR("com.xxtouch.XUIEventValueChanged");
+//static CFStringRef const XUIEventUIUpdated = CFSTR("com.xxtouch.XUIEventUIUpdated");
 
 void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     
