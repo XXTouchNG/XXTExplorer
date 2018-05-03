@@ -683,18 +683,18 @@ XXTE_END_IGNORE_PARTIAL
     { // if entry is executable, select it instead of viewer action
 #ifndef APPSTORE
         [self performViewerExecutableActionForEntry:entry];
+        return;
 #endif
     }
     else if (entry.isConfigurable)
     { // if entry is configurable, configure it instead of viewer action
         [self performUnchangedButtonAction:XXTExplorerEntryButtonActionConfigure forEntry:entry];
+        return;
     }
-    else
-    { // but, entry viewer
-        UITableView *tableView = self.tableView;
-        UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entry];
-        [self tableView:tableView showDetailController:viewer animated:animated];
-    }
+    // but, entry viewer
+    UITableView *tableView = self.tableView;
+    UIViewController <XXTEViewer> *viewer = [self.class.explorerEntryService viewerForEntry:entry];
+    [self tableView:tableView showDetailController:viewer animated:animated];
 }
 
 - (void)performViewerExecutableActionForEntry:(XXTExplorerEntry *)entry
@@ -705,6 +705,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)performViewerExecutableActionForEntryAtPath:(NSString *)entryPath
 { // select executable entry
+#ifndef APPSTORE
     UITableView *tableView = self.tableView;
     UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}]
@@ -726,6 +727,7 @@ XXTE_END_IGNORE_PARTIAL
             [self reconfigureCellAtIndexPath:indexPath];
         }
     });
+#endif
 }
 
 // Accessory Action
