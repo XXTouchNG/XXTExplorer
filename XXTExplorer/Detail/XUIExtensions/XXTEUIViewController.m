@@ -21,6 +21,9 @@ static CFStringRef const XUICallbackValueChanged = CFSTR("com.xxtouch.XUICallbac
 static CFStringRef const XUIEventValueChanged = CFSTR("com.xxtouch.XUIEventValueChanged");
 //static CFStringRef const XUIEventUIUpdated = CFSTR("com.xxtouch.XUIEventUIUpdated");
 
+static CFStringRef const XUIEventViewDidAppear = CFSTR("com.xxtouch.XUIEventViewDidAppear");
+static CFStringRef const XUIEventViewDidDisappear = CFSTR("com.xxtouch.XUIEventViewDidDisappear");
+
 void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     
     dispatch_async(dispatch_get_main_queue(), ^{
