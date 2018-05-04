@@ -211,15 +211,18 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
 XXTE_START_IGNORE_PARTIAL
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            // retain the context to avoid registering more than once
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+    if (self.allowsPreviewing) {
+        if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+            if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+                // retain the context to avoid registering more than once
+                if (!self.previewingContext)
+                {
+                    self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+                }
+            } else {
+                [self unregisterForPreviewingWithContext:self.previewingContext];
+                self.previewingContext = nil;
             }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
         }
     }
 }
@@ -238,6 +241,10 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Item Picker Inherit
 
 - (BOOL)showsHomeSeries {
+    return YES;
+}
+
+- (BOOL)allowsPreviewing {
     return YES;
 }
 
@@ -878,16 +885,16 @@ XXTE_END_IGNORE_PARTIAL
     }
 }
 
-- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entryDetail {
+- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry {
     entryCell.delegate = self;
     entryCell.entryTitleLabel.textColor = [UIColor blackColor];
     entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-    if (entryDetail.isBrokenSymlink) {
+    if (entry.isBrokenSymlink) {
         // broken symlink
         entryCell.entryTitleLabel.textColor = XXTColorDanger();
         entryCell.entrySubtitleLabel.textColor = XXTColorDanger();
         entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
-    } else if (entryDetail.isSymlink) {
+    } else if (entry.isSymlink) {
         // symlink
         entryCell.entryTitleLabel.textColor = XXTColorDefault();
         entryCell.entrySubtitleLabel.textColor = XXTColorDefault();
@@ -897,23 +904,22 @@ XXTE_END_IGNORE_PARTIAL
         entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     }
-    if (!entryDetail.isMaskedDirectory &&
-        [self.class.selectedScriptPath isEqualToString:entryDetail.entryPath]) {
+    if (!entry.isMaskedDirectory &&
+        [self.class.selectedScriptPath isEqualToString:entry.entryPath]) {
         // selected script itself
         entryCell.entryTitleLabel.textColor = XXTColorSuccess();
         entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
-    } else if ((
-                entryDetail.isMaskedDirectory ||
-                entryDetail.isBundle
-                ) &&
-               [self.class.selectedScriptPath hasPrefix:entryDetail.entryPath]) {
+    } else if ((entry.isMaskedDirectory ||
+                entry.isBundle) &&
+               [[self.class selectedScriptPath] hasPrefix:entry.entryPath] &&
+               [[[self.class selectedScriptPath] substringFromIndex:entry.entryPath.length] containsString:@"/"]) {
         // selected script in directory / bundle
         entryCell.entryTitleLabel.textColor = XXTColorSuccess();
         entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
         entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
     }
-    NSString *fixedName = entryDetail.localizedDisplayName;
+    NSString *fixedName = entry.localizedDisplayName;
     if (self.historyMode) {
         NSUInteger atLoc = [fixedName rangeOfString:@"@"].location + 1;
         if (atLoc != NSNotFound && atLoc < fixedName.length) {
@@ -921,8 +927,8 @@ XXTE_END_IGNORE_PARTIAL
         }
     }
     entryCell.entryTitleLabel.text = fixedName;
-    entryCell.entrySubtitleLabel.text = entryDetail.localizedDescription;
-    entryCell.entryIconImageView.image = entryDetail.localizedDisplayIconImage;
+    entryCell.entrySubtitleLabel.text = entry.localizedDescription;
+    entryCell.entryIconImageView.image = entry.localizedDisplayIconImage;
     if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton)
     {
         entryCell.accessoryType = UITableViewCellAccessoryDetailButton;

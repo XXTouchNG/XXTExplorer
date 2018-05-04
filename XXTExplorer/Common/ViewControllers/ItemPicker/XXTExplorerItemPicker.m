@@ -59,6 +59,10 @@
     return NO;
 }
 
+- (BOOL)allowsPreviewing {
+    return NO;
+}
+
 - (BOOL)shouldDisplayEntry:(XXTExplorerEntry *)entryDetail {
     NSString *entryBaseExtension = entryDetail.entryExtension;
     if (entryDetail.isBundle ||
@@ -141,14 +145,17 @@
     if (tableView == self.tableView) {
         if (indexPath.section == XXTExplorerViewSectionIndexList) {
             XXTExplorerViewCell *cell = (XXTExplorerViewCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
-            XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
-            NSString *entryPath = entryDetail.entryPath;
-            if ([entryPath isEqualToString:self.selectedBootScriptPath]) {
+            XXTExplorerEntry *entry = self.entryList[indexPath.row];
+            if (!entry.isMaskedDirectory &&
+                [entry.entryPath isEqualToString:self.selectedBootScriptPath]) {
                 cell.entryTitleLabel.textColor = XXTColorDefault();
                 cell.entrySubtitleLabel.textColor = XXTColorDefault();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
             }
-            else if ([self.selectedBootScriptPath hasPrefix:entryPath]) {
+            else if ((entry.isMaskedDirectory ||
+                      entry.isBundle) &&
+                     [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
+                     [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] containsString:@"/"]) {
                 cell.entryTitleLabel.textColor = XXTColorDefault();
                 cell.entrySubtitleLabel.textColor = XXTColorDefault();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;

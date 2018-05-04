@@ -269,6 +269,7 @@
 
 - (void)setSelectedImage:(UIImage *)selectedImage {
     _selectedImage = selectedImage;
+    _pickerResult = nil;
     if (!selectedImage) {
         self.cropToolbar.hidden = YES;
         self.cropView.hidden = YES;

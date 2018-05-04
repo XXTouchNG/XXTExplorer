@@ -138,6 +138,16 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     [self updateSubtitle:subtitle];
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    UIEdgeInsets insets1 = self.tableView.contentInset;
+    insets1.bottom -= self.view.safeAreaInsets.bottom;
+    UIEdgeInsets insets2 = self.tableView.scrollIndicatorInsets;
+    insets2.bottom -= self.view.safeAreaInsets.bottom;
+    self.tableView.contentInset = insets1;
+    self.tableView.scrollIndicatorInsets = insets2;
+}
+
 #pragma mark - Task Operations
 
 - (void)taskFinished:(UIBarButtonItem *)sender {

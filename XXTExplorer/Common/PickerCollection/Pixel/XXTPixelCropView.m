@@ -615,7 +615,7 @@ static const UIEdgeInsets XXTPixelCropMargin = { 81.f, 37.f, 81.f, 37.f };
                 [self addFlagViewAtPoint:restoredPoint andReal:p];
             } else if (self.type == kXXTPixelCropViewTypeMultiplePositionColor) {
                 [self addFlagViewAtPoint:restoredPoint andReal:p andColor:c];
-                [self modelArrayUpdated]; // Set Array
+                [self modelArrayUpdated];
             }
 
             if (self.type == kXXTPixelCropViewTypeColor) {

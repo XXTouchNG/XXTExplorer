@@ -59,7 +59,10 @@ XXTE_END_IGNORE_PARTIAL
 
 @end
 
-@implementation XXTEMoreApplicationListController
+@implementation XXTEMoreApplicationListController {
+    UIEdgeInsets _savedInsets1;
+    UIEdgeInsets _savedInsets2;
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -76,20 +79,6 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Default Style
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    if (self.searchController.active) {
-        return UIStatusBarStyleDefault;
-    }
-    return [super preferredStatusBarStyle];
-}
-
-- (BOOL)xxte_prefersNavigationBarHidden {
-    if (self.searchController.active) {
-        return YES;
-    }
-    return NO;
-}
 
 - (NSString *)title {
     return NSLocalizedString(@"Applications", nil);
@@ -133,6 +122,7 @@ XXTE_END_IGNORE_PARTIAL
     tableViewController.tableView = self.tableView;
     _refreshControl = ({
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(asyncApplicationList:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
         refreshControl;
@@ -155,23 +145,35 @@ XXTE_END_IGNORE_PARTIAL
     }
     XXTE_END_IGNORE_PARTIAL
 
-    self.tableView.tableHeaderView = ({
-        UISearchBar *searchBar = self.searchController.searchBar;
+    UISearchBar *searchBar = self.searchController.searchBar;
+    searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
+    searchBar.scopeButtonTitles = @[
+                                    NSLocalizedString(@"Name", nil),
+                                    NSLocalizedString(@"Bundle ID", nil)
+                                    ];
+    searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
+    searchBar.delegate = self;
+    
+    if (@available(iOS 11.0, *)) {
+        UITextField *textField = [searchBar valueForKey:@"searchField"];
+        textField.textColor = [UIColor blackColor];
+        textField.tintColor = XXTColorDefault();
+        UIView *backgroundView = [textField.subviews firstObject];
+        backgroundView.backgroundColor = [UIColor whiteColor];
+        backgroundView.layer.cornerRadius = 10.0;
+        backgroundView.clipsToBounds = YES;
+        searchBar.barTintColor = [UIColor whiteColor];
+        searchBar.tintColor = [UIColor whiteColor];
+        self.navigationItem.searchController = self.searchController;
+    } else {
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
-        searchBar.scopeButtonTitles = @[
-                                        NSLocalizedString(@"Name", nil),
-                                        NSLocalizedString(@"Bundle ID", nil)
-                                        ];
-        searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-        searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
         searchBar.tintColor = XXTColorDefault();
-        searchBar.delegate = self;
-        searchBar;
-    });
+        self.tableView.tableHeaderView = searchBar;
+    }
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
@@ -188,6 +190,12 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
+    if (self.searchController.active) {
+        if ([refreshControl isRefreshing]) {
+            [refreshControl endRefreshing];
+        }
+        return;
+    }
     UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -270,7 +278,7 @@ XXTE_END_IGNORE_PARTIAL
         dispatch_async_on_main_queue(^{
             [self.tableView reloadData];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            if (refreshControl && [refreshControl isRefreshing]) {
+            if ([refreshControl isRefreshing]) {
                 [refreshControl endRefreshing];
             }
             blockInteractions(blockVC, NO);
@@ -324,15 +332,23 @@ XXTE_END_IGNORE_PARTIAL
     NSUInteger indexRow = (NSUInteger) indexPath.row;
     if (self.searchController.active == NO) {
         if (indexPath.section == ApplicationSectionSystem) {
-            applicationDetail = self.allSystemApplications[indexRow];
+            if (indexRow < self.allSystemApplications.count) {
+                applicationDetail = self.allSystemApplications[indexRow];
+            }
         } else if (indexPath.section == ApplicationSectionUser) {
-            applicationDetail = self.allUserApplications[indexRow];
+            if (indexRow < self.allUserApplications.count) {
+                applicationDetail = self.allUserApplications[indexRow];
+            }
         }
     } else {
         if (indexPath.section == ApplicationSectionSystem) {
-            applicationDetail = self.displaySystemApplications[indexRow];
+            if (indexRow < self.displaySystemApplications.count) {
+                applicationDetail = self.displaySystemApplications[indexRow];
+            }
         } else if (indexPath.section == ApplicationSectionUser) {
-            applicationDetail = self.displayUserApplications[indexRow];
+            if (indexRow < self.displayUserApplications.count) {
+                applicationDetail = self.displayUserApplications[indexRow];
+            }
         }
     }
     [cell setApplicationName:applicationDetail[kXXTEMoreApplicationDetailKeyName]];

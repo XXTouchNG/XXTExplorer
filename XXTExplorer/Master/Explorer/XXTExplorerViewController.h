@@ -74,6 +74,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - picker
 
 - (BOOL)showsHomeSeries;
+- (BOOL)allowsPreviewing;
 - (BOOL)shouldDisplayEntry:(XXTExplorerEntry *)entryDetail;
 
 #pragma mark - fast open

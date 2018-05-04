@@ -120,12 +120,13 @@ static const void *ObjectTagKey = &ObjectTagKey;
         if ([viewController respondsToSelector:@selector(pickerFactory)]) {
             UIViewController *pickerController = viewController;
             [self.view bringSubviewToFront:self.popupBar];
-            if ([pickerController respondsToSelector:@selector(tableView)]) {
+            if ([pickerController respondsToSelector:@selector(tableView)])
+            {
                 UITableViewController *tablePickerController = (UITableViewController *)viewController;
                 UIEdgeInsets insets1 = tablePickerController.tableView.contentInset;
-                insets1.bottom = CGRectGetHeight(self.popupBar.bounds);
+                insets1.bottom += CGRectGetHeight(self.popupBar.bounds);
                 UIEdgeInsets insets2 = tablePickerController.tableView.scrollIndicatorInsets;
-                insets2.bottom = CGRectGetHeight(self.popupBar.bounds);
+                insets2.bottom += CGRectGetHeight(self.popupBar.bounds);
                 tablePickerController.tableView.contentInset = insets1;
                 tablePickerController.tableView.scrollIndicatorInsets = insets2;
             }

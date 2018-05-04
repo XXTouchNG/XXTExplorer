@@ -58,25 +58,12 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Default Style
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    if (self.searchController.active) {
-        return UIStatusBarStyleDefault;
-    }
-    return [super preferredStatusBarStyle];
-}
-
-- (BOOL)xxte_prefersNavigationBarHidden {
-    if (self.searchController.active) {
-        return YES;
-    }
-    return NO;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {
@@ -112,23 +99,35 @@ XXTE_END_IGNORE_PARTIAL
     }
     XXTE_END_IGNORE_PARTIAL
     
-    self.tableView.tableHeaderView = ({
-        UISearchBar *searchBar = self.searchController.searchBar;
+    UISearchBar *searchBar = self.searchController.searchBar;
+    searchBar.placeholder = NSLocalizedString(@"Search User Defaults", nil);
+    searchBar.scopeButtonTitles = @[
+                                    NSLocalizedString(@"Title", nil),
+                                    NSLocalizedString(@"Description", nil)
+                                    ];
+    searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
+    searchBar.delegate = self;
+    
+    if (@available(iOS 11.0, *)) {
+        UITextField *textField = [searchBar valueForKey:@"searchField"];
+        textField.textColor = [UIColor blackColor];
+        textField.tintColor = XXTColorDefault();
+        UIView *backgroundView = [textField.subviews firstObject];
+        backgroundView.backgroundColor = [UIColor whiteColor];
+        backgroundView.layer.cornerRadius = 10.0;
+        backgroundView.clipsToBounds = YES;
+        searchBar.barTintColor = [UIColor whiteColor];
+        searchBar.tintColor = [UIColor whiteColor];
+        self.navigationItem.searchController = self.searchController;
+    } else {
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        searchBar.placeholder = NSLocalizedString(@"Search User Defaults", nil);
-        searchBar.scopeButtonTitles = @[
-                                        NSLocalizedString(@"Title", nil),
-                                        NSLocalizedString(@"Description", nil)
-                                        ];
-        searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-        searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
         searchBar.tintColor = XXTColorDefault();
-        searchBar.delegate = self;
-        searchBar;
-    });
+        self.tableView.tableHeaderView = searchBar;
+    }
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
