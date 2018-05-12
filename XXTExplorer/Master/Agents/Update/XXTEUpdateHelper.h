@@ -23,5 +23,6 @@
 - (void)sync;
 
 @property (nonatomic, strong) XXTEUpdatePackage *respPackage;
+@property (nonatomic, strong, readonly) NSString *temporarilyLocation;
 
 @end

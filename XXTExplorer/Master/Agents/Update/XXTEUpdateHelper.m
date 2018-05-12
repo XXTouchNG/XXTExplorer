@@ -11,11 +11,7 @@
 #import <zlib.h>
 #import <sys/stat.h>
 
-#import "NSString+Template.h"
-
 @interface XXTEUpdateHelper ()
-
-@property (nonatomic, strong, readonly) NSString *temporarilyLocation;
 
 @end
 
@@ -88,27 +84,6 @@
         if (package)
         {
             self.respPackage = package;
-            if (package.templateURLString)
-            {
-                return [NSURLConnection GET:package.templateURLString query:@{}];
-            }
-        }
-        return [PMKPromise promiseWithValue:nil];
-    })
-    .then(^(NSString *templateResp)
-    {
-        XXTEUpdatePackage *pkg = self.respPackage;
-        NSString *loc = self.temporarilyLocation;
-        if (pkg && loc)
-        {
-            if ([templateResp isKindOfClass:[NSString class]])
-            {
-                NSString *templateString = templateResp;
-                templateString = [templateString stringByReplacingTagsInDictionary:[pkg toDictionary]];
-                NSString *templatePath = [loc stringByAppendingPathComponent:@"template.html"];
-                [[templateString dataUsingEncoding:NSUTF8StringEncoding] writeToFile:templatePath atomically:YES];
-                pkg.templatePath = templatePath;
-            }
         }
     })
     .catch(^(NSError *error)

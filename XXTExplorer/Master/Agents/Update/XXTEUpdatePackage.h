@@ -14,7 +14,6 @@
 
 // template cydia
 @property (nonatomic, copy) NSString *templateURLString;
-@property (nonatomic, copy) NSString *templatePath; // unmanaged
 @property (nonatomic, copy) NSString *aptURLString;
 @property (nonatomic, copy) NSString *packageID;
 

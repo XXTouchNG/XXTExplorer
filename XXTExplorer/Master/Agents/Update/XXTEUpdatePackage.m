@@ -9,18 +9,23 @@
 
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:
-            @{@"latestVersion": @"latest",
+            @{
+              
+              @"latestVersion": @"latest",
               @"updateDescription": @"description",
+              @"cydiaURLString": @"cydia-url",
+              
+              @"templateURLString": @"template-url",
+              @"aptURLString": @"apt-url",
+              @"packageID": @"package-id",
+              
               @"downloadURLString": @"url",
               @"downloadPath": @"path",
               @"downloadMD5": @"md5",
               @"downloadSHA1": @"sha1",
               @"downloadSHA256": @"sha256",
               @"downloadSHA512": @"sha512",
-              @"cydiaURLString": @"cydia-url",
-              @"templateURLString": @"template-url",
-              @"aptURLString": @"apt-url",
-              @"packageID": @"package-id",
+              
               }];
 }
 
@@ -34,22 +39,12 @@
     @"downloadSHA1",
     @"downloadSHA256",
     @"downloadSHA512",
+    
+    @"templateURLString",
     @"aptURLString",
     @"packageID",
     ];
     if ([optionalKeys containsObject:propertyName]) {
-        return YES;
-    }
-    return NO;
-}
-
-+ (BOOL)propertyIsIgnored:(NSString *)propertyName
-{
-    NSArray <NSString *> *ignoredKeys =
-    @[
-      @"templatePath"
-      ];
-    if ([ignoredKeys containsObject:propertyName]) {
         return YES;
     }
     return NO;

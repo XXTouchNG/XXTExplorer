@@ -11,10 +11,13 @@
 #import "XXTEMasterViewController+Notifications.h"
 
 #import "UIView+XXTEToast.h"
-
 #import "XXTExplorerNavigationController.h"
 
 #ifndef APPSTORE
+
+#import "NSString+Template.h"
+#import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
 
 #import "XXTERespringAgent.h"
 #import "XXTEDaemonAgent.h"
@@ -197,6 +200,7 @@
 - (void)launchAgents {
     BOOL shouldRespring = [XXTERespringAgent shouldPerformRespring];
     if (shouldRespring) {
+        @weakify(self);
         LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Needs Respring", nil)
                                                             message:NSLocalizedString(@"You should respring your device to continue using this application.", nil)
                                                               style:LGAlertViewStyleAlert
@@ -204,7 +208,9 @@
                                                   cancelButtonTitle:nil
                                              destructiveButtonTitle:NSLocalizedString(@"Respring Now", nil)
                                                       actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                          @strongify(self);
                                                           [alertView dismissAnimated];
+                                                          self.alertView = nil;
                                                           if (index == 0) {
                                                               NSURL *faqURL = [NSURL URLWithString:uAppDefine(@"XXTOUCH_FAQ_0018")];
                                                               if (faqURL) {
@@ -214,7 +220,9 @@
                                                       }
                                                       cancelHandler:nil
                                                  destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                                                     @strongify(self);
                                                      [alertView dismissAnimated];
+                                                     self.alertView = nil;
                                                      UIViewController *blockVC = blockInteractions(self, YES);
                                                      [XXTERespringAgent performRespring];
                                                      blockInteractions(blockVC, NO);
@@ -316,6 +324,7 @@
 
 #ifndef APPSTORE
 - (void)daemonAgent:(XXTEDaemonAgent *)agent didFailWithError:(NSError *)error {
+    @weakify(self);
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Sync Failed", nil)
                                                         message:[NSString stringWithFormat:NSLocalizedString(@"Cannot sync with daemon: %@", nil), error.localizedDescription]
                                                           style:LGAlertViewStyleActionSheet
@@ -323,7 +332,9 @@
                                               cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
                                          destructiveButtonTitle:nil
                                                   actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                      @strongify(self);
                                                       [alertView dismissAnimated];
+                                                      self.alertView = nil;
                                                       if (index == 0) {
                                                           NSURL *faqURL = [NSURL URLWithString:uAppDefine(@"XXTOUCH_FAQ_0017")];
                                                           if (faqURL) {
@@ -331,7 +342,9 @@
                                                           }
                                                       }
                                                   } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                                                      @strongify(self);
                                                       [alertView dismissAnimated];
+                                                      self.alertView = nil;
                                                   } destructiveHandler:nil];
     if (self.alertView && self.alertView.isShowing) {
         [self.alertView transitionToAlertView:alertView completionHandler:nil];
@@ -344,46 +357,117 @@
 
 #pragma mark - LGAlertViewDelegate
 
-#ifndef APPSTORE
-- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
-    if (index == 0) {
-        XXTEUpdateHelper *helper = self.jsonHelper;
-        XXTEUpdatePackage *packageModel = helper.respPackage;
-        NSString *urlString = nil;
-        NSString *cydiaTemplatePath = packageModel.templatePath;
-        if (cydiaTemplatePath)
+- (void (^)(NSString *cydiaURLString))cydiaFinallyBlock {
+    return ^void(NSString *cydiaURLString) {
+        if (cydiaURLString)
         {
-            NSString *cydiaURLString = uAppDefine(@"CYDIA_URL");
-            if (cydiaURLString) {
-                urlString = [NSString stringWithFormat:cydiaURLString, cydiaTemplatePath];
-            }
-        }
-        else
-        {
-            urlString = packageModel.cydiaURLString;
-        }
-        if (urlString)
-        {
-            NSURL *cydiaUrl = [NSURL URLWithString:urlString];
-            if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl])
+            NSURL *cydiaURL = [NSURL URLWithString:cydiaURLString];
+            if ([[UIApplication sharedApplication] canOpenURL:cydiaURL])
             {
-                [[UIApplication sharedApplication] openURL:cydiaUrl];
+                [[UIApplication sharedApplication] openURL:cydiaURL];
             }
             else
             {
-                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), urlString]));
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaURLString]));
             }
         }
+    };
+}
+
+#ifndef APPSTORE
+- (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
+    if (index == 0)
+    {
+        XXTEUpdateHelper *helper = self.jsonHelper;
+        XXTEUpdatePackage *packageModel = helper.respPackage;
+        if (!helper || !packageModel)
+        {
+            [alertView dismissAnimated]; self.alertView = nil;
+            return;
+        }
+        
+        NSString *templateURLString = packageModel.templateURLString;
+        if (templateURLString)
+        {
+            [self processingTemplateAtURLString:templateURLString];
+        }
+        else
+        {
+            NSString *urlString = packageModel.cydiaURLString;
+            if (urlString)
+            {
+                [self cydiaFinallyBlock](urlString);
+            }
+        }
+        
     } else if (index == 1) {
         [self.updateAgent ignoreThisDay];
     }
     [alertView dismissAnimated];
+    self.alertView = nil;
+}
+#endif
+
+#ifndef APPSTORE
+- (void)processingTemplateAtURLString:(NSString *)templateURLString {
+    XXTEUpdateHelper *helper = self.jsonHelper;
+    XXTEUpdatePackage *packageModel = helper.respPackage;
+    if (!helper || !packageModel)
+    {
+        return;
+    }
+    UIViewController *blockController = blockInteractions(self, YES);
+    [NSURLConnection GET:templateURLString query:@{}]
+    .then(^(NSString *templateResp) {
+        XXTEUpdatePackage *pkg = helper.respPackage;
+        NSString *loc = helper.temporarilyLocation;
+        if (pkg && loc)
+        {
+            if ([templateResp isKindOfClass:[NSString class]])
+            {
+                NSString *templateString = templateResp;
+                templateString = [templateString stringByReplacingTagsInDictionary:[pkg toDictionary]];
+                NSString *templatePath = [loc stringByAppendingPathComponent:@"template.html"];
+                BOOL writeResult = [[templateString dataUsingEncoding:NSUTF8StringEncoding] writeToFile:templatePath atomically:YES];
+                if (writeResult)
+                {
+                    return [PMKPromise promiseWithValue:templatePath];
+                }
+            }
+        }
+        return [PMKPromise promiseWithValue:nil];
+    })
+    .then(^(NSString *templatePath) {
+        if (templatePath) {
+            NSString *cydiaURLString = uAppDefine(@"CYDIA_URL");
+            if (cydiaURLString) {
+                return [PMKPromise promiseWithValue:[NSString stringWithFormat:cydiaURLString, templatePath]];
+            }
+        }
+        return [PMKPromise promiseWithValue:nil];
+    })
+    .then(^(NSString *cydiaURLString) {
+        if (cydiaURLString) {
+            [self cydiaFinallyBlock](cydiaURLString);
+        } else {
+            NSString *urlString = packageModel.cydiaURLString;
+            if (urlString) {
+                [self cydiaFinallyBlock](urlString);
+            }
+        }
+    })
+    .catch(^(NSError *error) {
+        toastError(self, error);
+    })
+    .finally(^ {
+        blockInteractions(blockController, NO);
+    });
 }
 #endif
 
 #ifndef APPSTORE
 - (void)alertViewDestructed:(LGAlertView *)alertView {
-    [alertView dismissAnimated];
+    [alertView dismissAnimated]; self.alertView = nil;
     XXTEUpdateHelper *helper = self.jsonHelper;
     XXTEUpdatePackage *packageModel = helper.respPackage;
     NSString *packageVersion = packageModel.latestVersion;
@@ -394,7 +478,7 @@
 
 #ifndef APPSTORE
 - (void)alertViewCancelled:(LGAlertView *)alertView {
-    [alertView dismissAnimated];
+    [alertView dismissAnimated]; self.alertView = nil;
 }
 #endif
 
