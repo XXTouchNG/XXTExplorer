@@ -60,8 +60,7 @@ XXTE_END_IGNORE_PARTIAL
 @end
 
 @implementation XXTEMoreApplicationListController {
-    UIEdgeInsets _savedInsets1;
-    UIEdgeInsets _savedInsets2;
+    UIEdgeInsets _savedInsets;
 }
 
 - (instancetype)init {
@@ -122,7 +121,9 @@ XXTE_END_IGNORE_PARTIAL
     tableViewController.tableView = self.tableView;
     _refreshControl = ({
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.tintColor = [UIColor whiteColor];
+        if (@available(iOS 11.0, *)) {
+            refreshControl.tintColor = [UIColor whiteColor];
+        }
         [refreshControl addTarget:self action:@selector(asyncApplicationList:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
         refreshControl;
@@ -438,6 +439,15 @@ XXTE_END_IGNORE_PARTIAL
     } else {
         [self.searchController.searchBar resignFirstResponder];
     }
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    UIEdgeInsets insets1 = self.tableView.scrollIndicatorInsets;
+    _savedInsets = insets1;
+    insets1.top += 50.0 + 44.0;
+    self.tableView.scrollIndicatorInsets = insets1;
 }
 
 #pragma mark - Memory

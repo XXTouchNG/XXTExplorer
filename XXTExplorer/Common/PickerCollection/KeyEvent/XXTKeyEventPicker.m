@@ -47,7 +47,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];
     } else {
-        return NSLocalizedStringFromTable(@"Key Event", @"XXTPickerCollection", nil);
+        return NSLocalizedString(@"Key Event", nil);
     }
 }
 
@@ -59,36 +59,36 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     [super viewDidLoad];
     
     self.sectionNames = @[
-            NSLocalizedStringFromTable(@"Hardware Keys", @"XXTPickerCollection", nil),
-            NSLocalizedStringFromTable(@"Keyboard Keys", @"XXTPickerCollection", nil),
-            NSLocalizedStringFromTable(@"Media Keys", @"XXTPickerCollection", nil),
+            NSLocalizedString(@"Hardware Keys", nil),
+            NSLocalizedString(@"Keyboard Keys", nil),
+            NSLocalizedString(@"Media Keys", nil),
     ];
     self.events = @[
             @[
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Home Button", @"XXTPickerCollection", nil) command:@"HOMEBUTTON"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Volume +", @"XXTPickerCollection", nil) command:@"VOLUMEUP"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Volume -", @"XXTPickerCollection", nil) command:@"VOLUMEDOWN"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Power Button", @"XXTPickerCollection", nil) command:@"LOCK"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Mute Button", @"XXTPickerCollection", nil) command:@"MUTE"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Home Button", nil) command:@"HOMEBUTTON"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Volume +", nil) command:@"VOLUMEUP"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Volume -", nil) command:@"VOLUMEDOWN"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Power Button", nil) command:@"LOCK"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Mute Button", nil) command:@"MUTE"],
             ],
             @[
 
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Return Key", @"XXTPickerCollection", nil) command:@"RETURN"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Esc Key", @"XXTPickerCollection", nil) command:@"ESCAPE"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Backspace Key", @"XXTPickerCollection", nil) command:@"BACKSPACE"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Space Key", @"XXTPickerCollection", nil) command:@"SPACE"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Tab Key", @"XXTPickerCollection", nil) command:@"TAB"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Spotlight Key", @"XXTPickerCollection", nil) command:@"SPOTLIGHT"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Bright +", @"XXTPickerCollection", nil) command:@"BRIGHTUP"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Bright -", @"XXTPickerCollection", nil) command:@"BRIGHTDOWN"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Show/Hide Keyboard", @"XXTPickerCollection", nil) command:@"SHOW_HIDE_KEYBOARD"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Return Key", nil) command:@"RETURN"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Esc Key", nil) command:@"ESCAPE"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Backspace Key", nil) command:@"BACKSPACE"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Space Key", nil) command:@"SPACE"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Tab Key", nil) command:@"TAB"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Spotlight Key", nil) command:@"SPOTLIGHT"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Bright +", nil) command:@"BRIGHTUP"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Bright -", nil) command:@"BRIGHTDOWN"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Show/Hide Keyboard", nil) command:@"SHOW_HIDE_KEYBOARD"],
             ],
             @[
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Media Forward Key", @"XXTPickerCollection", nil) command:@"FORWARD"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Media Rewind Key", @"XXTPickerCollection", nil) command:@"REWIND"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Media Forward 2 Key", @"XXTPickerCollection", nil) command:@"FORWARD2"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Media Rewind 2 Key", @"XXTPickerCollection", nil) command:@"REWIND2"],
-                    [XXTKeyEvent eventWithTitle:NSLocalizedStringFromTable(@"Media Play/Pause Key", @"XXTPickerCollection", nil) command:@"PLAYPAUSE"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Media Forward Key", nil) command:@"FORWARD"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Media Rewind Key", nil) command:@"REWIND"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Media Forward 2 Key", nil) command:@"FORWARD2"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Media Rewind 2 Key", nil) command:@"REWIND2"],
+                    [XXTKeyEvent eventWithTitle:NSLocalizedString(@"Media Play/Pause Key", nil) command:@"PLAYPAUSE"],
             ]
     ];
     
@@ -122,7 +122,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
 }
@@ -133,7 +133,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     if (self.pickerMeta[@"subtitle"]) {
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
-        subtitle = NSLocalizedStringFromTable(@"Select a key event", @"XXTPickerCollection", nil);
+        subtitle = NSLocalizedString(@"Select a key event", nil);
     }
     [self updateSubtitle:subtitle];
 }

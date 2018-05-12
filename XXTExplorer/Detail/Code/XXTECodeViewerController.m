@@ -10,6 +10,7 @@
 #import "XXTExplorerEntryCodeReader.h"
 
 #import "NSString+HTMLEscape.h"
+#import "NSString+Template.h"
 
 @interface XXTECodeViewerController ()
 
@@ -78,7 +79,7 @@
     }
     
     NSError *templateError = nil;
-    NSMutableString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
+    NSString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
     if (templateError) {
         return;
     }
@@ -91,8 +92,11 @@
     if (!escapedString) {
         return;
     }
-    [htmlTemplate replaceOccurrencesOfString:@"{{ title }}" withString:entryName options:0 range:NSMakeRange(0, htmlTemplate.length)];
-    [htmlTemplate replaceOccurrencesOfString:@"{{ code }}" withString:escapedString options:0 range:NSMakeRange(0, htmlTemplate.length)];
+    if (entryName && escapedString)
+    {
+        htmlTemplate =
+        [htmlTemplate stringByReplacingTagsInDictionary:@{ @"title": entryName, @"code": escapedString }];
+    }
     if (self.webView) {
         [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
     } else {

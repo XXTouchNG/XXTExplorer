@@ -11,6 +11,8 @@
 #import <zlib.h>
 #import <sys/stat.h>
 
+#import "NSString+Template.h"
+
 @interface XXTEUpdateHelper ()
 
 @property (nonatomic, strong, readonly) NSString *temporarilyLocation;
@@ -73,22 +75,64 @@
 
 - (void)sync {
     [NSURLConnection GET:[self.repositoryURL absoluteString] query:@{}]
-    .then(^(id apiResp) {
+    .then(^(id apiResp)
+    {
         return [[self class] syncPromiseWithValue:apiResp];
     })
-    .then(^(NSDictionary *apiResp) {
+    .then(^(NSDictionary *apiResp)
+    {
         return [[self class] syncPromiseWithDictionary:apiResp];
     })
-    .then(^(XXTEUpdatePackage *package) {
-        self.respPackage = package;
-        if ([_delegate respondsToSelector:@selector(jsonHelperDidSyncReady:)]) {
-            [_delegate jsonHelperDidSyncReady:self];
+    .then(^(XXTEUpdatePackage *package)
+    {
+        if (package)
+        {
+            self.respPackage = package;
+            if (package.templateURLString)
+            {
+                return [NSURLConnection GET:package.templateURLString query:@{}];
+            }
+        }
+        return [PMKPromise promiseWithValue:nil];
+    })
+    .then(^(NSString *templateResp)
+    {
+        XXTEUpdatePackage *pkg = self.respPackage;
+        NSString *loc = self.temporarilyLocation;
+        if (pkg && loc)
+        {
+            if ([templateResp isKindOfClass:[NSString class]])
+            {
+                NSString *templateString = templateResp;
+                templateString = [templateString stringByReplacingTagsInDictionary:[pkg toDictionary]];
+                NSString *templatePath = [loc stringByAppendingPathComponent:@"template.html"];
+                [[templateString dataUsingEncoding:NSUTF8StringEncoding] writeToFile:templatePath atomically:YES];
+                pkg.templatePath = templatePath;
+            }
         }
     })
-    .catch(^(NSError *error) {
-        if (error) {
-            if ([_delegate respondsToSelector:@selector(jsonHelper:didSyncFailWithError:)]) {
-                [_delegate jsonHelper:self didSyncFailWithError:error];
+    .catch(^(NSError *error)
+    {
+        XXTEUpdatePackage *pkg = self.respPackage;
+        if (!pkg)
+        {
+            if (error)
+            {
+                if ([_delegate respondsToSelector:@selector(jsonHelper:didSyncFailWithError:)])
+                {
+                    [_delegate jsonHelper:self didSyncFailWithError:error];
+                }
+            }
+        }
+    })
+    .finally(^
+    {
+        XXTEUpdatePackage *pkg = self.respPackage;
+        if (pkg)
+        {
+            if ([_delegate respondsToSelector:@selector(jsonHelperDidSyncReady:)])
+            {
+                [_delegate jsonHelperDidSyncReady:self];
             }
         }
     });

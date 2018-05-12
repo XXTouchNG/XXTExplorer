@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>XXTouch 快速安装器</title>
+<style>body,div,h1,html{padding:0;margin:0}body,html{color:#444;position:relative;font-family:"PingFang SC","Helvetica Neue",Helvetica,Arial,CustomFont,"Microsoft YaHei UI","Microsoft YaHei","Hiragino Sans GB",sans-serif;background:#fcfcfc;height:100%}h1{font-size:4em;font-weight:100}a{color:#4181b9;text-decoration:none;-webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease}a:active,a:hover{color:#5bb0ed}.wrapper{position:absolute;top:0;bottom:0;left:0;right:0;font-size:1em;font-weight:400;width:100%;height:30%;line-height:1;margin:auto;text-align:center}</style>
+</head>
+<body>
+<div class="wrapper">
+    <h1 class="title"><a href="javascript:install();" target="_blank">立即安装</a></h1>
+    <p>轻按上方链接 -> 右上角「确认」安装 XXTouch</p>
+    <p>XXTouch Team.</p>
+</div>
+<script>
+function addCydiaSource(url)
+{
+    cydia.addTrivialSource(url);
+    cydia.saveConfig();
+    cydia.refreshSources();
+}
+function sourced(url)
+{
+    var key = "deb:" + url + ":./";
+    var sources = cydia.getAllSources();
+    for (var source in sources) {
+        source = sources[source];
+        if (source.key == key)
+            return true;
+    }
+    return false;
+}
+function install() {
+    var packageid = "com.1func.xxtouch.ios";
+    var package = cydia.getPackageById(packageid);
+    if (package)
+    {
+        cydia.installPackages([package]);
+    }
+    else
+    {
+        window.open("cydia://package/" + packageid);
+    }
+}
+if (typeof window.cydia == 'undefined') {
+    window.open("cydia://url/" + window.location.href);
+} else {
+    var url = "https://apt.xxtouch.com/";
+    if (!sourced(url)) {
+        addCydiaSource(url);
+    } else {
+        cydia.refreshSources();
+    }
+}
+</script>
+</body>
+</html>

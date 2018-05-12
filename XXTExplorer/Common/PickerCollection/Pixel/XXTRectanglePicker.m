@@ -98,7 +98,7 @@
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -197,14 +197,14 @@
                 [self setSelectedImage:image];
             } else {
                 LGAlertView *alertView =
-                [[LGAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil) message:NSLocalizedStringFromTable(@"Cannot read image data, invalid image?", @"XXTPickerCollection", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Cannot read image data, invalid image?", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
                     [alertView dismissAnimated];
                 } destructiveHandler:nil];
                 [alertView showAnimated];
             }
         } else if (err) {
             LGAlertView *alertView =
-            [[LGAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil) message:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Cannot load image from cache: %@", @"XXTPickerCollection", nil), [err localizedDescription]] style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+            [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Cannot load image from cache: %@", nil), [err localizedDescription]] style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
                 [alertView dismissAnimated];
             } destructiveHandler:nil];
             [alertView showAnimated];
@@ -289,21 +289,21 @@
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
         if (!self.selectedImage) {
-            subtitle = NSLocalizedStringFromTable(@"Select an image from album.", @"XXTPickerCollection", nil);
+            subtitle = NSLocalizedString(@"Select an image from album.", nil);
         } else {
             switch ([[self class] cropViewType]) {
                 case XXTPixelPickerTypeRect:
-                    subtitle = NSLocalizedStringFromTable(@"Select a rectangle area by dragging its corners.", @"XXTPickerCollection", nil);
+                    subtitle = NSLocalizedString(@"Select a rectangle area by dragging its corners.", nil);
                     break;
                 case XXTPixelPickerTypePosition:
                 case XXTPixelPickerTypePositionColor:
-                    subtitle = NSLocalizedStringFromTable(@"Select a position by tapping on image.", @"XXTPickerCollection", nil);
+                    subtitle = NSLocalizedString(@"Select a position by tapping on image.", nil);
                     break;
                 case XXTPixelPickerTypeColor:
-                    subtitle = NSLocalizedStringFromTable(@"Select a color by tapping on image.", @"XXTPickerCollection", nil);
+                    subtitle = NSLocalizedString(@"Select a color by tapping on image.", nil);
                     break;
                 case XXTPixelPickerTypeMultiplePositionColor:
-                    subtitle = NSLocalizedStringFromTable(@"Select several positions by tapping on image.", @"XXTPickerCollection", nil);
+                    subtitle = NSLocalizedString(@"Select several positions by tapping on image.", nil);
                     break;
             }
         }
@@ -320,13 +320,13 @@
         if (@available(iOS 8.0, *)) {
             UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.image"] inMode:UIDocumentPickerModeImport];
             controller.delegate = self;
-            [controller addOptionWithTitle:NSLocalizedStringFromTable(@"Photos Library", @"XXTPickerCollection", nil)
+            [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
                                      image:nil
                                      order:UIDocumentMenuOrderFirst
                                    handler:^{
                                        [self selectImageFromCameraRoll];
                                    }];
-            [controller addOptionWithTitle:NSLocalizedStringFromTable(@"File System", @"XXTPickerCollection", nil)
+            [controller addOptionWithTitle:NSLocalizedString(@"File System", nil)
                                      image:nil
                                      order:UIDocumentMenuOrderFirst
                                    handler:^{
@@ -360,7 +360,7 @@
 
 - (void)tripleFingerTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        [self updateSubtitle:NSLocalizedStringFromTable(@"3+2 touches to enter/exit fullscreen.", @"XXTPickerCollection", nil)];
+        [self updateSubtitle:NSLocalizedString(@"3+2 touches to enter/exit fullscreen.", nil)];
         [self setNavigationBarHidden:![self isNavigationBarHidden] animated:YES];
     }
 }
@@ -425,7 +425,7 @@
     if (!_selectedImage || self.locked) return;
     if ([self.cropView userHasModifiedCropArea]) {
         [self.cropView resetCropRectAnimated:NO];
-        [self updateSubtitle:NSLocalizedStringFromTable(@"Canvas reset.", @"XXTPickerCollection", nil)];
+        [self updateSubtitle:NSLocalizedString(@"Canvas reset.", nil)];
     }
 }
 
@@ -436,17 +436,17 @@
         self.locked = NO;
         self.cropView.allowsOperation = YES;
         self.lockButton.selected = NO;
-        [self updateSubtitle:NSLocalizedStringFromTable(@"Canvas unlocked.", @"XXTPickerCollection", nil)];
+        [self updateSubtitle:NSLocalizedString(@"Canvas unlocked.", nil)];
     } else {
         self.locked = YES;
         self.cropView.allowsOperation = NO;
         self.lockButton.selected = YES;
-        [self updateSubtitle:NSLocalizedStringFromTable(@"Canvas locked, it cannot be moved or zoomed.", @"XXTPickerCollection", nil)];
+        [self updateSubtitle:NSLocalizedString(@"Canvas locked, it cannot be moved or zoomed.", nil)];
     }
 }
 
 - (void)trashButtonTapped:(id)sender {
-    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Confirm", @"XXTPickerCollection", nil) message:NSLocalizedStringFromTable(@"Discard all changes and reset the canvas?", @"XXTPickerCollection", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil) destructiveButtonTitle:NSLocalizedStringFromTable(@"Yes", @"XXTPickerCollection", nil) delegate:self];
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm", nil) message:NSLocalizedString(@"Discard all changes and reset the canvas?", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Yes", nil) delegate:self];
     [alertView showAnimated];
 }
 
@@ -486,10 +486,10 @@
                                      options:NSDataWritingAtomic
                                        error:&err];
         if (!result) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                 message:[err localizedDescription]
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
         }
@@ -503,10 +503,10 @@
     NSError *err = nil;
     BOOL result = [[NSFileManager defaultManager] removeItemAtPath:self.class.cachedImagePath error:&err];
     if (!result) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"XXTPickerCollection", nil)
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                             message:[err localizedDescription]
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"XXTPickerCollection", nil)
+                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                   otherButtonTitles:nil];
         [alertView show];
     }
@@ -520,15 +520,15 @@
     } else {
         switch ([[self class] cropViewType]) {
             case XXTPixelPickerTypeRect:
-                return NSLocalizedStringFromTable(@"Rectangle", @"XXTPickerCollection", nil);
+                return NSLocalizedString(@"Rectangle", nil);
             case XXTPixelPickerTypePosition:
-                return NSLocalizedStringFromTable(@"Position", @"XXTPickerCollection", nil);
+                return NSLocalizedString(@"Position", nil);
             case XXTPixelPickerTypeColor:
-                return NSLocalizedStringFromTable(@"Color", @"XXTPickerCollection", nil);
+                return NSLocalizedString(@"Color", nil);
             case XXTPixelPickerTypePositionColor:
-                return NSLocalizedStringFromTable(@"Position & Color", @"XXTPickerCollection", nil);
+                return NSLocalizedString(@"Position & Color", nil);
             case XXTPixelPickerTypeMultiplePositionColor:
-                return NSLocalizedStringFromTable(@"Position & Color", @"XXTPickerCollection", nil);
+                return NSLocalizedString(@"Position & Color", nil);
         }
         return @"";
     }
@@ -683,9 +683,13 @@
             [attributedString appendAttributedString:colorAttributedPreview];
             [self updatedAttributedSubtitle:[attributedString copy]];
         } else if ([selectedValue isKindOfClass:[NSArray class]]) {
+            NSArray *values = (NSArray *)selectedValue;
+            if (values.count == 99) {
+                toastMessage(self, NSLocalizedString(@"Cannot select more points.", nil));
+            }
             NSMutableArray <NSArray *> *mulArray = [[NSMutableArray alloc] init];
             NSUInteger index = 0;
-            for (XXTPositionColorModel *poscolor in selectedValue) {
+            for (XXTPositionColorModel *poscolor in values) {
                 index++;
                 UIColor *c = [poscolor.color copy];
                 if (!c) c = [UIColor blackColor];

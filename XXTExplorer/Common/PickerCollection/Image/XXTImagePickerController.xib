@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Light</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXTImagePickerController">
             <connections>
@@ -36,7 +31,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="NWT-KZ-ZEa">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="5bk-ia-oRG">
                         <size key="itemSize" width="104" height="104"/>
@@ -160,8 +155,8 @@
                 <constraint firstAttribute="trailing" secondItem="NWT-KZ-ZEa" secondAttribute="trailing" id="4X1-N0-lag"/>
                 <constraint firstItem="NWT-KZ-ZEa" firstAttribute="top" secondItem="1" secondAttribute="top" id="4ZZ-zA-TOF"/>
                 <constraint firstItem="m70-sa-NHK" firstAttribute="bottom" secondItem="1" secondAttribute="bottomMargin" id="8tl-Py-Fdm"/>
+                <constraint firstItem="m70-sa-NHK" firstAttribute="top" secondItem="NWT-KZ-ZEa" secondAttribute="bottom" id="JGK-bl-8tp"/>
                 <constraint firstItem="m70-sa-NHK" firstAttribute="top" secondItem="cGZ-TM-6a7" secondAttribute="bottom" constant="16" id="OXU-hx-bOY"/>
-                <constraint firstAttribute="bottomMargin" secondItem="NWT-KZ-ZEa" secondAttribute="bottom" id="ScY-Yq-E1s"/>
                 <constraint firstItem="OuM-nH-WaU" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Ssb-ee-uw7"/>
                 <constraint firstItem="OuM-nH-WaU" firstAttribute="bottom" secondItem="1" secondAttribute="bottomMargin" id="UaO-kd-mg8"/>
                 <constraint firstAttribute="trailing" secondItem="m70-sa-NHK" secondAttribute="trailing" id="V65-Z7-ToD"/>
@@ -171,6 +166,7 @@
                 <constraint firstAttribute="trailing" secondItem="OuM-nH-WaU" secondAttribute="trailing" id="rZv-ly-I8Z"/>
                 <constraint firstItem="j0i-qC-Y6W" firstAttribute="top" secondItem="1" secondAttribute="topMargin" constant="10" id="sFf-yX-Rq0"/>
             </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
     <resources>

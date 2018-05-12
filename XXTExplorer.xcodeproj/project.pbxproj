@@ -139,6 +139,12 @@
 		0F61E16A1ED78899003DCC78 /* XXTEMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */; };
 		0F61E16E1ED78EA8003DCC78 /* XXTEMoreNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */; };
 		0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
+		0F620CD020A6D33D001C0A4C /* NSString+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F620CCF20A6D33D001C0A4C /* NSString+Template.m */; };
+		0F620CD120A6D33D001C0A4C /* NSString+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F620CCF20A6D33D001C0A4C /* NSString+Template.m */; };
+		0F620CD220A6D33D001C0A4C /* NSString+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F620CCF20A6D33D001C0A4C /* NSString+Template.m */; };
+		0F620CD520A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F620CD420A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m */; };
+		0F620CD620A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F620CD420A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m */; };
+		0F620CD720A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F620CD420A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m */; };
 		0F6679DE1F5162880072C177 /* XXTESnippetViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */; };
 		0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */; };
 		0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E41F5164080072C177 /* XXTExplorerEntrySnippetReader.m */; };
@@ -546,7 +552,6 @@
 		0F8EDCAF1FB1F779003C92D6 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
 		0F8EDCB01FB1F779003C92D6 /* A.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090D1F4364C300097E9C /* A.tmTheme */; };
 		0F8EDCB11FB1F779003C92D6 /* OneHalf (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */; };
-		0F8EDCB21FB1F779003C92D6 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
 		0F8EDCB31FB1F779003C92D6 /* SKFont.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6686F431F4AE74E004403D0 /* SKFont.plist */; };
 		0F8EDCB41FB1F779003C92D6 /* Cobalt.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */; };
 		0F8EDCB71FB1F779003C92D6 /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
@@ -1163,7 +1168,6 @@
 		D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B4E1B1FBAF8E1009ED646 /* xml.tmLanguage */; };
 		D60FE7BE1FE2369300954818 /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
 		D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
-		D60FE7C21FE2369300954818 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
 		D60FE7C31FE2369300954818 /* SKFont.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6686F431F4AE74E004403D0 /* SKFont.plist */; };
 		D60FE7C51FE2369300954818 /* lua.tmLanguage in Resources */ = {isa = PBXBuildFile; fileRef = D645F9D31F42A68C00E3247B /* lua.tmLanguage */; };
 		D60FE7C71FE2369300954818 /* XXTEMoreValueViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6686F311F4ACEB6004403D0 /* XXTEMoreValueViewCell.xib */; };
@@ -1274,7 +1278,6 @@
 		D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D61F5032AB00D78CB9 /* XXTPositionColorPicker.m */; };
 		D6E141311F5032AB00D78CB9 /* XXTPositionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */; };
 		D6E141321F5032AB00D78CB9 /* XXTRectanglePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */; };
-		D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */; };
 		D6E1415E1F5032AC00D78CB9 /* XXTPickerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1410D1F5032AB00D78CB9 /* XXTPickerFactory.m */; };
 		D6E1415F1F5032AC00D78CB9 /* XXTPickerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E1410F1F5032AB00D78CB9 /* XXTPickerNavigationController.m */; };
 		D6E141601F5032AC00D78CB9 /* XXTPickerPreviewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */; };
@@ -1503,6 +1506,11 @@
 		0F61E16D1ED78EA8003DCC78 /* XXTEMoreNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F61E16F1ED78EE9003DCC78 /* XXTExplorerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerNavigationController.h; sourceTree = "<group>"; };
 		0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0F620CC920A69DE0001C0A4C /* XXTPickerPreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTPickerPreview.h; sourceTree = "<group>"; };
+		0F620CCE20A6D33D001C0A4C /* NSString+Template.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Template.h"; sourceTree = "<group>"; };
+		0F620CCF20A6D33D001C0A4C /* NSString+Template.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Template.m"; sourceTree = "<group>"; };
+		0F620CD320A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+OpenURLInCydia.h"; sourceTree = "<group>"; };
+		0F620CD420A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+OpenURLInCydia.m"; sourceTree = "<group>"; };
 		0F6679DC1F5162880072C177 /* XXTESnippetViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESnippetViewerController.h; sourceTree = "<group>"; };
 		0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESnippetViewerController.m; sourceTree = "<group>"; };
 		0F6679DF1F51635C0072C177 /* NSString+HTMLEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTMLEscape.h"; sourceTree = "<group>"; };
@@ -2135,9 +2143,7 @@
 		D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPositionPicker.m; sourceTree = "<group>"; };
 		D6E140D91F5032AB00D78CB9 /* XXTRectanglePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTRectanglePicker.h; sourceTree = "<group>"; };
 		D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTRectanglePicker.m; sourceTree = "<group>"; };
-		D6E140DD1F5032AB00D78CB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/XXTPickerCollection.strings; sourceTree = "<group>"; };
 		D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTApplicationCell.xib; sourceTree = "<group>"; };
-		D6E141081F5032AB00D78CB9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/XXTPickerCollection.strings"; sourceTree = "<group>"; };
 		D6E141091F5032AB00D78CB9 /* XXTBasePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTBasePicker.h; sourceTree = "<group>"; };
 		D6E1410B1F5032AB00D78CB9 /* XXTPickerDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerDefine.h; sourceTree = "<group>"; };
 		D6E1410C1F5032AB00D78CB9 /* XXTPickerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPickerFactory.h; sourceTree = "<group>"; };
@@ -2450,6 +2456,7 @@
 		0F2E49E51F4CA10600BD11AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				0F08BC0F1FFD1A8000B83972 /* Lua */,
 				D63E89E02031693A00A865DA /* WebDAV */,
 				D63E89DF2031692F00A865DA /* Category */,
 				0F5EB5191F08E03B0016016A /* Aliyun */,
@@ -2796,6 +2803,14 @@
 				0FCC2ACA1F13112200C50A48 /* Toast */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0F620CC820A69DC0001C0A4C /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				0F620CC920A69DE0001C0A4C /* XXTPickerPreview.h */,
+			);
+			path = Preview;
 			sourceTree = "<group>";
 		};
 		0F6679DB1F51559E0072C177 /* Snippet */ = {
@@ -3810,6 +3825,8 @@
 				0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */,
 				0F7B52BC201994CA00D91702 /* NSString+VersionValue.h */,
 				0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */,
+				0F620CCE20A6D33D001C0A4C /* NSString+Template.h */,
+				0F620CCF20A6D33D001C0A4C /* NSString+Template.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -3996,6 +4013,8 @@
 				D6863C5B1F7E275800A45CF7 /* XXTEUIViewController+ScanQRCode.m */,
 				D69D43E92026EA4600AD62C1 /* XXTEUIViewController+RunCommand.h */,
 				D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */,
+				0F620CD320A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.h */,
+				0F620CD420A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m */,
 			);
 			path = ButtonAction;
 			sourceTree = "<group>";
@@ -4111,7 +4130,7 @@
 		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
-				0F08BC0F1FFD1A8000B83972 /* Lua */,
+				0F620CC820A69DC0001C0A4C /* Preview */,
 				D6E140981F5032AB00D78CB9 /* Application */,
 				0FBAFF321F6E5378008B3189 /* Image */,
 				D6E140AE1F5032AB00D78CB9 /* KeyEvent */,
@@ -4218,7 +4237,6 @@
 			isa = PBXGroup;
 			children = (
 				D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */,
-				D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -4471,7 +4489,6 @@
 				0F8EDCB01FB1F779003C92D6 /* A.tmTheme in Resources */,
 				0F8EDCB11FB1F779003C92D6 /* OneHalf (Light).tmTheme in Resources */,
 				0F8ECD441FE802A900A5457C /* Eiffel.png in Resources */,
-				0F8EDCB21FB1F779003C92D6 /* XXTPickerCollection.strings in Resources */,
 				0F8EDCB31FB1F779003C92D6 /* SKFont.plist in Resources */,
 				0F8ECD5F1FE80D0F00A5457C /* Anonymous_Pro.ttf in Resources */,
 				0F8EDCB41FB1F779003C92D6 /* Cobalt.tmTheme in Resources */,
@@ -4615,7 +4632,6 @@
 				0FA1A4FF1FF13CAC0021648B /* Settings.Pro.bundle in Resources */,
 				0FB0090E1F4364C300097E9C /* A.tmTheme in Resources */,
 				0FB009121F43685E00097E9C /* OneHalf (Light).tmTheme in Resources */,
-				D6E141331F5032AB00D78CB9 /* XXTPickerCollection.strings in Resources */,
 				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				0F469CEC200CE7200042F1BF /* RMCloudExpandedCell.xib in Resources */,
 				D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */,
@@ -4695,7 +4711,6 @@
 				D60FE7BD1FE2369300954818 /* xml.tmLanguage in Resources */,
 				D60FE7BE1FE2369300954818 /* XUIAnimatedImageCell.xib in Resources */,
 				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
-				D60FE7C21FE2369300954818 /* XXTPickerCollection.strings in Resources */,
 				0FCAF40A200A1D14002FB774 /* RMCloudMoreCell.xib in Resources */,
 				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
 				0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
@@ -5176,6 +5191,7 @@
 				0F8EDC361FB1F779003C92D6 /* lcode.c in Sources */,
 				0F8EDC371FB1F779003C92D6 /* lcorolib.c in Sources */,
 				0F8EDC381FB1F779003C92D6 /* ICTextView.m in Sources */,
+				0F620CD220A6D33D001C0A4C /* NSString+Template.m in Sources */,
 				0F8EDC391FB1F779003C92D6 /* lctype.c in Sources */,
 				0F8EDC3A1FB1F779003C92D6 /* ldblib.c in Sources */,
 				0F8EDC3B1FB1F779003C92D6 /* ldebug.c in Sources */,
@@ -5198,6 +5214,7 @@
 				0F8EDC4C1FB1F779003C92D6 /* lstate.c in Sources */,
 				0F8EDC4D1FB1F779003C92D6 /* lstring.c in Sources */,
 				0F8EDC4E1FB1F779003C92D6 /* lstrlib.c in Sources */,
+				0F620CD720A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m in Sources */,
 				0F8EDC4F1FB1F779003C92D6 /* ltable.c in Sources */,
 				0F8EDC501FB1F779003C92D6 /* ltablib.c in Sources */,
 				0F8EDC511FB1F779003C92D6 /* ltm.c in Sources */,
@@ -5215,6 +5232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */,
+				0F620CD020A6D33D001C0A4C /* NSString+Template.m in Sources */,
 				0F97F1CB1FB2A7EA007CA883 /* XXTEMoreApplicationCell.m in Sources */,
 				0F97F1CC1FB2A7EA007CA883 /* XXTEMoreApplicationDetailController.m in Sources */,
 				0F97F1CD1FB2A7EA007CA883 /* XXTEMoreApplicationListController.m in Sources */,
@@ -5337,6 +5355,7 @@
 				0F61E1671ED787A7003DCC78 /* XXTEMasterViewController.m in Sources */,
 				0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */,
 				0F0654BC1EE483A0005B6C5F /* zip.c in Sources */,
+				0F620CD520A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m in Sources */,
 				0F98515520033F7700FFD9E8 /* XXTExplorerPermissionViewController.m in Sources */,
 				0F072DB51FB9EC8B00597EE2 /* xui32.c in Sources */,
 				D6863C8C1F7E30C600A45CF7 /* XXTEUIViewController+SharedInstance.m in Sources */,
@@ -5545,6 +5564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D60FE6511FE2369300954818 /* XXTEMediaPlayerController.m in Sources */,
+				0F620CD120A6D33D001C0A4C /* NSString+Template.m in Sources */,
 				D60FE6521FE2369300954818 /* XXTEMoreApplicationCell.m in Sources */,
 				D60FE6531FE2369300954818 /* XXTEMoreApplicationDetailController.m in Sources */,
 				D60FE6541FE2369300954818 /* XXTEMoreApplicationListController.m in Sources */,
@@ -5667,6 +5687,7 @@
 				D60FE6B61FE2369300954818 /* XXTEMasterViewController.m in Sources */,
 				D60FE6B71FE2369300954818 /* NSData+SHA1.m in Sources */,
 				D60FE6B81FE2369300954818 /* zip.c in Sources */,
+				0F620CD620A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m in Sources */,
 				0F98515620033F7700FFD9E8 /* XXTExplorerPermissionViewController.m in Sources */,
 				D60FE6B91FE2369300954818 /* xui32.c in Sources */,
 				D60FE6BA1FE2369300954818 /* XXTEUIViewController+SharedInstance.m in Sources */,
@@ -5966,16 +5987,6 @@
 				D6DBD48A1F3C4CA1002D5561 /* zh-Hans */,
 			);
 			name = XXTEBuiltInDefaults.plist;
-			path = .;
-			sourceTree = "<group>";
-		};
-		D6E140DC1F5032AB00D78CB9 /* XXTPickerCollection.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D6E140DD1F5032AB00D78CB9 /* en */,
-				D6E141081F5032AB00D78CB9 /* zh-Hans */,
-			);
-			name = XXTPickerCollection.strings;
 			path = .;
 			sourceTree = "<group>";
 		};

@@ -13,8 +13,46 @@
               @"updateDescription": @"description",
               @"downloadURLString": @"url",
               @"downloadPath": @"path",
-              @"cydiaURL": @"cydia-url",
+              @"downloadMD5": @"md5",
+              @"downloadSHA1": @"sha1",
+              @"downloadSHA256": @"sha256",
+              @"downloadSHA512": @"sha512",
+              @"cydiaURLString": @"cydia-url",
+              @"templateURLString": @"template-url",
+              @"aptURLString": @"apt-url",
+              @"packageID": @"package-id",
               }];
+}
+
++ (BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    NSArray <NSString *> *optionalKeys =
+  @[
+    @"downloadURLString",
+    @"downloadPath",
+    @"downloadMD5",
+    @"downloadSHA1",
+    @"downloadSHA256",
+    @"downloadSHA512",
+    @"aptURLString",
+    @"packageID",
+    ];
+    if ([optionalKeys containsObject:propertyName]) {
+        return YES;
+    }
+    return NO;
+}
+
++ (BOOL)propertyIsIgnored:(NSString *)propertyName
+{
+    NSArray <NSString *> *ignoredKeys =
+    @[
+      @"templatePath"
+      ];
+    if ([ignoredKeys containsObject:propertyName]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

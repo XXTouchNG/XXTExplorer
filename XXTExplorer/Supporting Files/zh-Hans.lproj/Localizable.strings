@@ -36,6 +36,9 @@
 "%d items" = "%d 项";
 
 /* No comment provided by engineer. */
+"%lu Application(s) selected." = "%lu 应用程序已选择.";
+
+/* No comment provided by engineer. */
 "%lu items" = "%lu 项";
 
 /* No comment provided by engineer. */
@@ -51,6 +54,9 @@
 "(0)" = "(0)";
 
 /* No comment provided by engineer. */
+"(0/%d)" = "(0/%d)";
+
+/* No comment provided by engineer. */
 "(Un)Comment" = "切换注释";
 
 /* No comment provided by engineer. */
@@ -64,6 +70,9 @@
 
 /* No comment provided by engineer. */
 "1 item" = "1 项";
+
+/* No comment provided by engineer. */
+"3+2 touches to enter/exit fullscreen." = "三指双击以进入/退出全屏.";
 
 /* No comment provided by engineer. */
 "[%@]\nPath \"%@\" (treated as \"NSArray\") is empty." = "[%@]\路径 \"%@\" (作为 \"NSArray\") 为空.";
@@ -180,6 +189,9 @@
 "An empty regular text file. (text/plain)" = "空白的常规文本文件. (text/plain)";
 
 /* No comment provided by engineer. */
+"Application" = "应用程序";
+
+/* No comment provided by engineer. */
 "Application List" = "应用列表";
 
 /* No comment provided by engineer. */
@@ -231,6 +243,9 @@
 "Auto Word Wrap" = "自动折行";
 
 /* No comment provided by engineer. */
+"Backspace Key" = "退格键";
+
+/* No comment provided by engineer. */
 "Basic" = "基本";
 
 /* No comment provided by engineer. */
@@ -238,6 +253,12 @@
 
 /* No comment provided by engineer. */
 "Boot script path has been copied to the pasteboard." = "开机启动项路径已被复制到剪贴板.";
+
+/* No comment provided by engineer. */
+"Bright +" = "亮度 +";
+
+/* No comment provided by engineer. */
+"Bright -" = "亮度 -";
 
 /* No comment provided by engineer. */
 "Bundle ID" = "Bundle 标识符";
@@ -327,6 +348,9 @@
 "Cannot launch script: %@" = "无法启动脚本: %@";
 
 /* No comment provided by engineer. */
+"Cannot load image from cache: %@" = "无法从缓存载入图片: %@";
+
+/* No comment provided by engineer. */
 "Cannot load movie \"%@\": %@" = "无法加载视频 \"%@\": %@";
 
 /* No comment provided by engineer. */
@@ -378,6 +402,9 @@
 "Cannot read archive file \"%@\": Password protected archive is not supported." = "无法读取归档文件 \"%@\": 不支持密码保护归档.";
 
 /* No comment provided by engineer. */
+"Cannot read image data, invalid image?" = "无法读取图片, 请确认图片是否有效.";
+
+/* No comment provided by engineer. */
 "Cannot read or parse specific script: \"%@\"." = "无法读取或解析指定脚本文件: \"%@\".";
 
 /* No comment provided by engineer. */
@@ -393,6 +420,9 @@
 "Cannot save changes: %@" = "无法保存更改: %@";
 
 /* No comment provided by engineer. */
+"Cannot select more points." = "无法继续选择更多点.";
+
+/* No comment provided by engineer. */
 "Cannot select script: %@" = "无法选中脚本: %@";
 
 /* No comment provided by engineer. */
@@ -400,6 +430,15 @@
 
 /* No comment provided by engineer. */
 "Cannot sync with daemon: %@" = "无法与守护进程同步: %@";
+
+/* No comment provided by engineer. */
+"Canvas locked, it cannot be moved or zoomed." = "画布已锁定, 不可被移动或缩放.";
+
+/* No comment provided by engineer. */
+"Canvas reset." = "画布已重置.";
+
+/* No comment provided by engineer. */
+"Canvas unlocked." = "画布已解锁.";
 
 /* No comment provided by engineer. */
 "Case Sensitive" = "区分大小写";
@@ -466,6 +505,9 @@
 
 /* No comment provided by engineer. */
 "Code Viewer" = "代码查看器";
+
+/* No comment provided by engineer. */
+"Color" = "颜色";
 
 /* No comment provided by engineer. */
 "Command exit with code: %@" = "命令运行结束: %@";
@@ -621,6 +663,9 @@
 "Disable this feature to ignore all shortcut events that can launch or stop selected script." = "关闭以上功能将忽略所有内置快捷键以及 Activator 启停脚本事件.";
 
 /* No comment provided by engineer. */
+"Discard all changes and reset the canvas?" = "放弃所有更改并重置画布?";
+
+/* No comment provided by engineer. */
 "Dismiss" = "忽略";
 
 /* No comment provided by engineer. */
@@ -652,6 +697,9 @@
 
 /* No comment provided by engineer. */
 "Download Times: %lu" = "下载次数: %lu";
+
+/* No comment provided by engineer. */
+"Drag & Drop 📌" = "拖拽定位📌";
 
 /* No comment provided by engineer. */
 "Edit" = "编辑";
@@ -702,6 +750,9 @@
 "Error Log" = "错误日志";
 
 /* No comment provided by engineer. */
+"Esc Key" = "Esc 键";
+
+/* No comment provided by engineer. */
 "Everyone" = "任何人";
 
 /* No comment provided by engineer. */
@@ -747,6 +798,9 @@
 "File \"%@\" saved." = "文件 \"%@\" 已保存.";
 
 /* No comment provided by engineer. */
+"File System" = "文件系统";
+
+/* No comment provided by engineer. */
 "Filename" = "文件名";
 
 /* No comment provided by engineer. */
@@ -780,6 +834,9 @@
 "Group" = "组";
 
 /* No comment provided by engineer. */
+"Hardware Keys" = "硬件按键";
+
+/* No comment provided by engineer. */
 "Help" = "帮助";
 
 /* No comment provided by engineer. */
@@ -787,6 +844,9 @@
 
 /* No comment provided by engineer. */
 "Hide" = "隐藏";
+
+/* No comment provided by engineer. */
+"Home Button" = "Home 键";
 
 /* No comment provided by engineer. */
 "If \"Infinite Repeat\" is enabled, \"Repeat Times\" will make no sense." = "如果 \"无限循环\" 处于启用状态, 那么 \"循环次数\" 将不起作用.";
@@ -867,7 +927,13 @@
 "key \"%@\", should be \"%@\"." = "键 \"%@\", 应该为 \"%@\".";
 
 /* No comment provided by engineer. */
+"Key Event" = "按键事件";
+
+/* No comment provided by engineer. */
 "Keyboard" = "键盘";
+
+/* No comment provided by engineer. */
+"Keyboard Keys" = "键盘按键";
 
 /* No comment provided by engineer. */
 "Kind" = "类型";
@@ -947,6 +1013,8 @@
 /* No comment provided by engineer. */
 "Location" = "位置";
 
+"Location Select" = "地理位置选择";
+
 /* No comment provided by engineer. */
 "Log" = "日志";
 
@@ -967,6 +1035,24 @@
 
 /* No comment provided by engineer. */
 "Mac Classic" = "Mac Classic";
+
+/* No comment provided by engineer. */
+"Media Forward 2 Key" = "多媒体下一首2";
+
+/* No comment provided by engineer. */
+"Media Forward Key" = "多媒体下一首";
+
+/* No comment provided by engineer. */
+"Media Keys" = "多媒体按键";
+
+/* No comment provided by engineer. */
+"Media Play/Pause Key" = "多媒体暂停";
+
+/* No comment provided by engineer. */
+"Media Rewind 2 Key" = "多媒体上一首2";
+
+/* No comment provided by engineer. */
+"Media Rewind Key" = "多媒体上一首";
 
 /* No comment provided by engineer. */
 "Modified At" = "修改于";
@@ -994,6 +1080,9 @@
 
 /* No comment provided by engineer. */
 "Moving process terminated: User interrupt occurred." = "移动进程终止: 用户结束操作.";
+
+/* No comment provided by engineer. */
+"Mute Button" = "静音";
 
 /* No comment provided by engineer. */
 "My Scripts" = "我的脚本";
@@ -1026,6 +1115,9 @@
 "New Version: %@" = "新版本: %@";
 
 /* No comment provided by engineer. */
+"Next" = "下一步";
+
+/* No comment provided by engineer. */
 "No" = "否";
 
 /* No comment provided by engineer. */
@@ -1039,6 +1131,9 @@
 
 /* No comment provided by engineer. */
 "No file can be found.\nImport file via File Sharing or iTunes." = "您还一个文件都没有.\n请通过文件共享或 iTunes 导入文件.";
+
+/* No comment provided by engineer. */
+"No image\nTap here to add" = "无图片\n轻按此处以添加";
 
 /* No comment provided by engineer. */
 "No item" = "无项目";
@@ -1182,6 +1277,15 @@
 "Popular" = "热门";
 
 /* No comment provided by engineer. */
+"Position" = "位置";
+
+/* No comment provided by engineer. */
+"Position & Color" = "位置与颜色";
+
+/* No comment provided by engineer. */
+"Power Button" = "电源键";
+
+/* No comment provided by engineer. */
 "Press & Hold \"Volume +\"" = "按住 \"音量 +\"";
 
 /* No comment provided by engineer. */
@@ -1231,6 +1335,9 @@
 
 /* No comment provided by engineer. */
 "Reboot Now" = "立即重启";
+
+/* No comment provided by engineer. */
+"Rectangle" = "矩形";
 
 /* No comment provided by engineer. */
 "Redirect Confirm" = "跳转确认";
@@ -1329,6 +1436,9 @@
 "Retry" = "重试";
 
 /* No comment provided by engineer. */
+"Return Key" = "回车键";
+
+/* No comment provided by engineer. */
 "RuanMao Cloud" = "找脚本";
 
 /* No comment provided by engineer. */
@@ -1374,13 +1484,43 @@
 "Search..." = "搜索...";
 
 /* No comment provided by engineer. */
+"Select a color by tapping on image." = "轻按以选择图片中任意位置的颜色.";
+
+/* No comment provided by engineer. */
+"Select a key event" = "请选择一个按键事件";
+
+/* No comment provided by engineer. */
+"Select a location by dragging 📌" = "拖拽以选择地理位置 📌";
+
+/* No comment provided by engineer. */
+"Select a position by tapping on image." = "轻按以选择图片中任意位置.";
+
+/* No comment provided by engineer. */
+"Select a rectangle area by dragging its corners." = "拖拽矩形顶点以选择区域.";
+
+/* No comment provided by engineer. */
+"Select an application." = "选择一个应用程序.";
+
+/* No comment provided by engineer. */
+"Select an image from album." = "从相册选择一张图片";
+
+/* No comment provided by engineer. */
 "Select Boot Script" = "选择开机启动项";
 
 /* No comment provided by engineer. */
 "Select item from the left panel" = "请从左侧面板中选择项目";
 
 /* No comment provided by engineer. */
+"Select several positions by tapping on image." = "轻按以选择图片中若干位置.";
+
+/* No comment provided by engineer. */
+"Select some applications." = "选择一些应用程序.";
+
+/* No comment provided by engineer. */
 "Selected" = "已选择";
+
+/* No comment provided by engineer. */
+"Selected Applications (%lu)" = "已选择的应用程序 (%lu)";
 
 /* No comment provided by engineer. */
 "Serial Number" = "序列号";
@@ -1413,6 +1553,9 @@
 "Show Invisible Characters" = "显示控制字符";
 
 /* No comment provided by engineer. */
+"Show/Hide Keyboard" = "显示/隐藏键盘";
+
+/* No comment provided by engineer. */
 "Size" = "尺寸";
 
 /* No comment provided by engineer. */
@@ -1437,6 +1580,9 @@
 "Source URL has been copied to the pasteboard." = "源 URL 已被复制到剪贴板.";
 
 /* No comment provided by engineer. */
+"Space Key" = "空格键";
+
+/* No comment provided by engineer. */
 "Special" = "特殊";
 
 /* No comment provided by engineer. */
@@ -1447,6 +1593,9 @@
 
 /* No comment provided by engineer. */
 "Spell Checking" = "拼写检查";
+
+/* No comment provided by engineer. */
+"Spotlight Key" = "Spotlight 键";
 
 /* No comment provided by engineer. */
 "Statistics" = "统计";
@@ -1491,6 +1640,9 @@
 
 /* No comment provided by engineer. */
 "System Applications" = "系统应用程序";
+
+/* No comment provided by engineer. */
+"Tab Key" = "Tab 键";
 
 /* No comment provided by engineer. */
 "Tabs" = "缩进符";
@@ -1678,6 +1830,9 @@
 "Unknown server response type (%@)." = "未知的服务端响应类型 (%@).";
 
 /* No comment provided by engineer. */
+"Unselected Applications (%lu)" = "未选择的应用程序 (%lu)";
+
+/* No comment provided by engineer. */
 "Unsupported package format.\nSupported formats are: deb, ipa." = "不支持的安装包格式.\n支持的格式有: deb, ipa.";
 
 /* No comment provided by engineer. */
@@ -1706,6 +1861,12 @@
 
 /* No comment provided by engineer. */
 "View History" = "历史记录";
+
+/* No comment provided by engineer. */
+"Volume +" = "音量 +";
+
+/* No comment provided by engineer. */
+"Volume -" = "音量 -";
 
 /* No comment provided by engineer. */
 "Warning" = "警告";

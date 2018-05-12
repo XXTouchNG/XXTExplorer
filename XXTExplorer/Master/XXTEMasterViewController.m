@@ -349,13 +349,29 @@
     if (index == 0) {
         XXTEUpdateHelper *helper = self.jsonHelper;
         XXTEUpdatePackage *packageModel = helper.respPackage;
-        NSString *cydiaUrlString = packageModel.cydiaURL;
-        if (cydiaUrlString) {
-            NSURL *cydiaUrl = [NSURL URLWithString:cydiaUrlString];
-            if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl]) {
+        NSString *urlString = nil;
+        NSString *cydiaTemplatePath = packageModel.templatePath;
+        if (cydiaTemplatePath)
+        {
+            NSString *cydiaURLString = uAppDefine(@"CYDIA_URL");
+            if (cydiaURLString) {
+                urlString = [NSString stringWithFormat:cydiaURLString, cydiaTemplatePath];
+            }
+        }
+        else
+        {
+            urlString = packageModel.cydiaURLString;
+        }
+        if (urlString)
+        {
+            NSURL *cydiaUrl = [NSURL URLWithString:urlString];
+            if ([[UIApplication sharedApplication] canOpenURL:cydiaUrl])
+            {
                 [[UIApplication sharedApplication] openURL:cydiaUrl];
-            } else {
-                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), cydiaUrlString]));
+            }
+            else
+            {
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot open \"%@\".", nil), urlString]));
             }
         }
     } else if (index == 1) {

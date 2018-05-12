@@ -705,6 +705,7 @@ static const UIEdgeInsets XXTPixelCropMargin = { 81.f, 37.f, 81.f, 37.f };
         [self maskViewTapped:repeatedFlagView];
         return;
     }
+    if (self.flagViews.count >= 99) return;
     newFlagView.originalPoint = p;
     newFlagView.index = self.flagViews.count + 1;
     if (c) {

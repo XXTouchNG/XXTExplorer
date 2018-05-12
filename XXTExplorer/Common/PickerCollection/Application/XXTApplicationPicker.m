@@ -93,7 +93,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];
     } else {
-        return NSLocalizedStringFromTable(@"Application", @"XXTPickerCollection", nil);
+        return NSLocalizedString(@"Application", nil);
     }
 }
 
@@ -121,10 +121,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     _allApplications = @[];
 
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-    searchBar.placeholder = NSLocalizedStringFromTable(@"Search Application", @"XXTPickerCollection", nil);
+    searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
     searchBar.scopeButtonTitles = @[
-            NSLocalizedStringFromTable(@"Name", @"XXTPickerCollection", nil),
-            NSLocalizedStringFromTable(@"Bundle ID", @"XXTPickerCollection", nil)
+            NSLocalizedString(@"Name", nil),
+            NSLocalizedString(@"Bundle ID", nil)
     ];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -171,7 +171,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -189,7 +189,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if (self.pickerMeta[@"subtitle"]) {
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
-        subtitle = NSLocalizedStringFromTable(@"Select an application.", @"XXTPickerCollection", nil);
+        subtitle = NSLocalizedString(@"Select an application.", nil);
     }
     [self updateSubtitle:subtitle];
 }

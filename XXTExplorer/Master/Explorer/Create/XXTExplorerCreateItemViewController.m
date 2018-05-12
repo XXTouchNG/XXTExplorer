@@ -16,7 +16,7 @@
 
 #import "XXTEMoreLinkCell.h"
 #import "UIControl+BlockTarget.h"
-
+#import "NSString+Template.h"
 
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,
@@ -403,7 +403,7 @@ typedef enum : NSUInteger {
         
         if ([createItemManager fileExistsAtPath:templatePath]) {
             
-            NSMutableString *newTemplate = [[[NSString alloc] initWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:&createError] mutableCopy];
+            NSString *newTemplate = [[NSString alloc] initWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:&createError];
             
             if (createError) {
                 toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Cannot read template \"%@\".", nil), templatePath]));
@@ -416,13 +416,15 @@ typedef enum : NSUInteger {
             NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:[NSDate date]];
             NSString *yearString = [@([dateComponents year]) stringValue];
             
-            [newTemplate replaceOccurrencesOfString:@"{{FILENAME}}" withString:itemName options:0 range:NSMakeRange(0, newTemplate.length)];
-            [newTemplate replaceOccurrencesOfString:@"{{PRODUCT_STRING}}" withString:versionString options:0 range:NSMakeRange(0, newTemplate.length)];
-            [newTemplate replaceOccurrencesOfString:@"{{AUTHOR_NAME}}" withString:deviceName options:0 range:NSMakeRange(0, newTemplate.length)];
-            [newTemplate replaceOccurrencesOfString:@"{{CREATED_AT}}" withString:longDateString options:0 range:NSMakeRange(0, newTemplate.length)];
-            [newTemplate replaceOccurrencesOfString:@"{{COPYRIGHT_YEAR}}" withString:yearString options:0 range:NSMakeRange(0, newTemplate.length)];
-            [newTemplate replaceOccurrencesOfString:@"{{DEVICE_NAME}}" withString:deviceName options:0 range:NSMakeRange(0, newTemplate.length)];
+            NSMutableDictionary <NSString *, NSString *> *tags = [[NSMutableDictionary alloc] init];
+            if (itemName) tags[@"FILENAME"] = itemName;
+            if (versionString) tags[@"PRODUCT_STRING"] = versionString;
+            if (deviceName) tags[@"AUTHOR_NAME"] = deviceName;
+            if (longDateString) tags[@"CREATED_AT"] = longDateString;
+            if (yearString) tags[@"COPYRIGHT_YEAR"] = yearString;
+            if (deviceName) tags[@"DEVICE_NAME"] = deviceName;
             
+            newTemplate = [newTemplate stringByReplacingTagsInDictionary:[tags copy]];
             templateData = [newTemplate dataUsingEncoding:NSUTF8StringEncoding];
             
         }

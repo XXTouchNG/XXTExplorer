@@ -7,7 +7,7 @@
 //
 
 #import "XXTEUIViewController+OpenURL.h"
-#import "XUIButtonCell.h"
+#import <XUI/XUIButtonCell.h>
 
 #import <XUI/XUI.h>
 #import <XUI/XUILogger.h>

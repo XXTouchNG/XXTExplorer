@@ -311,7 +311,9 @@ static void * activatorHandler = nil;
                 vc.title = NSLocalizedString(@"Activator", nil);
                 [self.navigationController pushViewController:vc animated:YES];
             } else {
-                NSString *activatorURLString = uAppDefine(@"ACTIVATOR_URL");
+                NSString *cydiaPackageString = uAppDefine(@"CYDIA_PACKAGE");
+                if (!cydiaPackageString) return;
+                NSString *activatorURLString = [NSString stringWithFormat:cydiaPackageString, @"libactivator"];
                 NSURL *activatorURL = [NSURL URLWithString:activatorURLString];
                 if ([[UIApplication sharedApplication] canOpenURL:activatorURL]) {
                     [[UIApplication sharedApplication] openURL:activatorURL];

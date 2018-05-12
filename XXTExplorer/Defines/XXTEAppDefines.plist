@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ACTIVATOR_URL</key>
-	<string>cydia://package/libactivator</string>
 	<key>ADD1S_PATH</key>
 	<string>/usr/bin/1ferver/add1s</string>
 	<key>ALIYUN_APPKEY</key>
@@ -38,6 +36,10 @@
 	</array>
 	<key>CHANNEL_ID</key>
 	<string>Cydia™</string>
+	<key>CYDIA_PACKAGE</key>
+	<string>cydia://package/%@</string>
+	<key>CYDIA_URL</key>
+	<string>cydia://url/%@</string>
 	<key>DAEMON_ERROR_LOG_PATH</key>
 	<string>log/script_error.log</string>
 	<key>DAEMON_LOG_PATH</key>

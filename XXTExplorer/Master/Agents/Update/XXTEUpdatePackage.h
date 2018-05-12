@@ -7,10 +7,23 @@
 
 @interface XXTEUpdatePackage : JSONModel
 
-@property (nonatomic, strong) NSString *latestVersion;
-@property (nonatomic, strong) NSString *updateDescription;
-@property (nonatomic, strong) NSString *downloadURLString;
-@property (nonatomic, strong) NSString *downloadPath;
-@property (nonatomic, strong) NSString *cydiaURL;
+// required cydia
+@property (nonatomic, copy) NSString *latestVersion;
+@property (nonatomic, copy) NSString *updateDescription;
+@property (nonatomic, copy) NSString *cydiaURLString;
+
+// template cydia
+@property (nonatomic, copy) NSString *templateURLString;
+@property (nonatomic, copy) NSString *templatePath; // unmanaged
+@property (nonatomic, copy) NSString *aptURLString;
+@property (nonatomic, copy) NSString *packageID;
+
+// online updating
+@property (nonatomic, copy) NSString *downloadURLString;
+@property (nonatomic, copy) NSString *downloadPath;
+@property (nonatomic, copy) NSString *downloadMD5;
+@property (nonatomic, copy) NSString *downloadSHA1;
+@property (nonatomic, copy) NSString *downloadSHA256;
+@property (nonatomic, copy) NSString *downloadSHA512;
 
 @end

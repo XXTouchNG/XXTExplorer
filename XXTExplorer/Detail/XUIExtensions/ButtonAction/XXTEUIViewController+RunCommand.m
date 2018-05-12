@@ -7,7 +7,7 @@
 //
 
 #import "XXTEUIViewController+RunCommand.h"
-#import "XUIButtonCell.h"
+#import <XUI/XUIButtonCell.h>
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 #import <XUI/XUILogger.h>

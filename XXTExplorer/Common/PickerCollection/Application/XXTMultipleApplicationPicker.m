@@ -95,7 +95,7 @@ UISearchDisplayDelegate
     if (self.pickerMeta[@"title"]) {
         return self.pickerMeta[@"title"];
     } else {
-        return NSLocalizedStringFromTable(@"Applications", @"XXTPickerCollection", nil);
+        return NSLocalizedString(@"Applications", nil);
     }
 }
 
@@ -134,10 +134,10 @@ UISearchDisplayDelegate
 #pragma clang diagnostic pop
     
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-    searchBar.placeholder = NSLocalizedStringFromTable(@"Search Application", @"XXTPickerCollection", nil);
+    searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
     searchBar.scopeButtonTitles = @[
-                                    NSLocalizedStringFromTable(@"Name", @"XXTPickerCollection", nil),
-                                    NSLocalizedStringFromTable(@"Bundle ID", @"XXTPickerCollection", nil)
+                                    NSLocalizedString(@"Name", nil),
+                                    NSLocalizedString(@"Bundle ID", nil)
                                     ];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -184,7 +184,7 @@ UISearchDisplayDelegate
     if ([self.pickerTask taskFinished]) {
         rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(taskFinished:)];
     } else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Next", @"XXTPickerCollection", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStylePlain target:self action:@selector(taskNextStep:)];
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -202,7 +202,7 @@ UISearchDisplayDelegate
     if (self.pickerMeta[@"subtitle"]) {
         subtitle = self.pickerMeta[@"subtitle"];
     } else {
-        subtitle = NSLocalizedStringFromTable(@"Select some applications.", @"XXTPickerCollection", nil);
+        subtitle = NSLocalizedString(@"Select some applications.", nil);
     }
     [self updateSubtitle:subtitle];
 }
@@ -332,9 +332,9 @@ UISearchDisplayDelegate
         
         NSString *text = nil;
         if (section == kXXTApplicationPickerCellSectionSelected) {
-            text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Selected Applications (%lu)", @"XXTPickerCollection", nil), (unsigned long)selectedIdentifiers.count];
+            text = [NSString stringWithFormat:NSLocalizedString(@"Selected Applications (%lu)", nil), (unsigned long)selectedIdentifiers.count];
         } else if (section == kXXTApplicationPickerCellSectionUnselected) {
-            text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Unselected Applications (%lu)", @"XXTPickerCollection", nil), (unsigned long)unselectedIdentifiers.count];
+            text = [NSString stringWithFormat:NSLocalizedString(@"Unselected Applications (%lu)", nil), (unsigned long)unselectedIdentifiers.count];
         }
         if (text) {
             NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:14.0] }];
@@ -511,7 +511,7 @@ UISearchDisplayDelegate
     [self tableView:tableView reloadHeaderView:[tableView headerViewForSection:indexPath.section] forSection:indexPath.section];
     [self tableView:tableView reloadHeaderView:[tableView headerViewForSection:toIndexPath.section] forSection:toIndexPath.section];
     
-    [self updateSubtitle:[NSString stringWithFormat:NSLocalizedStringFromTable(@"%lu Application(s) selected.", @"XXTPickerCollection", nil), (unsigned long)self.selectedIdentifiers.count]];
+    [self updateSubtitle:[NSString stringWithFormat:NSLocalizedString(@"%lu Application(s) selected.", nil), (unsigned long)self.selectedIdentifiers.count]];
     
 }
 

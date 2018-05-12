@@ -8,7 +8,7 @@
 
 #import "XXTEUIViewController+ScanQRCode.h"
 
-#import "XUIButtonCell.h"
+#import <XUI/XUIButtonCell.h>
 #import "XXTEScanViewController.h"
 
 #import <objc/runtime.h>

@@ -86,7 +86,7 @@
     centerAddLabel.textAlignment = NSTextAlignmentCenter;
     centerAddLabel.numberOfLines = 2;
     centerAddLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    centerAddLabel.text = NSLocalizedStringFromTable(@"No image\nTap here to add", @"XXTPickerCollection", nil);
+    centerAddLabel.text = NSLocalizedString(@"No image\nTap here to add", nil);
     [centerAddLabel sizeToFit];
 
     centerAddLabel.center = CGPointMake(centerAddImage.bounds.size.width / 2, centerAddImage.bounds.size.height + 20.f + centerAddLabel.bounds.size.height / 2);
