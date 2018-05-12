@@ -339,6 +339,9 @@
 "Cannot find top-level XPP from \"%@\"." = "无法加载顶层 XPP 项目: \"%@\".";
 
 /* No comment provided by engineer. */
+"Cannot generate code snippet because template table field \"output\" is undefined or empty." = "无法生成代码片段, 因为模板表字段 \"output\" 未定义或为空.";
+
+/* No comment provided by engineer. */
 "Cannot launch inspector process." = "无法启动权限注入进程.";
 
 /* No comment provided by engineer. */
@@ -529,9 +532,6 @@
 
 /* No comment provided by engineer. */
 "Confirm" = "确认";
-
-/* No comment provided by engineer. */
-"Connect to the APT server..." = "连接到源服务器...";
 
 /* No comment provided by engineer. */
 "Connect to the update server..." = "连接到更新服务器...";
@@ -832,6 +832,9 @@
 
 /* No comment provided by engineer. */
 "General" = "通用";
+
+/* No comment provided by engineer. */
+"Generated code snippet has been saved to \"%@\"." = "生成的代码片段已保存到 \"%@\".";
 
 /* No comment provided by engineer. */
 "Group" = "组";

@@ -58,6 +58,7 @@
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     if (self = [super initWithURL:fileURL]) {
         _entryPath = path;
+        self.navigationButtonsHidden = YES;
         if (@available(iOS 9.0, *)) {
             self.showActionButton = YES;
         } else {

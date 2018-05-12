@@ -11,8 +11,9 @@
 
 @interface XXTPickerSnippet : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic, strong) NSString *path;
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, copy) NSString *path;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *output;
 @property (nonatomic, strong) NSArray <NSDictionary *> *flags;
 
 - (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr;

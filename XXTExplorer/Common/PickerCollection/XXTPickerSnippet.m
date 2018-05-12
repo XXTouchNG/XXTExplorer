@@ -100,6 +100,21 @@
                 _name = snippet_name;
             }
             
+            // get output
+            if (lua_type(L, -1) == LUA_TTABLE) {
+                NSString *snippet_output = nil;
+                lua_getfield(L, -1, "output");
+                if (lua_type(L, -1) == LUA_TSTRING) {
+                    const char *output = lua_tostring(L, -1);
+                    if (output)
+                        snippet_output = [NSString stringWithUTF8String:output];
+                }
+                lua_pop(L, 1);
+                if (!snippet_output)
+                    snippet_output = @"";
+                _output = snippet_output;
+            }
+            
             // get arguments and transform it
             if (lua_type(L, -1) == LUA_TTABLE) {
                 NSArray *args_array = nil;
@@ -137,8 +152,9 @@
                 snippet_body = lua_toNSValue(L, -1);
                 lua_pop(L, 1); // pop 2
             }
+        } else {
+            lua_pop(L, 1); // pop 1
         }
-        lua_pop(L, 1); // pop 1
     }
 	return snippet_body;
 }
@@ -150,6 +166,7 @@
 	if (self = [super init]) {
 		_path = [aDecoder decodeObjectForKey:@"path"];
 		_name = [aDecoder decodeObjectForKey:@"name"];
+        _output = [aDecoder decodeObjectForKey:@"output"];
 		_flags = [aDecoder decodeObjectForKey:@"flags"];
 		_results = [aDecoder decodeObjectForKey:@"results"];
         [self setupWithError:nil];
@@ -161,6 +178,7 @@
 {
 	[aCoder encodeObject:self.path forKey:@"path"];
 	[aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.output forKey:@"output"];
 	[aCoder encodeObject:self.flags forKey:@"flags"];
 	[aCoder encodeObject:self.results forKey:@"results"];
 }
@@ -171,6 +189,7 @@
 	XXTPickerSnippet *copy = (XXTPickerSnippet *) [[[self class] allocWithZone:zone] init];
 	copy.path = [self.path copyWithZone:zone];
 	copy.name = [self.name copyWithZone:zone];
+    copy.output = [self.output copyWithZone:zone];
 	copy.flags = [self.flags copyWithZone:zone];
 	copy.results = [self.results copyWithZone:zone];
 	return copy;
