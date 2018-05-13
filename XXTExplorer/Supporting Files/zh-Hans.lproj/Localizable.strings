@@ -342,6 +342,9 @@
 "Cannot generate code snippet because template table field \"output\" is undefined or empty." = "无法生成代码片段, 因为模板表字段 \"output\" 未定义或为空.";
 
 /* No comment provided by engineer. */
+"Cannot generate code snippet: unknown error." = "无法生成代码片段: 未知错误, 文件可能不是一个合法的代码片段模板.";
+
+/* No comment provided by engineer. */
 "Cannot launch inspector process." = "无法启动权限注入进程.";
 
 /* No comment provided by engineer. */
@@ -373,6 +376,9 @@
 
 /* No comment provided by engineer. */
 "Cannot open log file \"%@\"." = "无法打开日志文件 \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot open url \"%@\"." = "无法打开 URL \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot open: \"%@\"" = "无法打开: \"%@\"";

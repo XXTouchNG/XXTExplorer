@@ -90,7 +90,7 @@
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         _errorAttributes = @{
                                NSFontAttributeName: font,
-                               NSForegroundColorAttributeName: [UIColor redColor],
+                               NSForegroundColorAttributeName: XXTColorDanger(),
                                };
     }
     return _errorAttributes;

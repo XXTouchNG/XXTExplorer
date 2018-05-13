@@ -11,8 +11,10 @@
 #import "XXTEEditorStatisticsViewController.h"
 #import "XXTESymbolViewController.h"
 #import "XXTENavigationController.h"
+#import "XXTETerminalViewController.h"
 
 #import "XXTEEditorTextView.h"
+#import "XXTEEditorLanguage.h"
 
 @implementation XXTEEditorController (Settings)
 
@@ -40,6 +42,26 @@
         toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
     }
     XXTE_END_IGNORE_PARTIAL
+}
+
+- (void)launchItemTapped:(UIBarButtonItem *)sender {
+    BOOL supported = NO;
+    NSArray <NSString *> *suggested = [XXTETerminalViewController suggestedExtensions];
+    NSArray <NSString *> *holded = self.language.extensions;
+    for (NSString *holdedExt in holded) {
+        if ([suggested containsObject:holdedExt]) {
+            supported = YES;
+            break;
+        }
+    }
+    if (!supported) {
+        return;
+    }
+    NSString *entryPath = self.entryPath;
+    XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
+    terminalController.runImmediately = YES;
+    terminalController.editor = self;
+    [self.navigationController pushViewController:terminalController animated:YES];
 }
 
 - (void)searchButtonItemTapped:(UIBarButtonItem *)sender {

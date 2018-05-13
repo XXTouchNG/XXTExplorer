@@ -69,6 +69,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *launchButtonItem;
 
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
@@ -496,8 +497,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         }
     }
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = self.myBackButtonItem;
-    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
+    
+    self.navigationItem.leftBarButtonItems = @[self.myBackButtonItem];
+    if (isOS9Above() && isAppStore()) {
+        self.navigationItem.rightBarButtonItems = @[self.shareButtonItem, self.launchButtonItem];
+    } else {
+        self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
+    }
     
     [self.maskView setTextView:self.textView];
     
@@ -598,6 +604,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         _shareButtonItem = shareButtonItem;
     }
     return _shareButtonItem;
+}
+
+- (UIBarButtonItem *)launchButtonItem {
+    if (!_launchButtonItem) {
+        _launchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(launchItemTapped:)];
+    }
+    return _launchButtonItem;
 }
 
 - (UIBarButtonItem *)searchButtonItem {

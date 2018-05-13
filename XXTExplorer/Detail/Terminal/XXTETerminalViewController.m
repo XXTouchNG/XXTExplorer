@@ -7,9 +7,9 @@
 //
 
 #import "XXTELuaVModel.h"
-#import "XXTETerminalViewController.h"
 #import "XXTETerminalTextView.h"
-
+#import "XXTETerminalViewController.h"
+#import "XXTEEditorController+NavigationBar.h"
 #import "XXTExplorerEntryTerminalReader.h"
 
 @interface XXTETerminalViewController () <UITextViewDelegate, XXTELuaVModelDelegate>
@@ -31,7 +31,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"lua" ];
+    return @[ @"lua", @"snippet", @"xui" ];
 }
 
 + (Class)relatedReader {
@@ -74,12 +74,23 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.editor renderNavigationBarTheme:YES];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
 - (void)willMoveToParentViewController:(UIViewController *)parent {
     if (parent == nil) {
+        [self.editor renderNavigationBarTheme:NO];
         if (self.virtualModel.running) {
             [self shutdownVirtualMachine];
-            return;
         }
+    } else {
+        [self.editor renderNavigationBarTheme:YES];
     }
     [super willMoveToParentViewController:parent];
 }

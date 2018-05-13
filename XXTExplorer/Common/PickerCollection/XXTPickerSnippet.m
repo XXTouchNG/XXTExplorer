@@ -126,7 +126,12 @@
                 _flags = args_array;
             }
             
-            // remain table in that stack
+            // copy and register that table
+            lua_pushvalue(L, -1);
+            lua_setfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
+            
+            // clear
+            lua_pop(L, 1);
         }
     }
     
@@ -140,21 +145,25 @@
     id snippet_body = nil;
     @synchronized (self) {
         NSArray *arguments = [self.results copy];
-        lua_getfield(L, -1, "generator"); // push 1
-        if (lua_type(L, -1) == LUA_TFUNCTION) { // judge type
-            for (int i = 0; i < [arguments count]; ++i) {
-                lua_pushNSValue(L, [arguments objectAtIndex:i]);
+        lua_getfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
+        if (lua_type(L, -1) == LUA_TTABLE) {
+            lua_getfield(L, -1, "generator");
+            if (lua_type(L, -1) == LUA_TFUNCTION) {
+                for (int i = 0; i < [arguments count]; ++i) {
+                    lua_pushNSValue(L, [arguments objectAtIndex:i]);
+                }
+                int argumentCount = (int)[arguments count];
+                int generateResult = lua_pcall(L, argumentCount, 1, 0);
+                if (lua_checkCode(L, generateResult, error))
+                {
+                    snippet_body = lua_toNSValue(L, -1);
+                    lua_pop(L, 1);
+                }
+            } else {
+                lua_pop(L, 1);
             }
-            int argumentCount = (int)[arguments count];
-            int generateResult = lua_pcall(L, argumentCount, 1, 0); // push 2
-            if (lua_checkCode(L, generateResult, error))
-            {
-                snippet_body = lua_toNSValue(L, -1);
-                lua_pop(L, 1); // pop 2
-            }
-        } else {
-            lua_pop(L, 1); // pop 1
         }
+        lua_pop(L, 1);
     }
 	return snippet_body;
 }
@@ -250,7 +259,6 @@
 
 - (void)dealloc {
     if (L) {
-        lua_pop(L, 1);
         lua_close(L);
         L = NULL;
     }

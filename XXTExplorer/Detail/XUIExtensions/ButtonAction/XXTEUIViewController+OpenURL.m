@@ -31,14 +31,17 @@ BOOL SBSOpenSensitiveURLAndUnlock(NSURL *url, BOOL flags) {
     NSURL *url = [NSURL URLWithString:args[@"url"]];
 #ifndef APPSTORE
     BOOL canOpenURL = SBSOpenSensitiveURLAndUnlock(url, YES);
-    return @(canOpenURL);
 #else
     BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:url];
     if (canOpenURL) {
         [[UIApplication sharedApplication] openURL:url];
     }
-    return @(canOpenURL);
 #endif
+    if (!canOpenURL)
+    {
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open url \"%@\".", nil), url]);
+    }
+    return @(canOpenURL);
 }
 
 @end

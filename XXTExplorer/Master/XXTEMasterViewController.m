@@ -427,7 +427,8 @@
             {
                 NSString *templateString = templateResp;
                 templateString = [templateString stringByReplacingTagsInDictionary:[pkg toDictionary]];
-                NSString *templatePath = [loc stringByAppendingPathComponent:@"template.html"];
+                NSString *uuidString = [[NSUUID UUID] UUIDString];
+                NSString *templatePath = [[loc stringByAppendingPathComponent:[@"template-" stringByAppendingString:uuidString]] stringByAppendingPathExtension:@"html"];
                 BOOL writeResult = [[templateString dataUsingEncoding:NSUTF8StringEncoding] writeToFile:templatePath atomically:YES];
                 if (writeResult)
                 {

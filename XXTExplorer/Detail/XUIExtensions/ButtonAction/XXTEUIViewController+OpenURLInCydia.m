@@ -34,6 +34,10 @@
     if (canOpenURL) {
         [[UIApplication sharedApplication] openURL:url];
     }
+    if (!canOpenURL)
+    {
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open url \"%@\".", nil), url]);
+    }
     return @(canOpenURL);
 }
 

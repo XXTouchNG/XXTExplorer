@@ -8,7 +8,11 @@
 
 #import "XXTEViewer.h"
 
+@class XXTEEditorController;
+
 @interface XXTETerminalViewController : UIViewController <XXTEViewer>
+
 @property (nonatomic, assign) BOOL runImmediately;
+@property (nonatomic, weak) XXTEEditorController *editor;
 
 @end

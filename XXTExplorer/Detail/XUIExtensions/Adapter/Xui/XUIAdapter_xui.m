@@ -78,8 +78,12 @@
             if (!lua_checkCode(L, loadResult, error)) {
                 return NO;
             }
+            
+            // copy and register the function
             lua_pushvalue(L, -1);
-            lua_setfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
+            lua_setfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
+            
+            // clear
             lua_pop(L, 1);
             
             return YES;
@@ -126,7 +130,7 @@
     id value = nil;
     
     @synchronized (self) {
-        lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
+        lua_getfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"load",
                          @"bundlePath": [bundle bundlePath],
@@ -170,7 +174,7 @@
     if (!path || !bundle || !rootPath || !mainBundle) return;
     
     @synchronized (self) {
-        lua_getfield(L, LUA_REGISTRYINDEX, "XUIAdapter_xui");
+        lua_getfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"save",
                          @"defaultsId": identifier,
@@ -192,8 +196,9 @@
                 NSLog(@"%@", [saveError localizedDescription]);
 #endif
             }
+        } else {
+            lua_pop(L, -1);
         }
-        lua_pop(L, -1);
     }
 }
 

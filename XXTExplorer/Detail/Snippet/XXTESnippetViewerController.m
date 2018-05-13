@@ -83,8 +83,10 @@
             blockInteractions(blockVC, NO);
             if (taskResult) {
                 [self copyResult:taskResult fromTask:task];
-            } else {
+            } else if (error) {
                 toastError(self, error);
+            } else {
+                toastMessage(self, NSLocalizedString(@"Cannot generate code snippet: unknown error.", nil));
             }
         });
     });
