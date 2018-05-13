@@ -17,9 +17,9 @@
 @property (nonatomic, strong, readonly) NSArray <Class> *registeredViewers;
 
 + (instancetype)sharedInstance;
-- (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName;
+- (void)setNeedsReload;
 
-//- (BOOL)isRegisteredExtension:(NSString *)ext;
+- (void)bindExtension:(NSString *)extension toViewer:(NSString *)viewerName;
 
 - (BOOL)hasViewerForEntry:(XXTExplorerEntry *)entry;
 - (BOOL)hasEditorForEntry:(XXTExplorerEntry *)entry;

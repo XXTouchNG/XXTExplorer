@@ -14,6 +14,7 @@
 #import <NSURLConnection+PromiseKit.h>
 
 #import <WebKit/WebKit.h>
+#import "XXTExplorerEntryService.h"
 
 @implementation XXTEUIViewController (XXTResetDefaults)
 
@@ -21,8 +22,6 @@
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Reset Defaults", nil) message:NSLocalizedString(@"All user defaults will be removed, but your file will not be deleted.\nThis operation cannot be revoked.", nil) style:LGAlertViewStyleActionSheet buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Reset", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
         [alertView dismissAnimated];
         [self performResetDefaultsAtRemote];
     }];
@@ -32,6 +31,7 @@
 
 #pragma mark - Reset Action
 
+#ifndef APPSTORE
 - (void)performResetDefaultsAtRemote {
     UIViewController *blockVC = blockInteractions(self, YES);
     [self promiseCleanCacheAndCookie]
@@ -52,9 +52,32 @@
         blockInteractions(blockVC, NO);
     });
 }
+#else
+- (void)performResetDefaultsAtRemote {
+    UIViewController *blockVC = blockInteractions(self, YES);
+    [self promiseCleanCacheAndCookie]
+    .then(^(NSNumber *val) {
+        if (val && [val isKindOfClass:[NSNumber class]] && [val boolValue]) {
+            toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+        }
+    })
+    .catch(^(NSError *error) {
+        toastDaemonError(self, error);
+    })
+    .finally(^() {
+        blockInteractions(blockVC, NO);
+    });
+}
+#endif
 
 - (PMKPromise *)promiseCleanCacheAndCookie {
     return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
+        
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        
+        [[XXTExplorerEntryService sharedInstance] setNeedsReload];
+        
         NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         for (NSHTTPCookie *cookie in [storage cookies]) {
             [storage deleteCookie:cookie];
@@ -73,6 +96,7 @@
         } else {
             resolve(@(NO));
         }
+        
     }];
 }
 

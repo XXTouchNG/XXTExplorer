@@ -180,4 +180,12 @@
     return nil;
 }
 
+- (void)setNeedsReload {
+    _bindingDictionary = nil;
+    _registeredViewers = nil;
+#ifdef DEBUG
+    NSLog(@"+ [%@ sharedInstance] needs reload...", NSStringFromClass([self class]));
+#endif
+}
+
 @end

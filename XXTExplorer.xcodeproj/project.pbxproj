@@ -148,6 +148,7 @@
 		0F6679DE1F5162880072C177 /* XXTESnippetViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */; };
 		0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */; };
 		0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E41F5164080072C177 /* XXTExplorerEntrySnippetReader.m */; };
+		0F6682F820A7D62A00960436 /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; };
 		0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */; };
 		0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA861F374D8B0017BE7C /* XXTExplorerViewController+Notification.m */; };
 		0F6AEA901F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA8F1F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m */; };
@@ -5209,6 +5210,7 @@
 				0F9387F01FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
 				0F8EDC491FB1F779003C92D6 /* lopcodes.c in Sources */,
 				0F8EDC4A1FB1F779003C92D6 /* loslib.c in Sources */,
+				0F6682F820A7D62A00960436 /* XXTEUIViewController+XXTResetDefaults.m in Sources */,
 				0FAE18E920806830005F9B67 /* XXTEDbTableContentViewController.m in Sources */,
 				0F8EDC4B1FB1F779003C92D6 /* lparser.c in Sources */,
 				0F8EDC4C1FB1F779003C92D6 /* lstate.c in Sources */,
