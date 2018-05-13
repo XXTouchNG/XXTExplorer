@@ -17,6 +17,7 @@
 
 
 @interface XXTEMoreBootScriptController () <XXTExplorerItemPickerDelegate>
+
 @property (nonatomic, strong) UISwitch *bootScriptSwitch;
 @property (nonatomic, copy) NSString *bootScriptPath;
 

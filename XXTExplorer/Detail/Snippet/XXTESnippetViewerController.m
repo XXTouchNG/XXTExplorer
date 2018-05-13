@@ -57,6 +57,11 @@
         toastError(self, initError);
         return;
     }
+    if (snippet.output.length == 0)
+    {
+        toastMessage(self, NSLocalizedString(@"Cannot generate code snippet because template table field \"output\" is undefined or empty.", nil));
+        return;
+    }
     XXTPickerFactory *pickerFactory = [XXTPickerFactory sharedInstance];
     pickerFactory.delegate = self;
     [pickerFactory executeTask:snippet fromViewController:self];
@@ -97,7 +102,6 @@
 {
     if (task.output.length == 0)
     {
-        toastMessage(self, NSLocalizedString(@"Cannot generate code snippet because template table field \"output\" is undefined or empty.", nil));
         return;
     }
     

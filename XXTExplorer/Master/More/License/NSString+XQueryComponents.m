@@ -9,6 +9,7 @@
 #import "NSString+XQueryComponents.h"
 
 @implementation NSString (XQueryComponents)
+
 - (NSString *)stringByDecodingURLFormat
 {
     NSString *result = [self stringByReplacingOccurrencesOfString:@"+" withString:@" "];
@@ -42,16 +43,20 @@
     }
     return queryComponents;
 }
+
 @end
 
 @implementation NSURL (XQueryComponents)
+
 - (NSMutableDictionary *)queryComponents
 {
     return [[self query] dictionaryFromQueryComponents];
 }
+
 @end
 
 @implementation NSDictionary (XQueryComponents)
+
 - (NSString *)stringFromQueryComponents
 {
     NSString *result = nil;
@@ -78,4 +83,5 @@
     }
     return result;
 }
+
 @end

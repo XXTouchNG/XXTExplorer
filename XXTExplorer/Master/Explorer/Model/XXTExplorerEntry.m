@@ -186,7 +186,7 @@ NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
 #pragma mark - Localized Size
 
 - (NSString *)localizedStringOfEntrySize {
-    if (!self.entrySize) return nil;
+    if (self.entrySize == nil) return nil;
     NSInteger byteCount = [self.entrySize integerValue];
     NSString *readableSize = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
     return readableSize;

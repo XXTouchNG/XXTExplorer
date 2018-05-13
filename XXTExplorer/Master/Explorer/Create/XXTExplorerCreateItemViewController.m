@@ -411,17 +411,21 @@ typedef enum : NSUInteger {
             }
             
             NSString *deviceName = [[UIDevice currentDevice] name];
-            NSString *versionString = [NSString stringWithFormat:@"%@ V%@", uAppDefine(@"PRODUCT_NAME"), uAppDefine(kXXTDaemonVersionKey)];
+            NSString *productString = [NSString stringWithFormat:@"%@ V%@", uAppDefine(@"PRODUCT_NAME"), uAppDefine(kXXTDaemonVersionKey)];
             NSString *longDateString = [self.class.itemTemplateDateFormatter stringFromDate:[NSDate date]];
-            NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:[NSDate date]];
+            NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:[NSDate date]];
+            
             NSString *yearString = [@([dateComponents year]) stringValue];
+            NSString *monthString = [@([dateComponents month]) stringValue];
+            NSString *dayString = [@([dateComponents day]) stringValue];
             
             NSMutableDictionary <NSString *, NSString *> *tags = [[NSMutableDictionary alloc] init];
             if (itemName) tags[@"FILENAME"] = itemName;
-            if (versionString) tags[@"PRODUCT_STRING"] = versionString;
-            if (deviceName) tags[@"AUTHOR_NAME"] = deviceName;
+            if (productString) tags[@"PRODUCT_STRING"] = productString;
             if (longDateString) tags[@"CREATED_AT"] = longDateString;
-            if (yearString) tags[@"COPYRIGHT_YEAR"] = yearString;
+            if (yearString) tags[@"CURRENT_YEAR"] = yearString;
+            if (monthString) tags[@"CURRENT_MONTH"] = monthString;
+            if (dayString) tags[@"CURRENT_DAY"] = dayString;
             if (deviceName) tags[@"DEVICE_NAME"] = deviceName;
             
             newTemplate = [newTemplate stringByReplacingTagsInDictionary:[tags copy]];

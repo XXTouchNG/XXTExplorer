@@ -70,8 +70,16 @@
         _rightInset = 4.f;
         _topInset = 2.f;
         _bottomInset = 2.5f;
-        _fontSize = 10.f;
-        _bigFontSize = 14.f;
+        if (XXTE_IS_IPHONE_6_BELOW)
+        {
+            _fontSize = 8.f;
+            _bigFontSize = 12.f;
+        }
+        else
+        {
+            _fontSize = 10.f;
+            _bigFontSize = 14.f;
+        }
     } else if (_style == XXTEKeyboardButtonTypeTablet) {
         _labelWidth = 20.f;
         _labelHeight = 20.f;

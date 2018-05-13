@@ -1240,11 +1240,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     }
     if (target.length) {
         BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
-        BOOL searchSucceed = NO;
+//        BOOL searchSucceed = NO;
         if (useRegular) {
-            searchSucceed = [self.textView scrollToMatch:target searchDirection:direction];
+//            searchSucceed =
+            [self.textView scrollToMatch:target searchDirection:direction];
         } else {
-            searchSucceed = [self.textView scrollToString:target searchDirection:direction];
+//            searchSucceed =
+            [self.textView scrollToString:target searchDirection:direction];
         }
     } else {
         [self.textView resetSearch];

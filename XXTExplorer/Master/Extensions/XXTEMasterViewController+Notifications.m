@@ -109,7 +109,7 @@
                 
                 NSError *err = nil;
                 NSNumber *instantRun = userInfo[XXTENotificationViewImmediately];
-                if (!instantRun) instantRun = @(NO);
+                if (instantRun == nil) instantRun = @(NO);
                 
                 NSString *lastComponent = [inboxURL lastPathComponent];
                 NSString *formerPath = [inboxURL path];

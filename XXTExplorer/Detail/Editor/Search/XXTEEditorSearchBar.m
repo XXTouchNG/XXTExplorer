@@ -254,6 +254,7 @@
 }
 
 - (BOOL)resignFirstResponder {
+    [super resignFirstResponder];
     BOOL a = [self.searchField resignFirstResponder];
     BOOL b = [self.replaceField resignFirstResponder];
     return (a && b);

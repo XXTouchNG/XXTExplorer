@@ -95,17 +95,19 @@
         NSString *entryName = [entryPath lastPathComponent];
         NSString *entryLinkName = [pathSubhash stringByAppendingFormat:@"@%@", entryName];
         NSString *entryLinkPath = [historyPath stringByAppendingPathComponent:entryLinkName];
-        BOOL linkResult = NO;
+//        BOOL linkResult = NO;
         NSError *linkError = nil;
         if (entryLinkPath.length > 0 && entryPath.length > 0) {
             NSFileManager *manager = [[self class] explorerFileManager];
-            BOOL cleanResult = NO;
+//            BOOL cleanResult = NO;
             NSError *cleanError = nil;
             struct stat cleanStat;
             if (0 == lstat(entryLinkPath.fileSystemRepresentation, &cleanStat)) {
-                cleanResult = [manager removeItemAtPath:entryLinkPath error:&cleanError];
+//                cleanResult =
+                [manager removeItemAtPath:entryLinkPath error:&cleanError];
             }
-            linkResult = [manager createSymbolicLinkAtURL:[NSURL fileURLWithPath:entryLinkPath] withDestinationURL:[NSURL fileURLWithPath:entryPath] error:&linkError];
+//            linkResult =
+            [manager createSymbolicLinkAtURL:[NSURL fileURLWithPath:entryLinkPath] withDestinationURL:[NSURL fileURLWithPath:entryPath] error:&linkError];
         }
     }
 }
