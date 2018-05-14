@@ -149,6 +149,12 @@
 		0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */; };
 		0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E41F5164080072C177 /* XXTExplorerEntrySnippetReader.m */; };
 		0F6682F820A7D62A00960436 /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; };
+		0F6682FC20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */; };
+		0F6682FD20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */; };
+		0F6682FE20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */; };
+		0F66830120A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F66830020A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m */; };
+		0F66830220A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F66830020A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m */; };
+		0F66830320A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F66830020A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m */; };
 		0F6AEA811F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */; };
 		0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA861F374D8B0017BE7C /* XXTExplorerViewController+Notification.m */; };
 		0F6AEA901F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA8F1F3751310017BE7C /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m */; };
@@ -1518,6 +1524,10 @@
 		0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTMLEscape.m"; sourceTree = "<group>"; };
 		0F6679E31F5164080072C177 /* XXTExplorerEntrySnippetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntrySnippetReader.h; sourceTree = "<group>"; };
 		0F6679E41F5164080072C177 /* XXTExplorerEntrySnippetReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntrySnippetReader.m; sourceTree = "<group>"; };
+		0F6682FA20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UITableViewDropDelegate.h"; sourceTree = "<group>"; };
+		0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UITableViewDropDelegate.m"; sourceTree = "<group>"; };
+		0F6682FF20A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UITableViewDragDelegate.h"; sourceTree = "<group>"; };
+		0F66830020A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UITableViewDragDelegate.m"; sourceTree = "<group>"; };
 		0F6AEA7F1F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryOpenWithViewController.h; sourceTree = "<group>"; };
 		0F6AEA801F372C580017BE7C /* XXTExplorerEntryOpenWithViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTExplorerEntryOpenWithViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F6AEA851F374D8B0017BE7C /* XXTExplorerViewController+Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+Notification.h"; sourceTree = "<group>"; };
@@ -3225,6 +3235,10 @@
 				0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */,
 				0F40C1AA1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.h */,
 				0F40C1AB1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m */,
+				0F6682FA20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.h */,
+				0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */,
+				0F6682FF20A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.h */,
+				0F66830020A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5027,6 +5041,7 @@
 				0F8EDB8D1FB1F779003C92D6 /* XXTPixelCropView.m in Sources */,
 				0F8EDB8E1FB1F779003C92D6 /* XXTEMoreNavigationController.m in Sources */,
 				0F8EDB8F1FB1F779003C92D6 /* XXTEEditorTypeSetter.m in Sources */,
+				0F66830320A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */,
 				0F8EDB901FB1F779003C92D6 /* XXTEAppDelegate.m in Sources */,
 				0F8EDB911FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				0F8EDB931FB1F779003C92D6 /* XXTExplorerNavigationController.m in Sources */,
@@ -5169,6 +5184,7 @@
 				0F8EDC1D1FB1F779003C92D6 /* SKCaptureCollection.m in Sources */,
 				0F8EDC1E1FB1F779003C92D6 /* SKTheme.m in Sources */,
 				0F8EDC1F1FB1F779003C92D6 /* SKReferenceManager.m in Sources */,
+				0F6682FE20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */,
 				0F40C1AD1FD422C800C14510 /* XXTExplorerViewController+XXTExplorerCreateItemViewControllerDelegate.m in Sources */,
 				0F8EDC201FB1F779003C92D6 /* XXTPickerNavigationController.m in Sources */,
 				D60FE64A1FE226F000954818 /* XXTEEditorSearchBar.m in Sources */,
@@ -5298,6 +5314,7 @@
 				0F3D5DF91FAEC4420083196D /* XXTESymbolViewController.m in Sources */,
 				0F457F381F87948A001F0951 /* XXTEMasterViewController+Notifications.m in Sources */,
 				0F9387EF1FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
+				0F66830120A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */,
 				0FE1E4311F1887CE00055E02 /* XXTExplorerEntryImageReader.m in Sources */,
 				0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				0FFC8F021FCA8E730012C170 /* XXTEXPAPackageExtractor.m in Sources */,
@@ -5547,6 +5564,7 @@
 				B0312A053C59B1B57081B1D5 /* lstring.c in Sources */,
 				B03123AEC29587929008E302 /* lstrlib.c in Sources */,
 				B0312E6CADEA96D50980083B /* ltable.c in Sources */,
+				0F6682FC20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */,
 				B03127063A6370DE2592AB60 /* ltablib.c in Sources */,
 				B0312410FEAA5378C35D615F /* ltm.c in Sources */,
 				0F469CEA200CE7200042F1BF /* RMCloudExpandedCell.m in Sources */,
@@ -5630,6 +5648,7 @@
 				D60FE6811FE2369300954818 /* XXTESymbolViewController.m in Sources */,
 				D60FE6821FE2369300954818 /* XXTEMasterViewController+Notifications.m in Sources */,
 				0F9387F11FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
+				0F66830220A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */,
 				D60FE6831FE2369300954818 /* XXTExplorerEntryImageReader.m in Sources */,
 				D60FE6841FE2369300954818 /* XXTExplorerViewController+SharedInstance.m in Sources */,
 				D60FE6851FE2369300954818 /* XXTEXPAPackageExtractor.m in Sources */,
@@ -5879,6 +5898,7 @@
 				D60FE7591FE2369300954818 /* lstring.c in Sources */,
 				D60FE75A1FE2369300954818 /* lstrlib.c in Sources */,
 				D60FE75B1FE2369300954818 /* ltable.c in Sources */,
+				0F6682FD20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */,
 				D60FE75C1FE2369300954818 /* ltablib.c in Sources */,
 				D60FE75D1FE2369300954818 /* ltm.c in Sources */,
 				0F469CEB200CE7200042F1BF /* RMCloudExpandedCell.m in Sources */,

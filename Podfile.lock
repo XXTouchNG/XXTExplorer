@@ -96,7 +96,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   LGAlertView:
-    :commit: ee0e4294b4dcffdab829b4d0c5a6fa523a1c0c94
+    :commit: 0eae275d0b81b8b0d41c94902d2c917a1c51e116
     :git: https://github.com/XXTouchAssistant/LGAlertView.git
   MWPhotoBrowser:
     :commit: 9aea50ef21412dd0907de5d24ec90f8e1e869c03

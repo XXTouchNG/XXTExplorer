@@ -7,8 +7,14 @@
 //
 
 #import "XXTEWorkspaceViewController.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface XXTEWorkspaceViewController ()
+@interface XXTEWorkspaceViewController () <UIDropInteractionDelegate>
+
+XXTE_START_IGNORE_PARTIAL
+@property (nonatomic, strong) UIDropInteraction *dropInteraction;
+XXTE_END_IGNORE_PARTIAL
+
 @property (nonatomic, strong) UIImageView *logoPlaceholderImageView;
 @property (nonatomic, strong) UILabel *guideLabel;
 
@@ -44,6 +50,13 @@
     
     self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    
+    if (@available(iOS 11.0, *))
+    {
+        UIDropInteraction *dropInteraction = [[UIDropInteraction alloc] initWithDelegate:self];
+        [self.view addInteraction:dropInteraction];
+        _dropInteraction = dropInteraction;
+    }
     
     [self.view addSubview:self.logoPlaceholderImageView];
     [self.view addSubview:self.guideLabel];
@@ -189,6 +202,35 @@
     }
     [self setNeedsStatusBarAppearanceUpdate];
 }
+
+#pragma mark - UIDropInteraction
+
+XXTE_START_IGNORE_PARTIAL
+- (BOOL)dropInteraction:(UIDropInteraction *)interaction canHandleSession:(id<UIDropSession>)session {
+    return YES;
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (UIDropProposal *)dropInteraction:(UIDropInteraction *)interaction sessionDidUpdate:(id<UIDropSession>)session {
+//    if (session.items.count != 1)
+//    {
+        return [[UIDropProposal alloc] initWithDropOperation:UIDropOperationForbidden];
+//    }
+//    return [[UIDropProposal alloc] initWithDropOperation:UIDropOperationCopy];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)dropInteraction:(UIDropInteraction *)interaction performDrop:(id<UIDropSession>)session {
+//    [session.items enumerateObjectsUsingBlock:^(UIDragItem * _Nonnull dragItem, NSUInteger idx, BOOL * _Nonnull stop) {
+//        [dragItem.itemProvider loadInPlaceFileRepresentationForTypeIdentifier:(NSString *)kUTTypeItem completionHandler:^(NSURL * _Nullable url, BOOL isInPlace, NSError * _Nullable error)
+//        {
+//            
+//        }];
+//    }];
+}
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

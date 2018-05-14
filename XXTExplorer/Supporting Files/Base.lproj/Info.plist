@@ -250,6 +250,23 @@
 				<string>application/x-xpa</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.xxtouch.deb</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>deb</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-deb</string>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>

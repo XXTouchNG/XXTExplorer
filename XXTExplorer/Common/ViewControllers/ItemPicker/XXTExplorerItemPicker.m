@@ -63,6 +63,10 @@
     return NO;
 }
 
+- (BOOL)allowDragAndDrop {
+    return NO;
+}
+
 - (BOOL)shouldDisplayEntry:(XXTExplorerEntry *)entryDetail {
     NSString *entryBaseExtension = entryDetail.entryExtension;
     if (entryDetail.isBundle ||

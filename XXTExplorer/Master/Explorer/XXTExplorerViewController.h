@@ -75,6 +75,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (BOOL)showsHomeSeries;
 - (BOOL)allowsPreviewing;
+- (BOOL)allowDragAndDrop;
 - (BOOL)shouldDisplayEntry:(XXTExplorerEntry *)entryDetail;
 
 #pragma mark - fast open

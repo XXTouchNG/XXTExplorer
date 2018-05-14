@@ -31,7 +31,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"lua", @"snippet", @"xui" ];
+    return @[ @"lua" ];
 }
 
 + (Class)relatedReader {

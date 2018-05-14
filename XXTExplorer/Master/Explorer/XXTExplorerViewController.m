@@ -28,6 +28,8 @@
 #import "XXTExplorerViewController+XXTExplorerToolbarDelegate.h"
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 #import "XXTExplorerViewController+LGAlertViewDelegate.h"
+#import "XXTExplorerViewController+UITableViewDropDelegate.h"
+#import "XXTExplorerViewController+UITableViewDragDelegate.h"
 #import "XXTExplorerViewController+ArchiverOperation.h"
 #import "XXTExplorerViewController+FileOperation.h"
 #import "XXTExplorerViewController+PasteboardOperations.h"
@@ -245,6 +247,10 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (BOOL)allowsPreviewing {
+    return YES;
+}
+
+- (BOOL)allowDragAndDrop {
     return YES;
 }
 
@@ -1163,6 +1169,12 @@ XXTE_END_IGNORE_PARTIAL
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
         }
         XXTE_END_IGNORE_PARTIAL
+        if ([self allowDragAndDrop]) {
+            if (@available(iOS 11.0, *)) {
+                tableView.dragDelegate = self;
+                tableView.dropDelegate = self;
+            }
+        }
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewCellReuseIdentifier];
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTExplorerViewHomeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
         UILongPressGestureRecognizer *cellLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryCellDidLongPress:)];
