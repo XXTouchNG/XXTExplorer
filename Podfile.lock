@@ -102,7 +102,7 @@ CHECKOUT OPTIONS:
     :commit: 9aea50ef21412dd0907de5d24ec90f8e1e869c03
     :git: https://github.com/XXTouchAssistant/MWPhotoBrowser.git
   TOWebViewController:
-    :commit: fe2dba2f78e8eb37b82644b6e92b68e3392fb0fd
+    :commit: 5509ab9bf7f350f7719ec91add1c36856e5c55fe
     :git: https://github.com/XXTouchAssistant/TOWebViewController.git
   UnrarKit:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
