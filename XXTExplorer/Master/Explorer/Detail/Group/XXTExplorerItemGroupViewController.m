@@ -143,6 +143,10 @@ typedef enum : NSUInteger {
     cell_s.titleLabel.text = NSLocalizedString(@"Apply Recursively", nil);
     _applyCell = cell_s;
     
+    if (self.itemGroups) {
+        self.saveItem.enabled = YES;
+    }
+    
     [self reloadGroupStatus];
 }
 
@@ -252,6 +256,7 @@ typedef enum : NSUInteger {
 - (UIBarButtonItem *)saveItem {
     if (!_saveItem) {
         _saveItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveItemTapped:)];
+        _saveItem.enabled = NO;
     }
     return _saveItem;
 }

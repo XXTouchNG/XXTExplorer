@@ -155,7 +155,7 @@ static CGFloat XXTEScanVOffset = -22.0;
     CGContextStrokePath(ctx);
 
     // Draw Rect Angles
-    CGFloat lineWidthAngle = 8.f;
+    CGFloat lineWidthAngle = 4.f;
     CGFloat diffAngle = lineWidthAngle / 3;
     CGFloat wAngle = 24.f;
     CGFloat hAngle = 24.f;

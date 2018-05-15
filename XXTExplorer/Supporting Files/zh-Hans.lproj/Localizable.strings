@@ -576,6 +576,9 @@
 "Copy %@" = "复制 %@";
 
 /* No comment provided by engineer. */
+"Copyright" = "版权";
+
+/* No comment provided by engineer. */
 "Could not connect to the daemon." = "无法连接到守护进程.";
 
 /* No comment provided by engineer. */

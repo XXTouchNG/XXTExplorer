@@ -27,11 +27,11 @@
     self.hidden = NO;
     
     __weak __typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:.5f animations:^{
         weakSelf.alpha = 1.0;
     } completion:nil];
     
-    [UIView animateWithDuration:3.f animations:^{
+    [UIView animateWithDuration:2.4f animations:^{
         CGFloat leftX = self->_animationRect.origin.x + 5;
         CGFloat width = self->_animationRect.size.width - 10;
         weakSelf.frame = CGRectMake(leftX, self->_animationRect.origin.y + self->_animationRect.size.height - 8, width, 4);

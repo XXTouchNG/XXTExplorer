@@ -64,14 +64,15 @@
             iconImage = extensionIconImage;
         }
     }
-    _entryDisplayName = [self nameForEntry:path];
     _entryIconImage = iconImage;
     _entryExtensionDescription = [NSString stringWithFormat:@"%@ Document", entryUpperedExtension];
     _entryViewerDescription = [XXTESnippetViewerController viewerName];
+    [self parseSnippetForEntryAtPath:path];
 }
 
-- (NSString *)nameForEntry:(NSString *)path {
+- (void)parseSnippetForEntryAtPath:(NSString *)path {
     NSString *snippet_name = nil;
+    NSString *snippet_description = nil;
     
     lua_State *L = luaL_newstate(); // only for grammar parsing, no bullshit
     NSAssert(L, @"LuaVM: not enough memory.");
@@ -87,7 +88,8 @@
         int callResult = lua_pcall(L, 0, 1, 0);
         if (lua_checkCode(L, callResult, nil))
         {
-            if (lua_type(L, -1) == LUA_TTABLE) {
+            if (lua_type(L, -1) == LUA_TTABLE)
+            {
                 int fieldType = lua_getfield(L, -1, "name");
                 if (fieldType == LUA_TSTRING) {
                     const char *name = lua_tostring(L, -1);
@@ -95,15 +97,28 @@
                         snippet_name = [NSString stringWithUTF8String:name];
                 }
                 lua_pop(L, 1);
-                if (!snippet_name)
-                    snippet_name = [path lastPathComponent];
             }
+            
+            if (lua_type(L, -1) == LUA_TTABLE)
+            {
+                int fieldType = lua_getfield(L, -1, "description");
+                if (fieldType == LUA_TSTRING) {
+                    const char *description = lua_tostring(L, -1);
+                    if (description)
+                        snippet_description = [NSString stringWithUTF8String:description];
+                }
+                lua_pop(L, 1);
+            }
+            
             lua_pop(L, 1);
         }
     }
+    
     lua_close(L);
     L = NULL;
-    return snippet_name;
+    
+    _entryDisplayName = snippet_name;
+    _entryDescription = snippet_description;
 }
 
 @end
