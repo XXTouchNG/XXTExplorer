@@ -48,11 +48,6 @@
       };
 }
 
-+ (BOOL)testEntry:(NSDictionary *)cellEntry withError:(NSError **)error {
-    BOOL superResult = [super testEntry:cellEntry withError:error];
-    return superResult;
-}
-
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
