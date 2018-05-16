@@ -75,7 +75,7 @@ DEPENDENCIES:
   - PromiseKit (~> 1.7.6)
   - TOWebViewController (from `https://github.com/XXTouchAssistant/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/XXTouchAssistant/UnrarKit.git`, branch `v2.9`)
-  - XUI (from `../XUI`)
+  - XUI (from `https://github.com/Lessica/XUI.git`, branch `feature/textfield-prompt`)
   - YYImage (~> 1.0.4)
   - YYWebImage (~> 1.0.5)
 
@@ -92,7 +92,8 @@ EXTERNAL SOURCES:
     :branch: v2.9
     :git: https://github.com/XXTouchAssistant/UnrarKit.git
   XUI:
-    :path: ../XUI
+    :branch: feature/textfield-prompt
+    :git: https://github.com/Lessica/XUI.git
 
 CHECKOUT OPTIONS:
   LGAlertView:
@@ -107,6 +108,9 @@ CHECKOUT OPTIONS:
   UnrarKit:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
     :git: https://github.com/XXTouchAssistant/UnrarKit.git
+  XUI:
+    :commit: ef2ff5173206d6f5a723b2fd67d28cb61e3617b5
+    :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
@@ -124,6 +128,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 59c662e669dd91d113afa463a1c07742c99e9962
+PODFILE CHECKSUM: d3f5714ff7c5be2bbe3fc753e6a863696e3e729f
 
 COCOAPODS: 1.3.1

@@ -2,8 +2,8 @@ xcodeproj 'XXTExplorer'
 install! 'cocoapods', :deterministic_uuids => false
 
 def shared_pods
-    pod 'XUI', :path => '../XUI'
-    # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git'
+    # pod 'XUI', :path => '../XUI'
+    pod 'XUI', :git => 'https://github.com/Lessica/XUI.git', :branch => 'feature/textfield-prompt'
 
     # pod 'TOWebViewController', '~> 2.2.6'
     # pod 'TOWebViewController', :path => '../TOWebViewController', :inhibit_warnings => true
