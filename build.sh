@@ -7,10 +7,12 @@ fi
 
 PACKAGE_NAME="${1:-latest}"
 DAEMON_VERSION="${2}"
+BRANCH_NAME=`git symbolic-ref --short -q HEAD`
 
 SRC_DIR="Releases/${PACKAGE_NAME}.xcarchive"
 DEST_DIR="Releases/${PACKAGE_NAME}"
 
+echo "Current branch: ${BRANCH_NAME}"
 echo "Update repository..."
 git pull
 if [ $? != 0 ] ; then
