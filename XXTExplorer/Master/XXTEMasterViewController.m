@@ -105,6 +105,7 @@
 }
 
 + (void)setupAlertDarkAppearance:(LGAlertView *)alertAppearance {
+    UIColor *labelColor = [UIColor colorWithRed:197.0/255.0 green:200.0/255.0 blue:198.0/255.0 alpha:1.0];
     alertAppearance.coverColor = [UIColor clearColor];
     if (@available(iOS 8.0, *)) {
         alertAppearance.backgroundColor = UIColor.clearColor;
@@ -116,25 +117,24 @@
     alertAppearance.coverAlpha = 0.85;
     alertAppearance.buttonsHeight = 44.0;
     alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
-    alertAppearance.titleTextColor = [UIColor whiteColor];
-    alertAppearance.messageTextColor = [UIColor whiteColor];
-    alertAppearance.activityIndicatorViewColor = [UIColor whiteColor];
+    alertAppearance.titleTextColor = labelColor;
+    alertAppearance.messageTextColor = labelColor;
+    alertAppearance.activityIndicatorViewColor = labelColor;
     alertAppearance.progressViewProgressTintColor = [UIColor whiteColor];
-    alertAppearance.progressLabelTextColor = [UIColor whiteColor];
+    alertAppearance.progressLabelTextColor = labelColor;
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.buttonsTitleColor = XXTColorDefault();
     alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.cancelButtonTitleColor = [UIColor whiteColor];
+    alertAppearance.cancelButtonTitleColor = labelColor;
     alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
     alertAppearance.textFieldsBackgroundColor = [UIColor colorWithWhite:0.0 alpha:0.03];
-    UIColor *textFieldsTextColor = [UIColor colorWithRed:197.0/255.0 green:200.0/255.0 blue:198.0/255.0 alpha:1.0];
-    alertAppearance.textFieldsTextColor = textFieldsTextColor;
-    alertAppearance.textFieldsButtonClearColor = [textFieldsTextColor colorWithAlphaComponent:0.6];
-    alertAppearance.textFieldsButtonClearColorHighlighted = textFieldsTextColor;
+    alertAppearance.textFieldsTextColor = labelColor;
+    alertAppearance.textFieldsButtonClearColor = [labelColor colorWithAlphaComponent:0.6];
+    alertAppearance.textFieldsButtonClearColorHighlighted = labelColor;
     alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
     alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
     alertAppearance.dismissOnAction = NO;
