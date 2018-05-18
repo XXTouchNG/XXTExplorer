@@ -19,6 +19,10 @@
 - (void)tableView:(UITableView *)tableView XUITextFieldCell:(UITableViewCell *)cell
 {
     
+    if (NO == XXTE_SYSTEM_8) {
+        return;
+    }
+    
     XUITextFieldCell *textFieldCell = (XUITextFieldCell *)cell;
     if (textFieldCell.xui_prompt.length == 0) return;
     
