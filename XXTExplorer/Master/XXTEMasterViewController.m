@@ -64,6 +64,88 @@
     return self;
 }
 
++ (void)setupAlertDefaultAppearance:(LGAlertView *)alertAppearance {
+    if (@available(iOS 8.0, *)) {
+        alertAppearance.coverColor = [UIColor clearColor];
+        alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    } else {
+        alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+    }
+    alertAppearance.coverAlpha = 0.85;
+    alertAppearance.layerShadowColor = [UIColor colorWithWhite:0.0 alpha:0.3];
+    alertAppearance.layerShadowRadius = 4.0;
+    alertAppearance.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
+    alertAppearance.buttonsHeight = 44.0;
+    alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
+    alertAppearance.titleTextColor = [UIColor blackColor];
+    alertAppearance.messageTextColor = [UIColor blackColor];
+    alertAppearance.activityIndicatorViewColor = XXTColorDefault();
+    alertAppearance.progressViewProgressTintColor = XXTColorDefault();
+    alertAppearance.progressLabelTextColor = [UIColor blackColor];
+    alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
+    alertAppearance.buttonsTitleColor = XXTColorDefault();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
+    alertAppearance.cancelButtonTitleColor = XXTColorDefault();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
+    alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
+    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
+    alertAppearance.textFieldsBackgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
+    alertAppearance.textFieldsTextColor = [UIColor blackColor];
+    alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
+    alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
+    alertAppearance.dismissOnAction = NO;
+    alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
+    alertAppearance.buttonsTextAlignment = NSTextAlignmentCenter;
+    if (@available(iOS 11.0, *)) {
+        CGFloat bottomOffset = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;
+        alertAppearance.cancelButtonOffsetY = bottomOffset;
+    }
+}
+
++ (void)setupAlertDarkAppearance:(LGAlertView *)alertAppearance {
+    alertAppearance.coverColor = [UIColor clearColor];
+    if (@available(iOS 8.0, *)) {
+        alertAppearance.backgroundColor = UIColor.clearColor;
+        alertAppearance.backgroundBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    } else {
+        alertAppearance.backgroundColor = UIColor.clearColor;
+    }
+    alertAppearance.separatorsColor = [UIColor colorWithWhite:0.25 alpha:1.0];
+    alertAppearance.coverAlpha = 0.85;
+    alertAppearance.buttonsHeight = 44.0;
+    alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
+    alertAppearance.titleTextColor = [UIColor whiteColor];
+    alertAppearance.messageTextColor = [UIColor whiteColor];
+    alertAppearance.activityIndicatorViewColor = [UIColor whiteColor];
+    alertAppearance.progressViewProgressTintColor = [UIColor whiteColor];
+    alertAppearance.progressLabelTextColor = [UIColor whiteColor];
+    alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
+    alertAppearance.buttonsTitleColor = XXTColorDefault();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
+    alertAppearance.cancelButtonTitleColor = [UIColor whiteColor];
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
+    alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
+    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
+    alertAppearance.textFieldsBackgroundColor = [UIColor colorWithWhite:0.0 alpha:0.03];
+    UIColor *textFieldsTextColor = [UIColor colorWithRed:197.0/255.0 green:200.0/255.0 blue:198.0/255.0 alpha:1.0];
+    alertAppearance.textFieldsTextColor = textFieldsTextColor;
+    alertAppearance.textFieldsButtonClearColor = [textFieldsTextColor colorWithAlphaComponent:0.6];
+    alertAppearance.textFieldsButtonClearColorHighlighted = textFieldsTextColor;
+    alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
+    alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
+    alertAppearance.dismissOnAction = NO;
+    alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
+    alertAppearance.buttonsTextAlignment = NSTextAlignmentCenter;
+    if (@available(iOS 11.0, *)) {
+        CGFloat bottomOffset = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;
+        alertAppearance.cancelButtonOffsetY = bottomOffset;
+    }
+}
+
 - (void)setupAppearance {
     UITabBar *tabBarAppearance = [UITabBar appearanceWhenContainedIn:[self class], nil];
     [tabBarAppearance setTintColor:XXTColorDefault()];
@@ -75,40 +157,7 @@
     }
     
     LGAlertView *alertAppearance = [LGAlertView appearanceWhenContainedIn:[self class], nil];
-    alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.25];
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    }
-    XXTE_END_IGNORE_PARTIAL
-    alertAppearance.coverAlpha = 0.85;
-    alertAppearance.layerShadowColor = [UIColor colorWithWhite:0.0 alpha:0.3];
-    alertAppearance.layerShadowRadius = 4.0;
-    alertAppearance.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
-    alertAppearance.buttonsHeight = 44.0;
-    alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
-    alertAppearance.titleTextColor = [UIColor blackColor];
-    alertAppearance.messageTextColor = [UIColor blackColor];
-    alertAppearance.activityIndicatorViewColor = XXTColorDefault();
-    alertAppearance.progressViewProgressTintColor = XXTColorDefault();
-    alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.buttonsTitleColor = XXTColorDefault();
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
-    alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.cancelButtonTitleColor = XXTColorDefault();
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
-    alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
-    alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
-    alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
-    alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
-    alertAppearance.dismissOnAction = NO;
-    alertAppearance.buttonsIconPosition = LGAlertViewButtonIconPositionLeft;
-    alertAppearance.buttonsTextAlignment = NSTextAlignmentCenter;
-    if (@available(iOS 11.0, *)) {
-        CGFloat bottomOffset = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;
-        alertAppearance.cancelButtonOffsetY = bottomOffset;
-    }
+    [self.class setupAlertDefaultAppearance:alertAppearance];
     
     [XXTEToastManager setTapToDismissEnabled:YES];
     [XXTEToastManager setDefaultDuration:2.4f];

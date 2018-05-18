@@ -7,11 +7,16 @@
 //
 
 #import "XXTEUIViewController.h"
+#import "XXTEMasterViewController.h"
+
 #import "XUIEntryReader.h"
 #import <XUI/XUIListFooterView.h>
 
 #import <XUI/XUI.h>
 #import <XUI/XUICellFactory.h>
+#import <XUI/XUIStrings.h>
+
+#import <LGAlertView/LGAlertView.h>
 
 // to listen
 static CFStringRef const XUICallbackUIUpdated = CFSTR("com.xxtouch.XUICallbackUIUpdated");
@@ -216,6 +221,30 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
         
     }
     
+}
+
+- (void)presentErrorAlertController:(NSError *)error {
+    if (!error) return;
+    @weakify(self);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @strongify(self);
+        NSString *entryName = [self.callerPath lastPathComponent];
+        LGAlertView *alert = [[LGAlertView alloc] initWithTitle:[XUIStrings localizedStringForString:@"XUI Error"]
+                                                        message:[NSString stringWithFormat:[XUIStrings localizedStringForString:@"%@\n%@: %@"], entryName, error.localizedFailureReason, error.localizedDescription]
+                                                          style:LGAlertViewStyleAlert
+                                                   buttonTitles:@[ [XUIStrings localizedStringForString:@"OK"] ]
+                                              cancelButtonTitle:nil
+                                         destructiveButtonTitle:nil
+                                                  actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) { [alertView dismissAnimated]; }
+                                                  cancelHandler:nil
+                                             destructiveHandler:nil];
+        if (self.theme.isBackgroundDark == NO) {
+            [XXTEMasterViewController setupAlertDefaultAppearance:alert];
+        } else {
+            [XXTEMasterViewController setupAlertDarkAppearance:alert];
+        }
+        [alert showAnimated];
+    });
 }
 
 @end

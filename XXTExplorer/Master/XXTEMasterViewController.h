@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class XXTExplorerViewController, XXTEUpdateHelper, XXTEUpdateAgent;
+@class LGAlertView;
 
 typedef enum : NSUInteger {
     kMasterViewControllerIndexExplorer = 0,
@@ -26,7 +27,10 @@ typedef enum : NSUInteger {
 #endif
 
 #pragma mark - Convenience Getters
-
 @property (nonatomic, strong, readonly) XXTExplorerViewController *topmostExplorerViewController;
+
+#pragma mark - Pre-Defined Appearances
++ (void)setupAlertDefaultAppearance:(LGAlertView *)alertAppearance;
++ (void)setupAlertDarkAppearance:(LGAlertView *)alertAppearance;
 
 @end
