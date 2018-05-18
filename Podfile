@@ -2,8 +2,8 @@ xcodeproj 'XXTExplorer'
 install! 'cocoapods', :deterministic_uuids => false
 
 def shared_pods
-    pod 'XUI', :path => '../XUI'
-    # pod 'XUI', :git => 'https://github.com/Lessica/XUI.git', :branch => 'feature/textfield-prompt'
+    # pod 'XUI', :path => '../XUI'
+    pod 'XUI', :git => 'https://github.com/Lessica/XUI.git', :branch => 'feature/textfield-prompt'
 
     # pod 'TOWebViewController', '~> 2.2.6'
     # pod 'TOWebViewController', :path => '../TOWebViewController', :inhibit_warnings => true
@@ -15,8 +15,8 @@ def shared_pods
     # pod 'PromiseKit', :path => '../PromiseKit', :inhibit_warnings => true
 
     # pod 'LGAlertView', '~> 2.4.0', :inhibit_warnings => true
-    pod 'LGAlertView', :path => '../LGAlertView', :inhibit_warnings => true
-    # pod 'LGAlertView', :git => 'https://github.com/XXTouchAssistant/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
+    # pod 'LGAlertView', :path => '../LGAlertView', :inhibit_warnings => true
+    pod 'LGAlertView', :git => 'https://github.com/XXTouchAssistant/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
 
     # pod 'MWPhotoBrowser', '~> 2.1.2', :inhibit_warnings => true
     # pod 'MWPhotoBrowser', :path => '../MWPhotoBrowser', :inhibit_warnings => true
