@@ -31,7 +31,7 @@ All Rights Reserved.</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>2.0.2</string>
+			<string>2.0.3</string>
 			<key>Key</key>
 			<string>sbVersion</string>
 			<key>Title</key>

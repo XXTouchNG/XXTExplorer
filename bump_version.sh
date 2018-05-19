@@ -29,7 +29,7 @@ plutil -insert "items.6" -xml "<dict><key>cell</key><string>Button</string><key>
 plutil -remove "PreferenceSpecifiers.3" "XXTExplorer/Supporting Files/Settings.Pro.bundle/Root.plist"
 plutil -insert "PreferenceSpecifiers.3" -xml "<dict><key>Type</key><string>PSTitleValueSpecifier</string><key>DefaultValue</key><string>${BVER}</string><key>Title</key><string>Version</string><key>Key</key><string>sbVersion</string></dict>" "XXTExplorer/Supporting Files/Settings.Pro.bundle/Root.plist"
 
-elif [ "${SCHEME}" == "XXTExplorer" ]; then
+elif [ "${SCHEME}" == "XXTouch" ]; then
 
 plutil -replace "CFBundleShortVersionString" -string "${BVER}" "XXTExplorer/Supporting Files/Base.lproj/Info.AppStore.plist"
 plutil -replace "DAEMON_VERSION" -string "${BVER}" "XXTExplorer/Defines/XXTEAppDefines.AppStore.plist"
