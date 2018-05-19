@@ -111,6 +111,7 @@
 
 #pragma mark - WKUIDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
 {
     if (webView == self.wkWebView) {
@@ -120,7 +121,9 @@
     }
     return nil;
 }
+XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
 {
     if (webView == self.wkWebView) {
@@ -133,7 +136,9 @@
         [alertView showAnimated];
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler
 {
     if (webView == self.wkWebView) {
@@ -151,7 +156,9 @@
         [alertView showAnimated];
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler
 {
     if (webView == self.wkWebView) {
@@ -172,7 +179,9 @@
         [alertView showAnimated];
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)webViewDidClose:(WKWebView *)webView {
     if (self.navigationController && self.navigationController.topViewController && self.navigationController.topViewController != self)
     {
@@ -181,6 +190,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

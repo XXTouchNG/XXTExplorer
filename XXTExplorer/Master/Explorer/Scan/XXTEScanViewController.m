@@ -88,18 +88,33 @@ static CGFloat XXTEScanVOffset = -22.0;
     [self.view addSubview:self.lightButton];
     [self.view addSubview:self.flipButton];
     
-    [self.view addConstraints:@[
-      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1.0 constant:16.0],
-      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
-      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-      [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
-      ]];
-    [self.view addConstraints:@[
-      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1.0 constant:-16.0],
-      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
-      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-      [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
-      ]];
+    if (@available(iOS 8.0, *)) {
+        [self.view addConstraints:@[
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1.0 constant:16.0],
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
+                                    ]];
+        [self.view addConstraints:@[
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1.0 constant:-16.0],
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
+                                    ]];
+    } else {
+        [self.view addConstraints:@[
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:16.0],
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-32.0],
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
+                                    ]];
+        [self.view addConstraints:@[
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-16.0],
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-32.0],
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
+                                    ]];
+    }
     
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];

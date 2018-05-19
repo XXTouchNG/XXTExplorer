@@ -443,12 +443,14 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - UISearchControllerDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (void)didPresentSearchController:(UISearchController *)searchController {
     UIEdgeInsets insets1 = self.tableView.scrollIndicatorInsets;
     _savedInsets = insets1;
     insets1.top += 50.0 + 44.0;
     self.tableView.scrollIndicatorInsets = insets1;
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Memory
 

@@ -159,7 +159,7 @@
             else if ((entry.isMaskedDirectory ||
                       entry.isBundle) &&
                      [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
-                     [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] containsString:@"/"]) {
+                     [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
                 cell.entryTitleLabel.textColor = XXTColorDefault();
                 cell.entrySubtitleLabel.textColor = XXTColorDefault();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
