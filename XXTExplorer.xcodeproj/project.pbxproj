@@ -4299,7 +4299,6 @@
 				0F8EDC581FB1F779003C92D6 /* Frameworks */,
 				0F8EDC6A1FB1F779003C92D6 /* Resources */,
 				0F8EDCC11FB1F779003C92D6 /* Localization */,
-				4D89EE81A6D019938A6B5ABF /* [CP] Embed Pods Frameworks */,
 				CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */,
 				D60FE7D71FE23BAD00954818 /* Integrate Reveal Server */,
 				D6FD9143203E987900CC0362 /* Copy Files */,
@@ -4321,7 +4320,6 @@
 				0FA7ABE61ED641A3003EAD7D /* Sources */,
 				0FA7ABE71ED641A3003EAD7D /* Frameworks */,
 				0FA7ABE81ED641A3003EAD7D /* Resources */,
-				6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
 				D6DBD48D1F3C52D9002D5561 /* Localization */,
 				D60FE7D61FE23B5800954818 /* Integrate Reveal Server */,
@@ -4343,7 +4341,6 @@
 				D60FE6501FE2369300954818 /* Sources */,
 				D60FE7651FE2369300954818 /* Frameworks */,
 				D60FE7761FE2369300954818 /* Resources */,
-				D60FE7CB1FE2369300954818 /* [CP] Embed Pods Frameworks */,
 				D60FE7CC1FE2369300954818 /* [CP] Copy Pods Resources */,
 				D60FE7CD1FE2369300954818 /* Localization */,
 			);
@@ -4786,36 +4783,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4D89EE81A6D019938A6B5ABF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6A8294A4201198CE1FF8804B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7D4150815B560FDD6EB4D829 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4841,12 +4808,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4860,13 +4828,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/UnrarKit/UnrarKitResources.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/UnrarKit/UnrarKitResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UnrarKitResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4891,21 +4861,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D60FE7CB1FE2369300954818 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D60FE7CC1FE2369300954818 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4913,12 +4868,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOWebViewControllerLocalizable.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

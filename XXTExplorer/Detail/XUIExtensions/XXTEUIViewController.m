@@ -30,58 +30,49 @@ static CFStringRef const XUIEventValueChanged = CFSTR("com.xxtouch.XUIEventValue
 //static CFStringRef const XUIEventViewDidDisappear = CFSTR("com.xxtouch.XUIEventViewDidDisappear");
 
 void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
-        [controller.cellFactory setNeedsReload];
-        if (controller.isBeingDisplayed)
-        { // reload immediately
-            [controller.cellFactory reloadIfNeeded];
-        }
-    });
-    
+    XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
+    [controller.cellFactory setNeedsReload];
+    if (controller.isBeingDisplayed)
+    { // reload immediately
+        [controller.cellFactory reloadIfNeeded];
+    }
 }
 
 void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
-    
+
     static NSString *valueSignalPath = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         valueSignalPath = [[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"XUICallbackValueChanged.plist"];
     });
+
+    XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
+    NSDictionary *payload = [[NSDictionary alloc] initWithContentsOfFile:valueSignalPath];
+    if (!payload) return;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);
-        NSDictionary *payload = [[NSDictionary alloc] initWithContentsOfFile:valueSignalPath];
-        if (!payload) return;
-        
-        NSMutableArray <NSDictionary *> *changedPairs = [[NSMutableArray alloc] init];
-        NSArray <NSDictionary *> *valueSignalArray = payload[@"objects"];
-        if (!valueSignalArray) return;
-        
+    NSMutableArray <NSDictionary *> *changedPairs = [[NSMutableArray alloc] init];
+    NSArray <NSDictionary *> *valueSignalArray = payload[@"objects"];
+    if (!valueSignalArray) return;
+    
+    for (NSDictionary *signalDict in valueSignalArray) {
+        if (![signalDict isKindOfClass:[NSDictionary class]]) {
+            continue;
+        }
+        if (![signalDict[@"defaults"] isKindOfClass:[NSString class]] ||
+            ![signalDict[@"key"] isKindOfClass:[NSString class]] ||
+            ![signalDict[@"value"] isKindOfClass:[NSString class]])
+        {
+            continue;
+        }
+        [changedPairs addObject:signalDict];
+    }
+    
+    if (valueSignalArray.count > 0) {
         for (NSDictionary *signalDict in valueSignalArray) {
-            if (![signalDict isKindOfClass:[NSDictionary class]]) {
-                continue;
-            }
-            if (![signalDict[@"defaults"] isKindOfClass:[NSString class]] ||
-                ![signalDict[@"key"] isKindOfClass:[NSString class]] ||
-                ![signalDict[@"value"] isKindOfClass:[NSString class]])
-            {
-                continue;
-            }
-            [changedPairs addObject:signalDict];
+            [controller.cellFactory updateRelatedCellsForConfigurationPair:signalDict];
         }
-        
-        if (valueSignalArray.count > 0) {
-            for (NSDictionary *signalDict in valueSignalArray) {
-                [controller.cellFactory updateRelatedCellsForConfigurationPair:signalDict];
-            }
-        }
-        
-        unlink(valueSignalPath.fileSystemRepresentation);
-        
-    });
+    }
+
 }
 
 @interface XXTEUIViewController ()

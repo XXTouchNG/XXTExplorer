@@ -455,9 +455,9 @@ XXTE_END_IGNORE_PARTIAL
             rootPath = ({
 #ifndef APPSTORE
     #ifndef DEBUG
-                    NSString *mainPath = uAppDefine(@"MAIN_PATH");
+                NSString *mainPath = uAppDefine(@"MAIN_PATH");
     #else
-                    NSString *mainPath = nil;
+                NSString *mainPath = nil;
     #endif
 #else
                 NSString *mainPath = nil;
