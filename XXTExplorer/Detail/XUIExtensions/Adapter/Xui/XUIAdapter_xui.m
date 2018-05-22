@@ -48,8 +48,7 @@
             
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
-
-            lua_setMaxLine(L, LUA_MAX_LINE_B);
+            
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
             lua_openXPPLibs(L);
@@ -94,6 +93,10 @@
     }
 }
 
+- (void)resetMaxLine {
+    lua_setMaxLine(L, LUA_MAX_LINE_B);
+}
+
 - (void)saveDefaultsFromCell:(XUIBaseCell *)cell {
     NSString *specComponent = nil;
     if (!specComponent) specComponent = cell.xui_defaults;
@@ -132,6 +135,7 @@
     id value = nil;
     
     @synchronized (self) {
+        [self resetMaxLine];
         lua_getfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"load",
@@ -176,6 +180,7 @@
     if (!path || !bundle || !rootPath || !mainBundle) return;
     
     @synchronized (self) {
+        [self resetMaxLine];
         lua_getfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
         if (lua_type(L, -1) == LUA_TFUNCTION) {
             id args = @{ @"event": @"save",
