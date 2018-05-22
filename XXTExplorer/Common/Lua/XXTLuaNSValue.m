@@ -699,13 +699,17 @@ int luaopen_xpp(lua_State *L)
 
 void lua_openXPPLibs(lua_State *L)
 {
-    luaL_requiref(L, "json", luaopen_json, YES);
-    lua_pop(L, 1);
-    luaL_requiref(L, "plist", luaopen_plist, YES);
-    lua_pop(L, 1);
     luaL_requiref(L, "xui", luaopen_xui, YES);
     lua_pop(L, 1);
     luaL_requiref(L, "xpp", luaopen_xpp, YES);
+    lua_pop(L, 1);
+}
+
+void lua_openNSValueLibs(lua_State *L)
+{
+    luaL_requiref(L, "json", luaopen_json, YES);
+    lua_pop(L, 1);
+    luaL_requiref(L, "plist", luaopen_plist, YES);
     lua_pop(L, 1);
     luaL_requiref(L, "sys", luaopen_sys, YES);
     lua_pop(L, 1);
@@ -713,10 +717,6 @@ void lua_openXPPLibs(lua_State *L)
     lua_pop(L, 1);
     luaL_requiref(L, "device", luaopen_device, YES);
     lua_pop(L, 1);
-}
-
-void lua_openNSValueLibs(lua_State *L)
-{
     {
         lua_getglobal(L, "os");
         lua_pushcfunction(L, lua_xxt_os_execute);

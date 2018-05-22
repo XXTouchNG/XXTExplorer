@@ -457,7 +457,7 @@ XXTE_END_IGNORE_PARTIAL
     #ifndef DEBUG
                 NSString *mainPath = uAppDefine(@"MAIN_PATH");
     #else
-                NSString *mainPath = nil;
+                NSString *mainPath = uAppDefine(@"MAIN_PATH");
     #endif
 #else
                 NSString *mainPath = nil;
