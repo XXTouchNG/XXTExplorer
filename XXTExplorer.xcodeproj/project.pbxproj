@@ -674,6 +674,9 @@
 		0FB7B8A4200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */; };
 		0FB7B8A5200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */; };
 		0FB7B8A6200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */; };
+		0FB8458C20B4376800D65E00 /* XXTEUIViewController+Null.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8458B20B4376800D65E00 /* XXTEUIViewController+Null.m */; };
+		0FB8458D20B4376800D65E00 /* XXTEUIViewController+Null.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8458B20B4376800D65E00 /* XXTEUIViewController+Null.m */; };
+		0FB8458E20B4376800D65E00 /* XXTEUIViewController+Null.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8458B20B4376800D65E00 /* XXTEUIViewController+Null.m */; };
 		0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */; };
 		0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */; };
 		0FBAFF1E1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1D1F6E4102008B3189 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m */; };
@@ -1736,6 +1739,8 @@
 		0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEObjectViewController.m; sourceTree = "<group>"; };
 		0FB7B8A2200099D30047CE84 /* UIViewController+topMostViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+topMostViewController.h"; sourceTree = "<group>"; };
 		0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+topMostViewController.m"; sourceTree = "<group>"; };
+		0FB8458A20B4376800D65E00 /* XXTEUIViewController+Null.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+Null.h"; sourceTree = "<group>"; };
+		0FB8458B20B4376800D65E00 /* XXTEUIViewController+Null.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+Null.m"; sourceTree = "<group>"; };
 		0FBAFF161F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentMenuDelegate.h"; sourceTree = "<group>"; };
 		0FBAFF171F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTExplorerViewController+UIDocumentMenuDelegate.m"; sourceTree = "<group>"; };
 		0FBAFF191F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+UIDocumentPickerDelegate.h"; sourceTree = "<group>"; };
@@ -4045,6 +4050,8 @@
 				D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */,
 				0F620CD320A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.h */,
 				0F620CD420A6DD7F001C0A4C /* XXTEUIViewController+OpenURLInCydia.m */,
+				0FB8458A20B4376800D65E00 /* XXTEUIViewController+Null.h */,
+				0FB8458B20B4376800D65E00 /* XXTEUIViewController+Null.m */,
 			);
 			path = ButtonAction;
 			sourceTree = "<group>";
@@ -5078,6 +5085,7 @@
 				0F8EDBD01FB1F779003C92D6 /* XXTEEditorLayoutManager.m in Sources */,
 				0F8811661FB6AF640004F20C /* XXTESegmentedControl.m in Sources */,
 				0F8EDBD21FB1F779003C92D6 /* XXTEMoreUserDefaultsOperationController.m in Sources */,
+				0FB8458E20B4376800D65E00 /* XXTEUIViewController+Null.m in Sources */,
 				0F8EDBD31FB1F779003C92D6 /* XXTExplorerViewController+Notification.m in Sources */,
 				0F8EDBD41FB1F779003C92D6 /* XXTExplorerEntryService.m in Sources */,
 				0F8EDBD51FB1F779003C92D6 /* ICRangeUtils.m in Sources */,
@@ -5331,6 +5339,7 @@
 				D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */,
 				0F6B6A501F5F9C8D0095A760 /* XXTEKeyboardToolbarRow.m in Sources */,
 				D6863C631F7E275900A45CF7 /* XXTEUIViewController+OpenURL.m in Sources */,
+				0FB8458C20B4376800D65E00 /* XXTEUIViewController+Null.m in Sources */,
 				D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */,
 				D6E141271F5032AB00D78CB9 /* XXTPixelCropRectView.m in Sources */,
 				0FAE0EFF1ED6FBDA00798B4B /* XXTENavigationController.m in Sources */,
@@ -5666,6 +5675,7 @@
 				D60FE6A91FE2369300954818 /* XXTEDaemonAgent.m in Sources */,
 				D60FE6AA1FE2369300954818 /* XXTEKeyboardToolbarRow.m in Sources */,
 				D60FE6AB1FE2369300954818 /* XXTEUIViewController+OpenURL.m in Sources */,
+				0FB8458D20B4376800D65E00 /* XXTEUIViewController+Null.m in Sources */,
 				D60FE6AC1FE2369300954818 /* XXTEEditorTextStorage.m in Sources */,
 				D60FE6AD1FE2369300954818 /* XXTPixelCropRectView.m in Sources */,
 				D60FE6AE1FE2369300954818 /* XXTENavigationController.m in Sources */,
