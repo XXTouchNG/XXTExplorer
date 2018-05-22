@@ -919,7 +919,7 @@ XXTE_END_IGNORE_PARTIAL
     } else if ((entry.isMaskedDirectory ||
                 entry.isBundle) &&
                [[self.class selectedScriptPath] hasPrefix:entry.entryPath] &&
-               [[[self.class selectedScriptPath] substringFromIndex:entry.entryPath.length] containsString:@"/"]) {
+               [[[self.class selectedScriptPath] substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
         // selected script in directory / bundle
         entryCell.entryTitleLabel.textColor = XXTColorSuccess();
         entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();

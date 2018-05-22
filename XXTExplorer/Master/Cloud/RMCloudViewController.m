@@ -46,10 +46,8 @@
     controller2.sortBy = RMApiActionSortByDownloadTimesDesc;
     [self setViewControllers:@[ controller1, controller2 ]];
     
-    if (@available(iOS 8.0, *)) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
-        self.navigationItem.rightBarButtonItem = self.searchItem;
-    }
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 39.f, 44.f)]];
+    self.navigationItem.rightBarButtonItem = self.searchItem;
 }
 
 #pragma mark - Life Cycle
@@ -75,8 +73,12 @@
 }
 
 - (void)searchItemTapped:(UIBarButtonItem *)sender {
-    RMCloudSearchViewController *searchController = [[RMCloudSearchViewController alloc] init];
-    [self.navigationController pushViewController:searchController animated:YES];
+    if (@available(iOS 8.0, *)) {
+        RMCloudSearchViewController *searchController = [[RMCloudSearchViewController alloc] init];
+        [self.navigationController pushViewController:searchController animated:YES];
+    } else {
+        toastMessage(self, NSLocalizedString(@"This feature requires iOS 8.0 or later.", nil));
+    }
 }
 
 #pragma mark - Memory

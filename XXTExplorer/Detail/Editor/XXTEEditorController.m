@@ -474,16 +474,33 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    UIEdgeInsets insets = UIEdgeInsetsZero;
-    if (@available(iOS 11.0, *)) {
-        // insets = self.view.safeAreaInsets;
+    // fixed - unnecessary textview width fix
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     { // usually on iPad
+         UIEdgeInsets insets = UIEdgeInsetsZero;
+         if (@available(iOS 11.0, *)) {
+             // insets = self.view.safeAreaInsets;
+         }
+         UITextView *textView = self.textView;
+         UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
+         textView.contentInset = contentInsets;\
+         textView.scrollIndicatorInsets = contentInsets;
+         [self setNeedsReloadTextViewWidth]; // fixed
+         [self reloadTextViewWidthIfNecessary];
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 8.0, *)) {
+        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     }
-    UITextView *textView = self.textView;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
-    textView.contentInset = contentInsets;
-    textView.scrollIndicatorInsets = contentInsets;
-    [self setNeedsReloadTextViewWidth]; // fixed
-    [self reloadTextViewWidthIfNecessary];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Layout

@@ -301,7 +301,7 @@
             if (@available(iOS 8.0, *)) {
                 return UITableViewAutomaticDimension;
             } else {
-                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
                 [cell setNeedsUpdateConstraints];
                 [cell updateConstraintsIfNeeded];
                 
