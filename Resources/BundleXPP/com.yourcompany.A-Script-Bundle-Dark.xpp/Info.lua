@@ -1,14 +1,14 @@
 return {
 	MainInterfaceFile = "interface.xui";
-	BundleDisplayName = "一个脚本包";
+	BundleDisplayName = "XUI 暗色主题示例";
 	Executable = "main.lua";
 	BundleIconFile = "appicon.png";
 	BundleVersion = "1.3.0";
 	MinimumXXTVersion = "1.2";
 	MinimumSystemVersion = "7.0";
-	MaximumSystemVersion = "10.2";
+	-- MaximumSystemVersion = "11.1.2";
 	BundleInfoDictionaryVersion = "6.0";
-	SupportedResolutions = {
+	--[[ SupportedResolutions = {
 		{
 			width = "640";
 			height = "1136";
@@ -16,6 +16,10 @@ return {
 		{
 			width = "750";
 			height = "1334";
+		};
+		{
+			width = "1242";
+			height = "2208";
 		};
 		{
 			width = "640";
@@ -29,7 +33,7 @@ return {
 			width = "1536";
 			height = "2048";
 		};
-	};
+	}; --]]
 	BundleName = "A-Script-Bundle";
 	PackageControl = {
 		AuthorEmail = "info@xxtouch.com";

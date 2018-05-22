@@ -1,0 +1,103 @@
+local __xui_conf = function(defaults)
+	return "/var/mobile/Media/1ferver/uicfg/"..defaults..".plist"
+end
+
+local __xui_read = function(defaults)
+	local plist = require("plist")
+	return plist.read(__xui_conf(defaults)) or {}
+end
+
+local __xui_write = function(defaults, dict)
+    local plist = require("plist")
+    plist.write(__xui_conf(defaults), dict)
+end;
+
+_G['xui'] = {
+	read = __xui_read;
+	write = __xui_write;
+    get = function(defaults, key)
+    	return __xui_read(defaults)[key]
+    end;
+    set = function(defaults, key, value)
+	    local dict = __xui_read(defaults)
+	    dict[key] = value
+	    __xui_write(defaults, dict)
+    end;
+}
+
+
+local items = {
+  {
+    cell = "Group";
+    label = "获取网络时间";
+  };
+  {
+    cell = "Button";
+    label = "立即联网获取";
+    action = "LaunchScript:";
+    args = {
+      path = "sub/xui-script.lua";
+      operation = "ntime";
+    };
+  };
+  {
+    cell = "TitleValue";
+    label = "网络时间";
+    key = "ntime";
+  };
+  {
+    cell = "Group";
+    label = "动态开关组";
+  };
+  {
+    cell = "Button";
+    label = "添加一个开关";
+    action = "LaunchScript:";
+    args = {
+      path = "sub/xui-script.lua";
+      operation = "add-switch";
+    };
+  };
+  {
+    cell = "Button";
+    label = "减少一个开关";
+    action = "LaunchScript:";
+    args = {
+      path = "sub/xui-script.lua";
+      operation = "rm-switch";
+    };
+  };
+}
+local iidx = #items
+
+local defaultsKey = "com.yourcompany.A-Script-Bundle"
+local grp_num = xui.get(defaultsKey, "ui-group-num") or 0
+for idx = iidx + 1, grp_num + iidx do
+	local grp_cell = {
+        cell = "Switch";
+        key = "grp-switch-"..(idx - iidx);
+        label = "开关 "..(idx - iidx);
+    }
+    items[idx] = grp_cell;
+end
+iidx = iidx + grp_num
+
+return {
+  defaults = defaultsKey;
+  title = "动态联动演示";
+  items = items
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

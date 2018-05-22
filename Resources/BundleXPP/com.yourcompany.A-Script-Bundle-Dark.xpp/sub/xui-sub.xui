@@ -1,6 +1,6 @@
 return {
   defaults = "com.yourcompany.A-Script-Bundle"; -- 配置存储的位置，读取配置的时候需要用到
-  title = "一个子页面";
+  title = "更多组件演示";
   items = {
     {
       cell = "Group";
@@ -18,7 +18,7 @@ return {
     };
     {
       cell = "Group";
-      label = "开关";
+      label = "联动";
     };
     {
       default = true;
@@ -38,7 +38,8 @@ return {
     };
     {
       cell = "Group";
-      label = "选择器";
+      label = "二维码";
+      footerText = "扫描结果会出现在扫码内容中";
     };
     {
       cell = "Button";
@@ -51,6 +52,20 @@ return {
       cell = "TitleValue";
       label = "扫码内容";
       key = "qr1";
+    };
+    {
+      cell = "Group";
+      label = "文件选择";
+      footerText = "请选择一条数据文件";
+    };
+    {
+      cell = "File";
+      key = "file1";
+      allowedExtensions = { "lua"; "xxt"; "xpp" };
+    };
+    {
+      cell = "Group";
+      label = "选择器组";
     };
     {
       cell = "TitleValue";
@@ -83,11 +98,6 @@ return {
       snippet = "snippets/test.snippet";
     };
     {
-      cell = "File";
-      key = "file1";
-      allowedExtensions = { "lua"; "xxt"; "xpp" };
-    };
-    {
       cell = "Group";
       label = "时间与日期";
     };
@@ -97,7 +107,7 @@ return {
     };
     {
       cell = "Group";
-      label = "动作";
+      label = "更多按钮动作";
     };
     {
       cell = "Button";
@@ -105,6 +115,15 @@ return {
       label = "运行一个脚本";
       args = {
         path = "sub/xui-script.lua";
+        operation = "demo";
+      };
+    };
+    {
+      cell = "Button";
+      action = "RunCommand:";
+      label = "运行一个命令";
+      args = {
+        command = "killall -9 SpringBoard";
       };
     };
     {

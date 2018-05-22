@@ -2,7 +2,7 @@ return {
   title = "一个脚本包";
   header = "脚本配置演示";
   subheader = "由 XXTouch 提供的优雅的脚本配置界面";
-  defaults = "com.yourcompany.A-Script-Bundle"; -- 配置存储的位置，读取配置的时候需要用到
+  defaults = "com.yourcompany.A-Script-Bundle";  -- 配置存储的位置，读取配置的时候需要用到
   theme = {
     navigationBarColor = '0x1d1f21'; -- 记得加上引号
     navigationTitleColor = '0xc5c8c6';
@@ -25,17 +25,19 @@ return {
       default = true;
       label = "启用某功能";
       cell = "Switch";
-      key = "enabled"; -- 该项存储的键，读取该键配置时需要用到
-      icon = "res/16.png";
+      key = "enabled";  -- 该项存储的键，读取该键配置时需要用到
+    };
+    {
+      default = false;
+      label = "带图标的开关";
+      cell = "Switch";
+      key = "enabled1";  -- 该项存储的键，读取该键配置时需要用到
+      icon = "res/16.png";  -- 其它有些组件也可以设置图标
     };
     {
       cell = "Group";
-      label = "按钮";
-    };
-    {
-      url = "https://www.xxtouch.com";
-      cell = "Link";
-      label = "打开 XXTouch.com";
+      label = "按钮动作";
+      footerText = "更多按钮动作参见子页面 > 更多组件演示";
     };
     {
       cell = "Button";
@@ -43,16 +45,30 @@ return {
       label = "联系 info@xxtouch.com";
       args = {
         url = "mailto://info@xxtouch.com";
-      }
+      };
     };
     {
       cell = "Group";
-      label = "菜单";
+      label = "子页面";
     };
     {
       url = "sub/xui-sub.xuic";
       cell = "Link";
-      label = "载入一个子页面";
+      label = "更多组件演示";
+    };
+    {
+      url = "sub/xui-dynamic.xui";
+      cell = "Link";
+      label = "动态联动通知演示";
+    };
+    {
+      cell = "Group";
+      label = "资源浏览";
+    };
+    {
+      url = "https://www.xxtouch.com";
+      cell = "Link";
+      label = "打开 XXTouch.com";
     };
     {
       url = "res/b6d21727a66f856f79dc9b6ef8e7b4d6.gif";
@@ -68,6 +84,10 @@ return {
       url = "https://www.apple.com/apple-events/september-2015/";
       cell = "Link";
       label = "在线视频";
+    };
+    {
+      cell = "Group";
+      label = "选项";
     };
     {
       default = "绿帽，你懂的！";
@@ -117,7 +137,7 @@ return {
       default = {
         "红色";
       };
-      label = "有序选项列表";
+      label = "有序选项列表 (悬浮)";
       cell = "OrderedOption";
       key = "list-3";
       maxCount = 2;
@@ -136,6 +156,7 @@ return {
           icon = "res/blue.png";
         };
       };
+      popoverMode = true;  -- 使用悬浮模式
     };
     {
       maxCount = 10;
@@ -145,6 +166,7 @@ return {
       default = {
         "Default";
       };
+      validationRegex = "^[0-9a-zA-Z]+$";
     };
     {
       cell = "Group";
@@ -211,6 +233,7 @@ return {
       default = "Fifth";
       cell = "Radio";
       key = "radio";
+      alignment = "Justified";
       options = {
         {
           title = "第一";
@@ -242,20 +265,22 @@ return {
     {
       cell = "Group";
       label = "数字相关";
+      footerText = "长按步进控件调整速度会变快";
     };
     {
       showValue = true;
       min = 1;
       default = 5;
       max = 10;
+      step = 0.5;
       label = "滑动控件";
       cell = "Slider";
       key = "slider";
     };
     {
       min = 1;
-      default = 5;
-      max = 10;
+      default = 25;
+      max = 100;
       autoRepeat = true;
       label = "步进控件";
       cell = "Stepper";
@@ -276,6 +301,8 @@ return {
       keyboard = "Default";
       alignment = "Right";
       placeholder = "输入用户名";
+      maxLength = 21;
+      validationRegex = "^[0-9a-zA-Z]+$";
     };
     {
       noAutoCorrect = true;
@@ -287,6 +314,10 @@ return {
       keyboard = "Alphabet";
       alignment = "Right";
       placeholder = "输入密码";
+      prompt = "请输入密码";
+      message = "请在提示框中输入 6 位数字密码";
+      validationRegex = "^[0-9]{6}$";
+      okTitle = "保存";
     };
     {
       cell = "Group";
