@@ -27,8 +27,6 @@
         extern "C" {
 #endif
 
-        int lua_table_is_array(lua_State *L, int index);
-
         void lua_pushNSDictionaryx(lua_State *L, NSDictionary *dict, int level, int include_func);
         void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level, int include_func);
         void lua_pushNSValuex(lua_State *L, id value, int level, int include_func);
@@ -36,17 +34,26 @@
         NSDictionary *lua_toNSDictionaryx(lua_State *L, int index, NSMutableDictionary *result, int level, int include_func);
         NSArray *lua_toNSArrayx(lua_State *L, int index, NSMutableArray *result, int level, int include_func);
         id lua_toNSValuex(lua_State *L, int index, int level, int include_func);
-
-        int luaopen_json(lua_State *L);
-        int luaopen_plist(lua_State *L);
+        
+        // libs
+        void lua_openXPPLibs(lua_State *L);
         void lua_openNSValueLibs(lua_State *L);
+        
+        // io
         void lua_createArgTable(lua_State *L, const char *path);
         void lua_setPath(lua_State* L, const char *key, const char *path);
 
+        // error handling
         extern NSString * const kXXTELuaVModelErrorDomain;
         BOOL lua_checkCode(lua_State *L, int code, NSError **error);
         void lua_setMaxLine(lua_State *L, lua_Integer maxline);
         
+        // ocobject
+        void lua_ocobject_set(lua_State *L, const char *key, NSObject *object);
+        NSObject *lua_ocobject_get(lua_State *L, const char *key);
+        void lua_ocobject_free(lua_State *L, const char *key);
+        
+        // shortcut for system
         int xxt_system(const char *ctx);
         
 #ifdef __cplusplus

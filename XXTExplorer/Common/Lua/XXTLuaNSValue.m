@@ -650,9 +650,54 @@ int lua_xxt_os_exit (lua_State *L) {
     return luaL_error(L, "os.exit is not available on platform iOS");
 }
 
+#pragma mark - XPP
+
+int l_xpp_bundle_path(lua_State *L) {
+    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xui.bundle");
+    if (!bundle) {
+        lua_pushnil(L);
+        return 1;
+    }
+    lua_pushNSValue(L, [bundle bundlePath]);
+    return 1;
+}
+
+int l_xpp_resource_path(lua_State *L) {
+    const char *resource_name = luaL_checkstring(L, 1);
+    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xui.bundle");
+    if (!bundle) {
+        lua_pushnil(L);
+        return 1;
+    }
+    @autoreleasepool {
+        NSString *resourceName = [NSString stringWithUTF8String:resource_name];
+        NSString *resourcePath = [bundle pathForResource:resourceName ofType:nil];
+        lua_pushNSValue(L, resourcePath);
+        return 1;
+    }
+}
+
+int luaopen_xpp(lua_State *L)
+{
+    lua_createtable(L, 0, 3);
+//    lua_pushcfunction(L, l_xpp_info);
+//    lua_setfield(L, -2, "info");
+    lua_pushcfunction(L, l_xpp_bundle_path);
+    lua_setfield(L, -2, "bundle_path");
+    lua_pushcfunction(L, l_xpp_resource_path);
+    lua_setfield(L, -2, "resource_path");
+//    lua_pushcfunction(L, l_xpp_ui_dismiss);
+//    lua_setfield(L, -2, "ui_dismiss");
+//    lua_pushcfunction(L, l_xpp_ui_reload);
+//    lua_setfield(L, -2, "ui_reload");
+    lua_pushliteral(L, "0.2");
+    lua_setfield(L, -2, "_VERSION");
+    return 1;
+}
+
 #pragma mark - Libs
 
-void lua_openNSValueLibs(lua_State *L)
+void lua_openXPPLibs(lua_State *L)
 {
     luaL_requiref(L, "json", luaopen_json, YES);
     lua_pop(L, 1);
@@ -660,12 +705,18 @@ void lua_openNSValueLibs(lua_State *L)
     lua_pop(L, 1);
     luaL_requiref(L, "xui", luaopen_xui, YES);
     lua_pop(L, 1);
+    luaL_requiref(L, "xpp", luaopen_xpp, YES);
+    lua_pop(L, 1);
     luaL_requiref(L, "sys", luaopen_sys, YES);
     lua_pop(L, 1);
     luaL_requiref(L, "screen", luaopen_screen, YES);
     lua_pop(L, 1);
     luaL_requiref(L, "device", luaopen_device, YES);
     lua_pop(L, 1);
+}
+
+void lua_openNSValueLibs(lua_State *L)
+{
     {
         lua_getglobal(L, "os");
         lua_pushcfunction(L, lua_xxt_os_execute);
@@ -731,6 +782,29 @@ void lua_setPath(lua_State* L, const char *key, const char *path)
     lua_pushstring(L, [strOrigPath UTF8String]); // push the new one
     lua_setfield(L, -2, key); // set the field "path" in table at -2 with value at top of stack
     lua_pop(L, 1); // get rid of package table from top of stack
+}
+
+#pragma mark - OCObject Helpers
+
+void lua_ocobject_set(lua_State *L, const char *key, NSObject *object) {
+    const void **tmpp = (const void **)lua_newuserdata(L, sizeof(NSObject *));
+    *tmpp = (__bridge const void *)(object);
+    lua_setfield(L, LUA_REGISTRYINDEX, key);
+}
+
+NSObject *lua_ocobject_get(lua_State *L, const char *key) {
+    lua_getfield(L, LUA_REGISTRYINDEX, key);
+    if (lua_isuserdata(L, -1)) {
+        NSObject *bundle = (__bridge NSObject *)(*((void **)lua_touserdata(L, -1)));
+        return bundle;
+    }
+    lua_pop(L, 1);
+    return nil;
+}
+
+void lua_ocobject_free(lua_State *L, const char *key) {
+    lua_pushnil(L);
+    lua_setfield(L, LUA_REGISTRYINDEX, key);
 }
 
 #pragma mark - Linehook

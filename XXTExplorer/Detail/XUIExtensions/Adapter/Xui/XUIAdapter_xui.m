@@ -52,6 +52,8 @@
             lua_setMaxLine(L, LUA_MAX_LINE_B);
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
+            lua_openXPPLibs(L);
+            lua_ocobject_set(L, "xpp.bundle", _bundle);
             
             NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter_xui" ofType:@"xuic"];
             if (!adapterPath) {
@@ -213,6 +215,7 @@
 
 - (void)dealloc {
     if (L) {
+        lua_ocobject_free(L, "xui.bundle");
         lua_close(L);
         L = NULL;
     }
