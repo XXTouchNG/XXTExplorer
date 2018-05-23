@@ -51,7 +51,8 @@
 }
 
 - (void)setXui_label:(NSString *)xui_label {
-    self.titleLabel.text = xui_label;
+    [super setXui_label:xui_label];
+    self.titleLabel.text = self.adapter ? [self.adapter localizedString:xui_label] : xui_label;
 }
 
 - (void)setXui_value:(id)xui_value {

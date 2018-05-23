@@ -18,7 +18,7 @@ return {
     caretColor = '0xb5bd68';
     separatorColor = '0x373b41';
     thumbColor = '#f0f0f0';
-    style = 'Grouped';
+    style = 'Plain'; -- 平铺显示风格，如果为 Grouped 则为组显示风格
   };
   items = {
     {
