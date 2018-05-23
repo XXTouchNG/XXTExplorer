@@ -8,9 +8,9 @@ language: objective-c
 podfile: Podfile
 
 before_install:
+- gem install cocoapods # Since Travis is not always on latest version
 - pod repo update
 - pod install --verbose
-# - gem install cocoapods # Since Travis is not always on latest version
 
 script:
 - set -o pipefail && xcodebuild build -workspace XXTExplorer.xcworkspace -scheme XXTExplorer-Archive -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
