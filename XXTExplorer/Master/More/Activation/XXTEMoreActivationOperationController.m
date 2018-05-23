@@ -17,7 +17,6 @@
 @end
 
 @implementation XXTEMoreActivationOperationController {
-    BOOL isFirstTimeLoaded;
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
@@ -68,14 +67,6 @@
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewData];
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    if (isFirstTimeLoaded) {
-//        [self reloadDynamicTableViewData];
-//    }
-//    isFirstTimeLoaded = YES;
-//}
 
 - (void)reloadDynamicTableViewData {
     UIViewController *blockVC = blockInteractions(self, YES);

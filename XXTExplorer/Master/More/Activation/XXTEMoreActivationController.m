@@ -42,7 +42,6 @@ static void * activatorHandler = nil;
 @end
 
 @implementation XXTEMoreActivationController {
-    BOOL isFirstTimeLoaded;
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;

@@ -136,9 +136,7 @@ static int sizingCancelFlag = 0;
 
 @end
 
-@implementation XXTExplorerItemDetailViewController {
-    BOOL isFirstTimeLoaded;
-}
+@implementation XXTExplorerItemDetailViewController
 
 #pragma mark - Setup
 

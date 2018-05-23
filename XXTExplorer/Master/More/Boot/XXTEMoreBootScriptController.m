@@ -24,7 +24,6 @@
 @end
 
 @implementation XXTEMoreBootScriptController {
-    BOOL isFirstTimeLoaded;
     NSArray <NSMutableArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;

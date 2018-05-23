@@ -185,6 +185,11 @@ return {
       };
     };
     {
+      cell = "Group";
+      label = "多选框组";
+      footerText = "轻按以选中标签，再次轻按以取消选中，最多选择 4 项";
+    };
+    {
       default = {
         "红色";
         "绿帽";
@@ -215,10 +220,15 @@ return {
       };
     };
     {
+      cell = "Group";
+      label = "单选框组";
+      footerText = "轻按以选中标签";
+    };
+    {
       default = "Fifth";
       cell = "Radio";
       key = "radio";
-      alignment = "Justified";
+      -- alignment = "Justified";
       options = {
         {
           title = "第一";

@@ -102,7 +102,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @end
 
-@implementation XXTEEditorController
+@implementation XXTEEditorController {
+    BOOL isFirstTimeLoaded;
+}
 
 @synthesize entryPath = _entryPath;
 
@@ -475,22 +477,17 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     // fixed - unnecessary textview width fix
+    if (NO == isFirstTimeLoaded) {
+        [self fixTextViewInsetsAndWidth];
+        isFirstTimeLoaded = YES;
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      { // usually on iPad
-         UIEdgeInsets insets = UIEdgeInsetsZero;
-         if (@available(iOS 11.0, *)) {
-             // insets = self.view.safeAreaInsets;
-         }
-         UITextView *textView = self.textView;
-         UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
-         textView.contentInset = contentInsets;\
-         textView.scrollIndicatorInsets = contentInsets;
-         [self setNeedsReloadTextViewWidth]; // fixed
-         [self reloadTextViewWidthIfNecessary];
+         [self fixTextViewInsetsAndWidth];
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          
@@ -501,6 +498,20 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     }
     XXTE_END_IGNORE_PARTIAL
+}
+
+- (void)fixTextViewInsetsAndWidth
+{
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        // insets = self.view.safeAreaInsets;
+    }
+    UITextView *textView = self.textView;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
+    textView.contentInset = contentInsets;\
+    textView.scrollIndicatorInsets = contentInsets;
+    [self setNeedsReloadTextViewWidth]; // fixed
+    [self reloadTextViewWidthIfNecessary];
 }
 
 #pragma mark - Layout

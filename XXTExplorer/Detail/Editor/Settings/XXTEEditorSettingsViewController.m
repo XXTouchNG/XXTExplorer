@@ -34,7 +34,6 @@
 @end
 
 @implementation XXTEEditorSettingsViewController {
-    BOOL isFirstTimeLoaded;
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;

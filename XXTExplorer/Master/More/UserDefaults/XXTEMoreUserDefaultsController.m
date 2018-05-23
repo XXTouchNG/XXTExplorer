@@ -34,9 +34,7 @@ XXTE_END_IGNORE_PARTIAL
 
 @end
 
-@implementation XXTEMoreUserDefaultsController {
-    BOOL isFirstTimeLoaded;
-}
+@implementation XXTEMoreUserDefaultsController
 
 - (instancetype)init {
     if (self = [super init]) {

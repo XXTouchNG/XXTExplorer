@@ -56,7 +56,6 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 @end
 
 @implementation XXTEMoreLicenseController {
-    BOOL isFirstTimeLoaded;
     NSArray <NSArray <UITableViewCell *> *> *staticCells;
     NSArray <NSString *> *staticSectionTitles;
     NSArray <NSString *> *staticSectionFooters;
