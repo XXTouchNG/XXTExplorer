@@ -200,6 +200,7 @@ return {
       cell = "Checkbox";
       key = "checkbox";
       maxCount = 4;
+      numPerLine = 4; -- 每行选项数量
       options = {
         {
           title = "红色";
