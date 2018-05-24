@@ -1,5 +1,5 @@
 return {
-  defaults = "com.yourcompany.A-Script-Bundle"; -- 配置存储的位置，读取配置的时候需要用到
+  defaults = "com.yourcompany.A-Script-Bundle";   -- 配置存储的位置，读取配置的时候需要用到
   title = "更多组件演示";
   items = {
     {

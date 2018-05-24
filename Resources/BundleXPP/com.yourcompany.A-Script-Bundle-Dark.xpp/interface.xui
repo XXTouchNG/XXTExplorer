@@ -4,7 +4,8 @@ return {
   subheader = "由 XXTouch 提供的优雅的脚本配置界面";
   defaults = "com.yourcompany.A-Script-Bundle";  -- 配置存储的位置，读取配置的时候需要用到
   theme = {
-    navigationBarColor = '0x1d1f21'; -- 记得加上引号
+    style = "Plain";  -- 组显示风格，如果为 Plain 则为平铺显示风格
+    navigationBarColor = '0x1d1f21';  -- 记得加上引号
     navigationTitleColor = '0xc5c8c6';
     cellBackgroundColor = '0xffffff03';
     backgroundColor = '0x1d1f21';
@@ -18,9 +19,18 @@ return {
     caretColor = '0xb5bd68';
     separatorColor = '0x373b41';
     thumbColor = '#f0f0f0';
-    style = 'Plain'; -- 平铺显示风格，如果为 Grouped 则为组显示风格
   };
   items = {
+    {
+      cell = "About";
+      -- imagePath = "res/xxt-icon.png";  -- 中间图标
+      label = "XUI 示例\nv1.2-10";  -- 标题
+      value = "适用于 XXTouch v1.2-10 及以上版本, \n示例内容仅供参考, 请勿直接用于生产环境.\n2016-2018 (c) XXTouch Team.\nAll Rights Reserved.";  -- 副标题
+    };
+    {
+      cell = "Group";
+      label = "开关";
+    };
     {
       default = true;
       label = "启用某功能";
@@ -33,6 +43,7 @@ return {
       cell = "Switch";
       key = "enabled1";  -- 该项存储的键，读取该键配置时需要用到
       icon = "res/16.png";  -- 其它有些组件也可以设置图标
+      readonly = true;  -- 所有组件都支持禁用
     };
     {
       cell = "Group";
@@ -45,14 +56,14 @@ return {
       label = "联系 info@xxtouch.com";
       args = {
         url = "mailto://info@xxtouch.com";
-      };
+      }
     };
     {
       cell = "Group";
       label = "子页面";
     };
     {
-      url = "sub/xui-sub.xuic";
+      url = "sub/xui-sub.xuic";  -- 相对于 xpp 的路径
       cell = "Link";
       label = "更多组件演示";
     };
@@ -90,7 +101,7 @@ return {
       label = "选项";
     };
     {
-      default = "绿帽，你懂的！";
+      default = "绿帽，你懂的！";  -- 默认值
       label = "单选列表";
       cell = "Option";
       key = "list-1";
@@ -117,11 +128,11 @@ return {
       label = "多选列表";
       cell = "MultipleOption";
       key = "list-2";
-      maxCount = 2;
+      maxCount = 2;  -- 最大选项数量
       options = {
         {
           title = "红色，姨妈色！";
-          icon = "res/red.png";
+          icon = "res/red.png";  -- 为选项设置图标
         };
         {
           title = "绿帽，你懂的！";
@@ -132,6 +143,35 @@ return {
           icon = "res/blue.png";
         };
       };
+      footerText = "最多可以选择两项";  -- 底部提示信息
+    };
+    {
+      default = {
+        "红色";
+      };
+      label = "有序选项列表";
+      cell = "OrderedOption";
+      key = "list-3";
+      maxCount = 2;  -- 最大选项数量
+      minCount = 1;  -- 最小选项数量
+      options = {
+        {
+          title = "红色";
+          -- value = "Red";
+          icon = "res/red.png";
+        };
+        {
+          title = "绿帽";
+          -- value = "Green";
+          icon = "res/green.png";
+        };
+        {
+          title = "蓝色";
+          -- value = "Blue";
+          icon = "res/blue.png";
+        };
+      };
+      footerText = "最多选择两项，最少选择一项";  -- 底部提示信息
     };
     {
       default = {
@@ -157,6 +197,7 @@ return {
         };
       };
       popoverMode = true;  -- 使用悬浮模式
+      footerText = "最多选择两项，最少选择一项";
     };
     {
       maxCount = 10;
@@ -205,7 +246,7 @@ return {
       cell = "Checkbox";
       key = "checkbox";
       maxCount = 4;
-      numPerLine = 4; -- 每行选项数量
+      numPerLine = 4;  -- 每行选项数量
       options = {
         {
           title = "红色";
@@ -256,13 +297,13 @@ return {
           title = "第三";
         };
         {
-          title = "第四";
+          title = "第四";  -- 如果选项未设置 value，则该选项配置值为 title
         };
         {
           title = "第五";
-          value = "Fifth";
+          value = "Fifth";  -- 如果选项设置了 value，则该选项配置值为 value
         };
-        "倒数第一";
+        "倒数第一";  -- 选项可以简写
       };
       theme = {
       	tagBackgroundColor = '0x1d1f21';
@@ -279,11 +320,11 @@ return {
       footerText = "长按步进控件调整速度会变快";
     };
     {
-      showValue = true;
+      showValue = true;  -- 是否显示当前值
       min = 1;
       default = 5;
       max = 10;
-      step = 0.5;
+      step = 0.5;  -- 可以设置步进间隔
       label = "滑动控件";
       cell = "Slider";
       key = "slider";
@@ -292,11 +333,11 @@ return {
       min = 1;
       default = 25;
       max = 100;
-      autoRepeat = true;
+      autoRepeat = true;  -- 长按自动重复触发
       label = "步进控件";
       cell = "Stepper";
       key = "stepper";
-      isInteger = true;
+      isInteger = true;  -- 是否显示为整数
     };
     {
       cell = "Group";
@@ -304,31 +345,30 @@ return {
       label = "文本框相关";
     };
     {
-      noAutoCorrect = true;
       default = "";
       label = "用户名";
       cell = "TextField";
       key = "username";
-      keyboard = "Default";
-      alignment = "Right";
-      placeholder = "输入用户名";
-      maxLength = 21;
-      validationRegex = "^[0-9a-zA-Z]+$";
+      keyboard = "Default";  -- 默认键盘
+      alignment = "Right";  -- 右对齐
+      placeholder = "输入用户名";  -- 占位符
+      maxLength = 21;  -- 最大长度
+      validationRegex = "^[0-9a-zA-Z]+$";  -- 正则验证
     };
     {
-      noAutoCorrect = true;
-	  isSecure = true;
+      isSecure = true;  -- 显示为小圆点密码输入
       default = "";
       label = "密码";
       cell = "TextField";
       key = "password";
-      keyboard = "Alphabet";
-      alignment = "Right";
-      placeholder = "输入密码";
-      prompt = "请输入密码";
-      message = "请在提示框中输入 6 位数字密码";
-      validationRegex = "^[0-9]{6}$";
-      okTitle = "保存";
+      keyboard = "NumberPad";  -- 数字小键盘
+      alignment = "Right";  -- 右对齐
+      placeholder = "输入密码";  -- 占位符
+      prompt = "请输入密码";  -- 弹框标题
+      message = "请在提示框中输入 6 位数字密码";  -- 弹框信息
+      validationRegex = "^[0-9]{6}$";  -- 正则验证
+      okTitle = "保存";  -- 提交按钮标题
+      cancelTitle = "取消";  -- 取消按钮标题
     };
     {
       cell = "Group";
@@ -341,7 +381,7 @@ return {
     {
       cell = "StaticText";
       label = "这里是一条可以被选中文字的静态文本";
-      selectable = true;
+      selectable = true;  -- 允许选中
     };
   };
 };
