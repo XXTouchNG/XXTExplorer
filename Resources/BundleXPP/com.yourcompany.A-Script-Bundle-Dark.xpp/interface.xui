@@ -4,21 +4,25 @@ return {
   subheader = "由 XXTouch 提供的优雅的脚本配置界面";
   defaults = "com.yourcompany.A-Script-Bundle";  -- 配置存储的位置，读取配置的时候需要用到
   theme = {
-    style = "Plain";  -- 组显示风格，如果为 Plain 则为平铺显示风格
+    style = "Grouped";  -- 组显示风格，如果为 Plain 则为平铺显示风格
     navigationBarColor = '0x1d1f21';  -- 记得加上引号
     navigationTitleColor = '0xc5c8c6';
-    cellBackgroundColor = '0xffffff03';
-    backgroundColor = '0x1d1f21';
+    cellBackgroundColor = '0x00000045';
+    backgroundColor = '0x1d1f21a0';
     tintColor = '0xb5bd68';
     labelColor = '0xc5c8c6';
-    disclosureIndicatorColor = '0x373b41';
-    valueColor = '0x4b4e55';
-    selectedColor = '0x373b41';
+    disclosureIndicatorColor = '0x777b81';
+    valueColor = '0x9b9ea5';
+    selectedColor = '0x373b4190';
     textColor = '0xc5c8c6';
     placeholderColor = '0xc5c8c66a';
     caretColor = '0xb5bd68';
     separatorColor = '0x373b41';
     thumbColor = '#f0f0f0';
+    headerTextColor = '#fefefe';
+    subheaderTextColor = '#fefefe';
+    footerTextColor = '#fefefe';
+    backgroundImage = 'res/2560_1440.jpg';
   };
   items = {
     {
@@ -26,6 +30,7 @@ return {
       -- imagePath = "res/xxt-icon.png";  -- 中间图标
       label = "XUI 示例\nv1.2-10";  -- 标题
       value = "适用于 XXTouch v1.2-10 及以上版本, \n示例内容仅供参考, 请勿直接用于生产环境.\n2016-2018 (c) XXTouch Team.\nAll Rights Reserved.";  -- 副标题
+      iconRenderingMode = "AlwaysTemplate";
     };
     {
       cell = "Group";
@@ -197,6 +202,9 @@ return {
         };
       };
       popoverMode = true;  -- 使用悬浮模式
+      theme = {
+        style = "Plain";
+      };
       footerText = "最多选择两项，最少选择一项";
     };
     {
@@ -268,12 +276,12 @@ return {
         "灰色";
       };
       theme = {
-      	tagBackgroundColor = '0x1d1f21';
-      	tagSelectedBackgroundColor = '0x373b41';
+      	tagBackgroundColor = '0x1d1f2100';
+      	tagSelectedBackgroundColor = '0xb5bd68';
       	tagTextColor = '0xc5c8c6';
-      	tagSelectedTextColor = '0xc5c8c6';
+      	tagSelectedTextColor = '0x333333';
       	tagBorderColor = '0x4b4e55';
-      	tagSelectedBorderColor = '0x4b4e55';
+      	tagSelectedBorderColor = '0xb5bd68';
       };
     };
     {
@@ -306,12 +314,12 @@ return {
         "倒数第一";  -- 选项可以简写
       };
       theme = {
-      	tagBackgroundColor = '0x1d1f21';
-      	tagSelectedBackgroundColor = '0x373b41';
+      	tagBackgroundColor = '0x1d1f2100';
+      	tagSelectedBackgroundColor = '0xb5bd68';
       	tagTextColor = '0xc5c8c6';
-      	tagSelectedTextColor = '0xc5c8c6';
+      	tagSelectedTextColor = '0x333333';
       	tagBorderColor = '0x4b4e55';
-      	tagSelectedBorderColor = '0x4b4e55';
+      	tagSelectedBorderColor = '0xb5bd68';
       };
     };
     {

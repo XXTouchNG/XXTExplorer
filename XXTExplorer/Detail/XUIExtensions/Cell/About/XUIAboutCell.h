@@ -10,7 +10,6 @@
 
 @interface XUIAboutCell : XUIBaseCell
 
-@property (nonatomic, strong) NSString *xui_imagePath;
 @property (nonatomic, strong) UIImage *centeredImage;
 
 @end

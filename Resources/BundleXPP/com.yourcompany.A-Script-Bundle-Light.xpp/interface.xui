@@ -183,6 +183,9 @@ return {
         };
       };
       popoverMode = true;  -- 使用悬浮模式
+      theme = {
+        style = "Plain";
+      };
       footerText = "最多选择两项，最少选择一项";
     };
     {

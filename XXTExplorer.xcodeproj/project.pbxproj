@@ -2987,6 +2987,16 @@
 			path = Toolbar;
 			sourceTree = "<group>";
 		};
+		0F9C1B1F20B6DB9800563ECB /* About */ = {
+			isa = PBXGroup;
+			children = (
+				0F5EB5321F0A88600016016A /* XUIAboutCell.h */,
+				0F5EB5331F0A88600016016A /* XUIAboutCell.m */,
+				0F5EB5341F0A88600016016A /* XUIAboutCell.xib */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
@@ -3428,9 +3438,6 @@
 				D629C2201F0635F20030C6DA /* XXTEMoreApplicationCell.h */,
 				D629C2211F0635F20030C6DA /* XXTEMoreApplicationCell.m */,
 				D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */,
-				0F5EB5321F0A88600016016A /* XUIAboutCell.h */,
-				0F5EB5331F0A88600016016A /* XUIAboutCell.m */,
-				0F5EB5341F0A88600016016A /* XUIAboutCell.xib */,
 				0FAD691A1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.h */,
 				0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */,
 				0FAD691C1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib */,
@@ -4026,6 +4033,7 @@
 		D6863C511F7E275800A45CF7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				0F9C1B1F20B6DB9800563ECB /* About */,
 				0F3B56C320AEDA0600F07FE4 /* TextField */,
 				D69532FC1F904DD000A24B9B /* AnimatedImage */,
 				D6863D1C1F7E3B9100A45CF7 /* Link */,
