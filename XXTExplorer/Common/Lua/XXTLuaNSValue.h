@@ -54,7 +54,7 @@
         void lua_ocobject_free(lua_State *L, const char *key);
         
         // shortcut for system
-        int xxt_system(const char *ctx);
+        int lua_xxtSystem(const char *ctx);
         
 #ifdef __cplusplus
         }

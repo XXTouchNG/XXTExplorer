@@ -18,7 +18,7 @@
 
 + (PMKPromise *)promiseRunCommand:(NSString *)command {
     return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
-        int status = xxt_system(command.UTF8String);
+        int status = lua_xxtSystem(command.UTF8String);
         if (WIFEXITED(status)) {
             status = WEXITSTATUS(status);
         }

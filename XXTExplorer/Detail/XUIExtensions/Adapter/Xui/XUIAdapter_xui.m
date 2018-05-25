@@ -220,7 +220,7 @@
 
 - (void)dealloc {
     if (L) {
-        lua_ocobject_free(L, "xui.bundle");
+        lua_ocobject_free(L, "xpp.bundle");
         lua_close(L);
         L = NULL;
     }

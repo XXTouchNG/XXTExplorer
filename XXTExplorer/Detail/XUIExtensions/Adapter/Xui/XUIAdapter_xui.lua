@@ -50,6 +50,7 @@ local _ENV = {
     };
     xui = {
         decode = xui.decode;
+        dismiss = xui.dismiss;
     };
     table = {
         insert = table.insert;

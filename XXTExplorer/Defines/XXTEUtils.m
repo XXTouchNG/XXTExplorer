@@ -435,3 +435,25 @@ BOOL isAppStore() {
 NSString *uAppUserAgent() {
     return [NSString stringWithFormat:@"XXTExplorer/%@", [uAppDefine(kXXTDaemonVersionKey) stringByReplacingOccurrencesOfString:@"-" withString:@"."]];
 }
+
+#ifndef APPSTORE
+BOOL SBSOpenSensitiveURLAndUnlock(NSURL *url, BOOL flags);
+#endif
+
+#if (TARGET_OS_SIMULATOR)
+BOOL SBSOpenSensitiveURLAndUnlock(NSURL *url, BOOL flags) {
+    return YES;
+}
+#endif
+
+BOOL uOpenURL(NSURL *url) {
+#ifndef APPSTORE
+    BOOL canOpenURL = SBSOpenSensitiveURLAndUnlock(url, YES);
+#else
+    BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:url];
+    if (canOpenURL) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+#endif
+    return canOpenURL;
+}

@@ -11,11 +11,7 @@
 
 #import "xui32.h"
 #import "XXTLuaFunction.h"
-
-#import <sys/utsname.h>
-
-#import "UIView+XXTEToast.h"
-#import "UIViewController+topMostViewController.h"
+#import "XXTExplorerEntryXPPReader.h"
 
 #import <stdio.h>
 #import <stdlib.h>
@@ -23,6 +19,32 @@
 #import <sys/types.h>
 #import <sys/stat.h>
 #import <spawn.h>
+#import <sys/utsname.h>
+
+#import "UIView+XXTEToast.h"
+#import "UIViewController+topMostViewController.h"
+
+
+#pragma mark - Linehook
+
+static void ____lua_setmaxline_hook(lua_State *L, lua_Debug *ar)
+{
+    lua_getfield(L, LUA_REGISTRYINDEX, "lua_setmaxline_line_count");
+    lua_Integer *line_count_ptr = (lua_Integer *)lua_touserdata(L, -1);
+    lua_pop(L, 1);
+    *line_count_ptr = *line_count_ptr - 1;
+    if (*line_count_ptr < 0) {
+        luaL_error(L, "line overflow");
+    }
+}
+
+void lua_setMaxLine(lua_State *L, lua_Integer maxline)
+{
+    lua_Integer *line_count_ptr = (lua_Integer *)lua_newuserdata(L, sizeof(lua_Integer));
+    lua_setfield(L, LUA_REGISTRYINDEX, "lua_setmaxline_line_count");
+    *line_count_ptr = maxline;
+    lua_sethook(L, ____lua_setmaxline_hook, LUA_MASKLINE, 0);
+}
 
 #pragma mark - Errors
 
@@ -45,7 +67,25 @@ BOOL lua_checkCode(lua_State *L, int code, NSError **error) {
     return YES;
 }
 
-#pragma mark - NSValue
+#pragma mark - Helpers
+
+void lua_setPath(lua_State* L, const char *key, const char *path)
+{
+    lua_getglobal(L, "package");
+    lua_getfield(L, -1, key); // get field "path" from table at top of stack (-1)
+    const char *origPath = lua_tostring(L, -1); // grab path string from top of stack
+    NSString *strPath = [[NSString alloc] initWithUTF8String:path];
+    NSString *strOrigPath = [[NSString alloc] initWithUTF8String:origPath];
+    strOrigPath = [strOrigPath stringByAppendingString:@";"];
+    strOrigPath = [strOrigPath stringByAppendingString:strPath];
+    strOrigPath = [strOrigPath stringByAppendingString:@";"];
+    lua_pop(L, 1); // get rid of the string on the stack we just pushed on line 5
+    lua_pushstring(L, [strOrigPath UTF8String]); // push the new one
+    lua_setfield(L, -2, key); // set the field "path" in table at -2 with value at top of stack
+    lua_pop(L, 1); // get rid of package table from top of stack
+}
+
+#pragma mark - Transformer
 
 void lua_pushNSArrayx(lua_State *L, NSArray *arr, int level, int include_func)
 {
@@ -371,7 +411,9 @@ NSData *lua_toJSONData(lua_State *L, int index)
     }
 }
 
-int l_fromJSON(lua_State *L)
+#pragma mark - JSON
+
+int l_json_decode(lua_State *L)
 {
     size_t l;
     const char *json_cstr = luaL_checklstring(L, 1, &l);
@@ -382,7 +424,7 @@ int l_fromJSON(lua_State *L)
     return 1;
 }
 
-int l_toJSON(lua_State *L)
+int l_json_encode(lua_State *L)
 {
     @autoreleasepool {
         NSData *jsonData = lua_toJSONData(L, 1);
@@ -398,9 +440,9 @@ int l_toJSON(lua_State *L)
 int luaopen_json(lua_State *L)
 {
     lua_createtable(L, 0, 4);
-    lua_pushcfunction(L, l_fromJSON);
+    lua_pushcfunction(L, l_json_decode);
     lua_setfield(L, -2, "decode");
-    lua_pushcfunction(L, l_toJSON);
+    lua_pushcfunction(L, l_json_encode);
     lua_setfield(L, -2, "encode");
     lua_pushlightuserdata(L, (void *)NULL);
     lua_setfield(L, -2, "null");
@@ -409,7 +451,9 @@ int luaopen_json(lua_State *L)
     return 1;
 }
 
-int l_fromPlist(lua_State *L)
+#pragma mark - Property List
+
+int l_plist_read(lua_State *L)
 {
     const char *filename_cstr = luaL_checkstring(L, 1);
     @autoreleasepool {
@@ -433,7 +477,7 @@ int l_fromPlist(lua_State *L)
     return 1;
 }
 
-int l_toPlist(lua_State *L)
+int l_plist_write(lua_State *L)
 {
     const char *filename_cstr = luaL_checkstring(L, 1);
     luaL_checktype(L, 2, LUA_TTABLE);
@@ -452,9 +496,9 @@ int l_toPlist(lua_State *L)
 int luaopen_plist(lua_State *L)
 {
     lua_createtable(L, 0, 3);
-    lua_pushcfunction(L, l_fromPlist);
+    lua_pushcfunction(L, l_plist_read);
     lua_setfield(L, -2, "read");
-    lua_pushcfunction(L, l_toPlist);
+    lua_pushcfunction(L, l_plist_write);
     lua_setfield(L, -2, "write");
     lua_pushliteral(L, "0.4");
     lua_setfield(L, -2, "_VERSION");
@@ -463,7 +507,7 @@ int luaopen_plist(lua_State *L)
 
 #pragma mark - XUI
 
-int l_decodeXUI(lua_State *L)
+int l_xui_decode(lua_State *L)
 {
     size_t l;
     const char *xui_cstr = luaL_checklstring(L, 1, &l);
@@ -485,8 +529,8 @@ int l_decodeXUI(lua_State *L)
 
 int luaopen_xui(lua_State *L)
 {
-    lua_createtable(L, 0, 2);
-    lua_pushcfunction(L, l_decodeXUI);
+    lua_createtable(L, 0, 5);
+    lua_pushcfunction(L, l_xui_decode);
     lua_setfield(L, -2, "decode");
     lua_pushliteral(L, "0.2");
     lua_setfield(L, -2, "_VERSION");
@@ -594,7 +638,7 @@ int luaopen_sys(lua_State *L)
 
 #pragma mark - OS
 
-int xxt_system(const char *ctx)
+int lua_xxtSystem(const char *ctx)
 {
     const char *binsh_path = NULL;
     
@@ -625,10 +669,10 @@ int xxt_system(const char *ctx)
     }
 }
 
-int lua_xxt_os_execute (lua_State *L)
+int l_os_execute (lua_State *L)
 {
     const char *cmd = luaL_optstring(L, 1, NULL);
-    int stat = xxt_system(cmd);
+    int stat = lua_xxtSystem(cmd);
     if (cmd != NULL)
         return luaL_execresult(L, stat);
     else {
@@ -637,7 +681,7 @@ int lua_xxt_os_execute (lua_State *L)
     }
 }
 
-int lua_xxt_os_tmpname (lua_State *L)
+int l_os_tmpname (lua_State *L)
 {
     NSString *identifier = [[NSProcessInfo processInfo] globallyUniqueString];
     NSString *tmpNameString = [NSString stringWithFormat:@"lua_%@", identifier];
@@ -646,14 +690,29 @@ int lua_xxt_os_tmpname (lua_State *L)
     return 1;
 }
 
-int lua_xxt_os_exit (lua_State *L) {
+int l_os_exit (lua_State *L) {
     return luaL_error(L, "os.exit is not available on platform iOS");
 }
 
 #pragma mark - XPP
 
+int l_xpp_info(lua_State *L) {
+    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xpp.bundle");
+    if (!bundle) {
+        lua_pushnil(L);
+        return 1;
+    }
+    XXTExplorerEntryXPPReader *reader = [[XXTExplorerEntryXPPReader alloc] initWithPath:bundle.bundlePath];
+    if (!reader.metaDictionary) {
+        lua_pushnil(L);
+        return 1;
+    }
+    lua_pushNSDictionary(L, reader.metaDictionary);
+    return 1;
+}
+
 int l_xpp_bundle_path(lua_State *L) {
-    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xui.bundle");
+    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xpp.bundle");
     if (!bundle) {
         lua_pushnil(L);
         return 1;
@@ -664,7 +723,7 @@ int l_xpp_bundle_path(lua_State *L) {
 
 int l_xpp_resource_path(lua_State *L) {
     const char *resource_name = luaL_checkstring(L, 1);
-    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xui.bundle");
+    NSBundle *bundle = (NSBundle *)lua_ocobject_get(L, "xpp.bundle");
     if (!bundle) {
         lua_pushnil(L);
         return 1;
@@ -680,22 +739,65 @@ int l_xpp_resource_path(lua_State *L) {
 int luaopen_xpp(lua_State *L)
 {
     lua_createtable(L, 0, 3);
-//    lua_pushcfunction(L, l_xpp_info);
-//    lua_setfield(L, -2, "info");
+    lua_pushcfunction(L, l_xpp_info);
+    lua_setfield(L, -2, "info");
     lua_pushcfunction(L, l_xpp_bundle_path);
     lua_setfield(L, -2, "bundle_path");
     lua_pushcfunction(L, l_xpp_resource_path);
     lua_setfield(L, -2, "resource_path");
-//    lua_pushcfunction(L, l_xpp_ui_dismiss);
-//    lua_setfield(L, -2, "ui_dismiss");
-//    lua_pushcfunction(L, l_xpp_ui_reload);
-//    lua_setfield(L, -2, "ui_reload");
     lua_pushliteral(L, "0.2");
     lua_setfield(L, -2, "_VERSION");
     return 1;
 }
 
-#pragma mark - Libs
+#pragma mark - App
+
+int l_app_open_url(lua_State *L)
+{
+    const char *url = luaL_checkstring(L, 1);
+    @autoreleasepool {
+        NSString *nssurl = [NSString stringWithUTF8String:url];
+        if (!nssurl) {
+            lua_pushboolean(L, 0);
+            return 1;
+        }
+        NSURL *nsurl = [NSURL URLWithString:nssurl];
+        if (!nsurl) {
+            lua_pushboolean(L, 0);
+            return 1;
+        }
+        BOOL canOpenURL = uOpenURL(nsurl);
+        lua_pushboolean(L, canOpenURL);
+        return 1;
+    }
+}
+
+int luaopen_app(lua_State *L)
+{
+    lua_createtable(L, 0, 2);
+    lua_pushcfunction(L, l_app_open_url);
+    lua_setfield(L, -2, "open_url");
+    lua_pushliteral(L, "0.2");
+    lua_setfield(L, -2, "_VERSION");
+    return 1;
+}
+
+#pragma mark - Notify Post
+
+int l_notify_post(lua_State *L)
+{
+    const char *name = luaL_checkstring(L, 1);
+    @autoreleasepool {
+        NSString *nsname = [NSString stringWithUTF8String:name];
+        if (!nsname) {
+            return 0;
+        }
+        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), ((__bridge CFStringRef)nsname), NULL, NULL, true);
+        return 0;
+    }
+}
+
+#pragma mark - Library Import
 
 void lua_openXPPLibs(lua_State *L)
 {
@@ -717,23 +819,29 @@ void lua_openNSValueLibs(lua_State *L)
     lua_pop(L, 1);
     luaL_requiref(L, "device", luaopen_device, YES);
     lua_pop(L, 1);
+    luaL_requiref(L, "app", luaopen_app, YES);
+    lua_pop(L, 1);
     {
         lua_getglobal(L, "os");
-        lua_pushcfunction(L, lua_xxt_os_execute);
+        lua_pushcfunction(L, l_os_execute);
         lua_setfield(L, -2, "execute");
         lua_pop(L, 1);
     }
     {
         lua_getglobal(L, "os");
-        lua_pushcfunction(L, lua_xxt_os_tmpname);
+        lua_pushcfunction(L, l_os_tmpname);
         lua_setfield(L, -2, "tmpname");
         lua_pop(L, 1);
     }
     {
         lua_getglobal(L, "os");
-        lua_pushcfunction(L, lua_xxt_os_exit);
+        lua_pushcfunction(L, l_os_exit);
         lua_setfield(L, -2, "exit");
         lua_pop(L, 1);
+    }
+    {
+        lua_pushcfunction(L, l_notify_post);
+        lua_setglobal(L, "notify_post");
     }
     {
         NSString *loc = [XXTERootPath() stringByAppendingPathComponent:@"lib"];
@@ -766,24 +874,6 @@ void lua_createArgTable(lua_State *L, const char *path)
     lua_setglobal(L, "arg");
 }
 
-#pragma mark - Helpers
-
-void lua_setPath(lua_State* L, const char *key, const char *path)
-{
-    lua_getglobal(L, "package");
-    lua_getfield(L, -1, key); // get field "path" from table at top of stack (-1)
-    const char *origPath = lua_tostring(L, -1); // grab path string from top of stack
-    NSString *strPath = [[NSString alloc] initWithUTF8String:path];
-    NSString *strOrigPath = [[NSString alloc] initWithUTF8String:origPath];
-    strOrigPath = [strOrigPath stringByAppendingString:@";"];
-    strOrigPath = [strOrigPath stringByAppendingString:strPath];
-    strOrigPath = [strOrigPath stringByAppendingString:@";"];
-    lua_pop(L, 1); // get rid of the string on the stack we just pushed on line 5
-    lua_pushstring(L, [strOrigPath UTF8String]); // push the new one
-    lua_setfield(L, -2, key); // set the field "path" in table at -2 with value at top of stack
-    lua_pop(L, 1); // get rid of package table from top of stack
-}
-
 #pragma mark - OCObject Helpers
 
 void lua_ocobject_set(lua_State *L, const char *key, NSObject *object) {
@@ -807,23 +897,3 @@ void lua_ocobject_free(lua_State *L, const char *key) {
     lua_setfield(L, LUA_REGISTRYINDEX, key);
 }
 
-#pragma mark - Linehook
-
-static void ____lua_setmaxline_hook(lua_State *L, lua_Debug *ar)
-{
-    lua_getfield(L, LUA_REGISTRYINDEX, "lua_setmaxline_line_count");
-    lua_Integer *line_count_ptr = (lua_Integer *)lua_touserdata(L, -1);
-    lua_pop(L, 1);
-    *line_count_ptr = *line_count_ptr - 1;
-    if (*line_count_ptr < 0) {
-        luaL_error(L, "line overflow");
-    }
-}
-
-void lua_setMaxLine(lua_State *L, lua_Integer maxline)
-{
-    lua_Integer *line_count_ptr = (lua_Integer *)lua_newuserdata(L, sizeof(lua_Integer));
-    lua_setfield(L, LUA_REGISTRYINDEX, "lua_setmaxline_line_count");
-    *line_count_ptr = maxline;
-    lua_sethook(L, ____lua_setmaxline_hook, LUA_MASKLINE, 0);
-}

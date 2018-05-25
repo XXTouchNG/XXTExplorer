@@ -35,6 +35,7 @@ extern "C" {
     
     NSDictionary *uAppConstEnvp(void);
     NSString *uAppUserAgent(void);
+    BOOL uOpenURL(NSURL *url);
     
     NSString *XXTSchemeCloudProjectID(NSUInteger projectID);
     

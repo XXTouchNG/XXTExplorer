@@ -10,16 +10,6 @@
 #import <XUI/XUIButtonCell.h>
 #import <XUI/XUILogger.h>
 
-#ifndef APPSTORE
-BOOL SBSOpenSensitiveURLAndUnlock(NSURL *url, BOOL flags);
-#endif
-
-#if (TARGET_OS_SIMULATOR)
-BOOL SBSOpenSensitiveURLAndUnlock(NSURL *url, BOOL flags) {
-    return YES;
-}
-#endif
-
 @implementation XXTEUIViewController (OpenURL)
 
 - (NSNumber *)xui_OpenURL:(XUIButtonCell *)cell {
@@ -29,14 +19,7 @@ BOOL SBSOpenSensitiveURLAndUnlock(NSURL *url, BOOL flags) {
         return @(NO);
     }
     NSURL *url = [NSURL URLWithString:args[@"url"]];
-#ifndef APPSTORE
-    BOOL canOpenURL = SBSOpenSensitiveURLAndUnlock(url, YES);
-#else
-    BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:url];
-    if (canOpenURL) {
-        [[UIApplication sharedApplication] openURL:url];
-    }
-#endif
+    BOOL canOpenURL = uOpenURL(url);
     if (!canOpenURL)
     {
         toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open url \"%@\".", nil), url]);
