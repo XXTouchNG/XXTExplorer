@@ -19,6 +19,7 @@ return {
     caretColor = '0xb5bd68';
     separatorColor = '0x373b41';
     thumbColor = '#f0f0f0';
+    onTintColor = '0xb5bd68';
     headerTextColor = '#fefefe';
     subheaderTextColor = '#fefefe';
     footerTextColor = '#fefefe';
@@ -61,7 +62,8 @@ return {
       label = "联系 info@xxtouch.com";
       args = {
         url = "mailto://info@xxtouch.com";
-      }
+      };
+      alignment = "Center";
     };
     {
       cell = "Group";
