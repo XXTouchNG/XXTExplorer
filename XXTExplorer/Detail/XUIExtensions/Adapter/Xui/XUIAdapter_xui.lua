@@ -25,10 +25,16 @@
 
 local opt = ...
 
-_XUI_VERSION = "1.2"
+_XUI_VERSION = "1.3"
+
+app = app or {}
 
 local __G = _G
 local _ENV = {
+    notify_post = notify_post;
+    app = {
+        open_url = app.open_url;
+    };
     math = {
         floor = math.floor;
         type = math.type;
@@ -50,7 +56,6 @@ local _ENV = {
     };
     xui = {
         decode = xui.decode;
-        dismiss = xui.dismiss;
     };
     table = {
         insert = table.insert;
@@ -153,11 +158,127 @@ if type(opt.bundlePath) == 'string' and (string.has_surfix(opt.bundlePath, '.xpp
     fixPermission(opt.bundlePath)
 end
 
-__G.xui.bundle_path = function()
+local function getDefaultsPath(defaults)
+    return string.format(opt.rootPath.."/uicfg/%s.plist", defaults)
+end
+
+local DefaultsCaches = {}
+
+local function loadDefaultsAndCache(defaultsId)
+    if not DefaultsCaches[defaultsId] then
+        local defaultsPath = getDefaultsPath(defaultsId)
+        DefaultsCaches[defaultsId] = plist.read(defaultsPath) or {}
+    end
+    return DefaultsCaches[defaultsId]
+end
+
+local function saveCachedDefaults()
+    for defaultsId, defaultsCache in pairs(DefaultsCaches) do
+        local defaultsPath = getDefaultsPath(defaultsId)
+        fixPermission(defaultsPath)
+        plist.write(defaultsPath, defaultsCache)
+    end
+end
+
+function __G.xui.bundle_path()
     return opt.bundlePath
 end
-__G.xui_path = function()
+
+function __G.xui_path()
     return opt.XUIPath
+end
+
+function __G.xui.setup()
+end
+
+function __G.xui.show()
+end
+
+function __G.xui.dismiss()
+    app.open_url('xxt://workspace/')
+end
+
+function __G.xui.reload(kvs)
+    if not kvs then
+        notify_post('com.xxtouch.XUICallbackUIUpdated')
+    else
+        if type(kvs) ~= 'table' then
+            error(string.format('bad argument #1(keyValues) to `xui.reload` (table expected, got %s)', type(key)), 2)
+        end
+        local globalDefaultsId = nil
+        if type(kvs.defaults) == 'string' then
+            globalDefaultsId = kvs.defaults
+        end
+        local kvs_own = {}
+        for _,kv in ipairs(kvs) do
+            if type(kv) == 'table' then
+                if type(kv.key) == 'string' and (type(kv.defaults) == 'string' or type(globalDefaultsId) == 'string') then
+                    kvs_own[#kvs_own + 1] = {
+                        key = kv.key;
+                        value = kv.value;
+                    }
+                    if type(kv.defaults) ~= 'string' then
+                        kvs_own[#kvs_own].defaults = globalDefaultsId
+                    else
+                        kvs_own[#kvs_own].defaults = kv.defaults
+                    end
+                    local defaultsCache = loadDefaultsAndCache(defaultsId)
+                    defaultsCache[kv.key] = kv.value
+                end
+            end
+        end
+        saveCachedDefaults()
+        if plist.write(opt.rootPath..'/caches/XUICallbackValueChanged.plist', {objects = kvs_own}) then
+            notify_post('com.xxtouch.XUICallbackValueChanged')
+        end
+    end
+end
+
+function __G.xui.get(defaultsId, key)
+    if type(defaultsId) ~= 'string' then
+        error(string.format('bad argument #1(defaultsId) to `xui.get` (string expected, got %s)', type(key)), 2)
+    end
+    if type(key) ~= 'string' then
+        error(string.format('bad argument #2(key) to `xui.get` (string expected, got %s)', type(key)), 2)
+    end
+    local defaultsCache = loadDefaultsAndCache(defaultsId)
+    return defaultsCache[key]
+end
+
+function __G.xui.set(defaultsId, key, value)
+    if type(defaultsId) ~= 'string' then
+        error(string.format('bad argument #1(defaultsId) to `xui.set` (string expected, got %s)', type(key)), 2)
+    end
+    if type(key) ~= 'string' then
+        error(string.format('bad argument #2(key) to `xui.set` (string expected, got %s)', type(key)), 2)
+    end
+    local defaultsCache = loadDefaultsAndCache(defaultsId)
+    defaultsCache[key] = value
+    local defaultsPath = getDefaultsPath(defaultsId)
+    fixPermission(defaultsPath)
+    plist.write(defaultsPath, defaultsCache)
+end
+
+function __G.xui.read(defaultsId)
+    if type(defaultsId) ~= 'string' then
+        error(string.format('bad argument #1(defaultsId) to `xui.get` (string expected, got %s)', type(key)), 2)
+    end
+    local defaultsCache = loadDefaultsAndCache(defaultsId)
+    return defaultsCache
+end
+
+function __G.xui.write(defaultsId, keyValues)
+    if type(defaultsId) ~= 'string' then
+        error(string.format('bad argument #1(defaultsId) to `xui.set` (string expected, got %s)', type(key)), 2)
+    end
+    if type(keyValues) ~= 'table' then
+        error(string.format('bad argument #2(keyValues) to `xui.set` (table expected, got %s)', type(key)), 2)
+    end
+    loadDefaultsAndCache(defaultsId)
+    DefaultsCaches[defaultsId] = keyValues
+    local defaultsPath = getDefaultsPath(defaultsId)
+    fixPermission(defaultsPath)
+    plist.write(defaultsPath, keyValues)
 end
 
 local function loadXUIFile(filename)
@@ -196,28 +317,6 @@ end
 
 if type(opt.XUITable) ~= 'table' then
     error(string.format('%q', XUIPath))
-end
-
-local function getDefaultsPath(defaults)
-    return string.format(opt.rootPath.."/uicfg/%s.plist", defaults)
-end
-
-local DefaultsCaches = {}
-
-local function loadDefaultsAndCache(defaultsId)
-    if not DefaultsCaches[defaultsId] then
-        local defaultsPath = getDefaultsPath(defaultsId)
-        DefaultsCaches[defaultsId] = plist.read(defaultsPath) or {}
-    end
-    return DefaultsCaches[defaultsId]
-end
-
-local function saveCachedDefaults()
-    for defaultsId, defaultsCache in pairs(DefaultsCaches) do
-        local defaultsPath = getDefaultsPath(defaultsId)
-        fixPermission(defaultsPath)
-        plist.write(defaultsPath, defaultsCache)
-    end
 end
 
 local ValueCheckers = {}
@@ -675,6 +774,7 @@ function _loadDefaults(opt)
                         defaultsTable[itemKey] = item.default
                     end
                     item.value = checkCellValue(item, defaultsTable[itemKey], idx)
+                    defaultsTable[itemKey] = item.value
                 end
             end
         end
