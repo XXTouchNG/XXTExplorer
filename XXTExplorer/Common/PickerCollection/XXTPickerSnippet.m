@@ -8,54 +8,18 @@
 
 #import "XXTPickerSnippet.h"
 
-#import "XXTLocationPicker.h"
-#import "XXTKeyEventPicker.h"
-#import "XXTRectanglePicker.h"
-#import "XXTPositionPicker.h"
-#import "XXTColorPicker.h"
-#import "XXTPositionColorPicker.h"
-#import "XXTMultiplePositionColorPicker.h"
-#import "XXTApplicationPicker.h"
-#import "XXTMultipleApplicationPicker.h"
-
 #import "XXTLuaNSValue.h"
-#import <XUI/XUIAdapter.h>
 #import "xui32.h"
 
 
 @interface XXTPickerSnippet ()
-@property (nonatomic, strong) NSMutableArray *results;
+
 @end
 
 @implementation XXTPickerSnippet {
     lua_State *L;
 }
 
-+ (NSArray <Class> *)pickers {
-	// Register Picker Here
-	NSArray <Class> *availablePickers =
-	@[
-	  [XXTLocationPicker class],
-      [XXTKeyEventPicker class],
-      [XXTRectanglePicker class],
-	  [XXTPositionPicker class],
-      [XXTColorPicker class],
-      [XXTPositionColorPicker class],
-	  [XXTMultiplePositionColorPicker class],
-#ifndef APPSTORE
-      [XXTApplicationPicker class],
-      [XXTMultipleApplicationPicker class],
-#endif
-	  ];
-	return availablePickers;
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        [self setupWithAdapter:nil Error:nil];
-    }
-    return self;
-}
 
 - (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr
 {
@@ -66,13 +30,13 @@
 {
 	if (self = [super init]) {
 		_path = path;
-		_results = [[NSMutableArray alloc] init];
-        if (![self setupWithAdapter:adapter Error:errorPtr]) return nil;
+        _adapter = adapter;
+        if (![self setupWithError:errorPtr]) return nil;
 	}
 	return self;
 }
 
-- (BOOL)setupWithAdapter:(id <XUIAdapter>)adapter Error:(NSError **)errorPtr {
+- (BOOL)setupWithError:(NSError **)errorPtr {
     NSString *path = self.path;
     if (!path) return NO;
     
@@ -92,6 +56,7 @@
             lua_createArgTable(L, path.fileSystemRepresentation);
             
             // xui adapter
+            id <XUIAdapter> adapter = self.adapter;
             if (adapter)
             {
                 NSBundle *bundle = adapter.bundle;
@@ -126,6 +91,9 @@
                 lua_pushNSValue(L, args);
                 int entryResult = lua_pcall(L, 1, 1, 0);
                 if (!lua_checkCode(L, entryResult, errorPtr)) return NO;
+                
+                // clear that function
+                lua_pop(L, 1);
             }
             
             // load snippet
@@ -191,13 +159,11 @@
     return YES;
 }
 
-#pragma mark - Getters
-
-- (id)generateWithError:(NSError **)error {
+- (id)generateWithResults:(NSArray *)results Error:(NSError **)error {
     if (!L) return nil;
     id snippet_body = nil;
     @synchronized (self) {
-        NSArray *arguments = [self.results copy];
+        NSArray *arguments = [results copy];
         lua_getfield(L, LUA_REGISTRYINDEX, NSStringFromClass([self class]).UTF8String);
         if (lua_type(L, -1) == LUA_TTABLE) {
             lua_getfield(L, -1, "generator");
@@ -218,100 +184,14 @@
         }
         lua_pop(L, 1);
     }
-	return snippet_body;
+    return snippet_body;
 }
 
-#pragma mark - NSCoding
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-	if (self = [super init]) {
-		_path = [aDecoder decodeObjectForKey:@"path"];
-		_name = [aDecoder decodeObjectForKey:@"name"];
-        _output = [aDecoder decodeObjectForKey:@"output"];
-		_flags = [aDecoder decodeObjectForKey:@"flags"];
-		_results = [aDecoder decodeObjectForKey:@"results"];
-        [self setupWithAdapter:nil Error:nil];
-	}
-	return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-	[aCoder encodeObject:self.path forKey:@"path"];
-	[aCoder encodeObject:self.name forKey:@"name"];
-    [aCoder encodeObject:self.output forKey:@"output"];
-	[aCoder encodeObject:self.flags forKey:@"flags"];
-	[aCoder encodeObject:self.results forKey:@"results"];
-}
-
-#pragma mark - NSCopying
-
-- (instancetype)copyWithZone:(nullable NSZone *)zone {
-	XXTPickerSnippet *copy = (XXTPickerSnippet *) [[[self class] allocWithZone:zone] init];
-	copy.path = [self.path copyWithZone:zone];
-	copy.name = [self.name copyWithZone:zone];
-    copy.output = [self.output copyWithZone:zone];
-	copy.flags = [self.flags copyWithZone:zone];
-	copy.results = [self.results copyWithZone:zone];
-	return copy;
-}
-
-#pragma mark - Generator
-
-- (void)addResult:(id)result {
-	if (!result || self.results.count >= self.flags.count) return;
-	[self.results addObject:result];
-}
-
-- (UIViewController <XXTBasePicker> *)nextPicker {
-	NSUInteger nextFlagIndex = self.results.count;
-	if (nextFlagIndex >= self.flags.count) return nil;
-	
-	NSDictionary *nextFlagDictionary = self.flags[nextFlagIndex];
-    NSString *nextFlag = nextFlagDictionary[@"type"];
-	
-	Class pickerClass;
-	for (Class cls in self.class.pickers) {
-		NSString *keyword = nil;
-		if ([cls respondsToSelector:@selector(pickerKeyword)]) {
-			keyword = [cls performSelector:@selector(pickerKeyword)];
-		}
-		if ([keyword isEqualToString:nextFlag]) {
-			pickerClass = cls;
-		}
-	}
-    
-    UIViewController <XXTBasePicker> *picker = [[pickerClass alloc] init];
-    picker.pickerMeta = nextFlagDictionary;
-	
-	return picker;
-}
-
-- (BOOL)taskFinished {
-	return (self.results.count >= self.flags.count - 1);
-}
-
-- (float)currentProgress {
-	return (float)self.results.count / self.flags.count;
-}
-
-- (NSUInteger)currentStep {
-	return self.results.count + 1;
-}
-
-- (NSUInteger)totalStep {
-	return self.flags.count;
-}
-
-#pragma mark - Getters
-
-- (NSArray *)getResults {
-    return [self.results copy];
-}
+#pragma mark - Memory
 
 - (void)dealloc {
     if (L) {
+        lua_ocobject_free(L, "xpp.bundle");
         lua_close(L);
         L = NULL;
     }

@@ -9,6 +9,10 @@
 #import "XXTEUIViewController+XUITitleValueCell.h"
 #import "XXTEObjectViewController.h"
 
+#import "XUITitleValueCell.h"
+#import "XXTPickerFactory.h"
+#import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
 
 #import <objc/runtime.h>
 #import <XUI/XUICellFactory.h>
@@ -29,9 +33,10 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
             [self presentErrorAlertController:snippetError];
             return;
         }
+        XXTPickerSnippetTask *task = [[XXTPickerSnippetTask alloc] initWithSnippet:snippet];
         XXTPickerFactory *factory = [XXTPickerFactory sharedInstance];
         factory.delegate = self;
-        [factory executeTask:snippet fromViewController:self];
+        [factory executeTask:task fromViewController:self];
         objc_setAssociatedObject(self, XUITitleValueCellStorageKey, titleValueCell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     } else {
         [self tableView:tableView accessoryXUITitleValueCell:cell];
@@ -53,11 +58,11 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 
 #pragma mark - XXTPickerFactoryDelegate
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task {
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippetTask *)task {
     return YES;
 }
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task {
     UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{

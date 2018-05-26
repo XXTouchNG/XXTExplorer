@@ -3,17 +3,19 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#import <objc/runtime.h>
-#import "LSApplicationProxy.h"
-#import "LSApplicationWorkspace.h"
 #import "XXTMultipleApplicationPicker.h"
 #import "XXTApplicationCell.h"
 #import "XXTPickerInsetsLabel.h"
-#import "XXTPickerFactory.h"
-#import "XXTPickerDefine.h"
-#import "XXTPickerSnippet.h"
-
 #import "XXTExplorerFooterView.h"
+
+#import <objc/runtime.h>
+#import "LSApplicationProxy.h"
+#import "LSApplicationWorkspace.h"
+
+#import "XXTPickerDefine.h"
+#import "XXTPickerFactory.h"
+#import "XXTPickerSnippetTask.h"
+
 
 enum {
     kXXTApplicationPickerCellSectionSelected = 0,
@@ -210,6 +212,7 @@ UISearchDisplayDelegate
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
     
     NSArray <NSString *> *defaultIdentifiers = self.pickerMeta[@"default"];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
         NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
@@ -279,10 +282,12 @@ UISearchDisplayDelegate
                 }
             }
         }
-        for (NSString *defaultIdentifier in defaultIdentifiers) {
-            if ([self.unselectedIdentifiers containsObject:defaultIdentifier]) {
-                [self.selectedIdentifiers addObject:defaultIdentifier];
-                [self.unselectedIdentifiers removeObject:defaultIdentifier];
+        if ([defaultIdentifiers isKindOfClass:[NSArray class]]) {
+            for (NSString *defaultIdentifier in defaultIdentifiers) {
+                if ([self.unselectedIdentifiers containsObject:defaultIdentifier]) {
+                    [self.selectedIdentifiers addObject:defaultIdentifier];
+                    [self.unselectedIdentifiers removeObject:defaultIdentifier];
+                }
             }
         }
         

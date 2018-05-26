@@ -6,25 +6,27 @@
 //  Copyright © 2016 Zheng. All rights reserved.
 //
 
-#import "XXTPixelCropView.h"
 #import "XXTRectanglePicker.h"
 #import "XXTEImagePickerController.h"
-#import "XXTPixelPlaceholderView.h"
-#import "XXTPickerFactory.h"
-#import "UIColor+hexValue.h"
-#import "UIColor+inverseColor.h"
-#import "XXTPositionColorModel.h"
-#import "XXTPickerSnippet.h"
-
-#import "XXTExplorerViewController+SharedInstance.h"
-#import "XXTExplorerItemPicker.h"
 #import "XXTENavigationController.h"
-#import "XXTExplorerEntryImageReader.h"
+#import "XXTPixelCropView.h"
+#import "XXTPixelPlaceholderView.h"
+#import "XXTPositionColorModel.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <LGAlertView/LGAlertView.h>
 
+#import "UIColor+hexValue.h"
+#import "UIColor+inverseColor.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
+
+#import "XXTExplorerViewController+SharedInstance.h"
+#import "XXTExplorerEntryImageReader.h"
+#import "XXTExplorerItemPicker.h"
+
+#import "XXTPickerSnippetTask.h"
+#import "XXTPickerFactory.h"
+
 
 @interface XXTRectanglePicker () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, LGAlertViewDelegate, XXTPixelCropViewDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate, XXTExplorerItemPickerDelegate>
 @property(nonatomic, strong) XXTPixelPlaceholderView *placeholderView;

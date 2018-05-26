@@ -11,11 +11,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class XXTPickerSnippet, XXTPickerFactory;
+@class XXTPickerSnippetTask, XXTPickerFactory;
 
 @protocol XXTBasePicker <NSObject>
 @property (nonatomic, weak) XXTPickerFactory *pickerFactory;
-@property (nonatomic, strong) XXTPickerSnippet *pickerTask;
+@property (nonatomic, strong) XXTPickerSnippetTask *pickerTask;
 @property (nonatomic, strong) NSDictionary *pickerMeta;
 
 + (NSString *)pickerKeyword;

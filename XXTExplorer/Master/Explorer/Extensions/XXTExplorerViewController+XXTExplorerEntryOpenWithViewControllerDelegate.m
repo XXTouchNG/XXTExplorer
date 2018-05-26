@@ -80,7 +80,7 @@
         [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
         UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
         {
-            XXTENavigationController *navigationController = nil;
+            UIViewController *navigationController = nil;
             if ([viewer isKindOfClass:[XUIViewController class]]) {
                 navigationController = [[XUINavigationController alloc] initWithRootViewController:viewer];
             } else {

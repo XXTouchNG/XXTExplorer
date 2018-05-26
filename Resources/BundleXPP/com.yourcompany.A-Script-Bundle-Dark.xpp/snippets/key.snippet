@@ -6,8 +6,7 @@ return {
 			type = "key",
 			subtitle = "选择一个按键",
 			default = (function()
-				local t = plist.read('/private/var/mobile/Media/1ferver/uicfg/com.yourcompany.A-Script-Bundle.plist') or {}
-				return t.keypicker
+				return xui.get('com.yourcompany.A-Script-Bundle', 'keypicker')
 			end)(),
 		},
 	},

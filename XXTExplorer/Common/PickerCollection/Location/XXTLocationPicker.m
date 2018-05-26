@@ -6,11 +6,13 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <MapKit/MapKit.h>
 #import "XXTLocationPicker.h"
-#import "XXTPickerFactory.h"
+
+#import <MapKit/MapKit.h>
+
 #import "XXTPickerDefine.h"
-#import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
+#import "XXTPickerFactory.h"
 
 static NSString * const kXXTCoordinateRegionLatitudeKey = @"latitude";
 static NSString * const kXXTCoordinateRegionLongitudeKey = @"longitude";

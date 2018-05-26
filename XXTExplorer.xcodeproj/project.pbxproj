@@ -671,6 +671,9 @@
 		0FB2209F1F824B2100156C3B /* XXTEEditorController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB2209E1F824B2100156C3B /* XXTEEditorController+NavigationBar.m */; };
 		0FB388E51FA860E800B41E44 /* XXTEEditorStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB388E41FA860E800B41E44 /* XXTEEditorStatisticsViewController.m */; };
 		0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */; };
+		0FB7968B20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7968A20B9D74B0005EAED /* XXTPickerSnippetTask.m */; };
+		0FB7968C20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7968A20B9D74B0005EAED /* XXTPickerSnippetTask.m */; };
+		0FB7968D20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7968A20B9D74B0005EAED /* XXTPickerSnippetTask.m */; };
 		0FB7B8A4200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */; };
 		0FB7B8A5200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */; };
 		0FB7B8A6200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */; };
@@ -1737,6 +1740,9 @@
 		0FB388E41FA860E800B41E44 /* XXTEEditorStatisticsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorStatisticsViewController.m; sourceTree = "<group>"; };
 		0FB6BB6B1F1C4B4900CADCEA /* XXTEObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEObjectViewController.h; sourceTree = "<group>"; };
 		0FB6BB6C1F1C4B4900CADCEA /* XXTEObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEObjectViewController.m; sourceTree = "<group>"; };
+		0FB7968920B9D74B0005EAED /* XXTPickerSnippetTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTPickerSnippetTask.h; sourceTree = "<group>"; };
+		0FB7968A20B9D74B0005EAED /* XXTPickerSnippetTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTPickerSnippetTask.m; sourceTree = "<group>"; };
+		0FB7968E20B9DE1C0005EAED /* XXTPickerFactoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTPickerFactoryDelegate.h; sourceTree = "<group>"; };
 		0FB7B8A2200099D30047CE84 /* UIViewController+topMostViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+topMostViewController.h"; sourceTree = "<group>"; };
 		0FB7B8A3200099D30047CE84 /* UIViewController+topMostViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+topMostViewController.m"; sourceTree = "<group>"; };
 		0FB8458A20B4376800D65E00 /* XXTEUIViewController+Null.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+Null.h"; sourceTree = "<group>"; };
@@ -4192,6 +4198,9 @@
 				D6E141111F5032AB00D78CB9 /* XXTPickerPreviewBar.m */,
 				0FFBC1301F5C391300690C8F /* XXTPickerSnippet.h */,
 				0FFBC1311F5C391300690C8F /* XXTPickerSnippet.m */,
+				0FB7968920B9D74B0005EAED /* XXTPickerSnippetTask.h */,
+				0FB7968A20B9D74B0005EAED /* XXTPickerSnippetTask.m */,
+				0FB7968E20B9DE1C0005EAED /* XXTPickerFactoryDelegate.h */,
 			);
 			path = PickerCollection;
 			sourceTree = "<group>";
@@ -5176,6 +5185,7 @@
 				0F8EDC201FB1F779003C92D6 /* XXTPickerNavigationController.m in Sources */,
 				D60FE64A1FE226F000954818 /* XXTEEditorSearchBar.m in Sources */,
 				0F8EDC211FB1F779003C92D6 /* SKPattern.m in Sources */,
+				0FB7968D20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				0F8EDC221FB1F779003C92D6 /* XUIAnimatedImageCell.m in Sources */,
 				0F8EDC231FB1F779003C92D6 /* SKRepository.m in Sources */,
 				0F8EDC251FB1F779003C92D6 /* SKLanguage.m in Sources */,
@@ -5460,6 +5470,7 @@
 				0F072DA71FB9D52000597EE2 /* XXTExplorerEntryReader.m in Sources */,
 				0FB2209F1F824B2100156C3B /* XXTEEditorController+NavigationBar.m in Sources */,
 				D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */,
+				0FB7968B20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,
 				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
 				0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */,
@@ -5796,6 +5807,7 @@
 				D60FE70B1FE2369300954818 /* XXTExplorerEntryReader.m in Sources */,
 				D60FE70C1FE2369300954818 /* XXTEEditorController+NavigationBar.m in Sources */,
 				D60FE70D1FE2369300954818 /* XXTLocationPicker.m in Sources */,
+				0FB7968C20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				D60FE70E1FE2369300954818 /* UIColor+inverseColor.m in Sources */,
 				D60FE70F1FE2369300954818 /* XXTPositionColorPicker.m in Sources */,
 				D60FE7101FE2369300954818 /* XXTExplorerEntrySnippetReader.m in Sources */,

@@ -7,10 +7,8 @@
 //
 
 #import "XXTEUIViewController.h"
-#import "XUITitleValueCell.h"
+#import "XXTPickerFactoryDelegate.h"
 
-#import "XXTPickerSnippet.h"
-#import "XXTPickerFactory.h"
 
 @interface XXTEUIViewController (XUITitleValueCell) <XXTPickerFactoryDelegate>
 

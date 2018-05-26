@@ -46,7 +46,6 @@ return {
       label = "打开二维码扫描器";
       key = "qr1";
       action = "ScanQRCode:";
-      kwargs = {};
     };
     {
       cell = "TitleValue";

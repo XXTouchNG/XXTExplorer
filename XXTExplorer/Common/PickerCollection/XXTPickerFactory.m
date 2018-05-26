@@ -7,9 +7,8 @@
 //
 
 #import "XXTPickerFactory.h"
-#import "XXTBasePicker.h"
 #import "XXTPickerNavigationController.h"
-#import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
 
 @interface XXTPickerFactory ()
 
@@ -26,7 +25,7 @@
     return sharedInstance;
 }
 
-- (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController {
+- (void)executeTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController {
     id nextPicker = [pickerTask nextPicker];
     if (nextPicker) {
         if ([nextPicker respondsToSelector:@selector(setPickerTask:)])
@@ -58,18 +57,18 @@
     }
 }
 
-- (void)performNextStep:(UIViewController *)viewController {
+- (void)performNextStep:(UIViewController <XXTBasePicker> *)viewController {
 
     if ([[viewController class] respondsToSelector:@selector(pickerKeyword)]) {
         id pickerResult = [viewController performSelector:@selector(pickerResult)];
         if (!pickerResult) {
             return;
         }
-        id pickerTaskObj = [viewController performSelector:@selector(pickerTask)];
-        if (!pickerTaskObj) {
+        XXTPickerSnippetTask *pickerTaskObj = [viewController performSelector:@selector(pickerTask)];
+        if (![pickerTaskObj isKindOfClass:[XXTPickerSnippetTask class]]) {
             return;
         }
-        XXTPickerSnippet *pickerTask = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:pickerTaskObj]];
+        XXTPickerSnippetTask *pickerTask = [pickerTaskObj copy];
         [pickerTask addResult:pickerResult];
         id nextPicker = [pickerTask nextPicker];
         if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerTask:)])
@@ -92,7 +91,7 @@
 
 }
 
-- (void)performFinished:(UIViewController *)viewController {
+- (void)performFinished:(UIViewController <XXTBasePicker> *)viewController {
     
     if ([viewController respondsToSelector:@selector(pickerResult)] &&
         [viewController respondsToSelector:@selector(pickerTask)]) {
@@ -100,11 +99,11 @@
         if (!pickerResult) {
             return;
         }
-        id pickerTaskObj = [viewController performSelector:@selector(pickerTask)];
-        if (!pickerTaskObj) {
+        XXTPickerSnippetTask *pickerTaskObj = [viewController performSelector:@selector(pickerTask)];
+        if (![pickerTaskObj isKindOfClass:[XXTPickerSnippetTask class]]) {
             return;
         }
-        XXTPickerSnippet *pickerTask = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:pickerTaskObj]];
+        XXTPickerSnippetTask *pickerTask = [pickerTaskObj copy];
         [pickerTask addResult:pickerResult];
         BOOL shouldFinish = YES;
         if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldFinished:)]) {
@@ -117,12 +116,12 @@
 
 }
 
-- (void)performUpdateStep:(UIViewController *)viewController {
+- (void)performUpdateStep:(UIViewController <XXTBasePicker> *)viewController {
 
     XXTPickerNavigationController *navController = (XXTPickerNavigationController *)viewController.navigationController;
     
     if ([viewController respondsToSelector:@selector(pickerTask)]) {
-        XXTPickerSnippet *currentTask = [viewController performSelector:@selector(pickerTask)];
+        XXTPickerSnippetTask *currentTask = [viewController performSelector:@selector(pickerTask)];
         [navController.popupBar setTitle:[NSString stringWithFormat:@"%@ (%lu/%lu)", viewController.title, (unsigned long)currentTask.currentStep, (unsigned long)currentTask.totalStep]];
         [navController.popupBar setProgress:currentTask.currentProgress];
         

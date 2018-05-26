@@ -8,17 +8,17 @@
 
 #import "XXTEEditorController+Menu.h"
 
+#import "XXTEEditorLanguage.h"
 #import "XXTEEditorDefaults.h"
-
 #import "XXTEEditorTextView.h"
 
 #import "XXTENavigationController.h"
 #import "XXTPickerFactory.h"
 #import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
 
 #import "XXTPickerNavigationController.h"
 
-#import "XXTEEditorLanguage.h"
 
 @implementation XXTEEditorController (Menu)
 
@@ -212,18 +212,19 @@
         [self presentErrorAlertController:initError];
         return;
     }
+    XXTPickerSnippetTask *task = [[XXTPickerSnippetTask alloc] initWithSnippet:snippet];
     XXTPickerFactory *pickerFactory = [XXTPickerFactory sharedInstance];
     pickerFactory.delegate = self;
-    [pickerFactory executeTask:snippet fromViewController:picker];
+    [pickerFactory executeTask:task fromViewController:picker];
 }
 
 #pragma mark - XXTPickerFactoryDelegate
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task {
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippetTask *)task {
     return YES;
 }
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task {
     UIViewController *blockVC = blockInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;

@@ -7,24 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTBasePicker.h"
+#import "XXTPickerFactoryDelegate.h"
 
-@class XXTPickerFactory, XXTPickerSnippet;
 
-@protocol XXTPickerFactoryDelegate <NSObject>
-
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task;
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task;
-
-@end
+@class XXTPickerFactory, XXTPickerSnippetTask;
 
 @interface XXTPickerFactory : NSObject
 
 @property (nonatomic, weak) id <XXTPickerFactoryDelegate> delegate;
 
 + (instancetype)sharedInstance;
-- (void)executeTask:(XXTPickerSnippet *)pickerTask fromViewController:(UIViewController *)viewController;
-- (void)performNextStep:(UIViewController *)viewController;
-- (void)performFinished:(UIViewController *)viewController;
-- (void)performUpdateStep:(UIViewController *)viewController;
+- (void)executeTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController;
+- (void)performNextStep:(UIViewController <XXTBasePicker> *)viewController;
+- (void)performFinished:(UIViewController <XXTBasePicker> *)viewController;
+- (void)performUpdateStep:(UIViewController <XXTBasePicker> *)viewController;
 
 @end

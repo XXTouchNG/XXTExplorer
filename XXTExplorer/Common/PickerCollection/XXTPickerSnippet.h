@@ -7,29 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XXTBasePicker.h"
+#import <XUI/XUIAdapter.h>
+
 
 @protocol XUIAdapter;
 
-@interface XXTPickerSnippet : NSObject <NSCoding, NSCopying>
+@interface XXTPickerSnippet : NSObject
 
-@property (nonatomic, copy) NSString *path;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *output;
-@property (nonatomic, strong) NSArray <NSDictionary *> *flags;
+@property (nonatomic, copy, readonly) NSString *path;
+@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *output;
+@property (nonatomic, strong, readonly) id <XUIAdapter> adapter;
+@property (nonatomic, copy, readonly) NSArray <NSDictionary *> *flags;
 
+- (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr;
 - (instancetype)initWithContentsOfFile:(NSString *)path Adapter:(id <XUIAdapter>)adapter Error:(NSError **)errorPtr;
-- (id)generateWithError:(NSError **)error;
 
-- (void)addResult:(id)result;
-- (UIViewController <XXTBasePicker> *)nextPicker;
-- (BOOL)taskFinished;
-- (float)currentProgress;
-
-- (NSUInteger)currentStep;
-- (NSUInteger)totalStep;
-
-- (NSArray *)getResults;
+- (id)generateWithResults:(NSArray *)results Error:(NSError **)error;
 
 @end

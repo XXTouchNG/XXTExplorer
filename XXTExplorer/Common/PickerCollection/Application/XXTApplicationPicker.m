@@ -3,15 +3,17 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
-#import <objc/runtime.h>
 #import "XXTApplicationPicker.h"
-#import "XXTPickerFactory.h"
-#import "LSApplicationProxy.h"
-#import "LSApplicationWorkspace.h"
 #import "XXTApplicationCell.h"
 #import "XXTPickerNavigationController.h"
+
+#import <objc/runtime.h>
+#import "LSApplicationProxy.h"
+#import "LSApplicationWorkspace.h"
+
 #import "XXTPickerDefine.h"
-#import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
+#import "XXTPickerFactory.h"
 
 enum {
     kXXTApplicationPickerCellSection = 0,

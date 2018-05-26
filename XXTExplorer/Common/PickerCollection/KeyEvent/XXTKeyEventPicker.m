@@ -8,9 +8,10 @@
 
 #import "XXTKeyEventPicker.h"
 #import "XXTKeyEvent.h"
-#import "XXTPickerFactory.h"
+
 #import "XXTPickerDefine.h"
-#import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
+#import "XXTPickerFactory.h"
 
 static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEventTableViewCellReuseIdentifier";
 
@@ -93,7 +94,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
     ];
     
     NSString *selectedCommand = self.pickerMeta[@"default"];
-    if (selectedCommand) {
+    if ([selectedCommand isKindOfClass:[NSString class]]) {
         self.selectedCommand = selectedCommand;
     } else {
         self.selectedCommand = self.events[0][0].command;

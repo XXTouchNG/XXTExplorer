@@ -8,7 +8,7 @@
 
 #import "XXTEEditorController.h"
 #import "XXTExplorerItemPicker.h"
-#import "XXTPickerFactory.h"
+#import "XXTPickerFactoryDelegate.h"
 
 @interface XXTEEditorController (Menu) <XXTExplorerItemPickerDelegate, XXTPickerFactoryDelegate>
 

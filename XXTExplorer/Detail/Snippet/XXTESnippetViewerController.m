@@ -10,6 +10,7 @@
 #import "XXTExplorerEntrySnippetReader.h"
 
 #import "XXTPickerSnippet.h"
+#import "XXTPickerSnippetTask.h"
 #import "XXTPickerFactory.h"
 
 @interface XXTESnippetViewerController () <XXTPickerFactoryDelegate>
@@ -62,18 +63,19 @@
         toastMessage(self, NSLocalizedString(@"Cannot generate code snippet because template table field \"output\" is undefined or empty.", nil));
         return;
     }
+    XXTPickerSnippetTask *task = [[XXTPickerSnippetTask alloc] initWithSnippet:snippet];
     XXTPickerFactory *pickerFactory = [XXTPickerFactory sharedInstance];
     pickerFactory.delegate = self;
-    [pickerFactory executeTask:snippet fromViewController:self];
+    [pickerFactory executeTask:task fromViewController:self];
 }
 
 #pragma mark - XXTPickerFactoryDelegate
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippet *)task {
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldEnterNextStep:(XXTPickerSnippetTask *)task {
     return YES;
 }
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippet *)task {
+- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task {
     UIViewController *blockVC = blockInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;
@@ -98,16 +100,16 @@
     return YES;
 }
 
-- (void)copyResult:(NSString *)result fromTask:(XXTPickerSnippet *)task
+- (void)copyResult:(NSString *)result fromTask:(XXTPickerSnippetTask *)task
 {
-    if (task.output.length == 0)
+    if (task.snippet.output.length == 0)
     {
         return;
     }
     
     NSError *writeError = nil;
     NSString *parentPath = [self.entryPath stringByDeletingLastPathComponent];
-    NSString *writeToPath = [parentPath stringByAppendingPathComponent:task.output];
+    NSString *writeToPath = [parentPath stringByAppendingPathComponent:task.snippet.output];
     BOOL writeResult = [result writeToFile:writeToPath atomically:YES encoding:NSUTF8StringEncoding error:&writeError];
     if (!writeResult) {
         if (writeError) {
@@ -116,7 +118,7 @@
         return;
     }
     
-    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Generated code snippet has been saved to \"%@\".", nil), task.output]);
+    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Generated code snippet has been saved to \"%@\".", nil), task.snippet.output]);
 }
 
 #pragma mark - Memory
