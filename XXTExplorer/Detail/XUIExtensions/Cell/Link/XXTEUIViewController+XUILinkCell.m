@@ -43,7 +43,8 @@
         if ([detailController isKindOfClass:[self class]])
         {
             XXTEUIViewController *nextController = (XXTEUIViewController *)detailController;
-            nextController.cellFactory.theme = self.cellFactory.theme;
+            [nextController updateTheme:[self.theme copy]];
+            [nextController updateLogger:self.logger];
         }
         [self.navigationController pushViewController:detailController animated:YES];
     }

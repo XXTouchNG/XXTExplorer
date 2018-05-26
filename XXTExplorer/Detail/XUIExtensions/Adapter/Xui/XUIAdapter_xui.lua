@@ -152,12 +152,6 @@ local function fixPermission(path)
     os.execute('add1s chown -R mobile:mobile '..sh_escape(path))
 end
 
-fixPermission(opt.XUIPath)
-
-if type(opt.bundlePath) == 'string' and (string.has_surfix(opt.bundlePath, '.xpp') or string.has_surfix(opt.bundlePath, '.xpp/')) then
-    fixPermission(opt.bundlePath)
-end
-
 local function getDefaultsPath(defaults)
     return string.format(opt.rootPath.."/uicfg/%s.plist", defaults)
 end
@@ -279,6 +273,16 @@ function __G.xui.write(defaultsId, keyValues)
     local defaultsPath = getDefaultsPath(defaultsId)
     fixPermission(defaultsPath)
     plist.write(defaultsPath, keyValues)
+end
+
+if not opt.event then
+    return
+end
+
+fixPermission(opt.XUIPath)
+
+if type(opt.bundlePath) == 'string' and (string.has_surfix(opt.bundlePath, '.xpp') or string.has_surfix(opt.bundlePath, '.xpp/')) then
+    fixPermission(opt.bundlePath)
 end
 
 local function loadXUIFile(filename)

@@ -22,6 +22,9 @@
 #import "XXTExplorerViewCell.h"
 #import "NSString+SHA1.h"
 
+#import <XUI/XUIViewController.h>
+#import <XUI/XUINavigationController.h>
+
 
 @implementation XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate)
 
@@ -77,7 +80,12 @@
         [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
         UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
         {
-            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
+            XXTENavigationController *navigationController = nil;
+            if ([viewer isKindOfClass:[XUIViewController class]]) {
+                navigationController = [[XUINavigationController alloc] initWithRootViewController:viewer];
+            } else {
+                navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
+            }
             navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
             navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [self.tabBarController presentViewController:navigationController animated:YES completion:nil];

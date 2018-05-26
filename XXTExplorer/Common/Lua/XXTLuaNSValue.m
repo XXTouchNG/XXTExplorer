@@ -20,6 +20,7 @@
 #import <sys/stat.h>
 #import <spawn.h>
 #import <sys/utsname.h>
+#import <notify.h>
 
 #import "UIView+XXTEToast.h"
 #import "UIViewController+topMostViewController.h"
@@ -786,15 +787,9 @@ int luaopen_app(lua_State *L)
 
 int l_notify_post(lua_State *L)
 {
-    const char *name = luaL_checkstring(L, 1);
-    @autoreleasepool {
-        NSString *nsname = [NSString stringWithUTF8String:name];
-        if (!nsname) {
-            return 0;
-        }
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), ((__bridge CFStringRef)nsname), NULL, NULL, true);
-        return 0;
-    }
+    const char *notify_name = luaL_checkstring(L, 1);
+    lua_pushinteger(L, notify_post(notify_name));
+    return 1;
 }
 
 #pragma mark - Library Import

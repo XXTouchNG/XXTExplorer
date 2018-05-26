@@ -1,35 +1,3 @@
-local __xui_conf = function(defaults)
-	return "/var/mobile/Media/1ferver/uicfg/"..defaults..".plist"
-end
-
-local __xui_read = function(defaults)
-	local plist = require("plist")
-	return plist.read(__xui_conf(defaults)) or {}
-end
-
-local __xui_write = function(defaults, dict)
-    local plist = require("plist")
-    plist.write(__xui_conf(defaults), dict)
-end;
-
-_G['xui'] = {
-	reload = xpp.ui_reload;
-	dismiss = xpp.ui_dismiss;
-	setup = xpp.ui_setup;
-	show = xpp.ui_show;
-	read = __xui_read;
-	write = __xui_write;
-    get = function(defaults, key)
-    	return __xui_read(defaults)[key]
-    end;
-    set = function(defaults, key, value)
-	    local dict = __xui_read(defaults)
-	    dict[key] = value
-	    __xui_write(defaults, dict)
-    end;
-}
-
-
 local defaultsKey = "com.yourcompany.A-Script-Bundle"
 
 -- 获取 Button 组件 LaunchScript: 额外参数
@@ -81,5 +49,4 @@ elseif operation == 'rm-switch' then
 	xui.reload()
 	
 end
-
 

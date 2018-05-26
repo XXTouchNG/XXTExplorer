@@ -11,7 +11,7 @@
 #import "XUIBaseCell.h"
 #import "XXTLuaNSValue.h"
 
-#import "XUI.h"
+#import <XUI/XUI.h>
 #import "xui32.h"
 
 @implementation XUIAdapter_xui {
@@ -43,41 +43,41 @@
 }
 
 - (BOOL)setupWithError:(NSError **)error {
+    NSString *path = self.path;
+    if (!path) return NO;
+    
     @synchronized (self) {
         if (!L) {
             
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
             
+            // universal libraries
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
-            lua_openXPPLibs(L);
-            lua_ocobject_set(L, "xpp.bundle", _bundle);
             
-            NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter_xui" ofType:@"xuic"];
-            if (!adapterPath) {
-                return NO; // NSAssert(adapterPath, @"LuaVM: XUIAdapter not found.");
-            }
+            // create arg table
+            lua_createArgTable(L, path.fileSystemRepresentation);
             
-            lua_createArgTable(L, adapterPath.fileSystemRepresentation);
-            xui_32 *xui = XUICreateWithContentsOfFile(adapterPath.fileSystemRepresentation);
-            
-            if (!xui) {
-                return NO; // NSAssert(xui, @"LuaVM: Cannot decode XUIAdapter.");
-            }
-            void *xuiBuffer = NULL; uint32_t xuiSize = 0;
-            XUICopyRawData(xui, &xuiBuffer, &xuiSize);
-            if (xui) XUIRelease(xui);
-            if (!xuiBuffer) {
-                return NO; // NSAssert(xuiBuffer, @"LuaVM: Cannot decode XUIAdapter.");
-            }
-            
-            size_t xuiSizeT = xuiSize;
-            int loadResult = luaL_loadbuffer(L, xuiBuffer, xuiSizeT, adapterPath.UTF8String);
-            if (xuiBuffer) free(xuiBuffer);
-            
-            if (!lua_checkCode(L, loadResult, error)) {
-                return NO;
+            // xui adapter
+            {
+                lua_openXPPLibs(L);
+                lua_ocobject_set(L, "xpp.bundle", self.bundle);
+                
+                NSString *adapterPath = [[NSBundle mainBundle] pathForResource:@"XUIAdapter_xui" ofType:@"xuic"];
+                if (!adapterPath) return NO;
+                
+                // parse xui format
+                xui_32 *xui = XUICreateWithContentsOfFile(adapterPath.fileSystemRepresentation);
+                if (!xui) return NO;
+                void *xuiBuffer = NULL; uint32_t xuiSize = 0;
+                XUICopyRawData(xui, &xuiBuffer, &xuiSize);
+                if (xui) XUIRelease(xui);
+                if (!xuiBuffer) return NO;
+                size_t xuiSizeT = xuiSize;
+                int loadResult = luaL_loadbuffer(L, xuiBuffer, xuiSizeT, adapterPath.UTF8String);
+                if (xuiBuffer) free(xuiBuffer);
+                if (!lua_checkCode(L, loadResult, error)) return NO;
             }
             
             // copy and register the function
@@ -94,6 +94,7 @@
 }
 
 - (void)resetMaxLine {
+    if (!L) return;
     lua_setMaxLine(L, LUA_MAX_LINE_B);
 }
 
@@ -119,7 +120,6 @@
         NSString *customNotificationName = cell.xui_postNotification;
         if (customNotificationName.length)
         {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:customNotificationName object:cell userInfo:[configurationPair copy]];
             CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), ((__bridge CFStringRef)customNotificationName), /* aNotification.object */ NULL, /* aNotification.userInfo */ NULL, true);
         }
     }
@@ -131,7 +131,7 @@
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *rootPath = XXTERootPath();
     
-    if (!path || !bundle || !rootPath || !mainBundle) return nil;
+    if (!path || !bundle || !rootPath) return nil;
     id value = nil;
     
     @synchronized (self) {

@@ -21,9 +21,10 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
 - (void)tableView:(UITableView *)tableView XUITitleValueCell:(UITableViewCell *)cell {
     XUITitleValueCell *titleValueCell = (XUITitleValueCell *)cell;
     if (titleValueCell.xui_snippet) {
+        id <XUIAdapter> adapter = self.adapter;
         NSString *snippetPath = [self.bundle pathForResource:titleValueCell.xui_snippet ofType:nil];
         NSError *snippetError = nil;
-        XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:snippetPath Error:&snippetError];
+        XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:snippetPath Adapter:adapter Error:&snippetError];
         if (snippetError) {
             [self presentErrorAlertController:snippetError];
             return;

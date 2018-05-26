@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "XXTBasePicker.h"
 
+@protocol XUIAdapter;
+
 @interface XXTPickerSnippet : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString *path;
@@ -17,6 +19,7 @@
 @property (nonatomic, strong) NSArray <NSDictionary *> *flags;
 
 - (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr;
+- (instancetype)initWithContentsOfFile:(NSString *)path Adapter:(id <XUIAdapter>)adapter Error:(NSError **)errorPtr;
 - (id)generateWithError:(NSError **)error;
 
 - (void)addResult:(id)result;

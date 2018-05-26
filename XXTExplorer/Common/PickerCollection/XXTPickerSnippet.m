@@ -19,6 +19,9 @@
 #import "XXTMultipleApplicationPicker.h"
 
 #import "XXTLuaNSValue.h"
+#import <XUI/XUIAdapter.h>
+#import "xui32.h"
+
 
 @interface XXTPickerSnippet ()
 @property (nonatomic, strong) NSMutableArray *results;
@@ -49,38 +52,88 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self setupWithError:nil];
+        [self setupWithAdapter:nil Error:nil];
     }
     return self;
 }
 
-- (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr {
+- (instancetype)initWithContentsOfFile:(NSString *)path Error:(NSError **)errorPtr
+{
+    return [self initWithContentsOfFile:path Adapter:nil Error:errorPtr];
+}
+
+- (instancetype)initWithContentsOfFile:(NSString *)path Adapter:(id <XUIAdapter>)adapter Error:(NSError **)errorPtr
+{
 	if (self = [super init]) {
 		_path = path;
 		_results = [[NSMutableArray alloc] init];
-        if (![self setupWithError:errorPtr]) return nil;
+        if (![self setupWithAdapter:adapter Error:errorPtr]) return nil;
 	}
 	return self;
 }
 
-- (BOOL)setupWithError:(NSError **)errorPtr {
+- (BOOL)setupWithAdapter:(id <XUIAdapter>)adapter Error:(NSError **)errorPtr {
     NSString *path = self.path;
     if (!path) return NO;
     
     @synchronized (self) {
         if (!L) {
+            
+            // new lua state
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
             
+            // universal libraries
             lua_setMaxLine(L, LUA_MAX_LINE_C);
             luaL_openlibs(L);
             lua_openNSValueLibs(L);
+            
+            // create arg table
             lua_createArgTable(L, path.fileSystemRepresentation);
             
+            // xui adapter
+            if (adapter)
+            {
+                NSBundle *bundle = adapter.bundle;
+                NSString *rootPath = XXTERootPath();
+                NSBundle *mainBundle = [NSBundle mainBundle];
+                if (!bundle || !rootPath || !mainBundle)
+                    return NO;
+                
+                lua_openXPPLibs(L);
+                lua_ocobject_set(L, "xpp.bundle", bundle);
+                
+                NSString *adapterPath = [mainBundle pathForResource:@"XUIAdapter_xui" ofType:@"xuic"];
+                if (!adapterPath) return NO;
+                
+                // parse xui format
+                xui_32 *xui = XUICreateWithContentsOfFile(adapterPath.fileSystemRepresentation);
+                if (!xui) return NO;
+                void *xuiBuffer = NULL; uint32_t xuiSize = 0;
+                XUICopyRawData(xui, &xuiBuffer, &xuiSize);
+                if (xui) XUIRelease(xui);
+                if (!xuiBuffer) return NO;
+                size_t xuiSizeT = xuiSize;
+                int loadResult = luaL_loadbuffer(L, xuiBuffer, xuiSizeT, adapterPath.UTF8String);
+                if (xuiBuffer) free(xuiBuffer);
+                if (!lua_checkCode(L, loadResult, errorPtr)) return NO;
+                
+                // load adapter libraries
+                NSDictionary *args = @{ @"bundlePath": [bundle bundlePath],
+                                        @"XUIPath": path,
+                                        @"rootPath": rootPath,
+                                        @"appPath": [mainBundle bundlePath] };
+                lua_pushNSValue(L, args);
+                int entryResult = lua_pcall(L, 1, 1, 0);
+                if (!lua_checkCode(L, entryResult, errorPtr)) return NO;
+            }
+            
+            // load snippet
             int luaResult = luaL_loadfile(L, path.fileSystemRepresentation);
             if (!lua_checkCode(L, luaResult, errorPtr))
                 return NO;
             
+            // get root table
             int callResult = lua_pcall(L, 0, 1, 0);
             if (!lua_checkCode(L, callResult, errorPtr))
                 return NO;
@@ -178,7 +231,7 @@
         _output = [aDecoder decodeObjectForKey:@"output"];
 		_flags = [aDecoder decodeObjectForKey:@"flags"];
 		_results = [aDecoder decodeObjectForKey:@"results"];
-        [self setupWithError:nil];
+        [self setupWithAdapter:nil Error:nil];
 	}
 	return self;
 }
