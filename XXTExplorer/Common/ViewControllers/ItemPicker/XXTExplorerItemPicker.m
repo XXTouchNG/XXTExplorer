@@ -18,6 +18,7 @@
 @interface XXTExplorerItemPicker () <XXTESwipeTableCellDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *selectButtonItem;
 
 @end
 
@@ -26,6 +27,14 @@
 }
 
 #pragma mark - Life Cycle
+
+- (instancetype)initWithEntryPath:(NSString *)path {
+    self = [super initWithEntryPath:path];
+    if (self) {
+        _isFile = YES;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,7 +51,11 @@
         }
     }
     
-    self.navigationItem.rightBarButtonItem = nil;
+    if (self.isFile) {
+        self.navigationItem.rightBarButtonItem = nil;
+    } else {
+        self.navigationItem.rightBarButtonItem = self.selectButtonItem;
+    }
     if ([self.navigationController.viewControllers firstObject] == self && !self.isPreviewed) {
         self.navigationItem.leftBarButtonItem = self.closeButtonItem;
     }
@@ -100,6 +113,7 @@
                     explorerViewController.delegate = self.delegate;
                     explorerViewController.allowedExtensions = self.allowedExtensions;
                     explorerViewController.selectedBootScriptPath = self.selectedBootScriptPath;
+                    explorerViewController.isFile = self.isFile;
                     [self.navigationController pushViewController:explorerViewController animated:YES];
                 }
             }
@@ -108,21 +122,25 @@
                      entryDetail.isMaskedRegular
                      )
             { // Bundle or Regular
-                NSString *entryBaseExtension = entryDetail.entryExtension;
-                BOOL extensionPermitted = NO;
-                for (NSString *obj in self.allowedExtensions) {
-                    if ([entryBaseExtension isEqualToString:obj]) {
-                        extensionPermitted = YES;
-                        break;
+                if (self.isFile) {
+                    NSString *entryBaseExtension = entryDetail.entryExtension;
+                    BOOL extensionPermitted = NO;
+                    for (NSString *obj in self.allowedExtensions) {
+                        if ([entryBaseExtension isEqualToString:obj]) {
+                            extensionPermitted = YES;
+                            break;
+                        }
                     }
-                }
-                if (extensionPermitted) {
-                    NSString *selectedPath = entryDetail.entryPath;
-                    if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
-                        [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
+                    if (extensionPermitted) {
+                        NSString *selectedPath = entryDetail.entryPath;
+                        if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
+                            [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
+                        }
+                    } else {
+                        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]));
                     }
                 } else {
-                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]));
+                    toastMessage(self, NSLocalizedString(@"Please select a directory.", nil));
                 }
             }
             else if (entryDetail.isBrokenSymlink)
@@ -213,11 +231,24 @@
     return _closeButtonItem;
 }
 
+- (UIBarButtonItem *)selectButtonItem {
+    if (!_selectButtonItem) {
+        _selectButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Select", nil) style:UIBarButtonItemStylePlain target:self action:@selector(selectButtonItemTapped:)];
+    }
+    return _selectButtonItem;
+}
+
 #pragma mark - UIControl Actions
 
 - (void)closeButtonItemTapped:(UIBarButtonItem *)sender {
     if (_delegate && [_delegate respondsToSelector:@selector(itemPickerDidCancelSelectingItem:)]) {
         [_delegate itemPickerDidCancelSelectingItem:self];
+    }
+}
+
+- (void)selectButtonItemTapped:(UIBarButtonItem *)sender {
+    if ([_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
+        [_delegate itemPicker:self didSelectItemAtPath:self.entryPath];
     }
 }
 

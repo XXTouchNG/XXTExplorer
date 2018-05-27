@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) NSString *selectedBootScriptPath;
 @property (nonatomic, weak) id <XXTExplorerItemPickerDelegate> delegate;
+
+@property (nonatomic, assign) BOOL isFile;
 @property (nonatomic, copy) NSArray <NSString *> *allowedExtensions;
 @property (nonatomic, assign, readonly) BOOL allowsMultipleSelection; // not implemented
 

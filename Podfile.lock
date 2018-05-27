@@ -75,7 +75,7 @@ DEPENDENCIES:
   - PromiseKit (~> 1.7.6)
   - TOWebViewController (from `https://github.com/XXTouchAssistant/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/XXTouchAssistant/UnrarKit.git`, branch `v2.9`)
-  - XUI (from `https://github.com/Lessica/XUI.git`)
+  - XUI (from `../XUI`)
   - YYImage (~> 1.0.4)
   - YYWebImage (~> 1.0.5)
 
@@ -104,7 +104,7 @@ EXTERNAL SOURCES:
     :branch: v2.9
     :git: https://github.com/XXTouchAssistant/UnrarKit.git
   XUI:
-    :git: https://github.com/Lessica/XUI.git
+    :path: "../XUI"
 
 CHECKOUT OPTIONS:
   LGAlertView:
@@ -119,9 +119,6 @@ CHECKOUT OPTIONS:
   UnrarKit:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
     :git: https://github.com/XXTouchAssistant/UnrarKit.git
-  XUI:
-    :commit: 8dee9a32f2f39dd9dcef76e40dec12c9ccba3f49
-    :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
@@ -134,11 +131,11 @@ SPEC CHECKSUMS:
   PromiseKit: 94bcf2f44424df0384af81c6221cb3bfa3e7ed4c
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
-  XUI: de0dd8c99edeaa5b60303240df9d53cc0cdfd1a7
+  XUI: 11728d23c0fbd3c536ac760e57e82839faa08074
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 6d8d2e9fbe048a5e5949996031b98b52d5fdf95c
+PODFILE CHECKSUM: 59c662e669dd91d113afa463a1c07742c99e9962
 
 COCOAPODS: 1.5.2

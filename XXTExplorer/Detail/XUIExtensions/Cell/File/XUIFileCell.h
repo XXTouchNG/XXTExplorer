@@ -12,7 +12,9 @@ static CGFloat const XUIFileCellHeight = 68.f;
 
 @interface XUIFileCell : XUIBaseCell
 
+@property (nonatomic, strong) NSNumber *xui_isFile;
 @property (nonatomic, strong) NSString *xui_initialPath;
 @property (nonatomic, strong) NSArray <NSString *> *xui_allowedExtensions;
+@property (nonatomic, strong) NSString *xui_footerText;
 
 @end

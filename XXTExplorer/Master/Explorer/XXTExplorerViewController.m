@@ -57,10 +57,7 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
 @synthesize footerView = _footerView;
 
 - (instancetype)init {
-    if (self = [super init]) {
-        [self setupWithPath:nil];
-    }
-    return self;
+    return [self initWithEntryPath:nil];
 }
 
 - (instancetype)initWithEntryPath:(NSString *)path {

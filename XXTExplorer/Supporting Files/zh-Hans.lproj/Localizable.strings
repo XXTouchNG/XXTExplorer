@@ -750,6 +750,9 @@
 "Encrypt Confirm" = "加密确认";
 
 /* No comment provided by engineer. */
+"Enter a directory, and tap the \"Select\" button." = "进入目录中, 然后轻按 \"选择\" 按钮.";
+
+/* No comment provided by engineer. */
 "Enter your 12/16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "键入 12/16 位授权码, 轻按 \"完成\" 以激活授权, 并将授权绑定至当前设备.\n授权码中仅包含 3-9 和 A-Z, 不包含空格.";
 
 /* No comment provided by engineer. */
@@ -1283,6 +1286,9 @@
 "Please enter a valid positive integer." = "请输入一个有效的正整数.";
 
 /* No comment provided by engineer. */
+"Please select a directory." = "请选择一个目录.";
+
+/* No comment provided by engineer. */
 "Please setup \"Mail\" to send mail feedback directly." = "请设置邮件客户端以直接发送电子邮件进行反馈.";
 
 /* No comment provided by engineer. */
@@ -1499,6 +1505,9 @@
 "Search..." = "搜索...";
 
 /* No comment provided by engineer. */
+"Select" = "选择";
+
+/* No comment provided by engineer. */
 "Select a color by tapping on image." = "轻按以选择图片中任意位置的颜色.";
 
 /* No comment provided by engineer. */
@@ -1667,6 +1676,9 @@
 
 /* No comment provided by engineer. */
 "Tap \"Respring\" to continue..." = "轻按 \"注销\" 以继续...";
+
+/* No comment provided by engineer. */
+"Tap here to add a directory." = "轻按以添加目录";
 
 /* No comment provided by engineer. */
 "Tap here to add a file." = "轻按以添加文件.";

@@ -63,6 +63,11 @@ return {
       allowedExtensions = { "lua"; "xxt"; "xpp" };
     };
     {
+      cell = "File";
+      key = "file2";
+      isFile = false;
+    };
+    {
       cell = "Group";
       label = "选择器组";
     };

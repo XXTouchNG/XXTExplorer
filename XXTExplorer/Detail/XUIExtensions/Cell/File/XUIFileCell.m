@@ -13,6 +13,8 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 
 @interface XUIFileCell ()
+
+@property (assign, nonatomic) BOOL shouldReloadCellState;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
@@ -44,7 +46,9 @@
     @{
       @"allowedExtensions": [NSArray class],
       @"initialPath": [NSString class],
-      @"value": [NSString class]
+      @"isFile": [NSNumber class],
+      @"value": [NSString class],
+      @"footerText": [NSString class],
       };
 }
 
@@ -53,19 +57,64 @@
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
     self.accessoryType = UITableViewCellAccessoryNone;
     
+    _xui_isFile = @(YES);
     _xui_height = @(XUIFileCellHeight); // standard height for file cell
     _xui_allowedExtensions = @[ @"lua", @"xxt", @"xpp" ];
     
-    [self resetCellState];
+    [self setNeedsReloadCellState];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self reloadCellStateIfNeeded];
+}
+
+#pragma mark - Setters
+
+- (void)setInternalTheme:(XUITheme *)theme {
+    [super setInternalTheme:theme];
+    self.nameLabel.textColor = theme.labelColor;
+    self.descriptionLabel.textColor = theme.valueColor;
+}
+
+- (void)setXui_isFile:(NSNumber *)xui_isFile {
+    _xui_isFile = xui_isFile;
+    [self setNeedsReloadCellState];
 }
 
 - (void)setXui_value:(id)xui_value {
-    if (!xui_value) {
-        _xui_value = xui_value;
-        [self resetCellState];
-        return;
-    }
-    NSString *filePath = xui_value;
+    _xui_value = xui_value;
+    [self setNeedsReloadCellState];
+}
+
+- (void)setXui_label:(NSString *)xui_label {
+    [super setXui_label:xui_label];
+    [self setNeedsReloadCellState];
+}
+
+- (void)setXui_footerText:(NSString *)xui_footerText {
+    _xui_footerText = xui_footerText;
+    [self setNeedsReloadCellState];
+}
+
+#pragma mark - Getters
+
+- (BOOL)canDelete {
+    return YES;
+}
+
+#pragma mark - Reload
+
+- (void)setNeedsReloadCellState {
+    self.shouldReloadCellState = YES;
+}
+
+- (void)reloadCellStateIfNeeded {
+    
+    if (!self.shouldReloadCellState) return;
+    self.shouldReloadCellState = NO;
+    
+    NSString *filePath = self.xui_value;
     if (filePath) {
         XXTExplorerEntry *entryDetail = [XXTExplorerViewController.explorerEntryParser entryOfPath:filePath withError:nil];
         if (entryDetail)
@@ -76,16 +125,31 @@
             self.nameLabel.text = entryDisplayName;
             self.descriptionLabel.text = entryDescription;
             self.iconImageView.image = entryIconImage;
-            _xui_value = xui_value;
             return;
         }
     }
-}
-
-- (void)resetCellState {
-    self.nameLabel.text = NSLocalizedString(@"Tap here to add a file.", nil);
-    self.descriptionLabel.text = [self openWithCellDescriptionFromExtensions:self.xui_allowedExtensions];
+    NSString *labelText = [self.adapter localizedString:self.xui_label];
+    NSString *detailText = [self.adapter localizedString:self.xui_footerText];
+    BOOL isFile = [self.xui_isFile boolValue];
+    if (isFile) {
+        if (labelText.length == 0) {
+            labelText = NSLocalizedString(@"Tap here to add a file.", nil);
+        }
+        if (detailText.length == 0) {
+            detailText = [self openWithCellDescriptionFromExtensions:self.xui_allowedExtensions];
+        }
+    } else {
+        if (labelText.length == 0) {
+            labelText = NSLocalizedString(@"Tap here to add a directory.", nil);
+        }
+        if (detailText.length == 0) {
+            detailText = NSLocalizedString(@"Enter a directory, and tap the \"Select\" button.", nil);
+        }
+    }
+    self.nameLabel.text = labelText;
+    self.descriptionLabel.text = detailText;
     self.iconImageView.image = [UIImage imageNamed:@"XUIFileCellIcon"];
+    
 }
 
 - (NSString *)openWithCellDescriptionFromExtensions:(NSArray <NSString *> *)extensions {
@@ -97,16 +161,6 @@
             [mutableDescription appendFormat:@"%@. ", obj];
     }];
     return [[NSString alloc] initWithString:mutableDescription];
-}
-
-- (void)setInternalTheme:(XUITheme *)theme {
-    [super setInternalTheme:theme];
-    self.nameLabel.textColor = theme.labelColor;
-    self.descriptionLabel.textColor = theme.valueColor;
-}
-
-- (BOOL)canDelete {
-    return YES;
 }
 
 @end
