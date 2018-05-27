@@ -18,7 +18,7 @@
 @property (nonatomic, weak) id <XXTPickerFactoryDelegate> delegate;
 
 + (instancetype)sharedInstance;
-- (void)executeTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController;
+- (void)beginTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController;
 - (void)performNextStep:(UIViewController <XXTBasePicker> *)viewController;
 - (void)performFinished:(UIViewController <XXTBasePicker> *)viewController;
 - (void)performUpdateStep:(UIViewController <XXTBasePicker> *)viewController;

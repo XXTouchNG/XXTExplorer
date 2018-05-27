@@ -25,20 +25,17 @@
     return sharedInstance;
 }
 
-- (void)executeTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController {
-    id nextPicker = [pickerTask nextPicker];
-    if (nextPicker) {
-        if ([nextPicker respondsToSelector:@selector(setPickerTask:)])
+- (void)beginTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController {
+    UIViewController <XXTBasePicker> *nextPicker = [pickerTask nextPicker];
+    if ([nextPicker conformsToProtocol:@protocol(XXTBasePicker)]) {
+        nextPicker.pickerTask = pickerTask;
+        nextPicker.pickerFactory = self;
+        if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]])
         {
-            [nextPicker performSelector:@selector(setPickerTask:) withObject:pickerTask];
-        }
-        if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerFactory:)])
-        {
-            [nextPicker performSelector:@selector(setPickerFactory:) withObject:self];
-        }
-        if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
             [viewController.navigationController pushViewController:nextPicker animated:YES];
-        } else {
+        }
+        else
+        {
             XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:nextPicker];
             navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
             navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -58,7 +55,6 @@
 }
 
 - (void)performNextStep:(UIViewController <XXTBasePicker> *)viewController {
-
     if ([[viewController class] respondsToSelector:@selector(pickerKeyword)]) {
         id pickerResult = [viewController performSelector:@selector(pickerResult)];
         if (!pickerResult) {
@@ -70,14 +66,10 @@
         }
         XXTPickerSnippetTask *pickerTask = [pickerTaskObj copy];
         [pickerTask addResult:pickerResult];
-        id nextPicker = [pickerTask nextPicker];
-        if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerTask:)])
-        {
-            [nextPicker performSelector:@selector(setPickerTask:) withObject:pickerTask];
-        }
-        if (nextPicker && [nextPicker respondsToSelector:@selector(setPickerFactory:)])
-        {
-            [nextPicker performSelector:@selector(setPickerFactory:) withObject:self];
+        UIViewController <XXTBasePicker> *nextPicker = [pickerTask nextPicker];
+        if ([nextPicker conformsToProtocol:@protocol(XXTBasePicker)]) {
+            nextPicker.pickerTask = pickerTask;
+            nextPicker.pickerFactory = self;
         }
         BOOL shouldEnter = YES;
         if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldEnterNextStep:)]) {
@@ -119,21 +111,21 @@
 - (void)performUpdateStep:(UIViewController <XXTBasePicker> *)viewController {
 
     XXTPickerNavigationController *navController = (XXTPickerNavigationController *)viewController.navigationController;
-    
     if ([viewController respondsToSelector:@selector(pickerTask)]) {
         XXTPickerSnippetTask *currentTask = [viewController performSelector:@selector(pickerTask)];
         [navController.popupBar setTitle:[NSString stringWithFormat:@"%@ (%lu/%lu)", viewController.title, (unsigned long)currentTask.currentStep, (unsigned long)currentTask.totalStep]];
         [navController.popupBar setProgress:currentTask.currentProgress];
-        
         if ([viewController respondsToSelector:@selector(pickerSubtitle)]) {
-            NSString *subtitle = [viewController performSelector:@selector(pickerSubtitle)];
-            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
+            NSString *subtitle = viewController.pickerSubtitle;
+            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]])
+            {
                 [navController.popupBar setSubtitle:subtitle];
             }
         }
         if ([viewController respondsToSelector:@selector(pickerAttributedSubtitle)]) {
-            NSAttributedString *subtitle = [viewController performSelector:@selector(pickerAttributedSubtitle)];
-            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
+            NSAttributedString *subtitle = viewController.pickerAttributedSubtitle;
+            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]])
+            {
                 [navController.popupBar setAttributedSubtitle:subtitle];
             }
         }

@@ -66,7 +66,7 @@
     XXTPickerSnippetTask *task = [[XXTPickerSnippetTask alloc] initWithSnippet:snippet];
     XXTPickerFactory *pickerFactory = [XXTPickerFactory sharedInstance];
     pickerFactory.delegate = self;
-    [pickerFactory executeTask:task fromViewController:self];
+    [pickerFactory beginTask:task fromViewController:self];
 }
 
 #pragma mark - XXTPickerFactoryDelegate

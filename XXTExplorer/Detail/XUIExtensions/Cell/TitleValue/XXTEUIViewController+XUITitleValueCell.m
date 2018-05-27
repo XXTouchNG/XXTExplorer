@@ -36,7 +36,7 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
         XXTPickerSnippetTask *task = [[XXTPickerSnippetTask alloc] initWithSnippet:snippet];
         XXTPickerFactory *factory = [XXTPickerFactory sharedInstance];
         factory.delegate = self;
-        [factory executeTask:task fromViewController:self];
+        [factory beginTask:task fromViewController:self];
         objc_setAssociatedObject(self, XUITitleValueCellStorageKey, titleValueCell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     } else {
         [self tableView:tableView accessoryXUITitleValueCell:cell];

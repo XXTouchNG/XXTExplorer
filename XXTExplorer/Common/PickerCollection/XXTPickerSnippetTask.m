@@ -120,4 +120,8 @@
     return newTask;
 }
 
+- (void)dealloc {
+    
+}
+
 @end

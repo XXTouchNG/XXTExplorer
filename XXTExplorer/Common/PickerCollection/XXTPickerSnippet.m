@@ -190,6 +190,9 @@
 #pragma mark - Memory
 
 - (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
+#endif
     if (L) {
         lua_ocobject_free(L, "xpp.bundle");
         lua_close(L);

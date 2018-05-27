@@ -14,6 +14,8 @@
 @class XXTPickerSnippetTask, XXTPickerFactory;
 
 @protocol XXTBasePicker <NSObject>
+
+@required
 @property (nonatomic, weak) XXTPickerFactory *pickerFactory;
 @property (nonatomic, strong) XXTPickerSnippetTask *pickerTask;
 @property (nonatomic, strong) NSDictionary *pickerMeta;
