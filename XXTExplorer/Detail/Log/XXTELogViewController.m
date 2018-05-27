@@ -355,7 +355,7 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)reloadSearch {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self CONTAINS[cd] %@", self.searchDisplayController.searchBar.text];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", self.searchDisplayController.searchBar.text];
     if (predicate) {
         self.displayLogContents = [[NSArray alloc] initWithArray:[self.logContents filteredArrayUsingPredicate:predicate]];
     }

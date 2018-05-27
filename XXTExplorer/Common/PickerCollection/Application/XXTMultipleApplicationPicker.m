@@ -47,12 +47,12 @@ UISearchDisplayDelegate
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 
-@property(nonatomic, strong, readonly) NSMutableDictionary <NSString *, NSDictionary *> *applications;
+//@property(nonatomic, strong, readonly) NSMutableDictionary <NSString *, NSDictionary *> *applications;
 
-@property(nonatomic, strong, readonly) NSMutableArray <NSString *> *selectedIdentifiers;
-@property(nonatomic, strong, readonly) NSMutableArray <NSString *> *unselectedIdentifiers;
-@property(nonatomic, strong, readonly) NSMutableArray <NSString *> *displaySelectedIdentifiers;
-@property(nonatomic, strong, readonly) NSMutableArray <NSString *> *displayUnselectedIdentifiers;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *selectedApplications;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *unselectedApplications;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *displaySelectedApplications;
+@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *displayUnselectedApplications;
 
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
@@ -79,7 +79,15 @@ UISearchDisplayDelegate
 }
 
 - (NSArray <NSString *> *)pickerResult {
-    return [self.selectedIdentifiers copy];
+    NSMutableArray <NSString *> *selectedIdentifiers = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in self.selectedApplications) {
+        NSString *bid = dict[kXXTApplicationDetailKeyBundleID];
+        if (bid)
+        {
+            [selectedIdentifiers addObject:bid];
+        }
+    }
+    return [selectedIdentifiers copy];
 }
 
 #pragma mark - Default Style
@@ -105,11 +113,10 @@ UISearchDisplayDelegate
 
 - (instancetype)init {
     if (self = [super init]) {
-        _applications = [[NSMutableDictionary alloc] init];
-        _selectedIdentifiers = [[NSMutableArray alloc] init];
-        _unselectedIdentifiers = [[NSMutableArray alloc] init];
-        _displaySelectedIdentifiers = [[NSMutableArray alloc] init];
-        _displayUnselectedIdentifiers = [[NSMutableArray alloc] init];
+        _selectedApplications = [[NSMutableArray alloc] init];
+        _unselectedApplications = [[NSMutableArray alloc] init];
+        _displaySelectedApplications = [[NSMutableArray alloc] init];
+        _displayUnselectedApplications = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -212,6 +219,10 @@ UISearchDisplayDelegate
 - (void)asyncApplicationList:(UIRefreshControl *)refreshControl {
     
     NSArray <NSString *> *defaultIdentifiers = self.pickerMeta[@"default"];
+    if (![defaultIdentifiers isKindOfClass:[NSArray class]])
+    {
+        defaultIdentifiers = @[];
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
@@ -230,8 +241,8 @@ UISearchDisplayDelegate
             allApplications = [self.applicationWorkspace performSelector:selectorAll];
 #pragma clang diagnostic pop
         }
-        [self.unselectedIdentifiers removeAllObjects];
-        [self.selectedIdentifiers removeAllObjects];
+        [self.unselectedApplications removeAllObjects];
+        [self.selectedApplications removeAllObjects];
         
         NSString *whiteIconListPath = [[NSBundle mainBundle] pathForResource:@"xxte-white-icons" ofType:@"plist"];
         NSArray <NSString *> *blacklistIdentifiers = [NSDictionary dictionaryWithContentsOfFile:whiteIconListPath][@"xxte-white-icons"];
@@ -276,17 +287,11 @@ UISearchDisplayDelegate
                     if (applicationIconImage) {
                         applicationDetail[kXXTApplicationDetailKeyIconImage] = applicationIconImage;
                     }
-                    [self.unselectedIdentifiers addObject:applicationBundleID];
-                    [self.applications setObject:[applicationDetail copy]
-                                          forKey:applicationBundleID];
-                }
-            }
-        }
-        if ([defaultIdentifiers isKindOfClass:[NSArray class]]) {
-            for (NSString *defaultIdentifier in defaultIdentifiers) {
-                if ([self.unselectedIdentifiers containsObject:defaultIdentifier]) {
-                    [self.selectedIdentifiers addObject:defaultIdentifier];
-                    [self.unselectedIdentifiers removeObject:defaultIdentifier];
+                    if ([defaultIdentifiers containsObject:applicationBundleID]) {
+                        [self.selectedApplications addObject:applicationDetail];
+                    } else {
+                        [self.unselectedApplications addObject:applicationDetail];
+                    }
                 }
             }
         }
@@ -325,21 +330,21 @@ UISearchDisplayDelegate
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     UILabel *label = ((UITableViewHeaderFooterView *)view).textLabel;
     if (label) {
-        NSMutableArray <NSString *> *selectedIdentifiers = nil;
-        NSMutableArray <NSString *> *unselectedIdentifiers = nil;
+        NSMutableArray <NSDictionary *> *selectedApplications = nil;
+        NSMutableArray <NSDictionary *> *unselectedApplications = nil;
         if (tableView == self.tableView) {
-            selectedIdentifiers = self.selectedIdentifiers;
-            unselectedIdentifiers = self.unselectedIdentifiers;
+            selectedApplications = self.selectedApplications;
+            unselectedApplications = self.unselectedApplications;
         } else {
-            selectedIdentifiers = self.displaySelectedIdentifiers;
-            unselectedIdentifiers = self.displayUnselectedIdentifiers;
+            selectedApplications = self.displaySelectedApplications;
+            unselectedApplications = self.displayUnselectedApplications;
         }
         
         NSString *text = nil;
         if (section == kXXTApplicationPickerCellSectionSelected) {
-            text = [NSString stringWithFormat:NSLocalizedString(@"Selected Applications (%lu)", nil), (unsigned long)selectedIdentifiers.count];
+            text = [NSString stringWithFormat:NSLocalizedString(@"Selected Applications (%lu)", nil), (unsigned long)selectedApplications.count];
         } else if (section == kXXTApplicationPickerCellSectionUnselected) {
-            text = [NSString stringWithFormat:NSLocalizedString(@"Unselected Applications (%lu)", nil), (unsigned long)unselectedIdentifiers.count];
+            text = [NSString stringWithFormat:NSLocalizedString(@"Unselected Applications (%lu)", nil), (unsigned long)unselectedApplications.count];
         }
         if (text) {
             NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:14.0] }];
@@ -368,15 +373,15 @@ UISearchDisplayDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         if (section == kXXTApplicationPickerCellSectionSelected) {
-            return self.selectedIdentifiers.count;
+            return self.selectedApplications.count;
         } else if (section == kXXTApplicationPickerCellSectionUnselected) {
-            return self.unselectedIdentifiers.count;
+            return self.unselectedApplications.count;
         }
     } else {
         if (section == kXXTApplicationPickerCellSectionSelected) {
-            return self.displaySelectedIdentifiers.count;
+            return self.displaySelectedApplications.count;
         } else if (section == kXXTApplicationPickerCellSectionUnselected) {
-            return self.displayUnselectedIdentifiers.count;
+            return self.displayUnselectedApplications.count;
         }
     }
     return 0;
@@ -388,22 +393,21 @@ UISearchDisplayDelegate
         cell = [[XXTApplicationCell alloc] initWithStyle:UITableViewCellStyleDefault
                                          reuseIdentifier:kXXTApplicationCellReuseIdentifier];
     }
-    NSString *identifier = nil;
+    NSDictionary *appDetail = nil;
     if (tableView == self.tableView) {
         if (indexPath.section == kXXTApplicationPickerCellSectionSelected) {
-            identifier = self.selectedIdentifiers[(NSUInteger) indexPath.row];
+            appDetail = self.selectedApplications[(NSUInteger) indexPath.row];
         } else if (indexPath.section == kXXTApplicationPickerCellSectionUnselected) {
-            identifier = self.unselectedIdentifiers[(NSUInteger) indexPath.row];
+            appDetail = self.unselectedApplications[(NSUInteger) indexPath.row];
         }
     } else {
         if (indexPath.section == kXXTApplicationPickerCellSectionSelected) {
-            identifier = self.displaySelectedIdentifiers[(NSUInteger) indexPath.row];
+            appDetail = self.displaySelectedApplications[(NSUInteger) indexPath.row];
         } else if (indexPath.section == kXXTApplicationPickerCellSectionUnselected) {
-            identifier = self.displayUnselectedIdentifiers[(NSUInteger) indexPath.row];
+            appDetail = self.displayUnselectedApplications[(NSUInteger) indexPath.row];
         }
     }
-    if (identifier) {
-        NSDictionary *appDetail = self.applications[identifier];
+    if (appDetail) {
         [cell setApplicationName:appDetail[kXXTApplicationDetailKeyName]];
         [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
         [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
@@ -439,18 +443,20 @@ UISearchDisplayDelegate
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     if (tableView == self.tableView) {
-        if (fromIndexPath.section == kXXTApplicationPickerCellSectionSelected && toIndexPath.section == kXXTApplicationPickerCellSectionSelected) {
-            NSString *identifier = self.selectedIdentifiers[fromIndexPath.row];
+        if (fromIndexPath.section == kXXTApplicationPickerCellSectionSelected
+            && toIndexPath.section == kXXTApplicationPickerCellSectionSelected)
+        {
+            NSDictionary *dict = self.selectedApplications[fromIndexPath.row];
             if (fromIndexPath.row > toIndexPath.row) {
-                [self.selectedIdentifiers insertObject:identifier atIndex:toIndexPath.row];
-                [self.selectedIdentifiers removeObjectAtIndex:(fromIndexPath.row + 1)];
+                [self.selectedApplications insertObject:dict atIndex:toIndexPath.row];
+                [self.selectedApplications removeObjectAtIndex:(fromIndexPath.row + 1)];
             }
             else if (fromIndexPath.row < toIndexPath.row) {
-                [self.selectedIdentifiers insertObject:identifier atIndex:(toIndexPath.row + 1)];
-                [self.selectedIdentifiers removeObjectAtIndex:(fromIndexPath.row)];
+                [self.selectedApplications insertObject:dict atIndex:(toIndexPath.row + 1)];
+                [self.selectedApplications removeObjectAtIndex:(fromIndexPath.row)];
             }
+            [tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
         }
-        [tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
     }
 }
 
@@ -465,45 +471,45 @@ UISearchDisplayDelegate
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *identifier = nil;
+    NSDictionary *dict = nil;
     
-    NSMutableArray <NSString *> *selectedIdentifiers = nil;
-    NSMutableArray <NSString *> *unselectedIdentifiers = nil;
+    NSMutableArray <NSDictionary *> *selectedApplications = nil;
+    NSMutableArray <NSDictionary *> *unselectedApplications = nil;
     if (tableView == self.tableView) {
-        selectedIdentifiers = self.selectedIdentifiers;
-        unselectedIdentifiers = self.unselectedIdentifiers;
+        selectedApplications = self.selectedApplications;
+        unselectedApplications = self.unselectedApplications;
     } else {
-        selectedIdentifiers = self.displaySelectedIdentifiers;
-        unselectedIdentifiers = self.displayUnselectedIdentifiers;
+        selectedApplications = self.displaySelectedApplications;
+        unselectedApplications = self.displayUnselectedApplications;
     }
     
     if (indexPath.section == kXXTApplicationPickerCellSectionSelected) {
-        identifier = selectedIdentifiers[(NSUInteger) indexPath.row];
+        dict = selectedApplications[(NSUInteger) indexPath.row];
     } else if (indexPath.section == kXXTApplicationPickerCellSectionUnselected) {
-        identifier = unselectedIdentifiers[(NSUInteger) indexPath.row];
+        dict = unselectedApplications[(NSUInteger) indexPath.row];
     }
     
     NSIndexPath *toIndexPath = nil;
-    BOOL alreadyExists = identifier ? [selectedIdentifiers containsObject:identifier] : NO;
+    BOOL alreadyExists = dict ? [selectedApplications containsObject:dict] : NO;
     
     if (alreadyExists && editingStyle == UITableViewCellEditingStyleDelete) {
         toIndexPath = [NSIndexPath indexPathForRow:0 inSection:kXXTApplicationPickerCellSectionUnselected];
-        if (identifier) {
-            [selectedIdentifiers removeObject:identifier];
-            [unselectedIdentifiers insertObject:identifier atIndex:0];
+        if (dict) {
+            [selectedApplications removeObject:dict];
+            [unselectedApplications insertObject:dict atIndex:0];
             if (tableView != self.tableView) {
-                [self.selectedIdentifiers removeObject:identifier];
-                [self.unselectedIdentifiers insertObject:identifier atIndex:0];
+                [self.selectedApplications removeObject:dict];
+                [self.unselectedApplications insertObject:dict atIndex:0];
             }
         }
     } else if (!alreadyExists && editingStyle == UITableViewCellEditingStyleInsert) {
-        toIndexPath = [NSIndexPath indexPathForRow:selectedIdentifiers.count inSection:kXXTApplicationPickerCellSectionSelected];
-        if (identifier) {
-            [unselectedIdentifiers removeObject:identifier];
-            [selectedIdentifiers addObject:identifier];
+        toIndexPath = [NSIndexPath indexPathForRow:selectedApplications.count inSection:kXXTApplicationPickerCellSectionSelected];
+        if (dict) {
+            [unselectedApplications removeObject:dict];
+            [selectedApplications addObject:dict];
             if (tableView != self.tableView) {
-                [self.unselectedIdentifiers removeObject:identifier];
-                [self.selectedIdentifiers addObject:identifier];
+                [self.unselectedApplications removeObject:dict];
+                [self.selectedApplications addObject:dict];
             }
         }
     }
@@ -516,7 +522,7 @@ UISearchDisplayDelegate
     [self tableView:tableView reloadHeaderView:[tableView headerViewForSection:indexPath.section] forSection:indexPath.section];
     [self tableView:tableView reloadHeaderView:[tableView headerViewForSection:toIndexPath.section] forSection:toIndexPath.section];
     
-    [self updateSubtitle:[NSString stringWithFormat:NSLocalizedString(@"%lu Application(s) selected.", nil), (unsigned long)self.selectedIdentifiers.count]];
+    [self updateSubtitle:[NSString stringWithFormat:NSLocalizedString(@"%lu Application(s) selected.", nil), (unsigned long)self.selectedApplications.count]];
     
 }
 
@@ -604,10 +610,10 @@ XXTP_START_IGNORE_PARTIAL
         predicate = [NSPredicate predicateWithFormat:@"kXXTApplicationDetailKeyBundleID CONTAINS[cd] %@", self.searchDisplayController.searchBar.text];
     }
     if (predicate) {
-        [self.displaySelectedIdentifiers removeAllObjects];
-        [self.displayUnselectedIdentifiers removeAllObjects];
-        [self.displaySelectedIdentifiers addObjectsFromArray:[self.selectedIdentifiers filteredArrayUsingPredicate:predicate]];
-        [self.displayUnselectedIdentifiers addObjectsFromArray:[self.unselectedIdentifiers filteredArrayUsingPredicate:predicate]];
+        [self.displaySelectedApplications removeAllObjects];
+        [self.displayUnselectedApplications removeAllObjects];
+        [self.displaySelectedApplications addObjectsFromArray:[self.selectedApplications filteredArrayUsingPredicate:predicate]];
+        [self.displayUnselectedApplications addObjectsFromArray:[self.unselectedApplications filteredArrayUsingPredicate:predicate]];
     }
 }
 XXTP_END_IGNORE_PARTIAL
