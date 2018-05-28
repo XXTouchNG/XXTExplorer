@@ -839,8 +839,9 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         NSString *boxedType = boxedDict[@"type"];
         NSString *boxedAddress = boxedDict[@"address"];
         if ([boxedType isEqualToString:@"ipv4"] &&
-            ![boxedName hasPrefix:@"lo"] &&
-            ![boxedName hasPrefix:@"pdp"] &&
+//            ![boxedName hasPrefix:@"lo"] &&
+//            ![boxedName hasPrefix:@"pdp"] &&
+            [boxedName hasPrefix:@"en"] &&
             ![boxedAddress hasPrefix:@"169.254."]) {
             firstEthernetAddress = boxedAddress;
         }
