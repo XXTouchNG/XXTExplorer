@@ -14,6 +14,9 @@
 
 XXTE_START_IGNORE_PARTIAL
 - (NSArray <UIDragItem *> *)tableView:(UITableView *)tableView itemsForBeginningDragSession:(id<UIDragSession>)session atIndexPath:(NSIndexPath *)indexPath {
+    if (!tableView.isEditing) {
+        return @[];
+    }
     if (indexPath.section != XXTExplorerViewSectionIndexList) {
         return @[];
     }
@@ -28,7 +31,20 @@ XXTE_START_IGNORE_PARTIAL
         return nil;
     }];
     UIDragItem *dragItem = [[UIDragItem alloc] initWithItemProvider:provider];
+    dragItem.localObject = indexPath;
     return @[ dragItem ];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)tableView:(UITableView *)tableView dragSessionWillBegin:(id<UIDragSession>)session {
+    
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)tableView:(UITableView *)tableView dragSessionDidEnd:(id<UIDragSession>)session {
+    
 }
 XXTE_END_IGNORE_PARTIAL
 

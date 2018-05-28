@@ -74,8 +74,10 @@
         }
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive] ||
                  [eventType isEqualToString:XXTENotificationEventTypeApplicationDidExtractResource] ||
-                 [eventType isEqualToString:XXTENotificationEventTypeSelectedScriptPathChanged]) {
+                 [eventType isEqualToString:XXTENotificationEventTypeSelectedScriptPathChanged])
+        {
             [self reloadEntryListView];
+            [self updateToolbarStatus];
         }
     }
 }

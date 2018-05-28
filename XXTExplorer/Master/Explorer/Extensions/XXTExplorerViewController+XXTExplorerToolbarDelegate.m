@@ -37,12 +37,34 @@
 
 @implementation XXTExplorerViewController (XXTExplorerToolbarDelegate)
 
-- (void)configureToolbar {
+- (void)configureToolbarAndCover {
     if (self.isPreviewed) return;
+    
     XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     toolbar.tapDelegate = self;
     self.toolbar = toolbar;
+    
+    UILabel *toolbarCover = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.bounds.size.width, 44.f)];
+    toolbarCover.textAlignment = NSTextAlignmentCenter;
+    toolbarCover.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    toolbarCover.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    toolbarCover.hidden = YES;
+    UIFont *font = nil;
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 8.2, *)) {
+        font = [UIFont systemFontOfSize:14.f weight:UIFontWeightRegular];
+    } else {
+        font = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
+    }
+    XXTE_END_IGNORE_PARTIAL
+    toolbarCover.font = font;
+    toolbarCover.textColor = XXTColorDefault();
+    toolbarCover.text = NSLocalizedString(@"Drop to parent directory", nil);
+    self.toolbarCover = toolbarCover;
+    
+    [toolbar addSubview:toolbarCover];
+    
     if (isOS11Above() && isAppStore()) {
         [self.tableView setTableHeaderView:toolbar];
     } else {

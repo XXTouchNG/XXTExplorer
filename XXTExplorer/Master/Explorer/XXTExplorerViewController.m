@@ -44,7 +44,12 @@
 UIViewControllerPreviewingDelegate, XXTExplorerFooterViewDelegate,
 XXTExplorerItemPreviewDelegate, XXTExplorerItemPreviewActionDelegate,
 XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
+
 @property (nonatomic, strong) id<UIViewControllerPreviewing> previewingContext;
+
+XXTE_START_IGNORE_PARTIAL
+@property (nonatomic, strong) UIDropInteraction *dropInteraction;
+XXTE_END_IGNORE_PARTIAL
 
 @end
 
@@ -119,29 +124,49 @@ XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
         }
     }
     
-    XXTE_START_IGNORE_PARTIAL
-    if (isOS11Above()) {
-        if (isAppStore()) {
-            self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
-        } else {
-            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    {
+        XXTE_START_IGNORE_PARTIAL
+        if (isOS11Above()) {
+            if (isAppStore()) {
+                self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
+            } else {
+                self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+            }
+        }
+        XXTE_END_IGNORE_PARTIAL
+        
+        if (NO == self.isPreviewed)
+        {
+            self.navigationItem.rightBarButtonItem = self.editButtonItem;
         }
     }
-    XXTE_END_IGNORE_PARTIAL
     
-    if (NO == self.isPreviewed)
     {
-        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        [self.view setBackgroundColor:[UIColor whiteColor]];
+        [self.view addSubview:self.tableView];
     }
     
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:self.tableView];
-    UITableViewController *tableViewController = [[UITableViewController alloc] init];
-    tableViewController.tableView = self.tableView;
-    [tableViewController setRefreshControl:self.refreshControl];
-    [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
-    [self configureToolbar];
-    [self.tableView setTableFooterView:self.footerView];
+    {
+        UITableViewController *tableViewController = [[UITableViewController alloc] init];
+        tableViewController.tableView = self.tableView;
+        [tableViewController setRefreshControl:self.refreshControl];
+        [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
+    }
+    
+    {
+        [self configureToolbarAndCover];
+        if (@available(iOS 11.0, *))
+        {
+            UIDropInteraction *dropInteraction = [[UIDropInteraction alloc] initWithDelegate:self];
+            [self.toolbar addInteraction:dropInteraction];
+            _dropInteraction = dropInteraction;
+        }
+    }
+    
+    {
+        [self.tableView setTableFooterView:self.footerView];
+    }
+    
     if (!(isOS11Above() && isAppStore())) {
         [self setupConstraints];
     }

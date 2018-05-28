@@ -11,7 +11,7 @@
 
 @interface XXTExplorerViewController (XXTExplorerToolbarDelegate) <XXTExplorerToolbarDelegate>
 
-- (void)configureToolbar;
+- (void)configureToolbarAndCover;
 
 #pragma mark - toolbar
 

@@ -8,6 +8,6 @@
 
 #import "XXTExplorerViewController.h"
 
-@interface XXTExplorerViewController (UITableViewDropDelegate) <UITableViewDropDelegate>
+@interface XXTExplorerViewController (UITableViewDropDelegate) <UITableViewDropDelegate, UIDropInteractionDelegate>
 
 @end

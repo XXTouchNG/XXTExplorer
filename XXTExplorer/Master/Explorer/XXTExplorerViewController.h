@@ -51,6 +51,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - toolbar
 
 @property (nonatomic, strong) XXTExplorerToolbar *toolbar;
+@property (nonatomic, strong) UIView *toolbarCover;
 
 #pragma mark - status
 

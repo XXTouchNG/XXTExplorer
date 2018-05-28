@@ -192,4 +192,135 @@ XXTE_START_IGNORE_PARTIAL
 }
 XXTE_END_IGNORE_PARTIAL
 
+#pragma mark - UIDropInteractionDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (BOOL)dropInteraction:(UIDropInteraction *)interaction canHandleSession:(id<UIDropSession>)session {
+    if (![interaction.view isEqual:self.toolbar])
+    {
+        return NO;
+    }
+    // do not allow top level moving
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        return NO;
+    }
+    if (!self.tableView.hasActiveDrag || !session.localDragSession)
+    {
+        return NO;
+    }
+    return YES;
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (UIDropProposal *)dropInteraction:(UIDropInteraction *)interaction sessionDidUpdate:(id<UIDropSession>)session {
+    return [[UIDropProposal alloc] initWithDropOperation:UIDropOperationMove];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)dropInteraction:(UIDropInteraction *)interaction performDrop:(id<UIDropSession>)session {
+    NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+    if (!selectedIndexPaths || selectedIndexPaths.count != session.items.count)
+    {
+        return;
+    }
+    
+    XXTExplorerEntryParser *parser = [[self class] explorerEntryParser];
+    UITableView *tableView = self.tableView;
+    
+    NSString *parentPath = [self.entryPath stringByDeletingLastPathComponent];
+    XXTExplorerEntry *destinationEntry
+    = [parser entryOfPath:parentPath withError:nil];
+    if (!destinationEntry || !destinationEntry.isMaskedDirectory) {
+        return;
+    }
+    
+    NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
+    NSMutableArray <NSIndexPath *> *indexPathsToRemove = [[NSMutableArray alloc] init];
+    
+    NSMutableArray <XXTExplorerEntry *> *entryList = self.entryList;
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    
+    dispatch_group_t group = dispatch_group_create();
+    [session.items enumerateObjectsUsingBlock:^(UIDragItem *dragItem, NSUInteger idx, BOOL * _Nonnull stop) {
+        dispatch_group_enter(group);
+        [dragItem.itemProvider loadFileRepresentationForTypeIdentifier:(NSString *)kUTTypeItem completionHandler:^(NSURL * _Nullable url, NSError * _Nullable error) {
+            NSString *path = [url path];
+            if (path)
+            {
+                NSString *itemComponent = [path lastPathComponent];
+                NSString *itemName = [itemComponent stringByDeletingPathExtension];
+                NSString *itemExtension = [itemComponent pathExtension];
+                NSString *itemDot = @".";
+                if (itemExtension.length == 0) {
+                    itemDot = @"";
+                }
+                
+                NSString *testItemComponent = [NSString stringWithFormat:@"%@%@%@", itemName, itemDot, itemExtension];
+                NSString *testItemPath = [parentPath stringByAppendingPathComponent:testItemComponent];
+                
+                NSUInteger testIndex = 2;
+                struct stat testStat;
+                while (0 == lstat(testItemPath.fileSystemRepresentation, &testStat))
+                {
+                    testItemComponent = [NSString stringWithFormat:@"%@-%lu%@%@", itemName, (unsigned long) testIndex, itemDot, itemExtension];
+                    testItemPath = [parentPath stringByAppendingPathComponent:testItemComponent];
+                    testIndex++;
+                }
+                
+                BOOL writeResult = [manager moveItemAtPath:path toPath:testItemPath error:nil];
+                if (writeResult)
+                {
+                    if ([dragItem.localObject isKindOfClass:[NSIndexPath class]])
+                    {
+                        NSIndexPath *sourceIndexPath = (NSIndexPath *)dragItem.localObject;
+                        if (sourceIndexPath &&
+                            sourceIndexPath.section == XXTExplorerViewSectionIndexList)
+                        {
+                            NSUInteger srcIndex = sourceIndexPath.row;
+                            if (srcIndex >= entryList.count) {
+                                return;
+                            }
+                            XXTExplorerEntry *sourceEntry = entryList[srcIndex];
+                            BOOL removeResult = [manager removeItemAtPath:sourceEntry.entryPath error:nil];
+                            if (removeResult)
+                            {
+                                [indexesToRemove addIndex:srcIndex];
+                                [indexPathsToRemove addObject:sourceIndexPath];
+                            }
+                        }
+                    }
+                }
+                
+            }
+            dispatch_group_leave(group);
+        }];
+    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [entryList removeObjectsAtIndexes:[indexesToRemove copy]];
+        [tableView deleteRowsAtIndexPaths:[indexPathsToRemove copy] withRowAnimation:UITableViewRowAnimationAutomatic];
+    });
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)dropInteraction:(UIDropInteraction *)interaction sessionDidEnter:(id<UIDropSession>)session {
+    self.toolbarCover.hidden = NO;
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)dropInteraction:(UIDropInteraction *)interaction sessionDidExit:(id<UIDropSession>)session {
+    self.toolbarCover.hidden = YES;
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (void)dropInteraction:(UIDropInteraction *)interaction sessionDidEnd:(id<UIDropSession>)session {
+    self.toolbarCover.hidden = YES;
+}
+XXTE_END_IGNORE_PARTIAL
+
 @end
