@@ -104,6 +104,14 @@ return {
           title = "蓝色，嗯！";
           shortTitle = "蓝色";
         };
+        {
+          title = "净网行动开展中，此处已被河蟹。";
+          shortTitle = "黄色";
+        };
+        {
+          title = "基佬紫，喜欢吗？";
+          shortTitle = "紫色";
+        };
       };
     };
     {
@@ -127,6 +135,12 @@ return {
         {
           title = "蓝色，嗯！";
           icon = "res/blue.png";
+        };
+        {
+          title = "净网行动开展中，此处已被河蟹。";
+        };
+        {
+          title = "基佬紫，喜欢吗？";
         };
       };
       footerText = "最多可以选择两项";  -- 底部提示信息
@@ -156,6 +170,12 @@ return {
           -- value = "Blue";
           icon = "res/blue.png";
         };
+        {
+          title = "黑色";
+        };
+        {
+          title = "白色";
+        };
       };
       footerText = "最多选择两项，最少选择一项";  -- 底部提示信息
     };
@@ -180,6 +200,12 @@ return {
         {
           title = "蓝色";
           icon = "res/blue.png";
+        };
+        {
+          title = "黑色";
+        };
+        {
+          title = "白色";
         };
       };
       popoverMode = true;  -- 使用悬浮模式
