@@ -7,19 +7,19 @@
 //
 
 #import "XXTEMoreViewController.h"
-#import "XXTEMoreLinkCell.h"
-#import "UIView+XXTEToast.h"
 #import "XXTEMoreUserDefaultsController.h"
 #import "XXTEUIViewController.h"
-
 #import "XXTENavigationController.h"
+
 #import "XXTExplorerViewController+SharedInstance.h"
 #import "XXTExplorerEntryService.h"
-
-#import "XXTEMoreRemoteSwitchCell.h"
-#import "XXTEMoreAddressCell.h"
+#import "UIDevice+IPAddress.h"
 
 #import <LGAlertView/LGAlertView.h>
+#import "UIView+XXTEToast.h"
+#import "XXTEMoreRemoteSwitchCell.h"
+#import "XXTEMoreAddressCell.h"
+#import "XXTEMoreLinkCell.h"
 
 #if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
 #import <FLEX/FLEXManager.h>
@@ -29,8 +29,10 @@
 
 #import <objc/runtime.h>
 #import <objc/message.h>
+
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
+
 #import "XXTEMoreApplicationListController.h"
 #import "XXTEMoreLicenseController.h"
 #import "XXTEMoreActivationController.h"
@@ -265,6 +267,8 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                 if (remoteAccessStatus) {
                     _webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
                     _bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
+                    if (_webServerUrl.length == 0)
+                        _webServerUrl = [[self class] otherInterfaceIPAddresses];
                 } else {
                     _webServerUrl = nil;
                     _bonjourWebServerUrl = nil;
@@ -750,6 +754,8 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                 if (changeToStatus == YES) {
                     _webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
                     _bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
+                    if (_webServerUrl.length == 0)
+                        _webServerUrl = [[self class] otherInterfaceIPAddresses];
                 } else {
                     _webServerUrl = nil;
                     _bonjourWebServerUrl = nil;
@@ -814,12 +820,37 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 - (void)reloadDAVStatusWithDAVClient:(XXTEWebDAVClient *)davClient {
     _webServerUrl = davClient.serverURL.absoluteString;
     _bonjourWebServerUrl = davClient.bonjourServerURL.absoluteString;
+    if (_webServerUrl.length == 0)
+        _webServerUrl = [[self class] otherInterfaceIPAddresses];
     [self updateRemoteAccessAddressDisplay];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
     if (self.remoteAccessSwitch.on != davClient.isRunning)
         [self.remoteAccessSwitch setOn:davClient.isRunning animated:NO];
 }
 #endif
+
+#pragma mark - Get other addresses
+
++ (NSString *)otherInterfaceIPAddresses {
+    NSString *firstEthernetAddress = nil;
+    NSArray <NSDictionary *> *boxedList = [[UIDevice currentDevice] getIPAddresses];
+    for (NSDictionary *boxedDict in boxedList) {
+        NSString *boxedName = boxedDict[@"name"];
+        NSString *boxedType = boxedDict[@"type"];
+        NSString *boxedAddress = boxedDict[@"address"];
+        if ([boxedType isEqualToString:@"ipv4"] &&
+            ![boxedName hasPrefix:@"lo"] &&
+            ![boxedName hasPrefix:@"pdp"] &&
+            ![boxedAddress hasPrefix:@"169.254."]) {
+            firstEthernetAddress = boxedAddress;
+        }
+    }
+    if (firstEthernetAddress.length) {
+        NSString *localPort = uAppDefine(@"LOCAL_PORT");
+        return [NSString stringWithFormat:@"http://%@:%@/", firstEthernetAddress, localPort];
+    }
+    return nil;
+}
 
 #pragma mark - LGAlertViewDelegate
 

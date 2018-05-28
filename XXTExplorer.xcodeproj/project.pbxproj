@@ -699,6 +699,9 @@
 		0FBECD682005FEE300068437 /* XXTETextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTETextReader.m */; };
 		0FBECD692005FEE300068437 /* XXTETextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBECD662005FEE300068437 /* XXTETextReader.m */; };
 		0FC043BF1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */; };
+		0FC0E5AB20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0E5AA20BC4205000FEDFE /* UIDevice+IPAddress.m */; };
+		0FC0E5AC20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0E5AA20BC4205000FEDFE /* UIDevice+IPAddress.m */; };
+		0FC0E5AD20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0E5AA20BC4205000FEDFE /* UIDevice+IPAddress.m */; };
 		0FC598AA1FB2189A001F918B /* main.AppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC598A91FB2189A001F918B /* main.AppStore.m */; };
 		0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC598AC1FB49317001F918B /* QuartzCore.framework */; };
 		0FCAF3DD200874D1002FB774 /* RMCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCAF3DC200874D1002FB774 /* RMCloudViewController.m */; };
@@ -1774,6 +1777,8 @@
 		0FBECD662005FEE300068437 /* XXTETextReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTETextReader.m; sourceTree = "<group>"; };
 		0FC043BD1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+StatusBar.h"; sourceTree = "<group>"; };
 		0FC043BE1F6EF0EF00730FAB /* UIImagePickerController+StatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+StatusBar.m"; sourceTree = "<group>"; };
+		0FC0E5A920BC4205000FEDFE /* UIDevice+IPAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IPAddress.h"; sourceTree = "<group>"; };
+		0FC0E5AA20BC4205000FEDFE /* UIDevice+IPAddress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+IPAddress.m"; sourceTree = "<group>"; };
 		0FC477591F376A0500B8F28E /* XXTEEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditor.h; sourceTree = "<group>"; };
 		0FC598A71FB216A1001F918B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.AppStore.plist; sourceTree = "<group>"; };
 		0FC598A91FB2189A001F918B /* main.AppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.AppStore.m; sourceTree = "<group>"; };
@@ -2824,6 +2829,8 @@
 				0F61E1691ED78899003DCC78 /* XXTEMoreViewController.m */,
 				D693D8B9202BEFA80060A352 /* XXTEConfirmTextInputObject.h */,
 				D693D8BA202BEFA80060A352 /* XXTEConfirmTextInputObject.m */,
+				0FC0E5A920BC4205000FEDFE /* UIDevice+IPAddress.h */,
+				0FC0E5AA20BC4205000FEDFE /* UIDevice+IPAddress.m */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -5092,6 +5099,7 @@
 				0F8EDBC71FB1F779003C92D6 /* NSString+XQueryComponents.m in Sources */,
 				D6A850782043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
 				0F8147CA2081CD49009C6B6D /* XXTELogCell.m in Sources */,
+				0FC0E5AD20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */,
 				0F8EDBC81FB1F779003C92D6 /* XXTExplorerEntryMediaReader.m in Sources */,
 				0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FBECD622005FEB100068437 /* XXTETextViewController.m in Sources */,
@@ -5561,6 +5569,7 @@
 				B0312F7F228AF24585508F52 /* loslib.c in Sources */,
 				D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */,
 				B0312377E43C15DE15B17173 /* lparser.c in Sources */,
+				0FC0E5AB20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */,
 				B03128A558F31B66887F8FF4 /* lstate.c in Sources */,
 				B0312A053C59B1B57081B1D5 /* lstring.c in Sources */,
 				B03123AEC29587929008E302 /* lstrlib.c in Sources */,
@@ -5898,6 +5907,7 @@
 				D60FE7551FE2369300954818 /* loslib.c in Sources */,
 				D60FE7561FE2369300954818 /* XXTEImageViewerController.m in Sources */,
 				D60FE7571FE2369300954818 /* lparser.c in Sources */,
+				0FC0E5AC20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */,
 				D60FE7581FE2369300954818 /* lstate.c in Sources */,
 				D60FE7591FE2369300954818 /* lstring.c in Sources */,
 				D60FE75A1FE2369300954818 /* lstrlib.c in Sources */,
