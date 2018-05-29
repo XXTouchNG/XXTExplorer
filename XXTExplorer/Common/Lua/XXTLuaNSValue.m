@@ -24,6 +24,7 @@
 
 #import "UIView+XXTEToast.h"
 #import "UIViewController+topMostViewController.h"
+#import "NSString+VersionValue.h"
 
 
 #pragma mark - Linehook
@@ -792,6 +793,18 @@ int l_notify_post(lua_State *L)
     return 1;
 }
 
+#pragma mark - String
+
+int l_string_compare_version(lua_State *L)
+{
+    const char *version_str1 = luaL_checkstring(L, 1);
+    const char *version_str2 = luaL_checkstring(L, 2);
+    NSString *ver1 = [NSString stringWithUTF8String:version_str1];
+    NSString *ver2 = [NSString stringWithUTF8String:version_str2];
+    lua_pushinteger(L, [ver1 compareVersion:ver2]);
+    return 1;
+}
+
 #pragma mark - Library Import
 
 void lua_openXPPLibs(lua_State *L)
@@ -832,6 +845,12 @@ void lua_openNSValueLibs(lua_State *L)
         lua_getglobal(L, "os");
         lua_pushcfunction(L, l_os_exit);
         lua_setfield(L, -2, "exit");
+        lua_pop(L, 1);
+    }
+    {
+        lua_getglobal(L, "string");
+        lua_pushcfunction(L, l_string_compare_version);
+        lua_setfield(L, -2, "compare_version");
         lua_pop(L, 1);
     }
     {

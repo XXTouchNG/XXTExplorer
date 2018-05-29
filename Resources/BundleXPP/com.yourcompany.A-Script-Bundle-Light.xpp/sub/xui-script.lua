@@ -1,3 +1,9 @@
+if string.compare_version(sys.xtversion(), "1.2-10") < 0 then
+	sys.alert("此示例内容仅支持 XXTouch v1.2-10 及以上版本")
+	return
+end
+
+
 local defaultsKey = "com.yourcompany.A-Script-Bundle"
 
 -- 获取 Button 组件 LaunchScript: 额外参数

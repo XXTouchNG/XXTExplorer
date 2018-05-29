@@ -1,3 +1,14 @@
+if not xui.get then
+  xui.get = function ()
+    return nil
+  end
+end
+
+if string.compare_version(sys.xtversion(), "1.2-10") < 0 then
+	sys.toast("此示例内容仅支持 XXTouch v1.2-10 及以上版本")
+end
+
+
 local items = {
   {
     cell = "Group";

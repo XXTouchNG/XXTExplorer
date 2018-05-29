@@ -1,3 +1,9 @@
+if not xui.get then
+	xui.get = function (defaults, key)
+		local t = plist.read('/private/var/mobile/Media/1ferver/uicfg/'..defaults..'.plist') or {}
+		return t[key]
+	end
+end
 
 return {
 	name = '位置',
@@ -14,3 +20,4 @@ return {
 		return loc
 	end,
 }
+
