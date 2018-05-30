@@ -575,6 +575,8 @@
 		0F8EDCD11FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EDCD01FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist */; };
 		0F8EDCD31FB2130D003C92D6 /* XXTExplorerEntryLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D59891F19E48A00CCA383 /* XXTExplorerEntryLauncher.m */; };
 		0F8EDCD41FB2132D003C92D6 /* XXTEExecutableViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */; };
+		0F8F33A620BF10B000A1C819 /* XXTEAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F33A520BF10B000A1C819 /* XXTEAgreementViewController.m */; };
+		0F8F33A720BF10B000A1C819 /* XXTEAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F33A520BF10B000A1C819 /* XXTEAgreementViewController.m */; };
 		0F9273201F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */; };
 		0F9273231F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273221F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.m */; };
 		0F9273261F375F7800109096 /* XXTExplorerViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9273251F375F7800109096 /* XXTExplorerViewController+SharedInstance.m */; };
@@ -1644,6 +1646,8 @@
 		0F8EDCCC1FB203AF003C92D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/XXTEBuiltInDefaults.AppStore.plist; sourceTree = "<group>"; };
 		0F8EDCCD1FB203BD003C92D6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.AppStore.plist"; sourceTree = "<group>"; };
 		0F8EDCD01FB210A9003C92D6 /* XXTEAppDefines.AppStore.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.AppStore.plist; sourceTree = "<group>"; };
+		0F8F33A420BF10B000A1C819 /* XXTEAgreementViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEAgreementViewController.h; sourceTree = "<group>"; };
+		0F8F33A520BF10B000A1C819 /* XXTEAgreementViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEAgreementViewController.m; sourceTree = "<group>"; };
 		0F92731E1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+XXTESwipeTableCellDelegate.h"; sourceTree = "<group>"; };
 		0F92731F1F375A8000109096 /* XXTExplorerViewController+XXTESwipeTableCellDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "XXTExplorerViewController+XXTESwipeTableCellDelegate.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F9273211F375B9C00109096 /* XXTExplorerViewController+LGAlertViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTExplorerViewController+LGAlertViewDelegate.h"; sourceTree = "<group>"; };
@@ -3045,6 +3049,8 @@
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
+				0F8F33A420BF10B000A1C819 /* XXTEAgreementViewController.h */,
+				0F8F33A520BF10B000A1C819 /* XXTEAgreementViewController.m */,
 			);
 			path = XXTExplorer;
 			sourceTree = "<group>";
@@ -5331,6 +5337,7 @@
 				0FD973E71F4B122D00133162 /* XXTEEditorThemeCell.m in Sources */,
 				0FB6BB6D1F1C4B4900CADCEA /* XXTEObjectViewController.m in Sources */,
 				0F7B52BE201994CA00D91702 /* NSString+VersionValue.m in Sources */,
+				0F8F33A620BF10B000A1C819 /* XXTEAgreementViewController.m in Sources */,
 				0F1C3EBB1FA8376200B5146C /* ICRegularExpression.m in Sources */,
 				0F5EB53F1F0A9EF40016016A /* XXTECommonWebViewController.m in Sources */,
 				D6A850762043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,
@@ -5669,6 +5676,7 @@
 				D60FE68A1FE2369300954818 /* XXTEEditorThemeCell.m in Sources */,
 				D60FE68B1FE2369300954818 /* XXTEObjectViewController.m in Sources */,
 				0F7B52C0201994CA00D91702 /* NSString+VersionValue.m in Sources */,
+				0F8F33A720BF10B000A1C819 /* XXTEAgreementViewController.m in Sources */,
 				D60FE68C1FE2369300954818 /* ICRegularExpression.m in Sources */,
 				D60FE68D1FE2369300954818 /* XXTECommonWebViewController.m in Sources */,
 				D6A850772043DED5008745EB /* XXTExplorerItemPreviewController.m in Sources */,

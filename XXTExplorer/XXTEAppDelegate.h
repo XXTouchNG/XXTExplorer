@@ -16,6 +16,7 @@
 + (NSString *)sharedRootPath;
 
 @property (strong, nonatomic) UIWindow *window;
+- (void)reloadWorkspace;
 
 @end
 

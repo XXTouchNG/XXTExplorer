@@ -11,6 +11,8 @@
 
 #import "XXTEAppDelegate.h"
 
+#import <XUI/XUINavigationController.h>
+#import "XXTEAgreementViewController.h"
 #import "XXTESplitViewController.h"
 #import "XXTENavigationController.h"
 
@@ -36,6 +38,8 @@
 static NSString * const kXXTEShortcutAction = @"XXTEShortcutAction";
 static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName-%@";
+static NSString * const kXXTEAgreementVersionFlag = @"XXTEAgreementVersion-%@";
+static NSString * const kXXTEAgreementVersion = @"1.2";
 
 @interface XXTEAppDelegate ()
 
@@ -70,8 +74,20 @@ static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
     
-    [self reloadWorkspace];
+    BOOL shouldDisplayAgreement = NO;
+#ifndef APPSTORE
+    NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
+    if (XXTEDefaultsObject(agreementFlag, nil) == nil) {
+        shouldDisplayAgreement = YES;
+    }
+#endif
     
+    if (shouldDisplayAgreement) {
+        [self displayAgreementViewController];
+        return YES;
+    }
+    
+    [self reloadWorkspace];
     return YES;
 }
 
@@ -338,11 +354,23 @@ XXTE_END_IGNORE_PARTIAL
     return NO;
 }
 
+#pragma mark - Reload
+
 - (void)dismissTopMostViewController {
     
 }
 
 - (void)reloadWorkspace {
+    
+#ifdef DEBUG
+    NSLog(@"- [XXTEAppDelegate reloadWorkspace] called...");
+    NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
+    if (XXTEDefaultsObject(agreementFlag, nil) == nil)
+    {
+        XXTEDefaultsSetBasic(agreementFlag, YES);
+    }
+#endif
+    
     UIWindow *mainWindow = self.window;
     
     // Master - Explorer Controller
@@ -388,6 +416,18 @@ XXTE_END_IGNORE_PARTIAL
             mainWindow.rootViewController = masterViewController;
         }
     }
+}
+
+- (void)displayAgreementViewController {
+    UIWindow *mainWindow = self.window;
+    
+    NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.Pro.bundle"];
+    NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
+    XXTEAgreementViewController *agreementController = [[XXTEAgreementViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
+    
+    XUINavigationController *navigationController = [[XUINavigationController alloc] initWithRootViewController:agreementController];
+    
+    mainWindow.rootViewController = navigationController;
 }
 
 #pragma mark - App Defines
