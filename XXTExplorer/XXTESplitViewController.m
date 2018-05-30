@@ -178,7 +178,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)removeNotifications {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:XXTENotificationShortcut object:nil];
 }
 
 - (void)handleApplicationNotification:(NSNotification *)aNotification {

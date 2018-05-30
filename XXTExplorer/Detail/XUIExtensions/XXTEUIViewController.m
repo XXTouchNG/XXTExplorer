@@ -81,7 +81,9 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 
 @end
 
-@implementation XXTEUIViewController
+@implementation XXTEUIViewController {
+    
+}
 
 @synthesize entryPath = _entryPath, awakeFromOutside = _awakeFromOutside;
 
@@ -146,15 +148,25 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventValueChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventUIUpdated object:nil];
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotifications:) name:XXTENotificationEvent object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventValueChanged object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleXUINotifications:) name:XUINotificationEventUIUpdated object:nil];
+    }
     [super viewWillAppear:animated];
     self.beingDisplayed = YES;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:XXTENotificationEvent object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:XUINotificationEventValueChanged object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:XUINotificationEventUIUpdated object:nil];
+    }
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
     self.beingDisplayed = NO;
 }

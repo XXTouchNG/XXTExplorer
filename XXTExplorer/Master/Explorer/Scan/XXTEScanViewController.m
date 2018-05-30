@@ -215,13 +215,11 @@ static CGFloat XXTEScanVOffset = -22.0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    }
     [super viewWillAppear:animated];
     [self reloadCaptureSceneWithSize:self.view.bounds.size];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -233,6 +231,9 @@ static CGFloat XXTEScanVOffset = -22.0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    }
     [super viewWillDisappear:animated];
     {
         self.maskView.image = nil;
@@ -245,8 +246,6 @@ static CGFloat XXTEScanVOffset = -22.0;
     {
         blockInteractions(self, YES);
     }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)startAnimation {

@@ -126,12 +126,16 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChangeWithNotificaton:) name:UITextFieldTextDidChangeNotification object:self.licenseField];
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChangeWithNotificaton:) name:UITextFieldTextDidChangeNotification object:self.licenseField];
+    }
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
     [super viewWillDisappear:animated];
 }
 
