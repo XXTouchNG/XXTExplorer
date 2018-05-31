@@ -2,14 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>PreferenceSpecifiers</key>
+	<key>items</key>
 	<array>
 		<dict>
-			<key>FooterText</key>
-			<string># XXTouch 服务协议
-
-
-## 特别提示
+			<key>cell</key>
+			<string>Group</string>
+			<key>label</key>
+			<string>XXTouch 服务协议</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>StaticText</string>
+			<key>label</key>
+			<string>## 特别提示
 
 《XXTouch 服务协议》（以下简称“本协议”）适用于所有使用 XXTouch 服务的用户（以下或称“您”）。本协议一经同意并接受，即形成您与 XXTouch 所属的公司 (湘潭璐娜软件科技有限公司) 及其关联公司（以下简称“XXTouch”）间有法律约束力之文件。您确认，您已详细阅读了本协议所有内容，您充分理解并同意接受本协议的全部内容。
 
@@ -90,8 +95,6 @@ XXTouch 将严格保护您的隐私。为服务用户的目的，XXTouch 可能�
 * 本协议中的标题仅为方便而设，不具法律或契约效果。
 
 </string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
 		</dict>
 	</array>
 </dict>

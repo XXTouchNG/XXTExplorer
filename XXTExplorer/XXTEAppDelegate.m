@@ -364,6 +364,9 @@ XXTE_END_IGNORE_PARTIAL
     
 #ifdef DEBUG
     NSLog(@"- [XXTEAppDelegate reloadWorkspace] called...");
+#endif
+    
+#ifndef APPSTORE
     NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
     if (XXTEDefaultsObject(agreementFlag, nil) == nil)
     {

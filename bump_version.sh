@@ -22,7 +22,7 @@ plutil -replace "DAEMON_VERSION" -string "${BVER}" "XXTExplorer/Defines/XXTEAppD
 plutil -remove "items.1" "XXTExplorer/Supporting Files/Settings.Pro.bundle/About.plist"
 plutil -insert "items.1" -xml "<dict><key>cell</key><string>About</string><key>label</key><string>XXTouch
 v${BVER}</string><key>value</key><string>https://www.xxtouch.com
-2016-${YEAR} © XXTouch Team.
+2014-${YEAR} © XXTouch Team.
 All Rights Reserved.</string></dict>" "XXTExplorer/Supporting Files/Settings.Pro.bundle/About.plist"
 plutil -remove "items.6" "XXTExplorer/Supporting Files/Settings.Pro.bundle/About.plist"
 plutil -insert "items.6" -xml "<dict><key>cell</key><string>Button</string><key>label</key><string>Mail Feedback</string><key>action</key><string>SendMail:</string><key>args</key><dict><key>subject</key><string>[Feedback] XXTouch v${BVER}</string><key>toRecipients</key><array><string>bug@xxtouch.com</string></array><key>ccRecipients</key><array><string>i.82@qq.com</string></array></dict><key>icon</key><string>res/XXTEAboutIconMail.png</string><key>iconRenderingMode</key><string>AlwaysTemplate</string></dict>" "XXTExplorer/Supporting Files/Settings.Pro.bundle/About.plist"
@@ -36,7 +36,7 @@ plutil -replace "DAEMON_VERSION" -string "${BVER}" "XXTExplorer/Defines/XXTEAppD
 plutil -remove "items.1" "XXTExplorer/Supporting Files/Settings.bundle/About.plist"
 plutil -insert "items.1" -xml "<dict><key>cell</key><string>About</string><key>label</key><string>XXTouch Editor
 v${BVER}</string><key>value</key><string>https://www.xxtouch.com
-2016-${YEAR} © XXTouch Team.
+2014-${YEAR} © XXTouch Team.
 All Rights Reserved.</string></dict>" "XXTExplorer/Supporting Files/Settings.bundle/About.plist"
 plutil -remove "items.6" "XXTExplorer/Supporting Files/Settings.bundle/About.plist"
 plutil -insert "items.6" -xml "<dict><key>cell</key><string>Button</string><key>label</key><string>Mail Feedback</string><key>action</key><string>SendMail:</string><key>args</key><dict><key>subject</key><string>[Feedback] XXTouch Editor v${BVER}</string><key>toRecipients</key><array><string>bug@xxtouch.com</string></array><key>ccRecipients</key><array><string>i.82@qq.com</string></array></dict><key>icon</key><string>res/XXTEAboutIconMail.png</string><key>iconRenderingMode</key><string>AlwaysTemplate</string></dict>" "XXTExplorer/Supporting Files/Settings.bundle/About.plist"
