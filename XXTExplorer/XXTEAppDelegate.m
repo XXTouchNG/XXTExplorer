@@ -11,8 +11,11 @@
 
 #import "XXTEAppDelegate.h"
 
+#ifndef APPSTORE
 #import <XUI/XUINavigationController.h>
 #import "XXTEAgreementViewController.h"
+#endif
+
 #import "XXTESplitViewController.h"
 #import "XXTENavigationController.h"
 
@@ -74,20 +77,20 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
     
-    BOOL shouldDisplayAgreement = NO;
+    
 #ifndef APPSTORE
+    BOOL shouldDisplayAgreement = NO;
     NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
     if (XXTEDefaultsObject(agreementFlag, nil) == nil) {
         shouldDisplayAgreement = YES;
     }
-#endif
-    
     if (shouldDisplayAgreement) {
         [self displayAgreementViewController];
-    } else {
-        [self reloadWorkspace];
+        return YES;
     }
+#endif
     
+    [self reloadWorkspace];
     return YES;
 }
 
@@ -423,6 +426,7 @@ XXTE_END_IGNORE_PARTIAL
     
 }
 
+#ifndef APPSTORE
 - (void)displayAgreementViewController {
     UIWindow *mainWindow = self.window;
     
@@ -434,6 +438,7 @@ XXTE_END_IGNORE_PARTIAL
     
     mainWindow.rootViewController = navigationController;
 }
+#endif
 
 #pragma mark - App Defines
 
