@@ -10,6 +10,7 @@
 #import "XXTEAppDelegate.h"
 
 #import <LGAlertView/LGAlertView.h>
+#import <XUI/XUIListFooterView.h>
 
 @interface XXTEAgreementViewController ()
 
@@ -25,6 +26,8 @@
     
     self.navigationItem.leftBarButtonItem = self.quitItem;
     self.navigationItem.rightBarButtonItem = self.agreeItem;
+    
+    self.footerView.footerIcon = [[UIImage imageNamed:@"XUIAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 #pragma mark - Getter
