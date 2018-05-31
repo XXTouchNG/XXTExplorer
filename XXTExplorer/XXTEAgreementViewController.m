@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UIBarButtonItem *quitItem;
 @property (nonatomic, strong) UIBarButtonItem *agreeItem;
+@property (nonatomic, assign) NSTimeInterval appearTime;
 
 @end
 
@@ -28,6 +29,11 @@
     self.navigationItem.rightBarButtonItem = self.agreeItem;
     
     self.footerView.footerIcon = [[UIImage imageNamed:@"XUIAboutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    _appearTime = [[NSDate date] timeIntervalSince1970];
 }
 
 #pragma mark - Getter
@@ -49,7 +55,7 @@
 #pragma mark - Actions
 
 - (void)quitItemTapped:(UIBarButtonItem *)sender {
-    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Quit Confirm", nil) message:NSLocalizedString(@"Do you want to quit XXTouch? \nIf you do not agree to our terms of service, you cannot continue using our application.", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Quit Now", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Quit Confirm", nil) message:NSLocalizedString(@"Do you want to quit XXTouch? \nIf you do not agree to our \"Terms Of Service\", you cannot continue using our application.", nil) style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Quit Now", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
@@ -63,7 +69,14 @@
 }
 
 - (void)agreeItemTapped:(UIBarButtonItem *)sender {
-    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm", nil) message:NSLocalizedString(@"I Agree To Terms Of Service (XXTouch).", nil) style:LGAlertViewStyleAlert buttonTitles:@[ NSLocalizedString(@"I Agree", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+    NSTimeInterval nowTime = [[NSDate date] timeIntervalSince1970];
+    if (nowTime - self.appearTime < 5.0)
+    {
+        NSTimeInterval timeLeft = round(5.0 - (nowTime - self.appearTime));
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Please read our \"Terms Of Service\" for more than 5 seconds, %ld seconds left.", nil), (NSInteger)timeLeft]);
+        return;
+    }
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm", nil) message:NSLocalizedString(@"I Agree To \"Terms Of Service (XXTouch)\".", nil) style:LGAlertViewStyleAlert buttonTitles:@[ NSLocalizedString(@"I Agree", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
         [alertView dismissAnimated];
         [self AgreeImmediately];
     } cancelHandler:^(LGAlertView * _Nonnull alertView) {
@@ -97,7 +110,9 @@
 #pragma mark - Memory
 
 - (void)dealloc {
-    
+#ifdef DEBUG
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
+#endif
 }
 
 @end

@@ -684,7 +684,7 @@
 "Dismiss" = "忽略";
 
 /* No comment provided by engineer. */
-"Do you want to quit XXTouch? \nIf you do not agree to our terms of service, you cannot continue using our application." = "你确定要退出 XXTouch 吗? \n如果你不同意我们的服务条款, 你将不能继续使用我们的应用程序.";
+"Do you want to quit XXTouch? \nIf you do not agree to our \"Terms Of Service\", you cannot continue using our application." = "你确定要退出 XXTouch 吗? \n如果你不同意我们的服务协议, 你将不能继续使用我们的应用程序.";
 
 /* No comment provided by engineer. */
 "Documents" = "文档";
@@ -879,7 +879,7 @@
 "I Agree" = "我同意";
 
 /* No comment provided by engineer. */
-"I Agree To Terms Of Service (XXTouch)." = "我同意 XXTouch 服务协议.";
+"I Agree To \"Terms Of Service (XXTouch)\"." = "我同意「XXTouch 服务协议」.";
 
 /* No comment provided by engineer. */
 "If \"Infinite Repeat\" is enabled, \"Repeat Times\" will make no sense." = "如果 \"无限循环\" 处于启用状态, 那么 \"循环次数\" 将不起作用.";
@@ -1154,10 +1154,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1299,6 +1299,9 @@
 
 /* No comment provided by engineer. */
 "Please enter a valid positive integer." = "请输入一个有效的正整数.";
+
+/* No comment provided by engineer. */
+"Please read our \"Terms Of Service\" for more than 5 seconds, %ld seconds left." = "请仔细阅读我们的服务协议, 不得少于 5 秒, 还剩 %ld 秒.";
 
 /* No comment provided by engineer. */
 "Please select a directory." = "请选择一个目录.";

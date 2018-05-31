@@ -84,10 +84,10 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     
     if (shouldDisplayAgreement) {
         [self displayAgreementViewController];
-        return YES;
+    } else {
+        [self reloadWorkspace];
     }
     
-    [self reloadWorkspace];
     return YES;
 }
 
