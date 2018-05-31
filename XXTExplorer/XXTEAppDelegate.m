@@ -357,14 +357,10 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Reload
 
 - (void)dismissTopMostViewController {
-    
+    // no implementation
 }
 
 - (void)reloadWorkspace {
-    
-#ifdef DEBUG
-    NSLog(@"- [XXTEAppDelegate reloadWorkspace] called...");
-#endif
     
 #ifndef APPSTORE
     NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
@@ -374,51 +370,57 @@ XXTE_END_IGNORE_PARTIAL
     }
 #endif
     
-    UIWindow *mainWindow = self.window;
-    
-    // Master - Explorer Controller
-    XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
-    XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
-    
-    // Master - Cloud Controller
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        UIWindow *mainWindow = self.window;
+        
+        // Master - Explorer Controller
+        XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
+        XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
+        
+        // Master - Cloud Controller
 #if (!defined APPSTORE) && (defined RMCLOUD_ENABLED)
-    RMCloudViewController *cloudViewController = [[RMCloudViewController alloc] init];
-    RMCloudNavigationController *cloudNavigationController = [[RMCloudNavigationController alloc] initWithRootViewController:cloudViewController];
+        RMCloudViewController *cloudViewController = [[RMCloudViewController alloc] init];
+        RMCloudNavigationController *cloudNavigationController = [[RMCloudNavigationController alloc] initWithRootViewController:cloudViewController];
 #endif
-    
-    // Master - More Controller
+        
+        // Master - More Controller
 #ifndef APPSTORE
-    XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
+        XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
 #endif
-    
-    // Master Controller
-    XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
+        
+        // Master Controller
+        XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
 #ifndef APPSTORE
 #ifdef RMCLOUD_ENABLED
-    masterViewController.viewControllers = @[masterNavigationControllerLeft, cloudNavigationController, masterNavigationControllerRight];
+        masterViewController.viewControllers = @[masterNavigationControllerLeft, cloudNavigationController, masterNavigationControllerRight];
 #else
-    masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
+        masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
 #endif
 #else
-    masterViewController.viewControllers = @[masterNavigationControllerLeft];
+        masterViewController.viewControllers = @[masterNavigationControllerLeft];
 #endif
-    
-    {
-        if (@available(iOS 8.0, *)) {
-            // Detail Controller
-            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
-            
-            // Split Controller
-            XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
-            splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-            
-            mainWindow.rootViewController = splitViewController;
-        } else {
-            mainWindow.rootViewController = masterViewController;
+        
+        {
+            if (@available(iOS 8.0, *)) {
+                // Detail Controller
+                XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+                XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+                
+                // Split Controller
+                XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
+                splitViewController.viewControllers = @[masterViewController, detailNavigationController];
+                
+                mainWindow.rootViewController = splitViewController;
+            } else {
+                mainWindow.rootViewController = masterViewController;
+            }
         }
-    }
+        
+    });
+    
 }
 
 - (void)displayAgreementViewController {
