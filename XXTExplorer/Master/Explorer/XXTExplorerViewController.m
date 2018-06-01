@@ -335,10 +335,10 @@ XXTE_END_IGNORE_PARTIAL
         promiseFixPermission(entryPath, NO);
         
         BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
-        NSError *localError = nil;
-        NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&localError];
-        if (localError && error) {
-            *error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: localError.localizedDescription}];
+        NSError *listError = nil;
+        NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&listError];
+        if (listError && error) {
+            *error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey:listError.localizedDescription}];
         }
         
         NSMutableArray <XXTExplorerEntry *> *entryDirectoryAttributesList = [[NSMutableArray alloc] init];
@@ -351,8 +351,8 @@ XXTE_END_IGNORE_PARTIAL
                     continue;
                 }
                 NSString *entrySubdirectoryPath = [entryPath stringByAppendingPathComponent:entrySubdirectoryName];
-                XXTExplorerEntry *entryDetail = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:&localError];
-                if (localError && error) {
+                XXTExplorerEntry *entryDetail = [self.class.explorerEntryParser entryOfPath:entrySubdirectoryPath withError:nil];
+                if (!entryDetail) {
                     continue;
                 }
                 if ([self shouldDisplayEntry:entryDetail] == NO) {
