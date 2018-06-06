@@ -55,8 +55,8 @@ return {
     };
     {
       url = "sub/xui-dynamic.xui";
-      cell = "Link";
-      label = "动态联动通知演示";
+      cell = type(string.compare_version) == 'function' and "Link" or "StaticText";
+      label = type(string.compare_version) == 'function' and "动态联动通知演示" or "动态联动通知（请更新 X.X.T. 查看）";
     };
     {
       cell = "Group";

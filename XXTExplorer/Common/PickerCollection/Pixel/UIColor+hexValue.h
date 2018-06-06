@@ -7,7 +7,7 @@
 
 @interface UIColor (hexValue)
 
-- (NSString *)hexStringWithAlpha:(BOOL)withAlpha;
-- (NSNumber *)ARGBNumberValue;
+- (NSString *)hexString;
+- (NSNumber *)RGBNumberValue;
 
 @end

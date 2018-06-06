@@ -3,7 +3,7 @@ return {
 	BundleDisplayName = "XUI 亮色主题示例";
 	Executable = "main.lua";
 	BundleIconFile = "appicon.png";
-	BundleVersion = "1.3.0";
+	BundleVersion = "1.4.0";
 	MinimumXXTVersion = "1.2";
 	MinimumSystemVersion = "7.0";
 	-- MaximumSystemVersion = "11.1.2";
@@ -37,7 +37,7 @@ return {
 	BundleName = "A-Script-Bundle";
 	PackageControl = {
 		AuthorEmail = "info@xxtouch.com";
-		Description = "一个 XXTouch 脚本包例子";
+		Description = "一个 XXTouch 脚本包例子，完整效果需要最低 1.2-10 支持";
 		Homepage = "https://www.xxtouch.com";
 		AuthorName = "XXTouch Team";
 	};

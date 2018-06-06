@@ -147,9 +147,9 @@
 {
     NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long)self.contentsArray.count];
     NSDictionary <NSString *, id> *attrs = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0]};
-    CGSize size =   [str boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 14)
-                                      options:NSStringDrawingUsesLineFragmentOrigin
-                                   attributes:attrs context:nil].size;
+    CGSize size = [str boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 14)
+                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                attributes:attrs context:nil].size;
     return size.width + 20;
 }
 

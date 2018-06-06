@@ -5,21 +5,21 @@ return {
   defaults = "com.yourcompany.A-Script-Bundle";  -- 配置存储的位置，读取配置的时候需要用到
   theme = {
     style = "Grouped";  -- 组显示风格，如果为 Plain 则为平铺显示风格
-    navigationBarColor = '0x1d1f21';  -- 记得加上引号
-    navigationTitleColor = '0xc5c8c6';
-    cellBackgroundColor = '0x00000045';
-    backgroundColor = '0x1d1f21a0';
-    tintColor = '0xb5bd68';
-    labelColor = '0xc5c8c6';
-    disclosureIndicatorColor = '0x777b81';
-    valueColor = '0x9b9ea5';
-    selectedColor = '0x373b4190';
-    textColor = '0xc5c8c6';
-    placeholderColor = '0xc5c8c66a';
-    caretColor = '0xb5bd68';
-    separatorColor = '0x373b41';
+    navigationBarColor = '#1d1f21';  -- 记得加上引号
+    navigationTitleColor = '#c5c8c6';
+    cellBackgroundColor = '#00000045';
+    backgroundColor = '#1d1f21a0';
+    tintColor = '#b5bd68';
+    labelColor = '#c5c8c6';
+    disclosureIndicatorColor = '#777b81';
+    valueColor = '#9b9ea5';
+    selectedColor = '#373b4190';
+    textColor = '#c5c8c6';
+    placeholderColor = '#c5c8c66a';
+    caretColor = '#b5bd68';
+    separatorColor = '#373b41';
     thumbColor = '#f0f0f0';
-    onTintColor = '0xb5bd68';
+    onTintColor = '#b5bd68';
     headerTextColor = '#fefefe';
     subheaderTextColor = '#fefefe';
     footerTextColor = '#fefefe';
@@ -76,8 +76,8 @@ return {
     };
     {
       url = "sub/xui-dynamic.xui";
-      cell = "Link";
-      label = "动态联动通知演示";
+      cell = type(string.compare_version) == 'function' and "Link" or "StaticText";
+      label = type(string.compare_version) == 'function' and "动态联动通知演示" or "动态联动通知（请更新 X.X.T. 查看）";
     };
     {
       cell = "Group";
@@ -304,12 +304,12 @@ return {
         "灰色";
       };
       theme = {
-      	tagBackgroundColor = '0x1d1f2100';
-      	tagSelectedBackgroundColor = '0xb5bd68';
-      	tagTextColor = '0xc5c8c6';
-      	tagSelectedTextColor = '0x333333';
-      	tagBorderColor = '0x4b4e55';
-      	tagSelectedBorderColor = '0xb5bd68';
+      	tagBackgroundColor = '#1d1f2100';
+      	tagSelectedBackgroundColor = '#b5bd68';
+      	tagTextColor = '#c5c8c6';
+      	tagSelectedTextColor = '#333333';
+      	tagBorderColor = '#4b4e55';
+      	tagSelectedBorderColor = '#b5bd68';
       };
     };
     {
@@ -342,12 +342,12 @@ return {
         "倒数第一";  -- 选项可以简写
       };
       theme = {
-      	tagBackgroundColor = '0x1d1f2100';
-      	tagSelectedBackgroundColor = '0xb5bd68';
-      	tagTextColor = '0xc5c8c6';
-      	tagSelectedTextColor = '0x333333';
-      	tagBorderColor = '0x4b4e55';
-      	tagSelectedBorderColor = '0xb5bd68';
+      	tagBackgroundColor = '#1d1f2100';
+      	tagSelectedBackgroundColor = '#b5bd68';
+      	tagTextColor = '#c5c8c6';
+      	tagSelectedTextColor = '#333333';
+      	tagBorderColor = '#4b4e55';
+      	tagSelectedBorderColor = '#b5bd68';
       };
     };
     {

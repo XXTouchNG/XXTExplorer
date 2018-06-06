@@ -174,6 +174,10 @@ local function saveCachedDefaults()
     end
 end
 
+function __G.XXTHomeDirectory()
+    return '/private/var/mobile/Media/1ferver/'
+end
+
 function __G.xui.bundle_path()
     return opt.bundlePath
 end

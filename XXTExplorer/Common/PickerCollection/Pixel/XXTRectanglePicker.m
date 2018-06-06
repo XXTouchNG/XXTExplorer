@@ -632,8 +632,8 @@
         if (!selectedColor) {
             selectedColor = [UIColor blackColor];
         }
-        NSString *selectedHex = [selectedColor hexStringWithAlpha:NO];
-        _pickerResult = [selectedColor ARGBNumberValue];
+        NSString *selectedHex = [selectedColor hexString];
+        _pickerResult = [selectedColor RGBNumberValue];
         NSString *previewFormat = @"(r%d, g%d, b%d) ";
         CGFloat r = 0, g = 0, b = 0, a = 0;
         [selectedColor getRed:&r green:&g blue:&b alpha:&a];
@@ -664,9 +664,9 @@
             XXTPositionColorModel *model = selectedValue;
             CGPoint selectedPoint = model.position;
             UIColor *selectedColor = model.color;
-            NSString *selectedHex = [selectedColor hexStringWithAlpha:NO];
+            NSString *selectedHex = [selectedColor hexString];
             if (type == kXXTPixelCropViewTypePositionColor) {
-                _pickerResult = @[ @((int) selectedPoint.x), @((int) selectedPoint.y), [selectedColor ARGBNumberValue] ];
+                _pickerResult = @[ @((int) selectedPoint.x), @((int) selectedPoint.y), [selectedColor RGBNumberValue] ];
             }
             NSString *previewFormat = @"(x%d, y%d) ";
             NSString *previewString = [NSString stringWithFormat:previewFormat, (int) selectedPoint.x, (int) selectedPoint.y];
@@ -696,7 +696,7 @@
                 UIColor *c = [poscolor.color copy];
                 if (!c) c = [UIColor blackColor];
                 CGPoint p = poscolor.position;
-                [mulArray addObject: @[ @((int) p.x), @((int) p.y), [c ARGBNumberValue] ]];
+                [mulArray addObject: @[ @((int) p.x), @((int) p.y), [c RGBNumberValue] ]];
             }
             _pickerResult = [mulArray copy];
         } else {

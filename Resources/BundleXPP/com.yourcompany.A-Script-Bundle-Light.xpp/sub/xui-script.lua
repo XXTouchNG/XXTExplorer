@@ -1,6 +1,6 @@
 if string.compare_version(sys.xtversion(), "1.2-10") < 0 then
 	sys.alert("此示例内容仅支持 XXTouch v1.2-10 及以上版本")
-	return
+	return os.exit()
 end
 
 
@@ -30,7 +30,7 @@ elseif operation == 'ntime' then
 	
 	if nt == 0 then
 		sys.alert("获取网络时间失败")
-		return
+		return os.exit()
 	else
 		ntstr = os.date("%Y-%m-%d %H:%M:%S", nt)
 	end
@@ -49,10 +49,11 @@ elseif operation == 'rm-switch' then
 	local num = xui.get(defaultsKey, "ui-group-num") or 0
 	if num <= 0 then
 		sys.alert("已经不能减少了")
-		return
+		return os.exit()
 	end
 	xui.set(defaultsKey, "ui-group-num", num - 1)
 	xui.reload()
 	
 end
 
+os.exit()
