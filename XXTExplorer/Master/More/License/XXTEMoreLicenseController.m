@@ -940,7 +940,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTEMoreLicenseController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

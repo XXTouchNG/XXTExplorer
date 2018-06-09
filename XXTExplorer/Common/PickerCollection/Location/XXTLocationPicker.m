@@ -197,7 +197,7 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTLocationPicker dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

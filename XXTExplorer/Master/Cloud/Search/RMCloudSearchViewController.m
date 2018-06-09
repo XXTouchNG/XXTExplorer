@@ -382,7 +382,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)dealloc {
     [self.searchController.view removeFromSuperview];
 #ifdef DEBUG
-    NSLog(@"- [RMCloudSearchViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

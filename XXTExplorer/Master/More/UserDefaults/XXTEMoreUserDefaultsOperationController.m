@@ -123,7 +123,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTEMoreUserDefaultsOperationController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

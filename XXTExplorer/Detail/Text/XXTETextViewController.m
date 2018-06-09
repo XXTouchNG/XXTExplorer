@@ -189,7 +189,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTETextViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

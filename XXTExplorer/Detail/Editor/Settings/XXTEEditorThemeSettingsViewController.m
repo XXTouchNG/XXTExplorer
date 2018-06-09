@@ -159,7 +159,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTEEditorThemeSettingsViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

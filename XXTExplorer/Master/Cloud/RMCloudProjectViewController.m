@@ -790,7 +790,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [RMCloudProjectViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

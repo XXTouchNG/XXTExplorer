@@ -460,7 +460,7 @@ XXTP_END_IGNORE_PARTIAL
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTApplicationPicker dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

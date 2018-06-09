@@ -762,7 +762,7 @@ typedef enum : NSUInteger {
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTEDownloadViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

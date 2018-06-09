@@ -197,7 +197,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTEDbTableContentViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

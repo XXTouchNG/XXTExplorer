@@ -423,7 +423,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [RMCloudListViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

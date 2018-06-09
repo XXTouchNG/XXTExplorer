@@ -98,7 +98,7 @@
 - (void)dealloc {
     [self resetVirtualMachine];
 #ifdef DEBUG
-    NSLog(@"- [XXTETerminalViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

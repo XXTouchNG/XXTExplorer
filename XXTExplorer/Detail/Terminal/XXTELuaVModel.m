@@ -200,7 +200,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
         L = NULL;
     }
 #ifdef DEBUG
-    NSLog(@"- [XXTELuaVModel dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

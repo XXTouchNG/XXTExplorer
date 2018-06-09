@@ -272,6 +272,12 @@ NSString *uAppDaemonCommandUrl(NSString *command) {
 #endif
 
 #ifndef APPSTORE
+NSString *uAppWebAccessUrl(NSString *path) {
+    return ([uAppDefine(@"LOCAL_API") stringByAppendingFormat:@"download_file?filename=%@", [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]]);
+}
+#endif
+
+#ifndef APPSTORE
 NSString *uAppLicenseServerCommandUrl(NSString *command) {
     return ([uAppDefine(@"AUTH_API") stringByAppendingString:command]);
 }

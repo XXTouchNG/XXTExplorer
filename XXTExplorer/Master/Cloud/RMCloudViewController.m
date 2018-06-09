@@ -85,7 +85,7 @@
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [RMCloudViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

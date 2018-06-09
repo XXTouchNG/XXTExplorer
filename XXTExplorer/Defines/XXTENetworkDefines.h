@@ -27,6 +27,7 @@ extern "C" {
     
 #ifndef APPSTORE
     NSString *uAppDaemonCommandUrl(NSString *command);
+    NSString *uAppWebAccessUrl(NSString *path);
 #endif
     
 #ifndef APPSTORE

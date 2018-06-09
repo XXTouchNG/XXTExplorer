@@ -1525,7 +1525,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)dealloc {
     [self dismissUndoNotifications];
 #ifdef DEBUG
-    NSLog(@"- [XXTEEditorController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

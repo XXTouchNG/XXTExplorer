@@ -29,6 +29,10 @@
 		0F08BC131FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */; };
 		0F08BC141FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */; };
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
+		0F0C283C20CC309800B47261 /* XXTExplorerEntryMobileConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C283A20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.m */; };
+		0F0C283D20CC309800B47261 /* XXTExplorerEntryMobileConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C283A20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.m */; };
+		0F0C283E20CC31A500B47261 /* XXTEMobileConfigViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C283720CC301200B47261 /* XXTEMobileConfigViewerController.m */; };
+		0F0C283F20CC31A600B47261 /* XXTEMobileConfigViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C283720CC301200B47261 /* XXTEMobileConfigViewerController.m */; };
 		0F0F76281F361509006EA102 /* XXTEPackageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */; };
 		0F0F762C1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762B1F3616D4006EA102 /* XXTExplorerEntryPackageReader.m */; };
 		0F0F76301F3617CF006EA102 /* XXTEDebianPackageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0F762F1F3617CF006EA102 /* XXTEDebianPackageExtractor.m */; };
@@ -1362,6 +1366,10 @@
 		0F08BC101FFD1A9D00B83972 /* XXTLuaFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTLuaFunction.h; sourceTree = "<group>"; };
 		0F08BC111FFD1A9D00B83972 /* XXTLuaFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTLuaFunction.m; sourceTree = "<group>"; };
 		0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XXTEItemTemplate.lua; sourceTree = "<group>"; };
+		0F0C283720CC301200B47261 /* XXTEMobileConfigViewerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMobileConfigViewerController.m; sourceTree = "<group>"; };
+		0F0C283920CC301200B47261 /* XXTEMobileConfigViewerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMobileConfigViewerController.h; sourceTree = "<group>"; };
+		0F0C283A20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryMobileConfigReader.m; sourceTree = "<group>"; };
+		0F0C283B20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryMobileConfigReader.h; sourceTree = "<group>"; };
 		0F0F76261F361509006EA102 /* XXTEPackageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEPackageViewerController.h; sourceTree = "<group>"; };
 		0F0F76271F361509006EA102 /* XXTEPackageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEPackageViewerController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0F0F762A1F3616D4006EA102 /* XXTExplorerEntryPackageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryPackageReader.h; sourceTree = "<group>"; };
@@ -2371,6 +2379,25 @@
 			path = Lua;
 			sourceTree = "<group>";
 		};
+		0F0C283620CC2FF100B47261 /* MobileConfig */ = {
+			isa = PBXGroup;
+			children = (
+				0F0C283820CC301200B47261 /* Reader */,
+				0F0C283920CC301200B47261 /* XXTEMobileConfigViewerController.h */,
+				0F0C283720CC301200B47261 /* XXTEMobileConfigViewerController.m */,
+			);
+			path = MobileConfig;
+			sourceTree = "<group>";
+		};
+		0F0C283820CC301200B47261 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				0F0C283B20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.h */,
+				0F0C283A20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.m */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
 		0F0F76291F36150F006EA102 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
@@ -2789,6 +2816,7 @@
 				D66085581F3C65F900E87B3C /* Editor */,
 				0F8147B42081C6E0009C6B6D /* Text */,
 				0FBECD5E2005FE7700068437 /* Log */,
+				0F0C283620CC2FF100B47261 /* MobileConfig */,
 				D6863C501F7E275800A45CF7 /* XUIExtensions */,
 			);
 			path = Detail;
@@ -5452,6 +5480,7 @@
 				0FBAFF4A1F6E701A008B3189 /* NSString+QueryItems.m in Sources */,
 				D6E141211F5032AB00D78CB9 /* UIColor+hexValue.m in Sources */,
 				0FA7ABEF1ED641A3003EAD7D /* main.m in Sources */,
+				0F0C283E20CC31A500B47261 /* XXTEMobileConfigViewerController.m in Sources */,
 				0F5690051F19B52B009AF9FE /* XXTExplorerEntryBindingViewController.m in Sources */,
 				D6863C641F7E275900A45CF7 /* XXTEUIViewController+ScanQRCode.m in Sources */,
 				0FCAF3F5200898EB002FB774 /* RMProject.m in Sources */,
@@ -5461,6 +5490,7 @@
 				0F51CB161F61191900150D6D /* XXTEEditorLanguage.m in Sources */,
 				0F98515020033F5A00FFD9E8 /* XXTExplorerItemGroupViewController.m in Sources */,
 				0FBBA21B1F475CED007BC776 /* UIColor+SKColor.m in Sources */,
+				0F0C283C20CC309800B47261 /* XXTExplorerEntryMobileConfigReader.m in Sources */,
 				D6FC2F2C1F0E3372000BAB42 /* XXTEMoreActivationController.m in Sources */,
 				0F86B3121F474EC4003CC228 /* SKAttributedParsingOperation.m in Sources */,
 				D6863D251F7E3B9100A45CF7 /* XXTEUIViewController+XUILinkCell.m in Sources */,
@@ -5791,6 +5821,7 @@
 				D60FE6EE1FE2369300954818 /* NSString+QueryItems.m in Sources */,
 				D60FE6EF1FE2369300954818 /* UIColor+hexValue.m in Sources */,
 				D60FE6F01FE2369300954818 /* main.m in Sources */,
+				0F0C283F20CC31A600B47261 /* XXTEMobileConfigViewerController.m in Sources */,
 				D60FE6F11FE2369300954818 /* XXTExplorerEntryBindingViewController.m in Sources */,
 				D60FE6F21FE2369300954818 /* XXTEUIViewController+ScanQRCode.m in Sources */,
 				0FCAF3F6200898EB002FB774 /* RMProject.m in Sources */,
@@ -5800,6 +5831,7 @@
 				D60FE6F61FE2369300954818 /* XXTEEditorLanguage.m in Sources */,
 				0F98515120033F5A00FFD9E8 /* XXTExplorerItemGroupViewController.m in Sources */,
 				D60FE6F71FE2369300954818 /* UIColor+SKColor.m in Sources */,
+				0F0C283D20CC309800B47261 /* XXTExplorerEntryMobileConfigReader.m in Sources */,
 				D60FE6F81FE2369300954818 /* XXTEMoreActivationController.m in Sources */,
 				D60FE6F91FE2369300954818 /* SKAttributedParsingOperation.m in Sources */,
 				D60FE6FA1FE2369300954818 /* XXTEUIViewController+XUILinkCell.m in Sources */,

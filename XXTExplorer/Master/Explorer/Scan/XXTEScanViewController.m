@@ -765,7 +765,7 @@ static CGFloat XXTEScanVOffset = -22.0;
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTEScanViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

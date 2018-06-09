@@ -534,6 +534,9 @@
 "Configure \"Activator\"" = "配置 \"Activator\"";
 
 /* No comment provided by engineer. */
+"Configure in Safari" = "在 Safari 中配置";
+
+/* No comment provided by engineer. */
 "Configure this XPP Bundle requires iOS version between (%@, %@), not %@.\nYou can find the required iOS version in extended item properties." = "配置该脚本包需要 iOS 版本 (%@, %@), 不支持当前值 %@.\n你可以在项目扩展属性中检查必需的 iOS 版本.";
 
 /* No comment provided by engineer. */
@@ -1088,6 +1091,9 @@
 "Media Rewind Key" = "多媒体上一首";
 
 /* No comment provided by engineer. */
+"Mobile Configurator" = "配置器";
+
+/* No comment provided by engineer. */
 "Modified At" = "修改于";
 
 /* No comment provided by engineer. */
@@ -1154,10 +1160,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1206,6 +1212,9 @@
 
 /* No comment provided by engineer. */
 "Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks." = "打开 \"Cydia\" 并安装第三方插件 \"Activator\", 获取更多自定义的激活方式和计划任务.";
+
+/* No comment provided by engineer. */
+"Open in Safari" = "在 Safari 中打开";
 
 /* No comment provided by engineer. */
 "Open URL" = "打开 URL";

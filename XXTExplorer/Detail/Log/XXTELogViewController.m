@@ -366,7 +366,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTELogViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 

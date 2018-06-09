@@ -980,7 +980,7 @@ static int sizingCancelFlag = 0;
 
 - (void)dealloc {
 #ifdef DEBUG
-    NSLog(@"- [XXTExplorerItemDetailViewController dealloc]");
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
 
