@@ -752,6 +752,7 @@ local cellNameMap = {
     image           = 'Image';
     animatedimage   = 'AnimatedImage';
     editablelist    = 'EditableList';
+    about           = 'About';
 }
 
 local events = {}
@@ -764,7 +765,10 @@ function _loadDefaults(opt)
     local globalDefaults = XUITable.defaults
     for idx, item in ipairs(XUITable.items) do
         if type(item) ~= 'table' then
-            error(string.format('%q: items (table expected got %s)', opt.XUIPath, type(item)))
+            error(string.format('%q: items[%d] (table expected got %s)', opt.XUIPath, idx, type(item)))
+        end
+        if type(item.cell) ~= 'string' then
+            error(string.format('%q: items[%d].cell (string expected got %s)', opt.XUIPath, idx, type(item.cell)))
         end
         local itemKey = item.key
         local itemCell = string.lower(tostring(item.cell))
