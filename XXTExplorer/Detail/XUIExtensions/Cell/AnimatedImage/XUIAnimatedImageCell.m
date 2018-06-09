@@ -7,7 +7,7 @@
 //
 
 #import "XUIAnimatedImageCell.h"
-#import <YYImage/YYImage.h>
+#import <YYWebImage/YYWebImage.h>
 
 @interface XUIAnimatedImageCell ()
 
@@ -47,9 +47,16 @@
 
 - (void)setXui_path:(NSString *)xui_path {
     _xui_path = xui_path;
-    NSString *imagePath = [self.adapter.bundle pathForResource:xui_path ofType:nil];
-    YYImage *image = [YYImage imageWithContentsOfFile:imagePath];
-    self.cellImageView.image = image;
+    NSURL *imageURL = [NSURL URLWithString:xui_path];
+    NSString *urlScheme = [imageURL scheme];
+    if (urlScheme.length > 0) {
+        UIImageView *imageView = self.cellImageView;
+        [imageView yy_setImageWithURL:imageURL options:(YYWebImageOptionShowNetworkActivity | YYWebImageOptionProgressive)];
+    } else {
+        NSString *imagePath = [self.adapter.bundle pathForResource:xui_path ofType:nil];
+        YYImage *image = [YYImage imageWithContentsOfFile:imagePath];
+        [self.cellImageView setImage:image];
+    }
 }
 
 @end
