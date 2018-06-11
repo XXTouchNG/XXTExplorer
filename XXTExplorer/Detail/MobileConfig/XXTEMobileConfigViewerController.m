@@ -9,6 +9,8 @@
 #import "XXTEMobileConfigViewerController.h"
 #import "XXTExplorerEntryMobileConfigReader.h"
 
+#import <LGAlertView/LGAlertView.h>
+
 @interface XXTEMobileConfigViewerController ()
 
 @property (nonatomic, strong) UIButton *launchButton;
@@ -63,7 +65,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!_isFirstLoaded) {
-        [self launchButtonTapped:self.launchButton];
+//        [self launchButtonTapped:self.launchButton];
         _isFirstLoaded = YES;
     }
 }
@@ -80,7 +82,7 @@
             font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
         }
         XXTE_END_IGNORE_PARTIAL
-        NSString *title = NSLocalizedString(@"Configure in Safari", nil);
+        NSString *title = NSLocalizedString(@"Continue in Safari", nil);
         _launchButton = [[UIButton alloc] init];
         _launchButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [_launchButton addTarget:self action:@selector(launchButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -95,6 +97,16 @@
 #pragma mark - Actions
 
 - (void)launchButtonTapped:(UIButton *)sender {
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Redirect Confirm", nil) message:NSLocalizedString(@"You will be redirected to \"Safari\" and \"Preferences\".\nFollow the instruction to finish configuration.", nil) style:LGAlertViewStyleAlert buttonTitles:@[] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Continue", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+        [alertView dismissAnimated];
+    } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+        [alertView dismissAnimated];
+        [self openInSafariImmediately];
+    }];
+    [alertView showAnimated];
+}
+
+- (void)openInSafariImmediately {
     NSError *directoryError = nil;
     NSString *webPath = [XXTERootPath() stringByAppendingPathComponent:@"web"];
     NSString *webTmpComponent = [@"tmp" stringByAppendingFormat:@"/%@", [[NSUUID UUID] UUIDString]];

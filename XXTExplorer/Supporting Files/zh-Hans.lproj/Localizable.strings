@@ -534,9 +534,6 @@
 "Configure \"Activator\"" = "配置 \"Activator\"";
 
 /* No comment provided by engineer. */
-"Configure in Safari" = "在 Safari 中配置";
-
-/* No comment provided by engineer. */
 "Configure this XPP Bundle requires iOS version between (%@, %@), not %@.\nYou can find the required iOS version in extended item properties." = "配置该脚本包需要 iOS 版本 (%@, %@), 不支持当前值 %@.\n你可以在项目扩展属性中检查必需的 iOS 版本.";
 
 /* No comment provided by engineer. */
@@ -571,6 +568,9 @@
 
 /* No comment provided by engineer. */
 "Continue as Archive" = "作为归档继续";
+
+/* No comment provided by engineer. */
+"Continue in Safari" = "在 Safari 中继续";
 
 /* No comment provided by engineer. */
 "Copied to the pasteboard." = "已复制到剪贴板.";
@@ -1981,6 +1981,9 @@
 
 /* No comment provided by engineer. */
 "You should respring your device to continue using this application." = "注销此设备以继续使用该应用程序.";
+
+/* No comment provided by engineer. */
+"You will be redirected to \"Safari\" and \"Preferences\".\nFollow the instruction to finish configuration." = "即将跳转到 \"Safari\" 和 \"设置\" 应用.\n它们将指导你完成配置.";
 
 /* No comment provided by engineer. */
 "You will be redirected to the ordering page.\nFollow that page to finish your order." = "即将跳转到外部支付页面.\n该页面将指导你完成购买.";
