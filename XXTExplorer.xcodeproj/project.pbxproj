@@ -123,10 +123,10 @@
 		0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */; };
 		0F5C01C81FB4123B00BB3D09 /* XXTEEditorMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5C01C71FB4123B00BB3D09 /* XXTEEditorMaskView.m */; };
 		0F5C01C91FB4123B00BB3D09 /* XXTEEditorMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5C01C71FB4123B00BB3D09 /* XXTEEditorMaskView.m */; };
-		0F5D6C002010DF1500BD1DDC /* RMCloudComingSoon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D6BFF2010DF1500BD1DDC /* RMCloudComingSoon.m */; };
-		0F5D6C012010DF1500BD1DDC /* RMCloudComingSoon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D6BFF2010DF1500BD1DDC /* RMCloudComingSoon.m */; };
-		0F5D6C052010E3A600BD1DDC /* RMCloudComingSoon.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5D6C082010E3A600BD1DDC /* RMCloudComingSoon.xib */; };
-		0F5D6C062010E3A600BD1DDC /* RMCloudComingSoon.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5D6C082010E3A600BD1DDC /* RMCloudComingSoon.xib */; };
+		0F5D6C002010DF1500BD1DDC /* XXTESingleActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */; };
+		0F5D6C012010DF1500BD1DDC /* XXTESingleActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */; };
+		0F5D6C052010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */; };
+		0F5D6C062010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */; };
 		0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */; };
 		0F5EB5101F08DDE40016016A /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */; };
 		0F5EB5131F08DE070016016A /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB5121F08DE070016016A /* NSData+SHA1.m */; };
@@ -181,6 +181,7 @@
 		0F71A2761FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F71A2731FE2BD3C00A95214 /* UITextView+DisableFuckingSmartXXX.m */; };
 		0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61616FA1FE8F76F009F10FF /* StoreKit.framework */; };
 		0F766CB01ED8D7D700E18BE2 /* UIView+XXTEToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F766CAF1ED8D7D700E18BE2 /* UIView+XXTEToast.m */; };
+		0F77CB3D20D267C60095C46B /* XXTESingleActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */; };
 		0F7B52BE201994CA00D91702 /* NSString+VersionValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */; };
 		0F7B52BF201994CA00D91702 /* NSString+VersionValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */; };
 		0F7B52C0201994CA00D91702 /* NSString+VersionValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */; };
@@ -1496,10 +1497,10 @@
 		0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEExecutableViewer.m; sourceTree = "<group>"; };
 		0F5C01C61FB4123B00BB3D09 /* XXTEEditorMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorMaskView.h; sourceTree = "<group>"; };
 		0F5C01C71FB4123B00BB3D09 /* XXTEEditorMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorMaskView.m; sourceTree = "<group>"; };
-		0F5D6BFE2010DF1500BD1DDC /* RMCloudComingSoon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCloudComingSoon.h; sourceTree = "<group>"; };
-		0F5D6BFF2010DF1500BD1DDC /* RMCloudComingSoon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCloudComingSoon.m; sourceTree = "<group>"; };
-		0F5D6C072010E3A600BD1DDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RMCloudComingSoon.xib; sourceTree = "<group>"; };
-		0F5D6C0A2010E3A800BD1DDC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/RMCloudComingSoon.strings"; sourceTree = "<group>"; };
+		0F5D6BFE2010DF1500BD1DDC /* XXTESingleActionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESingleActionView.h; sourceTree = "<group>"; };
+		0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESingleActionView.m; sourceTree = "<group>"; };
+		0F5D6C072010E3A600BD1DDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/XXTESingleActionView.xib; sourceTree = "<group>"; };
+		0F5D6C0A2010E3A800BD1DDC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/XXTESingleActionView.strings"; sourceTree = "<group>"; };
 		0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XQueryComponents.h"; sourceTree = "<group>"; };
 		0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XQueryComponents.m"; sourceTree = "<group>"; };
 		0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
@@ -2766,6 +2767,9 @@
 				0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */,
 				0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */,
 				0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */,
+				0F5D6BFE2010DF1500BD1DDC /* XXTESingleActionView.h */,
+				0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */,
+				0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3343,9 +3347,6 @@
 				0FCAF3F1200895CA002FB774 /* Cell */,
 				0F469CDC200C909C0042F1BF /* RMCloudLoadingView.h */,
 				0F469CDD200C909C0042F1BF /* RMCloudLoadingView.m */,
-				0F5D6BFE2010DF1500BD1DDC /* RMCloudComingSoon.h */,
-				0F5D6BFF2010DF1500BD1DDC /* RMCloudComingSoon.m */,
-				0F5D6C082010E3A600BD1DDC /* RMCloudComingSoon.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4628,7 +4629,7 @@
 				0F8ECD9D1FE81C1700A5457C /* Tomorrow Night (Eighties).png in Resources */,
 				0F8ECD9E1FE81C1700A5457C /* Tomorrow Night.png in Resources */,
 				0F8ECD9F1FE81C1700A5457C /* Tomorrow.png in Resources */,
-				0F5D6C052010E3A600BD1DDC /* RMCloudComingSoon.xib in Resources */,
+				0F5D6C052010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
 				0F8ECDA01FE81C1700A5457C /* Twilight.png in Resources */,
 				0F469CD2200B57CA0042F1BF /* RMCloudProjectDescriptionCell.xib in Resources */,
 				0F97F1DB1FB30CED007CA883 /* XXTEMoreReferences.bundle in Resources */,
@@ -4767,7 +4768,7 @@
 				D60FE7921FE2369300954818 /* XUIAdapter_xui.xuic in Resources */,
 				D60FE7931FE2369300954818 /* strings.tmLanguage in Resources */,
 				D60FE7981FE2369300954818 /* Eiffel.tmTheme in Resources */,
-				0F5D6C062010E3A600BD1DDC /* RMCloudComingSoon.xib in Resources */,
+				0F5D6C062010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
 				D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */,
 				0F469CF4200CFEC60042F1BF /* RMCloudLinkCell.xib in Resources */,
 				D60FE79A1FE2369300954818 /* json.tmLanguage in Resources */,
@@ -5034,6 +5035,7 @@
 				0F8EDB631FB1F779003C92D6 /* XXTEEditorPreprocessor.m in Sources */,
 				0F8EDB641FB1F779003C92D6 /* XXTImagePickerPhotoCell.m in Sources */,
 				0F8EDB651FB1F779003C92D6 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
+				0F77CB3D20D267C60095C46B /* XXTESingleActionView.m in Sources */,
 				0F5FE3C61FF3F7DF00D54F26 /* XXTEAutoLabel.m in Sources */,
 				0F8EDB661FB1F779003C92D6 /* UINavigationController+StatusBar.m in Sources */,
 				0F8EDB671FB1F779003C92D6 /* UIImagePickerController+StatusBar.m in Sources */,
@@ -5559,7 +5561,7 @@
 				D6686F481F4AEF32004403D0 /* UIControl+BlockTarget.m in Sources */,
 				52512440558639F0CA2A63C6 /* SKInclude.m in Sources */,
 				D6E141291F5032AB00D78CB9 /* XXTPixelFlagView.m in Sources */,
-				0F5D6C002010DF1500BD1DDC /* RMCloudComingSoon.m in Sources */,
+				0F5D6C002010DF1500BD1DDC /* XXTESingleActionView.m in Sources */,
 				D64323891F8B79A3009477BE /* XXTEUIViewController.m in Sources */,
 				D6E141191F5032AB00D78CB9 /* XXTPickerInsetsLabel.m in Sources */,
 				0F4EE36E1FC1A979003FF5FD /* XXTEInstallerViewController.m in Sources */,
@@ -5900,7 +5902,7 @@
 				D60FE72C1FE2369300954818 /* UIControl+BlockTarget.m in Sources */,
 				D60FE72D1FE2369300954818 /* SKInclude.m in Sources */,
 				D60FE72E1FE2369300954818 /* XXTPixelFlagView.m in Sources */,
-				0F5D6C012010DF1500BD1DDC /* RMCloudComingSoon.m in Sources */,
+				0F5D6C012010DF1500BD1DDC /* XXTESingleActionView.m in Sources */,
 				D60FE72F1FE2369300954818 /* XXTEUIViewController.m in Sources */,
 				D60FE7301FE2369300954818 /* XXTPickerInsetsLabel.m in Sources */,
 				D60FE7311FE2369300954818 /* XXTEInstallerViewController.m in Sources */,
@@ -5986,13 +5988,13 @@
 			path = .;
 			sourceTree = "<group>";
 		};
-		0F5D6C082010E3A600BD1DDC /* RMCloudComingSoon.xib */ = {
+		0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0F5D6C072010E3A600BD1DDC /* Base */,
 				0F5D6C0A2010E3A800BD1DDC /* zh-Hans */,
 			);
-			name = RMCloudComingSoon.xib;
+			name = XXTESingleActionView.xib;
 			sourceTree = "<group>";
 		};
 		0F8EDCCB1FB203AB003C92D6 /* XXTEBuiltInDefaults.AppStore.plist */ = {

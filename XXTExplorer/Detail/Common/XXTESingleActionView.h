@@ -1,5 +1,5 @@
 //
-//  RMCloudComingSoon.h
+//  XXTESingleActionView.h
 //  XXTExplorer
 //
 //  Created by Zheng on 18/01/2018.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RMCloudComingSoon : UIView
+@interface XXTESingleActionView : UIView
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @end

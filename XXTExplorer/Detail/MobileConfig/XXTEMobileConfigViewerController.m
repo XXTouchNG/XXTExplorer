@@ -10,10 +10,11 @@
 #import "XXTExplorerEntryMobileConfigReader.h"
 
 #import <LGAlertView/LGAlertView.h>
+#import "XXTESingleActionView.h"
 
 @interface XXTEMobileConfigViewerController ()
 
-@property (nonatomic, strong) UIButton *launchButton;
+@property (nonatomic, strong) XXTESingleActionView *actionView;
 
 @end
 
@@ -55,7 +56,7 @@
     }
     
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.launchButton];
+    [self.view addSubview:self.actionView];
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
@@ -65,38 +66,30 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!_isFirstLoaded) {
-//        [self launchButtonTapped:self.launchButton];
         _isFirstLoaded = YES;
     }
 }
 
 #pragma mark - UIView Getters
 
-- (UIButton *)launchButton {
-    if (!_launchButton) {
-        UIFont *font = nil;
-        XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 8.2, *)) {
-            font = [UIFont systemFontOfSize:17.f weight:UIFontWeightLight];
-        } else {
-            font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.f];
-        }
-        XXTE_END_IGNORE_PARTIAL
-        NSString *title = NSLocalizedString(@"Continue in Safari", nil);
-        _launchButton = [[UIButton alloc] init];
-        _launchButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        [_launchButton addTarget:self action:@selector(launchButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [_launchButton setAttributedTitle:[[NSAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: XXTColorDefault()}] forState:UIControlStateNormal];
-        [_launchButton setAttributedTitle:[[NSAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [XXTColorDefault() colorWithAlphaComponent:0.5]}] forState:UIControlStateHighlighted];
-        [_launchButton sizeToFit];
-        _launchButton.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
+- (XXTESingleActionView *)actionView {
+    if (!_actionView) {
+        XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
+        actionView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        actionView.iconImageView.image = [XXTExplorerEntryMobileConfigReader defaultImage];
+        actionView.titleLabel.text = NSLocalizedString(@"Continue in Safari", nil);
+        actionView.descriptionLabel.text = @"";
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(launchButtonTapped:)];
+        [actionView addGestureRecognizer:tapGesture];
+        _actionView = actionView;
     }
-    return _launchButton;
+    return _actionView;
 }
 
 #pragma mark - Actions
 
-- (void)launchButtonTapped:(UIButton *)sender {
+- (void)launchButtonTapped:(UIGestureRecognizer *)sender {
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Redirect Confirm", nil) message:NSLocalizedString(@"You will be redirected to \"Safari\" and \"Preferences\".\nFollow the instruction to finish configuration.", nil) style:LGAlertViewStyleAlert buttonTitles:@[] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Continue", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {

@@ -11,7 +11,7 @@
 #import "RMCloudMoreCell.h"
 #import "RMCloudProjectViewController.h"
 #import "RMCloudLoadingView.h"
-#import "RMCloudComingSoon.h"
+#import "XXTESingleActionView.h"
 
 #import "XXTENavigationController.h"
 
@@ -29,7 +29,7 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSMutableArray <RMProject *> *projects;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
-@property (nonatomic, strong) RMCloudComingSoon *comingSoonView;
+@property (nonatomic, strong) XXTESingleActionView *comingSoonView;
 @property (nonatomic, strong) id<UIViewControllerPreviewing> previewingContext;
 
 @end
@@ -159,7 +159,7 @@ XXTE_END_IGNORE_PARTIAL
         toastError(self, error);
         if (error.code != RMApiErrorCode) {
             UITableView *tableView = self.tableView;
-            RMCloudComingSoon *comingSoonView = self.comingSoonView;
+            XXTESingleActionView *comingSoonView = self.comingSoonView;
             comingSoonView.titleLabel.text =
             [NSString stringWithFormat:NSLocalizedString(@"Error", nil)];
             comingSoonView.descriptionLabel.text =
@@ -220,9 +220,9 @@ XXTE_END_IGNORE_PARTIAL
     return _pawAnimation;
 }
 
-- (RMCloudComingSoon *)comingSoonView {
+- (XXTESingleActionView *)comingSoonView {
     if (!_comingSoonView) {
-        RMCloudComingSoon *comingSoonView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudComingSoon class]) owner:nil options:nil] lastObject];
+        XXTESingleActionView *comingSoonView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
         comingSoonView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
         comingSoonView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         comingSoonView.hidden = YES;

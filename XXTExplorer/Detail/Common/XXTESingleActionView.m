@@ -1,14 +1,14 @@
 //
-//  RMCloudComingSoon.m
+//  XXTESingleActionView.m
 //  XXTExplorer
 //
 //  Created by Zheng on 18/01/2018.
 //  Copyright © 2018 Zheng. All rights reserved.
 //
 
-#import "RMCloudComingSoon.h"
+#import "XXTESingleActionView.h"
 
-@implementation RMCloudComingSoon
+@implementation XXTESingleActionView
 
 /*
 // Only override drawRect: if you perform custom drawing.

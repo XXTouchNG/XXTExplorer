@@ -12,7 +12,7 @@
 #import "RMCloudTrendsCell.h"
 
 #import "RMCloudLoadingView.h"
-#import "RMCloudComingSoon.h"
+#import "XXTESingleActionView.h"
 
 #import "RMCloudProjectViewController.h"
 
@@ -30,7 +30,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) RMCloudTrendsCell *trendsCell;
 @property (nonatomic, strong) RMCloudLoadingView *pawAnimation;
-@property (nonatomic, strong) RMCloudComingSoon *comingSoonView;
+@property (nonatomic, strong) XXTESingleActionView *comingSoonView;
 
 XXTE_START_IGNORE_PARTIAL
 @property (nonatomic, strong, readonly) UISearchController *searchController;
@@ -159,7 +159,7 @@ XXTE_END_IGNORE_PARTIAL
         toastError(self, error);
         if (error.code != RMApiErrorCode) {
             UITableView *tableView = self.tableView;
-            RMCloudComingSoon *comingSoonView = self.comingSoonView;
+            XXTESingleActionView *comingSoonView = self.comingSoonView;
             comingSoonView.titleLabel.text =
             [NSString stringWithFormat:NSLocalizedString(@"Error", nil)];
             comingSoonView.descriptionLabel.text =
@@ -204,9 +204,9 @@ XXTE_END_IGNORE_PARTIAL
     return _pawAnimation;
 }
 
-- (RMCloudComingSoon *)comingSoonView {
+- (XXTESingleActionView *)comingSoonView {
     if (!_comingSoonView) {
-        RMCloudComingSoon *comingSoonView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([RMCloudComingSoon class]) owner:nil options:nil] lastObject];
+        XXTESingleActionView *comingSoonView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
         comingSoonView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
         comingSoonView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         comingSoonView.hidden = YES;
