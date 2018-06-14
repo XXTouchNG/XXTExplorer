@@ -57,6 +57,7 @@
         }
     }
     _entryIconImage = iconImage;
+    _entryExtensionDescription = @"SQLite Database";
     _entryViewerDescription = [XXTEDbTableListViewController viewerName];
 }
 

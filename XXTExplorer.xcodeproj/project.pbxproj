@@ -2761,15 +2761,13 @@
 		0F5EB53C1F0A9ED80016016A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				0F77CB3F20D282EC0095C46B /* View */,
 				0F6679DF1F51635C0072C177 /* NSString+HTMLEscape.h */,
 				0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */,
 				0F5EB53D1F0A9EF40016016A /* XXTECommonWebViewController.h */,
 				0F5EB53E1F0A9EF40016016A /* XXTECommonWebViewController.m */,
 				0F222A19202F27F100EF2C27 /* UIViewController+DetailCloseItem.h */,
 				0F222A1A202F27F100EF2C27 /* UIViewController+DetailCloseItem.m */,
-				0F5D6BFE2010DF1500BD1DDC /* XXTESingleActionView.h */,
-				0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */,
-				0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2949,6 +2947,16 @@
 				0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0F77CB3F20D282EC0095C46B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0F5D6BFE2010DF1500BD1DDC /* XXTESingleActionView.h */,
+				0F5D6BFF2010DF1500BD1DDC /* XXTESingleActionView.m */,
+				0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		0F8093EF1F547088003D5894 /* Shimmering */ = {

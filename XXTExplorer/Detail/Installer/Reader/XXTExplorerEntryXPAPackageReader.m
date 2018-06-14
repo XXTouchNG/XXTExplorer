@@ -44,7 +44,6 @@
     _editable = NO;
     NSString *entryExtension = [path pathExtension];
     NSString *entryBaseExtension = [entryExtension lowercaseString];
-    NSString *entryUpperedExtension = [entryExtension uppercaseString];
     UIImage *iconImage = [self.class defaultImage];
     {
         UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
@@ -53,7 +52,7 @@
         }
     }
     _entryIconImage = iconImage;
-    _entryExtensionDescription = [NSString stringWithFormat:@"%@ Package", entryUpperedExtension];
+    _entryExtensionDescription = @"XXTouch Package";
     _entryViewerDescription = [XXTEInstallerViewController viewerName];
 }
 

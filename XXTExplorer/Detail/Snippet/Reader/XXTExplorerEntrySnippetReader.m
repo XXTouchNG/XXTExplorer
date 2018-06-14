@@ -56,7 +56,6 @@
     _editable = YES;
     NSString *entryExtension = [path pathExtension];
     NSString *entryBaseExtension = [entryExtension lowercaseString];
-    NSString *entryUpperedExtension = [entryExtension uppercaseString];
     UIImage *iconImage = [self.class defaultImage];
     {
         UIImage *extensionIconImage = [UIImage imageNamed:[NSString stringWithFormat:kXXTEFileTypeImageNameFormat, entryBaseExtension]];
@@ -65,7 +64,7 @@
         }
     }
     _entryIconImage = iconImage;
-    _entryExtensionDescription = [NSString stringWithFormat:@"%@ Document", entryUpperedExtension];
+    _entryExtensionDescription = @"Code Snippet";
     _entryViewerDescription = [XXTESnippetViewerController viewerName];
     [self parseSnippetForEntryAtPath:path];
 }

@@ -58,7 +58,11 @@
         }
     }
     _entryIconImage = iconImage;
-    _entryExtensionDescription = [NSString stringWithFormat:@"%@ Package", entryUpperedExtension];
+    if ([entryUpperedExtension isEqualToString:@"DEB"]) {
+        _entryExtensionDescription = @"Debian Package";
+    } else if ([entryUpperedExtension isEqualToString:@"IPA"]) {
+        _entryExtensionDescription = @"iTunes Package Archive";
+    }
     _entryViewerDescription = [XXTEPackageViewerController viewerName];
 }
 

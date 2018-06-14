@@ -60,7 +60,9 @@
         }
     }
     _entryIconImage = iconImage;
-    _entryExtensionDescription = [NSString stringWithFormat:@"%@ Script", entryUpperedExtension];
+    if ([entryUpperedExtension isEqualToString:@"LUA"]) {
+        _entryExtensionDescription = @"Lua Script";
+    }
     _entryViewerDescription = [XXTETerminalViewController viewerName];
 }
 

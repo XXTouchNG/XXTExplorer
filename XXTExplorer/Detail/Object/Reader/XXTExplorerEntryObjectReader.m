@@ -59,7 +59,11 @@
         }
     }
     _entryIconImage = iconImage;
-    _entryExtensionDescription = [NSString stringWithFormat:@"%@ Document", entryUpperedExtension];
+    if ([entryUpperedExtension isEqualToString:@"JSON"]) {
+        _entryExtensionDescription = @"JSON";
+    } else if ([entryUpperedExtension isEqualToString:@"PLIST"]) {
+        _entryExtensionDescription = @"Property List";
+    }
     _entryViewerDescription = [XXTEObjectViewController viewerName];
 }
 
