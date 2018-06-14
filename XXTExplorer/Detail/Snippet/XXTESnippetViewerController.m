@@ -13,13 +13,28 @@
 #import "XXTPickerSnippetTask.h"
 #import "XXTPickerFactory.h"
 
+#import "XXTExplorerEntry.h"
+#import "XXTExplorerEntryParser.h"
+#import "XXTESingleActionView.h"
+
 @interface XXTESnippetViewerController () <XXTPickerFactoryDelegate>
 
-@property (nonatomic, strong) UIBarButtonItem *launchItem;
+@property (nonatomic, strong) XXTESingleActionView *actionView;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @end
 
 @implementation XXTESnippetViewerController
+
+@synthesize entryPath = _entryPath;
+@synthesize awakeFromOutside = _awakeFromOutside;
+
+- (instancetype)initWithPath:(NSString *)path {
+    if (self = [super init]) {
+        _entryPath = path;
+    }
+    return self;
+}
 
 + (NSString *)viewerName {
     return NSLocalizedString(@"Snippet Viewer", nil);
@@ -35,22 +50,59 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.title.length == 0) {
+        if (self.entryPath) {
+            NSString *entryName = [self.entryPath lastPathComponent];
+            self.title = entryName;
+        } else {
+            self.title = [[self class] viewerName];
+        }
+    }
     
-    self.applicationBarButtonItems = @[ self.launchItem ];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    {
+        XXTESingleActionView *actionView = self.actionView;
+        NSError *parseError = nil;
+        XXTExplorerEntryParser *parser = [[XXTExplorerEntryParser alloc] init];
+        XXTExplorerEntry *entry = [parser entryOfPath:self.entryPath withError:&parseError];
+        actionView.titleLabel.text = [entry localizedDisplayName];
+        actionView.descriptionLabel.text = [entry localizedDescription];
+        [self.view addSubview:actionView];
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
 }
 
 #pragma mark - UIView Getters
 
-- (UIBarButtonItem *)launchItem {
-    if (!_launchItem) {
-        _launchItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(launchItemTapped:)];
+- (XXTESingleActionView *)actionView {
+    if (!_actionView) {
+        XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
+        actionView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        actionView.iconImageView.image = [XXTExplorerEntrySnippetReader defaultImage];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(launchItemTapped:)];
+        [actionView addGestureRecognizer:tapGesture];
+        _actionView = actionView;
     }
-    return _launchItem;
+    return _actionView;
+}
+
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
 }
 
 #pragma mark - Actions
 
-- (void)launchItemTapped:(UIBarButtonItem *)sender {
+- (void)launchItemTapped:(UIGestureRecognizer *)sender {
     NSString *path = self.entryPath;
     NSError *initError = nil;
     XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:path Error:&initError];
@@ -67,6 +119,26 @@
     XXTPickerFactory *pickerFactory = [XXTPickerFactory sharedInstance];
     pickerFactory.delegate = self;
     [pickerFactory beginTask:task fromViewController:self];
+}
+
+- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
+    if (!self.entryPath) return;
+    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareUrl) return;
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 9.0, *)) {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+        if (XXTE_IS_IPAD) {
+            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+            popoverPresentationController.barButtonItem = sender;
+        }
+        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    } else {
+        toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - XXTPickerFactoryDelegate

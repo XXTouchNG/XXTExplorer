@@ -6,8 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTECodeViewerController.h"
+#import "XXTEViewer.h"
 
-@interface XXTESnippetViewerController : XXTECodeViewerController
+@interface XXTESnippetViewerController : UIViewController <XXTEViewer>
 
 @end

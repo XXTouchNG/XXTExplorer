@@ -15,6 +15,7 @@
 @interface XXTEMobileConfigViewerController ()
 
 @property (nonatomic, strong) XXTESingleActionView *actionView;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @end
 
@@ -61,6 +62,7 @@
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,16 +77,24 @@
 - (XXTESingleActionView *)actionView {
     if (!_actionView) {
         XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
-        actionView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2.0, CGRectGetHeight(self.view.bounds) / 2.0);
-        actionView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        actionView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         actionView.iconImageView.image = [XXTExplorerEntryMobileConfigReader defaultImage];
         actionView.titleLabel.text = NSLocalizedString(@"Continue in Safari", nil);
-        actionView.descriptionLabel.text = @"";
+        actionView.descriptionLabel.text = NSLocalizedString(@"Tap here to setup configuration file in Safari.", nil);
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(launchButtonTapped:)];
         [actionView addGestureRecognizer:tapGesture];
         _actionView = actionView;
     }
     return _actionView;
+}
+
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
 }
 
 #pragma mark - Actions
@@ -124,6 +134,26 @@
     if ([sharedApplication canOpenURL:accessURL]) {
         [sharedApplication openURL:accessURL];
     }
+}
+
+- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
+    if (!self.entryPath) return;
+    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareUrl) return;
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 9.0, *)) {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+        if (XXTE_IS_IPAD) {
+            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+            popoverPresentationController.barButtonItem = sender;
+        }
+        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    } else {
+        toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
+    }
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Memory

@@ -15,9 +15,9 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 
 @interface XXTETextViewController ()
 
-@property (nonatomic, strong) UITextView *logTextView;
-@property (nonatomic, strong) UIBarButtonItem *clearItem;
+@property (nonatomic, strong) UITextView *contentTextView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @end
 
@@ -61,17 +61,17 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
     }
     XXTE_END_IGNORE_PARTIAL
-    self.navigationItem.rightBarButtonItem = self.clearItem;
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
+    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     if (@available(iOS 10.0, *)) {
-        [self.logTextView setRefreshControl:self.refreshControl];
+        [self.contentTextView setRefreshControl:self.refreshControl];
     }
     
-    [self.view addSubview:self.logTextView];
+    [self.view addSubview:self.contentTextView];
     [self loadTextDataFromEntry];
 }
 
@@ -111,20 +111,18 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
         return;
     }
     if (stringPart.length == 0) {
-        [self.clearItem setEnabled:NO];
-        [self.logTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of text file \"%@\" is empty.", nil), entryPath]];
+        [self.contentTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of text file \"%@\" is empty.", nil), entryPath]];
     } else {
-        [self.clearItem setEnabled:YES];
-        [self.logTextView setText:stringPart];
+        [self.contentTextView setText:stringPart];
     }
     
-    [self.logTextView setSelectedRange:NSMakeRange(0, 0)];
+    [self.contentTextView setSelectedRange:NSMakeRange(0, 0)];
 }
 
 #pragma mark - UIView Getters
 
-- (UITextView *)logTextView {
-    if (!_logTextView) {
+- (UITextView *)contentTextView {
+    if (!_contentTextView) {
         UITextView *logTextView = [[UITextView alloc] initWithFrame:self.view.bounds];
         logTextView.selectable = YES;
         logTextView.scrollsToTop = YES;
@@ -146,17 +144,9 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
             // Fallback on earlier versions
         }
         XXTE_END_IGNORE_PARTIAL
-        _logTextView = logTextView;
+        _contentTextView = logTextView;
     }
-    return _logTextView;
-}
-
-- (UIBarButtonItem *)clearItem {
-    if (!_clearItem) {
-        UIBarButtonItem *clearItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Clear", nil) style:UIBarButtonItemStylePlain target:self action:@selector(clearItemTapped:)];
-        _clearItem = clearItem;
-    }
-    return _clearItem;
+    return _contentTextView;
 }
 
 - (UIRefreshControl *)refreshControl {
@@ -168,21 +158,34 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     return _refreshControl;
 }
 
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
+}
+
 #pragma mark - Actions
 
-- (void)clearItemTapped:(UIBarButtonItem *)sender {
-    NSString *entryPath = self.entryPath;
-    if (!entryPath) {
-        return;
+- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
+    if (!self.entryPath) return;
+    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareUrl) return;
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 9.0, *)) {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+        if (XXTE_IS_IPAD) {
+            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+            popoverPresentationController.barButtonItem = sender;
+        }
+        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    } else {
+        toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
     }
-    LGAlertView *clearAlert = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Confirm", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Remove all text in \"%@\"?", nil), entryPath] style:LGAlertViewStyleActionSheet buttonTitles:@[ ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Clear Now", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
-        [alertView dismissAnimated];
-    } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-        [alertView dismissAnimated];
-        [[NSData data] writeToFile:entryPath atomically:YES];
-        [self loadTextDataFromEntry];
-    }];
-    [clearAlert showAnimated];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Memory
@@ -193,6 +196,6 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 #endif
 }
 
-@synthesize awakeFromOutside;
+@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end

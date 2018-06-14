@@ -370,6 +370,6 @@ XXTE_END_IGNORE_PARTIAL
 #endif
 }
 
-@synthesize awakeFromOutside;
+@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end

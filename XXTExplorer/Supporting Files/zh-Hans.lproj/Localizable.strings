@@ -1163,10 +1163,10 @@
 "No" = "否";
 
 /* No comment provided by engineer. */
-"No Action" = "无动作";
+"No action" = "无动作";
 
 /* No comment provided by engineer. */
-"No action" = "无动作";
+"No Action" = "无动作";
 
 /* No comment provided by engineer. */
 "No description." = "暂无描述.";
@@ -1721,6 +1721,9 @@
 
 /* No comment provided by engineer. */
 "Tap here to add a file." = "轻按以添加文件.";
+
+/* No comment provided by engineer. */
+"Tap here to setup configuration file in Safari." = "轻按此处以在 Safari 中安装描述文件.";
 
 /* No comment provided by engineer. */
 "Tap to load more..." = "轻按以加载更多...";
