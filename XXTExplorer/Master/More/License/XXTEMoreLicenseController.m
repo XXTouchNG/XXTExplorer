@@ -234,24 +234,28 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     .then(^(NSDictionary *jsonDictionary) {
         NSDictionary *dataDictionary = jsonDictionary[@"data"];
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            ((XXTEMoreTitleValueCell *)staticCells[2][0]).valueLabel.text = dataDictionary[@"zeversion"];
-            ((XXTEMoreTitleValueCell *)staticCells[2][1]).valueLabel.text = dataDictionary[@"sysversion"];
-            ((XXTEMoreTitleValueCell *)staticCells[2][2]).valueLabel.text = dataDictionary[@"devtype"];
-            ((XXTEMoreTitleValueCell *)staticCells[2][3]).valueLabel.text = dataDictionary[@"devname"];
-            ((XXTEMoreTitleValueCell *)staticCells[2][4]).valueLabel.text = dataDictionary[@"devsn"];
-            ((XXTEMoreTitleValueCell *)staticCells[2][5]).valueLabel.text = dataDictionary[@"devmac"];
-            ((XXTEMoreTitleValueCell *)staticCells[2][6]).valueLabel.text = dataDictionary[@"deviceid"];
+            ((XXTEMoreTitleValueCell *)staticCells[2][0]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"zeversion"]];
+            ((XXTEMoreTitleValueCell *)staticCells[2][1]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"sysversion"]];
+            ((XXTEMoreTitleValueCell *)staticCells[2][2]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devtype"]];
+            ((XXTEMoreTitleValueCell *)staticCells[2][3]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devname"]];
+            ((XXTEMoreTitleValueCell *)staticCells[2][4]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devsn"]];
+            ((XXTEMoreTitleValueCell *)staticCells[2][5]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devmac"]];
+            ((XXTEMoreTitleValueCell *)staticCells[2][6]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"deviceid"]];
             self.dataDictionary = dataDictionary;
         }
-        NSDictionary *sendDictionary = @{
-                                         @"did": dataDictionary[@"deviceid"],
-                                         @"sv": dataDictionary[@"sysversion"],
-                                         @"v": dataDictionary[@"zeversion"],
-                                         @"dt": dataDictionary[@"devtype"],
-                                         @"ts": [@((int)[[NSDate date] timeIntervalSince1970]) stringValue],
-                                         @"sn": dataDictionary[@"devsn"],
-                                         };
-        return @[uAppLicenseServerCommandUrl(@"device_info"), sendDictionary];
+        NSMutableDictionary *sendDict = [@{} mutableCopy];
+        sendDict[@"ts"] = [@((int)[[NSDate date] timeIntervalSince1970]) stringValue];
+        if (dataDictionary[@"deviceid"])
+            sendDict[@"did"] = dataDictionary[@"deviceid"];
+        if (dataDictionary[@"sysversion"])
+            sendDict[@"sv"] = dataDictionary[@"sysversion"];
+        if (dataDictionary[@"zeversion"])
+            sendDict[@"v"] = dataDictionary[@"zeversion"];
+        if (dataDictionary[@"devtype"])
+            sendDict[@"dt"] = dataDictionary[@"devtype"];
+        if (dataDictionary[@"devsn"])
+            sendDict[@"sn"] = dataDictionary[@"devsn"];
+        return @[uAppLicenseServerCommandUrl(@"device_info"), sendDict];
     })
     .then(sendCloudApiRequest)
     .then(^(NSDictionary *licenseDictionary) {
@@ -587,16 +591,21 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDictionary) {
         NSDictionary *dataDictionary = jsonDictionary[@"data"];
-        NSDictionary *sendDictionary = @{
-                                         @"did": dataDictionary[@"deviceid"],
-                                         @"code": licenseCode,
-                                         @"sv": dataDictionary[@"sysversion"],
-                                         @"v": dataDictionary[@"zeversion"],
-                                         @"dt": dataDictionary[@"devtype"],
-                                         @"ts": [@((int)[[NSDate date] timeIntervalSince1970]) stringValue],
-                                         @"sn": dataDictionary[@"devsn"],
-                                         };
-        return @[uAppLicenseServerCommandUrl(@"bind_code"), sendDictionary];
+        NSMutableDictionary *sendDict = [@{} mutableCopy];
+        sendDict[@"ts"] = [@((int)[[NSDate date] timeIntervalSince1970]) stringValue];
+        if (licenseCode)
+            sendDict[@"code"] = licenseCode;
+        if (dataDictionary[@"deviceid"])
+            sendDict[@"did"] = dataDictionary[@"deviceid"];
+        if (dataDictionary[@"sysversion"])
+            sendDict[@"sv"] = dataDictionary[@"sysversion"];
+        if (dataDictionary[@"zeversion"])
+            sendDict[@"v"] = dataDictionary[@"zeversion"];
+        if (dataDictionary[@"devtype"])
+            sendDict[@"dt"] = dataDictionary[@"devtype"];
+        if (dataDictionary[@"devsn"])
+            sendDict[@"sn"] = dataDictionary[@"devsn"];
+        return @[uAppLicenseServerCommandUrl(@"bind_code"), sendDict];
     })
     .then(sendCloudApiRequest)
     .then(^(NSDictionary *licenseDictionary) {
@@ -621,9 +630,17 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         UIImageView *licenseImageView = [[UIImageView alloc] initWithImage:licenseImage];
         [licenseImageView setContentMode:UIViewContentModeScaleAspectFit];
         
-        NSTimeInterval deviceExpirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
+        NSTimeInterval deviceExpirationInterval = 0;
+        if ([licenseDictionary[@"data"] isKindOfClass:[NSDictionary class]] && [licenseDictionary[@"data"][@"deviceExpireDate"] isKindOfClass:[NSNumber class]])
+        {
+            deviceExpirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
+        }
         // !!! You cannot use expireDate here !!!
-        NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+        NSTimeInterval nowInterval = 0;
+        if ([licenseDictionary[@"data"] isKindOfClass:[NSDictionary class]] && [licenseDictionary[@"data"][@"nowDate"] isKindOfClass:[NSNumber class]])
+        {
+            nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+        }
         
         [self updateCellExpirationTime:deviceExpirationInterval
                            nowInterval:nowInterval];
@@ -812,12 +829,17 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     NSString *licenseCode = self.licenseField.text;
     UIFont *licenseFont = [UIFont fontWithName:@"Menlo-Regular" size:32.0 * scale];
     if (!licenseCode || !licenseFont) return;
+    if (![licenseDictionary[@"data"] isKindOfClass:[NSDictionary class]]) return;
     
-    NSString *deviceSN = licenseDictionary[@"data"][@"deviceSerialNumber"];
+    NSString *deviceSN = [NSString stringWithFormat:@"%@", licenseDictionary[@"data"][@"deviceSerialNumber"]];
     UIFont *deviceSNFont = [UIFont fontWithName:@"Menlo-Regular" size:14.0 * scale];
     if (!deviceSN || !deviceSNFont) return;
     
-    NSTimeInterval nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+    NSTimeInterval nowInterval = 0;
+    if ([licenseDictionary[@"data"][@"nowDate"] isKindOfClass:[NSNumber class]])
+    {
+        nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+    }
     NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -826,26 +848,36 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     
     NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
     
-    NSTimeInterval expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
+    NSTimeInterval expirationInterval = 0;
+    if ([licenseDictionary[@"data"][@"expireDate"] isKindOfClass:[NSNumber class]])
+    {
+        expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
+    }
     NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
     
     NSTimeInterval interval = [expirationDate timeIntervalSinceDate:nowDate];
     NSMutableString *intervalString = [[NSMutableString alloc] init];
-    int intervalDay = (int)floor(interval / 86400);
-    if (intervalDay > 1)
+    if ([licenseDictionary[@"data"][@"cardType"] isKindOfClass:[NSString class]])
     {
-        [intervalString appendFormat:NSLocalizedString(@"%d Days ", nil), intervalDay];
-    } else if (intervalDay == 1) {
-        [intervalString appendFormat:NSLocalizedString(@"%d Day ", nil), intervalDay];
+        [intervalString appendString:licenseDictionary[@"data"][@"cardType"]];
     }
-    int intervalHour = (int)floor((interval - intervalDay * 86400) / 3600);
-    if (intervalHour > 1) {
-        [intervalString appendFormat:NSLocalizedString(@"%d Hours ", nil), intervalHour];
-    } else if (intervalHour == 1) {
-        [intervalString appendFormat:NSLocalizedString(@"%d Hour ", nil), intervalHour];
-    }
-    if (intervalString.length == 0) {
-        [intervalString appendString:NSLocalizedString(@"Test", nil)];
+    else
+    {
+        int intervalDay = (int)floor(interval / 86400);
+        if (intervalDay > 1) {
+            [intervalString appendFormat:NSLocalizedString(@"%d Days ", nil), intervalDay];
+        } else if (intervalDay == 1) {
+            [intervalString appendFormat:NSLocalizedString(@"%d Day ", nil), intervalDay];
+        }
+        int intervalHour = (int)floor((interval - intervalDay * 86400) / 3600);
+        if (intervalHour > 1) {
+            [intervalString appendFormat:NSLocalizedString(@"%d Hours ", nil), intervalHour];
+        } else if (intervalHour == 1) {
+            [intervalString appendFormat:NSLocalizedString(@"%d Hour ", nil), intervalHour];
+        }
+        if (intervalString.length == 0) {
+            [intervalString appendString:NSLocalizedString(@"Test", nil)];
+        }
     }
     
     NSString *nowString = [NSString stringWithFormat:@"%@ %@", nowDateString, intervalString];
