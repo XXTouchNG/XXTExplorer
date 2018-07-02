@@ -120,7 +120,7 @@ CHECKOUT OPTIONS:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
     :git: https://github.com/XXTouchAssistant/UnrarKit.git
   XUI:
-    :commit: b7424a03bb1756a718dadab3c14afa0852e0f567
+    :commit: 484c02278cdb04eb63b39f34d2c7668a94cc1e0b
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:

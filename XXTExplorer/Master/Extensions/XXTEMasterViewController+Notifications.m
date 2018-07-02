@@ -14,7 +14,6 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryService.h"
-#import "NSString+QueryItems.h"
 
 #import "XXTENavigationController.h"
 #import "XXTECommonWebViewController.h"
@@ -22,17 +21,24 @@
 #import "XXTExplorerViewController.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
+#import "NSString+QueryItems.h"
 #import "UIViewController+topMostViewController.h"
 
+#import <XUI/XUIViewController.h>
+#import <XUI/XUINavigationController.h>
+
 #ifndef APPSTORE
-    #import "XXTExplorerDefaults.h"
-    
-    #import "XXTEMoreLicenseController.h"
-    #import "XXTEDownloadViewController.h"
-    #import <PromiseKit/PromiseKit.h>
-    #import <PromiseKit/NSURLConnection+PromiseKit.h>
-    #import "RMCloudNavigationController.h"
-    #import "RMCloudProjectViewController.h"
+
+#import "XXTExplorerDefaults.h"
+
+#import "XXTEMoreLicenseController.h"
+#import "XXTEDownloadViewController.h"
+#import "RMCloudNavigationController.h"
+#import "RMCloudProjectViewController.h"
+
+#import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
+
 #endif
 
 @implementation XXTEMasterViewController (Notifications)
@@ -424,21 +430,33 @@
         toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configurator can't be found.", nil), entryName]), 5.0);
         return NO;
     }
-    UIViewController <XXTEViewer> *configurator = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail configurationName:name];
-    if (!configurator) {
+    UIViewController <XXTEViewer> *controller = [[XXTExplorerViewController explorerEntryService] configuratorForEntry:entryDetail configurationName:name];
+    if (!controller) {
         toastMessageWithDelay(self, ([NSString stringWithFormat:NSLocalizedString(@"File \"%@\" can't be configured because its configuration file can't be found or loaded.", nil), entryName]), 5.0);
         return NO;
     }
-    configurator.awakeFromOutside = interactive;
-    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:configurator];
-    navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigationController animated:YES completion:^() {
-        if (interactive) {
-            toastMessageWithDelay(configurator, NSLocalizedString(@"Press \"Home\" button to quit.\nTap to dismiss this notice.", nil), 6.0);
+    controller.awakeFromOutside = interactive;
+    if ([controller isKindOfClass:[UIViewController class]] &&
+        [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
+        UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
+        {
+            UIViewController *navigationController = nil;
+            if ([viewer isKindOfClass:[XUIViewController class]]) {
+                navigationController = [[XUINavigationController alloc] initWithRootViewController:viewer];
+            } else {
+                navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
+            }
+            navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+            navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self presentViewController:navigationController animated:YES completion:^() {
+                if (interactive) {
+                    toastMessageWithDelay(controller, NSLocalizedString(@"Press \"Home\" button to quit.\nTap to dismiss this notice.", nil), 6.0);
+                }
+            }];
+            return YES;
         }
-    }];
-    return YES;
+    }
+    return NO;
 }
 
 #pragma mark - Button Actions
