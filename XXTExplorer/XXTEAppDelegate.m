@@ -510,7 +510,7 @@ XXTE_END_IGNORE_PARTIAL
         if (!rootPath) {
             rootPath = ({
 #ifndef APPSTORE
-    #ifndef DEBUG
+    #ifdef ARCHIVE
                 NSString *mainPath = uAppDefine(@"MAIN_PATH");
     #else
                 NSString *mainPath = nil;

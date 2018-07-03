@@ -6,6 +6,21 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		0F31D42D20EB2F0F0091130D /* XXTExplorer-Debug */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 0F31D42E20EB2F100091130D /* Build configuration list for PBXAggregateTarget "XXTExplorer-Debug" */;
+			buildPhases = (
+				0F31D43320EB2F1A0091130D /* ShellScript */,
+			);
+			dependencies = (
+				0F31D43220EB2F160091130D /* PBXTargetDependency */,
+			);
+			name = "XXTExplorer-Debug";
+			productName = "XXTExplorer-Debug";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		0F00CAE01F66EECB00692913 /* UIImage+ColoredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */; };
 		0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
@@ -1325,6 +1340,16 @@
 		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0F31D43120EB2F160091130D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FA7ABE21ED641A3003EAD7D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D60FE64E1FE2369300954818;
+			remoteInfo = "XXTExplorer-Archive";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		D6FD9143203E987900CC0362 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -1421,6 +1446,7 @@
 		0F2DAE522013158C001593C9 /* RMCloudTrendsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RMCloudTrendsCell.xib; sourceTree = "<group>"; };
 		0F2DAE582013173D001593C9 /* RMHotWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMHotWord.h; sourceTree = "<group>"; };
 		0F2DAE592013173D001593C9 /* RMHotWord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMHotWord.m; sourceTree = "<group>"; };
+		0F31D43420EB90850091130D /* _XXTAppEntitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = _XXTAppEntitlements.xml; sourceTree = "<group>"; };
 		0F349BB21F62F474004143B7 /* strings.tmLanguage */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = strings.tmLanguage; sourceTree = "<group>"; };
 		0F3508B81F163DCB000403FD /* XXTExplorerEntryXPPMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPMeta.h; sourceTree = "<group>"; };
 		0F3508BA1F163FE0000403FD /* XXTExplorerEntryXPPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryXPPReader.h; sourceTree = "<group>"; };
@@ -3106,6 +3132,7 @@
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
 				0FC598A61FB216A1001F918B /* Info.AppStore.plist */,
 				0FA1A5021FF13CD10021648B /* Archive-Info.plist */,
+				0F31D43420EB90850091130D /* _XXTAppEntitlements.xml */,
 				0FE1629C1F3C8FFC003064B2 /* InfoPlist.strings */,
 				0F3508C21F166A69000403FD /* Localizable.strings */,
 				0FE1E4361F189A1600055E02 /* Meta.strings */,
@@ -4437,6 +4464,10 @@
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Zheng;
 				TargetAttributes = {
+					0F31D42D20EB2F0F0091130D = {
+						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
+					};
 					0F8EDB551FB1F779003C92D6 = {
 						DevelopmentTeam = GXZ23M5TP2;
 					};
@@ -4471,6 +4502,7 @@
 			projectRoot = "";
 			targets = (
 				0FA7ABE91ED641A3003EAD7D /* XXTExplorer */,
+				0F31D42D20EB2F0F0091130D /* XXTExplorer-Debug */,
 				D60FE64E1FE2369300954818 /* XXTExplorer-Archive */,
 				0F8EDB551FB1F779003C92D6 /* XXTouch */,
 			);
@@ -4824,6 +4856,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0F31D43320EB2F1A0091130D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SRC=\"$TARGET_BUILD_DIR/XXTExplorer-Archive.app\"\nMID=\"$TARGET_BUILD_DIR/XXTExplorer.app\"\nDST=\"/Applications\"\nrm -r \"$MID\"\ncp -r \"$SRC\" \"$MID\"\nldid -S\"$SRCROOT/XXTExplorer/Supporting Files/_XXTAppEntitlements.xml\" \"$MID/XXTExplorer-Archive\"\n\nssh root@127.0.0.1 -p 2222 \"rm -r /Applications/XXTExplorer.app\"\nssh root@127.0.0.1 -p 2222 \"mkdir -p /Applications/XXTExplorer.app\"\nscp -rP 2222 \"$MID\" root@127.0.0.1:\"$DST\"\nssh root@127.0.0.1 -p 2222 \"chown -R root:wheel /Applications/XXTExplorer.app\"\nssh root@127.0.0.1 -p 2222 \"su mobile -c uicache\"\n";
+		};
 		0F8EDCC11FB1F779003C92D6 /* Localization */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5978,6 +6023,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0F31D43220EB2F160091130D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D60FE64E1FE2369300954818 /* XXTExplorer-Archive */;
+			targetProxy = 0F31D43120EB2F160091130D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		0F222A18202F1C0F00EF2C27 /* LaunchScreen.AppStore.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -6078,6 +6131,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0F31D42F20EB2F100091130D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0F31D43020EB2F100091130D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		0F8EDCC31FB1F779003C92D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7467C452DEE4D5A4B71BF9C8 /* Pods-XXTouch.debug.xcconfig */;
@@ -6713,6 +6784,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0F31D42E20EB2F100091130D /* Build configuration list for PBXAggregateTarget "XXTExplorer-Debug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F31D42F20EB2F100091130D /* Debug */,
+				0F31D43020EB2F100091130D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0F8EDCC21FB1F779003C92D6 /* Build configuration list for PBXNativeTarget "XXTouch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

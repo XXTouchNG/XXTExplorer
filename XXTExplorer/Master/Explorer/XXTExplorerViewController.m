@@ -315,11 +315,7 @@ XXTE_END_IGNORE_PARTIAL
 - (BOOL)loadEntryListDataWithError:(NSError **)error {
     
     {
-#ifdef DEBUG
-        BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, YES);
-#else
         BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO);
-#endif
         [self.homeEntryList removeAllObjects];
         if ([self showsHomeSeries] && homeEnabled &&
             (self == [self.navigationController.viewControllers firstObject]) && !self.isPreviewed) {

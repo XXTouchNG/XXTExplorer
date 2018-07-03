@@ -626,20 +626,21 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     .then(^(NSArray *licenseData) {
         
         NSDictionary *licenseDictionary = licenseData[0];
+        NSDictionary *dataDictionary = licenseDictionary[@"data"];
         UIImage *licenseImage = licenseData[1];
         UIImageView *licenseImageView = [[UIImageView alloc] initWithImage:licenseImage];
         [licenseImageView setContentMode:UIViewContentModeScaleAspectFit];
         
         NSTimeInterval deviceExpirationInterval = 0;
-        if ([licenseDictionary[@"data"] isKindOfClass:[NSDictionary class]] && [licenseDictionary[@"data"][@"deviceExpireDate"] isKindOfClass:[NSNumber class]])
+        if ([dataDictionary[@"deviceExpireDate"] isKindOfClass:[NSNumber class]])
         {
-            deviceExpirationInterval = [licenseDictionary[@"data"][@"deviceExpireDate"] doubleValue];
+            deviceExpirationInterval = [dataDictionary[@"deviceExpireDate"] doubleValue];
         }
         // !!! You cannot use expireDate here !!!
         NSTimeInterval nowInterval = 0;
-        if ([licenseDictionary[@"data"] isKindOfClass:[NSDictionary class]] && [licenseDictionary[@"data"][@"nowDate"] isKindOfClass:[NSNumber class]])
+        if ([dataDictionary[@"nowDate"] isKindOfClass:[NSNumber class]])
         {
-            nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+            nowInterval = [dataDictionary[@"nowDate"] doubleValue];
         }
         
         [self updateCellExpirationTime:deviceExpirationInterval
@@ -830,15 +831,16 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     UIFont *licenseFont = [UIFont fontWithName:@"Menlo-Regular" size:32.0 * scale];
     if (!licenseCode || !licenseFont) return;
     if (![licenseDictionary[@"data"] isKindOfClass:[NSDictionary class]]) return;
+    NSDictionary *dataDictionary = licenseDictionary[@"data"];
     
     NSString *deviceSN = [NSString stringWithFormat:@"%@", licenseDictionary[@"data"][@"deviceSerialNumber"]];
     UIFont *deviceSNFont = [UIFont fontWithName:@"Menlo-Regular" size:14.0 * scale];
     if (!deviceSN || !deviceSNFont) return;
     
     NSTimeInterval nowInterval = 0;
-    if ([licenseDictionary[@"data"][@"nowDate"] isKindOfClass:[NSNumber class]])
+    if ([dataDictionary[@"nowDate"] isKindOfClass:[NSNumber class]])
     {
-        nowInterval = [licenseDictionary[@"data"][@"nowDate"] doubleValue];
+        nowInterval = [dataDictionary[@"nowDate"] doubleValue];
     }
     NSDate *nowDate = [NSDate dateWithTimeIntervalSince1970:nowInterval];
     
@@ -849,17 +851,17 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
     
     NSTimeInterval expirationInterval = 0;
-    if ([licenseDictionary[@"data"][@"expireDate"] isKindOfClass:[NSNumber class]])
+    if ([dataDictionary[@"expireDate"] isKindOfClass:[NSNumber class]])
     {
-        expirationInterval = [licenseDictionary[@"data"][@"expireDate"] doubleValue];
+        expirationInterval = [dataDictionary[@"expireDate"] doubleValue];
     }
     NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:expirationInterval];
     
     NSTimeInterval interval = [expirationDate timeIntervalSinceDate:nowDate];
     NSMutableString *intervalString = [[NSMutableString alloc] init];
-    if ([licenseDictionary[@"data"][@"cardType"] isKindOfClass:[NSString class]])
+    if ([dataDictionary[@"cardType"] isKindOfClass:[NSString class]])
     {
-        [intervalString appendString:licenseDictionary[@"data"][@"cardType"]];
+        [intervalString appendString:dataDictionary[@"cardType"]];
     }
     else
     {
