@@ -73,7 +73,10 @@
     if (nowTime - self.appearTime < 5.0)
     {
         NSTimeInterval timeLeft = round(5.0 - (nowTime - self.appearTime));
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Please read our \"Terms Of Service\" for more than 5 seconds, %ld seconds left.", nil), (NSInteger)timeLeft]);
+        int secRemain = (int)timeLeft;
+        if (secRemain < 1)
+            secRemain = 1;
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Please read our \"Terms Of Service\" for more than 5 seconds, %ld seconds left.", nil), secRemain]);
         return;
     }
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm", nil) message:NSLocalizedString(@"I Agree To \"Terms Of Service (XXTouch)\".", nil) style:LGAlertViewStyleAlert buttonTitles:@[ NSLocalizedString(@"I Agree", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
