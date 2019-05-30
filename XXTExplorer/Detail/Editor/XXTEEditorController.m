@@ -147,6 +147,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)reloadAll {
     NSString *newContent = [self loadContent];
     [self prepareForView];
+    [self reloadUI];
     [self reloadTextViewLayout];
     [self reloadTextViewProperties];
     [self reloadContent:newContent];
@@ -154,6 +155,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 }
 
 - (void)reloadSoft {
+    [self reloadUI];
     [self reloadTextViewProperties];
 }
 
@@ -299,6 +301,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
 }
 
+- (void)reloadUI {
+    BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+    XXTEEditorSearchBar *searchBar = self.searchBar;
+    [searchBar setRegexMode:useRegular];
+    [searchBar updateView];
+}
+
 - (void)reloadTextViewLayout {
     if (![self isViewLoaded]) return;
     
@@ -406,6 +415,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     NSString *newContent = [self loadContent];
     [self prepareForView];
+    [self reloadUI];
     [self reloadTextViewLayout];
     [self reloadTextViewProperties];
     [self reloadContent:newContent];
@@ -1144,14 +1154,22 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 }
 
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldBeginEditing:(UITextField *)textField {
-    self.searchAccessoryView.replaceMode = NO;
+    XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    [searchAccessoryView setAllowReplacement:!isReadOnlyMode];
+    [searchAccessoryView setReplaceMode:NO];
+    [searchAccessoryView updateAccessoryView];
     [self.textView resetSearch];
     [self searchNextMatch:searchBar.searchText];
     return YES;
 }
 
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldBeginEditing:(UITextField *)textField {
-    self.searchAccessoryView.replaceMode = YES;
+    XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    [searchAccessoryView setAllowReplacement:!isReadOnlyMode];
+    [searchAccessoryView setReplaceMode:YES];
+    [searchAccessoryView updateAccessoryView];
     [self.textView resetSearch];
     [self searchNextMatch:searchBar.searchText];
     return YES;
@@ -1170,6 +1188,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)searchAccessoryViewShouldMatchNext:(XXTEEditorSearchAccessoryView *)accessoryView {
     [self searchNextMatch:self.searchBar.searchText];
+}
+
+- (BOOL)searchAccessoryViewAllowReplacement:(XXTEEditorSearchAccessoryView *)accessoryView {
+    return YES;
 }
 
 - (void)searchAccessoryViewShouldReplace:(XXTEEditorSearchAccessoryView *)accessoryView {

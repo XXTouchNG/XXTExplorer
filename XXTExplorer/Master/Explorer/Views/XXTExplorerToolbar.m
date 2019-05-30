@@ -88,9 +88,9 @@
           flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypeAddItem],
           flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypePaste],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
           fixedSpace,
           ];
 #else
@@ -115,9 +115,9 @@
           flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypeCompress],
           flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeTrash],
-          flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypePaste],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeTrash],
           fixedSpace,
           ];
         
@@ -139,9 +139,9 @@
           flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypeAddItem],
           flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypePaste],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeSort],
           ];
 #else
         _defaultButtons =
@@ -162,9 +162,9 @@
           flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypeCompress],
           flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeTrash],
-          flexibleSpace,
           buttons[XXTExplorerToolbarButtonTypePaste],
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeTrash],
           ];
         
         _readonlyButtons =

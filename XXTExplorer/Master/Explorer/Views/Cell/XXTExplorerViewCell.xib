@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -80,15 +81,22 @@
                             <constraint firstAttribute="width" constant="4" id="HWh-9m-8VU"/>
                         </constraints>
                     </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bhs-M0-2y9">
+                        <rect key="frame" x="0.0" y="0.0" width="66" height="67.5"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="SNn-dR-AFH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="1xG-tf-S71"/>
+                    <constraint firstAttribute="bottom" secondItem="bhs-M0-2y9" secondAttribute="bottom" id="2RJ-uF-7uP"/>
                     <constraint firstItem="SNn-dR-AFH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="47m-ha-Ui8"/>
                     <constraint firstItem="bRG-I1-Xlm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="4Ur-CG-lPO"/>
                     <constraint firstAttribute="trailing" secondItem="bRG-I1-Xlm" secondAttribute="trailing" constant="8" id="7S6-lm-dNA"/>
                     <constraint firstAttribute="bottom" secondItem="bRG-I1-Xlm" secondAttribute="bottom" constant="8" id="DDN-ap-cXL"/>
                     <constraint firstItem="bRG-I1-Xlm" firstAttribute="leading" secondItem="SNn-dR-AFH" secondAttribute="trailing" constant="8" id="KIh-lp-t35"/>
+                    <constraint firstItem="bhs-M0-2y9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="NL0-2P-CAu"/>
+                    <constraint firstItem="bhs-M0-2y9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fgC-2V-f1a"/>
                     <constraint firstAttribute="bottom" secondItem="M3F-VV-JfD" secondAttribute="bottom" id="ne1-dJ-Crv"/>
+                    <constraint firstItem="bRG-I1-Xlm" firstAttribute="leading" secondItem="bhs-M0-2y9" secondAttribute="trailing" constant="8" id="sii-ZI-4qy"/>
                     <constraint firstAttribute="bottom" secondItem="SNn-dR-AFH" secondAttribute="bottom" constant="8" id="vN1-oT-e0j"/>
                     <constraint firstItem="M3F-VV-JfD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="x1A-nO-uea"/>
                     <constraint firstItem="M3F-VV-JfD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xn8-ix-wSX"/>
@@ -97,13 +105,14 @@
             <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="animationView" destination="bhs-M0-2y9" id="hlz-XP-EJP"/>
                 <outlet property="entryIconImageView" destination="HEf-By-uFg" id="dWc-7A-d35"/>
                 <outlet property="entrySubtitleLabel" destination="1AQ-6d-5OW" id="68W-fE-CLM"/>
                 <outlet property="entryTitleLabel" destination="iCR-c0-zcG" id="o7s-iJ-IsI"/>
                 <outlet property="flagIconImageView" destination="ndE-c1-3JZ" id="ncg-mA-7ja"/>
                 <outlet property="indicatorView" destination="M3F-VV-JfD" id="C3V-Yd-CEQ"/>
             </connections>
-            <point key="canvasLocation" x="68" y="87"/>
+            <point key="canvasLocation" x="67.200000000000003" y="86.35682158920541"/>
         </tableViewCell>
     </objects>
 </document>

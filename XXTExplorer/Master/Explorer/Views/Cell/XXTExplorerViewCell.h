@@ -31,4 +31,6 @@ static CGFloat XXTExplorerViewCellHeight = 68.f;
 @property (nonatomic, assign) XXTExplorerViewCellFlagType flagType;
 @property (nonatomic, strong, readonly) UIColor *flagColor;
 
+//- (void)animateIndicatorForFlagType:(XXTExplorerViewCellFlagType)flagType;
+
 @end

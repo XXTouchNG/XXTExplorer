@@ -144,7 +144,8 @@
 
 - (UIBarButtonItem *)replaceItem {
     if (!_replaceItem) {
-        UIBarButtonItem *replaceItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(replaceAction)];
+        UIBarButtonItem *replaceItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:self action:@selector(replaceAction)];
+        [replaceItem setBackgroundImage:[UIImage imageNamed:@"XXTEKeyboardReplaceDisabled"] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
         _replaceItem = replaceItem;
     }
     return _replaceItem;
@@ -152,7 +153,8 @@
 
 - (UIBarButtonItem *)replaceAllItem {
     if (!_replaceAllItem) {
-        UIBarButtonItem *replaceAllItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceAll"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(replaceAllAction)];
+        UIBarButtonItem *replaceAllItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:self action:@selector(replaceAllAction)];
+        [replaceAllItem setBackgroundImage:[UIImage imageNamed:@"XXTEKeyboardReplaceAllDisabled"] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
         _replaceAllItem = replaceAllItem;
     }
     return _replaceAllItem;
@@ -172,10 +174,30 @@
 
 - (void)setReplaceMode:(BOOL)replaceMode {
     _replaceMode = replaceMode;
-    if (!replaceMode) {
-        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.counter]];
-    } else {
+}
+
+- (void)setAllowReplacement:(BOOL)allowReplacement {
+    _allowReplacement = allowReplacement;
+}
+
+#pragma mark - Update
+
+- (void)updateAccessoryView {
+    if (_replaceMode == YES) {
         [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.replaceItem, self.replaceAllItem, self.fixedSpace, self.counter]];
+    } else {
+        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.counter]];
+    }
+    if (_allowReplacement) {
+        [self.replaceItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [self.replaceAllItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceAll"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [self.replaceItem setEnabled:YES];
+        [self.replaceAllItem setEnabled:YES];
+    } else {
+        [self.replaceItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceDisabled"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [self.replaceAllItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplaceAllDisabled"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [self.replaceItem setEnabled:NO];
+        [self.replaceAllItem setEnabled:NO];
     }
 }
 

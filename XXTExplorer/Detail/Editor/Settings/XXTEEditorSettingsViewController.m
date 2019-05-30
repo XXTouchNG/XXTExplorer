@@ -380,6 +380,7 @@
         [cell17.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSearchRegularExpression, optionSwitch.on);
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -390,6 +391,7 @@
         [cell18.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
+            [self.editor setNeedsSoftReload];
         }];
     }
     

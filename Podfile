@@ -7,7 +7,7 @@ def shared_pods
 
     # pod 'TOWebViewController', '~> 2.2.6'
     # pod 'TOWebViewController', :path => '../TOWebViewController', :inhibit_warnings => true
-    pod 'TOWebViewController', :git => 'https://github.com/XXTouchAssistant/TOWebViewController.git', :branch => 'WKWebView', :inhibit_warnings => true
+    pod 'TOWebViewController', :git => 'https://github.com/Lessica/TOWebViewController.git', :branch => 'WKWebView', :inhibit_warnings => true
 
     pod 'OMGHTTPURLRQ', :inhibit_warnings => true
     
@@ -16,11 +16,11 @@ def shared_pods
 
     # pod 'LGAlertView', '~> 2.4.0', :inhibit_warnings => true
     # pod 'LGAlertView', :path => '../LGAlertView', :inhibit_warnings => true
-    pod 'LGAlertView', :git => 'https://github.com/XXTouchAssistant/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
+    pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
 
     # pod 'MWPhotoBrowser', '~> 2.1.2', :inhibit_warnings => true
     # pod 'MWPhotoBrowser', :path => '../MWPhotoBrowser', :inhibit_warnings => true
-    pod 'MWPhotoBrowser', :git => 'https://github.com/XXTouchAssistant/MWPhotoBrowser.git', :inhibit_warnings => true
+    pod 'MWPhotoBrowser', :git => 'https://github.com/Lessica/MWPhotoBrowser.git', :inhibit_warnings => true
     
     pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true
     pod 'Bugly', :inhibit_warnings => true
@@ -31,7 +31,7 @@ target 'XXTouch' do
     shared_pods
     
     # pod 'UnrarKit', :path => '../UnrarKit'
-    pod 'UnrarKit', :git => 'https://github.com/XXTouchAssistant/UnrarKit.git', :branch => 'v2.9', :inhibit_warnings => true
+    pod 'UnrarKit', :git => 'https://github.com/Lessica/UnrarKit.git', :branch => 'v2.9', :inhibit_warnings => true
     
     pod 'GCDWebServer/WebDAV', :inhibit_warnings => true
 end

@@ -116,10 +116,14 @@ XXTE_END_IGNORE_PARTIAL
                 self.title = NSLocalizedString(@"My Scripts", nil);
             }
         } else {
-            NSString *entryPath = self.entryPath;
-            if (entryPath) {
-                NSString *entryName = [entryPath lastPathComponent];
-                self.title = entryName;
+            if (self.historyMode) {
+                self.title = NSLocalizedString(@"View History", nil);
+            } else {
+                NSString *entryPath = self.entryPath;
+                if (entryPath) {
+                    NSString *entryName = [entryPath lastPathComponent];
+                    self.title = entryName;
+                }
             }
         }
     }
@@ -737,6 +741,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)performViewerExecutableActionForEntryAtPath:(NSString *)entryPath
 { // select executable entry
 #ifndef APPSTORE
+//    __block BOOL succeed = NO;
     UITableView *tableView = self.tableView;
     UIViewController *blockVC = blockInteractions(self, YES);
     [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}]
@@ -744,6 +749,7 @@ XXTE_END_IGNORE_PARTIAL
     .then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
             XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
+//            succeed = YES;
         } else {
             @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDictionary[@"message"]];
         }
@@ -752,9 +758,23 @@ XXTE_END_IGNORE_PARTIAL
         toastDaemonError(self, serverError);
     })
     .finally(^() {
+//#ifdef DEBUG
+//        XXTEDefaultsSetObject(XXTExplorerViewEntrySelectedScriptPathKey, entryPath);
+//        succeed = YES;
+//#endif
         blockInteractions(blockVC, NO);
         [self loadEntryListData];
-        for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows]) {
+        for (NSIndexPath *indexPath in [tableView indexPathsForVisibleRows])
+        {
+            // Selection animation
+//            {
+//                XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+//                BOOL isSelectedCell = [entryDetail.entryPath isEqualToString:entryPath];
+//                if (isSelectedCell) {
+//                    XXTExplorerViewCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
+//                    [entryCell animateIndicatorForFlagType:XXTExplorerViewCellFlagTypeSelected];
+//                }
+//            }
             [self reconfigureCellAtIndexPath:indexPath];
         }
     });

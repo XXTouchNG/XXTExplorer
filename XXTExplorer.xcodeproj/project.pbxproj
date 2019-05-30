@@ -794,7 +794,7 @@
 		0FFC8F0E1FCA94E80012C170 /* XXTEInstallerLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFC8F0C1FCA94E80012C170 /* XXTEInstallerLoadingView.xib */; };
 		0FFC8F141FCB14C20012C170 /* XXTExplorerDynamicSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFC8F131FCB14C20012C170 /* XXTExplorerDynamicSection.m */; };
 		0FFC8F151FCB14C20012C170 /* XXTExplorerDynamicSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFC8F131FCB14C20012C170 /* XXTExplorerDynamicSection.m */; };
-		13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
+		13DFE52DF6156873486D5F35 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		52512001977DD8102C9C4ED6 /* SKLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251209D280AFB66F3169F0C /* SKLanguage.m */; };
 		52512159F631F9582F89C858 /* SKRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 525124A0DCE70FECE2B114E7 /* SKRepository.m */; };
 		52512415AF9FC95820D9C5F6 /* SKTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251251343C867D1BE381F9F /* SKTheme.m */; };
@@ -1160,7 +1160,6 @@
 		D60FE7721FE2369300954818 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		D60FE7731FE2369300954818 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6063D81F111E2E0087822E /* MobileCoreServices.framework */; };
 		D60FE7741FE2369300954818 /* libactivator.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D60FE7751FE2369300954818 /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */; };
 		D60FE7771FE2369300954818 /* XXTEMoreReferences.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6F827341F905C7000A5A41E /* XXTEMoreReferences.bundle */; };
 		D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */; };
 		D60FE7791FE2369300954818 /* XXTApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6E141041F5032AB00D78CB9 /* XXTApplicationCell.xib */; };
@@ -1338,6 +1337,7 @@
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
 		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
+		FFE619641C9C84963276FD4F /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2007,6 +2007,7 @@
 		B0312E7C21C7B2451E6D240D /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		B0312E8696170984090886F2 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
 		B0312EA80D17B9AF4D5E309E /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
+		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTheme.h; sourceTree = "<group>"; };
@@ -2245,7 +2246,6 @@
 		D6FC2F3A1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreActivationOperationController.h; sourceTree = "<group>"; };
 		D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreActivationOperationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E15A559CFF7426B35A2959FE /* Pods-XXTouch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouch.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch.release.xcconfig"; sourceTree = "<group>"; };
-		E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC5CA007CD6DFC57E2CBFE2F /* Pods-XXTExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2294,7 +2294,8 @@
 				D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */,
 				0F6063D91F111E2E0087822E /* MobileCoreServices.framework in Frameworks */,
 				D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */,
-				13DFE52DF6156873486D5F35 /* libPods-XXTExplorer.a in Frameworks */,
+				13DFE52DF6156873486D5F35 /* (null) in Frameworks */,
+				FFE619641C9C84963276FD4F /* libPods-XXTExplorer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2318,7 +2319,6 @@
 				D60FE7721FE2369300954818 /* libz.tbd in Frameworks */,
 				D60FE7731FE2369300954818 /* MobileCoreServices.framework in Frameworks */,
 				D60FE7741FE2369300954818 /* libactivator.tbd in Frameworks */,
-				D60FE7751FE2369300954818 /* libPods-XXTExplorer.a in Frameworks */,
 				89BF00097A9A80630E30D9FE /* libPods-XXTExplorer-Archive.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3725,10 +3725,10 @@
 				D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */,
 				0F6063D81F111E2E0087822E /* MobileCoreServices.framework */,
 				D6DBD48E1F3C5B5C002D5561 /* libz.tbd */,
-				E50D4EEB57C7C40143169036 /* libPods-XXTExplorer.a */,
 				AD648480DA696CAD33102457 /* libPods-XXTouch.a */,
 				2518A55552AF2DC7D103A498 /* libPods-XXTExplorer-Archive.a */,
 				D6A8508420453F3E008745EB /* NotificationCenter.framework */,
+				CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4461,7 +4461,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = XXTE;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Zheng;
 				TargetAttributes = {
 					0F31D42D20EB2F0F0091130D = {
@@ -4489,7 +4489,7 @@
 			};
 			buildConfigurationList = 0FA7ABE51ED641A3003EAD7D /* Build configuration list for PBXProject "XXTExplorer" */;
 			compatibilityVersion = "Xcode 8.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -4925,7 +4925,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 			);
@@ -4936,7 +4936,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */ = {
@@ -4945,7 +4945,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/UnrarKit/UnrarKitResources.bundle",
@@ -4958,7 +4958,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D60FE64F1FE2369300954818 /* [CP] Check Pods Manifest.lock */ = {
@@ -4985,7 +4985,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
 			);
@@ -4996,7 +4996,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D60FE7CD1FE2369300954818 /* Localization */ = {
@@ -6134,6 +6134,7 @@
 		0F31D42F20EB2F100091130D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6143,6 +6144,7 @@
 		0F31D43020EB2F100091130D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6334,6 +6336,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -6341,6 +6344,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -6382,6 +6386,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -6389,6 +6394,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -6594,7 +6600,7 @@
 					"ARCHIVE=1",
 				);
 				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Base.lproj/Archive-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6710,7 +6716,7 @@
 					"ARCHIVE=1",
 				);
 				INFOPLIST_FILE = "XXTExplorer/Supporting Files/Base.lproj/Archive-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

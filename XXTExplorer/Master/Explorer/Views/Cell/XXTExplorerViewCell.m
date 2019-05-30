@@ -10,6 +10,7 @@
 
 @interface XXTExplorerViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *indicatorView;
+@property (weak, nonatomic) IBOutlet UIImageView *animationView;
 
 @end
 
@@ -50,31 +51,48 @@
     self.selectedBackgroundView = selectionBackground;
 }
 
+- (UIImage *)indicatorImageForFlagType:(XXTExplorerViewCellFlagType)flagType {
+    if (flagType == XXTExplorerViewCellFlagTypeSelected) {
+        return [UIImage imageNamed:@"XXTEColoredPixelSuccess"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
+        return [UIImage imageNamed:@"XXTEColoredPixelSuccess"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeForbidden) {
+        return nil;
+    } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {
+        return nil;
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript) {
+        return [UIImage imageNamed:@"XXTEColoredPixelNormal"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
+        return [UIImage imageNamed:@"XXTEColoredPixelNormal"];
+    }
+    return nil;
+}
+
+- (UIImage *)flagImageForFlagType:(XXTExplorerViewCellFlagType)flagType {
+    if (flagType == XXTExplorerViewCellFlagTypeSelected) {
+        return [UIImage imageNamed:@"XXTExplorerSelectedScriptFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
+        return [UIImage imageNamed:@"XXTExplorerSelectedScriptInsideFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeForbidden) {
+        return [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {
+        return [UIImage imageNamed:@"XXTExplorerBrokenFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript) {
+        return [UIImage imageNamed:@"XXTExplorerSelectedBootScriptFlag"];
+    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
+        return [UIImage imageNamed:@"XXTExplorerSelectedBootScriptInsideFlag"];
+    }
+    return nil;
+}
+
 - (void)setFlagType:(XXTExplorerViewCellFlagType)flagType {
     _flagType = flagType;
     
     UIImageView *imageView = self.flagIconImageView;
     UIImageView *indicatorView = self.indicatorView;
     
-    if (flagType == XXTExplorerViewCellFlagTypeSelected) {
-        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptFlag"];
-        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelSuccess"];
-    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedInside) {
-        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedScriptInsideFlag"];
-        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelSuccess"];
-    } else if (flagType == XXTExplorerViewCellFlagTypeForbidden) {
-        imageView.image = [UIImage imageNamed:@"XXTExplorerForbiddenFlag"];
-        indicatorView.image = nil;
-    } else if (flagType == XXTExplorerViewCellFlagTypeBroken) {
-        imageView.image = [UIImage imageNamed:@"XXTExplorerBrokenFlag"];
-        indicatorView.image = nil;
-    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript) {
-        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedBootScriptFlag"];
-        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelNormal"];
-    } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
-        imageView.image = [UIImage imageNamed:@"XXTExplorerSelectedBootScriptInsideFlag"];
-        indicatorView.image = [UIImage imageNamed:@"XXTEColoredPixelNormal"];
-    }
+    imageView.image = [self flagImageForFlagType:flagType];
+    indicatorView.image = [self indicatorImageForFlagType:flagType];
     
     if (flagType == XXTExplorerViewCellFlagTypeNone) {
         imageView.hidden = YES;
@@ -99,5 +117,25 @@
     }
     return XXTColorDefault();
 }
+
+//- (void)animateIndicatorForFlagType:(XXTExplorerViewCellFlagType)flagType {
+//    UIImage *image = [self indicatorImageForFlagType:flagType];
+//    if (image == nil) {
+//        return;
+//    }
+//    UIImageView *animationView = self.animationView;
+//    if (!animationView.hidden) {
+//        return;
+//    }
+//    [animationView setImage:image];
+//    animationView.transform = CGAffineTransformIdentity;
+//    [animationView setHidden:NO];
+//    [UIView animateWithDuration:0.27f delay:0.6f options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        animationView.transform = CGAffineTransformMakeTranslation(-CGRectGetWidth(animationView.bounds), 0);
+//    } completion:^(BOOL finished) {
+//        [animationView setHidden:YES];
+//        animationView.transform = CGAffineTransformIdentity;
+//    }];
+//}
 
 @end

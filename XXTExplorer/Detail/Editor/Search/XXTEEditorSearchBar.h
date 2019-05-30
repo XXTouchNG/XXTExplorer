@@ -54,4 +54,7 @@ static CGFloat const XXTEEditorSearchBarHeight = 88.f;
 @property (nonatomic, strong) UIView *replaceInputAccessoryView;
 @property (nonatomic, assign) UIKeyboardAppearance replaceKeyboardAppearance;
 
+@property (nonatomic, assign) BOOL regexMode;
+- (void)updateView;
+
 @end

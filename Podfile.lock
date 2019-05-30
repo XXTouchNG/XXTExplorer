@@ -1,8 +1,8 @@
 PODS:
   - Bugly (2.5.0)
-  - FLEX (2.4.0)
-  - GCDWebServer/Core (3.4.2)
-  - GCDWebServer/WebDAV (3.4.2):
+  - FLEX (3.0.0)
+  - GCDWebServer/Core (3.5.2)
+  - GCDWebServer/WebDAV (3.5.2):
     - GCDWebServer/Core
   - JSONModel (1.7.0)
   - LGAlertView (2.4.0)
@@ -15,39 +15,39 @@ PODS:
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
   - OMGHTTPURLRQ/UserAgent (3.2.4)
-  - PromiseKit (1.7.6):
-    - PromiseKit/CALayer (= 1.7.6)
-    - PromiseKit/NSNotificationCenter (= 1.7.6)
-    - PromiseKit/NSURLConnection (= 1.7.6)
-    - PromiseKit/Pause (= 1.7.6)
-    - PromiseKit/UIActionSheet (= 1.7.6)
-    - PromiseKit/UIAlertView (= 1.7.6)
-    - PromiseKit/UIView (= 1.7.6)
-    - PromiseKit/UIViewController (= 1.7.6)
-    - PromiseKit/Until (= 1.7.6)
-    - PromiseKit/When (= 1.7.6)
-  - PromiseKit/CALayer (1.7.6):
+  - PromiseKit (1.7.7):
+    - PromiseKit/CALayer (= 1.7.7)
+    - PromiseKit/NSNotificationCenter (= 1.7.7)
+    - PromiseKit/NSURLConnection (= 1.7.7)
+    - PromiseKit/Pause (= 1.7.7)
+    - PromiseKit/UIActionSheet (= 1.7.7)
+    - PromiseKit/UIAlertView (= 1.7.7)
+    - PromiseKit/UIView (= 1.7.7)
+    - PromiseKit/UIViewController (= 1.7.7)
+    - PromiseKit/Until (= 1.7.7)
+    - PromiseKit/When (= 1.7.7)
+  - PromiseKit/CALayer (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/NSNotificationCenter (1.7.6):
+  - PromiseKit/NSNotificationCenter (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/NSURLConnection (1.7.6):
+  - PromiseKit/NSURLConnection (1.7.7):
     - OMGHTTPURLRQ (~> 3.2)
     - PromiseKit/Promise
-  - PromiseKit/Pause (1.7.6):
+  - PromiseKit/Pause (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/Promise (1.7.6)
-  - PromiseKit/UIActionSheet (1.7.6):
+  - PromiseKit/Promise (1.7.7)
+  - PromiseKit/UIActionSheet (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/UIAlertView (1.7.6):
+  - PromiseKit/UIAlertView (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/UIView (1.7.6):
+  - PromiseKit/UIView (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/UIViewController (1.7.6):
+  - PromiseKit/UIViewController (1.7.7):
     - PromiseKit/Promise
-  - PromiseKit/Until (1.7.6):
+  - PromiseKit/Until (1.7.7):
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/When (1.7.6):
+  - PromiseKit/When (1.7.7):
     - PromiseKit/Promise
   - TOWebViewController (2.2.6):
     - TOWebViewController/Core (= 2.2.6)
@@ -69,12 +69,12 @@ DEPENDENCIES:
   - FLEX
   - GCDWebServer/WebDAV
   - JSONModel (~> 1.7.0)
-  - LGAlertView (from `https://github.com/XXTouchAssistant/LGAlertView.git`, branch `old-device`)
-  - MWPhotoBrowser (from `https://github.com/XXTouchAssistant/MWPhotoBrowser.git`)
+  - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
+  - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7.6)
-  - TOWebViewController (from `https://github.com/XXTouchAssistant/TOWebViewController.git`, branch `WKWebView`)
-  - UnrarKit (from `https://github.com/XXTouchAssistant/UnrarKit.git`, branch `v2.9`)
+  - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
+  - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
   - XUI (from `https://github.com/Lessica/XUI.git`)
   - YYImage (~> 1.0.4)
   - YYWebImage (~> 1.0.5)
@@ -94,44 +94,44 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   LGAlertView:
     :branch: old-device
-    :git: https://github.com/XXTouchAssistant/LGAlertView.git
+    :git: https://github.com/Lessica/LGAlertView.git
   MWPhotoBrowser:
-    :git: https://github.com/XXTouchAssistant/MWPhotoBrowser.git
+    :git: https://github.com/Lessica/MWPhotoBrowser.git
   TOWebViewController:
     :branch: WKWebView
-    :git: https://github.com/XXTouchAssistant/TOWebViewController.git
+    :git: https://github.com/Lessica/TOWebViewController.git
   UnrarKit:
     :branch: v2.9
-    :git: https://github.com/XXTouchAssistant/UnrarKit.git
+    :git: https://github.com/Lessica/UnrarKit.git
   XUI:
     :git: https://github.com/Lessica/XUI.git
 
 CHECKOUT OPTIONS:
   LGAlertView:
     :commit: fc2cb8508ead5cad2273c097c7d165445bb0c2a5
-    :git: https://github.com/XXTouchAssistant/LGAlertView.git
+    :git: https://github.com/Lessica/LGAlertView.git
   MWPhotoBrowser:
     :commit: 9aea50ef21412dd0907de5d24ec90f8e1e869c03
-    :git: https://github.com/XXTouchAssistant/MWPhotoBrowser.git
+    :git: https://github.com/Lessica/MWPhotoBrowser.git
   TOWebViewController:
     :commit: 766e2a7b1df024800620fd0a9624f74db12f93b9
-    :git: https://github.com/XXTouchAssistant/TOWebViewController.git
+    :git: https://github.com/Lessica/TOWebViewController.git
   UnrarKit:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
-    :git: https://github.com/XXTouchAssistant/UnrarKit.git
+    :git: https://github.com/Lessica/UnrarKit.git
   XUI:
     :commit: 680c7b3b6225eb92291d9b061cc9ca72f1a9119f
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
-  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  GCDWebServer: 8d67ee9f634b4bb91eb4b8aee440318a5fc6debd
+  FLEX: d66c759bce0f6ebbbf472c742380874d846f2883
+  GCDWebServer: ead88cd14596dd4eae4f5830b8877c87c8728990
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: 9ac96bdf5c90a33f75836630729ea1adc312a9ed
-  PromiseKit: 94bcf2f44424df0384af81c6221cb3bfa3e7ed4c
+  PromiseKit: 9007df2f9e2ef725467084ab3880cf932ab935a4
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
   XUI: de0dd8c99edeaa5b60303240df9d53cc0cdfd1a7
@@ -139,6 +139,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 6d8d2e9fbe048a5e5949996031b98b52d5fdf95c
+PODFILE CHECKSUM: a9f11297673b507a2991c131eaf84f1c183d2c41
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.7.0

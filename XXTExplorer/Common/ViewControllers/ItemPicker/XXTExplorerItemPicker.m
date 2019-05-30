@@ -51,14 +51,15 @@
         }
     }
     
-    if (self.isFile) {
-        self.navigationItem.rightBarButtonItem = nil;
-    } else {
-        self.navigationItem.rightBarButtonItem = self.selectButtonItem;
+    NSMutableArray <UIBarButtonItem *> *rightItems = [NSMutableArray array];
+    if (!self.isFile) {
+        [rightItems addObject:self.selectButtonItem];
     }
-    if ([self.navigationController.viewControllers firstObject] == self && !self.isPreviewed) {
-        self.navigationItem.leftBarButtonItem = self.closeButtonItem;
+    if ([self.navigationController.viewControllers firstObject] != self && !self.isPreviewed)
+    {
+        [rightItems addObject:self.closeButtonItem];
     }
+    [self.navigationItem setRightBarButtonItems:rightItems];
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;

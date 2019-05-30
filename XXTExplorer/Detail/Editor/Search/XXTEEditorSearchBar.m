@@ -35,6 +35,7 @@
 }
 
 - (void)setup {
+    _regexMode = NO;
     _separatorColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     
     self.tintColor = [UIColor blackColor];
@@ -87,7 +88,6 @@
 - (XXTEEditorSearchField *)searchField {
     if (!_searchField) {
         XXTEEditorSearchField *searchField = [[XXTEEditorSearchField alloc] init];
-        searchField.placeholder = NSLocalizedString(@"Search...", nil);
         searchField.delegate = self;
         searchField.returnKeyType = UIReturnKeyNext;
         searchField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -102,7 +102,6 @@
 - (XXTEEditorSearchField *)replaceField {
     if (!_replaceField) {
         XXTEEditorSearchField *replaceField = [[XXTEEditorSearchField alloc] init];
-        replaceField.placeholder = NSLocalizedString(@"Replace...", nil);
         replaceField.delegate = self;
         replaceField.returnKeyType = UIReturnKeyNext;
         replaceField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -362,6 +361,24 @@
         }
     }
     return YES;
+}
+
+#pragma mark - Setters
+
+- (void)setRegexMode:(BOOL)regexMode {
+    _regexMode = regexMode;
+}
+
+#pragma mark - Update
+
+- (void)updateView {
+    if (_regexMode == YES) {
+        self.searchField.placeholder = NSLocalizedString(@"Search Regex...", nil);
+        self.replaceField.placeholder = NSLocalizedString(@"Replace Regex...", nil);
+    } else {
+        self.searchField.placeholder = NSLocalizedString(@"Search Text...", nil);
+        self.replaceField.placeholder = NSLocalizedString(@"Replace Text...", nil);
+    }
 }
 
 @end
