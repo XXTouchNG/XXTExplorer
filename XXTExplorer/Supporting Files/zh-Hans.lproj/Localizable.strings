@@ -1463,6 +1463,12 @@
 "Replace..." = "替换...";
 
 /* No comment provided by engineer. */
+"Replace Text..." = "替换文本...";
+
+/* No comment provided by engineer. */
+"Replace Regex..." = "替换正则...";
+
+/* No comment provided by engineer. */
 "Reset" = "重置";
 
 /* No comment provided by engineer. */
@@ -1542,6 +1548,12 @@
 
 /* No comment provided by engineer. */
 "Search..." = "搜索...";
+
+/* No comment provided by engineer. */
+"Search Text..." = "搜索文本...";
+
+/* No comment provided by engineer. */
+"Search Regex..." = "搜索正则...";
 
 /* No comment provided by engineer. */
 "Select" = "选择";

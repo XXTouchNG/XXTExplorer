@@ -229,7 +229,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         cellAddress1.addressLabel.textColor = [UIColor blackColor];
         cellAddress1.addressLabel.text = _webServerUrl;
     } else {
-        cellAddress1.addressLabel.textColor = XXTColorDanger();
+        cellAddress1.addressLabel.textColor = [UIColor colorWithWhite:.8 alpha:1.0];
         cellAddress1.addressLabel.text = NSLocalizedString(@"Connect to Wi-fi network.", nil);
     }
     cellAddress2.addressLabel.text = _bonjourWebServerUrl.length > 0 ? _bonjourWebServerUrl : NSLocalizedString(@"N/A", nil);
