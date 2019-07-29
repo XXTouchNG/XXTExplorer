@@ -126,11 +126,11 @@ static CGFloat XXTEScanVOffset = -22.0;
     self.navigationItem.rightBarButtonItem = self.albumItem;
     XXTE_START_IGNORE_PARTIAL
     if (isOS11Above()) {
-        if (isAppStore()) {
-            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
-        } else {
+//        if (isAppStore()) {
+//            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+//        } else {
             self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-        }
+//        }
     }
     XXTE_END_IGNORE_PARTIAL
     

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>Group</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>StaticText</string>
+			<key>label</key>
+			<string>IPA Installer Console
+
+Install IPA from command line
+https://github.com/autopear/ipainstaller
+
+ZipArchive from https://github.com/mattconnolly/ZipArchive
+UIDevice-Extension from https://github.com/erica/uidevice-extension
+New check capability method from https://github.com/a3tweaks/Flipswitch/blob/master/FSCapability.m
+MiniZip from http://www.winimage.com/zLibDll/minizip.html
+fixblankicon is an executable from ipod4g, which is used in old script to fix blank icons. It is not used in the binary.</string>
+		</dict>
+	</array>
+</dict>
+</plist>

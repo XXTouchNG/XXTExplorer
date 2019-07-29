@@ -1241,6 +1241,7 @@
 		D64C42FC1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D64C42FD1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
+		D6625FBE22ED3B2D00053549 /* XXTESingleActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */; };
 		D6686F271F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */; };
 		D6686F2D1F4AC920004403D0 /* XXTEMoreValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F2C1F4AC920004403D0 /* XXTEMoreValueView.m */; };
 		D6686F321F4ACEB6004403D0 /* XXTEMoreValueViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F301F4ACEB6004403D0 /* XXTEMoreValueViewCell.m */; };
@@ -1281,6 +1282,9 @@
 		D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
 		D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
 		D6A8507B2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */; };
+		D6BE070922EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */; };
+		D6BE070A22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */; };
+		D6BE070B22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */; };
 		D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */; };
 		D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
 		D6CB81B91FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
@@ -2150,6 +2154,8 @@
 		D6A850742043DED5008745EB /* XXTExplorerItemPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerItemPreviewController.m; sourceTree = "<group>"; };
 		D6A850752043DED5008745EB /* XXTExplorerItemPreviewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTExplorerItemPreviewController.xib; sourceTree = "<group>"; };
 		D6A8508420453F3E008745EB /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		D6BE070722EF48CA0008B2AA /* XXTECodeViewerSettingsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTECodeViewerSettingsController.h; sourceTree = "<group>"; };
+		D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTECodeViewerSettingsController.m; sourceTree = "<group>"; };
 		D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = XXTEAssets.xcassets; sourceTree = "<group>"; };
 		D6CB81B61FE262320033EA2F /* XXTEEditorSearchField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchField.h; sourceTree = "<group>"; };
 		D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchField.m; sourceTree = "<group>"; };
@@ -3633,6 +3639,8 @@
 				0FE1E4471F18FC5D00055E02 /* Reader */,
 				0FE1E4411F18E9D800055E02 /* XXTECodeViewerController.h */,
 				0FE1E4421F18E9D800055E02 /* XXTECodeViewerController.m */,
+				D6BE070722EF48CA0008B2AA /* XXTECodeViewerSettingsController.h */,
+				D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -4399,7 +4407,6 @@
 				0F8EDB571FB1F779003C92D6 /* Sources */,
 				0F8EDC581FB1F779003C92D6 /* Frameworks */,
 				0F8EDC6A1FB1F779003C92D6 /* Resources */,
-				0F8EDCC11FB1F779003C92D6 /* Localization */,
 				CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */,
 				D60FE7D71FE23BAD00954818 /* Integrate Reveal Server */,
 				D6FD9143203E987900CC0362 /* Copy Files */,
@@ -4422,7 +4429,6 @@
 				0FA7ABE71ED641A3003EAD7D /* Frameworks */,
 				0FA7ABE81ED641A3003EAD7D /* Resources */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
-				D6DBD48D1F3C52D9002D5561 /* Localization */,
 				D60FE7D61FE23B5800954818 /* Integrate Reveal Server */,
 			);
 			buildRules = (
@@ -4443,7 +4449,6 @@
 				D60FE7651FE2369300954818 /* Frameworks */,
 				D60FE7761FE2369300954818 /* Resources */,
 				D60FE7CC1FE2369300954818 /* [CP] Copy Pods Resources */,
-				D60FE7CD1FE2369300954818 /* Localization */,
 			);
 			buildRules = (
 			);
@@ -4570,6 +4575,7 @@
 				0F8ECD7C1FE81AEA00A5457C /* Hack-BoldItalic.ttf in Resources */,
 				0F8ECD451FE802A900A5457C /* Ciapre (Black).png in Resources */,
 				0F8ECD4F1FE802A900A5457C /* OneHalf (Light).png in Resources */,
+				D6625FBE22ED3B2D00053549 /* XXTESingleActionView.xib in Resources */,
 				0F8ECD481FE802A900A5457C /* Tomorrow.png in Resources */,
 				0F8ECD511FE802A900A5457C /* Nothing.png in Resources */,
 				0F8ECD6F1FE80F8E00A5457C /* DejaVuSansMono.ttf in Resources */,
@@ -4869,20 +4875,6 @@
 			shellPath = /bin/sh;
 			shellScript = "SRC=\"$TARGET_BUILD_DIR/XXTExplorer-Archive.app\"\nMID=\"$TARGET_BUILD_DIR/XXTExplorer.app\"\nDST=\"/Applications\"\nrm -r \"$MID\"\ncp -r \"$SRC\" \"$MID\"\nldid -S\"$SRCROOT/XXTExplorer/Supporting Files/_XXTAppEntitlements.xml\" \"$MID/XXTExplorer-Archive\"\n\nssh root@127.0.0.1 -p 2222 \"rm -r /Applications/XXTExplorer.app\"\nssh root@127.0.0.1 -p 2222 \"mkdir -p /Applications/XXTExplorer.app\"\nscp -rP 2222 \"$MID\" root@127.0.0.1:\"$DST\"\nssh root@127.0.0.1 -p 2222 \"chown -R root:wheel /Applications/XXTExplorer.app\"\nssh root@127.0.0.1 -p 2222 \"su mobile -c uicache\"\n";
 		};
-		0F8EDCC11FB1F779003C92D6 /* Localization */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Localization;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "export PATH=\"/Users/Zheng/homebrew/bin:${PATH}\"\n\nif which bartycrouch > /dev/null; then\n# Incrementally update all Storyboards/XIBs strings files\nbartycrouch interfaces -p \"$PROJECT_DIR/XXTExplorer\"\n\n# Add new keys to Localizable.strings files from NSLocalizedString in code\nbartycrouch code -p \"$PROJECT_DIR/XXTExplorer\" -l \"$PROJECT_DIR/XXTExplorer\" -a -s\nelse\necho \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
-		};
 		1E5BD987FA01455D091829D9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4999,20 +4991,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D60FE7CD1FE2369300954818 /* Localization */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Localization;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "export PATH=\"/Users/Zheng/homebrew/bin:${PATH}\"\n\nif which bartycrouch > /dev/null; then\n# Incrementally update all Storyboards/XIBs strings files\nbartycrouch interfaces -p \"$PROJECT_DIR/XXTExplorer\"\n\n# Add new keys to Localizable.strings files from NSLocalizedString in code\nbartycrouch code -p \"$PROJECT_DIR/XXTExplorer\" -l \"$PROJECT_DIR/XXTExplorer\" -a -s\nelse\necho \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
-		};
 		D60FE7D61FE23B5800954818 /* Integrate Reveal Server */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5040,20 +5018,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export REVEAL_SERVER_FILENAME=\"RevealServer.framework\"\n\n# Update this path to point to the location of RevealServer.framework in your project.\nexport REVEAL_SERVER_PATH=\"${SRCROOT}/Frameworks/${REVEAL_SERVER_FILENAME}\"\n\n# If configuration is not Debug, skip this script.\n[ \"${CONFIGURATION}\" != \"Debug\" ] && exit 0\n\n# If RevealServer.framework exists at the specified path, run code signing script.\nif [ -d \"${REVEAL_SERVER_PATH}\" ]; then\n\"${REVEAL_SERVER_PATH}/Scripts/copy_and_codesign_revealserver.sh\"\nelse\necho \"Reveal Server not loaded: RevealServer.framework could not be found.\"\nfi\n";
-		};
-		D6DBD48D1F3C52D9002D5561 /* Localization */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Localization;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "export PATH=\"/Users/Zheng/homebrew/bin:${PATH}\"\n\nif which bartycrouch > /dev/null; then\n# Incrementally update all Storyboards/XIBs strings files\nbartycrouch interfaces -p \"$PROJECT_DIR/XXTExplorer\"\n\n# Add new keys to Localizable.strings files from NSLocalizedString in code\nbartycrouch code -p \"$PROJECT_DIR/XXTExplorer\" -l \"$PROJECT_DIR/XXTExplorer\" -a -s\nelse\necho \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -5159,6 +5123,7 @@
 				D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */,
 				0FAE18FE20806CB0005F9B67 /* XXTEDbReader.m in Sources */,
 				0FAE18E620806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
+				D6BE070B22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */,
 				0F8EDBAE1FB1F779003C92D6 /* XXTExplorerViewController+FileOperation.m in Sources */,
 				0F8EDBAF1FB1F779003C92D6 /* XXTPositionPicker.m in Sources */,
 				0F8EDBB01FB1F779003C92D6 /* XXTESymbolTypeView.m in Sources */,
@@ -5525,6 +5490,7 @@
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
 				0F3B56C620AEDA2700F07FE4 /* XXTEUIViewController+XUITextFieldCell.m in Sources */,
 				0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */,
+				D6BE070922EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */,
 				D6E141241F5032AB00D78CB9 /* XXTColorPicker.m in Sources */,
 				0F2CD3571F3B5CAB00110772 /* XXTEUpdateHelper.m in Sources */,
 				0F50AEA31F307A510098211C /* UIViewController+XXTExplorer.m in Sources */,
@@ -5866,6 +5832,7 @@
 				D60FE6E51FE2369300954818 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
 				0F3B56C720AEDA2700F07FE4 /* XXTEUIViewController+XUITextFieldCell.m in Sources */,
 				D60FE6E61FE2369300954818 /* NSString+HTMLEscape.m in Sources */,
+				D6BE070A22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */,
 				D60FE6E71FE2369300954818 /* XXTColorPicker.m in Sources */,
 				D60FE6E81FE2369300954818 /* XXTEUpdateHelper.m in Sources */,
 				D60FE6E91FE2369300954818 /* UIViewController+XXTExplorer.m in Sources */,

@@ -518,7 +518,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     }
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
-    textView.contentInset = contentInsets;\
+    textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
     [self setNeedsReloadTextViewWidth]; // fixed
     [self reloadTextViewWidthIfNecessary];

@@ -108,6 +108,10 @@ XXTE_END_IGNORE_PARTIAL
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     searchBar.delegate = self;
     
+    if (@available(iOS 13.0, *)) {
+//        UITextField *searchField = [searchBar valueForKey:@"searchField"];
+    }
+    
     if (@available(iOS 11.0, *)) {
         UITextField *textField = [searchBar valueForKey:@"searchField"];
         textField.textColor = [UIColor blackColor];

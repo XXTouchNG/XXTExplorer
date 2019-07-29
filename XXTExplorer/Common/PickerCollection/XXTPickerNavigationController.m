@@ -67,6 +67,11 @@ static const void *ObjectTagKey = &ObjectTagKey;
     
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
+    
+//    if (@available(iOS 13.0, *)) {
+//        barAppearance.scrollEdgeAppearance = barAppearance.standardAppearance;
+//        navigationBarAppearance.scrollEdgeAppearance = navigationBarAppearance.standardAppearance;
+//    }
 }
 
 - (void)viewDidLoad {

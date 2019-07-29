@@ -55,8 +55,10 @@
         }
     }
     if (!supported) {
+        toastMessage(self, NSLocalizedString(@"This file is not executable.", nil));
         return;
     }
+    [self saveDocumentIfNecessary];
     NSString *entryPath = self.entryPath;
     XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
     terminalController.runImmediately = YES;

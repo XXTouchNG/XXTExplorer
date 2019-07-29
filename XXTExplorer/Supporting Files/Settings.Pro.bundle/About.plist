@@ -15,9 +15,9 @@
 			<string>About</string>
 			<key>label</key>
 			<string>XXTouch
-v1.2-11</string>
+v2.1.0</string>
 			<key>value</key>
-			<string>https://www.xxtouch.com
+			<string>https://82flex.com
 2014-2019 © XXTouch Team.
 All Rights Reserved.</string>
 		</dict>
@@ -63,7 +63,7 @@ All Rights Reserved.</string>
 					<string>i.82@qq.com</string>
 				</array>
 				<key>subject</key>
-				<string>[Feedback] XXTouch v1.2-11</string>
+				<string>[Feedback] XXTouch v2.1.0</string>
 				<key>toRecipients</key>
 				<array>
 					<string>bug@xxtouch.com</string>

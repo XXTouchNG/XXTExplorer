@@ -165,11 +165,11 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTE_END_IGNORE_PARTIAL
     
     if (@available(iOS 11.0, *)) {
-#ifdef APPSTORE
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
-#else
+//#ifdef APPSTORE
+//        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+//#else
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-#endif
+//#endif
     }
     
 #ifdef APPSTORE
@@ -246,7 +246,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
     }
 #else
-    if (_webServerUrl.length > 0 || _bonjourWebServerUrl.length > 0)
+    if (_webServerUrl.length > 0 && _bonjourWebServerUrl.length > 0)
     {
         staticSectionRowNum = @[ @3, @1, @1 ];
     } else {

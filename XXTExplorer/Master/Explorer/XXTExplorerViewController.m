@@ -131,11 +131,11 @@ XXTE_END_IGNORE_PARTIAL
     {
         XXTE_START_IGNORE_PARTIAL
         if (isOS11Above()) {
-            if (isAppStore()) {
-                self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
-            } else {
+//            if (isAppStore()) {
+//                self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
+//            } else {
                 self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-            }
+//            }
         }
         XXTE_END_IGNORE_PARTIAL
         
@@ -973,9 +973,9 @@ XXTE_END_IGNORE_PARTIAL
     entryCell.entryTitleLabel.text = fixedName;
     entryCell.entrySubtitleLabel.text = entry.localizedDescription;
     entryCell.entryIconImageView.image = entry.localizedDisplayIconImage;
-    if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton)
+    if (entryCell.accessoryType != UITableViewCellAccessoryNone)
     {
-        entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
+        entryCell.accessoryType = UITableViewCellAccessoryNone;
     }
 }
 

@@ -8,11 +8,14 @@
 
 #import "XXTECodeViewerController.h"
 #import "XXTExplorerEntryCodeReader.h"
+#import "XXTECodeViewerSettingsController.h"
 
 #import "NSString+HTMLEscape.h"
 #import "NSString+Template.h"
 
 @interface XXTECodeViewerController ()
+
+@property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @end
 
@@ -96,7 +99,7 @@
     if (entryName && escapedString)
     {
         htmlTemplate =
-        [htmlTemplate stringByReplacingTagsInDictionary:@{ @"title": entryName, @"code": escapedString }];
+        [htmlTemplate stringByReplacingTagsInDictionary:@{ @"title": entryName, @"code": escapedString, @"type": [self.entryPath pathExtension] }];
     }
     if (self.webView) {
         [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
@@ -104,6 +107,7 @@
         [self.wkWebView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
     }
     
+    self.navigationItem.rightBarButtonItems = @[ self.settingsButtonItem ];
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
@@ -111,6 +115,23 @@
 
 - (NSURL *)baseUrl {
     return [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"XXTEMoreReferences.bundle"];
+}
+
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)settingsButtonItem {
+    if (!_settingsButtonItem) {
+        UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEToolbarSettings"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonItemTapped:)];
+        _settingsButtonItem = settingsButtonItem;
+    }
+    return _settingsButtonItem;
+}
+
+#pragma mark - Actions
+
+- (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
+    XXTECodeViewerSettingsController *settingsController = [[XXTECodeViewerSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:settingsController animated:YES];
 }
 
 #pragma mark - Memory

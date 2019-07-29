@@ -1211,7 +1211,7 @@
 "Online Documents" = "在线文档";
 
 /* No comment provided by engineer. */
-"Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及符号链接.";
+"Only regular file, directory and symbolic link are supported." = "仅支持常规文件, 目录及替身.";
 
 /* No comment provided by engineer. */
 "Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks." = "打开 \"Cydia\" 并安装第三方插件 \"Activator\", 获取更多自定义的激活方式和计划任务.";
@@ -1696,7 +1696,7 @@
 "Suggested" = "建议";
 
 /* No comment provided by engineer. */
-"Symbolic Link" = "符号链接";
+"Symbolic Link" = "替身";
 
 /* No comment provided by engineer. */
 "Symbols" = "符号表";
@@ -2011,3 +2011,18 @@
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
+
+/* Used in the context: 'Showing 1 of 3 items' */
+"of" = "of";
+
+/* Used in the context: '1 photo' */
+"photo" = "photo";
+
+/* Used in the context: '3 photos' */
+"photos" = "photos";
+
+/* No comment provided by engineer. */
+"Select Photos" = "Select Photos";
+
+/* No comment provided by engineer. */
+"This file is not executable." = "此文件不可被执行.";

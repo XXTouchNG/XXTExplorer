@@ -103,23 +103,6 @@ All Rights Reserved.</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>OpenURLInCydia:</string>
-			<key>args</key>
-			<dict>
-				<key>path</key>
-				<string>Payload.html</string>
-			</dict>
-			<key>cell</key>
-			<string>Button</string>
-			<key>icon</key>
-			<string>res/XXTEAboutIconUpdate.png</string>
-			<key>iconRenderingMode</key>
-			<string>AlwaysTemplate</string>
-			<key>label</key>
-			<string>Run Payload</string>
-		</dict>
-		<dict>
-			<key>action</key>
 			<string>XXTResetDefaults:</string>
 			<key>args</key>
 			<dict/>

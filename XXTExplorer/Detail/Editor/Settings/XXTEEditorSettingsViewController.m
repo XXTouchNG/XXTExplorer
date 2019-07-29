@@ -377,7 +377,9 @@
     cell17.titleLabel.text = NSLocalizedString(@"Regular Expression", nil);
     cell17.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
     {
+        @weakify(self);
         [cell17.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSearchRegularExpression, optionSwitch.on);
             [self.editor setNeedsSoftReload];
@@ -388,7 +390,9 @@
     cell18.titleLabel.text = NSLocalizedString(@"Case Sensitive", nil);
     cell18.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchCaseSensitive, NO);
     {
+        @weakify(self);
         [cell18.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
             [self.editor setNeedsSoftReload];

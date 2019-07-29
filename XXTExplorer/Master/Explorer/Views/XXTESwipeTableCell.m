@@ -865,7 +865,11 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
 -(void) willMoveToSuperview:(UIView *)newSuperview;
 {
     if (newSuperview == nil) { //remove the table overlay when a cell is removed from the table
-        [self hideSwipeOverlayIfNeeded];
+        if (@available(iOS 13.0, *)) {
+            
+        } else {
+            [self hideSwipeOverlayIfNeeded];
+        }
     }
 }
 
