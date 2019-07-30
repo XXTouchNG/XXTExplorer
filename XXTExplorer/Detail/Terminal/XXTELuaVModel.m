@@ -14,10 +14,6 @@
 #import "XXTELuaVModel.h"
 #import "XXTLuaNSValue.h"
 
-static NSString * const XXTETerminalHandlerOutput = @"TerminalOutput-%@.pipe";
-static NSString * const XXTETerminalHandlerError = @"TerminalError-%@.pipe";
-static NSString * const XXTETerminalHandlerInput = @"TerminalInput-%@.pipe";
-
 static jmp_buf buf;
 static BOOL _running = NO;
 
@@ -45,6 +41,15 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 
 - (void)setup {
     @synchronized (self) {
+        _stdinReadHandler = stdin;
+        _stdinWriteHandler = stdin;
+        _stdoutHandler = stdout;
+        _stderrHandler = stderr;
+        
+        _inputPipe = [NSPipe pipe];
+        _outputPipe = [NSPipe pipe];
+        _errorPipe = [NSPipe pipe];
+        
         if (!L) {
             L = luaL_newstate();
             NSAssert(L, @"LuaVM: not enough memory.");
@@ -60,56 +65,55 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 
 - (void)setFakeIOEnabled:(BOOL)enabled {
     if (enabled) {
-        NSString *stdoutHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:XXTETerminalHandlerOutput, [NSUUID UUID]]];
-        unlink(stdoutHandlerPath.UTF8String);
-        FILE *stdoutHandler = fopen(stdoutHandlerPath.UTF8String, "wb+");
+        
+        FILE *stdoutHandler = fdopen(self.outputPipe.fileHandleForWriting.fileDescriptor, "w");
         NSAssert(stdoutHandler, @"Cannot create stdout handler");
+        setbuf(stdoutHandler, NULL);
         self.stdoutHandler = stdoutHandler;
         
-        NSString *stderrHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:XXTETerminalHandlerError, [NSUUID UUID]]];
-        unlink(stderrHandlerPath.UTF8String);
-        FILE *stderrHandler = fopen(stderrHandlerPath.UTF8String, "wb+");
+        FILE *stderrHandler = fdopen(self.errorPipe.fileHandleForWriting.fileDescriptor, "w");
         NSAssert(stderrHandler, @"Cannot create stderr handler");
+        setbuf(stderrHandler, NULL);
         self.stderrHandler = stderrHandler;
         
-        NSString *stdinHandlerPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:XXTETerminalHandlerInput, [NSUUID UUID]]];
-        unlink(stdinHandlerPath.UTF8String);
-        if (mkfifo(stdinHandlerPath.UTF8String, S_IRWXU) >= 0)
-        {
-            self.stdinReadHandler = stdin;
-            FILE *stdinReadHandler = NULL;
-            if ((stdinReadHandler = fopen(stdinHandlerPath.UTF8String, "rb+")) != NULL) {
-                self.stdinReadHandler = stdinReadHandler;
-            }
-            
-            self.stdinWriteHandler = stdin;
-            FILE *stdinWriteHandler = NULL;
-            if ((stdinWriteHandler = fopen(stdinHandlerPath.UTF8String, "wb+")) != NULL) {
-                self.stdinWriteHandler = stdinWriteHandler;
-            }
+        FILE *stdinReadHandler = NULL;
+        if ((stdinReadHandler = fdopen(self.inputPipe.fileHandleForReading.fileDescriptor, "r")) != NULL) {
+            self.stdinReadHandler = stdinReadHandler;
+        }
+        
+        FILE *stdinWriteHandler = NULL;
+        if ((stdinWriteHandler = fdopen(self.inputPipe.fileHandleForWriting.fileDescriptor, "w")) != NULL) {
+            self.stdinWriteHandler = stdinWriteHandler;
         }
         
         lua_setStream(self.stdinReadHandler, self.stdoutHandler, self.stderrHandler);
+        
     } else {
+        
         lua_setStream(nil, nil, nil);
         chdir("/");
         
-        if (self.stdoutHandler) {
+        if (self.stdoutHandler)
+        {
             fclose(self.stdoutHandler);
-            self.stdoutHandler = nil;
+            self.stdoutHandler = stdout;
         }
-        if (self.stderrHandler) {
+        if (self.stderrHandler)
+        {
             fclose(self.stderrHandler);
-            self.stderrHandler = nil;
+            self.stderrHandler = stderr;
         }
-        if (self.stdinReadHandler) {
+        if (self.stdinReadHandler)
+        {
             fclose(self.stdinReadHandler);
-            self.stdinReadHandler = nil;
+            self.stdinReadHandler = stdin;
         }
-        if (self.stdinWriteHandler) {
+        if (self.stdinWriteHandler)
+        {
             fclose(self.stdinWriteHandler);
-            self.stdinWriteHandler = nil;
+            self.stdinWriteHandler = stdin;
         }
+        
     }
 }
 
@@ -123,10 +127,10 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
     _running = running;
     if (!running)
     {
-        char *emptyBuf = malloc(8192 * sizeof(char)); // malloc
+        char *emptyBuf = (char *)malloc(8192 * sizeof(char)); // malloc
         memset(emptyBuf, 0x0a, 8192);
-        write(fileno(self.stdinWriteHandler), emptyBuf, 8192);
-        free(emptyBuf); // free
+        [self.inputPipe.fileHandleForWriting writeData:[NSData dataWithBytes:emptyBuf length:8192]];
+        free(emptyBuf);
     }
     if (_delegate && [_delegate respondsToSelector:@selector(virtualMachineDidChangedState:)])
     {
@@ -175,11 +179,11 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 #pragma mark - pcall
 
 - (BOOL)pcallWithError:(NSError **)error {
-    self.running = YES;
+    [self setRunning:YES];
     int load_stat = 0;
-    if (!setjmp(buf)) {
+    if (setjmp(buf) == 0) {
         load_stat = lua_pcall(L, 0, 0, 0);
-        self.running = NO;
+        [self setRunning:NO];
         if (!lua_checkCode(L, load_stat, error)) {
             return NO;
         }

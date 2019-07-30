@@ -44,7 +44,7 @@
     XXTE_END_IGNORE_PARTIAL
 }
 
-- (void)launchItemTapped:(UIBarButtonItem *)sender {
+- (BOOL)isLaunchItemAvailable {
     BOOL supported = NO;
     NSArray <NSString *> *suggested = [XXTETerminalViewController suggestedExtensions];
     NSArray <NSString *> *holded = self.language.extensions;
@@ -54,7 +54,11 @@
             break;
         }
     }
-    if (!supported) {
+    return supported;
+}
+
+- (void)launchItemTapped:(UIBarButtonItem *)sender {
+    if (![self isLaunchItemAvailable]) {
         toastMessage(self, NSLocalizedString(@"This file is not executable.", nil));
         return;
     }
@@ -71,9 +75,13 @@
     [self toggleSearchBar:sender animated:YES];
 }
 
+- (BOOL)isSymbolsButtonItemAvailable {
+    return [XXTESymbolViewController hasSymbolPatternsForLanguage:self.language];
+}
+
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
-    if ([XXTESymbolViewController hasSymbolPatternsForLanguage:self.language]) {
+    if ([self isSymbolsButtonItemAvailable]) {
         XXTESymbolViewController *symbolController = [[XXTESymbolViewController alloc] init];
         symbolController.editor = self;
         [self.navigationController pushViewController:symbolController animated:YES];

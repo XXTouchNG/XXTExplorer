@@ -46,6 +46,9 @@
 // Toolbar
 #import "XXTEEditorToolbar.h"
 
+// Title View
+#import "XXTELockedTitleView.h"
+
 // Search
 #import "XXTEEditorSearchBar.h"
 #import "ICTextView.h"
@@ -60,6 +63,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
 
+@property (nonatomic, strong) XXTELockedTitleView *lockedTitleView;
 @property (nonatomic, strong) UIScrollView *containerView;
 @property (nonatomic, strong) NSLayoutConstraint *textViewWidthConstraint;
 
@@ -306,6 +310,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     XXTEEditorSearchBar *searchBar = self.searchBar;
     [searchBar setRegexMode:useRegular];
     [searchBar updateView];
+    
+    [self.launchButtonItem setEnabled:[self isLaunchItemAvailable]];
+    [self.symbolsButtonItem setEnabled:[self isSymbolsButtonItemAvailable]];
+    
+    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
+    [self.lockedTitleView setLocked:isReadOnlyMode];
 }
 
 - (void)reloadTextViewLayout {
@@ -542,6 +552,8 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     } else {
         self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
     }
+    self.lockedTitleView.title = self.title;
+    self.navigationItem.titleView = self.lockedTitleView;
     
     [self.maskView setTextView:self.textView];
     
@@ -608,6 +620,13 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 }
 
 #pragma mark - UIView Getters
+
+- (XXTELockedTitleView *)lockedTitleView {
+    if (!_lockedTitleView) {
+        _lockedTitleView = (XXTELockedTitleView *)[[[UINib nibWithNibName:@"XXTELockedTitleView" bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
+    }
+    return _lockedTitleView;
+}
 
 - (UIScrollView *)containerView {
     if (!_containerView) {

@@ -159,24 +159,30 @@
 
 #pragma mark - Redirect
 
-- (void)redirectStandardOutput:(int)fd {
+- (void)registerFileHandlerNotification:(int)fd
+{
     NSPipe *pipe = [NSPipe pipe];
-    NSFileHandle *pipeReadHandle = [pipe fileHandleForReading];
-    int result = dup2([[pipe fileHandleForWriting] fileDescriptor], fd);
-    if (result != -1) {
+    NSFileHandle *pipeReadHandle = pipe.fileHandleForReading;
+    int result = dup2(pipe.fileHandleForWriting.fileDescriptor, fd);
+    if (result > 0)
+    {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(redirectNotificationHandle:)
+                                                 selector:@selector(fileHandlerReadabilityHandler:)
                                                      name:NSFileHandleReadCompletionNotification
                                                    object:pipeReadHandle];
         [pipeReadHandle readInBackgroundAndNotify];
     }
 }
 
-- (void)redirectNotificationHandle:(NSNotification *)aNotification {
+- (void)fileHandlerReadabilityHandler:(NSNotification *)aNotification
+{
     NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [self.textView appendString:str];
-    [[aNotification object] readInBackgroundAndNotify];
+    NSFileHandle *pipeReadHandle = [aNotification object];
+    if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
+        [pipeReadHandle readInBackgroundAndNotify];
+    }
 }
 
 #pragma mark - Execute
@@ -200,9 +206,13 @@
     XXTELuaVModel *virtualModel = [[XXTELuaVModel alloc] init];
     virtualModel.delegate = self;
     [virtualModel setFakeIOEnabled:YES];
-    if (virtualModel.stdoutHandler && virtualModel.stderrHandler) {
-        [self redirectStandardOutput:fileno(virtualModel.stdoutHandler)];
-        [self redirectStandardOutput:fileno(virtualModel.stderrHandler)];
+    if (virtualModel.stdoutHandler)
+    {
+        [self registerFileHandlerNotification:fileno(virtualModel.stdoutHandler)];
+    }
+    if (virtualModel.stderrHandler)
+    {
+        [self registerFileHandlerNotification:fileno(virtualModel.stderrHandler)];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
@@ -238,7 +248,7 @@
     } else {
         [self.textView appendMessage:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil)];
     }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         NSError *err = nil;
         BOOL result = [self.virtualModel pcallWithError:&err];
         dispatch_async_on_main_queue(^{
@@ -278,10 +288,7 @@
         if ([text isEqualToString:@"\n"]) {
             [textView insertText:text];
             NSString *bufferedString = [textView getBufferString];
-            const char *buf = bufferedString.UTF8String;
-            if (self.virtualModel.stdinWriteHandler) {
-                write(fileno(self.virtualModel.stdinWriteHandler), buf, strlen(buf));
-            }
+            [self.virtualModel.inputPipe.fileHandleForWriting writeData:[bufferedString dataUsingEncoding:NSUTF8StringEncoding]];
             return NO;
         }
         [self.textView resetTypingAttributes];

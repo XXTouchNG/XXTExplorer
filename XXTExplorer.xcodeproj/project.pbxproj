@@ -1298,6 +1298,12 @@
 		D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */; };
 		D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */; };
+		D6CDFECA22F0AEBE00522CFE /* XXTELockedTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CDFEC922F0AEBE00522CFE /* XXTELockedTitleView.m */; };
+		D6CDFECB22F0AEBE00522CFE /* XXTELockedTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CDFEC922F0AEBE00522CFE /* XXTELockedTitleView.m */; };
+		D6CDFECC22F0AEBE00522CFE /* XXTELockedTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CDFEC922F0AEBE00522CFE /* XXTELockedTitleView.m */; };
+		D6CDFECE22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6CDFECD22F0AEC700522CFE /* XXTELockedTitleView.xib */; };
+		D6CDFECF22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6CDFECD22F0AEC700522CFE /* XXTELockedTitleView.xib */; };
+		D6CDFED022F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6CDFECD22F0AEC700522CFE /* XXTELockedTitleView.xib */; };
 		D6D15B8B22F0760B00EDFD8E /* XXTExplorerViewController+ArchiverOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA921F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
@@ -2166,6 +2172,9 @@
 		D6CCD4102048E16E009C2072 /* XXTExplorerEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntry.h; sourceTree = "<group>"; };
 		D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntry.m; sourceTree = "<group>"; };
 		D6CCD417204CDE69009C2072 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D6CDFEC822F0AEBE00522CFE /* XXTELockedTitleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTELockedTitleView.h; sourceTree = "<group>"; };
+		D6CDFEC922F0AEBE00522CFE /* XXTELockedTitleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTELockedTitleView.m; sourceTree = "<group>"; };
+		D6CDFECD22F0AEC700522CFE /* XXTELockedTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XXTELockedTitleView.xib; sourceTree = "<group>"; };
 		D6DBD4861F3C36AD002D5561 /* XXTEDaemonAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEDaemonAgent.h; sourceTree = "<group>"; };
 		D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEDaemonAgent.m; sourceTree = "<group>"; };
 		D6DBD48A1F3C4CA1002D5561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/XXTEBuiltInDefaults.plist"; sourceTree = "<group>"; };
@@ -3993,6 +4002,7 @@
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				D6CDFEC722F0AE8000522CFE /* Views */,
 				D60FE6461FE226D400954818 /* Search */,
 				0F3D5DF61FAEC4120083196D /* Symbol */,
 				0FB388E21FA860AA00B41E44 /* Statistics */,
@@ -4263,6 +4273,16 @@
 				D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D6CDFEC722F0AE8000522CFE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D6CDFECD22F0AEC700522CFE /* XXTELockedTitleView.xib */,
+				D6CDFEC822F0AEBE00522CFE /* XXTELockedTitleView.h */,
+				D6CDFEC922F0AEBE00522CFE /* XXTELockedTitleView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D6E140971F5032AB00D78CB9 /* PickerCollection */ = {
@@ -4543,6 +4563,7 @@
 				0F8EDC781FB1F779003C92D6 /* XXTExplorerViewCell.xib in Resources */,
 				0F8EDC791FB1F779003C92D6 /* Tomorrow.tmTheme in Resources */,
 				0F8EDC7A1FB1F779003C92D6 /* Kimbie (Light).tmTheme in Resources */,
+				D6CDFED022F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
 				0F8EDC7B1FB1F779003C92D6 /* XXTImagePickerPhotoCell.xib in Resources */,
 				0F8ECD821FE81AEA00A5457C /* Hack-Italic.ttf in Resources */,
 				0F8EDC7C1FB1F779003C92D6 /* XXTEMoreTitleValueCell.xib in Resources */,
@@ -4713,6 +4734,7 @@
 				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
 				0FB008FF1F4356FB00097E9C /* Ciapre.tmTheme in Resources */,
 				0F2DAE552013158C001593C9 /* RMCloudTrendsCell.xib in Resources */,
+				D6CDFECE22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F856CF61FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F349BB31F62F474004143B7 /* strings.tmLanguage in Resources */,
@@ -4827,6 +4849,7 @@
 				D60FE79F1FE2369300954818 /* XXTEMoreAddressCell.xib in Resources */,
 				D60FE7A31FE2369300954818 /* XXTEAppDefines.plist in Resources */,
 				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
+				D6CDFECF22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
 				D60FE7A61FE2369300954818 /* XXTEItemTemplate.lua in Resources */,
 				D60FE7A71FE2369300954818 /* XXTEMoreTextFieldCell.xib in Resources */,
 				D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */,
@@ -5076,6 +5099,7 @@
 				0F8EDB761FB1F779003C92D6 /* XUIFileCell.m in Sources */,
 				0F8EDB771FB1F779003C92D6 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FAE18EC20806830005F9B67 /* XXTEDbTableListViewController.m in Sources */,
+				D6CDFECC22F0AEBE00522CFE /* XXTELockedTitleView.m in Sources */,
 				0F8EDB781FB1F779003C92D6 /* XXTImagePickerController.m in Sources */,
 				0F8EDB791FB1F779003C92D6 /* XXTPickerSnippet.m in Sources */,
 				0F8EDB7A1FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
@@ -5352,6 +5376,7 @@
 				0FFC8F141FCB14C20012C170 /* XXTExplorerDynamicSection.m in Sources */,
 				0F10A9241F07FC32008BA792 /* XXTEMoreLicenseCell.m in Sources */,
 				0FD974011F4B37FE00133162 /* XXTEEditorController+Menu.m in Sources */,
+				D6CDFECA22F0AEBE00522CFE /* XXTELockedTitleView.m in Sources */,
 				D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */,
 				D629C2351F0651320030C6DA /* UISearchController+StatusBarStyle.m in Sources */,
 				0FAE18FC20806CAF005F9B67 /* XXTEDbReader.m in Sources */,
@@ -5694,6 +5719,7 @@
 				D60FE66F1FE2369300954818 /* XXTExplorerDynamicSection.m in Sources */,
 				D60FE6701FE2369300954818 /* XXTEMoreLicenseCell.m in Sources */,
 				D60FE6711FE2369300954818 /* XXTEEditorController+Menu.m in Sources */,
+				D6CDFECB22F0AEBE00522CFE /* XXTELockedTitleView.m in Sources */,
 				D60FE6721FE2369300954818 /* XXTESwipeTableCell.m in Sources */,
 				D60FE6731FE2369300954818 /* UISearchController+StatusBarStyle.m in Sources */,
 				0FAE18FD20806CAF005F9B67 /* XXTEDbReader.m in Sources */,

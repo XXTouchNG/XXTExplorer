@@ -18,10 +18,16 @@
 
 @interface XXTELuaVModel : NSObject
 @property (nonatomic, weak) id<XXTELuaVModelDelegate> delegate;
+
 @property (nonatomic, assign) FILE *stdoutHandler;
 @property (nonatomic, assign) FILE *stderrHandler;
 @property (nonatomic, assign) FILE *stdinReadHandler;
 @property (nonatomic, assign) FILE *stdinWriteHandler;
+
+@property (nonatomic, strong) NSPipe *outputPipe;
+@property (nonatomic, strong) NSPipe *inputPipe;
+@property (nonatomic, strong) NSPipe *errorPipe;
+
 @property (nonatomic, assign) BOOL running;
 
 - (void)setFakeIOEnabled:(BOOL)enabled;

@@ -17,4 +17,7 @@
 - (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender;
 
+- (BOOL)isLaunchItemAvailable;
+- (BOOL)isSymbolsButtonItemAvailable;
+
 @end

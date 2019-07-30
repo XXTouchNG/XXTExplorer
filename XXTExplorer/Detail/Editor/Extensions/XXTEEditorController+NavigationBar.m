@@ -80,6 +80,7 @@
     navigation.navigationBar.barTintColor = barTintColor;
     navigation.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
     navigation.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    navigation.navigationItem.titleView.tintColor = barTitleColor;
     for (UIBarButtonItem *item in navigation.navigationItem.leftBarButtonItems) {
         item.tintColor = barTitleColor;
     }
@@ -88,6 +89,7 @@
     }
     self.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
     self.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    self.navigationItem.titleView.tintColor = barTitleColor;
     for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
         item.tintColor = barTitleColor;
     }
