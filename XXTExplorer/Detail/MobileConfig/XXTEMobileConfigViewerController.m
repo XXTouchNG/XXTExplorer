@@ -38,7 +38,11 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"mobileconfig" ];
+    return @[ @"mobileconfig",
+              @"pem", @"crt", @"cer", @"key",
+              @"der", @"rsa",
+              @"pfx", @"p12",
+              @"csr", @"key" ];
 }
 
 + (Class)relatedReader {
@@ -100,6 +104,7 @@
 #pragma mark - Actions
 
 - (void)launchButtonTapped:(UIGestureRecognizer *)sender {
+#ifndef APPSTORE
     LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Redirect Confirm", nil) message:NSLocalizedString(@"You will be redirected to \"Safari\" and \"Preferences\".\nFollow the instruction to finish configuration.", nil) style:LGAlertViewStyleAlert buttonTitles:@[] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Continue", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
@@ -107,9 +112,19 @@
         [self openInSafariImmediately];
     }];
     [alertView showAnimated];
+#else
+    LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Instruction", nil) message:NSLocalizedString(@"Data URL will be copied to the pasteboard, paste it in Safari maually to finish installation.", nil) style:LGAlertViewStyleAlert buttonTitles:@[] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Continue", nil) actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView) {
+        [alertView dismissAnimated];
+    } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+        [alertView dismissAnimated];
+        [self openInSafariImmediately];
+    }];
+    [alertView showAnimated];
+#endif
 }
 
 - (void)openInSafariImmediately {
+#ifndef APPSTORE
     NSError *directoryError = nil;
     NSString *webPath = [XXTERootPath() stringByAppendingPathComponent:@"web"];
     NSString *webTmpComponent = [@"tmp" stringByAppendingFormat:@"/%@", [[NSUUID UUID] UUIDString]];
@@ -134,15 +149,43 @@
     if ([sharedApplication canOpenURL:accessURL]) {
         [sharedApplication openURL:accessURL];
     }
+#else
+    if (!self.entryPath) return;
+    NSError *readingError = nil;
+    NSData *data = [NSData dataWithContentsOfFile:self.entryPath options:kNilOptions error:&readingError];
+    if (!data) {
+        toastError(self, readingError);
+        return;
+    }
+    NSString *b64String = [data base64EncodedStringWithOptions:kNilOptions];
+    NSString *urlString = [NSString stringWithFormat:@"data:application/x-apple-aspen-config;base64,%@", b64String];
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (!url) return;
+    BOOL succeed = NO;
+    UIApplication *sharedApplication = [UIApplication sharedApplication];
+    if ([sharedApplication canOpenURL:url]) {
+        succeed = [sharedApplication openURL:url];
+    }
+    else {
+        [[UIPasteboard generalPasteboard] setURL:url];
+        NSURL *exampleURL = [NSURL URLWithString:@"https://example.com/"];
+        if ([sharedApplication canOpenURL:exampleURL]) {
+            succeed = [sharedApplication openURL:exampleURL];
+        }
+    }
+    if (!succeed) {
+        toastMessage(self, NSLocalizedString(@"Cannot redirect to Safari.", nil));
+    }
+#endif
 }
 
 - (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
     if (!self.entryPath) return;
-    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
-    if (!shareUrl) return;
+    NSURL *shareURL = [NSURL fileURLWithPath:self.entryPath];
+    if (!shareURL) return;
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
         if (XXTE_IS_IPAD) {
             activityViewController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;

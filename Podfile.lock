@@ -49,6 +49,7 @@ PODS:
     - PromiseKit/When
   - PromiseKit/When (1.7.7):
     - PromiseKit/Promise
+  - SSZipArchive (2.2.2)
   - TOWebViewController (2.2.6):
     - TOWebViewController/Core (= 2.2.6)
   - TOWebViewController/Core (2.2.6)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7.6)
+  - SSZipArchive (from `https://github.com/Lessica/ZipArchive.git`)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
   - XUI (from `https://github.com/Lessica/XUI.git`)
@@ -97,6 +99,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/Lessica/LGAlertView.git
   MWPhotoBrowser:
     :git: https://github.com/Lessica/MWPhotoBrowser.git
+  SSZipArchive:
+    :git: https://github.com/Lessica/ZipArchive.git
   TOWebViewController:
     :branch: WKWebView
     :git: https://github.com/Lessica/TOWebViewController.git
@@ -113,6 +117,9 @@ CHECKOUT OPTIONS:
   MWPhotoBrowser:
     :commit: 9aea50ef21412dd0907de5d24ec90f8e1e869c03
     :git: https://github.com/Lessica/MWPhotoBrowser.git
+  SSZipArchive:
+    :commit: e960dafaf876c6cab169a62d929b4f99053daf36
+    :git: https://github.com/Lessica/ZipArchive.git
   TOWebViewController:
     :commit: 766e2a7b1df024800620fd0a9624f74db12f93b9
     :git: https://github.com/Lessica/TOWebViewController.git
@@ -132,6 +139,7 @@ SPEC CHECKSUMS:
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: 9ac96bdf5c90a33f75836630729ea1adc312a9ed
   PromiseKit: 9007df2f9e2ef725467084ab3880cf932ab935a4
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
   XUI: de0dd8c99edeaa5b60303240df9d53cc0cdfd1a7
@@ -139,6 +147,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: a9f11297673b507a2991c131eaf84f1c183d2c41
+PODFILE CHECKSUM: 67a4d97cf38da688cc5cb8f210bc23f0ca21fa73
 
 COCOAPODS: 1.7.2

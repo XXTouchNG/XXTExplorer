@@ -381,7 +381,6 @@
 		0F8EDBB31FB1F779003C92D6 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F8EDBB51FB1F779003C92D6 /* XUIAdapter_xui.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */; };
 		0F8EDBB61FB1F779003C92D6 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
-		0F8EDBB81FB1F779003C92D6 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		0F8EDBB91FB1F779003C92D6 /* XXTEUIViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C8B1F7E30C600A45CF7 /* XXTEUIViewController+SharedInstance.m */; };
 		0F8EDBBA1FB1F779003C92D6 /* XXTEEditorController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */; };
 		0F8EDBBB1FB1F779003C92D6 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5D1F7E275800A45CF7 /* XUIEntryReader.m */; };
@@ -413,7 +412,6 @@
 		0F8EDBDB1FB1F779003C92D6 /* XXTExplorerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1482641EDABCC6007A777B /* XXTExplorerToolbar.m */; };
 		0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FECB2251EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m */; };
 		0F8EDBDD1FB1F779003C92D6 /* XXTExplorerViewController+PasteboardOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA981F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m */; };
-		0F8EDBDE1FB1F779003C92D6 /* XXTExplorerViewController+ArchiverOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA921F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m */; };
 		0F8EDBE01FB1F779003C92D6 /* XXTEEditorStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB388E41FA860E800B41E44 /* XXTEEditorStatisticsViewController.m */; };
 		0F8EDBE11FB1F779003C92D6 /* XXTEInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F061ED70E4800798B4B /* XXTEInsetsLabel.m */; };
 		0F8EDBE21FB1F779003C92D6 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA9B1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m */; };
@@ -875,6 +873,7 @@
 		D60D0A031FE8BCB100289725 /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
 		D60D0A041FE8BCB100289725 /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
 		D60D0A051FE8BCB100289725 /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
+		D60F864422F0741900C5F526 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		D60FE6491FE226F000954818 /* XXTEEditorSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */; };
 		D60FE64A1FE226F000954818 /* XXTEEditorSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */; };
 		D60FE6511FE2369300954818 /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
@@ -1285,6 +1284,8 @@
 		D6BE070922EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */; };
 		D6BE070A22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */; };
 		D6BE070B22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BE070822EF48CA0008B2AA /* XXTECodeViewerSettingsController.m */; };
+		D6BE070C22EFECFF0008B2AA /* XXTExplorerEntryMobileConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C283A20CC303300B47261 /* XXTExplorerEntryMobileConfigReader.m */; };
+		D6BE070D22EFED070008B2AA /* XXTEMobileConfigViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C283720CC301200B47261 /* XXTEMobileConfigViewerController.m */; };
 		D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */; };
 		D6CB81B81FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
 		D6CB81B91FE262320033EA2F /* XXTEEditorSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB81B71FE262320033EA2F /* XXTEEditorSearchField.m */; };
@@ -1297,6 +1298,7 @@
 		D6CCD4142048E16E009C2072 /* XXTExplorerEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CCD4112048E16E009C2072 /* XXTExplorerEntry.m */; };
 		D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */; };
 		D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */; };
+		D6D15B8B22F0760B00EDFD8E /* XXTExplorerViewController+ArchiverOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AEA921F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m */; };
 		D6DBD4881F3C36AD002D5561 /* XXTEDaemonAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */; };
 		D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D6DBD48F1F3C5B5C002D5561 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
@@ -5030,6 +5032,7 @@
 				D6FA3C211FFCB74E00EADE49 /* NSData+SHA1.m in Sources */,
 				0F8147BF2081CB7D009C6B6D /* XXTELogViewController.m in Sources */,
 				D6FA3C221FFCB74E00EADE49 /* NSString+SHA1.m in Sources */,
+				D60F864422F0741900C5F526 /* zip.c in Sources */,
 				D6F3EBE11FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */,
 				0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */,
@@ -5065,6 +5068,7 @@
 				0F8EDB6E1FB1F779003C92D6 /* XXTEMoreLinkCell.m in Sources */,
 				0F8EDB701FB1F779003C92D6 /* XXTEEditorController+Menu.m in Sources */,
 				0F8EDB711FB1F779003C92D6 /* XXTESwipeTableCell.m in Sources */,
+				D6BE070C22EFECFF0008B2AA /* XXTExplorerEntryMobileConfigReader.m in Sources */,
 				0F072DB61FB9EC8B00597EE2 /* xui32.c in Sources */,
 				0F8EDB721FB1F779003C92D6 /* UISearchController+StatusBarStyle.m in Sources */,
 				0F8EDB741FB1F779003C92D6 /* SKAttributedRenderer.m in Sources */,
@@ -5131,9 +5135,9 @@
 				0F8EDBB31FB1F779003C92D6 /* XXTEWorkspaceViewController.m in Sources */,
 				0F8EDBB51FB1F779003C92D6 /* XUIAdapter_xui.m in Sources */,
 				0F8EDBB61FB1F779003C92D6 /* XXTEMasterViewController.m in Sources */,
-				0F8EDBB81FB1F779003C92D6 /* zip.c in Sources */,
 				0FB7B8A5200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */,
 				0F8EDBB91FB1F779003C92D6 /* XXTEUIViewController+SharedInstance.m in Sources */,
+				D6BE070D22EFED070008B2AA /* XXTEMobileConfigViewerController.m in Sources */,
 				0F8EDBBA1FB1F779003C92D6 /* XXTEEditorController+Keyboard.m in Sources */,
 				0F8EDBBB1FB1F779003C92D6 /* XUIEntryReader.m in Sources */,
 				0F8EDBBC1FB1F779003C92D6 /* XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.m in Sources */,
@@ -5177,7 +5181,6 @@
 				0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */,
 				D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */,
 				0F8EDBDD1FB1F779003C92D6 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
-				0F8EDBDE1FB1F779003C92D6 /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
 				0F8EDBE01FB1F779003C92D6 /* XXTEEditorStatisticsViewController.m in Sources */,
 				0F8EDBE11FB1F779003C92D6 /* XXTEInsetsLabel.m in Sources */,
 				0F8EDBE21FB1F779003C92D6 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
@@ -5283,6 +5286,7 @@
 				0F8EDC471FB1F779003C92D6 /* loadlib.c in Sources */,
 				0F8EDC481FB1F779003C92D6 /* lobject.c in Sources */,
 				0F9387F01FEEAF9800DBAC8E /* UINavigationController+RestoreWorkspace.m in Sources */,
+				D6D15B8B22F0760B00EDFD8E /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
 				0F8EDC491FB1F779003C92D6 /* lopcodes.c in Sources */,
 				0F8EDC4A1FB1F779003C92D6 /* loslib.c in Sources */,
 				0F6682F820A7D62A00960436 /* XXTEUIViewController+XXTResetDefaults.m in Sources */,

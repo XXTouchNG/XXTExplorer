@@ -30,7 +30,7 @@ target 'XXTouch' do
     platform :ios, '8.0'
     shared_pods
     
-    # pod 'UnrarKit', :path => '../UnrarKit'
+    pod 'SSZipArchive', :git => 'https://github.com/Lessica/ZipArchive.git', :inhibit_warnings => true
     pod 'UnrarKit', :git => 'https://github.com/Lessica/UnrarKit.git', :branch => 'v2.9', :inhibit_warnings => true
     
     pod 'GCDWebServer/WebDAV', :inhibit_warnings => true

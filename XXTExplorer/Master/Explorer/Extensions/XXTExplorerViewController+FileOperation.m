@@ -278,7 +278,7 @@
                     break;
                 }
                 if (!self.busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Moving process terminated: User interrupt occurred.", nil)}];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Moving process terminated: user interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -414,7 +414,7 @@
                     break;
                 }
                 if (!self.busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Pasting process terminated: User interrupt occurred.", nil)}];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Pasting process terminated: user interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -515,7 +515,7 @@
                 }
                 [resultPaths addObject:targetPath];
                 if (!self.busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Linking process terminated: User interrupt occurred.", nil)}];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Linking process terminated: user interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -619,7 +619,7 @@
                     break;
                 }
                 if (!self.busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil)}];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: user interrupt occurred.", nil)}];
                     break;
                 }
             }
@@ -738,7 +738,7 @@
                     // TODO: pause by remove error
                 }
                 if (!self.busyOperationProgressFlag) {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: User interrupt occurred.", nil)}];
+                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: user interrupt occurred.", nil)}];
                     break;
                 }
             }

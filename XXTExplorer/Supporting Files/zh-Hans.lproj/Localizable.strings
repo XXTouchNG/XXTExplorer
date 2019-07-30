@@ -216,7 +216,7 @@
 "Archive Confirm" = "归档确认";
 
 /* No comment provided by engineer. */
-"Archiving process terminated: User interrupt occurred." = "归档进程终止: 用户结束操作.";
+"Archiving process terminated: user interrupt occurred." = "归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Ask you for a choice." = "询问用户的选择.";
@@ -714,7 +714,7 @@
 "Download terminated, unsupported server response: %@ (%ld)." = "下载终止, 不支持的服务端响应: %@ (%ld).";
 
 /* No comment provided by engineer. */
-"Download terminated: User interrupt occurred." = "下载终止: 用户结束操作.";
+"Download terminated: user interrupt occurred." = "下载终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Download Times" = "下载次数";
@@ -1032,7 +1032,7 @@
 "Link %@ to \"%@\"" = "链接 %@ 到 \"%@\"";
 
 /* No comment provided by engineer. */
-"Linking process terminated: User interrupt occurred." = "链接进程终止: 用户结束操作.";
+"Linking process terminated: user interrupt occurred." = "链接进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Loading..." = "载入中...";
@@ -1121,7 +1121,7 @@
 "Movie Player" = "视频播放器";
 
 /* No comment provided by engineer. */
-"Moving process terminated: User interrupt occurred." = "移动进程终止: 用户结束操作.";
+"Moving process terminated: user interrupt occurred." = "移动进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Mute Button" = "静音";
@@ -1283,7 +1283,7 @@
 "Pasteboard" = "剪贴板";
 
 /* No comment provided by engineer. */
-"Pasting process terminated: User interrupt occurred." = "粘贴进程终止: 用户结束操作.";
+"Pasting process terminated: user interrupt occurred." = "粘贴进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Path has been copied to the pasteboard." = "路径已被复制到剪贴板.";
@@ -1439,7 +1439,7 @@
 "Remove all text in \"%@\"?" = "移除 \"%@\" 中的所有文本?";
 
 /* No comment provided by engineer. */
-"Removing process terminated: User interrupt occurred." = "删除进程终止: 用户结束操作.";
+"Removing process terminated: user interrupt occurred." = "删除进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Rename" = "重命名";
@@ -1890,7 +1890,7 @@
 "Unarchiving \"%@\" to \"%@\"" = "解压 \"%@\" 到 \"%@\"";
 
 /* No comment provided by engineer. */
-"Unarchiving process terminated: User interrupt occurred." = "解归档进程终止: 用户结束操作.";
+"Unarchiving process terminated: user interrupt occurred." = "解归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
 "Undefined" = "未定义";
@@ -2026,3 +2026,24 @@
 
 /* No comment provided by engineer. */
 "This file is not executable." = "此文件不可被执行.";
+
+/* No comment provided by engineer. */
+"Data URL will be copied to the pasteboard, paste it in Safari maually to finish installation." = "数据 URL 将被复制到剪贴板, 请在 Safari 地址栏粘贴以完成安装.";
+
+/* No comment provided by engineer. */
+"Instruction" = "指引";
+
+/* No comment provided by engineer. */
+"Cannot redirect to Safari." = "无法跳转到 Safari.";
+
+/* No comment provided by engineer. */
+"Cannot read archive file \"%@\": %@." = "无法读取归档文件 \"%@\": %@.";
+
+/* No comment provided by engineer. */
+"Enter the password of this archive." = "请输入该归档文件的密码.";
+
+/* No comment provided by engineer. */
+"Password" = "密码";
+
+/* No comment provided by engineer. */
+"Password Protected" = "密码保护";

@@ -366,7 +366,7 @@ typedef enum : NSUInteger {
         NSURLConnection *currentConnection = self.downloadURLConnection;
         if (currentConnection) {
             [currentConnection cancel];
-            [self connection:currentConnection didFailWithError:[NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Download terminated: User interrupt occurred.", nil)}]];
+            [self connection:currentConnection didFailWithError:[NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Download terminated: user interrupt occurred.", nil)}]];
             self.downloadURLConnection = nil;
         }
         busyOperationProgressFlag = NO;

@@ -21,6 +21,7 @@
 		<string>XXTESnippetViewerController</string>
 		<string>XXTETextViewController</string>
 		<string>XXTELogViewController</string>
+		<string>XXTEMobileConfigViewerController</string>
 	</array>
 	<key>CYDIA_PACKAGE</key>
 	<string>cydia://package/%@</string>

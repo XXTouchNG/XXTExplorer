@@ -61,8 +61,6 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechrome</string>
-		<string>cydia</string>
-		<string>mqqapi</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
