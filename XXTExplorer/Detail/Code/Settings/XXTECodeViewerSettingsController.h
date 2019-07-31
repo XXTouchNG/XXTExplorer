@@ -10,7 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class XXTECodeViewerSettingsController;
+
+@protocol XXTECodeViewerSettingsControllerDelegate <NSObject>
+- (void)codeViewerSettingsControllerDidChange:(XXTECodeViewerSettingsController *)controller;
+
+@end
+
 @interface XXTECodeViewerSettingsController : UITableViewController
+@property (nonatomic, weak) id <XXTECodeViewerSettingsControllerDelegate> delegate;
 
 @end
 

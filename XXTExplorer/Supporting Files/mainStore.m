@@ -1,5 +1,5 @@
 //
-//  main.AppStore.m
+//  mainStore.m
 //  XXTExplorer
 //
 

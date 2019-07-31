@@ -436,7 +436,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)displayAgreementViewController {
     UIWindow *mainWindow = self.window;
     
-    NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.Pro.bundle"];
+    NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"SettingsPro.bundle"];
     NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
     XXTEAgreementViewController *agreementController = [[XXTEAgreementViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
     
@@ -460,7 +460,7 @@ XXTE_END_IGNORE_PARTIAL
                 [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
                 [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
 #else
-                NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines.AppStore" ofType:@"plist"]];
+                NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefinesStore" ofType:@"plist"]];
 #endif
                 appDefines;
             });
@@ -494,7 +494,7 @@ XXTE_END_IGNORE_PARTIAL
             });
 #else
             builtInDefaults = ({
-                NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults.AppStore" ofType:@"plist"];
+                NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaultsStore" ofType:@"plist"];
                 [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
             });
 #endif

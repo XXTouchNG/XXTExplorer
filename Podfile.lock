@@ -118,7 +118,7 @@ CHECKOUT OPTIONS:
     :commit: 9aea50ef21412dd0907de5d24ec90f8e1e869c03
     :git: https://github.com/Lessica/MWPhotoBrowser.git
   SSZipArchive:
-    :commit: e960dafaf876c6cab169a62d929b4f99053daf36
+    :commit: 8efe8627b563e02d36ca4a26c40c93bedb859b42
     :git: https://github.com/Lessica/ZipArchive.git
   TOWebViewController:
     :commit: 766e2a7b1df024800620fd0a9624f74db12f93b9

@@ -9,8 +9,15 @@
 #import "XXTEImageViewerController.h"
 #import "XXTExplorerEntryImageReader.h"
 
+#import "XXTExplorerEntryParser.h"
+#import <LGAlertView/LGAlertView.h>
+
+
 @interface XXTEImageViewerController () <MWPhotoBrowserDelegate>
+@property (nonatomic, strong) NSMutableArray <NSString *> *photoPaths;
 @property (nonatomic, strong) NSMutableArray <MWPhoto *> *photos;
+@property (nonatomic, strong) XXTExplorerEntryParser *entryParser;
+@property (nonatomic, strong) UIBarButtonItem *infoItem;
 
 @end
 
@@ -33,6 +40,8 @@
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super initWithDelegate:self]) {
         _entryPath = path;
+        _entryParser = [[XXTExplorerEntryParser alloc] init];
+        _photoPaths = [[NSMutableArray alloc] init];
         _photos = [[NSMutableArray alloc] init];
         [self setup];
     }
@@ -88,6 +97,7 @@
     
     for (NSString *filteredFile in filteredFileList) {
         NSString *singlePath = [parentPath stringByAppendingPathComponent:filteredFile];
+        [self.photoPaths addObject:singlePath];
         NSURL *singleURL = [NSURL fileURLWithPath:singlePath];
         MWPhoto *singlePhoto = [MWPhoto photoWithURL:singleURL];
         singlePhoto.caption = [singlePath lastPathComponent];
@@ -111,9 +121,42 @@
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
     }
     XXTE_END_IGNORE_PARTIAL
+    [self.navigationItem setRightBarButtonItem:self.infoItem];
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+}
+
+#pragma mark - UIView Getters
+
+- (UIBarButtonItem *)infoItem {
+    if (!_infoItem) {
+        _infoItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTExplorerActionIconProperty"] style:UIBarButtonItemStylePlain target:self action:@selector(infoItemTapped:)];
+    }
+    return _infoItem;
+}
+
+#pragma mark - Actions
+
+- (void)infoItemTapped:(UIBarButtonItem *)sender {
+    if (self.currentIndex < self.photoPaths.count) {
+        NSBundle *mainBundle = [NSBundle mainBundle];
+        NSString *photoPath = [self.photoPaths objectAtIndex:self.currentIndex];
+        XXTExplorerEntryReader *entryReader = [[self.entryParser entryOfPath:photoPath withError:nil] entryReader];
+        if (entryReader) {
+            NSArray <NSString *> *metaKeys = entryReader.metaKeys;
+            NSDictionary *meta = entryReader.metaDictionary;
+            NSMutableArray <NSString *> *metaStrings = [NSMutableArray array];
+            for (NSString *metaKey in metaKeys) {
+                NSString *metaVal = meta[metaKey];
+                if (metaVal) {
+                    NSString *localizedKey = [mainBundle localizedStringForKey:(metaKey) value:nil table:(@"Meta")];
+                    [metaStrings addObject:[NSString stringWithFormat:@"%@: %@", localizedKey, metaVal]];
+                }
+            }
+            toastMessage(self, [metaStrings componentsJoinedByString:@"\n"]);
+        }
     }
 }
 
@@ -124,8 +167,10 @@
 }
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.photos.count) {
-        return [self.photos objectAtIndex:index];
+    if (index < self.photos.count && index < self.photoPaths.count) {
+        MWPhoto *photo = [self.photos objectAtIndex:index];
+        // ... do something
+        return photo;
     }
     return nil;
 }

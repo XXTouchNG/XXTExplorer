@@ -9,13 +9,15 @@
 #import "XXTECodeViewerController.h"
 #import "XXTExplorerEntryCodeReader.h"
 #import "XXTECodeViewerSettingsController.h"
+#import "XXTExplorerItemPicker.h"
+#import "XXTECodeViewerDefaults.h"
 
 #import "NSString+HTMLEscape.h"
 #import "NSString+Template.h"
 
-@interface XXTECodeViewerController ()
-
+@interface XXTECodeViewerController () <XXTECodeViewerSettingsControllerDelegate>
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
+@property (nonatomic, assign) BOOL needsReload;
 
 @end
 
@@ -74,6 +76,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.applicationBarButtonItems = @[ self.settingsButtonItem ];
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    }
+    
+    [self loadContent];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.needsReload) {
+        [self loadContent];
+        [self setNeedsReload:NO];
+    }
+}
+
+- (void)loadContent {
     NSString *entryPath = self.entryPath;
     NSString *entryName = [entryPath lastPathComponent];
     if (self.title.length == 0) {
@@ -81,40 +100,64 @@
             self.title = entryName;
         }
     }
+    if (!entryName)
+    {
+        return;
+    }
     
     NSError *templateError = nil;
-    NSString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEMoreReferences.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
+    NSString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"References.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
     if (templateError) {
         return;
     }
+    
     NSError *codecError = nil;
     NSString *codeString = [[NSString alloc] initWithContentsOfFile:self.entryPath encoding:NSUTF8StringEncoding error:&codecError];
     if (codecError) {
         return;
     }
+    
     NSString *escapedString = [codeString stringByEscapingHTML];
-    if (!escapedString) {
+    if (!escapedString)
+    {
         return;
     }
-    if (entryName && escapedString)
-    {
-        htmlTemplate =
-        [htmlTemplate stringByReplacingTagsInDictionary:@{ @"title": entryName, @"code": escapedString, @"type": [self.entryPath pathExtension] }];
+    
+    // theme
+    NSString *themeName = XXTEDefaultsObject(XXTECodeViewerThemeName, @"xcode");
+    NSString *cssPath =
+    [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"References.bundle/hljs/styles/%@", themeName] ofType:@"css"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:cssPath]) {
+        themeName = @"xcode";
     }
+    BOOL highlight = XXTEDefaultsBool(XXTECodeViewerHighlightEnabled, YES);
+    
+    // font
+    NSString *fontName = XXTEDefaultsObject(XXTECodeViewerFontName, @"CourierNewPSMT");
+    NSNumber *fontSize = XXTEDefaultsObject(XXTECodeViewerFontSize, @(12.0));
+    
+    NSDictionary *settingsDict =
+    @{
+      @"title": entryName,
+      @"code": escapedString,
+      @"type": highlight ? [NSString stringWithFormat:@"lang-%@", [self.entryPath pathExtension]] : @"nohighlight",
+      @"themeLocation": [NSString stringWithFormat:@"hljs/styles/%@.css", themeName],
+      @"fontName": [NSString stringWithFormat:@"\"%@\", monospace", fontName],
+      @"fontSize": [NSString stringWithFormat:@"%@px", fontSize],
+      };
+    
+    // render
+    htmlTemplate =
+    [htmlTemplate stringByReplacingTagsInDictionary:settingsDict];
     if (self.webView) {
         [self.webView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
     } else {
         [self.wkWebView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
     }
-    
-    self.navigationItem.rightBarButtonItems = @[ self.settingsButtonItem ];
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
 }
 
 - (NSURL *)baseUrl {
-    return [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"XXTEMoreReferences.bundle"];
+    return [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"References.bundle"];
 }
 
 #pragma mark - UIView Getters
@@ -131,7 +174,15 @@
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
     XXTECodeViewerSettingsController *settingsController = [[XXTECodeViewerSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
+    settingsController.delegate = self;
     [self.navigationController pushViewController:settingsController animated:YES];
+}
+
+#pragma mark - XXTECodeViewerSettingsControllerDelegate
+
+- (void)codeViewerSettingsControllerDidChange:(XXTECodeViewerSettingsController *)controller
+{
+    [self setNeedsReload:YES];
 }
 
 #pragma mark - Memory

@@ -73,6 +73,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setupWithPath:(NSString *)path {
+    _displayCurrentPath = YES;
     _homeEntryList = [[NSMutableArray alloc] init];
     _entryList = [[NSMutableArray alloc] init];
     {
@@ -808,7 +809,9 @@ XXTE_END_IGNORE_PARTIAL
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == section) {
-            return 24.f;
+            if (self.displayCurrentPath) {
+                return 24.f;
+            }
         } // Notice: assume that there will not be any headers for Home section
     }
     return 0;
@@ -817,24 +820,26 @@ XXTE_END_IGNORE_PARTIAL
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         if (XXTExplorerViewSectionIndexList == section) {
-            XXTExplorerHeaderView *entryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
-            if (!entryHeaderView)
-            {
-                entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+            if (self.displayCurrentPath) {
+                XXTExplorerHeaderView *entryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+                if (!entryHeaderView)
+                {
+                    entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+                }
+                NSString *rootPath = XXTERootPath();
+                NSRange rootRange = [self.entryPath rangeOfString:rootPath];
+                if (rootRange.location == 0) {
+                    NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
+                    [entryHeaderView.headerLabel setText:tiledPath];
+                } else {
+                    [entryHeaderView.headerLabel setText:self.entryPath];
+                }
+                entryHeaderView.userInteractionEnabled = YES;
+                UITapGestureRecognizer *addressTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressLabelTapped:)];
+                addressTapGestureRecognizer.delegate = self;
+                [entryHeaderView addGestureRecognizer:addressTapGestureRecognizer];
+                return entryHeaderView;
             }
-            NSString *rootPath = XXTERootPath();
-            NSRange rootRange = [self.entryPath rangeOfString:rootPath];
-            if (rootRange.location == 0) {
-                NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
-                [entryHeaderView.headerLabel setText:tiledPath];
-            } else {
-                [entryHeaderView.headerLabel setText:self.entryPath];
-            }
-            entryHeaderView.userInteractionEnabled = YES;
-            UITapGestureRecognizer *addressTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressLabelTapped:)];
-            addressTapGestureRecognizer.delegate = self;
-            [entryHeaderView addGestureRecognizer:addressTapGestureRecognizer];
-            return entryHeaderView;
         } // Notice: assume that there will not be any headers for Home section
     }
     return nil;

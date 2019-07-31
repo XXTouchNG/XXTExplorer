@@ -41,6 +41,7 @@ XXTE_END_IGNORE_PARTIAL
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder explorerSortOrder;
 
 @property (nonatomic, assign) BOOL historyMode;
+@property (nonatomic, assign) BOOL displayCurrentPath;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField internalSortField;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder internalSortOrder;
 

@@ -6,9 +6,11 @@
 	<array>
 		<dict>
 			<key>FooterText</key>
-			<string>
+			<string>BSD 3-Clause &quot;New&quot; or &quot;Revised&quot; License
+
 Copyright (c) 2006, Ivan Sagalaev
 All rights reserved.
+
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 

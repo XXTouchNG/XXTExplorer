@@ -33,13 +33,38 @@
     return self;
 }
 
+- (instancetype)initWithStyle:(UITableViewStyle)style definesPath:(NSString *)path {
+    if (self = [super initWithStyle:style]) {
+        [self setupWithDefinesPath:path];
+    }
+    return self;
+}
+
 - (void)setup {
-    NSString *rawThemesPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
+    NSString *defaultDefinesPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
+    [self setupWithDefinesPath:defaultDefinesPath];
+}
+
+- (void)setupWithDefinesPath:(NSString *)path {
+    NSString *rawThemesPath = path;
     NSArray <NSDictionary *> *rawThemes = [[NSArray alloc] initWithContentsOfFile:rawThemesPath];
     NSMutableArray <NSDictionary *> *availableThemes = [[NSMutableArray alloc] init];
     for (NSDictionary *rawTheme in rawThemes) {
         NSString *themeName = rawTheme[@"name"];
-        if ([themeName isKindOfClass:[NSString class]]) {
+        NSString *themeLocation = rawTheme[@"location"];
+        if (![themeName isKindOfClass:[NSString class]] ||
+            ![themeLocation isKindOfClass:[NSString class]]
+            ) {
+            continue;
+        }
+        if (themeLocation.length > 0) {
+            if ([[NSBundle mainBundle] pathForResource:themeLocation ofType:@""])
+            {
+                [availableThemes addObject:rawTheme];
+            }
+        }
+        else
+        {
             if ([[NSBundle mainBundle] pathForResource:themeName ofType:@"tmTheme"])
             {
                 [availableThemes addObject:rawTheme];
@@ -142,7 +167,10 @@
 }
 
 - (void)previewItemTapped:(UIBarButtonItem *)sender {
-    if (!self.selectedThemeName) return;
+    if (!self.selectedThemeName || self.themes.count == 0) {
+        toastMessage(self, NSLocalizedString(@"No theme available.", nil));
+        return;
+    }
     NSUInteger idx = 0;
     for (NSDictionary *theme in self.themes) {
         NSString *themeName = theme[@"name"];

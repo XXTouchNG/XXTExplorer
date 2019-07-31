@@ -652,7 +652,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         }
         else
         if (indexPath.section == kXXTEMoreSectionIndexHelp) {
-            NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.Pro.bundle"];
+            NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"SettingsPro.bundle"];
             if (indexPath.row == kXXTEMoreSectionHelpRowIndexDocuments) {
                 NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
                 XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
