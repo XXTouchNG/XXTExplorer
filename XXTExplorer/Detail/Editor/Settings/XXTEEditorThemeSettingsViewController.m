@@ -115,8 +115,9 @@
     if (indexPath.section == 0) {
         NSDictionary *theme = self.themes[indexPath.row];
         NSString *themeName = theme[@"name"];
+        NSString *themeTitle = theme[@"title"] ?: themeName;
         XXTEEditorThemeCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEEditorThemeCellReuseIdentifier forIndexPath:indexPath];
-        cell.titleLabel.text = themeName;
+        cell.titleLabel.text = themeTitle;
         id previewValue = theme[@"preview"];
         if ([previewValue isKindOfClass:[UIImage class]]) {
             cell.previewImageView.image = previewValue;
@@ -141,6 +142,7 @@
         NSDictionary *theme = self.themes[indexPath.row];
         NSString *themeName = theme[@"name"];
         self.selectedThemeName = themeName;
+        self.selectedThemeEntry = theme;
         
         for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
             cell.titleLabel.textColor = [UIColor blackColor];

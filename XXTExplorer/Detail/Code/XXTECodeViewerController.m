@@ -124,12 +124,7 @@
     }
     
     // theme
-    NSString *themeName = XXTEDefaultsObject(XXTECodeViewerThemeName, @"xcode");
-    NSString *cssPath =
-    [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"References.bundle/hljs/styles/%@", themeName] ofType:@"css"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:cssPath]) {
-        themeName = @"xcode";
-    }
+    NSString *themeLocation = XXTEDefaultsObject(XXTECodeViewerThemeLocation, @"References.bundle/hljs/styles/xcode.css");
     BOOL highlight = XXTEDefaultsBool(XXTECodeViewerHighlightEnabled, YES);
     
     // font
@@ -141,7 +136,7 @@
       @"title": entryName,
       @"code": escapedString,
       @"type": highlight ? [NSString stringWithFormat:@"lang-%@", [self.entryPath pathExtension]] : @"nohighlight",
-      @"themeLocation": [NSString stringWithFormat:@"hljs/styles/%@.css", themeName],
+      @"themeLocation": [[NSBundle mainBundle] pathForResource:themeLocation ofType:@""],
       @"fontName": [NSString stringWithFormat:@"\"%@\", monospace", fontName],
       @"fontSize": [NSString stringWithFormat:@"%@px", fontSize],
       };

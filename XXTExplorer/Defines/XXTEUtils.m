@@ -334,7 +334,7 @@ BOOL isiPhoneX() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (@available(iOS 8.0, *)) {
-            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone && UIScreen.mainScreen.nativeBounds.size.height == 2436)  {
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone && UIScreen.mainScreen.bounds.size.height > 800)  {
                 checkiPhoneX = YES;
             }
         } else {

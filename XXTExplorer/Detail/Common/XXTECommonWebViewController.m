@@ -81,12 +81,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (isiPhoneX()) {
-        if (self.navigationButtonsHidden == YES)
-        {
-            self.hidesBottomBarWhenPushed = NO;
-        }
-    }
+//    if (isiPhoneX()) {
+//        if (self.navigationButtonsHidden == YES)
+//        {
+//            self.hidesBottomBarWhenPushed = NO;
+//        }
+//    }
     
     if (self.webView) {
         self.webView.opaque = NO;

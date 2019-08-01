@@ -13,6 +13,7 @@ static NSString * const XXTECodeViewerFontName = @"XXTECodeViewerFontName"; // N
 static NSString * const XXTECodeViewerFontSize = @"XXTECodeViewerFontSize"; // NSNumber - Integer
 
 static NSString * const XXTECodeViewerThemeName = @"XXTECodeViewerThemeName"; // NSString
+static NSString * const XXTECodeViewerThemeLocation = @"XXTECodeViewerThemeLocation"; // NSString
 static NSString * const XXTECodeViewerHighlightEnabled = @"XXTECodeViewerHighlightEnabled"; // NSNumber - Bool
 
 #endif /* XXTECodeViewerDefaults_h */

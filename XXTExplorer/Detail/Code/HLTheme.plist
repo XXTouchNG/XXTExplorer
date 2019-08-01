@@ -6,737 +6,705 @@
 		<key>location</key>
 		<string>References.bundle/hljs/styles/a11y-dark.css</string>
 		<key>name</key>
-		<string>a11y-dark</string>
+		<string>A 11 Y Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/a11y-dark.png</string>
+		<string>References.bundle/hljs/styles/A 11 Y Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/a11y-light.css</string>
 		<key>name</key>
-		<string>a11y-light</string>
+		<string>A 11 Y Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/a11y-light.png</string>
+		<string>References.bundle/hljs/styles/A 11 Y Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/agate.css</string>
 		<key>name</key>
-		<string>agate</string>
+		<string>Agate</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/agate.png</string>
+		<string>References.bundle/hljs/styles/Agate.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/an-old-hope.css</string>
 		<key>name</key>
-		<string>an-old-hope</string>
+		<string>An Old Hope</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/an-old-hope.png</string>
+		<string>References.bundle/hljs/styles/An Old Hope.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/androidstudio.css</string>
 		<key>name</key>
-		<string>androidstudio</string>
+		<string>Androidstudio</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/androidstudio.png</string>
+		<string>References.bundle/hljs/styles/Androidstudio.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/arduino-light.css</string>
 		<key>name</key>
-		<string>arduino-light</string>
+		<string>Arduino Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/arduino-light.png</string>
+		<string>References.bundle/hljs/styles/Arduino Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/arta.css</string>
 		<key>name</key>
-		<string>arta</string>
+		<string>Arta</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/arta.png</string>
+		<string>References.bundle/hljs/styles/Arta.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/ascetic.css</string>
 		<key>name</key>
-		<string>ascetic</string>
+		<string>Ascetic</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/ascetic.png</string>
+		<string>References.bundle/hljs/styles/Ascetic.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-cave-dark.css</string>
 		<key>name</key>
-		<string>atelier-cave-dark</string>
+		<string>Atelier Cave Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-cave-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Cave Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-cave-light.css</string>
 		<key>name</key>
-		<string>atelier-cave-light</string>
+		<string>Atelier Cave Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-cave-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Cave Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-dune-dark.css</string>
 		<key>name</key>
-		<string>atelier-dune-dark</string>
+		<string>Atelier Dune Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-dune-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Dune Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-dune-light.css</string>
 		<key>name</key>
-		<string>atelier-dune-light</string>
+		<string>Atelier Dune Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-dune-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Dune Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-estuary-dark.css</string>
 		<key>name</key>
-		<string>atelier-estuary-dark</string>
+		<string>Atelier Estuary Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-estuary-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Estuary Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-estuary-light.css</string>
 		<key>name</key>
-		<string>atelier-estuary-light</string>
+		<string>Atelier Estuary Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-estuary-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Estuary Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-forest-dark.css</string>
 		<key>name</key>
-		<string>atelier-forest-dark</string>
+		<string>Atelier Forest Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-forest-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Forest Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-forest-light.css</string>
 		<key>name</key>
-		<string>atelier-forest-light</string>
+		<string>Atelier Forest Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-forest-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Forest Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-heath-dark.css</string>
 		<key>name</key>
-		<string>atelier-heath-dark</string>
+		<string>Atelier Heath Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-heath-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Heath Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-heath-light.css</string>
 		<key>name</key>
-		<string>atelier-heath-light</string>
+		<string>Atelier Heath Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-heath-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Heath Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-lakeside-dark.css</string>
 		<key>name</key>
-		<string>atelier-lakeside-dark</string>
+		<string>Atelier Lakeside Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-lakeside-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Lakeside Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-lakeside-light.css</string>
 		<key>name</key>
-		<string>atelier-lakeside-light</string>
+		<string>Atelier Lakeside Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-lakeside-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Lakeside Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-plateau-dark.css</string>
 		<key>name</key>
-		<string>atelier-plateau-dark</string>
+		<string>Atelier Plateau Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-plateau-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Plateau Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-plateau-light.css</string>
 		<key>name</key>
-		<string>atelier-plateau-light</string>
+		<string>Atelier Plateau Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-plateau-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Plateau Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-savanna-dark.css</string>
 		<key>name</key>
-		<string>atelier-savanna-dark</string>
+		<string>Atelier Savanna Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-savanna-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Savanna Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-savanna-light.css</string>
 		<key>name</key>
-		<string>atelier-savanna-light</string>
+		<string>Atelier Savanna Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-savanna-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Savanna Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-seaside-dark.css</string>
 		<key>name</key>
-		<string>atelier-seaside-dark</string>
+		<string>Atelier Seaside Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-seaside-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Seaside Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-seaside-light.css</string>
 		<key>name</key>
-		<string>atelier-seaside-light</string>
+		<string>Atelier Seaside Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-seaside-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Seaside Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-sulphurpool-dark.css</string>
 		<key>name</key>
-		<string>atelier-sulphurpool-dark</string>
+		<string>Atelier Sulphurpool Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-sulphurpool-dark.png</string>
+		<string>References.bundle/hljs/styles/Atelier Sulphurpool Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-sulphurpool-light.css</string>
 		<key>name</key>
-		<string>atelier-sulphurpool-light</string>
+		<string>Atelier Sulphurpool Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atelier-sulphurpool-light.png</string>
+		<string>References.bundle/hljs/styles/Atelier Sulphurpool Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atom-one-dark.css</string>
 		<key>name</key>
-		<string>atom-one-dark</string>
+		<string>Atom One Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atom-one-dark.png</string>
+		<string>References.bundle/hljs/styles/Atom One Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atom-one-dark-reasonable.css</string>
 		<key>name</key>
-		<string>atom-one-dark-reasonable</string>
+		<string>Atom One Dark Reasonable</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atom-one-dark-reasonable.png</string>
+		<string>References.bundle/hljs/styles/Atom One Dark Reasonable.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atom-one-light.css</string>
 		<key>name</key>
-		<string>atom-one-light</string>
+		<string>Atom One Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/atom-one-light.png</string>
-	</dict>
-	<dict>
-		<key>location</key>
-		<string>References.bundle/hljs/styles/brown-paper.css</string>
-		<key>name</key>
-		<string>brown-paper</string>
-		<key>preview</key>
-		<string>References.bundle/hljs/styles/brown-paper.png</string>
-	</dict>
-	<dict>
-		<key>location</key>
-		<string>References.bundle/hljs/styles/brown-papersq.css</string>
-		<key>name</key>
-		<string>brown-papersq</string>
-		<key>preview</key>
-		<string>References.bundle/hljs/styles/brown-papersq.png</string>
+		<string>References.bundle/hljs/styles/Atom One Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/codepen-embed.css</string>
 		<key>name</key>
-		<string>codepen-embed</string>
+		<string>Codepen Embed</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/codepen-embed.png</string>
+		<string>References.bundle/hljs/styles/Codepen Embed.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/color-brewer.css</string>
 		<key>name</key>
-		<string>color-brewer</string>
+		<string>Color Brewer</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/color-brewer.png</string>
+		<string>References.bundle/hljs/styles/Color Brewer.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/darcula.css</string>
 		<key>name</key>
-		<string>darcula</string>
+		<string>Darcula</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/darcula.png</string>
+		<string>References.bundle/hljs/styles/Darcula.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/dark.css</string>
 		<key>name</key>
-		<string>dark</string>
+		<string>Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/dark.png</string>
+		<string>References.bundle/hljs/styles/Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/darkula.css</string>
 		<key>name</key>
-		<string>darkula</string>
+		<string>Darkula</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/darkula.png</string>
+		<string>References.bundle/hljs/styles/Darkula.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/default.css</string>
 		<key>name</key>
-		<string>default</string>
+		<string>Default</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/default.png</string>
+		<string>References.bundle/hljs/styles/Default.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/docco.css</string>
 		<key>name</key>
-		<string>docco</string>
+		<string>Docco</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/docco.png</string>
+		<string>References.bundle/hljs/styles/Docco.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/dracula.css</string>
 		<key>name</key>
-		<string>dracula</string>
+		<string>Dracula</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/dracula.png</string>
+		<string>References.bundle/hljs/styles/Dracula.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/far.css</string>
 		<key>name</key>
-		<string>far</string>
+		<string>Far</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/far.png</string>
+		<string>References.bundle/hljs/styles/Far.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/foundation.css</string>
 		<key>name</key>
-		<string>foundation</string>
+		<string>Foundation</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/foundation.png</string>
+		<string>References.bundle/hljs/styles/Foundation.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/github.css</string>
 		<key>name</key>
-		<string>github</string>
+		<string>Github</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/github.png</string>
+		<string>References.bundle/hljs/styles/Github.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/github-gist.css</string>
 		<key>name</key>
-		<string>github-gist</string>
+		<string>Github Gist</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/github-gist.png</string>
+		<string>References.bundle/hljs/styles/Github Gist.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/gml.css</string>
 		<key>name</key>
-		<string>gml</string>
+		<string>Gml</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/gml.png</string>
+		<string>References.bundle/hljs/styles/Gml.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/googlecode.css</string>
 		<key>name</key>
-		<string>googlecode</string>
+		<string>Googlecode</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/googlecode.png</string>
+		<string>References.bundle/hljs/styles/Googlecode.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/grayscale.css</string>
 		<key>name</key>
-		<string>grayscale</string>
+		<string>Grayscale</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/grayscale.png</string>
+		<string>References.bundle/hljs/styles/Grayscale.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/gruvbox-dark.css</string>
 		<key>name</key>
-		<string>gruvbox-dark</string>
+		<string>Gruvbox Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/gruvbox-dark.png</string>
+		<string>References.bundle/hljs/styles/Gruvbox Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/gruvbox-light.css</string>
 		<key>name</key>
-		<string>gruvbox-light</string>
+		<string>Gruvbox Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/gruvbox-light.png</string>
+		<string>References.bundle/hljs/styles/Gruvbox Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/hopscotch.css</string>
 		<key>name</key>
-		<string>hopscotch</string>
+		<string>Hopscotch</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/hopscotch.png</string>
+		<string>References.bundle/hljs/styles/Hopscotch.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/hybrid.css</string>
 		<key>name</key>
-		<string>hybrid</string>
+		<string>Hybrid</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/hybrid.png</string>
+		<string>References.bundle/hljs/styles/Hybrid.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/idea.css</string>
 		<key>name</key>
-		<string>idea</string>
+		<string>Idea</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/idea.png</string>
+		<string>References.bundle/hljs/styles/Idea.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/ir-black.css</string>
 		<key>name</key>
-		<string>ir-black</string>
+		<string>Ir Black</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/ir-black.png</string>
+		<string>References.bundle/hljs/styles/Ir Black.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/isbl-editor-dark.css</string>
 		<key>name</key>
-		<string>isbl-editor-dark</string>
+		<string>Isbl Editor Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/isbl-editor-dark.png</string>
+		<string>References.bundle/hljs/styles/Isbl Editor Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/isbl-editor-light.css</string>
 		<key>name</key>
-		<string>isbl-editor-light</string>
+		<string>Isbl Editor Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/isbl-editor-light.png</string>
+		<string>References.bundle/hljs/styles/Isbl Editor Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/kimbie.dark.css</string>
 		<key>name</key>
-		<string>kimbie.dark</string>
+		<string>Kimbie Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/kimbie.dark.png</string>
+		<string>References.bundle/hljs/styles/Kimbie Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/kimbie.light.css</string>
 		<key>name</key>
-		<string>kimbie.light</string>
+		<string>Kimbie Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/kimbie.light.png</string>
+		<string>References.bundle/hljs/styles/Kimbie Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/lightfair.css</string>
 		<key>name</key>
-		<string>lightfair</string>
+		<string>Lightfair</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/lightfair.png</string>
+		<string>References.bundle/hljs/styles/Lightfair.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/magula.css</string>
 		<key>name</key>
-		<string>magula</string>
+		<string>Magula</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/magula.png</string>
+		<string>References.bundle/hljs/styles/Magula.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/mono-blue.css</string>
 		<key>name</key>
-		<string>mono-blue</string>
+		<string>Mono Blue</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/mono-blue.png</string>
+		<string>References.bundle/hljs/styles/Mono Blue.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/monokai.css</string>
 		<key>name</key>
-		<string>monokai</string>
+		<string>Monokai</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/monokai.png</string>
+		<string>References.bundle/hljs/styles/Monokai.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/monokai-sublime.css</string>
 		<key>name</key>
-		<string>monokai-sublime</string>
+		<string>Monokai Sublime</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/monokai-sublime.png</string>
+		<string>References.bundle/hljs/styles/Monokai Sublime.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/nord.css</string>
 		<key>name</key>
-		<string>nord</string>
+		<string>Nord</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/nord.png</string>
+		<string>References.bundle/hljs/styles/Nord.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/obsidian.css</string>
 		<key>name</key>
-		<string>obsidian</string>
+		<string>Obsidian</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/obsidian.png</string>
+		<string>References.bundle/hljs/styles/Obsidian.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/ocean.css</string>
 		<key>name</key>
-		<string>ocean</string>
+		<string>Ocean</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/ocean.png</string>
+		<string>References.bundle/hljs/styles/Ocean.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/paraiso-dark.css</string>
 		<key>name</key>
-		<string>paraiso-dark</string>
+		<string>Paraiso Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/paraiso-dark.png</string>
+		<string>References.bundle/hljs/styles/Paraiso Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/paraiso-light.css</string>
 		<key>name</key>
-		<string>paraiso-light</string>
+		<string>Paraiso Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/paraiso-light.png</string>
+		<string>References.bundle/hljs/styles/Paraiso Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/pojoaque.css</string>
 		<key>name</key>
-		<string>pojoaque</string>
+		<string>Pojoaque</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/pojoaque.png</string>
-	</dict>
-	<dict>
-		<key>location</key>
-		<string>References.bundle/hljs/styles/pojoaque.css</string>
-		<key>name</key>
-		<string>pojoaque</string>
-		<key>preview</key>
-		<string>References.bundle/hljs/styles/pojoaque.png</string>
+		<string>References.bundle/hljs/styles/Pojoaque.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/purebasic.css</string>
 		<key>name</key>
-		<string>purebasic</string>
+		<string>Purebasic</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/purebasic.png</string>
+		<string>References.bundle/hljs/styles/Purebasic.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/qtcreator_dark.css</string>
 		<key>name</key>
-		<string>qtcreator_dark</string>
+		<string>Qtcreator Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/qtcreator_dark.png</string>
+		<string>References.bundle/hljs/styles/Qtcreator Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/qtcreator_light.css</string>
 		<key>name</key>
-		<string>qtcreator_light</string>
+		<string>Qtcreator Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/qtcreator_light.png</string>
+		<string>References.bundle/hljs/styles/Qtcreator Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/railscasts.css</string>
 		<key>name</key>
-		<string>railscasts</string>
+		<string>Railscasts</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/railscasts.png</string>
+		<string>References.bundle/hljs/styles/Railscasts.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/rainbow.css</string>
 		<key>name</key>
-		<string>rainbow</string>
+		<string>Rainbow</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/rainbow.png</string>
+		<string>References.bundle/hljs/styles/Rainbow.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/routeros.css</string>
 		<key>name</key>
-		<string>routeros</string>
+		<string>Routeros</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/routeros.png</string>
+		<string>References.bundle/hljs/styles/Routeros.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/school-book.css</string>
 		<key>name</key>
-		<string>school-book</string>
+		<string>School Book</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/school-book.png</string>
-	</dict>
-	<dict>
-		<key>location</key>
-		<string>References.bundle/hljs/styles/school-book.css</string>
-		<key>name</key>
-		<string>school-book</string>
-		<key>preview</key>
-		<string>References.bundle/hljs/styles/school-book.png</string>
+		<string>References.bundle/hljs/styles/School Book.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/shades-of-purple.css</string>
 		<key>name</key>
-		<string>shades-of-purple</string>
+		<string>Shades Of Purple</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/shades-of-purple.png</string>
+		<string>References.bundle/hljs/styles/Shades Of Purple.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/solarized-dark.css</string>
 		<key>name</key>
-		<string>solarized-dark</string>
+		<string>Solarized Dark</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/solarized-dark.png</string>
+		<string>References.bundle/hljs/styles/Solarized Dark.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/solarized-light.css</string>
 		<key>name</key>
-		<string>solarized-light</string>
+		<string>Solarized Light</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/solarized-light.png</string>
+		<string>References.bundle/hljs/styles/Solarized Light.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/sunburst.css</string>
 		<key>name</key>
-		<string>sunburst</string>
+		<string>Sunburst</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/sunburst.png</string>
+		<string>References.bundle/hljs/styles/Sunburst.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow.css</string>
 		<key>name</key>
-		<string>tomorrow</string>
+		<string>Tomorrow</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/tomorrow.png</string>
+		<string>References.bundle/hljs/styles/Tomorrow.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night.css</string>
 		<key>name</key>
-		<string>tomorrow-night</string>
+		<string>Tomorrow Night</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/tomorrow-night.png</string>
+		<string>References.bundle/hljs/styles/Tomorrow Night.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night-blue.css</string>
 		<key>name</key>
-		<string>tomorrow-night-blue</string>
+		<string>Tomorrow Night Blue</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/tomorrow-night-blue.png</string>
+		<string>References.bundle/hljs/styles/Tomorrow Night Blue.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night-bright.css</string>
 		<key>name</key>
-		<string>tomorrow-night-bright</string>
+		<string>Tomorrow Night Bright</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/tomorrow-night-bright.png</string>
+		<string>References.bundle/hljs/styles/Tomorrow Night Bright.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night-eighties.css</string>
 		<key>name</key>
-		<string>tomorrow-night-eighties</string>
+		<string>Tomorrow Night Eighties</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/tomorrow-night-eighties.png</string>
+		<string>References.bundle/hljs/styles/Tomorrow Night Eighties.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/vs.css</string>
 		<key>name</key>
-		<string>vs</string>
+		<string>Vs</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/vs.png</string>
+		<string>References.bundle/hljs/styles/Vs.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/vs2015.css</string>
 		<key>name</key>
-		<string>vs2015</string>
+		<string>Vs 2015</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/vs2015.png</string>
+		<string>References.bundle/hljs/styles/Vs 2015.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/xcode.css</string>
 		<key>name</key>
-		<string>xcode</string>
+		<string>Xcode</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/xcode.png</string>
+		<string>References.bundle/hljs/styles/Xcode.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/xt256.css</string>
 		<key>name</key>
-		<string>xt256</string>
+		<string>Xt 256</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/xt256.png</string>
+		<string>References.bundle/hljs/styles/Xt 256.png</string>
 	</dict>
 	<dict>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/zenburn.css</string>
 		<key>name</key>
-		<string>zenburn</string>
+		<string>Zenburn</string>
 		<key>preview</key>
-		<string>References.bundle/hljs/styles/zenburn.png</string>
+		<string>References.bundle/hljs/styles/Zenburn.png</string>
 	</dict>
 </array>
 </plist>

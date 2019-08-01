@@ -101,7 +101,7 @@
     
     XXTEMoreTitleValueCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell3.titleLabel.text = NSLocalizedString(@"Theme", nil);
-    cell3.valueLabel.text = XXTEDefaultsObject(XXTECodeViewerThemeName, NSLocalizedString(@"Mac Classic", nil));
+    cell3.valueLabel.text = XXTEDefaultsObject(XXTECodeViewerThemeName, NSLocalizedString(@"Xcode", nil));
     cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     XXTEMoreSwitchCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
@@ -167,7 +167,7 @@
             NSString *definesPath = [[NSBundle mainBundle] pathForResource:@"HLTheme" ofType:@"plist"];
             XXTEEditorThemeSettingsViewController *themeSettingsViewController = [[XXTEEditorThemeSettingsViewController alloc] initWithStyle:UITableViewStylePlain definesPath:definesPath];
             themeSettingsViewController.delegate = self;
-            themeSettingsViewController.selectedThemeName = XXTEDefaultsObject(XXTECodeViewerThemeName, @"default");
+            themeSettingsViewController.selectedThemeName = XXTEDefaultsObject(XXTECodeViewerThemeName, @"Xcode");
             [self.navigationController pushViewController:themeSettingsViewController animated:YES];
         }
     }
@@ -221,6 +221,7 @@
 
 - (void)themeSettingsViewControllerSettingsDidChanged:(XXTEEditorThemeSettingsViewController *)controller {
     XXTEDefaultsSetObject(XXTECodeViewerThemeName, [controller.selectedThemeName copy]);
+    XXTEDefaultsSetObject(XXTECodeViewerThemeLocation, [controller.selectedThemeEntry objectForKey:@"location"]);
     ((XXTEMoreTitleValueCell *)staticCells[1][0]).valueLabel.text = controller.selectedThemeName;
     if ([_delegate respondsToSelector:@selector(codeViewerSettingsControllerDidChange:)]) {
         [_delegate codeViewerSettingsControllerDidChange:self];

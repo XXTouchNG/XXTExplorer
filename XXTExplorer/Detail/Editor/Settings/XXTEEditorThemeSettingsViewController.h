@@ -20,6 +20,7 @@
 
 @property (nonatomic, weak) id <XXTEEditorThemeSettingsViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *selectedThemeName;
+@property (nonatomic, strong) NSDictionary *selectedThemeEntry;
 
 - (instancetype)initWithStyle:(UITableViewStyle)style definesPath:(NSString *)path;
 
