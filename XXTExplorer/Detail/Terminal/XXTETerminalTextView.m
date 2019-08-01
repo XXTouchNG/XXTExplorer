@@ -53,7 +53,7 @@
 
 - (NSDictionary *)defaultAttributes {
     if (!_defaultAttributes) {
-        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.f);
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         _defaultAttributes = @{
@@ -66,7 +66,7 @@
 
 - (NSDictionary *)messageAttributes {
     if (!_messageAttributes) {
-        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.f);
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         NSString *familyName = [font familyName];
@@ -85,7 +85,7 @@
 
 - (NSDictionary *)errorAttributes {
     if (!_errorAttributes) {
-        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.f);
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         _errorAttributes = @{
@@ -98,7 +98,7 @@
 
 - (NSDictionary *)inputAttributes {
     if (!_inputAttributes) {
-        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+        NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.f);
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         _inputAttributes = @{

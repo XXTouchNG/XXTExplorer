@@ -100,7 +100,7 @@
     staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Word Wrap", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Text", nil), NSLocalizedString(@"Search", nil) ];
     staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"", @"" ];
     
-    NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+    NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
     double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
     
     UIFont *font = [UIFont fontWithName:fontName size:fontSize];
@@ -467,7 +467,7 @@
         if (indexPath.section == 0 && indexPath.row == 0) {
             XXTEEditorFontSettingsViewController *fontSettingsViewController = [[XXTEEditorFontSettingsViewController alloc] initWithStyle:UITableViewStylePlain];
             fontSettingsViewController.delegate = self;
-            fontSettingsViewController.selectedFontName = XXTEDefaultsObject(XXTEEditorFontName, @"CourierNewPSMT");
+            fontSettingsViewController.selectedFontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
             [self.navigationController pushViewController:fontSettingsViewController animated:YES];
         }
         else if (indexPath.section == 1 && indexPath.row == 0) {

@@ -134,7 +134,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
         logTextView.allowsEditingTextAttributes = NO;
         logTextView.tintColor = XXTColorDefault();
         logTextView.alwaysBounceVertical = YES;
-        logTextView.font = [UIFont fontWithName:@"CourierNewPSMT" size:12.f];
+        logTextView.font = [UIFont fontWithName:@"Courier" size:12.f];
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 11.0, *)) {
             logTextView.smartDashesType = UITextSmartDashesTypeNo;

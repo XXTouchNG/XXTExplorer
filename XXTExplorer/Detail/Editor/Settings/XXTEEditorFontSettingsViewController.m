@@ -108,16 +108,18 @@
     if (indexPath.section == 0) {
         UIFont *font = self.fonts[indexPath.row];
         NSString *fontName = [font fontName];
-        self.selectedFontName = fontName;
-        
-        for (UITableViewCell *cell in tableView.visibleCells) {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(fontSettingsViewControllerSettingsDidChanged:)]) {
-            [_delegate fontSettingsViewControllerSettingsDidChanged:self];
+        if (![self.selectedFontName isEqualToString:fontName]) {
+            self.selectedFontName = fontName;
+            
+            for (UITableViewCell *cell in tableView.visibleCells) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+            selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+            if (_delegate && [_delegate respondsToSelector:@selector(fontSettingsViewControllerSettingsDidChanged:)]) {
+                [_delegate fontSettingsViewControllerSettingsDidChanged:self];
+            }
         }
     }
 }

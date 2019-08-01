@@ -90,6 +90,14 @@
 		<string>References.bundle/fonts/Hack-Bold.ttf</string>
 		<string>References.bundle/fonts/Hack-Italic.ttf</string>
 		<string>References.bundle/fonts/Hack-BoldItalic.ttf</string>
+		<string>References.bundle/fonts/Monego.otf</string>
+		<string>References.bundle/fonts/Monego-Bold.otf</string>
+		<string>References.bundle/fonts/Monego-Italic.otf</string>
+		<string>References.bundle/fonts/Monego-BoldItalic.otf</string>
+		<string>References.bundle/fonts/Powerline Consolas.ttf</string>
+		<string>References.bundle/fonts/Powerline Consolas Bold.ttf</string>
+		<string>References.bundle/fonts/Powerline Consolas Italic.ttf</string>
+		<string>References.bundle/fonts/Powerline Consolas Bold Italic.ttf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

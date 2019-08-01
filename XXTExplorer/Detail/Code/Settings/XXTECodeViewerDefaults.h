@@ -16,4 +16,6 @@ static NSString * const XXTECodeViewerThemeName = @"XXTECodeViewerThemeName"; //
 static NSString * const XXTECodeViewerThemeLocation = @"XXTECodeViewerThemeLocation"; // NSString
 static NSString * const XXTECodeViewerHighlightEnabled = @"XXTECodeViewerHighlightEnabled"; // NSNumber - Bool
 
+static NSString * const XXTECodeViewerLineNumberEnabled = @"XXTECodeViewerLineNumberEnabled"; // NSNumber - Bool
+
 #endif /* XXTECodeViewerDefaults_h */

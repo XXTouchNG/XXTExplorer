@@ -48,7 +48,7 @@
     self.loadingBarTintColor = [UIColor colorWithWhite:1.0 alpha:0.33];
     self.showLoadingBar = YES;
     self.showUrlWhileLoading = NO;
-    self.hideWebViewBoundaries = YES;
+    self.hideWebViewBoundaries = NO;
     
     if (isiPhoneX()) {
         self.hidesBottomBarWhenPushed = YES;

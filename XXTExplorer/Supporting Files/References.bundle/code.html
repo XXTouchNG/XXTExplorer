@@ -7,133 +7,37 @@
 <meta content="telephone=no" name="format-detection">
 <title>{{ title }}</title>
 <link rel="stylesheet" type="text/css" href="{{ themeLocation }}" />
+<link rel="stylesheet" type="text/css" href="css/fonts.css" />
+{{ extra }}
 <style>
-    body, pre { margin: 0; padding: 0; }
-</style>
-<style>
-    
-@font-face {
-    font-family: "AnonymousPro";
-    font-weight: normal;
-    src: url("fonts/Anonymous_Pro.ttf") format("truetype");
+body, pre {
+    margin: 0;
+    padding: 0;
 }
-@font-face {
-    font-family: "AnonymousPro";
-    font-weight: bold;
-    src: url("fonts/Anonymous_Pro_B.ttf") format("truetype");
-}
-@font-face {
-    font-family: "AnonymousPro";
-    font-weight: normal;
-    font-style: italic;
-    src: url("fonts/Anonymous_Pro_I.ttf") format("truetype");
-}
-@font-face {
-    font-family: "AnonymousPro";
-    font-weight: bold;
-    font-style: italic;
-    src: url("fonts/Anonymous_Pro_BI.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "CamingoCode-Regular";
-    font-weight: normal;
-    src: url("fonts/CamingoCode-Regular.ttf") format("truetype");
-}
-@font-face {
-    font-family: "CamingoCode-Regular";
-    font-weight: bold;
-    src: url("fonts/CamingoCode-Bold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "CamingoCode-Regular";
-    font-weight: normal;
-    font-style: italic;
-    src: url("fonts/CamingoCode-Italic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "CamingoCode-Regular";
-    font-weight: bold;
-    font-style: italic;
-    src: url("fonts/CamingoCode-BoldItalic.ttf") format("truetype");
-}
-    
-@font-face {
-    font-family: "DejaVuSansMono";
-    font-weight: normal;
-    src: url("fonts/DejaVuSansMono.ttf") format("truetype");
-}
-@font-face {
-    font-family: "DejaVuSansMono";
-    font-weight: bold;
-    src: url("fonts/DejaVuSansMono-Bold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "DejaVuSansMono";
-    font-weight: normal;
-    font-style: italic;
-    src: url("fonts/DejaVuSansMono-Oblique.ttf") format("truetype");
-}
-@font-face {
-    font-family: "DejaVuSansMono";
-    font-weight: bold;
-    font-style: italic;
-    src: url("fonts/DejaVuSansMono-BoldOblique.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Hack-Regular";
-    font-weight: normal;
-    src: url("fonts/Hack-Regular.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Hack-Regular";
-    font-weight: bold;
-    src: url("fonts/Hack-Bold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Hack-Regular";
-    font-weight: normal;
-    font-style: italic;
-    src: url("fonts/Hack-Italic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Hack-Regular";
-    font-weight: bold;
-    font-style: italic;
-    src: url("fonts/Hack-BoldItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "SourceCodePro-Regular";
-    font-weight: normal;
-    src: url("fonts/SourceCodePro-Regular.otf") format("opentype");
-}
-@font-face {
-    font-family: "SourceCodePro-Regular";
-    font-weight: bold;
-    src: url("fonts/SourceCodePro-Bold.otf") format("opentype");
-}
-@font-face {
-    font-family: "SourceCodePro-Regular";
-    font-weight: normal;
-    font-style: italic;
-    src: url("fonts/SourceCodePro-It.otf") format("opentype");
-}
-@font-face {
-    font-family: "SourceCodePro-Regular";
-    font-weight: bold;
-    font-style: italic;
-    src: url("fonts/SourceCodePro-BoldIt.otf") format("opentype");
-}
-
 code {
     font-family: {{ fontName }};
     font-size: {{ fontSize }};
+}
+code {
+    counter-reset: line;
+}
+span.line {
+    counter-increment: line;
+}
+span.line::before {
+    content: counter(line);
+    display: inline-block;
+    width: 2.2em; /* Fixed width */
+    border-right: 1px solid {{ gutterColor }};
+    color: {{ gutterColor }};
+    padding: 0 .5em;
+    margin-right: .5em;
+    text-align: right;
+    -webkit-user-select: none;
 }
 </style>
 <script src="hljs/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </head>
-<body class="hljs"><pre><code class="{{ type }}">{{ code }}</code></pre></body>
+<body><pre><code class="{{ type }}">{{ code }}</code></pre></body>
 </html>

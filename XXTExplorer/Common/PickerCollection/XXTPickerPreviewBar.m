@@ -49,7 +49,7 @@
 - (UILabel *)subtitleLabel {
     if (!_subtitleLabel) {
         UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 22, self.frame.size.width, 18)];
-        subtitleLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:12.f];
+        subtitleLabel.font = [UIFont fontWithName:@"Courier" size:12.f];
         subtitleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         subtitleLabel.textAlignment = NSTextAlignmentCenter;
         subtitleLabel.numberOfLines = 1;

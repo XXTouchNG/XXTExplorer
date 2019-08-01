@@ -165,7 +165,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 - (void)prepareForView {
     
-    static NSString * const XXTEDefaultFontName = @"CourierNewPSMT";
+    static NSString * const XXTEDefaultFontName = @"Courier";
     
     // Font
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, XXTEDefaultFontName);

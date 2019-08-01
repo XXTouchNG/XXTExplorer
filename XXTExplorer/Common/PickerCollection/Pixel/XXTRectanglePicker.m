@@ -587,7 +587,7 @@
 - (void)updateSubtitle:(NSString *)subtitle {
     _pickerSubtitle = [[NSAttributedString alloc] initWithString:subtitle
                                                       attributes:@{
-                                                              NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:12.f],
+                                                              NSFontAttributeName: [UIFont fontWithName:@"Courier" size:12.f],
                                                               NSForegroundColorAttributeName: [UIColor blackColor],
                                                       }];
     [self.pickerFactory performUpdateStep:self];
@@ -640,13 +640,13 @@
         NSString *previewString = [NSString stringWithFormat:previewFormat, (int) (r * 255.f), (int) (g * 255.f), (int) (b * 255.f)];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:previewString
                                                                                              attributes:@{
-                                                                                                     NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:12.f],
+                                                                                                     NSFontAttributeName: [UIFont fontWithName:@"Courier" size:12.f],
                                                                                                      NSForegroundColorAttributeName: [UIColor blackColor]
                                                                                              }];
         NSString *colorPreview = [NSString stringWithFormat:@"(■ 0x%@)", selectedHex];
         NSAttributedString *colorAttributedPreview = [[NSMutableAttributedString alloc] initWithString:colorPreview
                                                                                             attributes:@{
-                                                                                                    NSFontAttributeName: [UIFont fontWithName:@"CourierNewPS-BoldMT" size:12.f],
+                                                                                                    NSFontAttributeName: [UIFont fontWithName:@"Courier-Bold" size:12.f],
                                                                                                     NSForegroundColorAttributeName: selectedColor,
                                                                                                     NSBackgroundColorAttributeName: [selectedColor inverseColor]
                                                                                             }];
@@ -672,13 +672,13 @@
             NSString *previewString = [NSString stringWithFormat:previewFormat, (int) selectedPoint.x, (int) selectedPoint.y];
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:previewString
                                                                                                  attributes:@{
-                                                                                                         NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:12.f],
+                                                                                                         NSFontAttributeName: [UIFont fontWithName:@"Courier" size:12.f],
                                                                                                          NSForegroundColorAttributeName: [UIColor blackColor]
                                                                                                  }];
             NSString *colorPreview = [NSString stringWithFormat:@"(■ 0x%@)", selectedHex];
             NSAttributedString *colorAttributedPreview = [[NSMutableAttributedString alloc] initWithString:colorPreview
                                                                                                 attributes:@{
-                                                                                                        NSFontAttributeName: [UIFont fontWithName:@"CourierNewPS-BoldMT" size:12.f],
+                                                                                                        NSFontAttributeName: [UIFont fontWithName:@"Courier-Bold" size:12.f],
                                                                                                         NSForegroundColorAttributeName: selectedColor,
                                                                                                         NSBackgroundColorAttributeName: [selectedColor inverseColor]
                                                                                                 }];

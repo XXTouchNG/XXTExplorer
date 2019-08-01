@@ -38,7 +38,7 @@
     _flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UILabel *countLabel = [[UILabel alloc] init];
-    countLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:16.0];
+    countLabel.font = [UIFont fontWithName:@"Courier" size:16.0];
     countLabel.textAlignment = NSTextAlignmentRight;
     countLabel.textColor = self.tintColor; // *
     countLabel.text = NSLocalizedString(@"0/0", nil);

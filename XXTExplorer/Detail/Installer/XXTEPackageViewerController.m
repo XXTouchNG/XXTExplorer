@@ -147,7 +147,7 @@
     if (!_textView) {
         UITextView *textView = [[UITextView alloc] initWithFrame:self.view.bounds];
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        textView.font = [UIFont fontWithName:@"CourierNewPSMT" size:14.f];
+        textView.font = [UIFont fontWithName:@"Courier" size:14.f];
         textView.delegate = self;
         textView.editable = NO;
         textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -164,7 +164,7 @@
     if (!_stdoutAttributes) {
         _stdoutAttributes =
         @{
-          NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:14.f],
+          NSFontAttributeName: [UIFont fontWithName:@"Courier" size:14.f],
           NSForegroundColorAttributeName: [UIColor blackColor]
           };
     }
@@ -175,7 +175,7 @@
     if (!_stderrAttributes) {
         _stderrAttributes =
         @{
-          NSFontAttributeName: [UIFont fontWithName:@"CourierNewPSMT" size:14.f],
+          NSFontAttributeName: [UIFont fontWithName:@"Courier" size:14.f],
           NSForegroundColorAttributeName: XXTColorDanger()
           };
     }

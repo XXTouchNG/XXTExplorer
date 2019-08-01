@@ -88,14 +88,34 @@
 	<string>${PRODUCT_NAME} want to access your album to extract QR code or import images.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SourceCodePro-Regular.otf</string>
-		<string>SourceCodePro-Bold.otf</string>
-		<string>SourceCodePro-It.otf</string>
-		<string>SourceCodePro-BoldIt.otf</string>
-		<string>CamingoCode-Regular.ttf</string>
-		<string>CamingoCode-Bold.ttf</string>
-		<string>CamingoCode-Italic.ttf</string>
-		<string>CamingoCode-BoldItalic.ttf</string>
+		<string>References.bundle/fonts/SourceCodePro-Regular.otf</string>
+		<string>References.bundle/fonts/SourceCodePro-Bold.otf</string>
+		<string>References.bundle/fonts/SourceCodePro-It.otf</string>
+		<string>References.bundle/fonts/SourceCodePro-BoldIt.otf</string>
+		<string>References.bundle/fonts/CamingoCode-Regular.ttf</string>
+		<string>References.bundle/fonts/CamingoCode-Bold.ttf</string>
+		<string>References.bundle/fonts/CamingoCode-Italic.ttf</string>
+		<string>References.bundle/fonts/CamingoCode-BoldItalic.ttf</string>
+		<string>References.bundle/fonts/Anonymous_Pro_B.ttf</string>
+		<string>References.bundle/fonts/Anonymous_Pro_BI.ttf</string>
+		<string>References.bundle/fonts/Anonymous_Pro_I.ttf</string>
+		<string>References.bundle/fonts/Anonymous_Pro.ttf</string>
+		<string>References.bundle/fonts/DejaVuSansMono-Bold.ttf</string>
+		<string>References.bundle/fonts/DejaVuSansMono-BoldOblique.ttf</string>
+		<string>References.bundle/fonts/DejaVuSansMono-Oblique.ttf</string>
+		<string>References.bundle/fonts/DejaVuSansMono.ttf</string>
+		<string>References.bundle/fonts/Hack-Regular.ttf</string>
+		<string>References.bundle/fonts/Hack-Bold.ttf</string>
+		<string>References.bundle/fonts/Hack-Italic.ttf</string>
+		<string>References.bundle/fonts/Hack-BoldItalic.ttf</string>
+		<string>References.bundle/fonts/Monego.otf</string>
+		<string>References.bundle/fonts/Monego-Bold.otf</string>
+		<string>References.bundle/fonts/Monego-Italic.otf</string>
+		<string>References.bundle/fonts/Monego-BoldItalic.otf</string>
+		<string>References.bundle/fonts/Powerline Consolas.ttf</string>
+		<string>References.bundle/fonts/Powerline Consolas Bold.ttf</string>
+		<string>References.bundle/fonts/Powerline Consolas Italic.ttf</string>
+		<string>References.bundle/fonts/Powerline Consolas Bold Italic.ttf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

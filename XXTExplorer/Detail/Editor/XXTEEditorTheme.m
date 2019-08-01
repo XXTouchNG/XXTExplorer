@@ -21,7 +21,7 @@
 
 - (instancetype)initWithName:(NSString *)name baseFont:(UIFont *)font {
     if (self = [super init]) {
-        _font = font ? font : [UIFont fontWithName:@"CourierNewPSMT" size:14.0];
+        _font = font ? font : [UIFont fontWithName:@"Courier" size:14.0];
         _name = name ? name : @"";
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;

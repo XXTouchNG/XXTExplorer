@@ -8,6 +8,7 @@
 @interface UIColor (hexValue)
 
 - (NSString *)hexString;
+- (NSString *)cssRGBAString;
 - (NSNumber *)RGBNumberValue;
 
 @end

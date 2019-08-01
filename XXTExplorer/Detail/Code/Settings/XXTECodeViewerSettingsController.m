@@ -16,6 +16,8 @@
 #import "XXTEMoreTitleValueCell.h"
 #import "XXTEMoreValueViewCell.h"
 #import "XXTEMoreSwitchCell.h"
+
+// Helpers
 #import "UIControl+BlockTarget.h"
 
 // Children
@@ -76,11 +78,29 @@
     [self reloadStaticTableViewData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    if ([_delegate respondsToSelector:@selector(codeViewerNeedsRestoreNavigationBar:)]) {
+        [self.delegate codeViewerNeedsRestoreNavigationBar:YES];
+    }
+    [super viewWillAppear:animated]; // good for UITableViewController to handle keyboard events
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if ([_delegate respondsToSelector:@selector(codeViewerNeedsRestoreNavigationBar:)]) {
+        if (parent == nil) {
+            [self.delegate codeViewerNeedsRestoreNavigationBar:NO];
+        } else {
+            [self.delegate codeViewerNeedsRestoreNavigationBar:YES];
+        }
+    }
+    [super willMoveToParentViewController:parent];
+}
+
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil) ];
-    staticSectionFooters = @[ @"", @"" ];
+    staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), ];
+    staticSectionFooters = @[ @"", @"", @"" ];
     
-    NSString *fontName = XXTEDefaultsObject(XXTECodeViewerFontName, @"CourierNewPSMT");
+    NSString *fontName = XXTEDefaultsObject(XXTECodeViewerFontName, @"Courier");
     double fontSize = XXTEDefaultsDouble(XXTECodeViewerFontSize, 14.0);
     
     UIFont *font = [UIFont fontWithName:fontName size:fontSize];
@@ -119,9 +139,25 @@
         }];
     }
     
+    XXTEMoreSwitchCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cell5.titleLabel.text = NSLocalizedString(@"Line Numbers", nil);
+    cell5.optionSwitch.on = XXTEDefaultsBool(XXTECodeViewerLineNumberEnabled, NO);
+    {
+        @weakify(self);
+        [cell5.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
+            UISwitch *optionSwitch = (UISwitch *)sender;
+            XXTEDefaultsSetBasic(XXTECodeViewerLineNumberEnabled, optionSwitch.on);
+            if ([self.delegate respondsToSelector:@selector(codeViewerSettingsControllerDidChange:)]) {
+                [self.delegate codeViewerSettingsControllerDidChange:self];
+            }
+        }];
+    }
+    
     staticCells = @[
                     @[ cell1, cell2 ],
                     @[ cell3, cell4 ],
+                    @[ cell5 ],
                     ];
 }
 
@@ -160,7 +196,7 @@
         if (indexPath.section == 0 && indexPath.row == 0) {
             XXTEEditorFontSettingsViewController *fontSettingsViewController = [[XXTEEditorFontSettingsViewController alloc] initWithStyle:UITableViewStylePlain];
             fontSettingsViewController.delegate = self;
-            fontSettingsViewController.selectedFontName = XXTEDefaultsObject(XXTECodeViewerFontName, @"CourierNewPSMT");
+            fontSettingsViewController.selectedFontName = XXTEDefaultsObject(XXTECodeViewerFontName, @"Courier");
             [self.navigationController pushViewController:fontSettingsViewController animated:YES];
         }
         else if (indexPath.section == 1 && indexPath.row == 0) {

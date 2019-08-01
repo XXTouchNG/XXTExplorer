@@ -575,17 +575,17 @@ static int sizingCancelFlag = 0;
         
         XXTEMoreTitleValueCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell9.titleLabel.text = NSLocalizedString(@"Owner", nil);
-        cell9.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
+        cell9.valueLabel.font = [UIFont fontWithName:@"Courier" size:17.f];
         cell9.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", userReadFlag, userWriteFlag, userExecuteFlag];
         
         XXTEMoreTitleValueCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell10.titleLabel.text = NSLocalizedString(@"Group", nil);
-        cell10.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
+        cell10.valueLabel.font = [UIFont fontWithName:@"Courier" size:17.f];
         cell10.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", groupReadFlag, groupWriteFlag, groupExecuteFlag];
         
         XXTEMoreTitleValueCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
         cell11.titleLabel.text = NSLocalizedString(@"Everyone", nil);
-        cell11.valueLabel.font = [UIFont fontWithName:@"CourierNewPSMT" size:17.f];
+        cell11.valueLabel.font = [UIFont fontWithName:@"Courier" size:17.f];
         cell11.valueLabel.text = [NSString stringWithFormat:@"%@%@%@", otherReadFlag, otherWriteFlag, otherExecuteFlag];
         
         XXTEMoreLinkCell *cell12 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];

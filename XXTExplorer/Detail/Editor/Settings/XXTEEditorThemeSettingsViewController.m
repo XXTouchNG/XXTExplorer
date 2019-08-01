@@ -141,19 +141,22 @@
     if (indexPath.section == 0) {
         NSDictionary *theme = self.themes[indexPath.row];
         NSString *themeName = theme[@"name"];
-        self.selectedThemeName = themeName;
-        self.selectedThemeEntry = theme;
         
-        for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
-            cell.titleLabel.textColor = [UIColor blackColor];
-            cell.selectFlagView.hidden = YES;
-        }
-        XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectCell.titleLabel.textColor = XXTColorDefault();
-        selectCell.selectFlagView.hidden = NO;
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {
-            [_delegate themeSettingsViewControllerSettingsDidChanged:self];
+        if (![self.selectedThemeName isEqualToString:themeName]) {
+            self.selectedThemeName = themeName;
+            self.selectedThemeEntry = theme;
+            
+            for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
+                cell.titleLabel.textColor = [UIColor blackColor];
+                cell.selectFlagView.hidden = YES;
+            }
+            XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+            selectCell.titleLabel.textColor = XXTColorDefault();
+            selectCell.selectFlagView.hidden = NO;
+            
+            if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {
+                [_delegate themeSettingsViewControllerSettingsDidChanged:self];
+            }
         }
     }
 }

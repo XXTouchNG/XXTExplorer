@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class XXTECodeViewerSettingsController;
 
 @protocol XXTECodeViewerSettingsControllerDelegate <NSObject>
+@optional
+- (void)codeViewerNeedsRestoreNavigationBar:(BOOL)restore;
 - (void)codeViewerSettingsControllerDidChange:(XXTECodeViewerSettingsController *)controller;
 
 @end
