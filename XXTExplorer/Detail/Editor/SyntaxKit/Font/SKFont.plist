@@ -4,6 +4,19 @@
 <array>
 	<dict>
 		<key>family</key>
+		<string>Courier</string>
+		<key>location</key>
+		<string></string>
+		<key>fonts</key>
+		<array>
+			<string>Courier</string>
+			<string>Courier-Bold</string>
+			<string>Courier-Oblique</string>
+			<string>Courier-BoldOblique</string>
+		</array>
+	</dict>
+	<dict>
+		<key>family</key>
 		<string>Courier New</string>
 		<key>location</key>
 		<string></string>
@@ -52,6 +65,32 @@
 			<string>CamingoCode-Bold</string>
 			<string>CamingoCode-Italic</string>
 			<string>CamingoCode-BoldItalic</string>
+		</array>
+	</dict>
+	<dict>
+		<key>family</key>
+		<string>Consolas</string>
+		<key>location</key>
+		<string></string>
+		<key>fonts</key>
+		<array>
+			<string>Powerline-Consolas</string>
+			<string>Powerline-Consolas-Bold</string>
+			<string>Powerline-Consolas-Italic</string>
+			<string>Powerline-Consolas-BoldItalic</string>
+		</array>
+	</dict>
+	<dict>
+		<key>family</key>
+		<string>Monego</string>
+		<key>location</key>
+		<string></string>
+		<key>fonts</key>
+		<array>
+			<string>Monego-Regular</string>
+			<string>Monego-Bold</string>
+			<string>Monego-Italic</string>
+			<string>Monego-BoldItalic</string>
 		</array>
 	</dict>
 	<dict>
