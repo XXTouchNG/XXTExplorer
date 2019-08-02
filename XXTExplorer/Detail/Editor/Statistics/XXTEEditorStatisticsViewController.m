@@ -25,7 +25,11 @@
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreTitleValueCell.h"
 
+#ifdef APPSTORE
 @interface XXTEEditorStatisticsViewController () <XXTEEditorEncodingControllerDelegate>
+#else
+@interface XXTEEditorStatisticsViewController ()
+#endif
 
 @property (strong, nonatomic) UILabel *filenameLabel;
 @property (strong, nonatomic) UILabel *filesizeLabel;

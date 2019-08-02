@@ -67,7 +67,11 @@
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
+#ifdef APPSTORE
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEditorEncodingControllerDelegate>
+#else
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
+#endif
 
 @property (nonatomic, strong) XXTELockedTitleView *lockedTitleView;
 @property (nonatomic, strong) XXTESingleActionView *actionView;
@@ -859,6 +863,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #pragma mark - Actions
 
+#ifdef APPSTORE
 - (void)actionViewTapped:(XXTESingleActionView *)actionView {
     XXTEEditorEncodingController *controller = [[XXTEEditorEncodingController alloc] initWithStyle:UITableViewStylePlain];
     controller.title = NSLocalizedString(@"Select Encoding", nil);
@@ -869,6 +874,11 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
+#else
+- (void)actionViewTapped:(XXTESingleActionView *)actionView {
+    
+}
+#endif
 
 #pragma mark - Getters
 
@@ -1012,6 +1022,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 #pragma mark - XXTEEditorEncodingControllerDelegate
 
+#ifdef APPSTORE
 - (void)encodingControllerDidConfirm:(XXTEEditorEncodingController *)controller
 {
     [self setCurrentEncoding:controller.selectedEncoding];
@@ -1021,11 +1032,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         
     }];
 }
+#endif
 
+#ifdef APPSTORE
 - (void)encodingControllerDidCancel:(XXTEEditorEncodingController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
+#endif
 
 #pragma mark - Render Engine
 
