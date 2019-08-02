@@ -12,12 +12,17 @@
 
 - (void)backButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)shareButtonItemTapped:(UIBarButtonItem *)sender;
+
+- (void)launchItemTapped:(UIBarButtonItem *)sender;
 - (void)searchButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender;
 
 - (BOOL)isLaunchItemAvailable;
+- (BOOL)isSearchButtonItemAvailable;
 - (BOOL)isSymbolsButtonItemAvailable;
+- (BOOL)isStatisticsButtonItemAvailable;
+- (BOOL)isSettingsButtonItemAvailable;
 
 @end

@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XXTEEditorTextProperties.h"
+
 
 @interface XXTEEditorPreprocessor : NSObject
 
 + (NSString *)preprocessedStringWithContentsOfFile:(NSString *)path
                                      NumberOfLines:(NSUInteger *)num
+                                          Encoding:(CFStringEncoding *)encoding
+                                         LineBreak:(NSStringLineBreakType *)lineBreak
                                              Error:(NSError **)error;
 
 @end

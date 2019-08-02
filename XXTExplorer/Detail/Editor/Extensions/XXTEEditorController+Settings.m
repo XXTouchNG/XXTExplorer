@@ -45,6 +45,9 @@
 }
 
 - (BOOL)isLaunchItemAvailable {
+    if (self.isLockedState) {
+        return NO;
+    }
     BOOL supported = NO;
     NSArray <NSString *> *suggested = [XXTETerminalViewController suggestedExtensions];
     NSArray <NSString *> *holded = self.language.extensions;
@@ -58,24 +61,37 @@
 }
 
 - (void)launchItemTapped:(UIBarButtonItem *)sender {
-    if (![self isLaunchItemAvailable]) {
+    if ([self isLaunchItemAvailable]) {
+        [self saveDocumentIfNecessary];
+        NSString *entryPath = self.entryPath;
+        XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
+        terminalController.runImmediately = YES;
+        terminalController.editor = self;
+        [self.navigationController pushViewController:terminalController animated:YES];
+    } else {
         toastMessage(self, NSLocalizedString(@"This file is not executable.", nil));
         return;
     }
-    [self saveDocumentIfNecessary];
-    NSString *entryPath = self.entryPath;
-    XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
-    terminalController.runImmediately = YES;
-    terminalController.editor = self;
-    [self.navigationController pushViewController:terminalController animated:YES];
+}
+
+- (BOOL)isSearchButtonItemAvailable {
+    if (self.isLockedState) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)searchButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
-    [self toggleSearchBar:sender animated:YES];
+    if ([self isSearchButtonItemAvailable]) {
+        [self toggleSearchBar:sender animated:YES];
+    }
 }
 
 - (BOOL)isSymbolsButtonItemAvailable {
+    if (self.isLockedState) {
+        return NO;
+    }
     return [XXTESymbolViewController hasSymbolPatternsForLanguage:self.language];
 }
 
@@ -90,18 +106,36 @@
     }
 }
 
+- (BOOL)isStatisticsButtonItemAvailable {
+    if (self.isLockedState) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)statisticsButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
-    XXTEEditorStatisticsViewController *statisticsController = [[XXTEEditorStatisticsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    statisticsController.editor = self;
-    [self.navigationController pushViewController:statisticsController animated:YES];
+    if ([self isStatisticsButtonItemAvailable]) {
+        XXTEEditorStatisticsViewController *statisticsController = [[XXTEEditorStatisticsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        statisticsController.editor = self;
+        [self.navigationController pushViewController:statisticsController animated:YES];
+    }
+}
+
+- (BOOL)isSettingsButtonItemAvailable {
+    if (self.isLockedState) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
     [self.textView resignFirstResponder];
-    XXTEEditorSettingsViewController *settingsController = [[XXTEEditorSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    settingsController.editor = self;
-    [self.navigationController pushViewController:settingsController animated:YES];
+    if ([self isSettingsButtonItemAvailable]) {
+        XXTEEditorSettingsViewController *settingsController = [[XXTEEditorSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        settingsController.editor = self;
+        [self.navigationController pushViewController:settingsController animated:YES];
+    }
 }
 
 @end

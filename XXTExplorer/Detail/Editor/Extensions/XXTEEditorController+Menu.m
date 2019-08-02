@@ -39,6 +39,7 @@
 #pragma mark - Menu Actions
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    BOOL isLockedState = self.isLockedState;
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     if (
         action == @selector(menuActionComment:)
@@ -46,8 +47,9 @@
         || action == @selector(menuActionShiftRight:)
         || action == @selector(menuActionCodeBlocks:)
         ) {
-        if (YES == isReadOnlyMode
-            || nil == self.language) {
+        if (YES == isReadOnlyMode ||
+            YES == isLockedState ||
+            nil == self.language) {
             return NO;
         }
     }

@@ -107,41 +107,40 @@
         } else if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
             
             NSURL *inboxURL = aNotification.object;
+            NSNumber *instantRun = userInfo[XXTENotificationViewImmediately];
+            if (instantRun == nil) instantRun = @(NO);
+            
+            NSString *lastComponent = [inboxURL lastPathComponent];
+            NSString *formerPath = [inboxURL path];
+            NSString *currentPath = XXTExplorerViewController.initialPath;
+            
+            XXTExplorerNavigationController *explorerNavigationController = (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
+            XXTExplorerViewController *topmostExplorerViewController = explorerNavigationController.topmostExplorerViewController;
+            if (topmostExplorerViewController) {
+                currentPath = topmostExplorerViewController.entryPath;
+            }
+            
+            NSString *lastComponentName = [lastComponent stringByDeletingPathExtension];
+            NSString *lastComponentExt = [lastComponent pathExtension];
+            
+            NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+            NSUInteger testedIndex = 2;
+            struct stat inboxTestStat;
+            while (0 == lstat(testedPath.UTF8String, &inboxTestStat)) {
+                lastComponent = [[NSString stringWithFormat:@"%@-%lu", lastComponentName, (unsigned long)testedIndex] stringByAppendingPathExtension:lastComponentExt];
+                testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
+                testedIndex++;
+            }
             
             @weakify(self);
             UIViewController *blockVC = blockInteractions(self, YES);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 @strongify(self);
-                
-                NSError *err = nil;
-                NSNumber *instantRun = userInfo[XXTENotificationViewImmediately];
-                if (instantRun == nil) instantRun = @(NO);
-                
-                NSString *lastComponent = [inboxURL lastPathComponent];
-                NSString *formerPath = [inboxURL path];
-                NSString *currentPath = XXTExplorerViewController.initialPath;
-                
-                XXTExplorerNavigationController *explorerNavigationController = (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
-                XXTExplorerViewController *topmostExplorerViewController = explorerNavigationController.topmostExplorerViewController;
-                if (topmostExplorerViewController) {
-                    currentPath = topmostExplorerViewController.entryPath;
-                }
-                
-                NSString *lastComponentName = [lastComponent stringByDeletingPathExtension];
-                NSString *lastComponentExt = [lastComponent pathExtension];
-                
-                NSString *testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
-                NSUInteger testedIndex = 2;
-                struct stat inboxTestStat;
-                while (0 == lstat(testedPath.UTF8String, &inboxTestStat)) {
-                    lastComponent = [[NSString stringWithFormat:@"%@-%lu", lastComponentName, (unsigned long)testedIndex] stringByAppendingPathExtension:lastComponentExt];
-                    testedPath = [currentPath stringByAppendingPathComponent:lastComponent];
-                    testedIndex++;
-                }
-                
                 promiseFixPermission(currentPath, NO); // fix permission
                 
-                BOOL result = [[NSFileManager defaultManager] moveItemAtPath:formerPath toPath:testedPath error:&err];
+                NSError *err = nil;
+                NSFileManager *manager = [NSFileManager new];
+                BOOL result = [manager moveItemAtPath:formerPath toPath:testedPath error:&err];
                 dispatch_async_on_main_queue(^{
                     blockInteractions(blockVC, NO);
                     

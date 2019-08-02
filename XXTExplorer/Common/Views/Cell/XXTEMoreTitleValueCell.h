@@ -15,4 +15,5 @@ static NSString * const XXTEMoreTitleValueCellReuseIdentifier = @"XXTEMoreTitleV
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet XXTEAutoLabel *valueLabel;
 
++ (UIColor *)detailTextColor;
 @end

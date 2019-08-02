@@ -2053,3 +2053,27 @@
 
 /* No comment provided by engineer. */
 "No theme available." = "无可用主题.";
+
+/* No comment provided by engineer. */
+"Cannot open file with encoding \"%@\"." = "无法以指定编码 \"%@\" 打开文件.";
+
+/* No comment provided by engineer. */
+"Xcode" = "Xcode";
+
+/* No comment provided by engineer. */
+"Bad Encoding" = "Bad Encoding";
+
+/* No comment provided by engineer. */
+"No encoding available." = "无可用编码.";
+
+/* No comment provided by engineer. */
+"Select Encoding" = "选择编码";
+
+/* No comment provided by engineer. */
+"Unknown reason." = "未知原因.";
+
+/* No comment provided by engineer. */
+"Use \"%@\"" = "使用 \"%@\"";
+
+/* No comment provided by engineer. */
+"Will change current text encoding to \"%@\", continue?" = "即将修改当前文本编码为 \"%@\", 是否继续?";

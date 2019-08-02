@@ -46,8 +46,9 @@
 // Toolbar
 #import "XXTEEditorToolbar.h"
 
-// Title View
+// Views
 #import "XXTELockedTitleView.h"
+#import "XXTESingleActionView.h"
 
 // Search
 #import "XXTEEditorSearchBar.h"
@@ -58,12 +59,19 @@
 // Replace
 #import "SKParser.h"
 
+// Encoding
+#import "XXTEEditorEncodingHelper.h"
+#import "XXTENavigationController.h"
+#import "XXTEEditorEncodingController.h"
+
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEditorEncodingControllerDelegate>
 
 @property (nonatomic, strong) XXTELockedTitleView *lockedTitleView;
+@property (nonatomic, strong) XXTESingleActionView *actionView;
+
 @property (nonatomic, strong) UIScrollView *containerView;
 @property (nonatomic, strong) NSLayoutConstraint *textViewWidthConstraint;
 
@@ -108,6 +116,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 @implementation XXTEEditorController {
     BOOL isFirstTimeLoaded;
+    BOOL _lockedState;
 }
 
 @synthesize entryPath = _entryPath;
@@ -144,6 +153,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     _shouldRefreshNagivationBar = NO;
     _shouldHighlightRange = NO;
     _isRendering = NO;
+    
+    _lockedState = NO;
+    _currentEncoding = kCFStringEncodingUTF8;
+    _currentLineBreak = NSStringLineBreakTypeLF;
     
     [self registerUndoNotifications];
 }
@@ -224,6 +237,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)reloadTextViewProperties {
     if (![self isViewLoaded]) return;
     
+    BOOL isLockedState = self.isLockedState;
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     
     // TextView
@@ -232,7 +246,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     textView.autocapitalizationType = XXTEDefaultsEnum(XXTEEditorAutoCapitalization, UITextAutocapitalizationTypeNone);
     textView.autocorrectionType = XXTEDefaultsEnum(XXTEEditorAutoCorrection, UITextAutocorrectionTypeNo); // config
     textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo); // config
-    textView.editable = !isReadOnlyMode;
+    textView.editable = (isReadOnlyMode == NO && isLockedState == NO);
     
     // Set the fucking smart types again
     XXTE_START_IGNORE_PARTIAL
@@ -311,11 +325,27 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [searchBar setRegexMode:useRegular];
     [searchBar updateView];
     
-    [self.launchButtonItem setEnabled:[self isLaunchItemAvailable]];
-    [self.symbolsButtonItem setEnabled:[self isSymbolsButtonItemAvailable]];
-    
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
-    [self.lockedTitleView setLocked:isReadOnlyMode];
+    BOOL isLockedState = self.isLockedState;
+    [self.lockedTitleView setLocked:(isReadOnlyMode || isLockedState)];
+    
+    [self.launchButtonItem setEnabled:[self isLaunchItemAvailable]];
+    [self.searchButtonItem setEnabled:[self isSearchButtonItemAvailable]];
+    [self.symbolsButtonItem setEnabled:[self isSymbolsButtonItemAvailable]];
+    [self.statisticsButtonItem setEnabled:[self isStatisticsButtonItemAvailable]];
+    [self.settingsButtonItem setEnabled:[self isSettingsButtonItemAvailable]];
+    
+    if (isLockedState)
+    {
+        if (![self.view.subviews containsObject:self.actionView])
+        {
+            [self.view addSubview:self.actionView];
+        }
+    }
+    else
+    {
+        [self.actionView removeFromSuperview];
+    }
 }
 
 - (void)reloadTextViewLayout {
@@ -445,8 +475,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 - (void)viewWillAppear:(BOOL)animated {
     [self registerStateNotifications];
     [self registerKeyboardNotifications];
-    
     [self renderNavigationBarTheme:NO];
+    
+    [self saveDocumentIfNecessary];
     [super viewWillAppear:animated];
 }
 
@@ -626,6 +657,19 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         _lockedTitleView = (XXTELockedTitleView *)[[[UINib nibWithNibName:@"XXTELockedTitleView" bundle:nil] instantiateWithOwner:nil options:nil] lastObject];
     }
     return _lockedTitleView;
+}
+
+- (XXTESingleActionView *)actionView {
+    if (!_actionView) {
+        XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
+        actionView.frame = self.view.bounds;
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIcon"];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionViewTapped:)];
+        [actionView addGestureRecognizer:tapGesture];
+        _actionView = actionView;
+    }
+    return _actionView;
 }
 
 - (UIScrollView *)containerView {
@@ -813,10 +857,27 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     return _toolbar;
 }
 
+#pragma mark - Actions
+
+- (void)actionViewTapped:(XXTESingleActionView *)actionView {
+    XXTEEditorEncodingController *controller = [[XXTEEditorEncodingController alloc] initWithStyle:UITableViewStylePlain];
+    controller.title = NSLocalizedString(@"Select Encoding", nil);
+    controller.delegate = self;
+    controller.reopenMode = YES;
+    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:controller];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 #pragma mark - Getters
 
 - (BOOL)isEditing {
     return _textView.isFirstResponder || _searchBar.isFirstResponder;
+}
+
+- (BOOL)isLockedState {
+    return _lockedState;
 }
 
 #pragma mark - Content
@@ -831,11 +892,18 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (!entryPath) return nil;
     NSUInteger numberOfLines = 0;
     NSError *readError = nil;
-    NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Error:&readError];
-    if (readError) {
-        toastError(self, readError);
+    CFStringEncoding tryEncoding = [self currentEncoding];
+    NSStringLineBreakType tryLineBreak = [self currentLineBreak];
+    NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Encoding:&tryEncoding LineBreak:&tryLineBreak Error:&readError];
+    if (!string) {
+        [self setLockedState:YES];
+        self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
+        self.actionView.descriptionLabel.text = readError ? readError.localizedDescription : NSLocalizedString(@"Unknown reason.", nil);
         return nil;
+    } else {
+        [self setLockedState:NO];
     }
+    [self setCurrentEncoding:tryEncoding];
     [_textView.vLayoutManager setNumberOfDigits:GetNumberOfDigits(numberOfLines)];
     return string;
 }
@@ -843,6 +911,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)reloadContent:(NSString *)content {
     if (!content) return;
     
+    BOOL isLockedState = self.isLockedState;
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
     [self resetSearch];
     
@@ -852,13 +921,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [textView setFont:theme.font];
     [textView setTextColor:theme.foregroundColor];
     [textView setText:content];
-    [textView setEditable:!isReadOnlyMode];
+    [textView setEditable:(isReadOnlyMode == NO && isLockedState == NO)];
     [textView setSelectedRange:NSMakeRange(0, 0)];
     
     XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
     keyboardToolbarRow.redoItem.enabled = NO;
     keyboardToolbarRow.undoItem.enabled = NO;
-    keyboardToolbarRow.snippetItem.enabled = (!isReadOnlyMode && self.language != nil);
+    keyboardToolbarRow.snippetItem.enabled = (NO == isReadOnlyMode && NO == isLockedState && self.language != nil);
     {
         [textView.undoManager removeAllActions]; // reset undo manager
     }
@@ -899,7 +968,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
 {
-    if (!self.textView.editable) return;
+    if (NO == self.textView.editable) return;
     if (![self isHighlightEnabled]) {
         return;
     }
@@ -939,6 +1008,23 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     } else if (scrollView == self.containerView) {
         
     }
+}
+
+#pragma mark - XXTEEditorEncodingControllerDelegate
+
+- (void)encodingControllerDidConfirm:(XXTEEditorEncodingController *)controller
+{
+    [self setCurrentEncoding:controller.selectedEncoding];
+    // [self setNeedsSaveDocument];
+    [self setNeedsReload];
+    [controller dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)encodingControllerDidCancel:(XXTEEditorEncodingController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Render Engine
@@ -1174,8 +1260,9 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldBeginEditing:(UITextField *)textField {
     XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    BOOL isLockedState = self.isLockedState;
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
-    [searchAccessoryView setAllowReplacement:!isReadOnlyMode];
+    [searchAccessoryView setAllowReplacement:(NO == isReadOnlyMode && NO == isLockedState)];
     [searchAccessoryView setReplaceMode:NO];
     [searchAccessoryView updateAccessoryView];
     [self.textView resetSearch];
@@ -1185,8 +1272,9 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldBeginEditing:(UITextField *)textField {
     XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
+    BOOL isLockedState = self.isLockedState;
     BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
-    [searchAccessoryView setAllowReplacement:!isReadOnlyMode];
+    [searchAccessoryView setAllowReplacement:(NO == isReadOnlyMode && NO == isLockedState)];
     [searchAccessoryView setReplaceMode:YES];
     [searchAccessoryView updateAccessoryView];
     [self.textView resetSearch];
@@ -1539,13 +1627,24 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)saveDocumentIfNecessary {
-    if (!self.shouldSaveDocument || !self.textView.editable) return;
+    if (
+        self.shouldSaveDocument == NO ||
+        self.textView.editable == NO ||
+        self.isLockedState == YES
+        )
+    {
+        return;
+    }
     self.shouldSaveDocument = NO;
-    NSString *documentString = self.textView.textStorage.string;
-    NSData *documentData = [documentString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *string = self.textView.textStorage.string;
+    CFDataRef data = CFStringCreateExternalRepresentation(kCFAllocatorDefault, (__bridge CFStringRef)string, [self currentEncoding], 0);
+    NSData *documentData = (__bridge NSData *)(data);
     NSString *entryPath = self.entryPath;
     promiseFixPermission(entryPath, NO); // fix permission
     [documentData writeToFile:entryPath atomically:YES];
+#ifdef DEBUG
+    NSLog(@"document saved with encoding %@: %@", [XXTEEditorEncodingHelper encodingNameForEncoding:[self currentEncoding]], entryPath);
+#endif
 }
 
 - (void)reloadTextViewWidthIfNecessary {

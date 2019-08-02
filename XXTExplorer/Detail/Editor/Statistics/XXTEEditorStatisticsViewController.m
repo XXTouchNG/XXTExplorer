@@ -9,6 +9,8 @@
 #import "XXTEEditorStatisticsViewController.h"
 #import "XXTEEditorTextView.h"
 #import <PromiseKit/PromiseKit.h>
+#import "XXTEEditorEncodingController.h"
+#import "XXTEEditorEncodingHelper.h"
 
 // Pre-Defines
 #import "XXTEEditorDefaults.h"
@@ -23,7 +25,7 @@
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreTitleValueCell.h"
 
-@interface XXTEEditorStatisticsViewController ()
+@interface XXTEEditorStatisticsViewController () <XXTEEditorEncodingControllerDelegate>
 
 @property (strong, nonatomic) UILabel *filenameLabel;
 @property (strong, nonatomic) UILabel *filesizeLabel;
@@ -113,11 +115,7 @@
 
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[ NSLocalizedString(@"Basic", nil), NSLocalizedString(@"Format", nil), NSLocalizedString(@"Counting", nil) ];
-#ifdef DEBUG
-    staticSectionFooters = @[ @"", NSLocalizedString(@"Editing any properties in this section is not supported.", nil), @"" ];
-#else
     staticSectionFooters = @[ @"", @"", @"" ];
-#endif
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Filename", nil);
@@ -134,10 +132,16 @@
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Encoding", nil);
+#ifdef APPSTORE
+    cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+#endif
     self.encodingLabel = cell4.valueLabel;
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Line Endings", nil);
+#ifdef APPSTORE
+    cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+#endif
     self.lineEndingsLabel = cell5.valueLabel;
     
     XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -167,7 +171,6 @@
 
 - (BOOL)loadFilePropertiesWithError:(NSError **)err {
     NSString *filePath = self.editor.entryPath;
-    NSString *fileContent = self.editor.textView.text;
     {
         self.filenameLabel.text = [filePath lastPathComponent];
     }
@@ -185,20 +188,25 @@
         self.modificationLabel.text = [previewFormatter stringFromDate:modifiedAt];
     }
     {
-        self.encodingLabel.text = NSLocalizedString(@"Unicode (UTF-8)", nil); // Certain
+        self.encodingLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:self.editor.currentEncoding];
+    }
+    {
+        if (self.editor.isLockedState) {
+            self.encodingLabel.textColor = XXTColorDanger();
+            self.lineEndingsLabel.textColor = XXTColorDanger();
+        } else {
+            self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
+            self.lineEndingsLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
+        }
     }
     {
         NSString *lineEnding = @"";
-        NSRange crlfRange = [fileContent rangeOfString:@"\r\n"];
-        if (crlfRange.location != NSNotFound) {
+        if (self.editor.currentLineBreak == NSStringLineBreakTypeCRLF) {
             lineEnding = NSLocalizedString(@"Windows (CRLF)", nil);
+        } else if (self.editor.currentLineBreak == NSStringLineBreakTypeLF) {
+            lineEnding = NSLocalizedString(@"Unix (LF)", nil);
         } else {
-            NSRange crRange = [fileContent rangeOfString:@"\r"];
-            if (crRange.location != NSNotFound) {
-                lineEnding = NSLocalizedString(@"Mac (CR)", nil);
-            } else {
-                lineEnding = NSLocalizedString(@"Unix (LF)", nil);
-            }
+            lineEnding = NSLocalizedString(@"Mac (CR)", nil);
         }
         self.lineEndingsLabel.text = lineEnding;
     }
@@ -210,6 +218,7 @@
         }
     }
     {
+        NSString *fileContent = self.editor.textView.text;
         stopCounting = NO;
         self.lineCountLabel.text = NSLocalizedString(@"...", nil);
         self.characterCountLabel.text = NSLocalizedString(@"...", nil);
@@ -319,21 +328,34 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
-            NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
-            if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractions(self, YES);
-                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                        [[UIPasteboard generalPasteboard] setString:detailText];
-                        fulfill(nil);
+        if (indexPath.section == 0) {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
+                NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
+                if (detailText && detailText.length > 0) {
+                    UIViewController *blockVC = blockInteractions(self, YES);
+                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            [[UIPasteboard generalPasteboard] setString:detailText];
+                            fulfill(nil);
+                        });
+                    }].finally(^() {
+                        toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                        blockInteractions(blockVC, NO);
                     });
-                }].finally(^() {
-                    toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                    blockInteractions(blockVC, NO);
-                });
+                }
             }
+        } else if (indexPath.section == 1) {
+#ifdef APPSTORE
+            if (self.editor.isLockedState == NO) {
+                if (indexPath.row == 0) {
+                    XXTEEditorEncodingController *controller = [[XXTEEditorEncodingController alloc] initWithStyle:UITableViewStylePlain];
+                    controller.delegate = self;
+                    controller.selectedEncoding = self.editor.currentEncoding;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }
+            }
+#endif
         }
     }
 }
@@ -358,6 +380,18 @@
     }
     return [UITableViewCell new];
 }
+
+#pragma mark - XXTEEditorEncodingControllerDelegate
+
+#ifdef APPSTORE
+- (void)encodingControllerDidChange:(XXTEEditorEncodingController *)controller {
+    [self.editor setCurrentEncoding:controller.selectedEncoding];
+    self.encodingLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:self.editor.currentEncoding];
+    self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
+    [self.editor setNeedsSaveDocument];
+    [self.editor setNeedsReload];
+}
+#endif
 
 - (void)dealloc {
 #ifdef DEBUG

@@ -292,7 +292,7 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
     NSString *entryParentPath = [entryPath stringByDeletingLastPathComponent];
     
     NSString *destinationPath = nil;
-    destinationPath = [entryParentPath stringByAppendingPathComponent:@"Archive"];
+    destinationPath = [entryParentPath stringByAppendingPathComponent:[entryName stringByDeletingPathExtension]];
     
     // adjust destination path
     NSString *destinationPathWithIndex = destinationPath;
