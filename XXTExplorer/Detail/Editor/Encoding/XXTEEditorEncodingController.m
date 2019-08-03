@@ -129,7 +129,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Encoding", nil);
+    if (!self.title.length) {
+        self.title = NSLocalizedString(@"Encoding", nil);
+    }
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

@@ -339,15 +339,27 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     [self.statisticsButtonItem setEnabled:[self isStatisticsButtonItemAvailable]];
     [self.settingsButtonItem setEnabled:[self isSettingsButtonItemAvailable]];
     
+    UIColor *newColor = self.theme.foregroundColor;
+    if (!newColor) newColor = [UIColor blackColor];
+    self.actionView.titleLabel.textColor = newColor;
+    self.actionView.descriptionLabel.textColor = newColor;
+    if (![self isDarkMode]) {
+        self.actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIcon"];
+    } else {
+        self.actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIconLight"];
+    }
+    
     if (isLockedState)
     {
         if (![self.view.subviews containsObject:self.actionView])
         {
             [self.view addSubview:self.actionView];
         }
+        [self.textView setHidden:YES];
     }
     else
     {
+        [self.textView setHidden:NO];
         [self.actionView removeFromSuperview];
     }
 }
@@ -668,7 +680,6 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
         XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
         actionView.frame = self.view.bounds;
         actionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIcon"];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionViewTapped:)];
         [actionView addGestureRecognizer:tapGesture];
         _actionView = actionView;
@@ -908,12 +919,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (!string) {
         [self setLockedState:YES];
         self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
-        self.actionView.descriptionLabel.text = readError ? readError.localizedDescription : NSLocalizedString(@"Unknown reason.", nil);
+        self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
         return nil;
     } else {
         [self setLockedState:NO];
     }
     [self setCurrentEncoding:tryEncoding];
+    [self setCurrentLineBreak:tryLineBreak];
     [_textView.vLayoutManager setNumberOfDigits:GetNumberOfDigits(numberOfLines)];
     return string;
 }
@@ -1651,6 +1663,11 @@ XXTE_END_IGNORE_PARTIAL
     }
     self.shouldSaveDocument = NO;
     NSString *string = self.textView.textStorage.string;
+    if ([self currentLineBreak] == NSStringLineBreakTypeCRLF) {
+        string = [string stringByReplacingOccurrencesOfString:@NSStringLineBreakLF withString:@NSStringLineBreakCRLF];
+    } else if ([self currentLineBreak] == NSStringLineBreakTypeCR) {
+        string = [string stringByReplacingOccurrencesOfString:@NSStringLineBreakLF withString:@NSStringLineBreakCR];
+    }
     CFDataRef data = CFStringCreateExternalRepresentation(kCFAllocatorDefault, (__bridge CFStringRef)string, [self currentEncoding], 0);
     NSData *documentData = (__bridge NSData *)(data);
     NSString *entryPath = self.entryPath;

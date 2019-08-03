@@ -817,6 +817,10 @@
 		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
+		D606114822F53F3800F6F0E6 /* XXTEEditorLineBreakController.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114722F53F3800F6F0E6 /* XXTEEditorLineBreakController.m */; };
+		D606114B22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
+		D606114C22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
+		D606114D22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
 		D60A26AA1F3DA83D00E013E2 /* XXTEEditorTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */; };
 		D60A26C01F3DB7BE00E013E2 /* Blackboard.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */; };
 		D60A26C31F3DB7BE00E013E2 /* Cobalt.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */; };
@@ -1978,6 +1982,10 @@
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
+		D606114622F53F3800F6F0E6 /* XXTEEditorLineBreakController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineBreakController.h; sourceTree = "<group>"; };
+		D606114722F53F3800F6F0E6 /* XXTEEditorLineBreakController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLineBreakController.m; sourceTree = "<group>"; };
+		D606114922F542A200F6F0E6 /* XXTEEditorLineBreakHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineBreakHelper.h; sourceTree = "<group>"; };
+		D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLineBreakHelper.m; sourceTree = "<group>"; };
 		D60A26A81F3DA83D00E013E2 /* XXTEEditorTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTheme.h; sourceTree = "<group>"; };
 		D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTheme.m; sourceTree = "<group>"; };
 		D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Blackboard.tmTheme; sourceTree = "<group>"; };
@@ -3801,6 +3809,17 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		D606114E22F542AC00F6F0E6 /* LineBreak */ = {
+			isa = PBXGroup;
+			children = (
+				D606114922F542A200F6F0E6 /* XXTEEditorLineBreakHelper.h */,
+				D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */,
+				D606114622F53F3800F6F0E6 /* XXTEEditorLineBreakController.h */,
+				D606114722F53F3800F6F0E6 /* XXTEEditorLineBreakController.m */,
+			);
+			path = LineBreak;
+			sourceTree = "<group>";
+		};
 		D60FE6461FE226D400954818 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -3989,6 +4008,7 @@
 				D60FE6461FE226D400954818 /* Search */,
 				0F3D5DF61FAEC4120083196D /* Symbol */,
 				D637120922F4852900ACE211 /* Encoding */,
+				D606114E22F542AC00F6F0E6 /* LineBreak */,
 				0FB388E21FA860AA00B41E44 /* Statistics */,
 				0F9888C81FA7538D00ED33E7 /* Toolbar */,
 				0FB009141F45ABA000097E9C /* Extensions */,
@@ -5009,6 +5029,7 @@
 				D63E89E32031694B00A865DA /* XXTEWebDAVClient.m in Sources */,
 				0F8EDB5F1FB1F779003C92D6 /* XXTEEditorTextInput.m in Sources */,
 				0F8EDB601FB1F779003C92D6 /* XXTEBaseObjectViewController.m in Sources */,
+				D606114822F53F3800F6F0E6 /* XXTEEditorLineBreakController.m in Sources */,
 				0F8EDB631FB1F779003C92D6 /* XXTEEditorPreprocessor.m in Sources */,
 				0F8EDB641FB1F779003C92D6 /* XXTImagePickerPhotoCell.m in Sources */,
 				0F8EDB651FB1F779003C92D6 /* XXTExplorerViewController+XXTImagePickerControllerDelegate.m in Sources */,
@@ -5139,6 +5160,7 @@
 				0F8EDBDA1FB1F779003C92D6 /* XXTEArchiveViewer.m in Sources */,
 				0F8EDBDB1FB1F779003C92D6 /* XXTExplorerToolbar.m in Sources */,
 				0FAE18F820806830005F9B67 /* XXTESQLiteDatabaseManager.m in Sources */,
+				D606114D22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */,
 				0F8EDBDC1FB1F779003C92D6 /* XXTExplorerViewHomeCell.m in Sources */,
 				D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */,
 				0F8EDBDD1FB1F779003C92D6 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
@@ -5493,6 +5515,7 @@
 				D677B10C1F4FE8AB00E741C2 /* XXTELuaVModel.m in Sources */,
 				0FAD69271F04039D00B2F0EC /* XXTEMoreSwitchCell.m in Sources */,
 				D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */,
+				D606114B22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */,
 				0FB7B8A4200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */,
 				0F4D598A1F19E48A00CCA383 /* XXTExplorerEntryLauncher.m in Sources */,
 				0F1DD1C61F11BC9300F1A66A /* XXTEScanLineAnimation.m in Sources */,
@@ -5839,6 +5862,7 @@
 				D60FE7001FE2369300954818 /* XXTELuaVModel.m in Sources */,
 				D60FE7011FE2369300954818 /* XXTEMoreSwitchCell.m in Sources */,
 				D60FE7021FE2369300954818 /* XXTETerminalViewController.m in Sources */,
+				D606114C22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */,
 				0FB7B8A6200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */,
 				D60FE7041FE2369300954818 /* XXTExplorerEntryLauncher.m in Sources */,
 				D60FE7051FE2369300954818 /* XXTEScanLineAnimation.m in Sources */,

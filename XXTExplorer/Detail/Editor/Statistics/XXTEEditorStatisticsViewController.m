@@ -10,7 +10,9 @@
 #import "XXTEEditorTextView.h"
 #import <PromiseKit/PromiseKit.h>
 #import "XXTEEditorEncodingController.h"
+#import "XXTEEditorLineBreakController.h"
 #import "XXTEEditorEncodingHelper.h"
+#import "XXTEEditorLineBreakHelper.h"
 
 // Pre-Defines
 #import "XXTEEditorDefaults.h"
@@ -26,7 +28,7 @@
 #import "XXTEMoreTitleValueCell.h"
 
 #ifdef APPSTORE
-@interface XXTEEditorStatisticsViewController () <XXTEEditorEncodingControllerDelegate>
+@interface XXTEEditorStatisticsViewController () <XXTEEditorEncodingControllerDelegate, XXTEEditorLineBreakControllerDelegate>
 #else
 @interface XXTEEditorStatisticsViewController ()
 #endif
@@ -357,6 +359,11 @@
                     controller.delegate = self;
                     controller.selectedEncoding = self.editor.currentEncoding;
                     [self.navigationController pushViewController:controller animated:YES];
+                } else if (indexPath.row == 1) {
+                    XXTEEditorLineBreakController *controller = [[XXTEEditorLineBreakController alloc] initWithStyle:UITableViewStyleGrouped];
+                    controller.delegate = self;
+                    controller.selectedLineBreakType = self.editor.currentLineBreak;
+                    [self.navigationController pushViewController:controller animated:YES];
                 }
             }
 #endif
@@ -390,8 +397,20 @@
 #ifdef APPSTORE
 - (void)encodingControllerDidChange:(XXTEEditorEncodingController *)controller {
     [self.editor setCurrentEncoding:controller.selectedEncoding];
-    self.encodingLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:self.editor.currentEncoding];
+    self.encodingLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:controller.selectedEncoding];
     self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
+    [self.editor setNeedsSaveDocument];
+    [self.editor setNeedsReload];
+}
+#endif
+
+#pragma mark - XXTEEditorLineBreakControllerDelegate
+
+#ifdef APPSTORE
+- (void)linebreakControllerDidChange:(XXTEEditorLineBreakController *)controller {
+    [self.editor setCurrentLineBreak:controller.selectedLineBreakType];
+    self.lineEndingsLabel.text = [XXTEEditorLineBreakHelper lineBreakNameForType:controller.selectedLineBreakType];
+    self.lineEndingsLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
     [self.editor setNeedsSaveDocument];
     [self.editor setNeedsReload];
 }

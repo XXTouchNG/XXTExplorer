@@ -10,6 +10,7 @@
 #import "XXTEAppDefines.h"
 #import "XXTEEditorEncodingController.h"
 #import "XXTEEditorEncodingHelper.h"
+#import "XXTEEditorTextProperties.h"
 
 
 static NSString *kXXTErrorInvalidStringEncodingDomain = @"com.darwindev.XXTExplorer.error.invalid-string-encoding";
@@ -40,17 +41,17 @@ static NSString *kXXTErrorInvalidStringEncodingDomain = @"com.darwindev.XXTExplo
         NSLog(@"document opened with encoding %@: %@", [XXTEEditorEncodingHelper encodingNameForEncoding:preferredEncoding], path);
 #endif
     }
-    if ([rawString rangeOfString:@"\r\n"].location != NSNotFound) {
+    if ([rawString rangeOfString:@NSStringLineBreakCRLF].location != NSNotFound) {
         *lineBreak = NSStringLineBreakTypeCRLF;
     }
-    else if ([rawString rangeOfString:@"\r"].location != NSNotFound) {
+    else if ([rawString rangeOfString:@NSStringLineBreakCR].location != NSNotFound) {
         *lineBreak = NSStringLineBreakTypeCR;
     }
     else {
         *lineBreak = NSStringLineBreakTypeLF;
     }
-    rawString = [rawString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-    rawString = [rawString stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
+    rawString = [rawString stringByReplacingOccurrencesOfString:@NSStringLineBreakCRLF withString:@NSStringLineBreakLF];
+    rawString = [rawString stringByReplacingOccurrencesOfString:@NSStringLineBreakCR withString:@NSStringLineBreakLF];
     NSUInteger numberOfLines, index, stringLength = [rawString length];
     for (index = 0, numberOfLines = 0; index < stringLength; numberOfLines++)
         index = NSMaxRange([rawString lineRangeForRange:NSMakeRange(index, 0)]);

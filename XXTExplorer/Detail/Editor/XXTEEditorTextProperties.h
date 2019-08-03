@@ -15,4 +15,8 @@ typedef enum : NSUInteger {
     NSStringLineBreakTypeCRLF,
 } NSStringLineBreakType;
 
+#define NSStringLineBreakLF "\n"
+#define NSStringLineBreakCRLF "\r\n"
+#define NSStringLineBreakCR "\r"
+
 #endif /* XXTEEditorTextProperties_h */
