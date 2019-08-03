@@ -8,7 +8,9 @@
 
 #import "XXTETextViewController.h"
 #import "XXTETextReader.h"
-
+#import "XXTEAppDefines.h"
+#import "XXTExplorerDefaults.h"
+#import "XXTEEditorEncodingHelper.h"
 #import <LGAlertView/LGAlertView.h>
 
 static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200k
@@ -105,9 +107,13 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     if (!dataPart) {
         return;
     }
-    NSString *stringPart = [[NSString alloc] initWithData:dataPart encoding:NSUTF8StringEncoding];
+    
+    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
+    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
+    NSString *encodingName = [XXTEEditorEncodingHelper encodingNameForEncoding:encoding];
+    NSString *stringPart = CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorDefault, dataPart.bytes, dataPart.length, encoding, NO));
     if (!stringPart) {
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse text with UTF-8 encoding: \"%@\".", nil), entryPath]);
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse text with \"%@\" encoding: \"%@\".", nil), encodingName, entryPath]);
         return;
     }
     if (stringPart.length == 0) {

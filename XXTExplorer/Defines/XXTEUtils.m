@@ -95,6 +95,16 @@ NSString *XXTERootPath() {
     return [XXTEAppDelegate sharedRootPath];
 }
 
+NSString *XXTTiledPath(NSString *fullPath) {
+    NSString *rootPath = XXTERootPath();
+    NSRange rootRange = [fullPath rangeOfString:rootPath];
+    if (rootRange.location == 0) {
+        NSString *tiledPath = [fullPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
+        return tiledPath;
+    }
+    return fullPath;
+}
+
 #pragma mark - Permissions
 
 const char *add1s_binary() {

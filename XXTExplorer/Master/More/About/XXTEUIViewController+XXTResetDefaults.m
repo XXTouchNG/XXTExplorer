@@ -43,6 +43,11 @@
         if (jsonDirectory[@"code"]) {
             // already been killed
             toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+#ifdef DEBUG
+            UIApplication *app = [UIApplication sharedApplication];
+            [app performSelector:NSSelectorFromString(@"suspend")];
+            [app performSelector:NSSelectorFromString(@"terminateWithSuccess") withObject:nil afterDelay:0.3];
+#endif
         }
     })
     .catch(^(NSError *error) {
@@ -59,6 +64,14 @@
     .then(^(NSNumber *val) {
         if (val && [val isKindOfClass:[NSNumber class]] && [val boolValue]) {
             toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
+#ifdef DEBUG
+            UIApplication *app = [UIApplication sharedApplication];
+            [app performSelector:NSSelectorFromString(@"suspend")];
+            if ([app.delegate respondsToSelector:@selector(applicationWillTerminate:)]) {
+                [app.delegate applicationWillTerminate:app];
+            }
+            [app performSelector:NSSelectorFromString(@"terminateWithSuccess") withObject:nil afterDelay:0.3];
+#endif
         }
     })
     .catch(^(NSError *error) {

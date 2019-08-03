@@ -159,7 +159,10 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     _isRendering = NO;
     
     _lockedState = NO;
-    _currentEncoding = kCFStringEncodingUTF8;
+    
+    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
+    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
+    _currentEncoding = encoding;
     _currentLineBreak = NSStringLineBreakTypeLF;
     
     [self registerUndoNotifications];
@@ -324,6 +327,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 }
 
 - (void)reloadUI {
+    BOOL simple = XXTEDefaultsBool(XXTEEditorSimpleTitleView, (XXTE_IS_IPAD ? NO : YES));
+    [self.lockedTitleView setSimple:simple];
+    
     BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
     XXTEEditorSearchBar *searchBar = self.searchBar;
     [searchBar setRegexMode:useRegular];
@@ -368,7 +374,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     if (![self isViewLoaded]) return;
     
     // Config
-    BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, NO); // config
+    BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, (XXTE_IS_IPAD ? YES : NO)); // config
     BOOL showInvisibleCharacters = XXTEDefaultsBool(XXTEEditorShowInvisibleCharacters, NO); // config
     
     // Theme Appearance
@@ -584,6 +590,9 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 #pragma mark - Layout
 
 - (void)configure {
+    self.navigationItem.leftItemsSupplementBackButton = NO;
+    self.navigationItem.hidesBackButton = YES;
+    
     if (self.title.length == 0) {
         NSString *entryPath = self.entryPath;
         if (entryPath) {
@@ -595,11 +604,12 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     
     self.navigationItem.leftBarButtonItems = @[self.myBackButtonItem];
     if (isOS9Above() && isAppStore()) {
-        self.navigationItem.rightBarButtonItems = @[self.shareButtonItem, self.launchButtonItem];
+        self.navigationItem.rightBarButtonItems = @[self.launchButtonItem, self.shareButtonItem];
     } else {
         self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
     }
     self.lockedTitleView.title = self.title;
+    self.lockedTitleView.subtitle = XXTTiledPath(self.entryPath);
     self.navigationItem.titleView = self.lockedTitleView;
     
     [self.maskView setTextView:self.textView];
@@ -858,7 +868,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 - (XXTEEditorToolbar *)toolbar {
     if (!_toolbar) {
-        XXTEEditorToolbar *toolbar = [[XXTEEditorToolbar alloc] init];
+        XXTEEditorToolbar *toolbar = [[XXTEEditorToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds) - 44.0, CGRectGetWidth(self.view.bounds), 44.0)];
         if (@available(iOS 11.0, *)) {
             toolbar.translucent = YES;
         } else {
@@ -1038,10 +1048,11 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)encodingControllerDidConfirm:(XXTEEditorEncodingController *)controller
 {
     [self setCurrentEncoding:controller.selectedEncoding];
-    // [self setNeedsSaveDocument];
     [self setNeedsReload];
     [controller dismissViewControllerAnimated:YES completion:^{
-        
+        if (XXTE_COLLAPSED) {
+            [self reloadAllIfNecessary];
+        }
     }];
 }
 #endif
@@ -1669,7 +1680,7 @@ XXTE_END_IGNORE_PARTIAL
         string = [string stringByReplacingOccurrencesOfString:@NSStringLineBreakLF withString:@NSStringLineBreakCR];
     }
     CFDataRef data = CFStringCreateExternalRepresentation(kCFAllocatorDefault, (__bridge CFStringRef)string, [self currentEncoding], 0);
-    NSData *documentData = (__bridge NSData *)(data);
+    NSData *documentData = CFBridgingRelease(data);
     NSString *entryPath = self.entryPath;
     promiseFixPermission(entryPath, NO); // fix permission
     [documentData writeToFile:entryPath atomically:YES];

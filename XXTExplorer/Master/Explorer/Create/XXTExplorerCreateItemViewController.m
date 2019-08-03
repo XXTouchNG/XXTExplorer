@@ -7,14 +7,20 @@
 //
 
 #import <sys/stat.h>
+#import <PromiseKit/PromiseKit.h>
+
+// Views
 #import "XXTExplorerCreateItemViewController.h"
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionCell.h"
 #import "XUIViewShaker.h"
 #import "XXTEMoreAddressCell.h"
-#import <PromiseKit/PromiseKit.h>
-
 #import "XXTEMoreLinkCell.h"
+#import "XXTEAppDefines.h"
+#import "XXTExplorerDefaults.h"
+#import "XXTEEditorEncodingHelper.h"
+
+// Helpers
 #import "UIControl+BlockTarget.h"
 #import "NSString+Template.h"
 
@@ -431,8 +437,10 @@ typedef enum : NSUInteger {
             if (dayString) tags[@"CURRENT_DAY"] = dayString;
             if (deviceName) tags[@"DEVICE_NAME"] = deviceName;
             
+            NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
+            CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
             newTemplate = [newTemplate stringByReplacingTagsInDictionary:[tags copy]];
-            templateData = [newTemplate dataUsingEncoding:NSUTF8StringEncoding];
+            templateData = CFBridgingRelease(CFStringCreateExternalRepresentation(kCFAllocatorDefault, (__bridge CFStringRef)newTemplate, encoding, 0));
             
         }
         promiseFixPermission(entryPath, NO);

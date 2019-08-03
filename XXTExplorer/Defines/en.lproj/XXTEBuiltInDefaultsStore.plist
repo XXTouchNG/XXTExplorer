@@ -23,6 +23,12 @@
 			<key>title</key>
 			<string>Explorer Config</string>
 		</dict>
+		<dict>
+			<key>key</key>
+			<string>VIEWER_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>Viewer Config</string>
+		</dict>
 	</array>
 	<key>EXPLORER_USER_DEFAULTS</key>
 	<array>
@@ -137,7 +143,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
 			<key>default</key>
-			<true/>
+			<false/>
 			<key>title</key>
 			<string>Hide Operation Label</string>
 			<key>description</key>
@@ -154,7 +160,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowOpenMethodKey</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>title</key>
 			<string>Allow Open Method</string>
 			<key>description</key>
@@ -163,6 +169,107 @@
 			<array>
 				<string>Off</string>
 				<string>On</string>
+			</array>
+		</dict>
+	</array>
+	<key>VIEWER_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerDefaultEncodingKey</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Default Encoding</string>
+			<key>description</key>
+			<string>Encoding used in text related viewers by default.</string>
+			<key>options</key>
+			<array>
+				<string>Unicode (UTF-8)</string>
+				<string>Western (ASCII)</string>
+				<string>Western (ISO Latin 1)</string>
+				<string>Western (Mac OS Roman)</string>
+				<string>Western (Windows Latin 1, CP 1252)</string>
+				<string>Western (DOS Latin 1, CP 850)</string>
+				<string>Western (ISO Latin 3)</string>
+				<string>Western (ISO Latin 9)</string>
+				<string>Latin-US (DOS, CP 437)</string>
+				<string>Baltic (ISO Latin 7)</string>
+				<string>Baltic (Windows)</string>
+				<string>Baltic (DOS)</string>
+				<string>Central European (ISO Latin 2)</string>
+				<string>Central European (ISO Latin 4)</string>
+				<string>Central European (Mac OS)</string>
+				<string>Central European (Windows Latin 2)</string>
+				<string>Central European (DOS Latin 2, CP 852)</string>
+				<string>Cyrillic (KOI8-R)</string>
+				<string>Cyrillic (ISO 8859-5)</string>
+				<string>Cyrillic (Mac OS)</string>
+				<string>Cyrillic (Windows, CP 1251)</string>
+				<string>Cyrillic (DOS)</string>
+				<string>Greek (ISO 8859-7)</string>
+				<string>Greek (Mac OS)</string>
+				<string>Greek (Windows, CP 1253)</string>
+				<string>Greek (DOS)</string>
+				<string>Greek (DOS Greek 1)</string>
+				<string>Greek (DOS Greek 2)</string>
+				<string>Nordic (ISO Latin 6)</string>
+				<string>Nordic (DOS)</string>
+				<string>Celtic (ISO Latin 8)</string>
+				<string>Celtic (Mac OS)</string>
+				<string>Romanian (ISO Latin 10)</string>
+				<string>Romanian (Mac OS)</string>
+				<string>Turkish (ISO Latin 5)</string>
+				<string>Turkish (Mac OS)</string>
+				<string>Turkish (Windows Latin 5)</string>
+				<string>Turkish (DOS)</string>
+				<string>Japanese (Shift JIS)</string>
+				<string>Japanese (ISO 2022-JP)</string>
+				<string>Japanese (ISO 2022-JP-1)</string>
+				<string>Japanese (ISO 2022-JP-2)</string>
+				<string>Japanese (ISO 2022-JP-3)</string>
+				<string>Japanese (EUC)</string>
+				<string>Japanese (Mac OS)</string>
+				<string>Japanese (Windows, DOS)</string>
+				<string>Chinese (GB 18030)</string>
+				<string>Chinese (ISO 2022-CN)</string>
+				<string>Chinese (ISO 2022-CN-EXT)</string>
+				<string>Simplified Chinese (GB 2312)</string>
+				<string>Simplified Chinese (Mac OS)</string>
+				<string>Simplified Chinese (Windows, DOS)</string>
+				<string>Traditional Chinese (Big 5)</string>
+				<string>Traditional Chinese (Big 5 HKSCS)</string>
+				<string>Traditional Chinese (EUC)</string>
+				<string>Traditional Chinese (Mac OS)</string>
+				<string>Traditional Chinese (Windows, DOS)</string>
+				<string>Korean (EUC)</string>
+				<string>Korean (Mac OS)</string>
+				<string>Korean (Windows Johab)</string>
+				<string>Korean (Windows, DOS)</string>
+				<string>Vietnamese (Mac OS)</string>
+				<string>Vietnamese (Windows)</string>
+				<string>Thai (ISO 8859-11)</string>
+				<string>Thai (Mac OS)</string>
+				<string>Thai (Windows, DOS)</string>
+				<string>Hebrew (ISO 8859-8)</string>
+				<string>Hebrew (Mac OS)</string>
+				<string>Hebrew (Windows)</string>
+				<string>Hebrew (DOS)</string>
+				<string>Arabic (ISO 8859-6)</string>
+				<string>Arabic (Mac OS)</string>
+				<string>Arabic (Windows)</string>
+				<string>Arabic (DOS)</string>
+				<string>Unicode (UTF-16)</string>
+				<string>Unicode (UTF-16BE)</string>
+				<string>Unicode (UTF-16LE)</string>
+				<string>Unicode (UTF-32)</string>
+				<string>Unicode (UTF-32BE)</string>
+				<string>Unicode (UTF-32LE)</string>
+				<string>Western (EBCDIC US)</string>
+				<string>Western (EBCDIC Latin 1)</string>
+				<string>Non-lossy ASCII</string>
 			</array>
 		</dict>
 	</array>

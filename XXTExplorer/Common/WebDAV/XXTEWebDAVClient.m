@@ -44,6 +44,7 @@ NSString * const XXTEWebDAVNotificationServerDidUpdateNATPortMapping = @"XXTEWeb
 - (void)startWithPort:(NSUInteger)port error:(NSError **)error {
     if (NO == self.davServer.isRunning) {
         NSMutableDictionary* options = [NSMutableDictionary dictionary];
+//        [options setObject:[NSNumber numberWithBool:YES] forKey:GCDWebServerOption_BindToLocalhost];
         [options setObject:[NSNumber numberWithInteger:port] forKey:GCDWebServerOption_Port];
         [options setValue:NSStringFromClass([self class]) forKey:GCDWebServerOption_BonjourName];
         [self.davServer startWithOptions:options error:error];

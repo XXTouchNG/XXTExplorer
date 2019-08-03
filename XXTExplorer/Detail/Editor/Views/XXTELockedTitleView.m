@@ -10,6 +10,12 @@
 
 @interface XXTELockedTitleView ()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *lockImageView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lockWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *subtitleLabelHeight;
 
 @end
 
@@ -18,6 +24,11 @@
 - (void)setTitle:(NSString *)title {
     _title = title;
     self.titleLabel.text = title;
+}
+
+- (void)setSubtitle:(NSString *)subtitle {
+    _subtitle = subtitle;
+    self.subtitleLabel.text = subtitle;
 }
 
 - (void)setLocked:(BOOL)locked {
@@ -29,10 +40,23 @@
     }
 }
 
+- (void)setSimple:(BOOL)simple {
+    _simple = simple;
+    if (simple) {
+        self.subtitleLabelHeight.constant = 0.0;
+        self.subtitleLabel.text = @"";
+    } else {
+        self.subtitleLabelHeight.constant = 10.0;
+        self.subtitleLabel.text = self.subtitle;
+    }
+    [self updateConstraintsIfNeeded];
+}
+
 - (void)setTintColor:(UIColor *)tintColor
 {
     [super setTintColor:tintColor];
     self.titleLabel.textColor = tintColor;
+    self.subtitleLabel.textColor = tintColor;
 }
 
 @end

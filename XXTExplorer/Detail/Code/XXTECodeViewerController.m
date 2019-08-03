@@ -11,8 +11,10 @@
 #import "XXTECodeViewerSettingsController.h"
 #import "XXTExplorerItemPicker.h"
 #import "XXTECodeViewerDefaults.h"
+#import "XXTEEditorTextProperties.h"
 
 // Helpers
+#import "XXTEEditorEncodingHelper.h"
 #import "NSString+HTMLEscape.h"
 #import "NSString+Template.h"
 #import "UIColor+SKColor.h"
@@ -73,8 +75,7 @@
 }
 
 - (instancetype)initWithPath:(NSString *)path {
-    NSURL *fileURL = [NSURL fileURLWithPath:path];
-    if (self = [super initWithURL:fileURL]) {
+    if (self = [super init]) {
         _entryPath = path;
         _hljsCssRegex = [NSRegularExpression regularExpressionWithPattern:@"\\.hljs( +|,+.*?)\\{(.*?)\\}" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
         _hljsLineCssRegex = [NSRegularExpression regularExpressionWithPattern:@"([A-Za-z0-9|-]+):\\s?(.*)" options:kNilOptions error:nil];
@@ -95,10 +96,18 @@
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftItemsSupplementBackButton = YES;
-    self.navigationItem.leftBarButtonItems = @[ self.myBackButtonItem ];
-    self.applicationLeftBarButtonItems = @[ self.myBackButtonItem ];
+    XXTE_START_IGNORE_PARTIAL
+    if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
+        // inherit
+    }
+    else {
+        [self.navigationItem setLeftBarButtonItems:@[ self.myBackButtonItem ]];
+        [self setApplicationLeftBarButtonItems:@[ self.myBackButtonItem ]];
+    }
+    XXTE_END_IGNORE_PARTIAL
     self.navigationItem.rightBarButtonItems = @[ self.settingsButtonItem ];
     self.applicationBarButtonItems = @[ self.settingsButtonItem ];
+    
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
@@ -191,12 +200,22 @@
     NSError *templateError = nil;
     NSString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"References.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
     if (templateError) {
+        // impossible
         return;
     }
     
     NSError *codecError = nil;
-    NSString *codeString = [[NSString alloc] initWithContentsOfFile:self.entryPath encoding:NSUTF8StringEncoding error:&codecError];
-    if (codecError) {
+    NSData *codeData = [NSData dataWithContentsOfFile:self.entryPath options:kNilOptions error:&codecError];
+    if (!codeData) {
+        toastError(self, codecError);
+        return;
+    }
+    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
+    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
+    NSString *encodingName = [XXTEEditorEncodingHelper encodingNameForEncoding:encoding];
+    NSString *codeString = CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorMalloc, codeData.bytes, codeData.length, encoding, NO));
+    if (!codeString) {
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse text with \"%@\" encoding: \"%@\".", nil), encodingName, entryPath]);
         return;
     }
     
@@ -206,9 +225,17 @@
     }
     
     // line number
-    BOOL counter = XXTEDefaultsBool(XXTECodeViewerLineNumberEnabled, NO);
+    BOOL counter = XXTEDefaultsBool(XXTECodeViewerLineNumbersEnabled, (XXTE_IS_IPAD ? YES : NO));
     if (counter) {
-        NSArray <NSString *> *escapedLines = [escapedString componentsSeparatedByString:@"\n"];
+        NSArray <NSString *> *escapedLines = @[];
+        if ([escapedString containsString:@NSStringLineBreakCRLF]) {
+            escapedLines = [escapedString componentsSeparatedByString:@NSStringLineBreakCRLF];
+        } else if ([escapedString containsString:@NSStringLineBreakCR]) {
+            escapedLines = [escapedString componentsSeparatedByString:@NSStringLineBreakCR];
+        } else {
+            escapedLines = [escapedString componentsSeparatedByString:@NSStringLineBreakLF];
+        }
+        
         NSMutableString *mEscapedString = [NSMutableString string];
         for (NSString *escapedLine in escapedLines) {
             [mEscapedString appendString:@"<span class=\"line\">"];

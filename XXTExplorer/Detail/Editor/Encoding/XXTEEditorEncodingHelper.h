@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XXTEEditorEncodingHelper : NSObject
 + (NSString *)encodingNameForEncoding:(CFStringEncoding)encoding;
++ (CFStringEncoding)encodingForEncodingName:(NSString *)encodingName;
++ (NSArray <NSNumber *> *)encodings;
++ (CFStringEncoding)encodingAtIndex:(NSInteger)idx;
 
 @end
 

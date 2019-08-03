@@ -33,6 +33,7 @@ extern "C" {
     void XXTEDefaultsSetObject(NSString *key, id obj);
     
     NSString *XXTERootPath(void);
+    NSString *XXTTiledPath(NSString *fullPath);
     
 #ifdef __cplusplus
 }

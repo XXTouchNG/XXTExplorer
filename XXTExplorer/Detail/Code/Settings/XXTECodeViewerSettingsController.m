@@ -141,13 +141,13 @@
     
     XXTEMoreSwitchCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Line Numbers", nil);
-    cell5.optionSwitch.on = XXTEDefaultsBool(XXTECodeViewerLineNumberEnabled, NO);
+    cell5.optionSwitch.on = XXTEDefaultsBool(XXTECodeViewerLineNumbersEnabled, (XXTE_IS_IPAD ? YES : NO));
     {
         @weakify(self);
         [cell5.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
-            XXTEDefaultsSetBasic(XXTECodeViewerLineNumberEnabled, optionSwitch.on);
+            XXTEDefaultsSetBasic(XXTECodeViewerLineNumbersEnabled, optionSwitch.on);
             if ([self.delegate respondsToSelector:@selector(codeViewerSettingsControllerDidChange:)]) {
                 [self.delegate codeViewerSettingsControllerDidChange:self];
             }

@@ -12,12 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XXTELockedTitleView : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *lockImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lockWidth;
-
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, assign) BOOL locked;
+@property (nonatomic, assign) BOOL simple;
 
 @end
 

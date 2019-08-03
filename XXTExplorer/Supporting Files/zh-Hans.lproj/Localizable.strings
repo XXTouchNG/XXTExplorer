@@ -114,9 +114,6 @@
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" 已关闭, 在 \"更多 > 用户偏好设置\" 中可以重新开启它.";
 
 /* No comment provided by engineer. */
-"\"RSS Feed\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"RSS 订阅\" 已关闭, 在 \"更多 > 用户偏好设置\" 中可以重新开启它.";
-
-/* No comment provided by engineer. */
 "\n\nTest finished.\n" = "\n\n调试结束.\n";
 
 /* No comment provided by engineer. */
@@ -393,10 +390,10 @@
 "Cannot parse and override specific script: \"%@\"." = "无法解析并覆盖指定脚本文件: \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot parse log with UTF-8 encoding: \"%@\"." = "无法以 UTF-8 编码解析日志: \"%@\".";
+"Cannot parse log with \"%@\" encoding: \"%@\"." = "无法以 \"%@\" 编码解析日志: \"%@\".";
 
 /* No comment provided by engineer. */
-"Cannot parse text with UTF-8 encoding: \"%@\"." = "无法以 UTF-8 编码解析文本: \"%@\".";
+"Cannot parse text with \"%@\" encoding: \"%@\"." = "无法以 \"%@\" 编码解析文本: \"%@\".";
 
 /* No comment provided by engineer. */
 "Cannot perform operation \"%@\" on Pasteboard URL \"%@\"." = "无法执行操作 \"%@\": 剪贴板链接 \"%@\".";
@@ -2083,3 +2080,9 @@
 
 /* No comment provided by engineer. */
 "Will change current line endings to \"%@\", continue?" = "即将修改当前换行符为 \"%@\", 是否继续?";
+
+/* No comment provided by engineer. */
+"Simple Title" = "简易标题";
+
+/* No comment provided by engineer. */
+"\"Home Entries\" has been disabled, you can make it display again in \"Settings > User Defaults\"." = "\"主目录\" 已关闭, 在 \"设置 > 用户偏好设置\" 中可以重新开启它.";

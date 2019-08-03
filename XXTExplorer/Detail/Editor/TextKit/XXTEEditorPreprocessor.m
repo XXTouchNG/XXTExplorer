@@ -31,8 +31,7 @@ static NSString *kXXTErrorInvalidStringEncodingDomain = @"com.darwindev.XXTExplo
     if (preferredEncoding == kCFStringEncodingInvalidId) {
         return nil;
     }
-    CFStringRef cfString = CFStringCreateWithBytes(kCFAllocatorDefault, data.bytes, data.length, preferredEncoding, NO);
-    NSString *rawString = (__bridge NSString *)(cfString);
+    NSString *rawString = CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorDefault, data.bytes, data.length, preferredEncoding, NO));
     if (!rawString) {
         *error = [NSError errorWithDomain:kXXTErrorInvalidStringEncodingDomain code:400 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot open file with encoding \"%@\".", nil), [XXTEEditorEncodingHelper encodingNameForEncoding:preferredEncoding]] }];
         return nil;

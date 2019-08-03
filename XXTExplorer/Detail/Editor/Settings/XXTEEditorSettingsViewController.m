@@ -139,7 +139,7 @@
     
     XXTEMoreSwitchCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Line Numbers", nil);
-    cell5.optionSwitch.on = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, NO);
+    cell5.optionSwitch.on = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, (XXTE_IS_IPAD ? YES : NO));
     {
         @weakify(self);
         [cell5.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
@@ -170,6 +170,17 @@
         [fullScreenCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorFullScreenWhenEditing, optionSwitch.on);
+        }];
+    }
+    
+    XXTEMoreSwitchCell *simpleTitleViewCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    simpleTitleViewCell.titleLabel.text = NSLocalizedString(@"Simple Title", nil);
+    simpleTitleViewCell.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSimpleTitleView, (XXTE_IS_IPAD ? NO : YES));
+    {
+        [simpleTitleViewCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            UISwitch *optionSwitch = (UISwitch *)sender;
+            XXTEDefaultsSetBasic(XXTEEditorSimpleTitleView, optionSwitch.on);
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -403,9 +414,9 @@
     NSArray *keyboardSection = nil;
     
     if (XXTE_IS_IPAD) {
-        layoutSection = @[ cell5, cell6 ];
+        layoutSection = @[ simpleTitleViewCell, cell5, cell6 ];
     } else {
-        layoutSection = @[ fullScreenCell, cell5, cell6 ];
+        layoutSection = @[ simpleTitleViewCell, fullScreenCell, cell5, cell6 ];
     }
     
     if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {

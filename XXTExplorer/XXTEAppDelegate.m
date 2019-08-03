@@ -57,6 +57,25 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // Restore defaults
+    [[self class] appDefines];
+    NSUserDefaults *userDefaults = [[self class] userDefaults];
+    NSDictionary *builtInDefaults = [[self class] builtInDefaults];
+    NSArray <NSDictionary *> *sectionMetas = builtInDefaults[@"SECTION_META"];
+    for (NSDictionary *sectionMeta in sectionMetas) {
+        NSString *metaKey = sectionMeta[@"key"];
+        NSArray <NSDictionary *> *explorerUserDefaults = builtInDefaults[metaKey];
+        for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
+            NSString *defaultKey = explorerUserDefault[@"key"];
+            if (![userDefaults objectForKey:defaultKey]) {
+                id defaultValue = explorerUserDefault[@"default"];
+                if (defaultValue) {
+                    [userDefaults setObject:defaultValue forKey:defaultKey];
+                }
+            }
+        }
+    }
+    
     // Create required subdirectories
     {
         NSString *sharedRootPath = [XXTEAppDelegate sharedRootPath];
@@ -464,6 +483,9 @@ XXTE_END_IGNORE_PARTIAL
 #endif
                 appDefines;
             });
+#ifdef DEBUG
+            NSLog(@"App Defines: %@", localAppDefines);
+#endif
         }
     });
     return localAppDefines;
@@ -477,6 +499,9 @@ XXTE_END_IGNORE_PARTIAL
             userDefaults = ({
                 [NSUserDefaults standardUserDefaults];
             });
+#ifdef DEBUG
+            NSLog(@"User Defaults: %@", userDefaults);
+#endif
         }
     });
     return userDefaults;

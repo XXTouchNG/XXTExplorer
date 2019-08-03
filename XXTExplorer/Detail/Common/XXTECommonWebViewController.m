@@ -50,7 +50,7 @@
     self.showUrlWhileLoading = NO;
     self.hideWebViewBoundaries = NO;
     
-    if (isiPhoneX()) {
+    if (isiPhoneX() || XXTE_IS_IPAD) {
         self.hidesBottomBarWhenPushed = YES;
     } else {
         self.hidesBottomBarWhenPushed = NO;

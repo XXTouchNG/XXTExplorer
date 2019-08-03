@@ -67,7 +67,21 @@
         XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
         terminalController.runImmediately = YES;
         terminalController.editor = self;
-        [self.navigationController pushViewController:terminalController animated:YES];
+        if (XXTE_COLLAPSED) {
+            XXTE_START_IGNORE_PARTIAL
+            if (@available(iOS 9.0, *)) {
+                terminalController.modalPresentationStyle = UIModalPresentationPopover;
+                UIPopoverPresentationController *popoverPresentationController = terminalController.popoverPresentationController;
+                popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+                popoverPresentationController.barButtonItem = sender;
+                [self.navigationController presentViewController:terminalController animated:YES completion:nil];
+            } else {
+                toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
+            }
+            XXTE_END_IGNORE_PARTIAL
+        } else {
+            [self.navigationController pushViewController:terminalController animated:YES];
+        }
     } else {
         toastMessage(self, NSLocalizedString(@"This file is not executable.", nil));
         return;

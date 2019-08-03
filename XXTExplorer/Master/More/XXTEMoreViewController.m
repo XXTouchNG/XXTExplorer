@@ -696,7 +696,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         }
         else if (indexPath.section == kXXTEMoreSectionIndexSettings) {
             if (indexPath.row == kXXTEMoreSectionSettingsRowIndexUserDefaults) {
-                XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStylePlain];
+                XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStyleGrouped];
                 [self.navigationController pushViewController:userDefaultsController animated:YES];
             }
         }

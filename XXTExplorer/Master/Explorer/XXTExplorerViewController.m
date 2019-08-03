@@ -77,16 +77,6 @@ XXTE_END_IGNORE_PARTIAL
     _homeEntryList = [[NSMutableArray alloc] init];
     _entryList = [[NSMutableArray alloc] init];
     {
-        NSArray *explorerUserDefaults = XXTEBuiltInDefaultsObject(@"EXPLORER_USER_DEFAULTS");
-        for (NSDictionary *explorerUserDefault in explorerUserDefaults) {
-            NSString *defaultKey = explorerUserDefault[@"key"];
-            if (!XXTEDefaultsObject(defaultKey, nil)) {
-                id defaultValue = explorerUserDefault[@"default"];
-                XXTEDefaultsSetObject(defaultKey, defaultValue);
-            }
-        }
-    }
-    {
         if (!path) {
             if (![self.class.explorerFileManager fileExistsAtPath:self.class.initialPath])
             {
@@ -414,7 +404,10 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)reloadFooterView {
     NSUInteger itemCount = self.entryList.count;
-    if ([self.class.initialPath isEqualToString:self.entryPath] && itemCount == 0) {
+    if ([self.navigationController.viewControllers firstObject] == self &&
+        [self.class.initialPath isEqualToString:self.entryPath] &&
+        itemCount == 0)
+    {
         [self.footerView setEmptyMode:YES];
     } else {
         [self.footerView setEmptyMode:NO];
@@ -826,14 +819,7 @@ XXTE_END_IGNORE_PARTIAL
                 {
                     entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
                 }
-                NSString *rootPath = XXTERootPath();
-                NSRange rootRange = [self.entryPath rangeOfString:rootPath];
-                if (rootRange.location == 0) {
-                    NSString *tiledPath = [self.entryPath stringByReplacingCharactersInRange:rootRange withString:@"~"];
-                    [entryHeaderView.headerLabel setText:tiledPath];
-                } else {
-                    [entryHeaderView.headerLabel setText:self.entryPath];
-                }
+                [entryHeaderView.headerLabel setText:XXTTiledPath(self.entryPath)];
                 entryHeaderView.userInteractionEnabled = YES;
                 UITapGestureRecognizer *addressTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressLabelTapped:)];
                 addressTapGestureRecognizer.delegate = self;
@@ -1022,7 +1008,11 @@ XXTE_END_IGNORE_PARTIAL
     [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView reloadData];
     [self.tableView endUpdates];
+#ifndef APPSTORE
     toastMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+#else
+    toastMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"Settings > User Defaults\".", nil));
+#endif
 }
 
 #pragma mark - Gesture Attachments
@@ -1077,10 +1067,12 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)footerView:(XXTExplorerFooterView *)view emptyButtonTapped:(UIButton *)sender {
     if (view == self.footerView) {
+#ifndef APPSTORE
         NSDictionary *userInfo =
         @{XXTENotificationShortcutInterface: @"cloud",
           XXTENotificationShortcutUserData: @{  }};
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
+#endif
     }
 }
 

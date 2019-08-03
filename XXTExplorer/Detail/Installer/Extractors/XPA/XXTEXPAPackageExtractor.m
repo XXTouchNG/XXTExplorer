@@ -99,9 +99,9 @@
         int status = zip_extract([packagePath UTF8String], [temporarilyPath UTF8String], will_extract, did_extract, &arg);
         dispatch_async_on_main_queue(^{
             if (status == 0) {
-                if ([_delegate respondsToSelector:@selector(packageExtractor:didFinishFetchingMetaData:)]) {
+                if ([self.delegate respondsToSelector:@selector(packageExtractor:didFinishFetchingMetaData:)]) {
                     NSData *pathData = [self.metaPath dataUsingEncoding:NSUTF8StringEncoding];
-                    [_delegate packageExtractor:self didFinishFetchingMetaData:pathData];
+                    [self.delegate packageExtractor:self didFinishFetchingMetaData:pathData];
                 }
             } else {
                 [self callbackFetchingMetaDataWithErrorReason:NSLocalizedString(@"Cannot extract package, which may be a corrupted archive.", nil)];

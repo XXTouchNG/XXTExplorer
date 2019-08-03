@@ -9,6 +9,10 @@
 #import "XXTELogViewController.h"
 #import "XXTELogReader.h"
 #import "XXTELogCell.h"
+#import "XXTEEditorEncodingHelper.h"
+#import "XXTEAppDefines.h"
+#import "XXTExplorerDefaults.h"
+#import "XXTEEditorTextProperties.h"
 
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
@@ -171,9 +175,12 @@ XXTE_END_IGNORE_PARTIAL
     if (!dataPart) {
         return;
     }
-    NSString *stringPart = [[NSString alloc] initWithData:dataPart encoding:NSUTF8StringEncoding];
+    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
+    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
+    NSString *encodingName = [XXTEEditorEncodingHelper encodingNameForEncoding:encoding];
+    NSString *stringPart = CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorDefault, dataPart.bytes, dataPart.length, encoding, NO));
     if (!stringPart) {
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse log with UTF-8 encoding: \"%@\".", nil), entryPath]);
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse log with \"%@\" encoding: \"%@\".", nil), encodingName, entryPath]);
         return;
     }
     if (stringPart.length == 0) {
@@ -181,7 +188,15 @@ XXTE_END_IGNORE_PARTIAL
         self.logContents = @[ ];
     } else {
         [self.clearItem setEnabled:YES];
-        NSMutableArray *logArr = [[stringPart componentsSeparatedByString:@"\n"] mutableCopy];
+        NSMutableArray *logArr = nil;
+        if ([stringPart containsString:@NSStringLineBreakCRLF]) {
+            logArr = [[stringPart componentsSeparatedByString:@NSStringLineBreakCRLF] mutableCopy];
+        } else if ([stringPart containsString:@NSStringLineBreakCR]) {
+            logArr = [[stringPart componentsSeparatedByString:@NSStringLineBreakCR] mutableCopy];
+        } else {
+            logArr = [[stringPart componentsSeparatedByString:@NSStringLineBreakLF] mutableCopy];
+        }
+        
         [logArr removeObject:@""];
         self.logContents = [[logArr reverseObjectEnumerator] allObjects];
     }

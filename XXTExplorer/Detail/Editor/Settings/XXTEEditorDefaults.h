@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 
 static NSString * const XXTEEditorReadOnly = @"XXTEEditorReadOnly"; // NSNumber - Bool
+static NSString * const XXTEEditorSimpleTitleView = @"XXTEEditorSimpleTitleView"; // NSNumber - Bool
 static NSString * const XXTEEditorFullScreenWhenEditing = @"XXTEEditorFullScreenWhenEditing"; // NSNumber - Bool
 
 static NSString * const XXTEEditorThemeName = @"XXTEEditorThemeName"; // NSString
