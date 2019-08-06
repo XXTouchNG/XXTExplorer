@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14845" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14799.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,11 +13,11 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="67.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNn-dR-AFH">
-                        <rect key="frame" x="8" y="8" width="58" height="51.5"/>
+                        <rect key="frame" x="8" y="8" width="58" height="52"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HEf-By-uFg">
                                 <rect key="frame" x="10" y="6" width="40" height="40"/>
@@ -29,7 +27,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="HEf-By-uFg" firstAttribute="leading" secondItem="SNn-dR-AFH" secondAttribute="leading" constant="10" id="7uR-OQ-OmE"/>
                             <constraint firstItem="HEf-By-uFg" firstAttribute="centerY" secondItem="SNn-dR-AFH" secondAttribute="centerY" id="ISW-75-qZB"/>
@@ -37,7 +35,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRG-I1-Xlm">
-                        <rect key="frame" x="74" y="8" width="332" height="51.5"/>
+                        <rect key="frame" x="74" y="8" width="332" height="52"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCR-c0-zcG">
                                 <rect key="frame" x="0.0" y="0.0" width="332" height="30"/>
@@ -85,6 +83,7 @@
                 <outlet property="entrySubtitleLabel" destination="1AQ-6d-5OW" id="68W-fE-CLM"/>
                 <outlet property="entryTitleLabel" destination="iCR-c0-zcG" id="o7s-iJ-IsI"/>
             </connections>
+            <point key="canvasLocation" x="139" y="149"/>
         </tableViewCell>
     </objects>
 </document>

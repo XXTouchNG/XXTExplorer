@@ -411,7 +411,7 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
     FILE *fp = fopen(entryPath.fileSystemRepresentation, "rb");
     if (!fp)
     {
-        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot open archive file \"%@\".", nil), entryPath]}];
+        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot open archive file \"%@\".", nil), entryPath.lastPathComponent]}];
         completionBlock(NO, @[], checkError);
         return;
     }
@@ -420,7 +420,7 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
     if (numOfUnits <= 0)
     {
         fclose(fp);
-        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot recognize the format of archive file \"%@\".", nil), entryPath]}];
+        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot recognize the format of archive file \"%@\".", nil), entryPath.lastPathComponent]}];
         completionBlock(NO, @[], checkError);
         return;
     }
@@ -439,7 +439,7 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
     else
     {
         fclose(fp);
-        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot process archive file \"%@\" (0x%02x).", nil), entryPath, header_magic]}];
+        NSError *checkError = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot process archive file \"%@\" (0x%02x).", nil), entryPath.lastPathComponent, header_magic]}];
         completionBlock(NO, @[], checkError);
         return;
     }
@@ -593,11 +593,11 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
                     {
                         if (!error)
                         {
-                            error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath]}];
+                            error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\".", nil), entryPath.lastPathComponent]}];
                         }
                         else
                         {
-                            error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\": %@.", nil), entryPath, error.localizedDescription]}];
+                            error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot read archive file \"%@\": %@.", nil), entryPath.lastPathComponent, error.localizedDescription]}];
                         }
                     }
                 }

@@ -1080,7 +1080,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
 #ifdef APPSTORE
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
-    if (XXTE_IS_IPAD) {
+    if (!XXTE_IS_FULLSCREEN(self)) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];

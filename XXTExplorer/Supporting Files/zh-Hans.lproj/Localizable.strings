@@ -2086,3 +2086,6 @@
 
 /* No comment provided by engineer. */
 "\"Home Entries\" has been disabled, you can make it display again in \"Settings > User Defaults\"." = "\"主目录\" 已关闭, 在 \"设置 > 用户偏好设置\" 中可以重新开启它.";
+
+/* No comment provided by engineer. */
+"Default Encoding: %@" = "默认编码: %@";

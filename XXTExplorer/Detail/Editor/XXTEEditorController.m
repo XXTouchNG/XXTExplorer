@@ -23,7 +23,7 @@
 #import "XXTEEditorTextContainer.h"
 #import "XXTEEditorTypeSetter.h"
 #import "XXTEEditorTextInput.h"
-#import "XXTEEditorPreprocessor.h"
+#import "XXTETextPreprocessor.h"
 #import "XXTEEditorMaskView.h"
 
 // SyntaxKit
@@ -60,15 +60,15 @@
 #import "SKParser.h"
 
 // Encoding
-#import "XXTEEditorEncodingHelper.h"
+#import "XXTEEncodingHelper.h"
 #import "XXTENavigationController.h"
-#import "XXTEEditorEncodingController.h"
+#import "XXTEEncodingController.h"
 
 
 static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #ifdef APPSTORE
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEditorEncodingControllerDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEncodingControllerDelegate>
 #else
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
 #endif
@@ -161,7 +161,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
     _lockedState = NO;
     
     NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
-    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
+    CFStringEncoding encoding = [XXTEEncodingHelper encodingAtIndex:encodingIndex];
     _currentEncoding = encoding;
     _currentLineBreak = NSStringLineBreakTypeLF;
     
@@ -886,7 +886,7 @@ static NSUInteger const kXXTEEditorCachedRangeLength = 30000;
 
 #ifdef APPSTORE
 - (void)actionViewTapped:(XXTESingleActionView *)actionView {
-    XXTEEditorEncodingController *controller = [[XXTEEditorEncodingController alloc] initWithStyle:UITableViewStylePlain];
+    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
     controller.title = NSLocalizedString(@"Select Encoding", nil);
     controller.delegate = self;
     controller.reopenMode = YES;
@@ -925,11 +925,20 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     NSError *readError = nil;
     CFStringEncoding tryEncoding = [self currentEncoding];
     NSStringLineBreakType tryLineBreak = [self currentLineBreak];
-    NSString *string = [XXTEEditorPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Encoding:&tryEncoding LineBreak:&tryLineBreak Error:&readError];
+    NSString *string = [XXTETextPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Encoding:&tryEncoding LineBreak:&tryLineBreak MaximumLength:NULL Error:&readError];
     if (!string) {
         [self setLockedState:YES];
-        self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
-        self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
+        if ([readError.domain isEqualToString:kXXTErrorInvalidStringEncodingDomain]) {
+            self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
+#ifdef APPSTORE
+            self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
+#else
+            self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
+#endif
+        } else {
+            self.actionView.titleLabel.text = NSLocalizedString(@"Error", nil);
+            self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
+        }
         return nil;
     } else {
         [self setLockedState:NO];
@@ -1042,23 +1051,25 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     }
 }
 
-#pragma mark - XXTEEditorEncodingControllerDelegate
+#pragma mark - XXTEEncodingControllerDelegate
 
 #ifdef APPSTORE
-- (void)encodingControllerDidConfirm:(XXTEEditorEncodingController *)controller
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller
 {
     [self setCurrentEncoding:controller.selectedEncoding];
     [self setNeedsReload];
+    @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
-        if (XXTE_COLLAPSED) {
+        @strongify(self);
+         if (!XXTE_IS_FULLSCREEN(controller)) {
             [self reloadAllIfNecessary];
-        }
+         }
     }];
 }
 #endif
 
 #ifdef APPSTORE
-- (void)encodingControllerDidCancel:(XXTEEditorEncodingController *)controller
+- (void)encodingControllerDidCancel:(XXTEEncodingController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -1685,7 +1696,7 @@ XXTE_END_IGNORE_PARTIAL
     promiseFixPermission(entryPath, NO); // fix permission
     [documentData writeToFile:entryPath atomically:YES];
 #ifdef DEBUG
-    NSLog(@"document saved with encoding %@: %@", [XXTEEditorEncodingHelper encodingNameForEncoding:[self currentEncoding]], entryPath);
+    NSLog(@"document saved with encoding %@: %@", [XXTEEncodingHelper encodingNameForEncoding:[self currentEncoding]], entryPath);
 #endif
 }
 

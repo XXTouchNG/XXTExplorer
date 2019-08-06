@@ -10,9 +10,14 @@
 #import "XXTEViewer.h"
 
 @interface XXTECodeViewerController : XXTECommonWebViewController <XXTEViewer>
+
+@property (nonatomic, assign, getter=isLockedState) BOOL lockedState;
+@property (nonatomic, assign) CFStringEncoding currentEncoding;
+
 @property (nonatomic, strong) UIColor *barTintColor;
 @property (nonatomic, strong) UIColor *barTextColor;
 @property (nonatomic, strong) UIColor *backgroundColor;
+
 - (void)setNeedsRefreshNavigationBar;
 
 @end

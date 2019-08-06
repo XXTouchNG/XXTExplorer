@@ -55,7 +55,7 @@
     if (!self.isFile) {
         [rightItems addObject:self.selectButtonItem];
     }
-    if ([self.navigationController.viewControllers firstObject] != self && !self.isPreviewed)
+    if (!self.isPreviewed)
     {
         [rightItems addObject:self.closeButtonItem];
     }

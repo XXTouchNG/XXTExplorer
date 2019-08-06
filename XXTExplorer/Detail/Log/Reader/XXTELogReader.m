@@ -8,6 +8,7 @@
 
 #import "XXTELogReader.h"
 #import "XXTELogViewController.h"
+#import "XXTEEditorController.h"
 
 @implementation XXTELogReader
 
@@ -33,7 +34,7 @@
 }
 
 + (Class)relatedEditor {
-    return nil;
+    return [XXTEEditorController class];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
@@ -46,7 +47,7 @@
 
 - (void)setupWithPath:(NSString *)path {
     _executable = NO;
-    _editable = NO;
+    _editable = YES;
     NSString *entryExtension = [path pathExtension];
     NSString *entryBaseExtension = [entryExtension lowercaseString];
     UIImage *iconImage = [self.class defaultImage];

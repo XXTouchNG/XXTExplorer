@@ -10,6 +10,7 @@
 #import "XXTEMoreLinkCell.h"
 
 @interface XXTEMoreUserDefaultsOperationController ()
+@property (nonatomic, assign) NSInteger defaultChoice;
 
 @end
 
@@ -30,7 +31,7 @@
 }
 
 - (void)setup {
-    
+    _defaultChoice = NSNotFound;
 }
 
 - (void)viewDidLoad {
@@ -42,6 +43,7 @@
     }
     XXTE_END_IGNORE_PARTIAL
     
+    self.defaultChoice = [self.userDefaultsEntry[@"default"] integerValue];
     self.title = self.userDefaultsEntry[@"title"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -107,6 +109,19 @@
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    if (@available(iOS 8.2, *)) {
+        if (indexPath.row == self.defaultChoice) {
+            cell.titleLabel.font = [UIFont systemFontOfSize:16.0];
+        } else {
+            cell.titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
+        }
+    } else {
+        if (indexPath.row == self.defaultChoice) {
+            cell.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        } else {
+            cell.titleLabel.font = [UIFont systemFontOfSize:16.0];
+        }
     }
     cell.titleLabel.text = ((NSArray *)self.userDefaultsEntry[@"options"])[(NSUInteger) indexPath.row];
     return cell;

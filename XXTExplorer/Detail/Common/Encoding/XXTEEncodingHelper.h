@@ -1,5 +1,5 @@
 //
-//  XXTEEditorEncodingHelper.h
+//  XXTEEncodingHelper.h
 //  XXTExplorer
 //
 //  Created by Darwin on 8/2/19.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XXTEEditorEncodingHelper : NSObject
+@interface XXTEEncodingHelper : NSObject
 + (NSString *)encodingNameForEncoding:(CFStringEncoding)encoding;
 + (CFStringEncoding)encodingForEncodingName:(NSString *)encodingName;
 + (NSArray <NSNumber *> *)encodings;

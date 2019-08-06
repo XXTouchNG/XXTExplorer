@@ -52,11 +52,6 @@
     [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
     [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateNormal];
     [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor colorWithWhite:1.0 alpha:0.3], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateDisabled];
-    
-//    if (@available(iOS 13.0, *)) {
-//        barAppearance.scrollEdgeAppearance = barAppearance.standardAppearance;
-//        navigationBarAppearance.scrollEdgeAppearance = navigationBarAppearance.standardAppearance;
-//    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -70,7 +70,7 @@
     
     [self updateCells];
     if (![self importRecordingScript]) {
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read or parse specific script: \"%@\".", nil), self.entryPath]);
+        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot read or parse specific script: \"%@\".", nil), self.entryPath.lastPathComponent]);
         [self.tableView setUserInteractionEnabled:NO];
         allowsExport = NO;
     } else {

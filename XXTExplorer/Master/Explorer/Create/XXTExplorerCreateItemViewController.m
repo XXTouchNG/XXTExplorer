@@ -16,11 +16,13 @@
 #import "XUIViewShaker.h"
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreLinkCell.h"
+
+// Defaults
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEEditorEncodingHelper.h"
 
 // Helpers
+#import "XXTEEncodingHelper.h"
 #import "UIControl+BlockTarget.h"
 #import "NSString+Template.h"
 
@@ -152,11 +154,15 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
+    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
+    CFStringEncoding encoding = [XXTEEncodingHelper encodingAtIndex:encodingIndex];
+    NSString *encodingName = [XXTEEncodingHelper encodingNameForEncoding:encoding];
+    
     staticSectionTitles = @[ NSLocalizedString(@"Filename", nil),
                              NSLocalizedString(@"Type", nil),
                              NSLocalizedString(@"Location", nil),
                              ];
-    staticSectionFooters = @[ @"", @"", @"" ];
+    staticSectionFooters = @[ [NSString stringWithFormat:NSLocalizedString(@"Default Encoding: %@", nil), encodingName], @"", @"" ];
     
     XXTExplorerItemNameCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTExplorerItemNameCell class]) owner:nil options:nil] lastObject];
     cell1.nameField.delegate = self;
@@ -438,7 +444,7 @@ typedef enum : NSUInteger {
             if (deviceName) tags[@"DEVICE_NAME"] = deviceName;
             
             NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
-            CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
+            CFStringEncoding encoding = [XXTEEncodingHelper encodingAtIndex:encodingIndex];
             newTemplate = [newTemplate stringByReplacingTagsInDictionary:[tags copy]];
             templateData = CFBridgingRelease(CFStringCreateExternalRepresentation(kCFAllocatorDefault, (__bridge CFStringRef)newTemplate, encoding, 0));
             

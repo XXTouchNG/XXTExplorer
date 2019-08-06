@@ -172,7 +172,7 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 }
 
 - (void)dismissViewController:(id)dismissViewController {
-    if (XXTE_IS_IPAD) {
+    if (!XXTE_IS_FULLSCREEN(self)) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [super dismissViewController:dismissViewController];

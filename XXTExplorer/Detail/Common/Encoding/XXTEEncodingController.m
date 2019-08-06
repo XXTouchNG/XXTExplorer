@@ -1,18 +1,18 @@
 //
-//  XXTEEditorEncodingController.m
+//  XXTEEncodingController.m
 //  XXTExplorer
 //
 //  Created by Darwin on 8/2/19.
 //  Copyright © 2019 Zheng. All rights reserved.
 //
 
-#import "XXTEEditorEncodingController.h"
+#import "XXTEEncodingController.h"
 #import "XXTEMoreTitleValueCell.h"
-#import "XXTEEditorEncodingHelper.h"
+#import "XXTEEncodingHelper.h"
 #import <LGAlertView/LGAlertView.h>
 
 
-@interface XXTEEditorEncodingController ()
+@interface XXTEEncodingController ()
 @property (nonatomic, strong) UIBarButtonItem *previewItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelItem;
 @property (nonatomic, strong) UIBarButtonItem *confirmItem;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation XXTEEditorEncodingController
+@implementation XXTEEncodingController
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -38,7 +38,7 @@
 
 - (void)setup {
     _selectedEncoding = kCFStringEncodingInvalidId;
-    _arrayOfEncodings = [XXTEEditorEncodingHelper encodings];
+    _arrayOfEncodings = [XXTEEncodingHelper encodings];
 }
 
 - (void)viewDidLoad {
@@ -92,7 +92,7 @@
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    cell.titleLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:encoding];
+    cell.titleLabel.text = [XXTEEncodingHelper encodingNameForEncoding:encoding];
     return cell;
 }
 

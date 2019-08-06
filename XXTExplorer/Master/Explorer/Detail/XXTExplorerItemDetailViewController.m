@@ -675,7 +675,7 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    if (XXTE_IS_IPAD) {
+    if (!XXTE_IS_FULLSCREEN(self)) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -730,7 +730,7 @@ static int sizingCancelFlag = 0;
         BOOL result = [renameResult boolValue];
         if (result) {
             sizingCancelFlag = 1;
-            if (XXTE_IS_IPAD) {
+            if (!XXTE_IS_FULLSCREEN(self)) {
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
             }
             [self dismissViewControllerAnimated:YES completion:^{
@@ -969,6 +969,7 @@ static int sizingCancelFlag = 0;
 - (void)reloadIfNeeded {
     if (self.needsReload) {
         self.needsReload = NO;
+        self.doneButtonItem.enabled = NO;
         NSString *entryPath = self.entry.entryPath;
         self.entry = [self.entryParser entryOfPath:entryPath withError:nil];
         [self reloadStaticTableViewData];

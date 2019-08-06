@@ -320,7 +320,7 @@ typedef enum : NSUInteger {
 #pragma mark - UIControl Actions
 
 - (void)dismissViewController:(id)sender {
-    if (XXTE_IS_IPAD) {
+    if (!XXTE_IS_FULLSCREEN(self)) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:^{
@@ -379,7 +379,7 @@ typedef enum : NSUInteger {
 {
     if (index == 0 || index == 1) {
         [alertView dismissAnimated];
-        if (XXTE_IS_IPAD) {
+        if (!XXTE_IS_FULLSCREEN(self)) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
         }
         BOOL instantRun = (index == 0);

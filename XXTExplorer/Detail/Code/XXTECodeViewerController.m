@@ -9,12 +9,10 @@
 #import "XXTECodeViewerController.h"
 #import "XXTExplorerEntryCodeReader.h"
 #import "XXTECodeViewerSettingsController.h"
-#import "XXTExplorerItemPicker.h"
 #import "XXTECodeViewerDefaults.h"
-#import "XXTEEditorTextProperties.h"
 
 // Helpers
-#import "XXTEEditorEncodingHelper.h"
+#import "XXTETextPreprocessor.h"
 #import "NSString+HTMLEscape.h"
 #import "NSString+Template.h"
 #import "UIColor+SKColor.h"
@@ -22,12 +20,24 @@
 #import "UIColor+CssColor.h"
 #import "XXTECodeViewerController+NavigationBar.h"
 
+// Views
+#import "XXTESingleActionView.h"
+
+// Children
+#import "XXTEEncodingController.h"
+#import "XXTENavigationController.h"
+
+#ifdef APPSTORE
+@interface XXTECodeViewerController () <XXTECodeViewerSettingsControllerDelegate, XXTEEncodingControllerDelegate>
+#else
 @interface XXTECodeViewerController () <XXTECodeViewerSettingsControllerDelegate>
+#endif
 
 @property (nonatomic, strong) NSRegularExpression *hljsCssRegex;
 @property (nonatomic, strong) NSRegularExpression *hljsLineCssRegex;
 @property (nonatomic, assign) BOOL shouldRefreshNagivationBar;
 
+@property (nonatomic, strong) XXTESingleActionView *actionView;
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
@@ -36,7 +46,9 @@
 
 @end
 
-@implementation XXTECodeViewerController
+@implementation XXTECodeViewerController {
+    BOOL _lockedState;
+}
 
 @synthesize entryPath = _entryPath;
 
@@ -67,7 +79,7 @@
               @"lua", // Lua
               @"txt", // Plain Text
               @"strings", // Strings
-              ];
+    ];
 }
 
 + (Class)relatedReader {
@@ -76,6 +88,8 @@
 
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
+        _lockedState = NO;
+        _currentEncoding = kCFStringEncodingInvalidId;
         _entryPath = path;
         _hljsCssRegex = [NSRegularExpression regularExpressionWithPattern:@"\\.hljs( +|,+.*?)\\{(.*?)\\}" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
         _hljsLineCssRegex = [NSRegularExpression regularExpressionWithPattern:@"([A-Za-z0-9|-]+):\\s?(.*)" options:kNilOptions error:nil];
@@ -93,6 +107,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSString *entryPath = self.entryPath;
+    NSString *entryName = [entryPath lastPathComponent];
+    if (self.title.length == 0) {
+        if (entryName) {
+            self.title = entryName;
+        }
+    }
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftItemsSupplementBackButton = YES;
@@ -114,6 +136,7 @@
     
     [self reloadUI];
     [self reloadContent];
+    [self reloadLockedState];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -127,6 +150,7 @@
         [self reloadContent];
         [self setNeedsReloadContent:NO];
     }
+    [self reloadLockedState];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -148,6 +172,27 @@
     [super willMoveToParentViewController:parent];
 }
 
+#pragma mark - Loaders
+
+- (void)reloadLockedState {
+    BOOL isLockedState = self.isLockedState;
+    if (isLockedState)
+    {
+        if (![self.view.subviews containsObject:self.actionView])
+        {
+            [self.view addSubview:self.actionView];
+        }
+        if (self.webView) [self.webView setHidden:YES];
+        if (self.wkWebView) [self.wkWebView setHidden:YES];
+    }
+    else
+    {
+        if (self.webView) [self.webView setHidden:NO];
+        if (self.wkWebView) [self.wkWebView setHidden:NO];
+        [self.actionView removeFromSuperview];
+    }
+}
+
 - (void)reloadUI {
     // theme
     NSString *themeLocation = XXTEDefaultsObject(XXTECodeViewerThemeLocation, @"References.bundle/hljs/styles/xcode.css");
@@ -161,22 +206,34 @@
         if (!backgroundColorString) {
             backgroundColorString = [themeDict[@"background-color"] lastObject];
         }
+        UIColor *foregroundColor = nil;
         if (foregroundColorString) {
-            UIColor *foregroundColor = [UIColor colorWithHex:foregroundColorString];
+            foregroundColor = [UIColor colorWithHex:foregroundColorString];
             if (!foregroundColor) {
                 foregroundColor = [UIColor colorWithCssName:foregroundColorString];
             }
             self.view.tintColor = foregroundColor ?: XXTColorDefault();
             self.barTextColor = foregroundColor;
         }
+        UIColor *backgroundColor = nil;
         if (backgroundColorString) {
-            UIColor *backgroundColor = [UIColor colorWithHex:backgroundColorString];
+            backgroundColor = [UIColor colorWithHex:backgroundColorString];
             if (!backgroundColor) {
                 backgroundColor = [UIColor colorWithCssName:backgroundColorString];
             }
             self.view.backgroundColor = backgroundColor ?: [UIColor whiteColor];
             self.backgroundColor = backgroundColor;
             self.barTintColor = backgroundColor;
+        }
+        {
+            UIColor *newColor = foregroundColor;
+            self.actionView.titleLabel.textColor = newColor ?: [UIColor blackColor];
+            self.actionView.descriptionLabel.textColor = newColor;
+            if (![self isDarkMode]) {
+                self.actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIcon"];
+            } else {
+                self.actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIconLight"];
+            }
         }
     }
     
@@ -185,18 +242,6 @@
 }
 
 - (void)reloadContent {
-    NSString *entryPath = self.entryPath;
-    NSString *entryName = [entryPath lastPathComponent];
-    if (self.title.length == 0) {
-        if (entryName) {
-            self.title = entryName;
-        }
-    }
-    if (!entryName)
-    {
-        return;
-    }
-    
     NSError *templateError = nil;
     NSString *htmlTemplate = [NSMutableString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"References.bundle/code" ofType:@"html"] encoding:NSUTF8StringEncoding error:&templateError];
     if (templateError) {
@@ -204,20 +249,27 @@
         return;
     }
     
-    NSError *codecError = nil;
-    NSData *codeData = [NSData dataWithContentsOfFile:self.entryPath options:kNilOptions error:&codecError];
-    if (!codeData) {
-        toastError(self, codecError);
-        return;
-    }
-    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
-    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
-    NSString *encodingName = [XXTEEditorEncodingHelper encodingNameForEncoding:encoding];
-    NSString *codeString = CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorMalloc, codeData.bytes, codeData.length, encoding, NO));
+    NSError *readError = nil;
+    CFStringEncoding tryEncoding = [self currentEncoding];
+    NSString *codeString = [XXTETextPreprocessor preprocessedStringWithContentsOfFile:self.entryPath NumberOfLines:NULL Encoding:&tryEncoding LineBreak:NULL MaximumLength:NULL Error:&readError];
     if (!codeString) {
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse text with \"%@\" encoding: \"%@\".", nil), encodingName, entryPath]);
+        [self setLockedState:YES];
+        if ([readError.domain isEqualToString:kXXTErrorInvalidStringEncodingDomain]) {
+            self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
+#ifdef APPSTORE
+            self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
+#else
+            self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
+#endif
+        } else {
+            self.actionView.titleLabel.text = NSLocalizedString(@"Error", nil);
+            self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
+        }
         return;
+    } else {
+        [self setLockedState:NO];
     }
+    [self setCurrentEncoding:tryEncoding];
     
     NSString *escapedString = [codeString stringByEscapingHTML];
     if (!escapedString) {
@@ -259,15 +311,15 @@
     
     NSDictionary *settingsDict =
     @{
-      @"title": entryName,
-      @"code": escapedString,
-      @"type": highlight ? [NSString stringWithFormat:@"lang-%@", [self.entryPath pathExtension]] : @"nohighlight",
-      @"themeLocation": themePath,
-      @"gutterColor": [[self.barTextColor colorWithAlphaComponent:.45] cssRGBAString] ?: @"#ddd",
-      @"fontName": [NSString stringWithFormat:@"\"%@\", monospace", fontName],
-      @"fontSize": [NSString stringWithFormat:@"%@px", fontSize],
-      @"extra": @"",
-      };
+        @"title": self.entryPath.lastPathComponent ?: @"",
+        @"code": escapedString ?: @"",
+        @"type": highlight ? [NSString stringWithFormat:@"lang-%@", [self.entryPath pathExtension]] : @"nohighlight",
+        @"themeLocation": themePath ?: @"",
+        @"gutterColor": [[self.barTextColor colorWithAlphaComponent:.45] cssRGBAString] ?: @"#ddd",
+        @"fontName": [NSString stringWithFormat:@"\"%@\", monospace", fontName],
+        @"fontSize": [NSString stringWithFormat:@"%@px", fontSize],
+        @"extra": @"",
+    };
     
     // render
     htmlTemplate =
@@ -277,6 +329,12 @@
     } else {
         [self.wkWebView loadHTMLString:htmlTemplate baseURL:[self baseUrl]];
     }
+}
+
+#pragma mark - Getters
+
+- (BOOL)isLockedState {
+    return _lockedState;
 }
 
 - (NSURL *)baseUrl {
@@ -301,6 +359,18 @@
     return _myBackButtonItem;
 }
 
+- (XXTESingleActionView *)actionView {
+    if (!_actionView) {
+        XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
+        actionView.frame = self.view.bounds;
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionViewTapped:)];
+        [actionView addGestureRecognizer:tapGesture];
+        _actionView = actionView;
+    }
+    return _actionView;
+}
+
 #pragma mark - Actions
 
 - (void)settingsButtonItemTapped:(UIBarButtonItem *)sender {
@@ -313,16 +383,60 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#ifdef APPSTORE
+- (void)actionViewTapped:(XXTESingleActionView *)actionView {
+    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
+    controller.title = NSLocalizedString(@"Select Encoding", nil);
+    controller.delegate = self;
+    controller.reopenMode = YES;
+    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:controller];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+#else
+- (void)actionViewTapped:(XXTESingleActionView *)actionView {
+    
+}
+#endif
+
 #pragma mark - XXTECodeViewerSettingsControllerDelegate
 
 - (void)codeViewerSettingsControllerDidChange:(XXTECodeViewerSettingsController *)controller {
-    [self setNeedsReloadContent:YES];
     [self setNeedsReloadUI:YES];
+    [self setNeedsReloadContent:YES];
 }
 
 - (void)codeViewerNeedsRestoreNavigationBar:(BOOL)restore {
     [self renderNavigationBarTheme:restore];
 }
+
+#pragma mark - XXTEEncodingControllerDelegate
+
+#ifdef APPSTORE
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller
+{
+    [self setCurrentEncoding:controller.selectedEncoding];
+    [self setNeedsReloadUI:YES];
+    [self setNeedsReloadContent:YES];
+    @weakify(self);
+    [controller dismissViewControllerAnimated:YES completion:^{
+        @strongify(self);
+         if (!XXTE_IS_FULLSCREEN(controller)) {
+             [self reloadUI];
+             [self reloadContent];
+             [self reloadLockedState];
+         }
+    }];
+}
+#endif
+
+#ifdef APPSTORE
+- (void)encodingControllerDidCancel:(XXTEEncodingController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+#endif
 
 #pragma mark - Setters
 

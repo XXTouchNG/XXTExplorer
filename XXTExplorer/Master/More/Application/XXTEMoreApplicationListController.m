@@ -33,14 +33,15 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
 #endif
 
 @interface XXTEMoreApplicationListController ()
-        <
-        UITableViewDelegate,
-        UITableViewDataSource,
-        UISearchControllerDelegate,
-        UISearchResultsUpdating,
-        UIScrollViewDelegate,
-        UISearchBarDelegate
-        >
+<
+UITableViewDelegate,
+UITableViewDataSource,
+UISearchControllerDelegate,
+UISearchResultsUpdating,
+UIScrollViewDelegate,
+UISearchBarDelegate
+>
+
 @property(nonatomic, strong, readonly) UITableView *tableView;
 @property(nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 //@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *allApplications;
@@ -158,17 +159,27 @@ XXTE_END_IGNORE_PARTIAL
     searchBar.delegate = self;
     
     if (@available(iOS 11.0, *)) {
-        UITextField *textField = [searchBar valueForKey:@"searchField"];
+        UITextField *textField = nil;
+        if (@available(iOS 12.0, *)) {
+            textField = searchBar.searchTextField;
+        } else {
+            textField = [searchBar valueForKey:@"searchField"];
+        }
         textField.textColor = [UIColor blackColor];
         textField.tintColor = XXTColorDefault();
-        UIView *backgroundView = [textField.subviews firstObject];
-        backgroundView.backgroundColor = [UIColor whiteColor];
-        backgroundView.layer.cornerRadius = 10.0;
-        backgroundView.clipsToBounds = YES;
         searchBar.barTintColor = [UIColor whiteColor];
         searchBar.tintColor = [UIColor whiteColor];
+        if (@available(iOS 12.0, *)) {
+            self.navigationItem.hidesSearchBarWhenScrolling = NO;
+        } else {
+            UIView *backgroundView = [textField.subviews firstObject];
+            backgroundView.backgroundColor = [UIColor whiteColor];
+            backgroundView.layer.cornerRadius = 10.0;
+            backgroundView.clipsToBounds = YES;
+        }
         self.navigationItem.searchController = self.searchController;
-    } else {
+    }
+    else {
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
@@ -406,7 +417,11 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
+    if (@available(iOS 12.0, *)) {
+        
+    } else {
+        [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
+    }
 }
 
 XXTE_START_IGNORE_PARTIAL

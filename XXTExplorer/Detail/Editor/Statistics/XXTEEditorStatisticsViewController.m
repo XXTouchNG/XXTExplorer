@@ -9,9 +9,9 @@
 #import "XXTEEditorStatisticsViewController.h"
 #import "XXTEEditorTextView.h"
 #import <PromiseKit/PromiseKit.h>
-#import "XXTEEditorEncodingController.h"
+#import "XXTEEncodingController.h"
 #import "XXTEEditorLineBreakController.h"
-#import "XXTEEditorEncodingHelper.h"
+#import "XXTEEncodingHelper.h"
 #import "XXTEEditorLineBreakHelper.h"
 
 // Pre-Defines
@@ -28,7 +28,7 @@
 #import "XXTEMoreTitleValueCell.h"
 
 #ifdef APPSTORE
-@interface XXTEEditorStatisticsViewController () <XXTEEditorEncodingControllerDelegate, XXTEEditorLineBreakControllerDelegate>
+@interface XXTEEditorStatisticsViewController () <XXTEEncodingControllerDelegate, XXTEEditorLineBreakControllerDelegate>
 #else
 @interface XXTEEditorStatisticsViewController ()
 #endif
@@ -194,7 +194,7 @@
         self.modificationLabel.text = [previewFormatter stringFromDate:modifiedAt];
     }
     {
-        self.encodingLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:self.editor.currentEncoding];
+        self.encodingLabel.text = [XXTEEncodingHelper encodingNameForEncoding:self.editor.currentEncoding];
     }
     {
         if (self.editor.isLockedState) {
@@ -355,7 +355,7 @@
 #ifdef APPSTORE
             if (self.editor.isLockedState == NO) {
                 if (indexPath.row == 0) {
-                    XXTEEditorEncodingController *controller = [[XXTEEditorEncodingController alloc] initWithStyle:UITableViewStylePlain];
+                    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
                     controller.delegate = self;
                     controller.selectedEncoding = self.editor.currentEncoding;
                     [self.navigationController pushViewController:controller animated:YES];
@@ -392,12 +392,12 @@
     return [UITableViewCell new];
 }
 
-#pragma mark - XXTEEditorEncodingControllerDelegate
+#pragma mark - XXTEEncodingControllerDelegate
 
 #ifdef APPSTORE
-- (void)encodingControllerDidChange:(XXTEEditorEncodingController *)controller {
+- (void)encodingControllerDidChange:(XXTEEncodingController *)controller {
     [self.editor setCurrentEncoding:controller.selectedEncoding];
-    self.encodingLabel.text = [XXTEEditorEncodingHelper encodingNameForEncoding:controller.selectedEncoding];
+    self.encodingLabel.text = [XXTEEncodingHelper encodingNameForEncoding:controller.selectedEncoding];
     self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
     [self.editor setNeedsSaveDocument];
     [self.editor setNeedsReload];

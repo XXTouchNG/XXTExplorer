@@ -9,6 +9,7 @@
 #import "XXTPickerNavigationController.h"
 #import "XXTBasePicker.h"
 #import "XXTPickerFactory.h"
+#import "XXTExplorerItemPicker.h"
 
 #import <objc/runtime.h>
 
@@ -43,7 +44,9 @@ static const void *ObjectTagKey = &ObjectTagKey;
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
     if (self = [super initWithRootViewController:rootViewController]) {
         self.delegate = self;
-        rootViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+        if (![rootViewController isKindOfClass:[XXTExplorerItemPicker class]]) {
+            rootViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+        }
         [self setupAppearance];
     }
     return self;
@@ -67,11 +70,6 @@ static const void *ObjectTagKey = &ObjectTagKey;
     
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
-    
-//    if (@available(iOS 13.0, *)) {
-//        barAppearance.scrollEdgeAppearance = barAppearance.standardAppearance;
-//        navigationBarAppearance.scrollEdgeAppearance = navigationBarAppearance.standardAppearance;
-//    }
 }
 
 - (void)viewDidLoad {

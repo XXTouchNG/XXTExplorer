@@ -8,22 +8,42 @@
 
 #import "XXTETextViewController.h"
 #import "XXTETextReader.h"
+
+// Helpers
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
-#import "XXTEEditorEncodingHelper.h"
+#import "XXTEEncodingHelper.h"
+#import "XXTETextPreprocessor.h"
+
+// Views
+#import "XXTESingleActionView.h"
 #import <LGAlertView/LGAlertView.h>
+
+// Children
+#import "XXTEEncodingController.h"
+#import "XXTENavigationController.h"
+
 
 static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200k
 
+#ifdef APPSTORE
+@interface XXTETextViewController () <XXTEEncodingControllerDelegate>
+#else
 @interface XXTETextViewController ()
+#endif
 
+@property (nonatomic, strong) XXTESingleActionView *actionView;
 @property (nonatomic, strong) UITextView *contentTextView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
+@property (nonatomic, assign) BOOL needsReload;
+
 @end
 
-@implementation XXTETextViewController
+@implementation XXTETextViewController {
+    BOOL _lockedState;
+}
 
 @synthesize entryPath = _entryPath;
 
@@ -42,6 +62,9 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
+        _lockedState = NO;
+        _needsReload = NO;
+        _currentEncoding = kCFStringEncodingInvalidId;
     }
     return self;
 }
@@ -72,19 +95,53 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     if (@available(iOS 10.0, *)) {
         [self.contentTextView setRefreshControl:self.refreshControl];
     }
-    
     [self.view addSubview:self.contentTextView];
-    [self loadTextDataFromEntry];
+    self.actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIcon"];
+    
+    [self reloadTextDataFromEntry];
+    [self reloadLockedState];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self reloadIfNeeded];
+    [self reloadLockedState];
+}
+
+#pragma mark - Loaders
+
+- (void)reloadLockedState {
+    BOOL isLockedState = self.isLockedState;
+    if (isLockedState)
+    {
+        if (![self.view.subviews containsObject:self.actionView])
+        {
+            [self.view addSubview:self.actionView];
+        }
+        [self.contentTextView setHidden:YES];
+    }
+    else
+    {
+        [self.contentTextView setHidden:NO];
+        [self.actionView removeFromSuperview];
+    }
+}
+
+- (void)reloadIfNeeded {
+    if (self.needsReload) {
+        self.needsReload = NO;
+        [self reloadTextDataFromEntry];
+    }
 }
 
 - (void)reloadTextDataFromEntry:(UIRefreshControl *)sender {
-    [self loadTextDataFromEntry];
+    [self reloadTextDataFromEntry];
     if ([sender isRefreshing]) {
         [sender endRefreshing];
     }
 }
 
-- (void)loadTextDataFromEntry {
+- (void)reloadTextDataFromEntry {
     NSString *entryPath = self.entryPath;
     if (!entryPath) {
         return;
@@ -92,37 +149,44 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     if (0 != access(entryPath.fileSystemRepresentation, W_OK)) {
         [[NSData data] writeToFile:entryPath atomically:YES];
     }
-    NSURL *fileURL = [NSURL fileURLWithPath:entryPath];
-    NSError *readError = nil;
-    NSFileHandle *textHandler = [NSFileHandle fileHandleForReadingFromURL:fileURL error:&readError];
-    if (readError) {
-        toastError(self, readError);
-        return;
-    }
-    if (!textHandler) {
-        return;
-    }
-    NSData *dataPart = [textHandler readDataOfLength:kXXTETextViewControllerMaximumBytes];
-    [textHandler closeFile];
-    if (!dataPart) {
-        return;
-    }
     
-    NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
-    CFStringEncoding encoding = [XXTEEditorEncodingHelper encodingAtIndex:encodingIndex];
-    NSString *encodingName = [XXTEEditorEncodingHelper encodingNameForEncoding:encoding];
-    NSString *stringPart = CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorDefault, dataPart.bytes, dataPart.length, encoding, NO));
+    NSUInteger maximumLength = kXXTETextViewControllerMaximumBytes;
+    CFStringEncoding tryEncoding = [self currentEncoding];
+    NSError *readError = nil;
+    NSString *stringPart = [XXTETextPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:NULL Encoding:&tryEncoding LineBreak:NULL MaximumLength:&maximumLength Error:&readError];
+    
     if (!stringPart) {
-        toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot parse text with \"%@\" encoding: \"%@\".", nil), encodingName, entryPath]);
+        [self setLockedState:YES];
+        if ([readError.domain isEqualToString:kXXTErrorInvalidStringEncodingDomain]) {
+            self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
+#ifdef APPSTORE
+            self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
+#else
+            self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
+#endif
+        } else {
+            self.actionView.titleLabel.text = NSLocalizedString(@"Error", nil);
+            self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
+        }
         return;
+    } else {
+        [self setLockedState:NO];
     }
+    [self setCurrentEncoding:tryEncoding];
+
     if (stringPart.length == 0) {
-        [self.contentTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of text file \"%@\" is empty.", nil), entryPath]];
+        [self.contentTextView setText:[NSString stringWithFormat:NSLocalizedString(@"The content of text file \"%@\" is empty.", nil), entryPath.lastPathComponent]];
     } else {
         [self.contentTextView setText:stringPart];
     }
     
     [self.contentTextView setSelectedRange:NSMakeRange(0, 0)];
+}
+
+#pragma mark - Getters
+
+- (BOOL)isLockedState {
+    return _lockedState;
 }
 
 #pragma mark - UIView Getters
@@ -172,6 +236,18 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     return _shareButtonItem;
 }
 
+- (XXTESingleActionView *)actionView {
+    if (!_actionView) {
+        XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
+        actionView.frame = self.view.bounds;
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionViewTapped:)];
+        [actionView addGestureRecognizer:tapGesture];
+        _actionView = actionView;
+    }
+    return _actionView;
+}
+
 #pragma mark - Actions
 
 - (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
@@ -193,6 +269,49 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     }
     XXTE_END_IGNORE_PARTIAL
 }
+
+#ifdef APPSTORE
+- (void)actionViewTapped:(XXTESingleActionView *)actionView {
+    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
+    controller.title = NSLocalizedString(@"Select Encoding", nil);
+    controller.delegate = self;
+    controller.reopenMode = YES;
+    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:controller];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+#else
+- (void)actionViewTapped:(XXTESingleActionView *)actionView {
+    
+}
+#endif
+
+#pragma mark - XXTEEncodingControllerDelegate
+
+#ifdef APPSTORE
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller
+{
+    [self setCurrentEncoding:controller.selectedEncoding];
+    [self setNeedsReload:YES];
+    @weakify(self);
+    [controller dismissViewControllerAnimated:YES completion:^{
+        @strongify(self);
+         if (!XXTE_IS_FULLSCREEN(controller)) {
+             [self reloadIfNeeded];
+             [self reloadLockedState];
+         }
+    }];
+}
+#endif
+
+#ifdef APPSTORE
+- (void)encodingControllerDidCancel:(XXTEEncodingController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+#endif
+
 
 #pragma mark - Memory
 

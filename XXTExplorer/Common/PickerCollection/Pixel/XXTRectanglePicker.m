@@ -319,7 +319,10 @@
     BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, YES);
     if (allowsImport) {
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 8.0, *)) {
+        if (@available(iOS 13.0, *)) {
+            [self selectImageFromFileSystem];
+        }
+        else if (@available(iOS 8.0, *)) {
             UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.image"] inMode:UIDocumentPickerModeImport];
             controller.delegate = self;
             [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)

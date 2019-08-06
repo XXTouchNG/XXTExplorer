@@ -5,6 +5,10 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
 			<key>File</key>
 			<string>3rd/Lua</string>
 			<key>Title</key>
@@ -12,22 +16,22 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
-        <dict>
-            <key>File</key>
-            <string>3rd/highlightjs</string>
-            <key>Title</key>
-            <string>highlight.js</string>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
-        </dict>
-        <dict>
-            <key>File</key>
-            <string>3rd/SSZipArchive</string>
-            <key>Title</key>
-            <string>SSZipArchive</string>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
-        </dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/highlightjs</string>
+			<key>Title</key>
+			<string>highlight.js</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>3rd/SSZipArchive</string>
+			<key>Title</key>
+			<string>SSZipArchive</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
 		<dict>
 			<key>File</key>
 			<string>3rd/LGAlertView</string>
@@ -93,5 +97,7 @@
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
 </dict>
 </plist>

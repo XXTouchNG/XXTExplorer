@@ -47,6 +47,7 @@ XXTE_START_IGNORE_PARTIAL \
 (XXTE_SYSTEM_8 && self.splitViewController && self.splitViewController.collapsed != YES) \
 XXTE_END_IGNORE_PARTIAL
 
+#define XXTE_IS_FULLSCREEN(c) ((c.navigationController && c.navigationController.modalPresentationStyle == UIModalPresentationFullScreen) || (c.modalPresentationStyle == UIModalPresentationFullScreen))
 #define XXTE_IS_IPAD (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone)
 #define XXTE_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 

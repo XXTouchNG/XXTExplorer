@@ -22,7 +22,13 @@ enum {
     kXXTEMoreUserDefaultsSearchTypeDescription
 };
 
-@interface XXTEMoreUserDefaultsController () <UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate, XXTEMoreUserDefaultsOperationControllerDelegate>
+@interface XXTEMoreUserDefaultsController ()
+<
+UISearchBarDelegate,
+UISearchResultsUpdating,
+XXTEMoreUserDefaultsOperationControllerDelegate
+>
+
 @property (nonatomic, strong) NSArray <NSDictionary *> *defaultsSectionMeta;
 @property (nonatomic, strong) NSDictionary *defaultsMeta;
 @property (nonatomic, strong) NSDictionary *displayDefaultsMeta;
@@ -75,8 +81,8 @@ XXTE_END_IGNORE_PARTIAL
     _searchController = ({
         UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
-        searchController.delegate = self;
         searchController.dimsBackgroundDuringPresentation = NO;
+        searchController.hidesNavigationBarDuringPresentation = YES;
         searchController;
     });
     XXTE_END_IGNORE_PARTIAL
@@ -108,22 +114,28 @@ XXTE_END_IGNORE_PARTIAL
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     searchBar.delegate = self;
     
-    if (@available(iOS 13.0, *)) {
-//        UITextField *searchField = [searchBar valueForKey:@"searchField"];
-    }
-    
     if (@available(iOS 11.0, *)) {
-        UITextField *textField = [searchBar valueForKey:@"searchField"];
+        UITextField *textField = nil;
+        if (@available(iOS 12.0, *)) {
+            textField = searchBar.searchTextField;
+        } else {
+            textField = [searchBar valueForKey:@"searchField"];
+        }
         textField.textColor = [UIColor blackColor];
         textField.tintColor = XXTColorDefault();
-        UIView *backgroundView = [textField.subviews firstObject];
-        backgroundView.backgroundColor = [UIColor whiteColor];
-        backgroundView.layer.cornerRadius = 10.0;
-        backgroundView.clipsToBounds = YES;
         searchBar.barTintColor = [UIColor whiteColor];
         searchBar.tintColor = [UIColor whiteColor];
+        if (@available(iOS 12.0, *)) {
+            self.navigationItem.hidesSearchBarWhenScrolling = NO;
+        } else {
+            UIView *backgroundView = [textField.subviews firstObject];
+            backgroundView.backgroundColor = [UIColor whiteColor];
+            backgroundView.layer.cornerRadius = 10.0;
+            backgroundView.clipsToBounds = YES;
+        }
         self.navigationItem.searchController = self.searchController;
-    } else {
+    }
+    else {
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
@@ -303,22 +315,6 @@ XXTE_END_IGNORE_PARTIAL
     return @"";
 }
 
-#pragma mark - UISearchControllerDelegate
-
-XXTE_START_IGNORE_PARTIAL
-- (void)willPresentSearchController:(UISearchController *)searchController {
-    
-}
-
-- (void)willDismissSearchController:(UISearchController *)searchController {
-    
-}
-
-- (void)didDismissSearchController:(UISearchController *)searchController {
-    
-}
-XXTE_END_IGNORE_PARTIAL
-
 #pragma mark - UISearchResultsUpdating
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -330,7 +326,11 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
+    if (@available(iOS 12.0, *)) {
+        
+    } else {
+        [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
+    }
 }
 
 XXTE_START_IGNORE_PARTIAL

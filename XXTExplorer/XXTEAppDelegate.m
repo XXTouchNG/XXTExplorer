@@ -57,7 +57,7 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // Restore defaults
+    // restore defaults
     [[self class] appDefines];
     NSUserDefaults *userDefaults = [[self class] userDefaults];
     NSDictionary *builtInDefaults = [[self class] builtInDefaults];
@@ -76,7 +76,7 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
         }
     }
     
-    // Create required subdirectories
+    // create required subdirectories
     {
         NSString *sharedRootPath = [XXTEAppDelegate sharedRootPath];
         NSArray <NSString *> *requiredSubdirectories = uAppDefine(@"REQUIRED_SUBDIRECTORIES");

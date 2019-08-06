@@ -694,7 +694,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
-    if (XXTE_IS_IPAD) {
+    if (!XXTE_IS_FULLSCREEN(self)) {
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];

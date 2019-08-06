@@ -10,4 +10,7 @@
 
 @interface XXTETextViewController : UIViewController <XXTEViewer>
 
+@property (nonatomic, assign, getter=isLockedState) BOOL lockedState;
+@property (nonatomic, assign) CFStringEncoding currentEncoding;
+
 @end
