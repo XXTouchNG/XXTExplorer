@@ -169,7 +169,7 @@ XXTE_END_IGNORE_PARTIAL
         textField.tintColor = XXTColorDefault();
         searchBar.barTintColor = [UIColor whiteColor];
         searchBar.tintColor = [UIColor whiteColor];
-        if (@available(iOS 12.0, *)) {
+        if (@available(iOS 13.0, *)) {
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
         } else {
             UIView *backgroundView = [textField.subviews firstObject];
@@ -417,7 +417,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         
     } else {
         [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];

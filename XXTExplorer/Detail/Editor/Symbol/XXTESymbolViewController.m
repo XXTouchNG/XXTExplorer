@@ -79,7 +79,7 @@ XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = nil;
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         _searchController = ({
             UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
             searchController.searchResultsUpdater = self;
@@ -122,7 +122,7 @@ XXTE_END_IGNORE_PARTIAL
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        if (@available(iOS 12.0, *)) {
+        if (@available(iOS 13.0, *)) {
             
         } else {
             tableView.tableHeaderView = searchBar;
@@ -136,7 +136,7 @@ XXTE_END_IGNORE_PARTIAL
         [self.view addSubview:tableView];
         tableView;
     });
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         self.navigationItem.hidesSearchBarWhenScrolling = YES;
         self.navigationItem.searchController = self.searchController;
     }
@@ -234,7 +234,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (0 == section) {
-        if (@available(iOS 12.0, *)) {
+        if (@available(iOS 13.0, *)) {
             if (!self.searchController.active) {
                 return self.symbolsTable.count;
             } else {
@@ -261,7 +261,7 @@ XXTE_END_IGNORE_PARTIAL
             cell = [[XXTESymbolCell alloc] initWithStyle:UITableViewCellStyleDefault
                                          reuseIdentifier:XXTESymbolCellReuseIdentifier];
         }
-        if (@available(iOS 12.0, *)) {
+        if (@available(iOS 13.0, *)) {
             if (!self.searchController.active) {
                 [self configureCell:cell forRowAtIndexPath:indexPath];
             } else {
@@ -299,7 +299,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSRange toRange = {0, 0};
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         if (!self.searchController.active) {
             NSUInteger idx = indexPath.row;
             if (idx < self.symbolsTable.count) {
@@ -394,7 +394,7 @@ XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)reloadSearch {
     NSString *text = nil;
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         text = self.searchController.searchBar.text;
     } else {
         text = self.searchDisplayController.searchBar.text;
@@ -403,7 +403,7 @@ XXTE_START_IGNORE_PARTIAL
     if (predicate) {
         self.displaySymbolsTable = [[NSArray alloc] initWithArray:[self.symbolsTable filteredArrayUsingPredicate:predicate]];
     }
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         [self.tableView reloadData];
     }
 }

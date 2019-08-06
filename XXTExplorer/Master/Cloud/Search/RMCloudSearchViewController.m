@@ -353,7 +353,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - UISearchResultsUpdating
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    if (@available(iOS 12.0, *)) {
+    if (@available(iOS 13.0, *)) {
         
     } else {
         [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];

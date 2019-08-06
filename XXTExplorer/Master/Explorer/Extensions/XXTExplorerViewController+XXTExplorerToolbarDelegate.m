@@ -159,20 +159,20 @@
                     controller.delegate = self;
                     if (!self.historyMode) {
                         [controller addOptionWithTitle:NSLocalizedString(@"View History", nil)
-                                                 image:nil
+                                                 image:[UIImage imageNamed:@"XXTEAddOptionHistory"]
                                                  order:UIDocumentMenuOrderFirst
                                                handler:^{
                                                    [self presentHistoryViewController:buttonItem];
                                                }];
                     }
                     [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
-                                             image:nil
+                                             image:[UIImage imageNamed:@"XXTEAddOptionPhotosLibrary"]
                                              order:UIDocumentMenuOrderFirst
                                            handler:^{
                                                [self presentImagePickerController:buttonItem];
                                            }];
                     [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
-                                             image:nil
+                                             image:[UIImage imageNamed:@"XXTEAddOptionNew"]
                                              order:UIDocumentMenuOrderFirst
                                            handler:^{
                                                [self presentNewDocumentViewController:buttonItem];

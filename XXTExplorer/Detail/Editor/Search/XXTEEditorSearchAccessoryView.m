@@ -9,10 +9,12 @@
 #import "XXTEEditorSearchAccessoryView.h"
 
 @interface XXTEEditorSearchAccessoryView ()
+
 @property (nonatomic, strong) UIToolbar *toolbar;
 @property (nonatomic, strong) UIBarButtonItem *counter;
 @property (nonatomic, strong) UIBarButtonItem *fixedSpace;
 @property (nonatomic, strong) UIBarButtonItem *flexibleSpace;
+@property (nonatomic, strong) NSArray <UIBarButtonItem *> *allItems;
 
 @end
 
@@ -48,6 +50,7 @@
     _counter = [[UIBarButtonItem alloc] initWithCustomView:countLabel];
     _fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     _fixedSpace.width = 16.0;
+    _allItems = @[ self.prevItem, self.nextItem, self.replaceItem, self.replaceAllItem, self.counter ];
     
     [self setReplaceMode:NO];
     [self addSubview:self.toolbar];
@@ -81,7 +84,7 @@
     [super setTintColor:tintColor];
     UIToolbar *toolbar = self.toolbar;
     toolbar.tintColor = tintColor;
-    for (UIBarButtonItem *item in toolbar.items) {
+    for (UIBarButtonItem *item in self.allItems) {
         item.tintColor = tintColor;
     }
     self.countLabel.textColor = tintColor;
