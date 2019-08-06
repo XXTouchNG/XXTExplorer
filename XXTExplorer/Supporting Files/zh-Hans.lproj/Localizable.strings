@@ -2089,3 +2089,7 @@
 
 /* No comment provided by engineer. */
 "Default Encoding: %@" = "默认编码: %@";
+
+/* No comment provided by engineer. */
+"Configuration file \"%@\" is too large to process." = "配置文件 \"%@\" 超出预计尺寸, 无法处理.";
+

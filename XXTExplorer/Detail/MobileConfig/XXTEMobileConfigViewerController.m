@@ -12,6 +12,8 @@
 #import <LGAlertView/LGAlertView.h>
 #import "XXTESingleActionView.h"
 
+static NSUInteger const kXXTEMobileConfigViewerControllerMaximumBytes = 200 * 1024; // 200k
+
 @interface XXTEMobileConfigViewerController ()
 
 @property (nonatomic, strong) XXTESingleActionView *actionView;
@@ -151,10 +153,19 @@
     }
 #else
     if (!self.entryPath) return;
-    NSError *readingError = nil;
-    NSData *data = [NSData dataWithContentsOfFile:self.entryPath options:kNilOptions error:&readingError];
+    NSData *data = nil;
+    NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:self.entryPath];
+    if (handle) {
+        unsigned long long handleSize = [handle seekToEndOfFile];
+        if (handleSize <= kXXTEMobileConfigViewerControllerMaximumBytes)
+        {
+            [handle seekToFileOffset:0];
+            data = [handle readDataOfLength:kXXTEMobileConfigViewerControllerMaximumBytes];
+        }
+        [handle closeFile];
+    }
     if (!data) {
-        toastError(self, readingError);
+        toastError(self, [NSError errorWithDomain:kXXTErrorDomain code:500 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Configuration file \"%@\" is too large to process.", nil), self.entryPath.lastPathComponent] }]);
         return;
     }
     NSString *b64String = [data base64EncodedStringWithOptions:kNilOptions];
