@@ -116,8 +116,8 @@ XXTE_END_IGNORE_PARTIAL
     
     if (@available(iOS 11.0, *)) {
         UITextField *textField = nil;
-        if (@available(iOS 12.0, *)) {
-            textField = searchBar.searchTextField;
+        if (@available(iOS 13.0, *)) {
+            textField = [searchBar performSelector:@selector(searchTextField)];
         } else {
             textField = [searchBar valueForKey:@"searchField"];
         }

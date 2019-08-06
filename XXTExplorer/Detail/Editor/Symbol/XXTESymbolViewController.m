@@ -101,8 +101,8 @@ XXTE_END_IGNORE_PARTIAL
     XXTE_END_IGNORE_PARTIAL
     
     {
-        if (@available(iOS 12.0, *)) {
-            UITextField *textField = searchBar.searchTextField;
+        if (@available(iOS 13.0, *)) {
+            UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
             textField.textColor = [UIColor blackColor];
             textField.tintColor = XXTColorDefault();
         } else {
