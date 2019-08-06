@@ -127,6 +127,7 @@ XXTE_END_IGNORE_PARTIAL
         } else {
             tableView.tableHeaderView = searchBar;
         }
+        tableView.tableFooterView = [UIView new];
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;
