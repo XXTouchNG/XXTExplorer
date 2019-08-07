@@ -72,25 +72,25 @@ static NSString * const SKThemeFontStyleStrikeThrough = @"strikethrough";
     if (self)
     {
         NSString *uuidString = dictionary[@"uuid"];
+        assert([uuidString isKindOfClass:[NSString class]]);
         NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:uuidString];
+        _uuid = uuid;
+        
         NSString *name = dictionary[@"name"];
+        assert([name isKindOfClass:[NSString class]]);
+        _name = name;
+        
         NSArray <NSDictionary <NSString *, id> *> *rawSettings = dictionary[@"settings"];
-        if (
-            ![uuid isKindOfClass:[NSUUID class]] ||
-            ![name isKindOfClass:[NSString class]] ||
-            ![rawSettings isKindOfClass:[NSArray class]] ||
-            ![baseFonts isKindOfClass:[NSArray class]] ||
-            baseFonts.count != 4
-            )
-        {
-            return nil;
-        }
+        assert([rawSettings isKindOfClass:[NSArray class]]);
+        
+        assert([baseFonts isKindOfClass:[NSArray class]]);
+        assert(baseFonts.count == 4);
+        
         UIFont *regularFont = baseFonts[0];
         UIFont *boldFont = baseFonts[1];
         UIFont *italicFont = baseFonts[2];
         UIFont *boldItalicFont = baseFonts[3];
-        _uuid = uuid;
-        _name = name;
+        
         NSMutableDictionary <NSString *, SKAttributes> *attributes = [[NSMutableDictionary alloc] init];
         for (NSDictionary <NSString *, id> *raw in rawSettings) {
             NSMutableDictionary <NSString *, id> *setting = [raw[@"settings"] mutableCopy];

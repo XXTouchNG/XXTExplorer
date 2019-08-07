@@ -26,13 +26,13 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
     self = [super init];
     if (self)
     {
-        NSString *baseExtension = [extension lowercaseString];
-        
         NSString *languageMetasPath = [[NSBundle mainBundle] pathForResource:@"SKLanguage" ofType:@"plist"];
         assert(languageMetasPath);
         NSArray <NSDictionary *> *languageMetas = [[NSArray alloc] initWithContentsOfFile:languageMetasPath];
         assert([languageMetas isKindOfClass:[NSArray class]]);
         _languageMetas = languageMetas;
+        
+        NSString *baseExtension = [extension lowercaseString];
         NSDictionary *languageMeta = nil;
         for (NSDictionary *tLanguageMeta in languageMetas) {
             if ([tLanguageMeta isKindOfClass:[NSDictionary class]]) {
@@ -51,7 +51,7 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
         assert([languageMeta isKindOfClass:[NSDictionary class]]);
         
         NSString *languageIdentifier = languageMeta[@"identifier"];
-        if (!languageIdentifier) return nil;
+        assert([languageIdentifier isKindOfClass:[NSString class]]);
         
         @weakify(self);
         SKBundleManager *bundleManager = [[SKBundleManager alloc] initWithCallback:^NSURL *(NSString *identifier, SKTextMateFileType fileType) {
@@ -108,9 +108,10 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
     }
     assert([languageMeta isKindOfClass:[NSDictionary class]]);
     NSString *languageName = languageMeta[@"name"];
-    assert(languageName);
+    assert([languageName isKindOfClass:[NSString class]]);
     NSString *languagePath = [[NSBundle mainBundle] pathForResource:languageName ofType:@"tmLanguage"];
-    assert(languagePath);
+    // TODO: Onigmo Support
+    // assert([languagePath isKindOfClass:[NSString class]]);
     return languagePath;
 }
 

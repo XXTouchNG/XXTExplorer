@@ -185,7 +185,9 @@ XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (NSArray <UIPreviewAction *> *)previewActionsForEntry:(XXTExplorerEntry *)entry forEntryCell:(XXTESwipeTableCell *)entryCell {
     NSMutableArray <UIPreviewAction *> *actions = [[NSMutableArray alloc] init];
+#ifndef APPSTORE
     XXTExplorerEntryReader *entryReader = entry.entryReader;
+#endif
 #ifndef APPSTORE
     if (entry.isExecutable) {
         [actions addObject:[UIPreviewAction actionWithTitle:NSLocalizedString(@"Launch", nil) style:UIPreviewActionStyleDefault handler:[self unchangedPreviewAction:XXTExplorerEntryButtonActionLaunch forEntry:entry]]];
@@ -231,7 +233,9 @@ XXTE_END_IGNORE_PARTIAL
     XXTExplorerEntry *entry = self.entryList[indexPath.row];
     if (direction == XXTESwipeDirectionLeftToRight) {
         NSMutableArray *swipeButtons = [[NSMutableArray alloc] init];
+#ifndef APPSTORE
         XXTExplorerEntryReader *entryReader = entry.entryReader;
+#endif
         UIColor *colorSeries = XXTColorDefault();
 #ifndef APPSTORE
         if (entry.isExecutable) {

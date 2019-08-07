@@ -50,7 +50,7 @@ target 'XXTExplorer' do
 end
 
 target 'XXTExplorer-Archive' do
-    platform :ios, '7.0'
+    platform :ios, '8.0'
     shared_pods
     shared_cloud
 end

@@ -1969,6 +1969,7 @@
 		B0312E7C21C7B2451E6D240D /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		B0312E8696170984090886F2 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
 		B0312EA80D17B9AF4D5E309E /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
+		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
@@ -3296,6 +3297,7 @@
 		0FA7ABE11ED641A3003EAD7D = {
 			isa = PBXGroup;
 			children = (
+				BD42342122FB1A42005C6A39 /* Podfile */,
 				4480A4E60973939464BE0D72 /* Frameworks */,
 				59918F7D2218C7F23C834EB4 /* Pods */,
 				0FA7ABEB1ED641A3003EAD7D /* Products */,
@@ -5358,8 +5360,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer/Pods-XXTExplorer-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController/TOWebViewControllerLocalizable.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -5378,8 +5380,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XXTouch/Pods-XXTouch-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS8.0/MWPhotoBrowser.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS8.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController/TOWebViewControllerLocalizable.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/UnrarKit/UnrarKitResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -5418,8 +5420,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser-iOS7.0/MWPhotoBrowser.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController-iOS7.0/TOWebViewControllerLocalizable.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser/MWPhotoBrowser.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOWebViewController/TOWebViewControllerLocalizable.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -6627,25 +6629,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/LGAlertView-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/OMGHTTPURLRQ-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PromiseKit-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"LGAlertView-iOS8.0\"",
-					"-l\"MWPhotoBrowser-iOS8.0\"",
-					"-l\"OMGHTTPURLRQ-iOS8.0\"",
-					"-l\"PromiseKit-iOS8.0\"",
-					"-l\"TOWebViewController-iOS8.0\"",
-					"-l\"XUI-iOS8.0\"",
-					"-l\"YYImage-iOS8.0\"",
 					"-l\"c++\"",
 					"-l\"z\"",
 					"-framework",
@@ -6737,13 +6725,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/LGAlertView-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/OMGHTTPURLRQ-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PromiseKit-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
@@ -6873,26 +6854,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/LGAlertView-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/OMGHTTPURLRQ-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PromiseKit-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS8.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"LGAlertView-iOS8.0\"",
-					"-l\"MWPhotoBrowser-iOS8.0\"",
-					"-l\"OMGHTTPURLRQ-iOS8.0\"",
-					"-l\"PromiseKit-iOS8.0\"",
-					"-l\"TOWebViewController-iOS8.0\"",
-					"-l\"XUI-iOS8.0\"",
-					"-l\"YYImage-iOS8.0\"",
 					"-l\"c++\"",
 					"-l\"z\"",
 					"-framework",
@@ -7028,13 +6995,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/LGAlertView-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/OMGHTTPURLRQ-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PromiseKit-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS7.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
@@ -7042,13 +7002,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"LGAlertView-iOS7.0\"",
-					"-l\"MWPhotoBrowser-iOS7.0\"",
-					"-l\"OMGHTTPURLRQ-iOS7.0\"",
-					"-l\"PromiseKit-iOS7.0\"",
-					"-l\"TOWebViewController-iOS7.0\"",
-					"-l\"XUI-iOS7.0\"",
-					"-l\"YYImage-iOS7.0\"",
 					"-l\"c++\"",
 					"-l\"z\"",
 					"-framework",
@@ -7143,13 +7096,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/LGAlertView-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/OMGHTTPURLRQ-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PromiseKit-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/TOWebViewController-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/XUI-iOS7.0\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS7.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 				);
@@ -7157,13 +7103,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"LGAlertView-iOS7.0\"",
-					"-l\"MWPhotoBrowser-iOS7.0\"",
-					"-l\"OMGHTTPURLRQ-iOS7.0\"",
-					"-l\"PromiseKit-iOS7.0\"",
-					"-l\"TOWebViewController-iOS7.0\"",
-					"-l\"XUI-iOS7.0\"",
-					"-l\"YYImage-iOS7.0\"",
 					"-l\"c++\"",
 					"-l\"z\"",
 					"-framework",
