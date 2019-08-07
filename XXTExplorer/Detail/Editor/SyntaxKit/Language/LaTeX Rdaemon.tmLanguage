@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>firstLineMatch</key>
+	<string>^\\documentclass(?!.*\{beamer\})</string>
+	<key>foldingStartMarker</key>
+	<string>\\begin\{.*\}|%.*\(fold\)\s*$</string>
+	<key>foldingStopMarker</key>
+	<string>\\end\{.*\}|%.*\(end\)\s*$</string>
+	<key>keyEquivalent</key>
+	<string>^~L</string>
+	<key>name</key>
+	<string>LaTeX Rdaemon</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>begin</key>
+			<string>(?:\s*)((\\)begin)(\{)(Rdaemon)(\})</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.function.be.latex.rdaemon.embedded</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.function.latex.rdaemon.embedded</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.begin.latex.rdaemon.embedded</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.latex.rdaemon.embedded</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.end.latex.rdaemon.embedded</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>markup.raw.verbatim.latex</string>
+			<key>end</key>
+			<string>((\\)end)(\{)(\4)(\})</string>
+			<key>name</key>
+			<string>meta.function.verbatim.latex.rdaemon.embedded</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.rd.console</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>text.tex.latex</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>text.tex.latex.rdaemon</string>
+	<key>uuid</key>
+	<string>D573458E-3BC8-4383-B350-4707C67597F0</string>
+</dict>
+</plist>

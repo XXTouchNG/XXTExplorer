@@ -49,7 +49,7 @@ XXTE_END_IGNORE_PARTIAL
 @implementation XXTESymbolViewController
 
 + (BOOL)hasSymbolPatternsForLanguage:(XXTEEditorLanguage *)language {
-    return (language.symbolScopes.count > 0);
+    return language.hasSymbol;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -173,8 +173,8 @@ XXTE_END_IGNORE_PARTIAL
 - (BOOL)loadFileSymbolsWithError:(NSError **)error {
     self.symbolsTable = @[];
     
-    NSArray <NSString *> *symbols = self.editor.language.symbolScopes;
-    if (!symbols) {
+    BOOL hasSymbol = self.editor.language.hasSymbol;
+    if (!hasSymbol) {
         return NO;
     }
     NSString *string = self.editor.textView.text;

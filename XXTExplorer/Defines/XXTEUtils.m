@@ -303,7 +303,7 @@ NSDictionary *uAppConstEnvp(void) {
 
 #pragma mark - Interface
 
-UIViewController *blockInteractionsWithToast(UIViewController *viewController, BOOL shouldBlock, BOOL shouldToast) {
+UIViewController *blockInteractionsWithToastAndDelay(UIViewController *viewController, BOOL shouldBlock, BOOL shouldToast, NSTimeInterval delay) {
     if (!viewController) return nil;
     NSMutableArray <UIViewController *> *viewControllerToBlock = [NSMutableArray array];
     NSMutableArray <UIView *> *viewToBlock = [NSMutableArray array];
@@ -324,15 +324,24 @@ UIViewController *blockInteractionsWithToast(UIViewController *viewController, B
         view.userInteractionEnabled = NO;
         if (shouldToast)
         {
-            [view makeToastActivity:XXTEToastPositionCenter];
+            if (delay > 0) {
+                [view performSelector:@selector(makeToastActivity:) withObject:XXTEToastPositionCenter afterDelay:delay];
+            } else {
+                [view makeToastActivity:XXTEToastPositionCenter];
+            }
         }
     } else {
         for (UIView *view in viewToBlock) {
+            [UIView cancelPreviousPerformRequestsWithTarget:view selector:@selector(makeToastActivity:) object:XXTEToastPositionCenter];
             [view hideToastActivity];
             view.userInteractionEnabled = YES;
         }
     }
     return [viewControllerToBlock firstObject];
+}
+
+UIViewController *blockInteractionsWithToast(UIViewController *viewController, BOOL shouldBlock, BOOL shouldToast) {
+    return blockInteractionsWithToastAndDelay(viewController, shouldBlock, shouldToast, 0);
 }
 
 UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock) {
@@ -410,6 +419,20 @@ UIColor *XXTColorSuccess() { // rgb(26, 188, 134)
         xxtSuccessColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:134.f/255.f alpha:1.f];
     });
     return xxtSuccessColor;
+}
+
+BOOL isOS13Above() {
+    if (@available(iOS 13.0, *)) {
+        return YES;
+    }
+    return NO;
+}
+
+BOOL isOS12Above() {
+    if (@available(iOS 12.0, *)) {
+        return YES;
+    }
+    return NO;
 }
 
 BOOL isOS11Above() {

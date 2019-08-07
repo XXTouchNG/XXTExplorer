@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array/>
+	<key>injectionSelector</key>
+	<string>text, comment</string>
+	<key>name</key>
+	<string>Email Address</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>(?i)\b([A-Z][A-Z0-9._%+-]+)@([A-Z0-9.\-]+)\.([A-Z]{2,4})\b</string>
+			<key>name</key>
+			<string>markup.underline.link.email.hyperlink</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>text.mail</string>
+	<key>uuid</key>
+	<string>99F6D23C-2048-4F09-8558-6CECA7E2262A</string>
+</dict>
+</plist>

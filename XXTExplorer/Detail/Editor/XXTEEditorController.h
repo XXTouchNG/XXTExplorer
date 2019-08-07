@@ -22,6 +22,7 @@
 
 // text properties
 @property (nonatomic, assign, getter=isLockedState) BOOL lockedState;
+@property (nonatomic, assign) BOOL hasLongLine;
 @property (nonatomic, assign) CFStringEncoding currentEncoding;
 @property (nonatomic, assign) NSStringLineBreakType currentLineBreak;
 
@@ -40,7 +41,7 @@
 - (void)setNeedsHighlightRange:(NSRange)range;
 
 - (void)reloadAttributesIfNecessary;
-- (void)invalidateSyntaxCaches;
+- (BOOL)invalidateSyntaxCachesIfNeeded;
 - (void)saveDocumentIfNecessary;
 
 #pragma mark - Search

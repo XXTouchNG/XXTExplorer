@@ -15,6 +15,11 @@ NSString * const kTextMateCommentStart = @"TM_COMMENT_START";
 NSString * const kTextMateCommentMultilineStart = @"TM_COMMENT_START_2";
 NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
 
+@interface XXTEEditorLanguage ()
+@property (nonatomic, strong) NSArray <NSDictionary *> *languageMetas;
+
+@end
+
 @implementation XXTEEditorLanguage
 
 - (instancetype)initWithExtension:(NSString *)extension {
@@ -27,6 +32,7 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
         assert(languageMetasPath);
         NSArray <NSDictionary *> *languageMetas = [[NSArray alloc] initWithContentsOfFile:languageMetasPath];
         assert([languageMetas isKindOfClass:[NSArray class]]);
+        _languageMetas = languageMetas;
         NSDictionary *languageMeta = nil;
         for (NSDictionary *tLanguageMeta in languageMetas) {
             if ([tLanguageMeta isKindOfClass:[NSDictionary class]]) {
@@ -44,13 +50,8 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
         }
         assert([languageMeta isKindOfClass:[NSDictionary class]]);
         
-        NSString *languageName = languageMeta[@"name"];
-        if (!languageName) return nil;
-        NSString *languagePath = [[NSBundle mainBundle] pathForResource:languageName ofType:@"tmLanguage"];
-        if (!languagePath) return nil;
-        
-        NSDictionary *languageDictionary = [[NSDictionary alloc] initWithContentsOfFile:languagePath];
-        assert([languageDictionary isKindOfClass:[NSDictionary class]]);
+        NSString *languageIdentifier = languageMeta[@"identifier"];
+        if (!languageIdentifier) return nil;
         
         @weakify(self);
         SKBundleManager *bundleManager = [[SKBundleManager alloc] initWithCallback:^NSURL *(NSString *identifier, SKTextMateFileType fileType) {
@@ -64,7 +65,8 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
             }
             return nil;
         }];
-        SKLanguage *rawLanguage = [[SKLanguage alloc] initWithDictionary:languageDictionary manager:bundleManager];
+        
+        SKLanguage *rawLanguage = [bundleManager languageWithIdentifier:languageIdentifier];
         assert(rawLanguage);
         _skLanguage = rawLanguage;
         
@@ -82,16 +84,14 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
             _name = languageMeta[@"name"];
         if ([languageMeta[@"extensions"] isKindOfClass:[NSArray class]])
             _extensions = languageMeta[@"extensions"];
-        if ([languageMeta[@"symbolScopes"] isKindOfClass:[NSArray class]])
-            _symbolScopes = languageMeta[@"symbolScopes"];
+        if ([languageMeta[@"hasSymbol"] isKindOfClass:[NSNumber class]])
+            _hasSymbol = [languageMeta[@"hasSymbol"] boolValue];
     }
     return self;
 }
 
 - (NSString *)pathForLanguageIdentifier:(NSString *)identifier {
-    NSString *languageMetasPath = [[NSBundle mainBundle] pathForResource:@"SKLanguage" ofType:@"plist"];
-    assert(languageMetasPath);
-    NSArray <NSDictionary *> *languageMetas = [[NSArray alloc] initWithContentsOfFile:languageMetasPath];
+    NSArray <NSDictionary *> *languageMetas = self.languageMetas;
     assert([languageMetas isKindOfClass:[NSArray class]]);
     NSDictionary *languageMeta = nil;
     for (NSDictionary *tLanguageMeta in languageMetas) {

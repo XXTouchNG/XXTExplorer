@@ -97,8 +97,10 @@
 }
 
 - (void)reloadStaticTableViewData {
+    BOOL editorHasLongLine = self.editor.hasLongLine;
+    
     staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Word Wrap", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Text", nil), NSLocalizedString(@"Search", nil) ];
-    staticSectionFooters = @[ @"", @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"", @"" ];
+    staticSectionFooters = @[ @"", editorHasLongLine ? NSLocalizedString(@"❗️\"Syntax Highlight\" is skipped for files with long lines for performance reasons.", nil) : @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"", @"" ];
     
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
     double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
@@ -126,7 +128,13 @@
     
     XXTEMoreSwitchCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Syntax Highlight", nil);
-    cell4.optionSwitch.on = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES);
+    if (editorHasLongLine) {
+        cell4.optionSwitch.on = NO;
+        cell4.optionSwitch.enabled = NO;
+    } else {
+        cell4.optionSwitch.on = XXTEDefaultsBool(XXTEEditorHighlightEnabled, YES);
+        cell4.optionSwitch.enabled = YES;
+    }
     {
         @weakify(self);
         [cell4.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {

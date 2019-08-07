@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>lid</string>
+	</array>
+	<key>name</key>
+	<string>Lid File</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>begin</key>
+			<string>([\x{21}-\x{39}\x{3B}-\x{7E}]+)(:)\s*</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.mail</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.key-value.mail</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>^(?![ \t\v])</string>
+			<key>name</key>
+			<string>meta.header.mail</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.lid</string>
+	<key>uuid</key>
+	<string>7E074E76-1515-4B0D-BFAB-E0D9D8854163</string>
+</dict>
+</plist>

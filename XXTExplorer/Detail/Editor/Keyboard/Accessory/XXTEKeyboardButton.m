@@ -8,6 +8,8 @@
 
 #import "XXTEKeyboardButton.h"
 #import "XXTEKeyboardButtonView.h"
+#import "UIImage+ColoredImage.h"
+
 
 @interface XXTEKeyboardButton ()
 
@@ -167,12 +169,15 @@
                     [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
                 } else if (self.tabButton) {
-//                    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-//                    attachment.image = [UIImage imageNamed:@"XXTEKeyboardButtonTab"];
-//                    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-//                    [currentLabel setAttributedText:attachmentString];
-                    const unichar c = 0x2192; // tab icon
-                    [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
+                    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+                    attachment.image = [[UIImage imageNamed:@"XXTEKeyboardTab"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    if (@available(iOS 11.0, *)) {
+                        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+                        [currentLabel setAttributedText:attachmentString];
+                    } else {
+                        const unichar c = 0x2192; // tab icon
+                        [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
+                    }
                     [currentLabel setFrame:self.bounds];
                 }
             }
@@ -460,6 +465,7 @@
     UIColor *textColor = (colorStyle == XXTEKeyboardRowStyleDark) ? [UIColor whiteColor] : [UIColor blackColor];
     for (UILabel *label in self.labels) {
         [label setTextColor:textColor];
+        [label setTintColor:textColor];
     }
     [self setNeedsDisplay];
 }

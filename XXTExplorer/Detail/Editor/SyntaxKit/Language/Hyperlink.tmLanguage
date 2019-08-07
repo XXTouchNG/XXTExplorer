@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array/>
+	<key>injectionSelector</key>
+	<string>text, string, comment</string>
+	<key>name</key>
+	<string>Hyperlink</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>(?x)
+				( (https?|s?ftp|ftps|file|smb|afp|nfs|(x-)?man(-page)?|gopher|txmt|issue)://|mailto:)
+				[-:@a-zA-Z0-9_.,~%+/?=&amp;#;]+(?&lt;![-.,?:#;])
+			</string>
+			<key>name</key>
+			<string>markup.underline.link.$2.hyperlink</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?i)\bRFC(?: |(?&lt;= RFC))(\d+)\b</string>
+			<key>name</key>
+			<string>markup.underline.link.rfc.$1.hyperlink</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>text.hyperlink</string>
+	<key>uuid</key>
+	<string>40FCD8FB-8FA6-4966-9B27-F18663188851</string>
+</dict>
+</plist>

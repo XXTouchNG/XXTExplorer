@@ -27,4 +27,18 @@
     return [[self class] lineBreakMap][@(type)];
 }
 
++ (NSString *)lineBreakStringForType:(NSStringLineBreakType)type {
+    switch (type) {
+        case NSStringLineBreakTypeCRLF:
+            return @NSStringLineBreakCRLF;
+        case NSStringLineBreakTypeCR:
+            return @NSStringLineBreakCR;
+        case NSStringLineBreakTypeLF:
+            return @NSStringLineBreakLF;
+        default:
+            break;
+    }
+    return nil;
+}
+
 @end

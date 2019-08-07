@@ -122,15 +122,18 @@
 
 - (NSRegularExpression *)cachedExpressionForExpressionString:(NSRegularExpressionString *)expressionString
 {
-    if (!expressionString) return nil;
+    if (!expressionString.length) return nil;
     NSRegularExpression *cachedPattern = self.regularExpressionCaches[expressionString];
     if (cachedPattern) {
         
     } else {
         cachedPattern = [[NSRegularExpression alloc] initWithPattern:expressionString options:NSRegularExpressionAllowCommentsAndWhitespace | NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnixLineSeparators error:nil];
-        if (cachedPattern) {
-            self.regularExpressionCaches[expressionString] = cachedPattern;
+        if (!cachedPattern) {
+#ifdef DEBUG
+            NSAssert(cachedPattern, @"update to Onigmo to solve this issue...");
+#endif
         }
+        self.regularExpressionCaches[expressionString] = cachedPattern;
     }
     return cachedPattern;
 }

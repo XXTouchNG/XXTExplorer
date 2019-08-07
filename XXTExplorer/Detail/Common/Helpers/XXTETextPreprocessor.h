@@ -20,5 +20,6 @@ static NSString *kXXTErrorInvalidStringEncodingDomain = @"com.darwindev.XXTExplo
                                          LineBreak:(NSStringLineBreakType *)lineBreak
                                      MaximumLength:(NSUInteger *)len
                                              Error:(NSError **)error;
++ (BOOL)stringHasLongLine:(NSString *)string LineBreak:(NSStringLineBreakType)lineBreak;
 
 @end

@@ -12,8 +12,11 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTEEncodingController.h"
 #import "XXTEEncodingHelper.h"
+#import "XXTEEditorLineBreakHelper.h"
 #import "XXTEEditorTextProperties.h"
 
+
+static NSInteger kStopRenderingLineAfter = 1024;
 
 @implementation XXTETextPreprocessor
 
@@ -77,6 +80,20 @@
         *num = numberOfLines;
     }
     return rawString;
+}
+
++ (BOOL)stringHasLongLine:(NSString *)string LineBreak:(NSStringLineBreakType)lineBreak {
+    NSString *lb = [XXTEEditorLineBreakHelper lineBreakStringForType:lineBreak];
+    NSInteger lastPosition = 0;
+    NSInteger loc = NSNotFound;
+    while ((loc = [string rangeOfString:lb options:kNilOptions range:NSMakeRange((lastPosition + 1), string.length - (lastPosition + 1))].location) != NSNotFound)
+    {
+        if (loc - lastPosition > kStopRenderingLineAfter) {
+            return YES;
+        }
+        lastPosition = loc;
+    }
+    return NO;
 }
 
 @end

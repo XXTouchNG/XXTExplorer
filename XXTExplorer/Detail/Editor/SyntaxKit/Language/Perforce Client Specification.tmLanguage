@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>spec</string>
+		<string>client</string>
+	</array>
+	<key>firstLineMatch</key>
+	<string># A Perforce</string>
+	<key>name</key>
+	<string>Perforce Client Specification</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>^(Change|Client|User|Status|Description|Files|Update|Access|Owner|Host|Root|AltRoots|Options|SubmitOptions|LineEnd|View):</string>
+			<key>name</key>
+			<string>keyword.other</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b((submit|revert|leave)unchanged)(\+reopen)?\b</string>
+			<key>name</key>
+			<string>keyword.control.submitoptions</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(local|unix||mac|win|share)\b</string>
+			<key>name</key>
+			<string>keyword.control.lineend</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(((no)?(allwrite|clobber|compress|modtime|rmdir)|(un)?locked))\b</string>
+			<key>name</key>
+			<string>keyword.control.options</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(#).*$\n?</string>
+			<key>name</key>
+			<string>comment.line</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>&lt;enter description here&gt;</string>
+			<key>name</key>
+			<string>invalid.illegal</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.perforce</string>
+	<key>uuid</key>
+	<string>9C843973-4684-4D1F-AC63-748BE92025A6</string>
+</dict>
+</plist>

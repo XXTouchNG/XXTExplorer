@@ -2,20 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<!--    <key>fileTypes</key>-->
-<!--    <array>-->
-<!--        <string>xml</string>-->
-<!--        <string>xsd</string>-->
-<!--        <string>tld</string>-->
-<!--        <string>jsp</string>-->
-<!--        <string>pt</string>-->
-<!--        <string>cpt</string>-->
-<!--        <string>dtml</string>-->
-<!--        <string>rss</string>-->
-<!--        <string>opml</string>-->
-<!--    </array>-->
-<!--    <key>keyEquivalent</key>-->
-<!--    <string>^~X</string>-->
+	<key>fileTypes</key>
+	<array>
+		<string>xml</string>
+		<string>xsd</string>
+		<string>tld</string>
+		<string>jsp</string>
+		<string>pt</string>
+		<string>cpt</string>
+		<string>dtml</string>
+		<string>rss</string>
+		<string>opml</string>
+	</array>
+	<key>keyEquivalent</key>
+	<string>^~X</string>
 	<key>name</key>
 	<string>XML</string>
 	<key>patterns</key>

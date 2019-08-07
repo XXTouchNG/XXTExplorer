@@ -129,10 +129,8 @@
                 lighterFont = [UIFont systemFontOfSize:44.0];
             }
         }
-        NSAttributedString *attributedString = [[NSAttributedString alloc]
-                initWithString:inputString
-                    attributes:
-                            @{NSFontAttributeName: lighterFont, NSForegroundColorAttributeName: stringColor, NSParagraphStyleAttributeName: p}];
+        
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:inputString attributes:@{NSFontAttributeName: lighterFont, NSForegroundColorAttributeName: stringColor, NSParagraphStyleAttributeName: p}];
         [attributedString drawInRect:stringRect];
     }
 }

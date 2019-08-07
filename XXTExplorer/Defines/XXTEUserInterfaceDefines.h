@@ -16,9 +16,13 @@
 extern "C" {
 #endif
     
+    UIViewController *blockInteractionsWithToastAndDelay(UIViewController *viewController, BOOL shouldBlock, BOOL shouldToast, NSTimeInterval delay);
     UIViewController *blockInteractionsWithToast(UIViewController *viewController, BOOL shouldBlock, BOOL shouldToast);
     UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock);
+    
     BOOL isiPhoneX(void);
+    BOOL isOS13Above(void);
+    BOOL isOS12Above(void);
     BOOL isOS11Above(void);
     BOOL isOS10Above(void);
     BOOL isOS9Above(void);

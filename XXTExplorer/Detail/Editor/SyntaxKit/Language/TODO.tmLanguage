@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array/>
+	<key>injectionSelector</key>
+	<string>comment, text.plain</string>
+	<key>name</key>
+	<string>TODO</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>\b(TODO|FIXME|CHANGED)\b</string>
+			<key>name</key>
+			<string>storage.type.class.${1:/downcase}</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>markup.underline.link.radar</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>&lt;(ra?dar:/(?:/problem|)/(?:[&amp;0-9]+))&gt;</string>
+			<key>name</key>
+			<string>storage.type.class.radar</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>text.todo</string>
+	<key>uuid</key>
+	<string>94A00B36-AAEF-477A-BA78-9B081B116321</string>
+</dict>
+</plist>

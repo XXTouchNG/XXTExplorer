@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>st</string>
+	</array>
+	<key>name</key>
+	<string>Smalltalk</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>\b(true|false|nil|self|super|thisContext)\b</string>
+			<key>name</key>
+			<string>variable.language.smalltalk</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(\:\=)</string>
+			<key>name</key>
+			<string>keyword.operator.assignment.smalltalk</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(\^)</string>
+			<key>name</key>
+			<string>keyword.operator.return.smalltalk</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>end</key>
+			<string>"</string>
+			<key>name</key>
+			<string>comment.smalltalk</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>'</string>
+			<key>end</key>
+			<string>'</string>
+			<key>name</key>
+			<string>string.smalltalk</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.smalltalk</string>
+	<key>uuid</key>
+	<string>3018CF4D-D2EE-4290-8FC6-41C6FEE946A6</string>
+</dict>
+</plist>
