@@ -67,7 +67,7 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
         }];
         
         SKLanguage *rawLanguage = [bundleManager languageWithIdentifier:languageIdentifier];
-        assert(rawLanguage);
+        if (!rawLanguage) return nil;
         _skLanguage = rawLanguage;
         
         if ([languageMeta[@"comments"] isKindOfClass:[NSDictionary class]])

@@ -168,7 +168,7 @@
 		0F6679DE1F5162880072C177 /* XXTESnippetViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679DD1F5162880072C177 /* XXTESnippetViewerController.m */; };
 		0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E01F51635C0072C177 /* NSString+HTMLEscape.m */; };
 		0F6679E51F5164080072C177 /* XXTExplorerEntrySnippetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6679E41F5164080072C177 /* XXTExplorerEntrySnippetReader.m */; };
-		0F6682F820A7D62A00960436 /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; };
+		0F6682F820A7D62A00960436 /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		0F6682FC20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */; };
 		0F6682FD20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */; };
 		0F6682FE20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6682FB20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m */; };
@@ -1072,7 +1072,7 @@
 		D60FE74B1FE2369300954818 /* linit.c in Sources */ = {isa = PBXBuildFile; fileRef = B03125665019710DCE673142 /* linit.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D60FE74C1FE2369300954818 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312BFBBC625AD4F78CD910 /* liolib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D60FE74D1FE2369300954818 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312E8696170984090886F2 /* llex.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB -Wno-comma"; }; };
-		D60FE74E1FE2369300954818 /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; };
+		D60FE74E1FE2369300954818 /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		D60FE74F1FE2369300954818 /* lmathlib.c in Sources */ = {isa = PBXBuildFile; fileRef = B03126E6F40099732FDA696B /* lmathlib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D60FE7501FE2369300954818 /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312B42F387D1B96DCFA58C /* lmem.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		D60FE7511FE2369300954818 /* XXTESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8811641FB6AF640004F20C /* XXTESegmentedControl.m */; };
@@ -1181,7 +1181,7 @@
 		D63B58DB1F56684F00D26475 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63B58DA1F56684F00D26475 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D63E89E32031694B00A865DA /* XXTEWebDAVClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D63E89E22031694B00A865DA /* XXTEWebDAVClient.m */; };
 		D642B8C11F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C01F906E850006621B /* XXTEUIViewController+XXTCheckUpdate.m */; };
-		D642B8C41F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; };
+		D642B8C41F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C31F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		D642B8C71F906FEA0006621B /* XXTEUIViewController+SendMail.m in Sources */ = {isa = PBXBuildFile; fileRef = D642B8C61F906FEA0006621B /* XXTEUIViewController+SendMail.m */; };
 		D64323891F8B79A3009477BE /* XXTEUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64323881F8B79A3009477BE /* XXTEUIViewController.m */; };
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
@@ -1969,7 +1969,7 @@
 		B0312E7C21C7B2451E6D240D /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		B0312E8696170984090886F2 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
 		B0312EA80D17B9AF4D5E309E /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
-		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };

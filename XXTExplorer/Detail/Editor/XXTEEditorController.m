@@ -1578,6 +1578,7 @@ XXTE_START_IGNORE_PARTIAL
 }
 XXTE_END_IGNORE_PARTIAL
 
+XXTE_START_IGNORE_PARTIAL
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (XXTE_SYSTEM_8) {
         
@@ -1585,6 +1586,7 @@ XXTE_END_IGNORE_PARTIAL
         [self setNeedsReloadTextViewWidth];
     }
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - XXTEKeyboardToolbarRowDelegate
 

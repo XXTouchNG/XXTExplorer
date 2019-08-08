@@ -15,7 +15,7 @@
 #define RMCLOUD_ENABLED 1
 #define XXTE_STANDARD_LOCALE @"en_US_POSIX"
 
-#define XXTE_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"") _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+#define XXTE_START_IGNORE_PARTIAL _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wpartial-availability\"") _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") _Pragma("clang diagnostic ignored \"-Wdeprecated-implementations\"")
 #define XXTE_END_IGNORE_PARTIAL _Pragma("clang diagnostic pop")
 
 #define XXTE_SYSTEM_8 (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_8_0)

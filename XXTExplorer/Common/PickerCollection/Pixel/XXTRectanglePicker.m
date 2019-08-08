@@ -67,6 +67,7 @@
 
 #pragma mark - Rotate
 
+XXTE_START_IGNORE_PARTIAL
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration {
     if (!self.selectedImage) {
@@ -74,6 +75,7 @@
     }
     [self setSelectedImage:self.selectedImage];
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - View & Constraints
 
