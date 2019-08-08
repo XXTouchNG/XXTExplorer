@@ -246,7 +246,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
     }
 #else
-    if (_webServerUrl.length > 0 && _bonjourWebServerUrl.length > 0)
+    if (_webServerUrl.length > 0 || _bonjourWebServerUrl.length > 0)
     {
         staticSectionRowNum = @[ @3, @1, @1 ];
     } else {
@@ -820,7 +820,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 - (void)reloadDAVStatusWithDAVClient:(XXTEWebDAVClient *)davClient {
     _webServerUrl = davClient.serverURL.absoluteString;
     _bonjourWebServerUrl = davClient.bonjourServerURL.absoluteString;
-    if (_webServerUrl.length == 0)
+    if (_webServerUrl.length == 0 && davClient.isRunning)
         _webServerUrl = [[self class] otherInterfaceIPAddresses];
     [self updateRemoteAccessAddressDisplay];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
