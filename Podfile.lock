@@ -49,6 +49,7 @@ PODS:
     - PromiseKit/When
   - PromiseKit/When (1.7.7):
     - PromiseKit/Promise
+  - SOZOChromoplast (0.0.3)
   - SSZipArchive (2.2.2)
   - TOWebViewController (2.2.6):
     - TOWebViewController/Core (= 2.2.6)
@@ -74,10 +75,12 @@ DEPENDENCIES:
   - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7.6)
+  - SOZOChromoplast
   - SSZipArchive (from `https://github.com/Lessica/ZipArchive.git`)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
   - XUI (from `https://github.com/Lessica/XUI.git`)
+  - YYCache
   - YYImage (~> 1.0.4)
   - YYWebImage (~> 1.0.5)
 
@@ -89,6 +92,7 @@ SPEC REPOS:
     - JSONModel
     - OMGHTTPURLRQ
     - PromiseKit
+    - SOZOChromoplast
     - YYCache
     - YYImage
     - YYWebImage
@@ -139,6 +143,7 @@ SPEC CHECKSUMS:
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
   OMGHTTPURLRQ: 9ac96bdf5c90a33f75836630729ea1adc312a9ed
   PromiseKit: 9007df2f9e2ef725467084ab3880cf932ab935a4
+  SOZOChromoplast: 8902f554d852844c2025b26558d3322f8fae668d
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   TOWebViewController: 889ed1a70106e57541fd86f065855cc437763b15
   UnrarKit: d7d14f0841141e15e4fe936cd795a57d2cbbfbcd
@@ -147,6 +152,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: b0648ed35ff41b7625a85938976a85b43bd4b34e
+PODFILE CHECKSUM: e34c3fb036fb204de359fafa062a4654624b8053
 
 COCOAPODS: 1.7.5

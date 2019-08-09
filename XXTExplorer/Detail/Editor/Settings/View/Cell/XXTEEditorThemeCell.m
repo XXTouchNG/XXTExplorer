@@ -7,6 +7,11 @@
 //
 
 #import "XXTEEditorThemeCell.h"
+#import "UIImage+ColoredImage.h"
+
+@interface XXTEEditorThemeCell ()
+
+@end
 
 @implementation XXTEEditorThemeCell
 
@@ -19,7 +24,7 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = XXTColorCellSelected();
+    selectionBackground.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
     self.selectedBackgroundView = selectionBackground;
 }
 

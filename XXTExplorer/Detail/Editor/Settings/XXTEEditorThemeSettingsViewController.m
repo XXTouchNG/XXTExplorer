@@ -9,11 +9,19 @@
 #import "XXTEEditorThemeSettingsViewController.h"
 
 #import "XXTEEditorThemeCell.h"
+#import "UIColor+hexValue.h"
+#import "UIColor+SKColor.h"
+#import <SOZOChromoplast/SOZOChromoplast.h>
+#import <YYCache/YYCache.h>
+
+
+#define kEditorThemeMainColorCacheKey @"kEditorThemeMainColorCacheKey"
 
 @interface XXTEEditorThemeSettingsViewController ()
 
 @property (nonatomic, strong) UIBarButtonItem *previewItem;
 @property (nonatomic, strong) NSArray <NSDictionary *> *themes;
+@property (nonatomic, strong) YYCache *sozoCache;
 
 @end
 
@@ -72,6 +80,7 @@
         }
     }
     _themes = [availableThemes copy];
+    _sozoCache = [[YYCache alloc] initWithName:@"kEditorThemeMainColorCacheKey"];
 }
 
 #pragma mark - Life Cycle
@@ -82,6 +91,7 @@
     self.title = NSLocalizedString(@"Theme", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEEditorThemeCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEEditorThemeCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
@@ -116,21 +126,54 @@
         NSDictionary *theme = self.themes[indexPath.row];
         NSString *themeName = theme[@"name"];
         NSString *themeTitle = theme[@"title"] ?: themeName;
+        
         XXTEEditorThemeCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEEditorThemeCellReuseIdentifier forIndexPath:indexPath];
         cell.titleLabel.text = themeTitle;
-        id previewValue = theme[@"preview"];
-        if ([previewValue isKindOfClass:[UIImage class]]) {
-            cell.previewImageView.image = previewValue;
-        } else if ([previewValue isKindOfClass:[NSString class]]) {
-            cell.previewImageView.image = [UIImage imageNamed:previewValue];
+        
+        NSString *previewValue = theme[@"preview"];
+        UIImage *exampleImage = nil;
+        if ([previewValue isKindOfClass:[NSString class]]) {
+            exampleImage = [UIImage imageNamed:previewValue];
+            cell.previewImageView.image = exampleImage;
         }
+        
         if ([themeName isEqualToString:self.selectedThemeName]) {
-            cell.titleLabel.textColor = XXTColorDefault();
+            // cell.titleLabel.textColor = XXTColorDefault();
             cell.selectFlagView.hidden = NO;
         } else {
-            cell.titleLabel.textColor = [UIColor blackColor];
+            // cell.titleLabel.textColor = [UIColor whiteColor];
             cell.selectFlagView.hidden = YES;
         }
+        
+        if (exampleImage) {
+            NSString *mainKey = [NSString stringWithFormat:@"%@", previewValue];
+            NSString *dominantKey = [NSString stringWithFormat:@"%@/dominantColor", previewValue];
+            NSString *firstKey = [NSString stringWithFormat:@"%@/firstHighlight", previewValue];
+            // NSString *secondKey = [NSString stringWithFormat:@"%@/secondHighlight", previewValue];
+            
+            BOOL cached = [(NSNumber *)[self.sozoCache objectForKey:mainKey] boolValue];
+            if (cached) {
+                NSString *dominantHex = (NSString *)[self.sozoCache objectForKey:dominantKey];
+                NSString *firstHex = (NSString *)[self.sozoCache objectForKey:firstKey];
+                // NSString *secondHex = (NSString *)[self.sozoCache objectForKey:secondKey];
+                
+                cell.backgroundColor = [UIColor colorWithHex:dominantHex];
+                cell.titleLabel.textColor = [UIColor colorWithHex:firstHex];
+            } else {
+                // Instantiate your chromoplast
+                SOZOChromoplast *chromoplast = [[SOZOChromoplast alloc] initWithImage:exampleImage];
+                
+                // Use your colors!
+                cell.backgroundColor = chromoplast.dominantColor;
+                cell.titleLabel.textColor = chromoplast.firstHighlight;
+                
+                [self.sozoCache setObject:@(YES) forKey:mainKey];
+                [self.sozoCache setObject:[chromoplast.dominantColor hexString] forKey:dominantKey];
+                [self.sozoCache setObject:[chromoplast.firstHighlight hexString] forKey:firstKey];
+                // [self.sozoCache setObject:[chromoplast.secondHighlight hexString] forKey:secondKey];
+            }
+        }
+        
         return cell;
     }
     return [UITableViewCell new];
@@ -147,11 +190,11 @@
             self.selectedThemeEntry = theme;
             
             for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
-                cell.titleLabel.textColor = [UIColor blackColor];
+                // cell.titleLabel.textColor = [UIColor whiteColor];
                 cell.selectFlagView.hidden = YES;
             }
             XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-            selectCell.titleLabel.textColor = XXTColorDefault();
+            // selectCell.titleLabel.textColor = XXTColorDefault();
             selectCell.selectFlagView.hidden = NO;
             
             if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {

@@ -185,7 +185,9 @@
     simpleTitleViewCell.titleLabel.text = NSLocalizedString(@"Simple Title", nil);
     simpleTitleViewCell.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSimpleTitleView, (XXTE_IS_IPAD ? NO : YES));
     {
+        @weakify(self);
         [simpleTitleViewCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSimpleTitleView, optionSwitch.on);
             [self.editor setNeedsSoftReload];

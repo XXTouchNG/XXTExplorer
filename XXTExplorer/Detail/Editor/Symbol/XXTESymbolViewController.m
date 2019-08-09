@@ -17,11 +17,15 @@
 #import "XXTEEditorLanguage.h"
 #import "UIColor+SKColor.h"
 
+// Views
 #import "XXTESymbolCell.h"
 #import "XXTEEditorTextView.h"
+#import "XXTEEditorMaskView.h"
+#import "XXTESingleActionView.h"
+
+// Helpers
 #import "SKParser.h"
 
-#import "XXTEEditorMaskView.h"
 
 @interface XXTESymbolViewController ()
 <
@@ -32,6 +36,7 @@ UISearchResultsUpdating
 >
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) XXTESingleActionView *actionView;
 
 @property (nonatomic, strong) NSArray <NSDictionary *> *symbolsTable;
 @property (nonatomic, strong) NSArray <NSDictionary *> *displaySymbolsTable;
@@ -145,6 +150,9 @@ XXTE_END_IGNORE_PARTIAL
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
     
+    [self.actionView setHidden:YES];
+    [self.view addSubview:self.actionView];
+    
     NSError *error = nil;
     BOOL result = [self loadFileSymbolsWithError:&error];
     if (!result) {
@@ -218,11 +226,40 @@ XXTE_END_IGNORE_PARTIAL
         dispatch_async_on_main_queue(^{
             self.symbolsTable = symbolsTable;
             blockInteractions(blockVC, NO);
-            [self.tableView reloadData];
+            [self reloadState];
         });
     });
     return YES;
 }
+
+#pragma mark - Reload
+
+- (void)reloadState {
+    XXTESingleActionView *actionView = self.actionView;
+    if ([[self symbolsTable] count] == 0) {
+        [actionView.iconImageView setImage:[UIImage imageNamed:@"XXTENotFound"]];
+        [actionView.titleLabel setText:NSLocalizedString(@"404 Not Found", nil)];
+        [actionView.descriptionLabel setText:NSLocalizedString(@"No symbol found, would you like to write something exciting?", nil)];
+        [actionView setHidden:NO];
+    } else {
+        [actionView setHidden:YES];
+    }
+    [self.tableView reloadData];
+}
+
+#pragma mark - UIView Getters
+
+- (XXTESingleActionView *)actionView {
+    if (!_actionView) {
+        XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
+        actionView.frame = self.view.bounds;
+        actionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _actionView = actionView;
+    }
+    return _actionView;
+}
+
+#pragma mark - UITableView
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44.f;
