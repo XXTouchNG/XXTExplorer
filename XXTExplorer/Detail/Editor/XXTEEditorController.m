@@ -1032,19 +1032,21 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     }
     if (editedMask & NSTextStorageEditedCharacters) {
         NSString *text = textStorage.string;
+        NSRange textRange = NSMakeRange(0, text.length);
         
-//        NSUInteger s, e;
-//        [text getLineStart:&s end:NULL contentsEnd:&e forRange:editedRange];
-//        NSRange renderRange = NSMakeRange(s, e - s);
-        NSRange renderRange = [self.textView visibleRange];
+        NSUInteger s, e;
+        [text getLineStart:&s end:NULL contentsEnd:&e forRange:editedRange];
+        NSRange lineRange = NSMakeRange(s, e - s);
+        NSRange visibleRange = [self.textView visibleRange];
+        if (NO == NSRangeEntirelyContains(visibleRange, lineRange)) {
+            visibleRange = NSIntersectionRange(visibleRange, lineRange);
+        }
+        NSRange renderRange = NSIntersectionRange(visibleRange, textRange);
         
         NSDictionary *d = self.theme.defaultAttributes;
         [textStorage setAttributes:d range:renderRange];
         [textStorage fixAttributesInRange:renderRange];
         [self.parser attributedParseString:text inRange:renderRange matchCallback:^(NSString *scopeName, NSRange range, SKAttributes attributes) {
-//            if (NO == NSRangeEntirelyContains(renderRange, range)) {
-//                range = NSIntersectionRange(renderRange, range);
-//            }
             if (attributes) {
                 [textStorage addAttributes:attributes range:range];
                 [textStorage fixAttributesInRange:range];
