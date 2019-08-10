@@ -149,7 +149,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
 			<key>default</key>
-			<true/>
+			<false/>
 			<key>title</key>
 			<string>隐藏操作标签</string>
 			<key>description</key>
