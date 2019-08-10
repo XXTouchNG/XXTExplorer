@@ -29,6 +29,12 @@
 			<key>title</key>
 			<string>文件查看器设置</string>
 		</dict>
+		<dict>
+			<key>key</key>
+			<string>EDITOR_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>代码编辑器设置</string>
+		</dict>
 	</array>
 	<key>EXPLORER_USER_DEFAULTS</key>
 	<array>
@@ -270,6 +276,27 @@
 				<string>Western (EBCDIC US)</string>
 				<string>Western (EBCDIC Latin 1)</string>
 				<string>Non-lossy ASCII</string>
+			</array>
+		</dict>
+	</array>
+	<key>EDITOR_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerTerminalPresentationStyle</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>终端展示样式</string>
+			<key>description</key>
+			<string>仅适用于 iPhone/iPod, 此选项决定当你按下运行按钮时, 终端的显示样式.</string>
+			<key>options</key>
+			<array>
+				<string>推出新页面</string>
+				<string>以模态框展示</string>
+				<string>以悬浮窗展示</string>
 			</array>
 		</dict>
 	</array>

@@ -24,14 +24,22 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     UIView *selectionBackground = [[UIView alloc] init];
-    selectionBackground.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
+    selectionBackground.backgroundColor = [UIColor clearColor];
     self.selectedBackgroundView = selectionBackground;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    UIColor *backgroundColor = self.titleBaseView.backgroundColor;
+    [super setHighlighted:highlighted animated:animated];
+    self.titleBaseView.backgroundColor = backgroundColor;
+}
 
-    // Configure the view for the selected state
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    UIColor *backgroundColor = self.titleBaseView.backgroundColor;
+    [super setSelected:selected animated:animated];
+    self.titleBaseView.backgroundColor = backgroundColor;
 }
 
 @end

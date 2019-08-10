@@ -29,6 +29,12 @@
 			<key>title</key>
 			<string>Viewer Config</string>
 		</dict>
+		<dict>
+			<key>key</key>
+			<string>EDITOR_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>Editor Config</string>
+		</dict>
 	</array>
 	<key>EXPLORER_USER_DEFAULTS</key>
 	<array>
@@ -270,6 +276,27 @@
 				<string>Western (EBCDIC US)</string>
 				<string>Western (EBCDIC Latin 1)</string>
 				<string>Non-lossy ASCII</string>
+			</array>
+		</dict>
+	</array>
+	<key>EDITOR_USER_DEFAULTS</key>
+	<array>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerTerminalPresentationStyle</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Terminal Presentation Style</string>
+			<key>description</key>
+			<string>Available on iPhone/iPod, detetmine how terminal presents when you tap the launch button.</string>
+			<key>options</key>
+			<array>
+				<string>Push</string>
+				<string>Present in Modal</string>
+				<string>Present as Popover</string>
 			</array>
 		</dict>
 	</array>

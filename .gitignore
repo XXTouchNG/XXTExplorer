@@ -75,3 +75,6 @@ DerivedData/
 
 # End of https://www.gitignore.io/api/macos,xcode,cocoapods
 n
+
+## Lua Modules
+XXTExplorer/LuaModules/

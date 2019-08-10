@@ -41,10 +41,10 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 
 - (void)setup {
     @synchronized (self) {
-        _stdinReadHandler = stdin;
-        _stdinWriteHandler = stdin;
-        _stdoutHandler = stdout;
-        _stderrHandler = stderr;
+        _stdinReadHandler = nil;
+        _stdinWriteHandler = nil;
+        _stdoutHandler = nil;
+        _stderrHandler = nil;
         
         _inputPipe = [NSPipe pipe];
         _outputPipe = [NSPipe pipe];
@@ -96,22 +96,22 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
         if (self.stdoutHandler)
         {
             fclose(self.stdoutHandler);
-            self.stdoutHandler = stdout;
+            self.stdoutHandler = nil;
         }
         if (self.stderrHandler)
         {
             fclose(self.stderrHandler);
-            self.stderrHandler = stderr;
+            self.stderrHandler = nil;
         }
         if (self.stdinReadHandler)
         {
             fclose(self.stdinReadHandler);
-            self.stdinReadHandler = stdin;
+            self.stdinReadHandler = nil;
         }
         if (self.stdinWriteHandler)
         {
             fclose(self.stdinWriteHandler);
-            self.stdinWriteHandler = stdin;
+            self.stdinWriteHandler = nil;
         }
         
     }
@@ -124,17 +124,19 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
 }
 
 - (void)setRunning:(BOOL)running {
-    _running = running;
-    if (!running)
-    {
-        char *emptyBuf = (char *)malloc(8192 * sizeof(char)); // malloc
-        memset(emptyBuf, 0x0a, 8192);
-        [self.inputPipe.fileHandleForWriting writeData:[NSData dataWithBytes:emptyBuf length:8192]];
-        free(emptyBuf);
-    }
-    if (_delegate && [_delegate respondsToSelector:@selector(virtualMachineDidChangedState:)])
-    {
-        [_delegate virtualMachineDidChangedState:self];
+    if (running != _running) {
+        _running = running;
+        if (!running)
+        {
+            char *emptyBuf = (char *)malloc(8192 * sizeof(char)); // malloc
+            memset(emptyBuf, 0x0a, 8192);
+            [self.inputPipe.fileHandleForWriting writeData:[NSData dataWithBytes:emptyBuf length:8192]];
+            free(emptyBuf);
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(virtualMachineDidChangedState:)])
+        {
+            [_delegate virtualMachineDidChangedState:self];
+        }
     }
 }
 

@@ -284,14 +284,6 @@
 	</dict>
 	<dict>
 		<key>location</key>
-		<string>References.bundle/hljs/styles/darkula.css</string>
-		<key>name</key>
-		<string>Darkula</string>
-		<key>preview</key>
-		<string>References.bundle/hljs/styles/Darkula.png</string>
-	</dict>
-	<dict>
-		<key>location</key>
 		<string>References.bundle/hljs/styles/default.css</string>
 		<key>name</key>
 		<string>Default</string>

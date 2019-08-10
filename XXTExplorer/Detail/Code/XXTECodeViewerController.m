@@ -91,7 +91,7 @@
         _lockedState = NO;
         _currentEncoding = kCFStringEncodingInvalidId;
         _entryPath = path;
-        _hljsCssRegex = [NSRegularExpression regularExpressionWithPattern:@"\\.hljs( +|,+.*?)\\{(.*?)\\}" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
+        _hljsCssRegex = [NSRegularExpression regularExpressionWithPattern:@"\\.hljs(\\s+|,+.*?)\\{(.*?)\\}" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
         _hljsLineCssRegex = [NSRegularExpression regularExpressionWithPattern:@"([A-Za-z0-9|-]+):\\s?(.*)" options:kNilOptions error:nil];
         _shouldRefreshNagivationBar = NO;
         self.navigationButtonsHidden = YES;

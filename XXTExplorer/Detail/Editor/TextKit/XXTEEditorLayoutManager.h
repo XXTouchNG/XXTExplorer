@@ -20,12 +20,13 @@
 @property (nonatomic, strong) UIFont *lineNumberFont;
 @property (nonatomic, strong) UIColor *lineNumberColor;
 @property (nonatomic, assign) NSUInteger numberOfDigits;
+@property (nonatomic, assign, readonly) CGFloat lineHeight;
+@property (nonatomic, assign, readonly) CGFloat lineHeightScale;
 
 @property (nonatomic, assign, readonly) CGFloat gutterWidth;
 
 @property (nonatomic, assign, readonly) UIEdgeInsets lineAreaInset;
 @property (nonatomic, assign, readonly) CGFloat fontPointSize;
-@property (nonatomic, assign, readonly) CGFloat lineHeightScale;
 
 //- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex;
 - (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex textContainer:(NSTextContainer *)container;

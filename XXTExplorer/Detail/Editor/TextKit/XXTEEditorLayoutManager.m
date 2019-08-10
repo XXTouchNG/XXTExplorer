@@ -99,7 +99,10 @@
 }
 
 - (BOOL)indentWrappedLines {
-    return NO;
+    if (@available(iOS 12.0, *)) {
+        return _indentWrappedLines;
+    }
+    return YES;
     // this method has some bugs so we had to disable it temporarily
 }
 
@@ -322,7 +325,7 @@
         }
     }
     
-    // For now we compute left insets only, but rigth inset is also possible
+    // For now we compute left insets only, but right inset is also possible
     return UIEdgeInsetsMake(0, leftInset, 0, 0);
 }
 
@@ -343,7 +346,7 @@
 {
     // Etxra line fragment rect must be indented just like every other line fragment rect
     if ([self indentWrappedLines]) {
-        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: self.textStorage.length textContainer:container];
+        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex:self.textStorage.length textContainer:container];
         
         fragmentRect.origin.x += insets.left;
         usedRect.origin.x += insets.left;

@@ -15,17 +15,23 @@
 #import <YYCache/YYCache.h>
 
 
-#define kEditorThemeMainColorCacheKey @"kEditorThemeMainColorCacheKey"
-
 @interface XXTEEditorThemeSettingsViewController ()
 
 @property (nonatomic, strong) UIBarButtonItem *previewItem;
 @property (nonatomic, strong) NSArray <NSDictionary *> *themes;
-@property (nonatomic, strong) YYCache *sozoCache;
 
 @end
 
 @implementation XXTEEditorThemeSettingsViewController
+
++ (YYCache *)sozoCache {
+    static YYCache *sozoCache = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sozoCache = [[YYCache alloc] initWithName:@"kEditorThemeMainColorCacheKey"];
+    });
+    return sozoCache;
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -80,7 +86,6 @@
         }
     }
     _themes = [availableThemes copy];
-    _sozoCache = [[YYCache alloc] initWithName:@"kEditorThemeMainColorCacheKey"];
 }
 
 #pragma mark - Life Cycle
@@ -105,6 +110,47 @@
     }
     
     self.navigationItem.rightBarButtonItem = self.previewItem;
+    [self loadThemeColorCache];
+}
+
+#pragma mark - Cache
+
+- (void)loadThemeColorCache {
+    Class myClass = [XXTEEditorThemeSettingsViewController class];
+    NSArray <NSDictionary *> *themes = self.themes;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        for (NSDictionary *theme in themes) {
+            NSString *themePreview = theme[@"preview"];
+            if (![themePreview isKindOfClass:[NSString class]]) {
+                continue;
+            }
+            UIImage *exampleImage = [UIImage imageNamed:themePreview];
+            if (!exampleImage) {
+                continue;
+            }
+            NSString *mainKey = [NSString stringWithFormat:@"%@", themePreview];
+            BOOL cached = [(NSNumber *)[myClass.sozoCache objectForKey:mainKey] boolValue];
+            if (cached) {
+                continue;
+            }
+            
+            NSString *dominantKey = [NSString stringWithFormat:@"%@/dominantColor", themePreview];
+            NSString *firstKey = [NSString stringWithFormat:@"%@/firstHighlight", themePreview];
+            NSString *secondKey = [NSString stringWithFormat:@"%@/secondHighlight", themePreview];
+            
+            SOZOChromoplast *chromoplast = [[SOZOChromoplast alloc] initWithImage:exampleImage];
+            [myClass.sozoCache setObject:@(YES) forKey:mainKey];
+            [myClass.sozoCache setObject:[chromoplast.dominantColor hexString] forKey:dominantKey];
+            [myClass.sozoCache setObject:[chromoplast.firstHighlight hexString] forKey:firstKey];
+            [myClass.sozoCache setObject:[chromoplast.secondHighlight hexString] forKey:secondKey];
+            
+#ifdef DEBUG
+            dispatch_async_on_main_queue(^{
+                NSLog(@"SOZOChromoplast cached: %@", themePreview);
+            });
+#endif
+        }
+    });
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -130,49 +176,45 @@
         XXTEEditorThemeCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEEditorThemeCellReuseIdentifier forIndexPath:indexPath];
         cell.titleLabel.text = themeTitle;
         
-        NSString *previewValue = theme[@"preview"];
+        NSString *themePreview = theme[@"preview"];
         UIImage *exampleImage = nil;
-        if ([previewValue isKindOfClass:[NSString class]]) {
-            exampleImage = [UIImage imageNamed:previewValue];
+        if ([themePreview isKindOfClass:[NSString class]]) {
+            exampleImage = [UIImage imageNamed:themePreview];
             cell.previewImageView.image = exampleImage;
         }
         
-        if ([themeName isEqualToString:self.selectedThemeName]) {
-            // cell.titleLabel.textColor = XXTColorDefault();
-            cell.selectFlagView.hidden = NO;
-        } else {
-            // cell.titleLabel.textColor = [UIColor whiteColor];
-            cell.selectFlagView.hidden = YES;
-        }
-        
+        UIColor *highlightColor = [UIColor whiteColor];
         if (exampleImage) {
-            NSString *mainKey = [NSString stringWithFormat:@"%@", previewValue];
-            NSString *dominantKey = [NSString stringWithFormat:@"%@/dominantColor", previewValue];
-            NSString *firstKey = [NSString stringWithFormat:@"%@/firstHighlight", previewValue];
-            // NSString *secondKey = [NSString stringWithFormat:@"%@/secondHighlight", previewValue];
+            NSString *mainKey = [NSString stringWithFormat:@"%@", themePreview];
+            NSString *dominantKey = [NSString stringWithFormat:@"%@/dominantColor", themePreview];
+            NSString *firstKey = [NSString stringWithFormat:@"%@/firstHighlight", themePreview];
+            // NSString *secondKey = [NSString stringWithFormat:@"%@/secondHighlight", themePreview];
             
-            BOOL cached = [(NSNumber *)[self.sozoCache objectForKey:mainKey] boolValue];
+            BOOL cached = [(NSNumber *)[self.class.sozoCache objectForKey:mainKey] boolValue];
             if (cached) {
-                NSString *dominantHex = (NSString *)[self.sozoCache objectForKey:dominantKey];
-                NSString *firstHex = (NSString *)[self.sozoCache objectForKey:firstKey];
-                // NSString *secondHex = (NSString *)[self.sozoCache objectForKey:secondKey];
+                NSString *dominantHex = (NSString *)[self.class.sozoCache objectForKey:dominantKey];
+                NSString *firstHex = (NSString *)[self.class.sozoCache objectForKey:firstKey];
+                // NSString *secondHex = (NSString *)[self.class.sozoCache objectForKey:secondKey];
                 
+                highlightColor = [UIColor colorWithHex:firstHex];
                 cell.backgroundColor = [UIColor colorWithHex:dominantHex];
-                cell.titleLabel.textColor = [UIColor colorWithHex:firstHex];
+                cell.titleLabel.textColor = highlightColor;
             } else {
                 // Instantiate your chromoplast
                 SOZOChromoplast *chromoplast = [[SOZOChromoplast alloc] initWithImage:exampleImage];
                 
                 // Use your colors!
+                highlightColor = chromoplast.firstHighlight;
                 cell.backgroundColor = chromoplast.dominantColor;
-                cell.titleLabel.textColor = chromoplast.firstHighlight;
+                cell.titleLabel.textColor = highlightColor;
                 
-                [self.sozoCache setObject:@(YES) forKey:mainKey];
-                [self.sozoCache setObject:[chromoplast.dominantColor hexString] forKey:dominantKey];
-                [self.sozoCache setObject:[chromoplast.firstHighlight hexString] forKey:firstKey];
-                // [self.sozoCache setObject:[chromoplast.secondHighlight hexString] forKey:secondKey];
+                [self.class.sozoCache setObject:@(YES) forKey:mainKey];
+                [self.class.sozoCache setObject:[chromoplast.dominantColor hexString] forKey:dominantKey];
+                [self.class.sozoCache setObject:[chromoplast.firstHighlight hexString] forKey:firstKey];
+                // [self.class.sozoCache setObject:[chromoplast.secondHighlight hexString] forKey:secondKey];
             }
         }
+        cell.titleBaseView.backgroundColor = [highlightColor colorWithAlphaComponent:0.1];
         
         return cell;
     }
@@ -190,12 +232,10 @@
             self.selectedThemeEntry = theme;
             
             for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
-                // cell.titleLabel.textColor = [UIColor whiteColor];
-                cell.selectFlagView.hidden = YES;
+                // cell.titleBaseView.backgroundColor = [UIColor clearColor];
             }
             XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-            // selectCell.titleLabel.textColor = XXTColorDefault();
-            selectCell.selectFlagView.hidden = NO;
+            // selectCell.titleBaseView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
             
             if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {
                 [_delegate themeSettingsViewControllerSettingsDidChanged:self];

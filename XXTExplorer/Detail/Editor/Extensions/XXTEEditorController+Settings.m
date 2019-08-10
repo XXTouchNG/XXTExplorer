@@ -16,6 +16,9 @@
 #import "XXTEEditorTextView.h"
 #import "XXTEEditorLanguage.h"
 
+#import "XXTEAppDefines.h"
+#import "XXTExplorerDefaults.h"
+
 @implementation XXTEEditorController (Settings)
 
 #pragma mark - Button Actions
@@ -64,21 +67,26 @@
     if ([self isLaunchItemAvailable]) {
         [self saveDocumentIfNecessary];
         NSString *entryPath = self.entryPath;
+        XXTETerminalPresentationStyle style = XXTEDefaultsInt(XXTExplorerTerminalPresentationStyle, XXTETerminalPresentationStylePush);
         XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
         terminalController.runImmediately = YES;
         terminalController.editor = self;
-        if (XXTE_COLLAPSED) {
+        if (XXTE_COLLAPSED || style == XXTETerminalPresentationStylePresentAsPopover) {
             XXTE_START_IGNORE_PARTIAL
             if (@available(iOS 9.0, *)) {
                 terminalController.modalPresentationStyle = UIModalPresentationPopover;
                 UIPopoverPresentationController *popoverPresentationController = terminalController.popoverPresentationController;
                 popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
                 popoverPresentationController.barButtonItem = sender;
+                popoverPresentationController.delegate = self;
                 [self.navigationController presentViewController:terminalController animated:YES completion:nil];
             } else {
                 toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
             }
             XXTE_END_IGNORE_PARTIAL
+        } else if (style == XXTETerminalPresentationStylePresentInModal) {
+            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:terminalController];
+            [self presentViewController:navigationController animated:YES completion:nil];
         } else {
             [self.navigationController pushViewController:terminalController animated:YES];
         }
@@ -151,5 +159,13 @@
         [self.navigationController pushViewController:settingsController animated:YES];
     }
 }
+
+#pragma mark - UIPopoverPresentationControllerDelegate
+
+XXTE_START_IGNORE_PARTIAL
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
+}
+XXTE_END_IGNORE_PARTIAL
 
 @end

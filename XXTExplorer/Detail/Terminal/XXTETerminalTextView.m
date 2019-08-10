@@ -124,6 +124,9 @@
 }
 
 - (void)appendString:(NSString *)text withAttributes:(NSDictionary *)attrs {
+    if (!text || !attrs) {
+        return;
+    }
     [self.textStorage beginEditing];
     NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
     NSAttributedString *appendAttrString = [[NSAttributedString alloc] initWithString:text attributes:attrs];

@@ -36,6 +36,14 @@
 }
 
 - (void)keyboardWillAppear:(NSNotification *)aNotification {
+    if (self.presentedViewController) {
+        return;
+    }
+    
+    if (![self.textView isFirstResponder]) {
+        return;
+    }
+    
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
         BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
@@ -56,6 +64,14 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardDidAppear:(NSNotification *)aNotification
 {
+    if (self.presentedViewController) {
+        return;
+    }
+    
+    if (![self.textView isFirstResponder]) {
+        return;
+    }
+    
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
         BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
@@ -92,6 +108,14 @@
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillDisappear:(NSNotification *)aNotification
 {
+    if (self.presentedViewController) {
+        return;
+    }
+    
+    if (![self.textView isFirstResponder]) {
+        return;
+    }
+    
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
         BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
@@ -120,6 +144,10 @@
 
 - (void)keyboardDidDisappear:(NSNotification *)aNotification
 {
+    if (self.presentedViewController) {
+        return;
+    }
+    
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
         BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];

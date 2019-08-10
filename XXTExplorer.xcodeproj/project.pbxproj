@@ -1171,6 +1171,12 @@
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
 		D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
 		D63340641FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
+		D63699CD22FEBAD7006CF006 /* cjson.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D63699CC22FEBAD7006CF006 /* cjson.so */; };
+		D63699E822FEC6A1006CF006 /* liblfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D63699E622FEC5CB006CF006 /* liblfs.a */; };
+		D6369A2922FEC995006CF006 /* liblcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6369A2722FEC995006CF006 /* liblcurl.a */; };
+		D6369A2A22FEC995006CF006 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6369A2822FEC995006CF006 /* libcurl.a */; };
+		D6369A2D22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */ = {isa = PBXBuildFile; fileRef = D6369A2B22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */; };
+		D6369A2E22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */ = {isa = PBXBuildFile; fileRef = D6369A2C22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */; };
 		D63711DC22F2FB7400ACE211 /* UIColor+CssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */; };
 		D63711DD22F2FB7400ACE211 /* UIColor+CssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */; };
 		D63711DE22F2FB7400ACE211 /* UIColor+CssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */; };
@@ -2024,6 +2030,13 @@
 		D62DD67A1F3D7FE600A34850 /* SyntaxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxKit.h; sourceTree = "<group>"; };
 		D63340611FD6529200B08B4E /* XXTEImageViewerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
 		D63340621FD6529200B08B4E /* XXTEImageViewerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
+		D63699A922FE94C0006CF006 /* XXTECacheDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTECacheDefines.h; sourceTree = "<group>"; };
+		D63699CC22FEBAD7006CF006 /* cjson.so */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = cjson.so; path = dist/lib/cjson.so; sourceTree = "<group>"; };
+		D63699E622FEC5CB006CF006 /* liblfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblfs.a; path = dist/lib/liblfs.a; sourceTree = "<group>"; };
+		D6369A2722FEC995006CF006 /* liblcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblcurl.a; path = dist/lib/liblcurl.a; sourceTree = "<group>"; };
+		D6369A2822FEC995006CF006 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = dist/lib/libcurl.a; sourceTree = "<group>"; };
+		D6369A2B22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip"; path = "dist/Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip"; sourceTree = "<group>"; };
+		D6369A2C22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip"; path = "dist/lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip"; sourceTree = "<group>"; };
 		D63711DA22F2FB7400ACE211 /* UIColor+CssColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+CssColor.h"; sourceTree = "<group>"; };
 		D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CssColor.m"; sourceTree = "<group>"; };
 		D63711FA22F3F09400ACE211 /* XXTEEncodingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEncodingController.h; sourceTree = "<group>"; };
@@ -2471,8 +2484,12 @@
 				0FAE190220809143005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */,
 				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,
+				D63699CD22FEBAD7006CF006 /* cjson.so in Frameworks */,
+				D63699E822FEC6A1006CF006 /* liblfs.a in Frameworks */,
 				0F8EDC591FB1F779003C92D6 /* Photos.framework in Frameworks */,
+				D6369A2922FEC995006CF006 /* liblcurl.a in Frameworks */,
 				0F8EDC5A1FB1F779003C92D6 /* AssetsLibrary.framework in Frameworks */,
+				D6369A2A22FEC995006CF006 /* libcurl.a in Frameworks */,
 				0F8EDC5B1FB1F779003C92D6 /* libc++.tbd in Frameworks */,
 				0F8EDC5D1FB1F779003C92D6 /* WebKit.framework in Frameworks */,
 				0F8EDC5E1FB1F779003C92D6 /* CoreMedia.framework in Frameworks */,
@@ -3319,6 +3336,7 @@
 		0FA7ABEC1ED641A3003EAD7D /* XXTExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				D63699AA22FE9D86006CF006 /* LuaModules */,
 				0F2E49E51F4CA10600BD11AA /* Common */,
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
@@ -3908,6 +3926,7 @@
 				D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */,
 				D6E1E1DF2020489B00324198 /* XXTEPermissionDefines.h */,
 				0FEA24532020A90B00AA60DC /* XXTEUtils.m */,
+				D63699A922FE94C0006CF006 /* XXTECacheDefines.h */,
 			);
 			path = Defines;
 			sourceTree = "<group>";
@@ -4410,6 +4429,19 @@
 				D6DBD4871F3C36AD002D5561 /* XXTEDaemonAgent.m */,
 			);
 			path = Daemon;
+			sourceTree = "<group>";
+		};
+		D63699AA22FE9D86006CF006 /* LuaModules */ = {
+			isa = PBXGroup;
+			children = (
+				D6369A2822FEC995006CF006 /* libcurl.a */,
+				D6369A2722FEC995006CF006 /* liblcurl.a */,
+				D63699E622FEC5CB006CF006 /* liblfs.a */,
+				D63699CC22FEBAD7006CF006 /* cjson.so */,
+				D6369A2C22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */,
+				D6369A2B22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */,
+			);
+			path = LuaModules;
 			sourceTree = "<group>";
 		};
 		D637120922F4852900ACE211 /* Encoding */ = {
@@ -5029,6 +5061,7 @@
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
 				0FA1A4FD1FF13CA00021648B /* Settings.bundle in Resources */,
 				0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */,
+				D6369A2D22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */,
 				0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F8ECD4A1FE802A900A5457C /* Solarized (Light).png in Resources */,
@@ -5104,6 +5137,7 @@
 				D661679622F1D94F00EC8835 /* HLTheme.plist in Resources */,
 				0F8ECD261FE8016200A5457C /* Cobalt.png in Resources */,
 				0F8EDCBA1FB1F779003C92D6 /* XXTImagePickerController.xib in Resources */,
+				D6369A2E22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */,
 				0F8EDCBB1FB1F779003C92D6 /* XXTEEditorThemeCell.xib in Resources */,
 				0F8ECD461FE802A900A5457C /* Oceanic.png in Resources */,
 				0F8ECD241FE7FE0800A5457C /* Mac Classic.png in Resources */,
@@ -6630,6 +6664,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
+					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
+					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -6726,6 +6762,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
+					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
+					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6856,6 +6894,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
+					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -6938,6 +6977,7 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage-iOS8.0\"",
 					"$(PROJECT_DIR)/XXTExplorer",
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
+					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -401,10 +401,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     // Layout Manager
     [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     if (textView.vLayoutManager) {
-        UIColor *gutterColor = [theme.foregroundColor colorWithAlphaComponent:.45];
+        UIColor *gutterColor = [theme.foregroundColor colorWithAlphaComponent:.25];
+        UIColor *gutterBackgroundColor = [theme.foregroundColor colorWithAlphaComponent:.033];
         
         [textView setGutterLineColor:gutterColor];
-        [textView setGutterBackgroundColor:theme.backgroundColor];
+        [textView setGutterBackgroundColor:gutterBackgroundColor];
         
         [textView.vLayoutManager setLineNumberFont:theme.font];
         [textView.vLayoutManager setLineNumberColor:gutterColor];
@@ -486,6 +487,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     [self reloadTextViewProperties];
     [self reloadContent:newContent];
     [self reloadAttributesIfNecessary];
+    [self resetUndoManager];
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
@@ -968,12 +970,15 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     
     XXTEEditorTheme *theme = self.theme;
     XXTEEditorTextView *textView = self.textView;
+    
+    [textView.undoManager disableUndoRegistration];
     [textView setEditable:NO];
     [textView setFont:theme.font];
     [textView setTextColor:theme.foregroundColor];
     [textView setText:content];
     [textView setEditable:(isReadOnlyMode == NO && isLockedState == NO)];
     [textView setSelectedRange:NSMakeRange(0, 0)];
+    [textView.undoManager enableUndoRegistration];  // enable undo
 }
 
 - (void)resetUndoManager {
@@ -982,7 +987,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     keyboardToolbarRow.redoItem.enabled = NO;
     keyboardToolbarRow.undoItem.enabled = NO;
     {
-        [textView.undoManager removeAllActions]; // reset undo manager
+        [textView.undoManager removeAllActions];  // reset undo manager
     }
 }
 
@@ -1039,7 +1044,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         NSRange lineRange = NSMakeRange(s, e - s);
         NSRange visibleRange = [self.textView visibleRange];
         if (NO == NSRangeEntirelyContains(visibleRange, lineRange)) {
-            visibleRange = NSIntersectionRange(visibleRange, lineRange);
+            visibleRange = NSUnionRange(visibleRange, lineRange);
         }
         NSRange renderRange = NSIntersectionRange(visibleRange, textRange);
         

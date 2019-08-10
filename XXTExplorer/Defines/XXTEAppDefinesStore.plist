@@ -47,6 +47,18 @@
 			<key>to</key>
 			<string>snippets</string>
 		</dict>
+		<dict>
+			<key>from</key>
+			<string>lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5</string>
+			<key>to</key>
+			<string>lib</string>
+		</dict>
+		<dict>
+			<key>from</key>
+			<string>Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93</string>
+			<key>to</key>
+			<string>lib</string>
+		</dict>
 	</array>
 	<key>LOCAL_API</key>
 	<string>http://127.0.0.1:58422/</string>

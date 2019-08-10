@@ -17,6 +17,7 @@
 @property (nonatomic, strong) XXTELuaVModel *virtualModel;
 @property (nonatomic, strong) XXTETerminalTextView *textView;
 @property (nonatomic, strong) UIBarButtonItem *launchItem;
+@property (nonatomic, strong) UIBarButtonItem *closeItem;
 @property (nonatomic, strong) UIBarButtonItem *activityIndicatorItem;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
@@ -64,8 +65,12 @@
     [self loadProcess:self.runImmediately];
     
     XXTE_START_IGNORE_PARTIAL
-    if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
-        [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
+    if ([self.navigationController.viewControllers firstObject] == self) {
+        if (XXTE_COLLAPSED) {
+            [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
+        } else {
+            [self.navigationItem setLeftBarButtonItem:self.closeItem];
+        }
     }
     XXTE_END_IGNORE_PARTIAL
     
@@ -75,11 +80,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.editor renderNavigationBarTheme:YES];
+    if (XXTE_IS_FULLSCREEN(self) || self.navigationController == self.editor.navigationController) {
+        [self.editor renderNavigationBarTheme:YES];
+    }
     [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    if (self.virtualModel.running) {
+        [self shutdownVirtualMachine];
+    }
     [super viewDidDisappear:animated];
 }
 
@@ -90,8 +100,11 @@
             [self shutdownVirtualMachine];
         }
     } else {
-        [self.editor renderNavigationBarTheme:YES];
+        if (XXTE_IS_FULLSCREEN(self) || parent == self.editor.navigationController) {
+            [self.editor renderNavigationBarTheme:YES];
+        }
     }
+    
     [super willMoveToParentViewController:parent];
 }
 
@@ -157,28 +170,55 @@
     return _activityIndicatorItem;
 }
 
+- (UIBarButtonItem *)closeItem {
+    if (!_closeItem) {
+        UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeItemTapped:)];
+        _closeItem = closeItem;
+    }
+    return _closeItem;
+}
+
 #pragma mark - Redirect
 
-- (void)registerFileHandlerNotification:(int)fd
+- (void)registerFileHandlerNotification:(int)fd isStdout:(BOOL)type
 {
     NSPipe *pipe = [NSPipe pipe];
     NSFileHandle *pipeReadHandle = pipe.fileHandleForReading;
     int result = dup2(pipe.fileHandleForWriting.fileDescriptor, fd);
     if (result > 0)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(fileHandlerReadabilityHandler:)
-                                                     name:NSFileHandleReadCompletionNotification
-                                                   object:pipeReadHandle];
-        [pipeReadHandle readInBackgroundAndNotify];
+        if (type) {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(fileHandlerReadabilityHandlerStdout:)
+                                                         name:NSFileHandleReadCompletionNotification
+                                                       object:pipeReadHandle];
+            [pipeReadHandle readInBackgroundAndNotify];
+        } else {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(fileHandlerReadabilityHandlerStderr:)
+                                                         name:NSFileHandleReadCompletionNotification
+                                                       object:pipeReadHandle];
+            [pipeReadHandle readInBackgroundAndNotify];
+        }
     }
 }
 
-- (void)fileHandlerReadabilityHandler:(NSNotification *)aNotification
+- (void)fileHandlerReadabilityHandlerStdout:(NSNotification *)aNotification
 {
     NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [self.textView appendString:str];
+    NSFileHandle *pipeReadHandle = [aNotification object];
+    if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
+        [pipeReadHandle readInBackgroundAndNotify];
+    }
+}
+
+- (void)fileHandlerReadabilityHandlerStderr:(NSNotification *)aNotification
+{
+    NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [self.textView appendError:str];
     NSFileHandle *pipeReadHandle = [aNotification object];
     if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
         [pipeReadHandle readInBackgroundAndNotify];
@@ -208,11 +248,11 @@
     [virtualModel setFakeIOEnabled:YES];
     if (virtualModel.stdoutHandler)
     {
-        [self registerFileHandlerNotification:fileno(virtualModel.stdoutHandler)];
+        [self registerFileHandlerNotification:fileno(virtualModel.stdoutHandler) isStdout:YES];
     }
     if (virtualModel.stderrHandler)
     {
-        [self registerFileHandlerNotification:fileno(virtualModel.stderrHandler)];
+        [self registerFileHandlerNotification:fileno(virtualModel.stderrHandler) isStdout:NO];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
@@ -229,12 +269,15 @@
     if (self.virtualModel.running) {
         return;
     }
-    self.virtualModel = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self shutdownVirtualMachine];
 }
 
 - (void)shutdownVirtualMachine {
-    [self.virtualModel setRunning:NO];
+    if (self.virtualModel.running) {
+        [self.virtualModel setRunning:NO];
+    }
+    self.virtualModel = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)executeScript {
@@ -248,7 +291,9 @@
     } else {
         [self.textView appendMessage:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil)];
     }
+    @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        @strongify(self);
         NSError *err = nil;
         BOOL result = [self.virtualModel pcallWithError:&err];
         dispatch_async_on_main_queue(^{
@@ -308,7 +353,9 @@
 #pragma mark - XXTELuaVModelDelegate
 
 - (void)virtualMachineDidChangedState:(XXTELuaVModel *)vm {
+    @weakify(self);
     dispatch_sync_on_main_queue(^{
+        @strongify(self);
         self.textView.editable = vm.running;
         self.launchItem.enabled = !vm.running;
         if (!vm.running) {
@@ -329,6 +376,10 @@
 
 - (void)updateTextViewInsetsWithKeyboardNotification:(NSNotification *)notification
 {
+    if (!self.textView.isFirstResponder) {
+        return;
+    }
+    
     UIEdgeInsets newInsets = UIEdgeInsetsZero;
     if (notification)
     {

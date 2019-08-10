@@ -12,7 +12,7 @@
 
 @class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory, XXTEEditorMaskView;
 
-@interface XXTEEditorController : UIViewController <XXTEEditor>
+@interface XXTEEditorController : UIViewController <XXTEEditor, UIPopoverPresentationControllerDelegate>
 
 
 // syntax properties

@@ -12,9 +12,12 @@
 
 #import <PromiseKit/PromiseKit.h>
 #import <NSURLConnection+PromiseKit.h>
+#import <YYCache/YYCache.h>
 
 #import <WebKit/WebKit.h>
 #import "XXTExplorerEntryService.h"
+#import "XXTECacheDefines.h"
+
 
 @implementation XXTEUIViewController (XXTResetDefaults)
 
@@ -90,16 +93,19 @@
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
         
         [[XXTExplorerEntryService sharedInstance] setNeedsReload];
+        [[YYCache cacheWithName:kEditorThemeMainColorCacheKey] removeAllObjects];
         
         NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         for (NSHTTPCookie *cookie in [storage cookies]) {
             [storage deleteCookie:cookie];
         }
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        
         NSURLCache *cache = [NSURLCache sharedURLCache];
         [cache removeAllCachedResponses];
         [cache setDiskCapacity:0];
         [cache setMemoryCapacity:0];
+        
         if (@available(iOS 9.0, *)) {
             NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
             NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0.0];

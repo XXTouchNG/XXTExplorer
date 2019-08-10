@@ -53,6 +53,13 @@ static const luaL_Reg loadedlibs[] = {
 #if defined(LUA_COMPAT_BITLIB)
   {LUA_BITLIBNAME, luaopen_bit32},
 #endif
+#if !TARGET_OS_SIMULATOR
+  {LUA_CJSONLIBNAME, luaopen_cjson},
+  {LUA_CJSONSAFELIBNAME, luaopen_cjson_safe},
+  {LUA_LFSLIBNAME, luaopen_lfs},
+  {LUA_LCURLLIBNAME, luaopen_lcurl},
+  {LUA_LCURLSAFELIBNAME, luaopen_lcurl_safe},
+#endif
   {NULL, NULL}
 };
 

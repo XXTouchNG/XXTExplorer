@@ -32,7 +32,20 @@ static NSString * const XXTExplorerViewEntryHideOperationLabelKey = @"XXTExplore
 static NSString * const XXTExplorerPasteboardDetectOnActiveKey = @"XXTExplorerPasteboardDetectOnActiveKey";
 static NSString * const XXTExplorerAllowsImportFromAlbum = @"XXTExplorerAllowsImportFromAlbum";
 static NSString * const XXTExplorerFixFileOwnerAutomaticallyKey = @"XXTExplorerFixFileOwnerAutomaticallyKey";
+
+#pragma mark - Viewer Defaults
+
 static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEncodingKey";
+
+#pragma mark - Editor Defaults
+
+static NSString * const XXTExplorerTerminalPresentationStyle = @"XXTExplorerTerminalPresentationStyle";
+
+typedef enum : NSUInteger {
+    XXTETerminalPresentationStylePush = 0,
+    XXTETerminalPresentationStylePresentInModal,
+    XXTETerminalPresentationStylePresentAsPopover,
+} XXTETerminalPresentationStyle;
 
 #pragma mark - Item Picker Defaults
 
