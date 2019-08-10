@@ -296,7 +296,7 @@
     
     XXTEMoreTextFieldCell *cell11 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTextFieldCell class]) owner:nil options:nil] lastObject];
     cell11.titleLabel.text = NSLocalizedString(@"Word Column", nil);
-    NSInteger columnValue = XXTEDefaultsInt(XXTEEditorWrapColumn, 160);
+    NSInteger columnValue = XXTEDefaultsInt(XXTEEditorWrapColumn, 120);
     cell11.valueField.text = [NSString stringWithFormat:@"%ld", (long)columnValue];
     cell11.valueField.delegate = self;
     {
@@ -305,9 +305,9 @@
             @strongify(self);
             UITextField *valueField = (UITextField *)sender;
             int columnValue = [valueField.text intValue];
-            if (columnValue < 10 || columnValue > 10000)
+            if (columnValue < 10 || columnValue > 1000)
             {
-                columnValue = 160; // restore to default value
+                columnValue = 120; // restore to default value
             }
             XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
             [self.editor setNeedsSoftReload];

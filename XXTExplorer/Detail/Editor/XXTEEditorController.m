@@ -1549,10 +1549,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     CGFloat newWidth = CGRectGetWidth(self.view.bounds);
     BOOL autoWrap = XXTEDefaultsBool(XXTEEditorAutoWordWrap, YES);
     if (NO == autoWrap) {
-        NSInteger columnW = XXTEDefaultsInt(XXTEEditorWrapColumn, 160);
-        if (columnW < 10 || columnW > 10000)
+        NSInteger columnW = XXTEDefaultsInt(XXTEEditorWrapColumn, 120);
+        if (columnW < 10 || columnW > 1000)
         {
-            columnW = 160;
+            columnW = 120;
         }
         newWidth = [self textView:self.textView widthForTheme:self.theme columnWidth:columnW];
     }
