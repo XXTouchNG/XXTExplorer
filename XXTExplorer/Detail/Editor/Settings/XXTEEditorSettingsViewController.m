@@ -100,7 +100,7 @@
     BOOL editorHasLongLine = self.editor.hasLongLine;
     
     staticSectionTitles = @[ NSLocalizedString(@"Font", nil), NSLocalizedString(@"Theme", nil), NSLocalizedString(@"Layout", nil), NSLocalizedString(@"Tabs", nil), NSLocalizedString(@"Word Wrap", nil), NSLocalizedString(@"Keyboard", nil), NSLocalizedString(@"Text", nil), NSLocalizedString(@"Search", nil) ];
-    staticSectionFooters = @[ @"", editorHasLongLine ? NSLocalizedString(@"❗️\"Syntax Highlight\" is skipped for files with long lines for performance reasons.", nil) : @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), @"", @"", @"", @"" ];
+    staticSectionFooters = @[ @"", editorHasLongLine ? NSLocalizedString(@"❗️\"Syntax Highlight\" is skipped for files with long lines for performance reasons.", nil) : @"", @"", NSLocalizedString(@"Enable \"Soft Tabs\" to insert spaces instead of a tab character when you press the Tab key.", nil), NSLocalizedString(@"\"Word Column\" is used only when \"Auto Word Wrap\" is disabled.", nil), @"", @"", @"" ];
     
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
     double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
@@ -154,7 +154,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorLineNumbersEnabled, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -167,7 +167,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorShowInvisibleCharacters, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -264,24 +264,22 @@
                     break;
             }
             XXTEDefaultsSetBasic(XXTEEditorTabWidth, widthValue);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
-#ifdef DEBUG
     XXTEMoreSwitchCell *cell9 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell9.titleLabel.text = NSLocalizedString(@"Indent Wrapped Lines", nil);
-    cell9.optionSwitch.on = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, NO);
+    cell9.optionSwitch.on = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, YES);
     {
         @weakify(self);
         [cell9.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorIndentWrappedLines, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
-#endif
     
     XXTEMoreSwitchCell *cell10 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cell10.titleLabel.text = NSLocalizedString(@"Auto Word Wrap", nil);
@@ -292,7 +290,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoWordWrap, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -312,7 +310,7 @@
                 columnValue = 160; // restore to default value
             }
             XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsSoftReload];
         }];
     }
     
@@ -440,13 +438,7 @@
                     @[ cell3, cell4 ],
                     layoutSection,
                     @[ cell7, cell8, tabCell ],
-                    @[
-#ifdef DEBUG
-                        cell9,
-#endif
-                        cell10,
-                        cell11
-                        ],
+                    @[ cell9, cell10, cell11 ],
                     keyboardSection,
                     @[ cellBrackets, cell14, cell15, cell16 ],
                     @[ cell17, cell18 ]

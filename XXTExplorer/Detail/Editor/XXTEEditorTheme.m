@@ -112,7 +112,8 @@
                                         NSBackgroundColorAttributeName: backgroundColor,
                                         NSFontAttributeName: font,
                                         };
-    _tabWidth = [@" " sizeWithAttributes:defaultAttributes].width;
+    _spaceWidth = [@" " sizeWithAttributes:defaultAttributes].width;
+    _lineHeight = font.lineHeight;
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 //    paragraphStyle.minimumLineHeight = font.pointSize;

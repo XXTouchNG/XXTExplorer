@@ -2101,3 +2101,6 @@
 
 /* No comment provided by engineer. */
 "No symbol found, would you like to write something exciting?" = "找不到符号, 要不要搞点大事情?";
+
+/* No comment provided by engineer. */
+"\"Word Column\" is used only when \"Auto Word Wrap\" is disabled." = "\"行宽度\" 只有在 \"自动折行\" 关闭时才能生效.";

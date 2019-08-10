@@ -41,18 +41,14 @@
     return (MAX(layoutManager.lineHeightScale, 1) - 1) * rect.size.height;
 }
 
-// iOS 9.0+
-- (BOOL)layoutManager:(NSLayoutManager *)layoutManager shouldSetLineFragmentRect:(inout CGRect *)lineFragmentRect lineFragmentUsedRect:(inout CGRect *)lineFragmentUsedRect baselineOffset:(inout CGFloat *)baselineOffset inTextContainer:(NSTextContainer *)textContainer forGlyphRange:(NSRange)glyphRange
-{
-//    lineRect.pointee.size.height = manager.lineHeight
-//    usedRect.pointee.size.height = manager.lineHeight
-//    baselineOffset.pointee = manager.defaultBaselineOffset
-    return YES;
-}
+//- (BOOL)layoutManager:(NSLayoutManager *)layoutManager shouldSetLineFragmentRect:(inout CGRect *)lineFragmentRect lineFragmentUsedRect:(inout CGRect *)lineFragmentUsedRect baselineOffset:(inout CGFloat *)baselineOffset inTextContainer:(NSTextContainer *)textContainer forGlyphRange:(NSRange)glyphRange
+//{
+//    return YES;
+//}
 
-- (BOOL)layoutManager:(NSLayoutManager *)layoutManager shouldBreakLineByWordBeforeCharacterAtIndex:(NSUInteger)charIndex
-{
-    layoutManager.textStorage.text
-}
+//- (BOOL)layoutManager:(NSLayoutManager *)layoutManager shouldBreakLineByWordBeforeCharacterAtIndex:(NSUInteger)charIndex
+//{
+//
+//}
 
 @end

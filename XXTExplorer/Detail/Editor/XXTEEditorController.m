@@ -180,6 +180,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 - (void)reloadSoft {
     [self reloadUI];
+    [self reloadTextViewLayout];
     [self reloadTextViewProperties];
 }
 
@@ -398,34 +399,40 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     textView.tintColor = theme.caretColor;
     textView.indicatorStyle = [self isDarkMode] ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
     
+    // Tab Width
+    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
+    CGFloat tabWidth = tabWidthEnum * theme.spaceWidth;
+    
     // Layout Manager
     [textView setShowLineNumbers:isLineNumbersEnabled]; // config
-    if (textView.vLayoutManager) {
+    XXTEEditorLayoutManager *layoutManager = textView.vLayoutManager;
+    if (layoutManager) {
         UIColor *gutterColor = [theme.foregroundColor colorWithAlphaComponent:.25];
         UIColor *gutterBackgroundColor = [theme.foregroundColor colorWithAlphaComponent:.033];
         
         [textView setGutterLineColor:gutterColor];
         [textView setGutterBackgroundColor:gutterBackgroundColor];
         
-        [textView.vLayoutManager setLineNumberFont:theme.font];
-        [textView.vLayoutManager setLineNumberColor:gutterColor];
+        [layoutManager setLineNumberFont:theme.font];
+        [layoutManager setLineNumberColor:gutterColor];
         
-        [textView.vLayoutManager setShowInvisibleCharacters:showInvisibleCharacters];
-        [textView.vLayoutManager setInvisibleColor:theme.invisibleColor];
-        [textView.vLayoutManager setInvisibleFont:theme.font];
+        [layoutManager setShowInvisibleCharacters:showInvisibleCharacters];
+        [layoutManager setInvisibleColor:theme.invisibleColor];
+        [layoutManager setInvisibleFont:theme.font];
+        
+        [layoutManager setTabWidth:tabWidth];
+        [layoutManager setLineHeight:theme.lineHeight];
     }
     
     // Text Container
-    BOOL indentWrappedLines = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, NO);
+    BOOL indentWrappedLines = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, YES);
     if (textView.vLayoutManager) {
         [textView.vLayoutManager setIndentWrappedLines:indentWrappedLines];
     }
     
     // Type Setter
-    NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
-    CGFloat tabWidth = tabWidthEnum * theme.tabWidth;
     if (textView.vTypeSetter) {
-        textView.vTypeSetter.tabWidth = tabWidth;
+        [textView.vTypeSetter setTabWidth:tabWidth];
     }
     
     // Keyboard Row

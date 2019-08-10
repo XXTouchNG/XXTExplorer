@@ -15,8 +15,8 @@
 @property (nonatomic, strong) XXTEEditorLanguage *language;
 
 @property (nonatomic, assign) BOOL autoIndent;
-@property (nonatomic, strong) NSString *tabWidthString;
 @property (nonatomic, assign) BOOL autoBrackets;
+@property (nonatomic, strong) NSString *tabWidthString;
 
 @property (nonatomic, weak) id <UIScrollViewDelegate> scrollViewDelegate;
 

@@ -60,6 +60,8 @@
     _lineHeightScale = 1.05;
     _numberOfDigits = 3;
     
+    _indentWrappedLines = NO;
+    
     [self reloadGutterWidth];
     
     unichar crlf = 0x00B6;
@@ -76,12 +78,12 @@
     _lineNumberFont = lineNumberFont;
     _fontPointSize = lineNumberFont.pointSize;
     [self reloadGutterWidth];
-    [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+    [self invalidateLayout];
 }
 
 - (void)setLineHeightScale:(CGFloat)lineHeightScale {
     _lineHeightScale = lineHeightScale;
-    [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+    [self invalidateLayout];
 }
 
 - (void)setNumberOfDigits:(NSUInteger)numberOfDigits {
@@ -89,7 +91,12 @@
     if (numberOfDigits < 3) numberOfDigits = 3; // at least 3 digits
     _numberOfDigits = numberOfDigits;
     [self reloadGutterWidth];
-    [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+    [self invalidateLayout];
+}
+
+- (void)setIndentWrappedLines:(BOOL)indentWrappedLines {
+    _indentWrappedLines = indentWrappedLines;
+    [self invalidateLayout];
 }
 
 - (void)reloadGutterWidth {
@@ -98,15 +105,11 @@
     _gutterWidth = gutterWidth;
 }
 
-- (BOOL)indentWrappedLines {
-    if (@available(iOS 12.0, *)) {
-        return _indentWrappedLines;
-    }
-    return YES;
-    // this method has some bugs so we had to disable it temporarily
-}
-
 #pragma mark - Convenience
+
+- (void)invalidateLayout {
+    [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+}
 
 //- (CGRect)paragraphRectForRange:(NSRange)range
 //{
@@ -332,12 +335,12 @@
 - (void)setLineFragmentRect:(CGRect)fragmentRect forGlyphRange:(NSRange)glyphRange usedRect:(CGRect)usedRect
 {
     // IMPORTANT: Perform the shift of the X-coordinate that cannot be done in NSTextContainer's -lineFragmentRectForProposedRect:atIndex:writingDirection:remainingRect:
-    if ([self indentWrappedLines]) {
-        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: [self characterIndexForGlyphAtIndex: glyphRange.location] textContainer:nil];
-        
-        fragmentRect.origin.x += insets.left;
-        usedRect.origin.x += insets.left;
-    }
+//    if ([self indentWrappedLines]) {
+//        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: [self characterIndexForGlyphAtIndex: glyphRange.location] textContainer:nil];
+//
+//        fragmentRect.origin.x += insets.left;
+//        usedRect.origin.x += insets.left;
+//    }
 
     [super setLineFragmentRect:fragmentRect forGlyphRange:glyphRange usedRect:usedRect];
 }
@@ -345,12 +348,12 @@
 - (void)setExtraLineFragmentRect:(CGRect)fragmentRect usedRect:(CGRect)usedRect textContainer:(NSTextContainer *)container
 {
     // Etxra line fragment rect must be indented just like every other line fragment rect
-    if ([self indentWrappedLines]) {
-        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex:self.textStorage.length textContainer:container];
-        
-        fragmentRect.origin.x += insets.left;
-        usedRect.origin.x += insets.left;
-    }
+//    if ([self indentWrappedLines]) {
+//        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex:self.textStorage.length textContainer:container];
+//
+//        fragmentRect.origin.x += insets.left;
+//        usedRect.origin.x += insets.left;
+//    }
 
     [super setExtraLineFragmentRect:fragmentRect usedRect:usedRect textContainer:container];
 }
