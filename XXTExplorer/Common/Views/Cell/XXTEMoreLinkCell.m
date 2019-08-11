@@ -24,6 +24,12 @@
     self.titleLabel.text = @"";
     self.iconImage = nil;
     
+    if (@available(iOS 13.0, *)) {
+        self.iconImageView.tintColor = [UIColor labelColor];
+    } else {
+        self.iconImageView.tintColor = [UIColor blackColor];
+    }
+    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();
     self.selectedBackgroundView = selectionBackground;
@@ -31,7 +37,7 @@
 
 - (void)setIconImage:(UIImage *)iconImage {
     _iconImage = iconImage;
-    self.iconImageView.image = iconImage;
+    self.iconImageView.image = [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if (iconImage) {
         self.leftConstraint.constant = 16.0;
         self.iconWidthConstraint.constant = 32.0;

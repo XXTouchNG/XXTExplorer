@@ -73,7 +73,7 @@
 }
 
 - (void)configureCell:(XXTEMoreTitleValueCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.tintColor = XXTColorDefault();
+    cell.tintColor = XXTColorForeground();
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSBundle *entryBundle = self.entryBundle;
@@ -125,7 +125,7 @@
         } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeCount) {
             if ([pairValue respondsToSelector:@selector(count)]) {
                 NSUInteger childCount = [pairValue count];
-                cell.valueLabel.textColor = XXTColorDefault();
+                cell.valueLabel.textColor = XXTColorForeground();
                 cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
             }
         } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeDescription) {

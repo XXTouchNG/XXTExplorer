@@ -168,4 +168,18 @@ XXTE_START_IGNORE_PARTIAL
 }
 XXTE_END_IGNORE_PARTIAL
 
+#pragma mark - UIAdaptivePresentationControllerDelegate (13.0+)
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    return YES;
+}
+
+- (void)presentationControllerWillDismiss:(UIPresentationController *)presentationController {
+    [self setNeedsSaveDocument];
+}
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    [self saveDocumentIfNecessary];
+}
+
 @end

@@ -172,9 +172,6 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 }
 
 - (void)dismissViewController:(id)dismissViewController {
-    if (!XXTE_IS_FULLSCREEN(self)) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-    }
     [super dismissViewController:dismissViewController];
 }
 
@@ -248,6 +245,15 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
         }
         [alert showAnimated];
     });
+}
+
+#pragma mark - Dismissal (Override)
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    if (!XXTE_IS_FULLSCREEN(self)) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [super dismissViewControllerAnimated:flag completion:completion];
 }
 
 @end

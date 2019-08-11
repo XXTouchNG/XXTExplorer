@@ -18,8 +18,12 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.titleTextLabel.textColor = XXTColorDefault();
-    self.valueTextLabel.textColor = [UIColor blackColor];
+    self.titleTextLabel.textColor = XXTColorForeground();
+    if (@available(iOS 13.0, *)) {
+        self.valueTextLabel.textColor = [UIColor labelColor];
+    } else {
+        self.valueTextLabel.textColor = [UIColor blackColor];
+    }
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

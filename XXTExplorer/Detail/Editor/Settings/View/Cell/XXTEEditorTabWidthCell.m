@@ -13,8 +13,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.titleLabel.textColor = [UIColor blackColor];
-    self.segmentedControl.tintColor = XXTColorDefault();
+    if (@available(iOS 13.0, *)) {
+        self.titleLabel.textColor = [UIColor labelColor];
+    } else {
+        self.titleLabel.textColor = [UIColor blackColor];
+    }
+    self.segmentedControl.tintColor = XXTColorForeground();
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

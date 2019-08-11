@@ -29,7 +29,7 @@ XXTE_END_IGNORE_PARTIAL
 
 @end
 
-@interface XXTExplorerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
+@interface XXTExplorerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (nonatomic, copy, readonly) NSString *entryPath;
 @property (nonatomic, copy, readonly) XXTExplorerEntry *entry;

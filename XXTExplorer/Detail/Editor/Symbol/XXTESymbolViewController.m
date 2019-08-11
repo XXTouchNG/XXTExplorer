@@ -108,12 +108,12 @@ XXTE_END_IGNORE_PARTIAL
     {
         if (@available(iOS 13.0, *)) {
             UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
-            textField.textColor = [UIColor blackColor];
-            textField.tintColor = XXTColorDefault();
+            textField.textColor = [UIColor labelColor];
+            textField.tintColor = XXTColorForeground();
         } else {
             searchBar.backgroundColor = [UIColor whiteColor];
             searchBar.barTintColor = [UIColor whiteColor];
-            searchBar.tintColor = XXTColorDefault();
+            searchBar.tintColor = XXTColorForeground();
         }
         searchBar.placeholder = NSLocalizedString(@"Search Symbol", nil);
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;

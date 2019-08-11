@@ -46,7 +46,7 @@
 - (void)setupCell {
     [super setupCell];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.titleLabel.textColor = XXTColorDefault();
+    self.titleLabel.textColor = XXTColorForeground();
 }
 
 - (void)setXui_label:(NSString *)xui_label {

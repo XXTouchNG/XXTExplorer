@@ -69,7 +69,7 @@
 }
 
 - (void)configureCell:(XXTEMoreTitleValueCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.tintColor = XXTColorDefault();
+    cell.tintColor = XXTColorForeground();
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Item %lu", nil), indexPath.row];
     id elementValue = ((NSArray *)self.RootObject)[indexPath.row];
@@ -95,7 +95,7 @@
         } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeCount) {
             if ([elementValue respondsToSelector:@selector(count)]) {
                 NSUInteger childCount = [elementValue count];
-                cell.valueLabel.textColor = XXTColorDefault();
+                cell.valueLabel.textColor = XXTColorForeground();
                 cell.valueLabel.text = [NSString stringWithFormat:@"(%@)", [@(childCount) stringValue]];
             }
         } else if (self.containerDisplayMode == XXTEObjectContainerDisplayModeDescription) {

@@ -34,9 +34,13 @@
 }
 
 - (void)setup {
-    [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTintColor:XXTColorDefault()];
+    [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTintColor:XXTColorForeground()];
     
-    self.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
     
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedSpace.width = 20.0f;
@@ -187,7 +191,12 @@
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(ctx, 0.85, 0.85, 0.85, 1.0);
+    
+    if (@available(iOS 13.0, *)) {
+        CGContextSetStrokeColorWithColor(ctx, [UIColor separatorColor].CGColor);
+    } else {
+        CGContextSetRGBStrokeColor(ctx, 0.85, 0.85, 0.85, 1.0);
+    }
     CGContextSetLineWidth(ctx, 1.0f);
     CGPoint aPoint[2] = {
         CGPointMake(0.0, self.frame.size.height),

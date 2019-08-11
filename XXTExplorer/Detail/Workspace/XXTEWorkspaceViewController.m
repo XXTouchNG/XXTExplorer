@@ -178,7 +178,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Theme
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    UIColor *barTintColor = XXTColorDefault();
+    UIColor *barTintColor = XXTColorBarTint();
     UIColor *barTitleColor = [UIColor whiteColor];
     UINavigationController *navigation = self.navigationController;
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];

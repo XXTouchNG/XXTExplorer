@@ -43,8 +43,13 @@
 }
 
 - (void)setup {
-    self.entryTitleLabel.textColor = [UIColor blackColor];
-    self.entrySubtitleLabel.textColor = [UIColor lightGrayColor];
+    if (@available(iOS 13.0, *)) {
+        self.entryTitleLabel.textColor = [UIColor labelColor];
+        self.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
+    } else {
+        self.entryTitleLabel.textColor = [UIColor blackColor];
+        self.entrySubtitleLabel.textColor = [UIColor lightGrayColor];
+    }
     
     XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
     _entryParser = entryParser;
@@ -92,11 +97,16 @@
         self.entrySubtitleLabel.textColor = XXTColorDanger();
     } else if (entryDetail.isSymlink) {
         // symlink
-        self.entryTitleLabel.textColor = XXTColorDefault();
-        self.entrySubtitleLabel.textColor = XXTColorDefault();
+        self.entryTitleLabel.textColor = XXTColorForeground();
+        self.entrySubtitleLabel.textColor = XXTColorForeground();
     } else {
-        self.entryTitleLabel.textColor = [UIColor blackColor];
-        self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+        if (@available(iOS 13.0, *)) {
+            self.entryTitleLabel.textColor = [UIColor labelColor];
+            self.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
+        } else {
+            self.entryTitleLabel.textColor = [UIColor blackColor];
+            self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+        }
     }
     NSString *entryDisplayName = [entryDetail localizedDisplayName];
     NSString *readableSize = [entryDetail localizedStringOfEntrySize];

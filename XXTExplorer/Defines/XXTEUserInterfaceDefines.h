@@ -33,7 +33,8 @@ extern "C" {
     void toastMessage(UIViewController *viewController, NSString *message);
     void toastError(UIViewController *viewController, NSError *error);
     
-    UIColor *XXTColorDefault(void);
+    UIColor *XXTColorForeground(void);
+    UIColor *XXTColorBarTint(void);
     UIColor *XXTColorDanger(void);
     UIColor *XXTColorSuccess(void);
     UIColor *XXTColorCellSelected(void);

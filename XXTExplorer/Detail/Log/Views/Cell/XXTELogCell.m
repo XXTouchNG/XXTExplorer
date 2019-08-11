@@ -19,7 +19,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.logLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 13.0, *)) {
+        self.logLabel.textColor = [UIColor labelColor];
+    } else {
+        self.logLabel.textColor = [UIColor blackColor];
+    }
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

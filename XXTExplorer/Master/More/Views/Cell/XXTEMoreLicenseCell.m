@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.licenseField.textColor = XXTColorDefault();
-    self.licenseField.tintColor = XXTColorDefault();
+    self.licenseField.textColor = XXTColorForeground();
+    self.licenseField.tintColor = XXTColorForeground();
     
 }
 

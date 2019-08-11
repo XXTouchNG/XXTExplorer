@@ -137,7 +137,11 @@ XXTE_END_IGNORE_PARTIAL
     }
     
     {
-        [self.view setBackgroundColor:[UIColor whiteColor]];
+        if (@available(iOS 13.0, *)) {
+            [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
+        } else {
+            [self.view setBackgroundColor:[UIColor whiteColor]];
+        }
         [self.view addSubview:self.tableView];
     }
     
@@ -162,9 +166,9 @@ XXTE_END_IGNORE_PARTIAL
         [self.tableView setTableFooterView:self.footerView];
     }
     
-    if (!(isOS11Above() && isAppStore())) {
+//    if (!(isOS11Above() && isAppStore())) {
         [self setupConstraints];
-    }
+//    }
     
     [self loadEntryListData];
 }
@@ -176,8 +180,7 @@ XXTE_END_IGNORE_PARTIAL
     [self updateToolbarStatus];
     [self updateToolbarButton];
     if (firstTimeLoaded) {
-        [self loadEntryListData];
-        [self.tableView reloadData];
+        [self reloadEntryListView];
     } else if (!self.isPreviewed) {
         [self refreshControlTriggered:nil];
     }
@@ -248,7 +251,7 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 - (void)restoreTheme {
-    UIColor *backgroundColor = XXTColorDefault();
+    UIColor *backgroundColor = XXTColorBarTint();
     UIColor *foregroundColor = [UIColor whiteColor];
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
@@ -583,6 +586,7 @@ XXTE_END_IGNORE_PARTIAL
                                 popoverController.backgroundColor = [UIColor whiteColor];
                             }
                             XXTE_END_IGNORE_PARTIAL
+                            navController.presentationController.delegate = self;
                             [self.navigationController presentViewController:navController animated:YES completion:nil];
                         }
                     } else {
@@ -922,8 +926,13 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry {
     entryCell.delegate = self;
-    entryCell.entryTitleLabel.textColor = [UIColor blackColor];
-    entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+    if (@available(iOS 13.0, *)) {
+        entryCell.entryTitleLabel.textColor = [UIColor labelColor];
+        entryCell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
+    } else {
+        entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+        entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+    }
     if (entry.isBrokenSymlink) {
         // broken symlink
         entryCell.entryTitleLabel.textColor = XXTColorDanger();
@@ -931,12 +940,17 @@ XXTE_END_IGNORE_PARTIAL
         entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
     } else if (entry.isSymlink) {
         // symlink
-        entryCell.entryTitleLabel.textColor = XXTColorDefault();
-        entryCell.entrySubtitleLabel.textColor = XXTColorDefault();
+        entryCell.entryTitleLabel.textColor = XXTColorForeground();
+        entryCell.entrySubtitleLabel.textColor = XXTColorForeground();
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     } else {
-        entryCell.entryTitleLabel.textColor = [UIColor blackColor];
-        entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+        if (@available(iOS 13.0, *)) {
+            entryCell.entryTitleLabel.textColor = [UIColor labelColor];
+            entryCell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
+        } else {
+            entryCell.entryTitleLabel.textColor = [UIColor blackColor];
+            entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+        }
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     }
     if (!entry.isMaskedDirectory &&
@@ -1186,11 +1200,11 @@ XXTE_END_IGNORE_PARTIAL
 - (UITableView *)tableView {
     if (!_tableView) {
         CGRect tableViewFrame = CGRectZero;
-        if (isOS11Above() && isAppStore()) {
-            tableViewFrame = self.view.bounds;
-        } else {
+//        if (isOS11Above() && isAppStore()) {
+//            tableViewFrame = self.view.bounds;
+//        } else {
             tableViewFrame = CGRectMake(0.0, 44.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0);
-        }
+//        }
         UITableView *tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = self;
@@ -1223,9 +1237,9 @@ XXTE_END_IGNORE_PARTIAL
 - (UIRefreshControl *)refreshControl {
     if (!_refreshControl) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        if (isOS11Above() && isAppStore()) {
-            refreshControl.tintColor = [UIColor whiteColor];
-        }
+//        if (isOS11Above() && isAppStore()) {
+//            refreshControl.tintColor = [UIColor whiteColor];
+//        }
         [refreshControl addTarget:self action:@selector(refreshControlTriggered:) forControlEvents:UIControlEventValueChanged];
         _refreshControl = refreshControl;
     }
@@ -1239,6 +1253,16 @@ XXTE_END_IGNORE_PARTIAL
         _footerView = entryFooterView;
     }
     return _footerView;
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate (13.0+)
+
+- (void)presentationControllerWillDismiss:(UIPresentationController *)presentationController {
+    [self reloadEntryListView];  // performance?
+}
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    // better here?
 }
 
 #pragma mark - Memory

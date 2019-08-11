@@ -1767,7 +1767,6 @@ XXTE_END_IGNORE_PARTIAL
     }
 }
 
-
 #pragma mark - Memory
 
 - (void)didReceiveMemoryWarning {

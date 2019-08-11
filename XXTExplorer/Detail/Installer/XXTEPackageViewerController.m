@@ -152,7 +152,11 @@
         textView.editable = NO;
         textView.autocorrectionType = UITextAutocorrectionTypeNo;
         textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        textView.textColor = [UIColor blackColor];
+        if (@available(iOS 13.0, *)) {
+            textView.textColor = [UIColor labelColor];
+        } else {
+            textView.textColor = [UIColor blackColor];
+        }
         textView.alwaysBounceVertical = YES;
         textView.typingAttributes = self.stdoutAttributes;
         _textView = textView;

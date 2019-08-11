@@ -103,7 +103,7 @@
 }
 
 - (UIColor *)preferredNavigationBarColor {
-    return XXTColorDefault();
+    return XXTColorBarTint();
 }
 
 - (UIColor *)preferredNavigationBarTintColor {

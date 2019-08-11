@@ -88,6 +88,7 @@
             }
             navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
             navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            navigationController.presentationController.delegate = self;
             [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
         }
     }

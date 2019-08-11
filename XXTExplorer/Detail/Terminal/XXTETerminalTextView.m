@@ -41,7 +41,7 @@
 - (void)setup {
     // Appearance
     self.backgroundColor = [UIColor whiteColor];
-    self.tintColor = XXTColorDefault();
+    self.tintColor = XXTColorForeground();
     self.typingAttributes = self.defaultAttributes;
     
     // Property
@@ -103,7 +103,7 @@
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
         _inputAttributes = @{
                              NSFontAttributeName: font,
-                             NSForegroundColorAttributeName: XXTColorDefault(),
+                             NSForegroundColorAttributeName: XXTColorForeground(),
                              };
     }
     return _inputAttributes;

@@ -31,7 +31,7 @@
 - (void)setupAppearance {
     UINavigationBar *barAppearance = [UINavigationBar appearance];
     [barAppearance setTintColor:[UIColor whiteColor]];
-    [barAppearance setBarTintColor:XXTColorDefault()];
+    [barAppearance setBarTintColor:XXTColorBarTint()];
     [barAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f] }];
     if (@available(iOS 11.0, *)) {
         [barAppearance setLargeTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:24.f] }];
@@ -40,7 +40,7 @@
 
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];
-    [navigationBarAppearance setBarTintColor:XXTColorDefault()];
+    [navigationBarAppearance setBarTintColor:XXTColorBarTint()];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     if (@available(iOS 11.0, *)) {
         [navigationBarAppearance setTranslucent:YES];

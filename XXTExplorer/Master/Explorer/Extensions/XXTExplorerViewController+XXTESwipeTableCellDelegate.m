@@ -92,6 +92,7 @@
         XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailController];
         detailNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
         detailNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        detailNavigationController.presentationController.delegate = self;
         [self.navigationController presentViewController:detailNavigationController animated:YES completion:nil];
         handled = YES;
     }
@@ -236,7 +237,7 @@ XXTE_END_IGNORE_PARTIAL
 #ifndef APPSTORE
         XXTExplorerEntryReader *entryReader = entry.entryReader;
 #endif
-        UIColor *colorSeries = XXTColorDefault();
+        UIColor *colorSeries = XXTColorBarTint();
 #ifndef APPSTORE
         if (entry.isExecutable) {
             NSString *buttonTitle = nil;

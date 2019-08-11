@@ -212,7 +212,7 @@
             if (!foregroundColor) {
                 foregroundColor = [UIColor colorWithCssName:foregroundColorString];
             }
-            self.view.tintColor = foregroundColor ?: XXTColorDefault();
+            self.view.tintColor = foregroundColor ?: XXTColorForeground();
             self.barTextColor = foregroundColor;
         }
         UIColor *backgroundColor = nil;

@@ -71,6 +71,7 @@
     } else {
         alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.5];
     }
+    alertAppearance.separatorsColor = [UIColor colorWithWhite:0.85 alpha:1.0];
     alertAppearance.coverAlpha = 0.85;
     alertAppearance.layerShadowColor = [UIColor colorWithWhite:0.0 alpha:0.3];
     alertAppearance.layerShadowRadius = 4.0;
@@ -79,15 +80,15 @@
     alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
     alertAppearance.titleTextColor = [UIColor blackColor];
     alertAppearance.messageTextColor = [UIColor blackColor];
-    alertAppearance.activityIndicatorViewColor = XXTColorDefault();
-    alertAppearance.progressViewProgressTintColor = XXTColorDefault();
+    alertAppearance.activityIndicatorViewColor = XXTColorForeground();
+    alertAppearance.progressViewProgressTintColor = XXTColorForeground();
     alertAppearance.progressLabelTextColor = [UIColor blackColor];
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.buttonsTitleColor = XXTColorDefault();
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.buttonsTitleColor = XXTColorForeground();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorForeground();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.cancelButtonTitleColor = XXTColorDefault();
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.cancelButtonTitleColor = XXTColorForeground();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorForeground();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
@@ -123,11 +124,11 @@
     alertAppearance.progressViewProgressTintColor = [UIColor whiteColor];
     alertAppearance.progressLabelTextColor = labelColor;
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
-    alertAppearance.buttonsTitleColor = XXTColorDefault();
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.buttonsTitleColor = XXTColorForeground();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorBarTint();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.cancelButtonTitleColor = labelColor;
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorDefault();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorBarTint();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
@@ -148,7 +149,7 @@
 
 - (void)setupAppearance {
     UITabBar *tabBarAppearance = [UITabBar appearanceWhenContainedIn:[self class], nil];
-    [tabBarAppearance setTintColor:XXTColorDefault()];
+    [tabBarAppearance setTintColor:XXTColorForeground()];
     
     if (@available(iOS 11.0, *)) {
         self.tabBar.translucent = YES;
@@ -156,8 +157,12 @@
         self.tabBar.translucent = NO;
     }
     
-    LGAlertView *alertAppearance = [LGAlertView appearanceWhenContainedIn:[self class], nil];
-    [self.class setupAlertDefaultAppearance:alertAppearance];
+    if (@available(iOS 13.0, *)) {
+        [self updateAlertViewStyle];
+    } else {
+        LGAlertView *alertAppearanceDefault = [LGAlertView appearanceWhenContainedIn:[self class], nil];
+        [self.class setupAlertDefaultAppearance:alertAppearanceDefault];
+    }
     
     [XXTEToastManager setTapToDismissEnabled:YES];
     [XXTEToastManager setDefaultDuration:2.4f];
@@ -573,6 +578,24 @@
         return [navVC topmostExplorerViewController];
     }
     return nil;
+}
+
+#pragma mark - UITraitEnvironment
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [self updateAlertViewStyle];
+}
+
+- (void)updateAlertViewStyle {
+    if (@available(iOS 13.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            LGAlertView *alertAppearanceDefault = [LGAlertView appearanceWhenContainedIn:[self class], nil];
+            [self.class setupAlertDefaultAppearance:alertAppearanceDefault];
+        } else {
+            LGAlertView *alertAppearanceDark = [LGAlertView appearanceWhenContainedIn:[self class], nil];
+            [self.class setupAlertDarkAppearance:alertAppearanceDark];
+        }
+    }
 }
 
 #pragma mark - Memory

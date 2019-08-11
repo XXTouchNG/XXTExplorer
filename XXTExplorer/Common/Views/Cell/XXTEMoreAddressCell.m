@@ -20,7 +20,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.addressLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 13.0, *)) {
+        self.addressLabel.textColor = [UIColor labelColor];
+    } else {
+        self.addressLabel.textColor = [UIColor blackColor];
+    }
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

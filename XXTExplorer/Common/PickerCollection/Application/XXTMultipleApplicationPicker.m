@@ -411,7 +411,7 @@ UISearchDisplayDelegate
         [cell setApplicationName:appDetail[kXXTApplicationDetailKeyName]];
         [cell setApplicationBundleID:appDetail[kXXTApplicationDetailKeyBundleID]];
         [cell setApplicationIconImage:appDetail[kXXTApplicationDetailKeyIconImage]];
-        [cell setTintColor:XXTColorDefault()];
+        [cell setTintColor:XXTColorForeground()];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         [cell setShowsReorderControl:YES];
         return cell;

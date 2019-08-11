@@ -218,7 +218,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Remote Access", nil);
     cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell1.iconImageView.image = [UIImage imageNamed:@"XXTEMoreIconRemoteAccess"];
+    cell1.iconImageView.image = [[UIImage imageNamed:@"XXTEMoreIconRemoteAccess"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [cell1.optionSwitch addTarget:self action:@selector(remoteAccessOptionSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     self.remoteAccessSwitch = cell1.optionSwitch;
     self.remoteAccessIndicator = cell1.optionIndicator;
@@ -226,10 +226,18 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTEMoreAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     XXTEMoreAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     if (_webServerUrl.length > 0) {
-        cellAddress1.addressLabel.textColor = [UIColor blackColor];
+        if (@available(iOS 13.0, *)) {
+            cellAddress1.addressLabel.textColor = [UIColor labelColor];
+        } else {
+            cellAddress1.addressLabel.textColor = [UIColor blackColor];
+        }
         cellAddress1.addressLabel.text = _webServerUrl;
     } else {
-        cellAddress1.addressLabel.textColor = [UIColor colorWithWhite:.8 alpha:1.0];
+        if (@available(iOS 13.0, *)) {
+            cellAddress1.addressLabel.textColor = [UIColor secondaryLabelColor];
+        } else {
+            cellAddress1.addressLabel.textColor = [UIColor colorWithWhite:.8 alpha:1.0];
+        }
         cellAddress1.addressLabel.text = NSLocalizedString(@"Connect to Wi-fi network.", nil);
     }
     cellAddress2.addressLabel.text = _bonjourWebServerUrl.length > 0 ? _bonjourWebServerUrl : NSLocalizedString(@"N/A", nil);
@@ -580,7 +588,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                                                                       numberOfTextFields:1
                                                                   textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
                                                                       if (index == 0) {
-                                                                          textField.tintColor = XXTColorDefault();
+                                                                          textField.tintColor = XXTColorForeground();
                                                                           textField.autocorrectionType = UITextAutocorrectionTypeNo;
                                                                           textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
                                                                           textField.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -1080,9 +1088,6 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
 #ifdef APPSTORE
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
-    if (!XXTE_IS_FULLSCREEN(self)) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #endif
@@ -1112,6 +1117,15 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             [self.navigationController pushViewController:viewer animated:YES];
         }
     }
+}
+
+#pragma mark - Dismissal (Override)
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    if (!XXTE_IS_FULLSCREEN(self)) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [super dismissViewControllerAnimated:flag completion:completion];
 }
 
 @end

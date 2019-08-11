@@ -59,17 +59,17 @@
     }
     XXTE_END_IGNORE_PARTIAL
     toolbarCover.font = font;
-    toolbarCover.textColor = XXTColorDefault();
+    toolbarCover.textColor = XXTColorForeground();
     toolbarCover.text = NSLocalizedString(@"Drop to parent directory", nil);
     self.toolbarCover = toolbarCover;
     
     [toolbar addSubview:toolbarCover];
     
-    if (isOS11Above() && isAppStore()) {
-        [self.tableView setTableHeaderView:toolbar];
-    } else {
+//    if (isOS11Above() && isAppStore()) {
+//        [self.tableView setTableHeaderView:toolbar];
+//    } else {
         [self.view addSubview:toolbar];
-    }
+//    }
 }
 
 #pragma mark - XXTExplorerToolbar
@@ -147,6 +147,7 @@
             XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
             masterNavigationControllerRight.modalPresentationStyle = UIModalPresentationFormSheet;
             masterNavigationControllerRight.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            masterNavigationControllerRight.presentationController.delegate = self;
             [self.navigationController presentViewController:masterNavigationControllerRight animated:YES completion:nil];
         }
 #endif
@@ -181,6 +182,7 @@
                     UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
                     popoverController.barButtonItem = buttonItem;
                     popoverController.backgroundColor = [UIColor whiteColor];
+                    controller.presentationController.delegate = self;
                     [self.navigationController presentViewController:controller animated:YES completion:nil];
                 } else {
                     [self presentNewDocumentViewController:buttonItem];
@@ -331,6 +333,7 @@
                         popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
                         popoverPresentationController.barButtonItem = buttonItem;
                     }
+                    activityViewController.presentationController.delegate = self;
                     [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
                 } else {
                     toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
@@ -387,6 +390,7 @@
     XXTENavigationController *createItemNavigationController = [[XXTENavigationController alloc] initWithRootViewController:createItemViewController];
     createItemNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     createItemNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    createItemNavigationController.presentationController.delegate = self;
     [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
 }
 

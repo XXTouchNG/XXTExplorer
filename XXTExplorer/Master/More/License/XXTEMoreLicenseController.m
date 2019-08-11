@@ -516,7 +516,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     if (trimedString.length == 16) {
         textField.textColor = XXTColorSuccess();
     } else {
-        textField.textColor = XXTColorDefault();
+        textField.textColor = XXTColorForeground();
     }
     if (trimedString.length == 12 || trimedString.length == 16) {
         self.doneButtonItem.enabled = YES;
@@ -787,7 +787,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     }
     else {
         statusLabelCell.valueLabel.text = NSLocalizedString(@"Activated", nil);
-        dateLabel.textColor = XXTColorDefault();
+        dateLabel.textColor = XXTColorForeground();
     }
     [self.tableView reloadData];
 }

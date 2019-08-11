@@ -599,7 +599,11 @@ XXTE_END_IGNORE_PARTIAL
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     header.textLabel.font = [UIFont boldSystemFontOfSize:20.0];
-    header.textLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 13.0, *)) {
+        header.textLabel.textColor = [UIColor labelColor];
+    } else {
+        header.textLabel.textColor = [UIColor blackColor];
+    }
     UIView *bgView = [[UIView alloc] init];
     header.backgroundView = bgView;
     bgView.backgroundColor = [UIColor clearColor];
@@ -694,9 +698,6 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)closeItemTapped:(UIBarButtonItem *)sender {
-    if (!XXTE_IS_FULLSCREEN(self)) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -792,6 +793,15 @@ XXTE_END_IGNORE_PARTIAL
 #ifdef DEBUG
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
+}
+
+#pragma mark - Dismissal (Override)
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    if (!XXTE_IS_FULLSCREEN(self)) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [super dismissViewControllerAnimated:flag completion:completion];
 }
 
 #pragma mark - Unused initilizers

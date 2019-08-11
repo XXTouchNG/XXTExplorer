@@ -21,9 +21,14 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.titleLabel.textColor = [UIColor blackColor];
-    self.descriptionLabel.textColor = XXTColorDefault();
-    self.valueLabel.textColor = [UIColor lightGrayColor];
+    if (@available(iOS 13.0, *)) {
+        self.titleLabel.textColor = [UIColor labelColor];
+        self.valueLabel.textColor = [UIColor secondaryLabelColor];
+    } else {
+        self.titleLabel.textColor = [UIColor blackColor];
+        self.valueLabel.textColor = [UIColor lightGrayColor];
+    }
+    self.descriptionLabel.textColor = XXTColorForeground();
     
     self.titleLabel.text = @"";
     self.descriptionLabel.text = @"";

@@ -24,7 +24,7 @@
 
 static CGFloat XXTEScanVOffset = -22.0;
 
-@interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate>
+@interface XXTEScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LGAlertViewDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property(nonatomic, strong) AVCaptureSession *scanSession;
 @property(nonatomic, strong) AVCaptureDevice *scanDevice;
@@ -180,7 +180,7 @@ static CGFloat XXTEScanVOffset = -22.0;
     CGFloat bottomY = pD.y + diffAngle;
 
     CGContextSetLineWidth(ctx, lineWidthAngle);
-    CGContextSetStrokeColorWithColor(ctx, [XXTColorDefault() colorWithAlphaComponent:.75f].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [XXTColorForeground() colorWithAlphaComponent:.75f].CGColor);
 
     CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
     CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
@@ -476,20 +476,9 @@ static CGFloat XXTEScanVOffset = -22.0;
 }
 
 - (void)dismissScanViewController:(UIBarButtonItem *)sender {
-    if (!XXTE_IS_FULLSCREEN(self)) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-    }
     [self dismissViewControllerAnimated:YES completion:^() {
         
     }];
-}
-
-- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
-    if (self.scanSession != nil) {
-        [self.scanSession stopRunning];
-        self.scanSession = nil;
-    }
-    [super dismissViewControllerAnimated:flag completion:completion];
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
@@ -504,11 +493,12 @@ static CGFloat XXTEScanVOffset = -22.0;
         imagePicker.allowsEditing = NO;
         imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
         imagePicker.navigationBar.translucent = NO;
-        imagePicker.navigationBar.barTintColor = XXTColorDefault();
+        imagePicker.navigationBar.barTintColor = XXTColorBarTint();
         imagePicker.navigationBar.tintColor = [UIColor whiteColor];
         imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
         imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
         imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        imagePicker.presentationController.delegate = self;
         [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
     } else {
         toastMessage(self, NSLocalizedString(@"This feature requires iOS 8.0 or later.", nil));
@@ -759,6 +749,29 @@ static CGFloat XXTEScanVOffset = -22.0;
 
 - (void)handleEnterForeground:(NSNotification *)aNotification {
     [self reloadLightButtonStatus];
+}
+
+#pragma mark - Dismissal (Override)
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    if (self.scanSession != nil) {
+        [self.scanSession stopRunning];
+        self.scanSession = nil;
+    }
+    if (!XXTE_IS_FULLSCREEN(self)) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [super dismissViewControllerAnimated:flag completion:completion];
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate (13.0+)
+
+- (void)presentationControllerWillDismiss:(UIPresentationController *)presentationController {
+    
+}
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    
 }
 
 #pragma mark - Memory

@@ -36,11 +36,9 @@
         if (![eventType isKindOfClass:[NSString class]]) {
             return;
         }
-        if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved] ||
-            [eventType isEqualToString:XXTENotificationEventTypeFormSheetDismissed]
-            ) {
+        if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
             [self loadEntryListData];
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, XXTExplorerViewSectionIndexMax)] withRowAnimation:UITableViewRowAnimationAutomatic];
             
             NSString *movedPath = aNotification.object;
             if (movedPath) {
@@ -71,6 +69,9 @@
                     
                 }
             }
+        }
+        else if ([eventType isEqualToString:XXTENotificationEventTypeFormSheetDismissed]) {
+            [self reloadEntryListView];
         }
         else if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive] ||
                  [eventType isEqualToString:XXTENotificationEventTypeApplicationDidExtractResource] ||

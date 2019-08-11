@@ -26,11 +26,11 @@
     
     UIButton *btn = self.tapTitleButton;
     [btn setTitle:NSLocalizedString(@"More...", nil) forState:UIControlStateNormal];
-    [btn setTitleColor:XXTColorDefault() forState:UIControlStateNormal];
+    [btn setTitleColor:XXTColorForeground() forState:UIControlStateNormal];
     
     [btn.layer setCornerRadius:(CGRectGetHeight(btn.bounds) / 2.0)];
     [btn.layer setBorderWidth:0.6];
-    [btn.layer setBorderColor:XXTColorDefault().CGColor];
+    [btn.layer setBorderColor:XXTColorForeground().CGColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

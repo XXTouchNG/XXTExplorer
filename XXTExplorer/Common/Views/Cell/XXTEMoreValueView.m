@@ -42,7 +42,7 @@
 }
 
 - (void)setup {
-    _separatorColor = [XXTColorDefault() colorWithAlphaComponent:0.1];
+    _separatorColor = [XXTColorForeground() colorWithAlphaComponent:0.1];
     _maxValue = 32.0;
     _minValue = 8.0;
     _stepValue = 1.0;
@@ -50,7 +50,7 @@
     _unitString = @"pt";
     
     self.backgroundColor = [UIColor clearColor];
-    self.layer.borderColor = XXTColorDefault().CGColor;
+    self.layer.borderColor = XXTColorForeground().CGColor;
     self.layer.borderWidth = 1.f;
     self.layer.cornerRadius = 6.f;
     
@@ -63,7 +63,7 @@
     [upView setBackgroundImage:[UIImage imageWithUIColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
     UILabel *upTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     upTriView.font = [UIFont systemFontOfSize:14.f];
-    upTriView.textColor = XXTColorDefault();
+    upTriView.textColor = XXTColorForeground();
     upTriView.text = @"▲";
     [upTriView sizeToFit];
     self.upTriView = upTriView;
@@ -77,7 +77,7 @@
     [downView setBackgroundImage:[UIImage imageWithUIColor:XXTColorCellSelected()] forState:UIControlStateHighlighted];
     UILabel *downTriView = [[UILabel alloc] initWithFrame:CGRectZero];
     downTriView.font = [UIFont systemFontOfSize:14.f];
-    downTriView.textColor = XXTColorDefault();
+    downTriView.textColor = XXTColorForeground();
     downTriView.text = @"▼";
     [downTriView sizeToFit];
     [downView addSubview:downTriView];
@@ -144,7 +144,7 @@
         UILabel *ptLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         ptLabel.textAlignment = NSTextAlignmentCenter;
         ptLabel.font = [UIFont boldSystemFontOfSize:14.f];
-        ptLabel.textColor = XXTColorDefault();
+        ptLabel.textColor = XXTColorForeground();
         ptLabel.text = self.unitString;
         [ptLabel sizeToFit];
         _ptLabel = ptLabel;
@@ -160,7 +160,7 @@
         } else {
             sizeLabel.font = [UIFont boldSystemFontOfSize:36.f];
         }
-        sizeLabel.textColor = XXTColorDefault();
+        sizeLabel.textColor = XXTColorForeground();
         _sizeLabel = sizeLabel;
     }
     return _sizeLabel;

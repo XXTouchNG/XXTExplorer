@@ -59,8 +59,12 @@
     if (!_footerLabel) {
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
         textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        textLabel.textColor = XXTColorDefault();
-        textLabel.backgroundColor = [UIColor whiteColor];
+        textLabel.textColor = XXTColorForeground();
+        if (@available(iOS 13.0, *)) {
+            textLabel.backgroundColor = [UIColor systemBackgroundColor];
+        } else {
+            textLabel.backgroundColor = [UIColor whiteColor];
+        }
         UIFont *font = nil;
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 8.2, *)) {

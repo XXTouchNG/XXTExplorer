@@ -17,7 +17,7 @@
         prefersLightStatusBar = [self isDarkMode];
     } else {
         UIColor *newColor = self.barTintColor;
-        if (!newColor) newColor = XXTColorDefault();
+        if (!newColor) newColor = XXTColorBarTint();
         prefersLightStatusBar = [newColor xui_isDarkColor];
     }
     if (prefersLightStatusBar) {
@@ -30,7 +30,7 @@
 - (BOOL)isDarkMode
 {
     UIColor *newColor = self.backgroundColor;
-    if (!newColor) newColor = XXTColorDefault();
+    if (!newColor) newColor = XXTColorBarTint();
     return [newColor xui_isDarkColor];
 }
 
@@ -54,7 +54,7 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
-    UIColor *barTintColor = XXTColorDefault();
+    UIColor *barTintColor = XXTColorBarTint();
     UIColor *barTitleColor = [UIColor whiteColor];
     UINavigationController *navigation = self.navigationController;
     if (restore == NO) {

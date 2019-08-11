@@ -18,7 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.tintColor = XXTColorDefault();
+    self.tintColor = XXTColorForeground();
     
     UIImageView *imageView = self.previewImageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;

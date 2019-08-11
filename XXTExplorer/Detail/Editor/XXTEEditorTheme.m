@@ -25,8 +25,8 @@
         _name = name ? name : @"";
         _backgroundColor = UIColor.whiteColor;
         _foregroundColor = UIColor.blackColor;
-        _caretColor = XXTColorDefault();
-        _selectionColor = XXTColorDefault();
+        _caretColor = XXTColorForeground();
+        _selectionColor = XXTColorForeground();
         _invisibleColor = UIColor.blackColor;
         _barTintColor = nil;
         _barTextColor = nil;

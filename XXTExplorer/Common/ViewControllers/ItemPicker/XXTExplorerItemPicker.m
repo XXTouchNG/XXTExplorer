@@ -171,21 +171,26 @@
             XXTExplorerEntry *entry = self.entryList[indexPath.row];
             if (!entry.isMaskedDirectory &&
                 [entry.entryPath isEqualToString:self.selectedBootScriptPath]) {
-                cell.entryTitleLabel.textColor = XXTColorDefault();
-                cell.entrySubtitleLabel.textColor = XXTColorDefault();
+                cell.entryTitleLabel.textColor = XXTColorForeground();
+                cell.entrySubtitleLabel.textColor = XXTColorForeground();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
             }
             else if ((entry.isMaskedDirectory ||
                       entry.isBundle) &&
                      [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
                      [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
-                cell.entryTitleLabel.textColor = XXTColorDefault();
-                cell.entrySubtitleLabel.textColor = XXTColorDefault();
+                cell.entryTitleLabel.textColor = XXTColorForeground();
+                cell.entrySubtitleLabel.textColor = XXTColorForeground();
                 cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
             }
             else {
-                cell.entryTitleLabel.textColor = [UIColor blackColor];
-                cell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+                if (@available(iOS 13.0, *)) {
+                    cell.entryTitleLabel.textColor = [UIColor labelColor];
+                    cell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
+                } else {
+                    cell.entryTitleLabel.textColor = [UIColor blackColor];
+                    cell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+                }
                 cell.flagType = XXTExplorerViewCellFlagTypeNone;
             }
             cell.accessoryType = UITableViewCellAccessoryNone;

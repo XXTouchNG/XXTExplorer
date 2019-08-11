@@ -740,7 +740,7 @@ XXTE_END_IGNORE_PARTIAL
 
 XXTE_START_IGNORE_PARTIAL
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
-    [[UINavigationBar appearanceWhenContainedIn:[UIDocumentPickerViewController class], nil] setBarTintColor:XXTColorDefault()];
+    [[UINavigationBar appearanceWhenContainedIn:[UIDocumentPickerViewController class], nil] setBarTintColor:XXTColorBarTint()];
     documentPicker.delegate = self;
     if (@available(iOS 11.0, *)) {
         documentPicker.allowsMultipleSelection = NO;

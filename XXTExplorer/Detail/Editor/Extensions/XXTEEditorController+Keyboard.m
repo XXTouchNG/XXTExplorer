@@ -40,9 +40,9 @@
         return;
     }
     
-    if (![self.textView isFirstResponder]) {
-        return;
-    }
+//    if (![self.textView isFirstResponder]) {
+//        return;
+//    }
     
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
@@ -68,9 +68,9 @@
         return;
     }
     
-    if (![self.textView isFirstResponder]) {
-        return;
-    }
+//    if (![self.textView isFirstResponder]) {
+//        return;
+//    }
     
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
@@ -114,9 +114,9 @@
         return;
     }
     
-    if (![self.textView isFirstResponder]) {
-        return;
-    }
+//    if (![self.textView isFirstResponder]) {
+//        return;
+//    }
     
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {

@@ -29,6 +29,7 @@
     }
     controller.modalPresentationStyle = UIModalPresentationFormSheet;
     controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    controller.presentationController.delegate = self;
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 

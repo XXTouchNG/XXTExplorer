@@ -385,11 +385,40 @@ NSString *XXTSchemeCloudProjectID(NSUInteger projectID) {
     return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", (unsigned long)projectID];
 }
 
-UIColor *XXTColorDefault() { // rgb(52, 152, 219), #3498DB
+UIColor *XXTColorForeground() { // rgb(52, 152, 219), #3498DB
+    static UIColor *xxtColorF = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (@available(iOS 13.0, *)) {
+            xxtColorF = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+                if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                    return [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+                } else {
+                    return [UIColor labelColor];
+                }
+            }];
+        } else {
+            xxtColorF = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+        }
+    });
+    return xxtColorF;
+}
+
+UIColor *XXTColorBarTint() { // rgb(52, 152, 219), #3498DB
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+        if (@available(iOS 13.0, *)) {
+            xxtColor = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+                if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                    return [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+                } else {
+                    return [UIColor systemBackgroundColor];
+                }
+            }];
+        } else {
+            xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+        }
     });
     return xxtColor;
 }
@@ -398,7 +427,17 @@ UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:0.1];
+        if (@available(iOS 13.0, *)) {
+            xxtColor = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+                if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                    return [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:0.1];
+                } else {
+                    return [UIColor colorWithWhite:1.0 alpha:0.1];
+                }
+            }];
+        } else {
+            xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:0.1];
+        }
     });
     return xxtColor;
 }

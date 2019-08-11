@@ -125,12 +125,12 @@ XXTE_END_IGNORE_PARTIAL
     {
         if (@available(iOS 13.0, *)) {
             UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
-            textField.textColor = [UIColor blackColor];
-            textField.tintColor = XXTColorDefault();
+            textField.textColor = [UIColor labelColor];
+            textField.tintColor = XXTColorForeground();
         } else {
             searchBar.backgroundColor = [UIColor whiteColor];
             searchBar.barTintColor = [UIColor whiteColor];
-            searchBar.tintColor = XXTColorDefault();
+            searchBar.tintColor = XXTColorForeground();
         }
         searchBar.placeholder = NSLocalizedString(@"Search Log", nil);
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -358,10 +358,18 @@ XXTE_END_IGNORE_PARTIAL
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XXTELogCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTELogCellReuseIdentifier forIndexPath:indexPath];
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
-    if (indexPath.row % 2 == 0) {
-        [cell setBackgroundColor:[UIColor whiteColor]];
+    if (@available(iOS 13.0, *)) {
+        if (indexPath.row % 2 == 0) {
+            [cell setBackgroundColor:[UIColor systemBackgroundColor]];
+        } else {
+            [cell setBackgroundColor:[UIColor secondarySystemBackgroundColor]];
+        }
     } else {
-        [cell setBackgroundColor:[UIColor colorWithWhite:0.97 alpha:1.0]];
+        if (indexPath.row % 2 == 0) {
+            [cell setBackgroundColor:[UIColor whiteColor]];
+        } else {
+            [cell setBackgroundColor:[UIColor colorWithWhite:0.97 alpha:1.0]];
+        }
     }
     return cell;
 }

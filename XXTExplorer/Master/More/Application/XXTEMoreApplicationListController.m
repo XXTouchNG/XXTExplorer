@@ -166,7 +166,7 @@ XXTE_END_IGNORE_PARTIAL
             textField = [searchBar valueForKey:@"searchField"];
         }
         textField.textColor = [UIColor blackColor];
-        textField.tintColor = XXTColorDefault();
+        textField.tintColor = XXTColorForeground();
         searchBar.barTintColor = [UIColor whiteColor];
         searchBar.tintColor = [UIColor whiteColor];
         if (@available(iOS 13.0, *)) {
@@ -183,7 +183,7 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = XXTColorDefault();
+        searchBar.tintColor = XXTColorForeground();
         self.tableView.tableHeaderView = searchBar;
     }
     
@@ -366,7 +366,7 @@ XXTE_END_IGNORE_PARTIAL
     [cell setApplicationName:applicationDetail[kXXTEMoreApplicationDetailKeyName]];
     [cell setApplicationBundleID:applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];
     [cell setApplicationIconImage:applicationDetail[kXXTEMoreApplicationDetailKeyIconImage]];
-    [cell setTintColor:XXTColorDefault()];
+    [cell setTintColor:XXTColorForeground()];
     return cell;
 }
 

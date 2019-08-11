@@ -91,8 +91,12 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     }
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    mainWindow.tintColor = XXTColorDefault();
-    mainWindow.backgroundColor = [UIColor whiteColor];
+    mainWindow.tintColor = XXTColorForeground();
+    if (@available(iOS 13.0, *)) {
+        mainWindow.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        mainWindow.backgroundColor = [UIColor whiteColor];
+    }
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
     

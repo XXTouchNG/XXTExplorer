@@ -36,7 +36,7 @@
 }
 
 - (void)setup {
-    self.tintColor = XXTColorDefault();
+    self.tintColor = XXTColorForeground();
     
     self.flagIconImageView.layer.shadowOffset = CGSizeMake(0, 0);
     self.flagIconImageView.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:1.f].CGColor;
@@ -113,9 +113,9 @@
         return XXTColorDanger();
     } else if (flagType == XXTExplorerViewCellFlagTypeSelectedBootScript
                || flagType == XXTExplorerViewCellFlagTypeSelectedBootScriptInside) {
-        return XXTColorDefault();
+        return XXTColorForeground();
     }
-    return XXTColorDefault();
+    return XXTColorForeground();
 }
 
 //- (void)animateIndicatorForFlagType:(XXTExplorerViewCellFlagType)flagType {

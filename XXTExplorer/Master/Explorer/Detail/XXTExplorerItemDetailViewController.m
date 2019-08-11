@@ -399,7 +399,11 @@ static int sizingCancelFlag = 0;
             if (entry.isBrokenSymlink) {
                 cell3.addressLabel.textColor = XXTColorDanger();
             } else {
-                cell3.addressLabel.textColor = [UIColor blackColor];
+                if (@available(iOS 13.0, *)) {
+                    cell3.addressLabel.textColor = [UIColor labelColor];
+                } else {
+                    cell3.addressLabel.textColor = [UIColor blackColor];
+                }
             }
             
             XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
@@ -675,9 +679,6 @@ static int sizingCancelFlag = 0;
         [self.nameField resignFirstResponder];
     }
     sizingCancelFlag = 1;
-    if (!XXTE_IS_FULLSCREEN(self)) {
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-    }
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -730,9 +731,6 @@ static int sizingCancelFlag = 0;
         BOOL result = [renameResult boolValue];
         if (result) {
             sizingCancelFlag = 1;
-            if (!XXTE_IS_FULLSCREEN(self)) {
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
-            }
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];
@@ -975,6 +973,15 @@ static int sizingCancelFlag = 0;
         [self reloadStaticTableViewData];
         [self.tableView reloadData];
     }
+}
+
+#pragma mark - Dismissal (Override)
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    if (!XXTE_IS_FULLSCREEN(self)) {
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
+    }
+    [super dismissViewControllerAnimated:flag completion:completion];
 }
 
 #pragma mark - Memory

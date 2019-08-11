@@ -111,9 +111,14 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
-        searchBar.backgroundColor = [UIColor whiteColor];
-        searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = XXTColorDefault();
+        if (@available(iOS 13.0, *)) {
+            searchBar.backgroundColor = [UIColor systemBackgroundColor];
+            searchBar.barTintColor = [UIColor systemBackgroundColor];
+        } else {
+            searchBar.backgroundColor = [UIColor whiteColor];
+            searchBar.barTintColor = [UIColor whiteColor];
+        }
+        searchBar.tintColor = XXTColorForeground();
         searchBar.delegate = self;
         searchBar;
     });
