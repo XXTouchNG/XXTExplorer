@@ -36,13 +36,13 @@
 
 #pragma mark - UITextViewDelegate
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    
-}
+//- (void)textViewDidBeginEditing:(UITextView *)textView {
+//    
+//}
+//
+//- (void)textViewDidEndEditing:(UITextView *)textView {
+//    
+//}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {

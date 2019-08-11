@@ -401,10 +401,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Tab Width
     NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
-    CGFloat tabWidth = tabWidthEnum * theme.spaceWidth;
+    CGFloat tabWidth = tabWidthEnum * theme.fontSpaceWidth;
     
     // Layout Manager
-    [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     XXTEEditorLayoutManager *layoutManager = textView.vLayoutManager;
     if (layoutManager) {
         UIColor *gutterColor = [theme.foregroundColor colorWithAlphaComponent:.25];
@@ -421,8 +420,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         [layoutManager setInvisibleFont:theme.font];
         
         [layoutManager setTabWidth:tabWidth];
-        [layoutManager setLineHeight:theme.lineHeight];
+        [layoutManager setFontLineHeight:theme.fontLineHeight];
+        [layoutManager setLineHeightScale:theme.lineHeightScale];
+        [layoutManager setBaseLineOffset:theme.baseLineOffset];
     }
+    [textView setShowLineNumbers:isLineNumbersEnabled]; // config
     
     // Text Container
     BOOL indentWrappedLines = XXTEDefaultsBool(XXTEEditorIndentWrappedLines, YES);
@@ -1134,7 +1136,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (self.parser.aborted) return;
     if ([self invalidateSyntaxCachesIfNeeded]) return;
     
-    XXTEEditorSyntaxCache *cache = [self syntaxCache];
+    XXTEEditorSyntaxCache *cache = self.syntaxCache;
     NSArray *rangesArray = cache.rangesArray;
     NSArray *attributesArray = cache.attributesArray;
     NSMutableIndexSet *renderedSet = cache.renderedSet;

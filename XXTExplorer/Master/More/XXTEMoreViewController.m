@@ -746,7 +746,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             changeToCommand = @"open_remote_access";
         else
             changeToCommand = @"close_remote_access";
-        UIViewController *blockVC = blockInteractions(self, YES);
+        UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 2.0);
         [self.remoteAccessSwitch setHidden:YES];
         [self.remoteAccessIndicator startAnimating];
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
@@ -794,7 +794,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             } else {
                 [davClient stop];
             }
-            self.blockVC = blockInteractions(self, YES);
+            self.blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 2.0);
             [self.remoteAccessSwitch setHidden:YES];
             [self.remoteAccessIndicator startAnimating];
         }

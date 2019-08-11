@@ -26,8 +26,11 @@
 @property (nonatomic, strong, readonly) NSString *name;
 @property (nonatomic, strong, readonly) UIFont *font;
 
-@property (nonatomic, assign) CGFloat spaceWidth;
-@property (nonatomic, assign) CGFloat lineHeight;
+// font attributes
+@property (nonatomic, assign, readonly) CGFloat fontSpaceWidth;
+@property (nonatomic, assign, readonly) CGFloat fontLineHeight;
+@property (nonatomic, assign, readonly) CGFloat lineHeightScale;
+@property (nonatomic, assign, readonly) CGFloat baseLineOffset;
 
 - (instancetype)initWithName:(NSString *)name baseFont:(UIFont *)font;
 - (NSDictionary *)defaultAttributes;

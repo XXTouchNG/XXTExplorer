@@ -65,6 +65,7 @@
         if (lineRange.location < characterIndex) {
             
             // get base indent
+            // TODO: use common search instead of regular expression search (performance?)
             NSRange indentRange = [string rangeOfString:@"[ \t]+" options:NSRegularExpressionSearch | NSAnchoredSearch range:lineRange];
             CGFloat baseIndent = indentRange.location == NSNotFound ? 0 : [storage attributedSubstringFromRange:indentRange].size.width;
             

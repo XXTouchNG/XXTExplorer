@@ -10,4 +10,9 @@
 
 @implementation XXTEEditorSyntaxCache
 
+- (BOOL)isEqual:(XXTEEditorSyntaxCache *)object
+{
+    return self.referencedParser == object.referencedParser && [self.text isEqualToString:object.text];
+}
+
 @end

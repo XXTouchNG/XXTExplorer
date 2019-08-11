@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) SKAttributedParser *referencedParser;
 @property (nonatomic, copy) NSString *text;
+
 @property (atomic, strong) NSMutableIndexSet *renderedSet;
 @property (atomic, strong) NSMutableArray <NSValue *> *rangesArray;
 @property (atomic, strong) NSMutableArray <NSDictionary *> *attributesArray;

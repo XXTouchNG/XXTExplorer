@@ -52,15 +52,25 @@
 {
     self.allowsNonContiguousLayout = NO;
     
-    _lineNumberColor = [UIColor grayColor];
-    _lineNumberFont = [UIFont systemFontOfSize:14.0];
+    _showLineNumbers = NO;
+    _showInvisibleCharacters = NO;
+    _indentWrappedLines = YES;
+    
     _invisibleColor = [UIColor lightGrayColor];
     _invisibleFont = [UIFont systemFontOfSize:14.f];
-    _lineAreaInset = UIEdgeInsetsMake(0.0, 8.0, 0.0, 10.0);
-    _lineHeightScale = 1.05;
-    _numberOfDigits = 3;
     
-    _indentWrappedLines = NO;
+    _lineNumberFont = [UIFont systemFontOfSize:14.0];
+    _lineNumberColor = [UIColor grayColor];
+    _numberOfDigits = 3;
+    _gutterWidth = 0.0;
+    
+    _lineHeightScale = 1.05;
+    _tabWidth = 1.0;
+    _fontLineHeight = 1.0;
+    _baseLineOffset = 1.0;
+    
+    _lineAreaInset = UIEdgeInsetsMake(0.0, 8.0, 0.0, 10.0);
+    _fontPointSize = 1.0;
     
     [self reloadGutterWidth];
     
@@ -74,6 +84,21 @@
 
 #pragma mark - Getters & Setters
 
+- (void)setShowLineNumbers:(BOOL)showLineNumbers {
+    _showLineNumbers = showLineNumbers;
+    [self invalidateLayout];
+}
+
+- (void)setShowInvisibleCharacters:(BOOL)showInvisibleCharacters {
+    _showInvisibleCharacters = showInvisibleCharacters;
+    [self invalidateLayout];
+}
+
+- (void)setIndentWrappedLines:(BOOL)indentWrappedLines {
+    _indentWrappedLines = indentWrappedLines;
+    [self invalidateLayout];
+}
+
 - (void)setLineNumberFont:(UIFont *)lineNumberFont {
     _lineNumberFont = lineNumberFont;
     _fontPointSize = lineNumberFont.pointSize;
@@ -81,9 +106,9 @@
     [self invalidateLayout];
 }
 
-- (void)setLineHeightScale:(CGFloat)lineHeightScale {
-    _lineHeightScale = lineHeightScale;
-    [self invalidateLayout];
+- (void)setLineNumberColor:(UIColor *)lineNumberColor {
+    _lineNumberColor = lineNumberColor;
+    // [self invalidateLayout];
 }
 
 - (void)setNumberOfDigits:(NSUInteger)numberOfDigits {
@@ -94,8 +119,23 @@
     [self invalidateLayout];
 }
 
-- (void)setIndentWrappedLines:(BOOL)indentWrappedLines {
-    _indentWrappedLines = indentWrappedLines;
+- (void)setTabWidth:(CGFloat)tabWidth {
+    _tabWidth = tabWidth;
+    [self invalidateLayout];
+}
+
+- (void)setFontLineHeight:(CGFloat)fontLineHeight {
+    _fontLineHeight = fontLineHeight;
+    [self invalidateLayout];
+}
+
+- (void)setBaseLineOffset:(CGFloat)baseLineOffset {
+    _baseLineOffset = baseLineOffset;
+    [self invalidateLayout];
+}
+
+- (void)setLineHeightScale:(CGFloat)lineHeightScale {
+    _lineHeightScale = lineHeightScale;
     [self invalidateLayout];
 }
 
@@ -332,8 +372,8 @@
     return UIEdgeInsetsMake(0, leftInset, 0, 0);
 }
 
-- (void)setLineFragmentRect:(CGRect)fragmentRect forGlyphRange:(NSRange)glyphRange usedRect:(CGRect)usedRect
-{
+//- (void)setLineFragmentRect:(CGRect)fragmentRect forGlyphRange:(NSRange)glyphRange usedRect:(CGRect)usedRect
+//{
     // IMPORTANT: Perform the shift of the X-coordinate that cannot be done in NSTextContainer's -lineFragmentRectForProposedRect:atIndex:writingDirection:remainingRect:
 //    if ([self indentWrappedLines]) {
 //        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: [self characterIndexForGlyphAtIndex: glyphRange.location] textContainer:nil];
@@ -341,12 +381,12 @@
 //        fragmentRect.origin.x += insets.left;
 //        usedRect.origin.x += insets.left;
 //    }
+//
+//    [super setLineFragmentRect:fragmentRect forGlyphRange:glyphRange usedRect:usedRect];
+//}
 
-    [super setLineFragmentRect:fragmentRect forGlyphRange:glyphRange usedRect:usedRect];
-}
-
-- (void)setExtraLineFragmentRect:(CGRect)fragmentRect usedRect:(CGRect)usedRect textContainer:(NSTextContainer *)container
-{
+//- (void)setExtraLineFragmentRect:(CGRect)fragmentRect usedRect:(CGRect)usedRect textContainer:(NSTextContainer *)container
+//{
     // Etxra line fragment rect must be indented just like every other line fragment rect
 //    if ([self indentWrappedLines]) {
 //        UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex:self.textStorage.length textContainer:container];
@@ -354,8 +394,8 @@
 //        fragmentRect.origin.x += insets.left;
 //        usedRect.origin.x += insets.left;
 //    }
-
-    [super setExtraLineFragmentRect:fragmentRect usedRect:usedRect textContainer:container];
-}
+//
+//    [super setExtraLineFragmentRect:fragmentRect usedRect:usedRect textContainer:container];
+//}
 
 @end

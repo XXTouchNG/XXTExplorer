@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UITextView (VisibleRange)
 - (NSRange)visibleRange;
+
 @end
 
 NS_ASSUME_NONNULL_END

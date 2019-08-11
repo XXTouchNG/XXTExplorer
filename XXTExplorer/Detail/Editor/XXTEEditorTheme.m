@@ -112,8 +112,13 @@
                                         NSBackgroundColorAttributeName: backgroundColor,
                                         NSFontAttributeName: font,
                                         };
-    _spaceWidth = [@" " sizeWithAttributes:defaultAttributes].width;
-    _lineHeight = font.lineHeight;
+    _fontSpaceWidth = [@" " sizeWithAttributes:defaultAttributes].width;
+    _fontLineHeight = font.lineHeight;
+    _lineHeightScale = 1.05;
+    
+    CGFloat maximumFontLineHeight = font.lineHeight;
+    CGFloat maximumLineHeight = maximumFontLineHeight * _lineHeightScale;
+    _baseLineOffset = maximumLineHeight / 2.0 - maximumFontLineHeight / 2.0;
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 //    paragraphStyle.minimumLineHeight = font.pointSize;
@@ -121,8 +126,6 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.alignment = NSTextAlignmentLeft;
     _paragraphStyle = [paragraphStyle copy];
-    
-    
 }
 
 - (NSDictionary *)defaultAttributes {

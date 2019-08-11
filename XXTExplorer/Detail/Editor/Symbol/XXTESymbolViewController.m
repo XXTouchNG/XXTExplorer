@@ -198,7 +198,7 @@ XXTE_END_IGNORE_PARTIAL
         return NO;
     }
     
-    UIViewController *blockVC = blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSMutableArray *symbolsTable = [[NSMutableArray alloc] init];
         [parser parseString:string matchCallback:^(NSString *scopeName, NSRange range) {

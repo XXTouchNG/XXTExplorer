@@ -11,6 +11,9 @@
 #import "XXTEEditorTextStorage.h"
 #import "XXTEEditorLayoutManager.h"
 
+
+static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
+
 @interface XXTEEditorTextView ()
 
 @property (nonatomic, assign) BOOL shouldReloadContainerInsets;
@@ -49,25 +52,34 @@
     XXTEEditorLayoutManager *manager = self.vLayoutManager;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect bounds = self.bounds;
+    CGRect frame = self.frame;
     
-    CGFloat height = MAX(CGRectGetHeight(bounds), self.contentSize.height) + 200;
+    CGFloat height = MAX(CGRectGetHeight(frame), self.contentSize.height) + kXXTEEditorTextViewGutterExtraHeight * 2.0;
     
     CGContextSetFillColorWithColor(context, self.gutterBackgroundColor.CGColor);
-    CGContextFillRect(context, CGRectMake(bounds.origin.x, bounds.origin.y, manager.gutterWidth, height));
+    CGContextFillRect(context, CGRectMake(frame.origin.x, frame.origin.y - (kXXTEEditorTextViewGutterExtraHeight), manager.gutterWidth, height));
     
     CGContextSetFillColorWithColor(context, self.gutterLineColor.CGColor);
-    CGContextFillRect(context, CGRectMake(manager.gutterWidth, bounds.origin.y, 1.0, height));
+    CGContextFillRect(context, CGRectMake(manager.gutterWidth, frame.origin.y - (kXXTEEditorTextViewGutterExtraHeight), 1.0, height));
     
     [super drawRect:rect];
 }
 
 #pragma mark - Setters
 
-- (void)setText:(NSString *)text
-{
+- (void)setText:(NSString *)text {
     UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.endOfDocument];
     [self replaceRange:textRange withText:text];
+}
+
+- (void)setGutterLineColor:(UIColor *)gutterLineColor {
+    _gutterLineColor = gutterLineColor;
+    [self setNeedsDisplay];
+}
+
+- (void)setGutterBackgroundColor:(UIColor *)gutterBackgroundColor {
+    _gutterBackgroundColor = gutterBackgroundColor;
+    [self setNeedsDisplay];
 }
 
 - (void)replaceRange:(UITextRange *)range
