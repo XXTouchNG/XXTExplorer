@@ -36,7 +36,7 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame inputViewStyle:UIInputViewStyleKeyboard]) {
         [self setup];
     }
     return self;
@@ -48,6 +48,8 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
     }
     return self;
 }
+
+// TODO: sequence from language definition
 
 - (void)setup {
     switch ([UIDevice currentDevice].userInterfaceIdiom) {

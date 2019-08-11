@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIBarButtonItem *closeItem;
 @property (nonatomic, strong) UIBarButtonItem *activityIndicatorItem;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) NSMutableArray <NSPipe *> *pipes;
 
 @end
 
@@ -42,6 +43,7 @@
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
+        _pipes = [NSMutableArray array];
     }
     return self;
 }
@@ -77,6 +79,15 @@
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,6 +121,7 @@
 
 - (void)dealloc {
     [self resetVirtualMachine];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 #ifdef DEBUG
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
@@ -201,14 +213,24 @@
             [pipeReadHandle readInBackgroundAndNotify];
         }
     }
+    [self.pipes addObject:pipe];
 }
 
 - (void)fileHandlerReadabilityHandlerStdout:(NSNotification *)aNotification
 {
+    NSFileHandle *pipeReadHandle = [aNotification object];
+    NSPipe *pipe = nil;
+    for (NSPipe *pipe0 in self.pipes) {
+        if (pipe0.fileHandleForReading == pipeReadHandle) {
+            pipe = pipe0;
+        }
+    }
+    if (!pipe) {
+        return;
+    }
     NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [self.textView appendString:str];
-    NSFileHandle *pipeReadHandle = [aNotification object];
     if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
         [pipeReadHandle readInBackgroundAndNotify];
     }
@@ -216,10 +238,19 @@
 
 - (void)fileHandlerReadabilityHandlerStderr:(NSNotification *)aNotification
 {
+    NSFileHandle *pipeReadHandle = [aNotification object];
+    NSPipe *pipe = nil;
+    for (NSPipe *pipe0 in self.pipes) {
+        if (pipe0.fileHandleForReading == pipeReadHandle) {
+            pipe = pipe0;
+        }
+    }
+    if (!pipe) {
+        return;
+    }
     NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [self.textView appendError:str];
-    NSFileHandle *pipeReadHandle = [aNotification object];
     if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
         [pipeReadHandle readInBackgroundAndNotify];
     }
@@ -254,14 +285,6 @@
     {
         [self registerFileHandlerNotification:fileno(virtualModel.stderrHandler) isStdout:NO];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateTextViewInsetsWithKeyboardNotification:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
     self.virtualModel = virtualModel;
 }
 
@@ -277,7 +300,8 @@
         [self.virtualModel setRunning:NO];
     }
     self.virtualModel = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.pipes removeAllObjects];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadCompletionNotification object:nil];
 }
 
 - (void)executeScript {

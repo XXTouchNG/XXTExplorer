@@ -83,8 +83,11 @@ static NSInteger kStopRenderingLineAfter = 1024;
 }
 
 + (BOOL)stringHasLongLine:(NSString *)string LineBreak:(NSStringLineBreakType)lineBreak {
+    if (string.length < kStopRenderingLineAfter) {
+        return NO;
+    }
     NSString *lb = [XXTEEditorLineBreakHelper lineBreakStringForType:lineBreak];
-    NSInteger lastPosition = 0;
+    NSInteger lastPosition = -1;
     NSInteger loc = NSNotFound;
     while ((loc = [string rangeOfString:lb options:kNilOptions range:NSMakeRange((lastPosition + 1), string.length - (lastPosition + 1))].location) != NSNotFound)
     {

@@ -6668,6 +6668,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
+				MARKETING_VERSION = 2.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6767,6 +6768,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
+				MARKETING_VERSION = 2.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";

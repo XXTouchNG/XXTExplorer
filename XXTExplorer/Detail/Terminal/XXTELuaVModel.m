@@ -167,8 +167,7 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
     return YES;
 }
 
-- (BOOL)loadBufferFromString:(NSString *)string
-                       error:(NSError **)error
+- (BOOL)loadBufferFromString:(NSString *)string error:(NSError **)error
 {
     const char *cString = [string UTF8String];
     int load_stat = luaL_loadbufferx(L, cString, strlen(cString), "", 0);
@@ -185,10 +184,11 @@ void lua_terminate(lua_State *L, lua_Debug *ar)
     int load_stat = 0;
     if (setjmp(buf) == 0) {
         load_stat = lua_pcall(L, 0, 0, 0);
-        [self setRunning:NO];
         if (!lua_checkCode(L, load_stat, error)) {
+            [self setRunning:NO];
             return NO;
         }
+        [self setRunning:NO];
         return YES;
     } else {
         if (error != nil) {

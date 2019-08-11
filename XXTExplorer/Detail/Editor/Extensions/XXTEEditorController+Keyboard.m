@@ -103,6 +103,8 @@
     if (!CGRectContainsPoint(aRect, selectionCenterPoint) ) {
         [textView scrollRectToVisible:CGRectMake(selectionStartRect.origin.x, selectionStartRect.origin.y, selectionEndRect.origin.x - selectionStartRect.origin.x, selectionStartRect.size.height) animated:YES consideringInsets:YES];
     }
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -157,6 +159,7 @@
     }
     
     [self saveDocumentIfNecessary];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 @end

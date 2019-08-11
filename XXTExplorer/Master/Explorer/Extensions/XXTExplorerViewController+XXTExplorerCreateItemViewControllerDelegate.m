@@ -17,7 +17,7 @@
 @implementation XXTExplorerViewController (XXTExplorerCreateItemViewControllerDelegate)
 
 - (void)createItemViewControllerDidDismiss:(XXTExplorerCreateItemViewController *)controller {
-    UIViewController *blockController = blockInteractions(self, YES);
+    UIViewController *blockController = blockInteractionsWithToastAndDelay(self, YES, YES, 2.0);
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
@@ -30,7 +30,7 @@
 }
 
 - (void)createItemViewController:(XXTExplorerCreateItemViewController *)controller didFinishCreatingItemAtPath:(NSString *)path {
-    UIViewController *blockController = blockInteractions(self, YES);
+    UIViewController *blockController = blockInteractionsWithToastAndDelay(self, YES, YES, 2.0);
     @weakify(self);
     [self dismissViewControllerAnimated:YES completion:^{
         @strongify(self);

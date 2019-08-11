@@ -278,6 +278,42 @@
 				<string>Non-lossy ASCII</string>
 			</array>
 		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewerRegexSearch</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>正则表达式搜索</string>
+			<key>description</key>
+			<string>在文本/代码查看器中使用正则表达式进行搜索.
+该选项不会在代码编辑器中生效.</string>
+			<key>options</key>
+			<array>
+				<string>关闭</string>
+				<string>开启</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerViewerCaseSensitiveSearch</string>
+			<key>default</key>
+			<real>0</real>
+			<key>title</key>
+			<string>区分大小写搜索</string>
+			<key>description</key>
+			<string>在文本/代码查看器中使用大小写敏感模式进行搜索.
+该选项不会在代码编辑器中生效.</string>
+			<key>options</key>
+			<array>
+				<string>关闭</string>
+				<string>开启</string>
+			</array>
+		</dict>
 	</array>
 	<key>EDITOR_USER_DEFAULTS</key>
 	<array>

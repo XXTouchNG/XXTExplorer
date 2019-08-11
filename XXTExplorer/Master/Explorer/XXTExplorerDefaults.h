@@ -36,6 +36,8 @@ static NSString * const XXTExplorerFixFileOwnerAutomaticallyKey = @"XXTExplorerF
 #pragma mark - Viewer Defaults
 
 static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEncodingKey";
+static NSString * const XXTExplorerViewerRegexSearch = @"XXTExplorerViewerRegexSearch";
+static NSString * const XXTExplorerViewerCaseSensitiveSearch = @"XXTExplorerViewerCaseSensitiveSearch";
 
 #pragma mark - Editor Defaults
 
