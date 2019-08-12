@@ -62,9 +62,9 @@
         _lineNumberColor = [UIColor secondaryLabelColor];
         _lineNumberFont = [UIFont systemFontOfSize:14.0];
     } else {
-        _invisibleColor = [UIColor lightGrayColor];
+        _invisibleColor = [UIColor grayColor];
         _invisibleFont = [UIFont systemFontOfSize:14.f];
-        _lineNumberColor = [UIColor grayColor];
+        _lineNumberColor = [UIColor darkGrayColor];
         _lineNumberFont = [UIFont systemFontOfSize:14.0];
     }
     

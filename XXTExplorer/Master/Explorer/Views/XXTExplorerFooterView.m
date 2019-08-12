@@ -94,7 +94,7 @@
             [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor secondaryLabelColor]}] forState:UIControlStateHighlighted];
             [boxButton setTintColor:[UIColor tertiaryLabelColor]];
         } else {
-            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor lightGrayColor]}] forState:UIControlStateNormal];
+            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor grayColor]}] forState:UIControlStateNormal];
             [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor darkGrayColor]}] forState:UIControlStateHighlighted];
             [boxButton setTintColor:[UIColor lightGrayColor]];
         }

@@ -398,6 +398,7 @@ UIColor *XXTColorForeground() {
     static UIColor *xxtColorF = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
         if (@available(iOS 13.0, *)) {
             xxtColorF = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
                 if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
@@ -407,8 +408,11 @@ UIColor *XXTColorForeground() {
                 }
             }];
         } else {
+#endif
             xxtColorF = XXTColorFixed();
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
         }
+#endif
     });
     return xxtColorF;
 }
@@ -417,6 +421,7 @@ UIColor *XXTColorBarTint() {
     static UIColor *xxtColorT = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
         if (@available(iOS 13.0, *)) {
             xxtColorT = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
                 if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
@@ -426,8 +431,11 @@ UIColor *XXTColorBarTint() {
                 }
             }];
         } else {
+#endif
             xxtColorT = XXTColorFixed();
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
         }
+#endif
     });
     return xxtColorT;
 }
@@ -436,6 +444,7 @@ UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
         if (@available(iOS 13.0, *)) {
             xxtColor = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
                 if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
@@ -445,8 +454,11 @@ UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)
                 }
             }];
         } else {
+#endif
             xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:0.1];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
         }
+#endif
     });
     return xxtColor;
 }

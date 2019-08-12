@@ -233,7 +233,7 @@ static const CGFloat kColumnMargin = 1;
                 if (@available(iOS 13.0, *)) {
                     label.textColor = [UIColor secondaryLabelColor];
                 } else {
-                    label.textColor = [UIColor lightGrayColor];
+                    label.textColor = [UIColor darkGrayColor];
                 }
                 content = @"NULL";
             }

@@ -26,7 +26,7 @@
         self.valueLabel.textColor = [UIColor secondaryLabelColor];
     } else {
         self.titleLabel.textColor = [UIColor blackColor];
-        self.valueLabel.textColor = [UIColor lightGrayColor];
+        self.valueLabel.textColor = [UIColor darkGrayColor];
     }
     self.descriptionLabel.textColor = XXTColorForeground();
     

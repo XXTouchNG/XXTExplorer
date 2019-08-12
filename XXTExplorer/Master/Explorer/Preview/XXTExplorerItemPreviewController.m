@@ -48,7 +48,7 @@
         self.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
     } else {
         self.entryTitleLabel.textColor = [UIColor blackColor];
-        self.entrySubtitleLabel.textColor = [UIColor lightGrayColor];
+        self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
     }
     
     XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];

@@ -1158,6 +1158,9 @@
 		D61D40E62031677800F8E2B2 /* XXTEMoreRemoteSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAD691B1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.m */; };
 		D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D61D5DD51F6F64B400CDF16D /* XXTESwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */; };
+		D6273FF0230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */ = {isa = PBXBuildFile; fileRef = D6273FEF230104CA00CDB9E7 /* UIColor+systemColors.m */; };
+		D6273FF1230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */ = {isa = PBXBuildFile; fileRef = D6273FEF230104CA00CDB9E7 /* UIColor+systemColors.m */; };
+		D6273FF2230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */ = {isa = PBXBuildFile; fileRef = D6273FEF230104CA00CDB9E7 /* UIColor+systemColors.m */; };
 		D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */; };
 		D629C22C1F063B830030C6DA /* XXTEMoreTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22A1F063B830030C6DA /* XXTEMoreTitleValueCell.m */; };
 		D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D629C22B1F063B830030C6DA /* XXTEMoreTitleValueCell.xib */; };
@@ -1992,6 +1995,8 @@
 		D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeButton.m; sourceTree = "<group>"; };
 		D61D5DD21F6F64B400CDF16D /* XXTESwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTESwipeTableCell.h; sourceTree = "<group>"; };
 		D61D5DD31F6F64B400CDF16D /* XXTESwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTESwipeTableCell.m; sourceTree = "<group>"; };
+		D6273FEE230104CA00CDB9E7 /* UIColor+systemColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+systemColors.h"; sourceTree = "<group>"; };
+		D6273FEF230104CA00CDB9E7 /* UIColor+systemColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+systemColors.m"; sourceTree = "<group>"; };
 		D629C20A1F05E8060030C6DA /* XXTEAppDefines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = XXTEAppDefines.plist; sourceTree = "<group>"; };
 		D629C20C1F05F5A60030C6DA /* XXTENetworkDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTENetworkDefines.h; sourceTree = "<group>"; };
 		D629C21E1F0635DA0030C6DA /* XXTEMoreApplicationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTEMoreApplicationCell.xib; sourceTree = "<group>"; };
@@ -4464,6 +4469,8 @@
 				0F7B52BD201994CA00D91702 /* NSString+VersionValue.m */,
 				0F620CCE20A6D33D001C0A4C /* NSString+Template.h */,
 				0F620CCF20A6D33D001C0A4C /* NSString+Template.m */,
+				D6273FEE230104CA00CDB9E7 /* UIColor+systemColors.h */,
+				D6273FEF230104CA00CDB9E7 /* UIColor+systemColors.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -5656,6 +5663,7 @@
 				0FAE18EF20806830005F9B67 /* XXTEDbTableLeftCell.m in Sources */,
 				0F072DBA1FB9EC8B00597EE2 /* xxtea.c in Sources */,
 				D6CB81BE1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */,
+				D6273FF2230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */,
 				0F8EDBE61FB1F779003C92D6 /* UIViewController+XXTExplorer.m in Sources */,
 				0F8EDBE71FB1F779003C92D6 /* UIImage+XXTCrop.m in Sources */,
 				0F8EDBE81FB1F779003C92D6 /* XXTImagePickerAssetHelper.m in Sources */,
@@ -5790,6 +5798,7 @@
 				0F457F341F87796B001F0951 /* XXTEDownloadViewController.m in Sources */,
 				D6686F3F1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
+				D6273FF0230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */,
 				0F00CAF41F66F7A500692913 /* XXTEKeyboardButtonView.m in Sources */,
 				0F6679DE1F5162880072C177 /* XXTESnippetViewerController.m in Sources */,
 				D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */,
@@ -6139,6 +6148,7 @@
 				D60FE6581FE2369300954818 /* XXTEDownloadViewController.m in Sources */,
 				D60FE6591FE2369300954818 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				D60FE65A1FE2369300954818 /* XXTESplitViewController.m in Sources */,
+				D6273FF1230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */,
 				D60FE65B1FE2369300954818 /* XXTEKeyboardButtonView.m in Sources */,
 				D60FE65C1FE2369300954818 /* XXTESnippetViewerController.m in Sources */,
 				D60FE65D1FE2369300954818 /* XXTESwipeButton.m in Sources */,

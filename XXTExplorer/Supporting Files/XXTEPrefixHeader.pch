@@ -60,4 +60,10 @@
 #import "XXTENetworkDefines.h"
 #import "XXTEPermissionDefines.h"
 
+#ifdef __OBJC__
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
+#import "UIColor+systemColors.h"
+#endif
+#endif
+
 #endif /* XXTEPrefixHeader_pch */

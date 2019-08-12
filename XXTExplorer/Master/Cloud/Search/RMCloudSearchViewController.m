@@ -341,7 +341,7 @@ XXTE_END_IGNORE_PARTIAL
     if (@available(iOS 13.0, *)) {
         footer.textLabel.textColor = [UIColor secondaryLabelColor];
     } else {
-        footer.textLabel.textColor = [UIColor lightGrayColor];
+        footer.textLabel.textColor = [UIColor darkGrayColor];
     }
     UIView *bgView = [[UIView alloc] init];
     footer.backgroundView = bgView;

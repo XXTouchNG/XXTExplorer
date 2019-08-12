@@ -117,7 +117,7 @@
         if (@available(iOS 13.0, *)) {
             cell.valueLabel.textColor = [UIColor secondaryLabelColor];
         } else {
-            cell.valueLabel.textColor = [UIColor grayColor];
+            cell.valueLabel.textColor = [UIColor darkGrayColor];
         }
         cell.valueLabel.text = [pairValue xui_stringValue];
     }
