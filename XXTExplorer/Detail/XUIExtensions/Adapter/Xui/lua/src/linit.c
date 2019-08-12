@@ -33,6 +33,7 @@
 
 #include "lualib.h"
 #include "lauxlib.h"
+#include <TargetConditionals.h>
 
 
 /*
@@ -53,7 +54,7 @@ static const luaL_Reg loadedlibs[] = {
 #if defined(LUA_COMPAT_BITLIB)
   {LUA_BITLIBNAME, luaopen_bit32},
 #endif
-#if TARGET_OS_IPHONE
+#if !(TARGET_OS_SIMULATOR)
 #ifdef APPSTORE
   {LUA_CJSONLIBNAME, luaopen_cjson},
   {LUA_CJSONSAFELIBNAME, luaopen_cjson_safe},
