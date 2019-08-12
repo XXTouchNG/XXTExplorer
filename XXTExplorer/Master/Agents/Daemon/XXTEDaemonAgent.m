@@ -19,15 +19,15 @@
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDirectory) {
         if (jsonDirectory[@"code"]) {
-            if (_delegate && [_delegate respondsToSelector:@selector(daemonAgentDidSyncReady:)]) {
-                [_delegate daemonAgentDidSyncReady:self];
+            if (self->_delegate && [self->_delegate respondsToSelector:@selector(daemonAgentDidSyncReady:)]) {
+                [self->_delegate daemonAgentDidSyncReady:self];
             }
         }
     })
     .catch(^(NSError *error) {
         if (error) {
-            if (_delegate && [_delegate respondsToSelector:@selector(daemonAgent:didFailWithError:)]) {
-                [_delegate daemonAgent:self didFailWithError:error];
+            if (self->_delegate && [self->_delegate respondsToSelector:@selector(daemonAgent:didFailWithError:)]) {
+                [self->_delegate daemonAgent:self didFailWithError:error];
             }
         }
     });

@@ -615,7 +615,12 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
             self.title = entryName;
         }
     }
-    self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     self.navigationItem.leftBarButtonItems = @[self.myBackButtonItem];
     if (isOS9Above() && isAppStore()) {
@@ -1318,7 +1323,11 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (XXTEEditorSearchBar *)searchBar {
     if (!_searchBar) {
         XXTEEditorSearchBar *searchBar = [[XXTEEditorSearchBar alloc] init];
-        searchBar.backgroundColor = [UIColor whiteColor];
+        if (@available(iOS 13.0, *)) {
+            searchBar.backgroundColor = [UIColor systemBackgroundColor];
+        } else {
+            searchBar.backgroundColor = [UIColor whiteColor];
+        }
         searchBar.translatesAutoresizingMaskIntoConstraints = NO;
         searchBar.hidden = YES;
         searchBar.searchInputAccessoryView = self.searchAccessoryView;

@@ -237,7 +237,7 @@ XXTE_END_IGNORE_PARTIAL
 #ifndef APPSTORE
         XXTExplorerEntryReader *entryReader = entry.entryReader;
 #endif
-        UIColor *colorSeries = XXTColorBarTint();
+        UIColor *colorSeries = XXTColorFixed();
 #ifndef APPSTORE
         if (entry.isExecutable) {
             NSString *buttonTitle = nil;

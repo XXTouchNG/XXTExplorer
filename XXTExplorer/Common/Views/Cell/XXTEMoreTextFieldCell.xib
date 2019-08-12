@@ -17,16 +17,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Wrap Column" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6WL-yg-d0o">
-                        <rect key="frame" x="23" y="12.5" width="97" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                        <rect key="frame" x="23" y="12.5" width="98.5" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" text="120" placeholder="Value" textAlignment="right" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qZi-Cf-MtM">
-                        <rect key="frame" x="136" y="11" width="255" height="22"/>
+                        <rect key="frame" x="137.5" y="11" width="253.5" height="22"/>
                         <color key="tintColor" red="0.1019607843" green="0.63137254899999995" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="textColor"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                     </textField>
                 </subviews>

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,34 +13,34 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xti-ih-ceF" id="4mJ-yo-NEs">
-                <rect key="frame" x="0.0" y="0.0" width="376" height="67.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="382.5" height="68"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qI8-df-Hxv">
-                        <rect key="frame" x="28" y="14" width="40" height="40"/>
+                        <rect key="frame" x="23" y="14" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="NC5-dD-yDf"/>
                             <constraint firstAttribute="height" constant="40" id="OYj-vc-BlY"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bso-xE-w1c">
-                        <rect key="frame" x="76" y="11" width="292" height="46"/>
+                        <rect key="frame" x="71" y="11" width="308.5" height="46"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPW-zx-IZm">
-                                <rect key="frame" x="8" y="6" width="276" height="20"/>
+                                <rect key="frame" x="8" y="6" width="292.5" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="PrP-40-GW1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bundle ID Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eC2-cy-ucH">
-                                <rect key="frame" x="8" y="25" width="276" height="15"/>
+                                <rect key="frame" x="8" y="25" width="292.5" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="pfX-qa-BAL"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -74,6 +71,7 @@
                 <outlet property="applicationNameLabel" destination="fPW-zx-IZm" id="1yS-lj-1YC"/>
                 <outlet property="iconImageView" destination="qI8-df-Hxv" id="Oqd-dD-oIs"/>
             </connections>
+            <point key="canvasLocation" x="139" y="154"/>
         </tableViewCell>
     </objects>
 </document>

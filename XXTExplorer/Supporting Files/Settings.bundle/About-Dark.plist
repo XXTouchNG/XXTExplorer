@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>Group</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>About</string>
+			<key>label</key>
+			<string>XXTouch Editor
+v2.1.1</string>
+			<key>value</key>
+			<string>https://82flex.com
+2014-2019 © Zheng Wu
+All Rights Reserved.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Group</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Link</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconHome.png</string>
+			<key>label</key>
+			<string>Official Site</string>
+			<key>url</key>
+			<string>https://82flex.com</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Link</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconCopyright.png</string>
+			<key>label</key>
+			<string>Copyright &amp; User Agreement</string>
+			<key>url</key>
+			<string>Root.plist</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Group</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>SendMail:</string>
+			<key>args</key>
+			<dict>
+				<key>ccRecipients</key>
+				<array>
+					<string>i.82@qq.com</string>
+				</array>
+				<key>subject</key>
+				<string>[Feedback] XXTouch Editor v2.1.1</string>
+				<key>toRecipients</key>
+				<array>
+					<string>i.82@me.com</string>
+				</array>
+			</dict>
+			<key>cell</key>
+			<string>Button</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconMail.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Mail Feedback</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>OpenURL:</string>
+			<key>args</key>
+			<dict>
+				<key>url</key>
+				<string>itms-apps://itunes.apple.com/app/id1160374967?action=write-review</string>
+			</dict>
+			<key>cell</key>
+			<string>Button</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconFeedback.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Rate XXTouch</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>Group</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>XXTResetDefaults:</string>
+			<key>args</key>
+			<dict/>
+			<key>cell</key>
+			<string>Button</string>
+			<key>icon</key>
+			<string>res/XXTEAboutIconRecover.png</string>
+			<key>iconRenderingMode</key>
+			<string>AlwaysTemplate</string>
+			<key>label</key>
+			<string>Reset Defaults</string>
+		</dict>
+	</array>
+	<key>stringsTable</key>
+	<string>About</string>
+	<key>theme</key>
+	<dict>
+		<key>navigationBarColor</key>
+		<string>#1d1f21</string>
+		<key>navigationTitleColor</key>
+		<string>#c5c8c6</string>
+		<key>cellBackgroundColor</key>
+		<string>#00000045</string>
+		<key>backgroundColor</key>
+		<string>#1d1f21</string>
+		<key>tintColor</key>
+		<string>#b5bd68</string>
+		<key>labelColor</key>
+		<string>#c5c8c6</string>
+		<key>disclosureIndicatorColor</key>
+		<string>#777b81</string>
+		<key>valueColor</key>
+		<string>#9b9ea5</string>
+		<key>textColor</key>
+		<string>#c5c8c6</string>
+		<key>placeholderColor</key>
+		<string>#c5c8c66a</string>
+		<key>caretColor</key>
+		<string>#b5bd68</string>
+		<key>separatorColor</key>
+		<string>#373b41</string>
+		<key>thumbColor</key>
+		<string>#f0f0f0</string>
+		<key>selectedColor</key>
+		<string>#373b4190</string>
+		<key>onTintColor</key>
+		<string>#b5bd68</string>
+		<key>headerTextColor</key>
+		<string>#fefefe</string>
+		<key>subheaderTextColor</key>
+		<string>#fefefe</string>
+		<key>footerTextColor</key>
+		<string>#fefefe</string>
+	</dict>
+	<key>title</key>
+	<string>About</string>
+</dict>
+</plist>

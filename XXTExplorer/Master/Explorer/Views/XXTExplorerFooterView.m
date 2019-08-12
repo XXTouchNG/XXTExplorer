@@ -65,14 +65,7 @@
         } else {
             textLabel.backgroundColor = [UIColor whiteColor];
         }
-        UIFont *font = nil;
-        XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 8.2, *)) {
-            font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
-        } else {
-            font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
-        }
-        XXTE_END_IGNORE_PARTIAL
+        UIFont *font = [UIFont systemFontOfSize:14.0];
         textLabel.font = font;
         textLabel.edgeInsets = UIEdgeInsetsMake(0.0, 12.f, 24.0, 12.f);
         textLabel.numberOfLines = 1;
@@ -85,14 +78,7 @@
 
 - (UIButton *)boxEmptyButton {
     if (!_boxEmptyButton) {
-        UIFont *font = nil;
-        XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 8.2, *)) {
-            font = [UIFont systemFontOfSize:14.f weight:UIFontWeightLight];
-        } else {
-            font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.f];
-        }
-        XXTE_END_IGNORE_PARTIAL
+        UIFont *font = [UIFont systemFontOfSize:14.0];
         UIButton *boxButton = [[UIButton alloc] initWithFrame:self.contentView.bounds];
         boxButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         boxButton.titleLabel.textAlignment = NSTextAlignmentLeft;
@@ -103,9 +89,15 @@
 #else
         NSString *boxString = NSLocalizedString(@"No file can be found.\nImport file via File Sharing or iTunes.", nil);
 #endif
-        [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor lightGrayColor]}] forState:UIControlStateNormal];
-        [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor darkGrayColor]}] forState:UIControlStateHighlighted];
-        [boxButton setTintColor:[UIColor lightGrayColor]];
+        if (@available(iOS 13.0, *)) {
+            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor tertiaryLabelColor]}] forState:UIControlStateNormal];
+            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor secondaryLabelColor]}] forState:UIControlStateHighlighted];
+            [boxButton setTintColor:[UIColor tertiaryLabelColor]];
+        } else {
+            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor lightGrayColor]}] forState:UIControlStateNormal];
+            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor darkGrayColor]}] forState:UIControlStateHighlighted];
+            [boxButton setTintColor:[UIColor lightGrayColor]];
+        }
         [boxButton addTarget:self action:@selector(emptyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         _boxEmptyButton = boxButton;
     }

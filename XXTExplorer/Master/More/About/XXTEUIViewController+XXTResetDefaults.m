@@ -48,7 +48,13 @@
             toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
 #ifdef DEBUG
             UIApplication *app = [UIApplication sharedApplication];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [app performSelector:NSSelectorFromString(@"suspend")];
+#pragma clang diagnostic pop
+            if ([app.delegate respondsToSelector:@selector(applicationWillTerminate:)]) {
+                [app.delegate applicationWillTerminate:app];
+            }
             [app performSelector:NSSelectorFromString(@"terminateWithSuccess") withObject:nil afterDelay:0.3];
 #endif
         }
@@ -69,7 +75,10 @@
             toastMessage(self, NSLocalizedString(@"Operation succeed.", nil));
 #ifdef DEBUG
             UIApplication *app = [UIApplication sharedApplication];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [app performSelector:NSSelectorFromString(@"suspend")];
+#pragma clang diagnostic pop
             if ([app.delegate respondsToSelector:@selector(applicationWillTerminate:)]) {
                 [app.delegate applicationWillTerminate:app];
             }

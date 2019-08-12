@@ -103,11 +103,41 @@ XXTouch 将严格保护您的隐私。为服务用户的目的，XXTouch 可能�
 	<key>theme</key>
 	<dict>
 		<key>navigationBarColor</key>
-		<string>#3498db</string>
-		<key>selectedColor</key>
-		<string>#3498db18</string>
+		<string>#1d1f21</string>
+		<key>navigationTitleColor</key>
+		<string>#c5c8c6</string>
+		<key>cellBackgroundColor</key>
+		<string>#00000045</string>
+		<key>backgroundColor</key>
+		<string>#1d1f21</string>
 		<key>tintColor</key>
-		<string>#3498db</string>
+		<string>#b5bd68</string>
+		<key>labelColor</key>
+		<string>#c5c8c6</string>
+		<key>disclosureIndicatorColor</key>
+		<string>#777b81</string>
+		<key>valueColor</key>
+		<string>#9b9ea5</string>
+		<key>textColor</key>
+		<string>#c5c8c6</string>
+		<key>placeholderColor</key>
+		<string>#c5c8c66a</string>
+		<key>caretColor</key>
+		<string>#b5bd68</string>
+		<key>separatorColor</key>
+		<string>#373b41</string>
+		<key>thumbColor</key>
+		<string>#f0f0f0</string>
+		<key>selectedColor</key>
+		<string>#373b4190</string>
+		<key>onTintColor</key>
+		<string>#b5bd68</string>
+		<key>headerTextColor</key>
+		<string>#fefefe</string>
+		<key>subheaderTextColor</key>
+		<string>#fefefe</string>
+		<key>footerTextColor</key>
+		<string>#fefefe</string>
 	</dict>
 </dict>
 </plist>

@@ -68,8 +68,11 @@
     if (@available(iOS 8.0, *)) {
         alertAppearance.coverColor = [UIColor clearColor];
         alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        alertAppearance.backgroundColor = [UIColor clearColor];
+        alertAppearance.backgroundBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     } else {
         alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+        alertAppearance.backgroundColor = [UIColor clearColor];
     }
     alertAppearance.separatorsColor = [UIColor colorWithWhite:0.85 alpha:1.0];
     alertAppearance.coverAlpha = 0.85;
@@ -85,10 +88,10 @@
     alertAppearance.progressLabelTextColor = [UIColor blackColor];
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.buttonsTitleColor = XXTColorForeground();
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorForeground();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorFixed();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.cancelButtonTitleColor = XXTColorForeground();
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorForeground();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorFixed();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
@@ -107,12 +110,14 @@
 
 + (void)setupAlertDarkAppearance:(LGAlertView *)alertAppearance {
     UIColor *labelColor = [UIColor colorWithRed:197.0/255.0 green:200.0/255.0 blue:198.0/255.0 alpha:1.0];
-    alertAppearance.coverColor = [UIColor clearColor];
     if (@available(iOS 8.0, *)) {
-        alertAppearance.backgroundColor = UIColor.clearColor;
+        alertAppearance.coverColor = [UIColor clearColor];
+        alertAppearance.coverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        alertAppearance.backgroundColor = [UIColor clearColor];
         alertAppearance.backgroundBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     } else {
-        alertAppearance.backgroundColor = UIColor.clearColor;
+        alertAppearance.coverColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+        alertAppearance.backgroundColor = [UIColor clearColor];
     }
     alertAppearance.separatorsColor = [UIColor colorWithWhite:0.25 alpha:1.0];
     alertAppearance.coverAlpha = 0.85;
@@ -125,10 +130,10 @@
     alertAppearance.progressLabelTextColor = labelColor;
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.buttonsTitleColor = XXTColorForeground();
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorBarTint();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorFixed();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.cancelButtonTitleColor = labelColor;
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorBarTint();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorFixed();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();

@@ -49,7 +49,11 @@ XXTE_END_IGNORE_PARTIAL
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"Workspace", nil);
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemGroupedBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    }
     
     if (@available(iOS 11.0, *))
     {

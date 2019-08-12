@@ -187,4 +187,10 @@
     }
 }
 
+//- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+//    if (@available(iOS 13.0, *)) {
+//        [self setNeedsLayout];
+//    }
+//}
+
 @end

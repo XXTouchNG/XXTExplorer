@@ -385,42 +385,51 @@ NSString *XXTSchemeCloudProjectID(NSUInteger projectID) {
     return [NSString stringWithFormat:@"xxt://cloud/?project=%lu", (unsigned long)projectID];
 }
 
-UIColor *XXTColorForeground() { // rgb(52, 152, 219), #3498DB
+UIColor *XXTColorFixed() { // rgb(52, 152, 219), #3498DB
+    static UIColor *xxtColor = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+    });
+    return xxtColor;
+}
+
+UIColor *XXTColorForeground() {
     static UIColor *xxtColorF = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (@available(iOS 13.0, *)) {
             xxtColorF = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
                 if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-                    return [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+                    return XXTColorFixed();
                 } else {
                     return [UIColor labelColor];
                 }
             }];
         } else {
-            xxtColorF = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+            xxtColorF = XXTColorFixed();
         }
     });
     return xxtColorF;
 }
 
-UIColor *XXTColorBarTint() { // rgb(52, 152, 219), #3498DB
-    static UIColor *xxtColor = nil;
+UIColor *XXTColorBarTint() {
+    static UIColor *xxtColorT = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (@available(iOS 13.0, *)) {
-            xxtColor = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+            xxtColorT = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
                 if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-                    return [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+                    return XXTColorFixed();
                 } else {
                     return [UIColor systemBackgroundColor];
                 }
             }];
         } else {
-            xxtColor = [UIColor colorWithRed:52.f/255.f green:152.f/255.f blue:219.f/255.f alpha:1.f];
+            xxtColorT = XXTColorFixed();
         }
     });
-    return xxtColor;
+    return xxtColorT;
 }
 
 UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)

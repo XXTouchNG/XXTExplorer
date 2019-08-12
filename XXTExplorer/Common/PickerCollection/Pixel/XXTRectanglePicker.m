@@ -119,7 +119,11 @@ XXTE_END_IGNORE_PARTIAL
 - (void)loadView {
     UIView *contentView = [[UIView alloc] init];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    contentView.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        contentView.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        contentView.backgroundColor = [UIColor whiteColor];
+    }
     self.view = contentView;
 
     XXTPixelCropView *cropView = [[XXTPixelCropView alloc] initWithFrame:contentView.bounds andType:(kXXTPixelCropViewType) [[self class] cropViewType]];
@@ -354,7 +358,11 @@ XXTE_END_IGNORE_PARTIAL
             } else {
                 return;
             }
-            popoverController.backgroundColor = [UIColor whiteColor];
+            if (@available(iOS 13.0, *)) {
+                popoverController.backgroundColor = [UIColor systemBackgroundColor];
+            } else {
+                popoverController.backgroundColor = [UIColor whiteColor];
+            }
             [self.navigationController presentViewController:controller animated:YES completion:nil];
         } else {
             [self selectImageFromFileSystem];

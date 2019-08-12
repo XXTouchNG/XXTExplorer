@@ -75,9 +75,9 @@
                 return jsonDictionary[@"data"];
             })
             .then(^(NSDictionary *dataDictionary) {
-                NSNumber *selectedOperation = dataDictionary[operationKeyNames[self.actionIndex]];
+                NSNumber *selectedOperation = dataDictionary[self->operationKeyNames[self.actionIndex]];
                 if (selectedOperation != nil) {
-                    _selectedOperation = (NSUInteger) [selectedOperation integerValue];
+                    self->_selectedOperation = (NSUInteger) [selectedOperation integerValue];
                 }
             })
             .then(^() {
@@ -160,8 +160,8 @@
                         if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
                             self.selectedOperation = operationIndex;
                             [self updateOperationStatusDisplay];
-                            if (_delegate && [_delegate respondsToSelector:@selector(activationOperationController:operationSelectedWithIndex:)]) {
-                                [_delegate activationOperationController:self operationSelectedWithIndex:operationIndex];
+                            if (self->_delegate && [self->_delegate respondsToSelector:@selector(activationOperationController:operationSelectedWithIndex:)]) {
+                                [self->_delegate activationOperationController:self operationSelectedWithIndex:operationIndex];
                             }
                         }
                     })

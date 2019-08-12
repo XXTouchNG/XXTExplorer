@@ -120,17 +120,8 @@
 
         NSMutableParagraphStyle *p = [NSMutableParagraphStyle new];
         p.alignment = NSTextAlignmentCenter;
-
-        UIFont *lighterFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:44.0];
-        if (!lighterFont) {
-            if (@available(iOS 8.2, *)) {
-                lighterFont = [UIFont systemFontOfSize:44.0 weight:UIFontWeightLight];
-            } else {
-                lighterFont = [UIFont systemFontOfSize:44.0];
-            }
-        }
         
-        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:inputString attributes:@{NSFontAttributeName: lighterFont, NSForegroundColorAttributeName: stringColor, NSParagraphStyleAttributeName: p}];
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:inputString attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:44.0], NSForegroundColorAttributeName: stringColor, NSParagraphStyleAttributeName: p}];
         [attributedString drawInRect:stringRect];
     }
 }

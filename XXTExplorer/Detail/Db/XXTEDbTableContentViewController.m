@@ -30,7 +30,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     [self.view addSubview:self.multiColumView];
     if (@available(iOS 8.0, *)) {
@@ -71,7 +75,11 @@
     if (!_multiColumView) {
         _multiColumView = [[XXTEMultiColumnTableView alloc] initWithFrame:self.view.bounds];
         _multiColumView.translatesAutoresizingMaskIntoConstraints = NO;
-        _multiColumView.backgroundColor = [UIColor whiteColor];
+        if (@available(iOS 13.0, *)) {
+            _multiColumView.backgroundColor = [UIColor systemBackgroundColor];
+        } else {
+            _multiColumView.backgroundColor = [UIColor whiteColor];
+        }
         _multiColumView.dataSource = self;
         _multiColumView.delegate = self;
     }

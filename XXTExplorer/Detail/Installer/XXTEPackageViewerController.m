@@ -166,11 +166,19 @@
 
 - (NSDictionary *)stdoutAttributes {
     if (!_stdoutAttributes) {
-        _stdoutAttributes =
-        @{
-          NSFontAttributeName: [UIFont fontWithName:@"Courier" size:14.f],
-          NSForegroundColorAttributeName: [UIColor blackColor]
-          };
+        if (@available(iOS 13.0, *)) {
+            _stdoutAttributes =
+            @{
+              NSFontAttributeName: [UIFont fontWithName:@"Courier" size:14.f],
+              NSForegroundColorAttributeName: [UIColor labelColor]
+              };
+        } else {
+            _stdoutAttributes =
+            @{
+              NSFontAttributeName: [UIFont fontWithName:@"Courier" size:14.f],
+              NSForegroundColorAttributeName: [UIColor blackColor]
+              };
+        }
     }
     return _stdoutAttributes;
 }

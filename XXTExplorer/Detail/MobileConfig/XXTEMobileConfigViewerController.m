@@ -12,7 +12,9 @@
 #import <LGAlertView/LGAlertView.h>
 #import "XXTESingleActionView.h"
 
+#ifdef APPSTORE
 static NSUInteger const kXXTEMobileConfigViewerControllerMaximumBytes = 200 * 1024; // 200k
+#endif
 
 @interface XXTEMobileConfigViewerController ()
 

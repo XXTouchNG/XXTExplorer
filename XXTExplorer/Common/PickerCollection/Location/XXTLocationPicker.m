@@ -63,7 +63,11 @@ static NSString * const kXXTMapViewAnnotationFormat = @"Latitude: %f, Longitude:
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     MKMapView *mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     mapView.delegate = self;

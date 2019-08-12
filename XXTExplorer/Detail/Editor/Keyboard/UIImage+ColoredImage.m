@@ -24,6 +24,8 @@
     return image;
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
+/// this method has been implemented in iOS 13.0+
 - (UIImage *)imageWithTintColor:(UIColor *)tintColor {
     UIGraphicsBeginImageContextWithOptions(self.size, NO, self.scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -38,5 +40,6 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+#endif
 
 @end

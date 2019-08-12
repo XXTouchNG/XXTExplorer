@@ -1335,19 +1335,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		D6FD9143203E987900CC0362 /* Copy Files */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-			);
-			name = "Copy Files";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0D2B1570999C111DB43AA7B8 /* Pods-XXTExplorer-Archive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer-Archive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive.debug.xcconfig"; sourceTree = "<group>"; };
 		0F00CADE1F66EECB00692913 /* UIImage+ColoredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColoredImage.h"; sourceTree = "<group>"; };
@@ -4930,7 +4917,6 @@
 				0F8EDC6A1FB1F779003C92D6 /* Resources */,
 				CA457B69FAE4F412DD370F44 /* [CP] Copy Pods Resources */,
 				D60FE7D71FE23BAD00954818 /* Integrate Reveal Server */,
-				D6FD9143203E987900CC0362 /* Copy Files */,
 			);
 			buildRules = (
 			);

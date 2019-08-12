@@ -61,7 +61,11 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
         self.title = [NSString stringWithFormat:NSLocalizedString(@"Search \"%@\"", nil), self.searchWord];
     }
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     [self.view addSubview:self.comingSoonView];
     
     if (@available(iOS 11.0, *)) {
@@ -151,8 +155,8 @@ XXTE_END_IGNORE_PARTIAL
         if (models.count > 0) {
             [self.projects addObjectsFromArray:models];
             [self.tableView reloadData];
-            _currentPage = _currentPage + 1;
-            _firstLoaded = YES;
+            self->_currentPage = self->_currentPage + 1;
+            self->_firstLoaded = YES;
         }
     })
     .catch(^ (NSError *error) {
@@ -164,7 +168,7 @@ XXTE_END_IGNORE_PARTIAL
             [NSString stringWithFormat:NSLocalizedString(@"Error", nil)];
             comingSoonView.descriptionLabel.text =
             [NSString stringWithFormat:@"%@ (%ld)", [error localizedDescription], (long)[error code]];
-            if (NO == _firstLoaded) {
+            if (NO == self->_firstLoaded) {
                 tableView.hidden = YES;
                 comingSoonView.hidden = NO;
             }
@@ -174,7 +178,7 @@ XXTE_END_IGNORE_PARTIAL
         if ([refreshControl isRefreshing]) {
             [refreshControl endRefreshing];
         }
-        _isRequesting = NO;
+        self->_isRequesting = NO;
         [self.pawAnimation setHidden:YES];
         blockInteractions(blockController, NO);
     });

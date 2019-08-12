@@ -526,8 +526,10 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
             // destinationPath UTF-8 representation
             const char *from = [entryPath fileSystemRepresentation];
             const char *to = [destinationPathWithIndex fileSystemRepresentation];
+#ifdef APPSTORE
             NSString *fromPath = [[NSString alloc] initWithUTF8String:from];
             NSString *toPath = [[NSString alloc] initWithUTF8String:to];
+#endif
             
             // define error
             NSError *error = nil;

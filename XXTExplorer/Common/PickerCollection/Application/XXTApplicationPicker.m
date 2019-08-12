@@ -206,8 +206,10 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if ([defaultValue isKindOfClass:[NSString class]]) {
         self.selectedIdentifier = defaultValue;
     }
+    @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        _allApplications = ({
+        @strongify(self);
+        self->_allApplications = ({
             NSArray <NSString *> *applicationIdentifiers = (NSArray *)CFBridgingRelease(SBSCopyApplicationDisplayIdentifiers(false, false));
             NSMutableArray <LSApplicationProxy *> *allApplications = nil;
             if (applicationIdentifiers) {

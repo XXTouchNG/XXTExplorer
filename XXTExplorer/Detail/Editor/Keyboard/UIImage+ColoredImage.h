@@ -11,6 +11,8 @@
 @interface UIImage (ColoredImage)
 
 + (UIImage *)imageWithUIColor:(UIColor *)color;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
 - (UIImage *)imageWithTintColor:(UIColor *)tintColor;
+#endif
 
 @end

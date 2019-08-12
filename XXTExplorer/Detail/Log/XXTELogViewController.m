@@ -90,7 +90,12 @@ XXTE_END_IGNORE_PARTIAL
             self.title = [[self class] viewerName];
         }
     }
-    self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {

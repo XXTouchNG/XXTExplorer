@@ -273,13 +273,13 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
                 BOOL remoteAccessStatus = [jsonDictionary[@"data"][@"opened"] boolValue];
                 if (remoteAccessStatus) {
-                    _webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
-                    _bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
-                    if (_webServerUrl.length == 0)
-                        _webServerUrl = [[self class] otherInterfaceIPAddresses];
+                    self->_webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
+                    self->_bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
+                    if (self->_webServerUrl.length == 0)
+                        self->_webServerUrl = [[self class] otherInterfaceIPAddresses];
                 } else {
-                    _webServerUrl = nil;
-                    _bonjourWebServerUrl = nil;
+                    self->_webServerUrl = nil;
+                    self->_bonjourWebServerUrl = nil;
                 }
                 [self updateRemoteAccessAddressDisplay];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -292,7 +292,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         }).finally(^() {
             [self.remoteAccessIndicator stopAnimating];
             [self.remoteAccessSwitch setHidden:NO];
-            isFetchingRemoteStatus = NO;
+            self->isFetchingRemoteStatus = NO;
         });
     }
 }
@@ -662,13 +662,31 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         if (indexPath.section == kXXTEMoreSectionIndexHelp) {
             NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"SettingsPro.bundle"];
             if (indexPath.row == kXXTEMoreSectionHelpRowIndexDocuments) {
-                NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
+                NSString *settingsUIPath = nil;
+                if (@available(iOS 13.0, *)) {
+                    if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
+                    } else {
+                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents-Dark.plist"];
+                    }
+                } else {
+                    settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
+                }
                 XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
                 xuiController.hidesBottomBarWhenPushed = NO;
                 [self.navigationController pushViewController:xuiController animated:YES];
             }
             else if (indexPath.row == kXXTEMoreSectionHelpRowIndexAbout) {
-                NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                NSString *settingsUIPath = nil;
+                if (@available(iOS 13.0, *)) {
+                    if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                    } else {
+                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About-Dark.plist"];
+                    }
+                } else {
+                    settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                }
                 XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
                 xuiController.hidesBottomBarWhenPushed = NO;
                 [self.navigationController pushViewController:xuiController animated:YES];
@@ -712,7 +730,16 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             if (indexPath.section == kXXTEMoreSectionIndexHelp) {
                 NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.bundle"];
                 if (indexPath.row == kXXTEMoreSectionHelpRowIndexAbout) {
-                    NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                    NSString *settingsUIPath = nil;
+                    if (@available(iOS 13.0, *)) {
+                        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                        } else {
+                            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About-Dark.plist"];
+                        }
+                    } else {
+                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
+                    }
                     XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
                     xuiController.hidesBottomBarWhenPushed = NO;
                     [self.navigationController pushViewController:xuiController animated:YES];
@@ -760,13 +787,13 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         [NSURLConnection POST:uAppDaemonCommandUrl(changeToCommand) JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
             if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
                 if (changeToStatus == YES) {
-                    _webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
-                    _bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
-                    if (_webServerUrl.length == 0)
-                        _webServerUrl = [[self class] otherInterfaceIPAddresses];
+                    self->_webServerUrl = jsonDictionary[@"data"][@"webserver_url"];
+                    self->_bonjourWebServerUrl = jsonDictionary[@"data"][@"bonjour_webserver_url"];
+                    if (self->_webServerUrl.length == 0)
+                        self->_webServerUrl = [[self class] otherInterfaceIPAddresses];
                 } else {
-                    _webServerUrl = nil;
-                    _bonjourWebServerUrl = nil;
+                    self->_webServerUrl = nil;
+                    self->_bonjourWebServerUrl = nil;
                 }
                 [self updateRemoteAccessAddressDisplay];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -1126,6 +1153,14 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeFormSheetDismissed}]];
     }
     [super dismissViewControllerAnimated:flag completion:completion];
+}
+
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
+#endif
 }
 
 @end

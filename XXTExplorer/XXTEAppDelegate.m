@@ -460,11 +460,18 @@ XXTE_END_IGNORE_PARTIAL
     UIWindow *mainWindow = self.window;
     
     NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"SettingsPro.bundle"];
-    NSString *settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
+    NSString *settingsUIPath = nil;
+    if (@available(iOS 13.0, *)) {
+        if (mainWindow.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
+        } else {
+            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService-Dark.plist"];
+        }
+    } else {
+        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
+    }
     XXTEAgreementViewController *agreementController = [[XXTEAgreementViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
-    
     XUINavigationController *navigationController = [[XUINavigationController alloc] initWithRootViewController:agreementController];
-    
     mainWindow.rootViewController = navigationController;
 }
 #endif

@@ -18,7 +18,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        if (@available(iOS 13.0, *)) {
+            self.backgroundColor = [UIColor systemBackgroundColor];
+        } else {
+            self.backgroundColor = [UIColor whiteColor];
+        }
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, frame.size.width - 25, frame.size.height)];
         label.font = [UIFont systemFontOfSize:13.0];

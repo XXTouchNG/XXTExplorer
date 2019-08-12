@@ -59,7 +59,12 @@
             self.title = NSLocalizedString(@"Console", nil);
         }
     }
-    self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     self.navigationItem.rightBarButtonItem = self.launchItem;
     
     [self.view addSubview:self.textView];

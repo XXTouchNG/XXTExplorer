@@ -88,7 +88,11 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     [self.view addSubview:self.comingSoonView];
     
     XXTE_START_IGNORE_PARTIAL
@@ -173,7 +177,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     })
     .finally(^ () {
-        _isRequesting = NO;
+        self->_isRequesting = NO;
         [self.pawAnimation setHidden:YES];
         blockInteractions(blockController, NO);
     });
@@ -612,7 +616,11 @@ XXTE_END_IGNORE_PARTIAL
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
     footer.textLabel.font = [UIFont systemFontOfSize:12.0];
-    footer.textLabel.textColor = [UIColor lightGrayColor];
+    if (@available(iOS 13.0, *)) {
+        footer.textLabel.textColor = [UIColor secondaryLabelColor];
+    } else {
+        footer.textLabel.textColor = [UIColor lightGrayColor];
+    }
     UIView *bgView = [[UIView alloc] init];
     footer.backgroundView = bgView;
     bgView.backgroundColor = [UIColor clearColor];

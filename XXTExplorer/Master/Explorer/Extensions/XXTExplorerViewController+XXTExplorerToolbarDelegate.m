@@ -50,14 +50,7 @@
     toolbarCover.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
     toolbarCover.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     toolbarCover.hidden = YES;
-    UIFont *font = nil;
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.2, *)) {
-        font = [UIFont systemFontOfSize:14.f weight:UIFontWeightRegular];
-    } else {
-        font = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
-    }
-    XXTE_END_IGNORE_PARTIAL
+    UIFont *font = [UIFont systemFontOfSize:14.0];
     toolbarCover.font = font;
     toolbarCover.textColor = XXTColorForeground();
     toolbarCover.text = NSLocalizedString(@"Drop to parent directory", nil);
@@ -181,7 +174,11 @@
                     controller.modalPresentationStyle = UIModalPresentationPopover;
                     UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
                     popoverController.barButtonItem = buttonItem;
-                    popoverController.backgroundColor = [UIColor whiteColor];
+                    if (@available(iOS 13.0, *)) {
+                        popoverController.backgroundColor = [UIColor systemBackgroundColor];
+                    } else {
+                        popoverController.backgroundColor = [UIColor whiteColor];
+                    }
                     controller.presentationController.delegate = self;
                     [self.navigationController presentViewController:controller animated:YES completion:nil];
                 } else {

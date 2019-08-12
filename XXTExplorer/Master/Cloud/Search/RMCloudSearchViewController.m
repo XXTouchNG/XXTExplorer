@@ -81,7 +81,11 @@ XXTE_END_IGNORE_PARTIAL
     self.automaticallyAdjustsScrollViewInsets = YES;
     
     self.title = NSLocalizedString(@"Search", nil);
-    self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.view.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
@@ -157,7 +161,7 @@ XXTE_END_IGNORE_PARTIAL
         if (hotWords.count > 0) {
             [self.trendsCell setHotWords:hotWords];
             [self.tableView reloadData];
-            _firstLoaded = YES;
+            self->_firstLoaded = YES;
         }
     })
     .catch(^ (NSError *error) {
@@ -174,7 +178,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     })
     .finally(^ () {
-        _isRequesting = NO;
+        self->_isRequesting = NO;
         [self.pawAnimation setHidden:YES];
         blockInteractions(blockController, NO);
     });
@@ -185,7 +189,11 @@ XXTE_END_IGNORE_PARTIAL
 - (UITableView *)tableView {
     if (!_tableView) {
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        tableView.backgroundColor = [UIColor whiteColor];
+        if (@available(iOS 13.0, *)) {
+            tableView.backgroundColor = [UIColor systemBackgroundColor];
+        } else {
+            tableView.backgroundColor = [UIColor whiteColor];
+        }
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -330,7 +338,11 @@ XXTE_END_IGNORE_PARTIAL
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
     footer.textLabel.font = [UIFont systemFontOfSize:12.0];
-    footer.textLabel.textColor = [UIColor lightGrayColor];
+    if (@available(iOS 13.0, *)) {
+        footer.textLabel.textColor = [UIColor secondaryLabelColor];
+    } else {
+        footer.textLabel.textColor = [UIColor lightGrayColor];
+    }
     UIView *bgView = [[UIView alloc] init];
     footer.backgroundView = bgView;
     bgView.backgroundColor = [UIColor clearColor];

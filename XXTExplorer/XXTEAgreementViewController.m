@@ -59,13 +59,25 @@
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
-        [self ExitImmediately];
+        [self ExitGracefully];
     }];
     [alertView showAnimated];
 }
 
 - (void)ExitImmediately {
     exit(0);
+}
+
+- (void)ExitGracefully {
+    UIApplication *app = [UIApplication sharedApplication];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    [app performSelector:NSSelectorFromString(@"suspend")];
+#pragma clang diagnostic pop
+    if ([app.delegate respondsToSelector:@selector(applicationWillTerminate:)]) {
+        [app.delegate applicationWillTerminate:app];
+    }
+    [app performSelector:NSSelectorFromString(@"terminateWithSuccess") withObject:nil afterDelay:0.3];
 }
 
 - (void)agreeItemTapped:(UIBarButtonItem *)sender {

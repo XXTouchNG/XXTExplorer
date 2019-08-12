@@ -308,8 +308,8 @@ typedef enum : NSUInteger {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             blockInteractions(blockController, NO);
             if (status == 0) {
-                if ([_delegate respondsToSelector:@selector(explorerEntryUpdater:entryDidUpdatedAtPath:)]) {
-                    [_delegate explorerEntryUpdater:self entryDidUpdatedAtPath:self.entryPath];
+                if ([self->_delegate respondsToSelector:@selector(explorerEntryUpdater:entryDidUpdatedAtPath:)]) {
+                    [self->_delegate explorerEntryUpdater:self entryDidUpdatedAtPath:self.entryPath];
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             } else {

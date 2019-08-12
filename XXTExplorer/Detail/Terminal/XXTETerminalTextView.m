@@ -40,7 +40,11 @@
 
 - (void)setup {
     // Appearance
-    self.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
     self.tintColor = XXTColorForeground();
     self.typingAttributes = self.defaultAttributes;
     
@@ -56,10 +60,17 @@
         NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.f);
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
-        _defaultAttributes = @{
-                               NSFontAttributeName: font,
-                               NSForegroundColorAttributeName: [UIColor colorWithWhite:.33f alpha:1.f],
-                               };
+        if (@available(iOS 13.0, *)) {
+            _defaultAttributes = @{
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: [UIColor labelColor],
+            };
+        } else {
+            _defaultAttributes = @{
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: [UIColor colorWithWhite:.33f alpha:1.f],
+            };
+        }
     }
     return _defaultAttributes;
 }
@@ -75,10 +86,17 @@
                                                          @"NSFontFamilyAttribute" : familyName,
                                                          @"NSFontFaceAttribute" : @"Bold"
                                                          }] size:fontSize];
-        _messageAttributes = @{
-                             NSFontAttributeName: boldFont,
-                             NSForegroundColorAttributeName: [UIColor colorWithWhite:.33f alpha:1.f],
-                             };
+        if (@available(iOS 13.0, *)) {
+            _messageAttributes = @{
+            NSFontAttributeName: boldFont,
+            NSForegroundColorAttributeName: [UIColor labelColor],
+            };
+        } else {
+            _messageAttributes = @{
+            NSFontAttributeName: boldFont,
+            NSForegroundColorAttributeName: [UIColor colorWithWhite:.33f alpha:1.f],
+            };
+        }
     }
     return _messageAttributes;
 }

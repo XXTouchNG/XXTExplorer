@@ -234,13 +234,13 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     .then(^(NSDictionary *jsonDictionary) {
         NSDictionary *dataDictionary = jsonDictionary[@"data"];
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
-            ((XXTEMoreTitleValueCell *)staticCells[2][0]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"zeversion"]];
-            ((XXTEMoreTitleValueCell *)staticCells[2][1]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"sysversion"]];
-            ((XXTEMoreTitleValueCell *)staticCells[2][2]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devtype"]];
-            ((XXTEMoreTitleValueCell *)staticCells[2][3]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devname"]];
-            ((XXTEMoreTitleValueCell *)staticCells[2][4]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devsn"]];
-            ((XXTEMoreTitleValueCell *)staticCells[2][5]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devmac"]];
-            ((XXTEMoreTitleValueCell *)staticCells[2][6]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"deviceid"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][0]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"zeversion"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][1]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"sysversion"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][2]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devtype"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][3]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devname"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][4]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devsn"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][5]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"devmac"]];
+            ((XXTEMoreTitleValueCell *)self->staticCells[2][6]).valueLabel.text = [NSString stringWithFormat:@"%@", dataDictionary[@"deviceid"]];
             self.dataDictionary = dataDictionary;
         }
         NSMutableDictionary *sendDict = [@{} mutableCopy];

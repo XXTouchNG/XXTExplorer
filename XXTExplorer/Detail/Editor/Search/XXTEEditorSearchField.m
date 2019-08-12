@@ -35,11 +35,7 @@
     }
     self.enablesReturnKeyAutomatically = YES;
     self.keyboardAppearance = UIKeyboardAppearanceDefault;
-    if (@available(iOS 8.2, *)) {
-        self.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightLight];
-    } else {
-        self.font = [UIFont systemFontOfSize:14.0];
-    }
+    self.font = [UIFont systemFontOfSize:14.0];
     self.textAlignment = NSTextAlignmentLeft;
     self.clearButtonMode = UITextFieldViewModeAlways;
     self.returnKeyType = UIReturnKeyNext;
@@ -59,12 +55,7 @@
     if (self.placeholder.length && self.textColor) {
         NSMutableAttributedString *attrPlaceholder = [[NSMutableAttributedString alloc] initWithString:self.placeholder];
         UIColor *placeholderColor = [self.textColor colorWithAlphaComponent:0.3];
-        UIFont *placeholderFont = nil;
-        if (@available(iOS 8.2, *)) {
-            placeholderFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightLight];
-        } else {
-            placeholderFont = [UIFont systemFontOfSize:14.0];
-        }
+        UIFont *placeholderFont = [UIFont systemFontOfSize:14.0];
         NSDictionary *placeholderAttrs =
         @{ NSForegroundColorAttributeName: placeholderColor, NSFontAttributeName: placeholderFont };
         [attrPlaceholder addAttributes:placeholderAttrs range:NSMakeRange(0, attrPlaceholder.length)];

@@ -583,7 +583,11 @@ XXTE_END_IGNORE_PARTIAL
                                 UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
                                 popoverController.sourceView = tableView;
                                 popoverController.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
-                                popoverController.backgroundColor = [UIColor whiteColor];
+                                if (@available(iOS 13.0, *)) {
+                                    popoverController.backgroundColor = [UIColor systemBackgroundColor];
+                                } else {
+                                    popoverController.backgroundColor = [UIColor whiteColor];
+                                }
                             }
                             XXTE_END_IGNORE_PARTIAL
                             navController.presentationController.delegate = self;

@@ -110,18 +110,10 @@
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    if (@available(iOS 8.2, *)) {
-        if (indexPath.row == self.defaultChoice) {
-            cell.titleLabel.font = [UIFont systemFontOfSize:16.0];
-        } else {
-            cell.titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
-        }
+   if (indexPath.row == self.defaultChoice) {
+        cell.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
     } else {
-        if (indexPath.row == self.defaultChoice) {
-            cell.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-        } else {
-            cell.titleLabel.font = [UIFont systemFontOfSize:16.0];
-        }
+        cell.titleLabel.font = [UIFont systemFontOfSize:16.0];
     }
     cell.titleLabel.text = ((NSArray *)self.userDefaultsEntry[@"options"])[(NSUInteger) indexPath.row];
     return cell;

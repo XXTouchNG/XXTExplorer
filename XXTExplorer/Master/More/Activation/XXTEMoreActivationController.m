@@ -157,10 +157,10 @@ static void * activatorHandler = nil;
         return jsonDictionary[@"data"];
     })
     .then(^(NSDictionary *dataDictionary) {
-        [[operationStatus allKeys] enumerateObjectsUsingBlock:^(NSString *optionKeyName, NSUInteger idx, BOOL *stop) {
+        [[self->operationStatus allKeys] enumerateObjectsUsingBlock:^(NSString *optionKeyName, NSUInteger idx, BOOL *stop) {
             if (dataDictionary[optionKeyName]) {
                 NSInteger operationType = [dataDictionary[optionKeyName] integerValue];
-                operationStatus[optionKeyName] = @(operationType);
+                self->operationStatus[optionKeyName] = @(operationType);
             }
         }];
     })

@@ -178,8 +178,7 @@ XXTE_END_IGNORE_PARTIAL
             backgroundView.clipsToBounds = YES;
         }
         self.navigationItem.searchController = self.searchController;
-    }
-    else {
+    } else {
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];

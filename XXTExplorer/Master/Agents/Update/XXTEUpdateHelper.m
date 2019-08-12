@@ -93,9 +93,9 @@
         {
             if (error)
             {
-                if ([_delegate respondsToSelector:@selector(jsonHelper:didSyncFailWithError:)])
+                if ([self->_delegate respondsToSelector:@selector(jsonHelper:didSyncFailWithError:)])
                 {
-                    [_delegate jsonHelper:self didSyncFailWithError:error];
+                    [self->_delegate jsonHelper:self didSyncFailWithError:error];
                 }
             }
         }
@@ -105,9 +105,9 @@
         XXTEUpdatePackage *pkg = self.respPackage;
         if (pkg)
         {
-            if ([_delegate respondsToSelector:@selector(jsonHelperDidSyncReady:)])
+            if ([self->_delegate respondsToSelector:@selector(jsonHelperDidSyncReady:)])
             {
-                [_delegate jsonHelperDidSyncReady:self];
+                [self->_delegate jsonHelperDidSyncReady:self];
             }
         }
     });

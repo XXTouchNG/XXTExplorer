@@ -74,7 +74,11 @@
 }
 
 - (void)setup {
-    self.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
 
     UIImage *tintedImage = [UIImage imageNamed:@"xxt-marquee"];
     UIImageView *centerAddImage = [[UIImageView alloc] initWithImage:tintedImage];

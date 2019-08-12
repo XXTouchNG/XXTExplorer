@@ -48,7 +48,11 @@
     _isFirstLoading = YES;
     _selectedIndex = 0;
     
-    self.pageScrollView.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        self.pageScrollView.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        self.pageScrollView.backgroundColor = [UIColor whiteColor];
+    }
     
     XXTESegmentedControl *segmentedControl = [[XXTESegmentedControl alloc] init];
     segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -75,7 +79,8 @@
 }
     
 #pragma mark - Rotation
-    
+
+XXTE_START_IGNORE_PARTIAL
 - (void)willAnimateRotationToInterfaceOrientation:(__unused UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -85,6 +90,7 @@
     titleViewFrame.size = navigationBarSize;
     self.navigationItem.titleView.frame = titleViewFrame;
 }
+XXTE_END_IGNORE_PARTIAL
     
 #pragma mark - Life Cycle
     

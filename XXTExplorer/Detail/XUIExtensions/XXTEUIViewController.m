@@ -123,10 +123,8 @@ void XUINotificationCallbackValueChanged(CFNotificationCenterRef center, void *o
 }
 
 - (void)dealloc {
-    
     CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUICallbackUIUpdated, NULL);
     CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(self), XUICallbackValueChanged, NULL);
-    
 }
 
 - (void)viewDidLoad {

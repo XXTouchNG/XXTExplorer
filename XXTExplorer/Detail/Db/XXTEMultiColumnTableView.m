@@ -199,9 +199,17 @@ static const CGFloat kColumnMargin = 1;
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIColor *backgroundColor = [UIColor whiteColor];
-    if (indexPath.row % 2 != 0) {
-        backgroundColor = [UIColor colorWithWhite:0.950 alpha:0.750];
+    UIColor *backgroundColor = nil;
+    if (@available(iOS 13.0, *)) {
+        backgroundColor = [UIColor systemBackgroundColor];
+        if (indexPath.row % 2 != 0) {
+            backgroundColor = [UIColor secondarySystemBackgroundColor];
+        }
+    } else {
+        backgroundColor = [UIColor whiteColor];
+        if (indexPath.row % 2 != 0) {
+            backgroundColor = [UIColor colorWithWhite:0.950 alpha:0.750];
+        }
     }
     
     if (tableView != self.leftTableView) {
@@ -222,7 +230,11 @@ static const CGFloat kColumnMargin = 1;
             
             NSString *content = [NSString stringWithFormat:@"%@",self.rowData[i]];
             if ([content isEqualToString:@"<null>"]) {
-                label.textColor = [UIColor lightGrayColor];
+                if (@available(iOS 13.0, *)) {
+                    label.textColor = [UIColor secondaryLabelColor];
+                } else {
+                    label.textColor = [UIColor lightGrayColor];
+                }
                 content = @"NULL";
             }
             label.text            = content;
