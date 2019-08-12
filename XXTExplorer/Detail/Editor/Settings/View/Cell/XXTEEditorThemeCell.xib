@@ -50,8 +50,17 @@
                             <constraint firstAttribute="height" constant="120" id="vA4-sZ-VQ4"/>
                         </constraints>
                     </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTExplorerSelectedScriptFlag" translatesAutoresizingMaskIntoConstraints="NO" id="TkV-vS-tA4">
+                        <rect key="frame" x="18" y="71.5" width="17" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="17" id="Obv-Gt-Fff"/>
+                            <constraint firstAttribute="height" constant="17" id="tJD-Cb-Mro"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="TkV-vS-tA4" firstAttribute="centerY" secondItem="4sK-rI-yVK" secondAttribute="centerY" id="7rX-Fz-9wJ"/>
+                    <constraint firstItem="TkV-vS-tA4" firstAttribute="leading" secondItem="4sK-rI-yVK" secondAttribute="leading" constant="6" id="GFO-7X-QAB"/>
                     <constraint firstItem="EAf-hh-FtM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Isv-72-mJL"/>
                     <constraint firstItem="4sK-rI-yVK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Sci-B0-NUZ"/>
                     <constraint firstAttribute="trailing" secondItem="EAf-hh-FtM" secondAttribute="trailing" constant="12" id="TQv-7T-8wD"/>
@@ -63,10 +72,14 @@
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="previewImageView" destination="4sK-rI-yVK" id="lBQ-yh-sur"/>
+                <outlet property="selectedFlagView" destination="TkV-vS-tA4" id="A00-7T-45P"/>
                 <outlet property="titleBaseView" destination="EAf-hh-FtM" id="4uB-7u-Mue"/>
                 <outlet property="titleLabel" destination="MEY-Gs-v9o" id="LJM-aD-0eD"/>
             </connections>
             <point key="canvasLocation" x="52.799999999999997" y="48.575712143928037"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="XXTExplorerSelectedScriptFlag" width="17" height="17"/>
+    </resources>
 </document>

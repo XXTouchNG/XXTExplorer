@@ -12,6 +12,8 @@ static NSString * const XXTEEditorThemeCellReuseIdentifier = @"XXTEEditorThemeCe
 static CGFloat const XXTEEditorThemeCellHeight = 160.0;
 
 @interface XXTEEditorThemeCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *selectedFlagView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *titleBaseView;
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;

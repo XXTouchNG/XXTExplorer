@@ -216,6 +216,12 @@
         }
         cell.titleBaseView.backgroundColor = [highlightColor colorWithAlphaComponent:0.1];
         
+        if ([self.selectedThemeName isEqualToString:themeName]) {
+            cell.selectedFlagView.hidden = NO;
+        } else {
+            cell.selectedFlagView.hidden = YES;
+        }
+        
         return cell;
     }
     return [UITableViewCell new];
@@ -232,10 +238,10 @@
             self.selectedThemeEntry = theme;
             
             for (XXTEEditorThemeCell *cell in tableView.visibleCells) {
-                // cell.titleBaseView.backgroundColor = [UIColor clearColor];
+                cell.selectedFlagView.hidden = YES;
             }
             XXTEEditorThemeCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-            // selectCell.titleBaseView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
+            selectCell.selectedFlagView.hidden = NO;
             
             if (_delegate && [_delegate respondsToSelector:@selector(themeSettingsViewControllerSettingsDidChanged:)]) {
                 [_delegate themeSettingsViewControllerSettingsDidChanged:self];
