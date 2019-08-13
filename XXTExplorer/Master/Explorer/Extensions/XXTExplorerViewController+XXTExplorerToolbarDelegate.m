@@ -190,18 +190,51 @@
             }
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
-            if (self.explorerSortOrder != XXTExplorerViewEntryListSortOrderAsc) {
-                self.explorerSortField = XXTExplorerViewEntryListSortFieldDisplayName;
-                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderAsc;
-                toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
-            } else {
-                self.explorerSortField = XXTExplorerViewEntryListSortFieldModificationDate;
-                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderDesc;
-                toastMessage(self, NSLocalizedString(@"Sort by Modification Date Descend", nil));
+//            if (self.explorerSortOrder != XXTExplorerViewEntryListSortOrderAsc) {
+//                self.explorerSortField = XXTExplorerViewEntryListSortFieldDisplayName;
+//                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderAsc;
+//                toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
+//            } else {
+//                self.explorerSortField = XXTExplorerViewEntryListSortFieldModificationDate;
+//                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderDesc;
+//                toastMessage(self, NSLocalizedString(@"Sort by Modification Date Descend", nil));
+//            }
+//            [self updateToolbarButton];
+//            [self reloadEntryListView];
+            NSArray <NSString *> *sortTitles
+            = @[
+                NSLocalizedString(@"Created At", nil),
+                NSLocalizedString(@"Modified At", nil),
+                NSLocalizedString(@"Name", nil),
+                NSLocalizedString(@"Type", nil),
+                NSLocalizedString(@"Size", nil),
+                ];
+            NSUInteger sortFieldIdx = self.explorerSortField;
+            if (sortFieldIdx >= sortTitles.count) {
+                sortFieldIdx = XXTExplorerViewEntryListSortFieldModificationDate;
             }
-            [self updateToolbarButton];
-            [self loadEntryListData];
-            [self.tableView reloadData];
+            NSString *sortFieldTitle = sortTitles[sortFieldIdx];
+            NSUInteger sortOrderIdx = self.explorerSortOrder;
+            NSString *sortOrderTitie = (sortOrderIdx == XXTExplorerViewEntryListSortOrderAsc) ? NSLocalizedString(@"Ascend", nil) : NSLocalizedString(@"Descend", nil);
+            LGAlertView *sortAlert = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Sort By", nil)
+                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Currently sorted by %@, %@.", nil), sortFieldTitle, sortOrderTitie]
+                                                               style:LGAlertViewStyleActionSheet
+                                                        buttonTitles:sortTitles
+                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                              destructiveButtonTitle:nil
+                                                       actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                                                           if (index == sortFieldIdx) {
+                                                               self.explorerSortOrder = (sortOrderIdx == XXTExplorerViewEntryListSortOrderAsc ? XXTExplorerViewEntryListSortOrderDesc : XXTExplorerViewEntryListSortOrderAsc);
+                                                           } else {
+                                                               self.explorerSortField = index;
+                                                           }
+                                                           [self updateToolbarButton];
+                                                           [self reloadEntryListView];
+                                                           [alertView dismissAnimated];
+                                                       } cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                                                           [alertView dismissAnimated];
+                                                       } destructiveHandler:nil];
+            [sortAlert showAnimated];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];

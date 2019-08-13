@@ -2104,3 +2104,15 @@
 
 /* No comment provided by engineer. */
 "\"Word Column\" is used only when \"Auto Word Wrap\" is disabled." = "\"行宽度\" 只有在 \"自动折行\" 关闭时才能生效.";
+
+/* No comment provided by engineer. */
+"Ascend" = "升序";
+
+/* No comment provided by engineer. */
+"Descend" = "降序";
+
+/* No comment provided by engineer. */
+"Currently sorted by %@, %@." = "当前以 %@, %@ 排序.";
+
+/* No comment provided by engineer. */
+"Sort By" = "排序";
