@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAf-hh-FtM">
-                        <rect key="frame" x="342" y="64" width="60" height="32"/>
+                        <rect key="frame" x="348" y="64" width="60" height="32"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MEY-Gs-v9o">
                                 <rect key="frame" x="6" y="4" width="48" height="24"/>
@@ -43,7 +43,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sK-rI-yVK">
-                        <rect key="frame" x="12" y="20" width="212" height="120"/>
+                        <rect key="frame" x="6" y="20" width="212" height="120"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="212" id="e7o-zA-Fhf"/>
@@ -51,7 +51,7 @@
                         </constraints>
                     </imageView>
                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="XXTExplorerSelectedScriptFlag" translatesAutoresizingMaskIntoConstraints="NO" id="TkV-vS-tA4">
-                        <rect key="frame" x="18" y="71.5" width="17" height="17"/>
+                        <rect key="frame" x="12" y="71.5" width="17" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="17" id="Obv-Gt-Fff"/>
                             <constraint firstAttribute="height" constant="17" id="tJD-Cb-Mro"/>
@@ -63,9 +63,9 @@
                     <constraint firstItem="TkV-vS-tA4" firstAttribute="leading" secondItem="4sK-rI-yVK" secondAttribute="leading" constant="6" id="GFO-7X-QAB"/>
                     <constraint firstItem="EAf-hh-FtM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Isv-72-mJL"/>
                     <constraint firstItem="4sK-rI-yVK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Sci-B0-NUZ"/>
-                    <constraint firstAttribute="trailing" secondItem="EAf-hh-FtM" secondAttribute="trailing" constant="12" id="TQv-7T-8wD"/>
+                    <constraint firstAttribute="trailing" secondItem="EAf-hh-FtM" secondAttribute="trailing" constant="6" id="TQv-7T-8wD"/>
                     <constraint firstItem="EAf-hh-FtM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4sK-rI-yVK" secondAttribute="trailing" constant="6" id="fTJ-ds-Kja"/>
-                    <constraint firstItem="4sK-rI-yVK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="kgv-3x-Tc1"/>
+                    <constraint firstItem="4sK-rI-yVK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="kgv-3x-Tc1"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

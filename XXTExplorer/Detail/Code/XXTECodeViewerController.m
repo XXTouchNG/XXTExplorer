@@ -94,6 +94,7 @@
         _hljsCssRegex = [NSRegularExpression regularExpressionWithPattern:@"\\.hljs(\\s+|,+.*?)\\{(.*?)\\}" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
         _hljsLineCssRegex = [NSRegularExpression regularExpressionWithPattern:@"([A-Za-z0-9|-]+):\\s?(.*)" options:kNilOptions error:nil];
         _shouldRefreshNagivationBar = NO;
+        self.hidesBottomBarWhenPushed = YES;
         self.navigationButtonsHidden = YES;
         self.hideWebViewBoundaries = NO;
         if (@available(iOS 9.0, *)) {

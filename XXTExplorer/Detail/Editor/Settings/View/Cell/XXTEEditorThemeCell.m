@@ -26,6 +26,13 @@
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = [UIColor clearColor];
     self.selectedBackgroundView = selectionBackground;
+    
+    if (XXTE_IS_IPHONE_6_BELOW) {
+        self.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    }
+    else {
+        self.titleLabel.font = [UIFont systemFontOfSize:20.0];
+    }
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
