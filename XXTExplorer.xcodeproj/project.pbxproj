@@ -802,6 +802,12 @@
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		B0312F7F228AF24585508F52 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312AD0A1F2567D3206D00B /* loslib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
+		BD8D1829230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
+		BD8D182A230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
+		BD8D182B230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
+		BDFE72512304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
+		BDFE72522304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
+		BDFE72532304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D606114822F53F3800F6F0E6 /* XXTEEditorLineBreakController.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114722F53F3800F6F0E6 /* XXTEEditorLineBreakController.m */; };
@@ -1966,6 +1972,11 @@
 		B0312E8696170984090886F2 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
 		B0312EA80D17B9AF4D5E309E /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
 		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BD8D1826230443230005029B /* XXTETerminalDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTETerminalDelegate.h; sourceTree = "<group>"; };
+		BD8D1827230444060005029B /* XXTEEditorController+TerminalControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+TerminalControl.h"; sourceTree = "<group>"; };
+		BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+TerminalControl.m"; sourceTree = "<group>"; };
+		BDFE724F2304538800F56482 /* XXTEEditorTextView+TextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorTextView+TextRange.h"; sourceTree = "<group>"; };
+		BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorTextView+TextRange.m"; sourceTree = "<group>"; };
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
@@ -3462,6 +3473,8 @@
 				0FD973F81F4B29E700133162 /* XXTEEditorController+State.m */,
 				0FB2209D1F824B2100156C3B /* XXTEEditorController+NavigationBar.h */,
 				0FB2209E1F824B2100156C3B /* XXTEEditorController+NavigationBar.m */,
+				BD8D1827230444060005029B /* XXTEEditorController+TerminalControl.h */,
+				BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3822,6 +3835,8 @@
 				D6DB971B22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m */,
 				D6DB971F22FA864F00C4EA17 /* UITextView+VisibleRange.h */,
 				D6DB972022FA864F00C4EA17 /* UITextView+VisibleRange.m */,
+				BDFE724F2304538800F56482 /* XXTEEditorTextView+TextRange.h */,
+				BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */,
 			);
 			path = TextKit;
 			sourceTree = "<group>";
@@ -4598,6 +4613,7 @@
 				D677B10E1F4FE94000E741C2 /* XXTETerminalTextView.m */,
 				D677B1101F4FEA7B00E741C2 /* XXTETerminalViewController.h */,
 				D677B1111F4FEA7B00E741C2 /* XXTETerminalViewController.m */,
+				BD8D1826230443230005029B /* XXTETerminalDelegate.h */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";
@@ -5598,6 +5614,7 @@
 				0FAE18FE20806CB0005F9B67 /* XXTEDbReader.m in Sources */,
 				0FAE18E620806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
 				D6BE070B22EF48CA0008B2AA /* XXTECodeViewerSettingsController.m in Sources */,
+				BD8D182B230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */,
 				0F8EDBAE1FB1F779003C92D6 /* XXTExplorerViewController+FileOperation.m in Sources */,
 				0F8EDBAF1FB1F779003C92D6 /* XXTPositionPicker.m in Sources */,
 				0F8EDBB01FB1F779003C92D6 /* XXTESymbolTypeView.m in Sources */,
@@ -5670,6 +5687,7 @@
 				0F072DA81FB9D52000597EE2 /* XXTExplorerEntryReader.m in Sources */,
 				D6DB971E22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m in Sources */,
 				0F8EDBE91FB1F779003C92D6 /* XXTEMoreValueView.m in Sources */,
+				BDFE72532304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */,
 				0F8EDBEA1FB1F779003C92D6 /* XXTKeyEventPicker.m in Sources */,
 				0F8EDBEB1FB1F779003C92D6 /* NSString+QueryItems.m in Sources */,
 				0F7B52BF201994CA00D91702 /* NSString+VersionValue.m in Sources */,
@@ -5951,6 +5969,7 @@
 				D6E1411E1F5032AB00D78CB9 /* XXTKeyEvent.m in Sources */,
 				0F2CD3581F3B5CAB00110772 /* XXTEUpdatePackage.m in Sources */,
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
+				BD8D1829230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
@@ -6020,6 +6039,7 @@
 				0F072DA71FB9D52000597EE2 /* XXTExplorerEntryReader.m in Sources */,
 				0FB2209F1F824B2100156C3B /* XXTEEditorController+NavigationBar.m in Sources */,
 				D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */,
+				BDFE72512304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */,
 				0FB7968B20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,
 				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
@@ -6301,6 +6321,7 @@
 				D60FE6D01FE2369300954818 /* XXTKeyEvent.m in Sources */,
 				D60FE6D11FE2369300954818 /* XXTEUpdatePackage.m in Sources */,
 				D60FE6D21FE2369300954818 /* XXTEEditorLayoutManager.m in Sources */,
+				BD8D182A230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */,
 				D60FE6D31FE2369300954818 /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				D60FE6D41FE2369300954818 /* XXTExplorerViewController+Notification.m in Sources */,
 				D60FE6D51FE2369300954818 /* XXTExplorerEntryService.m in Sources */,
@@ -6370,6 +6391,7 @@
 				D60FE70B1FE2369300954818 /* XXTExplorerEntryReader.m in Sources */,
 				D60FE70C1FE2369300954818 /* XXTEEditorController+NavigationBar.m in Sources */,
 				D60FE70D1FE2369300954818 /* XXTLocationPicker.m in Sources */,
+				BDFE72522304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */,
 				0FB7968C20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				D60FE70E1FE2369300954818 /* UIColor+inverseColor.m in Sources */,
 				D60FE70F1FE2369300954818 /* XXTPositionColorPicker.m in Sources */,

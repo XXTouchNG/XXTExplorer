@@ -316,6 +316,12 @@
     if (!result && err) {
         [self.textView appendError:[NSString stringWithFormat:@"\n%@\n", [err localizedDescription]]];
         self.launchItem.enabled = YES;
+        if ([self->_delegate respondsToSelector:@selector(terminalDidTerminate:withError:)]) {
+            // preprocess with lua error
+            if (err.code != -1) {
+                [self->_delegate terminalDidTerminate:self withError:err];
+            }
+        }
         return;
     } else {
         [self.textView appendMessage:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil)];
@@ -328,7 +334,16 @@
         dispatch_async_on_main_queue(^{
             if (!result && err) {
                 [self.textView appendError:[NSString stringWithFormat:@"\n%@", [err localizedDescription]]];
-                return;
+                if ([self->_delegate respondsToSelector:@selector(terminalDidTerminate:withError:)]) {
+                    // preprocess with lua error
+                    if (err.code != -1) {
+                        [self->_delegate terminalDidTerminate:self withError:err];
+                    }
+                }
+            } else {
+                if ([self->_delegate respondsToSelector:@selector(terminalDidTerminateWithSuccess:)]) {
+                    [self->_delegate terminalDidTerminateWithSuccess:self];
+                }
             }
         });
     });

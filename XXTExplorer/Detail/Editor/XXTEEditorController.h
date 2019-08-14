@@ -8,11 +8,12 @@
 
 #import "XXTEEditor.h"
 #import "XXTEEditorTextProperties.h"
+#import "XXTETerminalDelegate.h"
 
 
 @class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory, XXTEEditorMaskView;
 
-@interface XXTEEditorController : UIViewController <XXTEEditor, UIPopoverPresentationControllerDelegate>
+@interface XXTEEditorController : UIViewController <XXTEEditor, XXTETerminalViewControllerDelegate, UIPopoverPresentationControllerDelegate>
 
 
 // syntax properties

@@ -99,4 +99,17 @@ static NSInteger kStopRenderingLineAfter = 1024;
     return NO;
 }
 
++ (NSRange)lineRangeForString:(NSString *)string AtIndex:(NSInteger)target {
+    __block NSInteger idx = 0;
+    __block NSRange range = NSMakeRange(NSNotFound, 0);
+    [string enumerateSubstringsInRange:NSMakeRange(0, string.length) options:NSStringEnumerationByLines usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+        if (target == idx) {
+            range = substringRange;
+            *stop = YES;
+        }
+        idx++;
+    }];
+    return range;
+}
+
 @end

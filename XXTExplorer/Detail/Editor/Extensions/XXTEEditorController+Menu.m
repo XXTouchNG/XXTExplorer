@@ -11,6 +11,7 @@
 #import "XXTEEditorLanguage.h"
 #import "XXTEEditorDefaults.h"
 #import "XXTEEditorTextView.h"
+#import "XXTEEditorTextView+TextRange.h"
 
 #import "XXTENavigationController.h"
 #import "XXTPickerFactory.h"
@@ -87,27 +88,12 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (NSRange)fixedSelectedTextRange {
-    NSRange selectedRange = [self.textView selectedRange];
-    NSString *stringRef = self.textView.text;
-    NSUInteger lineStart = 0, lineEnd = 0, contentsEnd = 0;
-    [stringRef getLineStart:&lineStart end:&lineEnd contentsEnd:&contentsEnd forRange:selectedRange];
-    return NSMakeRange(lineStart, contentsEnd - lineStart);
-}
-
-- (UITextRange *)textRangeFromNSRange:(NSRange)range {
-    UITextPosition *startPosition = [self.textView positionFromPosition:self.textView.beginningOfDocument offset:(NSInteger)range.location];
-    UITextPosition *endPosition = [self.textView positionFromPosition:startPosition offset:(NSInteger)range.length];
-    UITextRange *textRange = [self.textView textRangeFromPosition:startPosition toPosition:endPosition];
-    return textRange;
-}
-
 - (void)menuActionShiftLeft:(UIMenuItem *)sender {
     BOOL softTab = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
     NSUInteger tabWidth = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
     NSString *tabWidthString = softTab ? [@"" stringByPaddingToLength:tabWidth withString:@" " startingAtIndex:0] : @"\t";
     
-    NSRange fixedRange = [self fixedSelectedTextRange];
+    NSRange fixedRange = [self.textView fixedSelectedTextRange];
     NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
     NSMutableString *mutStr = [NSMutableString new];
     [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
@@ -118,7 +104,7 @@
         [mutStr appendFormat:@"%@\n", line];
     }];
     NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
-    [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+    [self.textView replaceRange:[self.textView textRangeFromNSRange:fixedRange] withText:resultStr];
 }
 
 - (void)menuActionShiftRight:(UIMenuItem *)sender {
@@ -126,20 +112,20 @@
     NSUInteger tabWidth = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4); // config
     NSString *tabWidthString = softTab ? [@"" stringByPaddingToLength:tabWidth withString:@" " startingAtIndex:0] : @"\t";
     
-    NSRange fixedRange = [self fixedSelectedTextRange];
+    NSRange fixedRange = [self.textView fixedSelectedTextRange];
     NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
     NSMutableString *mutStr = [[NSMutableString alloc] initWithString:tabWidthString];
     [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
         [mutStr appendFormat:@"%@\n%@", line, tabWidthString];
     }];
     NSString *resultStr = [mutStr substringToIndex:mutStr.length - tabWidthString.length - 1];
-    [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+    [self.textView replaceRange:[self.textView textRangeFromNSRange:fixedRange] withText:resultStr];
 }
 
 - (void)menuActionComment:(UIMenuItem *)sender {
     NSString *singleComment = self.language.comments[kTextMateCommentStart];
     if (singleComment) {
-        NSRange fixedRange = [self fixedSelectedTextRange];
+        NSRange fixedRange = [self.textView fixedSelectedTextRange];
         NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
         __block BOOL hasComment = NO;
         [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
@@ -179,21 +165,21 @@
             }];
         }
         NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
-        [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+        [self.textView replaceRange:[self.textView textRangeFromNSRange:fixedRange] withText:resultStr];
         return;
     }
     
     NSString *doubleCommentStart = self.language.comments[kTextMateCommentMultilineStart];
     NSString *doubleCommentEnd = self.language.comments[kTextMateCommentMultilineEnd];
     if (doubleCommentStart && doubleCommentEnd) {
-        NSRange fixedRange = [self fixedSelectedTextRange];
+        NSRange fixedRange = [self.textView fixedSelectedTextRange];
         NSString *selectedText = [self.textView.text substringWithRange:fixedRange];
         NSMutableString *mutStr = [NSMutableString new];
         [selectedText enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
             [mutStr appendFormat:@"%@%@%@\n", doubleCommentStart, line, doubleCommentEnd];
         }];
         NSString *resultStr = [mutStr substringToIndex:mutStr.length - 1];
-        [self.textView replaceRange:[self textRangeFromNSRange:fixedRange] withText:resultStr];
+        [self.textView replaceRange:[self.textView textRangeFromNSRange:fixedRange] withText:resultStr];
         return;
     }
     

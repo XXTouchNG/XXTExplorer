@@ -26,6 +26,7 @@
     NSString *char_CRLF;
     NSString *char_SPACE;
     NSString *char_TAB;
+    NSString *char_BULLET;
 }
 
 - (instancetype)init
@@ -60,11 +61,13 @@
         _invisibleColor = [UIColor tertiaryLabelColor];
         _invisibleFont = [UIFont systemFontOfSize:14.f];
         _lineNumberColor = [UIColor secondaryLabelColor];
+        _bulletColor = [[UIColor secondaryLabelColor] colorWithAlphaComponent:0.45];
         _lineNumberFont = [UIFont systemFontOfSize:14.0];
     } else {
         _invisibleColor = [UIColor grayColor];
         _invisibleFont = [UIFont systemFontOfSize:14.f];
         _lineNumberColor = [UIColor darkGrayColor];
+        _bulletColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.45];
         _lineNumberFont = [UIFont systemFontOfSize:14.0];
     }
     
@@ -87,6 +90,8 @@
     char_SPACE = [[NSString alloc] initWithCharacters:&space length:1];
     unichar tab = 0x25B8;
     char_TAB = [[NSString alloc] initWithCharacters:&tab length:1];
+    unichar bullet = 0x2022;
+    char_BULLET = [[NSString alloc] initWithCharacters:&bullet length:1];
 }
 
 #pragma mark - Getters & Setters
@@ -115,6 +120,11 @@
 
 - (void)setLineNumberColor:(UIColor *)lineNumberColor {
     _lineNumberColor = lineNumberColor;
+    // [self invalidateLayout];
+}
+
+- (void)setBulletColor:(UIColor *)bulletColor {
+    _bulletColor = bulletColor;
     // [self invalidateLayout];
 }
 
@@ -253,6 +263,7 @@
     
     //  Draw line numbers.  Note that the background for line number gutter is drawn by the LineNumberTextView class.
     NSDictionary* attrs = @{NSFontAttributeName: self.lineNumberFont, NSForegroundColorAttributeName: self.lineNumberColor};
+    NSDictionary* bulletAttrs = @{NSFontAttributeName: self.lineNumberFont, NSForegroundColorAttributeName: self.bulletColor};
     
     __block CGRect gutterRect = CGRectZero;
     __block NSUInteger paraNumber;
@@ -267,14 +278,19 @@
          NSRange paraRange = [self.textStorage.string paragraphRangeForRange:charRange];
          
          //   Only draw line numbers for the paragraph's first line fragment. Subsequent fragments are wrapped portions of the paragraph and don't get the line number.
+         
+         gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self.gutterWidth, rect.size.height), origin.x, origin.y);
          if (charRange.location == paraRange.location) {
-             gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self.gutterWidth, rect.size.height), origin.x, origin.y);
              paraNumber = [self _paraNumberForRange:charRange];
              NSString *lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 1];
              CGSize size = [lineNumber sizeWithAttributes:attrs];
              
-             [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0)
-             withAttributes:attrs];
+             [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0) withAttributes:attrs];
+         } else {
+             NSString *bulletString = self->char_BULLET;
+             CGSize size = [bulletString sizeWithAttributes:bulletAttrs];
+             
+             [bulletString drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0) withAttributes:bulletAttrs];
          }
          
      }];

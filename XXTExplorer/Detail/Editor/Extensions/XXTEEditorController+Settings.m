@@ -71,6 +71,7 @@
         XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
         terminalController.runImmediately = YES;
         terminalController.editor = self;
+        terminalController.delegate = self;
         if (XXTE_COLLAPSED || style == XXTETerminalPresentationStylePresentAsPopover) {
             XXTE_START_IGNORE_PARTIAL
             if (@available(iOS 9.0, *)) {

@@ -10,6 +10,7 @@
 
 #import "XXTEEditorTextStorage.h"
 #import "XXTEEditorLayoutManager.h"
+#import "XXTEEditorTextView+TextRange.h"
 
 
 static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
@@ -31,6 +32,11 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
 }
 
 - (void)setup {
+    _showLineHighlight = NO;
+    _lineHighlightRange = NSMakeRange(NSNotFound, 0);
+    _needsUpdateLineHighlight = NO;
+    _lineHighlightRect = CGRectNull;
+    
     self.bounces = YES;
     self.alwaysBounceVertical = YES;
     self.contentMode = UIViewContentModeRedraw;
@@ -62,10 +68,49 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
     CGContextSetFillColorWithColor(context, self.gutterLineColor.CGColor);
     CGContextFillRect(context, CGRectMake(manager.gutterWidth, frame.origin.y - (kXXTEEditorTextViewGutterExtraHeight), 1.0, height));
     
+    // [self drawLineHighlight];
     [super drawRect:rect];
 }
 
+- (void)drawLineHighlight {
+    if (!self.showLineHighlight || self.lineHighlightRange.location == NSNotFound) {
+        return;
+    }
+    if ([self needsUpdateLineHighlight]) {
+        self.lineHighlightRect = [self lineRectForRange:self.lineHighlightRange];
+        _needsUpdateLineHighlight = NO;
+    }
+    if (CGRectIsNull(self.lineHighlightRect)) {
+        return;
+    }
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // CGContextSaveGState(context);
+    // [[UIColor whiteColor] setFill];
+    CGContextFillRect(context, self.lineHighlightRect);
+    // CGContextRestoreGState(context);
+}
+
 #pragma mark - Setters
+
+- (void)setShowLineHighlight:(BOOL)highlight lineRange:(NSRange)range {
+    _showLineHighlight = highlight;
+    if (highlight) {
+        _lineHighlightRange = range;
+        [self setNeedsUpdateLineHighlight];
+        [self setNeedsDisplay];
+    } else {
+        _lineHighlightRange = NSMakeRange(NSNotFound, 0);
+        _needsUpdateLineHighlight = NO;
+        _lineHighlightRect = CGRectNull;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setNeedsUpdateLineHighlight {
+    _needsUpdateLineHighlight = YES;
+}
 
 - (void)setText:(NSString *)text {
     UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.endOfDocument];

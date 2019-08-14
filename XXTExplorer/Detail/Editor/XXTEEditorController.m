@@ -406,6 +406,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     // Layout Manager
     XXTEEditorLayoutManager *layoutManager = textView.vLayoutManager;
     if (layoutManager) {
+        UIColor *bulletColor = [theme.foregroundColor colorWithAlphaComponent:.12];
         UIColor *gutterColor = [theme.foregroundColor colorWithAlphaComponent:.25];
         UIColor *gutterBackgroundColor = [theme.foregroundColor colorWithAlphaComponent:.033];
         
@@ -414,6 +415,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         
         [layoutManager setLineNumberFont:theme.font];
         [layoutManager setLineNumberColor:gutterColor];
+        [layoutManager setBulletColor:bulletColor];
         
         [layoutManager setShowInvisibleCharacters:showInvisibleCharacters];
         [layoutManager setInvisibleColor:theme.invisibleColor];

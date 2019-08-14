@@ -7,11 +7,14 @@
 //
 
 #import "XXTEViewer.h"
+#import "XXTETerminalDelegate.h"
+
 
 @class XXTEEditorController;
 
 @interface XXTETerminalViewController : UIViewController <XXTEViewer>
 
+@property (nonatomic, weak) id <XXTETerminalViewControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL runImmediately;
 @property (nonatomic, weak) XXTEEditorController *editor;
 
