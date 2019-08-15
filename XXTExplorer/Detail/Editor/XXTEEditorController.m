@@ -95,7 +95,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 @property (nonatomic, strong) UIBarButtonItem *settingsButtonItem;
 
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
-@property (nonatomic, assign) BOOL isRendering;
 @property (atomic, strong) XXTEEditorSyntaxCache *syntaxCache;
 
 @property (nonatomic, assign) BOOL shouldSaveDocument;
@@ -104,6 +103,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 @property (nonatomic, assign) BOOL shouldReloadTextViewWidth;
 @property (nonatomic, assign) BOOL shouldReloadNagivationBar;
+
+@property (nonatomic, assign) BOOL shouldReloadAll;
 @property (nonatomic, strong) NSMutableArray <NSString *> *defaultsKeysToReload;
 
 @property (nonatomic, assign) BOOL shouldHighlightRange;
@@ -117,7 +118,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 @end
 
 @implementation XXTEEditorController {
-    BOOL isFirstTimeLoaded;
+    BOOL isFirstTimeAppeared;
+    BOOL isFirstTimeLayout;
+    BOOL isRendering;
+    BOOL isParsing;
     BOOL _lockedState;
 }
 
@@ -155,9 +159,12 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     _defaultsKeysToReload = [NSMutableArray array];
     _shouldReloadTextViewWidth = NO;
     _shouldReloadNagivationBar = NO;
-    
-    _isRendering = NO;
     _lockedState = NO;
+    
+    isFirstTimeAppeared = NO;
+    isFirstTimeLayout = NO;
+    isRendering = NO;
+    isParsing = NO;
     
     NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
     CFStringEncoding encoding = [XXTEEncodingHelper encodingAtIndex:encodingIndex];
@@ -168,15 +175,18 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 }
 
 - (void)reloadAllIfNeeded {
-    NSString *newContent = [self loadContent];
-    [self __reloadAll];
-    [self reloadTextViewWidthIfNecessary];
-    [self reloadNavigationBarIfNecessary];
-    [self reloadContent:newContent];
-    [self reloadAttributesIfNecessary];
+    if (self.shouldReloadAll) {
+        self.shouldReloadAll = NO;
+        NSString *newContent = [self loadContent];
+        [self reloadDefaults];
+        [self reloadTextViewWidthIfNecessary];
+        [self reloadNavigationBarIfNecessary];
+        [self reloadContent:newContent];
+        [self reloadAttributesIfNecessary];
+    }
 }
 
-- (void)__reloadAll {
+- (void)reloadDefaults {
     if (![self isViewLoaded]) return;
     NSMutableArray <NSString *> *keysToReload = self.defaultsKeysToReload;
     
@@ -269,8 +279,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         self.searchBar.separatorColor = [self.theme.foregroundColor colorWithAlphaComponent:0.2];
         if (self.searchBar.regexMode != useRegular) {
             [self.searchBar setRegexMode:useRegular];
-            [self.searchBar updateView];
         }
+        [self.searchBar updateView];
     }
     
     // Search Accessories
@@ -515,13 +525,29 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Attributes Related
-    if ([keysToReload containsObject:XXTEEditorFontName] || [keysToReload containsObject:XXTEEditorFontSize] || [keysToReload containsObject:XXTEEditorThemeName] || [keysToReload containsObject:XXTEEditorHighlightEnabled])
+    if ([keysToReload containsObject:XXTEEditorFontName] ||
+        [keysToReload containsObject:XXTEEditorFontSize] ||
+        [keysToReload containsObject:XXTEEditorThemeName] ||
+        [keysToReload containsObject:XXTEEditorHighlightEnabled])
     {
         [self setNeedsReloadAttributes];
     }
     
     // Redraw Text View
-    [self.textView setNeedsDisplay];
+    if ([keysToReload containsObject:XXTEEditorFontName] ||
+        [keysToReload containsObject:XXTEEditorFontSize] ||
+        [keysToReload containsObject:XXTEEditorThemeName] ||
+        [keysToReload containsObject:XXTEEditorHighlightEnabled] ||
+        [keysToReload containsObject:XXTEEditorLineNumbersEnabled] ||
+        [keysToReload containsObject:XXTEEditorShowInvisibleCharacters] ||
+        [keysToReload containsObject:XXTEEditorAutoIndent] ||
+        [keysToReload containsObject:XXTEEditorIndentWrappedLines] ||
+        [keysToReload containsObject:XXTEEditorAutoWordWrap] ||
+        [keysToReload containsObject:XXTEEditorWrapColumn]
+        )
+    {
+        [self.textView setNeedsDisplay];
+    }
     
     // Navigation Bar
     if ([keysToReload containsObject:XXTEEditorThemeName]) {
@@ -553,6 +579,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // Save Document
+    [self saveDocumentIfNecessary];
+    
     // Notifications
     [self registerStateNotifications];
     [self registerKeyboardNotifications];
@@ -560,11 +589,13 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     // Navigation Bar
     [self renderNavigationBarTheme:NO];
     
-    // Reload All
-    [self reloadAllIfNeeded];
-    
-    // Save Document
-    [self saveDocumentIfNecessary];
+    // Reload Defaults
+    if (isFirstTimeAppeared) {
+        [self reloadDefaults];
+        [self reloadTextViewWidthIfNecessary];
+        [self reloadNavigationBarIfNecessary];
+        [self reloadAttributesIfNecessary];
+    }
     
     // Super
     [super viewWillAppear:animated];
@@ -574,8 +605,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     // Super
     [super viewDidAppear:animated];
     
-    // Hmmm... Navigation Bar should check loaded here
-    [self reloadNavigationBarIfNecessary];
+    // Hmmm...
+    if (isFirstTimeAppeared) {
+        [self reloadNavigationBarIfNecessary];
+        [self reloadAttributesIfNecessary];
+    }
     
     // Focus Symbol
     if (self.shouldHighlightRange) {
@@ -586,6 +620,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
             [self.textView becomeFirstResponder];
         }
     }
+    
+    isFirstTimeAppeared = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -617,9 +653,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     // fixed - unnecessary textview width fix
-    if (NO == isFirstTimeLoaded) {
+    if (!isFirstTimeLayout) {
         [self fixTextViewInsetsAndWidth];
-        isFirstTimeLoaded = YES;
+        isFirstTimeLayout = YES;
     }
 }
 
@@ -1163,6 +1199,12 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)reloadAttributes {
     if (![self isViewLoaded]) return;
     if ([self isHighlightEnabled]) {
+        if (isParsing) return;
+        isParsing = YES;
+        
+#ifdef DEBUG
+        NSLog(@"start parsing...");
+#endif
         NSString *wholeString = self.textView.text;
         UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
         @weakify(self);
@@ -1177,6 +1219,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
                 }
             }];
             dispatch_async_on_main_queue(^{
+                self->isParsing = NO;
                 {
                     XXTEEditorSyntaxCache *syntaxCache = [[XXTEEditorSyntaxCache alloc] init];
                     syntaxCache.referencedParser = self.parser;
@@ -1236,10 +1279,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (rangesArrayLength != attributesArrayLength) return;
     
     // Single
-    if (self.isRendering) return;
+    if (isRendering) return;
+    isRendering = YES;
     
+#ifdef DEBUG
+    NSLog(@"start rendering...");
+#endif
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        self.isRendering = YES;
         
         // Filter
         NSMutableArray <NSNumber *> *renderIndexes = [[NSMutableArray alloc] init];
@@ -1268,7 +1314,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
             });
         }
         
-        self.isRendering = NO;
+        self->isRendering = NO;
     });
 }
 
@@ -1768,6 +1814,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
      XXTEEditorSearchRegularExpression,
      XXTEEditorSearchCaseSensitive,
      ]];
+    _shouldReloadAll = YES;
 }
 
 - (void)setNeedsSaveDocument {
@@ -1810,13 +1857,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)reloadAttributesIfNecessary {
     BOOL needsReload = [self invalidateSyntaxCachesIfNeeded];
-    if (!needsReload) {
+    if (!needsReload) {  // no need to reload
         if (!self.shouldReloadAttributes) {
             return;
         }
         self.shouldReloadAttributes = NO;
     }
     [self reloadAttributes];
+    self.shouldReloadAttributes = NO;
 }
 
 - (void)saveDocumentIfNecessary {
