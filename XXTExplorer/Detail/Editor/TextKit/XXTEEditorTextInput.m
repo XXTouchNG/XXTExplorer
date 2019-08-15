@@ -8,6 +8,8 @@
 
 #import "XXTEEditorTextInput.h"
 #import "XXTEEditorLanguage.h"
+#import "XXTEEditorMaskView.h"
+
 
 @interface XXTEEditorTextInput ()
 
@@ -20,14 +22,14 @@
 
 #pragma mark - Setters
 
-- (void)setLanguage:(XXTEEditorLanguage *)language {
-    _language = language;
-    if (language) {
-        NSString *increaseIndentPatternExpr = language.indent[@"increaseIndentPattern"];
+- (void)setInputLanguage:(XXTEEditorLanguage *)inputLanguage {
+    _inputLanguage = inputLanguage;
+    if (inputLanguage) {
+        NSString *increaseIndentPatternExpr = inputLanguage.indent[@"increaseIndentPattern"];
         if (increaseIndentPatternExpr) {
             _increaseIndentPattern = [[NSRegularExpression alloc] initWithPattern:increaseIndentPatternExpr options:NSRegularExpressionAllowCommentsAndWhitespace | NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnixLineSeparators error:nil];
         }
-        NSString *decreaseIndentPatternExpr = language.indent[@"decreaseIndentPattern"];
+        NSString *decreaseIndentPatternExpr = inputLanguage.indent[@"decreaseIndentPattern"];
         if (decreaseIndentPatternExpr) {
             _decreaseIndentPattern = [[NSRegularExpression alloc] initWithPattern:decreaseIndentPatternExpr options:NSRegularExpressionAllowCommentsAndWhitespace | NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnixLineSeparators error:nil];
         }
@@ -36,21 +38,62 @@
 
 #pragma mark - UITextViewDelegate
 
-//- (void)textViewDidBeginEditing:(UITextView *)textView {
-//    
-//}
-//
-//- (void)textViewDidEndEditing:(UITextView *)textView {
-//    
-//}
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    
+    if (!self.autoBrackets) {
+        return;
+    }
+    
+    NSRange selectedRange = textView.selectedRange;
+    if (selectedRange.location > 0 &&
+        selectedRange.length == 0)
+    {
+        NSString *stringRef = textView.text;
+        unichar previousChar = [stringRef characterAtIndex:(selectedRange.location - 1)];
+        
+        if (previousChar == '{' || previousChar == '[' || previousChar == '(')
+        {
+            unichar findChar;
+            if (previousChar == '{') {
+                findChar = '}';
+            } else if (previousChar == '[') {
+                findChar = ']';
+            } else if (previousChar == '(') {
+                findChar = ')';
+            }
+            
+            NSRange findRange = [stringRef rangeOfString:[NSString stringWithCharacters:&findChar length:1] options:kNilOptions range:NSMakeRange(selectedRange.location, stringRef.length - selectedRange.location)];
+            if (findRange.location != NSNotFound) {
+                [self.inputMaskView flashRange:findRange];
+            }
+        }
+        else if (previousChar == '}' || previousChar == ']' || previousChar == ')')
+        {
+            unichar findChar;
+            if (previousChar == '}') {
+                findChar = '{';
+            } else if (previousChar == ']') {
+                findChar = '[';
+            } else if (previousChar == ')') {
+                findChar = '(';
+            }
+            
+            NSRange findRange = [stringRef rangeOfString:[NSString stringWithCharacters:&findChar length:1] options:NSBackwardsSearch range:NSMakeRange(0, selectedRange.location - 1)];
+            if (findRange.location != NSNotFound) {
+                [self.inputMaskView flashRange:findRange];
+            }
+        }
+    }
+}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    
     if (text.length == 1 &&
         range.length == 0) { // receive ASCII from keyboard input
+        unichar replChar = [text characterAtIndex:0];
+        
         if (self.autoIndent) {
-            if ([text isEqualToString:@"\n"]) {
+            if (replChar == '\n') {
                 // Just like what Textastic do
                 
                 NSString *stringRef = textView.text;
@@ -117,21 +160,33 @@
         }
         
         if (self.autoBrackets) {
-            if ([text isEqualToString:@"{"] || [text isEqualToString:@"["] || [text isEqualToString:@"("]) {
-                if ([text isEqualToString:@"{"])
+            if (replChar == '{' || replChar == '[' || replChar == '(') {
+                if (replChar == '{')
                 {
                     [textView insertText:@"{}"];
                 }
-                else if ([text isEqualToString:@"["])
+                else if (replChar == '[')
                 {
                     [textView insertText:@"[]"];
                 }
-                else if ([text isEqualToString:@"("])
+                else if (replChar == '(')
                 {
                     [textView insertText:@"()"];
                 }
                 [textView setSelectedRange:NSMakeRange(range.location + 1, 0)];
                 return NO;
+            } else if (replChar == '}' || replChar == ']' || replChar == ')') {
+                NSString *stringRef = textView.text;
+                
+                if (range.location < stringRef.length) {
+                    unichar nextCharacter = [stringRef characterAtIndex:range.location];
+                    
+                    if ((nextCharacter == '}' || nextCharacter == ']' || nextCharacter == ')') && replChar == nextCharacter)
+                    {
+                        [textView setSelectedRange:NSMakeRange(range.location + 1, 0)];
+                        return NO;
+                    }
+                }
             }
         }
     }

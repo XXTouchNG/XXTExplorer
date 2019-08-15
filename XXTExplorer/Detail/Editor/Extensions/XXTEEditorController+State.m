@@ -51,10 +51,6 @@
         XXTEEditorTextView *textView = (XXTEEditorTextView *)textInput;
         if ([aNotification.name isEqualToString:UITextViewTextDidBeginEditingNotification]) {
             // Begin
-            // if ([textView isEditable]) {
-                // [self invalidateSyntaxCachesIfNeeded];
-                // [self setNeedsReloadAttributes];
-            // }
         } else if ([aNotification.name isEqualToString:UITextViewTextDidEndEditingNotification]) {
             // End
             [self saveDocumentIfNecessary];

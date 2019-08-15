@@ -400,7 +400,7 @@
     self.encodingLabel.text = [XXTEEncodingHelper encodingNameForEncoding:controller.selectedEncoding];
     self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
     [self.editor setNeedsSaveDocument];
-    [self.editor setNeedsReload];
+    [self.editor setNeedsReloadAll];
 }
 #endif
 
@@ -412,7 +412,7 @@
     self.lineEndingsLabel.text = [XXTEEditorLineBreakHelper lineBreakNameForType:controller.selectedLineBreakType];
     self.lineEndingsLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
     [self.editor setNeedsSaveDocument];
-    [self.editor setNeedsReload];
+    [self.editor setNeedsReloadAll];
 }
 #endif
 

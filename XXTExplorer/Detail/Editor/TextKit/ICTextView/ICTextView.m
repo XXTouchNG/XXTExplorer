@@ -304,6 +304,10 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
         if (highlightingSupported && self.highlightSearchResults)
             [self highlightOccurrencesInMaskedVisibleRange];
         
+        // TODO: show text selection UI without becoming first responder
+        // [self select:self];
+        // [self setSelectedRange:matchRange];
+        
         // Scroll
         [self scrollRangeToVisible:matchRange consideringInsets:YES animated:self.animatedSearch];
     }

@@ -33,17 +33,16 @@
 @property (nonatomic, strong) XXTEEditorMaskView *maskView;
 @property (nonatomic, strong) XXTEEditorToolbar *toolbar;
 
+- (void)setNeedsReload:(NSString *)defaultKey;
+- (void)setNeedsReloadAll;
+- (void)setNeedsReloadAttributes;  // called from keyboard events
+- (void)setNeedsSaveDocument;  // called from keyboard events
 
-- (void)setNeedsReload;
-- (void)setNeedsSoftReload;
-- (void)setNeedsReloadAttributes;
-- (void)setNeedsSaveDocument;
-- (void)setNeedsFocusTextView;
-- (void)setNeedsHighlightRange:(NSRange)range;
+- (void)setNeedsFocusTextView;  // called from menu
+- (void)setNeedsHighlightRange:(NSRange)range;  // called from symbol controller
 
-- (void)reloadAttributesIfNecessary;
-- (BOOL)invalidateSyntaxCachesIfNeeded;
-- (void)saveDocumentIfNecessary;
+- (void)reloadAttributesIfNecessary;  // called from states
+- (void)saveDocumentIfNecessary;  // called from keyboard events
 
 #pragma mark - Search
 

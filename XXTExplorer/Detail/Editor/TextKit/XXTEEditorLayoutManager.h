@@ -14,12 +14,12 @@
 @property (nonatomic, assign) BOOL showInvisibleCharacters;
 @property (nonatomic, assign) BOOL indentWrappedLines;
 
-@property (nonatomic, strong) UIColor *invisibleColor;  // not updated
-@property (nonatomic, strong) UIFont *invisibleFont;  // not updated
+@property (nonatomic, strong) UIColor *invisibleColor;
+@property (nonatomic, strong) UIFont *invisibleFont;
 
 @property (nonatomic, strong) UIFont *lineNumberFont;
-@property (nonatomic, strong) UIColor *lineNumberColor;  // not updated
-@property (nonatomic, strong) UIColor *bulletColor;  // not updated
+@property (nonatomic, strong) UIColor *lineNumberColor;
+@property (nonatomic, strong) UIColor *bulletColor;
 @property (nonatomic, assign) NSUInteger numberOfDigits;
 @property (nonatomic, assign, readonly) CGFloat gutterWidth;
 
@@ -31,7 +31,7 @@
 @property (nonatomic, assign, readonly) UIEdgeInsets lineAreaInset;
 @property (nonatomic, assign, readonly) CGFloat fontPointSize;
 
-//- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex;
-- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex textContainer:(NSTextContainer *)container;
+- (void)invalidateLayout;  // you must call this method manually
+- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex lineFragmentRect:(CGRect)fragmentRect;
 
 @end

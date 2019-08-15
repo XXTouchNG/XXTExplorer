@@ -50,35 +50,10 @@
     // IMPORTANT: Inset width only, since setting a non-zero X coordinate kills the text system
     // Offset must be done *after layout computation* in UMLayoutManager's -setLineFragmentRect:forGlyphRange:usedRect:
     
-//    if ([[self xxteLayoutManager] indentWrappedLines]) {
-//        UIEdgeInsets insets = [[self xxteLayoutManager] insetsForLineStartingAtCharacterIndex: characterIndex textContainer:self];
-//        rect.size.width -= insets.left + insets.right;
-//    }
-    
     XXTEEditorLayoutManager *layoutManager = [self xxteLayoutManager];
     if ([layoutManager indentWrappedLines]) {
-        NSTextStorage *storage = [layoutManager textStorage];
-        NSString *string = storage.string;
-        NSRange lineRange = [string lineRangeForRange:NSMakeRange(characterIndex, 0)];
-        
-        // no hanging indent for new line
-        if (lineRange.location < characterIndex) {
-            
-            // get base indent
-            // TODO: use common search instead of regular expression search (performance?)
-            NSRange indentRange = [string rangeOfString:@"[ \t]+" options:NSRegularExpressionSearch | NSAnchoredSearch range:lineRange];
-            CGFloat baseIndent = indentRange.location == NSNotFound ? 0 : [storage attributedSubstringFromRange:indentRange].size.width;
-            
-            // calculate hanging indent
-            CGFloat hangingIndent = layoutManager.tabWidth;
-            CGFloat indent = baseIndent + hangingIndent;
-            
-            // remove hanging indent space from rect
-            rect.size.width -= indent;
-            rect.origin.x += indent;
-            
-            return rect;
-        }
+        UIEdgeInsets insets = [layoutManager insetsForLineStartingAtCharacterIndex:characterIndex lineFragmentRect:rect];
+        rect.size.width -= insets.left + insets.right;
     }
     
     return rect;

@@ -50,7 +50,7 @@
     
     // Property
     self.alwaysBounceVertical = YES;
-    self.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    self.textContainerInset = UIEdgeInsetsMake(16, 8, 16, 8);
 }
 
 #pragma mark - Getters

@@ -48,11 +48,12 @@
 /// adjust vertical position to keep line height even with composed font
 - (BOOL)layoutManager:(NSLayoutManager *)layoutManager shouldSetLineFragmentRect:(inout CGRect *)lineFragmentRect lineFragmentUsedRect:(inout CGRect *)lineFragmentUsedRect baselineOffset:(inout CGFloat *)baselineOffset inTextContainer:(NSTextContainer *)textContainer forGlyphRange:(NSRange)glyphRange
 {
+    // but this will messed up for different font
     if ([layoutManager isKindOfClass:[XXTEEditorLayoutManager class]]) {
         XXTEEditorLayoutManager *manager = (XXTEEditorLayoutManager *)layoutManager;
-        (*lineFragmentRect).size.height = manager.fontLineHeight;
-        (*lineFragmentUsedRect).size.height = manager.fontLineHeight;
-        // (*baselineOffset) += manager.baseLineOffset;
+//        (*lineFragmentRect).size.height = manager.fontLineHeight * manager.lineHeightScale;
+//        (*lineFragmentUsedRect).size.height = manager.fontLineHeight * manager.lineHeightScale;
+        (*baselineOffset) += manager.baseLineOffset;
         return YES;
     }
     return NO;

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class XXTEEditorLanguage;
+@class XXTEEditorLanguage, XXTEEditorMaskView;
 
 @interface XXTEEditorTextInput : NSObject <UITextViewDelegate>
 
-@property (nonatomic, strong) XXTEEditorLanguage *language;
+@property (nonatomic, weak) XXTEEditorLanguage *inputLanguage;
+@property (nonatomic, weak) XXTEEditorMaskView *inputMaskView;
 
 @property (nonatomic, assign) BOOL autoIndent;
 @property (nonatomic, assign) BOOL autoBrackets;

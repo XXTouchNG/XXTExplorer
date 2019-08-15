@@ -106,6 +106,7 @@
     }
     _barTextColor = navigationTitleColor;
     
+    _lineHeightScale = 1.2;
     UIFont *font = self.font;
     NSDictionary *defaultAttributes = @{
                                         NSForegroundColorAttributeName: foregroundColor,
@@ -114,7 +115,6 @@
                                         };
     _fontSpaceWidth = [@" " sizeWithAttributes:defaultAttributes].width;
     _fontLineHeight = font.lineHeight;
-    _lineHeightScale = 1.05;
     
     CGFloat maximumFontLineHeight = font.lineHeight;
     CGFloat maximumLineHeight = maximumFontLineHeight * _lineHeightScale;

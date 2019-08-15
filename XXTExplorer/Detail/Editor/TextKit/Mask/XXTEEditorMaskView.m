@@ -46,7 +46,7 @@
 }
 
 - (void)setup {
-    _maskColor = [UIColor colorWithRed:150.0f/255.0f green:200.0f/255.0f blue:1.0 alpha:1.0];
+    _focusColor = [UIColor colorWithRed:150.0f/255.0f green:200.0f/255.0f blue:1.0 alpha:1.0];
     self.userInteractionEnabled = NO;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
@@ -57,7 +57,7 @@
     return NO; // do not respond to any touch event
 }
 
-- (void)flashWithRange:(NSRange)range {
+- (void)focusRange:(NSRange)range {
     UITextView *textView = self.textView;
     if (!textView || [textView isFirstResponder]) return;
     
@@ -91,7 +91,7 @@
     CALayer *highlightLayer = [CALayer layer];
     [highlightLayer setFrame:textRect];
     [highlightLayer setCornerRadius:(textRect.size.height * 0.2f)];
-    [highlightLayer setBackgroundColor:[self.maskColor CGColor]];
+    [highlightLayer setBackgroundColor:[self.focusColor CGColor]];
     [highlightLayer setOpacity:0.66f];
     [highlightLayer setBorderWidth:1.f];
     [highlightLayer setBorderColor:[[UIColor whiteColor] CGColor]];
@@ -137,6 +137,67 @@
     [CATransaction commit];
     
     [textView scrollRectToVisible:centeredRect animated:YES];
+}
+
+- (void)flashRange:(NSRange)range {
+    UITextView *textView = self.textView;
+    if (!textView || ![textView isFirstResponder]) return;
+    
+    UITextPosition *beginning = textView.beginningOfDocument;
+    UITextPosition *start = [textView positionFromPosition:beginning offset:range.location];
+    if (!start) return;
+    
+    UITextPosition *end = [textView positionFromPosition:start offset:range.length];
+    if (!end) return;
+    
+    UITextRange *textRange = [textView textRangeFromPosition:start toPosition:end];
+    if (!textRange) return;
+    
+    NSLayoutManager *manager = textView.layoutManager;
+    NSRange glyphRange = [manager glyphRangeForCharacterRange:range actualCharacterRange:NULL];
+    CGRect textRect = [manager boundingRectForGlyphRange:glyphRange inTextContainer:[textView textContainer]];
+    
+    UIEdgeInsets textInsets = UIEdgeInsetsMake(1.8, 4.0, 2.0, 4.0);
+    // We do not need to consider its origin because our maskView has the same bound with textView.
+    textRect.origin.x += textView.textContainerInset.left - textInsets.left;
+    textRect.origin.y += textView.textContainerInset.top - textInsets.top;
+    textRect.size.width += textInsets.left + textInsets.right;
+    textRect.size.height += textInsets.top + textInsets.bottom;
+    
+    CALayer *highlightLayer = [CALayer layer];
+    [highlightLayer setFrame:textRect];
+    [highlightLayer setCornerRadius:(textRect.size.height * 0.2f)];
+    [highlightLayer setBackgroundColor:[self.flashColor CGColor]];
+    [highlightLayer setOpacity:0.66f];
+    [highlightLayer setBorderWidth:1.f];
+    [highlightLayer setBorderColor:[[UIColor whiteColor] CGColor]];
+    [highlightLayer setShadowColor:[[UIColor blackColor] CGColor]];
+    [highlightLayer setShadowOffset:CGSizeZero];
+    [highlightLayer setShadowOpacity:0.25f];
+    [highlightLayer setShadowRadius:8.0f];
+    [[textView layer] addSublayer:highlightLayer];
+    
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [highlightLayer setHidden:YES];
+        [highlightLayer removeAllAnimations];
+        [highlightLayer removeFromSuperlayer];
+    }];
+    
+    // opacity out
+    CABasicAnimation *opacityOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opacityOutAnimation.beginTime = CACurrentMediaTime();
+    opacityOutAnimation.duration = 0.4;
+    opacityOutAnimation.repeatCount = 1;
+    opacityOutAnimation.fromValue = [NSNumber numberWithFloat:0.66f];
+    opacityOutAnimation.toValue = [NSNumber numberWithFloat:0.0f];
+    opacityOutAnimation.removedOnCompletion = NO;
+    opacityOutAnimation.fillMode = kCAFillModeBoth;
+    opacityOutAnimation.additive = NO;
+    opacityOutAnimation.autoreverses = NO;
+    [highlightLayer addAnimation:opacityOutAnimation forKey:@"opacityOut"];
+    
+    [CATransaction commit];
 }
 
 @end

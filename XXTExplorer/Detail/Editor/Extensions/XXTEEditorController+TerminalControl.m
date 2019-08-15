@@ -36,14 +36,16 @@
         }
         NSInteger lineNumber = [[errorDescription substringWithRange:[matchResult rangeAtIndex:1]] integerValue];
         NSString *errorReason = [errorDescription substringWithRange:[matchResult rangeAtIndex:2]];
-        NSLog(@"%ld: %@", lineNumber, errorReason);
+#ifdef DEBUG
+        NSLog(@"%ld: %@", (long)lineNumber, errorReason);
+#endif
         
         NSRange lineRange = [XXTETextPreprocessor lineRangeForString:self.textView.text AtIndex:(lineNumber - 1)];
         if (lineRange.location == NSNotFound) {
             return;
         }
         
-        [self.textView setShowLineHighlight:YES lineRange:lineRange];
+        // TODO: highlight line
         [self.textView scrollRangeToVisible:lineRange consideringInsets:YES animated:YES];
     }
 }

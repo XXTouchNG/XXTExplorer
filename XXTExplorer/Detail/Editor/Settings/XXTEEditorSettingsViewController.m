@@ -141,7 +141,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorHighlightEnabled, optionSwitch.on);
-            [self.editor setNeedsReload];
+            [self.editor setNeedsReloadAll];
         }];
     }
     
@@ -154,7 +154,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorLineNumbersEnabled, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorLineNumbersEnabled];
         }];
     }
     
@@ -167,7 +167,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorShowInvisibleCharacters, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorShowInvisibleCharacters];
         }];
     }
     
@@ -178,6 +178,7 @@
         [fullScreenCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorFullScreenWhenEditing, optionSwitch.on);
+            [self.editor setNeedsReload:XXTEEditorFullScreenWhenEditing];
         }];
     }
     
@@ -190,7 +191,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSimpleTitleView, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorSimpleTitleView];
         }];
     }
     
@@ -203,7 +204,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoIndent, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorAutoIndent];
         }];
     }
     
@@ -216,7 +217,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSoftTabs, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorSoftTabs];
         }];
     }
     
@@ -264,7 +265,7 @@
                     break;
             }
             XXTEDefaultsSetBasic(XXTEEditorTabWidth, widthValue);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorTabWidth];
         }];
     }
     
@@ -277,7 +278,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorIndentWrappedLines, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorIndentWrappedLines];
         }];
     }
     
@@ -290,7 +291,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoWordWrap, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorAutoWordWrap];
         }];
     }
     
@@ -310,7 +311,7 @@
                 columnValue = 120; // restore to default value
             }
             XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorWrapColumn];
         }];
     }
     
@@ -323,7 +324,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorReadOnly, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorReadOnly];
         }];
     }
     
@@ -336,7 +337,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorKeyboardRowAccessoryEnabled, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorKeyboardRowAccessoryEnabled];
         }];
     }
     
@@ -349,7 +350,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoBrackets, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorAutoBrackets];
         }];
     }
     
@@ -362,7 +363,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoCorrection, optionSwitch.on ? UITextAutocorrectionTypeYes : UITextAutocorrectionTypeNo);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorAutoCorrection];
         }];
     }
     
@@ -375,7 +376,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorAutoCapitalization, optionSwitch.on ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorAutoCapitalization];
         }];
     }
     
@@ -388,7 +389,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSpellChecking, optionSwitch.on ? UITextSpellCheckingTypeYes : UITextSpellCheckingTypeNo);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorSpellChecking];
         }];
     }
     
@@ -401,7 +402,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSearchRegularExpression, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorSearchRegularExpression];
         }];
     }
     
@@ -414,7 +415,7 @@
             @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorSearchCaseSensitive, optionSwitch.on);
-            [self.editor setNeedsSoftReload];
+            [self.editor setNeedsReload:XXTEEditorSearchCaseSensitive];
         }];
     }
     
@@ -517,7 +518,7 @@
 
 - (void)valueViewValueDidChanged:(XXTEMoreValueView *)view {
     XXTEDefaultsSetBasic(XXTEEditorFontSize, view.value);
-    [self.editor setNeedsReload];
+    [self.editor setNeedsReloadAll];
 }
 
 #pragma mark - XXTEEditorFontSettingsViewControllerDelegate
@@ -529,7 +530,7 @@
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.text = [font familyName];
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.font = font;
     }
-    [self.editor setNeedsReload];
+    [self.editor setNeedsReloadAll];
 }
 
 #pragma mark - XXTEEditorThemeSettingsViewControllerDelegate
@@ -537,7 +538,7 @@
 - (void)themeSettingsViewControllerSettingsDidChanged:(XXTEEditorThemeSettingsViewController *)controller {
     XXTEDefaultsSetObject(XXTEEditorThemeName, [controller.selectedThemeName copy]);
     ((XXTEMoreTitleValueCell *)staticCells[1][0]).valueLabel.text = controller.selectedThemeName;
-    [self.editor setNeedsReload];
+    [self.editor setNeedsReloadAll];
 }
 
 #pragma mark - UITextFieldDelegate

@@ -13,7 +13,7 @@
 #import "XXTEEditorTextView+TextRange.h"
 
 
-static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
+// static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
 
 @interface XXTEEditorTextView ()
 
@@ -32,11 +32,6 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
 }
 
 - (void)setup {
-    _showLineHighlight = NO;
-    _lineHighlightRange = NSMakeRange(NSNotFound, 0);
-    _needsUpdateLineHighlight = NO;
-    _lineHighlightRect = CGRectNull;
-    
     self.bounces = YES;
     self.alwaysBounceVertical = YES;
     self.contentMode = UIViewContentModeRedraw;
@@ -57,60 +52,21 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
     
     XXTEEditorLayoutManager *manager = self.vLayoutManager;
     
+    // Why we draw such a large area before? fuck...
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect frame = self.frame;
-    
-    CGFloat height = MAX(CGRectGetHeight(frame), self.contentSize.height) + kXXTEEditorTextViewGutterExtraHeight * 2.0;
-    
+
+    // Draw Gutter Background
     CGContextSetFillColorWithColor(context, self.gutterBackgroundColor.CGColor);
-    CGContextFillRect(context, CGRectMake(frame.origin.x, frame.origin.y - (kXXTEEditorTextViewGutterExtraHeight), manager.gutterWidth, height));
+    CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y, manager.gutterWidth, rect.size.height));
     
+    // Draw Gutter Line
     CGContextSetFillColorWithColor(context, self.gutterLineColor.CGColor);
-    CGContextFillRect(context, CGRectMake(manager.gutterWidth, frame.origin.y - (kXXTEEditorTextViewGutterExtraHeight), 1.0, height));
+    CGContextFillRect(context, CGRectMake(manager.gutterWidth, rect.origin.y, 1.0, rect.size.height));
     
-    // [self drawLineHighlight];
     [super drawRect:rect];
 }
 
-- (void)drawLineHighlight {
-    if (!self.showLineHighlight || self.lineHighlightRange.location == NSNotFound) {
-        return;
-    }
-    if ([self needsUpdateLineHighlight]) {
-        self.lineHighlightRect = [self lineRectForRange:self.lineHighlightRange];
-        _needsUpdateLineHighlight = NO;
-    }
-    if (CGRectIsNull(self.lineHighlightRect)) {
-        return;
-    }
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // CGContextSaveGState(context);
-    // [[UIColor whiteColor] setFill];
-    CGContextFillRect(context, self.lineHighlightRect);
-    // CGContextRestoreGState(context);
-}
-
 #pragma mark - Setters
-
-- (void)setShowLineHighlight:(BOOL)highlight lineRange:(NSRange)range {
-    _showLineHighlight = highlight;
-    if (highlight) {
-        _lineHighlightRange = range;
-        [self setNeedsUpdateLineHighlight];
-        [self setNeedsDisplay];
-    } else {
-        _lineHighlightRange = NSMakeRange(NSNotFound, 0);
-        _needsUpdateLineHighlight = NO;
-        _lineHighlightRect = CGRectNull;
-        [self setNeedsDisplay];
-    }
-}
-
-- (void)setNeedsUpdateLineHighlight {
-    _needsUpdateLineHighlight = YES;
-}
 
 - (void)setText:(NSString *)text {
     UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.endOfDocument];
@@ -119,12 +75,12 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
 
 - (void)setGutterLineColor:(UIColor *)gutterLineColor {
     _gutterLineColor = gutterLineColor;
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
 - (void)setGutterBackgroundColor:(UIColor *)gutterBackgroundColor {
     _gutterBackgroundColor = gutterBackgroundColor;
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
 - (void)replaceRange:(UITextRange *)range
@@ -135,7 +91,7 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
 - (void)setShowLineNumbers:(BOOL)showLineNumbers {
     _showLineNumbers = showLineNumbers;
     [self.vLayoutManager setShowLineNumbers:showLineNumbers];
-    [self setShouldReloadContainerInsets:YES];
+    [self setNeedsReloadContainerInsets];
     [self setNeedsDisplay];
 }
 
@@ -153,9 +109,9 @@ static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;
 - (UIEdgeInsets)xxteTextContainerInset {
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (self.showLineNumbers) {
-        insets = UIEdgeInsetsMake(8.0, (self.vLayoutManager).gutterWidth + 2.0, 8.0, 8.0);
+        insets = UIEdgeInsetsMake(16.0, (self.vLayoutManager).gutterWidth + 2.0, 16.0, 8.0);
     } else {
-        insets = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
+        insets = UIEdgeInsetsMake(16.0, 8.0, 16.0, 8.0);
     }
     return insets;
 }
