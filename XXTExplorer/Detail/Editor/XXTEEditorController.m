@@ -258,16 +258,12 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     // Title View
     if ([keysToReload containsObject:XXTEEditorSimpleTitleView]) {
         BOOL isSimpleTitle = XXTEDefaultsBool(XXTEEditorSimpleTitleView, (XXTE_IS_IPAD ? NO : YES));
-        if (self.lockedTitleView.simple != isSimpleTitle) {
-            [self.lockedTitleView setSimple:isSimpleTitle];
-        }
+        [self.lockedTitleView setSimple:isSimpleTitle];
     }
     if ([keysToReload containsObject:XXTEEditorReadOnly]) {
         BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
         BOOL shouldLocked = (isReadOnlyMode || [self isLockedState]);
-        if (self.lockedTitleView.locked != shouldLocked) {
-            [self.lockedTitleView setLocked:shouldLocked];
-        }
+        [self.lockedTitleView setLocked:shouldLocked];
     }
     
     // Search Bar
@@ -277,9 +273,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         self.searchBar.tintColor = self.theme.foregroundColor;
         self.searchBar.textColor = self.theme.foregroundColor;
         self.searchBar.separatorColor = [self.theme.foregroundColor colorWithAlphaComponent:0.2];
-        if (self.searchBar.regexMode != useRegular) {
-            [self.searchBar setRegexMode:useRegular];
-        }
+        [self.searchBar setRegexMode:useRegular];
         [self.searchBar updateView];
     }
     
@@ -440,6 +434,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     // Config Keyboard Rows
     if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorKeyboardRowAccessoryEnabled]) {
         BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
+        BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
         if (isReadOnlyMode) {
             self.keyboardRow.textInput = nil;
             self.textView.inputAccessoryView = nil;
@@ -450,17 +445,14 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
                 self.textView.inputAccessoryView = nil;
                 self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
             } else {
-                if ([keysToReload containsObject:XXTEEditorKeyboardRowAccessoryEnabled]) {
-                    BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
-                    if (isKeyboardRowEnabled) {
-                        self.keyboardRow.textInput = self.textView;
-                        self.textView.inputAccessoryView = self.keyboardRow;
-                        self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-                    } else {
-                        self.keyboardRow.textInput = nil;
-                        self.textView.inputAccessoryView = self.keyboardToolbarRow;
-                        self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-                    }
+                if (isKeyboardRowEnabled) {
+                    self.keyboardRow.textInput = self.textView;
+                    self.textView.inputAccessoryView = self.keyboardRow;
+                    self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+                } else {
+                    self.keyboardRow.textInput = nil;
+                    self.textView.inputAccessoryView = self.keyboardToolbarRow;
+                    self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
                 }
             }
         }
