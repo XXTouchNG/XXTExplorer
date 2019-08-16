@@ -321,7 +321,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         self.textView.vTextInput.autoIndent = XXTEDefaultsBool(XXTEEditorAutoIndent, YES);
     }
     if ([keysToReload containsObject:XXTEEditorAutoBrackets]) {
-        self.textView.vTextInput.autoBrackets = XXTEDefaultsBool(XXTEEditorAutoBrackets, NO);
+        self.textView.vTextInput.autoBrackets = XXTEDefaultsBool(XXTEEditorAutoBrackets, YES);
     }
     
     // Tab Width
@@ -959,7 +959,6 @@ XXTE_END_IGNORE_PARTIAL
     if (!_maskView) {
         XXTEEditorMaskView *maskView = [[XXTEEditorMaskView alloc] initWithFrame:self.view.bounds];
         maskView.translatesAutoresizingMaskIntoConstraints = NO;
-        maskView.focusColor = [UIColor colorWithRed:241.0/255.0 green:196.0/255.0 blue:15.0/255.0 alpha:1.0];
         _maskView = maskView;
     }
     return _maskView;

@@ -305,13 +305,15 @@
         [cell11.valueField addActionforControlEvents:UIControlEventEditingDidEnd respond:^(UIControl *sender) {
             @strongify(self);
             UITextField *valueField = (UITextField *)sender;
-            int columnValue = [valueField.text intValue];
-            if (columnValue < 10 || columnValue > 1000)
+            int newValue = [valueField.text intValue];
+            if (newValue < 10 || newValue > 1000)
             {
-                columnValue = 120; // restore to default value
+                newValue = 120; // restore to default value
             }
-            XXTEDefaultsSetBasic(XXTEEditorWrapColumn, columnValue);
-            [self.editor setNeedsReload:XXTEEditorWrapColumn];
+            if (newValue != columnValue) {
+                XXTEDefaultsSetBasic(XXTEEditorWrapColumn, newValue);
+                [self.editor setNeedsReload:XXTEEditorWrapColumn];
+            }
         }];
     }
     
@@ -343,7 +345,7 @@
     
     XXTEMoreSwitchCell *cellBrackets = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cellBrackets.titleLabel.text = NSLocalizedString(@"Auto Insert Brackets", nil);
-    cellBrackets.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoBrackets, NO);
+    cellBrackets.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoBrackets, YES);
     {
         @weakify(self);
         [cellBrackets.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {

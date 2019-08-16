@@ -57,11 +57,13 @@
 
     // Draw Gutter Background
     CGContextSetFillColorWithColor(context, self.gutterBackgroundColor.CGColor);
-    CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y, manager.gutterWidth, rect.size.height));
+    CGRect backgroundRect = CGRectMake(rect.origin.x, rect.origin.y, manager.gutterWidth, rect.size.height);
+    CGContextFillRect(context, backgroundRect);
     
     // Draw Gutter Line
     CGContextSetFillColorWithColor(context, self.gutterLineColor.CGColor);
-    CGContextFillRect(context, CGRectMake(manager.gutterWidth, rect.origin.y, 1.0, rect.size.height));
+    CGRect lineRect = CGRectMake(manager.gutterWidth, rect.origin.y, 1.0, rect.size.height);
+    CGContextFillRect(context, lineRect);
     
     [super drawRect:rect];
 }

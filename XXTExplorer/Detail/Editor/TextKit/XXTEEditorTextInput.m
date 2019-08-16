@@ -10,6 +10,8 @@
 #import "XXTEEditorLanguage.h"
 #import "XXTEEditorMaskView.h"
 
+static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 * 10;  // 10k
+
 
 @interface XXTEEditorTextInput ()
 
@@ -58,27 +60,56 @@
                 findChar = '}';
             } else if (previousChar == '[') {
                 findChar = ']';
-            } else if (previousChar == '(') {
+            } else { /* previousChar == '(' */
                 findChar = ')';
             }
-            
-            NSRange findRange = [stringRef rangeOfString:[NSString stringWithCharacters:&findChar length:1] options:kNilOptions range:NSMakeRange(selectedRange.location, stringRef.length - selectedRange.location)];
+            NSRange findRange = NSMakeRange(NSNotFound, 0);
+            NSUInteger prevCount = 0;
+            NSRange searchRange = NSMakeRange(selectedRange.location, MIN(stringRef.length - selectedRange.location, kXXTEEditorTextInputMaximumBracketCheckCharacterCount));
+            for (NSUInteger idx = searchRange.location; idx < NSMaxRange(searchRange); idx++) {
+                unichar ch = [stringRef characterAtIndex:idx];
+                if (ch == previousChar) {
+                    prevCount++;
+                } else if (ch == findChar) {
+                    if (prevCount == 0) {
+                        findRange = NSMakeRange(idx, 1);
+                        break;
+                    }
+                    prevCount--;
+                }
+                
+            }
             if (findRange.location != NSNotFound) {
                 [self.inputMaskView flashRange:findRange];
             }
         }
-        else if (previousChar == '}' || previousChar == ']' || previousChar == ')')
+        else if (selectedRange.location > 1 && (previousChar == '}' || previousChar == ']' || previousChar == ')'))
         {
             unichar findChar;
             if (previousChar == '}') {
                 findChar = '{';
             } else if (previousChar == ']') {
                 findChar = '[';
-            } else if (previousChar == ')') {
+            } else { /*  previousChar == ')' */
                 findChar = '(';
             }
             
-            NSRange findRange = [stringRef rangeOfString:[NSString stringWithCharacters:&findChar length:1] options:NSBackwardsSearch range:NSMakeRange(0, selectedRange.location - 1)];
+            NSRange findRange = NSMakeRange(NSNotFound, 0);
+            NSUInteger prevCount = 0;
+            NSRange searchRange = NSMakeRange(((selectedRange.location - 1) < kXXTEEditorTextInputMaximumBracketCheckCharacterCount ? 0 : (selectedRange.location - 1 - kXXTEEditorTextInputMaximumBracketCheckCharacterCount)), selectedRange.location - 1);
+            for (NSUInteger idx = NSMaxRange(searchRange) - 1; idx >= searchRange.location; idx--) {
+                unichar ch = [stringRef characterAtIndex:idx];
+                if (ch == previousChar) {
+                    prevCount++;
+                } else if (ch == findChar) {
+                    if (prevCount == 0) {
+                        findRange = NSMakeRange(idx, 1);
+                        break;
+                    }
+                    prevCount--;
+                }
+                
+            }
             if (findRange.location != NSNotFound) {
                 [self.inputMaskView flashRange:findRange];
             }

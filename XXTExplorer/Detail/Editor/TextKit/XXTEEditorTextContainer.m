@@ -43,6 +43,10 @@
     return _xxteLayoutManager;
 }
 
+- (BOOL)isSimpleRectangularTextContainer {
+    return ![[self xxteLayoutManager] indentWrappedLines];
+}
+
 - (CGRect)lineFragmentRectForProposedRect:(CGRect)proposedRect atIndex:(NSUInteger)characterIndex writingDirection:(NSWritingDirection)baseWritingDirection remainingRect:(CGRect *)remainingRect
 {
     CGRect rect = [super lineFragmentRectForProposedRect:proposedRect atIndex:characterIndex writingDirection:baseWritingDirection remainingRect:remainingRect];

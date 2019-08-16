@@ -167,7 +167,7 @@
     [self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
 }
 
-- (NSUInteger) _paraNumberForRange:(NSRange) charRange {
+- (NSUInteger)_paraNumberForRange:(NSRange)charRange {
     //  NSString does not provide a means of efficiently determining the paragraph number of a range of text.  This code
     //  attempts to optimize what would normally be a series linear searches by keeping track of the last paragraph number
     //  found and uses that as the starting point for next paragraph number search.  This works (mostly) because we
@@ -188,9 +188,7 @@
         __block NSUInteger paraNumber = self.lastParaNumber;
         
         [s enumerateSubstringsInRange:NSMakeRange(charRange.location, self.lastParaLocation - charRange.location)
-                              options:NSStringEnumerationByParagraphs |
-         NSStringEnumerationSubstringNotRequired |
-         NSStringEnumerationReverse
+                              options:NSStringEnumerationByParagraphs | NSStringEnumerationSubstringNotRequired | NSStringEnumerationReverse
                            usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop){
                                if (enclosingRange.location <= charRange.location) {
                                    *stop = YES;
@@ -244,7 +242,9 @@
 - (void)drawBackgroundForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin
 {
     [super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
-    if (self.showLineNumbers == NO) return;
+    if (self.showLineNumbers == NO) {
+        return;
+    }
     
     //  Draw line numbers.  Note that the background for line number gutter is drawn by the TextView subclass.
     NSDictionary* attrs = @{NSFontAttributeName: self.lineNumberFont, NSForegroundColorAttributeName: self.lineNumberColor};
@@ -263,34 +263,38 @@
          NSRange paraRange = [self.textStorage.string paragraphRangeForRange:charRange];
          
          // Only draw line numbers for the paragraph's first line fragment. Subsequent fragments are wrapped portions of the paragraph and don't get the line number.
-         
          gutterRect = CGRectOffset(CGRectMake(0, rect.origin.y, self.gutterWidth, rect.size.height), origin.x, origin.y);
          if (charRange.location == paraRange.location) {
              paraNumber = [self _paraNumberForRange:charRange];
              NSString *lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 1];
              CGSize size = [lineNumber sizeWithAttributes:attrs];
-             
-             [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0) withAttributes:attrs];
+             CGRect drawRect = CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0);
+             [lineNumber drawInRect:drawRect withAttributes:attrs];
          } else {
              NSString *bulletString = self->char_BULLET;
              CGSize size = [bulletString sizeWithAttributes:bulletAttrs];
-             
-             [bulletString drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0) withAttributes:bulletAttrs];
+             CGRect drawRect = CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self.lineAreaInset.right - size.width - self.gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0);
+             [bulletString drawInRect:drawRect withAttributes:bulletAttrs];
          }
          
      }];
     
     //  Deal with the special case of an empty last line where enumerateLineFragmentsForGlyphRange has no line
     //  fragments to draw.
-    if (NSMaxRange(glyphsToShow) == self.numberOfGlyphs) {
-        // TODO: this should be fixed
-        
-        NSString *lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 2];
-        CGSize size = [lineNumber sizeWithAttributes:attrs];
-        
-        gutterRect = CGRectOffset(gutterRect, 0.0, CGRectGetHeight(gutterRect));
-        [lineNumber drawInRect:CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self->_lineAreaInset.right - size.width - self->_gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0) withAttributes:attrs];
-    }
+//    if (NSMaxRange(glyphsToShow) == self.numberOfGlyphs) {
+//        // TODO: this should be fixed
+//        
+//        NSUInteger charIndex = [self characterIndexForGlyphAtIndex:NSMaxRange(glyphsToShow) - 1];
+//        unichar ch = [self.textStorage.string characterAtIndex:charIndex];
+//        if (ch == '\n') {
+//            NSString *lineNumber = [NSString stringWithFormat:@"%ld", (unsigned long) paraNumber + 2];
+//            CGSize size = [lineNumber sizeWithAttributes:attrs];
+//            
+//            gutterRect = CGRectOffset(gutterRect, 0.0, CGRectGetHeight(gutterRect));
+//            CGRect drawRect = CGRectOffset(gutterRect, CGRectGetWidth(gutterRect) - self->_lineAreaInset.right - size.width - self->_gutterWidth, (CGRectGetHeight(gutterRect) - size.height) / 2.0);
+//            [lineNumber drawInRect:drawRect withAttributes:attrs];
+//        }
+//    }
 }
 
 - (void)drawGlyphsForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin {
