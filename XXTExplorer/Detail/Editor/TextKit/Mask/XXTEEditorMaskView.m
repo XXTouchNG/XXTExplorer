@@ -52,6 +52,10 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
 
 #pragma mark - Touch Events
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return NO; // do not respond to any touch event
+}
+
 - (void)focusRange:(NSRange)range {
     UITextView *textView = self.textView;
     if (!textView || [textView isFirstResponder]) return;

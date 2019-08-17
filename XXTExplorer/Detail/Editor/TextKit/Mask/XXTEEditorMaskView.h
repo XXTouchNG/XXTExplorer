@@ -12,7 +12,7 @@
 
 @class XXTEEditorTextView;
 
-@interface XXTEEditorMaskView : NSObject
+@interface XXTEEditorMaskView : UIView
 
 - (instancetype)initWithTextView:(XXTEEditorTextView *)textView;
 

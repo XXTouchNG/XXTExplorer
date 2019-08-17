@@ -120,7 +120,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 @implementation XXTEEditorController {
     BOOL isFirstTimeAppeared;
-    BOOL isFirstTimeLayout;
+    BOOL isFirstLayout;
     BOOL isRendering;
     BOOL isParsing;
     BOOL _lockedState;
@@ -160,10 +160,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     _defaultsKeysToReload = [NSMutableArray array];
     _shouldReloadTextViewWidth = NO;
     _shouldReloadNagivationBar = NO;
+    _shouldEraseAllLineMasks = NO;
     _lockedState = NO;
     
     isFirstTimeAppeared = NO;
-    isFirstTimeLayout = NO;
+    isFirstLayout = NO;
     isRendering = NO;
     isParsing = NO;
     
@@ -588,6 +589,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewControllerWillChangeDisplayMode:) name:XXTENotificationEvent object:self.splitViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -607,10 +610,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         [self reloadTextViewWidthIfNecessary];
         [self reloadNavigationBarIfNecessary];
         [self reloadAttributesIfNecessary];
-        if (self.shouldEraseAllLineMasks) {
-            [self.maskView eraseAllLineMasks];
-            self.shouldEraseAllLineMasks = NO;
-        }
+        [self eraseAllLineMasksIfNecessary];
     }
     
     // Super
@@ -625,7 +625,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if (isFirstTimeAppeared) {
         [self reloadNavigationBarIfNecessary];
         [self reloadAttributesIfNecessary];
-        [self.maskView fillAllLineMasks];
+        [self fillAllLineMasks];
     }
     
     // Focus Symbol
@@ -667,30 +667,32 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     [super didMoveToParentViewController:parent];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    // fixed - unnecessary textview width fix
-    if (!isFirstTimeLayout) {
-        [self fixTextViewInsetsAndWidth];
-        isFirstTimeLayout = YES;
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    if (!isFirstLayout) {
+        [self setNeedsReloadTextViewWidth];
     }
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     { // usually on iPad
-         [self fixTextViewInsetsAndWidth];
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
-         
-     }];
-    
-    XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (!isFirstLayout) {
+        [self fixTextViewInsets];
+        [self reloadTextViewWidthIfNecessary];
+        isFirstLayout = YES;
+    } else {
+        [self reloadTextViewWidthIfNecessary];
     }
-    XXTE_END_IGNORE_PARTIAL
+}
+
+- (void)viewControllerWillChangeDisplayMode:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = aNotification.userInfo;
+    if ([userInfo[XXTENotificationEventType] isEqualToString:XXTENotificationEventTypeSplitViewControllerWillChangeDisplayMode])
+    {
+        [self fixTextViewInsets];
+        [self setNeedsReloadTextViewWidth];
+    }
 }
 
 #pragma mark - Interface: Layouts
@@ -725,6 +727,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Subviews
     [self.containerView addSubview:self.textView];
+    [self.containerView addSubview:self.maskView];
     [self.view addSubview:self.containerView];
     [self.view addSubview:self.toolbar];
     [self.view addSubview:self.searchBar];
@@ -756,6 +759,16 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         self.textViewWidthConstraint = textViewWidthConstraint;
     }
     {
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+          ];
+        [self.containerView addConstraints:constraints];
+    }
+    {
         NSLayoutConstraint *bottomConstraint = nil;
         if (@available(iOS 11.0, *))
         {
@@ -778,8 +791,31 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 #pragma mark - Interface: Rotation
 
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [self setNeedsReloadTextViewWidth];
+    [self setNeedsEraseAllLineMasks];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     { // usually on iPad
+        [self fixTextViewInsets];
+        [self reloadTextViewWidthIfNecessary];
+        [self eraseAllLineMasksIfNecessary];
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+        [self fillAllLineMasks];
+     }];
+    
+    XXTE_START_IGNORE_PARTIAL
+    if (@available(iOS 8.0, *)) {
+        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    }
+    XXTE_END_IGNORE_PARTIAL
+}
+
 XXTE_START_IGNORE_PARTIAL
-- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
+              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     [self setNeedsReloadTextViewWidth];
 }
@@ -970,6 +1006,7 @@ XXTE_END_IGNORE_PARTIAL
 - (XXTEEditorMaskView *)maskView {
     if (!_maskView) {
         XXTEEditorMaskView *maskView = [[XXTEEditorMaskView alloc] initWithTextView:self.textView];
+        [maskView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [maskView setLineMaskColor:[UIColor clearColor] forType:XXTEEditorLineMaskNone];
         [maskView setLineMaskColor:XXTColorFixed() forType:XXTEEditorLineMaskInfo];
         [maskView setLineMaskColor:XXTColorSuccess() forType:XXTEEditorLineMaskSuccess];
@@ -1582,7 +1619,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 #pragma mark - Editor: Auto Word Wrap
 
-- (void)fixTextViewInsetsAndWidth
+- (void)fixTextViewInsets
 {
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
@@ -1592,8 +1629,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;
     textView.scrollIndicatorInsets = contentInsets;
-    [self setNeedsReloadTextViewWidth];  // fixed
-    [self reloadTextViewWidthIfNecessary];
 }
 
 - (void)reloadTextViewWidth {
@@ -1855,6 +1890,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 #pragma mark - Lazy Load
 
+- (void)fillAllLineMasks {
+    [self.maskView fillAllLineMasks];
+}
+
 - (void)reloadNavigationBarIfNecessary {
     if (self.shouldReloadNagivationBar) {
         self.shouldReloadNagivationBar = NO;
@@ -1876,6 +1915,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     }
     [self reloadAttributes];
     self.shouldReloadAttributes = NO;
+}
+
+- (void)eraseAllLineMasksIfNecessary {
+    if (self.shouldEraseAllLineMasks) {
+        [self.maskView eraseAllLineMasks];
+        self.shouldEraseAllLineMasks = NO;
+    }
 }
 
 - (void)saveDocumentIfNecessary {
