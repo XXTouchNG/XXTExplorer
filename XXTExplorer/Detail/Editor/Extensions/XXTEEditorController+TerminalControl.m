@@ -8,18 +8,16 @@
 
 #import "XXTEEditorController+TerminalControl.h"
 #import "XXTEEditorTextView.h"
-#import "XXTETextPreprocessor.h"
-#import "XXTEEditorTextView+TextRange.h"
-#import "ICTextView.h"
+#import "XXTEEditorMaskView.h"
 
 
 @implementation XXTEEditorController (TerminalControl)
 
-- (void)terminalDidTerminateWithSuccess:(id)sender {
+- (void)terminalDidTerminateWithSuccess:(UIViewController *)sender {
     
 }
 
-- (void)terminalDidTerminate:(id)sender withError:(NSError *)error {
+- (void)terminalDidTerminate:(UIViewController *)sender withError:(NSError *)error {
     if (@available(iOS 9.0, *)) {
         NSString *errorDescription = error.localizedDescription;
         if (!errorDescription) {
@@ -40,13 +38,13 @@
         NSLog(@"%ld: %@", (long)lineNumber, errorReason);
 #endif
         
-        NSRange lineRange = [XXTETextPreprocessor lineRangeForString:self.textView.text AtIndex:(lineNumber - 1)];
-        if (lineRange.location == NSNotFound) {
-            return;
-        }
-        
-        // TODO: highlight line
-        [self.textView scrollRangeToVisible:lineRange consideringInsets:YES animated:YES];
+        [self.maskView removeAllLineMasks];
+        XXTEEditorLineMask *newMask = [[XXTEEditorLineMask alloc] init];
+        newMask.lineIndex = lineNumber - 1;
+        newMask.maskType = XXTEEditorLineMaskError;
+        newMask.maskDescription = errorReason;
+        [self.maskView addLineMask:newMask];
+        [self.maskView scrollToLineMask:newMask animated:!XXTE_IS_FULLSCREEN(sender)];
     }
 }
 

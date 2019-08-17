@@ -520,7 +520,7 @@
 
 - (void)valueViewValueDidChanged:(XXTEMoreValueView *)view {
     XXTEDefaultsSetBasic(XXTEEditorFontSize, view.value);
-    [self.editor setNeedsReloadAll];
+    [self.editor setNeedsReload:XXTEEditorFontSize];
 }
 
 #pragma mark - XXTEEditorFontSettingsViewControllerDelegate
@@ -532,7 +532,7 @@
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.text = [font familyName];
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.font = font;
     }
-    [self.editor setNeedsReloadAll];
+    [self.editor setNeedsReload:XXTEEditorFontName];
 }
 
 #pragma mark - XXTEEditorThemeSettingsViewControllerDelegate
@@ -540,7 +540,7 @@
 - (void)themeSettingsViewControllerSettingsDidChanged:(XXTEEditorThemeSettingsViewController *)controller {
     XXTEDefaultsSetObject(XXTEEditorThemeName, [controller.selectedThemeName copy]);
     ((XXTEMoreTitleValueCell *)staticCells[1][0]).valueLabel.text = controller.selectedThemeName;
-    [self.editor setNeedsReloadAll];
+    [self.editor setNeedsReload:XXTEEditorThemeName];
 }
 
 #pragma mark - UITextFieldDelegate

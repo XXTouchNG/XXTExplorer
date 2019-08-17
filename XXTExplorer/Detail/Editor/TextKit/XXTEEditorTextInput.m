@@ -96,8 +96,9 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
             
             NSRange findRange = NSMakeRange(NSNotFound, 0);
             NSUInteger prevCount = 0;
-            NSRange searchRange = NSMakeRange(((selectedRange.location - 1) < kXXTEEditorTextInputMaximumBracketCheckCharacterCount ? 0 : (selectedRange.location - 1 - kXXTEEditorTextInputMaximumBracketCheckCharacterCount)), selectedRange.location - 1);
-            for (NSUInteger idx = NSMaxRange(searchRange) - 1; idx >= searchRange.location; idx--) {
+            NSUInteger searchStart = ((selectedRange.location - 1) < kXXTEEditorTextInputMaximumBracketCheckCharacterCount ? 0 : ((selectedRange.location - 1) - kXXTEEditorTextInputMaximumBracketCheckCharacterCount));
+            NSUInteger searchEnd = (selectedRange.location - 1);
+            for (NSUInteger idx = searchEnd - 1; idx >= searchStart; idx--) {
                 unichar ch = [stringRef characterAtIndex:idx];
                 if (ch == previousChar) {
                     prevCount++;

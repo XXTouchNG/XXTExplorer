@@ -24,8 +24,8 @@ typedef enum : NSUInteger {
 
 @protocol XXTETerminalViewControllerDelegate <NSObject>
 @optional
-- (void)terminalDidTerminateWithSuccess:(id)sender;
-- (void)terminalDidTerminate:(id)sender withError:(NSError *)error;
+- (void)terminalDidTerminateWithSuccess:(UIViewController *)sender;
+- (void)terminalDidTerminate:(UIViewController *)sender withError:(NSError *)error;
 
 @end
 

@@ -56,8 +56,8 @@
 
 - (CGRect)lineRectForRange:(NSRange)range {
     CGRect rect = [self.layoutManager lineFragmentsRectForRange:range];
-    CGRect rect1 = CGRectMake(0, rect.origin.y, self.textContainer.size.width, rect.size.height);
-    rect1 = CGRectInset(rect1, self.textContainer.lineFragmentPadding, 0);
+    CGRect rect1 = CGRectMake(0, rect.origin.y, self.textContainer.size.width + (self.textContainerInset.right), rect.size.height);
+    // rect1 = CGRectInset(rect1, self.textContainer.lineFragmentPadding, 0);
     rect1 = CGRectOffset(rect1, self.textContainerInset.left, self.textContainerInset.top);
     return CGRectIntegral(rect1);
 }

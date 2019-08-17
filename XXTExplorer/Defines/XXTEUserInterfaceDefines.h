@@ -36,6 +36,7 @@ extern "C" {
     UIColor *XXTColorFixed(void);
     UIColor *XXTColorForeground(void);
     UIColor *XXTColorBarTint(void);
+    UIColor *XXTColorWarning(void);
     UIColor *XXTColorDanger(void);
     UIColor *XXTColorSuccess(void);
     UIColor *XXTColorCellSelected(void);

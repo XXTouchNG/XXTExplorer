@@ -100,6 +100,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 @property (nonatomic, assign) BOOL shouldSaveDocument;
 @property (nonatomic, assign) BOOL shouldReloadAttributes;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
+@property (nonatomic, assign) BOOL shouldEraseAllLineMasks;
 
 @property (nonatomic, assign) BOOL shouldReloadTextViewWidth;
 @property (nonatomic, assign) BOOL shouldReloadNagivationBar;
@@ -338,6 +339,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if ([keysToReload containsObject:XXTEEditorLineNumbersEnabled]) {
         BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, (XXTE_IS_IPAD ? YES : NO));
         [self.textView setShowLineNumbers:isLineNumbersEnabled];
+        [self.textView.vLayoutManager setShowLineNumbers:isLineNumbersEnabled];
         shouldInvalidateTextViewLayouts = YES;
     }
     if ([keysToReload containsObject:XXTEEditorShowInvisibleCharacters]) {
@@ -375,6 +377,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Layouts
     if (shouldInvalidateTextViewLayouts) {
+        [self.textView setNeedsReloadContainerInsets];
         [self.textView.vLayoutManager invalidateLayout];
     }
     
@@ -456,6 +459,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
                 }
             }
         }
+    }
+    
+    // Mask
+    if ([keysToReload containsObject:XXTEEditorThemeName]) {
+        self.maskView.flashColor = self.theme.caretColor;
     }
     
     // Bottom Bar
@@ -541,6 +549,18 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         [self.textView setNeedsDisplay];
     }
     
+    // Line Masks Related
+    if ([keysToReload containsObject:XXTEEditorFontName] ||
+        [keysToReload containsObject:XXTEEditorFontSize] ||
+        [keysToReload containsObject:XXTEEditorLineNumbersEnabled] ||
+        [keysToReload containsObject:XXTEEditorIndentWrappedLines] ||
+        [keysToReload containsObject:XXTEEditorAutoWordWrap] ||
+        [keysToReload containsObject:XXTEEditorWrapColumn]
+        )
+    {
+        [self setNeedsEraseAllLineMasks];
+    }
+    
     // Navigation Bar
     if ([keysToReload containsObject:XXTEEditorThemeName]) {
         [self setNeedsReloadNavigationBar];
@@ -587,6 +607,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         [self reloadTextViewWidthIfNecessary];
         [self reloadNavigationBarIfNecessary];
         [self reloadAttributesIfNecessary];
+        if (self.shouldEraseAllLineMasks) {
+            [self.maskView eraseAllLineMasks];
+            self.shouldEraseAllLineMasks = NO;
+        }
     }
     
     // Super
@@ -601,6 +625,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if (isFirstTimeAppeared) {
         [self reloadNavigationBarIfNecessary];
         [self reloadAttributesIfNecessary];
+        [self.maskView fillAllLineMasks];
     }
     
     // Focus Symbol
@@ -698,11 +723,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     self.lockedTitleView.subtitle = XXTTiledPath(self.entryPath);
     self.navigationItem.titleView = self.lockedTitleView;
     
-    [self.maskView setTextView:self.textView];
-    
     // Subviews
     [self.containerView addSubview:self.textView];
-    [self.containerView addSubview:self.maskView];
     [self.view addSubview:self.containerView];
     [self.view addSubview:self.toolbar];
     [self.view addSubview:self.searchBar];
@@ -732,16 +754,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
           ];
         [self.containerView addConstraints:constraints];
         self.textViewWidthConstraint = textViewWidthConstraint;
-    }
-    {
-        NSArray <NSLayoutConstraint *> *constraints =
-        @[
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeTop multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
-          [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textView attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
-          ];
-        [self.containerView addConstraints:constraints];
     }
     {
         NSLayoutConstraint *bottomConstraint = nil;
@@ -957,8 +969,12 @@ XXTE_END_IGNORE_PARTIAL
 
 - (XXTEEditorMaskView *)maskView {
     if (!_maskView) {
-        XXTEEditorMaskView *maskView = [[XXTEEditorMaskView alloc] initWithFrame:self.view.bounds];
-        maskView.translatesAutoresizingMaskIntoConstraints = NO;
+        XXTEEditorMaskView *maskView = [[XXTEEditorMaskView alloc] initWithTextView:self.textView];
+        [maskView setLineMaskColor:[UIColor clearColor] forType:XXTEEditorLineMaskNone];
+        [maskView setLineMaskColor:XXTColorFixed() forType:XXTEEditorLineMaskInfo];
+        [maskView setLineMaskColor:XXTColorSuccess() forType:XXTEEditorLineMaskSuccess];
+        [maskView setLineMaskColor:XXTColorWarning() forType:XXTEEditorLineMaskWarning];
+        [maskView setLineMaskColor:XXTColorDanger() forType:XXTEEditorLineMaskError];
         _maskView = maskView;
     }
     return _maskView;
@@ -1818,6 +1834,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (void)setNeedsFocusTextView {
     self.shouldFocusTextView = YES;
+}
+
+- (void)setNeedsEraseAllLineMasks {
+    self.shouldEraseAllLineMasks = YES;
 }
 
 - (void)setNeedsReloadNavigationBar {

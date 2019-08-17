@@ -92,9 +92,6 @@
 
 - (void)setShowLineNumbers:(BOOL)showLineNumbers {
     _showLineNumbers = showLineNumbers;
-    [self.vLayoutManager setShowLineNumbers:showLineNumbers];
-    [self setNeedsReloadContainerInsets];
-    [self setNeedsDisplay];
 }
 
 - (void)setNeedsReloadContainerInsets {
