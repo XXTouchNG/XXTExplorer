@@ -808,6 +808,9 @@
 		BD9351922307CBF100F854FF /* XXTEEditorLineMask.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9351912307CBF100F854FF /* XXTEEditorLineMask.m */; };
 		BD9351932307CBF100F854FF /* XXTEEditorLineMask.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9351912307CBF100F854FF /* XXTEEditorLineMask.m */; };
 		BD9351942307CBF100F854FF /* XXTEEditorLineMask.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9351912307CBF100F854FF /* XXTEEditorLineMask.m */; };
+		BDC3DC9C2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
+		BDC3DC9D2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
+		BDC3DC9E2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
 		BDFE72512304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
 		BDFE72522304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
 		BDFE72532304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
@@ -1980,6 +1983,8 @@
 		BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+TerminalControl.m"; sourceTree = "<group>"; };
 		BD9351902307CBF100F854FF /* XXTEEditorLineMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineMask.h; sourceTree = "<group>"; };
 		BD9351912307CBF100F854FF /* XXTEEditorLineMask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLineMask.m; sourceTree = "<group>"; };
+		BDC3DC9A2308F925006A603B /* XXLuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXLuaInterpreter.h; sourceTree = "<group>"; };
+		BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XXLuaInterpreter.mm; sourceTree = "<group>"; };
 		BDFE724F2304538800F56482 /* XXTEEditorTextView+TextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorTextView+TextRange.h"; sourceTree = "<group>"; };
 		BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorTextView+TextRange.m"; sourceTree = "<group>"; };
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4148,6 +4153,8 @@
 			isa = PBXGroup;
 			children = (
 				D677B1131F4FEC3D00E741C2 /* Reader */,
+				BDC3DC9A2308F925006A603B /* XXLuaInterpreter.h */,
+				BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */,
 				D677B10A1F4FE8AB00E741C2 /* XXTELuaVModel.h */,
 				D677B10B1F4FE8AB00E741C2 /* XXTELuaVModel.m */,
 				D677B10D1F4FE94000E741C2 /* XXTETerminalTextView.h */,
@@ -5295,6 +5302,7 @@
 				0F8EDC2D1FB1F779003C92D6 /* SKParser.m in Sources */,
 				0F8EDC2E1FB1F779003C92D6 /* XXTESymbolCell.m in Sources */,
 				0F8EDC2F1FB1F779003C92D6 /* SKAttributedParser.m in Sources */,
+				BDC3DC9E2308F926006A603B /* XXLuaInterpreter.mm in Sources */,
 				0F8EDC321FB1F779003C92D6 /* lapi.c in Sources */,
 				0F8EDC331FB1F779003C92D6 /* lauxlib.c in Sources */,
 				0F8EDC341FB1F779003C92D6 /* lbaselib.c in Sources */,
@@ -5400,6 +5408,7 @@
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FCAF4002009AE59002FB774 /* RMCloudProjectCell.m in Sources */,
 				0FCAF40D200A3A69002FB774 /* RMCloudProjectViewController.m in Sources */,
+				BDC3DC9C2308F926006A603B /* XXLuaInterpreter.mm in Sources */,
 				0FBAFF411F6E5378008B3189 /* XXTImagePickerController.m in Sources */,
 				0F072DBD1FB9F54D00597EE2 /* XUIAdapter_xuic.m in Sources */,
 				0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */,
@@ -5753,6 +5762,7 @@
 				D60FE6781FE2369300954818 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FCAF4012009AE59002FB774 /* RMCloudProjectCell.m in Sources */,
 				0FCAF40E200A3A69002FB774 /* RMCloudProjectViewController.m in Sources */,
+				BDC3DC9D2308F926006A603B /* XXLuaInterpreter.mm in Sources */,
 				D60FE6791FE2369300954818 /* XXTImagePickerController.m in Sources */,
 				D60FE67A1FE2369300954818 /* XUIAdapter_xuic.m in Sources */,
 				D60FE67B1FE2369300954818 /* XXTPickerSnippet.m in Sources */,

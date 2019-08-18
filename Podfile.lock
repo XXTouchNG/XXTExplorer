@@ -131,7 +131,7 @@ CHECKOUT OPTIONS:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
     :git: https://github.com/Lessica/UnrarKit.git
   XUI:
-    :commit: 681955461a2afd626c7ee921c43dbc8b20c2752b
+    :commit: 1fd463aaaf0b18b2227459d9fd3058402747e6e7
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
