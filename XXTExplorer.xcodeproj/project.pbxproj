@@ -802,6 +802,12 @@
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		B0312F7F228AF24585508F52 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312AD0A1F2567D3206D00B /* loslib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
+		BD3433AB23099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */ = {isa = PBXBuildFile; fileRef = BD3433A423099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */; };
+		BD3433AC23099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */ = {isa = PBXBuildFile; fileRef = BD3433A523099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */; };
+		BD3433AD23099C2B00BDCC14 /* cjson.so in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433A723099C2B00BDCC14 /* cjson.so */; };
+		BD3433AE23099C2B00BDCC14 /* liblfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433A823099C2B00BDCC14 /* liblfs.a */; };
+		BD3433AF23099C2B00BDCC14 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433A923099C2B00BDCC14 /* libcurl.a */; };
+		BD3433B023099C2B00BDCC14 /* liblcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433AA23099C2B00BDCC14 /* liblcurl.a */; };
 		BD8D1829230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
 		BD8D182A230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
 		BD8D182B230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
@@ -1186,12 +1192,6 @@
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
 		D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
 		D63340641FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
-		D63699CD22FEBAD7006CF006 /* cjson.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D63699CC22FEBAD7006CF006 /* cjson.so */; };
-		D63699E822FEC6A1006CF006 /* liblfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D63699E622FEC5CB006CF006 /* liblfs.a */; };
-		D6369A2922FEC995006CF006 /* liblcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6369A2722FEC995006CF006 /* liblcurl.a */; };
-		D6369A2A22FEC995006CF006 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6369A2822FEC995006CF006 /* libcurl.a */; };
-		D6369A2D22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */ = {isa = PBXBuildFile; fileRef = D6369A2B22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */; };
-		D6369A2E22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */ = {isa = PBXBuildFile; fileRef = D6369A2C22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */; };
 		D63711DC22F2FB7400ACE211 /* UIColor+CssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */; };
 		D63711DD22F2FB7400ACE211 /* UIColor+CssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */; };
 		D63711DE22F2FB7400ACE211 /* UIColor+CssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */; };
@@ -1977,6 +1977,12 @@
 		B0312E7C21C7B2451E6D240D /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		B0312E8696170984090886F2 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
 		B0312EA80D17B9AF4D5E309E /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
+		BD3433A423099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip"; sourceTree = "<group>"; };
+		BD3433A523099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip"; sourceTree = "<group>"; };
+		BD3433A723099C2B00BDCC14 /* cjson.so */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = cjson.so; sourceTree = "<group>"; };
+		BD3433A823099C2B00BDCC14 /* liblfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblfs.a; sourceTree = "<group>"; };
+		BD3433A923099C2B00BDCC14 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		BD3433AA23099C2B00BDCC14 /* liblcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblcurl.a; sourceTree = "<group>"; };
 		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BD8D1826230443230005029B /* XXTETerminalDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTETerminalDelegate.h; sourceTree = "<group>"; };
 		BD8D1827230444060005029B /* XXTEEditorController+TerminalControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+TerminalControl.h"; sourceTree = "<group>"; };
@@ -2044,12 +2050,6 @@
 		D63340611FD6529200B08B4E /* XXTEImageViewerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEImageViewerController.h; sourceTree = "<group>"; };
 		D63340621FD6529200B08B4E /* XXTEImageViewerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEImageViewerController.m; sourceTree = "<group>"; };
 		D63699A922FE94C0006CF006 /* XXTECacheDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTECacheDefines.h; sourceTree = "<group>"; };
-		D63699CC22FEBAD7006CF006 /* cjson.so */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = cjson.so; path = dist/lib/cjson.so; sourceTree = "<group>"; };
-		D63699E622FEC5CB006CF006 /* liblfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblfs.a; path = dist/lib/liblfs.a; sourceTree = "<group>"; };
-		D6369A2722FEC995006CF006 /* liblcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblcurl.a; path = dist/lib/liblcurl.a; sourceTree = "<group>"; };
-		D6369A2822FEC995006CF006 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = dist/lib/libcurl.a; sourceTree = "<group>"; };
-		D6369A2B22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip"; path = "dist/Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip"; sourceTree = "<group>"; };
-		D6369A2C22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip"; path = "dist/lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip"; sourceTree = "<group>"; };
 		D63711DA22F2FB7400ACE211 /* UIColor+CssColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+CssColor.h"; sourceTree = "<group>"; };
 		D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CssColor.m"; sourceTree = "<group>"; };
 		D63711FA22F3F09400ACE211 /* XXTEEncodingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEncodingController.h; sourceTree = "<group>"; };
@@ -2264,12 +2264,11 @@
 				0FAE190220809143005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */,
 				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,
-				D63699CD22FEBAD7006CF006 /* cjson.so in Frameworks */,
-				D63699E822FEC6A1006CF006 /* liblfs.a in Frameworks */,
+				BD3433AD23099C2B00BDCC14 /* cjson.so in Frameworks */,
+				BD3433AE23099C2B00BDCC14 /* liblfs.a in Frameworks */,
+				BD3433AF23099C2B00BDCC14 /* libcurl.a in Frameworks */,
 				0F8EDC591FB1F779003C92D6 /* Photos.framework in Frameworks */,
-				D6369A2922FEC995006CF006 /* liblcurl.a in Frameworks */,
 				0F8EDC5A1FB1F779003C92D6 /* AssetsLibrary.framework in Frameworks */,
-				D6369A2A22FEC995006CF006 /* libcurl.a in Frameworks */,
 				0F8EDC5B1FB1F779003C92D6 /* libc++.tbd in Frameworks */,
 				0F8EDC5D1FB1F779003C92D6 /* WebKit.framework in Frameworks */,
 				0F8EDC5E1FB1F779003C92D6 /* CoreMedia.framework in Frameworks */,
@@ -2277,6 +2276,7 @@
 				0F8EDC601FB1F779003C92D6 /* MediaPlayer.framework in Frameworks */,
 				0F8EDC611FB1F779003C92D6 /* AVFoundation.framework in Frameworks */,
 				0F8EDC621FB1F779003C92D6 /* MapKit.framework in Frameworks */,
+				BD3433B023099C2B00BDCC14 /* liblcurl.a in Frameworks */,
 				0F8EDC631FB1F779003C92D6 /* Security.framework in Frameworks */,
 				0F8EDC641FB1F779003C92D6 /* SystemConfiguration.framework in Frameworks */,
 				0F8EDC661FB1F779003C92D6 /* libz.tbd in Frameworks */,
@@ -3846,6 +3846,27 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		BD3433A323099C2B00BDCC14 /* dist */ = {
+			isa = PBXGroup;
+			children = (
+				BD3433A423099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */,
+				BD3433A523099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */,
+				BD3433A623099C2B00BDCC14 /* lib */,
+			);
+			path = dist;
+			sourceTree = "<group>";
+		};
+		BD3433A623099C2B00BDCC14 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				BD3433A723099C2B00BDCC14 /* cjson.so */,
+				BD3433A823099C2B00BDCC14 /* liblfs.a */,
+				BD3433A923099C2B00BDCC14 /* libcurl.a */,
+				BD3433AA23099C2B00BDCC14 /* liblcurl.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		D606114E22F542AC00F6F0E6 /* LineBreak */ = {
 			isa = PBXGroup;
 			children = (
@@ -3987,12 +4008,7 @@
 		D63699AA22FE9D86006CF006 /* LuaModules */ = {
 			isa = PBXGroup;
 			children = (
-				D6369A2822FEC995006CF006 /* libcurl.a */,
-				D6369A2722FEC995006CF006 /* liblcurl.a */,
-				D63699E622FEC5CB006CF006 /* liblfs.a */,
-				D63699CC22FEBAD7006CF006 /* cjson.so */,
-				D6369A2C22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */,
-				D6369A2B22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */,
+				BD3433A323099C2B00BDCC14 /* dist */,
 			);
 			path = LuaModules;
 			sourceTree = "<group>";
@@ -4618,7 +4634,7 @@
 				0F8EDC811FB1F779003C92D6 /* XXTEMoreActionCell.xib in Resources */,
 				0FA1A4FD1FF13CA00021648B /* Settings.bundle in Resources */,
 				0F8EDC821FB1F779003C92D6 /* Ciapre.tmTheme in Resources */,
-				D6369A2D22FECB57006CF006 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */,
+				BD3433AB23099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */,
 				0F856CF71FBC72B3002332F2 /* XUIAdapter_xui.xuic in Resources */,
 				0F8EDC831FB1F779003C92D6 /* XXTExplorerItemNameCell.xib in Resources */,
 				0F8ECD4A1FE802A900A5457C /* Solarized (Light).png in Resources */,
@@ -4694,7 +4710,7 @@
 				D661679622F1D94F00EC8835 /* HLTheme.plist in Resources */,
 				0F8ECD261FE8016200A5457C /* Cobalt.png in Resources */,
 				0F8EDCBA1FB1F779003C92D6 /* XXTImagePickerController.xib in Resources */,
-				D6369A2E22FECB57006CF006 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */,
+				BD3433AC23099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */,
 				0F8EDCBB1FB1F779003C92D6 /* XXTEEditorThemeCell.xib in Resources */,
 				0F8ECD461FE802A900A5457C /* Oceanic.png in Resources */,
 				0F8ECD241FE7FE0800A5457C /* Mac Classic.png in Resources */,
