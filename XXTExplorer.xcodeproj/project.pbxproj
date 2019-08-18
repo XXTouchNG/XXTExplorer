@@ -802,6 +802,50 @@
 		B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		B0312F7F228AF24585508F52 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0312AD0A1F2567D3206D00B /* loslib.c */; settings = {COMPILER_FLAGS = "-DLUA_COMPAT_ALL -DLUA_USE_POSIX -DLUA_USE_DLOPEN -DLUA_COMPAT_BITLIB"; }; };
 		B0312F94BF35CA4B9B9FED03 /* LASettingsViewController+MyShowsAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B031231CE21AACABD6682B65 /* LASettingsViewController+MyShowsAd.m */; };
+		BD00B61C2309A25D0026AF27 /* A.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090D1F4364C300097E9C /* A.tmTheme */; };
+		BD00B61D2309A25D0026AF27 /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2A1FE802A400A5457C /* A.png */; };
+		BD00B61E2309A25D0026AF27 /* Blackboard.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26AD1F3DB7BE00E013E2 /* Blackboard.tmTheme */; };
+		BD00B61F2309A25D0026AF27 /* Blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD271FE8016900A5457C /* Blackboard.png */; };
+		BD00B6202309A25D0026AF27 /* Ciapre (Black).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973F51F4B1D8B00133162 /* Ciapre (Black).tmTheme */; };
+		BD00B6212309A25D0026AF27 /* Ciapre (Black).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2E1FE802A500A5457C /* Ciapre (Black).png */; };
+		BD00B6222309A25D0026AF27 /* Ciapre.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB008FD1F4356FB00097E9C /* Ciapre.tmTheme */; };
+		BD00B6232309A25D0026AF27 /* Ciapre.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD371FE802A700A5457C /* Ciapre.png */; };
+		BD00B6242309A25D0026AF27 /* Cobalt.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B01F3DB7BE00E013E2 /* Cobalt.tmTheme */; };
+		BD00B6252309A25D0026AF27 /* Cobalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD251FE8016100A5457C /* Cobalt.png */; };
+		BD00B6262309A25D0026AF27 /* Dawn.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B11F3DB7BE00E013E2 /* Dawn.tmTheme */; };
+		BD00B6272309A25D0026AF27 /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2B1FE802A500A5457C /* Dawn.png */; };
+		BD00B6282309A25D0026AF27 /* IDLE.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26B41F3DB7BE00E013E2 /* IDLE.tmTheme */; };
+		BD00B6292309A25D0026AF27 /* IDLE.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3D1FE802A800A5457C /* IDLE.png */; };
+		BD00B62A2309A25D0026AF27 /* Kimbie (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009071F4364AF00097E9C /* Kimbie (Dark).tmTheme */; };
+		BD00B62B2309A25D0026AF27 /* Kimbie (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD301FE802A500A5457C /* Kimbie (Dark).png */; };
+		BD00B62C2309A25D0026AF27 /* Kimbie (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009081F4364AF00097E9C /* Kimbie (Light).tmTheme */; };
+		BD00B62D2309A25D0026AF27 /* Kimbie (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3E1FE802A900A5457C /* Kimbie (Light).png */; };
+		BD00B62E2309A25D0026AF27 /* Nothing.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090B1F4364B800097E9C /* Nothing.tmTheme */; };
+		BD00B62F2309A25D0026AF27 /* Nothing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3A1FE802A800A5457C /* Nothing.png */; };
+		BD00B6302309A25D0026AF27 /* Oceanic (Eighties).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973F31F4B1D7B00133162 /* Oceanic (Eighties).tmTheme */; };
+		BD00B6312309A25D0026AF27 /* Oceanic (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD321FE802A600A5457C /* Oceanic (Eighties).png */; };
+		BD00B6322309A25D0026AF27 /* OneHalf (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0090F1F43685E00097E9C /* OneHalf (Dark).tmTheme */; };
+		BD00B6332309A25D0026AF27 /* OneHalf (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD361FE802A700A5457C /* OneHalf (Dark).png */; };
+		BD00B6342309A25D0026AF27 /* OneHalf (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009101F43685E00097E9C /* OneHalf (Light).tmTheme */; };
+		BD00B6352309A25D0026AF27 /* OneHalf (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD381FE802A700A5457C /* OneHalf (Light).png */; };
+		BD00B6362309A25D0026AF27 /* Solarized (Dark).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */; };
+		BD00B6372309A25D0026AF27 /* Solarized (Dark).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3B1FE802A800A5457C /* Solarized (Dark).png */; };
+		BD00B6382309A25D0026AF27 /* Solarized (Light).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */; };
+		BD00B6392309A25D0026AF27 /* Solarized (Light).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD331FE802A600A5457C /* Solarized (Light).png */; };
+		BD00B63A2309A25D0026AF27 /* Sunburst.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26BB1F3DB7BE00E013E2 /* Sunburst.tmTheme */; };
+		BD00B63B2309A25D0026AF27 /* Sunburst.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3C1FE802A800A5457C /* Sunburst.png */; };
+		BD00B63C2309A25D0026AF27 /* Tomorrow Night (Blue).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973E91F4B1D3700133162 /* Tomorrow Night (Blue).tmTheme */; };
+		BD00B63D2309A25D0026AF27 /* Tomorrow Night (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD351FE802A700A5457C /* Tomorrow Night (Blue).png */; };
+		BD00B63E2309A25D0026AF27 /* Tomorrow Night (Bright).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EA1F4B1D3700133162 /* Tomorrow Night (Bright).tmTheme */; };
+		BD00B63F2309A25D0026AF27 /* Tomorrow Night (Bright).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD291FE802A400A5457C /* Tomorrow Night (Bright).png */; };
+		BD00B6402309A25D0026AF27 /* Tomorrow Night (Eighties).tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EB1F4B1D3700133162 /* Tomorrow Night (Eighties).tmTheme */; };
+		BD00B6412309A25D0026AF27 /* Tomorrow Night (Eighties).png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD341FE802A600A5457C /* Tomorrow Night (Eighties).png */; };
+		BD00B6422309A25D0026AF27 /* Tomorrow Night.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */; };
+		BD00B6432309A25D0026AF27 /* Tomorrow Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD391FE802A700A5457C /* Tomorrow Night.png */; };
+		BD00B6442309A25D0026AF27 /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973ED1F4B1D3700133162 /* Tomorrow.tmTheme */; };
+		BD00B6452309A25D0026AF27 /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD311FE802A600A5457C /* Tomorrow.png */; };
+		BD00B6462309A25D0026AF27 /* Twilight.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D60A26BC1F3DB7BE00E013E2 /* Twilight.tmTheme */; };
+		BD00B6472309A25D0026AF27 /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2C1FE802A500A5457C /* Twilight.png */; };
 		BD3433AB23099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip in Resources */ = {isa = PBXBuildFile; fileRef = BD3433A423099C2B00BDCC14 /* Lua-cURLv3-lib-FFEFA3F2-38B9-4E84-96CF-20A3546FBB93.zip */; };
 		BD3433AC23099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip in Resources */ = {isa = PBXBuildFile; fileRef = BD3433A523099C2B00BDCC14 /* lua-cjson-lib-5E5B65FC-E139-4958-B15D-6335746215E5.zip */; };
 		BD3433AD23099C2B00BDCC14 /* cjson.so in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433A723099C2B00BDCC14 /* cjson.so */; };
@@ -2409,6 +2453,7 @@
 		0F08BC0F1FFD1A8000B83972 /* Lua */ = {
 			isa = PBXGroup;
 			children = (
+				B031266029D3349F42FAD280 /* src */,
 				0FFBC12E1F5C391300690C8F /* XXTLuaNSValue.h */,
 				0FFBC12F1F5C391300690C8F /* XXTLuaNSValue.m */,
 				0F08BC101FFD1A9D00B83972 /* XXTLuaFunction.h */,
@@ -3771,14 +3816,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B03122BD9FFFB7920A5AC290 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				B031266029D3349F42FAD280 /* src */,
-			);
-			path = lua;
-			sourceTree = "<group>";
-		};
 		B031266029D3349F42FAD280 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -4305,7 +4342,6 @@
 				D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */,
 				0F856CF21FBB5210002332F2 /* XUIAdapter_xui.lua */,
 				0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */,
-				B03122BD9FFFB7920A5AC290 /* lua */,
 			);
 			path = Xui;
 			sourceTree = "<group>";
@@ -4849,13 +4885,18 @@
 				D60FE77F1FE2369300954818 /* XUIFileCell.xib in Resources */,
 				D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
 				0F3F65A020AAC85D006115DF /* D60BDCA4-BE9E-4902-BCC4-4963FDC46503.zip in Resources */,
+				BD00B62B2309A25D0026AF27 /* Kimbie (Dark).png in Resources */,
 				D661679522F1D94F00EC8835 /* HLTheme.plist in Resources */,
 				0F2DAE562013158C001593C9 /* RMCloudTrendsCell.xib in Resources */,
+				BD00B63A2309A25D0026AF27 /* Sunburst.tmTheme in Resources */,
 				0FA1A5001FF13CAC0021648B /* SettingsPro.bundle in Resources */,
 				0FCAF415200A48C5002FB774 /* RMCloudProjectDetailCell.xib in Resources */,
+				BD00B6252309A25D0026AF27 /* Cobalt.png in Resources */,
 				D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */,
 				D60FE7871FE2369300954818 /* XXTImagePickerPhotoCell.xib in Resources */,
 				D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */,
+				BD00B62D2309A25D0026AF27 /* Kimbie (Light).png in Resources */,
+				BD00B61D2309A25D0026AF27 /* A.png in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
 				D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
 				0FCAF4032009AE59002FB774 /* RMCloudProjectCell.xib in Resources */,
@@ -4863,11 +4904,24 @@
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
 				D60FE7921FE2369300954818 /* XUIAdapter_xui.xuic in Resources */,
+				BD00B63E2309A25D0026AF27 /* Tomorrow Night (Bright).tmTheme in Resources */,
+				BD00B62A2309A25D0026AF27 /* Kimbie (Dark).tmTheme in Resources */,
 				D60FE7981FE2369300954818 /* Eiffel.tmTheme in Resources */,
+				BD00B6392309A25D0026AF27 /* Solarized (Light).png in Resources */,
+				BD00B6302309A25D0026AF27 /* Oceanic (Eighties).tmTheme in Resources */,
+				BD00B6382309A25D0026AF27 /* Solarized (Light).tmTheme in Resources */,
+				BD00B6202309A25D0026AF27 /* Ciapre (Black).tmTheme in Resources */,
+				BD00B6452309A25D0026AF27 /* Tomorrow.png in Resources */,
+				BD00B6422309A25D0026AF27 /* Tomorrow Night.tmTheme in Resources */,
+				BD00B6352309A25D0026AF27 /* OneHalf (Light).png in Resources */,
+				BD00B6362309A25D0026AF27 /* Solarized (Dark).tmTheme in Resources */,
 				0F5D6C062010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
 				D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */,
+				BD00B63C2309A25D0026AF27 /* Tomorrow Night (Blue).tmTheme in Resources */,
 				0F469CF4200CFEC60042F1BF /* RMCloudLinkCell.xib in Resources */,
 				D60FE79B1FE2369300954818 /* xxte-white-icons.plist in Resources */,
+				BD00B61E2309A25D0026AF27 /* Blackboard.tmTheme in Resources */,
+				BD00B6242309A25D0026AF27 /* Cobalt.tmTheme in Resources */,
 				D60FE79D1FE2369300954818 /* XXTEInstallerLoadingView.xib in Resources */,
 				D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */,
 				0F469CED200CE7200042F1BF /* RMCloudExpandedCell.xib in Resources */,
@@ -4876,29 +4930,55 @@
 				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
 				D6CDFECF22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
 				D60FE7A61FE2369300954818 /* XXTEItemTemplate.lua in Resources */,
+				BD00B6312309A25D0026AF27 /* Oceanic (Eighties).png in Resources */,
+				BD00B6222309A25D0026AF27 /* Ciapre.tmTheme in Resources */,
 				D60FE7A71FE2369300954818 /* XXTEMoreTextFieldCell.xib in Resources */,
 				D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */,
 				D6F0AD8522FAD94D00970123 /* Plain Text.tmLanguage in Resources */,
 				D60FE7A91FE2369300954818 /* XUIAboutCell.xib in Resources */,
+				BD00B6402309A25D0026AF27 /* Tomorrow Night (Eighties).tmTheme in Resources */,
 				D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */,
+				BD00B6472309A25D0026AF27 /* Twilight.png in Resources */,
+				BD00B6322309A25D0026AF27 /* OneHalf (Dark).tmTheme in Resources */,
 				D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */,
+				BD00B6442309A25D0026AF27 /* Tomorrow.tmTheme in Resources */,
 				D60FE7AD1FE2369300954818 /* .gitignore in Resources */,
 				0F469CD3200B57CA0042F1BF /* RMCloudProjectDescriptionCell.xib in Resources */,
+				BD00B62C2309A25D0026AF27 /* Kimbie (Light).tmTheme in Resources */,
 				D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */,
+				BD00B63F2309A25D0026AF27 /* Tomorrow Night (Bright).png in Resources */,
+				BD00B61F2309A25D0026AF27 /* Blackboard.png in Resources */,
+				BD00B62E2309A25D0026AF27 /* Nothing.tmTheme in Resources */,
+				BD00B6372309A25D0026AF27 /* Solarized (Dark).png in Resources */,
 				D60FE7B11FE2369300954818 /* Monokai.tmTheme in Resources */,
 				D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */,
+				BD00B6232309A25D0026AF27 /* Ciapre.png in Resources */,
 				D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */,
+				BD00B63D2309A25D0026AF27 /* Tomorrow Night (Blue).png in Resources */,
+				BD00B6332309A25D0026AF27 /* OneHalf (Dark).png in Resources */,
+				BD00B6292309A25D0026AF27 /* IDLE.png in Resources */,
 				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
+				BD00B6262309A25D0026AF27 /* Dawn.tmTheme in Resources */,
 				D60FE7B61FE2369300954818 /* XXTEMoreSwitchCell.xib in Resources */,
 				D60FE7B81FE2369300954818 /* Oceanic.tmTheme in Resources */,
 				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
 				0F469CE6200CE2C10042F1BF /* RMCloudExpandableCell.xib in Resources */,
+				BD00B61C2309A25D0026AF27 /* A.tmTheme in Resources */,
 				D60FE7BA1FE2369300954818 /* Mac Classic.tmTheme in Resources */,
+				BD00B63B2309A25D0026AF27 /* Sunburst.png in Resources */,
+				BD00B62F2309A25D0026AF27 /* Nothing.png in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				D60FE7BC1FE2369300954818 /* XXTImagePickerAlbumCell.xib in Resources */,
 				D60FE7BE1FE2369300954818 /* XUIAnimatedImageCell.xib in Resources */,
+				BD00B6212309A25D0026AF27 /* Ciapre (Black).png in Resources */,
+				BD00B6282309A25D0026AF27 /* IDLE.tmTheme in Resources */,
+				BD00B6432309A25D0026AF27 /* Tomorrow Night.png in Resources */,
+				BD00B6272309A25D0026AF27 /* Dawn.png in Resources */,
+				BD00B6412309A25D0026AF27 /* Tomorrow Night (Eighties).png in Resources */,
+				BD00B6342309A25D0026AF27 /* OneHalf (Light).tmTheme in Resources */,
 				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				0FCAF40A200A1D14002FB774 /* RMCloudMoreCell.xib in Resources */,
+				BD00B6462309A25D0026AF27 /* Twilight.tmTheme in Resources */,
 				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
 				0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
 				D60FE7C71FE2369300954818 /* XXTEMoreValueViewCell.xib in Resources */,
@@ -4922,7 +5002,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SRC=\"$TARGET_BUILD_DIR/XXTExplorer-Archive.app\"\nMID=\"$TARGET_BUILD_DIR/XXTExplorer.app\"\nDST=\"/Applications\"\nrm -r \"$MID\"\ncp -r \"$SRC\" \"$MID\"\nldid -S\"$SRCROOT/XXTExplorer/Supporting Files/_XXTAppEntitlements.xml\" \"$MID/XXTExplorer-Archive\"\n\nssh root@127.0.0.1 -p 2222 \"rm -r /Applications/XXTExplorer.app\"\nssh root@127.0.0.1 -p 2222 \"mkdir -p /Applications/XXTExplorer.app\"\nscp -rP 2222 \"$MID\" root@127.0.0.1:\"$DST\"\nssh root@127.0.0.1 -p 2222 \"chown -R root:wheel /Applications/XXTExplorer.app\"\nssh root@127.0.0.1 -p 2222 \"su mobile -c uicache\"\n";
+			shellScript = "SRC=\"$TARGET_BUILD_DIR/XXTExplorer-Archive.app\"\nMID=\"$TARGET_BUILD_DIR/XXTExplorer.app\"\nDST=\"/Applications\"\nDEVICE=\"127.0.0.1\"\nPORT=\"2222\"\n\nrm -r \"${MID}\"\ncp -r \"${SRC}\" \"${MID}\"\nldid -S\"${SRCROOT}/XXTExplorer/Supporting Files/_XXTAppEntitlements.xml\" \"${MID}/XXTExplorer-Archive\"\n\nssh \"root@${DEVICE}\" -p \"${PORT}\" \"rm -r /Applications/XXTExplorer.app\"\nssh \"root@${DEVICE}\" -p \"${PORT}\" \"mkdir -p /Applications/XXTExplorer.app\"\nscp -rP \"${PORT}\" \"${MID}\" \"root@${DEVICE}:${DST}\"\nssh \"root@${DEVICE}\" -p \"${PORT}\" \"chown -R root:wheel /Applications/XXTExplorer.app\"\nssh \"root@${DEVICE}\" -p \"${PORT}\" \"uicache --all\"\n";
 		};
 		1E5BD987FA01455D091829D9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
