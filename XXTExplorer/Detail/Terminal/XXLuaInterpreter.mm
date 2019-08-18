@@ -480,7 +480,7 @@ int _runSelector (lua_State *L) {
     va_list argumentTypes;
     va_start(argumentTypes, count);
     for (int i = 0; i < count; i++) {
-        [argumentTypesArray addObject:[NSNumber numberWithInt:va_arg(argumentTypes, XXLuaArgumentType)]];
+        [argumentTypesArray addObject:[NSNumber numberWithInt:va_arg(argumentTypes, int)]];  // XXLuaArgumentType
     }
     va_end(argumentTypes);
     
@@ -497,7 +497,7 @@ int _runSelector (lua_State *L) {
     va_list argumentTypes;
     va_start(argumentTypes, count);
     for (int i = 0; i < count; i++) {
-        [argumentTypesArray addObject:[NSNumber numberWithInt:va_arg(argumentTypes, XXLuaArgumentType)]];
+        [argumentTypesArray addObject:[NSNumber numberWithInt:va_arg(argumentTypes, int)]];  // XXLuaArgumentType
     }
     
     [self _registerSelector:selector target:target name:name returnType:returnType argumentTypesArray:argumentTypesArray];

@@ -104,6 +104,11 @@ XXTE_END_IGNORE_PARTIAL
     XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = self.searchController.searchBar;
+    if (@available(iOS 13.0, *)) {
+        searchBar.barStyle = UIBarStyleBlack;
+    } else {
+        searchBar.barStyle = UIBarStyleDefault;
+    }
     searchBar.placeholder = NSLocalizedString(@"Search User Defaults", nil);
     searchBar.scopeButtonTitles = @[
                                     NSLocalizedString(@"Title", nil),

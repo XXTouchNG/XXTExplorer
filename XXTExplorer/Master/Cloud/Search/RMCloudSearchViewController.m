@@ -116,9 +116,11 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
         if (@available(iOS 13.0, *)) {
+            searchBar.barStyle = UIBarStyleBlack;
             searchBar.backgroundColor = [UIColor systemBackgroundColor];
             searchBar.barTintColor = [UIColor systemBackgroundColor];
         } else {
+            searchBar.barStyle = UIBarStyleDefault;
             searchBar.backgroundColor = [UIColor whiteColor];
             searchBar.barTintColor = [UIColor whiteColor];
         }

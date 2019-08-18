@@ -129,10 +129,12 @@ XXTE_END_IGNORE_PARTIAL
     
     {
         if (@available(iOS 13.0, *)) {
+            searchBar.barStyle = UIBarStyleBlack;
             UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
             textField.textColor = [UIColor labelColor];
             textField.tintColor = XXTColorForeground();
         } else {
+            searchBar.barStyle = UIBarStyleDefault;
             searchBar.backgroundColor = [UIColor whiteColor];
             searchBar.barTintColor = [UIColor whiteColor];
             searchBar.tintColor = XXTColorForeground();

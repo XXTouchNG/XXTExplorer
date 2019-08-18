@@ -13,4 +13,4 @@ before_install:
 - pod install --verbose
 
 script:
-- set -o pipefail && xcodebuild build -workspace XXTExplorer.xcworkspace -scheme XXTExplorer-Archive -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
+- set -o pipefail && xcodebuild build -workspace XXTExplorer.xcworkspace -scheme XXTouch -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty

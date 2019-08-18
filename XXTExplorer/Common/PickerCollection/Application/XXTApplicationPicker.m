@@ -134,9 +134,11 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     if (@available(iOS 13.0, *)) {
         searchBar.backgroundColor = [UIColor systemBackgroundColor];
         searchBar.barTintColor = [UIColor systemBackgroundColor];
+        searchBar.barStyle = UIBarStyleBlack;
     } else {
         searchBar.backgroundColor = [UIColor whiteColor];
         searchBar.barTintColor = [UIColor whiteColor];
+        searchBar.barStyle = UIBarStyleDefault;
     }
     searchBar.tintColor = XXTColorForeground();
 
