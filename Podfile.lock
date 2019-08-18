@@ -74,7 +74,7 @@ DEPENDENCIES:
   - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
   - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`)
   - OMGHTTPURLRQ
-  - PromiseKit (~> 1.7.6)
+  - PromiseKit (~> 1.7)
   - SOZOChromoplast
   - SSZipArchive (from `https://github.com/Lessica/ZipArchive.git`)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
@@ -152,6 +152,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: e34c3fb036fb204de359fafa062a4654624b8053
+PODFILE CHECKSUM: cd194f5e57deab44654f822324c808793ff76897
 
 COCOAPODS: 1.7.5
