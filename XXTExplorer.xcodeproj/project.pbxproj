@@ -1230,6 +1230,9 @@
 		D62C9E7F22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D62C9E7E22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m */; };
 		D62C9E8022F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D62C9E7E22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m */; };
 		D62C9E8122F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D62C9E7E22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m */; };
+		D62D8F4D230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D62D8F4C230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m */; };
+		D62D8F4E230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D62D8F4C230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m */; };
+		D62D8F4F230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D62D8F4C230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m */; };
 		D62DD6471F3D536D00A34850 /* Mac Classic.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */; };
 		D62DD6671F3D740800A34850 /* XXTEEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */; };
 		D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63340621FD6529200B08B4E /* XXTEImageViewerController.m */; };
@@ -2086,6 +2089,8 @@
 		D629C2341F0651320030C6DA /* UISearchController+StatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchController+StatusBarStyle.m"; sourceTree = "<group>"; };
 		D62C9E7D22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTECodeViewerController+NavigationBar.h"; sourceTree = "<group>"; };
 		D62C9E7E22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTECodeViewerController+NavigationBar.m"; sourceTree = "<group>"; };
+		D62D8F4B230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEImageViewerController+NavigationBar.h"; sourceTree = "<group>"; };
+		D62D8F4C230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEImageViewerController+NavigationBar.m"; sourceTree = "<group>"; };
 		D62DD6331F3D536D00A34850 /* Mac Classic.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Mac Classic.tmTheme"; sourceTree = "<group>"; };
 		D62DD6651F3D740800A34850 /* XXTEEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextView.h; sourceTree = "<group>"; };
 		D62DD6661F3D740800A34850 /* XXTEEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextView.m; sourceTree = "<group>"; };
@@ -2755,6 +2760,7 @@
 		0F568FFE1F185AFE009AF9FE /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				D62D8F4A230BCA310037E1DE /* Extensions */,
 				0FE1E42E1F1887B800055E02 /* Reader */,
 				D63340611FD6529200B08B4E /* XXTEImageViewerController.h */,
 				D63340621FD6529200B08B4E /* XXTEImageViewerController.m */,
@@ -3958,6 +3964,15 @@
 				D62C9E7E22F2E94C00FA837F /* XXTECodeViewerController+NavigationBar.m */,
 				D63711DA22F2FB7400ACE211 /* UIColor+CssColor.h */,
 				D63711DB22F2FB7400ACE211 /* UIColor+CssColor.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D62D8F4A230BCA310037E1DE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D62D8F4B230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.h */,
+				D62D8F4C230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5400,6 +5415,7 @@
 				0F8EDC321FB1F779003C92D6 /* lapi.c in Sources */,
 				0F8EDC331FB1F779003C92D6 /* lauxlib.c in Sources */,
 				0F8EDC341FB1F779003C92D6 /* lbaselib.c in Sources */,
+				D62D8F4F230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m in Sources */,
 				0F8EDC351FB1F779003C92D6 /* lbitlib.c in Sources */,
 				0F8EDC361FB1F779003C92D6 /* lcode.c in Sources */,
 				0F8EDC371FB1F779003C92D6 /* lcorolib.c in Sources */,
@@ -5766,6 +5782,7 @@
 				B0312C9332686EA37B5D2D9A /* linit.c in Sources */,
 				B0312D5276C4F63F19A43056 /* liolib.c in Sources */,
 				B0312DBDADA674380136CA1F /* llex.c in Sources */,
+				D62D8F4D230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m in Sources */,
 				D642B8C41F906F260006621B /* XXTEUIViewController+XXTResetDefaults.m in Sources */,
 				B0312E59255B5F936A099C8C /* lmathlib.c in Sources */,
 				B0312A7DCF0E455F56A0AF30 /* lmem.c in Sources */,
@@ -6120,6 +6137,7 @@
 				D60FE74B1FE2369300954818 /* linit.c in Sources */,
 				D60FE74C1FE2369300954818 /* liolib.c in Sources */,
 				D60FE74D1FE2369300954818 /* llex.c in Sources */,
+				D62D8F4E230BCA4B0037E1DE /* XXTEImageViewerController+NavigationBar.m in Sources */,
 				D60FE74E1FE2369300954818 /* XXTEUIViewController+XXTResetDefaults.m in Sources */,
 				D60FE74F1FE2369300954818 /* lmathlib.c in Sources */,
 				D60FE7501FE2369300954818 /* lmem.c in Sources */,

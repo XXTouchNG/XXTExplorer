@@ -66,7 +66,7 @@
         if (self.barTintColor)
             barTintColor = self.barTintColor;
     }
-    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
+    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor}];
     navigation.navigationBar.tintColor = tintColor;
     navigation.navigationBar.barTintColor = barTintColor;
     navigation.navigationItem.leftBarButtonItem.tintColor = tintColor;
