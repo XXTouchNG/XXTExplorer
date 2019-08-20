@@ -285,17 +285,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     return nil;
 }
 
-#pragma mark - Open URL
-
-/*
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    if (@available(iOS 9.0, *)) {
-        return NO;
-    }
-    return [self application:application openURL:url];
-}
-*/
-
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application
@@ -424,15 +413,13 @@ XXTE_END_IGNORE_PARTIAL
 #endif
         
         // Master Controller
-        XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
 #ifndef APPSTORE
+        XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
 #ifdef RMCLOUD_ENABLED
         masterViewController.viewControllers = @[masterNavigationControllerLeft, cloudNavigationController, masterNavigationControllerRight];
 #else
         masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
 #endif
-#else
-        masterViewController.viewControllers = @[masterNavigationControllerLeft];
 #endif
         
         {
@@ -443,11 +430,18 @@ XXTE_END_IGNORE_PARTIAL
                 
                 // Split Controller
                 XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
+#ifndef APPSTORE
                 splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-                
+#else
+                splitViewController.viewControllers = @[masterNavigationControllerLeft, detailNavigationController];
+#endif
                 mainWindow.rootViewController = splitViewController;
             } else {
+#ifndef APPSTORE
                 mainWindow.rootViewController = masterViewController;
+#else
+                mainWindow.rootViewController = masterNavigationControllerLeft;
+#endif
             }
         }
         

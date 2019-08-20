@@ -30,18 +30,18 @@
 
 - (void)setupAppearance {
     UINavigationBar *barAppearance = [UINavigationBar appearance];
-    [barAppearance setTintColor:[UIColor whiteColor]];
+    [barAppearance setTintColor:XXTColorTint()];
     [barAppearance setBarTintColor:XXTColorBarTint()];
-    [barAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f] }];
+    [barAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f] }];
     if (@available(iOS 11.0, *)) {
-        [barAppearance setLargeTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:24.f] }];
+        [barAppearance setLargeTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:24.f] }];
         [barAppearance setPrefersLargeTitles:YES];
     }
 
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
-    [navigationBarAppearance setTintColor:[UIColor whiteColor]];
+    [navigationBarAppearance setTintColor:XXTColorTint()];
     [navigationBarAppearance setBarTintColor:XXTColorBarTint()];
-    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     if (@available(iOS 11.0, *)) {
         [navigationBarAppearance setTranslucent:YES];
     } else if (@available(iOS 8.0, *)) {
@@ -49,9 +49,9 @@
     }
 
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
-    [barButtonItemAppearance setTintColor:[UIColor whiteColor]];
-    [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateNormal];
-    [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor colorWithWhite:1.0 alpha:0.3], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateDisabled];
+    [barButtonItemAppearance setTintColor:XXTColorTint()];
+    [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorTint(), NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateNormal];
+    [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [XXTColorTint() colorWithAlphaComponent:0.3], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateDisabled];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -55,7 +55,11 @@
     if ([self isNavigationBarHidden]) {
         return UIStatusBarStyleDefault;
     }
+#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
+#else
+    return UIStatusBarStyleDefault;
+#endif
 }
 
 - (BOOL)prefersStatusBarHidden {

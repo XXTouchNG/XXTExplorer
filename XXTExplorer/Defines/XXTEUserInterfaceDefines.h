@@ -35,11 +35,14 @@ extern "C" {
     
     UIColor *XXTColorFixed(void);
     UIColor *XXTColorForeground(void);
+    UIColor *XXTColorTint(void);
+    UIColor *XXTColorBarText(void);
     UIColor *XXTColorBarTint(void);
+    UIColor *XXTColorCellSelected(void);
+    
     UIColor *XXTColorWarning(void);
     UIColor *XXTColorDanger(void);
     UIColor *XXTColorSuccess(void);
-    UIColor *XXTColorCellSelected(void);
     
 #ifdef __cplusplus
 }

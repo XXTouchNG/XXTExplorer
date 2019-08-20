@@ -12,6 +12,7 @@
 
 #import "UIView+XXTEToast.h"
 #import "XXTExplorerNavigationController.h"
+#import "XXTExplorerViewController.h"
 
 #ifndef APPSTORE
 
@@ -47,6 +48,7 @@
 
 #pragma mark - Initializers
 
+#ifndef APPSTORE
 - (instancetype)init {
     if (self = [super init]) {
         // UITabBarController is different
@@ -55,14 +57,27 @@
         dispatch_once(&onceToken, ^{
             NSAssert(NO == alreadyInitialized, @"XXTEMasterViewController is a singleton.");
             alreadyInitialized = YES;
-#ifndef APPSTORE
             [self setupAgents];
-#endif
             [self setupAppearance];
         });
     }
     return self;
 }
+#else
+- (instancetype)init {
+    if (self = [super init]) {
+        NSAssert(NO, @"XXTEMasterViewController must be initialized with a rootViewController.");
+    }
+    return self;
+}
+
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
+    if (self = [super initWithRootViewController:rootViewController]) {
+        [self setupAppearance];
+    }
+    return self;
+}
+#endif
 
 + (void)setupAlertDefaultAppearance:(LGAlertView *)alertAppearance {
     if (@available(iOS 8.0, *)) {
@@ -156,11 +171,20 @@
     UITabBar *tabBarAppearance = [UITabBar appearanceWhenContainedIn:[self class], nil];
     [tabBarAppearance setTintColor:XXTColorForeground()];
     
+#ifndef APPSTORE
     if (@available(iOS 11.0, *)) {
         self.tabBar.translucent = YES;
     } else {
         self.tabBar.translucent = NO;
     }
+#else
+    if (@available(iOS 11.0, *)) {
+        self.navigationBar.translucent = YES;
+    } else {
+        self.navigationBar.translucent = NO;
+    }
+    self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Files", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];
+#endif
     
     if (@available(iOS 13.0, *)) {
         [self updateAlertViewStyle];
@@ -184,6 +208,12 @@
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16.0]];
 }
+
+#ifdef APPSTORE
+- (UIViewController *)selectedViewController {
+    return self.topViewController;
+}
+#endif
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return self.selectedViewController.preferredStatusBarStyle;
@@ -416,6 +446,7 @@
 
 #pragma mark - LGAlertViewDelegate
 
+#ifndef APPSTORE
 - (void (^)(NSString *cydiaURLString))cydiaFinallyBlock {
     return ^void(NSString *cydiaURLString) {
         if (cydiaURLString)
@@ -432,6 +463,7 @@
         }
     };
 }
+#endif
 
 #ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView clickedButtonAtIndex:(NSUInteger)index title:(NSString *)title {
@@ -576,6 +608,7 @@
 
 #pragma mark - Getters
 
+#ifndef APPSTORE
 - (XXTExplorerViewController *)topmostExplorerViewController {
     UIViewController *firstFirstVC = [self.viewControllers firstObject];
     if ([firstFirstVC isKindOfClass:[XXTExplorerNavigationController class]]) {
@@ -584,6 +617,18 @@
     }
     return nil;
 }
+#else
+- (XXTExplorerViewController *)topmostExplorerViewController {
+    __block XXTExplorerViewController *topmostExplorerViewController = nil;
+    [self.viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[XXTExplorerViewController class]]) {
+            topmostExplorerViewController = (XXTExplorerViewController *)obj;
+            *stop = YES;
+        }
+    }];
+    return topmostExplorerViewController;
+}
+#endif
 
 #pragma mark - UITraitEnvironment
 
@@ -606,7 +651,9 @@
 #pragma mark - Memory
 
 - (void)dealloc {
-    
+#ifdef DEBUG
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
+#endif
 }
 
 @end

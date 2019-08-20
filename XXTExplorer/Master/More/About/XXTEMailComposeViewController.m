@@ -11,7 +11,11 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
+#else
+    return UIStatusBarStyleDefault;
+#endif
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {

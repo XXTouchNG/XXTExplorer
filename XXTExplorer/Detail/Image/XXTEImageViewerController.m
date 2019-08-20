@@ -133,6 +133,7 @@
 - (UIBarButtonItem *)infoItem {
     if (!_infoItem) {
         _infoItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTExplorerActionIconProperty"] style:UIBarButtonItemStylePlain target:self action:@selector(infoItemTapped:)];
+        _infoItem.tintColor = [UIColor whiteColor];
     }
     return _infoItem;
 }

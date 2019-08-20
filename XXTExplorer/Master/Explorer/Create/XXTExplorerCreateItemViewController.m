@@ -218,7 +218,7 @@ typedef enum : NSUInteger {
 - (UIBarButtonItem *)closeButtonItem {
     if (!_closeButtonItem) {
         UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
-        closeButtonItem.tintColor = [UIColor whiteColor];
+        closeButtonItem.tintColor = XXTColorTint();
         _closeButtonItem = closeButtonItem;
     }
     return _closeButtonItem;
@@ -227,7 +227,7 @@ typedef enum : NSUInteger {
 - (UIBarButtonItem *)doneButtonItem {
     if (!_doneButtonItem) {
         UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitViewController:)];
-        doneButtonItem.tintColor = [UIColor whiteColor];
+        doneButtonItem.tintColor = XXTColorTint();
         doneButtonItem.enabled = NO;
         _doneButtonItem = doneButtonItem;
     }
@@ -316,7 +316,7 @@ typedef enum : NSUInteger {
         else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
             if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractions(self, YES);
+                UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];

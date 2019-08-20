@@ -368,7 +368,7 @@ typedef enum : NSUInteger {
     if (!_installButtonItem) {
         UIBarButtonItem *installButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Install", nil) style:UIBarButtonItemStyleDone target:self action:@selector(installButtonItemTapped:)];
         installButtonItem.enabled = NO;
-        installButtonItem.tintColor = [UIColor whiteColor];
+        installButtonItem.tintColor = XXTColorTint();
         _installButtonItem = installButtonItem;
     }
     return _installButtonItem;
@@ -500,7 +500,7 @@ typedef enum : NSUInteger {
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
             if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractions(self, YES);
+                UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
                 [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                         [[UIPasteboard generalPasteboard] setString:detailText];

@@ -127,7 +127,7 @@
     if (!_installButtonItem) {
         UIBarButtonItem *installButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Install", nil) style:UIBarButtonItemStyleDone target:self action:@selector(installButtonItemTapped:)];
         installButtonItem.enabled = NO;
-        installButtonItem.tintColor = [UIColor whiteColor];
+        installButtonItem.tintColor = XXTColorTint();
         _installButtonItem = installButtonItem;
     }
     return _installButtonItem;
@@ -137,7 +137,7 @@
     if (!_respringButtonItem) {
         UIBarButtonItem *respringButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Respring", nil) style:UIBarButtonItemStyleDone target:self action:@selector(respringButtonItemTapped:)];
         respringButtonItem.enabled = NO;
-        respringButtonItem.tintColor = [UIColor whiteColor];
+        respringButtonItem.tintColor = XXTColorTint();
         _respringButtonItem = respringButtonItem;
     }
     return _respringButtonItem;

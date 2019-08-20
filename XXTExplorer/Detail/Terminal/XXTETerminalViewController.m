@@ -173,6 +173,8 @@
 - (UIActivityIndicatorView *)activityIndicator {
     if (!_activityIndicator) {
         UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        activityIndicator.color = XXTColorTint();
+        activityIndicator.tintColor = XXTColorTint();
         _activityIndicator = activityIndicator;
     }
     return _activityIndicator;
@@ -181,7 +183,7 @@
 - (UIBarButtonItem *)activityIndicatorItem {
     if (!_activityIndicatorItem) {
         UIBarButtonItem *activityIndicatorItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-        activityIndicatorItem.tintColor = [UIColor whiteColor];
+        activityIndicatorItem.tintColor = XXTColorTint();
         _activityIndicatorItem = activityIndicatorItem;
     }
     return _activityIndicatorItem;

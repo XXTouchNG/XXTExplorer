@@ -319,7 +319,6 @@
 		0F8EDB8F1FB1F779003C92D6 /* XXTEEditorTypeSetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F51CB181F61289600150D6D /* XXTEEditorTypeSetter.m */; };
 		0F8EDB901FB1F779003C92D6 /* XXTEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */; };
 		0F8EDB911FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */; };
-		0F8EDB931FB1F779003C92D6 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
 		0F8EDB951FB1F779003C92D6 /* XXTExplorerEntryXPPReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3508BB1F163FE0000403FD /* XXTExplorerEntryXPPReader.m */; };
 		0F8EDB981FB1F779003C92D6 /* XXTPixelPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */; };
 		0F8EDB991FB1F779003C92D6 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
@@ -346,7 +345,6 @@
 		0F8EDBB11FB1F779003C92D6 /* XXTExplorerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F111ED7204E00798B4B /* XXTExplorerViewCell.m */; };
 		0F8EDBB31FB1F779003C92D6 /* XXTEWorkspaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15E1ED78671003DCC78 /* XXTEWorkspaceViewController.m */; };
 		0F8EDBB51FB1F779003C92D6 /* XUIAdapter_xui.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */; };
-		0F8EDBB61FB1F779003C92D6 /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
 		0F8EDBB91FB1F779003C92D6 /* XXTEUIViewController+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C8B1F7E30C600A45CF7 /* XXTEUIViewController+SharedInstance.m */; };
 		0F8EDBBA1FB1F779003C92D6 /* XXTEEditorController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB009161F45AC0A00097E9C /* XXTEEditorController+Keyboard.m */; };
 		0F8EDBBB1FB1F779003C92D6 /* XUIEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5D1F7E275800A45CF7 /* XUIEntryReader.m */; };
@@ -1272,6 +1270,7 @@
 		D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B10E1F4FE94000E741C2 /* XXTETerminalTextView.m */; };
 		D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1111F4FEA7B00E741C2 /* XXTETerminalViewController.m */; };
 		D677B1161F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1151F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m */; };
+		D67F6E51230B8856008D315D /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
 		D6863C621F7E275900A45CF7 /* XXTEUIViewController+LaunchScript.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C571F7E275800A45CF7 /* XXTEUIViewController+LaunchScript.m */; };
 		D6863C631F7E275900A45CF7 /* XXTEUIViewController+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5A1F7E275800A45CF7 /* XXTEUIViewController+OpenURL.m */; };
 		D6863C641F7E275900A45CF7 /* XXTEUIViewController+ScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5B1F7E275800A45CF7 /* XXTEUIViewController+ScanQRCode.m */; };
@@ -5231,7 +5230,6 @@
 				0F66830320A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */,
 				0F8EDB901FB1F779003C92D6 /* XXTEAppDelegate.m in Sources */,
 				0F8EDB911FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
-				0F8EDB931FB1F779003C92D6 /* XXTExplorerNavigationController.m in Sources */,
 				0F8EDB951FB1F779003C92D6 /* XXTExplorerEntryXPPReader.m in Sources */,
 				0F8EDB981FB1F779003C92D6 /* XXTPixelPlaceholderView.m in Sources */,
 				0F8EDB991FB1F779003C92D6 /* XXTETurtleBezierPath.m in Sources */,
@@ -5266,7 +5264,6 @@
 				D606C72722F93CA7006CDAD5 /* XXTETextPreprocessor.m in Sources */,
 				0F8EDBB31FB1F779003C92D6 /* XXTEWorkspaceViewController.m in Sources */,
 				0F8EDBB51FB1F779003C92D6 /* XUIAdapter_xui.m in Sources */,
-				0F8EDBB61FB1F779003C92D6 /* XXTEMasterViewController.m in Sources */,
 				0FB7B8A5200099D30047CE84 /* UIViewController+topMostViewController.m in Sources */,
 				0F8EDBB91FB1F779003C92D6 /* XXTEUIViewController+SharedInstance.m in Sources */,
 				D6BE070D22EFED070008B2AA /* XXTEMobileConfigViewerController.m in Sources */,
@@ -5293,6 +5290,7 @@
 				0F8EDBC91FB1F779003C92D6 /* XXTExplorerEntryOpenWithViewController.m in Sources */,
 				0FBECD622005FEB100068437 /* XXTETextViewController.m in Sources */,
 				0F8EDBCA1FB1F779003C92D6 /* XXTExplorerHeaderView.m in Sources */,
+				D67F6E51230B8856008D315D /* XXTEMasterViewController.m in Sources */,
 				0F8EDBCB1FB1F779003C92D6 /* XXTEMoreValueViewCell.m in Sources */,
 				BD9351942307CBF100F854FF /* XXTEEditorLineMask.m in Sources */,
 				D63711FE22F3F09400ACE211 /* XXTEEncodingController.m in Sources */,

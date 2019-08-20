@@ -522,7 +522,7 @@ XXTE_END_IGNORE_PARTIAL
                         @weakify(self);
                         void (^copyBlock)(NSString *) = ^(NSString *textToCopy) {
                             @strongify(self);
-                            UIViewController *blockVC = blockInteractions(self, YES);
+                            UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
                             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                                     [[UIPasteboard generalPasteboard] setString:textToCopy];

@@ -166,10 +166,7 @@ XXTE_END_IGNORE_PARTIAL
         [self.tableView setTableFooterView:self.footerView];
     }
     
-//    if (!(isOS11Above() && isAppStore())) {
-        [self setupConstraints];
-//    }
-    
+    [self setupConstraints];
     [self loadEntryListData];
 }
 
@@ -215,6 +212,7 @@ XXTE_END_IGNORE_PARTIAL
     } else {
         self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+#ifndef APPSTORE
         NSArray <NSLayoutConstraint *> *constraints =
         @[
           [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
@@ -226,6 +224,19 @@ XXTE_END_IGNORE_PARTIAL
           [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
           ];
+#else
+        NSArray <NSLayoutConstraint *> *constraints =
+        @[
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
+          [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.toolbar attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+          ];
+#endif
         [self.view addConstraints:constraints];
     }
 }
@@ -251,12 +262,10 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 - (void)restoreTheme {
-    UIColor *backgroundColor = XXTColorBarTint();
-    UIColor *foregroundColor = [UIColor whiteColor];
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : foregroundColor}];
-    navigationBar.tintColor = foregroundColor;
-    navigationBar.barTintColor = backgroundColor;
+    [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText()}];
+    navigationBar.tintColor = XXTColorTint();
+    navigationBar.barTintColor = XXTColorBarTint();
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -998,10 +1007,9 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)addressLabelTapped:(UITapGestureRecognizer *)recognizer {
     if (![self isEditing] && recognizer.state == UIGestureRecognizerStateEnded) {
-//        NSString *detailText = ((XXTExplorerHeaderView *) recognizer.view).headerLabel.text;
         NSString *detailText = self.entryPath;
         if (detailText && detailText.length > 0) {
-            UIViewController *blockVC = blockInteractions(self, YES);
+            UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
             [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     [[UIPasteboard generalPasteboard] setString:detailText];
@@ -1241,9 +1249,6 @@ XXTE_END_IGNORE_PARTIAL
 - (UIRefreshControl *)refreshControl {
     if (!_refreshControl) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-//        if (isOS11Above() && isAppStore()) {
-//            refreshControl.tintColor = [UIColor whiteColor];
-//        }
         [refreshControl addTarget:self action:@selector(refreshControlTriggered:) forControlEvents:UIControlEventValueChanged];
         _refreshControl = refreshControl;
     }

@@ -23,11 +23,11 @@
     if (self = [super init]) {
         _font = font ? font : [UIFont fontWithName:@"Courier" size:14.0];
         _name = name ? name : @"";
-        _backgroundColor = UIColor.whiteColor;
-        _foregroundColor = UIColor.blackColor;
+        _backgroundColor = [UIColor whiteColor];
+        _foregroundColor = [UIColor blackColor];
         _caretColor = XXTColorForeground();
         _selectionColor = XXTColorForeground();
-        _invisibleColor = UIColor.blackColor;
+        _invisibleColor = [UIColor blackColor];
         _barTintColor = nil;
         _barTextColor = nil;
         

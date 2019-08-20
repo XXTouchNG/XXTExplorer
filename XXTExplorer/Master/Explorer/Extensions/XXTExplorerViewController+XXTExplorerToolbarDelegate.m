@@ -40,12 +40,18 @@
 - (void)configureToolbarAndCover {
     if (self.isPreviewed) return;
     
-    XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
+#ifndef APPSTORE
+    CGRect toolbarRect = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 44.f);
+#else
+    CGRect toolbarRect = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44.0, CGRectGetWidth(self.view.bounds), 44.f);
+#endif
+    
+    XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:toolbarRect];
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     toolbar.tapDelegate = self;
     self.toolbar = toolbar;
     
-    UILabel *toolbarCover = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.bounds.size.width, 44.f)];
+    UILabel *toolbarCover = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, CGRectGetWidth(self.view.bounds), 44.f)];
     toolbarCover.textAlignment = NSTextAlignmentCenter;
     toolbarCover.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
     toolbarCover.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -58,11 +64,7 @@
     
     [toolbar addSubview:toolbarCover];
     
-//    if (isOS11Above() && isAppStore()) {
-//        [self.tableView setTableHeaderView:toolbar];
-//    } else {
-        [self.view addSubview:toolbar];
-//    }
+    [self.view addSubview:toolbar];
 }
 
 #pragma mark - XXTExplorerToolbar
@@ -190,17 +192,6 @@
             }
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
-//            if (self.explorerSortOrder != XXTExplorerViewEntryListSortOrderAsc) {
-//                self.explorerSortField = XXTExplorerViewEntryListSortFieldDisplayName;
-//                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderAsc;
-//                toastMessage(self, NSLocalizedString(@"Sort by Name Ascend", nil));
-//            } else {
-//                self.explorerSortField = XXTExplorerViewEntryListSortFieldModificationDate;
-//                self.explorerSortOrder = XXTExplorerViewEntryListSortOrderDesc;
-//                toastMessage(self, NSLocalizedString(@"Sort by Modification Date Descend", nil));
-//            }
-//            [self updateToolbarButton];
-//            [self reloadEntryListView];
             NSArray <NSString *> *sortTitles
             = @[
                 NSLocalizedString(@"Created At", nil),

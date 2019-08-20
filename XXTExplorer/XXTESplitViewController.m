@@ -160,6 +160,14 @@ XXTE_END_IGNORE_PARTIAL
     return (splitViewController.viewControllers.count > 0) ? splitViewController.viewControllers[0] : nil;
 }
 
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
+{
+    if ([[self.viewControllers firstObject] isKindOfClass:[UITabBarController class]]) {
+        return NO;
+    }
+    return YES;
+}
+
 // DO NOT OVERRIDE preferredDisplayMode
 
 #pragma mark - UIView Getters
@@ -196,9 +204,9 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)restoreTheme {
     if (@available(iOS 8.0, *)) {
-        self.displayModeButtonItem.tintColor = [UIColor whiteColor];
+        self.displayModeButtonItem.tintColor = XXTColorTint();
     }
-    self.detailCloseItem.tintColor = [UIColor whiteColor];
+    self.detailCloseItem.tintColor = XXTColorTint();
 }
 
 #pragma mark - Getters

@@ -83,6 +83,7 @@
     else if ([aNotification.name isEqualToString:XXTENotificationEvent])
     {
         if ([eventType isEqualToString:XXTENotificationEventTypeInboxMoved]) {
+#ifndef APPSTORE
             if (self.viewControllers.count >= kMasterViewControllerIndexExplorer &&
                 self.selectedIndex != kMasterViewControllerIndexExplorer)
             {
@@ -104,6 +105,7 @@
                     // post this notification again
                 }
             }
+#endif
         } else if ([eventType isEqualToString:XXTENotificationEventTypeInbox]) {
             
             NSURL *inboxURL = aNotification.object;
@@ -582,7 +584,7 @@
 
 #ifndef APPSTORE
 - (void)scanViewController:(XXTEScanViewController *)controller textOperation:(NSString *)detailText {
-    UIViewController *blockVC = blockInteractions(self, YES);
+    UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);

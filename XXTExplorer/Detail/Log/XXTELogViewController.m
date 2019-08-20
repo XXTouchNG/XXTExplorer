@@ -69,7 +69,11 @@ XXTE_END_IGNORE_PARTIAL
         return UIStatusBarStyleDefault;
     }
     XXTE_END_IGNORE_PARTIAL
+#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
+#else
+    return UIStatusBarStyleDefault;
+#endif
 }
 
 - (instancetype)initWithPath:(NSString *)path {
@@ -129,12 +133,10 @@ XXTE_END_IGNORE_PARTIAL
     
     {
         if (@available(iOS 13.0, *)) {
-            searchBar.barStyle = UIBarStyleBlack;
             UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
             textField.textColor = [UIColor labelColor];
             textField.tintColor = XXTColorForeground();
         } else {
-            searchBar.barStyle = UIBarStyleDefault;
             searchBar.backgroundColor = [UIColor whiteColor];
             searchBar.barTintColor = [UIColor whiteColor];
             searchBar.tintColor = XXTColorForeground();
@@ -166,7 +168,7 @@ XXTE_END_IGNORE_PARTIAL
         tableView;
     });
     if (@available(iOS 13.0, *)) {
-        self.navigationItem.hidesSearchBarWhenScrolling = YES;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
         self.navigationItem.searchController = self.searchController;
     }
     
@@ -325,7 +327,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     }
     if (detailText && detailText.length > 0) {
-        UIViewController *blockVC = blockInteractions(self, YES);
+        UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
         [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [[UIPasteboard generalPasteboard] setString:detailText];

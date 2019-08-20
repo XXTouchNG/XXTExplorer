@@ -119,7 +119,7 @@
 }
 
 - (UIColor *)preferredNavigationBarTintColor {
-    return [UIColor whiteColor];
+    return XXTColorTint();
 }
 
 #pragma mark - Memory

@@ -202,7 +202,7 @@ typedef enum : NSUInteger {
 - (UIBarButtonItem *)closeButtonItem {
     if (!_closeButtonItem) {
         UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
-        closeButtonItem.tintColor = [UIColor whiteColor];
+        closeButtonItem.tintColor = XXTColorTint();
         _closeButtonItem = closeButtonItem;
     }
     return _closeButtonItem;
@@ -211,7 +211,7 @@ typedef enum : NSUInteger {
 - (UIBarButtonItem *)downloadButtonItem {
     if (!_downloadButtonItem) {
         UIBarButtonItem *downloadButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(confirmDownload:)];
-        downloadButtonItem.tintColor = [UIColor whiteColor];
+        downloadButtonItem.tintColor = XXTColorTint();
         downloadButtonItem.enabled = NO;
         _downloadButtonItem = downloadButtonItem;
     }
@@ -262,7 +262,7 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
                 if (detailText && detailText.length > 0) {
-                    UIViewController *blockVC = blockInteractions(self, YES);
+                    UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];
@@ -279,7 +279,7 @@ typedef enum : NSUInteger {
             if (indexPath.row == 0) {
                 NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
                 if (detailText && detailText.length > 0) {
-                    UIViewController *blockVC = blockInteractions(self, YES);
+                    UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
                     [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                             [[UIPasteboard generalPasteboard] setString:detailText];

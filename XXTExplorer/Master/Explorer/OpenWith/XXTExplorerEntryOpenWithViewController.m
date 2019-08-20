@@ -117,7 +117,7 @@ typedef enum : NSUInteger {
 - (UIBarButtonItem *)closeButtonItem {
     if (!_closeButtonItem) {
         UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeButtonItemTapped:)];
-        closeButtonItem.tintColor = [UIColor whiteColor];
+        closeButtonItem.tintColor = XXTColorTint();
         _closeButtonItem = closeButtonItem;
     }
     return _closeButtonItem;

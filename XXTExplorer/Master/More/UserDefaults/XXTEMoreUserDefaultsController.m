@@ -104,11 +104,6 @@ XXTE_END_IGNORE_PARTIAL
     XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = self.searchController.searchBar;
-    if (@available(iOS 13.0, *)) {
-        searchBar.barStyle = UIBarStyleBlack;
-    } else {
-        searchBar.barStyle = UIBarStyleDefault;
-    }
     searchBar.placeholder = NSLocalizedString(@"Search User Defaults", nil);
     searchBar.scopeButtonTitles = @[
                                     NSLocalizedString(@"Title", nil),
@@ -129,8 +124,8 @@ XXTE_END_IGNORE_PARTIAL
             textField.textColor = [UIColor blackColor];
         }
         textField.tintColor = XXTColorForeground();
-        searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = [UIColor whiteColor];
+        searchBar.barTintColor = XXTColorBarTint();
+        searchBar.tintColor = XXTColorTint();
         if (@available(iOS 13.0, *)) {
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
         } else {

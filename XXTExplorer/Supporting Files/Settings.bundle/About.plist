@@ -121,7 +121,7 @@ All Rights Reserved.</string>
 	<key>theme</key>
 	<dict>
 		<key>navigationBarColor</key>
-		<string>#3498db</string>
+		<string>#ffffff</string>
 		<key>selectedColor</key>
 		<string>#3498db18</string>
 		<key>tintColor</key>

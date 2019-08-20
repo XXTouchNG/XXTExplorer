@@ -53,7 +53,11 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
+#else
+    return UIStatusBarStyleDefault;
+#endif
 }
 
 - (void)viewDidLoad {

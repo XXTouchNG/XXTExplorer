@@ -199,8 +199,13 @@
     }
     CGContextSetLineWidth(ctx, 1.0f);
     CGPoint aPoint[2] = {
-        CGPointMake(0.0, self.frame.size.height),
-        CGPointMake(self.frame.size.width, self.frame.size.height)
+#ifndef APPSTORE
+        CGPointMake(0.0, CGRectGetHeight(self.frame)),
+        CGPointMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))
+#else
+        CGPointMake(0.0, 0.0),
+        CGPointMake(CGRectGetWidth(self.frame), 0.0)
+#endif
     };
     CGContextAddLines(ctx, aPoint, 2);
     CGContextStrokePath(ctx);

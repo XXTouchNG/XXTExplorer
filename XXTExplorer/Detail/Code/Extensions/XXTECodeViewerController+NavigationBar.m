@@ -55,34 +55,37 @@
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
     UIColor *barTintColor = XXTColorBarTint();
-    UIColor *barTitleColor = [UIColor whiteColor];
+    UIColor *barTitleColor = XXTColorBarText();
+    UIColor *tintColor = XXTColorTint();
     UINavigationController *navigation = self.navigationController;
     if (restore == NO) {
-        if (self.barTextColor)
-        barTitleColor = self.barTextColor;
+        if (self.barTextColor) {
+            barTitleColor = self.barTextColor;
+            tintColor = self.barTextColor;
+        }
         if (self.barTintColor)
-        barTintColor = self.barTintColor;
+            barTintColor = self.barTintColor;
     }
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
-    navigation.navigationBar.tintColor = barTitleColor;
+    navigation.navigationBar.tintColor = tintColor;
     navigation.navigationBar.barTintColor = barTintColor;
-    navigation.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
-    navigation.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    navigation.navigationItem.leftBarButtonItem.tintColor = tintColor;
+    navigation.navigationItem.rightBarButtonItem.tintColor = tintColor;
     navigation.navigationItem.titleView.tintColor = barTitleColor;
     for (UIBarButtonItem *item in navigation.navigationItem.leftBarButtonItems) {
-        item.tintColor = barTitleColor;
+        item.tintColor = tintColor;
     }
     for (UIBarButtonItem *item in navigation.navigationItem.rightBarButtonItems) {
-        item.tintColor = barTitleColor;
+        item.tintColor = tintColor;
     }
-    self.navigationItem.leftBarButtonItem.tintColor = barTitleColor;
-    self.navigationItem.rightBarButtonItem.tintColor = barTitleColor;
+    self.navigationItem.leftBarButtonItem.tintColor = tintColor;
+    self.navigationItem.rightBarButtonItem.tintColor = tintColor;
     self.navigationItem.titleView.tintColor = barTitleColor;
     for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
-        item.tintColor = barTitleColor;
+        item.tintColor = tintColor;
     }
     for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
-        item.tintColor = barTitleColor;
+        item.tintColor = tintColor;
     }
     [self setNeedsStatusBarAppearanceUpdate];
 }

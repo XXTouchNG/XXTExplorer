@@ -12,32 +12,13 @@
             <objects>
                 <splitViewController maximumPrimaryColumnWidth="320" id="Wba-cZ-q9A" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="D5h-5D-piV" kind="relationship" relationship="masterViewController" id="Spa-VG-Nsb"/>
                         <segue destination="vGH-3Z-5sh" kind="relationship" relationship="detailViewController" id="TgH-NA-XLC"/>
+                        <segue destination="A8E-mk-ZRk" kind="relationship" relationship="masterViewController" id="Ss9-TO-NYg"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nch-PT-aen" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3647" y="422"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="owV-YD-60q">
-            <objects>
-                <tabBarController id="D5h-5D-piV" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eFG-5R-sok">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="selectedImageTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="A8E-mk-ZRk" kind="relationship" relationship="viewControllers" id="eNz-vY-or7"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gjw-yY-059" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1375" y="423"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Y12-Po-rs4">
@@ -48,7 +29,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
@@ -62,7 +42,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BgJ-Iu-chi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-612" y="1178"/>
+            <point key="canvasLocation" x="-2464" y="421"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ma8-oj-6yh">
@@ -75,13 +55,27 @@
                     <view key="view" contentMode="scaleToFill" id="fTe-hu-Env">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jPx-di-gaG">
+                                <rect key="frame" x="0.0" y="648" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="DuP-8E-pYc"/>
+                                </constraints>
+                                <items/>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="jPx-di-gaG" firstAttribute="leading" secondItem="fTe-hu-Env" secondAttribute="leading" id="OcM-Eo-jrn"/>
+                            <constraint firstItem="gQ1-1g-tJz" firstAttribute="top" secondItem="jPx-di-gaG" secondAttribute="bottom" id="rJu-Mb-UWR"/>
+                            <constraint firstAttribute="trailing" secondItem="jPx-di-gaG" secondAttribute="trailing" id="t4v-rk-DdU"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="L6d-qb-zWa"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="L6d-qb-zWa"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FHe-3s-DT8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="148" y="1178"/>
+            <point key="canvasLocation" x="-1375" y="421"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IiZ-YF-rmp">
@@ -90,7 +84,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="eqf-z7-VTc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
@@ -119,7 +112,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="HeR-nU-8Ae"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="HeR-nU-8Ae"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bZO-lg-2im" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
