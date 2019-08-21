@@ -130,6 +130,10 @@ All Rights Reserved.</string>
 		<string>#323234</string>
 		<key>valueColor</key>
 		<string>#7E7E80</string>
+		<key>cellBackgroundColor</key>
+		<string>#FEFDFE</string>
+		<key>backgroundColor</key>
+		<string>#F6F5F6</string>
 	</dict>
 	<key>title</key>
 	<string>About</string>

@@ -146,7 +146,7 @@ XXTE_END_IGNORE_PARTIAL
         tableView;
     });
     if (@available(iOS 13.0, *)) {
-        self.navigationItem.hidesSearchBarWhenScrolling = NO;
+        self.navigationItem.hidesSearchBarWhenScrolling = YES;
         self.navigationItem.searchController = self.searchController;
     }
     

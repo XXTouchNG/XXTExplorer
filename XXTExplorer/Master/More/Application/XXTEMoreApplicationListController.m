@@ -172,7 +172,7 @@ XXTE_END_IGNORE_PARTIAL
         searchBar.barTintColor = XXTColorPlainBackground();
         searchBar.tintColor = XXTColorPlainBackground();
         if (@available(iOS 13.0, *)) {
-            self.navigationItem.hidesSearchBarWhenScrolling = NO;
+            self.navigationItem.hidesSearchBarWhenScrolling = YES;
         } else {
 #ifndef APPSTORE
             UIView *backgroundView = [textField.subviews firstObject];
