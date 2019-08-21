@@ -1294,7 +1294,6 @@
 		D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
 		D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */; };
 		D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
-		D69CB508230BDA6D00353BD0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69CB507230BDA6D00353BD0 /* GameKit.framework */; };
 		D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D69D43EC2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -2315,7 +2314,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D69CB508230BDA6D00353BD0 /* GameKit.framework in Frameworks */,
 				0FAE190220809143005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */,
 				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,

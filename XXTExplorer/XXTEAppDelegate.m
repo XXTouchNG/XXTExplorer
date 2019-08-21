@@ -8,7 +8,6 @@
 
 #import <unistd.h>
 #import <sys/stat.h>
-#import <GameKit/GameKit.h>
 
 #import "XXTEAppDelegate.h"
 
