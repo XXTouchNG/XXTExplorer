@@ -20,12 +20,10 @@
     [super awakeFromNib];
     // Initialization code
     
-    if (@available(iOS 13.0, *)) {
-        self.nameField.textColor = [UIColor labelColor];
-    } else {
-        self.nameField.textColor = [UIColor blackColor];
-    }
+    self.nameField.textColor = XXTColorPlainTitleText();
     self.nameField.tintColor = XXTColorForeground();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     if (XXTE_IS_IPHONE_6_BELOW) {
         self.guideWidthConstraint.constant = 0.0;

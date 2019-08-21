@@ -1293,6 +1293,7 @@
 		D693D8C6202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m in Sources */ = {isa = PBXBuildFile; fileRef = D693D8C3202C1C280060A352 /* XXTEEditorFuckSmartPunctuation.m */; };
 		D69533001F904DE300A24B9B /* XUIAnimatedImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */; };
 		D69533011F904DE300A24B9B /* XUIAnimatedImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */; };
+		D69CB508230BDA6D00353BD0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69CB507230BDA6D00353BD0 /* GameKit.framework */; };
 		D69D43EB2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D69D43EC2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */; };
 		D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -2177,6 +2178,8 @@
 		D6863D201F7E3B9100A45CF7 /* XXTEUIViewController+XUILinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+XUILinkCell.m"; sourceTree = "<group>"; };
 		D6863D361F7E574F00A45CF7 /* XUIAdapter_xui.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIAdapter_xui.m; sourceTree = "<group>"; };
 		D6863D381F7E574F00A45CF7 /* XUIAdapter_xui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIAdapter_xui.h; sourceTree = "<group>"; };
+		D686EB7F230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEMediaPlayerController+NavigationBar.m"; sourceTree = "<group>"; };
+		D686EB80230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEMediaPlayerController+NavigationBar.h"; sourceTree = "<group>"; };
 		D689F5A41F42AA3D002BB59E /* XXTEEditorLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLayoutManager.h; sourceTree = "<group>"; };
 		D689F5A51F42AA3D002BB59E /* XXTEEditorLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLayoutManager.m; sourceTree = "<group>"; };
 		D693D8B9202BEFA80060A352 /* XXTEConfirmTextInputObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEConfirmTextInputObject.h; sourceTree = "<group>"; };
@@ -2186,6 +2189,7 @@
 		D69532FD1F904DE300A24B9B /* XUIAnimatedImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XUIAnimatedImageCell.h; sourceTree = "<group>"; };
 		D69532FE1F904DE300A24B9B /* XUIAnimatedImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XUIAnimatedImageCell.m; sourceTree = "<group>"; };
 		D69532FF1F904DE300A24B9B /* XUIAnimatedImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XUIAnimatedImageCell.xib; sourceTree = "<group>"; };
+		D69CB507230BDA6D00353BD0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		D69D43E92026EA4600AD62C1 /* XXTEUIViewController+RunCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+RunCommand.h"; sourceTree = "<group>"; };
 		D69D43EA2026EA4600AD62C1 /* XXTEUIViewController+RunCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+RunCommand.m"; sourceTree = "<group>"; };
 		D6A5484A1F8B1B4F006B6DAA /* libactivator.tbd */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libactivator.tbd; sourceTree = "<group>"; };
@@ -2309,6 +2313,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D69CB508230BDA6D00353BD0 /* GameKit.framework in Frameworks */,
 				0FAE190220809143005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0F74C624203DB57C009C42DB /* StoreKit.framework in Frameworks */,
 				0FC598AD1FB49317001F918B /* QuartzCore.framework in Frameworks */,
@@ -2664,6 +2669,7 @@
 		0F4419EC1F17969000967980 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				D686EB7E230CFF5F0074CC4A /* Extensions */,
 				0F4419F61F17E11F00967980 /* Reader */,
 				D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */,
 				D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */,
@@ -3779,6 +3785,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D69CB507230BDA6D00353BD0 /* GameKit.framework */,
 				0FAE18FF20809135005F9B67 /* libsqlite3.tbd */,
 				D61616FA1FE8F76F009F10FF /* StoreKit.framework */,
 				0FC598AC1FB49317001F918B /* QuartzCore.framework */,
@@ -4358,6 +4365,15 @@
 				0F856CF51FBC72B3002332F2 /* XUIAdapter_xui.xuic */,
 			);
 			path = Xui;
+			sourceTree = "<group>";
+		};
+		D686EB7E230CFF5F0074CC4A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D686EB80230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.h */,
+				D686EB7F230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.m */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D69532FC1F904DD000A24B9B /* AnimatedImage */ = {

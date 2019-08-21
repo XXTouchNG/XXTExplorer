@@ -90,11 +90,7 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     if (self.title.length == 0) {
         self.title = [self.class viewerName];

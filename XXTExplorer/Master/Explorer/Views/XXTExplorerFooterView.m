@@ -60,11 +60,7 @@
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
         textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textLabel.textColor = XXTColorForeground();
-        if (@available(iOS 13.0, *)) {
-            textLabel.backgroundColor = [UIColor systemBackgroundColor];
-        } else {
-            textLabel.backgroundColor = [UIColor whiteColor];
-        }
+        textLabel.backgroundColor = XXTColorPlainBackground();
         UIFont *font = [UIFont systemFontOfSize:14.0];
         textLabel.font = font;
         textLabel.edgeInsets = UIEdgeInsetsMake(0.0, 12.f, 24.0, 12.f);

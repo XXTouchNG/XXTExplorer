@@ -7,6 +7,8 @@
 //
 
 #import "XXTExplorerToolbar.h"
+#import "UIImage+ColoredImage.h"
+
 
 @interface XXTExplorerToolbar ()
 
@@ -36,11 +38,7 @@
 - (void)setup {
     [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTintColor:XXTColorForeground()];
     
-    if (@available(iOS 13.0, *)) {
-        self.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.backgroundColor = [UIColor whiteColor];
-    }
+    self.backgroundColor = XXTColorPlainBackground();
     
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedSpace.width = 20.0f;

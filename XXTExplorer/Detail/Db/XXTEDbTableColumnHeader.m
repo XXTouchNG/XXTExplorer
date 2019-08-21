@@ -18,20 +18,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        if (@available(iOS 13.0, *)) {
-            self.backgroundColor = [UIColor systemBackgroundColor];
-        } else {
-            self.backgroundColor = [UIColor whiteColor];
-        }
+        self.backgroundColor = XXTColorPlainBackground();
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, frame.size.width - 25, frame.size.height)];
         label.font = [UIFont systemFontOfSize:13.0];
+        label.textColor = XXTColorPlainTitleText();
         [self addSubview:label];
         self.label = label;
         
         
         _arrowLabel = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width - 20, 0, 20, frame.size.height)];
         _arrowLabel.font = [UIFont systemFontOfSize:13.0];
+        _arrowLabel.textColor = XXTColorPlainTitleText();
         [self addSubview:_arrowLabel];
         
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 0.6, 0, 0.6, frame.size.height)];

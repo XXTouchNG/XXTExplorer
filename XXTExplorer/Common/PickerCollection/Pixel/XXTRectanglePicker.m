@@ -123,11 +123,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)loadView {
     UIView *contentView = [[UIView alloc] init];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    if (@available(iOS 13.0, *)) {
-        contentView.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        contentView.backgroundColor = [UIColor whiteColor];
-    }
+    contentView.backgroundColor = XXTColorPlainBackground();
     self.view = contentView;
 
     XXTPixelCropView *cropView = [[XXTPixelCropView alloc] initWithFrame:contentView.bounds andType:(kXXTPixelCropViewType) [[self class] cropViewType]];
@@ -602,10 +598,11 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)updateSubtitle:(NSString *)subtitle {
+    UIColor *textColor = XXTColorForeground();
     _pickerSubtitle = [[NSAttributedString alloc] initWithString:subtitle
                                                       attributes:@{
                                                               NSFontAttributeName: [UIFont fontWithName:@"Courier" size:12.f],
-                                                              NSForegroundColorAttributeName: [UIColor blackColor],
+                                                              NSForegroundColorAttributeName: textColor,
                                                       }];
     [self.pickerFactory performUpdateStep:self];
 }
@@ -655,10 +652,11 @@ XXTE_END_IGNORE_PARTIAL
         CGFloat r = 0, g = 0, b = 0, a = 0;
         [selectedColor getRed:&r green:&g blue:&b alpha:&a];
         NSString *previewString = [NSString stringWithFormat:previewFormat, (int) (r * 255.f), (int) (g * 255.f), (int) (b * 255.f)];
+        UIColor *textColor = XXTColorForeground();
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:previewString
                                                                                              attributes:@{
                                                                                                      NSFontAttributeName: [UIFont fontWithName:@"Courier" size:12.f],
-                                                                                                     NSForegroundColorAttributeName: [UIColor blackColor]
+                                                                                                     NSForegroundColorAttributeName: textColor
                                                                                              }];
         NSString *colorPreview = [NSString stringWithFormat:@"(■ 0x%@)", selectedHex];
         NSAttributedString *colorAttributedPreview = [[NSMutableAttributedString alloc] initWithString:colorPreview
@@ -687,10 +685,11 @@ XXTE_END_IGNORE_PARTIAL
             }
             NSString *previewFormat = @"(x%d, y%d) ";
             NSString *previewString = [NSString stringWithFormat:previewFormat, (int) selectedPoint.x, (int) selectedPoint.y];
+            UIColor *textColor = XXTColorForeground();
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:previewString
                                                                                                  attributes:@{
                                                                                                          NSFontAttributeName: [UIFont fontWithName:@"Courier" size:12.f],
-                                                                                                         NSForegroundColorAttributeName: [UIColor blackColor]
+                                                                                                         NSForegroundColorAttributeName: textColor
                                                                                                  }];
             NSString *colorPreview = [NSString stringWithFormat:@"(■ 0x%@)", selectedHex];
             NSAttributedString *colorAttributedPreview = [[NSMutableAttributedString alloc] initWithString:colorPreview

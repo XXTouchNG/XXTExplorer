@@ -157,6 +157,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     self.title = NSLocalizedString(@"More", nil);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.view.backgroundColor = XXTColorGroupedBackground();
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 9.0, *)) {
@@ -165,11 +166,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTE_END_IGNORE_PARTIAL
     
     if (@available(iOS 11.0, *)) {
-//#ifdef APPSTORE
-//        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
-//#else
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-//#endif
     }
     
 #ifdef APPSTORE
@@ -226,18 +223,10 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTEMoreAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     XXTEMoreAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     if (_webServerUrl.length > 0) {
-        if (@available(iOS 13.0, *)) {
-            cellAddress1.addressLabel.textColor = [UIColor labelColor];
-        } else {
-            cellAddress1.addressLabel.textColor = [UIColor blackColor];
-        }
+        cellAddress1.addressLabel.textColor = XXTColorPlainTitleText();
         cellAddress1.addressLabel.text = _webServerUrl;
     } else {
-        if (@available(iOS 13.0, *)) {
-            cellAddress1.addressLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cellAddress1.addressLabel.textColor = [UIColor colorWithWhite:.8 alpha:1.0];
-        }
+        cellAddress1.addressLabel.textColor = XXTColorPlainSubtitleText();
         cellAddress1.addressLabel.text = NSLocalizedString(@"Connect to Wi-fi network.", nil);
     }
     cellAddress2.addressLabel.text = _bonjourWebServerUrl.length > 0 ? _bonjourWebServerUrl : NSLocalizedString(@"N/A", nil);

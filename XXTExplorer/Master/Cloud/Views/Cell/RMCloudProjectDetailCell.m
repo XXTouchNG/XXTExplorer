@@ -21,7 +21,11 @@
     
     self.iconImageView.image = nil;
     self.titleTextLabel.text = @"";
+    self.titleTextLabel.textColor = XXTColorPlainTitleText();
     self.descriptionTextLabel.text = @"";
+    self.descriptionTextLabel.textColor = XXTColorPlainSubtitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIImageView *iconImageView = self.iconImageView;
     iconImageView.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.1].CGColor;

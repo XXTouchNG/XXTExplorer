@@ -200,16 +200,9 @@ static const CGFloat kColumnMargin = 1;
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *backgroundColor = nil;
-    if (@available(iOS 13.0, *)) {
-        backgroundColor = [UIColor systemBackgroundColor];
-        if (indexPath.row % 2 != 0) {
-            backgroundColor = [UIColor secondarySystemBackgroundColor];
-        }
-    } else {
-        backgroundColor = [UIColor whiteColor];
-        if (indexPath.row % 2 != 0) {
-            backgroundColor = [UIColor colorWithWhite:0.950 alpha:0.750];
-        }
+    backgroundColor = XXTColorPlainBackground();
+    if (indexPath.row % 2 != 0) {
+        backgroundColor = XXTColorPlainSectionHeader();
     }
     
     if (tableView != self.leftTableView) {

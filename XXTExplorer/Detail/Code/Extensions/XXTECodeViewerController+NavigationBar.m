@@ -23,6 +23,9 @@
     if (prefersLightStatusBar) {
         return UIStatusBarStyleLightContent;
     } else {
+        if (@available(iOS 13.0, *)) {
+            return UIStatusBarStyleDarkContent;
+        }
         return UIStatusBarStyleDefault;
     }
 }

@@ -95,11 +95,7 @@ XXTE_END_IGNORE_PARTIAL
         }
     }
     
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
@@ -134,11 +130,11 @@ XXTE_END_IGNORE_PARTIAL
     {
         if (@available(iOS 13.0, *)) {
             UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
-            textField.textColor = [UIColor labelColor];
+            textField.textColor = XXTColorPlainTitleText();
             textField.tintColor = XXTColorForeground();
         } else {
-            searchBar.backgroundColor = [UIColor whiteColor];
-            searchBar.barTintColor = [UIColor whiteColor];
+            searchBar.backgroundColor = XXTColorPlainBackground();
+            searchBar.barTintColor = XXTColorPlainBackground();
             searchBar.tintColor = XXTColorForeground();
         }
         searchBar.placeholder = NSLocalizedString(@"Search Log", nil);
@@ -367,18 +363,10 @@ XXTE_END_IGNORE_PARTIAL
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XXTELogCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTELogCellReuseIdentifier forIndexPath:indexPath];
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
-    if (@available(iOS 13.0, *)) {
-        if (indexPath.row % 2 == 0) {
-            [cell setBackgroundColor:[UIColor systemBackgroundColor]];
-        } else {
-            [cell setBackgroundColor:[UIColor secondarySystemBackgroundColor]];
-        }
+    if (indexPath.row % 2 == 0) {
+        [cell setBackgroundColor:XXTColorPlainBackground()];
     } else {
-        if (indexPath.row % 2 == 0) {
-            [cell setBackgroundColor:[UIColor whiteColor]];
-        } else {
-            [cell setBackgroundColor:[UIColor colorWithWhite:0.97 alpha:1.0]];
-        }
+        [cell setBackgroundColor:XXTColorPlainSectionHeader()];
     }
     return cell;
 }

@@ -48,11 +48,7 @@
     _isFirstLoading = YES;
     _selectedIndex = 0;
     
-    if (@available(iOS 13.0, *)) {
-        self.pageScrollView.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.pageScrollView.backgroundColor = [UIColor whiteColor];
-    }
+    self.pageScrollView.backgroundColor = XXTColorPlainBackground();
     
     XXTESegmentedControl *segmentedControl = [[XXTESegmentedControl alloc] init];
     segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

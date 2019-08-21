@@ -109,7 +109,6 @@
 }
 
 - (void)performUpdateStep:(UIViewController <XXTBasePicker> *)viewController {
-
     XXTPickerNavigationController *navController = (XXTPickerNavigationController *)viewController.navigationController;
     if ([viewController respondsToSelector:@selector(pickerTask)]) {
         XXTPickerSnippetTask *currentTask = [viewController performSelector:@selector(pickerTask)];

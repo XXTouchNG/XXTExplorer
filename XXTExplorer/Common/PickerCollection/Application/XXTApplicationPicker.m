@@ -131,13 +131,8 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
-    if (@available(iOS 13.0, *)) {
-        searchBar.backgroundColor = [UIColor systemBackgroundColor];
-        searchBar.barTintColor = [UIColor systemBackgroundColor];
-    } else {
-        searchBar.backgroundColor = [UIColor whiteColor];
-        searchBar.barTintColor = [UIColor whiteColor];
-    }
+    searchBar.backgroundColor = XXTColorPlainBackground();
+    searchBar.barTintColor = XXTColorPlainBackground();
     searchBar.tintColor = XXTColorForeground();
 
     XXTP_START_IGNORE_PARTIAL

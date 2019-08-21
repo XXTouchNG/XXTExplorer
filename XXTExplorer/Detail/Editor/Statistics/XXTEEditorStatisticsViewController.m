@@ -74,6 +74,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
     self.clearsSelectionOnViewWillAppear = YES;
     self.title = NSLocalizedString(@"Statistics", nil);

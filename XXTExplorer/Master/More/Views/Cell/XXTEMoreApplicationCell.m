@@ -20,12 +20,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    if (@available(iOS 13.0, *)) {
-        self.applicationNameLabel.textColor = [UIColor labelColor];
-    } else {
-        self.applicationNameLabel.textColor = [UIColor blackColor];
-    }
+    self.applicationNameLabel.textColor = XXTColorPlainTitleText();
     self.applicationBundleIDLabel.textColor = XXTColorForeground();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

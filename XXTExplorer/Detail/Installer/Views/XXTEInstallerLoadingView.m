@@ -12,7 +12,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
     self.loadingLabel.text = NSLocalizedString(@"Loading...", nil);
+    self.loadingLabel.textColor = XXTColorPlainSubtitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
 }
 
 @end

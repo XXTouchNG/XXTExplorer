@@ -96,11 +96,11 @@
     alertAppearance.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     alertAppearance.buttonsHeight = 44.0;
     alertAppearance.titleFont = [UIFont boldSystemFontOfSize:16.0];
-    alertAppearance.titleTextColor = [UIColor blackColor];
-    alertAppearance.messageTextColor = [UIColor blackColor];
+    alertAppearance.titleTextColor = XXTColorPlainTitleText();
+    alertAppearance.messageTextColor = XXTColorPlainTitleText();
     alertAppearance.activityIndicatorViewColor = XXTColorForeground();
     alertAppearance.progressViewProgressTintColor = XXTColorForeground();
-    alertAppearance.progressLabelTextColor = [UIColor blackColor];
+    alertAppearance.progressLabelTextColor = XXTColorPlainTitleText();
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.buttonsTitleColor = XXTColorForeground();
     alertAppearance.buttonsBackgroundColorHighlighted = XXTColorFixed();
@@ -111,7 +111,7 @@
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();
     alertAppearance.textFieldsBackgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
-    alertAppearance.textFieldsTextColor = [UIColor blackColor];
+    alertAppearance.textFieldsTextColor = XXTColorPlainTitleText();
     alertAppearance.progressLabelFont = [UIFont italicSystemFontOfSize:14.f];
     alertAppearance.progressLabelLineBreakMode = NSLineBreakByTruncatingHead;
     alertAppearance.dismissOnAction = NO;
@@ -145,10 +145,10 @@
     alertAppearance.progressLabelTextColor = labelColor;
     alertAppearance.buttonsFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.buttonsTitleColor = XXTColorForeground();
-    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorFixed();
+    alertAppearance.buttonsBackgroundColorHighlighted = XXTColorCellSelected();
     alertAppearance.cancelButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.cancelButtonTitleColor = labelColor;
-    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorFixed();
+    alertAppearance.cancelButtonBackgroundColorHighlighted = XXTColorCellSelected();
     alertAppearance.destructiveButtonFont = [UIFont systemFontOfSize:16.0];
     alertAppearance.destructiveButtonTitleColor = XXTColorDanger();
     alertAppearance.destructiveButtonBackgroundColorHighlighted = XXTColorDanger();

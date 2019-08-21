@@ -106,6 +106,11 @@ static void * activatorHandler = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
 
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {

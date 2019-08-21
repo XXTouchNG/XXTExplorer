@@ -59,11 +59,7 @@
         }
     }
     
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     {
         XXTESingleActionView *actionView = self.actionView;

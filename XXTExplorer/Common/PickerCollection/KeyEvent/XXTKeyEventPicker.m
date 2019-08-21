@@ -104,11 +104,7 @@ static NSString * const kXXTKeyEventTableViewCellReuseIdentifier = @"kXXTKeyEven
         self.selectedCommand = self.events[0][0].command;
     }
     
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
 
     UITableView * tableView1 = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableView1.delegate = self;

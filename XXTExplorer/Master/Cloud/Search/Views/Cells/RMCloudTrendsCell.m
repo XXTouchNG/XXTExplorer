@@ -13,6 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
+    
     self.tagView.scrollView.scrollEnabled = NO;
     self.tagView.contentInset = UIEdgeInsetsZero;
     self.tagView.scrollDirection = XUITagCollectionScrollDirectionVertical;

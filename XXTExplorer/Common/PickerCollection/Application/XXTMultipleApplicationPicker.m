@@ -151,8 +151,8 @@ UISearchDisplayDelegate
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
-    searchBar.backgroundColor = [UIColor whiteColor];  // do not optimize for iOS 13.0+, not supported.
-    searchBar.barTintColor = [UIColor whiteColor];  // do not optimize for iOS 13.0+, not supported.
+    searchBar.backgroundColor = XXTColorPlainBackground();
+    searchBar.barTintColor = XXTColorPlainBackground();
     
     XXTP_START_IGNORE_PARTIAL
     UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];

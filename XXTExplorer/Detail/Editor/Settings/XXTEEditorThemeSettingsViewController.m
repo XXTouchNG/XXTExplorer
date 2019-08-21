@@ -92,6 +92,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
     self.title = NSLocalizedString(@"Theme", nil);
     self.tableView.delegate = self;

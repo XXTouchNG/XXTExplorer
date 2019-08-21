@@ -30,11 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     [self.view addSubview:self.multiColumView];
     if (@available(iOS 8.0, *)) {

@@ -122,11 +122,7 @@ XXTE_END_IGNORE_PARTIAL
     {
         XXTE_START_IGNORE_PARTIAL
         if (isOS11Above()) {
-//            if (isAppStore()) {
-//                self.navigationItem.largeTitleDisplayMode = (self.isPreviewed) ? UINavigationItemLargeTitleDisplayModeNever : UINavigationItemLargeTitleDisplayModeAlways;
-//            } else {
-                self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-//            }
+            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
         }
         XXTE_END_IGNORE_PARTIAL
         
@@ -137,11 +133,7 @@ XXTE_END_IGNORE_PARTIAL
     }
     
     {
-        if (@available(iOS 13.0, *)) {
-            [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
-        } else {
-            [self.view setBackgroundColor:[UIColor whiteColor]];
-        }
+        self.view.backgroundColor = XXTColorPlainBackground();
         [self.view addSubview:self.tableView];
     }
     
@@ -592,11 +584,7 @@ XXTE_END_IGNORE_PARTIAL
                                 UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
                                 popoverController.sourceView = tableView;
                                 popoverController.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
-                                if (@available(iOS 13.0, *)) {
-                                    popoverController.backgroundColor = [UIColor systemBackgroundColor];
-                                } else {
-                                    popoverController.backgroundColor = [UIColor whiteColor];
-                                }
+                                popoverController.backgroundColor = XXTColorPlainBackground();
                             }
                             XXTE_END_IGNORE_PARTIAL
                             navController.presentationController.delegate = self;
@@ -939,13 +927,8 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry {
     entryCell.delegate = self;
-    if (@available(iOS 13.0, *)) {
-        entryCell.entryTitleLabel.textColor = [UIColor labelColor];
-        entryCell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
-    } else {
-        entryCell.entryTitleLabel.textColor = [UIColor blackColor];
-        entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-    }
+    entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
+    entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
     if (entry.isBrokenSymlink) {
         // broken symlink
         entryCell.entryTitleLabel.textColor = XXTColorDanger();
@@ -957,13 +940,8 @@ XXTE_END_IGNORE_PARTIAL
         entryCell.entrySubtitleLabel.textColor = XXTColorForeground();
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     } else {
-        if (@available(iOS 13.0, *)) {
-            entryCell.entryTitleLabel.textColor = [UIColor labelColor];
-            entryCell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            entryCell.entryTitleLabel.textColor = [UIColor blackColor];
-            entryCell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-        }
+        entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
+        entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
         entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
     }
     if (!entry.isMaskedDirectory &&
@@ -1001,6 +979,8 @@ XXTE_END_IGNORE_PARTIAL
     entryCell.entryIconImageView.image = [UIImage imageNamed:entryDetail[@"icon"]];
     entryCell.entryTitleLabel.text = entryDetail[@"title"];
     entryCell.entrySubtitleLabel.text = entryDetail[@"subtitle"];
+    entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
+    entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
 }
 
 #pragma mark - View Attachments
@@ -1212,11 +1192,7 @@ XXTE_END_IGNORE_PARTIAL
 - (UITableView *)tableView {
     if (!_tableView) {
         CGRect tableViewFrame = CGRectZero;
-//        if (isOS11Above() && isAppStore()) {
-//            tableViewFrame = self.view.bounds;
-//        } else {
-            tableViewFrame = CGRectMake(0.0, 44.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0);
-//        }
+        tableViewFrame = CGRectMake(0.0, 44.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0);
         UITableView *tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = self;
@@ -1225,6 +1201,7 @@ XXTE_END_IGNORE_PARTIAL
         tableView.allowsMultipleSelection = NO;
         tableView.allowsSelectionDuringEditing = YES;
         tableView.allowsMultipleSelectionDuringEditing = YES;
+        tableView.backgroundColor = XXTColorPlainBackground();
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 9.0, *)) {
             tableView.cellLayoutMarginsFollowReadableWidth = NO;

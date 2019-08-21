@@ -8,6 +8,7 @@
 
 #import <unistd.h>
 #import <sys/stat.h>
+#import <GameKit/GameKit.h>
 
 #import "XXTEAppDelegate.h"
 
@@ -92,11 +93,7 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     mainWindow.tintColor = XXTColorForeground();
-    if (@available(iOS 13.0, *)) {
-        mainWindow.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        mainWindow.backgroundColor = [UIColor whiteColor];
-    }
+    mainWindow.backgroundColor = XXTColorPlainBackground();
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
     

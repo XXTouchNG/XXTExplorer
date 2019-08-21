@@ -15,7 +15,8 @@
     
     self.licenseField.textColor = XXTColorForeground();
     self.licenseField.tintColor = XXTColorForeground();
-    
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

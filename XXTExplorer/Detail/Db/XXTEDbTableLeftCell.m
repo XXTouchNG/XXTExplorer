@@ -20,7 +20,8 @@
         UILabel *textLabel               = [[UILabel alloc] initWithFrame:CGRectZero];
         textLabel.textAlignment          = NSTextAlignmentCenter;
         textLabel.font                   = [UIFont systemFontOfSize:13.0];
-        textLabel.backgroundColor = [UIColor clearColor];
+        textLabel.backgroundColor        = [UIColor clearColor];
+        textLabel.textColor              = XXTColorPlainTitleText();
         [cell.contentView addSubview:textLabel];
         cell.titlelabel = textLabel;
     }

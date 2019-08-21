@@ -22,13 +22,11 @@
     // Initialization code
     
     self.titleLabel.text = @"";
+    self.titleLabel.textColor = XXTColorPlainTitleText();
     self.iconImage = nil;
-    
-    if (@available(iOS 13.0, *)) {
-        self.iconImageView.tintColor = [UIColor labelColor];
-    } else {
-        self.iconImageView.tintColor = [UIColor blackColor];
-    }
+    self.iconImageView.tintColor = XXTColorPlainTitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

@@ -176,11 +176,7 @@
                     controller.modalPresentationStyle = UIModalPresentationPopover;
                     UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
                     popoverController.barButtonItem = buttonItem;
-                    if (@available(iOS 13.0, *)) {
-                        popoverController.backgroundColor = [UIColor systemBackgroundColor];
-                    } else {
-                        popoverController.backgroundColor = [UIColor whiteColor];
-                    }
+                    popoverController.backgroundColor = XXTColorPlainBackground();
                     controller.presentationController.delegate = self;
                     [self.navigationController presentViewController:controller animated:YES completion:nil];
                 } else {

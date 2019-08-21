@@ -34,11 +34,20 @@ extern "C" {
     void toastError(UIViewController *viewController, NSError *error);
     
     UIColor *XXTColorFixed(void);
+
     UIColor *XXTColorForeground(void);
     UIColor *XXTColorTint(void);
     UIColor *XXTColorBarText(void);
     UIColor *XXTColorBarTint(void);
+    UIColor *XXTColorToolbarBarTint(void);
+
     UIColor *XXTColorCellSelected(void);
+    UIColor *XXTColorPlainBackground(void);
+    UIColor *XXTColorPlainTitleText(void);
+    UIColor *XXTColorPlainSubtitleText(void);
+    UIColor *XXTColorPlainSectionHeader(void);
+    UIColor *XXTColorPlainSectionHeaderText(void);
+    UIColor *XXTColorGroupedBackground(void);
     
     UIColor *XXTColorWarning(void);
     UIColor *XXTColorDanger(void);

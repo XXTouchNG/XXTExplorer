@@ -13,14 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    if (@available(iOS 13.0, *)) {
-        self.titleLabel.textColor = [UIColor labelColor];
-        self.valueField.textColor = [UIColor labelColor];
-    } else {
-        self.titleLabel.textColor = [UIColor blackColor];
-        self.valueField.textColor = [UIColor blackColor];
-    }
+    self.titleLabel.textColor = XXTColorPlainTitleText();
+    self.valueField.textColor = XXTColorPlainTitleText();
     self.valueField.tintColor = XXTColorForeground();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

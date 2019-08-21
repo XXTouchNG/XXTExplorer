@@ -81,11 +81,7 @@ XXTE_END_IGNORE_PARTIAL
     self.automaticallyAdjustsScrollViewInsets = YES;
     
     self.title = NSLocalizedString(@"Search", nil);
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;

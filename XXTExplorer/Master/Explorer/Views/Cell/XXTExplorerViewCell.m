@@ -37,6 +37,7 @@
 
 - (void)setup {
     self.tintColor = XXTColorForeground();
+    self.backgroundColor = XXTColorPlainBackground();
     
     self.flagIconImageView.layer.shadowOffset = CGSizeMake(0, 0);
     self.flagIconImageView.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:1.f].CGColor;
@@ -117,25 +118,5 @@
     }
     return XXTColorForeground();
 }
-
-//- (void)animateIndicatorForFlagType:(XXTExplorerViewCellFlagType)flagType {
-//    UIImage *image = [self indicatorImageForFlagType:flagType];
-//    if (image == nil) {
-//        return;
-//    }
-//    UIImageView *animationView = self.animationView;
-//    if (!animationView.hidden) {
-//        return;
-//    }
-//    [animationView setImage:image];
-//    animationView.transform = CGAffineTransformIdentity;
-//    [animationView setHidden:NO];
-//    [UIView animateWithDuration:0.27f delay:0.6f options:UIViewAnimationOptionCurveEaseOut animations:^{
-//        animationView.transform = CGAffineTransformMakeTranslation(-CGRectGetWidth(animationView.bounds), 0);
-//    } completion:^(BOOL finished) {
-//        [animationView setHidden:YES];
-//        animationView.transform = CGAffineTransformIdentity;
-//    }];
-//}
 
 @end

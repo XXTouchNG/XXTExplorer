@@ -19,6 +19,9 @@
     // Initialization code
     
     self.descriptionTextLabel.text = @"";
+    self.descriptionTextLabel.textColor = XXTColorPlainTitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

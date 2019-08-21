@@ -30,6 +30,7 @@
 
 - (void)setup {
     self.tintColor = XXTColorForeground();
+    self.backgroundColor = XXTColorPlainBackground();
     self.accessoryType = UITableViewCellAccessoryNone;
     
     UIView *selectionBackground = [[UIView alloc] init];

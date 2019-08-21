@@ -37,7 +37,11 @@
     self.selectedBackgroundView = selectionBackground;
     
     self.titleTextLabel.text = NSLocalizedString(@"Untitled", nil);
+    self.titleTextLabel.textColor = XXTColorPlainTitleText();
     self.descriptionTextLabel.text = NSLocalizedString(@"No description.", nil);
+    self.descriptionTextLabel.textColor = XXTColorPlainSubtitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIButton *downloadBtn = self.downloadButton;
     downloadBtn.showsTouchWhenHighlighted = YES;

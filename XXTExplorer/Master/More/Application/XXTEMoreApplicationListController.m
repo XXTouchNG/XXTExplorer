@@ -93,6 +93,8 @@ XXTE_END_IGNORE_PARTIAL
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.automaticallyAdjustsScrollViewInsets = YES;
     
+    self.view.backgroundColor = XXTColorPlainBackground();
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     _applicationWorkspace = ({
@@ -165,23 +167,23 @@ XXTE_END_IGNORE_PARTIAL
         } else {
             textField = [searchBar valueForKey:@"searchField"];
         }
-        textField.textColor = [UIColor blackColor];
+        textField.textColor = XXTColorPlainTitleText();
         textField.tintColor = XXTColorForeground();
-        searchBar.barTintColor = [UIColor whiteColor];
-        searchBar.tintColor = [UIColor whiteColor];
+        searchBar.barTintColor = XXTColorPlainBackground();
+        searchBar.tintColor = XXTColorPlainBackground();
         if (@available(iOS 13.0, *)) {
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
         } else {
             UIView *backgroundView = [textField.subviews firstObject];
-            backgroundView.backgroundColor = [UIColor whiteColor];
+            backgroundView.backgroundColor = XXTColorPlainBackground();
             backgroundView.layer.cornerRadius = 10.0;
             backgroundView.clipsToBounds = YES;
         }
         self.navigationItem.searchController = self.searchController;
     } else {
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        searchBar.backgroundColor = [UIColor whiteColor];
-        searchBar.barTintColor = [UIColor whiteColor];
+        searchBar.backgroundColor = XXTColorPlainBackground();
+        searchBar.barTintColor = XXTColorPlainBackground();
         searchBar.tintColor = XXTColorForeground();
         self.tableView.tableHeaderView = searchBar;
     }

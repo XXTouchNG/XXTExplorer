@@ -84,6 +84,7 @@
 
 - (void)setSubtitle:(NSString *)subtitle {
     self.subtitleLabel.text = subtitle;
+    self.subtitleLabel.textColor = XXTColorForeground();
 }
 
 - (void)setAttributedSubtitle:(NSAttributedString *)subtitle {

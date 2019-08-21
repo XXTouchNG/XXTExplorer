@@ -109,6 +109,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableViewStyle == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
     if (self.title.length == 0) {
         NSString *entryPath = self.entryPath;

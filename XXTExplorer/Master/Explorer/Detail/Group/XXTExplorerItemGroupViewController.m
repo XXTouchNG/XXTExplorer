@@ -123,6 +123,11 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreSwitchCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreSwitchCellReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleValueCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleValueCellReuseIdentifier];

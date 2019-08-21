@@ -14,6 +14,8 @@
     [super awakeFromNib];
     
     self.actionNameLabel.textColor = XXTColorDanger();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

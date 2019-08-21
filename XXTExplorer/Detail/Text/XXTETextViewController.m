@@ -79,11 +79,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
             self.title = [[self class] viewerName];
         }
     }
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
@@ -207,6 +203,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
         logTextView.textAlignment = NSTextAlignmentLeft;
         logTextView.allowsEditingTextAttributes = NO;
         logTextView.tintColor = XXTColorForeground();
+        logTextView.textColor = XXTColorPlainTitleText();
         logTextView.alwaysBounceVertical = YES;
         logTextView.font = [UIFont fontWithName:@"Courier" size:12.f];
         XXTE_START_IGNORE_PARTIAL

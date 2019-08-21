@@ -61,11 +61,7 @@ static NSUInteger const RMCloudListItemsPerPage = 20;
         self.title = [NSString stringWithFormat:NSLocalizedString(@"Search \"%@\"", nil), self.searchWord];
     }
     
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = XXTColorPlainBackground();
     [self.view addSubview:self.comingSoonView];
     
     if (@available(iOS 11.0, *)) {

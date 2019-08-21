@@ -20,6 +20,9 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
+    
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();
     self.selectedBackgroundView = selectionBackground;

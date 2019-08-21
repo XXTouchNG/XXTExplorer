@@ -19,6 +19,9 @@
     [super awakeFromNib];
     
     self.tintColor = XXTColorForeground();
+    self.titleLabel.textColor = XXTColorPlainTitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIImageView *imageView = self.previewImageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;

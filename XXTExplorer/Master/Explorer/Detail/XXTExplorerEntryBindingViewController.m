@@ -10,6 +10,7 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryService.h"
 #import "XXTExplorerViewCell.h"
+#import "XXTExplorerHeaderView.h"
 #import "XXTEViewer.h"
 #import "XXTExplorerEntryReader.h"
 
@@ -94,6 +95,11 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 8.0, *)) {
@@ -183,30 +189,28 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    header.textLabel.font = [UIFont systemFontOfSize:14.0];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
-    if (tableView.style == UITableViewStylePlain) {
-        UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-        footer.textLabel.font = [UIFont systemFontOfSize:12.0];
-    }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return staticSectionTitles[(NSUInteger) section];
+        if (section == 0) {
+            return 0;
+        }
+        return 24.f;
     }
-    return @"";
+    return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
-        return staticSectionFooters[(NSUInteger) section];
+        NSString *title = staticSectionTitles[(NSUInteger) section];
+        XXTExplorerHeaderView *entryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+        if (!entryHeaderView)
+        {
+            entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+        }
+        [entryHeaderView.headerLabel setText:title];
+        return entryHeaderView;
     }
-    return @"";
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

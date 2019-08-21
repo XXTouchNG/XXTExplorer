@@ -43,6 +43,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
     if (!self.title.length) {
         self.title = NSLocalizedString(@"Encoding", nil);

@@ -28,6 +28,7 @@
 }
 
 - (void)setup {
+//    self.backgroundColor = [UIColor clearColor];
     [self addSubview:self.headerLabel];
 }
 
@@ -39,13 +40,8 @@
 - (UILabel *)headerLabel {
     if (!_headerLabel) {
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
-        if (@available(iOS 13.0, *)) {
-            textLabel.textColor = [UIColor labelColor];
-            textLabel.backgroundColor = [UIColor secondarySystemBackgroundColor];
-        } else {
-            textLabel.textColor = [UIColor blackColor];
-            textLabel.backgroundColor = [UIColor colorWithWhite:.96f alpha:.9f];
-        }
+        textLabel.textColor = XXTColorPlainSectionHeaderText();
+        textLabel.backgroundColor = XXTColorPlainSectionHeader();
         textLabel.font = [UIFont italicSystemFontOfSize:14.f];
         textLabel.edgeInsets = UIEdgeInsetsMake(0, 12.f, 0, 12.f);
         textLabel.numberOfLines = 1;

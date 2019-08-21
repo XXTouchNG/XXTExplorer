@@ -24,14 +24,10 @@
         NSMutableArray<UILabel *> *labels = [NSMutableArray array];
         for (int i = 0; i < number ; i++) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-            if (@available(iOS 13.0, *)) {
-                label.backgroundColor = [UIColor systemBackgroundColor];
-            } else {
-                label.backgroundColor = [UIColor whiteColor];
-            }
+            label.backgroundColor = XXTColorPlainBackground();
             label.font            = [UIFont systemFontOfSize:13.0];
             label.textAlignment   = NSTextAlignmentLeft;
-            // label.backgroundColor = [UIColor greenColor];
+            label.textColor       = XXTColorPlainTitleText();
             [labels addObject:label];
             
             UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:cell
@@ -40,11 +36,7 @@
             label.userInteractionEnabled = YES;
             
             [cell.contentView addSubview:label];
-            if (@available(iOS 13.0, *)) {
-                cell.contentView.backgroundColor = [UIColor systemBackgroundColor];
-            } else {
-                cell.contentView.backgroundColor = [UIColor whiteColor];
-            }
+            cell.contentView.backgroundColor = XXTColorPlainBackground();
         }
         cell.labels = labels;
     }

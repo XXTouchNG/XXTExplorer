@@ -40,11 +40,8 @@
 
 - (void)setup {
     // Appearance
-    if (@available(iOS 13.0, *)) {
-        self.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.backgroundColor = [UIColor whiteColor];
-    }
+    
+    self.backgroundColor = XXTColorPlainBackground();
     self.tintColor = XXTColorForeground();
     self.typingAttributes = self.defaultAttributes;
     
@@ -60,17 +57,10 @@
         NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.f);
         UIFont *font = [UIFont fontWithName:fontName size:fontSize];
-        if (@available(iOS 13.0, *)) {
-            _defaultAttributes = @{
+        _defaultAttributes = @{
             NSFontAttributeName: font,
-            NSForegroundColorAttributeName: [UIColor labelColor],
-            };
-        } else {
-            _defaultAttributes = @{
-            NSFontAttributeName: font,
-            NSForegroundColorAttributeName: [UIColor colorWithWhite:.33f alpha:1.f],
-            };
-        }
+            NSForegroundColorAttributeName: XXTColorPlainTitleText(),
+        };
     }
     return _defaultAttributes;
 }
@@ -86,17 +76,10 @@
                                                          @"NSFontFamilyAttribute" : familyName,
                                                          @"NSFontFaceAttribute" : @"Bold"
                                                          }] size:fontSize];
-        if (@available(iOS 13.0, *)) {
-            _messageAttributes = @{
+        _messageAttributes = @{
             NSFontAttributeName: boldFont,
-            NSForegroundColorAttributeName: [UIColor labelColor],
-            };
-        } else {
-            _messageAttributes = @{
-            NSFontAttributeName: boldFont,
-            NSForegroundColorAttributeName: [UIColor colorWithWhite:.33f alpha:1.f],
-            };
-        }
+            NSForegroundColorAttributeName: XXTColorPlainTitleText(),
+        };
     }
     return _messageAttributes;
 }

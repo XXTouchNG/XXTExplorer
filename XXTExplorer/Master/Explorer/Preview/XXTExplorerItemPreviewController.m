@@ -59,6 +59,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = XXTColorPlainBackground();
+    self.view.tintColor = XXTColorForeground();
     
     self.preferredContentSize = CGSizeMake(300.0, 160.0);
     [self reloadEntryIfNeeded];
@@ -100,13 +102,8 @@
         self.entryTitleLabel.textColor = XXTColorForeground();
         self.entrySubtitleLabel.textColor = XXTColorForeground();
     } else {
-        if (@available(iOS 13.0, *)) {
-            self.entryTitleLabel.textColor = [UIColor labelColor];
-            self.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            self.entryTitleLabel.textColor = [UIColor blackColor];
-            self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-        }
+        self.entryTitleLabel.textColor = XXTColorPlainTitleText();
+        self.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
     }
     NSString *entryDisplayName = [entryDetail localizedDisplayName];
     NSString *readableSize = [entryDetail localizedStringOfEntrySize];

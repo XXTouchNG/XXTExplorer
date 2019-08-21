@@ -19,7 +19,11 @@
     // Initialization code
     
     self.titleTextLabel.text = @"";
+    self.titleTextLabel.textColor = XXTColorPlainSubtitleText();
     self.valueTextLabel.text = @"";
+    self.valueTextLabel.textColor = XXTColorPlainTitleText();
+    self.backgroundColor = XXTColorPlainBackground();
+    self.tintColor = XXTColorForeground();
     
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();

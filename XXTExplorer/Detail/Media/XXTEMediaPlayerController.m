@@ -8,6 +8,8 @@
 
 #import "XXTEMediaPlayerController.h"
 #import "XXTExplorerEntryMediaReader.h"
+#import "XXTEMediaPlayerController+NavigationBar.h"
+
 
 @interface XXTEMediaPlayerController () <MWPhotoBrowserDelegate>
 @property (nonatomic, strong) NSMutableArray <MWPhoto *> *videos;
@@ -115,6 +117,27 @@
     if (@available(iOS 11.0, *)) {
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self renderNavigationBarTheme:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [UIView animateWithDuration:.4f delay:.2f options:0 animations:^{
+        [self renderNavigationBarTheme:NO];
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if (parent == nil) {
+        [self renderNavigationBarTheme:YES];
+    }
+    [super willMoveToParentViewController:parent];
 }
 
 #pragma mark - MWPhotoBrowserDelegate

@@ -55,6 +55,11 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.tableView.style == UITableViewStylePlain) {
+        self.view.backgroundColor = XXTColorPlainBackground();
+    } else {
+        self.view.backgroundColor = XXTColorGroupedBackground();
+    }
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -79,6 +84,7 @@ typedef enum : NSUInteger {
     if (controllerTitle.length == 0) {
         controllerTitle = @"(null)";
     }
+    
     self.title = controllerTitle;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

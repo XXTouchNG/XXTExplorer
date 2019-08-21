@@ -126,6 +126,10 @@ All Rights Reserved.</string>
 		<string>#3498db18</string>
 		<key>tintColor</key>
 		<string>#3498db</string>
+		<key>labelColor</key>
+		<string>#323234</string>
+		<key>valueColor</key>
+		<string>#7E7E80</string>
 	</dict>
 	<key>title</key>
 	<string>About</string>
