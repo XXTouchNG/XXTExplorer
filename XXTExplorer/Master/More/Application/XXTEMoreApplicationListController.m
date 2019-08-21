@@ -174,10 +174,12 @@ XXTE_END_IGNORE_PARTIAL
         if (@available(iOS 13.0, *)) {
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
         } else {
+#ifndef APPSTORE
             UIView *backgroundView = [textField.subviews firstObject];
             backgroundView.backgroundColor = XXTColorPlainBackground();
             backgroundView.layer.cornerRadius = 10.0;
             backgroundView.clipsToBounds = YES;
+#endif
         }
         self.navigationItem.searchController = self.searchController;
     } else {

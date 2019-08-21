@@ -1253,6 +1253,7 @@
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
 		D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */; };
+		D64A0D85230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64A0D84230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m */; };
 		D64C42FB1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D64C42FC1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D64C42FD1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
@@ -2129,6 +2130,8 @@
 		D643A25D1F4D1B39005B9A59 /* UIImageView+Activator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Activator.h"; sourceTree = "<group>"; };
 		D645F9D51F42A77A00E3247B /* XXTEEditorTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorTextStorage.h; sourceTree = "<group>"; };
 		D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorTextStorage.m; sourceTree = "<group>"; };
+		D64A0D83230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTExplorerSearchResultsViewController.h; sourceTree = "<group>"; };
+		D64A0D84230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerSearchResultsViewController.m; sourceTree = "<group>"; };
 		D64C42F91FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+DisableFuckingSmartXXX.h"; sourceTree = "<group>"; };
 		D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+DisableFuckingSmartXXX.m"; sourceTree = "<group>"; };
 		D66085651F3C691100E87B3C /* XXTEEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorController.h; sourceTree = "<group>"; };
@@ -2920,6 +2923,7 @@
 		0F61E1621ED7872F003DCC78 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				D64A0D82230D1F1000E890B8 /* Search */,
 				D6CCD40F2048E152009C2072 /* Model */,
 				D6A850722043DE6C008745EB /* Preview */,
 				0F766CB71ED8DD5D00E18BE2 /* Views */,
@@ -4136,6 +4140,15 @@
 			path = Activator;
 			sourceTree = "<group>";
 		};
+		D64A0D82230D1F1000E890B8 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D64A0D83230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.h */,
+				D64A0D84230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		D66085581F3C65F900E87B3C /* Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -5201,6 +5214,7 @@
 				0F8EDCD41FB2132D003C92D6 /* XXTEExecutableViewer.m in Sources */,
 				0FFC8F0B1FCA94D90012C170 /* XXTEInstallerLoadingView.m in Sources */,
 				0F8EDCD31FB2130D003C92D6 /* XXTExplorerEntryLauncher.m in Sources */,
+				D64A0D85230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m in Sources */,
 				0F8EDB591FB1F779003C92D6 /* XXTEEditorFontSettingsViewController.m in Sources */,
 				0F8EDB5A1FB1F779003C92D6 /* XXTESplitViewController.m in Sources */,
 				0F8EDB5B1FB1F779003C92D6 /* XXTEKeyboardButtonView.m in Sources */,
@@ -6325,7 +6339,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
-				CURRENT_PROJECT_VERSION = 217;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6426,7 +6440,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
-				CURRENT_PROJECT_VERSION = 217;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;

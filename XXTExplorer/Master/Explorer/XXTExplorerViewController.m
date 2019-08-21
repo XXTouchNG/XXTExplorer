@@ -35,17 +35,23 @@
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+SharedInstance.h"
 
-
 #import "XXTExplorerItemPreviewController.h"
 #import "XXTExplorerNavigationController.h"
+#import "XXTExplorerSearchResultsViewController.h"
+
 
 @interface XXTExplorerViewController ()
 <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate,
 UIViewControllerPreviewingDelegate, XXTExplorerFooterViewDelegate,
 XXTExplorerItemPreviewDelegate, XXTExplorerItemPreviewActionDelegate,
-XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate>
+XXTExplorerDirectoryPreviewDelegate, XXTExplorerDirectoryPreviewActionDelegate,
+UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate
+>
 
 @property (nonatomic, strong) id<UIViewControllerPreviewing> previewingContext;
+
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) XXTExplorerSearchResultsViewController *searchResultsController;
 
 XXTE_START_IGNORE_PARTIAL
 @property (nonatomic, strong) UIDropInteraction *dropInteraction;
@@ -99,6 +105,7 @@ XXTE_END_IGNORE_PARTIAL
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.definesPresentationContext = YES;
     if (self.title.length == 0) {
         if (self == [self.navigationController.viewControllers firstObject] && !self.isPreviewed) {
             if (isAppStore()) {
@@ -142,6 +149,64 @@ XXTE_END_IGNORE_PARTIAL
         tableViewController.tableView = self.tableView;
         [tableViewController setRefreshControl:self.refreshControl];
         [self.tableView.backgroundView insertSubview:self.refreshControl atIndex:0];
+    }
+    
+    _searchResultsController = ({
+        XXTExplorerSearchResultsViewController *controller = [[XXTExplorerSearchResultsViewController alloc] initWithStyle:UITableViewStylePlain];
+        controller.historyMode = self.historyMode;
+        controller.tableView.delegate = self;  // only set delegate, no data source
+        controller;
+    });
+    
+    _searchController = ({
+        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
+        searchController.searchResultsUpdater = self;
+        searchController.dimsBackgroundDuringPresentation = NO;
+        searchController.hidesNavigationBarDuringPresentation = YES;
+        searchController.delegate = self;
+        searchController;
+    });
+    
+    UISearchBar *searchBar = self.searchController.searchBar;
+    searchBar.placeholder = NSLocalizedString(@"Search Files", nil);
+    searchBar.scopeButtonTitles = @[
+                                    NSLocalizedString(@"Current", nil),
+                                    NSLocalizedString(@"Recursively", nil)
+                                    ];
+    searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
+    searchBar.delegate = self;
+    
+    if (@available(iOS 11.0, *)) {
+        UITextField *textField = nil;
+        if (@available(iOS 13.0, *)) {
+            textField = [searchBar performSelector:@selector(searchTextField)];
+        } else {
+            textField = [searchBar valueForKey:@"searchField"];
+        }
+        textField.textColor = XXTColorPlainTitleText();
+        textField.tintColor = XXTColorForeground();
+        searchBar.barTintColor = XXTColorBarTint();
+        searchBar.tintColor = XXTColorTint();
+        if (@available(iOS 13.0, *)) {
+            
+        } else {
+#ifndef APPSTORE
+            UIView *backgroundView = [textField.subviews firstObject];
+            backgroundView.backgroundColor = XXTColorPlainBackground();
+            backgroundView.layer.cornerRadius = 10.0;
+            backgroundView.clipsToBounds = YES;
+#endif
+        }
+        self.navigationItem.searchController = self.searchController;
+    }
+    else {
+        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        searchBar.backgroundColor = XXTColorPlainBackground();
+        searchBar.barTintColor = XXTColorPlainBackground();
+        searchBar.tintColor = XXTColorForeground();
+        self.tableView.tableHeaderView = searchBar;
     }
     
     {
@@ -449,7 +514,6 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)refreshControlTriggered:(UIRefreshControl *)refreshControl {
 #ifndef APPSTORE
-    
     if ([self.class isFetchingSelectedScript] == NO) {
         [self.class setFetchingSelectedScript:YES];
         [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{}]
@@ -504,16 +568,7 @@ XXTE_END_IGNORE_PARTIAL
 #endif
 }
 
-#pragma mark - UITableViewDelegate & UITableViewDataSource
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.tableView) {
-        if (XXTExplorerViewSectionIndexList == indexPath.section) {
-            return YES;
-        }
-    }
-    return NO;
-}
+#pragma mark - UITableViewDelegate
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -522,17 +577,15 @@ XXTE_END_IGNORE_PARTIAL
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             return indexPath;
         }
+    } else if (tableView == self.searchResultsController.tableView) {
+        return indexPath;
     }
     return nil;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
+}  // delegate method
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleNone;
-}
+}  // delegate method
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -542,7 +595,7 @@ XXTE_END_IGNORE_PARTIAL
             }
         }
     }
-}
+}  // delegate method
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -616,7 +669,7 @@ XXTE_END_IGNORE_PARTIAL
             }
         }
     }
-}
+}  // delegate method
 
 // Home Action
 
@@ -791,7 +844,7 @@ XXTE_END_IGNORE_PARTIAL
             }
         }
     }
-}
+}  // delegate method
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
@@ -800,9 +853,11 @@ XXTE_END_IGNORE_PARTIAL
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             return XXTExplorerViewHomeCellHeight;
         }
+    } else if (tableView == self.searchResultsController.tableView) {
+        return XXTExplorerViewCellHeight;
     }
     return 0;
-}
+}  // delegate method
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
@@ -811,9 +866,11 @@ XXTE_END_IGNORE_PARTIAL
                 return 24.f;
             }
         } // Notice: assume that there will not be any headers for Home section
+    } else if (tableView == self.searchResultsController.tableView) {
+        return 24.f;
     }
     return 0;
-}
+}  // delegate method
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
@@ -832,11 +889,34 @@ XXTE_END_IGNORE_PARTIAL
                 return entryHeaderView;
             }
         } // Notice: assume that there will not be any headers for Home section
+    } else if (tableView == self.searchResultsController.tableView) {
+        if (section == 0) {
+            XXTExplorerHeaderView *entryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+            if (!entryHeaderView)
+            {
+                entryHeaderView = [[XXTExplorerHeaderView alloc] initWithReuseIdentifier:XXTExplorerEntryHeaderViewReuseIdentifier];
+            }
+            [entryHeaderView.headerLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Search Results (%ld)", nil), self.searchResultsController.filteredEntryList.count]];
+            return entryHeaderView;
+        }
     }
     return nil;
-}
+}  // delegate method
 
 #pragma mark - UITableViewDataSource
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.tableView) {
+        if (XXTExplorerViewSectionIndexList == indexPath.section) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {
@@ -1250,6 +1330,40 @@ XXTE_END_IGNORE_PARTIAL
 - (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
     // better here?
 }
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    [self updateSearchResultsForSearchController:self.searchController];
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    if (searchController.searchBar.selectedScopeButtonIndex == 0) {
+        // Current Directory
+        NSArray <XXTExplorerEntry *> *searchEntries = self.entryList;
+        NSString *searchString = searchController.searchBar.text;
+        NSMutableArray <XXTExplorerEntry *> *filteredEntries = [NSMutableArray arrayWithCapacity:searchEntries.count];
+        for (XXTExplorerEntry *entry in searchEntries) {
+            if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                [filteredEntries addObject:entry];
+            }
+        }
+        self.searchResultsController.recursively = NO;
+        self.searchResultsController.filteredEntryList = filteredEntries;
+        [self.searchResultsController.tableView reloadData];
+    } else if (searchController.searchBar.selectedScopeButtonIndex == 1) {
+        // Recursively, Async
+        
+    }
+}
+
+#pragma mark - UISearchControllerDelegate
 
 #pragma mark - Memory
 

@@ -12,5 +12,6 @@ static NSString *XXTExplorerEntryHeaderViewReuseIdentifier = @"XXTExplorerEntryH
 
 @interface XXTExplorerHeaderView : UITableViewHeaderFooterView
 @property (nonatomic, strong, readonly) UILabel *headerLabel;
+@property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
 
 @end

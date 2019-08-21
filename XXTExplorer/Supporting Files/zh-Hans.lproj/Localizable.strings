@@ -2122,3 +2122,15 @@
 
 /* No comment provided by engineer. */
 "Tap here to select a template" = "轻按此处以选择模板";
+
+/* No comment provided by engineer. */
+"Current" = "当前";
+
+/* No comment provided by engineer. */
+"Recursively" = "递归";
+
+/* No comment provided by engineer. */
+"Search Files" = "搜索文件";
+
+/* No comment provided by engineer. */
+"Search Results (%ld)" = "搜索结果 (%ld)";

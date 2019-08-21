@@ -501,7 +501,7 @@ XXTE_END_IGNORE_PARTIAL
                 [NSUserDefaults standardUserDefaults];
             });
 #ifdef DEBUG
-            NSLog(@"User Defaults: %@", userDefaults);
+            NSLog(@"User Defaults: %@", [userDefaults dictionaryRepresentation]);
 #endif
         }
     });
