@@ -8,9 +8,9 @@
 
 #import <sys/stat.h>
 #import <PromiseKit/PromiseKit.h>
+#import "XXTExplorerCreateItemViewController.h"
 
 // Views
-#import "XXTExplorerCreateItemViewController.h"
 #import "XXTExplorerItemNameCell.h"
 #import "XXTEMoreTitleDescriptionCell.h"
 #import "XUIViewShaker.h"
@@ -26,6 +26,10 @@
 #import "UIControl+BlockTarget.h"
 #import "NSString+Template.h"
 
+// Children
+#import "XXTExplorerItemPicker.h"
+
+
 typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexName = 0,
     kXXTExplorerCreateItemViewSectionIndexType,
@@ -33,13 +37,14 @@ typedef enum : NSUInteger {
     kXXTExplorerCreateItemViewSectionIndexMax
 } kXXTExplorerCreateItemViewSectionIndex;
 typedef enum : NSUInteger {
-    kXXTExplorerCreateItemViewItemTypeLUA = 0,
+    kXXTExplorerCreateItemViewItemTypeTemplate = 0,
+    kXXTExplorerCreateItemViewItemTypeLUA,
     kXXTExplorerCreateItemViewItemTypeTXT,
     kXXTExplorerCreateItemViewItemTypeFIL,
-    kXXTExplorerCreateItemViewItemTypeDIR
+    kXXTExplorerCreateItemViewItemTypeDIR,
 } kXXTExplorerCreateItemViewItemType;
 
-@interface XXTExplorerCreateItemViewController () <UITextFieldDelegate>
+@interface XXTExplorerCreateItemViewController () <UITextFieldDelegate, XXTExplorerItemPickerDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
@@ -47,6 +52,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) kXXTExplorerCreateItemViewItemType selectedItemType;
 @property (nonatomic, strong) XUIViewShaker *itemNameShaker;
 @property (nonatomic, assign) BOOL editingUponCreating;
+@property (nonatomic, strong) NSString *selectedTemplatePath;
 
 @end
 
@@ -95,6 +101,16 @@ typedef enum : NSUInteger {
 
 - (void)setup {
     _editingUponCreating = YES;
+    if (self.selectedTemplatePath != nil) {
+        BOOL templateExists = [[NSFileManager defaultManager] fileExistsAtPath:self.selectedTemplatePath];
+        if (templateExists) {
+            _selectedItemType = kXXTExplorerCreateItemViewItemTypeTemplate;
+        } else {
+            _selectedItemType = kXXTExplorerCreateItemViewItemTypeLUA;
+        }
+    } else {
+        _selectedItemType = kXXTExplorerCreateItemViewItemTypeLUA;
+    }
 }
 
 #pragma mark - UIViewController
@@ -178,10 +194,15 @@ typedef enum : NSUInteger {
     cell1_2.titleLabel.text = NSLocalizedString(@"Edit Upon Creating", nil);
     cell1_2.accessoryType = self.editingUponCreating ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
+    XXTEMoreTitleDescriptionCell *cell2_0 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
+    cell2_0.accessoryType = self.selectedTemplatePath == nil ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryCheckmark;
+    cell2_0.titleLabel.text = NSLocalizedString(@"Generate From Template...", nil);
+    cell2_0.descriptionLabel.text = NSLocalizedString(@"Tap here to select a template", nil);
+    
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.titleLabel.text = NSLocalizedString(@"Regular Lua File", nil);
-    cell2.descriptionLabel.text = NSLocalizedString(@"A regular lua file from template. (text/lua)", nil);
+    cell2.descriptionLabel.text = NSLocalizedString(@"A empty regular lua file. (text/lua)", nil);
     
     XXTEMoreTitleDescriptionCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell3.accessoryType = UITableViewCellAccessoryNone;
@@ -203,7 +224,7 @@ typedef enum : NSUInteger {
     
     staticCells = @[
                     @[ cell1, cell1_2 ],
-                    @[ cell2, cell3, cell4, cell5 ],
+                    @[ cell2_0, cell2, cell3, cell4, cell5 ],
                     @[ cell6 ],
                     ];
 }
@@ -214,8 +235,19 @@ typedef enum : NSUInteger {
     return (_editingUponCreating &&
             (
              self.selectedItemType == kXXTExplorerCreateItemViewItemTypeLUA ||
-             self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT
+             self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTXT ||
+             self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTemplate
              ));
+}
+
+- (NSString *)selectedTemplatePath {
+    return XXTEDefaultsObject(XXTExplorerCreateItemTemplatePathKey, nil);
+}
+
+#pragma mark - Setters
+
+- (void)setSelectedTemplatePath:(NSString *)selectedTemplatePath {
+    XXTEDefaultsSetObject(XXTExplorerCreateItemTemplatePathKey, selectedTemplatePath);
 }
 
 #pragma mark - UIView Getters
@@ -311,12 +343,30 @@ typedef enum : NSUInteger {
             }
         }
         else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
-            self.selectedItemType = (NSUInteger) indexPath.row;
-            for (UITableViewCell *cell in tableView.visibleCells) {
-                cell.accessoryType = UITableViewCellAccessoryNone;
+            if (indexPath.row == 0) {
+                NSString *selectedTemplatePath = XXTEDefaultsObject(XXTExplorerCreateItemTemplatePathKey, nil);
+                NSString *templatePath = [XXTERootPath() stringByAppendingPathComponent:@"templates"];
+                [[NSFileManager defaultManager] createDirectoryAtPath:templatePath withIntermediateDirectories:YES attributes:nil error:nil];
+                XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:templatePath];
+                itemPicker.delegate = self;
+                itemPicker.allowedExtensions = @[ @"lua" ];
+                itemPicker.selectedBootScriptPath = selectedTemplatePath;
+                [self.navigationController pushViewController:itemPicker animated:YES];
+            } else {
+                self.selectedItemType = (NSUInteger) indexPath.row;
+                for (UITableViewCell *cell in tableView.visibleCells) {
+                    NSIndexPath *cellPath = [tableView indexPathForCell:cell];
+                    if (cellPath.section == 1) {
+                        if (cellPath.row == 0) {
+                            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        } else {
+                            cell.accessoryType = UITableViewCellAccessoryNone;
+                        }
+                    }
+                }
+                UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
+                selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
-            UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-            selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
             NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
@@ -354,10 +404,21 @@ typedef enum : NSUInteger {
     if (tableView == self.tableView) {
         UITableViewCell *cell = staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
         if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexType) {
-            if (indexPath.row == self.selectedItemType) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            if (indexPath.row == 0) {
+                if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTemplate &&
+                    self.selectedTemplatePath != nil
+                    )
+                {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
             } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                if (indexPath.row == self.selectedItemType) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
             }
         }
         return cell;
@@ -397,6 +458,11 @@ typedef enum : NSUInteger {
         if (![[itemName pathExtension] isEqualToString:@"txt"]) {
             itemName = [itemName stringByAppendingPathExtension:@"txt"];
         }
+    } else if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTemplate) {
+        NSString *templateExt = [self.selectedTemplatePath pathExtension];
+        if (![[itemName pathExtension] isEqualToString:templateExt]) {
+            itemName = [itemName stringByAppendingPathExtension:templateExt];
+        }
     }
     NSString *itemExtension = [[itemName pathExtension] lowercaseString];
     NSFileManager *createItemManager = [[NSFileManager alloc] init];
@@ -419,10 +485,14 @@ typedef enum : NSUInteger {
         
         NSError *createError = nil;
         NSData *templateData = [NSData data];
-        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"XXTEItemTemplate" ofType:itemExtension];
+        NSString *templatePath = nil;
+        if (self.selectedItemType == kXXTExplorerCreateItemViewItemTypeTemplate) {
+            templatePath = self.selectedTemplatePath;
+        } else {
+            templatePath = [[NSBundle mainBundle] pathForResource:@"XXTEItemTemplate" ofType:itemExtension];
+        }
         
         if ([createItemManager fileExistsAtPath:templatePath]) {
-            
             NSString *newTemplate = [[NSString alloc] initWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:&createError];
             
             if (createError) {
@@ -447,12 +517,12 @@ typedef enum : NSUInteger {
             if (monthString) tags[@"CURRENT_MONTH"] = monthString;
             if (dayString) tags[@"CURRENT_DAY"] = dayString;
             if (deviceName) tags[@"DEVICE_NAME"] = deviceName;
+            tags[@"RANDOM_UUID"] = [[NSUUID UUID] UUIDString];
             
             NSInteger encodingIndex = XXTEDefaultsInt(XXTExplorerDefaultEncodingKey, 0);
             CFStringEncoding encoding = [XXTEEncodingHelper encodingAtIndex:encodingIndex];
             newTemplate = [newTemplate stringByReplacingTagsInDictionary:[tags copy]];
             templateData = CFBridgingRelease(CFStringCreateExternalRepresentation(kCFAllocatorDefault, (__bridge CFStringRef)newTemplate, encoding, 0));
-            
         }
         promiseFixPermission(entryPath, NO);
         BOOL createResult = [createItemManager createFileAtPath:itemPath contents:templateData attributes:nil];
@@ -497,6 +567,19 @@ typedef enum : NSUInteger {
     } else {
         self.doneButtonItem.enabled = NO;
     }
+}
+
+#pragma mark - XXTExplorerItemPickerDelegate
+
+- (void)itemPickerDidCancelSelectingItem:(XXTExplorerItemPicker *)picker {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
+    self.selectedItemType = kXXTExplorerCreateItemViewItemTypeTemplate;
+    self.selectedTemplatePath = path;
+    [self.tableView reloadData];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Memory

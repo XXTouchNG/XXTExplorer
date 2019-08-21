@@ -6,4 +6,7 @@
 --  Copyright © {{ CURRENT_YEAR }} {{ DEVICE_NAME }}.
 --  All rights reserved.
 --
+--  {{ RANDOM_UUID }}
+--
+
 

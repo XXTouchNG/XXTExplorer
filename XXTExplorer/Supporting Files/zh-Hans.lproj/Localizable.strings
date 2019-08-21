@@ -129,7 +129,7 @@
 "A directory with nothing inside." = "空目录.";
 
 /* No comment provided by engineer. */
-"A regular lua file from template. (text/lua)" = "从模板创建常规 Lua 文件. (text/lua)";
+"A empty regular lua file. (text/lua)" = "空白的常规 Lua 文件. (text/lua)";
 
 /* No comment provided by engineer. */
 "About" = "关于";
@@ -2116,3 +2116,9 @@
 
 /* No comment provided by engineer. */
 "Sort By" = "排序";
+
+/* No comment provided by engineer. */
+"Generate From Template..." = "从模板创建...";
+
+/* No comment provided by engineer. */
+"Tap here to select a template" = "轻按此处以选择模板";

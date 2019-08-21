@@ -33,6 +33,10 @@ static NSString * const XXTExplorerPasteboardDetectOnActiveKey = @"XXTExplorerPa
 static NSString * const XXTExplorerAllowsImportFromAlbum = @"XXTExplorerAllowsImportFromAlbum";
 static NSString * const XXTExplorerFixFileOwnerAutomaticallyKey = @"XXTExplorerFixFileOwnerAutomaticallyKey";
 
+#pragma mark - Templates
+
+static NSString * const XXTExplorerCreateItemTemplatePathKey = @"XXTExplorerCreateItemTemplatePathKey";
+
 #pragma mark - Viewer Defaults
 
 static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEncodingKey";

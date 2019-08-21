@@ -37,15 +37,21 @@
 	<array>
 		<dict>
 			<key>from</key>
-			<string>50BDCBCF-BF33-455E-9EE1-64E0FBBE0380</string>
+			<string>lua-tests-50BDCBCF-BF33-455E-9EE1-64E0FBBE0380</string>
 			<key>to</key>
 			<string>home</string>
 		</dict>
 		<dict>
 			<key>from</key>
-			<string>493711B6-F9C0-4508-A505-F63386F09191</string>
+			<string>snippets-493711B6-F9C0-4508-A505-F63386F09191</string>
 			<key>to</key>
 			<string>snippets</string>
+		</dict>
+		<dict>
+			<key>from</key>
+			<string>templates-588097CE-FB31-4610-B201-866B0986EE91</string>
+			<key>to</key>
+			<string>templates</string>
 		</dict>
 		<dict>
 			<key>from</key>
@@ -77,6 +83,7 @@
 		<string>res</string>
 		<string>home</string>
 		<string>snippets</string>
+		<string>templates</string>
 		<string>lib</string>
 	</array>
 </dict>
