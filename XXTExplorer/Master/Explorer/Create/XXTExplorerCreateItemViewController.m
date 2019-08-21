@@ -53,6 +53,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) XUIViewShaker *itemNameShaker;
 @property (nonatomic, assign) BOOL editingUponCreating;
 @property (nonatomic, strong) NSString *selectedTemplatePath;
+@property (nonatomic, strong) XXTEMoreTitleDescriptionCell *templateCell;
 
 @end
 
@@ -151,6 +152,7 @@ typedef enum : NSUInteger {
     }
     
     [self reloadStaticTableViewData];
+    [self reloadTemplatePathDisplay];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -197,7 +199,9 @@ typedef enum : NSUInteger {
     XXTEMoreTitleDescriptionCell *cell2_0 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2_0.accessoryType = self.selectedTemplatePath == nil ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryCheckmark;
     cell2_0.titleLabel.text = NSLocalizedString(@"Generate From Template...", nil);
-    cell2_0.descriptionLabel.text = NSLocalizedString(@"Tap here to select a template", nil);
+    cell2_0.descriptionLabel.text = @"...";
+    cell2_0.descriptionLabel.lineBreakMode = NSLineBreakByTruncatingHead;
+    _templateCell = cell2_0;
     
     XXTEMoreTitleDescriptionCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
@@ -227,6 +231,11 @@ typedef enum : NSUInteger {
                     @[ cell2_0, cell2, cell3, cell4, cell5 ],
                     @[ cell6 ],
                     ];
+}
+
+- (void)reloadTemplatePathDisplay {
+    self.templateCell.descriptionLabel.text =
+    (self.selectedTemplatePath == nil || self.selectedItemType != kXXTExplorerCreateItemViewItemTypeTemplate) ? NSLocalizedString(@"Tap here to select a template", nil) : XXTTiledPath(self.selectedTemplatePath);
 }
 
 #pragma mark - Getters
@@ -366,6 +375,7 @@ typedef enum : NSUInteger {
                 }
                 UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
                 selectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                [self reloadTemplatePathDisplay];
             }
         }
         else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
@@ -578,6 +588,7 @@ typedef enum : NSUInteger {
 - (void)itemPicker:(XXTExplorerItemPicker *)picker didSelectItemAtPath:(NSString *)path {
     self.selectedItemType = kXXTExplorerCreateItemViewItemTypeTemplate;
     self.selectedTemplatePath = path;
+    [self reloadTemplatePathDisplay];
     [self.tableView reloadData];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

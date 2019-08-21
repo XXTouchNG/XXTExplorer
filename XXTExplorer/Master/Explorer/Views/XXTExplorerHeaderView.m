@@ -29,20 +29,25 @@
 
 - (void)setup {
 //    self.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.headerLabel];
-    [self addSubview:self.activityIndicator];
+    UIView *containerView = [[UIView alloc] initWithFrame:self.bounds];
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    containerView.backgroundColor = XXTColorPlainSectionHeader();
+    
+    [containerView addSubview:self.headerLabel];
+    [containerView addSubview:self.activityIndicator];
+    [self addSubview:containerView];
     
     {
         self.headerLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addConstraints:
+        [containerView addConstraints:
   @[
-    [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+    [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+    [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
+    [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
     [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.activityIndicator attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
-    [NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:3.0],
-    [NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-12.0],
+    [NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeTop multiplier:1.0 constant:3.0],
+    [NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-12.0],
     [NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:18.0],
     [NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:18.0],
     ]];
@@ -53,7 +58,6 @@
     if (!_headerLabel) {
         XXTEInsetsLabel *textLabel = [[XXTEInsetsLabel alloc] initWithFrame:self.contentView.bounds];
         textLabel.textColor = XXTColorPlainSectionHeaderText();
-        textLabel.backgroundColor = XXTColorPlainSectionHeader();
         textLabel.font = [UIFont italicSystemFontOfSize:14.f];
         textLabel.edgeInsets = UIEdgeInsetsMake(0, 12.f, 0, 12.f);
         textLabel.numberOfLines = 1;

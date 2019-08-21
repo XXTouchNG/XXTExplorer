@@ -49,60 +49,10 @@
         if (!entryCell) {
             entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
         }
-        [self configureCell:entryCell withEntry:entryDetail];
+        [self.explorer configureCell:entryCell withEntry:entryDetail];
         return entryCell;
     }
     return [UITableViewCell new];
-}
-
-- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry {
-    entryCell.delegate = nil;  // no cell delegate
-    entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
-    entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
-    if (entry.isBrokenSymlink) {
-        // broken symlink
-        entryCell.entryTitleLabel.textColor = XXTColorDanger();
-        entryCell.entrySubtitleLabel.textColor = XXTColorDanger();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
-    } else if (entry.isSymlink) {
-        // symlink
-        entryCell.entryTitleLabel.textColor = XXTColorForeground();
-        entryCell.entrySubtitleLabel.textColor = XXTColorForeground();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
-    } else {
-        entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
-        entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
-    }
-    if (!entry.isMaskedDirectory &&
-        [[XXTExplorerViewController selectedScriptPath] isEqualToString:entry.entryPath]) {
-        // selected script itself
-        entryCell.entryTitleLabel.textColor = XXTColorSuccess();
-        entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
-    } else if ((entry.isMaskedDirectory ||
-                entry.isBundle) &&
-               [[XXTExplorerViewController selectedScriptPath] hasPrefix:entry.entryPath] &&
-               [[[XXTExplorerViewController selectedScriptPath] substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
-        // selected script in directory / bundle
-        entryCell.entryTitleLabel.textColor = XXTColorSuccess();
-        entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
-    }
-    NSString *fixedName = entry.localizedDisplayName;
-    if (self.historyMode) {
-        NSUInteger atLoc = [fixedName rangeOfString:@"@"].location + 1;
-        if (atLoc != NSNotFound && atLoc < fixedName.length) {
-            fixedName = [fixedName substringFromIndex:atLoc];
-        }
-    }
-    entryCell.entryTitleLabel.text = fixedName;
-    entryCell.entrySubtitleLabel.text = entry.localizedDescription;
-    entryCell.entryIconImageView.image = entry.localizedDisplayIconImage;
-    if (entryCell.accessoryType != UITableViewCellAccessoryNone)
-    {
-        entryCell.accessoryType = UITableViewCellAccessoryNone;
-    }
 }
 
 @end

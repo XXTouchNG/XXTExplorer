@@ -7,7 +7,7 @@
 //
 
 #import "XXTExplorerItemPicker.h"
-
+#import "XXTExplorerSearchResultsViewController.h"
 #import "XXTExplorerDefaults.h"
 
 #import "XXTExplorerToolbar.h"
@@ -69,6 +69,8 @@
     [self.footerView setEmptyMode:NO];
 }
 
+#pragma mark - Getters
+
 - (BOOL)showsHomeSeries {
     return NO;
 }
@@ -92,6 +94,63 @@
     return YES;
 }
 
+#pragma mark - Actions
+
+- (void)performPickerActionWithEntry:(XXTExplorerEntry *)entryDetail {
+    NSString *entryPath = entryDetail.entryPath;
+    if (entryDetail.isMaskedDirectory)
+    { // Directory or Symbolic Link Directory
+        // We'd better try to access it before we enter it.
+        NSError *accessError = nil;
+        [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
+        if (accessError) {
+            toastError(self, accessError);
+        }
+        else {
+            XXTExplorerItemPicker *explorerViewController = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
+            explorerViewController.delegate = self.delegate;
+            explorerViewController.allowedExtensions = self.allowedExtensions;
+            explorerViewController.selectedBootScriptPath = self.selectedBootScriptPath;
+            explorerViewController.isFile = self.isFile;
+            [self.navigationController pushViewController:explorerViewController animated:YES];
+        }
+    }
+    else if (
+             entryDetail.isBundle ||
+             entryDetail.isMaskedRegular
+             )
+    { // Bundle or Regular
+        if (self.isFile) {
+            NSString *entryBaseExtension = entryDetail.entryExtension;
+            BOOL extensionPermitted = NO;
+            for (NSString *obj in self.allowedExtensions) {
+                if ([entryBaseExtension isEqualToString:obj]) {
+                    extensionPermitted = YES;
+                    break;
+                }
+            }
+            if (extensionPermitted) {
+                NSString *selectedPath = entryDetail.entryPath;
+                if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
+                    [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
+                }
+            } else {
+                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]));
+            }
+        } else {
+            toastMessage(self, NSLocalizedString(@"Please select a directory.", nil));
+        }
+    }
+    else if (entryDetail.isBrokenSymlink)
+    {
+        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryDetail.localizedDisplayName]));
+    }
+    else
+    {
+        toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
+    }
+}
+
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -100,62 +159,16 @@
         if (XXTExplorerViewSectionIndexList == indexPath.section)
         {
             XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
-            NSString *entryPath = entryDetail.entryPath;
-            if (entryDetail.isMaskedDirectory)
-            { // Directory or Symbolic Link Directory
-                // We'd better try to access it before we enter it.
-                NSError *accessError = nil;
-                [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&accessError];
-                if (accessError) {
-                    toastError(self, accessError);
-                }
-                else {
-                    XXTExplorerItemPicker *explorerViewController = [[XXTExplorerItemPicker alloc] initWithEntryPath:entryPath];
-                    explorerViewController.delegate = self.delegate;
-                    explorerViewController.allowedExtensions = self.allowedExtensions;
-                    explorerViewController.selectedBootScriptPath = self.selectedBootScriptPath;
-                    explorerViewController.isFile = self.isFile;
-                    [self.navigationController pushViewController:explorerViewController animated:YES];
-                }
-            }
-            else if (
-                     entryDetail.isBundle ||
-                     entryDetail.isMaskedRegular
-                     )
-            { // Bundle or Regular
-                if (self.isFile) {
-                    NSString *entryBaseExtension = entryDetail.entryExtension;
-                    BOOL extensionPermitted = NO;
-                    for (NSString *obj in self.allowedExtensions) {
-                        if ([entryBaseExtension isEqualToString:obj]) {
-                            extensionPermitted = YES;
-                            break;
-                        }
-                    }
-                    if (extensionPermitted) {
-                        NSString *selectedPath = entryDetail.entryPath;
-                        if (_delegate && [_delegate respondsToSelector:@selector(itemPicker:didSelectItemAtPath:)]) {
-                            [_delegate itemPicker:self didSelectItemAtPath:selectedPath];
-                        }
-                    } else {
-                        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"Allowed file extensions: %@.", nil), self.allowedExtensions]));
-                    }
-                } else {
-                    toastMessage(self, NSLocalizedString(@"Please select a directory.", nil));
-                }
-            }
-            else if (entryDetail.isBrokenSymlink)
-            {
-                toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entryDetail.localizedDisplayName]));
-            }
-            else
-            {
-                toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
-            }
+            [self performPickerActionWithEntry:entryDetail];
         }
         else if (XXTExplorerViewSectionIndexHome == indexPath.section)
         {
             // impossible
+        }
+    } else if (tableView == self.searchResultsController.tableView) {
+        if (indexPath.section == 0) {
+            XXTExplorerEntry *entryDetail = self.searchResultsController.filteredEntryList[indexPath.row];
+            [self performPickerActionWithEntry:entryDetail];
         }
     }
 }
@@ -168,36 +181,39 @@
     if (tableView == self.tableView) {
         if (indexPath.section == XXTExplorerViewSectionIndexList) {
             XXTExplorerViewCell *cell = (XXTExplorerViewCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
-            XXTExplorerEntry *entry = self.entryList[indexPath.row];
-            if (!entry.isMaskedDirectory &&
-                [entry.entryPath isEqualToString:self.selectedBootScriptPath]) {
-                cell.entryTitleLabel.textColor = XXTColorForeground();
-                cell.entrySubtitleLabel.textColor = XXTColorForeground();
-                cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
-            }
-            else if ((entry.isMaskedDirectory ||
-                      entry.isBundle) &&
-                     [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
-                     [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
-                cell.entryTitleLabel.textColor = XXTColorForeground();
-                cell.entrySubtitleLabel.textColor = XXTColorForeground();
-                cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
-            }
-            else {
-                if (@available(iOS 13.0, *)) {
-                    cell.entryTitleLabel.textColor = [UIColor labelColor];
-                    cell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
-                } else {
-                    cell.entryTitleLabel.textColor = [UIColor blackColor];
-                    cell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-                }
-                cell.flagType = XXTExplorerViewCellFlagTypeNone;
-            }
-            cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         }
     }
     return [UITableViewCell new];
+}
+
+- (void)configureCell:(XXTExplorerViewCell *)cell withEntry:(XXTExplorerEntry *)entry {
+    [super configureCell:cell withEntry:entry];
+    if (!entry.isMaskedDirectory &&
+        [entry.entryPath isEqualToString:self.selectedBootScriptPath]) {
+        cell.entryTitleLabel.textColor = XXTColorForeground();
+        cell.entrySubtitleLabel.textColor = XXTColorForeground();
+        cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
+    }
+    else if ((entry.isMaskedDirectory ||
+              entry.isBundle) &&
+             [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
+             [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
+        cell.entryTitleLabel.textColor = XXTColorForeground();
+        cell.entrySubtitleLabel.textColor = XXTColorForeground();
+        cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
+    }
+    else {
+        if (@available(iOS 13.0, *)) {
+            cell.entryTitleLabel.textColor = [UIColor labelColor];
+            cell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
+        } else {
+            cell.entryTitleLabel.textColor = [UIColor blackColor];
+            cell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
+        }
+        cell.flagType = XXTExplorerViewCellFlagTypeNone;
+    }
+    cell.accessoryType = UITableViewCellAccessoryNone;
 }
 
 - (void)setSelectedBootScriptPath:(NSString *)selectedBootScriptPath {

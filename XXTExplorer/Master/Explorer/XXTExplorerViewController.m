@@ -155,6 +155,7 @@ XXTE_END_IGNORE_PARTIAL
         XXTExplorerSearchResultsViewController *controller = [[XXTExplorerSearchResultsViewController alloc] initWithStyle:UITableViewStylePlain];
         controller.historyMode = self.historyMode;
         controller.tableView.delegate = self;  // only set delegate, no data source
+        controller.explorer = self;
         controller;
     });
     
@@ -1350,7 +1351,9 @@ XXTE_END_IGNORE_PARTIAL
         NSString *searchString = searchController.searchBar.text;
         NSMutableArray <XXTExplorerEntry *> *filteredEntries = [NSMutableArray arrayWithCapacity:searchEntries.count];
         for (XXTExplorerEntry *entry in searchEntries) {
-            if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound ||
+                [entry.displayName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound
+                ) {
                 [filteredEntries addObject:entry];
             }
         }

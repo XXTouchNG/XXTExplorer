@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexMax
 } XXTExplorerViewSectionIndex;
 
-@class XXTExplorerToolbar, XXTExplorerFooterView, XXTExplorerViewController;
+@class XXTExplorerViewCell, XXTExplorerViewHomeCell, XXTExplorerToolbar, XXTExplorerFooterView, XXTExplorerViewController, XXTExplorerSearchResultsViewController;
 
 @protocol XXTExplorerDirectoryPreviewDelegate <NSObject>
 
@@ -63,6 +63,11 @@ XXTE_END_IGNORE_PARTIAL
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithEntryPath:(NSString *)path;
 
+#pragma mark - configure
+
+- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry;
+- (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell withEntry:(NSDictionary *)entryDetail;
+
 #pragma mark - reload
 
 - (void)loadEntryListData;
@@ -96,5 +101,9 @@ XXTE_END_IGNORE_PARTIAL
 @property (nonatomic, weak) id <XXTExplorerDirectoryPreviewActionDelegate> previewActionDelegate;
 @property (nonatomic, weak) id previewActionSender;
 @property (nonatomic, assign, readonly) BOOL isPreviewed; // previewActionDelegate != nil
+
+#pragma mark - search
+
+@property (nonatomic, strong, readonly) XXTExplorerSearchResultsViewController *searchResultsController;
 
 @end

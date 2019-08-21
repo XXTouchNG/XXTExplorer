@@ -10,9 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class XXTExplorerEntry;
+@class XXTExplorerEntry, XXTExplorerViewController;
 
 @interface XXTExplorerSearchResultsViewController : UITableViewController
+
+@property (nonatomic, weak) XXTExplorerViewController *explorer;
 @property (nonatomic, strong) NSMutableArray <XXTExplorerEntry *> *filteredEntryList;
 @property (nonatomic, assign) BOOL historyMode;
 @property (nonatomic, assign) BOOL recursively;
