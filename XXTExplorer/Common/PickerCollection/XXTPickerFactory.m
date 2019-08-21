@@ -9,6 +9,8 @@
 #import "XXTPickerFactory.h"
 #import "XXTPickerNavigationController.h"
 #import "XXTPickerSnippetTask.h"
+#import "XXTPickerSnippet.h"
+#import <LGAlertView/LGAlertView.h>
 
 @interface XXTPickerFactory ()
 
@@ -23,6 +25,19 @@
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
+}
+
+- (void)presentTaskAlert:(XXTPickerSnippetTask *)task withError:(NSError *)error {
+    LGAlertView *alert = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Snippet Error", nil)
+                                                 message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), task.snippet.name, error.localizedFailureReason, error.localizedDescription]
+                                                   style:LGAlertViewStyleAlert
+                                            buttonTitles:nil
+                                       cancelButtonTitle:NSLocalizedString(@"Dismiss", nil)
+                                  destructiveButtonTitle:nil
+                                           actionHandler:nil
+                                           cancelHandler:^(LGAlertView * _Nonnull alertView) { [alertView dismissAnimated]; }
+                                      destructiveHandler:nil];
+    [alert showAnimated];
 }
 
 - (void)beginTask:(XXTPickerSnippetTask *)pickerTask fromViewController:(UIViewController *)viewController {
@@ -42,14 +57,22 @@
             [viewController presentViewController:navigationController animated:YES completion:nil];
         }
     } else {
-        BOOL shouldFinish = YES;
-        if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldFinished:)]) {
-            shouldFinish = [_delegate pickerFactory:self taskShouldFinished:pickerTask];
-        }
-        if (shouldFinish) {
-            if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
-                [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
-            }
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldFinished:responseBlock:)]) {
+            @weakify(self);
+            [_delegate pickerFactory:self taskShouldFinished:pickerTask responseBlock:^(BOOL shouldFinish, NSError *responseError) {
+                @strongify(self);
+                if (shouldFinish) {
+                    if ([viewController.navigationController isKindOfClass:[XXTPickerNavigationController class]]) {
+                        [viewController.navigationController dismissViewControllerAnimated:YES completion:^{
+                            if (self->_delegate && [self->_delegate respondsToSelector:@selector(pickerFactory:taskDidFinished:)]) {
+                                [self->_delegate pickerFactory:self taskDidFinished:pickerTask];
+                            }
+                        }];
+                    }
+                } else {
+                    [self presentTaskAlert:pickerTask withError:responseError];
+                }
+            }];
         }
     }
 }
@@ -84,7 +107,6 @@
 }
 
 - (void)performFinished:(UIViewController <XXTBasePicker> *)viewController {
-    
     if ([viewController respondsToSelector:@selector(pickerResult)] &&
         [viewController respondsToSelector:@selector(pickerTask)]) {
         id pickerResult = [viewController performSelector:@selector(pickerResult)];
@@ -97,15 +119,22 @@
         }
         XXTPickerSnippetTask *pickerTask = [pickerTaskObj copy];
         [pickerTask addResult:pickerResult];
-        BOOL shouldFinish = YES;
-        if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldFinished:)]) {
-            shouldFinish = [_delegate pickerFactory:self taskShouldFinished:pickerTask];
-        }
-        if (shouldFinish) {
-            [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerFactory:taskShouldFinished:responseBlock:)]) {
+            @weakify(self);
+            [_delegate pickerFactory:self taskShouldFinished:pickerTask responseBlock:^(BOOL shouldFinish, NSError *responseError) {
+                @strongify(self);
+                if (shouldFinish) {
+                    [viewController.navigationController dismissViewControllerAnimated:YES completion:^{
+                        if (self->_delegate && [self->_delegate respondsToSelector:@selector(pickerFactory:taskDidFinished:)]) {
+                            [self->_delegate pickerFactory:self taskDidFinished:pickerTask];
+                        }
+                    }];
+                } else {
+                    [self presentTaskAlert:pickerTask withError:responseError];
+                }
+            }];
         }
     }
-
 }
 
 - (void)performUpdateStep:(UIViewController <XXTBasePicker> *)viewController {
@@ -131,7 +160,6 @@
     } else {
         [navController.popupBar setHidden:YES];
     }
-
 }
 
 - (void)dealloc {

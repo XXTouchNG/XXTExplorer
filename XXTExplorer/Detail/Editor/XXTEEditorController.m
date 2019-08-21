@@ -632,10 +632,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if (self.shouldHighlightRange) {
         [self highlightRangeIfNecessary];
     } else {
-        if (self.shouldFocusTextView) {
-            self.shouldFocusTextView = NO;
-            [self.textView becomeFirstResponder];
-        }
+        [self focusTextViewIfNecessary];
     }
     
     isFirstTimeAppeared = YES;
@@ -1135,9 +1132,9 @@ XXTE_END_IGNORE_PARTIAL
     @weakify(self);
     [controller dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
-         if (!XXTE_IS_FULLSCREEN(controller)) {
+        if (!XXTE_IS_FULLSCREEN(controller)) {
             [self reloadAllIfNeeded];
-         }
+        }
     }];
 }
 #endif
@@ -1961,6 +1958,13 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (self.shouldHighlightRange) {
         self.shouldHighlightRange = NO;
         [self.maskView focusRange:self.highlightRange];
+    }
+}
+
+- (void)focusTextViewIfNecessary {
+    if (self.shouldFocusTextView) {
+        self.shouldFocusTextView = NO;
+        [self.textView becomeFirstResponder];
     }
 }
 

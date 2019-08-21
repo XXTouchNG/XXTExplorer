@@ -96,7 +96,8 @@
 
 #pragma mark - Actions
 
-- (void)performPickerActionWithEntry:(XXTExplorerEntry *)entryDetail {
+- (void)performPickerActionWithEntry:(XXTExplorerEntry *)entryDetail
+{
     NSString *entryPath = entryDetail.entryPath;
     if (entryDetail.isMaskedDirectory)
     { // Directory or Symbolic Link Directory
@@ -168,7 +169,14 @@
     } else if (tableView == self.searchResultsController.tableView) {
         if (indexPath.section == 0) {
             XXTExplorerEntry *entryDetail = self.searchResultsController.filteredEntryList[indexPath.row];
-            [self performPickerActionWithEntry:entryDetail];
+            [self.searchController setActive:NO];
+            UIViewController *blockVC = blockInteractions(self, YES);
+            @weakify(self);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                @strongify(self);
+                blockInteractions(blockVC, NO);
+                [self performPickerActionWithEntry:entryDetail];
+            });
         }
     }
 }

@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) XXTESingleActionView *actionView;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
+@property (nonatomic, strong) id taskResult;
 
 @end
 
@@ -147,7 +148,7 @@
     return YES;
 }
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task {
+- (void)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task responseBlock:(void (^)(BOOL, NSError *))responseCallback {
     UIViewController *blockVC = blockInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;
@@ -161,15 +162,19 @@
         dispatch_async_on_main_queue(^{
             blockInteractions(blockVC, NO);
             if (taskResult) {
-                [self copyResult:taskResult fromTask:task];
-            } else if (error) {
-                toastError(self, error);
+                self.taskResult = taskResult;
+                responseCallback(YES, nil);
             } else {
-                toastMessage(self, NSLocalizedString(@"Cannot generate code snippet: unknown error.", nil));
+                // toastError(self, error);
+                responseCallback(NO, error);
             }
         });
     });
-    return YES;
+}
+
+- (void)pickerFactory:(XXTPickerFactory *)factory taskDidFinished:(XXTPickerSnippetTask *)task
+{
+    [self copyResult:self.taskResult fromTask:task];
 }
 
 - (void)copyResult:(NSString *)result fromTask:(XXTPickerSnippetTask *)task
@@ -191,6 +196,7 @@
     }
     
     toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Generated code snippet has been saved to \"%@\".", nil), task.snippet.output]);
+    self.taskResult = nil;
 }
 
 #pragma mark - Memory

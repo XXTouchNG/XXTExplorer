@@ -859,6 +859,9 @@
 		BDC3DC9C2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
 		BDC3DC9D2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
 		BDC3DC9E2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
+		BDC463F7230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
+		BDC463F8230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
+		BDC463F9230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
 		BDFE72512304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
 		BDFE72522304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
 		BDFE72532304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
@@ -2039,6 +2042,8 @@
 		BD9351912307CBF100F854FF /* XXTEEditorLineMask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLineMask.m; sourceTree = "<group>"; };
 		BDC3DC9A2308F925006A603B /* XXLuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXLuaInterpreter.h; sourceTree = "<group>"; };
 		BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XXLuaInterpreter.mm; sourceTree = "<group>"; };
+		BDC463F5230D7C2300730924 /* XXTPixelToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTPixelToolbar.h; sourceTree = "<group>"; };
+		BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTPixelToolbar.m; sourceTree = "<group>"; };
 		BDFE724F2304538800F56482 /* XXTEEditorTextView+TextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorTextView+TextRange.h"; sourceTree = "<group>"; };
 		BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorTextView+TextRange.m"; sourceTree = "<group>"; };
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3921,6 +3926,77 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		BDC463F0230D7B9200730924 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140B71F5032AB00D78CB9 /* UIColor+hexValue.h */,
+				D6E140B81F5032AB00D78CB9 /* UIColor+hexValue.m */,
+				D6E140B91F5032AB00D78CB9 /* UIColor+inverseColor.h */,
+				D6E140BA1F5032AB00D78CB9 /* UIColor+inverseColor.m */,
+				D6E140BB1F5032AB00D78CB9 /* UIImage+XXTCrop.h */,
+				D6E140BC1F5032AB00D78CB9 /* UIImage+XXTCrop.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		BDC463F1230D7BA100730924 /* Children */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140BD1F5032AB00D78CB9 /* XXTColorPicker.h */,
+				D6E140BE1F5032AB00D78CB9 /* XXTColorPicker.m */,
+				D6E140D71F5032AB00D78CB9 /* XXTPositionPicker.h */,
+				D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */,
+				D6E140D51F5032AB00D78CB9 /* XXTPositionColorPicker.h */,
+				D6E140D61F5032AB00D78CB9 /* XXTPositionColorPicker.m */,
+				D6E140BF1F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.h */,
+				D6E140C01F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m */,
+			);
+			path = Children;
+			sourceTree = "<group>";
+		};
+		BDC463F2230D7BB900730924 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140C91F5032AB00D78CB9 /* XXTPixelImage.h */,
+				D6E140CA1F5032AB00D78CB9 /* XXTPixelImage.m */,
+				D6E140C11F5032AB00D78CB9 /* XXTPixelColor.h */,
+				D6E140C21F5032AB00D78CB9 /* XXTPixelColor.m */,
+				D6E140D31F5032AB00D78CB9 /* XXTPositionColorModel.h */,
+				D6E140D41F5032AB00D78CB9 /* XXTPositionColorModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BDC463F3230D7BC600730924 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140D11F5032AB00D78CB9 /* XXTPixelResizeControl.h */,
+				D6E140D21F5032AB00D78CB9 /* XXTPixelResizeControl.m */,
+				D6E140CB1F5032AB00D78CB9 /* XXTPixelPlaceholderView.h */,
+				D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */,
+				D6E140CD1F5032AB00D78CB9 /* XXTPixelPreview.h */,
+				D6E140CE1F5032AB00D78CB9 /* XXTPixelPreview.m */,
+				D6E140C31F5032AB00D78CB9 /* XXTPixelCropRectView.h */,
+				D6E140C41F5032AB00D78CB9 /* XXTPixelCropRectView.m */,
+				D6E140C51F5032AB00D78CB9 /* XXTPixelCropView.h */,
+				D6E140C61F5032AB00D78CB9 /* XXTPixelCropView.m */,
+				D6E140C71F5032AB00D78CB9 /* XXTPixelFlagView.h */,
+				D6E140C81F5032AB00D78CB9 /* XXTPixelFlagView.m */,
+				BDC463F5230D7C2300730924 /* XXTPixelToolbar.h */,
+				BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BDC463F4230D7C0000730924 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				D6E140CF1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.h */,
+				D6E140D01F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
 		D606114E22F542AC00F6F0E6 /* LineBreak */ = {
 			isa = PBXGroup;
 			children = (
@@ -4507,40 +4583,11 @@
 		D6E140B61F5032AB00D78CB9 /* Pixel */ = {
 			isa = PBXGroup;
 			children = (
-				D6E140B71F5032AB00D78CB9 /* UIColor+hexValue.h */,
-				D6E140B81F5032AB00D78CB9 /* UIColor+hexValue.m */,
-				D6E140B91F5032AB00D78CB9 /* UIColor+inverseColor.h */,
-				D6E140BA1F5032AB00D78CB9 /* UIColor+inverseColor.m */,
-				D6E140BB1F5032AB00D78CB9 /* UIImage+XXTCrop.h */,
-				D6E140BC1F5032AB00D78CB9 /* UIImage+XXTCrop.m */,
-				D6E140BD1F5032AB00D78CB9 /* XXTColorPicker.h */,
-				D6E140BE1F5032AB00D78CB9 /* XXTColorPicker.m */,
-				D6E140BF1F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.h */,
-				D6E140C01F5032AB00D78CB9 /* XXTMultiplePositionColorPicker.m */,
-				D6E140C11F5032AB00D78CB9 /* XXTPixelColor.h */,
-				D6E140C21F5032AB00D78CB9 /* XXTPixelColor.m */,
-				D6E140C31F5032AB00D78CB9 /* XXTPixelCropRectView.h */,
-				D6E140C41F5032AB00D78CB9 /* XXTPixelCropRectView.m */,
-				D6E140C51F5032AB00D78CB9 /* XXTPixelCropView.h */,
-				D6E140C61F5032AB00D78CB9 /* XXTPixelCropView.m */,
-				D6E140C71F5032AB00D78CB9 /* XXTPixelFlagView.h */,
-				D6E140C81F5032AB00D78CB9 /* XXTPixelFlagView.m */,
-				D6E140C91F5032AB00D78CB9 /* XXTPixelImage.h */,
-				D6E140CA1F5032AB00D78CB9 /* XXTPixelImage.m */,
-				D6E140CB1F5032AB00D78CB9 /* XXTPixelPlaceholderView.h */,
-				D6E140CC1F5032AB00D78CB9 /* XXTPixelPlaceholderView.m */,
-				D6E140CD1F5032AB00D78CB9 /* XXTPixelPreview.h */,
-				D6E140CE1F5032AB00D78CB9 /* XXTPixelPreview.m */,
-				D6E140CF1F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.h */,
-				D6E140D01F5032AB00D78CB9 /* XXTPixelPreviewRootViewController.m */,
-				D6E140D11F5032AB00D78CB9 /* XXTPixelResizeControl.h */,
-				D6E140D21F5032AB00D78CB9 /* XXTPixelResizeControl.m */,
-				D6E140D31F5032AB00D78CB9 /* XXTPositionColorModel.h */,
-				D6E140D41F5032AB00D78CB9 /* XXTPositionColorModel.m */,
-				D6E140D51F5032AB00D78CB9 /* XXTPositionColorPicker.h */,
-				D6E140D61F5032AB00D78CB9 /* XXTPositionColorPicker.m */,
-				D6E140D71F5032AB00D78CB9 /* XXTPositionPicker.h */,
-				D6E140D81F5032AB00D78CB9 /* XXTPositionPicker.m */,
+				BDC463F4230D7C0000730924 /* Preview */,
+				BDC463F3230D7BC600730924 /* Views */,
+				BDC463F2230D7BB900730924 /* Models */,
+				BDC463F0230D7B9200730924 /* Helpers */,
+				BDC463F1230D7BA100730924 /* Children */,
 				D6E140D91F5032AB00D78CB9 /* XXTRectanglePicker.h */,
 				D6E140DA1F5032AB00D78CB9 /* XXTRectanglePicker.m */,
 			);
@@ -5273,6 +5320,7 @@
 				0F08BC131FFD1A9D00B83972 /* XXTLuaFunction.m in Sources */,
 				0F8EDB8D1FB1F779003C92D6 /* XXTPixelCropView.m in Sources */,
 				0F8EDB8E1FB1F779003C92D6 /* XXTEMoreNavigationController.m in Sources */,
+				BDC463F9230D7C2300730924 /* XXTPixelToolbar.m in Sources */,
 				0F8EDB8F1FB1F779003C92D6 /* XXTEEditorTypeSetter.m in Sources */,
 				0F66830320A9CFF500960436 /* XXTExplorerViewController+UITableViewDragDelegate.m in Sources */,
 				0F8EDB901FB1F779003C92D6 /* XXTEAppDelegate.m in Sources */,
@@ -5556,6 +5604,7 @@
 				0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */,
 				0F8147D32081EFF3009C6B6D /* XXTEProcessDelegateObject.m in Sources */,
 				0FBAFF181F6E3E38008B3189 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
+				BDC463F7230D7C2300730924 /* XXTPixelToolbar.m in Sources */,
 				0FE1E43F1F18E41200055E02 /* XXTExplorerEntryWebReader.m in Sources */,
 				D6E1412A1F5032AB00D78CB9 /* XXTPixelImage.m in Sources */,
 				0F98514C20033F4400FFD9E8 /* XXTExplorerItemOwnerViewController.m in Sources */,
@@ -5911,6 +5960,7 @@
 				D60FE67B1FE2369300954818 /* XXTPickerSnippet.m in Sources */,
 				0F8147D42081EFF3009C6B6D /* XXTEProcessDelegateObject.m in Sources */,
 				D60FE67C1FE2369300954818 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
+				BDC463F8230D7C2300730924 /* XXTPixelToolbar.m in Sources */,
 				D60FE67D1FE2369300954818 /* XXTExplorerEntryWebReader.m in Sources */,
 				D60FE67E1FE2369300954818 /* XXTPixelImage.m in Sources */,
 				0F98514D20033F4400FFD9E8 /* XXTExplorerItemOwnerViewController.m in Sources */,

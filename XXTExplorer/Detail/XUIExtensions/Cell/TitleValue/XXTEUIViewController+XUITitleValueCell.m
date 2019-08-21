@@ -62,7 +62,7 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
     return YES;
 }
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task {
+- (void)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task responseBlock:(void (^)(BOOL, NSError *))responseCallback {
     UIViewController *blockVC = blockInteractions(self, YES);
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -76,15 +76,20 @@ static const void * XUITitleValueCellStorageKey = &XUITitleValueCellStorageKey;
                 if ([cell isKindOfClass:[XUITitleValueCell class]]) {
                     cell.xui_value = result;
                     [self storeCellWhenNeeded:cell];
-                    [self storeCellsIfNecessary];
                 }
                 objc_setAssociatedObject(self, XUITitleValueCellStorageKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                responseCallback(YES, nil);
             } else {
-                [self presentErrorAlertController:error];
+                // [self presentErrorAlertController:error];
+                responseCallback(NO, error);
             }
         });
     });
-    return YES;
+}
+
+- (void)pickerFactory:(XXTPickerFactory *)factory taskDidFinished:(XXTPickerSnippetTask *)task
+{
+    [self storeCellsIfNecessary];
 }
 
 @end

@@ -181,6 +181,10 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
     [self saveDocumentIfNecessary];
+    if (presentationController.presentationStyle != UIModalPresentationFullScreen)
+    {
+        [self focusTextViewIfNecessary];
+    }
 }
 
 @end

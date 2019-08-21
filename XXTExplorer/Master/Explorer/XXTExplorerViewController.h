@@ -104,6 +104,7 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - search
 
+@property (nonatomic, strong, readonly) UISearchController *searchController;
 @property (nonatomic, strong, readonly) XXTExplorerSearchResultsViewController *searchResultsController;
 
 @end

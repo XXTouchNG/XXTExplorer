@@ -55,4 +55,12 @@
     return [UITableViewCell new];
 }
 
+#pragma mark - Memory
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
+#endif
+}
+
 @end

@@ -43,6 +43,7 @@
 
 - (void)reloadAttributesIfNecessary;  // called from states
 - (void)saveDocumentIfNecessary;  // called from keyboard events
+- (void)focusTextViewIfNecessary;  // called from picker collection
 
 #pragma mark - Search
 

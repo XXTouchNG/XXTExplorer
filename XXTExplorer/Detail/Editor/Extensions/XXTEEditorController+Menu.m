@@ -77,6 +77,11 @@
 }
 
 - (void)menuActionCodeBlocks:(UIMenuItem *)senderOrNil {
+    if (self.textView.isFirstResponder) {
+        [self.textView resignFirstResponder];
+        [self setNeedsFocusTextView];
+    }
+    
     NSString *snippetPath = [XXTERootPath() stringByAppendingPathComponent:@"snippets"];
     XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:snippetPath];
     itemPicker.title = NSLocalizedString(@"Code Snippets", nil);
@@ -85,7 +90,8 @@
     XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:itemPicker];
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigationController animated:YES completion:nil];
+    navigationController.presentationController.delegate = self;
+    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)menuActionShiftLeft:(UIMenuItem *)sender {
@@ -188,8 +194,13 @@
 #pragma mark - XXTExplorerItemPickerDelegate
 
 - (void)itemPickerDidCancelSelectingItem:(XXTExplorerItemPicker *)picker {
+    [self setNeedsFocusTextView];
+    @weakify(self);
     [picker dismissViewControllerAnimated:YES completion:^{
-        [self setNeedsFocusTextView];
+        @strongify(self);
+        if (!XXTE_IS_FULLSCREEN(picker)) {
+            [self focusTextViewIfNecessary];
+        }
     }];
 }
 
@@ -197,7 +208,7 @@
     NSError *initError = nil;
     XXTPickerSnippet *snippet = [[XXTPickerSnippet alloc] initWithContentsOfFile:path Error:&initError];
     if (initError) {
-        [self presentErrorAlertController:initError];
+        [self presentErrorAlertController:initError fromController:picker];
         return;
     }
     XXTPickerSnippetTask *task = [[XXTPickerSnippetTask alloc] initWithSnippet:snippet];
@@ -212,7 +223,7 @@
     return YES;
 }
 
-- (BOOL)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task {
+- (void)pickerFactory:(XXTPickerFactory *)factory taskShouldFinished:(XXTPickerSnippetTask *)task responseBlock:(void (^)(BOOL, NSError *))responseCallback {
     UIViewController *blockVC = blockInteractions(self, YES);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error = nil;
@@ -229,15 +240,22 @@
                 [self replaceSelectedRangeInTextView:self.textView withString:taskResult];
                 [self setNeedsSaveDocument];
                 [self setNeedsFocusTextView];
+                responseCallback(YES, nil);
             } else {
-                [self presentErrorAlertController:error];
+                // [self presentErrorAlertController:error];
+                responseCallback(NO, error);
             }
         });
     });
-    return YES;
 }
 
-- (void)replaceSelectedRangeInTextView:(UITextView *)textView withString:(NSString *)string {
+- (void)pickerFactory:(XXTPickerFactory *)factory taskDidFinished:(XXTPickerSnippetTask *)task {
+    [self saveDocumentIfNecessary];
+    [self focusTextViewIfNecessary];
+}
+
+- (void)replaceSelectedRangeInTextView:(UITextView *)textView
+                            withString:(NSString *)string {
     UITextView *textInput = textView;
     NSRange selectedNSRange = textInput.selectedRange;
     UITextRange *selectedRange = [textInput selectedTextRange];
@@ -298,7 +316,7 @@
 
 #pragma mark - Snippet Error
 
-- (void)presentErrorAlertController:(NSError *)error {
+- (void)presentErrorAlertController:(NSError *)error fromController:(UIViewController *)controller {
     @weakify(self);
     dispatch_async(dispatch_get_main_queue(), ^{
         @strongify(self);
@@ -307,7 +325,7 @@
         if (@available(iOS 8.0, *)) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedFailureReason, error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self.navigationController presentViewController:alertController animated:YES completion:nil];
+            [controller presentViewController:alertController animated:YES completion:nil];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Snippet Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@\n%@: %@", nil), entryName, error.localizedFailureReason, error.localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alertView show];

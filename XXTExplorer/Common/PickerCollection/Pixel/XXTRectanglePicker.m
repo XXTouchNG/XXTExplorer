@@ -12,6 +12,7 @@
 #import "XXTPixelCropView.h"
 #import "XXTPixelPlaceholderView.h"
 #import "XXTPositionColorModel.h"
+#import "XXTPixelToolbar.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <LGAlertView/LGAlertView.h>
@@ -33,7 +34,7 @@
 @property(nonatomic, assign) BOOL locked;
 @property(nonatomic, strong) UIButton *lockButton;
 @property(nonatomic, strong) XXTPixelCropView *cropView;
-@property(nonatomic, strong) UIToolbar *cropToolbar;
+@property(nonatomic, strong) XXTPixelToolbar *cropToolbar;
 @end
 
 // type
@@ -80,6 +81,12 @@ XXTE_START_IGNORE_PARTIAL
     [self setSelectedImage:self.selectedImage];
 }
 XXTE_END_IGNORE_PARTIAL
+
+#pragma mark - Interactive Modal
+
+- (BOOL)isModalInPresentation {
+    return self.locked;
+}
 
 #pragma mark - View & Constraints
 
@@ -238,13 +245,17 @@ XXTE_END_IGNORE_PARTIAL
     return _placeholderView;
 }
 
-- (UIToolbar *)cropToolbar {
+- (XXTPixelToolbar *)cropToolbar {
     if (!_cropToolbar) {
-        UIToolbar *cropToolbar = [[UIToolbar alloc] init];
+        XXTPixelToolbar *cropToolbar = [[XXTPixelToolbar alloc] init];
         cropToolbar.hidden = YES;
         cropToolbar.translatesAutoresizingMaskIntoConstraints = NO;
         cropToolbar.backgroundColor = [UIColor clearColor];
-        [cropToolbar setBackgroundColor:[UIColor colorWithWhite:1.f alpha:.75f]];
+        if (@available(iOS 13.0, *)) {
+            [cropToolbar setBackgroundColor:[[UIColor systemBackgroundColor] colorWithAlphaComponent:.75f]];
+        } else {
+            [cropToolbar setBackgroundColor:[UIColor colorWithWhite:1.f alpha:.75f]];
+        }
         
         UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *graphBtn = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"xxt-add-box"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(changeImageButtonTapped:)];
