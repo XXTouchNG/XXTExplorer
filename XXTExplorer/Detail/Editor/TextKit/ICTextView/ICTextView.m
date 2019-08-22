@@ -80,8 +80,8 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 
 // Highlights
 @property (nonatomic, strong) NSMutableDictionary *highlightsByRange;
-@property (nonatomic, strong) NSMutableArray *primaryHighlights;
-@property (nonatomic, strong) NSMutableOrderedSet *secondaryHighlights;
+@property (nonatomic, strong) NSMutableArray <ICTextHighlight *> *primaryHighlights;
+@property (nonatomic, strong) NSMutableOrderedSet <ICTextHighlight *> *secondaryHighlights;
 
 // Work
 @property (nonatomic, unsafe_unretained) NSTimer *autoRefreshTimer;
@@ -460,11 +460,11 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 #pragma mark - Private methods
 
 // Return value: highlight UIView
-- (UIView *)addHighlightAtRect:(CGRect)frame
+- (ICTextHighlight *)addHighlight:(UITextRange *)textRange atRect:(CGRect)frame
 {
-    UIView *highlight = [[UIView alloc] initWithFrame:frame];
+    UIView *highlightView = [[UIView alloc] initWithFrame:frame];
     CGFloat cornerRadius = self.highlightCornerRadius;
-    CALayer *highlightLayer = highlight.layer;
+    CALayer *highlightLayer = highlightView.layer;
     [highlightLayer setCornerRadius:(cornerRadius < 0.0 ? frame.size.height * 0.2f : cornerRadius)];
     [highlightLayer setBackgroundColor:self.secondaryHighlightColor.CGColor];
     [highlightLayer setOpacity:0.66f];
@@ -475,8 +475,11 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 //    [highlightLayer setShadowOffset:CGSizeZero];
 //    [highlightLayer setShadowOpacity:0.25f];
 //    [highlightLayer setShadowRadius:8.0f];
+    ICTextHighlight *highlight = [ICTextHighlight new];
+    highlight.highlightView = highlightView;
+    highlight.highlightRange = textRange;
     [self.secondaryHighlights addObject:highlight];
-    [self addSubview:highlight];
+    [self addSubview:highlightView];
     return highlight;
 }
 
@@ -507,13 +510,13 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
             else
             {
                 // Not adjacent, add previous rect to highlights array
-                [highlightsForRange addObject:[self addHighlightAtRect:previousRect]];
+                [highlightsForRange addObject:[self addHighlight:textRange atRect:previousRect]];
                 previousRect = currentRect;
             }
         }
         
         // Add last highlight
-        [highlightsForRange addObject:[self addHighlightAtRect:previousRect]];
+        [highlightsForRange addObject:[self addHighlight:textRange atRect:previousRect]];
     }
     else
 #endif
@@ -540,7 +543,7 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
                 start = lineEnd;
             }
             previousRect = [self firstRectForRange:textRange];
-            [highlightsForRange addObject:[self addHighlightAtRect:previousRect]];
+            [highlightsForRange addObject:[self addHighlight:textRange atRect:previousRect]];
         } while (hasMoreLines);
     }
     return highlightsForRange;
@@ -658,14 +661,15 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 - (void)initializePrimaryHighlights
 {
     // Move primary highlights to secondary highlights array
-    NSMutableArray *primaryHighlights = self.primaryHighlights;
-    NSMutableOrderedSet *secondaryHighlights = self.secondaryHighlights;
+    NSMutableArray <ICTextHighlight *> *primaryHighlights = self.primaryHighlights;
+    NSMutableOrderedSet <ICTextHighlight *> *secondaryHighlights = self.secondaryHighlights;
     UIColor *secondaryHighlightColor = self.secondaryHighlightColor;
     
-    for (UIView *hl in primaryHighlights)
+    for (ICTextHighlight *textHighlight in primaryHighlights)
     {
+        UIView *hl = textHighlight.highlightView;
         hl.backgroundColor = secondaryHighlightColor;
-        [secondaryHighlights addObject:hl];
+        [secondaryHighlights addObject:textHighlight];
     }
     [primaryHighlights removeAllObjects];
 }
@@ -733,8 +737,10 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
     NSMutableDictionary *highlightsByRange = self.highlightsByRange;
     NSMutableOrderedSet *secondaryHighlights = self.secondaryHighlights;
     
-    for (UIView *hl in secondaryHighlights)
+    for (ICTextHighlight *textHighlight in secondaryHighlights) {
+        UIView *hl = textHighlight.highlightView;
         [hl removeFromSuperview];
+    }
     [secondaryHighlights removeAllObjects];
     
     // Remove all objects in highlightsByRange, except rangeOfFoundString (primary)
@@ -759,21 +765,22 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
     NSUInteger max = min + 3 * range.length;
     
     // Scan highlighted ranges
-    NSMutableDictionary *highlightsByRange = self.highlightsByRange;
-    NSMutableOrderedSet *secondaryHighlights = self.secondaryHighlights;
+    NSMutableDictionary <NSValue *, NSMutableArray <ICTextHighlight *> *> *highlightsByRange = self.highlightsByRange;
+    NSMutableOrderedSet <ICTextHighlight *> *secondaryHighlights = self.secondaryHighlights;
     
-    NSMutableArray *keysToRemove = [[NSMutableArray alloc] init];
-    [highlightsByRange enumerateKeysAndObjectsUsingBlock:^(NSValue *rangeValue, NSArray *highlightsForRange, BOOL *stop){
+    NSMutableArray <NSValue *> *keysToRemove = [[NSMutableArray alloc] init];
+    [highlightsByRange enumerateKeysAndObjectsUsingBlock:^(NSValue *rangeValue, NSArray <ICTextHighlight *> *highlightsForRange, BOOL *stop){
         ICUnusedParameter(stop);
         
         // Selectively remove highlights
         NSUInteger location = [rangeValue rangeValue].location;
         if ((location < min || location > max) && location != [self rangeOfFoundString].location)
         {
-            for (UIView *hl in highlightsForRange)
+            for (ICTextHighlight *textHighlight in highlightsForRange)
             {
+                UIView *hl = textHighlight.highlightView;
                 [hl removeFromSuperview];
-                [secondaryHighlights removeObject:hl];
+                [secondaryHighlights removeObject:textHighlight];
             }
             [keysToRemove addObject:rangeValue];
         }
@@ -817,18 +824,19 @@ NS_INLINE BOOL ICCGFloatEqualOnScreen(CGFloat f1, CGFloat f2)
 - (void)setPrimaryHighlightAtRange:(NSRange)range
 {
     [self initializePrimaryHighlights];
-    NSMutableArray *primaryHighlights = self.primaryHighlights;
-    NSMutableOrderedSet *secondaryHighlights = self.secondaryHighlights;
+    NSMutableArray <ICTextHighlight *> *primaryHighlights = self.primaryHighlights;
+    NSMutableOrderedSet <ICTextHighlight *> *secondaryHighlights = self.secondaryHighlights;
     UIColor *primaryHighlightColor = self.primaryHighlightColor;
     
     NSValue *rangeValue = [NSValue valueWithRange:range];
-    NSMutableArray *highlightsForRange = [self.highlightsByRange objectForKey:rangeValue];
+    NSMutableArray <ICTextHighlight *> *highlightsForRange = [self.highlightsByRange objectForKey:rangeValue];
     
-    for (UIView *hl in highlightsForRange)
+    for (ICTextHighlight *textHighlight in highlightsForRange)
     {
+        UIView *hl = textHighlight.highlightView;
         hl.backgroundColor = primaryHighlightColor;
-        [primaryHighlights addObject:hl];
-        [secondaryHighlights removeObject:hl];
+        [primaryHighlights addObject:textHighlight];
+        [secondaryHighlights removeObject:textHighlight];
     }
 }
 

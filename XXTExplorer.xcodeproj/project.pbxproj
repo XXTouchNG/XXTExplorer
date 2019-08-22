@@ -1277,6 +1277,9 @@
 		D677B10F1F4FE94000E741C2 /* XXTETerminalTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B10E1F4FE94000E741C2 /* XXTETerminalTextView.m */; };
 		D677B1121F4FEA7B00E741C2 /* XXTETerminalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1111F4FEA7B00E741C2 /* XXTETerminalViewController.m */; };
 		D677B1161F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D677B1151F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m */; };
+		D677E21E230E27B000127B7B /* ICTextHighlight.m in Sources */ = {isa = PBXBuildFile; fileRef = D677E21D230E27B000127B7B /* ICTextHighlight.m */; };
+		D677E21F230E27B000127B7B /* ICTextHighlight.m in Sources */ = {isa = PBXBuildFile; fileRef = D677E21D230E27B000127B7B /* ICTextHighlight.m */; };
+		D677E220230E27B000127B7B /* ICTextHighlight.m in Sources */ = {isa = PBXBuildFile; fileRef = D677E21D230E27B000127B7B /* ICTextHighlight.m */; };
 		D67F6E51230B8856008D315D /* XXTEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1661ED787A7003DCC78 /* XXTEMasterViewController.m */; };
 		D6863C621F7E275900A45CF7 /* XXTEUIViewController+LaunchScript.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C571F7E275800A45CF7 /* XXTEUIViewController+LaunchScript.m */; };
 		D6863C631F7E275900A45CF7 /* XXTEUIViewController+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = D6863C5A1F7E275800A45CF7 /* XXTEUIViewController+OpenURL.m */; };
@@ -2165,6 +2168,8 @@
 		D677B1111F4FEA7B00E741C2 /* XXTETerminalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETerminalViewController.m; sourceTree = "<group>"; };
 		D677B1141F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTExplorerEntryTerminalReader.h; sourceTree = "<group>"; };
 		D677B1151F4FEC5A00E741C2 /* XXTExplorerEntryTerminalReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTExplorerEntryTerminalReader.m; sourceTree = "<group>"; };
+		D677E21C230E27B000127B7B /* ICTextHighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICTextHighlight.h; sourceTree = "<group>"; };
+		D677E21D230E27B000127B7B /* ICTextHighlight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICTextHighlight.m; sourceTree = "<group>"; };
 		D6863C561F7E275800A45CF7 /* XXTEUIViewController+OpenURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+OpenURL.h"; sourceTree = "<group>"; };
 		D6863C571F7E275800A45CF7 /* XXTEUIViewController+LaunchScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XXTEUIViewController+LaunchScript.m"; sourceTree = "<group>"; };
 		D6863C581F7E275800A45CF7 /* XXTEUIViewController+ScanQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XXTEUIViewController+ScanQRCode.h"; sourceTree = "<group>"; };
@@ -2541,6 +2546,8 @@
 				0F1C3EB51FA8376100B5146C /* ICRangeUtils.m */,
 				0F1C3EB41FA8376100B5146C /* ICRegularExpression.h */,
 				0F1C3EB71FA8376100B5146C /* ICRegularExpression.m */,
+				D677E21C230E27B000127B7B /* ICTextHighlight.h */,
+				D677E21D230E27B000127B7B /* ICTextHighlight.m */,
 				0F1C3EB61FA8376100B5146C /* ICTextView.h */,
 				0F1C3EB21FA8376000B5146C /* ICTextView.m */,
 			);
@@ -5433,6 +5440,7 @@
 				0F8EDBEE1FB1F779003C92D6 /* XXTExplorerEntryBindingViewController.m in Sources */,
 				0F8EDBF21FB1F779003C92D6 /* XXTEMoreTitleDescriptionCell.m in Sources */,
 				0F8EDBF31FB1F779003C92D6 /* XXTEEditorLanguage.m in Sources */,
+				D677E220230E27B000127B7B /* ICTextHighlight.m in Sources */,
 				0F8EDBF41FB1F779003C92D6 /* UIColor+SKColor.m in Sources */,
 				0F8EDBF61FB1F779003C92D6 /* SKAttributedParsingOperation.m in Sources */,
 				0F8EDBF71FB1F779003C92D6 /* XXTEUIViewController+XUILinkCell.m in Sources */,
@@ -5889,6 +5897,7 @@
 				0F072DB71FB9EC8B00597EE2 /* crc.c in Sources */,
 				B0312C66303F1ED315E31FC7 /* lua.c in Sources */,
 				B0312E67813AAEA39A201987 /* lundump.c in Sources */,
+				D677E21E230E27B000127B7B /* ICTextHighlight.m in Sources */,
 				B03125C11845933E80D25879 /* lutf8lib.c in Sources */,
 				D6CB81BD1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */,
 				B0312B3B3ED79CA84C88DCC4 /* lvm.c in Sources */,
@@ -6245,6 +6254,7 @@
 				D60FE75F1FE2369300954818 /* crc.c in Sources */,
 				D60FE7601FE2369300954818 /* lua.c in Sources */,
 				D60FE7611FE2369300954818 /* lundump.c in Sources */,
+				D677E21F230E27B000127B7B /* ICTextHighlight.m in Sources */,
 				D60FE7621FE2369300954818 /* lutf8lib.c in Sources */,
 				D6CB81BF1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */,
 				D60FE7631FE2369300954818 /* lvm.c in Sources */,

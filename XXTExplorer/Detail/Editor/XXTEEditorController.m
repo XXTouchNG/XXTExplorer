@@ -304,6 +304,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if ([keysToReload containsObject:XXTEEditorSpellChecking]) {
         self.textView.spellCheckingType = XXTEDefaultsEnum(XXTEEditorSpellChecking, UITextSpellCheckingTypeNo);
     }
+    if ([keysToReload containsObject:XXTEEditorSearchCircular]) {
+        self.textView.circularSearch = XXTEDefaultsBool(XXTEEditorSearchCircular, YES);
+    }
     // Set the fucking smart types again
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 11.0, *)) {
@@ -442,21 +445,17 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         if (isReadOnlyMode) {
             self.keyboardRow.textInput = nil;
             self.textView.inputAccessoryView = nil;
-            self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
         } else {
             if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
                 self.keyboardRow.textInput = nil;
                 self.textView.inputAccessoryView = nil;
-                self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
             } else {
                 if (isKeyboardRowEnabled) {
                     self.keyboardRow.textInput = self.textView;
                     self.textView.inputAccessoryView = self.keyboardRow;
-                    self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
                 } else {
                     self.keyboardRow.textInput = nil;
                     self.textView.inputAccessoryView = self.keyboardToolbarRow;
-                    self.textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
                 }
             }
         }
@@ -610,8 +609,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         [self reloadTextViewWidthIfNecessary];
         [self reloadNavigationBarIfNecessary];
         [self reloadAttributesIfNecessary];
-        [self eraseAllLineMasksIfNecessary];
     }
+    [self eraseAllLineMasksIfNecessary];
     
     // Super
     [super viewWillAppear:animated];
@@ -971,8 +970,7 @@ XXTE_END_IGNORE_PARTIAL
         textView.dataDetectorTypes = UIDataDetectorTypeNone;
         textView.textAlignment = NSTextAlignmentLeft;
         textView.allowsEditingTextAttributes = NO;
-        
-        textView.circularSearch = YES;
+        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
         textView.scrollPosition = ICTextViewScrollPositionMiddle;
         
         XXTE_START_IGNORE_PARTIAL
@@ -1388,7 +1386,9 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         if ([self.searchBar isFirstResponder]) {
             [self.searchBar resignFirstResponder];
         }
+        NSUInteger beginLocation = self.textView.selectedRange.location;
         [self.textView resetSearch];
+        [self.textView setSearchIndex:beginLocation];
         [self updateCountLabel];
     }
 }
@@ -1567,16 +1567,24 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     }
     if (target.length) {
         BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
-        //        BOOL searchSucceed = NO;
+        BOOL searchSucceed = NO;
         if (useRegular) {
-            //            searchSucceed =
+            searchSucceed =
             [self.textView scrollToMatch:target searchDirection:direction];
         } else {
-            //            searchSucceed =
+            searchSucceed =
             [self.textView scrollToString:target searchDirection:direction];
         }
+        if (searchSucceed) {
+            NSRange foundRange = self.textView.rangeOfFoundString;
+            if (foundRange.location != NSNotFound) {
+                [self.textView setSelectedRange:foundRange];
+            }
+        }
     } else {
+        NSUInteger beginLocation = self.textView.selectedRange.location;
         [self.textView resetSearch];
+        [self.textView setSearchIndex:beginLocation];
     }
     [self updateCountLabel];
 }
@@ -1596,10 +1604,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         if (idx != NSNotFound) {
             countLabel.text = numberOfMatches ? [NSString stringWithFormat:NSLocalizedString(@"%lu/%lu", nil), (unsigned long)idx + 1, (unsigned long)numberOfMatches] : NSLocalizedString(@"0/0", nil);
             [countLabel sizeToFit];
-            if (idx == 0) {
+            if (!textView.circularSearch && idx == 0) {
                 prevItem.enabled = NO;
                 nextItem.enabled = YES;
-            } else if (idx == numberOfMatches - 1) {
+            } else if (!textView.circularSearch && idx == numberOfMatches - 1) {
                 prevItem.enabled = YES;
                 nextItem.enabled = NO;
             } else {
@@ -1751,7 +1759,8 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [searchAccessoryView setAllowReplacement:(NO == isReadOnlyMode && NO == isLockedState)];
     [searchAccessoryView setReplaceMode:NO];
     [searchAccessoryView updateAccessoryView];
-    [self.textView resetSearch];
+    NSUInteger beginLocation = self.textView.selectedRange.location;
+    [self.textView setSearchIndex:beginLocation];
     [self searchNextMatch];
     return YES;
 }
@@ -1763,9 +1772,18 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [searchAccessoryView setAllowReplacement:(NO == isReadOnlyMode && NO == isLockedState)];
     [searchAccessoryView setReplaceMode:YES];
     [searchAccessoryView updateAccessoryView];
-    [self.textView resetSearch];
+    NSUInteger beginLocation = self.textView.selectedRange.location;
+    [self.textView setSearchIndex:beginLocation];
     [self searchNextMatch];
     return YES;
+}
+
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldDidEndEditing:(UITextField *)textField {
+    
+}
+
+- (void)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldDidEndEditing:(UITextField *)textField {
+    
 }
 
 - (void)searchBarDidCancel:(XXTEEditorSearchBar *)searchBar {
@@ -1783,9 +1801,9 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [self searchNextMatch];
 }
 
-- (BOOL)searchAccessoryViewAllowReplacement:(XXTEEditorSearchAccessoryView *)accessoryView {
-    return YES;
-}
+//- (BOOL)searchAccessoryViewAllowReplacement:(XXTEEditorSearchAccessoryView *)accessoryView {
+//    return YES;
+//}
 
 - (void)searchAccessoryViewShouldReplace:(XXTEEditorSearchAccessoryView *)accessoryView {
     [self replaceNextMatch];
@@ -1852,6 +1870,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
      XXTEEditorSpellChecking,
      XXTEEditorSearchRegularExpression,
      XXTEEditorSearchCaseSensitive,
+     XXTEEditorSearchCircular,
      ]];
     _shouldReloadAll = YES;
 }

@@ -42,8 +42,9 @@
  **/
 
 #import <UIKit/UIKit.h>
+#import "ICTextHighlight.h"
 
-#pragma mark Constants
+#pragma mark - Constants
 
 /// Scroll position for ICTextView's scroll and search methods.
 typedef enum
@@ -82,7 +83,7 @@ typedef enum
 
 #pragma mark - Configuration
 
-#pragma mark -- Appearance --
+#pragma mark - Appearance
 
 /// Color of the primary search highlight (default = RGB 150/200/255).
 @property (nonatomic, strong) UIColor *primaryHighlightColor UI_APPEARANCE_SELECTOR;
@@ -93,7 +94,7 @@ typedef enum
 /// Highlight corner radius (default = fontSize * 0.2).
 @property (nonatomic) CGFloat highlightCornerRadius UI_APPEARANCE_SELECTOR;
 
-#pragma mark -- Behaviour --
+#pragma mark - Behaviour
 
 /// Toggles scroll animation while searching (default = YES).
 @property (nonatomic) BOOL animatedSearch;
@@ -117,7 +118,7 @@ typedef enum
 /// Allows restricting search to a specific range (default = { 0, NSUIntegerMax }).
 @property (nonatomic) NSRange searchRange;
 
-#pragma mark -- Performance --
+#pragma mark - Performance
 
 /**
  Maximum number of cached highlighted matches (default = 100).
@@ -135,6 +136,12 @@ typedef enum
  */
 @property (nonatomic) NSTimeInterval scrollAutoRefreshDelay;
 
+#pragma mark - Highlights
+
+@property (nonatomic, strong, readonly) NSMutableDictionary <NSValue *, NSMutableArray <ICTextHighlight *> *> *highlightsByRange;
+@property (nonatomic, strong, readonly) NSMutableArray <ICTextHighlight *> *primaryHighlights;
+@property (nonatomic, strong, readonly) NSMutableOrderedSet <ICTextHighlight *> *secondaryHighlights;
+
 #pragma mark - Output
 
 /// String found during last search.
@@ -151,6 +158,12 @@ typedef enum
 - (NSTextCheckingResult *)matchOfFoundString;
 
 #pragma mark - Search
+
+// Flags
+@property (nonatomic, assign, readonly) BOOL appliedSelectionFix;
+@property (nonatomic, assign, readonly) BOOL performedNewScroll;
+@property (nonatomic, assign, readonly) BOOL searching;
+@property (nonatomic, assign, readonly) BOOL searchVisibleRange;
 
 /// Resets search, starts from self defined index.
 - (void)setSearchIndex:(NSUInteger)idx;

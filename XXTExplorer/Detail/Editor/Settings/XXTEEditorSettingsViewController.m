@@ -426,6 +426,19 @@
         }];
     }
     
+    XXTEMoreSwitchCell *cell19 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cell19.titleLabel.text = NSLocalizedString(@"Circular Search", nil);
+    cell19.optionSwitch.on = XXTEDefaultsBool(XXTEEditorSearchCircular, YES);
+    {
+        @weakify(self);
+        [cell19.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
+            UISwitch *optionSwitch = (UISwitch *)sender;
+            XXTEDefaultsSetBasic(XXTEEditorSearchCircular, optionSwitch.on);
+            [self.editor setNeedsReload:XXTEEditorSearchCircular];
+        }];
+    }
+    
     NSArray *layoutSection = nil;
     NSArray *keyboardSection = nil;
     
@@ -449,7 +462,7 @@
                     @[ cell9, cell10, cell11 ],
                     keyboardSection,
                     @[ cellBrackets, cell14, cell15, cell16 ],
-                    @[ cell17, cell18 ]
+                    @[ cell17, cell18, cell19 ]
                     ];
 }
 

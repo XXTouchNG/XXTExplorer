@@ -694,6 +694,29 @@ UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)/#373b4190
     return xxtColorCS;
 }
 
+UIColor *XXTColorSearchHighlight() {
+    static UIColor *xxtColor = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+        if (@available(iOS 13.0, *)) {
+            xxtColor = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+                if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+                    return [UIColor colorWithRed:253.0/255.0 green:247.0/255.0 blue:148.0/255.0 alpha:1.0];
+                } else {
+                    return [UIColor colorWithRed:62.0/255.f green:100.0/255.0 blue:25.0/255.0 alpha:1.0];
+                }
+            }];
+        } else {
+#endif
+            xxtColor = [UIColor colorWithRed:253.0/255.0 green:247.0/255.0 blue:148.0/255.0 alpha:1.0];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+        }
+#endif
+    });
+    return xxtColor;
+}
+
 UIColor *XXTColorWarning() { // rgb(241, 196, 15)
     static UIColor *xxtWarningColor = nil;
     static dispatch_once_t onceToken;

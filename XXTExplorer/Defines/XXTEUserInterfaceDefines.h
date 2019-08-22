@@ -48,6 +48,7 @@ extern "C" {
     UIColor *XXTColorPlainSectionHeader(void);
     UIColor *XXTColorPlainSectionHeaderText(void);
     UIColor *XXTColorGroupedBackground(void);
+    UIColor *XXTColorSearchHighlight(void);
     
     UIColor *XXTColorWarning(void);
     UIColor *XXTColorDanger(void);

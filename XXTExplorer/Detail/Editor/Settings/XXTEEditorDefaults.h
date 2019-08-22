@@ -35,12 +35,13 @@ static NSString * const XXTEEditorAutoBrackets = @"XXTEEditorAutoBrackets"; // N
 static NSString * const XXTEEditorFontName = @"XXTEEditorFontName"; // NSString
 static NSString * const XXTEEditorFontSize = @"XXTEEditorFontSize"; // NSNumber
 
-static NSString * const XXTEEditorAutoIndent = @"XXTEEditorAutoIndent";
-static NSString * const XXTEEditorSoftTabs = @"XXTEEditorSoftTabs";
+static NSString * const XXTEEditorAutoIndent = @"XXTEEditorAutoIndent"; // NSNumber - Bool
+static NSString * const XXTEEditorSoftTabs = @"XXTEEditorSoftTabs"; // NSNumber - Bool
 static NSString * const XXTEEditorTabWidth = @"XXTEEditorTabWidth"; // NSNumber
 
 static NSString * const XXTEEditorSearchRegularExpression = @"XXTEEditorSearchRegularExpression"; // NSNumber - Bool
 static NSString * const XXTEEditorSearchCaseSensitive = @"XXTEEditorSearchCaseSensitive"; // NSNumber - Bool
+static NSString * const XXTEEditorSearchCircular = @"XXTEEditorSearchCircular"; // NSNumber - Bool
 
 typedef enum : NSUInteger {
     XXTEEditorTabWidthValue_2 = 2,

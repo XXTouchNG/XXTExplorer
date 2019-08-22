@@ -24,6 +24,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) XXTEEditorLineMaskType maskType;
 @property (nonatomic, copy, nullable) NSString *maskDescription;
 @property (nonatomic, strong, nullable) id relatedObject;
+@property (nonatomic, assign) BOOL expanded;
+@property (nonatomic, assign) BOOL expanding;
 
 @end
 

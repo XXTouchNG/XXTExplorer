@@ -12,6 +12,7 @@
 #import "XXTEEditorTextView+TextRange.h"
 #import "UIImage+ColoredImage.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ICTextView.h"
 
 static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
 
@@ -52,9 +53,69 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
 
 #pragma mark - Touch Events
 
+- (ICTextHighlight *)textHighlightAtPoint:(CGPoint)targetPoint {
+    // Search
+    for (ICTextHighlight *textHighlight in self.textView.primaryHighlights) {
+        UIView *hl = textHighlight.highlightView;
+        CGRect hlRect = hl.frame;
+        if (CGRectContainsPoint(hlRect, targetPoint)) {
+            return textHighlight;
+        }
+    }
+    for (ICTextHighlight *textHighlight in self.textView.secondaryHighlights) {
+        UIView *hl = textHighlight.highlightView;
+        CGRect hlRect = hl.frame;
+        if (CGRectContainsPoint(hlRect, targetPoint)) {
+            return textHighlight;
+        }
+    }
+    return nil;
+}  // O(c1 + c2), c1 ~ 10, c2 ~ 100, very fast
+
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    return NO; // do not respond to any touch event
-}
+    BOOL inside = NO;
+    if (!inside) {
+        inside = [self lineMaskAtPoint:point forComponentAtIndex:1] != nil;  // only in tagged area, O(c), c ~ 100
+    }  // line mask at first
+    if (!inside) {
+        if (self.textView.searching) {
+            CGPoint touchPoint = point;
+            CGPoint targetPoint = [self convertPoint:touchPoint toView:self.textView];
+            inside = [self textHighlightAtPoint:targetPoint] != nil;
+        }
+    }
+    return inside;
+}  // O(k * c), k ~ 4
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (touches.count == 1) {
+        UITouch *touch = [touches anyObject];
+        BOOL handled = NO;
+        if (!handled) {
+            CGPoint targetPoint = [touch locationInView:self];
+            XXTEEditorLineMask *mask = [self lineMaskAtPoint:targetPoint forComponentAtIndex:1];
+            if (!mask.expanding) {
+                handled = YES;
+                if (mask.expanded) {
+                    [self collapseLineMask:mask];
+                } else {
+                    [self expandLineMask:mask];
+                }
+            }
+        }
+        if (!handled) {
+            CGPoint targetPoint = [touch locationInView:self.textView];
+            ICTextHighlight *textHighlight = [self textHighlightAtPoint:targetPoint];
+            if (textHighlight) {
+                handled = YES;
+                [self.textView setSelectedTextRange:textHighlight.highlightRange];
+                [self.textView select:self];
+            }
+        }
+    }
+}  // handle tap events
+
+#pragma mark - Focus
 
 - (void)focusRange:(NSRange)range {
     UITextView *textView = self.textView;
@@ -137,6 +198,8 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     
     [textView scrollRectToVisible:centeredRect animated:YES];
 }
+
+#pragma mark - Flash
 
 - (void)flashRange:(NSRange)range {
     UITextView *textView = self.textView;
@@ -336,20 +399,25 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
 - (void)fillLineMask:(XXTEEditorLineMask *)mask {
     XXTEEditorTextView *textView = self.textView;
     CGRect lineRect = [self lineFragmentsRectForLineIndex:mask.lineIndex];
+    if (CGRectIsNull(lineRect)) {
+        return;
+    }
     UIColor *bgColor = [self lineMaskColorForType:mask.maskType];
     
     CALayer *highlightLayer = [CALayer layer];
     [highlightLayer setFrame:lineRect];
     [highlightLayer setBackgroundColor:[bgColor CGColor]];
-    [highlightLayer setOpacity:0.166f];
+    [highlightLayer setOpacity:0.20f];
     [[textView layer] addSublayer:highlightLayer];
     
     CGRect fromRect = CGRectMake(CGRectGetMaxX(textView.frame), CGRectGetMinY(lineRect), 40.0, CGRectGetHeight(highlightLayer.bounds));
     CGRect toRect = CGRectOffset(fromRect, -34.0, 0.0);
     CALayer *taggedLayer = [CALayer layer];
+    [taggedLayer setContentsScale:[[UIScreen mainScreen] scale]];
     [taggedLayer setCornerRadius:6.f];
     [taggedLayer setFrame:fromRect];
     [taggedLayer setBackgroundColor:[bgColor CGColor]];
+    [taggedLayer setOpacity:.90f];
     [[textView layer] addSublayer:taggedLayer];
     
     if (CGRectGetHeight(taggedLayer.bounds) > 16.0) {
@@ -407,6 +475,7 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     }
     
     mask.relatedObject = @[ highlightLayer, taggedLayer ];
+    mask.expanded = NO;
 }
 
 - (void)eraseAllLineMasks {
@@ -484,6 +553,199 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     }
     
     mask.relatedObject = nil;
+    mask.expanded = NO;
+}
+
+#pragma mark - Line Mask (Private)
+
+- (CGRect)rectForLineMask:(XXTEEditorLineMask *)mask componentAtIndex:(NSUInteger)idx
+{
+    XXTEEditorTextView *textView = self.textView;
+    NSArray <CALayer *> *relatedLayers = (NSArray <CALayer *> *)mask.relatedObject;
+    if (relatedLayers) {
+        assert(relatedLayers.count == 2);
+        assert(idx < 2);
+        CALayer *layer = relatedLayers[idx];
+        return [self convertRect:layer.frame fromView:textView];
+    }
+    return CGRectNull;
+}
+
+- (XXTEEditorLineMask *)lineMaskAtPoint:(CGPoint)point forComponentAtIndex:(NSUInteger)idx
+{
+    for (XXTEEditorLineMask *mask in self.allLineMasks)
+    {
+        CGRect maskRect = [self rectForLineMask:mask componentAtIndex:idx];
+        if (CGRectIsNull(maskRect)) {
+            continue;
+        }
+        if (CGRectContainsPoint(maskRect, point)) {
+            return mask;
+        }
+    }
+    return nil;
+}
+
+- (void)expandLineMask:(XXTEEditorLineMask *)mask {
+    // do not expand again
+    if (mask.expanded || mask.expanding) {
+        return;
+    }
+    
+    // expand without mask description is not allowed
+    if (!mask.maskDescription || !mask.relatedObject) {
+        return;
+    }
+    
+    // get tagged layer
+    NSArray <CALayer *> *relatedLayers = (NSArray <CALayer *> *)mask.relatedObject;
+    assert(relatedLayers.count == 2);
+    CALayer *taggedLayer = relatedLayers[1];
+    
+    // do not expand small mask
+    if (CGRectGetHeight(taggedLayer.bounds) <= 16.0) {
+        return;
+    }
+    
+    mask.expanding = YES;
+    
+    // calculate size for description label
+    UIFont *labelFont = [UIFont boldSystemFontOfSize:12.0];
+    UIColor *labelColor = [UIColor colorWithWhite:0.0 alpha:.75];
+    NSDictionary *maskAttr = @{ NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelColor };
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:mask.maskDescription attributes:maskAttr];
+    CGSize strSize = attrStr.size;
+    
+    // expand tagged layer's width
+    CGFloat tageedExtraInsetRight = 10.f;
+    CGRect taggedFrame = taggedLayer.frame;
+    taggedFrame = CGRectMake(taggedFrame.origin.x, taggedFrame.origin.y, taggedFrame.size.width + strSize.width + tageedExtraInsetRight, taggedFrame.size.height);
+    taggedLayer.frame = taggedFrame;
+    
+    // draw attriubued string
+    CATextLayer *labelLayer = [CATextLayer layer];
+    labelLayer.opacity = 0.0;
+    labelLayer.contentsScale = [[UIScreen mainScreen] scale];
+    labelLayer.font = (__bridge CFTypeRef _Nullable)(labelFont);
+    labelLayer.fontSize = labelFont.pointSize;
+    labelLayer.foregroundColor = labelColor.CGColor;
+    labelLayer.alignmentMode = kCAAlignmentRight;
+    labelLayer.frame = CGRectMake(34.0, CGRectGetHeight(taggedFrame) / 2.0 - strSize.height / 2.0, strSize.width, strSize.height);
+    labelLayer.string = mask.maskDescription;
+    [taggedLayer addSublayer:labelLayer];
+    
+    // calculate start - end position
+    CGFloat expandOffsetX = - strSize.width - tageedExtraInsetRight;
+    CGPoint fromPos = CGPointMake(CGRectGetMidX(taggedFrame), CGRectGetMidY(taggedFrame));
+    CGPoint toPos = CGPointMake(fromPos.x + expandOffsetX, fromPos.y);
+    
+    // give UIKit some time to handle touch & scroll events in main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // animations
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            labelLayer.opacity = 1.0;
+            [labelLayer removeAllAnimations];
+            taggedLayer.frame = CGRectOffset(taggedFrame, expandOffsetX, 0.0);
+            [taggedLayer removeAllAnimations];
+            
+            mask.expanded = YES;
+            mask.expanding = NO;
+        }];
+        
+        // opacity in animation
+        CABasicAnimation *opacityInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        opacityInAnimation.beginTime = CACurrentMediaTime() + .2f;
+        opacityInAnimation.duration = 0.3;
+        opacityInAnimation.repeatCount = 1;
+        opacityInAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+        opacityInAnimation.toValue = [NSNumber numberWithFloat:1.0];
+        opacityInAnimation.removedOnCompletion = NO;
+        opacityInAnimation.fillMode = kCAFillModeForwards;
+        opacityInAnimation.additive = NO;
+        opacityInAnimation.autoreverses = NO;
+        [labelLayer addAnimation:opacityInAnimation forKey:@"labelOpacityIn"];
+        
+        // expand animation
+        CABasicAnimation *expandAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+        expandAnimation.beginTime = CACurrentMediaTime() + .2f;
+        expandAnimation.duration = 0.2;
+        expandAnimation.repeatCount = 1;
+        expandAnimation.fromValue = [NSValue valueWithCGPoint:fromPos];
+        expandAnimation.toValue = [NSValue valueWithCGPoint:toPos];
+        expandAnimation.removedOnCompletion = NO;
+        expandAnimation.fillMode = kCAFillModeForwards;
+        expandAnimation.additive = NO;
+        expandAnimation.autoreverses = NO;
+        [taggedLayer addAnimation:expandAnimation forKey:@"expand"];
+        
+        [CATransaction commit];
+    });
+}
+
+- (void)collapseLineMask:(XXTEEditorLineMask *)mask {
+    // do not collapse again
+    if (!mask.expanded || mask.expanding) {
+        return;
+    }
+    
+    // expand without mask description is not allowed
+    if (!mask.maskDescription || !mask.relatedObject) {
+        return;
+    }
+    
+    mask.expanding = YES;
+    
+    // get tagged layer
+    NSArray <CALayer *> *relatedLayers = (NSArray <CALayer *> *)mask.relatedObject;
+    assert(relatedLayers.count == 2);
+    CALayer *taggedLayer = relatedLayers[1];
+    CGRect taggedFrame = taggedLayer.frame;
+    
+    // calculate start - end position
+    CGFloat collapseOffsetX = CGRectGetWidth(taggedFrame) - 40.0;
+    CGPoint fromPos = CGPointMake(CGRectGetMidX(taggedFrame), CGRectGetMidY(taggedFrame));
+    CGPoint toPos = CGPointMake(fromPos.x + collapseOffsetX, fromPos.y);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // collapse animation
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            // remove text layer
+            CALayer *layerToRemove = nil;
+            for (CALayer *layer in taggedLayer.sublayers) {
+                if ([layer isKindOfClass:[CATextLayer class]]) {
+                    layerToRemove = layer;
+                }
+            }
+            [layerToRemove removeFromSuperlayer];
+            
+            // calculate collapsed frame
+            CGRect newTaggedFrame = CGRectOffset(taggedFrame, collapseOffsetX, 0.0);
+            newTaggedFrame.size.width = 40.0;
+            
+            // collapse frame set
+            taggedLayer.frame = newTaggedFrame;
+            [taggedLayer removeAllAnimations];
+            
+            mask.expanded = NO;
+            mask.expanding = NO;
+        }];
+        
+        CABasicAnimation *collapseAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+        collapseAnimation.beginTime = CACurrentMediaTime() + .2f;
+        collapseAnimation.duration = 0.2f;
+        collapseAnimation.repeatCount = 1;
+        collapseAnimation.fromValue = [NSValue valueWithCGPoint:fromPos];
+        collapseAnimation.toValue = [NSValue valueWithCGPoint:toPos];
+        collapseAnimation.removedOnCompletion = NO;
+        collapseAnimation.fillMode = kCAFillModeForwards;
+        collapseAnimation.additive = NO;
+        collapseAnimation.autoreverses = NO;
+        [taggedLayer addAnimation:collapseAnimation forKey:@"collapse"];
+        
+        [CATransaction commit];
+    });
 }
 
 @end

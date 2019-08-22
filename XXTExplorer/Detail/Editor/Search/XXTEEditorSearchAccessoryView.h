@@ -13,7 +13,7 @@
 @protocol XXTEEditorSearchAccessoryViewDelegate <NSObject>
 - (void)searchAccessoryViewShouldMatchPrev:(XXTEEditorSearchAccessoryView *)accessoryView;
 - (void)searchAccessoryViewShouldMatchNext:(XXTEEditorSearchAccessoryView *)accessoryView;
-// - (BOOL)searchAccessoryViewAllowReplacement:(XXTEEditorSearchAccessoryView *)accessoryView;
+//- (BOOL)searchAccessoryViewAllowReplacement:(XXTEEditorSearchAccessoryView *)accessoryView;
 - (void)searchAccessoryViewShouldReplace:(XXTEEditorSearchAccessoryView *)accessoryView;
 - (void)searchAccessoryViewShouldReplaceAll:(XXTEEditorSearchAccessoryView *)accessoryView;
 @end

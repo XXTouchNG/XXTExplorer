@@ -17,6 +17,8 @@
         _maskType = XXTEEditorLineMaskNone;
         _maskDescription = nil;
         _relatedObject = nil;
+        _expanded = NO;
+        _expanding = NO;
     }
     return self;
 }

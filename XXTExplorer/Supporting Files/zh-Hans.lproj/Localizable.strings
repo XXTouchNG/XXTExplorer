@@ -2134,3 +2134,6 @@
 
 /* No comment provided by engineer. */
 "Search Results (%ld)" = "搜索结果 (%ld)";
+
+/* No comment provided by engineer. */
+"Circular Search" = "循环搜索";

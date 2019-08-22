@@ -34,9 +34,13 @@
 #pragma mark - XXTESwipeTableCellDelegate
 
 - (BOOL)swipeTableCell:(XXTESwipeTableCell *)cell canSwipe:(XXTESwipeDirection)direction fromPoint:(CGPoint)point {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    if (!indexPath) return NO;
-    if (indexPath.row >= self.entryList.count) return NO;
+    if (self.searchController.active) {
+        return NO;  // do not swipe while searching
+    } else {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        if (!indexPath) return NO;
+        if (indexPath.row >= self.entryList.count) return NO;
+    }
     return YES;
 }
 

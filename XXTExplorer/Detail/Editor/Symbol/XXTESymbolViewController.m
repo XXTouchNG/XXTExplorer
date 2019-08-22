@@ -85,6 +85,7 @@ XXTE_END_IGNORE_PARTIAL
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"Symbols", nil);
+    self.view.backgroundColor = XXTColorPlainBackground();
     
     UISearchBar *searchBar = nil;
     XXTE_START_IGNORE_PARTIAL
@@ -130,6 +131,7 @@ XXTE_END_IGNORE_PARTIAL
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTESymbolCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTESymbolCellReuseIdentifier];
         tableView.delegate = self;
         tableView.dataSource = self;
+        tableView.backgroundColor = XXTColorPlainBackground();
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         if (@available(iOS 13.0, *)) {
             
@@ -333,7 +335,18 @@ XXTE_END_IGNORE_PARTIAL
     NSUInteger idx = indexPath.row;
     if (idx < self.displaySymbolsTable.count) {
         NSDictionary *detail = self.displaySymbolsTable[idx];
-        cell.symbolLabel.text = detail[@"title"];
+        NSString *symbolTitle = detail[@"title"];
+        if (self.searchController.active) {
+            NSString *searchContent = self.searchController.searchBar.text;
+            NSMutableAttributedString *attribuedTitle = [[NSMutableAttributedString alloc] initWithString:symbolTitle attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:16.0], NSForegroundColorAttributeName: XXTColorPlainTitleText() }];
+            NSRange highlightRange = [symbolTitle rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, symbolTitle.length)];
+            if (highlightRange.location != NSNotFound) {
+                [attribuedTitle addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:highlightRange];
+            }
+            [cell.symbolLabel setAttributedText:attribuedTitle];
+        } else {
+            [cell.symbolLabel setText:symbolTitle];
+        }
     }
 }
 

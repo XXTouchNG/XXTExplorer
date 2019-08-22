@@ -604,61 +604,9 @@ XXTE_END_IGNORE_PARTIAL
             if ([tableView isEditing]) {
                 [self updateToolbarStatus];
             } else {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 XXTExplorerEntry *entry = self.entryList[indexPath.row];
-                NSString *entryPath = entry.entryPath;
-                if (entry.isMaskedDirectory)
-                {
-                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    [self performDictionaryActionForEntry:entry];
-                }
-                else if (
-                         entry.isMaskedRegular ||
-                         entry.isBundle)
-                {
-                    if ([self.class.explorerFileManager isReadableFileAtPath:entryPath])
-                    {
-                        if ([self.class.explorerEntryService hasViewerForEntry:entry])
-                        {
-                            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                            if (!XXTE_COLLAPSED)
-                            {
-                                
-                            } // TODO: remain selected state when being viewed in collapsed detail view controller
-                            [self performViewerActionForEntry:entry];
-                        }
-                        else
-                        {
-                            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                            XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entry];
-                            openWithController.delegate = self;
-                            XXTENavigationController *navController = [[XXTENavigationController alloc] initWithRootViewController:openWithController];
-                            XXTE_START_IGNORE_PARTIAL
-                            if (@available(iOS 8.0, *)) {
-                                navController.modalPresentationStyle = UIModalPresentationPopover;
-                                UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
-                                popoverController.sourceView = tableView;
-                                popoverController.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
-                                popoverController.backgroundColor = XXTColorPlainBackground();
-                            }
-                            XXTE_END_IGNORE_PARTIAL
-                            navController.presentationController.delegate = self;
-                            [self.navigationController presentViewController:navController animated:YES completion:nil];
-                        }
-                    } else {
-                        // TODO: not readable, unlock?
-                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                        toastMessage(self, NSLocalizedString(@"Access denied.", nil));
-                    }
-                } else if (entry.isBrokenSymlink)
-                { // broken symlink
-                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entry.localizedDisplayName]));
-                }
-                else
-                { // not supported
-                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
-                }
+                [self performActionForEntry:entry sourceTableView:tableView sourceIndexPath:indexPath];
             }
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             if ([tableView isEditing]) {
@@ -668,6 +616,12 @@ XXTE_END_IGNORE_PARTIAL
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 [self performHomeActionForEntry:entryDetail];
             }
+        }
+    } else if (tableView == self.searchResultsController.tableView) {
+        if (indexPath.section == 0) {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            XXTExplorerEntry *entry = self.searchResultsController.filteredEntryList[indexPath.row];
+            [self performActionForEntry:entry sourceTableView:tableView sourceIndexPath:indexPath];
         }
     }
 }  // delegate method
@@ -700,6 +654,58 @@ XXTE_END_IGNORE_PARTIAL
         [self.navigationController pushViewController:controller animated:YES];
     } else if (prepareError) {
         toastError(self, prepareError);
+    }
+}
+
+- (void)performActionForEntry:(XXTExplorerEntry *)entry sourceTableView:(UITableView *)tableView sourceIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *entryPath = entry.entryPath;
+    if (entry.isMaskedDirectory)
+    {
+        [self performDictionaryActionForEntry:entry];
+    }
+    else if (
+             entry.isMaskedRegular ||
+             entry.isBundle)
+    {
+        if ([self.class.explorerFileManager isReadableFileAtPath:entryPath])
+        {
+            if ([self.class.explorerEntryService hasViewerForEntry:entry])
+            {
+                if (!XXTE_COLLAPSED)
+                {
+                    
+                } // TODO: remain selected state when being viewed in collapsed detail view controller
+                [self performViewerActionForEntry:entry];
+            }
+            else
+            {
+                XXTExplorerEntryOpenWithViewController *openWithController = [[XXTExplorerEntryOpenWithViewController alloc] initWithEntry:entry];
+                openWithController.delegate = self;
+                XXTENavigationController *navController = [[XXTENavigationController alloc] initWithRootViewController:openWithController];
+                XXTE_START_IGNORE_PARTIAL
+                if (@available(iOS 8.0, *)) {
+                    navController.modalPresentationStyle = UIModalPresentationPopover;
+                    UIPopoverPresentationController *popoverController = navController.popoverPresentationController;
+                    popoverController.sourceView = tableView;
+                    popoverController.sourceRect = [tableView rectForRowAtIndexPath:indexPath];
+                    popoverController.backgroundColor = XXTColorPlainBackground();
+                }
+                XXTE_END_IGNORE_PARTIAL
+                navController.presentationController.delegate = self;
+                [self.navigationController presentViewController:navController animated:YES completion:nil];
+            }
+        } else {
+            // TODO: not readable, unlock?
+            toastMessage(self, NSLocalizedString(@"Access denied.", nil));
+        }
+    } else if (entry.isBrokenSymlink)
+    { // broken symlink
+        toastMessage(self, ([NSString stringWithFormat:NSLocalizedString(@"The alias \"%@\" can't be opened because the original item can't be found.", nil), entry.localizedDisplayName]));
+    }
+    else
+    { // not supported
+        toastMessage(self, NSLocalizedString(@"Only regular file, directory and symbolic link are supported.", nil));
     }
 }
 
@@ -945,6 +951,7 @@ XXTE_END_IGNORE_PARTIAL
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
             }
+            entryCell.delegate = self;
             [self configureCell:entryCell withEntry:entryDetail];
             return entryCell;
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
@@ -994,6 +1001,7 @@ XXTE_END_IGNORE_PARTIAL
         if (indexPath.row < self.entryList.count) {
             XXTExplorerViewCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
             XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+            entryCell.delegate = self;
             [self configureCell:entryCell withEntry:entryDetail];
         }
     }
@@ -1007,7 +1015,6 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry {
-    entryCell.delegate = self;
     entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
     entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
     if (entry.isBrokenSymlink) {
@@ -1367,6 +1374,10 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - UISearchControllerDelegate
+
+- (void)willPresentSearchController:(UISearchController *)searchController {
+    // [self setEditing:NO animated:YES];
+}
 
 #pragma mark - Memory
 
