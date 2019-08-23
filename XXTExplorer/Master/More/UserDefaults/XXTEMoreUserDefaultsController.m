@@ -322,20 +322,24 @@ XXTE_END_IGNORE_PARTIAL
     NSString *rowDescription = rowDetail[@"description"];
     if (self.searchController.active) {
         NSString *searchContent = self.searchController.searchBar.text;
-        
-        NSMutableAttributedString *attribuedTitle = [[NSMutableAttributedString alloc] initWithString:rowTitle attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:16.0], NSForegroundColorAttributeName: XXTColorPlainTitleText() }];
-        NSRange highlightTitleRange = [rowTitle rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, rowTitle.length)];
-        if (highlightTitleRange.location != NSNotFound) {
-            [attribuedTitle addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:highlightTitleRange];
+        NSUInteger category = self.searchController.searchBar.selectedScopeButtonIndex;
+        if (category == kXXTEMoreUserDefaultsSearchTypeTitle) {
+            NSMutableAttributedString *attribuedTitle = [[NSMutableAttributedString alloc] initWithString:rowTitle attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:16.0], NSForegroundColorAttributeName: XXTColorPlainTitleText() }];
+            NSRange highlightTitleRange = [rowTitle rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, rowTitle.length)];
+            if (highlightTitleRange.location != NSNotFound) {
+                [attribuedTitle addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:highlightTitleRange];
+            }
+            [cell.titleLabel setAttributedText:attribuedTitle];
+            [cell.descriptionLabel setText:rowDescription];
+        } else if (category == kXXTEMoreUserDefaultsSearchTypeDescription) {
+            NSMutableAttributedString *attribuedSubtitle = [[NSMutableAttributedString alloc] initWithString:rowDescription attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:12.0], NSForegroundColorAttributeName: XXTColorForeground() }];
+            NSRange highlightSubtitleRange = [rowDescription rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, rowDescription.length)];
+            if (highlightSubtitleRange.location != NSNotFound) {
+                [attribuedSubtitle addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:highlightSubtitleRange];
+            }
+            [cell.titleLabel setText:rowTitle];
+            [cell.descriptionLabel setAttributedText:attribuedSubtitle];
         }
-        [cell.titleLabel setAttributedText:attribuedTitle];
-        
-        NSMutableAttributedString *attribuedSubtitle = [[NSMutableAttributedString alloc] initWithString:rowDescription attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:12.0], NSForegroundColorAttributeName: XXTColorForeground() }];
-        NSRange highlightSubtitleRange = [rowDescription rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, rowDescription.length)];
-        if (highlightSubtitleRange.location != NSNotFound) {
-            [attribuedSubtitle addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:highlightSubtitleRange];
-        }
-        [cell.descriptionLabel setAttributedText:attribuedSubtitle];
     } else {
         cell.titleLabel.text = rowTitle;
         cell.descriptionLabel.text = rowDescription;

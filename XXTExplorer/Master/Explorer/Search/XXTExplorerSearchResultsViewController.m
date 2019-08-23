@@ -50,7 +50,8 @@
             entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
         }
         entryCell.delegate = nil;
-        [self.explorer configureCell:entryCell withEntry:entryDetail];
+        [self.explorer configureCell:entryCell fromTableView:tableView withEntry:entryDetail];
+        // entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
         return entryCell;
     }
     return [UITableViewCell new];

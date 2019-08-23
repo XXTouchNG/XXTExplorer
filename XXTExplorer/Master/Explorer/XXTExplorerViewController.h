@@ -65,8 +65,8 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - configure
 
-- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry;
-- (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell withEntry:(NSDictionary *)entryDetail;
+- (void)configureCell:(XXTExplorerViewCell *)entryCell fromTableView:(UITableView *)tableView withEntry:(XXTExplorerEntry *)entry;
+- (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell fromTableView:(UITableView *)tableView withEntry:(NSDictionary *)entryDetail;
 
 #pragma mark - reload
 

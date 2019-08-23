@@ -308,13 +308,13 @@ XXTE_END_IGNORE_PARTIAL
             if (!self.searchController.active) {
                 [self configureCell:cell forRowAtIndexPath:indexPath];
             } else {
-                [self configureDisplayCell:cell forRowAtIndexPath:indexPath];
+                [self configureDisplayCell:cell fromTableView:tableView forRowAtIndexPath:indexPath];
             }
         } else {
             if (tableView == self.tableView) {
                 [self configureCell:cell forRowAtIndexPath:indexPath];
             } else {
-                [self configureDisplayCell:cell forRowAtIndexPath:indexPath];
+                [self configureDisplayCell:cell fromTableView:tableView forRowAtIndexPath:indexPath];
             }
         }
         
@@ -331,13 +331,21 @@ XXTE_END_IGNORE_PARTIAL
     }
 }
 
-- (void)configureDisplayCell:(XXTESymbolCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)configureDisplayCell:(XXTESymbolCell *)cell fromTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUInteger idx = indexPath.row;
     if (idx < self.displaySymbolsTable.count) {
         NSDictionary *detail = self.displaySymbolsTable[idx];
         NSString *symbolTitle = detail[@"title"];
-        if (self.searchController.active) {
-            NSString *searchContent = self.searchController.searchBar.text;
+        BOOL isSearch = NO;
+        NSString *searchContent = nil;
+        if (@available(iOS 13.0, *)) {
+            isSearch = self.searchController.active;
+            searchContent = self.searchController.searchBar.text;
+        } else {
+            isSearch = (tableView != self.tableView);
+            searchContent = self.searchDisplayController.searchBar.text;
+        }
+        if (isSearch) {
             NSMutableAttributedString *attribuedTitle = [[NSMutableAttributedString alloc] initWithString:symbolTitle attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:16.0], NSForegroundColorAttributeName: XXTColorPlainTitleText() }];
             NSRange highlightRange = [symbolTitle rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, symbolTitle.length)];
             if (highlightRange.location != NSNotFound) {

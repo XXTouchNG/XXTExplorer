@@ -850,6 +850,10 @@ XXTE_END_IGNORE_PARTIAL
                 [cell showSwipe:XXTESwipeDirectionLeftToRight animated:YES];
             }
         }
+    } else if (tableView == self.searchResultsController.tableView) {
+        if (indexPath.section == 0) {
+            // TODO: hide search and reveal original place
+        }
     }
 }  // delegate method
 
@@ -952,7 +956,7 @@ XXTE_END_IGNORE_PARTIAL
                 entryCell = [[XXTExplorerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewCellReuseIdentifier];
             }
             entryCell.delegate = self;
-            [self configureCell:entryCell withEntry:entryDetail];
+            [self configureCell:entryCell fromTableView:tableView withEntry:entryDetail];
             return entryCell;
         } else if (XXTExplorerViewSectionIndexHome == indexPath.section) {
             NSDictionary *entryDetail = self.homeEntryList[indexPath.row];
@@ -960,7 +964,7 @@ XXTE_END_IGNORE_PARTIAL
             if (!entryCell) {
                 entryCell = [[XXTExplorerViewHomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:XXTExplorerViewHomeCellReuseIdentifier];
             }
-            [self configureHomeCell:entryCell withEntry:entryDetail];
+            [self configureHomeCell:entryCell fromTableView:tableView withEntry:entryDetail];
             return entryCell;
         }
     }
@@ -1002,68 +1006,92 @@ XXTE_END_IGNORE_PARTIAL
             XXTExplorerViewCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
             XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
             entryCell.delegate = self;
-            [self configureCell:entryCell withEntry:entryDetail];
+            [self configureCell:entryCell fromTableView:self.tableView withEntry:entryDetail];
         }
     }
     else if (indexPath.section == XXTExplorerViewSectionIndexHome) {
         if (indexPath.row < self.homeEntryList.count) {
             XXTExplorerViewHomeCell *entryCell = [self.tableView cellForRowAtIndexPath:indexPath];
             NSDictionary *entryDetail = self.homeEntryList[indexPath.row];
-            [self configureHomeCell:entryCell withEntry:entryDetail];
+            [self configureHomeCell:entryCell fromTableView:self.tableView withEntry:entryDetail];
         }
     }
 }
 
-- (void)configureCell:(XXTExplorerViewCell *)entryCell withEntry:(XXTExplorerEntry *)entry {
-    entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
-    entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
+- (void)configureCell:(XXTExplorerViewCell *)entryCell fromTableView:(UITableView *)tableView withEntry:(XXTExplorerEntry *)entry {
+    UIColor *titleColor = XXTColorPlainTitleText();
+    UIColor *subtitleColor = XXTColorPlainSubtitleText();
+    XXTExplorerViewCellFlagType flagType = XXTExplorerViewCellFlagTypeNone;
+    
     if (entry.isBrokenSymlink) {
-        // broken symlink
-        entryCell.entryTitleLabel.textColor = XXTColorDanger();
-        entryCell.entrySubtitleLabel.textColor = XXTColorDanger();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeBroken;
+        titleColor = XXTColorDanger();
+        subtitleColor = XXTColorDanger();
+        flagType = XXTExplorerViewCellFlagTypeBroken;
     } else if (entry.isSymlink) {
-        // symlink
-        entryCell.entryTitleLabel.textColor = XXTColorForeground();
-        entryCell.entrySubtitleLabel.textColor = XXTColorForeground();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
+        titleColor = XXTColorForeground();
+        subtitleColor = XXTColorForeground();
+        flagType = XXTExplorerViewCellFlagTypeNone;
     } else {
-        entryCell.entryTitleLabel.textColor = XXTColorPlainTitleText();
-        entryCell.entrySubtitleLabel.textColor = XXTColorPlainSubtitleText();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeNone;
+        titleColor = XXTColorPlainTitleText();
+        subtitleColor = XXTColorPlainSubtitleText();
+        flagType = XXTExplorerViewCellFlagTypeNone;
     }
     if (!entry.isMaskedDirectory &&
         [self.class.selectedScriptPath isEqualToString:entry.entryPath]) {
         // selected script itself
-        entryCell.entryTitleLabel.textColor = XXTColorSuccess();
-        entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeSelected;
+        titleColor = XXTColorSuccess();
+        subtitleColor = XXTColorSuccess();
+        flagType = XXTExplorerViewCellFlagTypeSelected;
     } else if ((entry.isMaskedDirectory ||
                 entry.isBundle) &&
                [[self.class selectedScriptPath] hasPrefix:entry.entryPath] &&
                [[[self.class selectedScriptPath] substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
         // selected script in directory / bundle
-        entryCell.entryTitleLabel.textColor = XXTColorSuccess();
-        entryCell.entrySubtitleLabel.textColor = XXTColorSuccess();
-        entryCell.flagType = XXTExplorerViewCellFlagTypeSelectedInside;
+        titleColor = XXTColorSuccess();
+        subtitleColor = XXTColorSuccess();
+        flagType = XXTExplorerViewCellFlagTypeSelectedInside;
     }
+    
     NSString *fixedName = entry.localizedDisplayName;
+    NSString *fixedDescription = entry.localizedDescription;
+    UIImage *fixedImage = entry.localizedDisplayIconImage;
     if (self.historyMode) {
         NSUInteger atLoc = [fixedName rangeOfString:@"@"].location + 1;
         if (atLoc != NSNotFound && atLoc < fixedName.length) {
             fixedName = [fixedName substringFromIndex:atLoc];
         }
     }
-    entryCell.entryTitleLabel.text = fixedName;
-    entryCell.entrySubtitleLabel.text = entry.localizedDescription;
-    entryCell.entryIconImageView.image = entry.localizedDisplayIconImage;
-    if (entryCell.accessoryType != UITableViewCellAccessoryNone)
-    {
-        entryCell.accessoryType = UITableViewCellAccessoryNone;
+    
+    entryCell.flagType = flagType;
+    entryCell.entryIconImageView.image = fixedImage;
+    entryCell.entrySubtitleLabel.textColor = subtitleColor;
+    entryCell.entrySubtitleLabel.text = fixedDescription;
+    if (tableView == self.tableView) {
+        entryCell.entryTitleLabel.textColor = titleColor;
+        entryCell.entryTitleLabel.text = fixedName;
+    } else if (tableView == self.searchResultsController.tableView) {
+        NSString *searchContent = self.searchController.searchBar.text;
+        NSDictionary *titleAttrs = @{ NSFontAttributeName: [UIFont systemFontOfSize:16.0], NSForegroundColorAttributeName: titleColor };
+        NSMutableAttributedString *mAttributedTitle = [[NSMutableAttributedString alloc] initWithString:fixedName attributes:titleAttrs];
+        NSRange fixedRange = [fixedName rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, fixedName.length)];
+        if (fixedRange.location != NSNotFound) {
+            [mAttributedTitle addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:fixedRange];
+        }
+        [entryCell.entryTitleLabel setAttributedText:mAttributedTitle];
+    }
+    
+    if (tableView == self.tableView) {
+        if (entryCell.accessoryType != UITableViewCellAccessoryNone) {
+            entryCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+    } else {
+        if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton) {
+            entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
+        }
     }
 }
 
-- (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell withEntry:(NSDictionary *)entryDetail {
+- (void)configureHomeCell:(XXTExplorerViewHomeCell *)entryCell fromTableView:(UITableView *)tableView withEntry:(NSDictionary *)entryDetail {
     entryCell.entryIconImageView.image = [UIImage imageNamed:entryDetail[@"icon"]];
     entryCell.entryTitleLabel.text = entryDetail[@"title"];
     entryCell.entrySubtitleLabel.text = entryDetail[@"subtitle"];
@@ -1358,8 +1386,8 @@ XXTE_END_IGNORE_PARTIAL
         NSString *searchString = searchController.searchBar.text;
         NSMutableArray <XXTExplorerEntry *> *filteredEntries = [NSMutableArray arrayWithCapacity:searchEntries.count];
         for (XXTExplorerEntry *entry in searchEntries) {
-            if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound ||
-                [entry.displayName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound
+            if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].location != NSNotFound ||
+                [entry.localizedDisplayName rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound
                 ) {
                 [filteredEntries addObject:entry];
             }

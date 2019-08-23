@@ -195,33 +195,38 @@
     return [UITableViewCell new];
 }
 
-- (void)configureCell:(XXTExplorerViewCell *)cell withEntry:(XXTExplorerEntry *)entry {
-    [super configureCell:cell withEntry:entry];
+- (void)configureCell:(XXTExplorerViewCell *)entryCell fromTableView:(UITableView *)tableView withEntry:(XXTExplorerEntry *)entry {
+    [super configureCell:entryCell fromTableView:tableView withEntry:entry];
+    
+    UIColor *titleColor = nil;
+    UIColor *subtitleColor = nil;
+    XXTExplorerViewCellFlagType flagType = XXTExplorerViewCellFlagTypeNone;
+    BOOL needsOverride = NO;
+    
     if (!entry.isMaskedDirectory &&
         [entry.entryPath isEqualToString:self.selectedBootScriptPath]) {
-        cell.entryTitleLabel.textColor = XXTColorForeground();
-        cell.entrySubtitleLabel.textColor = XXTColorForeground();
-        cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
+        titleColor = XXTColorForeground();
+        subtitleColor = XXTColorForeground();
+        flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
+        needsOverride = YES;
     }
     else if ((entry.isMaskedDirectory ||
               entry.isBundle) &&
              [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
              [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
-        cell.entryTitleLabel.textColor = XXTColorForeground();
-        cell.entrySubtitleLabel.textColor = XXTColorForeground();
-        cell.flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
+        titleColor = XXTColorForeground();
+        subtitleColor = XXTColorForeground();
+        flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
+        needsOverride = YES;
     }
-    else {
-        if (@available(iOS 13.0, *)) {
-            cell.entryTitleLabel.textColor = [UIColor labelColor];
-            cell.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.entryTitleLabel.textColor = [UIColor blackColor];
-            cell.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-        }
-        cell.flagType = XXTExplorerViewCellFlagTypeNone;
+    
+    if (needsOverride) {
+        entryCell.entryTitleLabel.textColor = titleColor;
+        entryCell.entrySubtitleLabel.textColor = subtitleColor;
+        entryCell.flagType = flagType;
     }
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    entryCell.accessoryType = UITableViewCellAccessoryNone;
 }
 
 - (void)setSelectedBootScriptPath:(NSString *)selectedBootScriptPath {
