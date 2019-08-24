@@ -162,7 +162,7 @@ XXTE_END_IGNORE_PARTIAL
     _searchController = ({
         UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
         searchController.searchResultsUpdater = self;
-        searchController.dimsBackgroundDuringPresentation = NO;
+        searchController.dimsBackgroundDuringPresentation = YES;
         searchController.hidesNavigationBarDuringPresentation = YES;
         searchController.delegate = self;
         searchController;
@@ -852,7 +852,25 @@ XXTE_END_IGNORE_PARTIAL
         }
     } else if (tableView == self.searchResultsController.tableView) {
         if (indexPath.section == 0) {
-            // TODO: hide search and reveal original place
+            NSError *placeError = nil;
+            XXTExplorerEntry *entry = self.searchResultsController.filteredEntryList[indexPath.row];
+            NSString *parentPath = [entry.entryPath stringByDeletingLastPathComponent];
+            if ([parentPath isEqualToString:self.entryPath]) {
+                if (self.tableView.delegate) {
+                    [self selectCellEntryAtPath:entry.entryPath animated:NO];
+                    [self.searchController setActive:NO];
+                }
+            } else {
+                // recursive
+                XXTExplorerEntry *parentEntry = [[[self class] explorerEntryParser] entryOfPath:parentPath withError:&placeError];
+                if (parentEntry.isMaskedDirectory) {
+                    [self performDictionaryActionForEntry:parentEntry];
+                    // TODO: select cell in target view controller
+                }
+                else if (placeError) {
+                    toastError(self, placeError);
+                }
+            }
         }
     }
 }  // delegate method
