@@ -94,12 +94,14 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
         if (!handled) {
             CGPoint targetPoint = [touch locationInView:self];
             XXTEEditorLineMask *mask = [self lineMaskAtPoint:targetPoint forComponentAtIndex:1];
-            if (!mask.expanding) {
-                handled = YES;
-                if (mask.expanded) {
-                    [self collapseLineMask:mask];
-                } else {
-                    [self expandLineMask:mask];
+            if (mask) {
+                if (!mask.expanding) {
+                    handled = YES;
+                    if (mask.expanded) {
+                        [self collapseLineMask:mask];
+                    } else {
+                        [self expandLineMask:mask];
+                    }
                 }
             }
         }

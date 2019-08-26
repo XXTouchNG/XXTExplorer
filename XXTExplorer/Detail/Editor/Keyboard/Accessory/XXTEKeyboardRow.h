@@ -26,4 +26,6 @@ typedef NS_ENUM(NSUInteger, XXTEKeyboardRowStyle) {
 
 @property(nonatomic, assign) XXTEKeyboardRowStyle colorStyle;
 
+- (instancetype)initWithKeymap:(NSString *)keymap;
+
 @end

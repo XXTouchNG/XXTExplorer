@@ -193,7 +193,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     NSMutableArray <NSString *> *keysToReload = self.defaultsKeysToReload;
     
     // Language
+    BOOL languageReloaded = NO;
     if (!self.language) {
+        // TODO: reload language definition
         NSString *entryExtension = [self.entryPath pathExtension];
         if (entryExtension.length > 0)
         {
@@ -202,6 +204,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
                 
             }
             _language = language;
+            languageReloaded = YES;
         }
     }
     
@@ -239,7 +242,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     NSAssert(self.theme, @"Cannot load default theme from main bundle.");
     
     // Parser
-    if ([keysToReload containsObject:XXTEEditorThemeName]) {
+    if (languageReloaded || [keysToReload containsObject:XXTEEditorThemeName]) {
         if (self.language.skLanguage && self.theme.skTheme)
         {
             SKAttributedParser *parser = [[SKAttributedParser alloc] initWithLanguage:self.language.skLanguage theme:self.theme.skTheme];
@@ -386,6 +389,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Keyboard Row
+    if (languageReloaded) {
+        self.keyboardRow = ({
+            [[XXTEKeyboardRow alloc] initWithKeymap:self.language.keymap];
+        });
+    }
     if ([keysToReload containsObject:XXTEEditorSoftTabs] || [keysToReload containsObject:XXTEEditorTabWidth]) {
         BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
         NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
@@ -1010,14 +1018,6 @@ XXTE_END_IGNORE_PARTIAL
         _maskView = maskView;
     }
     return _maskView;
-}
-
-- (XXTEKeyboardRow *)keyboardRow {
-    if (!_keyboardRow) {
-        XXTEKeyboardRow *keyboardRow = [[XXTEKeyboardRow alloc] init];
-        _keyboardRow = keyboardRow;
-    }
-    return _keyboardRow;
 }
 
 - (XXTEKeyboardToolbarRow *)keyboardToolbarRow {

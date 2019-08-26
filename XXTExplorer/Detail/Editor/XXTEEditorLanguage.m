@@ -76,6 +76,8 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
             _indent = languageMeta[@"indent"];
         if ([languageMeta[@"folding"] isKindOfClass:[NSDictionary class]])
             _folding = languageMeta[@"folding"];
+        if ([languageMeta[@"keymap"] isKindOfClass:[NSString class]])
+            _keymap = languageMeta[@"keymap"];
         if ([languageMeta[@"identifier"] isKindOfClass:[NSString class]])
             _identifier = languageMeta[@"identifier"];
         if ([languageMeta[@"displayName"] isKindOfClass:[NSString class]])

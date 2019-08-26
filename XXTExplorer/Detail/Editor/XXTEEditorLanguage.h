@@ -21,6 +21,7 @@ extern NSString * const kTextMateCommentMultilineEnd;
 @property (nonatomic, strong, readonly) NSDictionary *comments;
 @property (nonatomic, strong, readonly) NSDictionary *indent;
 @property (nonatomic, strong, readonly) NSDictionary *folding;
+@property (nonatomic, strong, readonly) NSString *keymap;
 
 @property (nonatomic, strong, readonly) NSString *identifier;
 @property (nonatomic, strong, readonly) NSString *displayName;

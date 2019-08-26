@@ -40,6 +40,8 @@
 			<key>foldingStopMarker</key>
 			<string>\bend\b|^\s*}|\]\]</string>
 		</dict>
+		<key>keymap</key>
+		<string>TTTTT()&quot;[]{}&apos;&lt;&gt;\/$´`RRRRR~^|€£-+=%*!?#@&amp;_:;,.</string>
 		<key>displayName</key>
 		<string>Lua (*.lua, *.snippet, *.xui)</string>
 		<key>extensions</key>

@@ -9,8 +9,8 @@
 #import "XXTEKeyboardRow.h"
 #import "XXTEKeyboardButton.h"
 
-static NSString * const XXTEKeyboardRowPhoneSequence = @"TTTTT()\"[]{}'<>\\/$´`RRRRR~^|€£-+=%*!?#@&_:;,.";
-static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^|€£RRRRR-+=%*!?#@&_:;,.1203467589";
+static NSString * const XXTEKeyboardRowPhoneDefaultSequence = @"TTTTT()\"[]{}'<>\\/$´`RRRRR~^|€£-+=%*!?#@&_:;,.";
+static NSString * const XXTEKeyboardRowPadDefaultSequence = @"TTTTT()\"[]{}'<>\\/$´`~^|€£RRRRR-+=%*!?#@&_:;,.1203467589";
 
 @interface XXTEKeyboardRow ()
 
@@ -30,28 +30,33 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
 
 - (instancetype)init {
     if (self = [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard]) {
-        [self setup];
+        [self setupWithKeymap:nil];
     }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame inputViewStyle:UIInputViewStyleKeyboard]) {
-        [self setup];
+        [self setupWithKeymap:nil];
     }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame inputViewStyle:(UIInputViewStyle)inputViewStyle {
     if (self = [super initWithFrame:frame inputViewStyle:inputViewStyle]) {
-        [self setup];
+        [self setupWithKeymap:nil];
     }
     return self;
 }
 
-// TODO: sequence from language definition
+- (instancetype)initWithKeymap:(NSString *)keymap {
+    if (self = [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard]) {
+        [self setupWithKeymap:keymap];
+    }
+    return self;
+}
 
-- (void)setup {
+- (void)setupWithKeymap:(NSString *)keymap {
     switch ([UIDevice currentDevice].userInterfaceIdiom) {
         case UIUserInterfaceIdiomPhone:
             _buttonType = XXTEKeyboardButtonTypePhone;
@@ -74,7 +79,7 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
         _buttonWidth = (_barWidth - (_buttonSpacing * (_buttonCount - 1)) - (_leftMargin * 2)) / _buttonCount;
         _buttonHeight = _buttonWidth;
         _barHeight = _buttonHeight + _buttonSpacing * 2;
-        keys = XXTEKeyboardRowPhoneSequence;
+        keys = keymap ?: XXTEKeyboardRowPhoneDefaultSequence;
     } else if (_buttonType == XXTEKeyboardButtonTypeTablet) {
         _buttonCount = 11;
         _barHeight = 72.f;
@@ -83,7 +88,7 @@ static NSString * const XXTEKeyboardRowPadSequence = @"TTTTT()\"[]{}'<>\\/$´`~^
         _topMargin = 1.f;
         _buttonSpacing = 13.f;
         _buttonWidth = 57.f;
-        keys = XXTEKeyboardRowPadSequence;
+        keys = keymap ?: XXTEKeyboardRowPadDefaultSequence;
     }
 
     self.frame = CGRectMake(0, 0, _barWidth, _barHeight);
