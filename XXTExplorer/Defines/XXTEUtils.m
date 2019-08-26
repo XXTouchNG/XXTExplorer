@@ -95,6 +95,13 @@ NSString *XXTERootPath() {
     return [XXTEAppDelegate sharedRootPath];
 }
 
+NSString *XXTStrippedPath(NSString *fullPath) {
+    if ([fullPath hasPrefix:@"/private/var/"]) {  // 13
+        return [fullPath stringByReplacingCharactersInRange:NSMakeRange(0, 13) withString:@"/var/"];
+    }
+    return fullPath;
+}
+
 NSString *XXTTiledPath(NSString *fullPath) {
     NSString *rootPath = XXTERootPath();
     NSRange rootRange = [fullPath rangeOfString:rootPath];

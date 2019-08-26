@@ -19,8 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray <XXTExplorerEntry *> *filteredEntryList;
 @property (nonatomic, assign) BOOL historyMode;
 @property (nonatomic, assign) BOOL recursively;
-
-@property (nonatomic, assign) BOOL shouldStop;
 @property (nonatomic, assign) BOOL isUpdating;
 
 @end

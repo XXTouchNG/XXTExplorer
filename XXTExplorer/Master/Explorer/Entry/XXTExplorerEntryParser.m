@@ -92,7 +92,7 @@
     NSString *entryMaskType = entryBaseType;
     if ([entryBaseType isEqualToString:EntryTypeSymlink])
     {
-        const char *entrySubdirectoryPathCString = [entrySubdirectoryPath UTF8String];
+        const char *entrySubdirectoryPathCString = [entrySubdirectoryPath fileSystemRepresentation];
         struct stat entrySubdirectoryPathCStatStruct;
         bzero(&entrySubdirectoryPathCStatStruct, sizeof(struct stat));
         if (0 == stat(entrySubdirectoryPathCString, &entrySubdirectoryPathCStatStruct))
@@ -131,7 +131,7 @@
     }
     XXTExplorerEntry *entryDetail = [[XXTExplorerEntry alloc] init];
     entryDetail.iconImage = entryIconImage;
-    entryDetail.entryPath = entrySubdirectoryPath;
+    entryDetail.entryPath = XXTStrippedPath(entrySubdirectoryPath);
     entryDetail.creationDate = entrySubdirectoryAttributes[NSFileCreationDate];
     entryDetail.modificationDate = entrySubdirectoryAttributes[NSFileModificationDate];
     entryDetail.entrySize = entrySubdirectoryAttributes[NSFileSize];

@@ -42,6 +42,12 @@
 #import "XXTExplorerSearchResultsViewController.h"
 #endif
 
+typedef enum : NSUInteger {
+    XXTExplorerSearchTypeCurrentDirectory = 0,
+    XXTExplorerSearchTypeRecursively,
+} XXTExplorerSearchType;
+
+
 @interface XXTExplorerViewController ()
 #ifdef APPSTORE
 <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate,
@@ -69,7 +75,8 @@ XXTE_END_IGNORE_PARTIAL
 @end
 
 @implementation XXTExplorerViewController {
-    BOOL firstTimeLoaded;
+    BOOL _firstTimeLoaded;
+    BOOL _explorerSearchStopFlag;
 }
 
 @synthesize tableView = _tableView;
@@ -92,6 +99,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)setupWithPath:(NSString *)path {
     _displayCurrentPath = YES;
+    _explorerSearchStopFlag = YES;
     _homeEntryList = [[NSMutableArray alloc] init];
     _entryList = [[NSMutableArray alloc] init];
     {
@@ -254,7 +262,7 @@ XXTE_END_IGNORE_PARTIAL
     [self restoreTheme];
     [super viewWillAppear:animated];
     [self registerNotifications];
-    if (firstTimeLoaded) {
+    if (_firstTimeLoaded) {
         [self reloadEntryListView];
     } else if (!self.isPreviewed) {
         [self refreshControlTriggered:nil];
@@ -265,8 +273,8 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!firstTimeLoaded && !self.isPreviewed) {
-        firstTimeLoaded = YES;
+    if (!_firstTimeLoaded && !self.isPreviewed) {
+        _firstTimeLoaded = YES;
     }
     [self lazySelectCellAnimatedIfNecessary];
 }
@@ -1573,20 +1581,24 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
-    [self updateSearchResultsForSearchController:self.searchController];
+    UISearchController *searchController = self.searchController;
+    if (selectedScope == XXTExplorerSearchTypeRecursively) {
+        XXTExplorerSearchResultsViewController *searchResultsController = self.searchResultsController;
+        [searchResultsController setFilteredEntryList:[NSMutableArray array]];
+        [searchResultsController.tableView reloadData];
+    }
+    [self updateSearchResultsForSearchController:searchController];
 }
 
 #pragma mark - UISearchResultsUpdating
 
 #ifdef APPSTORE
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
-    static NSUInteger kXXTExplorerRecursivelySearchCachingCount = 1024;
-    NSString *searchString = searchController.searchBar.text;
-    XXTExplorerSearchResultsViewController *searchResultsController = self.searchResultsController;
-    
-    if (searchController.searchBar.selectedScopeButtonIndex == 0) {
+    if (searchController.searchBar.selectedScopeButtonIndex == XXTExplorerSearchTypeCurrentDirectory) {
         // Current Directory
+        NSString *searchString = searchController.searchBar.text;
+        XXTExplorerSearchResultsViewController *searchResultsController = self.searchResultsController;
+        
         NSArray <XXTExplorerEntry *> *searchEntries = self.entryList;
         NSMutableArray <XXTExplorerEntry *> *filteredEntries = [NSMutableArray arrayWithCapacity:searchEntries.count];
         for (XXTExplorerEntry *entry in searchEntries) {
@@ -1599,82 +1611,104 @@ XXTE_END_IGNORE_PARTIAL
         searchResultsController.recursively = NO;
         searchResultsController.filteredEntryList = filteredEntries;
         [searchResultsController.tableView reloadData];
-    } else if (searchController.searchBar.selectedScopeButtonIndex == 1) {
+    } else if (searchController.searchBar.selectedScopeButtonIndex == XXTExplorerSearchTypeRecursively) {
         // Recursively, Async
-        // TODO: performance?
-        
-        XXTExplorerEntryParser *parser = [[self class] explorerEntryParser];
-        BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSURL *entryURL = [NSURL fileURLWithPath:self.entryPath];
-        
-        NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:entryURL
-                                              includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
-                                                                 options:hidesDot ? NSDirectoryEnumerationSkipsHiddenFiles : kNilOptions
-                                                            errorHandler:^BOOL(NSURL *url, NSError *error) {
-#ifdef DEBUG
-            NSLog(@"[Error] %@ (%@)", error, url);
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(triggerSearchFromSearchController:) object:searchController];
+        [self performSelector:@selector(triggerSearchFromSearchController:) withObject:searchController afterDelay:0.33];
+    }
+}
 #endif
-            return searchController.active;
-        }];
+
+#ifdef APPSTORE
+- (void)triggerSearchFromSearchController:(UISearchController *)searchController {
+    _explorerSearchStopFlag = YES;
+    XXTExplorerSearchResultsViewController *searchResultsController = self.searchResultsController;
+    while (searchResultsController.isUpdating) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+    _explorerSearchStopFlag = NO;
+    [self triggerSearchFromSearchController:searchController forceStop:&_explorerSearchStopFlag];
+}
+#endif
+
+#ifdef APPSTORE
+- (void)triggerSearchFromSearchController:(UISearchController *)searchController forceStop:(BOOL *)forceStop {
+    static NSUInteger kXXTExplorerRecursivelySearchCachingCount = 1024;
+    NSString *searchString = searchController.searchBar.text;
+    XXTExplorerSearchResultsViewController *searchResultsController = self.searchResultsController;
+    
+    XXTExplorerEntryParser *parser = [[self class] explorerEntryParser];
+    BOOL hidesDot = XXTEDefaultsBool(XXTExplorerViewEntryListHideDotItemKey, YES);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *entryURL = [NSURL fileURLWithPath:self.entryPath];
+    
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:entryURL
+                                          includingPropertiesForKeys:@[]
+                                                             options:hidesDot ? NSDirectoryEnumerationSkipsHiddenFiles : kNilOptions
+                                                        errorHandler:^BOOL(NSURL *url, NSError *error) {
+#ifdef DEBUG
+        NSLog(@"[Error] %@ (%@)", error, url);
+#endif
+        return searchController.active;
+    }];
+    
+    UIActivityIndicatorView *activityIndicator = searchResultsController.searchHeaderView.activityIndicator;
+    [activityIndicator startAnimating];
+    
+    searchResultsController.isUpdating = YES;
+    searchResultsController.recursively = YES;
+    
+    NSMutableArray <XXTExplorerEntry *> *allEntries = [NSMutableArray array];
+    searchResultsController.filteredEntryList = allEntries;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSUInteger fileIndexInContainer = 0;
         
-        UIActivityIndicatorView *activityIndicator = searchResultsController.searchHeaderView.activityIndicator;
-        [activityIndicator startAnimating];
+        NSMutableArray <XXTExplorerEntry *> *mutableDirectoryEntries = [NSMutableArray array];
+        NSMutableArray <XXTExplorerEntry *> *mutableFileEntries = [NSMutableArray array];
         
-        searchResultsController.isUpdating = YES;
-        searchResultsController.shouldStop = NO;
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSMutableArray <XXTExplorerEntry *> *allEntries = [NSMutableArray array];
-            NSUInteger fileIndexInContainer = 0;
+        for (NSURL *fileURL in enumerator) {
+            XXTExplorerEntry *entry = [parser entryOfPath:fileURL.path withError:nil];
+            if (!entry) {
+                continue;
+            }
             
-            searchResultsController.recursively = YES;
-            searchResultsController.filteredEntryList = allEntries;
-            
-            NSMutableArray <XXTExplorerEntry *> *mutableDirectoryEntries = [NSMutableArray array];
-            NSMutableArray <XXTExplorerEntry *> *mutableFileEntries = [NSMutableArray array];
-            
-            for (NSURL *fileURL in enumerator) {
-                XXTExplorerEntry *entry = [parser entryOfPath:fileURL.path withError:nil];
-                if (!entry) {
-                    continue;
-                }
-                
-                if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].location != NSNotFound ||
-                    [entry.localizedDisplayName rangeOfString:searchString options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].location != NSNotFound
-                    )
-                {
-                    if (!entry.isMaskedDirectory) {
-                        [mutableFileEntries addObject:entry];
-                    } else {
-                        [mutableDirectoryEntries addObject:entry];
-                    }
-                }
-                
-                if (mutableFileEntries.count + mutableDirectoryEntries.count >= kXXTExplorerRecursivelySearchCachingCount)
-                {
-                    NSIndexSet *insertIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(fileIndexInContainer, mutableDirectoryEntries.count)];
-                    [allEntries insertObjects:mutableDirectoryEntries atIndexes:insertIndexSet];
-                    fileIndexInContainer += mutableDirectoryEntries.count;
-                    [allEntries addObjectsFromArray:mutableFileEntries];
-                    [mutableDirectoryEntries removeAllObjects];
-                    [mutableFileEntries removeAllObjects];
-                    
-                    usleep(500000);  // 500ms
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        if (searchController.active) {
-                            [searchResultsController.tableView reloadData];
-                        } else {
-                            searchResultsController.shouldStop = YES;
-                        }
-                    });
-                }
-                
-                if (searchResultsController.shouldStop) {
-                    break;  // worked!
+            if ([entry.entryName rangeOfString:searchString options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].location != NSNotFound ||
+                [entry.localizedDisplayName rangeOfString:searchString options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].location != NSNotFound
+                )
+            {
+                if (!entry.isMaskedDirectory) {
+                    [mutableFileEntries addObject:entry];
+                } else {
+                    [mutableDirectoryEntries addObject:entry];
                 }
             }
             
+            if (mutableFileEntries.count + mutableDirectoryEntries.count >= kXXTExplorerRecursivelySearchCachingCount)
+            {
+                NSIndexSet *insertIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(fileIndexInContainer, mutableDirectoryEntries.count)];
+                [allEntries insertObjects:mutableDirectoryEntries atIndexes:insertIndexSet];
+                fileIndexInContainer += mutableDirectoryEntries.count;
+                [allEntries addObjectsFromArray:mutableFileEntries];
+                [mutableDirectoryEntries removeAllObjects];
+                [mutableFileEntries removeAllObjects];
+                
+                usleep(200000);  // 200ms
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (searchController.active) {
+                        [searchResultsController.tableView reloadData];
+                    } else {
+                        *forceStop = YES;
+                    }
+                });
+            }
+            
+            if (*forceStop) {
+                break;  // worked!
+            }
+        }
+        
+        if (!*forceStop) {
             NSIndexSet *insertIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(fileIndexInContainer, mutableDirectoryEntries.count)];
             [allEntries insertObjects:mutableDirectoryEntries atIndexes:insertIndexSet];
             fileIndexInContainer += mutableDirectoryEntries.count;
@@ -1682,17 +1716,18 @@ XXTE_END_IGNORE_PARTIAL
             [mutableDirectoryEntries removeAllObjects];
             [mutableFileEntries removeAllObjects];
             
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 if (searchController.active) {
                     [searchResultsController.tableView reloadData];
                 }
                 [activityIndicator stopAnimating];
-                searchResultsController.isUpdating = NO;
             });
-            
-        });
+        }
         
-    }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            searchResultsController.isUpdating = NO;
+        });
+    });
 }
 #endif
 
