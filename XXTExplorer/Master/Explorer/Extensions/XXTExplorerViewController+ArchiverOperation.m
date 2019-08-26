@@ -255,7 +255,7 @@ typedef enum : NSUInteger {
                     }
                     int close_result = zip_entry_close(zip);
                     if (open_result != 0 || close_result != 0) {
-                        // TODO: pause by archive error
+                        
                     }
                     if (!self.busyOperationProgressFlag) {
                         error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Archiving process terminated: user interrupt occurred.", nil)}];

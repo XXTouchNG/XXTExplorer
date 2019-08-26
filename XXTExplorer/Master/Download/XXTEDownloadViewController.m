@@ -552,7 +552,6 @@ typedef enum : NSUInteger {
         }
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.statusCode != 200) {
-            // TODO: not supported http response
             [self connection:connection didFailWithError:[NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Download terminated, unsupported server response: %@ (%ld).", nil), [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode], httpResponse.statusCode]}]];
             return;
         }

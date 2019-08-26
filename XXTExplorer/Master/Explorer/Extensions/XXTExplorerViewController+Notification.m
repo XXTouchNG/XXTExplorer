@@ -83,40 +83,4 @@
     }
 }
 
-#pragma mark - Select Moved Cell
-
-- (void)scrollToCellEntryAtPath:(NSString *)entryPath shouldSelect:(BOOL)select animated:(BOOL)animated {
-    UITableView *tableView = self.tableView;
-    NSIndexPath *indexPath = [self indexPathForEntryAtPath:entryPath];
-    if (indexPath != nil) {
-        if (select) {
-            [self setEditing:YES animated:YES];
-            [tableView selectRowAtIndexPath:indexPath animated:animated scrollPosition:UITableViewScrollPositionMiddle];
-        } else {
-            [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:animated];
-        }
-    }
-    if (select) {
-        [self updateToolbarStatus];
-    }
-}
-
-- (void)scrollToCellEntryAtPath:(NSString *)entryPath animated:(BOOL)animated {
-    [self scrollToCellEntryAtPath:entryPath shouldSelect:NO animated:animated];
-}
-
-- (void)selectCellEntryAtPath:(NSString *)entryPath animated:(BOOL)animated {
-    [self scrollToCellEntryAtPath:entryPath shouldSelect:YES animated:animated];
-}
-
-- (void)selectCellEntriesAtPaths:(NSArray <NSString *> *)entryPaths animated:(BOOL)animated {
-    for (NSString *importedPath in entryPaths) {
-        NSIndexPath *importedIndexPath = [self indexPathForEntryAtPath:importedPath];
-        if (importedIndexPath) {
-            [self.tableView selectRowAtIndexPath:importedIndexPath animated:animated scrollPosition:UITableViewScrollPositionNone];
-        }
-    }
-    [self updateToolbarStatus];
-}
-
 @end

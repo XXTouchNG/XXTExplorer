@@ -129,10 +129,7 @@
     } else {
         cachedPattern = [[NSRegularExpression alloc] initWithPattern:expressionString options:NSRegularExpressionAllowCommentsAndWhitespace | NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnixLineSeparators error:nil];
         if (!cachedPattern) {
-#ifdef DEBUG
-            // TODO: Onigmo Support
-            // NSAssert(cachedPattern, @"update to Onigmo to solve this issue...");
-#endif
+            
         } else {
             self.regularExpressionCaches[expressionString] = cachedPattern;
         }

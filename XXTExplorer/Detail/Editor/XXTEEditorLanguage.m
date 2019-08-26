@@ -110,8 +110,6 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
     NSString *languageName = languageMeta[@"name"];
     assert([languageName isKindOfClass:[NSString class]]);
     NSString *languagePath = [[NSBundle mainBundle] pathForResource:languageName ofType:@"tmLanguage"];
-    // TODO: Onigmo Support
-    // assert([languagePath isKindOfClass:[NSString class]]);
     return languagePath;
 }
 

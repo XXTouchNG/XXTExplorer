@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
     XXTExplorerViewSectionIndexMax
 } XXTExplorerViewSectionIndex;
 
-@class XXTExplorerViewCell, XXTExplorerViewHomeCell, XXTExplorerToolbar, XXTExplorerFooterView, XXTExplorerViewController, XXTExplorerSearchResultsViewController;
+@class XXTExplorerViewCell, XXTExplorerViewHomeCell, XXTExplorerToolbar, XXTExplorerHeaderView, XXTExplorerFooterView, XXTExplorerViewController, XXTExplorerSearchResultsViewController;
 
 @protocol XXTExplorerDirectoryPreviewDelegate <NSObject>
 
@@ -48,6 +48,7 @@ XXTE_END_IGNORE_PARTIAL
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong, readonly) UIRefreshControl *refreshControl;
 @property (nonatomic, strong, readonly) XXTExplorerFooterView *footerView;
+@property (nonatomic, strong, readonly) XXTExplorerHeaderView *sectionHeaderView;
 
 #pragma mark - toolbar
 
@@ -106,5 +107,11 @@ XXTE_END_IGNORE_PARTIAL
 
 @property (nonatomic, strong, readonly) UISearchController *searchController;
 @property (nonatomic, strong, readonly) XXTExplorerSearchResultsViewController *searchResultsController;
+
+#pragma mark - cell selection
+
+- (void)scrollToCellEntryAtPath:(NSString *)entryPath animated:(BOOL)animated;
+- (void)selectCellEntryAtPath:(NSString *)entryPath animated:(BOOL)animated;
+- (void)selectCellEntriesAtPaths:(NSArray <NSString *> *)entryPaths animated:(BOOL)animated;
 
 @end

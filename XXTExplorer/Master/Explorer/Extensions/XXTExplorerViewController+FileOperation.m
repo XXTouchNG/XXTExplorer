@@ -235,7 +235,6 @@
                 BOOL isDirectory = NO;
                 BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
                 if (!fileExists) {
-                    // TODO: pause by non-exists error
                     continue;
                 }
                 if (fileExists) {
@@ -252,7 +251,7 @@
                                 }
                                 BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
                                 if (!mkdirResult) {
-                                    // TODO: pause by mkdir error
+                                    
                                 }
                                 [recursiveSubpaths addObject:enumPath];
                                 [recursiveSubnames addObject:enumName];
@@ -261,11 +260,11 @@
                             } else {
                                 BOOL rmdirResult = (rmdir([enumPath fileSystemRepresentation]) == 0);
                                 if (!rmdirResult) {
-                                    // TODO: pause by rmdir error
+                                    
                                 }
                                 BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
                                 if (!mkdirResult) {
-                                    // TODO: pause by mkdir error
+                                    
                                 }
                             }
                             continue;
@@ -274,7 +273,6 @@
                 }
                 BOOL moveResult = [fileManager moveItemAtPath:enumPath toPath:targetPath error:&error];
                 if (!moveResult) {
-                    // TODO: pause by move error
                     break;
                 }
                 if (!self.busyOperationProgressFlag) {
@@ -384,7 +382,6 @@
                 BOOL isDirectory = NO;
                 BOOL fileExists = [fileManager fileExistsAtPath:enumPath isDirectory:&isDirectory];
                 if (!fileExists) {
-                    // TODO: pause by non-exists error
                     continue;
                 }
                 if (fileExists) {
@@ -400,7 +397,7 @@
                             }
                             BOOL mkdirResult = (mkdir([targetPath fileSystemRepresentation], 0755) == 0);
                             if (!mkdirResult) {
-                                // TODO: pause by mkdir error
+                                
                             }
                             [recursiveSubpaths addObjectsFromArray:groupSubpathsAppended];
                             [recursiveSubnames addObjectsFromArray:groupSubnamesAppended];
@@ -410,7 +407,6 @@
                 }
                 BOOL copyResult = [fileManager copyItemAtPath:enumPath toPath:targetPath error:&error];
                 if (!copyResult) {
-                    // TODO: pause by copy error
                     break;
                 }
                 if (!self.busyOperationProgressFlag) {
@@ -510,7 +506,6 @@
                 NSString *targetPath = [destinationPath stringByAppendingPathComponent:storedName];
                 BOOL linkResult = [fileManager createSymbolicLinkAtPath:targetPath withDestinationPath:storedPath error:&error];
                 if (!linkResult) {
-                    // TODO: pause by link error
                     break;
                 }
                 [resultPaths addObject:targetPath];
@@ -615,7 +610,6 @@
                 }
                 BOOL removeResult = [fileManager removeItemAtPath:enumPath error:&error];
                 if (!removeResult) {
-                    // TODO: pause by remove error
                     break;
                 }
                 if (!self.busyOperationProgressFlag) {
@@ -735,7 +729,7 @@
                 }
                 BOOL removeResult = [fileManager removeItemAtPath:enumPath error:&error];
                 if (!removeResult) {
-                    // TODO: pause by remove error
+                    
                 }
                 if (!self.busyOperationProgressFlag) {
                     error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Removing process terminated: user interrupt occurred.", nil)}];

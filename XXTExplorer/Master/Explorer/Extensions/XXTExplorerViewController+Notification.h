@@ -13,8 +13,4 @@
 - (void)registerNotifications;
 - (void)removeNotifications;
 
-- (void)scrollToCellEntryAtPath:(NSString *)entryPath animated:(BOOL)animated;
-- (void)selectCellEntryAtPath:(NSString *)entryPath animated:(BOOL)animated;
-- (void)selectCellEntriesAtPaths:(NSArray <NSString *> *)entryPaths animated:(BOOL)animated;
-
 @end

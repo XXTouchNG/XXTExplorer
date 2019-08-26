@@ -557,7 +557,6 @@ static CGFloat XXTEScanVOffset = -22.0;
     if (metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *metadataObject = metadataObjects[0];
         if (metadataObject.type == AVMetadataObjectTypeQRCode) {
-            // TODO: use metadataObject.corners to draw code overlay
             NSString *stringValue = metadataObject.stringValue;
             if (stringValue.length > 0) {
                 [self pauseScan];
