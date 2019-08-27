@@ -127,6 +127,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 }
 
 @synthesize entryPath = _entryPath;
+@synthesize textView = _textView;
+@synthesize maskView = _maskView;
+@synthesize toolbar = _toolbar;
+@synthesize searchMode = _searchMode;
 
 #pragma mark - Editor
 
@@ -1179,7 +1183,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     NSStringLineBreakType tryLineBreak = [self currentLineBreak];
     NSString *string = [XXTETextPreprocessor preprocessedStringWithContentsOfFile:entryPath NumberOfLines:&numberOfLines Encoding:&tryEncoding LineBreak:&tryLineBreak MaximumLength:NULL Error:&readError];
     if (!string) {
-        [self setLockedState:YES];
+        _lockedState = YES;
         if ([readError.domain isEqualToString:kXXTErrorInvalidStringEncodingDomain]) {
             self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
 #ifdef APPSTORE
@@ -1193,7 +1197,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         }
         return nil;
     } else {
-        [self setLockedState:NO];
+        _lockedState = NO;
     }
     [self setCurrentEncoding:tryEncoding];
     [self setCurrentLineBreak:tryLineBreak];

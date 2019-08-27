@@ -369,7 +369,7 @@
 		</dict>
 		<dict>
 			<key>enabled</key>
-			<true/>
+			<false/>
 			<key>key</key>
 			<string>XXTExplorerViewerRegexSearch</string>
 			<key>default</key>
@@ -387,7 +387,7 @@ This option will not be applied to code editor.</string>
 		</dict>
 		<dict>
 			<key>enabled</key>
-			<true/>
+			<false/>
 			<key>key</key>
 			<string>XXTExplorerViewerCaseSensitiveSearch</string>
 			<key>default</key>

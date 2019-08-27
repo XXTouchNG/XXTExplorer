@@ -48,4 +48,6 @@
 - (void)removeLineMasksForType:(XXTEEditorLineMaskType)type;
 - (void)removeAllLineMasks;
 
+- (void)clearAllLineMasks;
+
 @end

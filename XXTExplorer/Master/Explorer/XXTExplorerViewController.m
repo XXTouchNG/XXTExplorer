@@ -1576,10 +1576,13 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - UISearchBarDelegate
 
+#ifdef APPSTORE
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
 }
+#endif
 
+#ifdef APPSTORE
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     UISearchController *searchController = self.searchController;
     if (selectedScope == XXTExplorerSearchTypeRecursively) {
@@ -1589,6 +1592,7 @@ XXTE_END_IGNORE_PARTIAL
     }
     [self updateSearchResultsForSearchController:searchController];
 }
+#endif
 
 #pragma mark - UISearchResultsUpdating
 

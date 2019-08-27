@@ -9,6 +9,8 @@
 #import "XXTEEditorController+State.h"
 
 #import "XXTEEditorTextView.h"
+#import "XXTEEditorMaskView.h"
+
 
 @implementation XXTEEditorController (State)
 
@@ -63,6 +65,7 @@
                 [self setNeedsSaveDocument];
                 [self setNeedsReloadAttributes];
             }
+            [self.maskView clearAllLineMasks];  // TODO: clear when changed target line only (libxdiff)
         }
     }
 }

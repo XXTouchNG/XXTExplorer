@@ -17,21 +17,21 @@
 
 
 // syntax properties
-@property (nonatomic, strong) XXTEEditorTheme *theme;
-@property (nonatomic, strong) XXTEEditorLanguage *language;
+@property (nonatomic, strong, readonly) XXTEEditorTheme *theme;
+@property (nonatomic, strong, readonly) XXTEEditorLanguage *language;
 
 
 // text properties
-@property (nonatomic, assign, getter=isLockedState) BOOL lockedState;
-@property (nonatomic, assign) BOOL hasLongLine;
-@property (nonatomic, assign) CFStringEncoding currentEncoding;
-@property (nonatomic, assign) NSStringLineBreakType currentLineBreak;
+@property (nonatomic, assign, getter=isLockedState, readonly) BOOL lockedState;
+@property (nonatomic, assign, readwrite) BOOL hasLongLine;
+@property (nonatomic, assign, readwrite) CFStringEncoding currentEncoding;
+@property (nonatomic, assign, readwrite) NSStringLineBreakType currentLineBreak;
 
 
 // public views
-@property (nonatomic, strong) XXTEEditorTextView *textView;
-@property (nonatomic, strong) XXTEEditorMaskView *maskView;
-@property (nonatomic, strong) XXTEEditorToolbar *toolbar;
+@property (nonatomic, strong, readonly) XXTEEditorTextView *textView;
+@property (nonatomic, strong, readonly) XXTEEditorMaskView *maskView;
+@property (nonatomic, strong, readonly) XXTEEditorToolbar *toolbar;
 
 - (void)setNeedsReload:(NSString *)defaultKey;
 - (void)setNeedsReloadAll;
@@ -48,6 +48,6 @@
 #pragma mark - Search
 
 - (void)toggleSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated;
-@property (nonatomic, assign, getter=isSearchMode) BOOL searchMode;
+@property (nonatomic, assign, getter=isSearchMode, readonly) BOOL searchMode;
 
 @end

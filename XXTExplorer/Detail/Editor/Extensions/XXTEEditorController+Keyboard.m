@@ -8,10 +8,9 @@
 
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorTextView.h"
-
 #import "XXTEEditorDefaults.h"
-
 #import "XXTEEditorToolbar.h"
+
 
 @implementation XXTEEditorController (Keyboard)
 

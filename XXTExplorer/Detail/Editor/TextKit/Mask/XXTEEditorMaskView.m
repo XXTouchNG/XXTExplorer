@@ -372,6 +372,11 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     [self.internalLineMasks removeAllObjects];
 }
 
+- (void)clearAllLineMasks {
+    if (self.internalLineMasks.count) {
+        [self removeAllLineMasks];
+    }
+}
 
 #pragma mark - Line Mask Render
 

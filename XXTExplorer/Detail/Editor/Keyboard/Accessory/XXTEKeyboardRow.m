@@ -14,15 +14,15 @@ static NSString * const XXTEKeyboardRowPadDefaultSequence = @"TTTTT()\"[]{}'<>\\
 
 @interface XXTEKeyboardRow ()
 
-@property(nonatomic, assign) NSUInteger buttonCount;
-@property(nonatomic, assign) CGFloat barWidth;
-@property(nonatomic, assign) CGFloat barHeight;
-@property(nonatomic, assign) CGFloat buttonHeight;
-@property(nonatomic, assign) CGFloat leftMargin;
-@property(nonatomic, assign) CGFloat topMargin;
-@property(nonatomic, assign) CGFloat buttonSpacing;
-@property(nonatomic, assign) CGFloat buttonWidth;
-@property(nonatomic, strong) NSMutableArray <XXTEKeyboardButton *> *buttons;
+@property (nonatomic, assign) NSUInteger buttonCount;
+@property (nonatomic, assign) CGFloat barWidth;
+@property (nonatomic, assign) CGFloat barHeight;
+@property (nonatomic, assign) CGFloat buttonHeight;
+@property (nonatomic, assign) CGFloat leftMargin;
+@property (nonatomic, assign) CGFloat topMargin;
+@property (nonatomic, assign) CGFloat buttonSpacing;
+@property (nonatomic, assign) CGFloat buttonWidth;
+@property (nonatomic, strong) NSMutableArray <XXTEKeyboardButton *> *buttons;
 
 @end
 
