@@ -275,7 +275,7 @@
 			<key>key</key>
 			<string>XXTExplorerDefaultEncodingKey</string>
 			<key>default</key>
-			<real>0</real>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Default Encoding</string>
 			<key>description</key>
@@ -373,7 +373,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewerRegexSearch</string>
 			<key>default</key>
-			<false/>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Regular Expression Search</string>
 			<key>description</key>
@@ -391,7 +391,7 @@ This option will not be applied to code editor.</string>
 			<key>key</key>
 			<string>XXTExplorerViewerCaseSensitiveSearch</string>
 			<key>default</key>
-			<false/>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Case Sensitive Search</string>
 			<key>description</key>

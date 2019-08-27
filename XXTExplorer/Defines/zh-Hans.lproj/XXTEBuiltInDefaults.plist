@@ -41,15 +41,15 @@
 		</dict>
 		<dict>
 			<key>key</key>
-			<string>VIEWER_USER_DEFAULTS</string>
-			<key>title</key>
-			<string>文件查看器设置</string>
-		</dict>
-		<dict>
-			<key>key</key>
 			<string>REMOTE_USER_DEFAULTS</string>
 			<key>title</key>
 			<string>守护进程设置</string>
+		</dict>
+		<dict>
+			<key>key</key>
+			<string>VIEWER_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>文件查看器设置</string>
 		</dict>
 	</array>
 	<key>GLOBAL_DEFAULTS</key>
@@ -275,7 +275,7 @@
 			<key>key</key>
 			<string>XXTExplorerDefaultEncodingKey</string>
 			<key>default</key>
-			<string>Unicode (UTF-8)</string>
+			<integer>0</integer>
 			<key>title</key>
 			<string>默认编码</string>
 			<key>description</key>

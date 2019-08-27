@@ -65,7 +65,8 @@
                 [self setNeedsSaveDocument];
                 [self setNeedsReloadAttributes];
             }
-            [self.maskView clearAllLineMasks];  // TODO: clear when changed target line only (libxdiff)
+            [self.maskView clearAllLineMasks];
+            // TODO: clear when changed target line only (libxdiff)
         }
     }
 }

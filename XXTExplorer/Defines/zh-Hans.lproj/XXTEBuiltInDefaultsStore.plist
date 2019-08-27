@@ -81,7 +81,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>显示 &quot;主目录&quot; 入口</string>
 			<key>description</key>
@@ -98,7 +98,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowsImportFromAlbum</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>允许从相册导入</string>
 			<key>description</key>
@@ -115,7 +115,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryListHideDotItemKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>隐藏点符文件</string>
 			<key>description</key>
@@ -132,7 +132,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>隐藏已知文件的扩展名</string>
 			<key>description</key>
@@ -149,7 +149,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
 			<key>default</key>
-			<false/>
+			<integer>0</integer>
 			<key>title</key>
 			<string>隐藏操作标签</string>
 			<key>description</key>
@@ -166,7 +166,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowOpenMethodKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>允许修改打开方式</string>
 			<key>description</key>
@@ -186,7 +186,7 @@
 			<key>key</key>
 			<string>XXTExplorerDefaultEncodingKey</string>
 			<key>default</key>
-			<string>Unicode (UTF-8)</string>
+			<real>0</real>
 			<key>title</key>
 			<string>默认编码</string>
 			<key>description</key>

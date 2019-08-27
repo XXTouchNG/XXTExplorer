@@ -81,7 +81,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>Show &quot;Home&quot; Entry</string>
 			<key>description</key>
@@ -98,7 +98,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowsImportFromAlbum</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>Allows Import from Album</string>
 			<key>description</key>
@@ -115,7 +115,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryListHideDotItemKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>Hide Dot Files</string>
 			<key>description</key>
@@ -132,7 +132,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>Hide Common File Extensions</string>
 			<key>description</key>
@@ -149,7 +149,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideOperationLabelKey</string>
 			<key>default</key>
-			<false/>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Hide Operation Label</string>
 			<key>description</key>
@@ -166,7 +166,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowOpenMethodKey</string>
 			<key>default</key>
-			<true/>
+			<integer>1</integer>
 			<key>title</key>
 			<string>Allow Open Method</string>
 			<key>description</key>
@@ -302,7 +302,7 @@ This option will not be applied to code editor.</string>
 			<key>key</key>
 			<string>XXTExplorerViewerCaseSensitiveSearch</string>
 			<key>default</key>
-			<false/>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Case Sensitive Search</string>
 			<key>description</key>
