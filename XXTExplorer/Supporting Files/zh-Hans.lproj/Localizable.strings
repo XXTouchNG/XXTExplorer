@@ -2137,3 +2137,6 @@
 
 /* No comment provided by engineer. */
 "Circular Search" = "循环搜索";
+
+/* No comment provided by engineer. */
+"Begin logging at: %@\n\n" = "开始记录日志: %@\n\n";

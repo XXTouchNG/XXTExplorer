@@ -207,13 +207,13 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
                 }
                 [textView setSelectedRange:NSMakeRange(range.location + 1, 0)];
                 return NO;
-            } else if (replChar == '}' || replChar == ']' || replChar == ')') {
+            } else if (replChar == '}' || replChar == ']' || replChar == ')' || replChar == '"') {
                 NSString *stringRef = textView.text;
                 
                 if (range.location < stringRef.length) {
                     unichar nextCharacter = [stringRef characterAtIndex:range.location];
                     
-                    if ((nextCharacter == '}' || nextCharacter == ']' || nextCharacter == ')') && replChar == nextCharacter)
+                    if ((nextCharacter == '}' || nextCharacter == ']' || nextCharacter == ')' || nextCharacter == '"') && replChar == nextCharacter)
                     {
                         [textView setSelectedRange:NSMakeRange(range.location + 1, 0)];
                         return NO;
