@@ -245,5 +245,17 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.$(PRODUCT_BUNDLE_IDENTIFIER)</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>One</string>
+			<key>NSUbiquitousContainerName</key>
+			<string>X.X.T.E.</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
