@@ -53,17 +53,38 @@ typedef enum : NSUInteger {
     return [XXTExplorerEntryTerminalReader class];
 }
 
++ (NSDateFormatter *)logDateFormatter {
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd";
+        formatter.timeZone = [NSTimeZone localTimeZone];
+        formatter.locale = [NSLocale currentLocale];
+    });
+    return formatter;
+}
+
++ (NSString *)logRootPath {
+    return [[XXTERootPath() stringByAppendingPathComponent:@"log"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", NSStringFromClass([self class])]];
+}
+
 - (instancetype)initWithPath:(NSString *)path {
     if (self = [super init]) {
         _entryPath = path;
         _pipes = [NSMutableArray array];
         
+        NSFileManager *manager = [NSFileManager defaultManager];
         BOOL saveLogs = XXTEDefaultsBool(XXTExplorerTerminalSaveLogs, YES);
         if (saveLogs) {
-            NSString *logName = [NSString stringWithFormat:@"%@-%@.log", NSStringFromClass([self class]), [[NSUUID UUID] UUIDString]];
-            NSString *logPath = [[XXTERootPath() stringByAppendingPathComponent:@"log"] stringByAppendingPathComponent:logName];
+            NSString *logDatePath = [[[self class] logRootPath] stringByAppendingPathComponent:[[[self class] logDateFormatter] stringFromDate:[NSDate date]]];
+            [manager createDirectoryAtPath:logDatePath withIntermediateDirectories:YES attributes:nil error:nil];
+            
+            NSString *logName = [NSString stringWithFormat:@"%lu.log", (NSUInteger)[[NSDate date] timeIntervalSince1970]];
+            NSString *logPath = [logDatePath stringByAppendingPathComponent:logName];
             _logPath = logPath;
-            BOOL created = [[NSFileManager defaultManager] createFileAtPath:logPath contents:[NSData data] attributes:nil];
+            
+            BOOL created = [manager createFileAtPath:logPath contents:[NSData data] attributes:nil];
             if (created) {
                 NSFileHandle *logHandle = [NSFileHandle fileHandleForWritingAtPath:logPath];
                 _logHandle = logHandle;

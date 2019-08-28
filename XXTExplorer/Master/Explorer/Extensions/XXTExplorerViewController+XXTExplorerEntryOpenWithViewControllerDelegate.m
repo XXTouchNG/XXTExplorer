@@ -28,6 +28,18 @@
 
 @implementation XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate)
 
++ (NSDateFormatter *)historyDateFormatter {
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd";
+        formatter.timeZone = [NSTimeZone localTimeZone];
+        formatter.locale = [NSLocale currentLocale];
+    });
+    return formatter;
+}
+
 #pragma mark - XXTExplorerEntryOpenWithViewControllerDelegate
 
 - (void)openWithViewController:(XXTExplorerEntryOpenWithViewController *)controller viewerDidSelected:(NSString *)controllerName {
@@ -96,26 +108,90 @@
 
 - (void)linkHistoryEntryAtPath:(NSString *)entryPath {
     if (self.historyMode) return;
+    NSFileManager *manager = [[self class] explorerFileManager];
+    
     NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
-    NSString *historyPath = [XXTERootPath() stringByAppendingPathComponent:historyRelativePath];
+    NSString *historyRootPath = [XXTERootPath() stringByAppendingPathComponent:historyRelativePath];
+    NSURL *historyRootURL = [NSURL fileURLWithPath:historyRootPath];
+    
+    NSInteger historyLimitChoice = XXTEDefaultsInt(XXTExplorerHistoryStoreLimit, 3);
+    NSTimeInterval historyLimit;
+    switch (historyLimitChoice) {
+        case 0:
+            historyLimit = 604800;
+            break;
+        case 1:
+            historyLimit = 604800 * 2;
+            break;
+        case 2:
+            historyLimit = 2592000;
+            break;
+        case 3:
+            historyLimit = 7776000;
+            break;
+        case 4:
+            historyLimit = 15552000;
+            break;
+        case 5:
+            historyLimit = 31536000;
+            break;
+        case 6:
+            historyLimit = INT_MAX;
+            break;
+        default:
+            historyLimit = 7776000;
+            break;
+    }
+    
+    NSDirectoryEnumerator *enumerator = [manager enumeratorAtURL:historyRootURL
+                                      includingPropertiesForKeys:@[ NSURLPathKey, NSURLIsDirectoryKey ]
+                                                         options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                                                    errorHandler:^BOOL(NSURL *url, NSError *error) {
+#ifdef DEBUG
+        NSLog(@"[Error] %@ (%@)", error, url);
+#endif
+        return YES;
+    }];
+    
+    NSDateFormatter *dateFormatter = [[self class] historyDateFormatter];
+    for (NSURL *dateDirectoryURL in enumerator) {
+        NSNumber *isPathDirectory = nil;
+        [dateDirectoryURL getResourceValue:&isPathDirectory forKey:NSURLIsDirectoryKey error:nil];
+        if (![isPathDirectory boolValue]) {
+            continue;
+        }
+        
+        NSString *dateDirectoryPath = nil;
+        [dateDirectoryURL getResourceValue:&dateDirectoryPath forKey:NSURLPathKey error:nil];
+        
+        NSString *dateDirectoryName = [dateDirectoryPath lastPathComponent];
+        NSDate *dateDirectoryDate = [dateFormatter dateFromString:dateDirectoryName];
+        if (!dateDirectoryDate) {
+            continue;
+        }
+        
+        if (fabs([dateDirectoryDate timeIntervalSinceNow]) > historyLimit)
+        {
+            [manager removeItemAtURL:dateDirectoryURL error:nil];
+        }
+    }
+    
+    NSString *historyDatePath = [historyRootPath stringByAppendingPathComponent:[dateFormatter stringFromDate:[NSDate date]]];
+    [manager createDirectoryAtPath:historyDatePath withIntermediateDirectories:YES attributes:nil error:nil];
+    
     NSString *pathHash = [entryPath sha1String];
     if (pathHash.length > 8) {
         NSString *pathSubhash = [pathHash substringToIndex:7];
         NSString *entryName = [entryPath lastPathComponent];
         NSString *entryLinkName = [pathSubhash stringByAppendingFormat:@"@%@", entryName];
-        NSString *entryLinkPath = [historyPath stringByAppendingPathComponent:entryLinkName];
-//        BOOL linkResult = NO;
+        NSString *entryLinkPath = [historyDatePath stringByAppendingPathComponent:entryLinkName];
         NSError *linkError = nil;
         if (entryLinkPath.length > 0 && entryPath.length > 0) {
-            NSFileManager *manager = [[self class] explorerFileManager];
-//            BOOL cleanResult = NO;
             NSError *cleanError = nil;
             struct stat cleanStat;
             if (0 == lstat(entryLinkPath.fileSystemRepresentation, &cleanStat)) {
-//                cleanResult =
                 [manager removeItemAtPath:entryLinkPath error:&cleanError];
             }
-//            linkResult =
             [manager createSymbolicLinkAtURL:[NSURL fileURLWithPath:entryLinkPath] withDestinationURL:[NSURL fileURLWithPath:entryPath] error:&linkError];
         }
     }

@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *defaultButtons;
 @property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *editingButtons;
 @property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *readonlyButtons;
+@property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *historyButtons;
 @property (nonatomic, strong, readonly) NSDictionary <NSString *, NSArray <UIBarButtonItem *> *> *statusSeries;
 
 @end
@@ -47,25 +48,25 @@
 #ifndef APPSTORE
     NSArray <NSString *> *buttonTypes =
     @[
-      XXTExplorerToolbarButtonTypeScan,
-      XXTExplorerToolbarButtonTypeCompress,
-      XXTExplorerToolbarButtonTypeAddItem,
-      XXTExplorerToolbarButtonTypeSort,
-      XXTExplorerToolbarButtonTypeShare,
-      XXTExplorerToolbarButtonTypePaste,
-      XXTExplorerToolbarButtonTypeTrash
-      ];
+        XXTExplorerToolbarButtonTypeScan,
+        XXTExplorerToolbarButtonTypeCompress,
+        XXTExplorerToolbarButtonTypeAddItem,
+        XXTExplorerToolbarButtonTypeSort,
+        XXTExplorerToolbarButtonTypeShare,
+        XXTExplorerToolbarButtonTypePaste,
+        XXTExplorerToolbarButtonTypeTrash
+    ];
 #else
     NSArray <NSString *> *buttonTypes =
     @[
-      XXTExplorerToolbarButtonTypeSettings,
-      XXTExplorerToolbarButtonTypeCompress,
-      XXTExplorerToolbarButtonTypeAddItem,
-      XXTExplorerToolbarButtonTypeSort,
-      XXTExplorerToolbarButtonTypeShare,
-      XXTExplorerToolbarButtonTypePaste,
-      XXTExplorerToolbarButtonTypeTrash
-      ];
+        XXTExplorerToolbarButtonTypeSettings,
+        XXTExplorerToolbarButtonTypeCompress,
+        XXTExplorerToolbarButtonTypeAddItem,
+        XXTExplorerToolbarButtonTypeSort,
+        XXTExplorerToolbarButtonTypeShare,
+        XXTExplorerToolbarButtonTypePaste,
+        XXTExplorerToolbarButtonTypeTrash
+    ];
 #endif
     
     NSMutableDictionary <NSString *, UIBarButtonItem *> *buttons = [[NSMutableDictionary alloc] initWithCapacity:buttonTypes.count];
@@ -85,106 +86,127 @@
 #ifndef APPSTORE
         _defaultButtons =
         @[
-          fixedSpace,
-          buttons[XXTExplorerToolbarButtonTypeScan],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeAddItem],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypePaste],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          fixedSpace,
-          ];
+            fixedSpace,
+            buttons[XXTExplorerToolbarButtonTypeScan],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeAddItem],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypePaste],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSort],
+            fixedSpace,
+        ];
 #else
         _defaultButtons =
         @[
-          fixedSpace,
-          buttons[XXTExplorerToolbarButtonTypeAddItem],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypePaste],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSettings],
-          fixedSpace,
-          ];
+            fixedSpace,
+            buttons[XXTExplorerToolbarButtonTypeAddItem],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSort],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypePaste],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSettings],
+            fixedSpace,
+        ];
 #endif
         
         _editingButtons =
         @[
-          fixedSpace,
-          buttons[XXTExplorerToolbarButtonTypeShare],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeCompress],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypePaste],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeTrash],
-          fixedSpace,
-          ];
+            fixedSpace,
+            buttons[XXTExplorerToolbarButtonTypeShare],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeCompress],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypePaste],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeTrash],
+            fixedSpace,
+        ];
         
         _readonlyButtons =
         @[
-          fixedSpace,
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          flexibleSpace,
-          fixedSpace,
-          ];
+            fixedSpace,
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSort],
+            flexibleSpace,
+            fixedSpace,
+        ];
+        
+        _historyButtons =
+        @[
+            fixedSpace,
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeTrash],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSettings],
+            flexibleSpace,
+            fixedSpace,
+        ];
     }
     else
     {
 #ifndef APPSTORE
         _defaultButtons =
         @[
-          buttons[XXTExplorerToolbarButtonTypeScan],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeAddItem],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypePaste],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          ];
+            buttons[XXTExplorerToolbarButtonTypeScan],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeAddItem],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypePaste],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSort],
+        ];
 #else
         _defaultButtons =
         @[
-          buttons[XXTExplorerToolbarButtonTypeAddItem],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypePaste],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSettings],
-          ];
+            buttons[XXTExplorerToolbarButtonTypeAddItem],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSort],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypePaste],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSettings],
+        ];
 #endif
         
         _editingButtons =
         @[
-          buttons[XXTExplorerToolbarButtonTypeShare],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeCompress],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypePaste],
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeTrash],
-          ];
+            buttons[XXTExplorerToolbarButtonTypeShare],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeCompress],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypePaste],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeTrash],
+        ];
         
         _readonlyButtons =
         @[
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeSort],
-          flexibleSpace,
-          ];
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSort],
+            flexibleSpace,
+        ];
+        
+        _historyButtons =
+        @[
+            fixedSpace,
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeTrash],
+            flexibleSpace,
+            buttons[XXTExplorerToolbarButtonTypeSettings],
+            flexibleSpace,
+            fixedSpace,
+        ];
     }
     
     _statusSeries =
     @{
-      XXTExplorerToolbarStatusDefault: self.defaultButtons,
-      XXTExplorerToolbarStatusEditing: self.editingButtons,
-      XXTExplorerToolbarStatusReadonly: self.readonlyButtons
-      };
-    
-    [self updateStatus:XXTExplorerToolbarStatusDefault];
+        XXTExplorerToolbarStatusDefault: self.defaultButtons,
+        XXTExplorerToolbarStatusEditing: self.editingButtons,
+        XXTExplorerToolbarStatusReadonly: self.readonlyButtons,
+        XXTExplorerToolbarStatusHistoryMode: self.historyButtons,
+    };
 }
 
 - (void)drawRect:(CGRect)rect {

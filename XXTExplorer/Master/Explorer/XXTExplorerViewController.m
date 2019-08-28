@@ -129,23 +129,33 @@ XXTE_END_IGNORE_PARTIAL
     [super viewDidLoad];
     
     if (self.title.length == 0) {
-        if (self == [self.navigationController.viewControllers firstObject] && !self.isPreviewed) {
-            if (isAppStore()) {
-                self.title = NSLocalizedString(@"Files", nil);
-            } else {
-                self.title = NSLocalizedString(@"My Scripts", nil);
-            }
-        } else {
-            if (self.historyMode) {
-                self.title = NSLocalizedString(@"View History", nil);
-            } else {
-                NSString *entryPath = self.entryPath;
-                if (entryPath) {
-                    NSString *entryName = [entryPath lastPathComponent];
-                    self.title = entryName;
+        NSString *title = nil;
+        if (!title) {
+            if (self == [self.navigationController.viewControllers firstObject]) {
+                if (!self.isPreviewed) {
+                    if (isAppStore()) {
+                        title = NSLocalizedString(@"Files", nil);
+                    } else {
+                        title = NSLocalizedString(@"My Scripts", nil);
+                    }
                 }
             }
         }
+        if (!title) {
+            if (self.historyMode) {
+                if ([self.entryPath isEqualToString:[[self class] historyDirectoryPath]]) {
+                    title = NSLocalizedString(@"View History", nil);
+                }
+            }
+        }
+        if (!title) {
+            NSString *entryPath = self.entryPath;
+            if (entryPath) {
+                NSString *entryName = [entryPath lastPathComponent];
+                title = entryName;
+            }
+        }
+        self.title = title;
     }
     
     {
@@ -824,6 +834,10 @@ XXTE_END_IGNORE_PARTIAL
             if (error) *error = accessError;
         } else {
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
+            explorerViewController.historyMode = self.historyMode;
+            explorerViewController.displayCurrentPath = self.displayCurrentPath;
+            explorerViewController.internalSortField = explorerViewController.internalSortField;
+            explorerViewController.internalSortOrder = explorerViewController.internalSortOrder;
             return explorerViewController;
         }
     }
@@ -853,6 +867,7 @@ XXTE_END_IGNORE_PARTIAL
         } else {
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
             explorerViewController.historyMode = YES;
+            explorerViewController.displayCurrentPath = NO;
             explorerViewController.internalSortField = XXTExplorerViewEntryListSortFieldModificationDate;
             explorerViewController.internalSortOrder = XXTExplorerViewEntryListSortOrderDesc;
             [self.navigationController pushViewController:explorerViewController animated:YES];
@@ -1425,10 +1440,14 @@ XXTE_END_IGNORE_PARTIAL
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
-    if (editing) {
-        [self.toolbar updateStatus:XXTExplorerToolbarStatusEditing];
+    if (self.historyMode) {
+        [self.toolbar updateStatus:XXTExplorerToolbarStatusHistoryMode];
     } else {
-        [self.toolbar updateStatus:XXTExplorerToolbarStatusDefault];
+        if (editing) {
+            [self.toolbar updateStatus:XXTExplorerToolbarStatusEditing];
+        } else {
+            [self.toolbar updateStatus:XXTExplorerToolbarStatusDefault];
+        }
     }
     [self updateToolbarStatus];
     [self reloadFooterView];

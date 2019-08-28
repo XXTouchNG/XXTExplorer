@@ -40,6 +40,7 @@ XXTE_END_IGNORE_PARTIAL
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField explorerSortField;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortOrder explorerSortOrder;
 
+// must inherit manually
 @property (nonatomic, assign) BOOL historyMode;
 @property (nonatomic, assign) BOOL displayCurrentPath;
 @property (nonatomic, assign) XXTExplorerViewEntryListSortField internalSortField;

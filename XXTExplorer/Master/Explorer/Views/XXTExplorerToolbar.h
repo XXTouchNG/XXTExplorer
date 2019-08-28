@@ -11,6 +11,7 @@
 static NSString * const XXTExplorerToolbarStatusDefault = @"XXTExplorerToolbarStatusDefault";
 static NSString * const XXTExplorerToolbarStatusEditing = @"XXTExplorerToolbarStatusEditing";
 static NSString * const XXTExplorerToolbarStatusReadonly = @"XXTExplorerToolbarStatusReadonly";
+static NSString * const XXTExplorerToolbarStatusHistoryMode = @"XXTExplorerToolbarStatusHistoryMode";
 
 #ifndef APPSTORE
     static NSString * const XXTExplorerToolbarButtonTypeScan = @"XXTExplorerToolbarButtonTypeScan";

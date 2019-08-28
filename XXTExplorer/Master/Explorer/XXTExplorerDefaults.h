@@ -32,6 +32,7 @@ static NSString * const XXTExplorerViewEntryHideOperationLabelKey = @"XXTExplore
 static NSString * const XXTExplorerPasteboardDetectOnActiveKey = @"XXTExplorerPasteboardDetectOnActiveKey";
 static NSString * const XXTExplorerAllowsImportFromAlbum = @"XXTExplorerAllowsImportFromAlbum";
 static NSString * const XXTExplorerFixFileOwnerAutomaticallyKey = @"XXTExplorerFixFileOwnerAutomaticallyKey";
+static NSString * const XXTExplorerHistoryStoreLimit = @"XXTExplorerHistoryStoreLimit";
 
 #pragma mark - Templates
 

@@ -177,6 +177,27 @@
 				<string>On</string>
 			</array>
 		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerHistoryStoreLimit</string>
+			<key>default</key>
+			<integer>3</integer>
+			<key>title</key>
+			<string>History Store Limit</string>
+			<key>description</key>
+			<string>Maximum history items count. If exceeded, earlier items will be cleared.</string>
+			<key>options</key>
+			<array>
+				<string>1 Week</string>
+				<string>1 Month</string>
+				<string>3 Months</string>
+				<string>6 Months</string>
+				<string>1 Year</string>
+				<string>Forever</string>
+			</array>
+		</dict>
 	</array>
 	<key>VIEWER_USER_DEFAULTS</key>
 	<array>
@@ -324,7 +345,7 @@ This option will not be applied to code editor.</string>
 			<key>title</key>
 			<string>Terminal Save Logs</string>
 			<key>description</key>
-			<string>Write terminal content to &apos;~/logs/&apos;.</string>
+			<string>Write terminal content to &apos;~/log/&apos;.</string>
 			<key>options</key>
 			<array>
 				<string>Disabled</string>

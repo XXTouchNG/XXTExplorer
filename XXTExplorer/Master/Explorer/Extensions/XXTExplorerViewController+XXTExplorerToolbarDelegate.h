@@ -18,4 +18,8 @@
 - (void)updateToolbarButton;
 - (void)updateToolbarStatus;
 
+#pragma mark - history
+
++ (NSString *)historyDirectoryPath;
+
 @end
