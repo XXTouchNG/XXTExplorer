@@ -10,7 +10,9 @@
 #import "SKRange.h"
 
 @interface NSLayoutManager (LineRect)
+
 - (CGRect)lineFragmentsRectForRange:(NSRange)range;
+
 @end
 
 @implementation NSLayoutManager (LineRect)

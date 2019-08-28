@@ -8,11 +8,11 @@
 
 #import "XXTEEditorMaskView.h"
 #import "XXTEEditorTextView.h"
+
 #import "UITextView+TextRange.h"
 #import "XXTETextPreprocessor.h"
 
 #import "ICTextView.h"
-#import "XXTEEditorLineMask.h"
 #import "UIImage+ColoredImage.h"
 #import <QuartzCore/QuartzCore.h>
 

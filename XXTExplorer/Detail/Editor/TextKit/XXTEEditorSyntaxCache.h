@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SKAttributedParser.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class SKAttributedParser;
 
 @interface XXTEEditorSyntaxCache : NSObject
 

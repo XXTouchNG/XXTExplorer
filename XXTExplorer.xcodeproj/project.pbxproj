@@ -4250,9 +4250,9 @@
 				D60A26A91F3DA83D00E013E2 /* XXTEEditorTheme.m */,
 				0F51CB141F61191900150D6D /* XXTEEditorLanguage.h */,
 				0F51CB151F61191900150D6D /* XXTEEditorLanguage.m */,
+				D63711FF22F4667700ACE211 /* XXTEEditorTextProperties.h */,
 				D66085651F3C691100E87B3C /* XXTEEditorController.h */,
 				D66085661F3C691100E87B3C /* XXTEEditorController.m */,
-				D63711FF22F4667700ACE211 /* XXTEEditorTextProperties.h */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
