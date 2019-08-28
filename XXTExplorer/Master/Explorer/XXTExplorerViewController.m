@@ -98,6 +98,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setupWithPath:(NSString *)path {
+    self.definesPresentationContext = YES;
     _displayCurrentPath = YES;
     _explorerSearchStopFlag = YES;
     _homeEntryList = [[NSMutableArray alloc] init];
@@ -127,7 +128,6 @@ XXTE_END_IGNORE_PARTIAL
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.definesPresentationContext = YES;
     if (self.title.length == 0) {
         if (self == [self.navigationController.viewControllers firstObject] && !self.isPreviewed) {
             if (isAppStore()) {

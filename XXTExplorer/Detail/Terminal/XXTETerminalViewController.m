@@ -7,10 +7,20 @@
 //
 
 #import "XXTELuaVModel.h"
+#import "XXTEAppDefines.h"
+#import "XXTExplorerDefaults.h"
 #import "XXTETerminalTextView.h"
 #import "XXTETerminalViewController.h"
 #import "XXTEEditorController+NavigationBar.h"
 #import "XXTExplorerEntryTerminalReader.h"
+
+typedef enum : NSUInteger {
+    XXTETerminalContentTypeDoNotLog = 0,
+    XXTETerminalContentTypeTips,
+    XXTETerminalContentTypeStandardOutput,
+    XXTETerminalContentTypeStandardError,
+} XXTETerminalContentType;
+
 
 @interface XXTETerminalViewController () <UITextViewDelegate, XXTELuaVModelDelegate>
 
@@ -21,6 +31,9 @@
 @property (nonatomic, strong) UIBarButtonItem *activityIndicatorItem;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) NSMutableArray <NSPipe *> *pipes;
+
+@property (nonatomic, strong) NSString *logPath;
+@property (nonatomic, strong) NSFileHandle *logHandle;
 
 @end
 
@@ -44,6 +57,21 @@
     if (self = [super init]) {
         _entryPath = path;
         _pipes = [NSMutableArray array];
+        
+        BOOL saveLogs = XXTEDefaultsBool(XXTExplorerTerminalSaveLogs, YES);
+        if (saveLogs) {
+            NSString *logName = [NSString stringWithFormat:@"%@-%@.log", NSStringFromClass([self class]), [[NSUUID UUID] UUIDString]];
+            NSString *logPath = [[XXTERootPath() stringByAppendingPathComponent:@"log"] stringByAppendingPathComponent:logName];
+            _logPath = logPath;
+            BOOL created = [[NSFileManager defaultManager] createFileAtPath:logPath contents:[NSData data] attributes:nil];
+            if (created) {
+                NSFileHandle *logHandle = [NSFileHandle fileHandleForWritingAtPath:logPath];
+                _logHandle = logHandle;
+            }
+        } else {
+            _logPath = nil;
+            _logHandle = nil;
+        }
     }
     return self;
 }
@@ -123,6 +151,7 @@
 - (void)dealloc {
     [self resetVirtualMachine];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.logHandle closeFile];
 #ifdef DEBUG
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
@@ -131,7 +160,7 @@
 #pragma mark - Load
 
 - (void)loadProcess:(BOOL)run {
-    [self.textView setText:@""];
+    [self resetContentOfTextView:self.textView];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if (self.entryPath) {
         [self displayWelcomeMessage:run];
@@ -233,7 +262,7 @@
     }
     NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [self.textView appendString:str];
+    [self appendContent:str contentType:XXTETerminalContentTypeStandardOutput toTextView:self.textView];
     if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
         [pipeReadHandle readInBackgroundAndNotify];
     }
@@ -253,7 +282,7 @@
     }
     NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [self.textView appendError:str];
+    [self appendContent:str contentType:XXTETerminalContentTypeStandardError toTextView:self.textView];
     if ([pipeReadHandle isKindOfClass:[NSFileHandle class]]) {
         [pipeReadHandle readInBackgroundAndNotify];
     }
@@ -262,16 +291,19 @@
 #pragma mark - Execute
 
 - (void)displayWelcomeMessage:(BOOL)run {
-    [self.textView appendMessage:[NSString stringWithFormat:@"%@\n", NSLocalizedString(@LUA_COPYRIGHT, nil)]];
+    if (self.logPath && self.logHandle) {
+        [self appendContent:[NSString stringWithFormat:NSLocalizedString(@"Begin logging at: %@\n\n", nil), self.logPath] contentType:XXTETerminalContentTypeDoNotLog toTextView:self.textView];
+    }
+    [self appendContent:[NSString stringWithFormat:@"%@\n", NSLocalizedString(@LUA_COPYRIGHT, nil)] contentType:XXTETerminalContentTypeTips toTextView:self.textView];
     if (run) {
-        [self.textView appendMessage:[NSString stringWithFormat:NSLocalizedString(@"\nTesting %@...\n", nil), self.entryPath]];
+        [self appendContent:[NSString stringWithFormat:NSLocalizedString(@"\nTesting %@...\n", nil), self.entryPath] contentType:XXTETerminalContentTypeTips toTextView:self.textView];
     } else {
-        [self.textView appendMessage:NSLocalizedString(@"\nReady.\n", nil)];
+        [self appendContent:NSLocalizedString(@"\nReady.\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
     }
 }
 
 - (void)displayFinishMessage {
-    [self.textView appendMessage:NSLocalizedString(@"\n\nTest finished.\n", nil)];
+    [self appendContent:NSLocalizedString(@"\n\nTest finished.\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
 }
 
 - (void)launchVirtualMachine {
@@ -312,7 +344,7 @@
     NSError *err = nil;
     BOOL result = [self.virtualModel loadFileFromPath:self.entryPath error:&err];
     if (!result && err) {
-        [self.textView appendError:[NSString stringWithFormat:@"\n%@\n", [err localizedDescription]]];
+        [self appendContent:[NSString stringWithFormat:@"\n%@\n", [err localizedDescription]] contentType:XXTETerminalContentTypeStandardError toTextView:self.textView];
         self.launchItem.enabled = YES;
         if ([self->_delegate respondsToSelector:@selector(terminalDidTerminate:withError:)]) {
             // preprocess with lua error
@@ -322,7 +354,7 @@
         }
         return;
     } else {
-        [self.textView appendMessage:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil)];
+        [self appendContent:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
     }
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -331,7 +363,7 @@
         BOOL result = [self.virtualModel pcallWithError:&err];
         dispatch_async_on_main_queue(^{
             if (!result && err) {
-                [self.textView appendError:[NSString stringWithFormat:@"\n%@", [err localizedDescription]]];
+                [self appendContent:[NSString stringWithFormat:@"\n%@", [err localizedDescription]] contentType:XXTETerminalContentTypeStandardError toTextView:self.textView];
                 if ([self->_delegate respondsToSelector:@selector(terminalDidTerminate:withError:)]) {
                     // preprocess with lua error
                     if (err.code != -1) {
@@ -363,6 +395,34 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Logs
+
+- (void)appendContent:(NSString *)content contentType:(XXTETerminalContentType)type toTextView:(XXTETerminalTextView *)textView
+{
+    if (type == XXTETerminalContentTypeTips) {
+        [textView appendMessage:content];
+    } else if (type == XXTETerminalContentTypeStandardOutput) {
+        [textView appendString:content];
+    } else if (type == XXTETerminalContentTypeStandardError) {
+        [textView appendError:content];
+    } else {
+        [textView appendMessage:content];
+    }
+    if (self.logHandle && type != XXTETerminalContentTypeDoNotLog) {
+        NSData *logData = [[content stringByAppendingString:@NSStringLineBreakCRLF] dataUsingEncoding:NSUTF8StringEncoding];
+        [self.logHandle writeData:logData];
+    }
+}
+
+- (void)resetContentOfTextView:(XXTETerminalTextView *)textView
+{
+    [textView setText:@""];
+    if (self.logHandle) {
+        [self.logHandle truncateFileAtOffset:0];
+        [self.logHandle synchronizeFile];
+    }
+}
+
 #pragma mark - UITextViewDelegate
 
 - (BOOL)textView:(XXTETerminalTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -372,10 +432,14 @@
         range.length == 0 &&
         text.length != 0
         ) {
-        if ([text isEqualToString:@"\n"]) {
-            [textView insertText:text];
+        if ([text isEqualToString:@NSStringLineBreakLF]) {
             NSString *bufferedString = [textView getBufferString];
-            [self.virtualModel.inputPipe.fileHandleForWriting writeData:[bufferedString dataUsingEncoding:NSUTF8StringEncoding]];
+            [textView insertText:text];
+            [self.virtualModel.inputPipe.fileHandleForWriting writeData:[[bufferedString stringByAppendingString:@NSStringLineBreakLF] dataUsingEncoding:NSUTF8StringEncoding]];
+            if (self.logHandle) {
+                NSData *logData = [[bufferedString stringByAppendingString:@NSStringLineBreakCRLF] dataUsingEncoding:NSUTF8StringEncoding];
+                [self.logHandle writeData:logData];
+            }
             return NO;
         }
         [self.textView resetTypingAttributes];

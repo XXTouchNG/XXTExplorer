@@ -69,6 +69,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setup {
+    self.definesPresentationContext = YES;
     _isRequesting = NO;
     _firstLoaded = NO;
 }
@@ -76,7 +77,6 @@ XXTE_END_IGNORE_PARTIAL
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.automaticallyAdjustsScrollViewInsets = YES;
     

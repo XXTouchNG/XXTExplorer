@@ -242,9 +242,13 @@ XXTE_END_IGNORE_PARTIAL
         } else {
             logArr = [[stringPart componentsSeparatedByString:@NSStringLineBreakLF] mutableCopy];
         }
-        
         [logArr removeObject:@""];
-        self.logContents = [[logArr reverseObjectEnumerator] allObjects];
+        NSArray <NSString *> *reversedLogArr = [[logArr reverseObjectEnumerator] allObjects];
+        NSMutableArray <NSString *> *logContents = [NSMutableArray arrayWithCapacity:reversedLogArr.count];
+        for (NSString *logPart in reversedLogArr) {
+            [logContents addObject:[logPart stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        }
+        self.logContents = [logContents copy];
     }
     [self.logTableView reloadData];
 }
@@ -372,25 +376,35 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)configureCell:(XXTELogCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    BOOL isSearch = NO;
+    UISearchBar *searchBar = nil;
     if (@available(iOS 13.0, *)) {
         if (!self.searchController.active) {
-            if (indexPath.row < self.logContents.count) {
-                [cell setLogText:self.logContents[indexPath.row]];
-            }
-        } else {
-            if (indexPath.row < self.displayLogContents.count) {
-                [cell setLogText:self.displayLogContents[indexPath.row]];
-            }
+            isSearch = YES;
+            searchBar = self.searchController.searchBar;
         }
     } else {
-        if (tableView == self.logTableView) {
-            if (indexPath.row < self.logContents.count) {
-                [cell setLogText:self.logContents[indexPath.row]];
+        if (tableView != self.logTableView) {
+            isSearch = YES;
+            searchBar = self.searchDisplayController.searchBar;
+        }
+    }
+    if (!isSearch) {
+        if (indexPath.row < self.logContents.count) {
+            [cell setLogText:self.logContents[indexPath.row]];
+        }
+    } else {
+        if (indexPath.row < self.displayLogContents.count) {
+            NSString *searchContent = searchBar.text;
+            NSString *logContent = self.displayLogContents[indexPath.row];
+            NSDictionary *logContentAttrs = @{ NSFontAttributeName: [UIFont fontWithName:@"Courier" size:14.0], NSForegroundColorAttributeName: XXTColorPlainTitleText() };
+            
+            NSMutableAttributedString *mLogContent = [[NSMutableAttributedString alloc] initWithString:logContent attributes:logContentAttrs];
+            NSRange searchRange = [logContent rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, logContent.length)];
+            if (searchRange.location != NSNotFound) {
+                [mLogContent addAttributes:@{ NSBackgroundColorAttributeName: XXTColorSearchHighlight() } range:searchRange];
             }
-        } else {
-            if (indexPath.row < self.displayLogContents.count) {
-                [cell setLogText:self.displayLogContents[indexPath.row]];
-            }
+            [cell setAttributedLogText:[mLogContent copy]];
         }
     }
 }

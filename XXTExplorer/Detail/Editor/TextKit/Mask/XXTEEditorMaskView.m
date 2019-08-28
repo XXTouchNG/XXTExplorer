@@ -417,11 +417,12 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     [highlightLayer setOpacity:0.20f];
     [[textView layer] addSublayer:highlightLayer];
     
+    CGFloat cornerRadius = 6.0;
     CGRect fromRect = CGRectMake(CGRectGetMaxX(textView.frame), CGRectGetMinY(lineRect), 40.0, CGRectGetHeight(highlightLayer.bounds));
-    CGRect toRect = CGRectOffset(fromRect, -34.0, 0.0);
+    CGRect toRect = CGRectOffset(fromRect, -CGRectGetWidth(fromRect) + cornerRadius, 0.0);
     CALayer *taggedLayer = [CALayer layer];
     [taggedLayer setContentsScale:[[UIScreen mainScreen] scale]];
-    [taggedLayer setCornerRadius:6.f];
+    [taggedLayer setCornerRadius:cornerRadius];
     [taggedLayer setFrame:fromRect];
     [taggedLayer setBackgroundColor:[bgColor CGColor]];
     [taggedLayer setOpacity:.90f];
@@ -456,14 +457,14 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
         opacityInAnimation.fromValue = [NSNumber numberWithFloat:0.0];
         opacityInAnimation.toValue = [NSNumber numberWithFloat:0.166f];
         opacityInAnimation.removedOnCompletion = NO;
-        opacityInAnimation.fillMode = kCAFillModeBoth;
+        opacityInAnimation.fillMode = kCAFillModeBoth; 
         opacityInAnimation.additive = NO;
         opacityInAnimation.autoreverses = NO;
         [highlightLayer addAnimation:opacityInAnimation forKey:@"opacityIn"];
         
         // tagged move in
         CGPoint fromPos = CGPointMake(CGRectGetMidX(fromRect), CGRectGetMidY(fromRect));
-        CGPoint toPos = CGPointMake(fromPos.x - 34.0, fromPos.y);
+        CGPoint toPos = CGPointMake(fromPos.x - CGRectGetWidth(fromRect) + cornerRadius, fromPos.y);
         CABasicAnimation *moveInAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
         moveInAnimation.beginTime = CACurrentMediaTime();
         moveInAnimation.duration = 0.2f;
@@ -507,6 +508,7 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     CALayer *highlightLayer = relatedLayers[0];
     CALayer *taggedLayer = relatedLayers[1];
     
+    CGFloat cornerRadius = 6.0;
     CGRect lineRect = highlightLayer.frame;
     CGRect fromRect = taggedLayer.frame;
     
@@ -539,7 +541,7 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
         
         // tagged move out
         CGPoint fromPos = CGPointMake(CGRectGetMidX(fromRect), CGRectGetMidY(fromRect));
-        CGPoint toPos = CGPointMake(fromPos.x + 34.0, fromPos.y);
+        CGPoint toPos = CGPointMake(fromPos.x + CGRectGetWidth(fromRect) - cornerRadius, fromPos.y);
         CABasicAnimation *moveOutAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
         moveOutAnimation.beginTime = CACurrentMediaTime();
         moveOutAnimation.duration = 0.2f;
@@ -607,6 +609,7 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     // get tagged layer
     NSArray <CALayer *> *relatedLayers = (NSArray <CALayer *> *)mask.relatedObject;
     assert(relatedLayers.count == 2);
+    CALayer *highlightLayer = relatedLayers[0];
     CALayer *taggedLayer = relatedLayers[1];
     
     // do not expand small mask
@@ -616,17 +619,28 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     
     mask.expanding = YES;
     
+    // format description
+    NSString *maskDescription = [NSString stringWithFormat:@"%@", mask.maskDescription];
+    
     // calculate size for description label
     UIFont *labelFont = [UIFont boldSystemFontOfSize:12.0];
     UIColor *labelColor = [UIColor colorWithWhite:0.0 alpha:.75];
     NSDictionary *maskAttr = @{ NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelColor };
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:mask.maskDescription attributes:maskAttr];
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:maskDescription attributes:maskAttr];
     CGSize strSize = attrStr.size;
     
+    // set maximum size
+    UIEdgeInsets tageedExtraInset = UIEdgeInsetsMake(0.0, 34.0, 0.0, 10.0);
+    CGRect highlightRect = highlightLayer.frame;
+    CGFloat maximumTaggedWidth = CGRectGetWidth(highlightRect) - (tageedExtraInset.left + tageedExtraInset.right) * 2.0;
+    if (strSize.width > maximumTaggedWidth)
+    {
+        strSize.width = maximumTaggedWidth;
+    }
+    
     // expand tagged layer's width
-    CGFloat tageedExtraInsetRight = 10.f;
     CGRect taggedFrame = taggedLayer.frame;
-    taggedFrame = CGRectMake(taggedFrame.origin.x, taggedFrame.origin.y, taggedFrame.size.width + strSize.width + tageedExtraInsetRight, taggedFrame.size.height);
+    taggedFrame = CGRectMake(taggedFrame.origin.x, taggedFrame.origin.y, taggedFrame.size.width + strSize.width + tageedExtraInset.right, taggedFrame.size.height);
     taggedLayer.frame = taggedFrame;
     
     // draw attriubued string
@@ -637,12 +651,13 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     labelLayer.fontSize = labelFont.pointSize;
     labelLayer.foregroundColor = labelColor.CGColor;
     labelLayer.alignmentMode = kCAAlignmentRight;
-    labelLayer.frame = CGRectMake(34.0, CGRectGetHeight(taggedFrame) / 2.0 - strSize.height / 2.0, strSize.width, strSize.height);
-    labelLayer.string = mask.maskDescription;
+    labelLayer.truncationMode = kCATruncationStart;
+    labelLayer.frame = CGRectMake(tageedExtraInset.left, CGRectGetHeight(taggedFrame) / 2.0 - strSize.height / 2.0, strSize.width, strSize.height);
+    labelLayer.string = maskDescription;
     [taggedLayer addSublayer:labelLayer];
     
     // calculate start - end position
-    CGFloat expandOffsetX = - strSize.width - tageedExtraInsetRight;
+    CGFloat expandOffsetX = - strSize.width - tageedExtraInset.right;
     CGPoint fromPos = CGPointMake(CGRectGetMidX(taggedFrame), CGRectGetMidY(taggedFrame));
     CGPoint toPos = CGPointMake(fromPos.x + expandOffsetX, fromPos.y);
     

@@ -403,6 +403,23 @@
 				<string>开启</string>
 			</array>
 		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerTerminalSaveLogs</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>终端保存日志</string>
+			<key>description</key>
+			<string>将终端实时日志写入 &apos;~/logs/&apos;.</string>
+			<key>options</key>
+			<array>
+				<string>关闭</string>
+				<string>开启</string>
+			</array>
+		</dict>
 	</array>
 	<key>REMOTE_USER_DEFAULTS</key>
 	<array>

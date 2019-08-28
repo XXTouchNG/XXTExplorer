@@ -64,10 +64,11 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>${PRODUCT_NAME} want to access your album to import images.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>References.bundle/fonts/SourceCodePro-Regular.otf</string>
@@ -240,5 +241,9 @@
 			</dict>
 		</dict>
 	</array>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} want to access your album to import images.</string>
 </dict>
 </plist>

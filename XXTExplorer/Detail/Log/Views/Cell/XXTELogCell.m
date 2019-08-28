@@ -47,7 +47,16 @@
 }
 
 - (void)setLogText:(NSString *)logText {
+    _logText = logText;
     self.logLabel.text = logText;
+    
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+}
+
+- (void)setAttributedLogText:(NSAttributedString *)logText {
+    _logText = [logText string];
+    self.logLabel.attributedText = logText;
     
     [self setNeedsLayout];
     [self layoutIfNeeded];

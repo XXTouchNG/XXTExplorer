@@ -42,6 +42,7 @@ static NSString * const XXTExplorerCreateItemTemplatePathKey = @"XXTExplorerCrea
 static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEncodingKey";
 static NSString * const XXTExplorerViewerRegexSearch = @"XXTExplorerViewerRegexSearch";
 static NSString * const XXTExplorerViewerCaseSensitiveSearch = @"XXTExplorerViewerCaseSensitiveSearch";
+static NSString * const XXTExplorerTerminalSaveLogs = @"XXTExplorerTerminalSaveLogs";
 
 #pragma mark - Editor Defaults
 

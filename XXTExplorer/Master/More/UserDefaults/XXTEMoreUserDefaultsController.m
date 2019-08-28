@@ -57,6 +57,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)setup {
+    self.definesPresentationContext = YES;
     self.userDefaults = [[NSMutableDictionary alloc] init];
 }
 
@@ -65,7 +66,6 @@ XXTE_END_IGNORE_PARTIAL
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.automaticallyAdjustsScrollViewInsets = YES;
     if (self.tableView.style == UITableViewStylePlain) {
