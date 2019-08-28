@@ -1,16 +1,16 @@
 //
-//  XXTEEditorTextView+TextRange.h
+//  UITextView+TextRange.h
 //  XXTExplorer
 //
 //  Created by MMM on 8/14/19.
 //  Copyright © 2019 Zheng. All rights reserved.
 //
 
-#import "XXTEEditorTextView.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XXTEEditorTextView (TextRange)
+@interface UITextView (TextRange)
 
 - (NSRange)fixedSelectedTextRange;
 - (UITextRange *)textRangeFromNSRange:(NSRange)range;

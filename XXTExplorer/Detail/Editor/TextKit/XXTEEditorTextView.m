@@ -10,7 +10,7 @@
 
 #import "XXTEEditorTextStorage.h"
 #import "XXTEEditorLayoutManager.h"
-#import "XXTEEditorTextView+TextRange.h"
+#import "UITextView+TextRange.h"
 
 
 // static CGFloat kXXTEEditorTextViewGutterExtraHeight = 150.0;

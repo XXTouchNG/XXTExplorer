@@ -19,6 +19,6 @@
 @property (nonatomic, assign) BOOL autoBrackets;
 @property (nonatomic, strong) NSString *tabWidthString;
 
-@property (nonatomic, weak) id <UIScrollViewDelegate> scrollViewDelegate;
+@property (nonatomic, weak) id <UIScrollViewDelegate> scrollViewDelegate;  /// Message Forwarding
 
 @end

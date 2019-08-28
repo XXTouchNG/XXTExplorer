@@ -1,12 +1,12 @@
 //
-//  XXTEEditorTextView+TextRange.m
+//  UITextView+TextRange.m
 //  XXTExplorer
 //
 //  Created by MMM on 8/14/19.
 //  Copyright © 2019 Zheng. All rights reserved.
 //
 
-#import "XXTEEditorTextView+TextRange.h"
+#import "UITextView+TextRange.h"
 #import "SKRange.h"
 
 @interface NSLayoutManager (LineRect)
@@ -37,7 +37,7 @@
 
 @end
 
-@implementation XXTEEditorTextView (TextRange)
+@implementation UITextView (TextRange)
 
 - (NSRange)fixedSelectedTextRange {
     NSRange selectedRange = [self selectedRange];
@@ -49,8 +49,11 @@
 
 - (UITextRange *)textRangeFromNSRange:(NSRange)range {
     UITextPosition *startPosition = [self positionFromPosition:self.beginningOfDocument offset:(NSInteger)range.location];
+    NSAssert(startPosition, @"Invalid startPosition.");
     UITextPosition *endPosition = [self positionFromPosition:startPosition offset:(NSInteger)range.length];
+    NSAssert(endPosition, @"Invalid endPosition.");
     UITextRange *textRange = [self textRangeFromPosition:startPosition toPosition:endPosition];
+    NSAssert(textRange, @"Invalid textRange.");
     return textRange;
 }
 

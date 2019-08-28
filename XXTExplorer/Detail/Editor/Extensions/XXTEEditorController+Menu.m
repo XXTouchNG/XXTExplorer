@@ -11,7 +11,7 @@
 #import "XXTEEditorLanguage.h"
 #import "XXTEEditorDefaults.h"
 #import "XXTEEditorTextView.h"
-#import "XXTEEditorTextView+TextRange.h"
+#import "UITextView+TextRange.h"
 
 #import "XXTENavigationController.h"
 #import "XXTPickerFactory.h"

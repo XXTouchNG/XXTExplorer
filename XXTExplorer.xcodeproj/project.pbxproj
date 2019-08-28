@@ -862,9 +862,9 @@
 		BDC463F7230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
 		BDC463F8230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
 		BDC463F9230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
-		BDFE72512304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
-		BDFE72522304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
-		BDFE72532304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */; };
+		BDFE72512304538800F56482 /* UITextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* UITextView+TextRange.m */; };
+		BDFE72522304538800F56482 /* UITextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* UITextView+TextRange.m */; };
+		BDFE72532304538800F56482 /* UITextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* UITextView+TextRange.m */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D606114822F53F3800F6F0E6 /* XXTEEditorLineBreakController.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114722F53F3800F6F0E6 /* XXTEEditorLineBreakController.m */; };
@@ -2047,8 +2047,8 @@
 		BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XXLuaInterpreter.mm; sourceTree = "<group>"; };
 		BDC463F5230D7C2300730924 /* XXTPixelToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTPixelToolbar.h; sourceTree = "<group>"; };
 		BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTPixelToolbar.m; sourceTree = "<group>"; };
-		BDFE724F2304538800F56482 /* XXTEEditorTextView+TextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorTextView+TextRange.h"; sourceTree = "<group>"; };
-		BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorTextView+TextRange.m"; sourceTree = "<group>"; };
+		BDFE724F2304538800F56482 /* UITextView+TextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+TextRange.h"; sourceTree = "<group>"; };
+		BDFE72502304538800F56482 /* UITextView+TextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TextRange.m"; sourceTree = "<group>"; };
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
@@ -3686,8 +3686,8 @@
 				D6DB971B22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m */,
 				D6DB971F22FA864F00C4EA17 /* UITextView+VisibleRange.h */,
 				D6DB972022FA864F00C4EA17 /* UITextView+VisibleRange.m */,
-				BDFE724F2304538800F56482 /* XXTEEditorTextView+TextRange.h */,
-				BDFE72502304538800F56482 /* XXTEEditorTextView+TextRange.m */,
+				BDFE724F2304538800F56482 /* UITextView+TextRange.h */,
+				BDFE72502304538800F56482 /* UITextView+TextRange.m */,
 			);
 			path = TextKit;
 			sourceTree = "<group>";
@@ -5432,7 +5432,7 @@
 				0F072DA81FB9D52000597EE2 /* XXTExplorerEntryReader.m in Sources */,
 				D6DB971E22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m in Sources */,
 				0F8EDBE91FB1F779003C92D6 /* XXTEMoreValueView.m in Sources */,
-				BDFE72532304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */,
+				BDFE72532304538800F56482 /* UITextView+TextRange.m in Sources */,
 				0F8EDBEA1FB1F779003C92D6 /* XXTKeyEventPicker.m in Sources */,
 				0F8EDBEB1FB1F779003C92D6 /* NSString+QueryItems.m in Sources */,
 				0F7B52BF201994CA00D91702 /* NSString+VersionValue.m in Sources */,
@@ -5789,7 +5789,7 @@
 				0F072DA71FB9D52000597EE2 /* XXTExplorerEntryReader.m in Sources */,
 				0FB2209F1F824B2100156C3B /* XXTEEditorController+NavigationBar.m in Sources */,
 				D6E141201F5032AB00D78CB9 /* XXTLocationPicker.m in Sources */,
-				BDFE72512304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */,
+				BDFE72512304538800F56482 /* UITextView+TextRange.m in Sources */,
 				0FB7968B20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				D6E141221F5032AB00D78CB9 /* UIColor+inverseColor.m in Sources */,
 				D6E141301F5032AB00D78CB9 /* XXTPositionColorPicker.m in Sources */,
@@ -6146,7 +6146,7 @@
 				D60FE70B1FE2369300954818 /* XXTExplorerEntryReader.m in Sources */,
 				D60FE70C1FE2369300954818 /* XXTEEditorController+NavigationBar.m in Sources */,
 				D60FE70D1FE2369300954818 /* XXTLocationPicker.m in Sources */,
-				BDFE72522304538800F56482 /* XXTEEditorTextView+TextRange.m in Sources */,
+				BDFE72522304538800F56482 /* UITextView+TextRange.m in Sources */,
 				0FB7968C20B9D74B0005EAED /* XXTPickerSnippetTask.m in Sources */,
 				D60FE70E1FE2369300954818 /* UIColor+inverseColor.m in Sources */,
 				D60FE70F1FE2369300954818 /* XXTPositionColorPicker.m in Sources */,

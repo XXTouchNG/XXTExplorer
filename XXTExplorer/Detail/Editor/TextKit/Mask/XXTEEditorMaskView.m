@@ -7,12 +7,14 @@
 //
 
 #import "XXTEEditorMaskView.h"
+#import "XXTEEditorTextView.h"
+#import "UITextView+TextRange.h"
 #import "XXTETextPreprocessor.h"
+
+#import "ICTextView.h"
 #import "XXTEEditorLineMask.h"
-#import "XXTEEditorTextView+TextRange.h"
 #import "UIImage+ColoredImage.h"
 #import <QuartzCore/QuartzCore.h>
-#import "ICTextView.h"
 
 static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
 
