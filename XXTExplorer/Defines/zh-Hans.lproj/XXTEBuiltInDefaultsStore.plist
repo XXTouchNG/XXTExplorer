@@ -25,15 +25,21 @@
 		</dict>
 		<dict>
 			<key>key</key>
+			<string>EDITOR_USER_DEFAULTS</string>
+			<key>title</key>
+			<string>代码编辑器设置</string>
+		</dict>
+		<dict>
+			<key>key</key>
 			<string>VIEWER_USER_DEFAULTS</string>
 			<key>title</key>
 			<string>文件查看器设置</string>
 		</dict>
 		<dict>
 			<key>key</key>
-			<string>EDITOR_USER_DEFAULTS</string>
+			<string>VIEWER_TERMINAL_USER_DEFAULTS</string>
 			<key>title</key>
-			<string>代码编辑器设置</string>
+			<string>文件查看器设置: 终端</string>
 		</dict>
 	</array>
 	<key>EXPLORER_USER_DEFAULTS</key>
@@ -335,6 +341,9 @@
 				<string>开启</string>
 			</array>
 		</dict>
+	</array>
+	<key>VIEWER_TERMINAL_USER_DEFAULTS</key>
+	<array>
 		<dict>
 			<key>enabled</key>
 			<true/>
@@ -350,6 +359,27 @@
 			<array>
 				<string>关闭</string>
 				<string>开启</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
+			<string>XXTExplorerTerminalLogStoreLimit</string>
+			<key>default</key>
+			<integer>3</integer>
+			<key>title</key>
+			<string>终端日志存储上限</string>
+			<key>description</key>
+			<string>终端日志项目最大存储时间. 如果超出限制, 最早的项目将会被清除.</string>
+			<key>options</key>
+			<array>
+				<string>1 周</string>
+				<string>1 个月</string>
+				<string>3 个月</string>
+				<string>6 个月</string>
+				<string>1 年</string>
+				<string>永久</string>
 			</array>
 		</dict>
 	</array>

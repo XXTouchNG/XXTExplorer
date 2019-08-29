@@ -44,6 +44,7 @@ static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEnco
 static NSString * const XXTExplorerViewerRegexSearch = @"XXTExplorerViewerRegexSearch";
 static NSString * const XXTExplorerViewerCaseSensitiveSearch = @"XXTExplorerViewerCaseSensitiveSearch";
 static NSString * const XXTExplorerTerminalSaveLogs = @"XXTExplorerTerminalSaveLogs";
+static NSString * const XXTExplorerTerminalLogStoreLimit = @"XXTExplorerTerminalLogStoreLimit";
 
 #pragma mark - Editor Defaults
 
@@ -100,5 +101,9 @@ static NSString * const XXTExplorerPasteboardName = @"XXTExplorerPasteboardName"
 #pragma mark - Bindings
 
 static NSString * const XXTExplorerViewEntryBindingKey = @"XXTExplorerViewEntryBindingKey";
+
+#pragma mark - Tutorials
+
+static NSString * const XXTExplorerSwipeTutorialKey = @"XXTExplorerSwipeTutorialKey";
 
 #endif /* XXTExplorerDefaults_h */

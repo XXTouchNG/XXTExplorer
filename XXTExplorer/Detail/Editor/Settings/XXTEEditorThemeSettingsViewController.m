@@ -22,7 +22,9 @@
 
 @end
 
-@implementation XXTEEditorThemeSettingsViewController
+@implementation XXTEEditorThemeSettingsViewController {
+    BOOL _firstLoaded;
+}
 
 + (YYCache *)sozoCache {
     static YYCache *sozoCache = nil;
@@ -55,6 +57,7 @@
 }
 
 - (void)setup {
+    _firstLoaded = NO;
     NSString *defaultDefinesPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
     [self setupWithDefinesPath:defaultDefinesPath];
 }
@@ -115,14 +118,24 @@
     }
     
     self.navigationItem.rightBarButtonItem = self.previewItem;
-    [self loadThemeColorCache];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_firstLoaded) {
+        [self loadThemeColorCache];
+        _firstLoaded = YES;
+    }
 }
 
 #pragma mark - Cache
 
+static BOOL kSozoCacheLoading = NO;
 - (void)loadThemeColorCache {
+    if (kSozoCacheLoading) return;
     Class myClass = [XXTEEditorThemeSettingsViewController class];
     NSArray <NSDictionary *> *themes = self.themes;
+    kSozoCacheLoading = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         for (NSDictionary *theme in themes) {
             NSString *themePreview = theme[@"preview"];
@@ -155,6 +168,9 @@
             });
 #endif
         }
+        dispatch_async_on_main_queue(^{
+            kSozoCacheLoading = NO;
+        });
     });
 }
 

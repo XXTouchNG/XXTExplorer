@@ -17,6 +17,7 @@
 
 // Views
 #import "XXTESingleActionView.h"
+#import "ICTextView.h"
 #import <LGAlertView/LGAlertView.h>
 
 // Children
@@ -33,7 +34,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 #endif
 
 @property (nonatomic, strong) XXTESingleActionView *actionView;
-@property (nonatomic, strong) UITextView *contentTextView;
+@property (nonatomic, strong) ICTextView *contentTextView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
@@ -191,9 +192,9 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 
 #pragma mark - UIView Getters
 
-- (UITextView *)contentTextView {
+- (ICTextView *)contentTextView {
     if (!_contentTextView) {
-        UITextView *logTextView = [[UITextView alloc] initWithFrame:self.view.bounds];
+        ICTextView *logTextView = [[ICTextView alloc] initWithFrame:self.view.bounds];
         logTextView.selectable = YES;
         logTextView.scrollsToTop = YES;
         logTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

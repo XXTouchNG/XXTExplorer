@@ -13,6 +13,7 @@
 #import "XXTETerminalViewController.h"
 #import "XXTEEditorController+NavigationBar.h"
 #import "XXTExplorerEntryTerminalReader.h"
+#import "XXTECachedResourcesManager.h"
 
 typedef enum : NSUInteger {
     XXTETerminalContentTypeDoNotLog = 0,
@@ -74,17 +75,16 @@ typedef enum : NSUInteger {
         _entryPath = path;
         _pipes = [NSMutableArray array];
         
-        NSFileManager *manager = [NSFileManager defaultManager];
+        [[XXTECachedResourcesManager sharedManager] cleanOutdatedManagedResourcesAtCachesPath:[[self class] logRootPath] limitType:XXTEDefaultsInt(XXTExplorerTerminalLogStoreLimit, 3)];
         BOOL saveLogs = XXTEDefaultsBool(XXTExplorerTerminalSaveLogs, YES);
         if (saveLogs) {
-            NSString *logDatePath = [[[self class] logRootPath] stringByAppendingPathComponent:[[[self class] logDateFormatter] stringFromDate:[NSDate date]]];
-            [manager createDirectoryAtPath:logDatePath withIntermediateDirectories:YES attributes:nil error:nil];
+            NSString *logDatePath = [[XXTECachedResourcesManager sharedManager] dateCachesPathAtCachesPath:[[self class] logRootPath]];
             
             NSString *logName = [NSString stringWithFormat:@"%lu.log", (NSUInteger)[[NSDate date] timeIntervalSince1970]];
             NSString *logPath = [logDatePath stringByAppendingPathComponent:logName];
             _logPath = logPath;
             
-            BOOL created = [manager createFileAtPath:logPath contents:[NSData data] attributes:nil];
+            BOOL created = [[XXTECachedResourcesManager sharedManager].fileManager createFileAtPath:logPath contents:[NSData data] attributes:nil];
             if (created) {
                 NSFileHandle *logHandle = [NSFileHandle fileHandleForWritingAtPath:logPath];
                 _logHandle = logHandle;

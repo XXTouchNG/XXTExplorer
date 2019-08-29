@@ -286,7 +286,16 @@ XXTE_END_IGNORE_PARTIAL
     if (!_firstTimeLoaded && !self.isPreviewed) {
         _firstTimeLoaded = YES;
     }
-    [self lazySelectCellAnimatedIfNecessary];
+    if (!self.historyMode && !self.isPreviewed) {
+        if ([self.navigationController.viewControllers firstObject] != self)
+        {
+            if (self.entryPathsToLazySelect == nil)
+            {
+                [self displaySwipeTutorialIfNecessary];
+            }
+        }
+        [self lazySelectCellAnimatedIfNecessary];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1378,6 +1387,32 @@ XXTE_END_IGNORE_PARTIAL
             [self selectCellEntriesAtPaths:self.entryPathsToLazySelect animated:YES];
         }
         self.entryPathsToLazySelect = nil;
+    }
+}
+
+- (void)displaySwipeTutorialIfNecessary {
+    BOOL tutorialDisplayed = XXTEDefaultsBool(XXTExplorerSwipeTutorialKey, NO);
+    if (!tutorialDisplayed) {
+        XXTExplorerViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:XXTExplorerViewSectionIndexList]];
+        if (cell) {
+            UIViewController *blockVC = blockInteractionsWithToast(self, YES, NO);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                blockInteractions(blockVC, NO);
+            });
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [cell showSwipe:XXTESwipeDirectionLeftToRight animated:YES completion:^(BOOL finished) {
+                    if (finished) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [cell hideSwipeAnimated:YES completion:^(BOOL finished) {
+                                if (finished) {
+                                    XXTEDefaultsSetBasic(XXTExplorerSwipeTutorialKey, YES);
+                                }
+                            }];
+                        });
+                    }
+                }];
+            });
+        }
     }
 }
 

@@ -910,14 +910,16 @@ static int sizingCancelFlag = 0;
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.nameField) {
+        NSString *text = textField.text;
+        NSRange range = NSMakeRange(text.length, 0);
         if (self.entry.isRegistered) {
-            NSString *text = textField.text;
             NSRange dotRange = [text rangeOfString:@"." options:NSBackwardsSearch];
             if (dotRange.location != NSNotFound) {
-                UITextRange *prefixRange = [textField textRangeFromPosition:textField.beginningOfDocument toPosition:[textField positionFromPosition:textField.beginningOfDocument offset:dotRange.location]];
-                [textField setSelectedTextRange:prefixRange];
+                range = dotRange;
             }
         }
+        UITextRange *prefixRange = [textField textRangeFromPosition:textField.beginningOfDocument toPosition:[textField positionFromPosition:textField.beginningOfDocument offset:range.location]];
+        [textField setSelectedTextRange:prefixRange];
     }
 }
 

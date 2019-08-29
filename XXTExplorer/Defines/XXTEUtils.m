@@ -340,7 +340,11 @@ UIViewController *blockInteractionsWithToastAndDelay(UIViewController *viewContr
     } else {
         for (UIView *view in viewToBlock) {
             [UIView cancelPreviousPerformRequestsWithTarget:view selector:@selector(makeToastActivity:) object:XXTEToastPositionCenter];
-            [view hideToastActivity];
+            if (delay > 0) {
+                [view performSelector:@selector(hideToastActivity) withObject:nil afterDelay:delay];
+            } else {
+                [view hideToastActivity];
+            }
             view.userInteractionEnabled = YES;
         }
     }
