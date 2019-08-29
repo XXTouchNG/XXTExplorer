@@ -3,700 +3,1222 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>dominantColor</key>
+		<string>2b2b2b</string>
+		<key>firstHighlight</key>
+		<string>8f8e8d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/a11y-dark.css</string>
 		<key>name</key>
 		<string>A 11 Y Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/A 11 Y Dark.png</string>
+		<key>secondHighlight</key>
+		<string>8c682f</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>fbfbfb</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/a11y-light.css</string>
 		<key>name</key>
 		<string>A 11 Y Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/A 11 Y Light.png</string>
+		<key>secondHighlight</key>
+		<string>3b3a3a</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>333333</string>
+		<key>firstHighlight</key>
+		<string>8d8d8d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/agate.css</string>
 		<key>name</key>
 		<string>Agate</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Agate.png</string>
+		<key>secondHighlight</key>
+		<string>908f69</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>1c1c20</string>
+		<key>firstHighlight</key>
+		<string>797c83</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/an-old-hope.css</string>
 		<key>name</key>
 		<string>An Old Hope</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/An Old Hope.png</string>
+		<key>secondHighlight</key>
+		<string>84783c</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>272b2e</string>
+		<key>firstHighlight</key>
+		<string>8c744c</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/androidstudio.css</string>
 		<key>name</key>
 		<string>Androidstudio</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Androidstudio.png</string>
+		<key>secondHighlight</key>
+		<string>885830</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/arduino-light.css</string>
 		<key>name</key>
 		<string>Arduino Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Arduino Light.png</string>
+		<key>secondHighlight</key>
+		<string>3b3a3a</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>242424</string>
+		<key>firstHighlight</key>
+		<string>8a722a</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/arta.css</string>
 		<key>name</key>
 		<string>Arta</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Arta.png</string>
+		<key>secondHighlight</key>
+		<string>2b6587</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/ascetic.css</string>
 		<key>name</key>
 		<string>Ascetic</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Ascetic.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>17161a</string>
+		<key>firstHighlight</key>
+		<string>5a3a86</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-cave-dark.css</string>
 		<key>name</key>
 		<string>Atelier Cave Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Cave Dark.png</string>
+		<key>secondHighlight</key>
+		<string>613e94</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>eeebf3</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-cave-light.css</string>
 		<key>name</key>
 		<string>Atelier Cave Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Cave Light.png</string>
+		<key>secondHighlight</key>
+		<string>383739</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>20201d</string>
+		<key>firstHighlight</key>
+		<string>783e87</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-dune-dark.css</string>
 		<key>name</key>
 		<string>Atelier Dune Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Dune Dark.png</string>
+		<key>secondHighlight</key>
+		<string>475788</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>fdf9ea</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-dune-light.css</string>
 		<key>name</key>
 		<string>Atelier Dune Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Dune Light.png</string>
+		<key>secondHighlight</key>
+		<string>3b3b37</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>22221a</string>
+		<key>firstHighlight</key>
+		<string>805917</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-estuary-dark.css</string>
 		<key>name</key>
 		<string>Atelier Estuary Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Estuary Dark.png</string>
+		<key>secondHighlight</key>
+		<string>7c7b5c</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f3f2eb</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-estuary-light.css</string>
 		<key>name</key>
 		<string>Atelier Estuary Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Estuary Light.png</string>
+		<key>secondHighlight</key>
+		<string>393937</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>191817</string>
+		<key>firstHighlight</key>
+		<string>44448d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-forest-dark.css</string>
 		<key>name</key>
 		<string>Atelier Forest Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Forest Dark.png</string>
+		<key>secondHighlight</key>
+		<string>86391d</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f0eeed</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-forest-light.css</string>
 		<key>name</key>
 		<string>Atelier Forest Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Forest Light.png</string>
+		<key>secondHighlight</key>
+		<string>383837</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>19171a</string>
+		<key>firstHighlight</key>
+		<string>37438a</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-heath-dark.css</string>
 		<key>name</key>
 		<string>Atelier Heath Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Heath Dark.png</string>
+		<key>secondHighlight</key>
+		<string>584185</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f6f1f5</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-heath-light.css</string>
 		<key>name</key>
 		<string>Atelier Heath Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Heath Light.png</string>
+		<key>secondHighlight</key>
+		<string>3a393a</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>15191b</string>
+		<key>firstHighlight</key>
+		<string>505186</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-lakeside-dark.css</string>
 		<key>name</key>
 		<string>Atelier Lakeside Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Lakeside Dark.png</string>
+		<key>secondHighlight</key>
+		<string>596d75</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ebf8ff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-lakeside-light.css</string>
 		<key>name</key>
 		<string>Atelier Lakeside Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Lakeside Light.png</string>
+		<key>secondHighlight</key>
+		<string>373a3b</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>191717</string>
+		<key>firstHighlight</key>
+		<string>4b4373</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-plateau-dark.css</string>
 		<key>name</key>
 		<string>Atelier Plateau Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Plateau Dark.png</string>
+		<key>secondHighlight</key>
+		<string>5a4882</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f3ebeb</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-plateau-light.css</string>
 		<key>name</key>
 		<string>Atelier Plateau Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Plateau Light.png</string>
+		<key>secondHighlight</key>
+		<string>393737</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>161b18</string>
+		<key>firstHighlight</key>
+		<string>a9cdb7</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-savanna-dark.css</string>
 		<key>name</key>
 		<string>Atelier Savanna Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Savanna Dark.png</string>
+		<key>secondHighlight</key>
+		<string>5f7467</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>eaf3ec</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-savanna-light.css</string>
 		<key>name</key>
 		<string>Atelier Savanna Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Savanna Light.png</string>
+		<key>secondHighlight</key>
+		<string>373937</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>121412</string>
+		<key>firstHighlight</key>
+		<string>24346f</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-seaside-dark.css</string>
 		<key>name</key>
 		<string>Atelier Seaside Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Seaside Dark.png</string>
+		<key>secondHighlight</key>
+		<string>68218b</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f3f9f2</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-seaside-light.css</string>
 		<key>name</key>
 		<string>Atelier Seaside Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Seaside Light.png</string>
+		<key>secondHighlight</key>
+		<string>393b39</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>222847</string>
+		<key>firstHighlight</key>
+		<string>5160a4</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-sulphurpool-dark.css</string>
 		<key>name</key>
 		<string>Atelier Sulphurpool Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Sulphurpool Dark.png</string>
+		<key>secondHighlight</key>
+		<string>4d5aa0</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f5f7ff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atelier-sulphurpool-light.css</string>
 		<key>name</key>
 		<string>Atelier Sulphurpool Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atelier Sulphurpool Light.png</string>
+		<key>secondHighlight</key>
+		<string>393a3b</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>272c34</string>
+		<key>firstHighlight</key>
+		<string>855997</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atom-one-dark.css</string>
 		<key>name</key>
 		<string>Atom One Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atom One Dark.png</string>
+		<key>secondHighlight</key>
+		<string>4a79a2</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>272c34</string>
+		<key>firstHighlight</key>
+		<string>a6295a</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atom-one-dark-reasonable.css</string>
 		<key>name</key>
 		<string>Atom One Dark Reasonable</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atom One Dark Reasonable.png</string>
+		<key>secondHighlight</key>
+		<string>4a79a2</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f8f8f8</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/atom-one-light.css</string>
 		<key>name</key>
 		<string>Atom One Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Atom One Light.png</string>
+		<key>secondHighlight</key>
+		<string>39393a</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>242424</string>
+		<key>firstHighlight</key>
+		<string>8d8d8d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/codepen-embed.css</string>
 		<key>name</key>
 		<string>Codepen Embed</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Codepen Embed.png</string>
+		<key>secondHighlight</key>
+		<string>a6a6a6</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/color-brewer.css</string>
 		<key>name</key>
 		<string>Color Brewer</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Color Brewer.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>2c2c2c</string>
+		<key>firstHighlight</key>
+		<string>86784b</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/darcula.css</string>
 		<key>name</key>
 		<string>Darcula</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Darcula.png</string>
+		<key>secondHighlight</key>
+		<string>88582f</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>464545</string>
+		<key>firstHighlight</key>
+		<string>adadad</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/dark.css</string>
 		<key>name</key>
 		<string>Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Dark.png</string>
+		<key>secondHighlight</key>
+		<string>cccccc</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>efefef</string>
+		<key>firstHighlight</key>
+		<string>939393</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/default.css</string>
 		<key>name</key>
 		<string>Default</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Default.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f8f8ff</string>
+		<key>firstHighlight</key>
+		<string>8f8f92</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/docco.css</string>
 		<key>name</key>
 		<string>Docco</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Docco.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>282a36</string>
+		<key>firstHighlight</key>
+		<string>8b8c90</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/dracula.css</string>
 		<key>name</key>
 		<string>Dracula</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Dracula.png</string>
+		<key>secondHighlight</key>
+		<string>a5a6a8</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>060280</string>
+		<key>firstHighlight</key>
+		<string>000008</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/far.css</string>
 		<key>name</key>
 		<string>Far</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Far.png</string>
+		<key>secondHighlight</key>
+		<string>cdcce5</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>eeedee</string>
+		<key>firstHighlight</key>
+		<string>909090</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/foundation.css</string>
 		<key>name</key>
 		<string>Foundation</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Foundation.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f6f6f6</string>
+		<key>firstHighlight</key>
+		<string>939393</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/github.css</string>
 		<key>name</key>
 		<string>Github</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Github.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/github-gist.css</string>
 		<key>name</key>
 		<string>Github Gist</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Github Gist.png</string>
+		<key>secondHighlight</key>
+		<string>969696</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>242424</string>
+		<key>firstHighlight</key>
+		<string>858585</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/gml.css</string>
 		<key>name</key>
 		<string>Gml</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Gml.png</string>
+		<key>secondHighlight</key>
+		<string>8d8d15</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/googlecode.css</string>
 		<key>name</key>
 		<string>Googlecode</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Googlecode.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>939393</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/grayscale.css</string>
 		<key>name</key>
 		<string>Grayscale</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Grayscale.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>292928</string>
+		<key>firstHighlight</key>
+		<string>918872</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/gruvbox-dark.css</string>
 		<key>name</key>
 		<string>Gruvbox Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Gruvbox Dark.png</string>
+		<key>secondHighlight</key>
+		<string>847b69</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>faf0c5</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/gruvbox-light.css</string>
 		<key>name</key>
 		<string>Gruvbox Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Gruvbox Light.png</string>
+		<key>secondHighlight</key>
+		<string>3b382e</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>312930</string>
+		<key>firstHighlight</key>
+		<string>8c5526</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/hopscotch.css</string>
 		<key>name</key>
 		<string>Hopscotch</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Hopscotch.png</string>
+		<key>secondHighlight</key>
+		<string>ab6423</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>1c1e20</string>
+		<key>firstHighlight</key>
+		<string>848686</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/hybrid.css</string>
 		<key>name</key>
 		<string>Hybrid</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Hybrid.png</string>
+		<key>secondHighlight</key>
+		<string>88734b</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/idea.css</string>
 		<key>name</key>
 		<string>Idea</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Idea.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>020202</string>
+		<key>firstHighlight</key>
+		<string>6e6e6e</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/ir-black.css</string>
 		<key>name</key>
 		<string>Ir Black</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Ir Black.png</string>
+		<key>secondHighlight</key>
+		<string>8b8b8b</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>424242</string>
+		<key>firstHighlight</key>
+		<string>acacac</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/isbl-editor-dark.css</string>
 		<key>name</key>
 		<string>Isbl Editor Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Isbl Editor Dark.png</string>
+		<key>secondHighlight</key>
+		<string>cacaca</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/isbl-editor-light.css</string>
 		<key>name</key>
 		<string>Isbl Editor Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Isbl Editor Light.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>221a0e</string>
+		<key>firstHighlight</key>
+		<string>866e52</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/kimbie.dark.css</string>
 		<key>name</key>
 		<string>Kimbie Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Kimbie Dark.png</string>
+		<key>secondHighlight</key>
+		<string>8e5520</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f9ead4</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/kimbie.light.css</string>
 		<key>name</key>
 		<string>Kimbie Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Kimbie Light.png</string>
+		<key>secondHighlight</key>
+		<string>3a3731</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/lightfair.css</string>
 		<key>name</key>
 		<string>Lightfair</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Lightfair.png</string>
+		<key>secondHighlight</key>
+		<string>929292</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f3f3f3</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/magula.css</string>
 		<key>name</key>
 		<string>Magula</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Magula.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>e9edf2</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/mono-blue.css</string>
 		<key>name</key>
 		<string>Mono Blue</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Mono Blue.png</string>
+		<key>secondHighlight</key>
+		<string>798699</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>282922</string>
+		<key>firstHighlight</key>
+		<string>8d8d8a</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/monokai.css</string>
 		<key>name</key>
 		<string>Monokai</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Monokai.png</string>
+		<key>secondHighlight</key>
+		<string>6a8a28</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>22231d</string>
+		<key>firstHighlight</key>
+		<string>90908a</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/monokai-sublime.css</string>
 		<key>name</key>
 		<string>Monokai Sublime</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Monokai Sublime.png</string>
+		<key>secondHighlight</key>
+		<string>8d2548</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>2e3440</string>
+		<key>firstHighlight</key>
+		<string>9298a3</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/nord.css</string>
 		<key>name</key>
 		<string>Nord</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Nord.png</string>
+		<key>secondHighlight</key>
+		<string>9ba1ac</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>272b2e</string>
+		<key>firstHighlight</key>
+		<string>8a8d90</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/obsidian.css</string>
 		<key>name</key>
 		<string>Obsidian</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Obsidian.png</string>
+		<key>secondHighlight</key>
+		<string>6c8f50</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>2b303a</string>
+		<key>firstHighlight</key>
+		<string>a06d60</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/ocean.css</string>
 		<key>name</key>
 		<string>Ocean</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Ocean.png</string>
+		<key>secondHighlight</key>
+		<string>6c7894</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>2d1d2d</string>
+		<key>firstHighlight</key>
+		<string>895624</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/paraiso-dark.css</string>
 		<key>name</key>
 		<string>Paraiso Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Paraiso Dark.png</string>
+		<key>secondHighlight</key>
+		<string>916a24</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>e5e8da</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/paraiso-light.css</string>
 		<key>name</key>
 		<string>Paraiso Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Paraiso Light.png</string>
+		<key>secondHighlight</key>
+		<string>363633</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>151610</string>
+		<key>firstHighlight</key>
+		<string>706b4a</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/pojoaque.css</string>
 		<key>name</key>
 		<string>Pojoaque</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Pojoaque.png</string>
+		<key>secondHighlight</key>
+		<string>725322</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>fffdde</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/purebasic.css</string>
 		<key>name</key>
 		<string>Purebasic</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Purebasic.png</string>
+		<key>secondHighlight</key>
+		<string>999886</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>020202</string>
+		<key>firstHighlight</key>
+		<string>6d246d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/qtcreator_dark.css</string>
 		<key>name</key>
 		<string>Qtcreator Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Qtcreator Dark.png</string>
+		<key>secondHighlight</key>
+		<string>707025</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/qtcreator_light.css</string>
 		<key>name</key>
 		<string>Qtcreator Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Qtcreator Light.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>242424</string>
+		<key>firstHighlight</key>
+		<string>8e8b89</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/railscasts.css</string>
 		<key>name</key>
 		<string>Railscasts</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Railscasts.png</string>
+		<key>secondHighlight</key>
+		<string>8c7146</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>484a4a</string>
+		<key>firstHighlight</key>
+		<string>9ca2a7</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/rainbow.css</string>
 		<key>name</key>
 		<string>Rainbow</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Rainbow.png</string>
+		<key>secondHighlight</key>
+		<string>a67050</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>efefef</string>
+		<key>firstHighlight</key>
+		<string>949494</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/routeros.css</string>
 		<key>name</key>
 		<string>Routeros</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Routeros.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>f3f4b0</string>
+		<key>firstHighlight</key>
+		<string>000100</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/school-book.css</string>
 		<key>name</key>
 		<string>School Book</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/School Book.png</string>
+		<key>secondHighlight</key>
+		<string>393a2a</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>2d2b56</string>
+		<key>firstHighlight</key>
+		<string>a7a4c6</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/shades-of-purple.css</string>
 		<key>name</key>
 		<string>Shades Of Purple</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Shades Of Purple.png</string>
+		<key>secondHighlight</key>
+		<string>a09cc1</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>012b36</string>
+		<key>firstHighlight</key>
+		<string>903032</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/solarized-dark.css</string>
 		<key>name</key>
 		<string>Solarized Dark</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Solarized Dark.png</string>
+		<key>secondHighlight</key>
+		<string>02738f</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>fcf5e2</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/solarized-light.css</string>
 		<key>name</key>
 		<string>Solarized Light</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Solarized Light.png</string>
+		<key>secondHighlight</key>
+		<string>3b3935</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>020202</string>
+		<key>firstHighlight</key>
+		<string>6f6f6f</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/sunburst.css</string>
 		<key>name</key>
 		<string>Sunburst</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Sunburst.png</string>
+		<key>secondHighlight</key>
+		<string>8b8b8b</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow.css</string>
 		<key>name</key>
 		<string>Tomorrow</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Tomorrow.png</string>
+		<key>secondHighlight</key>
+		<string>3b3a3a</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>1c1e20</string>
+		<key>firstHighlight</key>
+		<string>848686</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night.css</string>
 		<key>name</key>
 		<string>Tomorrow Night</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Tomorrow Night.png</string>
+		<key>secondHighlight</key>
+		<string>845c41</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>022351</string>
+		<key>firstHighlight</key>
+		<string>8995ae</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night-blue.css</string>
 		<key>name</key>
 		<string>Tomorrow Night Blue</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Tomorrow Night Blue.png</string>
+		<key>secondHighlight</key>
+		<string>97a5b7</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>020201</string>
+		<key>firstHighlight</key>
+		<string>6d6d6d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night-bright.css</string>
 		<key>name</key>
 		<string>Tomorrow Night Bright</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Tomorrow Night Bright.png</string>
+		<key>secondHighlight</key>
+		<string>898989</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>2d2d2d</string>
+		<key>firstHighlight</key>
+		<string>878787</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/tomorrow-night-eighties.css</string>
 		<key>name</key>
 		<string>Tomorrow Night Eighties</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Tomorrow Night Eighties.png</string>
+		<key>secondHighlight</key>
+		<string>8b5648</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/vs.css</string>
 		<key>name</key>
 		<string>Vs</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Vs.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>1c1c1c</string>
+		<key>firstHighlight</key>
+		<string>898989</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/vs2015.css</string>
 		<key>name</key>
 		<string>Vs 2015</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Vs 2015.png</string>
+		<key>secondHighlight</key>
+		<string>3e6586</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>919191</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/xcode.css</string>
 		<key>name</key>
 		<string>Xcode</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Xcode.png</string>
+		<key>secondHighlight</key>
+		<string>000000</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>020101</string>
+		<key>firstHighlight</key>
+		<string>6d6d6d</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/xt256.css</string>
 		<key>name</key>
 		<string>Xt 256</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Xt 256.png</string>
+		<key>secondHighlight</key>
+		<string>898989</string>
 	</dict>
 	<dict>
+		<key>dominantColor</key>
+		<string>3e3e3e</string>
+		<key>firstHighlight</key>
+		<string>a69983</string>
 		<key>location</key>
 		<string>References.bundle/hljs/styles/zenburn.css</string>
 		<key>name</key>
 		<string>Zenburn</string>
 		<key>preview</key>
 		<string>References.bundle/hljs/styles/Zenburn.png</string>
+		<key>secondHighlight</key>
+		<string>a2a2a2</string>
 	</dict>
 </array>
 </plist>

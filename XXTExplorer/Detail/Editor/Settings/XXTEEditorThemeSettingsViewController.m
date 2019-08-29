@@ -26,6 +26,7 @@
     BOOL _firstLoaded;
 }
 
+#ifdef DEBUG
 + (YYCache *)sozoCache {
     static YYCache *sozoCache = nil;
     static dispatch_once_t onceToken;
@@ -34,6 +35,7 @@
     });
     return sozoCache;
 }
+#endif
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -123,21 +125,27 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!_firstLoaded) {
+#ifdef DEBUG
         [self loadThemeColorCache];
+#endif
         _firstLoaded = YES;
     }
 }
 
 #pragma mark - Cache
 
+#ifdef DEBUG
 static BOOL kSozoCacheLoading = NO;
 - (void)loadThemeColorCache {
     if (kSozoCacheLoading) return;
     Class myClass = [XXTEEditorThemeSettingsViewController class];
     NSArray <NSDictionary *> *themes = self.themes;
+    NSMutableArray <NSDictionary *> *mThemes = [NSMutableArray arrayWithCapacity:themes.count];
     kSozoCacheLoading = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         for (NSDictionary *theme in themes) {
+            NSMutableDictionary *mTheme = [theme mutableCopy];
+            
             NSString *themePreview = theme[@"preview"];
             if (![themePreview isKindOfClass:[NSString class]]) {
                 continue;
@@ -157,10 +165,14 @@ static BOOL kSozoCacheLoading = NO;
             NSString *secondKey = [NSString stringWithFormat:@"%@/secondHighlight", themePreview];
             
             SOZOChromoplast *chromoplast = [[SOZOChromoplast alloc] initWithImage:exampleImage];
+            [mTheme setObject:[chromoplast.dominantColor hexString] forKey:@"dominantColor"];
+            [mTheme setObject:[chromoplast.firstHighlight hexString] forKey:@"firstHighlight"];
+            [mTheme setObject:[chromoplast.secondHighlight hexString] forKey:@"secondHighlight"];
             [myClass.sozoCache setObject:@(YES) forKey:mainKey];
-            [myClass.sozoCache setObject:[chromoplast.dominantColor hexString] forKey:dominantKey];
-            [myClass.sozoCache setObject:[chromoplast.firstHighlight hexString] forKey:firstKey];
-            [myClass.sozoCache setObject:[chromoplast.secondHighlight hexString] forKey:secondKey];
+            [myClass.sozoCache setObject:mTheme[@"dominantColor"] forKey:dominantKey];
+            [myClass.sozoCache setObject:mTheme[@"firstHighlight"] forKey:firstKey];
+            [myClass.sozoCache setObject:mTheme[@"secondHighlight"] forKey:secondKey];
+            [mThemes addObject:mTheme];
             
 #ifdef DEBUG
             dispatch_async_on_main_queue(^{
@@ -170,9 +182,11 @@ static BOOL kSozoCacheLoading = NO;
         }
         dispatch_async_on_main_queue(^{
             kSozoCacheLoading = NO;
+            [mThemes writeToFile:[XXTERootPath() stringByAppendingPathComponent:@"Theme.plist"] atomically:YES];
         });
     });
 }
+#endif
 
 #pragma mark - UITableViewDelegate / DataSource
 
@@ -206,34 +220,9 @@ static BOOL kSozoCacheLoading = NO;
         
         UIColor *highlightColor = [UIColor whiteColor];
         if (exampleImage) {
-            NSString *mainKey = [NSString stringWithFormat:@"%@", themePreview];
-            NSString *dominantKey = [NSString stringWithFormat:@"%@/dominantColor", themePreview];
-            NSString *firstKey = [NSString stringWithFormat:@"%@/firstHighlight", themePreview];
-            // NSString *secondKey = [NSString stringWithFormat:@"%@/secondHighlight", themePreview];
-            
-            BOOL cached = [(NSNumber *)[self.class.sozoCache objectForKey:mainKey] boolValue];
-            if (cached) {
-                NSString *dominantHex = (NSString *)[self.class.sozoCache objectForKey:dominantKey];
-                NSString *firstHex = (NSString *)[self.class.sozoCache objectForKey:firstKey];
-                // NSString *secondHex = (NSString *)[self.class.sozoCache objectForKey:secondKey];
-                
-                highlightColor = [UIColor colorWithHex:firstHex];
-                cell.backgroundColor = [UIColor colorWithHex:dominantHex];
-                cell.titleLabel.textColor = highlightColor;
-            } else {
-                // Instantiate your chromoplast
-                SOZOChromoplast *chromoplast = [[SOZOChromoplast alloc] initWithImage:exampleImage];
-                
-                // Use your colors!
-                highlightColor = chromoplast.firstHighlight;
-                cell.backgroundColor = chromoplast.dominantColor;
-                cell.titleLabel.textColor = highlightColor;
-                
-                [self.class.sozoCache setObject:@(YES) forKey:mainKey];
-                [self.class.sozoCache setObject:[chromoplast.dominantColor hexString] forKey:dominantKey];
-                [self.class.sozoCache setObject:[chromoplast.firstHighlight hexString] forKey:firstKey];
-                // [self.class.sozoCache setObject:[chromoplast.secondHighlight hexString] forKey:secondKey];
-            }
+            highlightColor = [UIColor colorWithHex:theme[@"firstHighlight"]];
+            cell.backgroundColor = [UIColor colorWithHex:theme[@"dominantColor"]];
+            cell.titleLabel.textColor = highlightColor;
         }
         cell.titleBaseView.backgroundColor = [highlightColor colorWithAlphaComponent:0.1];
         
