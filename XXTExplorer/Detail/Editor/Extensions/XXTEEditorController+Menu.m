@@ -88,7 +88,11 @@
     itemPicker.delegate = self;
     itemPicker.allowedExtensions = @[ @"snippet" ];
     XXTPickerNavigationController *navigationController = [[XXTPickerNavigationController alloc] initWithRootViewController:itemPicker];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    if (@available(iOS 13.0, *)) {
+        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    } else {
+        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     navigationController.presentationController.delegate = self;
     [self.navigationController presentViewController:navigationController animated:YES completion:nil];

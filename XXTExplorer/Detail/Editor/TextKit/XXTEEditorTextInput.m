@@ -178,6 +178,7 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
             }
             
             /// Check auto decrease
+            /// TODO: there is much to do because auto decrease is much difficult than auto increase
             if (shouldIncrease == NO && shouldDecrease == NO && nil != self.decreaseIndentPattern) {
                 if (replChar != '\n') {  // Decreasement may occur at any time
                     NSTextCheckingResult *decreaseCheck = [self.decreaseIndentPattern firstMatchInString:lineRef options:NSMatchingWithTransparentBounds range:NSMakeRange(0, lineRef.length)];
