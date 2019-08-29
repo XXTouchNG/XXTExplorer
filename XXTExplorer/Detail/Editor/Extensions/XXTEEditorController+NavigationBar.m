@@ -91,18 +91,22 @@
     navigation.navigationItem.titleView.tintColor = barTitleColor;
     for (UIBarButtonItem *item in navigation.navigationItem.leftBarButtonItems) {
         item.tintColor = tintColor;
+        [item setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor} forState:UIControlStateNormal];
     }
     for (UIBarButtonItem *item in navigation.navigationItem.rightBarButtonItems) {
         item.tintColor = tintColor;
+        [item setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor} forState:UIControlStateNormal];
     }
     self.navigationItem.leftBarButtonItem.tintColor = tintColor;
     self.navigationItem.rightBarButtonItem.tintColor = tintColor;
     self.navigationItem.titleView.tintColor = barTitleColor;
     for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
         item.tintColor = tintColor;
+        [item setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor} forState:UIControlStateNormal];
     }
     for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
         item.tintColor = tintColor;
+        [item setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor} forState:UIControlStateNormal];
     }
     [self setNeedsStatusBarAppearanceUpdate];
 }

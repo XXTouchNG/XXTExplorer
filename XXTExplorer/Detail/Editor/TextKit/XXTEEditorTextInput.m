@@ -192,7 +192,7 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
             if (shouldIncrease || shouldDecrease || replChar == '\n') {
                 
                 /// Find last line break character
-                NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(range.location > kXXTStopRenderingLineAfter ? range.location - kXXTStopRenderingLineAfter : 0, range.location)];
+                NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, range.location)];
                 NSUInteger lastIdx = lastBreak.location + 1;  // the character right after last line break
                 if (lastBreak.location == NSNotFound) lastIdx = 0;  // if it is the first line
                 else if (lastBreak.location + lastBreak.length == range.location) return YES;  // at the beginning of this line
@@ -224,7 +224,7 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
                     /// Find previous line break character
                     NSRange previousBreak;
                     if (lastBreak.location == NSNotFound) previousBreak = NSMakeRange(NSNotFound, 0);
-                    else previousBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(lastBreak.location > kXXTStopRenderingLineAfter ? lastBreak.location - kXXTStopRenderingLineAfter : 0, lastBreak.location)];
+                    else previousBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, lastBreak.location)];
                     NSUInteger previousIdx;
                     if (previousBreak.location == NSNotFound) previousIdx = 0;  // if that is the first line
                     else previousIdx = previousBreak.location + 1;  // the character right after previous line break

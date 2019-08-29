@@ -70,20 +70,40 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
     return (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
 }
 
+- (UIViewController *)detailViewController {
+    return (self.viewControllers.count > 1) ? self.viewControllers[1] : nil;
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.masterViewController.preferredStatusBarStyle;
+    if (!XXTE_IS_IPAD) {
+        return self.masterViewController.preferredStatusBarStyle;
+    } else {
+        return self.detailViewController.preferredStatusBarStyle;
+    }
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return self.masterViewController.prefersStatusBarHidden;
+    if (!XXTE_IS_IPAD) {
+        return self.masterViewController.prefersStatusBarHidden;
+    } else {
+        return self.detailViewController.prefersStatusBarHidden;
+    }
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-    return self.masterViewController;
+    if (!XXTE_IS_IPAD) {
+        return self.masterViewController;
+    } else {
+        return self.detailViewController;
+    }
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
-    return self.masterViewController;
+    if (!XXTE_IS_IPAD) {
+        return self.masterViewController;
+    } else {
+        return self.detailViewController;
+    }
 }
 
 - (void)viewDidLoad {

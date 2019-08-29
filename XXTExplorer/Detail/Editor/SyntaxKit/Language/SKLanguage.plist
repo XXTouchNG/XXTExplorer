@@ -42,6 +42,8 @@
 		</dict>
 		<key>keymap</key>
 		<string>TTTTT()&quot;[]{}&apos;&lt;&gt;\/$´`RRRRR~^|€£-+=%*!?#@&amp;_:;,.</string>
+		<key>keymap~ipad</key>
+		<string>TTTTT()&quot;[]{}&apos;&lt;&gt;\/$´`~^|€£RRRRR-+=%*!?#@&amp;_:;,.1203467589</string>
 		<key>displayName</key>
 		<string>Lua (*.lua, *.snippet, *.xui)</string>
 		<key>extensions</key>
