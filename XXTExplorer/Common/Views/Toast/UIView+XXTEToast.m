@@ -208,7 +208,7 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
     
     wrapperView.backgroundColor = style.backgroundColor;
     
-    if(image != nil) {
+    if (image != nil) {
         imageView = [[UIImageView alloc] initWithImage:image];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.frame = CGRectMake(style.horizontalPadding, style.verticalPadding, style.imageSize.width, style.imageSize.height);
@@ -217,7 +217,7 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
     CGFloat imageWidth, imageHeight, imageLeft;
     
     // the imageView frame values will be used to size & position the other views
-    if(imageView != nil) {
+    if (imageView != nil) {
         imageWidth = imageView.bounds.size.width;
         imageHeight = imageView.bounds.size.height;
         imageLeft = style.horizontalPadding;
@@ -262,7 +262,7 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
     // titleLabel frame values
     CGFloat titleWidth, titleHeight, titleTop, titleLeft;
     
-    if(titleLabel != nil) {
+    if (titleLabel != nil) {
         titleWidth = titleLabel.bounds.size.width;
         titleHeight = titleLabel.bounds.size.height;
         titleTop = style.verticalPadding;
@@ -274,7 +274,7 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
     // messageLabel frame values
     CGFloat messageWidth, messageHeight, messageLeft, messageTop;
     
-    if(messageLabel != nil) {
+    if (messageLabel != nil) {
         messageWidth = messageLabel.bounds.size.width;
         messageHeight = messageLabel.bounds.size.height;
         messageLeft = imageLeft + imageWidth + style.horizontalPadding;
@@ -292,17 +292,17 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
     
     wrapperView.frame = CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight);
     
-    if(titleLabel != nil) {
+    if (titleLabel != nil) {
         titleLabel.frame = CGRectMake(titleLeft, titleTop, titleWidth, titleHeight);
         [wrapperView addSubview:titleLabel];
     }
     
-    if(messageLabel != nil) {
+    if (messageLabel != nil) {
         messageLabel.frame = CGRectMake(messageLeft, messageTop, messageWidth, messageHeight);
         [wrapperView addSubview:messageLabel];
     }
     
-    if(imageView != nil) {
+    if (imageView != nil) {
         [wrapperView addSubview:imageView];
     }
     
@@ -395,10 +395,10 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
 - (CGPoint)xxte_centerPointForPosition:(id)point withToast:(UIView *)toast {
     XXTEToastStyle *style = [XXTEToastManager sharedStyle];
     
-    if([point isKindOfClass:[NSString class]]) {
-        if([point caseInsensitiveCompare:XXTEToastPositionTop] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + style.verticalPadding + style.verticalMargin);
-        } else if([point caseInsensitiveCompare:XXTEToastPositionCenter] == NSOrderedSame) {
+    if ([point isKindOfClass:[NSString class]]) {
+        if ([point caseInsensitiveCompare:XXTEToastPositionTop] == NSOrderedSame) {
+            return CGPointMake(self.bounds.size.width / 2, (toast.frame.size.height / 2) + style.verticalPadding + style.verticalMargin);
+        } else if ([point caseInsensitiveCompare:XXTEToastPositionCenter] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
         }
     } else if ([point isKindOfClass:[NSValue class]]) {

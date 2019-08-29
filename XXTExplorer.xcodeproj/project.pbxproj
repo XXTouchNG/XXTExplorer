@@ -850,6 +850,7 @@
 		BD3433AE23099C2B00BDCC14 /* liblfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433A823099C2B00BDCC14 /* liblfs.a */; };
 		BD3433AF23099C2B00BDCC14 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433A923099C2B00BDCC14 /* libcurl.a */; };
 		BD3433B023099C2B00BDCC14 /* liblcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3433AA23099C2B00BDCC14 /* liblcurl.a */; };
+		BD5598752318238A00C885FB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5598742318238A00C885FB /* CloudKit.framework */; };
 		BD8D1829230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
 		BD8D182A230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
 		BD8D182B230444060005029B /* XXTEEditorController+TerminalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */; };
@@ -2044,6 +2045,8 @@
 		BD3433A923099C2B00BDCC14 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		BD3433AA23099C2B00BDCC14 /* liblcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblcurl.a; sourceTree = "<group>"; };
 		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BD55986F2318217800C885FB /* XXTouch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XXTouch.entitlements; sourceTree = "<group>"; };
+		BD5598742318238A00C885FB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		BD8D1826230443230005029B /* XXTETerminalDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTETerminalDelegate.h; sourceTree = "<group>"; };
 		BD8D1827230444060005029B /* XXTEEditorController+TerminalControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XXTEEditorController+TerminalControl.h"; sourceTree = "<group>"; };
 		BD8D1828230444060005029B /* XXTEEditorController+TerminalControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XXTEEditorController+TerminalControl.m"; sourceTree = "<group>"; };
@@ -2343,6 +2346,7 @@
 				BD3433AE23099C2B00BDCC14 /* liblfs.a in Frameworks */,
 				BD3433AF23099C2B00BDCC14 /* libcurl.a in Frameworks */,
 				0F8EDC591FB1F779003C92D6 /* Photos.framework in Frameworks */,
+				BD5598752318238A00C885FB /* CloudKit.framework in Frameworks */,
 				0F8EDC5A1FB1F779003C92D6 /* AssetsLibrary.framework in Frameworks */,
 				0F8EDC5B1FB1F779003C92D6 /* libc++.tbd in Frameworks */,
 				0F8EDC5D1FB1F779003C92D6 /* WebKit.framework in Frameworks */,
@@ -2415,15 +2419,12 @@
 		0F00CAF61F66F8B300692913 /* Accessory */ = {
 			isa = PBXGroup;
 			children = (
+				BD55986E231806E500C885FB /* Views */,
 				D6677EBD231759E200414CA0 /* fontello.ttf */,
 				0F00CAED1F66F7A500692913 /* XXTEKeyboardButton.h */,
 				0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */,
-				0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */,
-				0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */,
 				0F00CAF11F66F7A500692913 /* XXTEKeyboardRow.h */,
 				0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */,
-				0F00CAE81F66F65100692913 /* XXTETurtleBezierPath.h */,
-				0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */,
 			);
 			path = Accessory;
 			sourceTree = "<group>";
@@ -3239,6 +3240,7 @@
 				0FC598A91FB2189A001F918B /* mainStore.m */,
 				D6CCD416204CDE69009C2072 /* LaunchScreen.storyboard */,
 				D6B5453422F15AEE001E55D9 /* LaunchScreenStore.storyboard */,
+				BD55986F2318217800C885FB /* XXTouch.entitlements */,
 				0F8D0A78200EF26900D05250 /* XXTExplorer.entitlements */,
 			);
 			path = "Supporting Files";
@@ -3813,6 +3815,7 @@
 		4480A4E60973939464BE0D72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BD5598742318238A00C885FB /* CloudKit.framework */,
 				D69CB507230BDA6D00353BD0 /* GameKit.framework */,
 				0FAE18FF20809135005F9B67 /* libsqlite3.tbd */,
 				D61616FA1FE8F76F009F10FF /* StoreKit.framework */,
@@ -3942,6 +3945,17 @@
 				BD3433AA23099C2B00BDCC14 /* liblcurl.a */,
 			);
 			path = lib;
+			sourceTree = "<group>";
+		};
+		BD55986E231806E500C885FB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */,
+				0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */,
+				0F00CAE81F66F65100692913 /* XXTETurtleBezierPath.h */,
+				0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		BDC463F0230D7B9200730924 /* Helpers */ = {
@@ -4723,12 +4737,23 @@
 					};
 					0F8EDB551FB1F779003C92D6 = {
 						DevelopmentTeam = GXZ23M5TP2;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					0FA7ABE91ED641A3003EAD7D = {
 						CreatedOnToolsVersion = 8.3.1;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};
@@ -6424,7 +6449,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
 				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
@@ -6525,7 +6550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
 				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;

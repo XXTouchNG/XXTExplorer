@@ -28,7 +28,7 @@
 @property(nonatomic, assign) CGFloat fontSize;
 @property(nonatomic, assign) CGFloat bigFontSize;
 @property(nonatomic, assign) BOOL trackPoint;
-@property(nonatomic, assign) BOOL tabButton;
+@property(nonatomic, assign) BOOL actionPoint;
 @property(nonatomic, assign) CGPoint touchBeginPoint;
 @property(nonatomic, strong) NSDate *firstTapDate;
 @property(nonatomic, assign) CGRect startLocation;
@@ -155,35 +155,57 @@
         [currentLabel setAdjustsFontSizeToFitWidth:YES];
 
         NSString *flag = [input substringToIndex:1];
-        if ([flag isEqualToString:@"R"] || [flag isEqualToString:@"T"]) {
-
-            self.trackPoint = [flag isEqualToString:@"R"];
-            self.tabButton = [flag isEqualToString:@"T"];
-
+        if ([flag isEqualToString:@"R"]) {
+            self.trackPoint = YES;
+            
             if (i != 2)
                 [currentLabel setHidden:YES];
             else {
                 _font = [UIFont fontWithName:@"fontello" size:self.bounds.size.width * .6f];
                 [currentLabel setFont:self.font];
-                if (self.trackPoint) {
-                    const unichar c = 0xe801; // circle icon
-                    [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
-                    [currentLabel setFrame:self.bounds];
-                } else if (self.tabButton) {
-                    const unichar c = 0xe804; // tab icon
-                    [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
-                    [currentLabel setFrame:self.bounds];
-                }
+                
+                const unichar c = 0xe804; // circle icon
+                [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
+                [currentLabel setFrame:self.bounds];
             }
-        } else {
+        }
+        else if ([flag isEqualToString:@"T"]) {
+            self.actionPoint = YES;
+            unichar c;
+            switch (i) {
+                case 0:
+                    c = 0xe801;
+                    break;
+                case 1:
+                    c = 0xe802;
+                    break;
+                case 2:
+                    c = 0xe803;
+                    break;
+                case 3:
+                    c = 0xe800;
+                    break;
+                case 4:
+                    c = 0xe805;
+                    break;
+                default:
+                    break;
+            }
+            if (i == 2) {
+                _font = [UIFont fontWithName:@"fontello" size:self.bigFontSize];
+            } else {
+                _font = [UIFont fontWithName:@"fontello" size:self.fontSize];
+            }
+            [currentLabel setFont:self.font];
+            [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
+        }
+        else {
             if (i == 2) {
                 _font = [UIFont systemFontOfSize:self.bigFontSize];
-                [currentLabel setFont:self.font];
             } else {
                 _font = [UIFont systemFontOfSize:self.fontSize];
-                [currentLabel setFont:self.font];
             }
-            [currentLabel setTextColor:[UIColor blackColor]];
+            [currentLabel setFont:self.font];
         }
     }
 }
@@ -354,7 +376,7 @@
     UITouch *t = [touches anyObject];
     _touchBeginPoint = [t locationInView:self];
 
-    if (_trackPoint) {
+    if (self.trackPoint) {
         _selecting = fabs([_firstTapDate timeIntervalSinceNow]) < TIME_INTERVAL_FOR_DOUBLE_TAP;
         _firstTapDate = [NSDate date];
 
@@ -383,7 +405,7 @@
 
     if (distance > 250) {
         [self selectLabel:-1];
-    } else if (!_tabButton && (distance > 20)) {
+    } else if (distance > 20) {
         CGFloat angle = (CGFloat) atan2(xdiff, ydiff);
 
         if (angle >= 0 && angle < M_PI_2) {
@@ -403,20 +425,40 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
 
-    if (_output != nil) {
-        if (_tabButton) {
-            [[UIDevice currentDevice] playInputClick];
-            [self insertText:self.tabString];
-        } else if (_trackPoint) {
-            if (_selecting) {
+    if (self.output.length > 0) {
+        if (self.trackPoint) {
+            if (self.selecting) {
                 [self selectionComplete];
             }
-        } else {
+        }
+        else if (self.actionPoint) {
+            [[UIDevice currentDevice] playInputClick];
+            unichar actionFlag = [self.output characterAtIndex:0];
+            switch (actionFlag) {
+                case 0xe800:
+                    [_actionDelegate keyboardButton:self didTriggerAction:XXTEKeyboardButtonActionBackspace];
+                    break;
+                case 0xe801:
+                    [_actionDelegate keyboardButton:self didTriggerAction:XXTEKeyboardButtonActionUndo];
+                    break;
+                case 0xe802:
+                    [_actionDelegate keyboardButton:self didTriggerAction:XXTEKeyboardButtonActionRedo];
+                    break;
+                case 0xe803:
+                    [self insertText:self.tabString];
+                    break;
+                case 0xe805:
+                    [_actionDelegate keyboardButton:self didTriggerAction:XXTEKeyboardButtonActionKeyboardDismissal];
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
             [[UIDevice currentDevice] playInputClick];
             [self insertText:self.output];
         }
     }
-
     [self selectLabel:-1];
 
     if (self.style == XXTEKeyboardButtonTypePhone) {

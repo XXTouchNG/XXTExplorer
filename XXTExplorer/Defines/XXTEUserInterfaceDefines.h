@@ -31,6 +31,7 @@ extern "C" {
     
     void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration);
     void toastMessage(UIViewController *viewController, NSString *message);
+    void toastMessageTip(UIViewController *viewController, NSString *message, CGPoint position);
     void toastError(UIViewController *viewController, NSError *error);
     
     UIColor *XXTColorFixed(void);

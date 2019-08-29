@@ -80,7 +80,7 @@ typedef enum : NSUInteger {
         if (saveLogs) {
             NSString *logDatePath = [[XXTECachedResourcesManager sharedManager] dateCachesPathAtCachesPath:[[self class] logRootPath]];
             
-            NSString *logName = [NSString stringWithFormat:@"%lu.log", (NSUInteger)[[NSDate date] timeIntervalSince1970]];
+            NSString *logName = [NSString stringWithFormat:@"%lu.log", (unsigned long)[[NSDate date] timeIntervalSince1970]];
             NSString *logPath = [logDatePath stringByAppendingPathComponent:logName];
             _logPath = logPath;
             

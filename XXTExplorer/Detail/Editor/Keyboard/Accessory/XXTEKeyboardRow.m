@@ -70,6 +70,7 @@ static NSString * const XXTEKeyboardRowPadDefaultSequence = @"TTTTT()\"[]{}'<>\\
 
     NSString *keys = nil;
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    
     _barWidth = MIN(screenSize.width, screenSize.height);
     if (_buttonType == XXTEKeyboardButtonTypePhone) {
         _buttonCount = 9;
@@ -79,7 +80,7 @@ static NSString * const XXTEKeyboardRowPadDefaultSequence = @"TTTTT()\"[]{}'<>\\
         _buttonWidth = (_barWidth - (_buttonSpacing * (_buttonCount - 1)) - (_leftMargin * 2)) / _buttonCount;
         _buttonHeight = _buttonWidth;
         _barHeight = _buttonHeight + _buttonSpacing * 2;
-        keys = keymap ?: XXTEKeyboardRowPhoneDefaultSequence;
+        keys = keymap.length == 45 ? keymap : XXTEKeyboardRowPhoneDefaultSequence;
     } else if (_buttonType == XXTEKeyboardButtonTypeTablet) {
         _buttonCount = 11;
         _barHeight = 72.f;
@@ -88,9 +89,10 @@ static NSString * const XXTEKeyboardRowPadDefaultSequence = @"TTTTT()\"[]{}'<>\\
         _topMargin = 1.f;
         _buttonSpacing = 13.f;
         _buttonWidth = 57.f;
-        keys = keymap ?: XXTEKeyboardRowPadDefaultSequence;
+        keys = keymap.length == 55 ? keymap : XXTEKeyboardRowPadDefaultSequence;
     }
-
+    _keymap = keys;
+    
     self.frame = CGRectMake(0, 0, _barWidth, _barHeight);
     self.backgroundColor = [UIColor clearColor];
     self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -120,6 +122,13 @@ static NSString * const XXTEKeyboardRowPadDefaultSequence = @"TTTTT()\"[]{}'<>\\
         for (XXTEKeyboardButton *button in self.buttons) {
             button.textInput = textInput;
         }
+    }
+}
+
+- (void)setActionDelegate:(id <XXTEKeyboardButtonDelegate>)actionDelegate {
+    _actionDelegate = actionDelegate;
+    for (XXTEKeyboardButton *button in self.buttons) {
+        button.actionDelegate = actionDelegate;
     }
 }
 

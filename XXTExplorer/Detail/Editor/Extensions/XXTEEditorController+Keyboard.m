@@ -23,7 +23,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
 }
 
 - (void)dismissKeyboardNotifications
@@ -32,16 +33,46 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
+}
+
+- (void)keyboardWillChangeFrame:(NSNotification *)aNotification {
+    if (self.presentedViewController) {
+        return;
+    }
+    
+    NSDictionary* info = [aNotification userInfo];
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return;
+        }
+    }
+    
+    self.keyboardFrame = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+}
+
+- (void)keyboardDidChangeFrame:(NSNotification *)aNotification {
+    if (self.presentedViewController) {
+        return;
+    }
+    
+    NSDictionary* info = [aNotification userInfo];
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return;
+        }
+    }
+    
+    self.keyboardFrame = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
 }
 
 - (void)keyboardWillAppear:(NSNotification *)aNotification {
     if (self.presentedViewController) {
         return;
     }
-    
-//    if (![self.textView isFirstResponder]) {
-//        return;
-//    }
     
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
@@ -66,10 +97,6 @@
     if (self.presentedViewController) {
         return;
     }
-    
-//    if (![self.textView isFirstResponder]) {
-//        return;
-//    }
     
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {
@@ -112,10 +139,6 @@
     if (self.presentedViewController) {
         return;
     }
-    
-//    if (![self.textView isFirstResponder]) {
-//        return;
-//    }
     
     NSDictionary* info = [aNotification userInfo];
     if (@available(iOS 9.0, *)) {

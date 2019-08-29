@@ -374,18 +374,26 @@ BOOL isiPhoneX() {
     return checkiPhoneX;
 }
 
-void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration) {
+void toastMessageWithDelayAndPosition(UIViewController *viewController, NSString *message, NSTimeInterval duration, id position) {
     if (viewController.navigationController) {
-        [viewController.navigationController.view makeToast:message duration:duration position:XXTEToastPositionCenter];
+        [viewController.navigationController.view makeToast:message duration:duration position:position];
     } else if (viewController.tabBarController) {
-        [viewController.tabBarController.view makeToast:message duration:duration position:XXTEToastPositionCenter];
+        [viewController.tabBarController.view makeToast:message duration:duration position:position];
     } else {
-        [viewController.view makeToast:message duration:duration position:XXTEToastPositionCenter];
+        [viewController.view makeToast:message duration:duration position:position];
     }
+}
+
+void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration) {
+    toastMessageWithDelayAndPosition(viewController, message, duration, XXTEToastPositionCenter);
 }
 
 void toastMessage(UIViewController *viewController, NSString *message) {
     toastMessageWithDelay(viewController, message, 2.0);
+}
+
+void toastMessageTip(UIViewController *viewController, NSString *message, CGPoint position) {
+    toastMessageWithDelayAndPosition(viewController, message, 2.0, [NSValue valueWithCGPoint:position]);
 }
 
 void toastError(UIViewController *viewController, NSError *error) {

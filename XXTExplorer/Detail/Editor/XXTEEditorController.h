@@ -28,10 +28,15 @@
 @property (nonatomic, assign, readwrite) NSStringLineBreakType currentLineBreak;
 
 
+// keyboard properties
+@property (nonatomic, assign, readwrite) CGRect keyboardFrame;
+
+
 // public views
 @property (nonatomic, strong, readonly) XXTEEditorTextView *textView;
 @property (nonatomic, strong, readonly) XXTEEditorMaskView *maskView;
 @property (nonatomic, strong, readonly) XXTEEditorToolbar *toolbar;
+
 
 - (void)setNeedsReload:(NSString *)defaultKey;
 - (void)setNeedsReloadAll;

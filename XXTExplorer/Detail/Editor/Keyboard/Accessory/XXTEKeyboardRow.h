@@ -18,14 +18,31 @@ typedef NS_ENUM(NSUInteger, XXTEKeyboardRowStyle) {
     XXTEKeyboardRowStyleDark
 };
 
+typedef NS_ENUM(NSUInteger, XXTEKeyboardButtonAction) {
+    XXTEKeyboardButtonActionUndo = 0,
+    XXTEKeyboardButtonActionRedo,
+    XXTEKeyboardButtonActionBackspace,
+    XXTEKeyboardButtonActionKeyboardDismissal,
+    XXTEKeyboardButtonActionSelectToLineBreak,
+};
+
+@class XXTEKeyboardButton;
+
+@protocol XXTEKeyboardButtonDelegate <NSObject>
+- (void)keyboardButton:(XXTEKeyboardButton *)button didTriggerAction:(XXTEKeyboardButtonAction)action;
+
+@end
+
 @interface XXTEKeyboardRow : UIInputView
 
-@property(nonatomic, weak) id <UITextInput> textInput;
-@property(nonatomic, assign) XXTEKeyboardButtonType buttonType;
-@property(nonatomic, copy) NSString *tabString;
+@property (nonatomic, assign) XXTEKeyboardButtonType buttonType;
+@property (nonatomic, assign) XXTEKeyboardRowStyle colorStyle;
 
-@property(nonatomic, assign) XXTEKeyboardRowStyle colorStyle;
+@property (nonatomic, weak) id <UITextInput> textInput;
+@property (nonatomic, weak) id <XXTEKeyboardButtonDelegate> actionDelegate;
 
+@property (nonatomic, copy) NSString *tabString;
+@property (nonatomic, copy, readonly) NSString *keymap;
 - (instancetype)initWithKeymap:(NSString *)keymap;
 
 @end

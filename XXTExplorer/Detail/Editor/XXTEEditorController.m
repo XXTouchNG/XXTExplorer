@@ -70,9 +70,9 @@
 static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 #ifdef APPSTORE
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEncodingControllerDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEncodingControllerDelegate, XXTEKeyboardButtonDelegate>
 #else
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEKeyboardButtonDelegate>
 #endif
 
 @property (nonatomic, strong) XXTELockedTitleView *lockedTitleView;
@@ -176,6 +176,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     CFStringEncoding encoding = [XXTEEncodingHelper encodingAtIndex:encodingIndex];
     _currentEncoding = encoding;
     _currentLineBreak = NSStringLineBreakTypeLF;
+    _keyboardFrame = CGRectNull;
     
     [self registerUndoNotifications];
 }
@@ -455,19 +456,23 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
         BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
         if (isReadOnlyMode) {
-            self.keyboardRow.textInput = nil;
-            self.textView.inputAccessoryView = nil;
+            [self.keyboardRow setTextInput:nil];
+            [self.keyboardRow setActionDelegate:nil];
+            [self.textView setInputAccessoryView:nil];
         } else {
             if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
-                self.keyboardRow.textInput = nil;
-                self.textView.inputAccessoryView = nil;
+                [self.keyboardRow setTextInput:nil];
+                [self.keyboardRow setActionDelegate:nil];
+                [self.textView setInputAccessoryView:nil];
             } else {
                 if (isKeyboardRowEnabled) {
-                    self.keyboardRow.textInput = self.textView;
-                    self.textView.inputAccessoryView = self.keyboardRow;
+                    [self.keyboardRow setTextInput:self.textView];
+                    [self.keyboardRow setActionDelegate:self];
+                    [self.textView setInputAccessoryView:self.keyboardRow];
                 } else {
-                    self.keyboardRow.textInput = nil;
-                    self.textView.inputAccessoryView = self.keyboardToolbarRow;
+                    [self.keyboardRow setTextInput:nil];
+                    [self.keyboardRow setActionDelegate:nil];
+                    [self.textView setInputAccessoryView:self.keyboardToolbarRow];
                 }
             }
         }
@@ -1567,11 +1572,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (!caseSensitive) {
         self.textView.searchOptions = NSRegularExpressionCaseInsensitive;
     } else {
-        self.textView.searchOptions = 0;
+        self.textView.searchOptions = kNilOptions;
     }
     if (target.length) {
-        BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
+        BOOL isCircular = NO;
+        NSUInteger currentIndex = self.textView.rangeOfFoundString.location;
+        
         BOOL searchSucceed = NO;
+        BOOL useRegular = XXTEDefaultsBool(XXTEEditorSearchRegularExpression, NO);
         if (useRegular) {
             searchSucceed =
             [self.textView scrollToMatch:target searchDirection:direction];
@@ -1579,10 +1587,32 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
             searchSucceed =
             [self.textView scrollToString:target searchDirection:direction];
         }
+        
+        NSUInteger succeedIndex = self.textView.rangeOfFoundString.location;
+        if (currentIndex != NSNotFound && succeedIndex != NSNotFound) {
+            if (direction == ICTextViewSearchDirectionForward) {
+                if (succeedIndex < currentIndex) {
+                    isCircular = YES;
+                }
+            } else if (direction == ICTextViewSearchDirectionBackward) {
+                if (succeedIndex > currentIndex) {
+                    isCircular = YES;
+                }
+            }
+        }
+        
         if (searchSucceed) {
             NSRange foundRange = self.textView.rangeOfFoundString;
             if (foundRange.location != NSNotFound) {
                 [self.textView setSelectedRange:foundRange];
+            }
+        }
+        
+        if (isCircular) {
+            if (direction == ICTextViewSearchDirectionForward) {
+                [self displayKeyboardTip:NSLocalizedString(@"From Top", nil)];
+            } else if (direction == ICTextViewSearchDirectionBackward) {
+                [self displayKeyboardTip:NSLocalizedString(@"From Bottom", nil)];
             }
         }
     } else {
@@ -1805,10 +1835,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [self searchNextMatch];
 }
 
-//- (BOOL)searchAccessoryViewAllowReplacement:(XXTEEditorSearchAccessoryView *)accessoryView {
-//    return YES;
-//}
-
 - (void)searchAccessoryViewShouldReplace:(XXTEEditorSearchAccessoryView *)accessoryView {
     [self replaceNextMatch];
 }
@@ -1820,24 +1846,85 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 #pragma mark - XXTEKeyboardToolbarRowDelegate
 
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapUndo:(UIBarButtonItem *)sender {
-    NSUndoManager *undoManager = [self.textView undoManager];
-    if (undoManager.canUndo) {
-        [undoManager undo];
-    }
+    [self performGlobalUndoAction:row];
 }
 
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapRedo:(UIBarButtonItem *)sender {
-    NSUndoManager *undoManager = [self.textView undoManager];
-    if (undoManager.canRedo) {
-        [undoManager redo];
-    }
+    [self performGlobalRedoAction:row];
 }
 
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapDismiss:(UIBarButtonItem *)sender {
-    [self.textView resignFirstResponder];
+    [self performGlobalKeyboardDismissalAction:row];
 }
 
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapSnippet:(UIBarButtonItem *)sender {
+    [self performGlobalCodeBlocksAction:row];
+}
+
+#pragma mark - XXTEKeyboardButtonDelegate
+
+- (void)keyboardButton:(XXTEKeyboardButton *)button didTriggerAction:(XXTEKeyboardButtonAction)action {
+    switch (action) {
+        case XXTEKeyboardButtonActionUndo:
+            [self performGlobalUndoAction:button];
+            break;
+        case XXTEKeyboardButtonActionRedo:
+            [self performGlobalRedoAction:button];
+            break;
+        case XXTEKeyboardButtonActionBackspace:
+            [self performGlobalBackspaceAction:button];
+            break;
+        case XXTEKeyboardButtonActionKeyboardDismissal:
+            [self performGlobalKeyboardDismissalAction:button];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Global Actions
+
+- (void)displayKeyboardTip:(NSString *)tip {
+    if (CGRectIsNull(self.keyboardFrame) || tip.length == 0) {
+        return;
+    }
+    toastMessageTip(self, tip, CGPointMake(CGRectGetWidth(self.keyboardFrame) / 2.0, MIN(CGRectGetMinY(self.keyboardFrame) - 36.0, CGRectGetMaxY(self.textView.frame) - 36.0)));
+}
+
+- (void)performGlobalUndoAction:(id)sender {
+    NSUndoManager *undoManager = [self.textView undoManager];
+    if (undoManager.canUndo) {
+        [undoManager undo];
+        [self displayKeyboardTip:NSLocalizedString(@"Undo", nil)];
+    }
+}
+
+- (void)performGlobalRedoAction:(id)sender {
+    NSUndoManager *undoManager = [self.textView undoManager];
+    if (undoManager.canRedo) {
+        [undoManager redo];
+        [self displayKeyboardTip:NSLocalizedString(@"Redo", nil)];
+    }
+}
+
+- (void)performGlobalBackspaceAction:(id)sender {
+    if ([self.textView isFirstResponder]) {
+        [self.textView deleteBackward];
+    }
+}
+
+- (void)performGlobalSelectToLineBreakAction:(id)sender {
+    
+}
+
+- (void)performGlobalKeyboardDismissalAction:(id)sender {
+    if ([self.textView isFirstResponder]) {
+        [self.textView resignFirstResponder];
+        [self displayKeyboardTip:NSLocalizedString(@"Keyboard Dismissal", nil)];
+    }
+}
+
+- (void)performGlobalCodeBlocksAction:(id)sender {
     [self menuActionCodeBlocks:nil];
 }
 

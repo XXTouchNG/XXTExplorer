@@ -11,7 +11,6 @@
 @class XXTEKeyboardButton;
 
 @interface XXTEKeyboardButtonView : UIView
-
 - (instancetype)initWithKeyboardButton:(XXTEKeyboardButton *)button;
 
 @end

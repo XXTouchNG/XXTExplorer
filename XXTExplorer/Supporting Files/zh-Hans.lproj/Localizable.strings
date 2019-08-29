@@ -2140,3 +2140,18 @@
 
 /* No comment provided by engineer. */
 "Begin logging at: %@\n\n" = "开始记录日志: %@\n\n";
+
+/* No comment provided by engineer. */
+"From Bottom" = "转至底部";
+
+/* No comment provided by engineer. */
+"From Top" = "转至顶部";
+
+/* No comment provided by engineer. */
+"Keyboard Dismissal" = "隐藏键盘";
+
+/* No comment provided by engineer. */
+"Redo" = "重做";
+
+/* No comment provided by engineer. */
+"Undo" = "撤销";

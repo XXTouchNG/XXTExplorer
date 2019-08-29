@@ -88,6 +88,9 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
                 if (0 != mkdir(directoryPathCStr, 0755))
                     continue;
         }
+        [self rootDirectoryForCloud:^(NSURL *url) {
+            NSLog(@"%@", url);
+        }];
     }
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -536,11 +539,11 @@ XXTE_END_IGNORE_PARTIAL
         if (!rootPath) {
             rootPath = ({
 #ifndef APPSTORE
-    #ifdef ARCHIVE
+#ifdef ARCHIVE
                 NSString *mainPath = uAppDefine(@"MAIN_PATH");
-    #else
+#else
                 NSString *mainPath = nil;
-    #endif
+#endif
 #else
                 NSString *mainPath = nil;
 #endif
@@ -555,6 +558,21 @@ XXTE_END_IGNORE_PARTIAL
         }
     });
     return rootPath;
+}
+
+- (void)rootDirectoryForCloud:(void (^)(NSURL *))completionHandler {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSFileManager *manager = [NSFileManager defaultManager];
+        NSURL *rootDirectory = [[manager URLForUbiquityContainerIdentifier:nil] URLByAppendingPathComponent:@"Documents"];
+        if (rootDirectory) {
+            if (![manager fileExistsAtPath:rootDirectory.path isDirectory:nil]) {
+                [manager createDirectoryAtURL:rootDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(rootDirectory);
+        });
+    });
 }
 
 @end

@@ -7,12 +7,12 @@
 //
 
 #import "XXTEEditorTextInput.h"
-#import "XXTETextPreprocessor.h"
 #import "UITextView+TextRange.h"
 #import "XXTEEditorLanguage.h"
 #import "XXTEEditorMaskView.h"
 
 static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 * 10;  // 10k
+static NSUInteger kXXTEEditorTextInputMaximumAutoIndentCheckLineCharacterCount = 1024;  // 1k
 
 
 @interface XXTEEditorTextInput ()
@@ -162,6 +162,9 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
                 contentsEnd = range.location + range.length;
             }
             NSRange lineRange = NSMakeRange(lineStart, contentsEnd - lineStart + 1);
+            if (lineRange.length > kXXTEEditorTextInputMaximumAutoIndentCheckLineCharacterCount) {
+                return YES;
+            }
             NSString *lineRef = [stringRef substringWithRange:lineRange];
             
             BOOL shouldIncrease = NO;
