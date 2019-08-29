@@ -75,6 +75,7 @@
 	<string>${PRODUCT_NAME} want to access your album to import images.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>fontello.ttf</string>
 		<string>References.bundle/fonts/SourceCodePro-Regular.otf</string>
 		<string>References.bundle/fonts/SourceCodePro-Bold.otf</string>
 		<string>References.bundle/fonts/SourceCodePro-It.otf</string>

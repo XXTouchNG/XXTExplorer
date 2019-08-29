@@ -92,11 +92,11 @@
         //// Shadow Declarations
         UIColor *shadow = [self isDarkMode] ? [UIColor clearColor] : [UIColor colorWithRed:136.f / 255.f green:138.f / 255.f blue:142.f / 255.f alpha:1.f];
         CGSize shadowOffset = CGSizeMake(0.1, 1.1);
-        CGFloat shadowBlurRadius = 0;
+        CGFloat shadowBlurRadius = 0.0;
 
         //// Rounded Rectangle Drawing
         UIBezierPath *roundedRectanglePath =
-                [UIBezierPath bezierPathWithRoundedRect:CGRectMake(keyRect.origin.x, keyRect.origin.y, keyRect.size.width, keyRect.size.height - 1) cornerRadius:4];
+                [UIBezierPath bezierPathWithRoundedRect:CGRectMake(keyRect.origin.x, keyRect.origin.y, keyRect.size.width, keyRect.size.height - 1.0) cornerRadius:4.0];
         CGContextSaveGState(context);
         CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor);
         [color setFill];
@@ -111,18 +111,20 @@
         
         UIColor *stringColor = nil;
         if (_button.selecting) {
-            stringColor = [UIColor redColor];
+            stringColor = XXTColorDanger();
         } else {
             stringColor = fillColor;
         }
 
         CGRect stringRect = bezierPath.bounds;
-
         NSMutableParagraphStyle *p = [NSMutableParagraphStyle new];
         p.alignment = NSTextAlignmentCenter;
         
-        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:inputString attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:44.0], NSForegroundColorAttributeName: stringColor, NSParagraphStyleAttributeName: p}];
-        [attributedString drawInRect:stringRect];
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:inputString attributes:@{NSFontAttributeName: [self.button.font fontWithSize:44.0], NSForegroundColorAttributeName: stringColor, NSParagraphStyleAttributeName: p}];
+        
+        CGSize stringSize = attributedString.size;
+        CGRect drawRect = CGRectMake(stringRect.origin.x + CGRectGetWidth(stringRect) / 2.0 - stringSize.width / 2.0, stringRect.origin.y + CGRectGetHeight(stringRect) / 2.0 - stringSize.height / 2.0 - 22.0, stringSize.width, stringSize.height);
+        [attributedString drawInRect:drawRect];
     }
 }
 

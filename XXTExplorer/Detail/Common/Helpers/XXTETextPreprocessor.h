@@ -11,6 +11,7 @@
 
 
 static NSString *kXXTErrorInvalidStringEncodingDomain = @"com.darwindev.XXTExplorer.error.invalid-string-encoding";
+static NSInteger kXXTStopRenderingLineAfter = 1024;
 
 @interface XXTETextPreprocessor : NSObject
 

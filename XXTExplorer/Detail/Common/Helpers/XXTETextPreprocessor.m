@@ -16,8 +16,6 @@
 #import "XXTEEditorTextProperties.h"
 
 
-static NSInteger kStopRenderingLineAfter = 1024;
-
 @implementation XXTETextPreprocessor
 
 + (NSString *)preprocessedStringWithContentsOfFile:(NSString *)path
@@ -83,7 +81,7 @@ static NSInteger kStopRenderingLineAfter = 1024;
 }
 
 + (BOOL)stringHasLongLine:(NSString *)string LineBreak:(NSStringLineBreakType)lineBreak {
-    if (string.length < kStopRenderingLineAfter) {
+    if (string.length < kXXTStopRenderingLineAfter) {
         return NO;
     }
     NSString *lb = [XXTEEditorLineBreakHelper lineBreakStringForType:lineBreak];
@@ -91,7 +89,7 @@ static NSInteger kStopRenderingLineAfter = 1024;
     NSInteger loc = NSNotFound;
     while ((loc = [string rangeOfString:lb options:kNilOptions range:NSMakeRange((lastPosition + 1), string.length - (lastPosition + 1))].location) != NSNotFound)
     {
-        if (loc - lastPosition > kStopRenderingLineAfter) {
+        if (loc - lastPosition > kXXTStopRenderingLineAfter) {
             return YES;
         }
         lastPosition = loc;

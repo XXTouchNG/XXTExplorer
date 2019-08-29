@@ -163,29 +163,25 @@
             if (i != 2)
                 [currentLabel setHidden:YES];
             else {
-                [currentLabel setFont:[UIFont systemFontOfSize:self.bounds.size.width * .6f]];
+                _font = [UIFont fontWithName:@"fontello" size:self.bounds.size.width * .6f];
+                [currentLabel setFont:self.font];
                 if (self.trackPoint) {
-                    const unichar c = 0x25c9; // circle icon
+                    const unichar c = 0xe801; // circle icon
                     [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
                 } else if (self.tabButton) {
-                    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-                    attachment.image = [[UIImage imageNamed:@"XXTEKeyboardTab"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                    if (@available(iOS 11.0, *)) {
-                        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-                        [currentLabel setAttributedText:attachmentString];
-                    } else {
-                        const unichar c = 0x2192; // tab icon
-                        [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
-                    }
+                    const unichar c = 0xe804; // tab icon
+                    [currentLabel setText:[[NSString alloc] initWithCharacters:&c length:1]];
                     [currentLabel setFrame:self.bounds];
                 }
             }
         } else {
             if (i == 2) {
-                [currentLabel setFont:[UIFont systemFontOfSize:self.bigFontSize]];
+                _font = [UIFont systemFontOfSize:self.bigFontSize];
+                [currentLabel setFont:self.font];
             } else {
-                [currentLabel setFont:[UIFont systemFontOfSize:self.fontSize]];
+                _font = [UIFont systemFontOfSize:self.fontSize];
+                [currentLabel setFont:self.font];
             }
             [currentLabel setTextColor:[UIColor blackColor]];
         }

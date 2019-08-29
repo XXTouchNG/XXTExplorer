@@ -7,6 +7,7 @@
 //
 
 #import "XXTEEditorTextInput.h"
+#import "XXTETextPreprocessor.h"
 #import "UITextView+TextRange.h"
 #import "XXTEEditorLanguage.h"
 #import "XXTEEditorMaskView.h"
@@ -189,43 +190,68 @@ static NSUInteger kXXTEEditorTextInputMaximumBracketCheckCharacterCount = 1024 *
             /// Perform auto indent
             if (shouldIncrease || shouldDecrease || replChar == '\n') {
                 
+                /// Find last line break character
+                NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(range.location > kXXTStopRenderingLineAfter ? range.location - kXXTStopRenderingLineAfter : 0, range.location)];
+                NSUInteger lastIdx = lastBreak.location + 1;  // the character right after last line break
+                if (lastBreak.location == NSNotFound) lastIdx = 0;  // if it is the first line
+                else if (lastBreak.location + lastBreak.length == range.location) return YES;  // at the beginning of this line
+                
                 /// Find tab or space before current line
-                NSRange lastBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(0, range.location)];
-                NSUInteger idx = lastBreak.location + 1;
-                if (lastBreak.location == NSNotFound) idx = 0;
-                else if (lastBreak.location + lastBreak.length == range.location) return YES;
-                NSMutableString *tabStr = [[NSMutableString alloc] init];
-                for (; idx < range.location; idx++)
+                NSMutableString *lastTabStr = [[NSMutableString alloc] init];
+                for (; lastIdx < range.location; lastIdx++)
                 {
-                    char thisChar = (char) [stringRef characterAtIndex:idx];
+                    unichar thisChar = [stringRef characterAtIndex:lastIdx];
                     if (thisChar != ' ' && thisChar != '\t') break;
-                    else [tabStr appendFormat:@"%c", (char)thisChar];
+                    else [lastTabStr appendFormat:@"%c", (char)thisChar];
                 }
                 
+                /// Increase
                 if (shouldIncrease || replChar == '\n') {
                     /// Perform increase
                     if (shouldIncrease) {
-                        [tabStr appendString:[[NSString alloc] initWithString:self.tabWidthString]];
+                        [lastTabStr appendString:[[NSString alloc] initWithString:self.tabWidthString]];
                     }
                     /// Or continue with current indent
-                    [textView insertText:[@"\n" stringByAppendingString:tabStr]];
+                    [textView insertText:[@"\n" stringByAppendingString:lastTabStr]];
                     /// Handled
                     return NO;
                 }
+                
+                /// Decrease
                 else if (shouldDecrease) {
+                    
+                    /// Find previous line break character
+                    NSRange previousBreak;
+                    if (lastBreak.location == NSNotFound) previousBreak = NSMakeRange(NSNotFound, 0);
+                    else previousBreak = [stringRef rangeOfString:@"\n" options:NSBackwardsSearch range:NSMakeRange(lastBreak.location > kXXTStopRenderingLineAfter ? lastBreak.location - kXXTStopRenderingLineAfter : 0, lastBreak.location)];
+                    NSUInteger previousIdx;
+                    if (previousBreak.location == NSNotFound) previousIdx = 0;  // if that is the first line
+                    else previousIdx = previousBreak.location + 1;  // the character right after previous line break
+                    
+                    /// Find tab or space before previous line
+                    NSMutableString *previousTabStr = [[NSMutableString alloc] init];
+                    for (; previousIdx < lastBreak.location; previousIdx++)
+                    {
+                        unichar thisChar = [stringRef characterAtIndex:previousIdx];
+                        if (thisChar != ' ' && thisChar != '\t') break;
+                        else [previousTabStr appendFormat:@"%c", (char)thisChar];
+                    }
+                    
                     /// Find available decrease range
-                    NSRange lastTabRange = [tabStr rangeOfString:self.tabWidthString options:NSBackwardsSearch range:NSMakeRange(0, tabStr.length)];
-                    if (lastTabRange.location != NSNotFound) {
+                    NSMutableString *tabStrToUse = previousTabStr.length > lastTabStr.length ? previousTabStr : lastTabStr;
+                    NSRange tabRangeToUse = [tabStrToUse rangeOfString:self.tabWidthString options:NSBackwardsSearch range:NSMakeRange(0, tabStrToUse.length)];
+                    if (tabRangeToUse.location != NSNotFound) {
                         /// Perform decrease
-                        [tabStr deleteCharactersInRange:lastTabRange];
+                        [tabStrToUse deleteCharactersInRange:tabRangeToUse];
                         /// Replace actual line range
                         NSRange actualLineRange = NSMakeRange(lineRange.location, lineRange.length - 1);
                         UITextRange *lineTextRange = [textView textRangeFromNSRange:actualLineRange];
-                        NSString *charsLeft = [stringRef substringWithRange:NSMakeRange(idx, range.location - idx + 1)];
-                        [textView replaceRange:lineTextRange withText:[tabStr stringByAppendingString:charsLeft]];
+                        NSString *charsLeft = [stringRef substringWithRange:NSMakeRange(lastIdx, range.location - lastIdx + 1)];
+                        [textView replaceRange:lineTextRange withText:[tabStrToUse stringByAppendingString:charsLeft]];
                         /// Handled
                         return NO;
                     }
+                    
                 }
             }
         }

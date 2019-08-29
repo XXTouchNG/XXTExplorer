@@ -1265,6 +1265,9 @@
 		D661679522F1D94F00EC8835 /* HLTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = D661679322F1D94F00EC8835 /* HLTheme.plist */; };
 		D661679622F1D94F00EC8835 /* HLTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = D661679322F1D94F00EC8835 /* HLTheme.plist */; };
 		D6625FBE22ED3B2D00053549 /* XXTESingleActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5D6C082010E3A600BD1DDC /* XXTESingleActionView.xib */; };
+		D6677EBE231759E200414CA0 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6677EBD231759E200414CA0 /* fontello.ttf */; };
+		D6677EBF231759E200414CA0 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6677EBD231759E200414CA0 /* fontello.ttf */; };
+		D6677EC0231759E200414CA0 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6677EBD231759E200414CA0 /* fontello.ttf */; };
 		D6686F271F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */; };
 		D6686F2D1F4AC920004403D0 /* XXTEMoreValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F2C1F4AC920004403D0 /* XXTEMoreValueView.m */; };
 		D6686F321F4ACEB6004403D0 /* XXTEMoreValueViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F301F4ACEB6004403D0 /* XXTEMoreValueViewCell.m */; };
@@ -2146,6 +2149,7 @@
 		D66085661F3C691100E87B3C /* XXTEEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorController.m; sourceTree = "<group>"; };
 		D661678B22F1A0F100EC8835 /* XXTECodeViewerDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTECodeViewerDefaults.h; sourceTree = "<group>"; };
 		D661679322F1D94F00EC8835 /* HLTheme.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = HLTheme.plist; sourceTree = "<group>"; };
+		D6677EBD231759E200414CA0 /* fontello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fontello.ttf; sourceTree = "<group>"; };
 		D6686F251F4AC4CE004403D0 /* XXTEEditorSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSettingsViewController.h; sourceTree = "<group>"; };
 		D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSettingsViewController.m; sourceTree = "<group>"; };
 		D6686F2B1F4AC920004403D0 /* XXTEMoreValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreValueView.h; sourceTree = "<group>"; };
@@ -2406,6 +2410,7 @@
 		0F00CAF61F66F8B300692913 /* Accessory */ = {
 			isa = PBXGroup;
 			children = (
+				D6677EBD231759E200414CA0 /* fontello.ttf */,
 				0F00CAED1F66F7A500692913 /* XXTEKeyboardButton.h */,
 				0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */,
 				0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */,
@@ -4798,6 +4803,7 @@
 				0F8ECD531FE802A900A5457C /* Sunburst.png in Resources */,
 				0F8EDC941FB1F779003C92D6 /* Ciapre (Black).tmTheme in Resources */,
 				D6F0AD8022FAD94B00970123 /* Lua.tmLanguage in Resources */,
+				D6677EC0231759E200414CA0 /* fontello.ttf in Resources */,
 				0F8EDC961FB1F779003C92D6 /* XXTEAssets.xcassets in Resources */,
 				0F8EDC971FB1F779003C92D6 /* OneHalf (Dark).tmTheme in Resources */,
 				0F8ECD421FE802A900A5457C /* Dawn.png in Resources */,
@@ -4945,6 +4951,7 @@
 				D60A26D21F3DB84A00E013E2 /* Monokai.tmTheme in Resources */,
 				0FD973F41F4B1D7B00133162 /* Oceanic (Eighties).tmTheme in Resources */,
 				0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */,
+				D6677EBE231759E200414CA0 /* fontello.ttf in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
@@ -5062,6 +5069,7 @@
 				D60FE7B81FE2369300954818 /* Oceanic.tmTheme in Resources */,
 				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
 				0F469CE6200CE2C10042F1BF /* RMCloudExpandableCell.xib in Resources */,
+				D6677EBF231759E200414CA0 /* fontello.ttf in Resources */,
 				BD00B61C2309A25D0026AF27 /* A.tmTheme in Resources */,
 				D60FE7BA1FE2369300954818 /* Mac Classic.tmTheme in Resources */,
 				BD00B63B2309A25D0026AF27 /* Sunburst.png in Resources */,
