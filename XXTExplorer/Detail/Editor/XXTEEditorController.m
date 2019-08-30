@@ -211,6 +211,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
             _language = language;
             languageReloaded = YES;
         }
+        else
+        {
+            _language = nil;
+            languageReloaded = YES;
+        }
     }
     
     // Font
@@ -243,6 +248,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
             }
             _theme = theme;
         }
+        else
+        {
+            _theme = nil;
+        }
     }
     NSAssert(self.theme, @"Cannot load default theme from main bundle.");
     
@@ -255,6 +264,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
                 
             }
             _parser = parser;
+            [self invalidateSyntaxCaches];
+        }
+        else
+        {
+            _parser = nil;
             [self invalidateSyntaxCaches];
         }
     }
@@ -1374,7 +1388,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (!self.syntaxCache) {
         return NO;
     }
-    return [self.syntaxCache.referencedParser isEqual:self.parser] && [self.syntaxCache.text isEqualToString:self.textView.text];
+    if (self.syntaxCache.referencedParser == nil && self.parser == nil) {
+        return YES;
+    }  // both nil, use empty cache to render
+    if ([self.syntaxCache.referencedParser isEqual:self.parser] &&
+        [self.syntaxCache.text isEqualToString:self.textView.text]) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)invalidateSyntaxCaches {

@@ -205,6 +205,7 @@
 
 - (BOOL)loadFilePropertiesWithError:(NSError **)err {
     NSString *filePath = self.editor.entryPath;
+    NSString *fileExtension = [filePath pathExtension];
     {
         self.filenameLabel.text = [filePath lastPathComponent];
     }
@@ -248,7 +249,12 @@
         if (self.editor.language) {
             self.syntaxDefinitionLabel.text = self.editor.language.displayName;
         } else {
-            self.syntaxDefinitionLabel.text = NSLocalizedString(@"Undefined", nil);
+            NSDictionary *languageMeta = [XXTEEditorLanguage languageMetaForExtension:fileExtension];
+            if (languageMeta) {
+                self.syntaxDefinitionLabel.text = languageMeta[kXXTEEditorLanguageKeyDisplayName];
+            } else {
+                self.syntaxDefinitionLabel.text = NSLocalizedString(@"Undefined", nil);
+            }
         }
     }
     {

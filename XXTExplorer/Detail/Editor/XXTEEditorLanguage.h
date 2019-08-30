@@ -8,9 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+
 extern NSString * const kTextMateCommentStart;
 extern NSString * const kTextMateCommentMultilineStart;
 extern NSString * const kTextMateCommentMultilineEnd;
+
+static NSString * const kXXTEEditorLanguageKeyComments = @"comments";
+static NSString * const kXXTEEditorLanguageKeyIndent = @"indent";
+static NSString * const kXXTEEditorLanguageKeyFolding = @"folding";
+static NSString * const kXXTEEditorLanguageKeyKeymap = @"keymap";
+static NSString * const kXXTEEditorLanguageKeyKeymapiPad = @"keymap~ipad";
+static NSString * const kXXTEEditorLanguageKeyIdentifier = @"identifier";
+static NSString * const kXXTEEditorLanguageKeyDisplayName = @"displayName";
+static NSString * const kXXTEEditorLanguageKeyName = @"name";
+static NSString * const kXXTEEditorLanguageKeyExtensions = @"extensions";
+static NSString * const kXXTEEditorLanguageKeyHasSymbol = @"hasSymbol";
 
 @class SKLanguage;
 
@@ -31,5 +43,10 @@ extern NSString * const kTextMateCommentMultilineEnd;
 @property (nonatomic, assign, readonly) BOOL hasSymbol;
 
 - (instancetype)initWithExtension:(NSString *)extension;
+
++ (NSArray <NSDictionary *> *)languageMetas;
++ (NSDictionary *)languageMetaForExtension:(NSString *)extension;
++ (NSDictionary *)languageMetaForIdentifier:(NSString *)identifier;
++ (NSString *)pathForLanguageIdentifier:(NSString *)identifier;
 
 @end
