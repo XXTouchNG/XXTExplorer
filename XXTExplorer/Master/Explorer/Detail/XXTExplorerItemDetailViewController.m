@@ -263,7 +263,7 @@ static int sizingCancelFlag = 0;
     self.entryBundle = entryBundle;
     
     struct stat entryStat;
-    if (lstat([entryPath UTF8String], &entryStat) != 0) return;
+    if (lstat([entryPath fileSystemRepresentation], &entryStat) != 0) return;
     
     // #1 - Name (Required)
     {

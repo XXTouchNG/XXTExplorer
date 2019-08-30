@@ -9,8 +9,13 @@
 #import "XXTEEditorStatisticsViewController.h"
 #import "XXTEEditorTextView.h"
 #import <PromiseKit/PromiseKit.h>
+
+// Children
 #import "XXTEEncodingController.h"
 #import "XXTEEditorLineBreakController.h"
+#import "XXTEEditorRenameTableViewController.h"
+
+// Helpers
 #import "XXTEEncodingHelper.h"
 #import "XXTEEditorLineBreakHelper.h"
 
@@ -28,9 +33,9 @@
 #import "XXTEMoreTitleValueCell.h"
 
 #ifdef APPSTORE
-@interface XXTEEditorStatisticsViewController () <XXTEEncodingControllerDelegate, XXTEEditorLineBreakControllerDelegate>
+@interface XXTEEditorStatisticsViewController () <XXTEEncodingControllerDelegate, XXTEEditorLineBreakControllerDelegate, XXTEEditorRenameTableViewControllerDelegate>
 #else
-@interface XXTEEditorStatisticsViewController ()
+@interface XXTEEditorStatisticsViewController () <XXTEEditorRenameTableViewControllerDelegate>
 #endif
 
 @property (strong, nonatomic) UILabel *filenameLabel;
@@ -44,6 +49,8 @@
 @property (strong, nonatomic) UILabel *lineCountLabel;
 @property (strong, nonatomic) UILabel *characterCountLabel;
 @property (strong, nonatomic) UILabel *wordCountLabel;
+
+@property (nonatomic, assign) BOOL needsReload;
 
 @end
 
@@ -69,7 +76,7 @@
 }
 
 - (void)setup {
-    
+    _needsReload = YES;
 }
 
 - (void)viewDidLoad {
@@ -96,13 +103,7 @@
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
     
-    [self reloadStaticTableViewData];
-    
-    NSError *error = nil;
-    BOOL result = [self loadFilePropertiesWithError:&error];
-    if (!result) {
-        toastError(self, error);
-    }
+    [self reloadAllIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -130,6 +131,7 @@
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Filename", nil);
+    cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.filenameLabel = cell1.valueLabel;
     
     XXTEMoreTitleValueCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -176,6 +178,27 @@
                     @[ cell4, cell5, cell6 ],
                     @[ cell7, cell8, cell9 ]
                     ];
+}
+
+#pragma mark - Reload
+
+- (void)reloadAllIfNeeded {
+    if (self.needsReload) {
+        self.needsReload = NO;
+        [self reloadAll];
+    }
+}
+
+- (void)reloadAll {
+    [self reloadStaticTableViewData];
+    
+    NSError *error = nil;
+    BOOL result = [self loadFilePropertiesWithError:&error];
+    if (!result) {
+        toastError(self, error);
+    }
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Statistics
@@ -340,20 +363,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == 0) {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
-                NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
-                if (detailText && detailText.length > 0) {
-                    UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
-                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                            [[UIPasteboard generalPasteboard] setString:detailText];
-                            fulfill(nil);
+            if (indexPath.row == 0) {
+                XXTEEditorRenameTableViewController *controller = [[XXTEEditorRenameTableViewController alloc] initWithPath:self.editor.entryPath];
+                controller.delegate = self;
+                [self.navigationController pushViewController:controller animated:YES];
+            } else {
+                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
+                    NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
+                    if (detailText && detailText.length > 0) {
+                        UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
+                        [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                                [[UIPasteboard generalPasteboard] setString:detailText];
+                                fulfill(nil);
+                            });
+                        }].finally(^() {
+                            toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
+                            blockInteractions(blockVC, NO);
                         });
-                    }].finally(^() {
-                        toastMessage(self, NSLocalizedString(@"Copied to the pasteboard.", nil));
-                        blockInteractions(blockVC, NO);
-                    });
+                    }
                 }
             }
         } else if (indexPath.section == 1) {
@@ -420,6 +449,18 @@
     [self.editor setNeedsReloadAll];
 }
 #endif
+
+#pragma mark - XXTEEditorRenameTableViewControllerDelegate
+
+- (void)renameTableViewController:(XXTEEditorRenameTableViewController *)controller itemDidMoveToPath:(NSString *)path {
+    [self.editor setRenamedEntryPath:path];
+    @weakify(self);
+    dispatch_async_on_main_queue(^{
+        @strongify(self);
+        [self setNeedsReload:YES];
+        [self reloadAllIfNeeded];
+    });
+}
 
 - (void)dealloc {
 #ifdef DEBUG

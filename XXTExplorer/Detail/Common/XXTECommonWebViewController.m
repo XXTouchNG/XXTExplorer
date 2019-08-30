@@ -45,7 +45,7 @@
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     }
     
-    self.loadingBarTintColor = [UIColor colorWithWhite:1.0 alpha:0.33];
+    self.loadingBarTintColor = [XXTColorForeground() colorWithAlphaComponent:0.33];
     self.showLoadingBar = YES;
     self.showUrlWhileLoading = NO;
     self.hideWebViewBoundaries = NO;

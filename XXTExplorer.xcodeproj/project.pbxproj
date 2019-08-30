@@ -888,6 +888,9 @@
 		D60D0A031FE8BCB100289725 /* Mac Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD231FE7FE0800A5457C /* Mac Classic.png */; };
 		D60D0A041FE8BCB100289725 /* Monokai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD3F1FE802A900A5457C /* Monokai.png */; };
 		D60D0A051FE8BCB100289725 /* Oceanic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8ECD2F1FE802A500A5457C /* Oceanic.png */; };
+		D60EF9A32318AE5200DA6789 /* XXTEEditorRenameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D60EF9A22318AE5200DA6789 /* XXTEEditorRenameTableViewController.m */; };
+		D60EF9A42318AE5200DA6789 /* XXTEEditorRenameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D60EF9A22318AE5200DA6789 /* XXTEEditorRenameTableViewController.m */; };
+		D60EF9A52318AE5200DA6789 /* XXTEEditorRenameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D60EF9A22318AE5200DA6789 /* XXTEEditorRenameTableViewController.m */; };
 		D60F864422F0741900C5F526 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		D60FE6491FE226F000954818 /* XXTEEditorSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */; };
 		D60FE64A1FE226F000954818 /* XXTEEditorSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */; };
@@ -2077,6 +2080,8 @@
 		D60A26D11F3DB84A00E013E2 /* Monokai.tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = Monokai.tmTheme; sourceTree = "<group>"; };
 		D60A26D31F3DB85100E013E2 /* Solarized (Dark).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Solarized (Dark).tmTheme"; sourceTree = "<group>"; };
 		D60A26D41F3DB85100E013E2 /* Solarized (Light).tmTheme */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "Solarized (Light).tmTheme"; sourceTree = "<group>"; };
+		D60EF9A12318AE5200DA6789 /* XXTEEditorRenameTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorRenameTableViewController.h; sourceTree = "<group>"; };
+		D60EF9A22318AE5200DA6789 /* XXTEEditorRenameTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorRenameTableViewController.m; sourceTree = "<group>"; };
 		D60FE6471FE226F000954818 /* XXTEEditorSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSearchBar.h; sourceTree = "<group>"; };
 		D60FE6481FE226F000954818 /* XXTEEditorSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSearchBar.m; sourceTree = "<group>"; };
 		D60FE64B1FE2344600954818 /* RevealServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevealServer.framework; path = Frameworks/RevealServer.framework; sourceTree = "<group>"; };
@@ -3346,6 +3351,8 @@
 		0FB388E21FA860AA00B41E44 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				D60EF9A12318AE5200DA6789 /* XXTEEditorRenameTableViewController.h */,
+				D60EF9A22318AE5200DA6789 /* XXTEEditorRenameTableViewController.m */,
 				0FB388E31FA860E800B41E44 /* XXTEEditorStatisticsViewController.h */,
 				0FB388E41FA860E800B41E44 /* XXTEEditorStatisticsViewController.m */,
 			);
@@ -5355,6 +5362,7 @@
 				0F8EDB781FB1F779003C92D6 /* XXTImagePickerController.m in Sources */,
 				0F8EDB791FB1F779003C92D6 /* XXTPickerSnippet.m in Sources */,
 				0F8EDB7A1FB1F779003C92D6 /* XXTExplorerViewController+UIDocumentMenuDelegate.m in Sources */,
+				D60EF9A52318AE5200DA6789 /* XXTEEditorRenameTableViewController.m in Sources */,
 				D64C42FC1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */,
 				0F8EDB7B1FB1F779003C92D6 /* XXTExplorerEntryWebReader.m in Sources */,
 				D6DB972322FA864F00C4EA17 /* UITextView+VisibleRange.m in Sources */,
@@ -5904,6 +5912,7 @@
 				B03129A83F3BF69AC89BC4CE /* lauxlib.c in Sources */,
 				B0312B4FE33A641307325C7A /* lbaselib.c in Sources */,
 				B0312E7DB009E7FB2A5FB5DF /* lbitlib.c in Sources */,
+				D60EF9A32318AE5200DA6789 /* XXTEEditorRenameTableViewController.m in Sources */,
 				0F2DAE5A2013173D001593C9 /* RMHotWord.m in Sources */,
 				B0312DF40FB983A6683D34FE /* lcode.c in Sources */,
 				B0312E0B03F5361610C9837D /* lcorolib.c in Sources */,
@@ -6262,6 +6271,7 @@
 				D60FE73C1FE2369300954818 /* lauxlib.c in Sources */,
 				D60FE73E1FE2369300954818 /* lbaselib.c in Sources */,
 				D60FE73F1FE2369300954818 /* lbitlib.c in Sources */,
+				D60EF9A42318AE5200DA6789 /* XXTEEditorRenameTableViewController.m in Sources */,
 				0F2DAE5B2013173D001593C9 /* RMHotWord.m in Sources */,
 				D60FE7401FE2369300954818 /* lcode.c in Sources */,
 				D60FE7411FE2369300954818 /* lcorolib.c in Sources */,

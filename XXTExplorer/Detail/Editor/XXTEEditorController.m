@@ -596,6 +596,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     [self reloadAllIfNeeded];
     [self resetUndoManager];
     
+    [self updateControllerTitles];
+    
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
         [self.navigationItem setLeftBarButtonItems:self.splitButtonItems];
@@ -714,14 +716,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     self.navigationItem.leftItemsSupplementBackButton = NO;
     self.navigationItem.hidesBackButton = YES;
     
-    if (self.title.length == 0) {
-        NSString *entryPath = self.entryPath;
-        if (entryPath) {
-            NSString *entryName = [entryPath lastPathComponent];
-            self.title = entryName;
-        }
-    }
-    
     if (@available(iOS 13.0, *)) {
         self.view.backgroundColor = [UIColor systemBackgroundColor];
     } else {
@@ -734,8 +728,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     } else {
         self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
     }
-    self.lockedTitleView.title = self.title;
-    self.lockedTitleView.subtitle = XXTTiledPath(self.entryPath);
     self.navigationItem.titleView = self.lockedTitleView;
     
     // Subviews
@@ -800,6 +792,18 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     [self setNeedsReloadAll];
+}
+
+#pragma mark - Interface: Titles
+
+- (void)updateControllerTitles {
+    NSString *entryPath = self.entryPath;
+    if (entryPath) {
+        NSString *entryName = [entryPath lastPathComponent];
+        self.title = entryName;
+    }
+    self.lockedTitleView.title = self.title;
+    self.lockedTitleView.subtitle = XXTTiledPath(self.entryPath);
 }
 
 #pragma mark - Interface: Rotation
@@ -2076,6 +2080,16 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         self.shouldFocusTextView = NO;
         [self.textView becomeFirstResponder];
     }
+}
+
+#pragma mark - Rename
+
+- (void)setRenamedEntryPath:(NSString *)entryPath {
+    _entryPath = entryPath;
+    _language = nil;  // needs reload language
+    [self updateControllerTitles];
+    [self setNeedsSaveDocument];
+    [self setNeedsReloadAll];
 }
 
 #pragma mark - Memory

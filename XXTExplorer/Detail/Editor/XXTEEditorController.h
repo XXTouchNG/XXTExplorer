@@ -55,4 +55,8 @@
 - (void)toggleSearchBar:(UIBarButtonItem *)sender animated:(BOOL)animated;
 @property (nonatomic, assign, getter=isSearchMode, readonly) BOOL searchMode;
 
+#pragma mark - Rename
+
+- (void)setRenamedEntryPath:(NSString *)entryPath;
+
 @end
