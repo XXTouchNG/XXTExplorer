@@ -46,6 +46,7 @@
 - (void)setNeedsFocusTextView;  // called from menu
 - (void)setNeedsHighlightRange:(NSRange)range;  // called from symbol controller
 
+- (void)preloadIfNecessary;
 - (void)reloadAttributesIfNecessary;  // called from states
 - (void)saveDocumentIfNecessary;  // called from keyboard events
 - (void)focusTextViewIfNecessary;  // called from picker collection

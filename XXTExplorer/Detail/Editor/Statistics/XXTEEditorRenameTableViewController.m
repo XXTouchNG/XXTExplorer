@@ -56,7 +56,7 @@
     }
     XXTE_END_IGNORE_PARTIAL
     
-    self.title = NSLocalizedString(@"Item Detail", nil);
+    self.title = NSLocalizedString(@"Item Rename", nil);
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -88,6 +88,13 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![self.nameField isFirstResponder]) {
+        [self.nameField becomeFirstResponder];
+    }
 }
 
 - (void)reloadStaticTableViewData {
@@ -138,13 +145,18 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
         if (section == 0) {
-            return NSLocalizedString(@"Filename", nil);
+            return NSLocalizedString(@"New Filename", nil);
         }
     }
     return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (tableView == self.tableView) {
+        if (section == 0) {
+            return NSLocalizedString(@"Tap \"Done\" on keyboard to save changes you just made.", nil);
+        }
+    }
     return @"";
 }
 

@@ -147,6 +147,7 @@
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorHighlightEnabled, optionSwitch.on);
             [self.editor setNeedsReloadAll];
+            [self.editor preloadIfNecessary];
         }];
     }
     
@@ -539,6 +540,7 @@
 - (void)valueViewValueDidChanged:(XXTEMoreValueView *)view {
     XXTEDefaultsSetBasic(XXTEEditorFontSize, view.value);
     [self.editor setNeedsReload:XXTEEditorFontSize];
+    [self.editor preloadIfNecessary];
 }
 
 #pragma mark - XXTEEditorFontSettingsViewControllerDelegate
@@ -551,6 +553,7 @@
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.font = font;
     }
     [self.editor setNeedsReload:XXTEEditorFontName];
+    [self.editor preloadIfNecessary];
 }
 
 #pragma mark - XXTEEditorThemeSettingsViewControllerDelegate
@@ -559,6 +562,7 @@
     XXTEDefaultsSetObject(XXTEEditorThemeName, [controller.selectedThemeName copy]);
     ((XXTEMoreTitleValueCell *)staticCells[1][0]).valueLabel.text = controller.selectedThemeName;
     [self.editor setNeedsReload:XXTEEditorThemeName];
+    [self.editor preloadIfNecessary];
 }
 
 #pragma mark - UITextFieldDelegate

@@ -1,0 +1,8 @@
+
+.icon-erase:before { content: '\e800'; } /* '' */
+.icon-ccw:before { content: '\e801'; } /* '' */
+.icon-cw:before { content: '\e802'; } /* '' */
+.icon-right:before { content: '\e803'; } /* '' */
+.icon-target:before { content: '\e804'; } /* '' */
+.icon-keyboard:before { content: '\e805'; } /* '' */
+.icon-arrows-ccw:before { content: '\e806'; } /* '' */

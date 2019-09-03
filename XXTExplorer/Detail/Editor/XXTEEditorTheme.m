@@ -19,6 +19,47 @@
 
 @implementation XXTEEditorTheme
 
++ (NSArray <NSDictionary *> *)themeMetas {
+    static NSArray <NSDictionary *> *metas = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        metas = ({
+            NSString *themeMetasPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
+            assert(themeMetasPath);
+            NSArray <NSDictionary *> *themeMetas = [[NSArray alloc] initWithContentsOfFile:themeMetasPath];
+            assert([themeMetas isKindOfClass:[NSArray class]]);
+            themeMetas;
+        });
+    });
+    return metas;
+}
+
++ (NSDictionary *)themeMetaForName:(NSString *)name atPath:(NSString **)path {
+    BOOL registered = NO;
+    for (NSDictionary *themeMeta in [[self class] themeMetas]) {
+        NSString *themeName = themeMeta[@"name"];
+        if ([themeName isKindOfClass:[NSString class]] &&
+            [themeName isEqualToString:name]) {
+            if ([[NSBundle mainBundle] pathForResource:themeName ofType:@"tmTheme"])
+            {
+                registered = YES;
+                break;
+            }
+        }
+    }
+    
+    if (registered) {
+        NSString *themePath = [[NSBundle mainBundle] pathForResource:name ofType:@"tmTheme"];
+        if (path) *path = [themePath copy];
+        NSDictionary *themeDictionary = [[NSDictionary alloc] initWithContentsOfFile:themePath];
+        NSAssert([themeDictionary isKindOfClass:[NSDictionary class]], @"Malformed textmate theme: \"%@\".", themePath);
+        
+        return themeDictionary;
+    }
+    
+    return nil;
+}
+
 - (instancetype)initWithName:(NSString *)name baseFont:(UIFont *)font {
     if (self = [super init]) {
         _font = font ? font : [UIFont fontWithName:@"Courier" size:14.0];
@@ -31,27 +72,12 @@
         _barTintColor = nil;
         _barTextColor = nil;
         
-        NSString *themeMetasPath = [[NSBundle mainBundle] pathForResource:@"SKTheme" ofType:@"plist"];
-        assert(themeMetasPath);
-        NSArray *themeMetas = [[NSArray alloc] initWithContentsOfFile:themeMetasPath];
-        assert([themeMetas isKindOfClass:[NSArray class]]);
-        BOOL registered = NO;
-        for (NSDictionary *themeMeta in themeMetas) {
-            NSString *themeName = themeMeta[@"name"];
-            if ([themeName isKindOfClass:[NSString class]] &&
-                [themeName isEqualToString:name]) {
-                if ([[NSBundle mainBundle] pathForResource:themeName ofType:@"tmTheme"])
-                {
-                    registered = YES;
-                    break;
-                }
-            }
+        NSString *themePath = nil;
+        NSDictionary *themeDictionary = [[self class] themeMetaForName:name atPath:&themePath];
+        if (!themeDictionary) {
+            return nil;
         }
-        if (!registered) return nil; // not registered, reset to default
         
-        NSString *themePath = [[NSBundle mainBundle] pathForResource:name ofType:@"tmTheme"];
-        NSDictionary *themeDictionary = [[NSDictionary alloc] initWithContentsOfFile:themePath];
-        NSAssert([themeDictionary isKindOfClass:[NSDictionary class]], @"Malformed textmate theme: \"%@\".", themePath);
         NSArray <NSDictionary *> *themeSettings = themeDictionary[@"settings"];
         NSAssert([themeSettings isKindOfClass:[NSArray class]], @"Malformed textmate theme: \"%@\".", themePath);
         NSDictionary *globalTheme = nil;
@@ -64,7 +90,7 @@
         NSAssert([globalTheme isKindOfClass:[NSDictionary class]], @"Cannot find global table for theme: \"%@\".", themePath);
         [self setupWithDictionary:globalTheme];
         
-        NSArray <UIFont *> *rawFonts = [self fontsForFontFamilyAnyOfFontName:font.fontName ofSize:font.pointSize];
+        NSArray <UIFont *> *rawFonts = [[self class] fontsForFontFamilyAnyOfFontName:font.fontName ofSize:font.pointSize];
         SKTheme *rawTheme = [[SKTheme alloc] initWithDictionary:themeDictionary baseFonts:rawFonts];
         assert(rawTheme);
         _skTheme = rawTheme;
@@ -139,11 +165,18 @@
 
 #pragma mark - Fonts
 
-- (NSArray <UIFont *> *)fontsForFontFamilyAnyOfFontName:(NSString *)tFontName ofSize:(CGFloat)size {
++ (NSArray <UIFont *> *)fontsForFontFamilyAnyOfFontName:(NSString *)tFontName ofSize:(CGFloat)size {
     if (!tFontName) return nil;
-    NSString *fontArrsPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SKFont" ofType:@"plist"];
+    static NSArray <NSDictionary *> *fontArrs = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fontArrs = ({
+            NSString *fontArrsPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SKFont" ofType:@"plist"];
+            [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
+        });
+    });
+    
     NSArray <NSString *> *retFontNames = nil;
-    NSArray <NSDictionary *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
     for (NSDictionary *fontDict in fontArrs) {
         NSArray <NSString *> *fontNames = fontDict[@"fonts"];
         if (![fontNames isKindOfClass:[NSArray class]]) continue;
@@ -157,6 +190,7 @@
             break;
         }
     }
+    
     if (retFontNames.count != 4) return nil;
     NSMutableArray <UIFont *> *retFonts = [[NSMutableArray alloc] init];
     for (NSString *retFontName in retFontNames) {
@@ -165,6 +199,7 @@
             [retFonts addObject:retFont];
         }
     }
+    
     return [retFonts copy];
 }
 

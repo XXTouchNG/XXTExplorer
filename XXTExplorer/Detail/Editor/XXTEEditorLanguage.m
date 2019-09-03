@@ -25,11 +25,13 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
     static NSArray <NSDictionary *> *metas = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *languageMetasPath = [[NSBundle mainBundle] pathForResource:@"SKLanguage" ofType:@"plist"];
-        assert(languageMetasPath);
-        NSArray <NSDictionary *> *languageMetas = [[NSArray alloc] initWithContentsOfFile:languageMetasPath];
-        assert([languageMetas isKindOfClass:[NSArray class]]);
-        metas = languageMetas;
+        metas = ({
+            NSString *languageMetasPath = [[NSBundle mainBundle] pathForResource:@"SKLanguage" ofType:@"plist"];
+            assert(languageMetasPath);
+            NSArray <NSDictionary *> *languageMetas = [[NSArray alloc] initWithContentsOfFile:languageMetasPath];
+            assert([languageMetas isKindOfClass:[NSArray class]]);
+            languageMetas;
+        });
     });
     return metas;
 }
@@ -82,6 +84,7 @@ NSString * const kTextMateCommentMultilineEnd = @"TM_COMMENT_END_2";
     if (self)
     {
         NSDictionary *languageMeta = [[self class] languageMetaForExtension:extension];
+        if (!languageMeta) return nil;  // no such language
         assert([languageMeta isKindOfClass:[NSDictionary class]]);
         
         NSString *languageIdentifier = languageMeta[@"identifier"];

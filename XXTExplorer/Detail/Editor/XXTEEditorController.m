@@ -99,6 +99,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 @property (nonatomic, assign) BOOL shouldSaveDocument;
 @property (nonatomic, assign) BOOL shouldReloadAttributes;
+@property (nonatomic, assign) BOOL shouldResetAttributes;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
 @property (nonatomic, assign) BOOL shouldEraseAllLineMasks;
 
@@ -157,6 +158,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     self.automaticallyAdjustsScrollViewInsets = NO; // !important
     
     _shouldReloadAttributes = NO;
+    _shouldResetAttributes = NO;
     _shouldSaveDocument = NO;
     _shouldFocusTextView = NO;
     _shouldHighlightRange = NO;
@@ -181,10 +183,24 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     [self registerUndoNotifications];
 }
 
+- (void)preloadIfNecessary {
+    BOOL shouldPreload = NO;
+    for (NSString *defaultsKey in self.defaultsKeysToReload) {
+        if ([[self defaultsKeysShouldPreload] containsObject:defaultsKey]) {
+            shouldPreload = YES;
+            break;
+        }
+    }
+    if (shouldPreload) {
+        [self preloadDefaults];
+    }
+}
+
 - (void)reloadAllIfNeeded {
     if (self.shouldReloadAll) {
         self.shouldReloadAll = NO;
         NSString *newContent = [self loadContent];
+        [self preloadDefaults];
         [self reloadDefaults];
         [self reloadTextViewWidthIfNecessary];
         [self reloadNavigationBarIfNecessary];
@@ -193,8 +209,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
 }
 
-- (void)reloadDefaults {
-    if (![self isViewLoaded]) return;
+- (void)preloadDefaults {
     NSMutableArray <NSString *> *keysToReload = self.defaultsKeysToReload;
     
     // Language
@@ -271,7 +286,17 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
             _parser = nil;
             [self invalidateSyntaxCaches];
         }
+        [self setNeedsResetAttributes];
     }
+    
+    if (languageReloaded) {
+        [self.defaultsKeysToReload addObject:XXTEEditorLanguageReloaded];
+    }
+}
+
+- (void)reloadDefaults {
+    if (![self isViewLoaded]) return;
+    NSMutableArray <NSString *> *keysToReload = self.defaultsKeysToReload;
     
     // Main View
     if ([keysToReload containsObject:XXTEEditorThemeName]) {
@@ -408,7 +433,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Keyboard Row
-    if (languageReloaded) {
+    if ([keysToReload containsObject:XXTEEditorLanguageReloaded]) {
         self.keyboardRow = ({
             [[XXTEKeyboardRow alloc] initWithKeymap:self.language.keymap];
         });
@@ -638,6 +663,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Reload Defaults
     if (isFirstTimeAppeared) {
+        [self preloadDefaults];
         [self reloadDefaults];
         [self reloadTextViewWidthIfNecessary];
         [self reloadNavigationBarIfNecessary];
@@ -1133,7 +1159,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == self.textView) {
-        [self renderSyntaxOnScreen];
+        [self renderSyntaxTextAttributesOnScreen];
     } else if (scrollView == self.containerView) {
         
     }
@@ -1141,7 +1167,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
     if (scrollView == self.textView) {
-        [self renderSyntaxOnScreen];
+        [self renderSyntaxTextAttributesOnScreen];
     } else if (scrollView == self.containerView) {
         
     }
@@ -1265,12 +1291,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)reloadAttributes {
     if (![self isViewLoaded]) return;
     if ([self isHighlightEnabled]) {
+        [self resetThemeTextAttributesOnScreen];
+        
+#ifdef DEBUG
+        NSLog(@"start parsing (full)...");
+#endif
         if (isParsing) return;
         isParsing = YES;
         
-#ifdef DEBUG
-        NSLog(@"start parsing...");
-#endif
         NSString *wholeString = self.textView.text;
         UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
         @weakify(self);
@@ -1286,24 +1314,25 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
             }];
             dispatch_async_on_main_queue(^{
                 self->isParsing = NO;
-                {
-                    XXTEEditorSyntaxCache *syntaxCache = [[XXTEEditorSyntaxCache alloc] init];
-                    syntaxCache.referencedParser = self.parser;
-                    syntaxCache.text = wholeString;
-                    syntaxCache.rangesArray = rangesArray;
-                    syntaxCache.attributesArray = attributesArray;
-                    syntaxCache.renderedSet = [[NSMutableIndexSet alloc] init];
-                    [self setSyntaxCache:syntaxCache];
-                }
-                [self renderSyntaxOnScreen];
+                
+                XXTEEditorSyntaxCache *syntaxCache = [[XXTEEditorSyntaxCache alloc] init];
+                syntaxCache.referencedParser = self.parser;
+                syntaxCache.text = wholeString;
+                syntaxCache.rangesArray = rangesArray;
+                syntaxCache.attributesArray = attributesArray;
+                syntaxCache.renderedSet = [[NSMutableIndexSet alloc] init];
+                [self setSyntaxCache:syntaxCache];
+                [self renderSyntaxTextAttributesOnScreen];
                 blockInteractions(blockVC, NO);
             });
         });
     } else {
         [self invalidateSyntaxCaches];
+        [self resetAttributesIfNecessary];
     }
 }
 
+// TODO: calculate screen range more efficiently
 - (NSRange)rangeShouldRenderOnScreen {
     XXTEEditorTextView *textView = self.textView;
     NSUInteger textLength = textView.text.length;
@@ -1323,15 +1352,51 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     return range;
 }
 
-- (void)renderSyntaxOnScreen {
-    if (self.parser.aborted) return;
-    if ([self invalidateSyntaxCachesIfNeeded]) return;
+// theme-related attributes
+- (void)resetThemeTextAttributes {
+    if (isRendering) return;
+    
+#ifdef DEBUG
+    NSLog(@"reset attributes (full)...");
+#endif
+    
+    NSTextStorage *vStorage = self.textView.vTextStorage;
+    NSDictionary *defaultAttributes = self.theme.defaultAttributes;
+    
+    [vStorage beginEditing];
+    [vStorage setAttributes:defaultAttributes range:NSMakeRange(0, vStorage.length)];
+    [vStorage endEditing];
+}
+
+// theme-related attributes
+- (void)resetThemeTextAttributesOnScreen {
+    if (isRendering) return;
+    
+#ifdef DEBUG
+    NSLog(@"reset attributes (screen)...");
+#endif
+    
+    NSTextStorage *vStorage = self.textView.vTextStorage;
+    NSDictionary *defaultAttributes = self.theme.defaultAttributes;
+    
+    NSRange range = [self rangeShouldRenderOnScreen];
+    [vStorage beginEditing];
+    [vStorage setAttributes:defaultAttributes range:range];
+    [vStorage endEditing];
+}
+
+// parser-related syntax attributes (cached)
+- (void)renderSyntaxTextAttributesOnScreen {
+    if ([self.parser aborted]) return;
+    if (![self isHighlightEnabled]) return;
+    if (![self _isValidSyntaxCache]) return;
     
     XXTEEditorSyntaxCache *cache = self.syntaxCache;
     NSArray *rangesArray = cache.rangesArray;
     NSArray *attributesArray = cache.attributesArray;
     NSMutableIndexSet *renderedSet = cache.renderedSet;
     
+    NSDictionary *defaultAttributes = self.theme.defaultAttributes;
     XXTEEditorTextView *textView = self.textView;
     NSTextStorage *vStorage = textView.vTextStorage;
     
@@ -1349,9 +1414,11 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     isRendering = YES;
     
 #ifdef DEBUG
-    NSLog(@"start rendering...");
+    NSLog(@"start rendering (screen)...");
 #endif
+    @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        @strongify(self);
         
         // Filter
         NSMutableArray <NSNumber *> *renderIndexes = [[NSMutableArray alloc] init];
@@ -1367,8 +1434,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         if (!self.parser.aborted) {
             dispatch_async_on_main_queue(^{
                 [vStorage beginEditing];
-                NSDictionary *d = self.theme.defaultAttributes;
-                [vStorage setAttributes:d range:range];
+                [vStorage setAttributes:defaultAttributes range:range];
                 NSUInteger renderLength = renderIndexes.count;
                 for (NSUInteger idx = 0; idx < renderLength; idx++) {
                     NSUInteger index = [renderIndexes[idx] unsignedIntegerValue];
@@ -1385,12 +1451,12 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 }
 
 - (BOOL)_isValidSyntaxCache {
-    if (!self.syntaxCache) {
+    if (![self _hasSyntaxCache]) {
         return NO;
     }
-    if (self.syntaxCache.referencedParser == nil && self.parser == nil) {
-        return YES;
-    }  // both nil, use empty cache to render
+    if (self.syntaxCache.referencedParser == nil || self.parser == nil) {
+        return NO;
+    }
     if ([self.syntaxCache.referencedParser isEqual:self.parser] &&
         [self.syntaxCache.text isEqualToString:self.textView.text]) {
         return YES;
@@ -1398,19 +1464,24 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     return NO;
 }
 
-- (void)invalidateSyntaxCaches {
-    // NSAssert([NSThread isMainThread], @"- [%@ invalidateSyntaxCaches] called in non-main thread!", NSStringFromClass([self class]));
-    [self setSyntaxCache:nil];
+- (BOOL)_hasSyntaxCache {
+    return (self.syntaxCache != nil);
 }
 
-- (BOOL)invalidateSyntaxCachesIfNeeded {
+- (void)invalidateSyntaxCaches {
+    // NSAssert([NSThread isMainThread], @"- [%@ invalidateSyntaxCaches] called in non-main thread!", NSStringFromClass([self class]));
+    if ([self _hasSyntaxCache]) {
+        self.syntaxCache = nil;
+        [self setNeedsResetAttributes];
+    }
+}
+
+- (void)invalidateSyntaxCachesIfInvalid {
     // NSAssert([NSThread isMainThread], @"- [%@ invalidateSyntaxCachesIfNeeded] called in non-main thread!", NSStringFromClass([self class]));
-    if ([self _isValidSyntaxCache])
-    {
-        return NO;
+    if ([self _isValidSyntaxCache]) {
+        return;
     }
     [self invalidateSyntaxCaches];
-    return YES;
 }
 
 #pragma mark - Editor: Search
@@ -1955,6 +2026,16 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 #pragma mark - Lazy Flags
 
+- (NSArray <NSString *> *)defaultsKeysShouldPreload {
+    return
+    @[
+      XXTEEditorFontName,
+      XXTEEditorFontSize,
+      XXTEEditorThemeName,
+      XXTEEditorHighlightEnabled,
+      ];
+}
+
 - (void)setNeedsReload:(NSString *)defaultKey {
     if (![self.defaultsKeysToReload containsObject:defaultKey]) {
         [self.defaultsKeysToReload addObject:defaultKey];
@@ -1999,6 +2080,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     self.shouldReloadAttributes = YES;
 }
 
+- (void)setNeedsResetAttributes {
+    self.shouldResetAttributes = YES;
+}
+
 - (void)setNeedsFocusTextView {
     self.shouldFocusTextView = YES;
 }
@@ -2038,15 +2123,24 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 }
 
 - (void)reloadAttributesIfNecessary {
-    BOOL needsReload = [self invalidateSyntaxCachesIfNeeded];
-    if (!needsReload) {  // no need to reload
+    BOOL isValidSyntaxCache = [self _isValidSyntaxCache];
+    if (isValidSyntaxCache) {  // no need to reload
         if (!self.shouldReloadAttributes) {
             return;
         }
         self.shouldReloadAttributes = NO;
+    } else {
+        [self invalidateSyntaxCaches];
     }
     [self reloadAttributes];
     self.shouldReloadAttributes = NO;
+}
+
+- (void)resetAttributesIfNecessary {
+    if (self.shouldResetAttributes) {
+        [self resetThemeTextAttributes];
+        self.shouldResetAttributes = NO;
+    }
 }
 
 - (void)eraseAllLineMasksIfNecessary {

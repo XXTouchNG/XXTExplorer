@@ -2155,3 +2155,15 @@
 
 /* No comment provided by engineer. */
 "Undo" = "撤销";
+
+/* No comment provided by engineer. */
+"Swipe: View Options" = "提示: 划动以查看选项";
+
+/* No comment provided by engineer. */
+"Item Rename" = "项目重命名";
+
+/* No comment provided by engineer. */
+"New Filename" = "新文件名";
+
+/* No comment provided by engineer. */
+"Tap \"Done\" on keyboard to save changes you just made." = "轻按键盘上的 \"完成\" 以保存刚刚进行的更改.";
