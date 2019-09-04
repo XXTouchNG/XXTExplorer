@@ -1153,7 +1153,11 @@ XXTE_END_IGNORE_PARTIAL
         [self setNeedsSaveDocument];
     }
     [self setNeedsReopenDocument];
-    [controller dismissViewControllerAnimated:YES completion:nil];
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (!XXTE_IS_FULLSCREEN(controller)) {
+            [self reopenDocumentIfNecessary];
+        }
+    }];
 }
 #endif
 
