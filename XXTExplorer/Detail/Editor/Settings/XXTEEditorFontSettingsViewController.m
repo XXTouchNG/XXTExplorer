@@ -12,11 +12,40 @@
 
 @interface XXTEEditorFontSettingsViewController ()
 
-@property (nonatomic, strong) NSArray <UIFont *> *fonts;
-
 @end
 
 @implementation XXTEEditorFontSettingsViewController
+
++ (NSArray <NSDictionary *> *)fontMetas {
+    static NSArray <NSDictionary *> *metas = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        metas = ({
+            NSString *fontArrsPath = [[NSBundle mainBundle] pathForResource:@"SKFont" ofType:@"plist"];
+            [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
+        });
+    });
+    return metas;
+}
+
++ (NSArray <UIFont *> *)availableFonts {
+    static NSMutableArray <UIFont *> *fonts = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fonts = [[NSMutableArray alloc] init];
+        for (NSDictionary *fontDict in [[self class] fontMetas]) {
+            NSArray <NSString *> *fontNames = fontDict[@"fonts"];
+            if (![fontNames isKindOfClass:[NSArray class]]) continue;
+            if (fontNames.count <= 0) continue;
+            NSString *fontName = fontNames[0];
+            UIFont *font = [UIFont fontWithName:fontName size:17.f];
+            if (font) {
+                [fonts addObject:font];
+            }
+        }
+    });
+    return fonts;
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -33,20 +62,7 @@
 }
 
 - (void)setup {
-    NSString *fontArrsPath = [[NSBundle mainBundle] pathForResource:@"SKFont" ofType:@"plist"];
-    NSArray <NSDictionary *> *fontArrs = [[NSArray alloc] initWithContentsOfFile:fontArrsPath];
-    NSMutableArray <UIFont *> *fonts = [[NSMutableArray alloc] init];
-    for (NSDictionary *fontDict in fontArrs) {
-        NSArray <NSString *> *fontNames = fontDict[@"fonts"];
-        if (![fontNames isKindOfClass:[NSArray class]]) continue;
-        if (fontNames.count <= 0) continue;
-        NSString *fontName = fontNames[0];
-        UIFont *font = [UIFont fontWithName:fontName size:17.f];
-        if (font) {
-            [fonts addObject:font];
-        }
-    }
-    _fonts = fonts;
+    
 }
 
 #pragma mark - Life Cycle
@@ -87,7 +103,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.fonts.count;
+        return [[[self class] availableFonts] count];
     }
     return 0;
 }
@@ -95,7 +111,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         XXTEMoreLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkCellReuseIdentifier forIndexPath:indexPath];
-        UIFont *font = self.fonts[indexPath.row];
+        UIFont *font = [[self class] availableFonts][indexPath.row];
         cell.titleLabel.text = font.familyName;
         cell.titleLabel.font = font;
         if ([[font fontName] isEqualToString:self.selectedFontName]) {
@@ -111,7 +127,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        UIFont *font = self.fonts[indexPath.row];
+        UIFont *font = [[self class] availableFonts][indexPath.row];
         NSString *fontName = [font fontName];
         if (![self.selectedFontName isEqualToString:fontName]) {
             self.selectedFontName = fontName;

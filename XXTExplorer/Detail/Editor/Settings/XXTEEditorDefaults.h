@@ -14,9 +14,9 @@
 
 #pragma mark - States (No Value)
 
-static NSString * const XXTEEditorLanguageReloaded = @"XXTEEditorLanguageReloaded";
-static NSString * const XXTEEditorLockedStateChanged = @"XXTEEditorLockedStateChanged";
-static NSString * const XXTEEditorInitialNumberOfLinesChanged = @"XXTEEditorInitialNumberOfLinesChanged";
+static NSString * const XXTEEditorLanguageReloaded = @"XXTEEditorLanguageReloaded"; // -> self.language
+static NSString * const XXTEEditorLockedStateChanged = @"XXTEEditorLockedStateChanged"; // -> self.isLockedState
+static NSString * const XXTEEditorInitialNumberOfLinesChanged = @"XXTEEditorInitialNumberOfLinesChanged"; // -> self.initialNumberOfLines
 
 
 #pragma mark - Preferences (Contains Value)
@@ -44,11 +44,11 @@ static NSString * const XXTEEditorAutoCapitalization = @"XXTEEditorAutoCapitaliz
 static NSString * const XXTEEditorAutoBrackets = @"XXTEEditorAutoBrackets"; // NSNumber - Bool
 
 static NSString * const XXTEEditorFontName = @"XXTEEditorFontName"; // NSString
-static NSString * const XXTEEditorFontSize = @"XXTEEditorFontSize"; // NSNumber
+static NSString * const XXTEEditorFontSize = @"XXTEEditorFontSize"; // NSNumber -> Integer from 8 to 32
 
 static NSString * const XXTEEditorAutoIndent = @"XXTEEditorAutoIndent"; // NSNumber - Bool
 static NSString * const XXTEEditorSoftTabs = @"XXTEEditorSoftTabs"; // NSNumber - Bool
-static NSString * const XXTEEditorTabWidth = @"XXTEEditorTabWidth"; // NSNumber
+static NSString * const XXTEEditorTabWidth = @"XXTEEditorTabWidth"; // NSNumber -> 2, 3, 4 or 8
 
 static NSString * const XXTEEditorSearchRegularExpression = @"XXTEEditorSearchRegularExpression"; // NSNumber - Bool
 static NSString * const XXTEEditorSearchCaseSensitive = @"XXTEEditorSearchCaseSensitive"; // NSNumber - Bool
