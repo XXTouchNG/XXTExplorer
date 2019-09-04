@@ -181,7 +181,9 @@
     fullScreenCell.titleLabel.text = NSLocalizedString(@"Auto Fullscreen", nil);
     fullScreenCell.optionSwitch.on = XXTEDefaultsBool(XXTEEditorFullScreenWhenEditing, NO);
     {
+        @weakify(self);
         [fullScreenCell.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
             UISwitch *optionSwitch = (UISwitch *)sender;
             XXTEDefaultsSetBasic(XXTEEditorFullScreenWhenEditing, optionSwitch.on);
             [self.editor setNeedsReload:XXTEEditorFullScreenWhenEditing];

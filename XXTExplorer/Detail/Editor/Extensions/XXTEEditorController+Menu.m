@@ -48,6 +48,9 @@
         || action == @selector(menuActionShiftRight:)
         || action == @selector(menuActionCodeBlocks:)
         ) {
+        if (!self.textView.isFirstResponder) {
+            return NO;
+        }
         if (YES == isReadOnlyMode ||
             YES == isLockedState ||
             nil == self.language) {
