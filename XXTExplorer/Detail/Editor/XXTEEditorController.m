@@ -6,6 +6,7 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
+#import <sys/stat.h>
 #import "XXTEEditorController.h"
 #import "XXTECodeViewerController.h"
 
@@ -61,19 +62,10 @@
 // Replace
 #import "SKParser.h"
 
-// Encoding
-#import "XXTEEncodingHelper.h"
-#import "XXTENavigationController.h"
-#import "XXTEEncodingController.h"
-
 
 static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
-#ifdef APPSTORE
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEEncodingControllerDelegate, XXTEKeyboardButtonDelegate>
-#else
 @interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEKeyboardButtonDelegate>
-#endif
 
 @property (nonatomic, strong) XXTELockedTitleView *lockedTitleView;
 @property (nonatomic, strong) XXTESingleActionView *actionView;
@@ -97,12 +89,14 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 @property (nonatomic, strong, readonly) SKAttributedParser *parser;
 @property (atomic, strong) XXTEEditorSyntaxCache *syntaxCache;
 
+@property (nonatomic, assign) NSUInteger initialNumberOfLines;
+
+@property (nonatomic, assign) BOOL shouldReopenDocument;
 @property (nonatomic, assign) BOOL shouldSaveDocument;
 @property (nonatomic, assign) BOOL shouldReloadAttributes;
 @property (nonatomic, assign) BOOL shouldResetAttributes;
 @property (nonatomic, assign) BOOL shouldFocusTextView;
 @property (nonatomic, assign) BOOL shouldEraseAllLineMasks;
-
 @property (nonatomic, assign) BOOL shouldReloadTextViewWidth;
 @property (nonatomic, assign) BOOL shouldReloadNagivationBar;
 
@@ -159,6 +153,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     _shouldReloadAttributes = NO;
     _shouldResetAttributes = NO;
+    _shouldReopenDocument = NO;
     _shouldSaveDocument = NO;
     _shouldFocusTextView = NO;
     _shouldHighlightRange = NO;
@@ -183,32 +178,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     [self registerUndoNotifications];
 }
 
-- (void)preloadIfNecessary {
-    BOOL shouldPreload = NO;
-    for (NSString *defaultsKey in self.defaultsKeysToReload) {
-        if ([[self defaultsKeysShouldPreload] containsObject:defaultsKey]) {
-            shouldPreload = YES;
-            break;
-        }
-    }
-    if (shouldPreload) {
-        [self preloadDefaults];
-    }
-}
-
-- (void)reloadAllIfNeeded {
-    if (self.shouldReloadAll) {
-        self.shouldReloadAll = NO;
-        NSString *newContent = [self loadContent];
-        [self preloadDefaults];
-        [self reloadDefaults];
-        [self reloadTextViewWidthIfNecessary];
-        [self reloadNavigationBarIfNecessary];
-        [self reloadContent:newContent];
-        [self reloadAttributesIfNecessary];
-    }
-}
-
 - (void)preloadDefaults {
     NSMutableArray <NSString *> *keysToReload = self.defaultsKeysToReload;
     
@@ -231,6 +200,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
             _language = nil;
             languageReloaded = YES;
         }
+        [keysToReload addObject:XXTEEditorLanguageReloaded];
     }
     
     // Font
@@ -288,10 +258,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         }
         [self setNeedsResetAttributes];
     }
-    
-    if (languageReloaded) {
-        [self.defaultsKeysToReload addObject:XXTEEditorLanguageReloaded];
-    }
 }
 
 - (void)reloadDefaults {
@@ -309,9 +275,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         BOOL isSimpleTitle = XXTEDefaultsBool(XXTEEditorSimpleTitleView, (XXTE_IS_IPAD ? NO : YES));
         [self.lockedTitleView setSimple:isSimpleTitle];
     }
-    if ([keysToReload containsObject:XXTEEditorReadOnly]) {
-        BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
-        BOOL shouldLocked = (isReadOnlyMode || [self isLockedState]);
+    if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorLockedStateChanged]) {
+        BOOL shouldLocked = ([self isReadOnly] || [self isLockedState]);
         [self.lockedTitleView setLocked:shouldLocked];
     }
     
@@ -337,9 +302,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         self.textView.backgroundColor = [UIColor clearColor];
         self.textView.indicatorStyle = self.isDarkMode ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
     }
-    if ([keysToReload containsObject:XXTEEditorReadOnly]) {
-        BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
-        BOOL shouldLocked = (isReadOnlyMode || [self isLockedState]);
+    if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorLockedStateChanged]) {
+        BOOL shouldLocked = ([self isReadOnly] || [self isLockedState]);
         self.textView.editable = !shouldLocked;
     }
     if ([keysToReload containsObject:XXTEEditorAutoCapitalization]) {
@@ -389,6 +353,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     BOOL shouldInvalidateTextViewLayouts = NO;
+    if ([keysToReload containsObject:XXTEEditorInitialNumberOfLinesChanged]) {
+        [self.textView.vLayoutManager setNumberOfDigits:GetNumberOfDigits(self.initialNumberOfLines)];
+        shouldInvalidateTextViewLayouts = YES;
+    }
     if ([keysToReload containsObject:XXTEEditorLineNumbersEnabled]) {
         BOOL isLineNumbersEnabled = XXTEDefaultsBool(XXTEEditorLineNumbersEnabled, (XXTE_IS_IPAD ? YES : NO));
         [self.textView setShowLineNumbers:isLineNumbersEnabled];
@@ -457,9 +425,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if ([keysToReload containsObject:XXTEEditorThemeName]) {
         self.keyboardToolbarRow.tintColor = self.theme.foregroundColor;
     }
-    if ([keysToReload containsObject:XXTEEditorReadOnly]) {
-        BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
-        BOOL shouldLocked = (isReadOnlyMode || [self isLockedState]);
+    if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorLockedStateChanged]) {
+        BOOL shouldLocked = ([self isReadOnly] || [self isLockedState]);
         self.keyboardToolbarRow.snippetItem.enabled = (self.language && !shouldLocked);
     }
     if (XXTE_IS_IPAD) {
@@ -494,7 +461,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Config Keyboard Rows
     if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorKeyboardRowAccessoryEnabled]) {
-        BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
+        BOOL isReadOnlyMode = [self isReadOnly];
         BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
         if (isReadOnlyMode) {
             [self.keyboardRow setTextInput:nil];
@@ -566,9 +533,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Shared Menu
-    if ([keysToReload containsObject:XXTEEditorReadOnly]) {
-        BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO);
-        BOOL shouldLocked = (isReadOnlyMode || [self isLockedState]);
+    if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorLockedStateChanged]) {
+        BOOL shouldLocked = ([self isReadOnly] || [self isLockedState]);
         
         if (!shouldLocked && self.language) {
             [self registerMenuActions];
@@ -592,14 +558,11 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Redraw Text View
-    if ([keysToReload containsObject:XXTEEditorFontName] ||
+    if (
+        shouldInvalidateTextViewLayouts ||
+        [keysToReload containsObject:XXTEEditorFontName] ||
         [keysToReload containsObject:XXTEEditorFontSize] ||
-        [keysToReload containsObject:XXTEEditorThemeName] ||
         [keysToReload containsObject:XXTEEditorHighlightEnabled] ||
-        [keysToReload containsObject:XXTEEditorLineNumbersEnabled] ||
-        [keysToReload containsObject:XXTEEditorShowInvisibleCharacters] ||
-        [keysToReload containsObject:XXTEEditorAutoIndent] ||
-        [keysToReload containsObject:XXTEEditorIndentWrappedLines] ||
         [keysToReload containsObject:XXTEEditorAutoWordWrap] ||
         [keysToReload containsObject:XXTEEditorWrapColumn]
         )
@@ -633,11 +596,8 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     [super viewDidLoad];
     [self _configure];
     
-    [self setNeedsReloadAll];
-    [self reloadAllIfNeeded];
-    [self resetUndoManager];
-    
     [self updateControllerTitles];
+    [self reloadAllImmediately];
     
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_COLLAPSED && [self.navigationController.viewControllers firstObject] == self) {
@@ -665,11 +625,15 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Reload Defaults
     if (isFirstTimeAppeared) {
-        [self preloadDefaults];
-        [self reloadDefaults];
-        [self reloadTextViewWidthIfNecessary];
-        [self reloadNavigationBarIfNecessary];
-        [self reloadAttributesIfNecessary];
+        if (self.shouldReopenDocument) {
+            [self reopenDocumentIfNecessary];
+        } else {
+            [self preloadDefaults];
+            [self reloadDefaults];
+            [self reloadTextViewWidthIfNecessary];
+            [self reloadNavigationBarIfNecessary];
+            [self reloadAttributesIfNecessary];
+        }
     }
     [self eraseAllLineMasksIfNecessary];
     
@@ -1115,6 +1079,10 @@ XXTE_END_IGNORE_PARTIAL
     return _textView.isFirstResponder || _searchBar.isFirstResponder;
 }
 
+- (BOOL)isReadOnly {
+    return XXTEDefaultsBool(XXTEEditorReadOnly, NO);
+}
+
 - (BOOL)isLockedState {
     return _lockedState;
 }
@@ -1178,17 +1146,25 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - XXTEEncodingControllerDelegate
 
 #ifdef APPSTORE
-- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller shouldSave:(BOOL)save
 {
     [self setCurrentEncoding:controller.selectedEncoding];
-    [self setNeedsReloadAll];
-    @weakify(self);
-    [controller dismissViewControllerAnimated:YES completion:^{
-        @strongify(self);
-        if (!XXTE_IS_FULLSCREEN(controller)) {
-            [self reloadAllIfNeeded];
-        }
-    }];
+    if (save) {
+        [self setNeedsSaveDocument];
+    }
+    [self setNeedsReopenDocument];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+#endif
+
+#ifdef APPSTORE
+- (void)encodingControllerDidChange:(XXTEEncodingController *)controller shouldSave:(BOOL)save
+{
+    [self setCurrentEncoding:controller.selectedEncoding];
+    if (save) {
+        [self setNeedsSaveDocument];
+    }
+    [self setNeedsReopenDocument];
 }
 #endif
 
@@ -1228,6 +1204,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (NSString *)loadContent {
     NSString *entryPath = self.entryPath;
     if (!entryPath) return nil;
+    
     NSUInteger numberOfLines = 0;
     NSError *readError = nil;
     CFStringEncoding tryEncoding = [self currentEncoding];
@@ -1246,14 +1223,18 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
             self.actionView.titleLabel.text = NSLocalizedString(@"Error", nil);
             self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
         }
-        return nil;
     } else {
         _lockedState = NO;
     }
+    
+    [self setInitialNumberOfLines:numberOfLines];
     [self setCurrentEncoding:tryEncoding];
     [self setCurrentLineBreak:tryLineBreak];
     [self setHasLongLine:[XXTETextPreprocessor stringHasLongLine:string LineBreak:NSStringLineBreakTypeLF]];
-    [self.textView.vLayoutManager setNumberOfDigits:GetNumberOfDigits(numberOfLines)];
+    
+    [self setNeedsReload:XXTEEditorLockedStateChanged];
+    [self setNeedsReload:XXTEEditorInitialNumberOfLinesChanged];
+    
     return string;
 }
 
@@ -1262,36 +1243,36 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (!content) return;
     
     BOOL isLockedState = self.isLockedState;
-    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    BOOL isReadOnlyMode = self.isReadOnly;
     [self resetSearch];
     
     XXTEEditorTheme *theme = self.theme;
     XXTEEditorTextView *textView = self.textView;
     
     [textView.undoManager disableUndoRegistration];
+    
     [textView setEditable:NO];
     [textView setFont:theme.font];
     [textView setTextColor:theme.foregroundColor];
     [textView setText:content];
     [textView setEditable:(isReadOnlyMode == NO && isLockedState == NO)];
     [textView setSelectedRange:NSMakeRange(0, 0)];
+    
     [textView.undoManager enableUndoRegistration];  // enable undo
-}
-
-- (void)resetUndoManager {
-    XXTEEditorTextView *textView = self.textView;
+    
     XXTEKeyboardToolbarRow *keyboardToolbarRow = self.keyboardToolbarRow;
     keyboardToolbarRow.redoItem.enabled = NO;
     keyboardToolbarRow.undoItem.enabled = NO;
-    {
-        [textView.undoManager removeAllActions];  // reset undo manager
-    }
+    
+    [textView.undoManager removeAllActions];  // reset undo manager
+    [self invalidateSyntaxCaches];
 }
 
 #pragma mark - Editor: Render Engine
 
 - (void)reloadAttributes {
     if (![self isViewLoaded]) return;
+    if ([self isLockedState]) return;
     if ([self isHighlightEnabled]) {
         [self resetThemeTextAttributesOnScreen];
         
@@ -1357,6 +1338,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 // theme-related attributes
 - (void)resetThemeTextAttributes {
     if (isRendering) return;
+    if ([self isLockedState]) return;
     
 #ifdef DEBUG
     NSLog(@"reset attributes (full)...");
@@ -1373,6 +1355,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 // theme-related attributes
 - (void)resetThemeTextAttributesOnScreen {
     if (isRendering) return;
+    if ([self isLockedState]) return;
     
 #ifdef DEBUG
     NSLog(@"reset attributes (screen)...");
@@ -1390,6 +1373,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 // parser-related syntax attributes (cached)
 - (void)renderSyntaxTextAttributesOnScreen {
     if ([self.parser aborted]) return;
+    if ([self isLockedState]) return;
     if (![self isHighlightEnabled]) return;
     if (![self _isValidSyntaxCache]) return;
     
@@ -1411,7 +1395,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     NSUInteger attributesArrayLength = attributesArray.count;
     if (rangesArrayLength != attributesArrayLength) return;
     
-    // Single
     if (isRendering) return;
     isRendering = YES;
     
@@ -1888,7 +1871,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar searchFieldShouldBeginEditing:(UITextField *)textField {
     XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
     BOOL isLockedState = self.isLockedState;
-    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    BOOL isReadOnlyMode = self.isReadOnly; // config
     [searchAccessoryView setAllowReplacement:(NO == isReadOnlyMode && NO == isLockedState)];
     [searchAccessoryView setReplaceMode:NO];
     [searchAccessoryView updateAccessoryView];
@@ -1901,7 +1884,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (BOOL)searchBar:(XXTEEditorSearchBar *)searchBar replaceFieldShouldBeginEditing:(UITextField *)textField {
     XXTEEditorSearchAccessoryView *searchAccessoryView = self.searchAccessoryView;
     BOOL isLockedState = self.isLockedState;
-    BOOL isReadOnlyMode = XXTEDefaultsBool(XXTEEditorReadOnly, NO); // config
+    BOOL isReadOnlyMode = self.isReadOnly; // config
     [searchAccessoryView setAllowReplacement:(NO == isReadOnlyMode && NO == isLockedState)];
     [searchAccessoryView setReplaceMode:YES];
     [searchAccessoryView updateAccessoryView];
@@ -2089,6 +2072,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     _shouldReloadAll = YES;
 }
 
+- (void)setNeedsReopenDocument {
+    self.shouldReopenDocument = YES;
+}
+
 - (void)setNeedsSaveDocument {
     self.shouldSaveDocument = YES;
 }
@@ -2167,6 +2154,48 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     }
 }
 
+- (void)preloadIfNecessary {
+    BOOL shouldPreload = NO;
+    for (NSString *defaultsKey in self.defaultsKeysToReload) {
+        if ([[self defaultsKeysShouldPreload] containsObject:defaultsKey]) {
+            shouldPreload = YES;
+            break;
+        }
+    }
+    if (shouldPreload) {
+        [self preloadDefaults];
+    }
+}
+
+- (void)reloadAllImmediately {
+    [self setNeedsReloadAll];
+    [self reloadAllIfNeeded];
+}
+
+- (void)reloadAllIfNeeded {
+    if (self.shouldReloadAll) {
+        self.shouldReloadAll = NO;
+        [self reloadProcedure];
+    }
+}
+
+- (void)reopenDocumentIfNecessary {
+    if (self.shouldReopenDocument) {
+        self.shouldReopenDocument = NO;
+        [self reloadProcedure];
+    }
+}
+
+- (void)reloadProcedure {
+    NSString *newContent = [self loadContent];
+    [self preloadDefaults];
+    [self reloadDefaults];
+    [self reloadTextViewWidthIfNecessary];
+    [self reloadNavigationBarIfNecessary];
+    [self reloadContent:newContent];
+    [self reloadAttributesIfNecessary];
+}
+
 - (void)saveDocumentIfNecessary {
     if (
         self.shouldSaveDocument == NO ||
@@ -2187,7 +2216,25 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     NSData *documentData = CFBridgingRelease(data);
     NSString *entryPath = self.entryPath;
     promiseFixPermission(entryPath, NO); // fix permission
-    [documentData writeToFile:entryPath atomically:YES];
+    
+    struct stat entryStat;
+    lstat(entryPath.fileSystemRepresentation, &entryStat);
+    if (S_ISLNK(entryStat.st_mode)) {
+        // support symbolic link
+        NSString *originalPath = nil;
+        char *resolved_path = (char *)malloc(PATH_MAX + 1);
+        ssize_t resolved_len = readlink(entryPath.fileSystemRepresentation, resolved_path, PATH_MAX);
+        resolved_path[resolved_len] = '\0';
+        if (resolved_len >= 0) {
+            originalPath = [[NSString alloc] initWithUTF8String:resolved_path];
+        }
+        free(resolved_path);
+        
+        [documentData writeToFile:originalPath atomically:YES];
+    } else {
+        [documentData writeToFile:entryPath atomically:YES];
+    }
+    
 #ifdef DEBUG
     NSLog(@"document saved with encoding %@: %@", [XXTEEncodingHelper encodingNameForEncoding:[self currentEncoding]], entryPath);
 #endif

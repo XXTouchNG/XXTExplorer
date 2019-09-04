@@ -182,7 +182,7 @@ static BOOL kSozoCacheLoading = NO;
         }
         dispatch_async_on_main_queue(^{
             kSozoCacheLoading = NO;
-            [mThemes writeToFile:[XXTERootPath() stringByAppendingPathComponent:@"Theme.plist"] atomically:YES];
+            [mThemes writeToFile:[[XXTERootPath() stringByAppendingPathComponent:@"caches"] stringByAppendingPathComponent:@"Themes.plist"] atomically:YES];
         });
     });
 }

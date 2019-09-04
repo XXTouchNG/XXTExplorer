@@ -845,8 +845,8 @@ XXTE_END_IGNORE_PARTIAL
             XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] initWithEntryPath:entryPath];
             explorerViewController.historyMode = self.historyMode;
             explorerViewController.displayCurrentPath = self.displayCurrentPath;
-            explorerViewController.internalSortField = explorerViewController.internalSortField;
-            explorerViewController.internalSortOrder = explorerViewController.internalSortOrder;
+            explorerViewController.internalSortField = self.internalSortField;
+            explorerViewController.internalSortOrder = self.internalSortOrder;
             return explorerViewController;
         }
     }

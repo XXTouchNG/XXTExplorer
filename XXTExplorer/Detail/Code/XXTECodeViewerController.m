@@ -416,7 +416,7 @@
 #pragma mark - XXTEEncodingControllerDelegate
 
 #ifdef APPSTORE
-- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller shouldSave:(BOOL)save
 {
     [self setCurrentEncoding:controller.selectedEncoding];
     [self setNeedsReloadUI:YES];

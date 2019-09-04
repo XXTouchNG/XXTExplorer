@@ -292,7 +292,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 #pragma mark - XXTEEncodingControllerDelegate
 
 #ifdef APPSTORE
-- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller shouldSave:(BOOL)save
 {
     [self setCurrentEncoding:controller.selectedEncoding];
     [self setNeedsReload:YES];

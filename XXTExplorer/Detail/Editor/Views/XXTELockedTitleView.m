@@ -21,14 +21,30 @@
 
 @implementation XXTELockedTitleView
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    _title = @"";
+    _subtitle = @"";
+    
+    self.titleLabel.text = @"";
+    self.subtitleLabel.text = @"";
+}
+
 - (void)setTitle:(NSString *)title {
     _title = title;
     self.titleLabel.text = title;
+    
+//    [self setNeedsLayout];
+//    [self setNeedsUpdateConstraints];
 }
 
 - (void)setSubtitle:(NSString *)subtitle {
     _subtitle = subtitle;
     self.subtitleLabel.text = subtitle;
+    
+//    [self setNeedsLayout];
+//    [self setNeedsUpdateConstraints];
 }
 
 - (void)setLocked:(BOOL)locked {
@@ -38,6 +54,9 @@
     } else {
         self.lockWidth.constant = 0.0;
     }
+    
+    [self setNeedsLayout];
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)setSimple:(BOOL)simple {
@@ -49,7 +68,9 @@
         self.subtitleLabelHeight.constant = 10.0;
         self.subtitleLabel.text = self.subtitle;
     }
-    [self updateConstraintsIfNeeded];
+    
+//    [self setNeedsLayout];
+//    [self setNeedsUpdateConstraints];
 }
 
 - (void)setTintColor:(UIColor *)tintColor

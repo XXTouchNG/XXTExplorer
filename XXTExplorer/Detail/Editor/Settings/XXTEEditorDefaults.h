@@ -11,7 +11,15 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString * const XXTEEditorLanguageReloaded = @"XXTEEditorLanguageReloaded"; // NSNumber - Bool
+
+#pragma mark - States (No Value)
+
+static NSString * const XXTEEditorLanguageReloaded = @"XXTEEditorLanguageReloaded";
+static NSString * const XXTEEditorLockedStateChanged = @"XXTEEditorLockedStateChanged";
+static NSString * const XXTEEditorInitialNumberOfLinesChanged = @"XXTEEditorInitialNumberOfLinesChanged";
+
+
+#pragma mark - Preferences (Contains Value)
 
 static NSString * const XXTEEditorReadOnly = @"XXTEEditorReadOnly"; // NSNumber - Bool
 static NSString * const XXTEEditorSimpleTitleView = @"XXTEEditorSimpleTitleView"; // NSNumber - Bool

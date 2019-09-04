@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol XXTEEditorLineBreakControllerDelegate <NSObject>
 
 @optional
-- (void)linebreakControllerDidChange:(XXTEEditorLineBreakController *)controller;
+- (BOOL)linebreakControllerCanSaveDocument:(XXTEEditorLineBreakController *)controller;
+- (void)linebreakControllerDidChange:(XXTEEditorLineBreakController *)controller shouldSave:(BOOL)save;
 
 @end
 

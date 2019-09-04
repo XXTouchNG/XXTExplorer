@@ -101,21 +101,31 @@
     NSStringLineBreakType typeVal = [type intValue];
     if (typeVal != self.selectedLineBreakType) {
         XXTEMoreTitleValueCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        @weakify(self);
-        LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Warning", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Will change current line endings to \"%@\", continue?", nil), cell.titleLabel.text] style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:[NSString stringWithFormat:NSLocalizedString(@"Use \"%@\"", nil), cell.titleLabel.text]
-                                                   actionHandler:nil
-                                                   cancelHandler:^(LGAlertView * _Nonnull alertView) {
-                                                       [alertView dismissAnimated];
-                                                   } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-                                                       @strongify(self);
-                                                       self.selectedLineBreakType = typeVal;
-                                                       if ([self.delegate respondsToSelector:@selector(linebreakControllerDidChange:)]) {
-                                                           [self.delegate linebreakControllerDidChange:self];
-                                                       }
-                                                       [self.tableView reloadData];
-                                                       [alertView dismissAnimated];
-                                                   }];
-        [alertView showAnimated];
+        
+        BOOL canSave = NO;
+        if ([self.delegate respondsToSelector:@selector(linebreakControllerCanSaveDocument:)]) {
+            canSave = [self.delegate linebreakControllerCanSaveDocument:self];
+        }
+        
+        if (canSave) {
+            @weakify(self);
+            LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Warning", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Will change current line endings to \"%@\", continue?", nil), cell.titleLabel.text] style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Save Document", nil)
+                                                       actionHandler:nil
+                                                       cancelHandler:^(LGAlertView * _Nonnull alertView) {
+                                                           [alertView dismissAnimated];
+                                                       } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                                                           @strongify(self);
+                                                           self.selectedLineBreakType = typeVal;
+                                                           if ([self.delegate respondsToSelector:@selector(linebreakControllerDidChange:shouldSave:)]) {
+                                                               [self.delegate linebreakControllerDidChange:self shouldSave:YES];
+                                                           }
+                                                           [self.tableView reloadData];
+                                                           [alertView dismissAnimated];
+                                                       }];
+            [alertView showAnimated];
+        } else {
+            toastMessage(self, NSLocalizedString(@"Cannot change line endings: Document is read-only.", nil));
+        }
     }
 }
 

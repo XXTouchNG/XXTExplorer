@@ -116,7 +116,11 @@
             NSString *formerPath = [inboxURL path];
             NSString *currentPath = XXTExplorerViewController.initialPath;
             
+#ifdef APPSTORE
+            XXTExplorerNavigationController *explorerNavigationController = self;
+#else
             XXTExplorerNavigationController *explorerNavigationController = (self.viewControllers.count > 0) ? self.viewControllers[0] : nil;
+#endif
             XXTExplorerViewController *topmostExplorerViewController = explorerNavigationController.topmostExplorerViewController;
             if (topmostExplorerViewController) {
                 currentPath = topmostExplorerViewController.entryPath;

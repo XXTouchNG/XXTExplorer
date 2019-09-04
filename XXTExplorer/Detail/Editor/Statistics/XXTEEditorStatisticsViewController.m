@@ -435,24 +435,44 @@
 #pragma mark - XXTEEncodingControllerDelegate
 
 #ifdef APPSTORE
-- (void)encodingControllerDidChange:(XXTEEncodingController *)controller {
-    [self.editor setCurrentEncoding:controller.selectedEncoding];
+- (void)encodingControllerDidChange:(XXTEEncodingController *)controller shouldSave:(BOOL)save {
     self.encodingLabel.text = [XXTEEncodingHelper encodingNameForEncoding:controller.selectedEncoding];
     self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
-    [self.editor setNeedsSaveDocument];
-    [self.editor setNeedsReloadAll];
+    
+    if ([self.editor respondsToSelector:@selector(encodingControllerDidChange:shouldSave:)]) {
+        [self.editor encodingControllerDidChange:controller shouldSave:save];
+    }
+    
+    [self.navigationController popToViewController:self.editor animated:YES];
+}
+#endif
+
+#ifdef APPSTORE
+- (BOOL)encodingControllerCanSaveDocument:(XXTEEncodingController *)controller {
+    return ![self.editor isReadOnly];
 }
 #endif
 
 #pragma mark - XXTEEditorLineBreakControllerDelegate
 
 #ifdef APPSTORE
-- (void)linebreakControllerDidChange:(XXTEEditorLineBreakController *)controller {
-    [self.editor setCurrentLineBreak:controller.selectedLineBreakType];
+- (void)linebreakControllerDidChange:(XXTEEditorLineBreakController *)controller shouldSave:(BOOL)save {
     self.lineEndingsLabel.text = [XXTEEditorLineBreakHelper lineBreakNameForType:controller.selectedLineBreakType];
     self.lineEndingsLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
-    [self.editor setNeedsSaveDocument];
-    [self.editor setNeedsReloadAll];
+    
+    [self.editor setCurrentLineBreak:controller.selectedLineBreakType];
+    if (save) {
+        [self.editor setNeedsSaveDocument];
+    }
+    [self.editor setNeedsReopenDocument];
+    
+    [self.navigationController popToViewController:self.editor animated:YES];
+}
+#endif
+
+#ifdef APPSTORE
+- (BOOL)linebreakControllerCanSaveDocument:(XXTEEditorLineBreakController *)controller {
+    return ![self.editor isReadOnly];
 }
 #endif
 

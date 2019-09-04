@@ -2170,3 +2170,15 @@
 
 /* No comment provided by engineer. */
 "ASCII Keyboard" = "ASCII 键盘";
+
+/* No comment provided by engineer. */
+"Reopen with encoding" = "以该编码重新打开";
+
+/* No comment provided by engineer. */
+"Save with encoding" = "以该编码保存";
+
+/* No comment provided by engineer. */
+"Save Document" = "保存文件";
+
+/* No comment provided by engineer. */
+"Cannot change line endings: Document is read-only." = "无法修改换行符: 文档是只读的.";

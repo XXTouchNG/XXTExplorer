@@ -145,7 +145,7 @@ static NSUInteger kXXTEEditorMaximumLineMaskCount = 100;
     NSRange glyphRange = [manager glyphRangeForCharacterRange:range actualCharacterRange:NULL];
     CGRect textRect = [manager boundingRectForGlyphRange:glyphRange inTextContainer:[textView textContainer]];
     
-    UIEdgeInsets textInsets = UIEdgeInsetsMake(1.8, 4.0, 2.0, 4.0);
+    UIEdgeInsets textInsets = UIEdgeInsetsMake(2.2, 4.0, 2.0, 4.0);
     // We do not need to consider its origin because our maskView has the same bound with textView.
     textRect.origin.x += textView.textContainerInset.left - textInsets.left;
     textRect.origin.y += textView.textContainerInset.top - textInsets.top;

@@ -10,11 +10,19 @@
 #import "XXTEEditorTextProperties.h"
 #import "XXTETerminalDelegate.h"
 
+// Encoding
+#import "XXTENavigationController.h"
+#import "XXTEEncodingHelper.h"
+#import "XXTEEncodingController.h"
+
 
 @class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory, XXTEEditorMaskView;
 
+#ifdef APPSTORE
+@interface XXTEEditorController : UIViewController <XXTEEditor, XXTETerminalViewControllerDelegate, UIPopoverPresentationControllerDelegate, XXTEEncodingControllerDelegate>
+#else
 @interface XXTEEditorController : UIViewController <XXTEEditor, XXTETerminalViewControllerDelegate, UIPopoverPresentationControllerDelegate>
-
+#endif
 
 // syntax properties
 @property (nonatomic, strong, readonly) XXTEEditorTheme *theme;
@@ -23,6 +31,7 @@
 
 // text properties
 @property (nonatomic, assign, getter=isLockedState, readonly) BOOL lockedState;
+@property (nonatomic, assign, getter=isReadOnly, readonly) BOOL readOnly;
 @property (nonatomic, assign, readwrite) BOOL hasLongLine;
 @property (nonatomic, assign, readwrite) CFStringEncoding currentEncoding;
 @property (nonatomic, assign, readwrite) NSStringLineBreakType currentLineBreak;
@@ -42,6 +51,7 @@
 - (void)setNeedsReloadAll;
 - (void)setNeedsReloadAttributes;  // called from keyboard events
 - (void)setNeedsSaveDocument;  // called from keyboard events
+- (void)setNeedsReopenDocument;
 
 - (void)setNeedsFocusTextView;  // called from menu
 - (void)setNeedsHighlightRange:(NSRange)range;  // called from symbol controller

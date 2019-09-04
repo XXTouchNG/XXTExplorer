@@ -124,6 +124,14 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
         [Bugly startWithAppId:nil];
     }
     
+#ifdef DEBUG
+    NSLog(@"!!! LOG %@", [NSLocale currentLocale].localeIdentifier);
+    NSLog(@"!!! LOG %@", [NSLocale systemLocale].localeIdentifier);
+    NSLog(@"!!! LOG %@", [NSLocale preferredLanguages]);
+    NSLog(@"!!! LOG %@", [NSTimeZone localTimeZone]);
+    NSLog(@"!!! LOG %@", [NSTimeZone systemTimeZone]);
+#endif
+    
     // Reset Application if crash repeatedly
     {
         BOOL crashRepeatedly = [Bugly isAppCrashedOnStartUpExceedTheLimit];

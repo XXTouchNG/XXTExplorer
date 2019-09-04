@@ -16,24 +16,28 @@
 
 /// customize behavior by control glyph
 - (NSControlCharacterAction)layoutManager:(NSLayoutManager *)layoutManager shouldUseAction:(NSControlCharacterAction)action forControlCharacterAtIndex:(NSUInteger)charIndex {
-    unichar character = [layoutManager.textStorage.string characterAtIndex:charIndex];
-    if (character == '\t') {
-        return NSControlCharacterActionWhitespace;
+    if ([layoutManager isKindOfClass:[XXTEEditorLayoutManager class]]) {
+        unichar character = [layoutManager.textStorage.string characterAtIndex:charIndex];
+        if (character == '\t') {
+            return NSControlCharacterActionWhitespace;
+        }
+//        else if (character == '\r') {
+//            return NSControlCharacterActionZeroAdvancement;
+//        }
     }
-    /*
-     else if (character == '\r') {
-        return NSControlCharacterActionZeroAdvancement;
-    }
-     */
     return action;
 }
 
 /// return bounding box for control glyph
 - (CGRect)layoutManager:(NSLayoutManager *)layoutManager boundingBoxForControlGlyphAtIndex:(NSUInteger)glyphIndex forTextContainer:(NSTextContainer *)textContainer proposedLineFragment:(CGRect)proposedRect glyphPosition:(CGPoint)glyphPosition characterIndex:(NSUInteger)charIndex {
     unichar character = [layoutManager.textStorage.string characterAtIndex:charIndex];
-    if (character == '\t') {
-        CGRect rect = CGRectMake(glyphPosition.x, glyphPosition.y, self.tabWidth, proposedRect.size.height);
-        return rect;
+    if ([layoutManager isKindOfClass:[XXTEEditorLayoutManager class]]) {
+//        XXTEEditorLayoutManager *manager = (XXTEEditorLayoutManager *)layoutManager;
+        if (character == '\t') {
+            CGRect rect = CGRectMake(glyphPosition.x, glyphPosition.y, self.tabWidth, proposedRect.size.height);
+//            rect.origin.y += manager.baseLineOffset;
+            return rect;
+        }
     }
     return CGRectZero;
 }

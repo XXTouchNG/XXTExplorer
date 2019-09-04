@@ -15,8 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol XXTEEncodingControllerDelegate <NSObject>
 
 @optional
-- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller;
-- (void)encodingControllerDidChange:(XXTEEncodingController *)controller;
+- (BOOL)encodingControllerCanSaveDocument:(XXTEEncodingController *)controller;
+- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller shouldSave:(BOOL)save;
+- (void)encodingControllerDidChange:(XXTEEncodingController *)controller shouldSave:(BOOL)save;
 - (void)encodingControllerDidCancel:(XXTEEncodingController *)controller;
 
 @end

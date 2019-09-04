@@ -327,7 +327,7 @@
                 CGRect glyphRect = [self lineFragmentRectForGlyphAtIndex:i effectiveRange:NULL];
                 CGPoint glyphPoint = [self locationForGlyphAtIndex:i];
                 CGPoint drawPoint = CGPointMake(glyphPoint.x + glyphRect.origin.x + origin.x, glyphRect.origin.y + origin.y);
-                
+                drawPoint.y += self.baseLineOffset;
                 [glyph drawAtPoint:drawPoint withAttributes:attrs];
             }
         }

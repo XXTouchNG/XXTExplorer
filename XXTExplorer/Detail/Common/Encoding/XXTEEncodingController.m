@@ -108,25 +108,45 @@
         XXTEMoreTitleValueCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (self.reopenMode) {
             self.selectedEncoding = encoding;
-            if ([self.delegate respondsToSelector:@selector(encodingControllerDidChange:)]) {
-                [self.delegate encodingControllerDidChange:self];
+            if ([self.delegate respondsToSelector:@selector(encodingControllerDidChange:shouldSave:)]) {
+                [self.delegate encodingControllerDidChange:self shouldSave:NO];
             }
             [self.tableView reloadData];
+            self.confirmItem.enabled = YES;
         } else {
+            BOOL canSave = NO;
+            if ([self.delegate respondsToSelector:@selector(encodingControllerCanSaveDocument:)]) {
+                canSave = [self.delegate encodingControllerCanSaveDocument:self];
+            }
+            NSString *destructiveButtonTitle = nil;
+            if (canSave) {
+                destructiveButtonTitle = NSLocalizedString(@"Save with encoding", nil);
+            }
             @weakify(self);
-            LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Warning", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Will change current text encoding to \"%@\", continue?", nil), cell.titleLabel.text] style:LGAlertViewStyleAlert buttonTitles:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:[NSString stringWithFormat:NSLocalizedString(@"Use \"%@\"", nil), cell.titleLabel.text]
-                                                       actionHandler:nil
+            LGAlertView *alertView = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Warning", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Will change current text encoding to \"%@\", continue?", nil), cell.titleLabel.text] style:LGAlertViewStyleAlert buttonTitles:@[ NSLocalizedString(@"Reopen with encoding", nil) ] cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:destructiveButtonTitle
+                                                       actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title)
+                                      {
+                if (index == 0) {
+                    @strongify(self);
+                    self.selectedEncoding = encoding;
+                    if ([self.delegate respondsToSelector:@selector(encodingControllerDidChange:shouldSave:)]) {
+                        [self.delegate encodingControllerDidChange:self shouldSave:NO];
+                    }
+                    [self.tableView reloadData];
+                    [alertView dismissAnimated];
+                }
+            }
                                                        cancelHandler:^(LGAlertView * _Nonnull alertView) {
-                                                           [alertView dismissAnimated];
-                                                       } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
-                                                           @strongify(self);
-                                                           self.selectedEncoding = encoding;
-                                                           if ([self.delegate respondsToSelector:@selector(encodingControllerDidChange:)]) {
-                                                               [self.delegate encodingControllerDidChange:self];
-                                                           }
-                                                           [self.tableView reloadData];
-                                                           [alertView dismissAnimated];
-                                                       }];
+                [alertView dismissAnimated];
+            } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                @strongify(self);
+                self.selectedEncoding = encoding;
+                if ([self.delegate respondsToSelector:@selector(encodingControllerDidChange:shouldSave:)]) {
+                    [self.delegate encodingControllerDidChange:self shouldSave:YES];
+                }
+                [self.tableView reloadData];
+                [alertView dismissAnimated];
+            }];
             [alertView showAnimated];
         }
     }
@@ -152,7 +172,8 @@
 
 - (UIBarButtonItem *)confirmItem {
     if (!_confirmItem) {
-        UIBarButtonItem *confirmItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(confirmItemTapped:)];
+        UIBarButtonItem *confirmItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(confirmItemTapped:)];
+        confirmItem.enabled = NO;
         _confirmItem = confirmItem;
     }
     return _confirmItem;
@@ -181,8 +202,8 @@
 }
 
 - (void)confirmItemTapped:(UIBarButtonItem *)sender {
-    if ([_delegate respondsToSelector:@selector(encodingControllerDidConfirm:)]) {
-        [_delegate encodingControllerDidConfirm:self];
+    if ([_delegate respondsToSelector:@selector(encodingControllerDidConfirm:shouldSave:)]) {
+        [_delegate encodingControllerDidConfirm:self shouldSave:NO];
     }
 }
 
