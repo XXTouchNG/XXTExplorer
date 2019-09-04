@@ -14,6 +14,28 @@
 
 @implementation XXTEEditorController (Keyboard)
 
++ (BOOL)runningInForeground
+{
+    UIApplicationState state = [UIApplication sharedApplication].applicationState;
+    return state == UIApplicationStateActive;
+}
+
+- (BOOL)isLocalKeyboard:(NSNotification *)aNotification {
+    NSDictionary* info = [aNotification userInfo];
+    if (@available(iOS 9.0, *)) {
+        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+        if (!isLocal) {
+            return NO;
+        }
+    }
+    
+    if (![[self class] runningInForeground]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark - Keyboard
 
 // Call this method somewhere in your view controller setup code.
@@ -42,14 +64,11 @@
         return;
     }
     
-    NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return;
-        }
+    if (![self isLocalKeyboard:aNotification]) {
+        return;
     }
     
+    NSDictionary* info = [aNotification userInfo];
     self.keyboardFrame = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
 }
 
@@ -58,14 +77,11 @@
         return;
     }
     
-    NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return;
-        }
+    if (![self isLocalKeyboard:aNotification]) {
+        return;
     }
     
+    NSDictionary* info = [aNotification userInfo];
     self.keyboardFrame = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
 }
 
@@ -74,12 +90,8 @@
         return;
     }
     
-    NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return;
-        }
+    if (![self isLocalKeyboard:aNotification]) {
+        return;
     }
     
     if (XXTE_IS_IPAD) {
@@ -98,13 +110,11 @@
         return;
     }
     
-    NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return;
-        }
+    if (![self isLocalKeyboard:aNotification]) {
+        return;
     }
+    
+    NSDictionary* info = [aNotification userInfo];
     
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     UIEdgeInsets insets = UIEdgeInsetsZero;
@@ -140,12 +150,8 @@
         return;
     }
     
-    NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return;
-        }
+    if (![self isLocalKeyboard:aNotification]) {
+        return;
     }
     
     if (XXTE_IS_IPAD) {
@@ -172,12 +178,8 @@
         return;
     }
     
-    NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return;
-        }
+    if (![self isLocalKeyboard:aNotification]) {
+        return;
     }
     
     [self saveDocumentIfNecessary];

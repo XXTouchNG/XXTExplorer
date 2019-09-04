@@ -351,6 +351,19 @@
         }];
     }
     
+    XXTEMoreSwitchCell *cellASCIIPreferred = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
+    cellASCIIPreferred.titleLabel.text = NSLocalizedString(@"ASCII Keyboard", nil);
+    cellASCIIPreferred.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardASCIIPreferred, NO);
+    {
+        @weakify(self);
+        [cellASCIIPreferred.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
+            @strongify(self);
+            UISwitch *optionSwitch = (UISwitch *)sender;
+            XXTEDefaultsSetBasic(XXTEEditorKeyboardASCIIPreferred, optionSwitch.on);
+            [self.editor setNeedsReload:XXTEEditorKeyboardASCIIPreferred];
+        }];
+    }
+    
     XXTEMoreSwitchCell *cellBrackets = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cellBrackets.titleLabel.text = NSLocalizedString(@"Auto Insert Brackets", nil);
     cellBrackets.optionSwitch.on = XXTEDefaultsEnum(XXTEEditorAutoBrackets, YES);
@@ -452,9 +465,9 @@
     }
     
     if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
-        keyboardSection = @[ cell12 ];
+        keyboardSection = @[ cell12, cellASCIIPreferred ];
     } else {
-        keyboardSection = @[ cell12, cell13 ];
+        keyboardSection = @[ cell12, cell13, cellASCIIPreferred ];
     }
     
     staticCells = @[

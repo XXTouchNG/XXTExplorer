@@ -50,7 +50,7 @@
     _counter = [[UIBarButtonItem alloc] initWithCustomView:countLabel];
     _fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     _fixedSpace.width = 16.0;
-    _allItems = @[ self.prevItem, self.nextItem, self.replaceItem, self.replaceAllItem, self.counter ];
+    _allItems = @[ self.prevItem, self.nextItem, self.replaceItem, self.replaceAllItem, self.counter, self.dismissItem ];
     
     [self setReplaceMode:NO];
     [self addSubview:self.toolbar];
@@ -77,6 +77,12 @@
 - (void)replaceAllAction {
     if ([_accessoryDelegate respondsToSelector:@selector(searchAccessoryViewShouldReplaceAll:)]) {
         [_accessoryDelegate searchAccessoryViewShouldReplaceAll:self];
+    }
+}
+
+- (void)dismissItemTapped:(UIBarButtonItem *)sender {
+    if ([_accessoryDelegate respondsToSelector:@selector(searchAccessoryView:didTapDismiss:)]) {
+        [_accessoryDelegate searchAccessoryView:self didTapDismiss:sender];
     }
 }
 
@@ -117,6 +123,16 @@
                          barMetrics:UIBarMetricsDefault];
     }
     [self reloadReplaceImages];
+}
+
+- (UIBarButtonItem *)dismissItem {
+    if (!_dismissItem) {
+        UIBarButtonItem *dismissItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEKeyboardDismiss"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissItemTapped:)];
+        dismissItem.tintColor = self.tintColor; // *
+        dismissItem.enabled = YES;
+        _dismissItem = dismissItem;
+    }
+    return _dismissItem;
 }
 
 - (UIBarButtonItem *)prevItem {
@@ -187,9 +203,9 @@
 
 - (void)updateAccessoryView {
     if (_replaceMode == YES) {
-        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.replaceItem, self.replaceAllItem, self.fixedSpace, self.counter]];
+        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.replaceItem, self.replaceAllItem, self.fixedSpace, self.dismissItem]];
     } else {
-        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.counter]];
+        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.dismissItem]];
     }
     if (_allowReplacement) {
         [self.replaceItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];

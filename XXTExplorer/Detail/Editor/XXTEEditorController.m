@@ -354,6 +354,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if ([keysToReload containsObject:XXTEEditorSearchCircular]) {
         self.textView.circularSearch = XXTEDefaultsBool(XXTEEditorSearchCircular, YES);
     }
+    if ([keysToReload containsObject:XXTEEditorKeyboardASCIIPreferred]) {
+        self.textView.keyboardType = XXTEDefaultsBool(XXTEEditorKeyboardASCIIPreferred, NO) ? UIKeyboardTypeASCIICapable : UIKeyboardTypeDefault;
+    }
     // Set the fucking smart types again
     XXTE_START_IGNORE_PARTIAL
     if (@available(iOS 11.0, *)) {
@@ -364,7 +367,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         // Fallback on earlier versions
     }
     XXTE_END_IGNORE_PARTIAL
-    self.textView.keyboardType = UIKeyboardTypeDefault;
     
     // Text View - Text Input Delegate
     self.textView.vTextInput.inputLanguage = self.language;
@@ -1727,6 +1729,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     UIBarButtonItem *prevItem = searchAccessoryView.prevItem;
     UIBarButtonItem *nextItem = searchAccessoryView.nextItem;
     UILabel *countLabel = searchAccessoryView.countLabel;
+    // TODO: move count label to search bar
     
     NSUInteger numberOfMatches = textView.numberOfMatches;
     if (numberOfMatches > 0) {
@@ -1957,6 +1960,10 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [self performGlobalCodeBlocksAction:row];
 }
 
+- (void)searchAccessoryView:(XXTEEditorSearchAccessoryView *)accessoryView didTapDismiss:(UIBarButtonItem *)sender {
+    [self performGlobalKeyboardDismissalAction:accessoryView];
+}
+
 #pragma mark - XXTEKeyboardButtonDelegate
 
 - (void)keyboardButton:(XXTEKeyboardButton *)button didTriggerAction:(XXTEKeyboardButtonAction)action {
@@ -1984,7 +1991,8 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (CGRectIsNull(self.keyboardFrame) || tip.length == 0) {
         return;
     }
-    toastMessageTip(self, tip, CGPointMake(CGRectGetWidth(self.keyboardFrame) / 2.0, MIN(CGRectGetMinY(self.keyboardFrame) - 36.0, CGRectGetMaxY(self.textView.frame) - 36.0)));
+    CGPoint textViewTipPosition = [self.view convertPoint:CGPointMake(CGRectGetWidth(self.toolbar.frame) / 2.0, CGRectGetMinY(self.toolbar.frame) - 36.0) toView:nil];
+    toastMessageTip(self, tip, CGPointMake(CGRectGetWidth(self.keyboardFrame) / 2.0, MIN(CGRectGetMinY(self.keyboardFrame) - 36.0, textViewTipPosition.y)));
 }
 
 - (void)performGlobalUndoAction:(id)sender {
@@ -2014,8 +2022,16 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 }
 
 - (void)performGlobalKeyboardDismissalAction:(id)sender {
+    BOOL dismissalSucceed = NO;
     if ([self.textView isFirstResponder]) {
         [self.textView resignFirstResponder];
+        dismissalSucceed = YES;
+    }
+    if ([self.searchBar isFirstResponder]) {
+        [self.searchBar resignFirstResponder];
+        dismissalSucceed = YES;
+    }
+    if (dismissalSucceed) {
         [self displayKeyboardTip:NSLocalizedString(@"Keyboard Dismissal", nil)];
     }
 }
@@ -2061,6 +2077,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
      XXTEEditorWrapColumn,
      XXTEEditorReadOnly,
      XXTEEditorKeyboardRowAccessoryEnabled,
+     XXTEEditorKeyboardASCIIPreferred,
      XXTEEditorAutoBrackets,
      XXTEEditorAutoCorrection,
      XXTEEditorAutoCapitalization,
