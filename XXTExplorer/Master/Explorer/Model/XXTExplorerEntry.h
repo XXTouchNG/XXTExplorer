@@ -32,7 +32,7 @@ extern NSString * const EntryMaskTypeBrokenSymlink;
 
 @property (nonatomic, strong) UIImage *iconImage; // default image
 @property (nonatomic, copy) NSString *entryPath;
-//@property (nonatomic, copy) NSString *entryRealPath;
+@property (nonatomic, copy) NSString *entryRealPath;
 @property (nonatomic, copy, readonly) NSString *entryName;
 @property (nonatomic, copy, readonly) NSString *entryExtension;
 @property (nonatomic, copy) XXTExplorerEntryType entryType;

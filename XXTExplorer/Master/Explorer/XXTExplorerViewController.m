@@ -879,6 +879,10 @@ XXTE_END_IGNORE_PARTIAL
             explorerViewController.displayCurrentPath = NO;
             explorerViewController.internalSortField = XXTExplorerViewEntryListSortFieldModificationDate;
             explorerViewController.internalSortOrder = XXTExplorerViewEntryListSortOrderDesc;
+//            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:explorerViewController];
+//            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+//            navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//            [self presentViewController:navigationController animated:YES completion:nil];
             [self.navigationController pushViewController:explorerViewController animated:YES];
         }
     }
@@ -1224,8 +1228,13 @@ XXTE_END_IGNORE_PARTIAL
     NSString *fixedName = entry.localizedDisplayName;
     NSString *fixedDescription = nil;
     if (tableView == self.tableView) {
-        fixedDescription = entry.localizedDescription;
-        entryCell.entrySubtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        if (entry.isSymlink && self.historyMode) {
+            fixedDescription = entry.entryRealPath;
+            entryCell.entrySubtitleLabel.lineBreakMode = NSLineBreakByTruncatingHead;
+        } else {
+            fixedDescription = entry.localizedDescription;
+            entryCell.entrySubtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        }
     }
 #ifdef APPSTORE
     else if (tableView == self.searchResultsController.tableView) {
@@ -1283,13 +1292,13 @@ XXTE_END_IGNORE_PARTIAL
 #endif
     
     if (tableView == self.tableView) {
-        if (entryCell.accessoryType != UITableViewCellAccessoryNone) {
+        if (entry.isSymlink && self.historyMode) {
+            entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
+        } else {
             entryCell.accessoryType = UITableViewCellAccessoryNone;
         }
     } else {
-        if (entryCell.accessoryType != UITableViewCellAccessoryDetailButton) {
-            entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
-        }
+        entryCell.accessoryType = UITableViewCellAccessoryDetailButton;
     }
 }
 

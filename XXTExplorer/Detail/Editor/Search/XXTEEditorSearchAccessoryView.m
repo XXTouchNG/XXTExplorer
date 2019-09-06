@@ -203,9 +203,9 @@
 
 - (void)updateAccessoryView {
     if (_replaceMode == YES) {
-        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.replaceItem, self.replaceAllItem, self.fixedSpace, self.dismissItem]];
+        [self.toolbar setItems:@[ self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.replaceItem, self.replaceAllItem, self.fixedSpace, self.dismissItem ]];
     } else {
-        [self.toolbar setItems:@[self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.dismissItem]];
+        [self.toolbar setItems:@[ self.prevItem, self.fixedSpace, self.nextItem, self.flexibleSpace, self.counter, self.fixedSpace, self.dismissItem ]];
     }
     if (_allowReplacement) {
         [self.replaceItem setImage:[[UIImage imageNamed:@"XXTEKeyboardReplace"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];

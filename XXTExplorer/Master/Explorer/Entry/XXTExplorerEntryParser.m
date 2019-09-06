@@ -88,7 +88,7 @@
     } else {
         entryBaseType = EntryTypeUnsupported;
     }
-//    NSString *entryRealPath = entrySubdirectoryPath;
+    NSString *entryRealPath = entrySubdirectoryPath;
     NSString *entryMaskType = entryBaseType;
     if ([entryBaseType isEqualToString:EntryTypeSymlink])
     {
@@ -97,6 +97,11 @@
         bzero(&entrySubdirectoryPathCStatStruct, sizeof(struct stat));
         if (0 == stat(entrySubdirectoryPathCString, &entrySubdirectoryPathCStatStruct))
         {
+            char entryRealPathBuffer[PATH_MAX] = {'\0'};
+            char *entryRealPathC = realpath(entrySubdirectoryPathCString, entryRealPathBuffer);
+            if (entryRealPathC != NULL) {
+                entryRealPath = [[NSString alloc] initWithUTF8String:entryRealPathC];
+            }
             if (S_ISDIR(entrySubdirectoryPathCStatStruct.st_mode))
             {
                 entryMaskType = EntryMaskTypeDirectory;
@@ -132,6 +137,7 @@
     XXTExplorerEntry *entryDetail = [[XXTExplorerEntry alloc] init];
     entryDetail.iconImage = entryIconImage;
     entryDetail.entryPath = XXTStrippedPath(entrySubdirectoryPath);
+    entryDetail.entryRealPath = XXTStrippedPath(entryRealPath);
     entryDetail.creationDate = entrySubdirectoryAttributes[NSFileCreationDate];
     entryDetail.modificationDate = entrySubdirectoryAttributes[NSFileModificationDate];
     entryDetail.entrySize = entrySubdirectoryAttributes[NSFileSize];

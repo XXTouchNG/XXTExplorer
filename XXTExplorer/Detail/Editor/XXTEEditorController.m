@@ -1716,7 +1716,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     UIBarButtonItem *prevItem = searchAccessoryView.prevItem;
     UIBarButtonItem *nextItem = searchAccessoryView.nextItem;
     UILabel *countLabel = searchAccessoryView.countLabel;
-    // TODO: move count label to search bar
     
     NSUInteger numberOfMatches = textView.numberOfMatches;
     if (numberOfMatches > 0) {
