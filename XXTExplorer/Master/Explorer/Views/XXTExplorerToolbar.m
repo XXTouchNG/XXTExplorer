@@ -133,6 +133,7 @@
             fixedSpace,
         ];
         
+#ifdef APPSTORE
         _historyButtons =
         @[
             fixedSpace,
@@ -143,6 +144,16 @@
             flexibleSpace,
             fixedSpace,
         ];
+#else
+        _historyButtons =
+        @[
+          fixedSpace,
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeTrash],
+          flexibleSpace,
+          fixedSpace,
+          ];
+#endif
     }
     else
     {
@@ -188,6 +199,7 @@
             flexibleSpace,
         ];
         
+#ifdef APPSTORE
         _historyButtons =
         @[
             fixedSpace,
@@ -198,6 +210,16 @@
             flexibleSpace,
             fixedSpace,
         ];
+#else
+        _historyButtons =
+        @[
+          fixedSpace,
+          flexibleSpace,
+          buttons[XXTExplorerToolbarButtonTypeTrash],
+          flexibleSpace,
+          fixedSpace,
+          ];
+#endif
     }
     
     _statusSeries =

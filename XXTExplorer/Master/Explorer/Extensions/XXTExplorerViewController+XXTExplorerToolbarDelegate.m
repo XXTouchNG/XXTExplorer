@@ -107,11 +107,13 @@
     // Editing Related
     if (self.historyMode) {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:YES];
+#ifdef APPSTORE
         if ([self isEditing]) {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:NO];
         } else {
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
         }
+#endif
     } else {
         if ([self isEditing]) {
             if (([self.tableView indexPathsForSelectedRows].count) > 0) {
