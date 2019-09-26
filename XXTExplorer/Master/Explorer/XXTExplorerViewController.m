@@ -127,6 +127,7 @@ XXTE_END_IGNORE_PARTIAL
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerForceTouchCapability];
     
     if (self.title.length == 0) {
         NSString *title = nil;
@@ -352,22 +353,28 @@ XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    if (self.allowsPreviewing) {
-        if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-            if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-                // retain the context to avoid registering more than once
-                if (!self.previewingContext)
-                {
-                    self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+    [self registerForceTouchCapability];
+}
+XXTE_END_IGNORE_PARTIAL
+
+- (void)registerForceTouchCapability {
+    if (@available(iOS 9.0, *)) {
+        if (self.allowsPreviewing) {
+            if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+                if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+                    // retain the context to avoid registering more than once
+                    if (!self.previewingContext)
+                    {
+                        self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+                    }
+                } else {
+                    [self unregisterForPreviewingWithContext:self.previewingContext];
+                    self.previewingContext = nil;
                 }
-            } else {
-                [self unregisterForPreviewingWithContext:self.previewingContext];
-                self.previewingContext = nil;
             }
         }
     }
 }
-XXTE_END_IGNORE_PARTIAL
 
 - (void)restoreTheme {
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
