@@ -11,5 +11,6 @@
 #import <TOWebViewController/TOWebViewController.h>
 
 @interface XXTECommonWebViewController : TOWebViewController <XXTEDetailViewController>
+- (void)configure NS_REQUIRES_SUPER;
 
 @end

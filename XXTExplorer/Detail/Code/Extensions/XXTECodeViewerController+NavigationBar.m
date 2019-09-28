@@ -96,6 +96,7 @@
         item.tintColor = tintColor;
         [item setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor} forState:UIControlStateNormal];
     }
+    self.loadingBarTintColor = [tintColor colorWithAlphaComponent:0.33];
     [self setNeedsStatusBarAppearanceUpdate];
 }
 

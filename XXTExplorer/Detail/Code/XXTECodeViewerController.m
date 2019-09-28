@@ -106,6 +106,10 @@
     return self;
 }
 
+- (void)configure {
+    [super configure];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
