@@ -7,16 +7,17 @@
 //
 
 #import "XXTExplorerToolbar.h"
+#import "XXTExplorerToolbarButtonItem.h"
 #import "UIImage+ColoredImage.h"
 
 
-@interface XXTExplorerToolbar ()
+@interface XXTExplorerToolbar () <XXTExplorerToolbarButtonItemDelegate>
 
-@property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *defaultButtons;
-@property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *editingButtons;
-@property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *readonlyButtons;
-@property (nonatomic, strong, readonly) NSArray <UIBarButtonItem *> *historyButtons;
-@property (nonatomic, strong, readonly) NSDictionary <NSString *, NSArray <UIBarButtonItem *> *> *statusSeries;
+@property (nonatomic, strong, readonly) NSArray <XXTExplorerToolbarButtonItem *> *defaultButtons;
+@property (nonatomic, strong, readonly) NSArray <XXTExplorerToolbarButtonItem *> *editingButtons;
+@property (nonatomic, strong, readonly) NSArray <XXTExplorerToolbarButtonItem *> *readonlyButtons;
+@property (nonatomic, strong, readonly) NSArray <XXTExplorerToolbarButtonItem *> *historyButtons;
+@property (nonatomic, strong, readonly) NSDictionary <NSString *, NSArray <XXTExplorerToolbarButtonItem *> *> *statusSeries;
 
 @end
 
@@ -37,13 +38,13 @@
 }
 
 - (void)setup {
-    [[UIBarButtonItem appearanceWhenContainedIn:[self class], nil] setTintColor:XXTColorForeground()];
+    [[XXTExplorerToolbarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[self class]]] setTintColor:XXTColorForeground()];
     
     self.backgroundColor = XXTColorPlainBackground();
     
-    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    XXTExplorerToolbarButtonItem *fixedSpace = [[XXTExplorerToolbarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedSpace.width = 20.0f;
-    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    XXTExplorerToolbarButtonItem *flexibleSpace = [[XXTExplorerToolbarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
 #ifndef APPSTORE
     NSArray <NSString *> *buttonTypes =
@@ -69,14 +70,9 @@
     ];
 #endif
     
-    NSMutableDictionary <NSString *, UIBarButtonItem *> *buttons = [[NSMutableDictionary alloc] initWithCapacity:buttonTypes.count];
+    NSMutableDictionary <NSString *, XXTExplorerToolbarButtonItem *> *buttons = [[NSMutableDictionary alloc] initWithCapacity:buttonTypes.count];
     for (NSString *buttonType in buttonTypes) {
-        UIImage *itemImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, XXTExplorerToolbarButtonStatusNormal]];
-        itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 26.0, 26.0)];
-        [newButton addTarget:self action:@selector(toolbarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [newButton setImage:itemImage forState:UIControlStateNormal];
-        UIBarButtonItem *newButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newButton];
+        XXTExplorerToolbarButtonItem *newButtonItem = [[XXTExplorerToolbarButtonItem alloc] initWithName:buttonType andActionReceiver:self];
         [buttons setObject:newButtonItem
                     forKey:buttonType];
     }
@@ -255,29 +251,38 @@
 
 - (void)updateStatus:(NSString *)status {
     for (NSString *buttonItemName in self.buttons) {
-        UIBarButtonItem *button = self.buttons[buttonItemName];
+        XXTExplorerToolbarButtonItem *button = self.buttons[buttonItemName];
         button.enabled = NO;
     }
     [self setItems:self.statusSeries[status] animated:YES];
 }
 
-- (void)updateButtonType:(NSString *)buttonType enabled:(BOOL)enabled {
-    [self updateButtonType:buttonType status:nil enabled:enabled];
+- (void)updateButtonType:(NSString *)buttonType toEnabled:(NSNumber *)enabled {
+    [self updateButtonType:buttonType toStatus:nil toEnabled:enabled];
 }
 
-- (void)updateButtonType:(NSString *)buttonType status:(NSString *)buttonStatus enabled:(BOOL)enabled {
-    UIBarButtonItem *buttonItem = self.buttons[buttonType];
+- (void)updateButtonType:(NSString *)buttonType toStatus:(XXTExplorerToolbarButtonItemStatus *)buttonStatus toEnabled:(NSNumber *)enabledVal {
+    [self updateButtonType:buttonType toStatus:buttonStatus toEnabled:enabledVal toTraitCollection:self.traitCollection];
+}
+
+- (void)updateButtonType:(NSString *)buttonType toStatus:(XXTExplorerToolbarButtonItemStatus *)buttonStatus toEnabled:(NSNumber *)enabledVal toTraitCollection:(UITraitCollection *)traitCollection {
+    
+    XXTExplorerToolbarButtonItem *buttonItem = self.buttons[buttonType];
+    
     if (buttonStatus) {
-        UIImage *statusImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", buttonType, buttonStatus]];
-        statusImage = [statusImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        if (statusImage) {
-            UIButton *button = [buttonItem customView];
-            [button setImage:statusImage forState:UIControlStateNormal];
+        [buttonItem setStatus:buttonStatus forTraitCollection:traitCollection];
+    } else {
+        if (traitCollection) {
+            [buttonItem updateButtonStatusForTraitCollection:traitCollection];
         }
     }
-    if (buttonItem.enabled != enabled) {
-        [buttonItem setEnabled:enabled];
+    
+    if (enabledVal) {
+        if (buttonItem.enabled != [enabledVal boolValue]) {
+            [buttonItem setEnabled:[enabledVal boolValue]];
+        }
     }
+    
 }
 
 #pragma mark - Button Tapped
@@ -286,7 +291,7 @@
     if (_tapDelegate && [_tapDelegate respondsToSelector:@selector(toolbar:buttonTypeTapped:buttonItem:)]) {
         NSString *buttonType = nil;
         for (NSString *buttonKey in self.buttons) {
-            UIBarButtonItem *buttonItem = self.buttons[buttonKey];
+            XXTExplorerToolbarButtonItem *buttonItem = self.buttons[buttonKey];
             if (buttonItem.customView == button) {
                 buttonType = buttonKey;
                 break;
@@ -295,6 +300,14 @@
         if (buttonType) {
             [_tapDelegate toolbar:self buttonTypeTapped:buttonType buttonItem:self.buttons[buttonType]];
         }
+    }
+}
+
+#pragma mark - Redraw
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    for (NSString *buttonItemName in self.buttons) {
+        [self updateButtonType:buttonItemName toStatus:nil toEnabled:nil toTraitCollection:self.traitCollection];
     }
 }
 

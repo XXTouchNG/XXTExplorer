@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXTExplorerToolbarButtonItem.h"
+
 
 static NSString * const XXTExplorerToolbarStatusDefault = @"XXTExplorerToolbarStatusDefault";
 static NSString * const XXTExplorerToolbarStatusEditing = @"XXTExplorerToolbarStatusEditing";
@@ -28,21 +30,24 @@ static NSString * const XXTExplorerToolbarButtonTypeTrash = @"XXTExplorerToolbar
 static NSString * const XXTExplorerToolbarButtonStatusNormal = @"Normal";
 static NSString * const XXTExplorerToolbarButtonStatusSelected = @"Selected";
 
-@class XXTExplorerToolbar;
+@class XXTExplorerToolbar, XXTExplorerToolbarButtonItem;
 
 @protocol XXTExplorerToolbarDelegate <NSObject>
 
-- (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem;
+- (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(XXTExplorerToolbarButtonItem *)buttonItem;
 
 @end
 
 @interface XXTExplorerToolbar : UIToolbar
 
 @property (nonatomic, weak) id <XXTExplorerToolbarDelegate> tapDelegate;
-@property (nonatomic, strong, readonly) NSDictionary <NSString *, UIBarButtonItem *> *buttons;
+@property (nonatomic, strong, readonly) NSDictionary <NSString *, XXTExplorerToolbarButtonItem *> *buttons;
 
+// toolbar status
 - (void)updateStatus:(NSString *)status;
-- (void)updateButtonType:(NSString *)buttonType enabled:(BOOL)enabled;
-- (void)updateButtonType:(NSString *)buttonType status:(NSString *)buttonStatus enabled:(BOOL)enabled;
+
+// button status
+- (void)updateButtonType:(NSString *)buttonType toEnabled:(NSNumber *)enabledVal;
+- (void)updateButtonType:(NSString *)buttonType toStatus:(XXTExplorerToolbarButtonItemStatus *)buttonStatus toEnabled:(NSNumber *)enabledVal;
 
 @end

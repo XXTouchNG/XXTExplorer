@@ -66,6 +66,13 @@ typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortOrderDesc,
 } XXTExplorerViewEntryListSortOrder;
 
+NS_INLINE NSString * const XXTELocalizedNameForSortOrder(XXTExplorerViewEntryListSortOrder sortOrder)
+{
+    NSUInteger sortOrderIdx = sortOrder;
+    NSString *sortOrderTitie = (sortOrderIdx == XXTExplorerViewEntryListSortOrderAsc) ? NSLocalizedString(@"Ascend", nil) : NSLocalizedString(@"Descend", nil);
+    return sortOrderTitie;
+}
+
 typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortFieldCreationDate = 0,
     XXTExplorerViewEntryListSortFieldModificationDate,
@@ -73,6 +80,28 @@ typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortFieldItemType,
     XXTExplorerViewEntryListSortFieldItemSize
 } XXTExplorerViewEntryListSortField;
+
+NS_INLINE NSArray <NSString *> * const XXTELocalizedNamesForAllSortFields()
+{
+    return @[
+        NSLocalizedString(@"Created At", nil),
+        NSLocalizedString(@"Modified At", nil),
+        NSLocalizedString(@"Name", nil),
+        NSLocalizedString(@"Type", nil),
+        NSLocalizedString(@"Size", nil),
+    ];
+}
+
+NS_INLINE NSString * const XXTELocalizedNameForSortField(XXTExplorerViewEntryListSortField sortField)
+{
+    NSArray <NSString *> *sortTitles = XXTELocalizedNamesForAllSortFields();
+    NSUInteger sortFieldIdx = sortField;
+    if (sortFieldIdx >= sortTitles.count) {
+        sortFieldIdx = XXTExplorerViewEntryListSortFieldModificationDate;
+    }
+    NSString *sortFieldTitle = sortTitles[sortFieldIdx];
+    return sortFieldTitle;
+}
 
 typedef enum : NSUInteger {
     XXTExplorerPasteboardDetectTypeNone = 0,

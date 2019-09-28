@@ -85,9 +85,9 @@
     {
         BOOL sortEnabled = (self.historyMode == NO);
         if (self.explorerSortOrder == XXTExplorerViewEntryListSortOrderAsc) {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusNormal enabled:sortEnabled];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toStatus:XXTExplorerToolbarButtonStatusNormal toEnabled:@(sortEnabled)];
         } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort status:XXTExplorerToolbarButtonStatusSelected enabled:sortEnabled];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toStatus:XXTExplorerToolbarButtonStatusSelected toEnabled:@(sortEnabled)];
         }
     }
 }
@@ -95,45 +95,45 @@
 - (void)updateToolbarStatus:(XXTExplorerToolbar *)toolbar {
     // Pasteboard
     if (self.historyMode) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
     } else {
         if ([[[self class] explorerPasteboard] strings].count > 0) {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
         } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
         }
     }
     
     // Editing Related
     if (self.historyMode) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:YES];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(YES)];
 #ifdef APPSTORE
         if ([self isEditing]) {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:NO];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings toEnabled:@(NO)];
         } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings toEnabled:@(YES)];
         }
 #endif
     } else {
         if ([self isEditing]) {
             if (([self.tableView indexPathsForSelectedRows].count) > 0) {
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:YES];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:YES];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:YES];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:YES];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(YES)];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(YES)];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(YES)];
             } else {
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare enabled:NO];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress enabled:NO];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste enabled:NO];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash enabled:NO];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(NO)];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(NO)];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
+                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(NO)];
             }
         } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem enabled:YES];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem toEnabled:@(YES)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toEnabled:@(YES)];
 #ifndef APPSTORE
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan toEnabled:@(YES)];
 #else
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings enabled:YES];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings toEnabled:@(YES)];
 #endif
         }
     }
@@ -202,28 +202,17 @@
             }
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
-            NSArray <NSString *> *sortTitles
-            = @[
-                NSLocalizedString(@"Created At", nil),
-                NSLocalizedString(@"Modified At", nil),
-                NSLocalizedString(@"Name", nil),
-                NSLocalizedString(@"Type", nil),
-                NSLocalizedString(@"Size", nil),
-            ];
-            NSUInteger sortFieldIdx = self.explorerSortField;
-            if (sortFieldIdx >= sortTitles.count) {
-                sortFieldIdx = XXTExplorerViewEntryListSortFieldModificationDate;
-            }
-            NSString *sortFieldTitle = sortTitles[sortFieldIdx];
-            NSUInteger sortOrderIdx = self.explorerSortOrder;
-            NSString *sortOrderTitie = (sortOrderIdx == XXTExplorerViewEntryListSortOrderAsc) ? NSLocalizedString(@"Ascend", nil) : NSLocalizedString(@"Descend", nil);
+            XXTExplorerViewEntryListSortField sortFieldIdx = self.explorerSortField;
+            XXTExplorerViewEntryListSortOrder sortOrderIdx = self.explorerSortOrder;
+            @weakify(self);
             LGAlertView *sortAlert = [LGAlertView alertViewWithTitle:NSLocalizedString(@"Sort By", nil)
-                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Currently sorted by %@, %@.", nil), sortFieldTitle, sortOrderTitie]
+                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Currently sorted by %@, %@.", nil), XXTELocalizedNameForSortField(sortFieldIdx), XXTELocalizedNameForSortOrder(sortOrderIdx)]
                                                                style:LGAlertViewStyleActionSheet
-                                                        buttonTitles:sortTitles
+                                                        buttonTitles:XXTELocalizedNamesForAllSortFields()
                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                               destructiveButtonTitle:nil
                                                        actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+                @strongify(self);
                 if (index == sortFieldIdx) {
                     self.explorerSortOrder = (sortOrderIdx == XXTExplorerViewEntryListSortOrderAsc ? XXTExplorerViewEntryListSortOrderDesc : XXTExplorerViewEntryListSortOrderAsc);
                 } else {
@@ -231,7 +220,9 @@
                 }
                 [self updateToolbarButton];
                 [self reloadEntryListView];
-                [alertView dismissAnimated];
+                [alertView dismissAnimated:YES completionHandler:^{
+                    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Currently sorted by %@, %@.", nil), XXTELocalizedNameForSortField(self.explorerSortField), XXTELocalizedNameForSortOrder(self.explorerSortOrder)]);
+                }];
             } cancelHandler:^(LGAlertView * _Nonnull alertView) {
                 [alertView dismissAnimated];
             } destructiveHandler:nil];
