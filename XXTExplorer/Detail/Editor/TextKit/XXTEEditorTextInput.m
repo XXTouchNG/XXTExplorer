@@ -117,7 +117,7 @@ static NSUInteger kXXTEEditorTextInputMaximumAutoIndentCheckLineCharacterCount =
             NSUInteger prevCount = 0;
             NSUInteger searchStart = ((selectedRange.location - 1) < kXXTEEditorTextInputMaximumBracketCheckCharacterCount ? 0 : ((selectedRange.location - 1) - kXXTEEditorTextInputMaximumBracketCheckCharacterCount));
             NSUInteger searchEnd = (selectedRange.location - 1);
-            for (NSUInteger idx = searchEnd - 1; idx >= searchStart; idx--) {
+            for (NSUInteger idx = searchEnd - 1; idx > searchStart; idx--) {
                 unichar ch = [stringRef characterAtIndex:idx];
                 if (ch == previousChar) {
                     prevCount++;
@@ -128,7 +128,6 @@ static NSUInteger kXXTEEditorTextInputMaximumAutoIndentCheckLineCharacterCount =
                     }
                     prevCount--;
                 }
-                
             }
             
             /// Found
