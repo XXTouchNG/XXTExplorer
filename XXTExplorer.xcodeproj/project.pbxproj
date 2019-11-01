@@ -1263,6 +1263,9 @@
 		D643A2521F4D18BA005B9A59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2511F4D18BA005B9A59 /* SystemConfiguration.framework */; };
 		D643A2541F4D18BE005B9A59 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D643A2531F4D18BE005B9A59 /* Security.framework */; };
 		D645F9D71F42A77A00E3247B /* XXTEEditorTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D645F9D61F42A77A00E3247B /* XXTEEditorTextStorage.m */; };
+		D6471DF7236BB7F800EC2F78 /* XXTEMediaPlayerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D686EB7F230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.m */; };
+		D6471DF8236BB82A00EC2F78 /* XXTEMediaPlayerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D686EB7F230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.m */; };
+		D6471DF9236BB82B00EC2F78 /* XXTEMediaPlayerController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D686EB7F230CFF5F0074CC4A /* XXTEMediaPlayerController+NavigationBar.m */; };
 		D64A0D85230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64A0D84230D1F5A00E890B8 /* XXTExplorerSearchResultsViewController.m */; };
 		D64C42FB1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D64C42FC1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
@@ -5322,6 +5325,7 @@
 				D60F864422F0741900C5F526 /* zip.c in Sources */,
 				D6F3EBE11FE3A12600197858 /* XXTEEditorTextContainer.m in Sources */,
 				D600C3281FD7B92F00FDED9F /* XXTEMediaPlayerController.m in Sources */,
+				D6471DF7236BB7F800EC2F78 /* XXTEMediaPlayerController+NavigationBar.m in Sources */,
 				0F97F1DA1FB309D0007CA883 /* XXTELuaVModel.m in Sources */,
 				0F97F1D71FB309C6007CA883 /* XXTExplorerEntryTerminalReader.m in Sources */,
 				0F97F1D81FB309C6007CA883 /* XXTETerminalTextView.m in Sources */,
@@ -5800,6 +5804,7 @@
 				0FECB2271EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.m in Sources */,
 				0F6AEA991F3754930017BE7C /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				0F6AEA931F3752600017BE7C /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
+				D6471DF8236BB82A00EC2F78 /* XXTEMediaPlayerController+NavigationBar.m in Sources */,
 				0FB388E51FA860E800B41E44 /* XXTEEditorStatisticsViewController.m in Sources */,
 				D6DB971C22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m in Sources */,
 				0FAE18E420806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
@@ -6160,6 +6165,7 @@
 				D60FE6DE1FE2369300954818 /* XXTExplorerViewHomeCell.m in Sources */,
 				D60FE6DF1FE2369300954818 /* XXTExplorerViewController+PasteboardOperations.m in Sources */,
 				D60FE6E01FE2369300954818 /* XXTExplorerViewController+ArchiverOperation.m in Sources */,
+				D6471DF9236BB82B00EC2F78 /* XXTEMediaPlayerController+NavigationBar.m in Sources */,
 				D60FE6E31FE2369300954818 /* XXTEEditorStatisticsViewController.m in Sources */,
 				D6DB971D22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m in Sources */,
 				0FAE18E520806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
