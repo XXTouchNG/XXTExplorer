@@ -28,7 +28,7 @@
 	<key>CYDIA_URL</key>
 	<string>cydia://url/%@</string>
 	<key>DAEMON_VERSION</key>
-	<string>2.1.3</string>
+	<string>2.1.4</string>
 	<key>EXPLORER_HISTORY_PATH</key>
 	<string>caches/history</string>
 	<key>EXPLORER_INITIAL_PATH</key>

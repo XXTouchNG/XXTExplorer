@@ -6475,7 +6475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
-				CURRENT_PROJECT_VERSION = 227;
+				CURRENT_PROJECT_VERSION = 228;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6520,7 +6520,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6576,7 +6576,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
-				CURRENT_PROJECT_VERSION = 227;
+				CURRENT_PROJECT_VERSION = 228;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6620,7 +6620,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";
