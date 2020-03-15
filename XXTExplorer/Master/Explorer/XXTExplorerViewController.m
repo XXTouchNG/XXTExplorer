@@ -494,14 +494,26 @@ XXTE_END_IGNORE_PARTIAL
         XXTExplorerViewEntryListSortOrder sortOrder = self.explorerSortOrder;
         
         NSString *sortFieldString = [XXTExplorerEntry sortField2AttributeName:sortField];
-        NSComparator comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2)
-        {
-            if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {
-                return [[obj1 valueForKey:sortFieldString] compare:[obj2 valueForKey:sortFieldString]];
-            } else {
-                return [[obj2 valueForKey:sortFieldString] compare:[obj1 valueForKey:sortFieldString]];
-            }
-        };
+        NSComparator comparator = nil;
+        if (sortField == XXTExplorerViewEntryListSortFieldDisplayName) {
+            comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2)
+            {
+                if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {
+                    return [(NSString *)[obj1 valueForKey:sortFieldString] localizedStandardCompare:(NSString *)[obj2 valueForKey:sortFieldString]];
+                } else {
+                    return [(NSString *)[obj2 valueForKey:sortFieldString] localizedStandardCompare:(NSString *)[obj1 valueForKey:sortFieldString]];
+                }
+            };
+        } else {
+            comparator = ^NSComparisonResult(NSDictionary *_Nonnull obj1, NSDictionary *_Nonnull obj2)
+            {
+                if (sortOrder == XXTExplorerViewEntryListSortOrderAsc) {
+                    return [[obj1 valueForKey:sortFieldString] compare:[obj2 valueForKey:sortFieldString]];
+                } else {
+                    return [[obj2 valueForKey:sortFieldString] compare:[obj1 valueForKey:sortFieldString]];
+                }
+            };
+        }
         
         [entryDirectoryAttributesList sortUsingComparator:comparator];
         [entryBundleAttributesList sortUsingComparator:comparator];
