@@ -24,7 +24,7 @@ translateMethodName = "translate"
 
 [update.normalize]
 path = "XXTExplorer"
-sourceLocale = "en"
+sourceLocale = "zh-Hans"
 harmonizeWithSource = true
 sortByKeys = true
 

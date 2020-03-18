@@ -21,6 +21,9 @@
 "%@\nActivated At: %@" = "%1$@\n激活时间: %2$@";
 
 /* No comment provided by engineer. */
+"%@\nTap here to change encoding." = "%@\n轻按此处以更改编码.";
+
+/* No comment provided by engineer. */
 "%d Day " = "%d 天 ";
 
 /* No comment provided by engineer. */
@@ -75,6 +78,9 @@
 "3+2 touches to enter/exit fullscreen." = "三指双击以进入/退出全屏.";
 
 /* No comment provided by engineer. */
+"404 Not Found" = "404 Not Found";
+
+/* No comment provided by engineer. */
 "[%@]\nPath \"%@\" (treated as \"NSArray\") is empty." = "[%@]\路径 \"%@\" (作为 \"NSArray\") 为空.";
 
 /* No comment provided by engineer. */
@@ -112,6 +118,12 @@
 
 /* No comment provided by engineer. */
 "\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\"." = "\"主目录\" 已关闭, 在 \"更多 > 用户偏好设置\" 中可以重新开启它.";
+
+/* No comment provided by engineer. */
+"\"Home Entries\" has been disabled, you can make it display again in \"Settings > User Defaults\"." = "\"主目录\" 已关闭, 在 \"设置 > 用户偏好设置\" 中可以重新开启它.";
+
+/* No comment provided by engineer. */
+"\"Word Column\" is used only when \"Auto Word Wrap\" is disabled." = "\"行宽度\" 只有在 \"自动折行\" 关闭时才能生效.";
 
 /* No comment provided by engineer. */
 "\n\nTest finished.\n" = "\n\n调试结束.\n";
@@ -216,6 +228,12 @@
 "Archiving process terminated: user interrupt occurred." = "归档进程终止: 用户结束操作.";
 
 /* No comment provided by engineer. */
+"Ascend" = "升序";
+
+/* No comment provided by engineer. */
+"ASCII Keyboard" = "ASCII 键盘";
+
+/* No comment provided by engineer. */
 "Ask you for a choice." = "询问用户的选择.";
 
 /* No comment provided by engineer. */
@@ -246,7 +264,13 @@
 "Backspace Key" = "退格键";
 
 /* No comment provided by engineer. */
+"Bad Encoding" = "Bad Encoding";
+
+/* No comment provided by engineer. */
 "Basic" = "基本";
+
+/* No comment provided by engineer. */
+"Begin logging at: %@\n\n" = "开始记录日志: %@\n\n";
 
 /* No comment provided by engineer. */
 "Boot Script" = "开机启动项";
@@ -283,6 +307,9 @@
 
 /* No comment provided by engineer. */
 "Cannot autofill license field: Invalid license code." = "无法自动填充字段: 无效的授权码.";
+
+/* No comment provided by engineer. */
+"Cannot change line endings: Document is read-only." = "无法修改换行符: 文档是只读的.";
 
 /* No comment provided by engineer. */
 "Cannot check update: %@" = "无法检查更新: %@";
@@ -375,6 +402,9 @@
 "Cannot open file \"%@\" for writing." = "无法打开文件以供写入 \"%@\".";
 
 /* No comment provided by engineer. */
+"Cannot open file with encoding \"%@\"." = "无法以指定编码 \"%@\" 打开文件.";
+
+/* No comment provided by engineer. */
 "Cannot open log file \"%@\"." = "无法打开日志文件 \"%@\".";
 
 /* No comment provided by engineer. */
@@ -408,6 +438,9 @@
 "Cannot read archive file \"%@\"." = "无法读取归档文件 \"%@\".";
 
 /* No comment provided by engineer. */
+"Cannot read archive file \"%@\": %@." = "无法读取归档文件 \"%@\": %@.";
+
+/* No comment provided by engineer. */
 "Cannot read archive file \"%@\": Password protected archive is not supported." = "无法读取归档文件 \"%@\": 不支持密码保护归档.";
 
 /* No comment provided by engineer. */
@@ -421,6 +454,9 @@
 
 /* No comment provided by engineer. */
 "Cannot recognize the format of archive file \"%@\"." = "无法识别归档文件格式 \"%@\".";
+
+/* No comment provided by engineer. */
+"Cannot redirect to Safari." = "无法跳转到 Safari.";
 
 /* No comment provided by engineer. */
 "Cannot restart daemon: %@" = "无法重启守护进程: %@";
@@ -463,6 +499,9 @@
 
 /* No comment provided by engineer. */
 "Choose an package operation for \"%@\"." = "请为 \"%@\" 选择一项安装包操作.";
+
+/* No comment provided by engineer. */
+"Circular Search" = "循环搜索";
 
 /* No comment provided by engineer. */
 "Clean All" = "全清设备";
@@ -523,6 +562,9 @@
 
 /* No comment provided by engineer. */
 "Complie and encrypt \"%@\"?\nEncrypted script will be saved to current directory." = "编译并加密 \"%@\"?\n加密脚本将保存到当前目录.";
+
+/* No comment provided by engineer. */
+"Configuration file \"%@\" is too large to process." = "配置文件 \"%@\" 超出预计尺寸, 无法处理.";
 
 /* No comment provided by engineer. */
 "Configure" = "配置";
@@ -615,6 +657,9 @@
 "Creation Failed" = "创建失败";
 
 /* No comment provided by engineer. */
+"Current" = "当前";
+
+/* No comment provided by engineer. */
 "Current License" = "当前授权";
 
 /* No comment provided by engineer. */
@@ -624,10 +669,16 @@
 "Current Script" = "当前脚本";
 
 /* No comment provided by engineer. */
+"Currently sorted by %@, %@." = "当前以 %@, %@ 排序.";
+
+/* No comment provided by engineer. */
 "Daemon" = "守护进程";
 
 /* No comment provided by engineer. */
 "Daemon Restarted" = "守护进程已重启";
+
+/* No comment provided by engineer. */
+"Data URL will be copied to the pasteboard, paste it in Safari maually to finish installation." = "数据 URL 将被复制到剪贴板, 请在 Safari 地址栏粘贴以完成安装.";
 
 /* No comment provided by engineer. */
 "Database Viewer" = "数据库查看器";
@@ -637,6 +688,9 @@
 
 /* No comment provided by engineer. */
 "Decompressing terminated unexpectedly." = "解压异常终止.";
+
+/* No comment provided by engineer. */
+"Default Encoding: %@" = "默认编码: %@";
 
 /* No comment provided by engineer. */
 "Delete" = "删除";
@@ -655,6 +709,9 @@
 
 /* No comment provided by engineer. */
 "Deleting \"%@\"" = "删除 \"%@\"";
+
+/* No comment provided by engineer. */
+"Descend" = "降序";
 
 /* No comment provided by engineer. */
 "Description" = "描述";
@@ -765,6 +822,9 @@
 "Enter a directory, and tap the \"Select\" button." = "进入目录中, 然后轻按 \"选择\" 按钮.";
 
 /* No comment provided by engineer. */
+"Enter the password of this archive." = "请输入该归档文件的密码.";
+
+/* No comment provided by engineer. */
 "Enter your 12/16-digit license code and tap \"Done\" to activate the license and bind it to current device.\nLicense code only contains 3-9 and A-Z, spaces are not included." = "键入 12/16 位授权码, 轻按 \"完成\" 以激活授权, 并将授权绑定至当前设备.\n授权码中仅包含 3-9 和 A-Z, 不包含空格.";
 
 /* No comment provided by engineer. */
@@ -855,7 +915,16 @@
 "From \"%@\"" = "来自 \"%@\"";
 
 /* No comment provided by engineer. */
+"From Bottom" = "转至底部";
+
+/* No comment provided by engineer. */
+"From Top" = "转至顶部";
+
+/* No comment provided by engineer. */
 "General" = "通用";
+
+/* No comment provided by engineer. */
+"Generate From Template..." = "从模板创建...";
 
 /* No comment provided by engineer. */
 "Generated code snippet has been saved to \"%@\"." = "生成的代码片段已保存到 \"%@\".";
@@ -924,6 +993,9 @@
 "Instant View / Run" = "立即查看";
 
 /* No comment provided by engineer. */
+"Instruction" = "指引";
+
+/* No comment provided by engineer. */
 "Integer (1 ~ %ld)" = "整数 (1 ~ %ld)";
 
 /* No comment provided by engineer. */
@@ -957,6 +1029,9 @@
 "Item Detail" = "项目详情";
 
 /* No comment provided by engineer. */
+"Item Rename" = "项目重命名";
+
+/* No comment provided by engineer. */
 "key \"%@\" (\"%@\") is invalid." = "键 \"%@\" 的值 (\"%@\") 是无效的.";
 
 /* No comment provided by engineer. */
@@ -967,6 +1042,9 @@
 
 /* No comment provided by engineer. */
 "Keyboard" = "键盘";
+
+/* No comment provided by engineer. */
+"Keyboard Dismissal" = "隐藏键盘";
 
 /* No comment provided by engineer. */
 "Keyboard Keys" = "键盘按键";
@@ -1142,6 +1220,9 @@
 "Needs Respring" = "需要注销";
 
 /* No comment provided by engineer. */
+"New Filename" = "新文件名";
+
+/* No comment provided by engineer. */
 "New Item" = "新项目";
 
 /* No comment provided by engineer. */
@@ -1169,6 +1250,9 @@
 "No description." = "暂无描述.";
 
 /* No comment provided by engineer. */
+"No encoding available." = "无可用编码.";
+
+/* No comment provided by engineer. */
 "No file can be found.\nImport file via File Sharing or iTunes." = "您还一个文件都没有.\n请通过文件共享或 iTunes 导入文件.";
 
 /* No comment provided by engineer. */
@@ -1187,6 +1271,12 @@
 "No symbol definition found for this language." = "找不到当前语言的符号定义.";
 
 /* No comment provided by engineer. */
+"No symbol found, would you like to write something exciting?" = "找不到符号, 要不要搞点大事情?";
+
+/* No comment provided by engineer. */
+"No theme available." = "无可用主题.";
+
+/* No comment provided by engineer. */
 "None" = "无";
 
 /* No comment provided by engineer. */
@@ -1194,6 +1284,9 @@
 
 /* No comment provided by engineer. */
 "Object Viewer" = "对象查看器";
+
+/* Used in the context: 'Showing 1 of 3 items' */
+"of" = "of";
 
 /* No comment provided by engineer. */
 "Off" = "关闭";
@@ -1268,6 +1361,12 @@
 "Package Operation" = "安装包操作";
 
 /* No comment provided by engineer. */
+"Password" = "密码";
+
+/* No comment provided by engineer. */
+"Password Protected" = "密码保护";
+
+/* No comment provided by engineer. */
 "Paste" = "粘贴";
 
 /* No comment provided by engineer. */
@@ -1287,6 +1386,12 @@
 
 /* No comment provided by engineer. */
 "Permission" = "权限";
+
+/* Used in the context: '1 photo' */
+"photo" = "photo";
+
+/* Used in the context: '3 photos' */
+"photos" = "photos";
 
 /* No comment provided by engineer. */
 "Photos Library" = "照片图库";
@@ -1388,6 +1493,9 @@
 "Read Only" = "只读模式";
 
 /* No comment provided by engineer. */
+"Ready.\n" = "就绪.\n";
+
+/* No comment provided by engineer. */
 "Reboot Device" = "重启设备";
 
 /* No comment provided by engineer. */
@@ -1397,7 +1505,13 @@
 "Rectangle" = "矩形";
 
 /* No comment provided by engineer. */
+"Recursively" = "递归";
+
+/* No comment provided by engineer. */
 "Redirect Confirm" = "跳转确认";
+
+/* No comment provided by engineer. */
+"Redo" = "重做";
 
 /* No comment provided by engineer. */
 "Regular Expression" = "正则表达式";
@@ -1442,6 +1556,9 @@
 "Rename" = "重命名";
 
 /* No comment provided by engineer. */
+"Reopen with encoding" = "以该编码重新打开";
+
+/* No comment provided by engineer. */
 "Repeat" = "循环";
 
 /* No comment provided by engineer. */
@@ -1457,13 +1574,13 @@
 "Replace Now" = "立即替换";
 
 /* No comment provided by engineer. */
-"Replace..." = "替换...";
+"Replace Regex..." = "替换正则...";
 
 /* No comment provided by engineer. */
 "Replace Text..." = "替换文本...";
 
 /* No comment provided by engineer. */
-"Replace Regex..." = "替换正则...";
+"Replace..." = "替换...";
 
 /* No comment provided by engineer. */
 "Reset" = "重置";
@@ -1508,7 +1625,13 @@
 "Save" = "保存";
 
 /* No comment provided by engineer. */
+"Save Document" = "保存文件";
+
+/* No comment provided by engineer. */
 "Save to Camera Roll" = "保存到相机胶卷";
+
+/* No comment provided by engineer. */
+"Save with encoding" = "以该编码保存";
 
 /* No comment provided by engineer. */
 "Scan" = "扫描";
@@ -1532,7 +1655,16 @@
 "Search Application" = "搜索应用程序";
 
 /* No comment provided by engineer. */
+"Search Files" = "搜索文件";
+
+/* No comment provided by engineer. */
 "Search Log" = "搜索日志";
+
+/* No comment provided by engineer. */
+"Search Regex..." = "搜索正则...";
+
+/* No comment provided by engineer. */
+"Search Results (%ld)" = "搜索结果 (%ld)";
 
 /* No comment provided by engineer. */
 "Search RuanMao Cloud" = "搜索软猫云";
@@ -1541,16 +1673,13 @@
 "Search Symbol" = "搜索符号";
 
 /* No comment provided by engineer. */
+"Search Text..." = "搜索文本...";
+
+/* No comment provided by engineer. */
 "Search User Defaults" = "搜索用户偏好设置";
 
 /* No comment provided by engineer. */
 "Search..." = "搜索...";
-
-/* No comment provided by engineer. */
-"Search Text..." = "搜索文本...";
-
-/* No comment provided by engineer. */
-"Search Regex..." = "搜索正则...";
 
 /* No comment provided by engineer. */
 "Select" = "选择";
@@ -1580,7 +1709,13 @@
 "Select Boot Script" = "选择开机启动项";
 
 /* No comment provided by engineer. */
+"Select Encoding" = "选择编码";
+
+/* No comment provided by engineer. */
 "Select item from the left panel" = "请从左侧面板中选择项目";
+
+/* No comment provided by engineer. */
+"Select Photos" = "Select Photos";
 
 /* No comment provided by engineer. */
 "Select several positions by tapping on image." = "轻按以选择图片中若干位置.";
@@ -1628,6 +1763,9 @@
 "Show/Hide Keyboard" = "显示/隐藏键盘";
 
 /* No comment provided by engineer. */
+"Simple Title" = "简易标题";
+
+/* No comment provided by engineer. */
 "Size" = "尺寸";
 
 /* No comment provided by engineer. */
@@ -1638,6 +1776,9 @@
 
 /* No comment provided by engineer. */
 "Soft Tabs" = "软缩进";
+
+/* No comment provided by engineer. */
+"Sort By" = "排序";
 
 /* No comment provided by engineer. */
 "Sort by Modification Date Descend" = "按修改日期降序排列";
@@ -1693,6 +1834,15 @@
 "Suggested" = "建议";
 
 /* No comment provided by engineer. */
+"Swipe: View Options" = "提示: 划动以查看选项";
+
+/* No comment provided by engineer. */
+"Switch to Ascending Order" = "切换到升序";
+
+/* No comment provided by engineer. */
+"Switch to Descending Order" = "切换到降序";
+
+/* No comment provided by engineer. */
 "Symbolic Link" = "替身";
 
 /* No comment provided by engineer. */
@@ -1720,6 +1870,9 @@
 "Tabs" = "缩进符";
 
 /* No comment provided by engineer. */
+"Tap \"Done\" on keyboard to save changes you just made." = "轻按键盘上的 \"完成\" 以保存刚刚进行的更改.";
+
+/* No comment provided by engineer. */
 "Tap \"Install\" to continue..." = "轻按 \"安装\" 以继续...";
 
 /* No comment provided by engineer. */
@@ -1730,6 +1883,9 @@
 
 /* No comment provided by engineer. */
 "Tap here to add a file." = "轻按以添加文件.";
+
+/* No comment provided by engineer. */
+"Tap here to select a template" = "轻按此处以选择模板";
 
 /* No comment provided by engineer. */
 "Tap here to setup configuration file in Safari." = "轻按此处以在 Safari 中安装描述文件.";
@@ -1757,6 +1913,9 @@
 
 /* No comment provided by engineer. */
 "Test" = "测试";
+
+/* No comment provided by engineer. */
+"Testing %@...\n" = "测试 %@...\n";
 
 /* No comment provided by engineer. */
 "Text" = "文本";
@@ -1804,6 +1963,9 @@
 "Theme" = "主题";
 
 /* No comment provided by engineer. */
+"Themes" = "主题";
+
+/* No comment provided by engineer. */
 "This feature is not supported." = "该功能暂不支持当前系统.";
 
 /* No comment provided by engineer. */
@@ -1811,6 +1973,9 @@
 
 /* No comment provided by engineer. */
 "This feature requires iOS 9.0 or later." = "该功能需要 iOS 9.0 以上版本.";
+
+/* No comment provided by engineer. */
+"This file is not executable." = "此文件不可被执行.";
 
 /* No comment provided by engineer. */
 "This operation will kill all applications and reset icon caches, which may cause icons to disappear." = "该操作将强行关闭所有应用程序并重置图标缓存, 这可能造成图标丢失.";
@@ -1893,6 +2058,9 @@
 "Undefined" = "未定义";
 
 /* No comment provided by engineer. */
+"Undo" = "撤销";
+
+/* No comment provided by engineer. */
 "Unicode (UTF-8)" = "Unicode (UTF-8)";
 
 /* No comment provided by engineer. */
@@ -1903,6 +2071,9 @@
 
 /* No comment provided by engineer. */
 "Unknown" = "未知";
+
+/* No comment provided by engineer. */
+"Unknown reason." = "未知原因.";
 
 /* No comment provided by engineer. */
 "Unknown server response (%@)." = "未知的服务端响应 (%@).";
@@ -1921,6 +2092,9 @@
 
 /* No comment provided by engineer. */
 "Untitled" = "未命名";
+
+/* No comment provided by engineer. */
+"Use \"%@\"" = "使用 \"%@\"";
 
 /* No comment provided by engineer. */
 "Use this viewer to open all documents like this one." = "使用该查看器查看所有此类型文档.";
@@ -1965,6 +2139,12 @@
 "Width" = "宽度";
 
 /* No comment provided by engineer. */
+"Will change current line endings to \"%@\", continue?" = "即将修改当前换行符为 \"%@\", 是否继续?";
+
+/* No comment provided by engineer. */
+"Will change current text encoding to \"%@\", continue?" = "即将修改当前文本编码为 \"%@\", 是否继续?";
+
+/* No comment provided by engineer. */
 "Will open url: \n\"%@\", continue?" = "即将打开 URL: \n\"%@\", 继续?";
 
 /* No comment provided by engineer. */
@@ -1984,6 +2164,9 @@
 
 /* No comment provided by engineer. */
 "Write" = "写";
+
+/* No comment provided by engineer. */
+"Xcode" = "Xcode";
 
 /* No comment provided by engineer. */
 "XUI Error" = "XUI 错误";
@@ -2009,176 +2192,5 @@
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";
 
-/* Used in the context: 'Showing 1 of 3 items' */
-"of" = "of";
-
-/* Used in the context: '1 photo' */
-"photo" = "photo";
-
-/* Used in the context: '3 photos' */
-"photos" = "photos";
-
-/* No comment provided by engineer. */
-"Select Photos" = "Select Photos";
-
-/* No comment provided by engineer. */
-"This file is not executable." = "此文件不可被执行.";
-
-/* No comment provided by engineer. */
-"Data URL will be copied to the pasteboard, paste it in Safari maually to finish installation." = "数据 URL 将被复制到剪贴板, 请在 Safari 地址栏粘贴以完成安装.";
-
-/* No comment provided by engineer. */
-"Instruction" = "指引";
-
-/* No comment provided by engineer. */
-"Cannot redirect to Safari." = "无法跳转到 Safari.";
-
-/* No comment provided by engineer. */
-"Cannot read archive file \"%@\": %@." = "无法读取归档文件 \"%@\": %@.";
-
-/* No comment provided by engineer. */
-"Enter the password of this archive." = "请输入该归档文件的密码.";
-
-/* No comment provided by engineer. */
-"Password" = "密码";
-
-/* No comment provided by engineer. */
-"Password Protected" = "密码保护";
-
-/* No comment provided by engineer. */
-"Themes" = "主题";
-
-/* No comment provided by engineer. */
-"No theme available." = "无可用主题.";
-
-/* No comment provided by engineer. */
-"Cannot open file with encoding \"%@\"." = "无法以指定编码 \"%@\" 打开文件.";
-
-/* No comment provided by engineer. */
-"Xcode" = "Xcode";
-
-/* No comment provided by engineer. */
-"Bad Encoding" = "Bad Encoding";
-
-/* No comment provided by engineer. */
-"No encoding available." = "无可用编码.";
-
-/* No comment provided by engineer. */
-"Select Encoding" = "选择编码";
-
-/* No comment provided by engineer. */
-"Unknown reason." = "未知原因.";
-
-/* No comment provided by engineer. */
-"Use \"%@\"" = "使用 \"%@\"";
-
-/* No comment provided by engineer. */
-"Will change current text encoding to \"%@\", continue?" = "即将修改当前文本编码为 \"%@\", 是否继续?";
-
-/* No comment provided by engineer. */
-"%@\nTap here to change encoding." = "%@\n轻按此处以更改编码.";
-
-/* No comment provided by engineer. */
-"Will change current line endings to \"%@\", continue?" = "即将修改当前换行符为 \"%@\", 是否继续?";
-
-/* No comment provided by engineer. */
-"Simple Title" = "简易标题";
-
-/* No comment provided by engineer. */
-"\"Home Entries\" has been disabled, you can make it display again in \"Settings > User Defaults\"." = "\"主目录\" 已关闭, 在 \"设置 > 用户偏好设置\" 中可以重新开启它.";
-
-/* No comment provided by engineer. */
-"Default Encoding: %@" = "默认编码: %@";
-
-/* No comment provided by engineer. */
-"Configuration file \"%@\" is too large to process." = "配置文件 \"%@\" 超出预计尺寸, 无法处理.";
-
 /* No comment provided by engineer. */
 "❗️\"Syntax Highlight\" is skipped for files with long lines for performance reasons." = "❗️由于性能原因, 对包含超长文本行的文件, \"语法高亮\" 已暂时停用.";
-
-/* No comment provided by engineer. */
-"404 Not Found" = "404 Not Found";
-
-/* No comment provided by engineer. */
-"No symbol found, would you like to write something exciting?" = "找不到符号, 要不要搞点大事情?";
-
-/* No comment provided by engineer. */
-"\"Word Column\" is used only when \"Auto Word Wrap\" is disabled." = "\"行宽度\" 只有在 \"自动折行\" 关闭时才能生效.";
-
-/* No comment provided by engineer. */
-"Ascend" = "升序";
-
-/* No comment provided by engineer. */
-"Descend" = "降序";
-
-/* No comment provided by engineer. */
-"Currently sorted by %@, %@." = "当前以 %@, %@ 排序.";
-
-/* No comment provided by engineer. */
-"Sort By" = "排序";
-
-/* No comment provided by engineer. */
-"Generate From Template..." = "从模板创建...";
-
-/* No comment provided by engineer. */
-"Tap here to select a template" = "轻按此处以选择模板";
-
-/* No comment provided by engineer. */
-"Current" = "当前";
-
-/* No comment provided by engineer. */
-"Recursively" = "递归";
-
-/* No comment provided by engineer. */
-"Search Files" = "搜索文件";
-
-/* No comment provided by engineer. */
-"Search Results (%ld)" = "搜索结果 (%ld)";
-
-/* No comment provided by engineer. */
-"Circular Search" = "循环搜索";
-
-/* No comment provided by engineer. */
-"Begin logging at: %@\n\n" = "开始记录日志: %@\n\n";
-
-/* No comment provided by engineer. */
-"From Bottom" = "转至底部";
-
-/* No comment provided by engineer. */
-"From Top" = "转至顶部";
-
-/* No comment provided by engineer. */
-"Keyboard Dismissal" = "隐藏键盘";
-
-/* No comment provided by engineer. */
-"Redo" = "重做";
-
-/* No comment provided by engineer. */
-"Undo" = "撤销";
-
-/* No comment provided by engineer. */
-"Swipe: View Options" = "提示: 划动以查看选项";
-
-/* No comment provided by engineer. */
-"Item Rename" = "项目重命名";
-
-/* No comment provided by engineer. */
-"New Filename" = "新文件名";
-
-/* No comment provided by engineer. */
-"Tap \"Done\" on keyboard to save changes you just made." = "轻按键盘上的 \"完成\" 以保存刚刚进行的更改.";
-
-/* No comment provided by engineer. */
-"ASCII Keyboard" = "ASCII 键盘";
-
-/* No comment provided by engineer. */
-"Reopen with encoding" = "以该编码重新打开";
-
-/* No comment provided by engineer. */
-"Save with encoding" = "以该编码保存";
-
-/* No comment provided by engineer. */
-"Save Document" = "保存文件";
-
-/* No comment provided by engineer. */
-"Cannot change line endings: Document is read-only." = "无法修改换行符: 文档是只读的.";
