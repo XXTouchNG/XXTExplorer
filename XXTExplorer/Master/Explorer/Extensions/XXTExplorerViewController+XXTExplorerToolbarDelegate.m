@@ -210,14 +210,10 @@
                                                                style:LGAlertViewStyleActionSheet
                                                         buttonTitles:XXTELocalizedNamesForAllSortFields()
                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                              destructiveButtonTitle:nil
+                                              destructiveButtonTitle:(sortOrderIdx == XXTExplorerViewEntryListSortOrderDesc ? NSLocalizedString(@"Switch to Ascending Order", nil) : NSLocalizedString(@"Switch to Descending Order", nil))
                                                        actionHandler:^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
                 @strongify(self);
-                if (index == sortFieldIdx) {
-                    self.explorerSortOrder = (sortOrderIdx == XXTExplorerViewEntryListSortOrderAsc ? XXTExplorerViewEntryListSortOrderDesc : XXTExplorerViewEntryListSortOrderAsc);
-                } else {
-                    self.explorerSortField = index;
-                }
+                [self setExplorerSortField:index];
                 [self updateToolbarButton];
                 [self reloadEntryListView];
                 [alertView dismissAnimated:YES completionHandler:^{
@@ -225,7 +221,15 @@
                 }];
             } cancelHandler:^(LGAlertView * _Nonnull alertView) {
                 [alertView dismissAnimated];
-            } destructiveHandler:nil];
+            } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
+                @strongify(self);
+                [self setExplorerSortOrder:(sortOrderIdx == XXTExplorerViewEntryListSortOrderDesc ? XXTExplorerViewEntryListSortOrderAsc : XXTExplorerViewEntryListSortOrderDesc)];
+                [self updateToolbarButton];
+                [self reloadEntryListView];
+                [alertView dismissAnimated:YES completionHandler:^{
+                    toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Currently sorted by %@, %@.", nil), XXTELocalizedNameForSortField(self.explorerSortField), XXTELocalizedNameForSortOrder(self.explorerSortOrder)]);
+                }];
+            }];
             [sortAlert showAnimated];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypePaste]) {

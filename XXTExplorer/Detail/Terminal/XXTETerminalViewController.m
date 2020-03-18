@@ -312,19 +312,29 @@ typedef enum : NSUInteger {
 #pragma mark - Execute
 
 - (void)displayWelcomeMessage:(BOOL)run {
+    BOOL showPrompt = XXTEDefaultsBool(XXTExplorerTerminalShowPrompt, YES);
     if (self.logPath && self.logHandle) {
-        [self appendContent:[NSString stringWithFormat:NSLocalizedString(@"Begin logging at: %@\n\n", nil), self.logPath] contentType:XXTETerminalContentTypeDoNotLog toTextView:self.textView];
+        if (showPrompt) {
+            [self appendContent:[NSString stringWithFormat:NSLocalizedString(@"Begin logging at: %@\n\n", nil), self.logPath] contentType:XXTETerminalContentTypeDoNotLog toTextView:self.textView];
+        }
     }
-    [self appendContent:[NSString stringWithFormat:@"%@\n", NSLocalizedString(@LUA_COPYRIGHT, nil)] contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+    [self appendContent:[NSString stringWithFormat:@"%@\n\n", NSLocalizedString(@LUA_COPYRIGHT, nil)] contentType:XXTETerminalContentTypeTips toTextView:self.textView];
     if (run) {
-        [self appendContent:[NSString stringWithFormat:NSLocalizedString(@"\nTesting %@...\n", nil), self.entryPath] contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+        if (showPrompt) {
+            [self appendContent:[NSString stringWithFormat:NSLocalizedString(@"Testing %@...\n", nil), self.entryPath] contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+        }
     } else {
-        [self appendContent:NSLocalizedString(@"\nReady.\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+        if (showPrompt) {
+            [self appendContent:NSLocalizedString(@"Ready.\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+        }
     }
 }
 
 - (void)displayFinishMessage {
-    [self appendContent:NSLocalizedString(@"\n\nTest finished.\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+    BOOL showPrompt = XXTEDefaultsBool(XXTExplorerTerminalShowPrompt, YES);
+    if (showPrompt) {
+        [self appendContent:NSLocalizedString(@"\n\nTest finished.\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+    }
 }
 
 - (void)launchVirtualMachine {
@@ -375,7 +385,10 @@ typedef enum : NSUInteger {
         }
         return;
     } else {
-        [self appendContent:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+        BOOL showPrompt = XXTEDefaultsBool(XXTExplorerTerminalShowPrompt, YES);
+        if (showPrompt) {
+            [self appendContent:NSLocalizedString(@"\nSyntax check passed, testing...\n\n", nil) contentType:XXTETerminalContentTypeTips toTextView:self.textView];
+        }
     }
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{

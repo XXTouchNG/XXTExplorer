@@ -444,7 +444,7 @@ XXTE_END_IGNORE_PARTIAL
         BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO);
         [self.homeEntryList removeAllObjects];
         if ([self showsHomeSeries] && homeEnabled &&
-            (self == [self.navigationController.viewControllers firstObject]) && !self.isPreviewed) {
+            (self == [self.navigationController.viewControllers firstObject]) && !self.isPreviewed && !self.historyMode) {
             NSArray <NSDictionary *> *entrySeries = XXTEBuiltInDefaultsObject(XXTExplorerViewBuiltHomeSeries);
             if (entrySeries) {
                 [self.homeEntryList addObjectsFromArray:entrySeries];

@@ -437,6 +437,23 @@ This option will not be applied to code editor.</string>
 			<key>enabled</key>
 			<true/>
 			<key>key</key>
+			<string>XXTExplorerTerminalShowPrompt</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Terminal Show Prompt</string>
+			<key>description</key>
+			<string>Show external prompt messages in terminal.</string>
+			<key>options</key>
+			<array>
+				<string>Disabled</string>
+				<string>Enabled</string>
+			</array>
+		</dict>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>key</key>
 			<string>XXTExplorerTerminalSaveLogs</string>
 			<key>default</key>
 			<integer>1</integer>

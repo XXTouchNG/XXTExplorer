@@ -43,6 +43,7 @@ static NSString * const XXTExplorerCreateItemTemplatePathKey = @"XXTExplorerCrea
 static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEncodingKey";
 static NSString * const XXTExplorerViewerRegexSearch = @"XXTExplorerViewerRegexSearch";
 static NSString * const XXTExplorerViewerCaseSensitiveSearch = @"XXTExplorerViewerCaseSensitiveSearch";
+static NSString * const XXTExplorerTerminalShowPrompt = @"XXTExplorerTerminalShowPrompt";
 static NSString * const XXTExplorerTerminalSaveLogs = @"XXTExplorerTerminalSaveLogs";
 static NSString * const XXTExplorerTerminalLogStoreLimit = @"XXTExplorerTerminalLogStoreLimit";
 

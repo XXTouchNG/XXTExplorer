@@ -18,6 +18,7 @@
 }
 
 - (void)terminalDidTerminate:(UIViewController *)sender withError:(NSError *)error {
+    return;
     if (@available(iOS 9.0, *)) {
         NSString *errorDescription = error.localizedDescription;
         if (!errorDescription) {

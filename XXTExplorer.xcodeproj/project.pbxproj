@@ -860,9 +860,6 @@
 		BDAB85A5233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAB85A4233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m */; };
 		BDAB85A6233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAB85A4233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m */; };
 		BDAB85A7233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAB85A4233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m */; };
-		BDC3DC9C2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
-		BDC3DC9D2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
-		BDC3DC9E2308F926006A603B /* XXLuaInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BDC3DC9B2308F925006A603B /* XXLuaInterpreter.mm */; };
 		BDC463F7230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
 		BDC463F8230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
 		BDC463F9230D7C2300730924 /* XXTPixelToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC463F6230D7C2300730924 /* XXTPixelToolbar.m */; };
@@ -5567,7 +5564,6 @@
 				0F8EDC2D1FB1F779003C92D6 /* SKParser.m in Sources */,
 				0F8EDC2E1FB1F779003C92D6 /* XXTESymbolCell.m in Sources */,
 				0F8EDC2F1FB1F779003C92D6 /* SKAttributedParser.m in Sources */,
-				BDC3DC9E2308F926006A603B /* XXLuaInterpreter.mm in Sources */,
 				0F8EDC321FB1F779003C92D6 /* lapi.c in Sources */,
 				0F8EDC331FB1F779003C92D6 /* lauxlib.c in Sources */,
 				0F8EDC341FB1F779003C92D6 /* lbaselib.c in Sources */,
@@ -5675,7 +5671,6 @@
 				0FE1E44A1F18FD5000055E02 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FCAF4002009AE59002FB774 /* RMCloudProjectCell.m in Sources */,
 				0FCAF40D200A3A69002FB774 /* RMCloudProjectViewController.m in Sources */,
-				BDC3DC9C2308F926006A603B /* XXLuaInterpreter.mm in Sources */,
 				0FBAFF411F6E5378008B3189 /* XXTImagePickerController.m in Sources */,
 				0F072DBD1FB9F54D00597EE2 /* XUIAdapter_xuic.m in Sources */,
 				0FFBC1331F5C391300690C8F /* XXTPickerSnippet.m in Sources */,
@@ -6036,7 +6031,6 @@
 				D60FE6781FE2369300954818 /* XXTExplorerEntryCodeReader.m in Sources */,
 				0FCAF4012009AE59002FB774 /* RMCloudProjectCell.m in Sources */,
 				0FCAF40E200A3A69002FB774 /* RMCloudProjectViewController.m in Sources */,
-				BDC3DC9D2308F926006A603B /* XXLuaInterpreter.mm in Sources */,
 				D60FE6791FE2369300954818 /* XXTImagePickerController.m in Sources */,
 				D60FE67A1FE2369300954818 /* XUIAdapter_xuic.m in Sources */,
 				D60FE67B1FE2369300954818 /* XXTPickerSnippet.m in Sources */,
@@ -6475,7 +6469,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
-				CURRENT_PROJECT_VERSION = 228;
+				CURRENT_PROJECT_VERSION = 229;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6520,7 +6514,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
-				MARKETING_VERSION = 2.1.4;
+				MARKETING_VERSION = 2.1.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6576,7 +6570,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
-				CURRENT_PROJECT_VERSION = 228;
+				CURRENT_PROJECT_VERSION = 229;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6620,7 +6614,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
-				MARKETING_VERSION = 2.1.4;
+				MARKETING_VERSION = 2.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";

@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>FooterText</key>
-			<string>2014-2019 © Zheng Wu.
+			<string>2014-2020 © Zheng Wu.
 All Rights Reserved.</string>
 			<key>Title</key>
 			<string>About</string>
@@ -23,7 +23,7 @@ All Rights Reserved.</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>2.1.4</string>
+			<string>2.1.5</string>
 			<key>Key</key>
 			<string>sbVersion</string>
 			<key>Title</key>
