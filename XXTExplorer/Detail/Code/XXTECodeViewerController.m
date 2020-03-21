@@ -218,6 +218,7 @@
                 foregroundColor = [UIColor colorWithCssName:foregroundColorString];
             }
             self.view.tintColor = foregroundColor ?: XXTColorForeground();
+            self.foregroundColor = foregroundColor;
             self.barTextColor = foregroundColor;
         }
         UIColor *backgroundColor = nil;
@@ -242,8 +243,29 @@
         }
     }
     
+    // scroll indicator
+    [self reloadScrollIndicator];
+    
     // navigation bar
     [self setNeedsRefreshNavigationBar];
+}
+
+- (void)reloadScrollIndicator {
+    UIScrollView *scrollView = nil;
+    if (self.webView) {
+        scrollView = self.webView.scrollView;
+    }
+    else if (self.wkWebView) {
+        scrollView = self.wkWebView.scrollView;
+    }
+    if (self.isDarkMode) {
+        scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+    }
+    else {
+        scrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
+    }
+    scrollView.showsHorizontalScrollIndicator = YES;
+    scrollView.alwaysBounceHorizontal = NO;
 }
 
 - (void)reloadContent {
@@ -322,8 +344,12 @@
         @"themeLocation": themePath ?: @"",
         @"gutterColor": [[self.barTextColor colorWithAlphaComponent:0.25] cssRGBAString] ?: @"#ddd",
         @"gutterBackgroundColor": [[self.barTextColor colorWithAlphaComponent:0.033] cssRGBAString] ?: @"#fff",
+        @"foregroundColor": [self.foregroundColor cssRGBAString] ?: @"#000",
+        @"backgroundColor": [self.backgroundColor cssRGBAString] ?: @"#fff",
         @"fontName": [NSString stringWithFormat:@"\"%@\", monospace", fontName],
         @"fontSize": [NSString stringWithFormat:@"%@px", fontSize],
+        @"bodyMargin": counter ? @"0" : @"revert",
+        @"preMargin": counter ? @"0" : @"revert",
         @"extra": @"",
     };
     

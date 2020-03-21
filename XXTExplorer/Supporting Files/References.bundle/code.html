@@ -10,9 +10,16 @@
 <link rel="stylesheet" type="text/css" href="css/fonts.css" />
 {{ extra }}
 <style>
+body {
+    margin: {{ bodyMargin }};
+}
+pre {
+    margin: {{ preMargin }};
+}
 code {
     font-family: {{ fontName }};
     font-size: {{ fontSize }};
+    color: {{ foregroundColor }};
 }
 code {
     counter-reset: line;
@@ -31,6 +38,9 @@ span.line::before {
     margin-right: .5em;
     text-align: right;
     -webkit-user-select: none;
+}
+::-webkit-scrollbar {
+    display: none;
 }
 </style>
 <script src="hljs/highlight.pack.js"></script>

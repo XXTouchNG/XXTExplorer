@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UIColor *barTintColor;
 @property (nonatomic, strong) UIColor *barTextColor;
+@property (nonatomic, strong) UIColor *foregroundColor;
 @property (nonatomic, strong) UIColor *backgroundColor;
 
 - (void)setNeedsRefreshNavigationBar;

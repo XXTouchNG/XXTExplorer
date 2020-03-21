@@ -127,17 +127,19 @@
     
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your app might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-    
     XXTEEditorTextView *textView = self.textView;
-    UITextRange *selectionRange = [textView selectedTextRange];
-    CGRect selectionStartRect = [textView caretRectForPosition:selectionRange.start];
-    CGRect selectionEndRect = [textView caretRectForPosition:selectionRange.end];
-    CGPoint selectionCenterPoint = (CGPoint){(selectionStartRect.origin.x + selectionEndRect.origin.x) / 2,(selectionStartRect.origin.y + selectionStartRect.size.height / 2)};
-    
-    if (!CGRectContainsPoint(aRect, selectionCenterPoint) ) {
-        [textView scrollRectToVisible:CGRectMake(selectionStartRect.origin.x, selectionStartRect.origin.y, selectionEndRect.origin.x - selectionStartRect.origin.x, selectionStartRect.size.height) animated:YES consideringInsets:YES];
+    if (textView.isFirstResponder) {
+        CGRect aRect = self.view.frame;
+        aRect.size.height -= kbSize.height;
+        
+        UITextRange *selectionRange = [textView selectedTextRange];
+        CGRect selectionStartRect = [textView caretRectForPosition:selectionRange.start];
+        CGRect selectionEndRect = [textView caretRectForPosition:selectionRange.end];
+        CGPoint selectionCenterPoint = (CGPoint){(selectionStartRect.origin.x + selectionEndRect.origin.x) / 2,(selectionStartRect.origin.y + selectionStartRect.size.height / 2)};
+        
+        if (!CGRectContainsPoint(aRect, selectionCenterPoint) ) {
+            [textView scrollRectToVisible:CGRectMake(selectionStartRect.origin.x, selectionStartRect.origin.y, selectionEndRect.origin.x - selectionStartRect.origin.x, selectionStartRect.size.height) animated:YES consideringInsets:YES];
+        }
     }
     
     [self setNeedsStatusBarAppearanceUpdate];

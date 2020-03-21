@@ -1127,15 +1127,25 @@ XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if (scrollView == self.textView) {
-        [self renderSyntaxTextAttributesOnScreen];
-    } else if (scrollView == self.containerView) {
-        
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        [self scrollViewDidFinishScrolling:scrollView];
     }
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self scrollViewDidFinishScrolling:scrollView];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self scrollViewDidFinishScrolling:scrollView];
+}
+
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+    [self scrollViewDidFinishScrolling:scrollView];
+}
+
+- (void)scrollViewDidFinishScrolling:(UIScrollView *)scrollView {
     if (scrollView == self.textView) {
         [self renderSyntaxTextAttributesOnScreen];
     } else if (scrollView == self.containerView) {
@@ -1260,7 +1270,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [textView setTextColor:theme.foregroundColor];
     [textView setText:content];
     [textView setEditable:(isReadOnlyMode == NO && isLockedState == NO)];
-    [textView setSelectedRange:NSMakeRange(0, 0)];
     
     [textView.undoManager enableUndoRegistration];  // enable undo
     
