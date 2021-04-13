@@ -10,6 +10,16 @@ XXTouch Editor is an elegant Lua integrated development environment and file man
 - Compression and decompression (supports encrypted ZIP, RAR)
 - View history
 
+## Various File Viewer
+- Image Viewer
+- Movie Player
+- Web Browser
+- Text Viewer
+- Code Viewer
+- Log Viewer
+- Property List Viewer
+- SQLite Viewer
+
 ## Perfect Code Viewer
 - 200+ language syntax highlighting
 - 89 color schemes
