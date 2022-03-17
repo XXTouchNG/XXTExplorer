@@ -31,8 +31,15 @@ XXTE_START_IGNORE_PARTIAL
         return nil;
     }];
     UIDragItem *dragItem = [[UIDragItem alloc] initWithItemProvider:provider];
-    dragItem.localObject = indexPath;
-    return @[ dragItem ];
+    dragItem.localObject = entry;
+    return @[dragItem];
+}
+XXTE_END_IGNORE_PARTIAL
+
+XXTE_START_IGNORE_PARTIAL
+- (NSArray<UIDragItem *> *)tableView:(UITableView *)tableView itemsForAddingToDragSession:(id<UIDragSession>)session atIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point
+{
+    return [self tableView:tableView itemsForBeginningDragSession:session atIndexPath:indexPath];
 }
 XXTE_END_IGNORE_PARTIAL
 

@@ -22,28 +22,40 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 
 XXTE_START_IGNORE_PARTIAL
-- (UITableViewDropProposal *)tableView:(UITableView *)tableView dropSessionDidUpdate:(id<UIDropSession>)session withDestinationIndexPath:(NSIndexPath *)destinationIndexPath {
+- (UITableViewDropProposal *)tableView:(UITableView *)tableView dropSessionDidUpdate:(id <UIDropSession>)session withDestinationIndexPath:(NSIndexPath *)destinationIndexPath {
     
     UITableViewDropProposal *cancelProp = [[UITableViewDropProposal alloc] initWithDropOperation:UIDropOperationCancel];
+    
+    if (!destinationIndexPath) {
+        destinationIndexPath = [NSIndexPath indexPathForRow:[tableView numberOfRowsInSection:XXTExplorerViewSectionIndexList] inSection:XXTExplorerViewSectionIndexList];
+    }
     
     if (destinationIndexPath.section != XXTExplorerViewSectionIndexList) {
         return cancelProp;
     }
     
+    XXTExplorerEntry *anySourceEntry = session.localDragSession.items.firstObject.localObject;
     XXTExplorerEntry *destinationEntry = nil;
     NSUInteger destIndex = destinationIndexPath.row;
     if (destIndex < self.entryList.count) {
         destinationEntry = self.entryList[destinationIndexPath.row];
+    } else if (destIndex == self.entryList.count) {
+        destinationEntry = self.entry;
     }
     
     UIDropOperation dropOperation = UIDropOperationCancel;
     UITableViewDropIntent dropIntent = UITableViewDropIntentAutomatic;
-    if (tableView.hasActiveDrag)
+    if (session.localDragSession)
     { // local drag
-        if (destinationEntry && destinationEntry.isMaskedDirectory)
+        if (destinationEntry)
         {
+            if (!destinationEntry.isMaskedDirectory && [self.entryList containsObject:anySourceEntry]) {
+                return cancelProp;
+            }
+            
+            // FIXME: highlight
             dropOperation = UIDropOperationMove;
-            dropIntent = UITableViewDropIntentInsertIntoDestinationIndexPath;
+            dropIntent = destinationEntry.isMaskedDirectory ? UITableViewDropIntentInsertIntoDestinationIndexPath : UITableViewDropIntentUnspecified;
         }
         else
         {
@@ -149,6 +161,7 @@ XXTE_START_IGNORE_PARTIAL
                             if (sourceIndexPath &&
                                 sourceIndexPath.section == XXTExplorerViewSectionIndexList)
                             {
+                                // the same table view
                                 NSUInteger srcIndex = sourceIndexPath.row;
                                 if (srcIndex >= entryList.count) {
                                     return;
@@ -160,6 +173,13 @@ XXTE_START_IGNORE_PARTIAL
                                     [indexesToRemove addIndex:srcIndex];
                                     [indexPathsToRemove addObject:sourceIndexPath];
                                 }
+                            }
+                            else if ([dropItem.dragItem.localObject isKindOfClass:[XXTExplorerEntry class]])
+                            {
+                                // from another table view
+                                XXTExplorerEntry *sourceEntry = dropItem.dragItem.localObject;
+                                BOOL removeResult = [manager removeItemAtPath:sourceEntry.entryPath error:nil];
+                                if (removeResult) { }
                             }
                         }
                     }
@@ -182,6 +202,9 @@ XXTE_START_IGNORE_PARTIAL
         } else {
             if (isMove) {
                 // move rows, left empty
+                // FIXME: diff add
+                [self loadEntryListData];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:XXTExplorerViewSectionIndexList] withRowAnimation:UITableViewRowAnimationAutomatic];
             } else {
                 // insert new paths
                 [entryList insertObjects:entries atIndexes:[indexes copy]];
@@ -272,22 +295,25 @@ XXTE_START_IGNORE_PARTIAL
                 BOOL writeResult = [manager moveItemAtPath:path toPath:testItemPath error:nil];
                 if (writeResult)
                 {
-                    if ([dragItem.localObject isKindOfClass:[NSIndexPath class]])
+                    if ([dragItem.localObject isKindOfClass:[XXTExplorerEntry class]])
                     {
-                        NSIndexPath *sourceIndexPath = (NSIndexPath *)dragItem.localObject;
-                        if (sourceIndexPath &&
-                            sourceIndexPath.section == XXTExplorerViewSectionIndexList)
-                        {
-                            NSUInteger srcIndex = sourceIndexPath.row;
-                            if (srcIndex >= entryList.count) {
-                                return;
-                            }
-                            XXTExplorerEntry *sourceEntry = entryList[srcIndex];
-                            BOOL removeResult = [manager removeItemAtPath:sourceEntry.entryPath error:nil];
-                            if (removeResult)
+                        NSUInteger sourceIndex = [self.entryList indexOfObject:dragItem.localObject];
+                        if (sourceIndex != NSNotFound) {
+                            NSIndexPath *sourceIndexPath = (NSIndexPath *)[NSIndexPath indexPathForRow:sourceIndex inSection:XXTExplorerViewSectionIndexList];
+                            if (sourceIndexPath &&
+                                sourceIndexPath.section == XXTExplorerViewSectionIndexList)
                             {
-                                [indexesToRemove addIndex:srcIndex];
-                                [indexPathsToRemove addObject:sourceIndexPath];
+                                NSUInteger srcIndex = sourceIndexPath.row;
+                                if (srcIndex >= entryList.count) {
+                                    return;
+                                }
+                                XXTExplorerEntry *sourceEntry = entryList[srcIndex];
+                                BOOL removeResult = [manager removeItemAtPath:sourceEntry.entryPath error:nil];
+                                if (removeResult)
+                                {
+                                    [indexesToRemove addIndex:srcIndex];
+                                    [indexPathsToRemove addObject:sourceIndexPath];
+                                }
                             }
                         }
                     }
