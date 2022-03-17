@@ -1,8 +1,8 @@
 PODS:
-  - Bugly (2.5.0)
+  - Bugly (2.5.91)
   - FLEX (3.0.0)
-  - GCDWebServer/Core (3.5.2)
-  - GCDWebServer/WebDAV (3.5.2):
+  - GCDWebServer/Core (3.5.4)
+  - GCDWebServer/WebDAV (3.5.4):
     - GCDWebServer/Core
   - JSONModel (1.7.0)
   - LGAlertView (2.4.0)
@@ -131,13 +131,13 @@ CHECKOUT OPTIONS:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
     :git: https://github.com/Lessica/UnrarKit.git
   XUI:
-    :commit: 1fd463aaaf0b18b2227459d9fd3058402747e6e7
+    :commit: 4a186251b687a2b38734b3b1794d1f97202217b0
     :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
-  Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
+  Bugly: afe841bba2ea6de6d432a3c125240a5e75949c55
   FLEX: d66c759bce0f6ebbbf472c742380874d846f2883
-  GCDWebServer: ead88cd14596dd4eae4f5830b8877c87c8728990
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
   MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
@@ -154,4 +154,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cd194f5e57deab44654f822324c808793ff76897
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.0

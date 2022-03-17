@@ -531,7 +531,7 @@ int l_xui_decode(lua_State *L)
 
 int luaopen_xui(lua_State *L)
 {
-    lua_createtable(L, 0, 5);
+    lua_createtable(L, 0, 2);
     lua_pushcfunction(L, l_xui_decode);
     lua_setfield(L, -2, "decode");
     lua_pushliteral(L, "0.2");

@@ -312,7 +312,7 @@ XXTE_END_IGNORE_PARTIAL
         self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
         NSArray <NSLayoutConstraint *> *constraints =
         @[
-          [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
@@ -336,7 +336,7 @@ XXTE_END_IGNORE_PARTIAL
 #else
         NSArray <NSLayoutConstraint *> *constraints =
         @[
-          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+          [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
           [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0],
@@ -377,10 +377,20 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)restoreTheme {
+    UIColor *barTintColor = XXTColorBarTint();
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+        [navigationBarAppearance configureWithOpaqueBackground];
+        [navigationBarAppearance setBackgroundColor:barTintColor];
+        [navigationBar setStandardAppearance:navigationBarAppearance];
+        [navigationBar setScrollEdgeAppearance:navigationBar.standardAppearance];
+    } else {
+        // Fallback on earlier versions
+    }
     [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText()}];
     navigationBar.tintColor = XXTColorTint();
-    navigationBar.barTintColor = XXTColorBarTint();
+    navigationBar.barTintColor = barTintColor;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 

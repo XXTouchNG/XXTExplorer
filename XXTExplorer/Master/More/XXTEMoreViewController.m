@@ -711,7 +711,12 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         }
         else if (indexPath.section == kXXTEMoreSectionIndexSettings) {
             if (indexPath.row == kXXTEMoreSectionSettingsRowIndexUserDefaults) {
-                XXTEMoreUserDefaultsController *userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStyleGrouped];
+                XXTEMoreUserDefaultsController *userDefaultsController = nil;
+                if (@available(iOS 13.0, *)) {
+                    userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStyleInsetGrouped];
+                } else {
+                    userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStyleGrouped];
+                }
                 [self.navigationController pushViewController:userDefaultsController animated:YES];
             }
         }

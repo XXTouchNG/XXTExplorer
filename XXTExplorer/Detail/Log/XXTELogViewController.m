@@ -379,7 +379,7 @@ XXTE_END_IGNORE_PARTIAL
     BOOL isSearch = NO;
     UISearchBar *searchBar = nil;
     if (@available(iOS 13.0, *)) {
-        if (!self.searchController.active) {
+        if (self.searchController.active) {
             isSearch = YES;
             searchBar = self.searchController.searchBar;
         }

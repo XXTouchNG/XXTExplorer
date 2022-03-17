@@ -152,7 +152,12 @@
         }
 #else
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSettings]) {
-            XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            XXTEMoreViewController *moreViewController = nil;
+            if (@available(iOS 13.0, *)) {
+                moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleInsetGrouped];
+            } else {
+                moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            }
             XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
             masterNavigationControllerRight.modalPresentationStyle = UIModalPresentationFormSheet;
             masterNavigationControllerRight.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

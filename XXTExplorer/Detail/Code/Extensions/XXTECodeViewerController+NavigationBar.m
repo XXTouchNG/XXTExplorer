@@ -71,6 +71,15 @@
         if (self.barTintColor)
             barTintColor = self.barTintColor;
     }
+    if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+        [navigationBarAppearance configureWithOpaqueBackground];
+        [navigationBarAppearance setBackgroundColor:barTintColor];
+        [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
+        [navigation.navigationBar setScrollEdgeAppearance:navigation.navigationBar.standardAppearance];
+    } else {
+        // Fallback on earlier versions
+    }
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor}];
     navigation.navigationBar.tintColor = tintColor;
     navigation.navigationBar.barTintColor = barTintColor;

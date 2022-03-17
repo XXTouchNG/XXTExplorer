@@ -276,7 +276,12 @@ XXTE_END_IGNORE_PARTIAL
     } else {
         rowDetail = self.displayDefaultsMeta[sectionKey][(NSUInteger) indexPath.row];
     }
-    XXTEMoreUserDefaultsOperationController *operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleGrouped];
+    XXTEMoreUserDefaultsOperationController *operationController = nil;
+    if (@available(iOS 13.0, *)) {
+        operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleInsetGrouped];
+    } else {
+        operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleGrouped];
+    }
     operationController.delegate = self;
     operationController.userDefaultsEntry = rowDetail;
     NSNumber *defaultsValue = self.userDefaults[rowDetail[@"key"]];
