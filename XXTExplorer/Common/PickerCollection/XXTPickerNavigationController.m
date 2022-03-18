@@ -210,7 +210,7 @@ static const void *ObjectTagKey = &ObjectTagKey;
 // If the user doesnt complete the swipe-to-go-back gesture, we need to intercept it and set the flag to NO again.
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     id<UIViewControllerTransitionCoordinator> tc = navigationController.topViewController.transitionCoordinator;
-    [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+    [tc notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         self.viewTransitionInProgress = NO;
         //--Reenable swipe back gesture.
         self.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)viewController;

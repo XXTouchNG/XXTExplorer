@@ -248,7 +248,7 @@
                 XXTExplorerEntry *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"\"%@\"", nil), firstAttributes.localizedDisplayName];
             } else {
-                formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
+                formatString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)selectedIndexPaths.count];
             }
             BOOL clearEnabled = NO;
             NSArray <NSString *> *pasteboardArray = [self.class.explorerPasteboard strings];
@@ -261,7 +261,7 @@
                 if (pasteboardCount == 1) {
                     pasteboardFormatString = NSLocalizedString(@"1 item", nil);
                 } else {
-                    pasteboardFormatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), pasteboardCount];
+                    pasteboardFormatString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)pasteboardCount];
                 }
                 clearEnabled = YES;
             }
@@ -320,7 +320,7 @@
                 }
                 formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes.localizedDisplayName];
             } else {
-                formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
+                formatString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)selectedIndexPaths.count];
             }
             if (isXPP) {
                 // XPP Bundle, jump to archive without confirm.
@@ -400,7 +400,7 @@
                 XXTExplorerEntry *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
                 formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes.localizedDisplayName];
             } else {
-                formatString = [NSString stringWithFormat:NSLocalizedString(@"%d items", nil), selectedIndexPaths.count];
+                formatString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)selectedIndexPaths.count];
             }
             LGAlertView *alertViewDelete = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Confirm", nil)
                                                                       message:[NSString stringWithFormat:NSLocalizedString(@"Delete %@?\nThis operation cannot be revoked.", nil), formatString]

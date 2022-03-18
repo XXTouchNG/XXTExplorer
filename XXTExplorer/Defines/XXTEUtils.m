@@ -219,7 +219,7 @@ id (^convertJsonString)(id) =
 };
 #endif
 
-NSDateFormatter *RFC822DateFormatter() {
+NSDateFormatter *RFC822DateFormatter(void) {
     static NSDateFormatter *formatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

@@ -109,6 +109,8 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do extra operations
+    
+    self.view.backgroundColor = [UIColor blackColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

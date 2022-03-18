@@ -1,13 +1,11 @@
 PODS:
-  - Bugly (2.5.91)
   - FLEX (3.0.0)
   - GCDWebServer/Core (3.5.4)
   - GCDWebServer/WebDAV (3.5.4):
     - GCDWebServer/Core
   - JSONModel (1.7.0)
   - LGAlertView (2.4.0)
-  - MWPhotoBrowser (2.1.2):
-    - YYImage (~> 1.0.4)
+  - MWPhotoBrowser (2.1.2)
   - OMGHTTPURLRQ (3.2.4):
     - OMGHTTPURLRQ/RQ (= 3.2.4)
   - OMGHTTPURLRQ/FormURLEncode (3.2.4)
@@ -67,26 +65,24 @@ PODS:
     - YYImage
 
 DEPENDENCIES:
-  - Bugly
   - FLEX
   - GCDWebServer/WebDAV
   - JSONModel (~> 1.7.0)
-  - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
-  - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`)
+  - LGAlertView (from `../LGAlertView`)
+  - MWPhotoBrowser (from `../MWPhotoBrowser`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7)
   - SOZOChromoplast
   - SSZipArchive (from `https://github.com/Lessica/ZipArchive.git`)
   - TOWebViewController (from `https://github.com/Lessica/TOWebViewController.git`, branch `WKWebView`)
   - UnrarKit (from `https://github.com/Lessica/UnrarKit.git`, branch `v2.9`)
-  - XUI (from `https://github.com/Lessica/XUI.git`)
+  - XUI (from `../XUI`)
   - YYCache
   - YYImage (~> 1.0.4)
   - YYWebImage (~> 1.0.5)
 
 SPEC REPOS:
   trunk:
-    - Bugly
     - FLEX
     - GCDWebServer
     - JSONModel
@@ -99,10 +95,9 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   LGAlertView:
-    :branch: old-device
-    :git: https://github.com/Lessica/LGAlertView.git
+    :path: "../LGAlertView"
   MWPhotoBrowser:
-    :git: https://github.com/Lessica/MWPhotoBrowser.git
+    :path: "../MWPhotoBrowser"
   SSZipArchive:
     :git: https://github.com/Lessica/ZipArchive.git
   TOWebViewController:
@@ -112,15 +107,9 @@ EXTERNAL SOURCES:
     :branch: v2.9
     :git: https://github.com/Lessica/UnrarKit.git
   XUI:
-    :git: https://github.com/Lessica/XUI.git
+    :path: "../XUI"
 
 CHECKOUT OPTIONS:
-  LGAlertView:
-    :commit: fc2cb8508ead5cad2273c097c7d165445bb0c2a5
-    :git: https://github.com/Lessica/LGAlertView.git
-  MWPhotoBrowser:
-    :commit: ae1b3f904d28da409528c1dca7fa279d9b812f99
-    :git: https://github.com/Lessica/MWPhotoBrowser.git
   SSZipArchive:
     :commit: 8efe8627b563e02d36ca4a26c40c93bedb859b42
     :git: https://github.com/Lessica/ZipArchive.git
@@ -130,17 +119,13 @@ CHECKOUT OPTIONS:
   UnrarKit:
     :commit: b4a02d0d9ed925d2ffbcb0c7512249a7a10b95fb
     :git: https://github.com/Lessica/UnrarKit.git
-  XUI:
-    :commit: 4a186251b687a2b38734b3b1794d1f97202217b0
-    :git: https://github.com/Lessica/XUI.git
 
 SPEC CHECKSUMS:
-  Bugly: afe841bba2ea6de6d432a3c125240a5e75949c55
   FLEX: d66c759bce0f6ebbbf472c742380874d846f2883
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   LGAlertView: b81455d5fbf31351df682fdd755b650c4f9b719d
-  MWPhotoBrowser: c04238f62e591d577511613f853e3d6b55cb676a
+  MWPhotoBrowser: bdccb6812ea62d8d6966d7f0c0f998b9629f8b7f
   OMGHTTPURLRQ: 9ac96bdf5c90a33f75836630729ea1adc312a9ed
   PromiseKit: 9007df2f9e2ef725467084ab3880cf932ab935a4
   SOZOChromoplast: 8902f554d852844c2025b26558d3322f8fae668d
@@ -152,6 +137,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: cd194f5e57deab44654f822324c808793ff76897
+PODFILE CHECKSUM: b6d0039baad7853d83f356ab15f9dcffe52ad956
 
 COCOAPODS: 1.11.3

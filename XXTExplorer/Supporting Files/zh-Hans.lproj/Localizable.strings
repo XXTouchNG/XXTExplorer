@@ -1388,10 +1388,10 @@
 "Permission" = "权限";
 
 /* Used in the context: '1 photo' */
-"photo" = "photo";
+"photo" = "图片";
 
 /* Used in the context: '3 photos' */
-"photos" = "photos";
+"photos" = "图片";
 
 /* No comment provided by engineer. */
 "Photos Library" = "照片图库";

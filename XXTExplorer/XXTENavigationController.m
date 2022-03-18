@@ -68,6 +68,10 @@
     return self.topViewController.prefersStatusBarHidden;
 }
 
+- (UIUserInterfaceStyle)overrideUserInterfaceStyle {
+    return self.topViewController.overrideUserInterfaceStyle;
+}
+
 - (UIViewController *)childViewControllerForStatusBarStyle {
     return self.topViewController;
 }

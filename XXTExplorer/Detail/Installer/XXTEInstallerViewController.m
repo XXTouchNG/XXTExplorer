@@ -131,8 +131,8 @@ typedef enum : NSUInteger {
     [constraints addObject:[NSLayoutConstraint constraintWithItem:self.loadingView
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.topLayoutGuide
-                                                        attribute:NSLayoutAttributeBottom
+                                                           toItem:self.view.safeAreaLayoutGuide
+                                                        attribute:NSLayoutAttributeTop
                                                        multiplier:1.f
                                                          constant:0.f]];
     [constraints addObject:[NSLayoutConstraint constraintWithItem:self.loadingView

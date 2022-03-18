@@ -33,7 +33,6 @@
 
 
 #import "zip.h"
-#import <Bugly/Bugly.h>
 #import "XXTECloudApiSdk.h"
 
 #import "UIViewController+topMostViewController.h"
@@ -119,11 +118,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    // Setup Bugly & Super Shield
-    {
-        [Bugly startWithAppId:nil];
-    }
-    
 #ifdef DEBUG
     NSLog(@"!!! LOG %@", [NSLocale currentLocale].localeIdentifier);
     NSLog(@"!!! LOG %@", [NSLocale systemLocale].localeIdentifier);
@@ -131,16 +125,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     NSLog(@"!!! LOG %@", [NSTimeZone localTimeZone]);
     NSLog(@"!!! LOG %@", [NSTimeZone systemTimeZone]);
 #endif
-    
-    // Reset Application if crash repeatedly
-    {
-        BOOL crashRepeatedly = [Bugly isAppCrashedOnStartUpExceedTheLimit];
-        if (crashRepeatedly)
-        { // Reset Application Persistent Store
-            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-        }
-    }
     
     // Setup Envp
     {
