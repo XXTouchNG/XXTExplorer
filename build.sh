@@ -53,6 +53,13 @@ fi
 #     exit 1
 # fi
 
+# 4
+cd "${SRC_DIR}/Products/Applications"
+codesign --remove-signature XXTExplorer.app
+rm -r XXTExplorer.app/_CodeSignature
+rm XXTExplorer.app/embedded.mobileprovision
+ldid -S XXTExplorer.app/XXTExplorer
+
 # 5
 echo "Succeed."
-open Releases
+open .

@@ -511,7 +511,7 @@
             if (selectAfterLaunch) {
                 if (entryPath)
                 {
-                    return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}];
+                    return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath }];
                 } else {
                     return [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ }];
                 }

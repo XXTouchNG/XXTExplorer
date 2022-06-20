@@ -229,7 +229,7 @@ CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentif
                     NSString *applicationBundleID = appProxy.applicationIdentifier;
                     BOOL shouldAdd = ![blacklistApplications containsObject:applicationBundleID];
                     if (shouldAdd) {
-                        NSString *applicationBundlePath = [appProxy.resourcesDirectoryURL path];
+                        NSString *applicationBundlePath = [appProxy.bundleContainerURL path];
                         NSString *applicationContainerPath = nil;
                         NSString *applicationName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
                         if (!applicationName) {

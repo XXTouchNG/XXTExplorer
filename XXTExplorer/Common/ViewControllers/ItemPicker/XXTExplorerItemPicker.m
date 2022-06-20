@@ -204,18 +204,18 @@
     BOOL needsOverride = NO;
     
     if (!entry.isMaskedDirectory &&
-        [entry.entryPath isEqualToString:self.selectedBootScriptPath]) {
-        titleColor = XXTColorForeground();
-        subtitleColor = XXTColorForeground();
+        [XXTStrippedPath(self.selectedBootScriptPath) isEqualToString:entry.entryPath]) {
+        titleColor = XXTColorFixed();
+        subtitleColor = XXTColorFixed();
         flagType = XXTExplorerViewCellFlagTypeSelectedBootScript;
         needsOverride = YES;
     }
     else if ((entry.isMaskedDirectory ||
               entry.isBundle) &&
-             [self.selectedBootScriptPath hasPrefix:entry.entryPath] &&
-             [[self.selectedBootScriptPath substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
-        titleColor = XXTColorForeground();
-        subtitleColor = XXTColorForeground();
+             [XXTStrippedPath(self.selectedBootScriptPath) hasPrefix:entry.entryPath] &&
+             [[XXTStrippedPath(self.selectedBootScriptPath) substringFromIndex:entry.entryPath.length] rangeOfString:@"/"].location != NSNotFound) {
+        titleColor = XXTColorFixed();
+        subtitleColor = XXTColorFixed();
         flagType = XXTExplorerViewCellFlagTypeSelectedBootScriptInside;
         needsOverride = YES;
     }

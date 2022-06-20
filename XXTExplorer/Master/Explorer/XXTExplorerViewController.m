@@ -954,7 +954,7 @@ XXTE_END_IGNORE_PARTIAL
 //    __block BOOL succeed = NO;
     UITableView *tableView = self.tableView;
     UIViewController *blockVC = blockInteractions(self, YES);
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{@"filename": entryPath}]
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"select_script_file") JSON:@{ @"filename": entryPath }]
     .then(convertJsonString)
     .then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@(0)]) {
@@ -1239,7 +1239,7 @@ XXTE_END_IGNORE_PARTIAL
         flagType = XXTExplorerViewCellFlagTypeNone;
     }
     if (!entry.isMaskedDirectory &&
-        [self.class.selectedScriptPath isEqualToString:entry.entryPath]) {
+        [[self.class selectedScriptPath] isEqualToString:entry.entryPath]) {
         // selected script itself
         titleColor = XXTColorSuccess();
         subtitleColor = XXTColorSuccess();

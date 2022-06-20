@@ -330,6 +330,11 @@
     });
 }
 
+- (void)itemPickerDidCancelSelectingItem:(XXTExplorerItemPicker *)picker {
+    [self.navigationController popToViewController:self animated:YES];
+}
+
+
 #pragma mark - Memory
 
 - (void)dealloc {

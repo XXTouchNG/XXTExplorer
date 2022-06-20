@@ -241,7 +241,7 @@ XXTE_END_IGNORE_PARTIAL
                 if (!shouldAdd) {
                     continue;
                 }
-                NSString *applicationBundlePath = [appProxy.resourcesDirectoryURL path];
+                NSString *applicationBundlePath = [appProxy.bundleContainerURL path];
                 NSString *applicationContainerPath = nil;
                 NSString *applicationName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
                 if (!applicationName) {
@@ -282,7 +282,7 @@ XXTE_END_IGNORE_PARTIAL
                 {
                     applicationDetail[kXXTEMoreApplicationDetailKeyIconImage] = applicationIconImage;
                 }
-                BOOL systemApp = [applicationBundlePath hasPrefix:@"/Applications"];
+                BOOL systemApp = applicationBundlePath.length == 0 || [applicationBundlePath hasPrefix:@"/Applications"] || [applicationBundleID hasPrefix:@"com.apple."];
                 if (systemApp) {
                     [self.allSystemApplications addObject:[applicationDetail copy]];
                 } else {

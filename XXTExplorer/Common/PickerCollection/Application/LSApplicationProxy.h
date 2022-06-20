@@ -17,9 +17,10 @@
 - (NSData *)iconDataForVariant:(int)arg1;
 - (NSString *)itemName;
 - (NSString *)localizedName;
-- (NSURL *)resourcesDirectoryURL;
 - (NSURL *)containerURL;
+- (NSURL *)bundleContainerURL;
 - (NSURL *)dataContainerURL;
+- (NSDictionary <NSString *, NSURL *> *)groupContainerURLs;
 - (BOOL)isSystemApplication;
 
 @property (nonatomic, readonly) NSString *applicationIdentifier;
