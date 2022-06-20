@@ -333,7 +333,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Tap Gestures
 
 - (void)placeholderViewTapped:(id)sender {
-    BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, YES);
+    BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, NO);
     if (allowsImport) {
         XXTE_START_IGNORE_PARTIAL
         if (@available(iOS 13.0, *)) {

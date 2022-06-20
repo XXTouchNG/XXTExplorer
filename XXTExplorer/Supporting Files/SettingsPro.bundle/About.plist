@@ -15,10 +15,10 @@
 			<string>About</string>
 			<key>label</key>
 			<string>XXTouch
-v2.1.0</string>
+v3.0.1</string>
 			<key>value</key>
 			<string>https://82flex.com
-2014-2020 © XXTouch Team.
+2014-2022 © XXTouch Team.
 All Rights Reserved.</string>
 		</dict>
 		<dict>
@@ -35,7 +35,7 @@ All Rights Reserved.</string>
 			<key>label</key>
 			<string>Official Site</string>
 			<key>url</key>
-			<string>https://www.xxtouch.com</string>
+			<string>https://www.xxtou.ch</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -63,10 +63,10 @@ All Rights Reserved.</string>
 					<string>i.82@qq.com</string>
 				</array>
 				<key>subject</key>
-				<string>[Feedback] XXTouch v2.1.0</string>
+				<string>[Feedback] XXTouch v3.0.1</string>
 				<key>toRecipients</key>
 				<array>
-					<string>bug@xxtouch.com</string>
+					<string>bug@xxtou.ch</string>
 				</array>
 			</dict>
 			<key>cell</key>

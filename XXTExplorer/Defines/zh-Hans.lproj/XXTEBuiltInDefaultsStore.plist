@@ -87,7 +87,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
-			<integer>1</integer>
+			<true/>
 			<key>title</key>
 			<string>显示 &quot;主目录&quot; 入口</string>
 			<key>description</key>
@@ -104,7 +104,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowsImportFromAlbum</string>
 			<key>default</key>
-			<integer>1</integer>
+			<false/>
 			<key>title</key>
 			<string>允许从相册导入</string>
 			<key>description</key>
@@ -138,7 +138,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
 			<key>default</key>
-			<integer>1</integer>
+			<false/>
 			<key>title</key>
 			<string>隐藏已知文件的扩展名</string>
 			<key>description</key>

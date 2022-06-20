@@ -53,11 +53,13 @@
     [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorTint(), NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateNormal];
     [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [XXTColorTint() colorWithAlphaComponent:0.3], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateDisabled];
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
     if (@available(iOS 15.0, *)) {
         [[UITableView appearance] setSectionHeaderTopPadding:0];
     } else {
         // Fallback on earlier versions
     }
+#endif
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

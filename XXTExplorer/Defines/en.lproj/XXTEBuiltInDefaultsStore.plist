@@ -87,7 +87,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHomeEnabledKey</string>
 			<key>default</key>
-			<integer>1</integer>
+			<true/>
 			<key>title</key>
 			<string>Show &quot;Home&quot; Entry</string>
 			<key>description</key>
@@ -104,7 +104,7 @@
 			<key>key</key>
 			<string>XXTExplorerAllowsImportFromAlbum</string>
 			<key>default</key>
-			<integer>1</integer>
+			<false/>
 			<key>title</key>
 			<string>Allows Import from Album</string>
 			<key>description</key>
@@ -138,7 +138,7 @@
 			<key>key</key>
 			<string>XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey</string>
 			<key>default</key>
-			<integer>1</integer>
+			<false/>
 			<key>title</key>
 			<string>Hide Common File Extensions</string>
 			<key>description</key>

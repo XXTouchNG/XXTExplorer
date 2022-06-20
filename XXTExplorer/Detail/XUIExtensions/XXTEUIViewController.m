@@ -19,15 +19,15 @@
 #import <LGAlertView/LGAlertView.h>
 
 // to listen
-static CFStringRef const XUICallbackUIUpdated = CFSTR("com.xxtouch.XUICallbackUIUpdated");
-static CFStringRef const XUICallbackValueChanged = CFSTR("com.xxtouch.XUICallbackValueChanged");
+static CFStringRef const XUICallbackUIUpdated = CFSTR("ch.xxtou.XUICallbackUIUpdated");
+static CFStringRef const XUICallbackValueChanged = CFSTR("ch.xxtou.XUICallbackValueChanged");
 
 // to post
-static CFStringRef const XUIEventValueChanged = CFSTR("com.xxtouch.XUIEventValueChanged");
-//static CFStringRef const XUIEventUIUpdated = CFSTR("com.xxtouch.XUIEventUIUpdated");
+static CFStringRef const XUIEventValueChanged = CFSTR("ch.xxtou.XUIEventValueChanged");
+//static CFStringRef const XUIEventUIUpdated = CFSTR("ch.xxtou.XUIEventUIUpdated");
 
-//static CFStringRef const XUIEventViewDidAppear = CFSTR("com.xxtouch.XUIEventViewDidAppear");
-//static CFStringRef const XUIEventViewDidDisappear = CFSTR("com.xxtouch.XUIEventViewDidDisappear");
+//static CFStringRef const XUIEventViewDidAppear = CFSTR("ch.xxtou.XUIEventViewDidAppear");
+//static CFStringRef const XUIEventViewDidDisappear = CFSTR("ch.xxtou.XUIEventViewDidDisappear");
 
 void XUINotificationCallbackUIUpdated(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     XXTEUIViewController *controller = (__bridge XXTEUIViewController *)(observer);

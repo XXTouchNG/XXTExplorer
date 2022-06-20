@@ -222,7 +222,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Theme
     if (!self.theme || [keysToReload containsObject:XXTEEditorThemeName]) {
-        static NSString * const XXTEDefaultThemeName = @"Mac Classic";
+        static NSString * const XXTEDefaultThemeName = @"Tomorrow Night";
         NSString *themeName = XXTEDefaultsObject(XXTEEditorThemeName, XXTEDefaultThemeName);
         if (themeName && themeFont)
         {

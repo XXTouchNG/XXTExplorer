@@ -35,7 +35,7 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 #pragma mark - Restore State
 
 - (NSString *)restorationIdentifier {
-    return [NSString stringWithFormat:@"com.xxtouch.restoration.%@", NSStringFromClass(self.class)];
+    return [NSString stringWithFormat:@"ch.xxtou.restoration.%@", NSStringFromClass(self.class)];
 }
 
 #pragma mark - Initializers

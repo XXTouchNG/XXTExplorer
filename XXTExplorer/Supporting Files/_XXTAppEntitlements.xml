@@ -16,7 +16,7 @@
     <key>allow-obliterate-device</key>
     <true/>
 	<key>application-identifier</key>
-	<string>com.xxtouch.XXTExplorer</string>
+	<string>ch.xxtou.XXTExplorer</string>
     <key>aps-connection-initiate</key>
     <true/>
     <key>auth-key-vault-client</key>

@@ -7,30 +7,30 @@ fi
 
 PACKAGE_NAME="${1:-latest}"
 DAEMON_VERSION="${2}"
-BRANCH_NAME=`git symbolic-ref --short -q HEAD`
+# BRANCH_NAME=`git symbolic-ref --short -q HEAD`
 
 SRC_DIR="Releases/${PACKAGE_NAME}.xcarchive"
 DEST_DIR="Releases/${PACKAGE_NAME}"
 
-echo "Current branch: ${BRANCH_NAME}"
-echo "Update repository..."
-git pull
-if [ $? != 0 ] ; then
-    exit 1
-fi
+# echo "Current branch: ${BRANCH_NAME}"
+# echo "Update repository..."
+# git pull
+# if [ $? != 0 ] ; then
+#     exit 1
+# fi
 
-echo "Update Cocoapods..."
-pod update --verbose
-if [ $? != 0 ] ; then
-    exit 1
-fi
+# echo "Update Cocoapods..."
+# pod update --verbose
+# if [ $? != 0 ] ; then
+#     exit 1
+# fi
 
 # 0
-echo "Update adapter..."
-./adapter_encode.sh
-if [ $? != 0 ] ; then
-    exit 1
-fi
+# echo "Update adapter..."
+# ./adapter_encode.sh
+# if [ $? != 0 ] ; then
+#     exit 1
+# fi
 
 # 1
 echo "Trigger build..."
@@ -47,11 +47,11 @@ if [ $? != 0 ] ; then
 fi
 
 # 3
-echo "Upload symbols..."
-./Libraries/BuglydSYMUploader/dSYMUpload.sh "abe3aa1f98" "d133a6f9-a23a-480c-a47a-e105191fd84c" "com.xxtouch.XXTExplorer" "${DAEMON_VERSION}" "${SRC_DIR}" "${DEST_DIR}" 1
-if [ $? != 0 ] ; then
-    exit 1
-fi
+# echo "Upload symbols..."
+# ./Libraries/BuglydSYMUploader/dSYMUpload.sh "abe3aa1f98" "d133a6f9-a23a-480c-a47a-e105191fd84c" "com.xxtouch.XXTExplorer" "${DAEMON_VERSION}" "${SRC_DIR}" "${DEST_DIR}" 1
+# if [ $? != 0 ] ; then
+#     exit 1
+# fi
 
 # 5
 echo "Succeed."

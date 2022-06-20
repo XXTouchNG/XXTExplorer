@@ -92,7 +92,7 @@ NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
     }
     if (self.isMaskedRegular || self.isBundle) {
         BOOL hideNameExtension =
-        XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, YES);
+        XXTEDefaultsBool(XXTExplorerViewEntryHideCommonFileExtensionsEnabledKey, NO);
         if (hideNameExtension)
         {
             if (self.isRegistered) {

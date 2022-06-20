@@ -198,7 +198,7 @@ end
 
 function __G.xui.reload(kvs)
     if not kvs then
-        notify_post('com.xxtouch.XUICallbackUIUpdated')
+        notify_post('ch.xxtou.XUICallbackUIUpdated')
     else
         if type(kvs) ~= 'table' then
             error(string.format('bad argument #1(keyValues) to `xui.reload` (table expected, got %s)', type(key)), 2)
@@ -227,7 +227,7 @@ function __G.xui.reload(kvs)
         end
         saveCachedDefaults()
         if plist.write(opt.rootPath..'/caches/XUICallbackValueChanged.plist', {objects = kvs_own}) then
-            notify_post('com.xxtouch.XUICallbackValueChanged')
+            notify_post('ch.xxtou.XUICallbackValueChanged')
         end
     end
 end

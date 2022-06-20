@@ -166,7 +166,7 @@
         }
 #endif
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
-            BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, YES);
+            BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, NO);
             if (allowsImport) {
                 XXTE_START_IGNORE_PARTIAL
                 if (@available(iOS 8.0, *)) {

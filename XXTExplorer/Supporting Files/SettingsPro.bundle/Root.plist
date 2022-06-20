@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>FooterText</key>
-			<string>2014-2020 © XXTouch Team.
+			<string>2014-2022 © XXTouch Team.
 All Rights Reserved.</string>
 			<key>Title</key>
 			<string>About</string>
@@ -31,7 +31,7 @@ All Rights Reserved.</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>2.1.0</string>
+			<string>3.0.1</string>
 			<key>Key</key>
 			<string>sbVersion</string>
 			<key>Title</key>

@@ -6469,7 +6469,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
-				CURRENT_PROJECT_VERSION = 230;
+				CURRENT_PROJECT_VERSION = 233;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6514,7 +6514,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6555,7 +6555,7 @@
 					"-weak_framework",
 					"\"RevealServer\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.xxtou.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
@@ -6568,7 +6568,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStore;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTouch.entitlements";
-				CURRENT_PROJECT_VERSION = 230;
+				CURRENT_PROJECT_VERSION = 233;
 				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -6612,8 +6612,8 @@
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist",
 					"$(PROJECT_DIR)/XXTExplorer/LuaModules/dist/lib",
 				);
-				MARKETING_VERSION = 2.1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTouchApp;
+				MARKETING_VERSION = 2.1.6;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.xxtou.XXTouchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
@@ -6842,7 +6842,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RLFKHCA862;
+				CURRENT_PROJECT_VERSION = 301;
+				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6924,7 +6925,7 @@
 					"\"Twitter\"",
 					"-Wl,-sectcreate,__RESTRICT,__restrict,/dev/null",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.xxtou.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = "armv7 arm64";
@@ -6942,7 +6943,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RLFKHCA862;
+				CURRENT_PROJECT_VERSION = 301;
+				DEVELOPMENT_TEAM = GXZ23M5TP2;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7023,7 +7025,7 @@
 					"\"Twitter\"",
 					"-Wl,-sectcreate,__RESTRICT,__restrict,/dev/null",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xxtouch.XXTExplorer;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.xxtou.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = "armv7 arm64";

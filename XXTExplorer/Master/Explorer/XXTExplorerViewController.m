@@ -451,7 +451,7 @@ XXTE_END_IGNORE_PARTIAL
 - (BOOL)loadEntryListDataWithError:(NSError **)error {
     
     {
-        BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, NO);
+        BOOL homeEnabled = XXTEDefaultsBool(XXTExplorerViewEntryHomeEnabledKey, YES);
         [self.homeEntryList removeAllObjects];
         if ([self showsHomeSeries] && homeEnabled &&
             (self == [self.navigationController.viewControllers firstObject]) && !self.isPreviewed && !self.historyMode) {
@@ -1480,7 +1480,7 @@ XXTE_END_IGNORE_PARTIAL
     for (NSUInteger idx = 0; idx < self.homeEntryList.count; idx++) {
         [homeIndexes addObject:[NSIndexPath indexPathForRow:idx inSection:XXTExplorerViewSectionIndexHome]];
     }
-    XXTEDefaultsSetBasic(XXTExplorerViewEntryHomeEnabledKey, NO);
+    XXTEDefaultsSetBasic(XXTExplorerViewEntryHomeEnabledKey, YES);
     [self loadEntryListData];
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -1542,6 +1542,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - XXTExplorerFooterViewDelegate
 
 - (void)footerView:(XXTExplorerFooterView *)view emptyButtonTapped:(UIButton *)sender {
+#ifdef RMCLOUD_ENABLED
     if (view == self.footerView) {
 #ifndef APPSTORE
         NSDictionary *userInfo =
@@ -1550,6 +1551,7 @@ XXTE_END_IGNORE_PARTIAL
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:nil userInfo:userInfo]];
 #endif
     }
+#endif
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate

@@ -19,12 +19,12 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.xxtouch.xui</string>
-				<string>com.xxtouch.xuic</string>
-				<string>com.xxtouch.lua</string>
-				<string>com.xxtouch.luac</string>
-				<string>com.xxtouch.xxt</string>
-				<string>com.xxtouch.xpa</string>
+				<string>ch.xxtou.xui</string>
+				<string>ch.xxtou.xuic</string>
+				<string>ch.xxtou.lua</string>
+				<string>ch.xxtou.luac</string>
+				<string>ch.xxtou.xxt</string>
+				<string>ch.xxtou.xpa</string>
 			</array>
 		</dict>
 		<dict>
@@ -51,7 +51,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.0</string>
+	<string>3.0.1</string>
 	<key>CFBundleVersion</key>
 	<string>206</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -156,7 +156,7 @@
 				<string>public.text</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.xui</string>
+			<string>ch.xxtou.xui</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -173,7 +173,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.xuic</string>
+			<string>ch.xxtou.xuic</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -190,7 +190,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.xxt</string>
+			<string>ch.xxtou.xxt</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -207,7 +207,7 @@
 				<string>public.text</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.lua</string>
+			<string>ch.xxtou.lua</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -224,7 +224,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.luac</string>
+			<string>ch.xxtou.luac</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -241,7 +241,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.xpa</string>
+			<string>ch.xxtou.xpa</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -258,7 +258,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.xxtouch.deb</string>
+			<string>ch.xxtou.deb</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -289,5 +289,7 @@
 	<string>${PRODUCT_NAME} want to access your album to save license record.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>${PRODUCT_NAME} want to access your album to extract QR code or import images.</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 </dict>
 </plist>
