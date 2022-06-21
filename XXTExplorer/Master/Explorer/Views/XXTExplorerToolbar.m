@@ -52,7 +52,6 @@
         XXTExplorerToolbarButtonTypeCompress,
         XXTExplorerToolbarButtonTypeAddItem,
         XXTExplorerToolbarButtonTypeSort,
-        XXTExplorerToolbarButtonTypeShare,
         XXTExplorerToolbarButtonTypePaste,
         XXTExplorerToolbarButtonTypeTrash
     ];
@@ -81,7 +80,7 @@
     _editingButtons =
     @[
         fixedSpace,
-        buttons[XXTExplorerToolbarButtonTypeShare],
+        buttons[XXTExplorerToolbarButtonTypeScan],
         flexibleSpace,
         buttons[XXTExplorerToolbarButtonTypeCompress],
         flexibleSpace,

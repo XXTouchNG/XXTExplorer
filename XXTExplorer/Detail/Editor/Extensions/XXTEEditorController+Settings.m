@@ -26,22 +26,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
-    if (!self.entryPath) return;
-    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
-    if (!shareUrl) return;
-    XXTE_START_IGNORE_PARTIAL
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
-    if (XXTE_IS_IPAD) {
-        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        popoverPresentationController.barButtonItem = sender;
-    }
-    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
-    XXTE_END_IGNORE_PARTIAL
-}
-
 - (BOOL)isSearchButtonItemAvailable {
     if (self.isLockedState) {
         return NO;

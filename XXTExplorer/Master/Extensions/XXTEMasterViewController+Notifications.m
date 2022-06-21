@@ -156,6 +156,12 @@
                     UIPasteboard *pb = [UIPasteboard generalPasteboard];
                     if (detectType == XXTExplorerPasteboardDetectTypeAll || detectType == XXTExplorerPasteboardDetectTypeURL) {
                         NSURL *pasteboardURL = [pb URL];
+                        if (!pasteboardURL) {
+                            NSString *pasteboardString = [pb string];
+                            if ([pasteboardString hasPrefix:@"http://"] || [pasteboardString hasPrefix:@"https://"]) {
+                                pasteboardURL = [NSURL URLWithString:pasteboardString];
+                            }
+                        }
                         NSString *scheme = [pasteboardURL scheme];
                         if (scheme.length > 0) {
                             if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])

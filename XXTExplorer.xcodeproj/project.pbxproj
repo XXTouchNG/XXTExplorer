@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0F00CAE01F66EECB00692913 /* UIImage+ColoredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */; };
-		0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
-		0F00CAF31F66F7A500692913 /* XXTEKeyboardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */; };
-		0F00CAF41F66F7A500692913 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
-		0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */; };
 		0F0654BC1EE483A0005B6C5F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F0654BA1EE483A0005B6C5F /* zip.c */; };
 		0F072DA71FB9D52000597EE2 /* XXTExplorerEntryReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F072DA61FB9D52000597EE2 /* XXTExplorerEntryReader.m */; };
 		0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0F0ADDF11F134163000D48FC /* XXTEItemTemplate.lua */; };
@@ -267,7 +263,6 @@
 		D60FE6581FE2369300954818 /* XXTEDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F457F331F877957001F0951 /* XXTEDownloadViewController.m */; };
 		D60FE6591FE2369300954818 /* XXTEEditorFontSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F3E1F4AE322004403D0 /* XXTEEditorFontSettingsViewController.m */; };
 		D60FE65A1FE2369300954818 /* XXTESplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */; };
-		D60FE65B1FE2369300954818 /* XXTEKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */; };
 		D60FE65D1FE2369300954818 /* XXTESwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D5DD11F6F64B400CDF16D /* XXTESwipeButton.m */; };
 		D60FE65E1FE2369300954818 /* XXTEEditorTextInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F51CB1B1F612ACF00150D6D /* XXTEEditorTextInput.m */; };
 		D60FE65F1FE2369300954818 /* XXTEBaseObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEA61F307C430098211C /* XXTEBaseObjectViewController.m */; };
@@ -310,7 +305,6 @@
 		D60FE6931FE2369300954818 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAFF1A1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m */; };
 		D60FE6941FE2369300954818 /* XXTEExecutableViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5690151F1B09B5009AF9FE /* XXTEExecutableViewer.m */; };
 		D60FE6951FE2369300954818 /* XXTExplorerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F61E1701ED78EE9003DCC78 /* XXTExplorerNavigationController.m */; };
-		D60FE69A1FE2369300954818 /* XXTETurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */; };
 		D60FE69B1FE2369300954818 /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
 		D60FE69C1FE2369300954818 /* XXTEEditorController+State.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD973F81F4B29E700133162 /* XXTEEditorController+State.m */; };
 		D60FE69D1FE2369300954818 /* XXTEEditorToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9888CA1FA753AE00ED33E7 /* XXTEEditorToolbar.m */; };
@@ -335,7 +329,6 @@
 		D60FE6C51FE2369300954818 /* XXTEMoreTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D629C22A1F063B830030C6DA /* XXTEMoreTitleValueCell.m */; };
 		D60FE6C61FE2369300954818 /* XXTExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAE0F011ED6FC0000798B4B /* XXTExplorerViewController.m */; };
 		D60FE6C71FE2369300954818 /* XXTExplorerEntryObjectReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F50AEBA1F30DBAB0098211C /* XXTExplorerEntryObjectReader.m */; };
-		D60FE6C81FE2369300954818 /* XXTEKeyboardRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */; };
 		D60FE6C91FE2369300954818 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAAB5921EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m */; };
 		D60FE6CA1FE2369300954818 /* NSString+XQueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EB50C1F08DD9C0016016A /* NSString+XQueryComponents.m */; };
 		D60FE6CB1FE2369300954818 /* XXTExplorerEntryMediaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4419F81F17E14F00967980 /* XXTExplorerEntryMediaReader.m */; };
@@ -393,7 +386,6 @@
 		D60FE7151FE2369300954818 /* XXTERespringAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = B03120C9E16A3F457F292605 /* XXTERespringAgent.m */; };
 		D60FE7161FE2369300954818 /* SKCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251293D44AFD758EEA8E4B2 /* SKCapture.m */; };
 		D60FE7171FE2369300954818 /* XXTEMoreTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBC12A1F5BD85F00690C8F /* XXTEMoreTextFieldCell.m */; };
-		D60FE7181FE2369300954818 /* XXTEKeyboardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */; };
 		D60FE71A1FE2369300954818 /* SKScopedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 525129847C45779842CAFB08 /* SKScopedString.m */; };
 		D60FE71B1FE2369300954818 /* SKResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512024B32016196224ED51 /* SKResultSet.m */; };
 		D60FE71D1FE2369300954818 /* XXTESegmentedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F88115C1FB6AF220004F20C /* XXTESegmentedController.m */; };
@@ -472,8 +464,6 @@
 		D64C42FB1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D64C42FD1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */; };
 		D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66085661F3C691100E87B3C /* XXTEEditorController.m */; };
-		D6677EBE231759E200414CA0 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6677EBD231759E200414CA0 /* fontello.ttf */; };
-		D6677EBF231759E200414CA0 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6677EBD231759E200414CA0 /* fontello.ttf */; };
 		D6686F271F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */; };
 		D6686F2D1F4AC920004403D0 /* XXTEMoreValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F2C1F4AC920004403D0 /* XXTEMoreValueView.m */; };
 		D6686F321F4ACEB6004403D0 /* XXTEMoreValueViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6686F301F4ACEB6004403D0 /* XXTEMoreValueViewCell.m */; };
@@ -530,14 +520,6 @@
 		0D2B1570999C111DB43AA7B8 /* Pods-XXTExplorer-Archive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTExplorer-Archive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive.debug.xcconfig"; sourceTree = "<group>"; };
 		0F00CADE1F66EECB00692913 /* UIImage+ColoredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColoredImage.h"; sourceTree = "<group>"; };
 		0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColoredImage.m"; sourceTree = "<group>"; };
-		0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTETurtleBezierPath.m; sourceTree = "<group>"; };
-		0F00CAE81F66F65100692913 /* XXTETurtleBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTETurtleBezierPath.h; sourceTree = "<group>"; };
-		0F00CAED1F66F7A500692913 /* XXTEKeyboardButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardButton.h; sourceTree = "<group>"; };
-		0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardButton.m; sourceTree = "<group>"; };
-		0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardButtonView.h; sourceTree = "<group>"; };
-		0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardButtonView.m; sourceTree = "<group>"; };
-		0F00CAF11F66F7A500692913 /* XXTEKeyboardRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEKeyboardRow.h; sourceTree = "<group>"; };
-		0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEKeyboardRow.m; sourceTree = "<group>"; };
 		0F0654B91EE483A0005B6C5F /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		0F0654BA1EE483A0005B6C5F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		0F0654BB1EE483A0005B6C5F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
@@ -985,7 +967,6 @@
 		D64C42FA1FF4B4F900DF5D96 /* UITextField+DisableFuckingSmartXXX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+DisableFuckingSmartXXX.m"; sourceTree = "<group>"; };
 		D66085651F3C691100E87B3C /* XXTEEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorController.h; sourceTree = "<group>"; };
 		D66085661F3C691100E87B3C /* XXTEEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorController.m; sourceTree = "<group>"; };
-		D6677EBD231759E200414CA0 /* fontello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fontello.ttf; sourceTree = "<group>"; };
 		D6686F251F4AC4CE004403D0 /* XXTEEditorSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEEditorSettingsViewController.h; sourceTree = "<group>"; };
 		D6686F261F4AC4CE004403D0 /* XXTEEditorSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorSettingsViewController.m; sourceTree = "<group>"; };
 		D6686F2B1F4AC920004403D0 /* XXTEMoreValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreValueView.h; sourceTree = "<group>"; };
@@ -1082,19 +1063,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F00CAF61F66F8B300692913 /* Accessory */ = {
-			isa = PBXGroup;
-			children = (
-				BD55986E231806E500C885FB /* Views */,
-				D6677EBD231759E200414CA0 /* fontello.ttf */,
-				0F00CAED1F66F7A500692913 /* XXTEKeyboardButton.h */,
-				0F00CAEE1F66F7A500692913 /* XXTEKeyboardButton.m */,
-				0F00CAF11F66F7A500692913 /* XXTEKeyboardRow.h */,
-				0F00CAF21F66F7A500692913 /* XXTEKeyboardRow.m */,
-			);
-			path = Accessory;
-			sourceTree = "<group>";
-		};
 		0F00CAF71F66F8C500692913 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1504,7 +1472,6 @@
 		0F6B6A4D1F5F9C6C0095A760 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				0F00CAF61F66F8B300692913 /* Accessory */,
 				0F00CAF71F66F8C500692913 /* Toolbar */,
 				0F00CADE1F66EECB00692913 /* UIImage+ColoredImage.h */,
 				0F00CADF1F66EECB00692913 /* UIImage+ColoredImage.m */,
@@ -2118,17 +2085,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		BD55986E231806E500C885FB /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				0F00CAEF1F66F7A500692913 /* XXTEKeyboardButtonView.h */,
-				0F00CAF01F66F7A500692913 /* XXTEKeyboardButtonView.m */,
-				0F00CAE81F66F65100692913 /* XXTETurtleBezierPath.h */,
-				0F00CAE61F66F65100692913 /* XXTETurtleBezierPath.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		D606114E22F542AC00F6F0E6 /* LineBreak */ = {
 			isa = PBXGroup;
 			children = (
@@ -2555,7 +2511,6 @@
 				525126058D5D618680DA5644 /* .gitignore in Resources */,
 				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
 				0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */,
-				D6677EBE231759E200414CA0 /* fontello.ttf in Resources */,
 				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
 				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
@@ -2603,7 +2558,6 @@
 				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
 				D60FE7B61FE2369300954818 /* XXTEMoreSwitchCell.xib in Resources */,
 				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
-				D6677EBF231759E200414CA0 /* fontello.ttf in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				BD00B6432309A25D0026AF27 /* Tomorrow Night.png in Resources */,
 				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
@@ -2721,7 +2675,6 @@
 				0F61E15C1ED78432003DCC78 /* XXTESplitViewController.m in Sources */,
 				BDAB85A5233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m in Sources */,
 				D6273FF0230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */,
-				0F00CAF41F66F7A500692913 /* XXTEKeyboardButtonView.m in Sources */,
 				CC246DF42861A2A8007FCFC5 /* XUIViewShaker.m in Sources */,
 				D61D5DD41F6F64B400CDF16D /* XXTESwipeButton.m in Sources */,
 				0F51CB1C1F612ACF00150D6D /* XXTEEditorTextInput.m in Sources */,
@@ -2778,7 +2731,6 @@
 				0FBAFF1B1F6E3E7C008B3189 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				0F5690161F1B09B5009AF9FE /* XXTEExecutableViewer.m in Sources */,
 				0F61E1711ED78EE9003DCC78 /* XXTExplorerNavigationController.m in Sources */,
-				0F00CAEB1F66F65100692913 /* XXTETurtleBezierPath.m in Sources */,
 				D66085671F3C691100E87B3C /* XXTEEditorController.m in Sources */,
 				0FD973F91F4B29E700133162 /* XXTEEditorController+State.m in Sources */,
 				CC2F46E02861A41B00D9B238 /* NSObject+XUIStringValue.m in Sources */,
@@ -2811,7 +2763,6 @@
 				0FAE0F021ED6FC0000798B4B /* XXTExplorerViewController.m in Sources */,
 				D637120C22F4853F00ACE211 /* XXTEEncodingHelper.m in Sources */,
 				0F50AEBB1F30DBAB0098211C /* XXTExplorerEntryObjectReader.m in Sources */,
-				0F00CAF51F66F7A500692913 /* XXTEKeyboardRow.m in Sources */,
 				0FAAB5931EDA3DB800897680 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				CC2F46EA2861A96A00D9B238 /* UIColor+XUIDarkColor.m in Sources */,
 				0F5EB50D1F08DD9C0016016A /* NSString+XQueryComponents.m in Sources */,
@@ -2883,7 +2834,6 @@
 				B0312EC01E0D35ED0EE22A85 /* XXTERespringAgent.m in Sources */,
 				52512CB22B66C2C399BAF27D /* SKCapture.m in Sources */,
 				0FFBC12C1F5BD85F00690C8F /* XXTEMoreTextFieldCell.m in Sources */,
-				0F00CAF31F66F7A500692913 /* XXTEKeyboardButton.m in Sources */,
 				5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */,
 				525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */,
 				0F88115D1FB6AF220004F20C /* XXTESegmentedController.m in Sources */,
@@ -2941,7 +2891,6 @@
 				D60FE65A1FE2369300954818 /* XXTESplitViewController.m in Sources */,
 				BDAB85A6233F4E5200C9F976 /* XXTExplorerToolbarButtonItem.m in Sources */,
 				D6273FF1230104CA00CDB9E7 /* UIColor+systemColors.m in Sources */,
-				D60FE65B1FE2369300954818 /* XXTEKeyboardButtonView.m in Sources */,
 				CC246DF52861A2A8007FCFC5 /* XUIViewShaker.m in Sources */,
 				D60FE65D1FE2369300954818 /* XXTESwipeButton.m in Sources */,
 				D60FE65E1FE2369300954818 /* XXTEEditorTextInput.m in Sources */,
@@ -2998,7 +2947,6 @@
 				D60FE6931FE2369300954818 /* XXTExplorerViewController+UIDocumentPickerDelegate.m in Sources */,
 				D60FE6941FE2369300954818 /* XXTEExecutableViewer.m in Sources */,
 				D60FE6951FE2369300954818 /* XXTExplorerNavigationController.m in Sources */,
-				D60FE69A1FE2369300954818 /* XXTETurtleBezierPath.m in Sources */,
 				D60FE69B1FE2369300954818 /* XXTEEditorController.m in Sources */,
 				D60FE69C1FE2369300954818 /* XXTEEditorController+State.m in Sources */,
 				CC2F46E12861A41B00D9B238 /* NSObject+XUIStringValue.m in Sources */,
@@ -3031,7 +2979,6 @@
 				D60FE6C61FE2369300954818 /* XXTExplorerViewController.m in Sources */,
 				D637120D22F4853F00ACE211 /* XXTEEncodingHelper.m in Sources */,
 				D60FE6C71FE2369300954818 /* XXTExplorerEntryObjectReader.m in Sources */,
-				D60FE6C81FE2369300954818 /* XXTEKeyboardRow.m in Sources */,
 				D60FE6C91FE2369300954818 /* UINavigationController+XXTEFullscreenPopGesture.m in Sources */,
 				CC2F46EB2861A96D00D9B238 /* UIColor+XUIDarkColor.m in Sources */,
 				D60FE6CA1FE2369300954818 /* NSString+XQueryComponents.m in Sources */,
@@ -3103,7 +3050,6 @@
 				D60FE7151FE2369300954818 /* XXTERespringAgent.m in Sources */,
 				D60FE7161FE2369300954818 /* SKCapture.m in Sources */,
 				D60FE7171FE2369300954818 /* XXTEMoreTextFieldCell.m in Sources */,
-				D60FE7181FE2369300954818 /* XXTEKeyboardButton.m in Sources */,
 				D60FE71A1FE2369300954818 /* SKScopedString.m in Sources */,
 				D60FE71B1FE2369300954818 /* SKResultSet.m in Sources */,
 				D60FE71D1FE2369300954818 /* XXTESegmentedController.m in Sources */,

@@ -11,7 +11,6 @@
 @interface XXTEEditorController (Settings)
 
 - (void)backButtonItemTapped:(UIBarButtonItem *)sender;
-- (void)shareButtonItemTapped:(UIBarButtonItem *)sender;
 
 - (void)searchButtonItemTapped:(UIBarButtonItem *)sender;
 - (void)symbolsButtonItemTapped:(UIBarButtonItem *)sender;

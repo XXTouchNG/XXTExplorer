@@ -79,7 +79,7 @@
     if (!fileMoved) {
         return nil;
     }
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@caches/www/%@/%@", uAppDefine(@"LOCAL_API"), randomStr, fileURL.lastPathComponent]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@caches/www/%@/%@", uAppDefine(@"LOCAL_API"), randomStr, [fileURL.lastPathComponent stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]]]];
 }
 
 #pragma mark - Life Cycle

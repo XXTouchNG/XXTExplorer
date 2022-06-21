@@ -336,19 +336,6 @@
         }];
     }
     
-    XXTEMoreSwitchCell *cell13 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
-    cell13.titleLabel.text = NSLocalizedString(@"Accessory Keyboard", nil);
-    cell13.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO);
-    {
-        @weakify(self);
-        [cell13.optionSwitch addActionforControlEvents:UIControlEventValueChanged respond:^(UIControl *sender) {
-            @strongify(self);
-            UISwitch *optionSwitch = (UISwitch *)sender;
-            XXTEDefaultsSetBasic(XXTEEditorKeyboardRowAccessoryEnabled, optionSwitch.on);
-            [self.editor setNeedsReload:XXTEEditorKeyboardRowAccessoryEnabled];
-        }];
-    }
-    
     XXTEMoreSwitchCell *cellASCIIPreferred = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreSwitchCell class]) owner:nil options:nil] lastObject];
     cellASCIIPreferred.titleLabel.text = NSLocalizedString(@"ASCII Keyboard", nil);
     cellASCIIPreferred.optionSwitch.on = XXTEDefaultsBool(XXTEEditorKeyboardASCIIPreferred, NO);
@@ -465,7 +452,7 @@
     if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
         keyboardSection = @[ cell12, cellASCIIPreferred ];
     } else {
-        keyboardSection = @[ cell12, cell13, cellASCIIPreferred ];
+        keyboardSection = @[ cell12, cellASCIIPreferred ];
     }
     
     staticCells = @[

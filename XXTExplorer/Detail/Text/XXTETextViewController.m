@@ -32,7 +32,6 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 @property (nonatomic, strong) XXTESingleActionView *actionView;
 @property (nonatomic, strong) ICTextView *contentTextView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @property (nonatomic, assign) BOOL needsReload;
 
@@ -85,7 +84,6 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     XXTE_END_IGNORE_PARTIAL
     
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
     [self.contentTextView setRefreshControl:self.refreshControl];
     [self.view addSubview:self.contentTextView];
@@ -214,14 +212,6 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     return _refreshControl;
 }
 
-- (UIBarButtonItem *)shareButtonItem {
-    if (!_shareButtonItem) {
-        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
-        _shareButtonItem = shareButtonItem;
-    }
-    return _shareButtonItem;
-}
-
 - (XXTESingleActionView *)actionView {
     if (!_actionView) {
         XXTESingleActionView *actionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTESingleActionView class]) owner:nil options:nil] lastObject];
@@ -235,22 +225,6 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 }
 
 #pragma mark - Actions
-
-- (void)shareButtonItemTapped:(UIBarButtonItem *)sender {
-    if (!self.entryPath) return;
-    NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
-    if (!shareUrl) return;
-    XXTE_START_IGNORE_PARTIAL
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
-    if (XXTE_IS_IPAD) {
-        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        popoverPresentationController.barButtonItem = sender;
-    }
-    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
-    XXTE_END_IGNORE_PARTIAL
-}
 
 - (void)actionViewTapped:(XXTESingleActionView *)actionView {
     

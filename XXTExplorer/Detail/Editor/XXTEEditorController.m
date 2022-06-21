@@ -33,7 +33,6 @@
 #import "XXTEEditorSyntaxCache.h"
 
 // Keyboard
-#import "XXTEKeyboardRow.h"
 #import "XXTEKeyboardToolbarRow.h"
 
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
@@ -64,7 +63,7 @@
 
 static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
-@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate, XXTEKeyboardButtonDelegate>
+@interface XXTEEditorController () <UIScrollViewDelegate, NSTextStorageDelegate, XXTEEditorSearchBarDelegate, XXTEEditorSearchAccessoryViewDelegate, XXTEKeyboardToolbarRowDelegate>
 
 @property (nonatomic, strong) XXTELockedTitleView *lockedTitleView;
 @property (nonatomic, strong) XXTESingleActionView *actionView;
@@ -72,12 +71,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 @property (nonatomic, strong) UIScrollView *containerView;
 @property (nonatomic, strong) NSLayoutConstraint *textViewWidthConstraint;
 
-@property (nonatomic, strong) XXTEKeyboardRow *keyboardRow;
 @property (nonatomic, strong) XXTEKeyboardToolbarRow *keyboardToolbarRow;
 @property (nonatomic, strong) XXTEEditorSearchAccessoryView *searchAccessoryView;
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
@@ -399,20 +396,13 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Keyboard Row
-    if ([keysToReload containsObject:XXTEEditorLanguageReloaded]) {
-        self.keyboardRow = ({
-            [[XXTEKeyboardRow alloc] initWithKeymap:self.language.keymap];
-        });
-    }
     if ([keysToReload containsObject:XXTEEditorSoftTabs] || [keysToReload containsObject:XXTEEditorTabWidth]) {
         BOOL softTabEnabled = XXTEDefaultsBool(XXTEEditorSoftTabs, NO);
         NSUInteger tabWidthEnum = XXTEDefaultsEnum(XXTEEditorTabWidth, XXTEEditorTabWidthValue_4);
         NSString *tabWidthString = [@"" stringByPaddingToLength:tabWidthEnum withString:@" " startingAtIndex:0];
         if (softTabEnabled) {
-            self.keyboardRow.tabString = tabWidthString;
             self.textView.vTextInput.tabWidthString = tabWidthString;
         } else {
-            self.keyboardRow.tabString = @"\t";
             self.textView.vTextInput.tabWidthString = @"\t";
         }
     }
@@ -427,7 +417,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         self.searchAccessoryView.barStyle = UIBarStyleDefault;
         self.textView.keyboardAppearance = UIKeyboardAppearanceLight;
         
-        [self.keyboardRow setColorStyle:XXTEKeyboardRowStyleLight];
         [self.keyboardToolbarRow setStyle:XXTEKeyboardToolbarRowStyleLight];
     } else {
         if ([keysToReload containsObject:XXTEEditorThemeName]) {
@@ -437,7 +426,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
                 self.searchAccessoryView.barStyle = UIBarStyleDefault;
                 self.textView.keyboardAppearance = UIKeyboardAppearanceLight;
                 
-                [self.keyboardRow setColorStyle:XXTEKeyboardRowStyleLight];
                 [self.keyboardToolbarRow setStyle:XXTEKeyboardToolbarRowStyleLight];
             } else {
                 self.searchBar.searchKeyboardAppearance = UIKeyboardAppearanceDark;
@@ -445,35 +433,21 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
                 self.searchAccessoryView.barStyle = UIBarStyleBlack;
                 self.textView.keyboardAppearance = UIKeyboardAppearanceDark;
                 
-                [self.keyboardRow setColorStyle:XXTEKeyboardRowStyleDark];
                 [self.keyboardToolbarRow setStyle:XXTEKeyboardToolbarRowStyleDark];
             }
         }
     }
     
     // Config Keyboard Rows
-    if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorKeyboardRowAccessoryEnabled]) {
+    if ([keysToReload containsObject:XXTEEditorReadOnly]) {
         BOOL isReadOnlyMode = [self isReadOnly];
-        BOOL isKeyboardRowEnabled = XXTEDefaultsBool(XXTEEditorKeyboardRowAccessoryEnabled, NO); // config
         if (isReadOnlyMode) {
-            [self.keyboardRow setTextInput:nil];
-            [self.keyboardRow setActionDelegate:nil];
             [self.textView setInputAccessoryView:nil];
         } else {
             if (XXTE_IS_IPAD && XXTE_SYSTEM_9) {
-                [self.keyboardRow setTextInput:nil];
-                [self.keyboardRow setActionDelegate:nil];
                 [self.textView setInputAccessoryView:nil];
             } else {
-                if (isKeyboardRowEnabled) {
-                    [self.keyboardRow setTextInput:self.textView];
-                    [self.keyboardRow setActionDelegate:self];
-                    [self.textView setInputAccessoryView:self.keyboardRow];
-                } else {
-                    [self.keyboardRow setTextInput:nil];
-                    [self.keyboardRow setActionDelegate:nil];
-                    [self.textView setInputAccessoryView:self.keyboardToolbarRow];
-                }
+                [self.textView setInputAccessoryView:self.keyboardToolbarRow];
             }
         }
     }
@@ -714,7 +688,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     self.view.backgroundColor = [UIColor systemBackgroundColor];
     
     self.navigationItem.leftBarButtonItems = @[self.myBackButtonItem];
-    self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
     self.navigationItem.titleView = self.lockedTitleView;
     
     // Subviews
@@ -871,14 +844,6 @@ XXTE_END_IGNORE_PARTIAL
         _myBackButtonItem = myBackButtonItem;
     }
     return _myBackButtonItem;
-}
-
-- (UIBarButtonItem *)shareButtonItem {
-    if (!_shareButtonItem) {
-        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
-        _shareButtonItem = shareButtonItem;
-    }
-    return _shareButtonItem;
 }
 
 - (UIBarButtonItem *)searchButtonItem {
@@ -1855,27 +1820,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [self performGlobalKeyboardDismissalAction:accessoryView];
 }
 
-#pragma mark - XXTEKeyboardButtonDelegate
-
-- (void)keyboardButton:(XXTEKeyboardButton *)button didTriggerAction:(XXTEKeyboardButtonAction)action {
-    switch (action) {
-        case XXTEKeyboardButtonActionUndo:
-            [self performGlobalUndoAction:button];
-            break;
-        case XXTEKeyboardButtonActionRedo:
-            [self performGlobalRedoAction:button];
-            break;
-        case XXTEKeyboardButtonActionBackspace:
-            [self performGlobalBackspaceAction:button];
-            break;
-        case XXTEKeyboardButtonActionKeyboardDismissal:
-            [self performGlobalKeyboardDismissalAction:button];
-            break;
-        default:
-            break;
-    }
-}
-
 #pragma mark - Global Actions
 
 - (void)displayKeyboardTip:(NSString *)tip {
@@ -1963,7 +1907,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
      XXTEEditorAutoWordWrap,
      XXTEEditorWrapColumn,
      XXTEEditorReadOnly,
-     XXTEEditorKeyboardRowAccessoryEnabled,
      XXTEEditorKeyboardASCIIPreferred,
      XXTEEditorAutoBrackets,
      XXTEEditorAutoCorrection,

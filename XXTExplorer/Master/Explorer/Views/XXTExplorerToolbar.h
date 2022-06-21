@@ -19,7 +19,6 @@ static NSString * const XXTExplorerToolbarButtonTypeScan = @"XXTExplorerToolbarB
 static NSString * const XXTExplorerToolbarButtonTypeCompress = @"XXTExplorerToolbarButtonTypeCompress";
 static NSString * const XXTExplorerToolbarButtonTypeAddItem = @"XXTExplorerToolbarButtonTypeAddItem";
 static NSString * const XXTExplorerToolbarButtonTypeSort = @"XXTExplorerToolbarButtonTypeSort";
-static NSString * const XXTExplorerToolbarButtonTypeShare = @"XXTExplorerToolbarButtonTypeShare";
 static NSString * const XXTExplorerToolbarButtonTypePaste = @"XXTExplorerToolbarButtonTypePaste";
 static NSString * const XXTExplorerToolbarButtonTypeTrash = @"XXTExplorerToolbarButtonTypeTrash";
 

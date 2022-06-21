@@ -30,7 +30,6 @@ static NSString * const XXTEEditorThemeName = @"XXTEEditorThemeName"; // NSStrin
 static NSString * const XXTEEditorHighlightEnabled = @"XXTEEditorHighlightEnabled"; // NSNumber - Bool
 static NSString * const XXTEEditorLineNumbersEnabled = @"XXTEEditorLineNumbersEnabled"; // NSNumber - Bool
 
-static NSString * const XXTEEditorKeyboardRowAccessoryEnabled = @"XXTEEditorKeyboardRowAccessoryEnabled"; // NSNumber - Bool
 static NSString * const XXTEEditorKeyboardASCIIPreferred = @"XXTEEditorKeyboardASCIIPreferred"; // NSNumber - Bool
 static NSString * const XXTEEditorShowInvisibleCharacters = @"XXTEEditorShowInvisibleCharacters"; // NSNumber - Bool
 
