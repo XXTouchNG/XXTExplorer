@@ -597,7 +597,7 @@
 "Contact" = "联系";
 
 /* No comment provided by engineer. */
-"Container Path" = "容器路径";
+"Data Container Path" = "数据容器路径";
 
 /* No comment provided by engineer. */
 "Contents" = "内容";
@@ -1139,7 +1139,7 @@
 "LUA" = "LUA";
 
 /* No comment provided by engineer. */
-"Lua (*.lua)" = "Lua (*.lua, *.xui)";
+"Lua (*.lua)" = "Lua (*.lua)";
 
 /* No comment provided by engineer. */
 "Mac (CR)" = "Mac (CR)";
@@ -1619,9 +1619,6 @@
 "Return Key" = "回车键";
 
 /* No comment provided by engineer. */
-"RuanMao Cloud" = "找脚本";
-
-/* No comment provided by engineer. */
 "Save" = "保存";
 
 /* No comment provided by engineer. */
@@ -1665,9 +1662,6 @@
 
 /* No comment provided by engineer. */
 "Search Results (%ld)" = "搜索结果 (%ld)";
-
-/* No comment provided by engineer. */
-"Search RuanMao Cloud" = "搜索软猫云";
 
 /* No comment provided by engineer. */
 "Search Symbol" = "搜索符号";
@@ -1948,9 +1942,6 @@
 "The information below is provided by the third party script author." = "以下信息由第三方脚本作者提供.";
 
 /* No comment provided by engineer. */
-"The information on this page is provided by RuanMao Cloud." = "此页面信息由软猫云提供.";
-
-/* No comment provided by engineer. */
 "The member type of \"%@\" should be \"%@\"." = "\"%@\" 的成员类型应该为 \"%@\".";
 
 /* No comment provided by engineer. */
@@ -2185,9 +2176,6 @@
 
 /* No comment provided by engineer. */
 "You will be redirected to the ordering page.\nFollow that page to finish your order." = "即将跳转到外部支付页面.\n该页面将指导你完成购买.";
-
-/* No comment provided by engineer. */
-"You will be redirected to the page hosted by RuanMao Cloud.\nFollow that page to finish your order." = "即将跳转到由软猫云提供的页面.\n该页面将指导你完成购买.";
 
 /* No comment provided by engineer. */
 "Your version v%@ is up-to-date with remote." = "此应用程序版本 v%@ 是最新的.";

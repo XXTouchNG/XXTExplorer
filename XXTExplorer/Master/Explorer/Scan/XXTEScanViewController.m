@@ -57,16 +57,14 @@ static CGFloat XXTEScanVOffset = -22.0;
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-         [self reloadCaptureSceneWithSize:size];
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+        [self reloadCaptureSceneWithSize:size];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-         
-     }];
+        
+    }];
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    }
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     XXTE_END_IGNORE_PARTIAL
 }
 
@@ -78,65 +76,48 @@ static CGFloat XXTEScanVOffset = -22.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.title = NSLocalizedString(@"Scan", nil);
     self.view.backgroundColor = [UIColor blackColor];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.extendedLayoutIncludesOpaqueBars = YES;
-
+    
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.lightButton];
     [self.view addSubview:self.flipButton];
     
-    if (@available(iOS 8.0, *)) {
-        [self.view addConstraints:@[
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1.0 constant:16.0],
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
-                                    ]];
-        [self.view addConstraints:@[
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1.0 constant:-16.0],
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
-                                    ]];
-    } else {
-        [self.view addConstraints:@[
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:16.0],
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-32.0],
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-                                    [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
-                                    ]];
-        [self.view addConstraints:@[
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-16.0],
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-32.0],
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
-                                    [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
-                                    ]];
-    }
+    [self.view addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1.0 constant:16.0],
+        [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
+        [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+        [NSLayoutConstraint constraintWithItem:self.lightButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
+    ]];
+    [self.view addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1.0 constant:-16.0],
+        [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:-32.0],
+        [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:64.0],
+        [NSLayoutConstraint constraintWithItem:self.flipButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:64.0],
+    ]];
     
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    XXTE_START_IGNORE_PARTIAL
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
+    XXTE_END_IGNORE_PARTIAL
     
     if ([self.navigationController.viewControllers firstObject] == self) {
         self.navigationItem.leftBarButtonItem = self.dismissItem;
     }
     self.navigationItem.rightBarButtonItem = self.albumItem;
-    XXTE_START_IGNORE_PARTIAL
-    if (isOS11Above()) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
-    XXTE_END_IGNORE_PARTIAL
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self fetchVideoPermission];
 }
 
 - (void)reloadCaptureSceneWithSize:(CGSize)toSize {
-
+    
     CGFloat scale = [[UIScreen mainScreen] scale];
-
+    
     CGSize oldSize = toSize;
     CGFloat maxLength = MAX(oldSize.width, oldSize.height);
     CGFloat minLength = MIN(oldSize.width, oldSize.height);
@@ -145,26 +126,26 @@ static CGFloat XXTEScanVOffset = -22.0;
     
     CGPoint pA = CGPointMake(size.width / 2 - rectWidth / 2, (size.height / 2 - rectWidth / 2) + XXTEScanVOffset);
     CGPoint pD = CGPointMake(size.width / 2 + rectWidth / 2, (size.height / 2 + rectWidth / 2) + XXTEScanVOffset);
-
+    
     // Begin Context
     UIGraphicsBeginImageContextWithOptions(size, NO, scale);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-
+    
     // Fill Background
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.3f);
     CGRect drawRect = CGRectMake(0, 0, size.width, size.height);
     CGContextFillRect(ctx, drawRect);
-
+    
     // Clear Rect
     CGRect cropRect = CGRectMake(pA.x, pA.y, rectWidth, rectWidth);
     CGContextClearRect(ctx, cropRect);
-
+    
     // Draw Rect Lines
     CGContextSetLineWidth(ctx, 1.6f);
     CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
     CGContextAddRect(ctx, cropRect);
     CGContextStrokePath(ctx);
-
+    
     // Draw Rect Angles
     CGFloat lineWidthAngle = 4.f;
     CGFloat diffAngle = lineWidthAngle / 3;
@@ -174,10 +155,10 @@ static CGFloat XXTEScanVOffset = -22.0;
     CGFloat topY = pA.y - diffAngle;
     CGFloat rightX = pD.x + diffAngle;
     CGFloat bottomY = pD.y + diffAngle;
-
+    
     CGContextSetLineWidth(ctx, lineWidthAngle);
     CGContextSetStrokeColorWithColor(ctx, [XXTColorForeground() colorWithAlphaComponent:.75f].CGColor);
-
+    
     CGContextMoveToPoint(ctx, leftX - lineWidthAngle / 2, topY);
     CGContextAddLineToPoint(ctx, leftX + wAngle, topY);
     CGContextMoveToPoint(ctx, leftX, topY - lineWidthAngle / 2);
@@ -195,15 +176,17 @@ static CGFloat XXTEScanVOffset = -22.0;
     CGContextMoveToPoint(ctx, rightX, bottomY + lineWidthAngle / 2);
     CGContextAddLineToPoint(ctx, rightX, bottomY - hAngle);
     CGContextStrokePath(ctx);
-
+    
     // Generate Image
     UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.maskView.image = returnImage;
-
+    
     AVCaptureConnection *layerConnection = self.scanLayer.connection;
+    XXTE_START_IGNORE_PARTIAL
     if ([layerConnection isVideoOrientationSupported])
         [layerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
+    XXTE_END_IGNORE_PARTIAL
     self.scanLineAnimation.animationRect = self.cropRect;
     self.scanLayer.frame = self.view.layer.bounds;
     
@@ -330,7 +313,9 @@ static CGFloat XXTEScanVOffset = -22.0;
 }
 
 - (AVCaptureDevice *)frontCamera {
+    XXTE_START_IGNORE_PARTIAL
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    XXTE_END_IGNORE_PARTIAL
     for (AVCaptureDevice *device in devices) {
         if ([device position] == AVCaptureDevicePositionFront) {
             return device;
@@ -340,7 +325,9 @@ static CGFloat XXTEScanVOffset = -22.0;
 }
 
 - (AVCaptureDevice *)backCamera {
+    XXTE_START_IGNORE_PARTIAL
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    XXTE_END_IGNORE_PARTIAL
     for (AVCaptureDevice *device in devices) {
         if ([device position] == AVCaptureDevicePositionBack) {
             return device;
@@ -478,27 +465,23 @@ static CGFloat XXTEScanVOffset = -22.0;
 }
 
 - (void)albumItemTapped:(UIBarButtonItem *)sender {
-    if (@available(iOS 8.0, *)) {
-        if (![XXTEImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-            return;
-        }
-        [self pauseScan];
-        XXTEImagePickerController *imagePicker = [[XXTEImagePickerController alloc] init];
-        imagePicker.delegate = self;
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        imagePicker.allowsEditing = NO;
-        imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
-        imagePicker.navigationBar.translucent = NO;
-        imagePicker.navigationBar.barTintColor = XXTColorBarTint();
-        imagePicker.navigationBar.tintColor = [UIColor whiteColor];
-        imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-        imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
-        imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        imagePicker.presentationController.delegate = self;
-        [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
-    } else {
-        toastMessage(self, NSLocalizedString(@"This feature requires iOS 8.0 or later.", nil));
+    if (![XXTEImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        return;
     }
+    [self pauseScan];
+    XXTEImagePickerController *imagePicker = [[XXTEImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.allowsEditing = NO;
+    imagePicker.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
+    imagePicker.navigationBar.translucent = NO;
+    imagePicker.navigationBar.barTintColor = XXTColorBarTint();
+    imagePicker.navigationBar.tintColor = [UIColor whiteColor];
+    imagePicker.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+    imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    imagePicker.presentationController.delegate = self;
+    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 #pragma mark - Permission Request
@@ -535,20 +518,20 @@ static CGFloat XXTEScanVOffset = -22.0;
             return fetchPermissionPromise;
         }
         if (permissionStatus == AVAuthorizationStatusRestricted ||
-                permissionStatus == AVAuthorizationStatusDenied) {
+            permissionStatus == AVAuthorizationStatusDenied) {
             NSString *productName = uAppDefine(@"PRODUCT_NAME");
             @throw [NSString stringWithFormat:NSLocalizedString(@"Turn to \"Settings > Privacy > Camera\" and enable %@ to use your camera.", nil), productName];
         }
         return [PMKPromise promiseWithValue:status];
     };
     checkPermissionPromise
-    .then(displayPermissionBlock)
-    .then(displayPermissionBlock)
-    .catch(^(NSError *error) {
-        [self.maskView setHidden:YES];
-        [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
-        toastMessageWithDelay(self, [error localizedDescription], CGFLOAT_MAX);
-    });
+        .then(displayPermissionBlock)
+        .then(displayPermissionBlock)
+        .catch(^(NSError *error) {
+            [self.maskView setHidden:YES];
+            [self.scanLineAnimation performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.2f];
+            toastMessageWithDelay(self, [error localizedDescription], CGFLOAT_MAX);
+        });
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
@@ -570,36 +553,30 @@ static CGFloat XXTEScanVOffset = -22.0;
 
 - (NSString *)scanImage:(UIImage *)image {
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        NSString *scannedResult = nil;
-        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil];
-        NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
-        for (NSUInteger index = 0; index < features.count; index++) {
-            CIQRCodeFeature *feature = features[index];
-            scannedResult = feature.messageString;
-            if (scannedResult) {
-                break;
-            }
+    NSString *scannedResult = nil;
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil];
+    NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+    for (NSUInteger index = 0; index < features.count; index++) {
+        CIQRCodeFeature *feature = features[index];
+        scannedResult = feature.messageString;
+        if (scannedResult) {
+            break;
         }
-        return scannedResult;
-    } else {
-        return nil;
     }
+    return scannedResult;
     XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)handleOutput:(NSString *)output {
     if (!output) return;
     
-    if (@available(iOS 10.0, *)) {
-        static UINotificationFeedbackGenerator *feedbackGenerator = nil;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
-        });
-        [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
-    }
-
+    static UINotificationFeedbackGenerator *feedbackGenerator = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+    });
+    [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
+    
     // URL? (v2)
     NSURL *url = [NSURL URLWithString:output];
     if (url.scheme.length > 0 && [[UIApplication sharedApplication] canOpenURL:url]) {
@@ -619,7 +596,7 @@ static CGFloat XXTEScanVOffset = -22.0;
         [alertView showAnimated];
         return;
     } // url finished
-
+    
     // JSON? (v1)
     NSError *jsonError = nil;
     id jsonObject = [NSJSONSerialization JSONObjectWithData:[output dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&jsonError];
@@ -629,7 +606,7 @@ static CGFloat XXTEScanVOffset = -22.0;
         }
         return;
     } // json finished
-
+    
     // PLAIN TEXT
     {
         NSString *detailText = output;
@@ -659,8 +636,8 @@ static CGFloat XXTEScanVOffset = -22.0;
 
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     SEL selectors[] = {
-            @selector(alertView:openURL:),
-            @selector(alertView:copyString:)
+        @selector(alertView:openURL:),
+        @selector(alertView:copyString:)
     };
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

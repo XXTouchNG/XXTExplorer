@@ -112,9 +112,7 @@ typedef enum : NSUInteger {
     }
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"Download", nil);
@@ -124,9 +122,7 @@ typedef enum : NSUInteger {
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
     if ([self.navigationController.viewControllers firstObject] == self) {
@@ -134,9 +130,7 @@ typedef enum : NSUInteger {
     }
     self.navigationItem.rightBarButtonItem = self.downloadButtonItem;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
     if (self.allowsAutoDetection) {
@@ -191,10 +185,12 @@ typedef enum : NSUInteger {
     NSURL *sourceURL = self.sourceURL;
     NSMutableURLRequest *headReq = [[NSMutableURLRequest alloc] initWithURL:sourceURL];
     [headReq setHTTPMethod:@"HEAD"];
+    XXTE_START_IGNORE_PARTIAL
     NSURLConnection *headConnection = [[NSURLConnection alloc] initWithRequest:headReq delegate:self startImmediately:NO];
     self.pretestConnection = headConnection;
     [headConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [headConnection start];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)skipPretest {
@@ -242,20 +238,7 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (@available(iOS 8.0, *)) {
-            return UITableViewAutomaticDimension;
-        } else {
-            UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-            [cell setNeedsUpdateConstraints];
-            [cell updateConstraintsIfNeeded];
-            
-            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-            [cell setNeedsLayout];
-            [cell layoutIfNeeded];
-            
-            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            return (height > 0) ? (height + 1.0) : 44.f;
-        }
+        return UITableViewAutomaticDimension;
     }
     return 44.f;
 }
@@ -467,8 +450,10 @@ typedef enum : NSUInteger {
         }
         busyOperationProgressFlag = YES;
         NSMutableURLRequest *downloadURLRequest = [NSMutableURLRequest requestWithURL:sourceURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:CGFLOAT_MAX];
+        XXTE_START_IGNORE_PARTIAL
         NSURLConnection *downloadURLConnection = [[NSURLConnection alloc] initWithRequest:downloadURLRequest delegate:self startImmediately:NO];
         [self performSelector:@selector(startDownloadImmediately:) withObject:downloadURLConnection afterDelay:1.f];
+        XXTE_END_IGNORE_PARTIAL
     }
 }
 
@@ -497,7 +482,9 @@ typedef enum : NSUInteger {
                 [self.downloadFileManager removeItemAtPath:temporarilyPath error:&cleanError];
             }
         }
+        XXTE_START_IGNORE_PARTIAL
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        XXTE_END_IGNORE_PARTIAL
         NSURL *sourceURL = self.sourceURL;
         NSString *sourceURLString = [sourceURL absoluteString];
         if (error) { // fail with error
@@ -555,7 +542,9 @@ typedef enum : NSUInteger {
             [self connection:connection didFailWithError:[NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Download terminated, unsupported server response: %@ (%ld).", nil), [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode], httpResponse.statusCode]}]];
             return;
         }
+        XXTE_START_IGNORE_PARTIAL
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        XXTE_END_IGNORE_PARTIAL
         {
             [self.downloadFileHandle seekToFileOffset:0];
             expectedFileSize = [response expectedContentLength];
@@ -636,7 +625,9 @@ typedef enum : NSUInteger {
     if (connection == self.downloadURLConnection) {
         busyOperationProgressFlag = NO;
         self.downloadURLConnection = nil;
+        XXTE_START_IGNORE_PARTIAL
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        XXTE_END_IGNORE_PARTIAL
         {
             if (self.downloadFileHandle) {
                 [self.downloadFileHandle closeFile];

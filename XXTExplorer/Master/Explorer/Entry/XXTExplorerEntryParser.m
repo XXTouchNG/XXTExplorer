@@ -11,7 +11,6 @@
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryParser.h"
 #import "XXTExplorerEntryReader.h"
-#import "XXTExplorerEntryXPPReader.h"
 #import "XXTExplorerEntryService.h"
 #import "XXTEViewer.h"
 #import "XXTExplorerEntryLauncher.h"
@@ -37,22 +36,6 @@
         }
     });
     return parserEntryService;
-}
-
-+ (NSArray <Class> *)bundleReaders {
-    static NSArray <Class> *bundleReaders = nil;
-    static dispatch_once_t token;
-    dispatch_once(&token, ^{
-        if (!bundleReaders) {
-            NSArray <NSString *> *registeredNames = uAppDefine(@"AVAILABLE_BUNDLE_READER");
-            NSMutableArray <Class> *registeredMutableReaders = [[NSMutableArray alloc] initWithCapacity:registeredNames.count];
-            for (NSString *className in registeredNames) {
-                [registeredMutableReaders addObject:NSClassFromString(className)];
-            }
-            bundleReaders = [[NSArray alloc] initWithArray:registeredMutableReaders];
-        }
-    });
-    return bundleReaders;
 }
 
 - (instancetype)init {
@@ -164,28 +147,6 @@
                     XXTExplorerEntryReader *relatedReader = [[relatedReaderClass alloc] initWithPath:entryPath];
                     entry.entryReader = relatedReader;
                 }
-            }
-        }
-    }
-    else if ([entryMaskType isEqualToString:EntryMaskTypeDirectory])
-    {
-        for (Class readerClass in [self.class bundleReaders]) {
-            BOOL supported = NO;
-            for (NSString *supportedExtension in [readerClass supportedExtensions]) {
-                if ([supportedExtension isEqualToString:entryBaseExtension]) {
-                    supported = YES;
-                    break;
-                }
-            }
-            if (supported) {
-                XXTExplorerEntryReader *bundleReader = [[readerClass alloc] initWithPath:entryPath];
-                entry.entryMaskType = EntryMaskTypeBundle;
-                entry.entryReader = bundleReader;
-                UIImage *bundleIconImage = [UIImage imageNamed:EntryMaskTypeBundle];
-                if (bundleIconImage) {
-                    entry.iconImage = bundleIconImage;
-                }
-                break;
             }
         }
     }

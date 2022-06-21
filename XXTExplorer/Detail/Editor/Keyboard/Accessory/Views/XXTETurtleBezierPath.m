@@ -98,7 +98,9 @@ static inline CGFloat radians(CGFloat degrees) {
 }
 
 - (BOOL)isEqual:(XXTETurtleBezierPath *)aPath {
+    XXTE_START_IGNORE_PARTIAL
     return [[NSKeyedArchiver archivedDataWithRootObject:self] isEqualToData:[NSKeyedArchiver archivedDataWithRootObject:aPath]];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)home {

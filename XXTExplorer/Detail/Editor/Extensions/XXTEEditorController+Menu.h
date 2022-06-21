@@ -8,9 +8,8 @@
 
 #import "XXTEEditorController.h"
 #import "XXTExplorerItemPicker.h"
-#import "XXTPickerFactoryDelegate.h"
 
-@interface XXTEEditorController (Menu) <XXTExplorerItemPickerDelegate, XXTPickerFactoryDelegate>
+@interface XXTEEditorController (Menu)
 
 - (void)registerMenuActions;
 - (void)dismissMenuActions;
@@ -18,6 +17,5 @@
 - (void)menuActionShiftLeft:(UIMenuItem *)sender;
 - (void)menuActionShiftRight:(UIMenuItem *)sender;
 - (void)menuActionComment:(UIMenuItem *)sender;
-- (void)menuActionCodeBlocks:(UIMenuItem *)senderOrNil;
 
 @end

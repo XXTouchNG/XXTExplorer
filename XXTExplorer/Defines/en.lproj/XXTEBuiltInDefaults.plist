@@ -51,12 +51,6 @@
 			<key>title</key>
 			<string>Viewer Config</string>
 		</dict>
-		<dict>
-			<key>key</key>
-			<string>VIEWER_TERMINAL_USER_DEFAULTS</string>
-			<key>title</key>
-			<string>Viewer Config: Terminal</string>
-		</dict>
 	</array>
 	<key>GLOBAL_DEFAULTS</key>
 	<array>
@@ -147,23 +141,6 @@
 			<string>Show &quot;Home&quot; Entry</string>
 			<key>description</key>
 			<string>Show &quot;Home&quot; entry at the top of file explorer.</string>
-			<key>options</key>
-			<array>
-				<string>Off</string>
-				<string>On</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<string>YES</string>
-			<key>key</key>
-			<string>XXTExplorerAllowsImportFromAlbum</string>
-			<key>default</key>
-			<false/>
-			<key>title</key>
-			<string>Allows Import from Album</string>
-			<key>description</key>
-			<string>Disable this feature to avoid calling helper application.</string>
 			<key>options</key>
 			<array>
 				<string>Off</string>
@@ -270,27 +247,6 @@
 			<array>
 				<string>Off</string>
 				<string>On</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerHistoryStoreLimit</string>
-			<key>default</key>
-			<integer>3</integer>
-			<key>title</key>
-			<string>History Store Limit</string>
-			<key>description</key>
-			<string>Maximum history items age. If exceeded, earlier items will be cleared.</string>
-			<key>options</key>
-			<array>
-				<string>1 Week</string>
-				<string>1 Month</string>
-				<string>3 Months</string>
-				<string>6 Months</string>
-				<string>1 Year</string>
-				<string>Forever</string>
 			</array>
 		</dict>
 	</array>
@@ -428,64 +384,6 @@ This option will not be applied to code editor.</string>
 			<array>
 				<string>Disabled</string>
 				<string>Enabled</string>
-			</array>
-		</dict>
-	</array>
-	<key>VIEWER_TERMINAL_USER_DEFAULTS</key>
-	<array>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerTerminalShowPrompt</string>
-			<key>default</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Terminal Show Prompt</string>
-			<key>description</key>
-			<string>Show external prompt messages in terminal.</string>
-			<key>options</key>
-			<array>
-				<string>Disabled</string>
-				<string>Enabled</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerTerminalSaveLogs</string>
-			<key>default</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Terminal Save Logs</string>
-			<key>description</key>
-			<string>Write terminal content to &apos;~/log/&apos;.</string>
-			<key>options</key>
-			<array>
-				<string>Disabled</string>
-				<string>Enabled</string>
-			</array>
-		</dict>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>key</key>
-			<string>XXTExplorerTerminalLogStoreLimit</string>
-			<key>default</key>
-			<integer>3</integer>
-			<key>title</key>
-			<string>Terminal Log Store Limit</string>
-			<key>description</key>
-			<string>Maximum log items age. If exceeded, earlier items will be cleared.</string>
-			<key>options</key>
-			<array>
-				<string>1 Week</string>
-				<string>1 Month</string>
-				<string>3 Months</string>
-				<string>6 Months</string>
-				<string>1 Year</string>
-				<string>Forever</string>
 			</array>
 		</dict>
 	</array>

@@ -8,6 +8,7 @@
 
 #import "XXTExplorerViewController.h"
 
+XXTE_START_IGNORE_PARTIAL
 @interface XXTExplorerViewController (UIDocumentMenuDelegate) <UIDocumentMenuDelegate>
-
 @end
+XXTE_END_IGNORE_PARTIAL

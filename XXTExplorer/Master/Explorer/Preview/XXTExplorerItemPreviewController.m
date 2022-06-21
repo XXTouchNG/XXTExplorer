@@ -43,14 +43,8 @@
 }
 
 - (void)setup {
-    if (@available(iOS 13.0, *)) {
-        self.entryTitleLabel.textColor = [UIColor labelColor];
-        self.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
-    } else {
-        self.entryTitleLabel.textColor = [UIColor blackColor];
-        self.entrySubtitleLabel.textColor = [UIColor darkGrayColor];
-    }
-    
+    self.entryTitleLabel.textColor = [UIColor labelColor];
+    self.entrySubtitleLabel.textColor = [UIColor secondaryLabelColor];
     XXTExplorerEntryParser *entryParser = [[XXTExplorerEntryParser alloc] init];
     _entryParser = entryParser;
 }
@@ -78,12 +72,14 @@
 
 #pragma mark - Getters
 
+XXTE_START_IGNORE_PARTIAL
 - (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
     if ([_previewActionDelegate respondsToSelector:@selector(itemPreviewController:previewActionsForEntry:)]) {
         return [_previewActionDelegate itemPreviewController:self previewActionsForEntry:self.entry];
     }
     return @[];
 }
+XXTE_END_IGNORE_PARTIAL
 
 #pragma mark - Setters
 

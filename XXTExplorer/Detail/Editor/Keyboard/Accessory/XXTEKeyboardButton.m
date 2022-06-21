@@ -349,8 +349,10 @@
     CGRect selectionStartRect = [_textInput caretRectForPosition:selectionRange.start];
     CGRect selectionEndRect = [_textInput caretRectForPosition:selectionRange.end];
     CGPoint selectionCenterPoint = (CGPoint) {(selectionStartRect.origin.x + selectionEndRect.origin.x) / 2, (selectionStartRect.origin.y + selectionStartRect.size.height / 2)};
+    XXTE_START_IGNORE_PARTIAL
     [menuController setTargetRect:[_textInput caretRectForPosition:[_textInput closestPositionToPoint:selectionCenterPoint withinRange:selectionRange]] inView:(UITextView *) _textInput];
     [menuController setMenuVisible:YES animated:YES];
+    XXTE_END_IGNORE_PARTIAL
 }
 
 #pragma mark - Internal - Configuration

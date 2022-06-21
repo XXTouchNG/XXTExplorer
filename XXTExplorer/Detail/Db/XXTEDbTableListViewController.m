@@ -72,9 +72,7 @@
         }
     }
     
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreLinkCell class]) bundle:nil] forCellReuseIdentifier:XXTEMoreLinkCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
@@ -83,9 +81,7 @@
     }
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 }
 
 - (id<XXTEDatabaseManager>)databaseManagerForFileAtPath:(NSString *)path
@@ -152,7 +148,5 @@
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
-
-@synthesize awakeFromOutside;
 
 @end

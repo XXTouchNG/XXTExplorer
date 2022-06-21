@@ -42,12 +42,7 @@
 }
 
 - (void)setup {
-    if (@available(iOS 9.0, *)) {
-        self.displayActionButton = YES;
-    } else {
-        self.displayActionButton = NO;
-    }
-    
+    self.displayActionButton = YES;
     self.displayNavArrows = YES;
     self.displaySelectionButtons = NO;
     self.zoomPhotosToFill = NO;
@@ -114,9 +109,7 @@
     }
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -164,7 +157,5 @@
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
-
-@synthesize awakeFromOutside;
 
 @end

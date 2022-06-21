@@ -18,7 +18,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"lua", @"xxt", @"xpp" ];
+    return @[ @"lua", @"xxt" ];
 }
 
 + (Class)relatedReader {
@@ -31,7 +31,5 @@
     }
     return self;
 }
-
-@synthesize awakeFromOutside;
 
 @end

@@ -80,20 +80,10 @@
         boxButton.titleLabel.textAlignment = NSTextAlignmentLeft;
         [boxButton setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 0.0, 32.0)];
         [boxButton setImage:[[UIImage imageNamed:@"XXTEBoxEmpty"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-#ifndef APPSTORE
         NSString *boxString = NSLocalizedString(@"No script can be found.\nTap here to find more scripts.", nil);
-#else
-        NSString *boxString = NSLocalizedString(@"No file can be found.\nImport file via File Sharing or iTunes.", nil);
-#endif
-        if (@available(iOS 13.0, *)) {
-            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor tertiaryLabelColor]}] forState:UIControlStateNormal];
-            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor secondaryLabelColor]}] forState:UIControlStateHighlighted];
-            [boxButton setTintColor:[UIColor tertiaryLabelColor]];
-        } else {
-            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor grayColor]}] forState:UIControlStateNormal];
-            [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor darkGrayColor]}] forState:UIControlStateHighlighted];
-            [boxButton setTintColor:[UIColor lightGrayColor]];
-        }
+        [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor tertiaryLabelColor]}] forState:UIControlStateNormal];
+        [boxButton setAttributedTitle:[[NSAttributedString alloc] initWithString:boxString attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: [UIColor secondaryLabelColor]}] forState:UIControlStateHighlighted];
+        [boxButton setTintColor:[UIColor tertiaryLabelColor]];
         [boxButton addTarget:self action:@selector(emptyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         _boxEmptyButton = boxButton;
     }

@@ -8,7 +8,6 @@
 
 #import <sys/stat.h>
 #import "XXTEEditorController.h"
-#import "XXTECodeViewerController.h"
 
 // Pre-Defines
 #import "XXTEEditorDefaults.h"
@@ -79,7 +78,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *launchButtonItem;
 
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
@@ -134,7 +132,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return [XXTECodeViewerController suggestedExtensions];
+    return @[ @"lua" ];
 }
 
 #pragma mark - Initializers
@@ -149,7 +147,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 
 - (void)setup {
     self.hidesBottomBarWhenPushed = YES;
+    XXTE_START_IGNORE_PARTIAL
     self.automaticallyAdjustsScrollViewInsets = NO; // !important
+    XXTE_END_IGNORE_PARTIAL
     
     _shouldReloadAttributes = NO;
     _shouldResetAttributes = NO;
@@ -323,13 +323,9 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     // Set the fucking smart types again
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 11.0, *)) {
-        self.textView.smartDashesType = UITextSmartDashesTypeNo;
-        self.textView.smartQuotesType = UITextSmartQuotesTypeNo;
-        self.textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-    } else {
-        // Fallback on earlier versions
-    }
+    self.textView.smartDashesType = UITextSmartDashesTypeNo;
+    self.textView.smartQuotesType = UITextSmartQuotesTypeNo;
+    self.textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
     XXTE_END_IGNORE_PARTIAL
     
     // Text View - Text Input Delegate
@@ -425,10 +421,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     if ([keysToReload containsObject:XXTEEditorThemeName]) {
         self.keyboardToolbarRow.tintColor = self.theme.foregroundColor;
     }
-    if ([keysToReload containsObject:XXTEEditorReadOnly] || [keysToReload containsObject:XXTEEditorLockedStateChanged]) {
-        BOOL shouldLocked = ([self isReadOnly] || [self isLockedState]);
-        self.keyboardToolbarRow.snippetItem.enabled = (self.language && !shouldLocked);
-    }
     if (XXTE_IS_IPAD) {
         self.searchBar.searchKeyboardAppearance = UIKeyboardAppearanceLight;
         self.searchBar.replaceKeyboardAppearance = UIKeyboardAppearanceLight;
@@ -501,7 +493,6 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     
     // Bottom Buttons
-    [self.launchButtonItem setEnabled:[self isLaunchItemAvailable]];
     [self.searchButtonItem setEnabled:[self isSearchButtonItemAvailable]];
     [self.symbolsButtonItem setEnabled:[self isSymbolsButtonItemAvailable]];
     [self.statisticsButtonItem setEnabled:[self isStatisticsButtonItemAvailable]];
@@ -605,9 +596,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     }
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewControllerWillChangeDisplayMode:) name:XXTENotificationEvent object:self.splitViewController];
 }
@@ -722,18 +711,10 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     self.navigationItem.leftItemsSupplementBackButton = NO;
     self.navigationItem.hidesBackButton = YES;
     
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
     
     self.navigationItem.leftBarButtonItems = @[self.myBackButtonItem];
-    if (isOS9Above() && isAppStore()) {
-        self.navigationItem.rightBarButtonItems = @[self.launchButtonItem, self.shareButtonItem];
-    } else {
-        self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
-    }
+    self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
     self.navigationItem.titleView = self.lockedTitleView;
     
     // Subviews
@@ -780,13 +761,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         [self.containerView addConstraints:constraints];
     }
     {
-        NSLayoutConstraint *bottomConstraint = nil;
-        if (@available(iOS 11.0, *))
-        {
-            bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-        } else {
-            bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-        }
+        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
         NSArray <NSLayoutConstraint *> *constraints =
         @[
           [NSLayoutConstraint constraintWithItem:self.toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:kXXTEEditorToolbarHeight],
@@ -830,9 +805,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
      }];
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    }
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     XXTE_END_IGNORE_PARTIAL
 }
 
@@ -886,9 +859,7 @@ XXTE_END_IGNORE_PARTIAL
         containerView.showsVerticalScrollIndicator = NO;
         containerView.scrollsToTop = NO;
         containerView.delegate = self;
-        if (@available(iOS 11.0, *)) {
-            containerView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        }
+        containerView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         _containerView = containerView;
     }
     return _containerView;
@@ -908,13 +879,6 @@ XXTE_END_IGNORE_PARTIAL
         _shareButtonItem = shareButtonItem;
     }
     return _shareButtonItem;
-}
-
-- (UIBarButtonItem *)launchButtonItem {
-    if (!_launchButtonItem) {
-        _launchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(launchItemTapped:)];
-    }
-    return _launchButtonItem;
 }
 
 - (UIBarButtonItem *)searchButtonItem {
@@ -952,11 +916,7 @@ XXTE_END_IGNORE_PARTIAL
 - (XXTEEditorSearchBar *)searchBar {
     if (!_searchBar) {
         XXTEEditorSearchBar *searchBar = [[XXTEEditorSearchBar alloc] init];
-        if (@available(iOS 13.0, *)) {
-            searchBar.backgroundColor = [UIColor systemBackgroundColor];
-        } else {
-            searchBar.backgroundColor = [UIColor whiteColor];
-        }
+        searchBar.backgroundColor = [UIColor systemBackgroundColor];
         searchBar.translatesAutoresizingMaskIntoConstraints = NO;
         searchBar.hidden = YES;
         searchBar.searchInputAccessoryView = self.searchAccessoryView;
@@ -1001,13 +961,9 @@ XXTE_END_IGNORE_PARTIAL
         textView.scrollPosition = ICTextViewScrollPositionMiddle;
         
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 11.0, *)) {
-            textView.smartDashesType = UITextSmartDashesTypeNo;
-            textView.smartQuotesType = UITextSmartQuotesTypeNo;
-            textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-        } else {
-            // Fallback on earlier versions
-        }
+        textView.smartDashesType = UITextSmartDashesTypeNo;
+        textView.smartQuotesType = UITextSmartQuotesTypeNo;
+        textView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
         XXTE_END_IGNORE_PARTIAL
         
         textView.keyboardType = UIKeyboardTypeDefault;
@@ -1060,11 +1016,7 @@ XXTE_END_IGNORE_PARTIAL
 - (XXTEEditorToolbar *)toolbar {
     if (!_toolbar) {
         XXTEEditorToolbar *toolbar = [[XXTEEditorToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds) - 44.0, CGRectGetWidth(self.view.bounds), 44.0)];
-        if (@available(iOS 11.0, *)) {
-            toolbar.translucent = YES;
-        } else {
-            toolbar.translucent = NO;
-        }
+        toolbar.translucent = YES;
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         toolbar.items = @[ self.searchButtonItem, flexible, self.symbolsButtonItem, flexible, self.statisticsButtonItem, flexible, self.settingsButtonItem ];
@@ -1153,60 +1105,11 @@ XXTE_END_IGNORE_PARTIAL
     }
 }
 
-#pragma mark - XXTEEncodingControllerDelegate
-
-#ifdef APPSTORE
-- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller shouldSave:(BOOL)save
-{
-    [self setCurrentEncoding:controller.selectedEncoding];
-    if (save) {
-        [self setNeedsSaveDocument];
-    }
-    [self setNeedsReopenDocument];
-    [controller dismissViewControllerAnimated:YES completion:^{
-        if (!XXTE_IS_FULLSCREEN(controller)) {
-            [self reopenDocumentIfNecessary];
-        }
-    }];
-}
-#endif
-
-#ifdef APPSTORE
-- (void)encodingControllerDidChange:(XXTEEncodingController *)controller shouldSave:(BOOL)save
-{
-    [self setCurrentEncoding:controller.selectedEncoding];
-    if (save) {
-        [self setNeedsSaveDocument];
-    }
-    [self setNeedsReopenDocument];
-}
-#endif
-
-#ifdef APPSTORE
-- (void)encodingControllerDidCancel:(XXTEEncodingController *)controller
-{
-    [controller dismissViewControllerAnimated:YES completion:nil];
-}
-#endif
-
 #pragma mark - Editor: Locked State
 
-#ifdef APPSTORE
-- (void)actionViewTapped:(XXTESingleActionView *)actionView {
-    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
-    controller.title = NSLocalizedString(@"Select Encoding", nil);
-    controller.delegate = self;
-    controller.reopenMode = YES;
-    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:controller];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
-#else
 - (void)actionViewTapped:(XXTESingleActionView *)actionView {
     
 }
-#endif
 
 #pragma mark - Editor: Content
 
@@ -1228,11 +1131,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
         _lockedState = YES;
         if ([readError.domain isEqualToString:kXXTErrorInvalidStringEncodingDomain]) {
             self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
-#ifdef APPSTORE
-            self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
-#else
             self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
-#endif
         } else {
             self.actionView.titleLabel.text = NSLocalizedString(@"Error", nil);
             self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
@@ -1550,6 +1449,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 
 - (NSArray <NSLayoutConstraint *> *)expandedSearchBarConstraints {
     if (!_expandedSearchBarConstraints) {
+        XXTE_START_IGNORE_PARTIAL
         _expandedSearchBarConstraints =
         @[
           [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
@@ -1557,12 +1457,14 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
           [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:XXTEEditorSearchBarHeight],
           ];
+        XXTE_END_IGNORE_PARTIAL
     }
     return _expandedSearchBarConstraints;
 }
 
 - (NSArray <NSLayoutConstraint *> *)closedSearchBarConstraints {
     if (!_closedSearchBarConstraints) {
+        XXTE_START_IGNORE_PARTIAL
         _closedSearchBarConstraints =
         @[
           [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:-XXTEEditorSearchBarHeight],
@@ -1570,6 +1472,7 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
           [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
           [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:XXTEEditorSearchBarHeight],
           ];
+        XXTE_END_IGNORE_PARTIAL
     }
     return _closedSearchBarConstraints;
 }
@@ -1755,9 +1658,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
 - (void)fixTextViewInsets
 {
     UIEdgeInsets insets = UIEdgeInsetsZero;
-    if (@available(iOS 11.0, *)) {
-        // insets = self.view.safeAreaInsets;
-    }
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;
@@ -1951,10 +1851,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     [self performGlobalKeyboardDismissalAction:row];
 }
 
-- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapSnippet:(UIBarButtonItem *)sender {
-    [self performGlobalCodeBlocksAction:row];
-}
-
 - (void)searchAccessoryView:(XXTEEditorSearchAccessoryView *)accessoryView didTapDismiss:(UIBarButtonItem *)sender {
     [self performGlobalKeyboardDismissalAction:accessoryView];
 }
@@ -2029,10 +1925,6 @@ static inline NSUInteger GetNumberOfDigits(NSUInteger i)
     if (dismissalSucceed) {
         [self displayKeyboardTip:NSLocalizedString(@"Keyboard Dismissal", nil)];
     }
-}
-
-- (void)performGlobalCodeBlocksAction:(id)sender {
-    [self menuActionCodeBlocks:nil];
 }
 
 #pragma mark - Lazy Flags

@@ -10,7 +10,6 @@
 #import "XXTExplorerViewController+LGAlertViewDelegate.h"
 #import "XXTExplorerViewController+PasteboardOperations.h"
 #import "XXTExplorerViewController+UIDocumentMenuDelegate.h"
-#import "XXTExplorerViewController+XXTImagePickerControllerDelegate.h"
 #import "XXTExplorerViewController+ArchiverOperation.h"
 
 #import "XXTExplorerDefaults.h"
@@ -40,20 +39,12 @@
 - (void)configureToolbarAndCover {
     if (self.isPreviewed) return;
     
-#ifndef APPSTORE
     CGRect toolbarRect = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 44.f);
-#else
-    CGRect toolbarRect = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44.0, CGRectGetWidth(self.view.bounds), 44.f);
-#endif
     
     XXTExplorerToolbar *toolbar = [[XXTExplorerToolbar alloc] initWithFrame:toolbarRect];
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     toolbar.tapDelegate = self;
-    if (self.historyMode) {
-        [toolbar updateStatus:XXTExplorerToolbarStatusHistoryMode];
-    } else {
-        [toolbar updateStatus:XXTExplorerToolbarStatusDefault];
-    }
+    [toolbar updateStatus:XXTExplorerToolbarStatusDefault];
     self.toolbar = toolbar;
     
     UILabel *toolbarCover = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, CGRectGetWidth(self.view.bounds), 44.f)];
@@ -83,59 +74,39 @@
 
 - (void)updateToolbarButton:(XXTExplorerToolbar *)toolbar {
     {
-        BOOL sortEnabled = (self.historyMode == NO);
         if (self.explorerSortOrder == XXTExplorerViewEntryListSortOrderAsc) {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toStatus:XXTExplorerToolbarButtonStatusNormal toEnabled:@(sortEnabled)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toStatus:XXTExplorerToolbarButtonStatusNormal toEnabled:@(YES)];
         } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toStatus:XXTExplorerToolbarButtonStatusSelected toEnabled:@(sortEnabled)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toStatus:XXTExplorerToolbarButtonStatusSelected toEnabled:@(YES)];
         }
     }
 }
 
 - (void)updateToolbarStatus:(XXTExplorerToolbar *)toolbar {
     // Pasteboard
-    if (self.historyMode) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
+    if ([[[self class] explorerPasteboard] strings].count > 0) {
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
     } else {
-        if ([[[self class] explorerPasteboard] strings].count > 0) {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
-        } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
-        }
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
     }
     
     // Editing Related
-    if (self.historyMode) {
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(YES)];
-#ifdef APPSTORE
-        if ([self isEditing]) {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings toEnabled:@(NO)];
+    if ([self isEditing]) {
+        if (([self.tableView indexPathsForSelectedRows].count) > 0) {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(YES)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(YES)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(YES)];
         } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings toEnabled:@(YES)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(NO)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(NO)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(NO)];
         }
-#endif
     } else {
-        if ([self isEditing]) {
-            if (([self.tableView indexPathsForSelectedRows].count) > 0) {
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(YES)];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(YES)];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(YES)];
-            } else {
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(NO)];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(NO)];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
-                [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(NO)];
-            }
-        } else {
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem toEnabled:@(YES)];
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toEnabled:@(YES)];
-#ifndef APPSTORE
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan toEnabled:@(YES)];
-#else
-            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSettings toEnabled:@(YES)];
-#endif
-        }
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem toEnabled:@(YES)];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toEnabled:@(YES)];
+        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan toEnabled:@(YES)];
     }
 }
 
@@ -143,68 +114,14 @@
 
 - (void)toolbar:(XXTExplorerToolbar *)toolbar buttonTypeTapped:(NSString *)buttonType buttonItem:(UIBarButtonItem *)buttonItem {
     if (toolbar == self.toolbar) {
-#ifndef APPSTORE
         if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeScan]) {
             NSDictionary *userInfo =
             @{XXTENotificationShortcutInterface: @"scan",
               XXTENotificationShortcutUserData: [NSNull null]};
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:buttonItem userInfo:userInfo]];
         }
-#else
-        if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSettings]) {
-            XXTEMoreViewController *moreViewController = nil;
-            if (@available(iOS 13.0, *)) {
-                moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleInsetGrouped];
-            } else {
-                moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            }
-            XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
-            masterNavigationControllerRight.modalPresentationStyle = UIModalPresentationFormSheet;
-            masterNavigationControllerRight.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            masterNavigationControllerRight.presentationController.delegate = self;
-            [self.navigationController presentViewController:masterNavigationControllerRight animated:YES completion:nil];
-        }
-#endif
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeAddItem]) {
-            BOOL allowsImport = XXTEDefaultsBool(XXTExplorerAllowsImportFromAlbum, NO);
-            if (allowsImport) {
-                XXTE_START_IGNORE_PARTIAL
-                if (@available(iOS 8.0, *)) {
-                    UIDocumentMenuViewController *controller = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
-                    controller.delegate = self;
-                    if (!self.historyMode) {
-                        [controller addOptionWithTitle:NSLocalizedString(@"View History", nil)
-                                                 image:[UIImage imageNamed:@"XXTEAddOptionHistory"]
-                                                 order:UIDocumentMenuOrderFirst
-                                               handler:^{
-                            [self presentHistoryViewController:buttonItem];
-                        }];
-                    }
-                    [controller addOptionWithTitle:NSLocalizedString(@"Photos Library", nil)
-                                             image:[UIImage imageNamed:@"XXTEAddOptionPhotosLibrary"]
-                                             order:UIDocumentMenuOrderFirst
-                                           handler:^{
-                        [self presentImagePickerController:buttonItem];
-                    }];
-                    [controller addOptionWithTitle:NSLocalizedString(@"New Item", nil)
-                                             image:[UIImage imageNamed:@"XXTEAddOptionNew"]
-                                             order:UIDocumentMenuOrderFirst
-                                           handler:^{
-                        [self presentNewDocumentViewController:buttonItem];
-                    }];
-                    controller.modalPresentationStyle = UIModalPresentationPopover;
-                    UIPopoverPresentationController *popoverController = controller.popoverPresentationController;
-                    popoverController.barButtonItem = buttonItem;
-                    popoverController.backgroundColor = XXTColorPlainBackground();
-                    controller.presentationController.delegate = self;
-                    [self.navigationController presentViewController:controller animated:YES completion:nil];
-                } else {
-                    [self presentNewDocumentViewController:buttonItem];
-                }
-                XXTE_END_IGNORE_PARTIAL
-            } else {
-                [self presentNewDocumentViewController:buttonItem];
-            }
+            [self presentNewDocumentViewController:buttonItem];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeSort]) {
             XXTExplorerViewEntryListSortField sortFieldIdx = self.explorerSortField;
@@ -307,35 +224,23 @@
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeCompress]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
-            BOOL isXPP = NO;
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
                 XXTExplorerEntry *firstAttributes = self.entryList[(NSUInteger) firstIndexPath.row];
-                NSString *entryExtension = firstAttributes.entryExtension;
-                NSString *entryBaseExtension = [entryExtension lowercaseString];
-                if (firstAttributes.isDirectory &&
-                    [entryBaseExtension isEqualToString:@"xpp"]) {
-                    isXPP = YES;
-                }
                 formatString = [NSString stringWithFormat:@"\"%@\"", firstAttributes.localizedDisplayName];
             } else {
                 formatString = [NSString stringWithFormat:NSLocalizedString(@"%lu items", nil), (unsigned long)selectedIndexPaths.count];
             }
-            if (isXPP) {
-                // XPP Bundle, jump to archive without confirm.
-                [self alertView:nil archiveEntriesAtIndexPaths:selectedIndexPaths];
-            } else {
-                LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
-                                                                      style:LGAlertViewStyleActionSheet
-                                                               buttonTitles:@[ ]
-                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                     destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
-                                                                   delegate:self];
-                objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                [alertView showAnimated:YES completionHandler:nil];
-            }
+            LGAlertView *alertView = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Archive Confirm", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Archive %@?", nil), formatString]
+                                                                  style:LGAlertViewStyleActionSheet
+                                                           buttonTitles:@[ ]
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                 destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
+                                                               delegate:self];
+            objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            [alertView showAnimated:YES completionHandler:nil];
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
@@ -356,19 +261,15 @@
             }
             if (shareUrls.count != 0) {
                 XXTE_START_IGNORE_PARTIAL
-                if (@available(iOS 9.0, *)) {
-                    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
-                    if (XXTE_IS_IPAD) {
-                        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-                        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-                        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-                        popoverPresentationController.barButtonItem = buttonItem;
-                    }
-                    activityViewController.presentationController.delegate = self;
-                    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
-                } else {
-                    toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
+                UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
+                if (XXTE_IS_IPAD) {
+                    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+                    UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+                    popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+                    popoverPresentationController.barButtonItem = buttonItem;
                 }
+                activityViewController.presentationController.delegate = self;
+                [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
                 XXTE_END_IGNORE_PARTIAL
             } else {
                 toastMessage(self, NSLocalizedString(@"You cannot share directory.", nil));
@@ -376,24 +277,6 @@
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
-            if (self.historyMode) {
-                if (selectedIndexPaths.count == 0) {
-                    LGAlertView *alertViewClear = [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Confirm", nil)
-                                                                             message:NSLocalizedString(@"Clear all history?\nThis operation cannot be revoked.", nil)
-                                                                               style:LGAlertViewStyleActionSheet
-                                                                        buttonTitles:@[ ]
-                                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                              destructiveButtonTitle:NSLocalizedString(@"Confirm", nil)
-                                                                       actionHandler:nil cancelHandler:^(LGAlertView * _Nonnull alertView1) {
-                        [alertView1 dismissAnimated];
-                    } destructiveHandler:^(LGAlertView * _Nonnull alertView1) {
-                        [alertView1 dismissAnimated];
-                        [self removeAllEntryContents];
-                    }];
-                    [alertViewClear showAnimated];
-                    return;
-                }
-            }
             NSString *formatString = nil;
             if (selectedIndexPaths.count == 1) {
                 NSIndexPath *firstIndexPath = selectedIndexPaths[0];
@@ -425,20 +308,7 @@
     [self.navigationController presentViewController:createItemNavigationController animated:YES completion:nil];
 }
 
-- (void)presentHistoryViewController:(UIBarButtonItem *)buttonItem {
-    NSError *entryError = nil;
-    XXTExplorerEntry *entryDetail = [[self.class explorerEntryParser] entryOfPath:[[self class] historyDirectoryPath] withError:&entryError];
-    if (!entryError) {
-        [self performHistoryActionForEntry:entryDetail];
-    } else {
-        toastError(self, entryError);
-    }
-}
-
 - (void)removeAllEntryContents {
-    if (!self.historyMode) {
-        return;
-    }
     NSString *entryPath = self.entryPath;
     NSError *localError = nil;
     NSArray <NSString *> *entrySubdirectoryPathList = [self.class.explorerFileManager contentsOfDirectoryAtPath:entryPath error:&localError];
@@ -465,12 +335,6 @@
             blockInteractions(blockController, NO);
         });
     });
-}
-
-#pragma mark - History
-
-+ (NSString *)historyDirectoryPath {
-    return [XXTERootPath() stringByAppendingPathComponent:uAppDefine(XXTExplorerViewBuiltHistoryPath)];
 }
 
 @end

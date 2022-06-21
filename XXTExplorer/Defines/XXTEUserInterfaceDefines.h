@@ -21,13 +21,6 @@ extern "C" {
     UIViewController *blockInteractions(UIViewController *viewController, BOOL shouldBlock);
     
     BOOL isiPhoneX(void);
-    BOOL isOS13Above(void);
-    BOOL isOS12Above(void);
-    BOOL isOS11Above(void);
-    BOOL isOS10Above(void);
-    BOOL isOS9Above(void);
-    BOOL isOS8Above(void);
-    BOOL isAppStore(void);
     
     void toastMessageWithDelay(UIViewController *viewController, NSString *message, NSTimeInterval duration);
     void toastMessage(UIViewController *viewController, NSString *message);
@@ -69,8 +62,8 @@ XXTE_START_IGNORE_PARTIAL \
 XXTE_END_IGNORE_PARTIAL
 
 #define XXTE_IS_FULLSCREEN(c) ((c.navigationController && c.navigationController.modalPresentationStyle == UIModalPresentationFullScreen) || (c.modalPresentationStyle == UIModalPresentationFullScreen))
-#define XXTE_IS_IPAD (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone)
-#define XXTE_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define XXTE_IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone)
+#define XXTE_IS_IPHONE ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 
 #define XXTE_SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define XXTE_SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)

@@ -357,7 +357,9 @@ static const NSTimeInterval XXTEToastFadeDuration     = 0.2;
         activityView.layer.shadowOffset = style.shadowOffset;
     }
     
+    XXTE_START_IGNORE_PARTIAL
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    XXTE_END_IGNORE_PARTIAL
     activityIndicatorView.center = CGPointMake(activityView.bounds.size.width / 2, activityView.bounds.size.height / 2);
     [activityView addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];

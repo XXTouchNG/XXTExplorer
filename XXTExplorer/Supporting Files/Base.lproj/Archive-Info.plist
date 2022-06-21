@@ -19,12 +19,9 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>ch.xxtou.xui</string>
-				<string>ch.xxtou.xuic</string>
 				<string>ch.xxtou.lua</string>
 				<string>ch.xxtou.luac</string>
 				<string>ch.xxtou.xxt</string>
-				<string>ch.xxtou.xpa</string>
 			</array>
 		</dict>
 		<dict>
@@ -172,40 +169,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.text</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>ch.xxtou.xui</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xui</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xui</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>ch.xxtou.xuic</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xuic</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xuic</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
@@ -252,23 +215,6 @@
 				</array>
 				<key>public.mime-type</key>
 				<string>application/x-luac</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>ch.xxtou.xpa</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xpa</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xpa</string>
 			</dict>
 		</dict>
 	</array>

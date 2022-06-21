@@ -76,32 +76,36 @@ static void * activatorHandler = nil;
                          @"hold_volume_down": @(0)} mutableCopy];
     
     activatorHandler = NULL;
-    if (0 == access([kXXTEActivatorLibraryPath UTF8String], R_OK)) {
-#if !(TARGET_OS_SIMULATOR)
-        activatorHandler = dlopen([kXXTEActivatorLibraryPath UTF8String], RTLD_LAZY);
-        Class la = objc_getClass("LAActivator");
-        if (!la) {
-            fprintf(stderr, "%s\n", dlerror());
-            return;
-        }
-        dlerror();
-        LAActivator *sharedActivator = [la sharedInstance];
-        BOOL hasSeen = [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStop] && [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStopWithAlert];
-        if (hasSeen) {
-            _activatorExists = YES;
-
-            // Method Swizzing to hide Ads
-            Method s1_Method =  class_getInstanceMethod([LASettingsViewController class], @selector(showsAd));
-            Method s2_Method = class_getInstanceMethod([LASettingsViewController class], @selector(myShowsAd));
-            method_exchangeImplementations(s1_Method, s2_Method);
-        }
-#endif
+    if (@available(iOS 14.0, *)) {
+        _activatorExists = YES;
     } else {
-        _activatorExists = NO;
-    }
-#ifdef DEBUG
-    _activatorExists = NO;
+        if (0 == access([kXXTEActivatorLibraryPath UTF8String], R_OK)) {
+#if !(TARGET_OS_SIMULATOR)
+            activatorHandler = dlopen([kXXTEActivatorLibraryPath UTF8String], RTLD_LAZY);
+            Class la = objc_getClass("LAActivator");
+            if (!la) {
+                fprintf(stderr, "%s\n", dlerror());
+                return;
+            }
+            dlerror();
+            LAActivator *sharedActivator = [la sharedInstance];
+            BOOL hasSeen = [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStop] && [sharedActivator hasSeenListenerWithName:kXXTEActivatorListenerRunOrStopWithAlert];
+            if (hasSeen) {
+                _activatorExists = YES;
+                
+                // Method Swizzing to hide Ads
+                Method s1_Method =  class_getInstanceMethod([LASettingsViewController class], @selector(showsAd));
+                Method s2_Method = class_getInstanceMethod([LASettingsViewController class], @selector(myShowsAd));
+                method_exchangeImplementations(s1_Method, s2_Method);
+            }
 #endif
+        } else {
+            _activatorExists = NO;
+        }
+#ifdef DEBUG
+        _activatorExists = NO;
+#endif
+    }
 }
 
 - (void)viewDidLoad {
@@ -113,9 +117,7 @@ static void * activatorHandler = nil;
     }
 
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"Shortcut Config", nil);
@@ -124,14 +126,10 @@ static void * activatorHandler = nil;
     self.tableView.dataSource = self;
 
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewData];
@@ -206,7 +204,7 @@ static void * activatorHandler = nil;
 - (void)reloadStaticTableViewData {
     staticSectionTitles = @[@"", NSLocalizedString(@"Internal Shortcut", nil), NSLocalizedString(@"Activator", nil)];
     NSString *activatorInstallTip = @"";
-    if (NO == self.activatorExists) {
+    if (NO == self.activatorExists || !activatorHandler) {
         activatorInstallTip = NSLocalizedString(@"Open \"Cydia\" and install 3rd-party tweak \"Activator\" to customize more activation methods, or set up scheduled tasks.", nil);
     }
     staticSectionFooters = @[NSLocalizedString(@"Disable this feature to ignore all shortcut events that can launch or stop selected script.", nil), @"", activatorInstallTip];
@@ -244,16 +242,29 @@ static void * activatorHandler = nil;
     cellActivator.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cellActivator.iconImage = [UIImage imageNamed:@"ActivatorIcon"];
     cellActivator.descriptionLabel.text = NSLocalizedString(@"Centralized gestures and button management for iOS.", nil);
+    
+    BOOL isActivatorHidden = NO;
     if (self.activatorExists) {
         cellActivator.titleLabel.text = NSLocalizedString(@"Configure \"Activator\"", nil);
+        if (!activatorHandler) {
+            isActivatorHidden = YES;
+        }
     } else {
         cellActivator.titleLabel.text = NSLocalizedString(@"Install \"Activator\"", nil);
     }
-    staticCells = @[
-                    @[ switchCell ],
-                    @[ cell1, cell2, cell3, cell4 ],
-                    @[ cellActivator ],
-                    ];
+    
+    if (isActivatorHidden) {
+        staticCells = @[
+            @[ switchCell ],
+            @[ cell1, cell2, cell3, cell4 ],
+        ];
+    } else {
+        staticCells = @[
+            @[ switchCell ],
+            @[ cell1, cell2, cell3, cell4 ],
+            @[ cellActivator ],
+        ];
+    }
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -295,7 +306,7 @@ static void * activatorHandler = nil;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
         if (indexPath.section == XXTEMoreActivationSectionInternalMethods) {
-            if (NO == self.activatorExists) {
+            if (NO == self.activatorExists || !activatorHandler) {
                 XXTEMoreTitleDescriptionCell *cell = (XXTEMoreTitleDescriptionCell *) staticCells[(NSUInteger) indexPath.section][(NSUInteger) indexPath.row];
                 XXTEMoreActivationOperationController *operationController = [[XXTEMoreActivationOperationController alloc] initWithStyle:UITableViewStyleGrouped];
                 operationController.delegate = self;
@@ -306,7 +317,7 @@ static void * activatorHandler = nil;
                 toastMessage(self, NSLocalizedString(@"\"Activator\" is active, configure activation behaviours below.", nil));
             }
         } else if (indexPath.section == XXTEMoreActivationSectionActivator) {
-            if (self.activatorExists) {
+            if (self.activatorExists && activatorHandler) {
 #if !(TARGET_OS_SIMULATOR)
                 XXTEModeSettingsController *vc = [[XXTEModeSettingsController alloc] initWithMode:nil];
 #else
@@ -320,7 +331,9 @@ static void * activatorHandler = nil;
                 NSString *activatorURLString = [NSString stringWithFormat:cydiaPackageString, @"libactivator"];
                 NSURL *activatorURL = [NSURL URLWithString:activatorURLString];
                 if ([[UIApplication sharedApplication] canOpenURL:activatorURL]) {
+                    XXTE_START_IGNORE_PARTIAL
                     [[UIApplication sharedApplication] openURL:activatorURL];
+                    XXTE_END_IGNORE_PARTIAL
                 } else {
                     toastMessage(self, [NSString stringWithFormat:NSLocalizedString(@"Cannot open: \"%@\"", nil), activatorURL]);
                 }

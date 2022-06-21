@@ -18,7 +18,6 @@ typedef enum : NSUInteger {
 @protocol XXTEKeyboardToolbarRowDelegate <NSObject>
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapUndo:(UIBarButtonItem *)sender;
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapRedo:(UIBarButtonItem *)sender;
-- (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapSnippet:(UIBarButtonItem *)sender;
 - (void)keyboardToolbarRow:(XXTEKeyboardToolbarRow *)row didTapDismiss:(UIBarButtonItem *)sender;
 @end
 
@@ -28,7 +27,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) id <XXTEKeyboardToolbarRowDelegate> delegate;
 @property (nonatomic, strong) UIBarButtonItem *undoItem;
 @property (nonatomic, strong) UIBarButtonItem *redoItem;
-@property (nonatomic, strong) UIBarButtonItem *snippetItem;
 @property (nonatomic, strong) UIBarButtonItem *dismissItem;
 
 @end

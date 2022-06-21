@@ -6,11 +6,8 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <SafariServices/SafariServices.h>
 #import "XXTEDetailViewController.h"
-#import <TOWebViewController/TOWebViewController.h>
 
-@interface XXTECommonWebViewController : TOWebViewController <XXTEDetailViewController>
-- (void)configure NS_REQUIRES_SUPER;
-
+@interface XXTECommonWebViewController : SFSafariViewController <XXTEDetailViewController>
 @end

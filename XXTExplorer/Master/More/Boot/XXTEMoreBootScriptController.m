@@ -57,9 +57,7 @@
     }
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"Boot Script", nil);
@@ -67,14 +65,10 @@
     self.tableView.dataSource = self;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewData];
@@ -193,20 +187,7 @@
             }
         } else if (indexPath.section == 1) {
             if (indexPath.row == 0) {
-                if (@available(iOS 8.0, *)) {
-                    return UITableViewAutomaticDimension;
-                } else {
-                    UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-                    [cell setNeedsUpdateConstraints];
-                    [cell updateConstraintsIfNeeded];
-                    
-                    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-                    [cell setNeedsLayout];
-                    [cell layoutIfNeeded];
-                    
-                    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                    return (height > 0) ? (height + 1.0) : 44.f;
-                }
+                return UITableViewAutomaticDimension;
             } else {
                 return 44.f;
             }
@@ -237,7 +218,7 @@
                 NSString *rootPath = [XXTExplorerViewController initialPath];
                 XXTExplorerItemPicker *itemPicker = [[XXTExplorerItemPicker alloc] initWithEntryPath:rootPath];
                 itemPicker.delegate = self;
-                itemPicker.allowedExtensions = @[ @"xxt", @"xpp", @"lua" ];
+                itemPicker.allowedExtensions = @[ @"lua", @"xxt" ];
                 itemPicker.selectedBootScriptPath = self.bootScriptPath;
                 [self.navigationController pushViewController:itemPicker animated:YES];
             }

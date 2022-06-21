@@ -54,9 +54,7 @@
     self.tableView.delaysContentTouches = NO;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.tableView.delegate = self;
@@ -64,14 +62,10 @@
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self updateCells];
     if (![self importRecordingScript]) {

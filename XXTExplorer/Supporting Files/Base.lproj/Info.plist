@@ -19,12 +19,9 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>ch.xxtou.xui</string>
-				<string>ch.xxtou.xuic</string>
 				<string>ch.xxtou.lua</string>
 				<string>ch.xxtou.luac</string>
 				<string>ch.xxtou.xxt</string>
-				<string>ch.xxtou.xpa</string>
 			</array>
 		</dict>
 		<dict>
@@ -52,8 +49,19 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>3.0.1</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.darwindev.xxtouch</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>xxt</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>206</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -66,11 +74,19 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>${PRODUCT_NAME} want to access your camera to scan QR code.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>${PRODUCT_NAME} want to access your album to save license record.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} want to access your album to extract QR code or import images.</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.$(PRODUCT_BUNDLE_IDENTIFIER)</key>
@@ -146,44 +162,12 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.text</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>ch.xxtou.xui</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xui</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xui</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>ch.xxtou.xuic</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xuic</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xuic</string>
-			</dict>
-		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -241,23 +225,6 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>ch.xxtou.xpa</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xpa</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/x-xpa</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeIdentifier</key>
 			<string>ch.xxtou.deb</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
@@ -270,26 +237,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<false/>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>com.darwindev.xxtouch</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>xxt</string>
-			</array>
-		</dict>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>${PRODUCT_NAME} want to access your camera to scan QR code.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>${PRODUCT_NAME} want to access your album to save license record.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>${PRODUCT_NAME} want to access your album to extract QR code or import images.</string>
-	<key>UIUserInterfaceStyle</key>
-	<string>Dark</string>
 </dict>
 </plist>

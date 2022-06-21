@@ -27,11 +27,7 @@
 
 static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200k
 
-#ifdef APPSTORE
-@interface XXTETextViewController () <XXTEEncodingControllerDelegate>
-#else
 @interface XXTETextViewController ()
-#endif
 
 @property (nonatomic, strong) XXTESingleActionView *actionView;
 @property (nonatomic, strong) ICTextView *contentTextView;
@@ -53,7 +49,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-    return @[ @"txt", @"log", @"ini", @"conf" ];
+    return @[ @"txt", @"conf" ];
 }
 
 + (Class)relatedReader {
@@ -88,14 +84,10 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     }
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     self.navigationItem.rightBarButtonItem = self.shareButtonItem;
     
-    if (@available(iOS 10.0, *)) {
-        [self.contentTextView setRefreshControl:self.refreshControl];
-    }
+    [self.contentTextView setRefreshControl:self.refreshControl];
     [self.view addSubview:self.contentTextView];
     self.actionView.iconImageView.image = [UIImage imageNamed:@"XXTEBugIcon"];
     
@@ -160,11 +152,7 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
         [self setLockedState:YES];
         if ([readError.domain isEqualToString:kXXTErrorInvalidStringEncodingDomain]) {
             self.actionView.titleLabel.text = NSLocalizedString(@"Bad Encoding", nil);
-#ifdef APPSTORE
-            self.actionView.descriptionLabel.text = readError ? [NSString stringWithFormat:NSLocalizedString(@"%@\nTap here to change encoding.", nil), readError.localizedDescription] : NSLocalizedString(@"Unknown reason.", nil);
-#else
             self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
-#endif
         } else {
             self.actionView.titleLabel.text = NSLocalizedString(@"Error", nil);
             self.actionView.descriptionLabel.text = readError.localizedDescription ?: NSLocalizedString(@"Unknown reason.", nil);
@@ -208,13 +196,9 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
         logTextView.alwaysBounceVertical = YES;
         logTextView.font = [UIFont fontWithName:@"Courier" size:12.f];
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 11.0, *)) {
-            logTextView.smartDashesType = UITextSmartDashesTypeNo;
-            logTextView.smartQuotesType = UITextSmartQuotesTypeNo;
-            logTextView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-        } else {
-            // Fallback on earlier versions
-        }
+        logTextView.smartDashesType = UITextSmartDashesTypeNo;
+        logTextView.smartQuotesType = UITextSmartQuotesTypeNo;
+        logTextView.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
         XXTE_END_IGNORE_PARTIAL
         _contentTextView = logTextView;
     }
@@ -257,63 +241,20 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
     if (!shareUrl) return;
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
-        if (XXTE_IS_IPAD) {
-            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-            UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-            popoverPresentationController.barButtonItem = sender;
-        }
-        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
-    } else {
-        toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+    if (XXTE_IS_IPAD) {
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverPresentationController.barButtonItem = sender;
     }
+    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
     XXTE_END_IGNORE_PARTIAL
 }
 
-#ifdef APPSTORE
-- (void)actionViewTapped:(XXTESingleActionView *)actionView {
-    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
-    controller.title = NSLocalizedString(@"Select Encoding", nil);
-    controller.delegate = self;
-    controller.reopenMode = YES;
-    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:controller];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
-#else
 - (void)actionViewTapped:(XXTESingleActionView *)actionView {
     
 }
-#endif
-
-#pragma mark - XXTEEncodingControllerDelegate
-
-#ifdef APPSTORE
-- (void)encodingControllerDidConfirm:(XXTEEncodingController *)controller shouldSave:(BOOL)save
-{
-    [self setCurrentEncoding:controller.selectedEncoding];
-    [self setNeedsReload:YES];
-    @weakify(self);
-    [controller dismissViewControllerAnimated:YES completion:^{
-        @strongify(self);
-         if (!XXTE_IS_FULLSCREEN(controller)) {
-             [self reloadIfNeeded];
-             [self reloadLockedState];
-         }
-    }];
-}
-#endif
-
-#ifdef APPSTORE
-- (void)encodingControllerDidCancel:(XXTEEncodingController *)controller
-{
-    [controller dismissViewControllerAnimated:YES completion:nil];
-}
-#endif
-
 
 #pragma mark - Memory
 
@@ -322,7 +263,5 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
-
-@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end

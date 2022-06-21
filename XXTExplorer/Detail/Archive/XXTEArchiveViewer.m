@@ -18,11 +18,7 @@
 }
 
 + (NSArray <NSString *> *)suggestedExtensions {
-#ifdef APPSTORE
-    return @[ @"zip", @"rar" ];
-#else
     return @[ @"zip" ];
-#endif
 }
 
 + (Class)relatedReader {
@@ -35,7 +31,5 @@
     }
     return self;
 }
-
-@synthesize awakeFromOutside;
 
 @end

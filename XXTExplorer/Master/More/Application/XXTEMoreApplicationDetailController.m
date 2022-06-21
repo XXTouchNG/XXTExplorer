@@ -17,14 +17,6 @@
 #import "XXTEMoreActionCell.h"
 
 
-typedef enum : NSUInteger {
-    kXXTEMoreApplicationDetailSectionIndexDetail = 0,
-    kXXTEMoreApplicationDetailSectionIndexBundlePath,
-    kXXTEMoreApplicationDetailSectionIndexContainerPath,
-    kXXTEMoreApplicationDetailSectionIndexAction,
-    kXXTEMoreApplicationDetailSectionIndexMax
-} kXXTEMoreApplicationDetailSectionIndex;
-
 @interface XXTEMoreApplicationDetailController () <LGAlertViewDelegate>
 @property(nonatomic, strong, readonly) LSApplicationWorkspace *applicationWorkspace;
 
@@ -72,9 +64,7 @@ typedef enum : NSUInteger {
 #pragma clang diagnostic pop
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     NSString *controllerTitle = self.applicationDetail[kXXTEMoreApplicationDetailKeyName];
@@ -90,23 +80,24 @@ typedef enum : NSUInteger {
     self.tableView.dataSource = self;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
 }
 
 - (void)reloadStaticTableViewData {
-    staticSectionTitles = @[ NSLocalizedString(@"Detail", nil),
-                             NSLocalizedString(@"Bundle Path", nil),
-                             NSLocalizedString(@"Container Path", nil),
-                             NSLocalizedString(@"Actions", nil) ];
+    NSMutableArray <NSString *> *sectionTitles = [NSMutableArray arrayWithArray:@[
+        NSLocalizedString(@"Detail", nil),
+        NSLocalizedString(@"Bundle Path", nil),
+        NSLocalizedString(@"Data Container Path", nil)
+    ]];
+    staticSectionTitles = sectionTitles;
+    
+    NSMutableArray <NSArray <UITableViewCell *> *> *sectionCells = [NSMutableArray array];
+    staticCells = sectionCells;
     
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Name", nil);
@@ -126,15 +117,37 @@ typedef enum : NSUInteger {
     }
     cell2.valueLabel.text = applicationBundleID;
     
+    [sectionCells addObject:@[ cell1, cell2 ]];
+    
     XXTEMoreAddressCell *cell3 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    cell3.addressLabel.text = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath];
+    NSString *bundlePath = self.applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath];
+    if (!bundlePath || bundlePath.length <= 0) {
+        bundlePath = @"(null)";
+    }
+    cell3.addressLabel.text = bundlePath;
+    
+    [sectionCells addObject:@[ cell3 ]];
     
     XXTEMoreAddressCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-    NSString *containerPath = self.applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath];
+    NSString *containerPath = self.applicationDetail[kXXTEMoreApplicationDetailKeyDataContainerPath];
     if (!containerPath || containerPath.length <= 0) {
         containerPath = NSLocalizedString(@"/private/var/mobile", nil);
     }
     cell4.addressLabel.text = containerPath;
+    
+    [sectionCells addObject:@[ cell4 ]];
+    
+    NSDictionary <NSString *, NSString *> *groupContainerPaths = self.applicationDetail[kXXTEMoreApplicationDetailKeyGroupContainerPaths];
+    NSArray <NSString *> *groupContainerIDs = [[groupContainerPaths allKeys] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
+    for (NSString *groupContainerID in groupContainerIDs) {
+        [sectionTitles addObject:groupContainerID];
+        
+        XXTEMoreAddressCell *groupCell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
+        groupCell.addressLabel.text = groupContainerPaths[groupContainerID];
+        [sectionCells addObject:@[ groupCell ]];
+    }
+    
+    [sectionTitles addObject:NSLocalizedString(@"Actions", nil)];
     
     XXTEMoreActionCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreActionCell class]) owner:nil options:nil] lastObject];
     cell5.actionNameLabel.textColor = XXTColorSuccess();
@@ -148,22 +161,14 @@ typedef enum : NSUInteger {
     cell7.actionNameLabel.textColor = XXTColorDanger();
     cell7.actionNameLabel.text = NSLocalizedString(@"Clean Application Data", nil);
     
-    staticCells = @[
-                    @[ cell1, cell2 ],
-                    //
-                    @[ cell3 ],
-                    //
-                    @[ cell4 ],
-                    //
-                    @[ cell5, cell6, cell7 ]
-                    ];
+    [sectionCells addObject:@[ cell5, cell6, cell7 ]];
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.tableView) {
-        return kXXTEMoreApplicationDetailSectionIndexMax;
+        return staticSectionTitles.count;
     }
     return 0;
 }
@@ -181,23 +186,7 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.tableView) {
-        if (@available(iOS 8.0, *)) {
-            return UITableViewAutomaticDimension;
-        } else {
-            if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath
-                || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
-                UITableViewCell *addressCell = staticCells[indexPath.section][indexPath.row];
-                [addressCell setNeedsUpdateConstraints];
-                [addressCell updateConstraintsIfNeeded];
-                
-                addressCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(addressCell.bounds));
-                [addressCell setNeedsLayout];
-                [addressCell layoutIfNeeded];
-                
-                CGFloat height = [addressCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
-            }
-        }
+        return UITableViewAutomaticDimension;
     }
     return 44.f;
 }
@@ -205,7 +194,7 @@ typedef enum : NSUInteger {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-        if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexDetail) {
+        if (indexPath.section == 0) {
             NSString *detailText = ((XXTEMoreTitleValueCell *)staticCells[indexPath.section][indexPath.row]).valueLabel.text;
             if (detailText && detailText.length > 0) {
                 UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
@@ -219,21 +208,7 @@ typedef enum : NSUInteger {
                     blockInteractions(blockVC, NO);
                 });
             }
-        } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexBundlePath || indexPath.section == kXXTEMoreApplicationDetailSectionIndexContainerPath) {
-            NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
-            if (detailText && detailText.length > 0) {
-                UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
-                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                        [[UIPasteboard generalPasteboard] setString:detailText];
-                        fulfill(nil);
-                    });
-                }].finally(^() {
-                    toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
-                    blockInteractions(blockVC, NO);
-                });
-            }
-        } else if (indexPath.section == kXXTEMoreApplicationDetailSectionIndexAction) {
+        } else if (indexPath.section == staticSectionTitles.count - 1) {
             if (indexPath.row == 0) {
                 [self.applicationWorkspace openApplicationWithBundleID:self.applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];
             }
@@ -258,6 +233,20 @@ typedef enum : NSUInteger {
                                                                    delegate:self];
                 objc_setAssociatedObject(alertView, @selector(alertView:cleanApplicationData:), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [alertView showAnimated:YES completionHandler:nil];
+            }
+        } else if ([staticCells[indexPath.section][indexPath.row] isKindOfClass:[XXTEMoreAddressCell class]]) {
+            NSString *detailText = ((XXTEMoreAddressCell *)staticCells[indexPath.section][indexPath.row]).addressLabel.text;
+            if (detailText && detailText.length > 0) {
+                UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
+                [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [[UIPasteboard generalPasteboard] setString:detailText];
+                        fulfill(nil);
+                    });
+                }].finally(^() {
+                    toastMessage(self, NSLocalizedString(@"Path has been copied to the pasteboard.", nil));
+                    blockInteractions(blockVC, NO);
+                });
             }
         }
     }

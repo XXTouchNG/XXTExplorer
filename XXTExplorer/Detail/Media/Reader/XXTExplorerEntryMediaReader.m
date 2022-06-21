@@ -102,11 +102,9 @@
                 mutableMetaDictionary[@"VideoNominalFrameRate"] = @(frameRate);
                 mutableMetaDictionary[@"VideoEstimatedDataRate"] = @(bps);
                 XXTE_START_IGNORE_PARTIAL
-                if (@available(iOS 8.0, *)) {
-                    NSTimeInterval duration = CMTimeGetSeconds(videoTrack.timeRange.duration);
-                    NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
-                    mutableMetaDictionary[@"VideoDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
-                }
+                NSTimeInterval duration = CMTimeGetSeconds(videoTrack.timeRange.duration);
+                NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
+                mutableMetaDictionary[@"VideoDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
                 XXTE_END_IGNORE_PARTIAL
             }
             
@@ -120,11 +118,9 @@
                     mutableMetaDictionary[@"AudioMediaType"] = mediaType;
                 }
                 XXTE_START_IGNORE_PARTIAL
-                if (@available(iOS 8.0, *)) {
-                    NSTimeInterval duration = CMTimeGetSeconds(audioTrack.timeRange.duration);
-                    NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
-                    mutableMetaDictionary[@"AudioDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
-                }
+                NSTimeInterval duration = CMTimeGetSeconds(audioTrack.timeRange.duration);
+                NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
+                mutableMetaDictionary[@"AudioDuration"] = [dateComponentsFormatter stringFromTimeInterval:duration];
                 XXTE_END_IGNORE_PARTIAL
             }
         }

@@ -12,10 +12,6 @@
 	<real>10</real>
 	<key>AUTH_API</key>
 	<string>https://api.xxtou.ch/api/</string>
-	<key>AVAILABLE_BUNDLE_READER</key>
-	<array>
-		<string>XXTExplorerEntryXPPReader</string>
-	</array>
 	<key>AVAILABLE_VIEWER</key>
 	<array>
 		<string>XXTEExecutableViewer</string>
@@ -23,17 +19,10 @@
 		<string>XXTEImageViewerController</string>
 		<string>XXTEMediaPlayerController</string>
 		<string>XXTEWebViewerController</string>
-		<string>XXTECodeViewerController</string>
 		<string>XXTEObjectViewController</string>
 		<string>XXTEDbTableListViewController</string>
-		<string>XXTEUIViewController</string>
-		<string>XXTEPackageViewerController</string>
-		<string>XXTEInstallerViewController</string>
-		<string>XXTETerminalViewController</string>
-		<string>XXTESnippetViewerController</string>
 		<string>XXTETextViewController</string>
 		<string>XXTELogViewController</string>
-		<string>XXTEMobileConfigViewerController</string>
 	</array>
 	<key>CHANNEL_ID</key>
 	<string>Cydia™</string>
@@ -49,8 +38,8 @@
 	<string>XXTELogViewController</string>
 	<key>DAEMON_VERSION</key>
 	<string>3.0.1</string>
-	<key>EXPLORER_HISTORY_PATH</key>
-	<string>caches/history</string>
+	<key>EXPLORER_CACHES_PATH</key>
+	<string>caches</string>
 	<key>EXPLORER_INITIAL_PATH</key>
 	<string>lua/scripts</string>
 	<key>INITIAL_RESOURCES</key>
@@ -96,41 +85,6 @@
 	</array>
 	<key>RESPRING_CHECK_PATH</key>
 	<string>/private/var/tmp/1ferver_need_respring</string>
-	<key>RMCLOUD_ADS</key>
-	<array>
-		<dict>
-			<key>image</key>
-			<string>https://www.mall-software.com/Images/IndexAds/ads1.jpg</string>
-			<key>url</key>
-			<string>https://www.mall-software.com/</string>
-		</dict>
-		<dict>
-			<key>image</key>
-			<string>https://www.mall-software.com/Images/IndexAds/ads2.jpg</string>
-			<key>url</key>
-			<string>https://www.mall-software.com/</string>
-		</dict>
-		<dict>
-			<key>image</key>
-			<string>https://www.mall-software.com/Images/IndexAds/ads3.jpg</string>
-			<key>url</key>
-			<string>https://www.mall-software.com/</string>
-		</dict>
-	</array>
-	<key>RMCLOUD_API_BUY</key>
-	<string>/Open/Insourcing</string>
-	<key>RMCLOUD_DEBUG_HOST</key>
-	<string>dev.mall-software.net</string>
-	<key>RMCLOUD_HOST</key>
-	<string>dev.mall-software.net</string>
-	<key>RMCLOUD_OPENAPI</key>
-	<string>/api/OpenAPI</string>
-	<key>RMCLOUD_PLATFORM</key>
-	<string>2</string>
-	<key>RMCLOUD_SCHEME</key>
-	<string>http</string>
-	<key>RMCLOUD_TOKEN</key>
-	<string>3487C956F68D360C</string>
 	<key>TRUSTED_HOSTS</key>
 	<array>
 		<string>www.xxtou.ch</string>
@@ -145,6 +99,8 @@
 	<string>/Applications/XXTExplorer.app</string>
 	<key>XXTOUCH_BUY_URL</key>
 	<string>https://www.xxtou.ch/buy/</string>
+	<key>XXTOUCH_MARKET_URL</key>
+	<string>https://www.xxtou.ch/market/</string>
 	<key>XXTOUCH_FAQ_0017</key>
 	<string>https://kb.xxtou.ch/FAQ/faq-0017.html</string>
 	<key>XXTOUCH_FAQ_0018</key>

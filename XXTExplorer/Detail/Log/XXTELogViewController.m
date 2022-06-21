@@ -69,11 +69,7 @@ XXTE_END_IGNORE_PARTIAL
         return UIStatusBarStyleDefault;
     }
     XXTE_END_IGNORE_PARTIAL
-#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
-#else
-    return UIStatusBarStyleDefault;
-#endif
 }
 
 - (instancetype)initWithPath:(NSString *)path {
@@ -106,37 +102,20 @@ XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = nil;
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 13.0, *)) {
-        _searchController = ({
-            UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-            searchController.searchResultsUpdater = self;
-            searchController.dimsBackgroundDuringPresentation = NO;
-            searchController.hidesNavigationBarDuringPresentation = YES;
-            searchController;
-        });
-        searchBar = self.searchController.searchBar;
-    } else {
-        searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-        _searchDisplayController = ({
-            UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-            searchDisplayController.searchResultsDelegate = self;
-            searchDisplayController.searchResultsDataSource = self;
-            searchDisplayController.delegate = self;
-            searchDisplayController;
-        });
-    }
+    _searchController = ({
+        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        searchController.searchResultsUpdater = self;
+        searchController.dimsBackgroundDuringPresentation = NO;
+        searchController.hidesNavigationBarDuringPresentation = YES;
+        searchController;
+    });
+    searchBar = self.searchController.searchBar;
     XXTE_END_IGNORE_PARTIAL
     
     {
-        if (@available(iOS 13.0, *)) {
-            UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
-            textField.textColor = XXTColorPlainTitleText();
-            textField.tintColor = XXTColorForeground();
-        } else {
-            searchBar.backgroundColor = XXTColorPlainBackground();
-            searchBar.barTintColor = XXTColorPlainBackground();
-            searchBar.tintColor = XXTColorForeground();
-        }
+        UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
+        textField.textColor = XXTColorPlainTitleText();
+        textField.tintColor = XXTColorForeground();
         searchBar.placeholder = NSLocalizedString(@"Search Log", nil);
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -149,11 +128,6 @@ XXTE_END_IGNORE_PARTIAL
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        if (@available(iOS 13.0, *)) {
-            
-        } else {
-            tableView.tableHeaderView = searchBar;
-        }
         tableView.tableFooterView = [UIView new];
         XXTE_START_IGNORE_PARTIAL
         if (XXTE_SYSTEM_9) {
@@ -163,10 +137,8 @@ XXTE_END_IGNORE_PARTIAL
         [self.view addSubview:tableView];
         tableView;
     });
-    if (@available(iOS 13.0, *)) {
-        self.navigationItem.hidesSearchBarWhenScrolling = YES;
-        self.navigationItem.searchController = self.searchController;
-    }
+    self.navigationItem.hidesSearchBarWhenScrolling = YES;
+    self.navigationItem.searchController = self.searchController;
     
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.logTableView;
@@ -178,9 +150,7 @@ XXTE_END_IGNORE_PARTIAL
     });
     [self.logTableView.backgroundView insertSubview:self.refreshControl atIndex:0];
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self loadTextDataFromEntry];
 }
@@ -287,43 +257,23 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (@available(iOS 13.0, *)) {
-        if (!self.searchController.active) {
-            return self.logContents.count;
-        } else {
-            return self.displayLogContents.count;
-        }
+    if (!self.searchController.active) {
+        return self.logContents.count;
     } else {
-        if (tableView == self.logTableView) {
-            return self.logContents.count;
-        } else {
-            return self.displayLogContents.count;
-        }
+        return self.displayLogContents.count;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *detailText = nil;
-    if (@available(iOS 13.0, *)) {
-        if (!self.searchController.active) {
-            if (indexPath.row < self.logContents.count) {
-                detailText = self.logContents[indexPath.row];
-            }
-        } else {
-            if (indexPath.row < self.displayLogContents.count) {
-                detailText = self.displayLogContents[indexPath.row];
-            }
+    if (!self.searchController.active) {
+        if (indexPath.row < self.logContents.count) {
+            detailText = self.logContents[indexPath.row];
         }
     } else {
-        if (tableView == self.logTableView) {
-            if (indexPath.row < self.logContents.count) {
-                detailText = self.logContents[indexPath.row];
-            }
-        } else {
-            if (indexPath.row < self.displayLogContents.count) {
-                detailText = self.displayLogContents[indexPath.row];
-            }
+        if (indexPath.row < self.displayLogContents.count) {
+            detailText = self.displayLogContents[indexPath.row];
         }
     }
     if (detailText && detailText.length > 0) {
@@ -345,23 +295,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (@available(iOS 8.0, *)) {
-        return UITableViewAutomaticDimension;
-    } else {
-        XXTELogCell *cell = self.sizingCell;
-        [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
-        
-        [cell setNeedsUpdateConstraints];
-        [cell updateConstraintsIfNeeded];
-        
-        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-        
-        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        return (height > 0) ? (height + 1.0) : 24.f;
-    }
-    return 24.f;
+    return UITableViewAutomaticDimension;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -378,16 +312,9 @@ XXTE_END_IGNORE_PARTIAL
 - (void)configureCell:(XXTELogCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     BOOL isSearch = NO;
     UISearchBar *searchBar = nil;
-    if (@available(iOS 13.0, *)) {
-        if (self.searchController.active) {
-            isSearch = YES;
-            searchBar = self.searchController.searchBar;
-        }
-    } else {
-        if (tableView != self.logTableView) {
-            isSearch = YES;
-            searchBar = self.searchDisplayController.searchBar;
-        }
+    if (self.searchController.active) {
+        isSearch = YES;
+        searchBar = self.searchController.searchBar;
     }
     if (!isSearch) {
         if (indexPath.row < self.logContents.count) {
@@ -422,9 +349,7 @@ XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTELogCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTELogCellReuseIdentifier];
-    if (@available(iOS 11.0, *)) {
-        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
+    tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
 }
 XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
@@ -470,19 +395,12 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)reloadSearch {
-    NSString *text = nil;
-    if (@available(iOS 13.0, *)) {
-        text = self.searchController.searchBar.text;
-    } else {
-        text = self.searchDisplayController.searchBar.text;
-    }
+    NSString *text = self.searchController.searchBar.text;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", text];
     if (predicate) {
         self.displayLogContents = [[NSArray alloc] initWithArray:[self.logContents filteredArrayUsingPredicate:predicate]];
     }
-    if (@available(iOS 13.0, *)) {
-        [self.logTableView reloadData];
-    }
+    [self.logTableView reloadData];
 }
 XXTE_END_IGNORE_PARTIAL
 
@@ -493,7 +411,5 @@ XXTE_END_IGNORE_PARTIAL
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
-
-@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end

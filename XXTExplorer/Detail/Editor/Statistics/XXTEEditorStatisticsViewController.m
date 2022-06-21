@@ -32,11 +32,7 @@
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreTitleValueCell.h"
 
-#ifdef APPSTORE
-@interface XXTEEditorStatisticsViewController () <XXTEEncodingControllerDelegate, XXTEEditorLineBreakControllerDelegate, XXTEEditorRenameTableViewControllerDelegate>
-#else
 @interface XXTEEditorStatisticsViewController () <XXTEEditorRenameTableViewControllerDelegate>
-#endif
 
 @property (strong, nonatomic) UILabel *filenameLabel;
 @property (strong, nonatomic) UILabel *filesizeLabel;
@@ -94,14 +90,10 @@
     self.tableView.dataSource = self;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadAllIfNeeded];
 }
@@ -145,16 +137,10 @@
     
     XXTEMoreTitleValueCell *cell4 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell4.titleLabel.text = NSLocalizedString(@"Encoding", nil);
-#ifdef APPSTORE
-    cell4.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-#endif
     self.encodingLabel = cell4.valueLabel;
     
     XXTEMoreTitleValueCell *cell5 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell5.titleLabel.text = NSLocalizedString(@"Line Endings", nil);
-#ifdef APPSTORE
-    cell5.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-#endif
     self.lineEndingsLabel = cell5.valueLabel;
     
     XXTEMoreTitleValueCell *cell6 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
@@ -346,20 +332,7 @@
     if (tableView == self.tableView) {
         if (indexPath.section == 0 && indexPath.row == 2)
         {
-            if (@available(iOS 8.0, *)) {
-                return UITableViewAutomaticDimension;
-            } else {
-                UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-                [cell setNeedsUpdateConstraints];
-                [cell updateConstraintsIfNeeded];
-                
-                cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-                [cell setNeedsLayout];
-                [cell layoutIfNeeded];
-                
-                CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
-            }
+            return UITableViewAutomaticDimension;
         }
     }
     return 44.f;
@@ -392,21 +365,7 @@
                 }
             }
         } else if (indexPath.section == 1) {
-#ifdef APPSTORE
-            if (self.editor.isLockedState == NO) {
-                if (indexPath.row == 0) {
-                    XXTEEncodingController *controller = [[XXTEEncodingController alloc] initWithStyle:UITableViewStylePlain];
-                    controller.delegate = self;
-                    controller.selectedEncoding = self.editor.currentEncoding;
-                    [self.navigationController pushViewController:controller animated:YES];
-                } else if (indexPath.row == 1) {
-                    XXTEEditorLineBreakController *controller = [[XXTEEditorLineBreakController alloc] initWithStyle:UITableViewStyleGrouped];
-                    controller.delegate = self;
-                    controller.selectedLineBreakType = self.editor.currentLineBreak;
-                    [self.navigationController pushViewController:controller animated:YES];
-                }
-            }
-#endif
+            NSAssert(NO, @"not implemented");
         }
     }
 }
@@ -431,50 +390,6 @@
     }
     return [UITableViewCell new];
 }
-
-#pragma mark - XXTEEncodingControllerDelegate
-
-#ifdef APPSTORE
-- (void)encodingControllerDidChange:(XXTEEncodingController *)controller shouldSave:(BOOL)save {
-    self.encodingLabel.text = [XXTEEncodingHelper encodingNameForEncoding:controller.selectedEncoding];
-    self.encodingLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
-    
-    if ([self.editor respondsToSelector:@selector(encodingControllerDidChange:shouldSave:)]) {
-        [self.editor encodingControllerDidChange:controller shouldSave:save];
-    }
-    
-    [self.navigationController popToViewController:self.editor animated:YES];
-}
-#endif
-
-#ifdef APPSTORE
-- (BOOL)encodingControllerCanSaveDocument:(XXTEEncodingController *)controller {
-    return ![self.editor isReadOnly];
-}
-#endif
-
-#pragma mark - XXTEEditorLineBreakControllerDelegate
-
-#ifdef APPSTORE
-- (void)linebreakControllerDidChange:(XXTEEditorLineBreakController *)controller shouldSave:(BOOL)save {
-    self.lineEndingsLabel.text = [XXTEEditorLineBreakHelper lineBreakNameForType:controller.selectedLineBreakType];
-    self.lineEndingsLabel.textColor = [XXTEMoreTitleValueCell detailTextColor];
-    
-    [self.editor setCurrentLineBreak:controller.selectedLineBreakType];
-    if (save) {
-        [self.editor setNeedsSaveDocument];
-    }
-    [self.editor setNeedsReopenDocument];
-    
-    [self.navigationController popToViewController:self.editor animated:YES];
-}
-#endif
-
-#ifdef APPSTORE
-- (BOOL)linebreakControllerCanSaveDocument:(XXTEEditorLineBreakController *)controller {
-    return ![self.editor isReadOnly];
-}
-#endif
 
 #pragma mark - XXTEEditorRenameTableViewControllerDelegate
 

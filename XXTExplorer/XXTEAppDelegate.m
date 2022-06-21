@@ -11,37 +11,27 @@
 
 #import "XXTEAppDelegate.h"
 
-#ifndef APPSTORE
-#import <XUI/XUINavigationController.h>
-#import "XXTEAgreementViewController.h"
-#endif
-
 #import "XXTESplitViewController.h"
 #import "XXTENavigationController.h"
 
 #import "XXTExplorerNavigationController.h"
 #import "XXTEMoreNavigationController.h"
-#import "RMCloudNavigationController.h"
 
 #import "XXTEMasterViewController.h"
 
 #import "XXTExplorerViewController.h"
 #import "XXTEMoreViewController.h"
-#import "RMCloudViewController.h"
 
 #import "XXTEWorkspaceViewController.h"
 
 
 #import "zip.h"
-#import "XXTECloudApiSdk.h"
 
 #import "UIViewController+topMostViewController.h"
 
 static NSString * const kXXTEShortcutAction = @"XXTEShortcutAction";
 static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";
 static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName-%@";
-static NSString * const kXXTEAgreementVersionFlag = @"XXTEAgreementVersion-%@";
-static NSString * const kXXTEAgreementVersion = @"1.2";
 
 @interface XXTEAppDelegate ()
 
@@ -97,19 +87,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     mainWindow.backgroundColor = XXTColorPlainBackground();
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
-    
-    
-#ifndef APPSTORE
-    BOOL shouldDisplayAgreement = NO;
-    NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
-    if (XXTEDefaultsObject(agreementFlag, nil) == nil) {
-        shouldDisplayAgreement = YES;
-    }
-    if (shouldDisplayAgreement) {
-        [self displayAgreementViewController];
-        return YES;
-    }
-#endif
     
     [self reloadWorkspace];
     return YES;
@@ -180,30 +157,18 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
         });
     }
     
-#ifndef APPSTORE
     // Setup Shortcut Actions
     {
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
-            UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:NSLocalizedString(@"Stop Current Script", nil) icon:stopIcon userInfo:@{ kXXTEShortcutAction: @"stop" }];
-            UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
-            UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:NSLocalizedString(@"Launch Selected Script", nil) icon:launchIcon userInfo:@{ kXXTEShortcutAction: @"launch" }];
-            UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
-            UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:NSLocalizedString(@"QRCode Scan", nil) icon:scanIcon userInfo:@{ kXXTEShortcutAction : @"scan" }];
-            [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
-        }
+        UIApplicationShortcutIcon *stopIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Stop"];
+        UIApplicationShortcutItem *stopItem = [[UIApplicationShortcutItem alloc] initWithType:@"Stop" localizedTitle:NSLocalizedString(@"Stop", nil) localizedSubtitle:NSLocalizedString(@"Stop Current Script", nil) icon:stopIcon userInfo:@{ kXXTEShortcutAction: @"stop" }];
+        UIApplicationShortcutIcon *launchIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Launch"];
+        UIApplicationShortcutItem *launchItem = [[UIApplicationShortcutItem alloc] initWithType:@"Launch" localizedTitle:NSLocalizedString(@"Launch", nil) localizedSubtitle:NSLocalizedString(@"Launch Selected Script", nil) icon:launchIcon userInfo:@{ kXXTEShortcutAction: @"launch" }];
+        UIApplicationShortcutIcon *scanIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"XXTEShortcut-Scan"];
+        UIApplicationShortcutItem *scanItem = [[UIApplicationShortcutItem alloc] initWithType:@"Scan" localizedTitle:NSLocalizedString(@"QR Scan", nil) localizedSubtitle:NSLocalizedString(@"QRCode Scan", nil) icon:scanIcon userInfo:@{ kXXTEShortcutAction : @"scan" }];
+        [UIApplication sharedApplication].shortcutItems = @[stopItem, launchItem, scanItem];
         XXTE_END_IGNORE_PARTIAL
     }
-#else
-    {
-        XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            [UIApplication sharedApplication].shortcutItems = @[ ];
-        }
-        XXTE_END_IGNORE_PARTIAL
-    }
-#endif
     
     // Launched Version
     {
@@ -278,16 +243,16 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
 
 #pragma mark - UIApplicationDelegate
 
+XXTE_START_IGNORE_PARTIAL
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(nullable NSString *)sourceApplication
          annotation:(id)annotation
 {
-    XXTE_START_IGNORE_PARTIAL
     BOOL inApp = [sourceApplication isEqualToString:[[NSBundle mainBundle] bundleIdentifier]];
     return [self application:application openURL:url withDelay:!inApp];
-    XXTE_END_IGNORE_PARTIAL
 }
+XXTE_END_IGNORE_PARTIAL
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -301,7 +266,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url withDelay:(BOOL)delay {
     if ([[url scheme] isEqualToString:@"xxt"]) {
-#ifndef APPSTORE
         NSURL *xxtCommandURL = url;
         NSString *xxtCommandInterface = [xxtCommandURL host];
         NSArray <NSString *> *xxtComponents = [xxtCommandURL pathComponents];
@@ -326,7 +290,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
         } else {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationShortcut object:application userInfo:userInfo]];
         }
-#endif
     } else if ([[url scheme] isEqualToString:@"file"]) {
         if (delay) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -339,7 +302,6 @@ static NSString * const kXXTEAgreementVersion = @"1.2";
     return NO;
 }
 
-#ifndef APPSTORE
 XXTE_START_IGNORE_PARTIAL
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     if (shortcutItem.userInfo[kXXTEShortcutAction]) {
@@ -353,7 +315,6 @@ XXTE_START_IGNORE_PARTIAL
     }
 }
 XXTE_END_IGNORE_PARTIAL
-#endif
 
 - (BOOL)application:(UIApplication *)application handleNativeEvents:(NSDictionary *)userInfo {
     NSString *shortcutInterface = userInfo[XXTENotificationShortcutInterface];
@@ -373,15 +334,6 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)reloadWorkspace {
-    
-#ifndef APPSTORE
-    NSString *agreementFlag = [NSString stringWithFormat:kXXTEAgreementVersionFlag, kXXTEAgreementVersion];
-    if (XXTEDefaultsObject(agreementFlag, nil) == nil)
-    {
-        XXTEDefaultsSetBasic(agreementFlag, YES);
-    }
-#endif
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
@@ -391,75 +343,28 @@ XXTE_END_IGNORE_PARTIAL
         XXTExplorerViewController *explorerViewController = [[XXTExplorerViewController alloc] init];
         XXTExplorerNavigationController *masterNavigationControllerLeft = [[XXTExplorerNavigationController alloc] initWithRootViewController:explorerViewController];
         
-        // Master - Cloud Controller
-#if (!defined APPSTORE) && (defined RMCLOUD_ENABLED)
-        RMCloudViewController *cloudViewController = [[RMCloudViewController alloc] init];
-        RMCloudNavigationController *cloudNavigationController = [[RMCloudNavigationController alloc] initWithRootViewController:cloudViewController];
-#endif
-        
         // Master - More Controller
-#ifndef APPSTORE
         XXTEMoreViewController *moreViewController = [[XXTEMoreViewController alloc] initWithStyle:UITableViewStyleGrouped];
         XXTEMoreNavigationController *masterNavigationControllerRight = [[XXTEMoreNavigationController alloc] initWithRootViewController:moreViewController];
-#endif
         
         // Master Controller
-#ifndef APPSTORE
         XXTEMasterViewController *masterViewController = [[XXTEMasterViewController alloc] init];
-#ifdef RMCLOUD_ENABLED
-        masterViewController.viewControllers = @[masterNavigationControllerLeft, cloudNavigationController, masterNavigationControllerRight];
-#else
         masterViewController.viewControllers = @[masterNavigationControllerLeft, masterNavigationControllerRight];
-#endif
-#endif
         
         {
-            if (@available(iOS 8.0, *)) {
-                // Detail Controller
-                XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-                XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
-                
-                // Split Controller
-                XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
-#ifndef APPSTORE
-                splitViewController.viewControllers = @[masterViewController, detailNavigationController];
-#else
-                splitViewController.viewControllers = @[masterNavigationControllerLeft, detailNavigationController];
-#endif
-                mainWindow.rootViewController = splitViewController;
-            } else {
-#ifndef APPSTORE
-                mainWindow.rootViewController = masterViewController;
-#else
-                mainWindow.rootViewController = masterNavigationControllerLeft;
-#endif
-            }
+            // Detail Controller
+            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+            
+            // Split Controller
+            XXTESplitViewController *splitViewController = [[XXTESplitViewController alloc] init];
+            splitViewController.viewControllers = @[masterViewController, detailNavigationController];
+            mainWindow.rootViewController = splitViewController;
         }
         
     });
     
 }
-
-#ifndef APPSTORE
-- (void)displayAgreementViewController {
-    UIWindow *mainWindow = self.window;
-    
-    NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"SettingsPro.bundle"];
-    NSString *settingsUIPath = nil;
-    if (@available(iOS 13.0, *)) {
-        if (mainWindow.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
-        } else {
-            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService-Dark.plist"];
-        }
-    } else {
-        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"TermsOfService.plist"];
-    }
-    XXTEAgreementViewController *agreementController = [[XXTEAgreementViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
-    XUINavigationController *navigationController = [[XUINavigationController alloc] initWithRootViewController:agreementController];
-    mainWindow.rootViewController = navigationController;
-}
-#endif
 
 #pragma mark - App Defines
 
@@ -469,14 +374,7 @@ XXTE_END_IGNORE_PARTIAL
     dispatch_once(&token, ^{
         if (!localAppDefines) {
             localAppDefines = ({
-#ifndef APPSTORE
                 NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefines" ofType:@"plist"]];
-                [[XXTECloudAppConfiguration instance] setAPP_KEY:appDefines[@"ALIYUN_APPKEY"]];
-                [[XXTECloudAppConfiguration instance] setAPP_SECRET:appDefines[@"ALIYUN_APPSECRERT"]];
-                [[XXTECloudAppConfiguration instance] setAPP_CONNECTION_TIMEOUT:[appDefines[@"APP_CONNECTION_TIMEOUT"] intValue]];
-#else
-                NSDictionary *appDefines = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"XXTEAppDefinesStore" ofType:@"plist"]];
-#endif
                 appDefines;
             });
 #ifdef DEBUG
@@ -508,17 +406,10 @@ XXTE_END_IGNORE_PARTIAL
     static dispatch_once_t token;
     dispatch_once(&token, ^{
         if (!builtInDefaults) {
-#ifndef APPSTORE
             builtInDefaults = ({
                 NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaults" ofType:@"plist"];
                 [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
             });
-#else
-            builtInDefaults = ({
-                NSString *builtInDefaultsPath = [[NSBundle mainBundle] pathForResource:@"XXTEBuiltInDefaultsStore" ofType:@"plist"];
-                [[NSDictionary alloc] initWithContentsOfFile:builtInDefaultsPath];
-            });
-#endif
         }
     });
     return builtInDefaults;
@@ -530,12 +421,8 @@ XXTE_END_IGNORE_PARTIAL
     dispatch_once(&token, ^{
         if (!rootPath) {
             rootPath = ({
-#ifndef APPSTORE
 #ifdef ARCHIVE
                 NSString *mainPath = uAppDefine(@"MAIN_PATH");
-#else
-                NSString *mainPath = nil;
-#endif
 #else
                 NSString *mainPath = nil;
 #endif

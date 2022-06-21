@@ -23,15 +23,12 @@
 
 - (BOOL)hasViewerForEntry:(XXTExplorerEntry *)entry;
 - (BOOL)hasEditorForEntry:(XXTExplorerEntry *)entry;
-- (BOOL)hasConfiguratorForEntry:(XXTExplorerEntry *)entry;
 
 #pragma mark - Controller Methods
 
 - (UIViewController <XXTEViewer> *)viewerForEntry:(XXTExplorerEntry *)entry;
 - (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)viewerName forEntry:(XXTExplorerEntry *)entry;
 - (UIViewController <XXTEEditor> *)editorForEntry:(XXTExplorerEntry *)entry;
-- (UIViewController <XXTEViewer> *)configuratorForEntry:(XXTExplorerEntry *)entry;
-- (UIViewController <XXTEViewer> *)configuratorForEntry:(XXTExplorerEntry *)entry configurationName:(NSString *)name;
 - (UIViewController <XXTEViewer> *)viewerWithName:(NSString *)controllerName forEntryPath:(NSString *)entryPath;
 
 @end

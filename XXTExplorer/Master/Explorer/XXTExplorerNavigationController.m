@@ -45,17 +45,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationBar.translucent = YES;
-    } else {
-        self.navigationBar.translucent = NO;
-    }
-    
-#ifndef APPSTORE
+    self.navigationBar.translucent = YES;
     self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"My Scripts", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];
-#else
-    self.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Files", nil) image:[UIImage imageNamed:@"XXTExplorerTabbarIcon"] tag:0];
-#endif
 }
 
 #pragma mark - Memory

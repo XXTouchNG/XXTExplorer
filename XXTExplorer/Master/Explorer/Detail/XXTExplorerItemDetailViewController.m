@@ -36,10 +36,7 @@
 #import "XXTExplorerItemOwnerViewController.h"
 #import "XXTExplorerItemGroupViewController.h"
 #import "XXTExplorerPermissionViewController.h"
-
-#ifndef APPSTORE
 #import "XXTExplorerItemRepeatViewController.h"
-#endif
 
 static int sizingCancelFlag = 0;
 
@@ -160,7 +157,6 @@ static int sizingCancelFlag = 0;
     _needsReload = NO;
 }
 
-#ifndef APPSTORE
 + (BOOL)checkRecordingScript:(NSString *)entryPath {
     BOOL isLuaExtension = [[entryPath pathExtension] isEqualToString:@"lua"];
     if (!isLuaExtension) return NO;
@@ -180,11 +176,6 @@ static int sizingCancelFlag = 0;
         return NO;
     return YES;
 }
-#else
-+ (BOOL)checkRecordingScript:(NSString *)entryPath {
-    return NO;
-}
-#endif
 
 #pragma mark - Repeat Check
 
@@ -199,9 +190,7 @@ static int sizingCancelFlag = 0;
     }
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"Item Detail", nil);
@@ -211,9 +200,7 @@ static int sizingCancelFlag = 0;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
     if ([self.navigationController.viewControllers firstObject] == self) {
@@ -221,9 +208,7 @@ static int sizingCancelFlag = 0;
     }
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
 }
@@ -404,11 +389,7 @@ static int sizingCancelFlag = 0;
             if (entry.isBrokenSymlink) {
                 cell3.addressLabel.textColor = XXTColorDanger();
             } else {
-                if (@available(iOS 13.0, *)) {
-                    cell3.addressLabel.textColor = [UIColor labelColor];
-                } else {
-                    cell3.addressLabel.textColor = [UIColor blackColor];
-                }
+                cell3.addressLabel.textColor = [UIColor labelColor];
             }
             
             XXTExplorerDynamicSection *section3 = [[XXTExplorerDynamicSection alloc] init];
@@ -529,8 +510,6 @@ static int sizingCancelFlag = 0;
         
     }
     
-#ifndef APPSTORE
-    
     // #6 - Owner
     
     BOOL allowOwner = XXTEDefaultsBool(XXTExplorerAllowEditingFileOwnerKey, NO);
@@ -562,10 +541,6 @@ static int sizingCancelFlag = 0;
             if (section6) [mutableDynamicSections addObject:section6];
         }
     }
-    
-#endif
-    
-#ifndef APPSTORE
     
     // #7 - Perimssion
     
@@ -610,8 +585,6 @@ static int sizingCancelFlag = 0;
         
         if (section7) [mutableDynamicSections addObject:section7];
     }
-    
-#endif
     
     // #8 - Open with
     
@@ -768,20 +741,7 @@ static int sizingCancelFlag = 0;
     if (tableView == self.tableView) {
         CGFloat storedHeight = [self.dynamicSections[indexPath.section].cellHeights[indexPath.row] floatValue];
         if (storedHeight < 0) {
-            if (@available(iOS 8.0, *)) {
-                return UITableViewAutomaticDimension;
-            } else {
-                UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
-                [cell setNeedsUpdateConstraints];
-                [cell updateConstraintsIfNeeded];
-                
-                cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-                [cell setNeedsLayout];
-                [cell layoutIfNeeded];
-                
-                CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
-            }
+            return UITableViewAutomaticDimension;
         }
         return storedHeight;
     }
@@ -791,9 +751,7 @@ static int sizingCancelFlag = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
-#ifndef APPSTORE
         NSString *entryPath = self.entry.entryPath;
-#endif
         NSString *sectionIdentifier = self.dynamicSections[indexPath.section].identifier;
         UITableViewCell *cell = self.dynamicSections[indexPath.section].cells[indexPath.row];
         if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOpenWith]) {
@@ -817,27 +775,22 @@ static int sizingCancelFlag = 0;
                 objectViewController.containerDisplayMode = XXTEObjectContainerDisplayModeDescription;
                 [self.navigationController pushViewController:objectViewController animated:YES];
             } else if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionPermission]) {
-#ifndef APPSTORE
                 if (indexPath.row == 3) {
                     XXTExplorerPermissionViewController *permissionController = [[XXTExplorerPermissionViewController alloc] initWithPath:entryPath];
                     permissionController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
                     permissionController.delegate = self;
                     [self.navigationController pushViewController:permissionController animated:YES];
                 }
-#endif
             } else if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionRepeat]) {
-#ifndef APPSTORE
                 if (indexPath.row == 0) {
                     XXTExplorerItemRepeatViewController *repeatController = [[XXTExplorerItemRepeatViewController alloc] initWithPath:entryPath];
                     repeatController.title = ((XXTEMoreLinkCell *)cell).titleLabel.text;
                     [self.navigationController pushViewController:repeatController animated:YES];
                 }
-#endif
             }
         }
         else if ([cell isKindOfClass:[XXTEMoreTitleValueCell class]]) {
             if ([sectionIdentifier isEqualToString:kXXTEDynamicSectionIdentifierSectionOwner]) {
-#ifndef APPSTORE
                 if (indexPath.row == 0) {
                     XXTExplorerItemOwnerViewController *ownerController = [[XXTExplorerItemOwnerViewController alloc] initWithPath:entryPath];
                     ownerController.title = ((XXTEMoreTitleValueCell *)cell).titleLabel.text;
@@ -849,7 +802,6 @@ static int sizingCancelFlag = 0;
                     groupController.delegate = self;
                     [self.navigationController pushViewController:groupController animated:YES];
                 }
-#endif
             } else {
                 NSString *detailText = ((XXTEMoreTitleValueCell *)cell).valueLabel.text;
                 if (detailText && detailText.length > 0) {

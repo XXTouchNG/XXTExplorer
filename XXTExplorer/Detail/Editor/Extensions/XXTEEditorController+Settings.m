@@ -11,7 +11,6 @@
 #import "XXTEEditorStatisticsViewController.h"
 #import "XXTESymbolViewController.h"
 #import "XXTENavigationController.h"
-#import "XXTETerminalViewController.h"
 
 #import "XXTEEditorTextView.h"
 #import "XXTEEditorLanguage.h"
@@ -32,69 +31,15 @@
     NSURL *shareUrl = [NSURL fileURLWithPath:self.entryPath];
     if (!shareUrl) return;
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
-        if (XXTE_IS_IPAD) {
-            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-            UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-            popoverPresentationController.barButtonItem = sender;
-        }
-        [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
-    } else {
-        toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[ shareUrl ] applicationActivities:nil];
+    if (XXTE_IS_IPAD) {
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverPresentationController.barButtonItem = sender;
     }
+    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
     XXTE_END_IGNORE_PARTIAL
-}
-
-- (BOOL)isLaunchItemAvailable {
-    if (self.isLockedState) {
-        return NO;
-    }
-    BOOL supported = NO;
-    NSArray <NSString *> *suggested = [XXTETerminalViewController suggestedExtensions];
-    NSArray <NSString *> *holded = self.language.extensions;
-    for (NSString *holdedExt in holded) {
-        if ([suggested containsObject:holdedExt]) {
-            supported = YES;
-            break;
-        }
-    }
-    return supported;
-}
-
-- (void)launchItemTapped:(UIBarButtonItem *)sender {
-    if ([self isLaunchItemAvailable]) {
-        [self saveDocumentIfNecessary];
-        NSString *entryPath = self.entryPath;
-        XXTETerminalPresentationStyle style = XXTEDefaultsInt(XXTExplorerTerminalPresentationStyle, XXTETerminalPresentationStylePush);
-        XXTETerminalViewController *terminalController = [[XXTETerminalViewController alloc] initWithPath:entryPath];
-        terminalController.runImmediately = YES;
-        terminalController.editor = self;
-        terminalController.delegate = self;
-        if (XXTE_COLLAPSED || style == XXTETerminalPresentationStylePresentAsPopover) {
-            XXTE_START_IGNORE_PARTIAL
-            if (@available(iOS 9.0, *)) {
-                terminalController.modalPresentationStyle = UIModalPresentationPopover;
-                UIPopoverPresentationController *popoverPresentationController = terminalController.popoverPresentationController;
-                popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-                popoverPresentationController.barButtonItem = sender;
-                popoverPresentationController.delegate = self;
-                [self.navigationController presentViewController:terminalController animated:YES completion:nil];
-            } else {
-                toastMessage(self, NSLocalizedString(@"This feature requires iOS 9.0 or later.", nil));
-            }
-            XXTE_END_IGNORE_PARTIAL
-        } else if (style == XXTETerminalPresentationStylePresentInModal) {
-            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:terminalController];
-            [self presentViewController:navigationController animated:YES completion:nil];
-        } else {
-            [self.navigationController pushViewController:terminalController animated:YES];
-        }
-    } else {
-        toastMessage(self, NSLocalizedString(@"This file is not executable.", nil));
-        return;
-    }
 }
 
 - (BOOL)isSearchButtonItemAvailable {

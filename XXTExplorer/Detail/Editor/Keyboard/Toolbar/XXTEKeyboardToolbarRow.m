@@ -53,7 +53,7 @@
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedItem.width = 16.0;
-    [self.toolbar setItems:@[self.undoItem, fixedItem, self.redoItem, flexibleItem, self.snippetItem, fixedItem, self.dismissItem]];
+    [self.toolbar setItems:@[self.undoItem, fixedItem, self.redoItem, flexibleItem, self.dismissItem]];
     [self addSubview:self.toolbar];
 }
 
@@ -99,15 +99,6 @@
     return _redoItem;
 }
 
-- (UIBarButtonItem *)snippetItem {
-    if (!_snippetItem) {
-        UIBarButtonItem *snippetItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"XXTEKeyboardSnippet"] style:UIBarButtonItemStylePlain target:self action:@selector(snippetItemTapped:)];
-        snippetItem.enabled = NO;
-        _snippetItem = snippetItem;
-    }
-    return _snippetItem;
-}
-
 #pragma mark - Setters
 
 - (void)setStyle:(XXTEKeyboardToolbarRowStyle)style {
@@ -146,12 +137,6 @@
 - (void)redoItemTapped:(UIBarButtonItem *)sender {
     if ([_delegate respondsToSelector:@selector(keyboardToolbarRow:didTapRedo:)]) {
         [_delegate keyboardToolbarRow:self didTapRedo:sender];
-    }
-}
-
-- (void)snippetItemTapped:(UIBarButtonItem *)sender {
-    if ([_delegate respondsToSelector:@selector(keyboardToolbarRow:didTapSnippet:)]) {
-        [_delegate keyboardToolbarRow:self didTapSnippet:sender];
     }
 }
 

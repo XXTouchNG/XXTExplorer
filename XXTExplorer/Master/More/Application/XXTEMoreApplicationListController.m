@@ -22,15 +22,9 @@ enum {
     kXXTEMoreApplicationSearchTypeBundleID
 };
 
-#if !(TARGET_OS_SIMULATOR)
 CFArrayRef SBSCopyApplicationDisplayIdentifiers(bool onlyActive, bool debuggable);
 CFStringRef SBSCopyLocalizedApplicationNameForDisplayIdentifier(CFStringRef displayIdentifier);
 CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentifier);
-#else
-CFArrayRef SBSCopyApplicationDisplayIdentifiers(bool onlyActive, bool debuggable);
-CFStringRef SBSCopyLocalizedApplicationNameForDisplayIdentifier(CFStringRef displayIdentifier);
-CFDataRef SBSCopyIconImagePNGDataForDisplayIdentifier(CFStringRef displayIdentifier);
-#endif
 
 @interface XXTEMoreApplicationListController ()
 <
@@ -41,16 +35,6 @@ UISearchResultsUpdating,
 UIScrollViewDelegate,
 UISearchBarDelegate
 >
-
-@property(nonatomic, strong, readonly) UITableView *tableView;
-@property(nonatomic, strong, readonly) UIRefreshControl *refreshControl;
-//@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *allApplications;
-//@property(nonatomic, strong, readonly) NSArray <NSDictionary *> *displayApplications;
-
-@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *allUserApplications;
-@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *allSystemApplications;
-@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *displayUserApplications;
-@property(nonatomic, strong, readonly) NSMutableArray <NSDictionary *> *displaySystemApplications;
 
 XXTE_START_IGNORE_PARTIAL
 @property(nonatomic, strong, readonly) UISearchController *searchController;
@@ -91,7 +75,9 @@ XXTE_END_IGNORE_PARTIAL
     [super viewDidLoad];
 
     self.extendedLayoutIncludesOpaqueBars = YES;
+    XXTE_START_IGNORE_PARTIAL
     self.automaticallyAdjustsScrollViewInsets = YES;
+    XXTE_END_IGNORE_PARTIAL
     
     self.view.backgroundColor = XXTColorPlainBackground();
     
@@ -112,9 +98,7 @@ XXTE_END_IGNORE_PARTIAL
         tableView.dataSource = self;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
+        tableView.cellLayoutMarginsFollowReadableWidth = NO;
         XXTE_END_IGNORE_PARTIAL
         [self.view addSubview:tableView];
         tableView;
@@ -124,9 +108,7 @@ XXTE_END_IGNORE_PARTIAL
     tableViewController.tableView = self.tableView;
     _refreshControl = ({
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        if (@available(iOS 11.0, *)) {
-            refreshControl.tintColor = [UIColor whiteColor];
-        }
+        refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(asyncApplicationList:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
         refreshControl;
@@ -144,9 +126,7 @@ XXTE_END_IGNORE_PARTIAL
     XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        [self.searchController loadViewIfNeeded];
-    }
+    [self.searchController loadViewIfNeeded];
     XXTE_END_IGNORE_PARTIAL
 
     UISearchBar *searchBar = self.searchController.searchBar;
@@ -160,39 +140,15 @@ XXTE_END_IGNORE_PARTIAL
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     searchBar.delegate = self;
     
-    if (@available(iOS 11.0, *)) {
-        UITextField *textField = nil;
-        if (@available(iOS 13.0, *)) {
-            textField = [searchBar performSelector:@selector(searchTextField)];
-        } else {
-            textField = [searchBar valueForKey:@"searchField"];
-        }
-        textField.textColor = XXTColorPlainTitleText();
-        textField.tintColor = XXTColorForeground();
-        searchBar.barTintColor = XXTColorPlainBackground();
-        searchBar.tintColor = XXTColorPlainBackground();
-        if (@available(iOS 13.0, *)) {
-            self.navigationItem.hidesSearchBarWhenScrolling = YES;
-        } else {
-#ifndef APPSTORE
-            UIView *backgroundView = [textField.subviews firstObject];
-            backgroundView.backgroundColor = XXTColorPlainBackground();
-            backgroundView.layer.cornerRadius = 10.0;
-            backgroundView.clipsToBounds = YES;
-#endif
-        }
-        self.navigationItem.searchController = self.searchController;
-    } else {
-        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        searchBar.backgroundColor = XXTColorPlainBackground();
-        searchBar.barTintColor = XXTColorPlainBackground();
-        searchBar.tintColor = XXTColorForeground();
-        self.tableView.tableHeaderView = searchBar;
-    }
+    UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
+    textField.textColor = XXTColorPlainTitleText();
+    textField.tintColor = XXTColorForeground();
+    searchBar.barTintColor = XXTColorPlainBackground();
+    searchBar.tintColor = XXTColorPlainBackground();
+    self.navigationItem.hidesSearchBarWhenScrolling = YES;
+    self.navigationItem.searchController = self.searchController;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self asyncApplicationList:self.refreshControl];
 }
@@ -242,24 +198,30 @@ XXTE_END_IGNORE_PARTIAL
                     continue;
                 }
                 NSString *applicationBundlePath = [appProxy.bundleContainerURL path];
-                NSString *applicationContainerPath = nil;
+                NSString *applicationDataContainerPath = nil;
+                NSDictionary <NSString *, NSString *> *applicationGroupContainerPaths = nil;
                 NSString *applicationName = CFBridgingRelease(SBSCopyLocalizedApplicationNameForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
                 if (!applicationName) {
                     applicationName = appProxy.localizedName;
                 }
                 NSData *applicationIconImageData = CFBridgingRelease(SBSCopyIconImagePNGDataForDisplayIdentifier((__bridge CFStringRef)(applicationBundleID)));
                 UIImage *applicationIconImage = [UIImage imageWithData:applicationIconImageData];
-                if (@available(iOS 8.0, *)) {
-                    if ([appProxy respondsToSelector:@selector(dataContainerURL)]) {
-                        applicationContainerPath = [[appProxy dataContainerURL] path];
-                    }
-                } else {
-                    if ([appProxy respondsToSelector:@selector(containerURL)]) {
-                        applicationContainerPath = [[appProxy containerURL] path];
-                    }
+                if ([appProxy respondsToSelector:@selector(dataContainerURL)]) {
+                    applicationDataContainerPath = [[appProxy dataContainerURL] path];
                 }
-                if (applicationContainerPath.length == 0) {
-                    applicationContainerPath = @"";
+                if (!applicationDataContainerPath) {
+                    applicationDataContainerPath = @"";
+                }
+                if ([appProxy respondsToSelector:@selector(groupContainerURLs)]) {
+                    NSDictionary <NSString *, NSURL *> *containerURLs = [appProxy groupContainerURLs];
+                    NSMutableDictionary <NSString *, NSString *> *containerPaths = [NSMutableDictionary dictionaryWithCapacity:containerURLs.count];
+                    for (NSString *containerID in containerURLs) {
+                        containerPaths[containerID] = [containerURLs[containerID] path];
+                    }
+                    applicationGroupContainerPaths = containerPaths;
+                }
+                if (!applicationGroupContainerPaths) {
+                    applicationGroupContainerPaths = @{};
                 }
                 NSMutableDictionary *applicationDetail = [[NSMutableDictionary alloc] init];
                 if (applicationBundleID)
@@ -274,9 +236,13 @@ XXTE_END_IGNORE_PARTIAL
                 {
                     applicationDetail[kXXTEMoreApplicationDetailKeyBundlePath] = applicationBundlePath;
                 }
-                if (applicationContainerPath)
+                if (applicationDataContainerPath)
                 {
-                    applicationDetail[kXXTEMoreApplicationDetailKeyContainerPath] = applicationContainerPath;
+                    applicationDetail[kXXTEMoreApplicationDetailKeyDataContainerPath] = applicationDataContainerPath;
+                }
+                if (applicationGroupContainerPaths)
+                {
+                    applicationDetail[kXXTEMoreApplicationDetailKeyGroupContainerPaths] = applicationGroupContainerPaths;
                 }
                 if (applicationIconImage)
                 {
@@ -370,6 +336,11 @@ XXTE_END_IGNORE_PARTIAL
     [cell setApplicationBundleID:applicationDetail[kXXTEMoreApplicationDetailKeyBundleID]];
     [cell setApplicationIconImage:applicationDetail[kXXTEMoreApplicationDetailKeyIconImage]];
     [cell setTintColor:XXTColorForeground()];
+    if (self.searchController.isActive) {
+        [cell setSearchText:self.searchController.searchBar.text];
+    } else {
+        [cell setSearchText:nil];
+    }
     return cell;
 }
 
@@ -420,11 +391,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    if (@available(iOS 13.0, *)) {
-        
-    } else {
-        [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
-    }
+    
 }
 
 XXTE_START_IGNORE_PARTIAL

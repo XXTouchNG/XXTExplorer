@@ -22,7 +22,9 @@
 {
     self = [super init];
     if (self) {
+        XXTE_START_IGNORE_PARTIAL
         self.automaticallyAdjustsScrollViewInsets = NO;
+        XXTE_END_IGNORE_PARTIAL
     }
     return self;
 }
@@ -33,29 +35,16 @@
     self.view.backgroundColor = XXTColorPlainBackground();
     
     [self.view addSubview:self.multiColumView];
-    if (@available(iOS 8.0, *)) {
-        NSArray <NSLayoutConstraint *> *constraints =
-        @[
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.0 constant:0.0],
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:0.0],
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
-          ];
-        [self.view addConstraints:constraints];
-    } else {
-        NSArray <NSLayoutConstraint *> *constraints =
-        @[
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
-          [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
-          ];
-        [self.view addConstraints:constraints];
-    }
+    NSArray <NSLayoutConstraint *> *constraints =
+    @[
+      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottomMargin multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0],
+      [NSLayoutConstraint constraintWithItem:self.multiColumView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0],
+      ];
+    [self.view addConstraints:constraints];
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,11 +60,7 @@
     if (!_multiColumView) {
         _multiColumView = [[XXTEMultiColumnTableView alloc] initWithFrame:self.view.bounds];
         _multiColumView.translatesAutoresizingMaskIntoConstraints = NO;
-        if (@available(iOS 13.0, *)) {
-            _multiColumView.backgroundColor = [UIColor systemBackgroundColor];
-        } else {
-            _multiColumView.backgroundColor = [UIColor whiteColor];
-        }
+        _multiColumView.backgroundColor = [UIColor systemBackgroundColor];
         _multiColumView.dataSource = self;
         _multiColumView.delegate = self;
     }

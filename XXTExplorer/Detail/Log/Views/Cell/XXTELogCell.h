@@ -13,5 +13,4 @@ static NSString * const XXTELogCellReuseIdentifier = @"XXTELogCellReuseIdentifie
 @interface XXTELogCell : UITableViewCell
 @property (nonatomic, copy) NSString *logText;
 - (void)setAttributedLogText:(NSAttributedString *)logText;
-
 @end

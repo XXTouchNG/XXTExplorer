@@ -22,13 +22,10 @@
 
 - (BOOL)isLocalKeyboard:(NSNotification *)aNotification {
     NSDictionary* info = [aNotification userInfo];
-    if (@available(iOS 9.0, *)) {
-        BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
-        if (!isLocal) {
-            return NO;
-        }
+    BOOL isLocal = [info[UIKeyboardIsLocalUserInfoKey] boolValue];
+    if (!isLocal) {
+        return NO;
     }
-    
     if (![[self class] runningInForeground]) {
         return NO;
     }
@@ -117,10 +114,7 @@
     NSDictionary* info = [aNotification userInfo];
     
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    UIEdgeInsets insets = UIEdgeInsetsZero;
-    if (@available(iOS 11.0, *)) {
-         insets = self.view.safeAreaInsets;
-    }
+    UIEdgeInsets insets = self.view.safeAreaInsets;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height - insets.bottom, 0.0);
     self.textView.contentInset = contentInsets;
     self.textView.scrollIndicatorInsets = contentInsets;
@@ -165,9 +159,6 @@
     }
     
     UIEdgeInsets insets = UIEdgeInsetsZero;
-    if (@available(iOS 11.0, *)) {
-        // insets = self.view.safeAreaInsets;
-    }
     UITextView *textView = self.textView;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(insets.top, insets.left, insets.bottom + kXXTEEditorToolbarHeight, insets.right);
     textView.contentInset = contentInsets;

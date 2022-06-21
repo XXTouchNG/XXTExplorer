@@ -12,7 +12,6 @@
 static NSString * const XXTExplorerEntryButtonActionLaunch = @"Launch";
 static NSString * const XXTExplorerEntryButtonActionProperty = @"Property";
 static NSString * const XXTExplorerEntryButtonActionContents = @"Contents";
-static NSString * const XXTExplorerEntryButtonActionConfigure = @"Configure";
 static NSString * const XXTExplorerEntryButtonActionEdit = @"Edit";
 static NSString * const XXTExplorerEntryButtonActionEncrypt = @"Encrypt";
 static NSString * const XXTExplorerEntryButtonActionTrash = @"Trash";

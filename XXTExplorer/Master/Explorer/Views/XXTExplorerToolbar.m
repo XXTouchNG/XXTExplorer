@@ -46,7 +46,6 @@
     fixedSpace.width = 20.0f;
     XXTExplorerToolbarButtonItem *flexibleSpace = [[XXTExplorerToolbarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-#ifndef APPSTORE
     NSArray <NSString *> *buttonTypes =
     @[
         XXTExplorerToolbarButtonTypeScan,
@@ -57,18 +56,6 @@
         XXTExplorerToolbarButtonTypePaste,
         XXTExplorerToolbarButtonTypeTrash
     ];
-#else
-    NSArray <NSString *> *buttonTypes =
-    @[
-        XXTExplorerToolbarButtonTypeSettings,
-        XXTExplorerToolbarButtonTypeCompress,
-        XXTExplorerToolbarButtonTypeAddItem,
-        XXTExplorerToolbarButtonTypeSort,
-        XXTExplorerToolbarButtonTypeShare,
-        XXTExplorerToolbarButtonTypePaste,
-        XXTExplorerToolbarButtonTypeTrash
-    ];
-#endif
     
     NSMutableDictionary <NSString *, XXTExplorerToolbarButtonItem *> *buttons = [[NSMutableDictionary alloc] initWithCapacity:buttonTypes.count];
     for (NSString *buttonType in buttonTypes) {
@@ -78,145 +65,49 @@
     }
     _buttons = buttons;
     
-    if (@available(iOS 11.0, *)) {
-#ifndef APPSTORE
-        _defaultButtons =
-        @[
-            fixedSpace,
-            buttons[XXTExplorerToolbarButtonTypeScan],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeAddItem],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypePaste],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSort],
-            fixedSpace,
-        ];
-#else
-        _defaultButtons =
-        @[
-            fixedSpace,
-            buttons[XXTExplorerToolbarButtonTypeAddItem],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSort],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypePaste],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSettings],
-            fixedSpace,
-        ];
-#endif
-        
-        _editingButtons =
-        @[
-            fixedSpace,
-            buttons[XXTExplorerToolbarButtonTypeShare],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeCompress],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypePaste],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeTrash],
-            fixedSpace,
-        ];
-        
-        _readonlyButtons =
-        @[
-            fixedSpace,
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSort],
-            flexibleSpace,
-            fixedSpace,
-        ];
-        
-#ifdef APPSTORE
-        _historyButtons =
-        @[
-            fixedSpace,
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeTrash],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSettings],
-            flexibleSpace,
-            fixedSpace,
-        ];
-#else
-        _historyButtons =
-        @[
-          fixedSpace,
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeTrash],
-          flexibleSpace,
-          fixedSpace,
-          ];
-#endif
-    }
-    else
-    {
-#ifndef APPSTORE
-        _defaultButtons =
-        @[
-            buttons[XXTExplorerToolbarButtonTypeScan],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeAddItem],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypePaste],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSort],
-        ];
-#else
-        _defaultButtons =
-        @[
-            buttons[XXTExplorerToolbarButtonTypeAddItem],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSort],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypePaste],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSettings],
-        ];
-#endif
-        
-        _editingButtons =
-        @[
-            buttons[XXTExplorerToolbarButtonTypeShare],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeCompress],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypePaste],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeTrash],
-        ];
-        
-        _readonlyButtons =
-        @[
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSort],
-            flexibleSpace,
-        ];
-        
-#ifdef APPSTORE
-        _historyButtons =
-        @[
-            fixedSpace,
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeTrash],
-            flexibleSpace,
-            buttons[XXTExplorerToolbarButtonTypeSettings],
-            flexibleSpace,
-            fixedSpace,
-        ];
-#else
-        _historyButtons =
-        @[
-          fixedSpace,
-          flexibleSpace,
-          buttons[XXTExplorerToolbarButtonTypeTrash],
-          flexibleSpace,
-          fixedSpace,
-          ];
-#endif
-    }
+    _defaultButtons =
+    @[
+        fixedSpace,
+        buttons[XXTExplorerToolbarButtonTypeScan],
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypeAddItem],
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypePaste],
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypeSort],
+        fixedSpace,
+    ];
+    
+    _editingButtons =
+    @[
+        fixedSpace,
+        buttons[XXTExplorerToolbarButtonTypeShare],
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypeCompress],
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypePaste],
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypeTrash],
+        fixedSpace,
+    ];
+    
+    _readonlyButtons =
+    @[
+        fixedSpace,
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypeSort],
+        flexibleSpace,
+        fixedSpace,
+    ];
+    
+    _historyButtons =
+    @[
+        fixedSpace,
+        flexibleSpace,
+        buttons[XXTExplorerToolbarButtonTypeTrash],
+        flexibleSpace,
+        fixedSpace,
+    ];
     
     _statusSeries =
     @{
@@ -230,20 +121,11 @@
 - (void)drawRect:(CGRect)rect {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    if (@available(iOS 13.0, *)) {
-        CGContextSetStrokeColorWithColor(ctx, [UIColor separatorColor].CGColor);
-    } else {
-        CGContextSetRGBStrokeColor(ctx, 0.85, 0.85, 0.85, 1.0);
-    }
+    CGContextSetStrokeColorWithColor(ctx, [UIColor separatorColor].CGColor);
     CGContextSetLineWidth(ctx, 1.0f);
     CGPoint aPoint[2] = {
-#ifndef APPSTORE
         CGPointMake(0.0, CGRectGetHeight(self.frame)),
         CGPointMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))
-#else
-        CGPointMake(0.0, 0.0),
-        CGPointMake(CGRectGetWidth(self.frame), 0.0)
-#endif
     };
     CGContextAddLines(ctx, aPoint, 2);
     CGContextStrokePath(ctx);

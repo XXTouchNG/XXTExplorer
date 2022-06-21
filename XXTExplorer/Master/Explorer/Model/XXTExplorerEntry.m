@@ -151,10 +151,6 @@ NSString * const EntryMaskTypeBrokenSymlink = @"EntryMaskTypeBrokenSymlink";
     return self.entryReader.editable;
 }
 
-- (BOOL)isConfigurable {
-    return self.entryReader.configurable;
-}
-
 #pragma mark - Localized Date
 
 + (NSDateFormatter *)entryDateFormatter {

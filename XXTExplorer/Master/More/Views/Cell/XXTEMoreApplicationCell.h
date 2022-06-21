@@ -13,11 +13,13 @@ static CGFloat const XXTEMoreApplicationCellHeight = 68.f;
 
 @interface XXTEMoreApplicationCell : UITableViewCell
 
+- (NSString *)applicationName;
 - (void)setApplicationName:(NSString *)name;
 
 - (NSString *)applicationBundleID;
 - (void)setApplicationBundleID:(NSString *)bundleID;
 
 - (void)setApplicationIconImage:(UIImage *)image;
+- (void)setSearchText:(NSString *)searchText;
 
 @end

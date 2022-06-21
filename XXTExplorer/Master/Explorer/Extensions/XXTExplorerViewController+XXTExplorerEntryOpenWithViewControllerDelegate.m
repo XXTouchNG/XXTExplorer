@@ -7,6 +7,7 @@
 //
 
 #import <sys/stat.h>
+#import <SafariServices/SafariServices.h>
 
 #import "XXTExplorerViewController+XXTExplorerEntryOpenWithViewControllerDelegate.h"
 #import "XXTExplorerViewController+ArchiverOperation.h"
@@ -14,7 +15,6 @@
 
 #import "XXTExplorerDefaults.h"
 #import "XXTExplorerEntryService.h"
-#import "XXTECachedResourcesManager.h"
 
 #import "XXTEArchiveViewer.h"
 #import "XXTEExecutableViewer.h"
@@ -22,9 +22,6 @@
 #import "XXTENavigationController.h"
 #import "XXTExplorerViewCell.h"
 #import "NSString+SHA1.h"
-
-#import <XUI/XUIViewController.h>
-#import <XUI/XUINavigationController.h>
 
 
 @implementation XXTExplorerViewController (XXTExplorerEntryOpenWithViewControllerDelegate)
@@ -52,9 +49,7 @@
         NSString *entryPath = viewer.entryPath;
         if ([viewer isKindOfClass:[XXTEExecutableViewer class]])
         {
-#ifndef APPSTORE
             [self performViewerExecutableActionForEntryAtPath:entryPath];
-#endif
         }
         else if ([viewer isKindOfClass:[XXTEArchiveViewer class]]) {
             [self tableView:tableView unarchiveEntryCellTappedWithEntryPath:entryPath];
@@ -63,16 +58,15 @@
         {
             if (XXTE_COLLAPSED) {
                 XXTE_START_IGNORE_PARTIAL
-                if (@available(iOS 8.0, *)) {
-                    XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
-                    [self.splitViewController showDetailViewController:navigationController sender:self];
-                }
+                XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
+                [self.splitViewController showDetailViewController:navigationController sender:self];
                 XXTE_END_IGNORE_PARTIAL
+            } else if ([viewer isKindOfClass:[SFSafariViewController class]]) {
+                [self.navigationController presentViewController:viewer animated:YES completion:nil];
             } else {
                 [self.navigationController pushViewController:viewer animated:animated];
             }
         }
-        [self linkHistoryEntryAtPath:entryPath];
     }
 }
 
@@ -81,44 +75,11 @@
         [controller conformsToProtocol:@protocol(XXTEDetailViewController)]) {
         UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
         {
-            UIViewController *navigationController = nil;
-            if ([viewer isKindOfClass:[XUIViewController class]]) {
-                navigationController = [[XUINavigationController alloc] initWithRootViewController:viewer];
-            } else {
-                navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
-            }
+            UIViewController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
             navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
             navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             navigationController.presentationController.delegate = self;
             [self.tabBarController presentViewController:navigationController animated:YES completion:nil];
-        }
-    }
-}
-
-- (void)linkHistoryEntryAtPath:(NSString *)entryPath {
-    if (self.historyMode) return;
-    NSFileManager *manager = [[self class] explorerFileManager];
-    
-    NSString *historyRelativePath = uAppDefine(XXTExplorerViewBuiltHistoryPath);
-    NSString *historyRootPath = [XXTERootPath() stringByAppendingPathComponent:historyRelativePath];
-    
-    [[XXTECachedResourcesManager sharedManager] cleanOutdatedManagedResourcesAtCachesPath:historyRootPath limitType:XXTEDefaultsInt(XXTExplorerHistoryStoreLimit, 3)];
-    NSString *historyDatePath = [[XXTECachedResourcesManager sharedManager]  dateCachesPathAtCachesPath:historyRootPath];
-    
-    NSString *pathHash = [entryPath sha1String];
-    if (pathHash.length > 8) {
-        NSString *pathSubhash = [pathHash substringToIndex:7];
-        NSString *entryName = [entryPath lastPathComponent];
-        NSString *entryLinkName = [pathSubhash stringByAppendingFormat:@"@%@", entryName];
-        NSString *entryLinkPath = [historyDatePath stringByAppendingPathComponent:entryLinkName];
-        NSError *linkError = nil;
-        if (entryLinkPath.length > 0 && entryPath.length > 0) {
-            NSError *cleanError = nil;
-            struct stat cleanStat;
-            if (0 == lstat(entryLinkPath.fileSystemRepresentation, &cleanStat)) {
-                [manager removeItemAtPath:entryLinkPath error:&cleanError];
-            }
-            [manager createSymbolicLinkAtURL:[NSURL fileURLWithPath:entryLinkPath] withDestinationURL:[NSURL fileURLWithPath:entryPath] error:&linkError];
         }
     }
 }

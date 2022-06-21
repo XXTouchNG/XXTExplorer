@@ -12,10 +12,8 @@
 #import "UIView+XXTEToast.h"
 #import "XXTEMoreUserDefaultsOperationController.h"
 
-#ifndef APPSTORE
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
-#endif
 
 enum {
     kXXTEMoreUserDefaultsSearchTypeTitle = 0,
@@ -67,7 +65,10 @@ XXTE_END_IGNORE_PARTIAL
     [super viewDidLoad];
     
     self.extendedLayoutIncludesOpaqueBars = YES;
+    XXTE_START_IGNORE_PARTIAL
     self.automaticallyAdjustsScrollViewInsets = YES;
+    XXTE_END_IGNORE_PARTIAL
+    
     if (self.tableView.style == UITableViewStylePlain) {
         self.view.backgroundColor = XXTColorPlainBackground();
     } else {
@@ -75,9 +76,7 @@ XXTE_END_IGNORE_PARTIAL
     }
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"User Defaults", nil);
@@ -97,15 +96,11 @@ XXTE_END_IGNORE_PARTIAL
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTEMoreTitleDescriptionCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTEMoreTitleDescriptionCellReuseIdentifier];
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        [self.searchController loadViewIfNeeded];
-    }
+    [self.searchController loadViewIfNeeded];
     XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = self.searchController.searchBar;
@@ -119,40 +114,15 @@ XXTE_END_IGNORE_PARTIAL
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     searchBar.delegate = self;
     
-    if (@available(iOS 11.0, *)) {
-        UITextField *textField = nil;
-        if (@available(iOS 13.0, *)) {
-            textField = [searchBar performSelector:@selector(searchTextField)];
-        } else {
-            textField = [searchBar valueForKey:@"searchField"];
-        }
-        textField.textColor = XXTColorPlainTitleText();
-        textField.tintColor = XXTColorForeground();
-        searchBar.barTintColor = XXTColorBarTint();
-        searchBar.tintColor = XXTColorTint();
-        if (@available(iOS 13.0, *)) {
-            self.navigationItem.hidesSearchBarWhenScrolling = YES;
-        } else {
-#ifndef APPSTORE
-            UIView *backgroundView = [textField.subviews firstObject];
-            backgroundView.backgroundColor = XXTColorPlainBackground();
-            backgroundView.layer.cornerRadius = 10.0;
-            backgroundView.clipsToBounds = YES;
-#endif
-        }
-        self.navigationItem.searchController = self.searchController;
-    }
-    else {
-        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        searchBar.backgroundColor = XXTColorPlainBackground();
-        searchBar.barTintColor = XXTColorPlainBackground();
-        searchBar.tintColor = XXTColorForeground();
-        self.tableView.tableHeaderView = searchBar;
-    }
+    UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
+    textField.textColor = XXTColorPlainTitleText();
+    textField.tintColor = XXTColorForeground();
+    searchBar.barTintColor = XXTColorBarTint();
+    searchBar.tintColor = XXTColorTint();
+    self.navigationItem.hidesSearchBarWhenScrolling = YES;
+    self.navigationItem.searchController = self.searchController;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self loadStaticUserDefaults];
     [self loadDynamicUserDefaults];
@@ -184,8 +154,6 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)loadDynamicUserDefaults {
-#ifndef APPSTORE
-    
     UIViewController *blockVC = blockInteractions(self, YES);
     PMKPromise *localDefaultsPromise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
         for (NSString *metaKey in self.defaultsMeta) {
@@ -221,24 +189,6 @@ XXTE_END_IGNORE_PARTIAL
         blockInteractions(blockVC, NO);
         [self.tableView reloadData];
     });
-    
-#else
-    
-    for (NSString *metaKey in self.defaultsMeta) {
-        NSArray <NSDictionary *> *metaArray = self.defaultsMeta[metaKey];
-        if ([metaArray isKindOfClass:[NSArray class]]) {
-            [metaArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull entry, NSUInteger idx, BOOL * _Nonnull stop) {
-                id key = entry[@"key"];
-                id value = XXTEDefaultsObject(key, nil);
-                if (value) {
-                    self.userDefaults[key] = value;
-                }
-            }];
-        }
-    }
-    [self.tableView reloadData];
-    
-#endif
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -276,12 +226,7 @@ XXTE_END_IGNORE_PARTIAL
     } else {
         rowDetail = self.displayDefaultsMeta[sectionKey][(NSUInteger) indexPath.row];
     }
-    XXTEMoreUserDefaultsOperationController *operationController = nil;
-    if (@available(iOS 13.0, *)) {
-        operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleInsetGrouped];
-    } else {
-        operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleGrouped];
-    }
+    XXTEMoreUserDefaultsOperationController *operationController = [[XXTEMoreUserDefaultsOperationController alloc] initWithStyle:UITableViewStyleInsetGrouped];
     operationController.delegate = self;
     operationController.userDefaultsEntry = rowDetail;
     NSNumber *defaultsValue = self.userDefaults[rowDetail[@"key"]];
@@ -367,11 +312,7 @@ XXTE_END_IGNORE_PARTIAL
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    if (@available(iOS 13.0, *)) {
-        
-    } else {
-        [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top) animated:NO];
-    }
+    
 }
 
 XXTE_START_IGNORE_PARTIAL
@@ -414,8 +355,6 @@ XXTE_END_IGNORE_PARTIAL
     NSMutableDictionary *editedUserDefaults = [[NSMutableDictionary alloc] initWithDictionary:self.userDefaults copyItems:YES];
     editedUserDefaults[modifyKey] = @(index);
     
-#ifndef APPSTORE
-    
     UIViewController *blockVC = blockInteractions(self, YES);
     NSDictionary *sendUserDefaults = [[NSDictionary alloc] initWithDictionary:editedUserDefaults];
     [NSURLConnection POST:uAppDaemonCommandUrl(@"set_user_conf") JSON:sendUserDefaults]
@@ -442,18 +381,6 @@ XXTE_END_IGNORE_PARTIAL
         blockInteractions(blockVC, NO);
         [self.tableView reloadData];
     });
-    
-#else
-    
-    block(YES);
-    self.userDefaults[modifyKey] = @(index);
-    [editedUserDefaults enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        XXTEDefaultsSetObject(key, obj);
-    }];
-    [self.tableView reloadData];
-    
-#endif
-    
 }
 
 #pragma mark - Memory

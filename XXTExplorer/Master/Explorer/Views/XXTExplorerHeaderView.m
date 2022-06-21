@@ -70,7 +70,9 @@
 - (UIActivityIndicatorView *)activityIndicator {
     if (!_activityIndicator) {
         UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - 30.0, 3.0, 18.0, 18.0)];
+        XXTE_START_IGNORE_PARTIAL
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+        XXTE_END_IGNORE_PARTIAL
         activityIndicator.color = XXTColorForeground();
         activityIndicator.tintColor = XXTColorForeground();
         activityIndicator.hidesWhenStopped = YES;

@@ -63,11 +63,7 @@ XXTE_END_IGNORE_PARTIAL
         return UIStatusBarStyleDefault;
     }
     XXTE_END_IGNORE_PARTIAL
-#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
-#else
-    return UIStatusBarStyleDefault;
-#endif
 }
 
 - (instancetype)init {
@@ -89,37 +85,20 @@ XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = nil;
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 13.0, *)) {
-        _searchController = ({
-            UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-            searchController.searchResultsUpdater = self;
-            searchController.dimsBackgroundDuringPresentation = NO;
-            searchController.hidesNavigationBarDuringPresentation = YES;
-            searchController;
-        });
-        searchBar = self.searchController.searchBar;
-    } else {
-        searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.f)];
-        _searchDisplayController = ({
-            UISearchDisplayController *searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-            searchDisplayController.searchResultsDelegate = self;
-            searchDisplayController.searchResultsDataSource = self;
-            searchDisplayController.delegate = self;
-            searchDisplayController;
-        });
-    }
+    _searchController = ({
+        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        searchController.searchResultsUpdater = self;
+        searchController.dimsBackgroundDuringPresentation = NO;
+        searchController.hidesNavigationBarDuringPresentation = YES;
+        searchController;
+    });
+    searchBar = self.searchController.searchBar;
     XXTE_END_IGNORE_PARTIAL
     
     {
-        if (@available(iOS 13.0, *)) {
-            UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
-            textField.textColor = XXTColorPlainTitleText();
-            textField.tintColor = XXTColorForeground();
-        } else {
-            searchBar.backgroundColor = XXTColorPlainBackground();
-            searchBar.barTintColor = XXTColorPlainBackground();
-            searchBar.tintColor = XXTColorForeground();
-        }
+        UITextField *textField = [searchBar performSelector:@selector(searchTextField)];
+        textField.textColor = XXTColorPlainTitleText();
+        textField.tintColor = XXTColorForeground();
         searchBar.placeholder = NSLocalizedString(@"Search Symbol", nil);
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -133,28 +112,17 @@ XXTE_END_IGNORE_PARTIAL
         tableView.dataSource = self;
         tableView.backgroundColor = XXTColorPlainBackground();
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        if (@available(iOS 13.0, *)) {
-            
-        } else {
-            tableView.tableHeaderView = searchBar;
-        }
         tableView.tableFooterView = [UIView new];
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
+        tableView.cellLayoutMarginsFollowReadableWidth = NO;
         XXTE_END_IGNORE_PARTIAL
         [self.view addSubview:tableView];
         tableView;
     });
-    if (@available(iOS 13.0, *)) {
-        self.navigationItem.hidesSearchBarWhenScrolling = YES;
-        self.navigationItem.searchController = self.searchController;
-    }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.hidesSearchBarWhenScrolling = YES;
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self.actionView setHidden:YES];
     [self.view addSubview:self.actionView];
@@ -277,18 +245,10 @@ XXTE_END_IGNORE_PARTIAL
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (0 == section) {
-        if (@available(iOS 13.0, *)) {
-            if (!self.searchController.active) {
-                return self.symbolsTable.count;
-            } else {
-                return self.displaySymbolsTable.count;
-            }
+        if (!self.searchController.active) {
+            return self.symbolsTable.count;
         } else {
-            if (tableView == self.tableView) {
-                return self.symbolsTable.count;
-            } else {
-                return self.displaySymbolsTable.count;
-            }
+            return self.displaySymbolsTable.count;
         }
     }
     return 0;
@@ -304,18 +264,10 @@ XXTE_END_IGNORE_PARTIAL
             cell = [[XXTESymbolCell alloc] initWithStyle:UITableViewCellStyleDefault
                                          reuseIdentifier:XXTESymbolCellReuseIdentifier];
         }
-        if (@available(iOS 13.0, *)) {
-            if (!self.searchController.active) {
-                [self configureCell:cell forRowAtIndexPath:indexPath];
-            } else {
-                [self configureDisplayCell:cell fromTableView:tableView forRowAtIndexPath:indexPath];
-            }
+        if (!self.searchController.active) {
+            [self configureCell:cell forRowAtIndexPath:indexPath];
         } else {
-            if (tableView == self.tableView) {
-                [self configureCell:cell forRowAtIndexPath:indexPath];
-            } else {
-                [self configureDisplayCell:cell fromTableView:tableView forRowAtIndexPath:indexPath];
-            }
+            [self configureDisplayCell:cell fromTableView:tableView forRowAtIndexPath:indexPath];
         }
         
         return cell;
@@ -338,13 +290,8 @@ XXTE_END_IGNORE_PARTIAL
         NSString *symbolTitle = detail[@"title"];
         BOOL isSearch = NO;
         NSString *searchContent = nil;
-        if (@available(iOS 13.0, *)) {
-            isSearch = self.searchController.active;
-            searchContent = self.searchController.searchBar.text;
-        } else {
-            isSearch = (tableView != self.tableView);
-            searchContent = self.searchDisplayController.searchBar.text;
-        }
+        isSearch = self.searchController.active;
+        searchContent = self.searchController.searchBar.text;
         if (isSearch) {
             NSMutableAttributedString *attribuedTitle = [[NSMutableAttributedString alloc] initWithString:symbolTitle attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:16.0], NSForegroundColorAttributeName: XXTColorPlainTitleText() }];
             NSRange highlightRange = [symbolTitle rangeOfString:searchContent options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, symbolTitle.length)];
@@ -361,33 +308,17 @@ XXTE_END_IGNORE_PARTIAL
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSRange toRange = {0, 0};
-    if (@available(iOS 13.0, *)) {
-        if (!self.searchController.active) {
-            NSUInteger idx = indexPath.row;
-            if (idx < self.symbolsTable.count) {
-                NSDictionary *detail = self.symbolsTable[idx];
-                toRange = [detail[@"range"] rangeValue];
-            }
-        } else {
-            NSUInteger idx = indexPath.row;
-            if (idx < self.displaySymbolsTable.count) {
-                NSDictionary *detail = self.displaySymbolsTable[idx];
-                toRange = [detail[@"range"] rangeValue];
-            }
+    if (!self.searchController.active) {
+        NSUInteger idx = indexPath.row;
+        if (idx < self.symbolsTable.count) {
+            NSDictionary *detail = self.symbolsTable[idx];
+            toRange = [detail[@"range"] rangeValue];
         }
     } else {
-        if (tableView == self.tableView) {
-            NSUInteger idx = indexPath.row;
-            if (idx < self.symbolsTable.count) {
-                NSDictionary *detail = self.symbolsTable[idx];
-                toRange = [detail[@"range"] rangeValue];
-            }
-        } else {
-            NSUInteger idx = indexPath.row;
-            if (idx < self.displaySymbolsTable.count) {
-                NSDictionary *detail = self.displaySymbolsTable[idx];
-                toRange = [detail[@"range"] rangeValue];
-            }
+        NSUInteger idx = indexPath.row;
+        if (idx < self.displaySymbolsTable.count) {
+            NSDictionary *detail = self.displaySymbolsTable[idx];
+            toRange = [detail[@"range"] rangeValue];
         }
     }
     [self.editor setNeedsHighlightRange:toRange];
@@ -407,9 +338,7 @@ XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XXTESymbolCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:XXTESymbolCellReuseIdentifier];
-    if (@available(iOS 11.0, *)) {
-        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
+    tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
 }
 XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
@@ -455,19 +384,12 @@ XXTE_START_IGNORE_PARTIAL
 XXTE_END_IGNORE_PARTIAL
 XXTE_START_IGNORE_PARTIAL
 - (void)reloadSearch {
-    NSString *text = nil;
-    if (@available(iOS 13.0, *)) {
-        text = self.searchController.searchBar.text;
-    } else {
-        text = self.searchDisplayController.searchBar.text;
-    }
+    NSString *text = self.searchController.searchBar.text;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", text];
     if (predicate) {
         self.displaySymbolsTable = [[NSArray alloc] initWithArray:[self.symbolsTable filteredArrayUsingPredicate:predicate]];
     }
-    if (@available(iOS 13.0, *)) {
-        [self.tableView reloadData];
-    }
+    [self.tableView reloadData];
 }
 XXTE_END_IGNORE_PARTIAL
 

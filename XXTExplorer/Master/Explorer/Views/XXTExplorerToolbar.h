@@ -15,11 +15,7 @@ static NSString * const XXTExplorerToolbarStatusEditing = @"XXTExplorerToolbarSt
 static NSString * const XXTExplorerToolbarStatusReadonly = @"XXTExplorerToolbarStatusReadonly";
 static NSString * const XXTExplorerToolbarStatusHistoryMode = @"XXTExplorerToolbarStatusHistoryMode";
 
-#ifndef APPSTORE
-    static NSString * const XXTExplorerToolbarButtonTypeScan = @"XXTExplorerToolbarButtonTypeScan";
-#else
-    static NSString * const XXTExplorerToolbarButtonTypeSettings = @"XXTExplorerToolbarButtonTypeSettings";
-#endif
+static NSString * const XXTExplorerToolbarButtonTypeScan = @"XXTExplorerToolbarButtonTypeScan";
 static NSString * const XXTExplorerToolbarButtonTypeCompress = @"XXTExplorerToolbarButtonTypeCompress";
 static NSString * const XXTExplorerToolbarButtonTypeAddItem = @"XXTExplorerToolbarButtonTypeAddItem";
 static NSString * const XXTExplorerToolbarButtonTypeSort = @"XXTExplorerToolbarButtonTypeSort";

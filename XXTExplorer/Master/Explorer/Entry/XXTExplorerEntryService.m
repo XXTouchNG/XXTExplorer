@@ -11,7 +11,6 @@
 #import "XXTEViewer.h"
 #import "XXTEEditor.h"
 #import "XXTExplorerEntryReader.h"
-#import "XXTEUIViewController.h"
 #import "XXTExplorerEntryOpenWithViewController.h"
 
 @interface XXTExplorerEntryService ()
@@ -113,14 +112,6 @@
     return NO;
 }
 
-- (BOOL)hasConfiguratorForEntry:(XXTExplorerEntry *)entry {
-    XXTExplorerEntryReader *reader = entry.entryReader;
-    if (reader && [reader isKindOfClass:[XXTExplorerEntryReader class]]) {
-        return reader && reader.configurable;;
-    }
-    return NO;
-}
-
 - (UIViewController <XXTEViewer> *)viewerForEntry:(XXTExplorerEntry *)entry {
     NSString *entryPath = entry.entryPath;
     NSString *entryBaseExtension = entry.entryExtension;
@@ -144,25 +135,6 @@
                 return editor;
             }
         }
-    }
-    return nil;
-}
-
-- (UIViewController <XXTEViewer> *)configuratorForEntry:(XXTExplorerEntry *)entry {
-    return [self configuratorForEntry:entry configurationName:nil];
-}
-
-- (UIViewController <XXTEViewer> *)configuratorForEntry:(XXTExplorerEntry *)entry configurationName:(NSString *)name {
-    XXTExplorerEntryReader *reader = entry.entryReader;
-    if (reader &&
-        [reader isKindOfClass:[XXTExplorerEntryReader class]] &&
-        reader.configurable &&
-        reader.configurationName) {
-        if (name.length == 0) {
-            name = reader.configurationName;
-        }
-        XXTEUIViewController *configutator = [[XXTEUIViewController alloc] initWithPath:name withBundlePath:reader.entryPath];
-        return configutator;
     }
     return nil;
 }

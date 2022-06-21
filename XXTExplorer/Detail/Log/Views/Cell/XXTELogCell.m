@@ -7,11 +7,9 @@
 //
 
 #import "XXTELogCell.h"
-#import "XXTEAutoLabel.h"
 
 @interface XXTELogCell ()
-@property (weak, nonatomic) IBOutlet XXTEAutoLabel *logLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *logLabel;
 @end
 
 @implementation XXTELogCell
@@ -24,26 +22,6 @@
     UIView *selectionBackground = [[UIView alloc] init];
     selectionBackground.backgroundColor = XXTColorCellSelected();
     self.selectedBackgroundView = selectionBackground;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    if (@available(iOS 8.0, *)) {
-        
-    } else {
-        XXTEAutoLabel *label = self.logLabel;
-        CGFloat boundsWidth = CGRectGetWidth(label.bounds);
-        if (label.preferredMaxLayoutWidth != boundsWidth) {
-            label.preferredMaxLayoutWidth = boundsWidth;
-            [label setNeedsUpdateConstraints];
-        }
-    }
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void)setLogText:(NSString *)logText {

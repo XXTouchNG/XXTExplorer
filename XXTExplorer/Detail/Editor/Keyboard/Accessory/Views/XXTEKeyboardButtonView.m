@@ -24,10 +24,12 @@
 
 - (instancetype)initWithKeyboardButton:(XXTEKeyboardButton *)button {
     CGRect frame = [UIScreen mainScreen].bounds;
-
+    
+    XXTE_START_IGNORE_PARTIAL
     if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
         frame = CGRectMake(0, 0, CGRectGetHeight(frame), CGRectGetWidth(frame));
     }
+    XXTE_END_IGNORE_PARTIAL
 
     self = [super initWithFrame:frame];
 

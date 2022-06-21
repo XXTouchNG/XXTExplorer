@@ -62,9 +62,7 @@
     scrollView.bounces = NO;
     scrollView.pagingEnabled = YES;
     scrollView.delegate = self;
-    if (@available(iOS 11.0, *)) {
-        scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
+    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     _pageScrollView = scrollView;
 }
     
@@ -205,11 +203,6 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Layout
     
 - (void)viewDidLayoutSubviews {
-    if (@available(iOS 11.0, *)) {
-        
-    } else {
-        self.segmentedControl.frame = self.segmentedControl.superview.bounds;
-    }
     [super viewDidLayoutSubviews];
     [self layoutControllers];
 }

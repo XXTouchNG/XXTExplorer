@@ -58,10 +58,8 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
 - (void)setupAppearance {
     XXTE_START_IGNORE_PARTIAL
     if (XXTE_IS_IPAD) {
-        if (@available(iOS 8.0, *)) {
-            self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-            self.maximumPrimaryColumnWidth = 320.0;
-        }
+        self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+        self.maximumPrimaryColumnWidth = 320.0;
     }
     XXTE_END_IGNORE_PARTIAL
 }
@@ -123,36 +121,13 @@ static NSString * const kXXTERatingPromptDisplayed = @"XXTERatingPromptDisplayed
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-#ifdef APPSTORE
-    if (@available(iOS 10.3, *)) {
-        if ([SKStoreReviewController respondsToSelector:@selector(requestReview)])
-        {
-            NSInteger launchedTimes = XXTEDefaultsInt(kXXTELaunchedTimes, 0);
-            if (launchedTimes >= 15)
-            {
-                BOOL promptDisplayed = XXTEDefaultsBool(kXXTERatingPromptDisplayed, NO);
-                if (!promptDisplayed) {
-                    [SKStoreReviewController requestReview];
-                    XXTEDefaultsSetBasic(kXXTERatingPromptDisplayed, YES);
-                }
-            }
-        }
-    }
-#endif
-}
-
 - (void)restoreWorkspaceViewControllerFromViewController:(UIViewController *)sender
 {
     if (XXTE_IS_IPAD) { // cannot use collapsed check here
-        if (@available(iOS 8.0, *))
-        {
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace}]];
-            XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
-            XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
-            [self showDetailViewController:detailNavigationController sender:sender];
-        }
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:self userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSplitViewControllerWillRestoreWorkspace}]];
+        XXTEWorkspaceViewController *detailViewController = [[XXTEWorkspaceViewController alloc] init];
+        XXTENavigationController *detailNavigationController = [[XXTENavigationController alloc] initWithRootViewController:detailViewController];
+        [self showDetailViewController:detailNavigationController sender:sender];
     }
 }
 
@@ -225,9 +200,7 @@ XXTE_END_IGNORE_PARTIAL
 #pragma mark - Theme
 
 - (void)restoreTheme {
-    if (@available(iOS 8.0, *)) {
-        self.displayModeButtonItem.tintColor = XXTColorTint();
-    }
+    self.displayModeButtonItem.tintColor = XXTColorTint();
     self.detailCloseItem.tintColor = XXTColorTint();
 }
 

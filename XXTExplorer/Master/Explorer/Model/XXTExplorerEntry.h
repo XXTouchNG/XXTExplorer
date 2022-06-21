@@ -68,7 +68,6 @@ extern NSString * const EntryMaskTypeBrokenSymlink;
 - (BOOL)isRegistered;
 - (BOOL)isExecutable;
 - (BOOL)isEditable;
-- (BOOL)isConfigurable;
 
 #pragma mark - Localized Date
 

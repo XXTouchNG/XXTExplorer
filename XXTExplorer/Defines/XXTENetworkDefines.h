@@ -17,28 +17,15 @@
 extern "C" {
 #endif
     
-#ifndef APPSTORE
     extern id (^convertJsonString)(id);
-#endif
-    
-#ifndef APPSTORE
     extern id (^sendCloudApiRequest)(NSArray *objs);
-#endif
-    
-#ifndef APPSTORE
     NSString *uAppDaemonCommandUrl(NSString *command);
     NSString *uAppWebAccessUrl(NSString *path);
-#endif
-    
-#ifndef APPSTORE
     NSString *uAppLicenseServerCommandUrl(NSString *command);
-#endif
     
     NSDictionary *uAppConstEnvp(void);
     NSString *uAppUserAgent(void);
     BOOL uOpenURL(NSURL *url);
-    
-    NSString *XXTSchemeCloudProjectID(NSUInteger projectID);
     
 #ifdef __cplusplus
 }

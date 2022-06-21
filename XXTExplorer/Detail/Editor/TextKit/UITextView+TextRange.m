@@ -18,21 +18,19 @@
 @implementation NSLayoutManager (LineRect)
 
 - (CGRect)lineFragmentsRectForRange:(NSRange)range {
-    if (@available(iOS 9.0, *)) {
-        NSRange glyphRange = [self glyphRangeForCharacterRange:range actualCharacterRange:nil];
-        if (glyphRange.location < self.numberOfGlyphs || self.extraLineFragmentTextContainer == nil) {
-            NSRange effectiveRange = NSMakeRange(NSNotFound, 0);
-            CGRect lowerRect = [self lineFragmentRectForGlyphAtIndex:glyphRange.location effectiveRange:&effectiveRange withoutAdditionalLayout:YES];
-            if (!NSRangeContainsIndex(effectiveRange, glyphRange.location + glyphRange.length)) {
-                NSUInteger upperBound = MIN(glyphRange.location + glyphRange.length, self.numberOfGlyphs - 1);
-                CGRect upperRect = [self lineFragmentRectForGlyphAtIndex:upperBound effectiveRange:nil withoutAdditionalLayout:YES];
-                return CGRectUnion(lowerRect, upperRect);
-            } else {
-                return lowerRect;
-            }
+    NSRange glyphRange = [self glyphRangeForCharacterRange:range actualCharacterRange:nil];
+    if (glyphRange.location < self.numberOfGlyphs || self.extraLineFragmentTextContainer == nil) {
+        NSRange effectiveRange = NSMakeRange(NSNotFound, 0);
+        CGRect lowerRect = [self lineFragmentRectForGlyphAtIndex:glyphRange.location effectiveRange:&effectiveRange withoutAdditionalLayout:YES];
+        if (!NSRangeContainsIndex(effectiveRange, glyphRange.location + glyphRange.length)) {
+            NSUInteger upperBound = MIN(glyphRange.location + glyphRange.length, self.numberOfGlyphs - 1);
+            CGRect upperRect = [self lineFragmentRectForGlyphAtIndex:upperBound effectiveRange:nil withoutAdditionalLayout:YES];
+            return CGRectUnion(lowerRect, upperRect);
         } else {
-            return self.extraLineFragmentRect;
+            return lowerRect;
         }
+    } else {
+        return self.extraLineFragmentRect;
     }
     return CGRectNull;
 }

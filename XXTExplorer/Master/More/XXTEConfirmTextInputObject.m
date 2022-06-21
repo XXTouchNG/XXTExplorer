@@ -7,7 +7,7 @@
 //
 
 #import "XXTEConfirmTextInputObject.h"
-#import <XUI/XUIViewShaker.h>
+#import "XUIViewShaker.h"
 
 @interface XXTEConfirmTextInputObject () <UITextFieldDelegate>
 @property (nonatomic, strong) XUIViewShaker *shaker;

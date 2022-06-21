@@ -68,8 +68,6 @@
     _entryIconImage = iconImage;
     if ([entryUpperedExtension isEqualToString:@"XXT"]) {
         _entryExtensionDescription = @"XXTouch Script";
-    } else if ([entryUpperedExtension isEqualToString:@"XPP"]) {
-        _entryExtensionDescription = @"XXTouch Bundle";
     } else if ([entryUpperedExtension isEqualToString:@"LUA"]) {
         _entryExtensionDescription = @"Lua Script";
     }

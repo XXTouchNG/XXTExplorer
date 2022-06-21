@@ -51,12 +51,9 @@ XXTE_END_IGNORE_PARTIAL
     self.title = NSLocalizedString(@"Workspace", nil);
     self.view.backgroundColor = XXTColorGroupedBackground();
     
-    if (@available(iOS 11.0, *))
-    {
-        UIDropInteraction *dropInteraction = [[UIDropInteraction alloc] initWithDelegate:self];
-        [self.view addInteraction:dropInteraction];
-        _dropInteraction = dropInteraction;
-    }
+    UIDropInteraction *dropInteraction = [[UIDropInteraction alloc] initWithDelegate:self];
+    [self.view addInteraction:dropInteraction];
+    _dropInteraction = dropInteraction;
     
     [self.view addSubview:self.logoPlaceholderImageView];
     [self.view addSubview:self.guideLabel];
@@ -69,9 +66,7 @@ XXTE_END_IGNORE_PARTIAL
     }
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -182,15 +177,11 @@ XXTE_END_IGNORE_PARTIAL
     UIColor *barTitleColor = XXTColorBarText();
     UIColor *tintColor = XXTColorTint();
     UINavigationController *navigation = self.navigationController;
-    if (@available(iOS 13.0, *)) {
-        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
-        [navigationBarAppearance configureWithOpaqueBackground];
-        [navigationBarAppearance setBackgroundColor:barTintColor];
-        [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
-        [navigation.navigationBar setScrollEdgeAppearance:navigation.navigationBar.standardAppearance];
-    } else {
-        // Fallback on earlier versions
-    }
+    UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+    [navigationBarAppearance configureWithOpaqueBackground];
+    [navigationBarAppearance setBackgroundColor:barTintColor];
+    [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
+    [navigation.navigationBar setScrollEdgeAppearance:navigation.navigationBar.standardAppearance];
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
     navigation.navigationBar.tintColor = tintColor;
     navigation.navigationBar.barTintColor = barTintColor;

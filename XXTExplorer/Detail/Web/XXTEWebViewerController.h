@@ -6,9 +6,9 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#import "XXTECommonWebViewController.h"
+#import <SafariServices/SafariServices.h>
 #import "XXTEViewer.h"
 
-@interface XXTEWebViewerController : XXTECommonWebViewController <XXTEViewer>
+@interface XXTEWebViewerController : SFSafariViewController <XXTEViewer>
 
 @end

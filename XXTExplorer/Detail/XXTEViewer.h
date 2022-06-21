@@ -19,8 +19,6 @@
 + (NSArray <NSString *> *)suggestedExtensions;
 + (Class)relatedReader;
 
-@property (nonatomic, assign) BOOL awakeFromOutside;
-
 @end
 
 #endif /* XXTEViewer_h */

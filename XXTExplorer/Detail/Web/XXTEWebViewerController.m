@@ -8,6 +8,7 @@
 
 #import "XXTEWebViewerController.h"
 #import "XXTExplorerEntryWebReader.h"
+#import "XXTExplorerDefaults.h"
 
 @interface XXTEWebViewerController ()
 
@@ -29,15 +30,26 @@
     return [XXTExplorerEntryWebReader class];
 }
 
++ (NSString *)cachesPath {
+    static NSString *cachesPath = nil;
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        if (!cachesPath) {
+            cachesPath = ({
+                NSString *relativePath = uAppDefine(XXTExplorerViewBuiltCachesPath);
+                [XXTERootPath() stringByAppendingPathComponent:relativePath];
+            });
+        }
+    });
+    return cachesPath;
+}
+
 - (instancetype)initWithPath:(NSString *)path {
-    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    NSURL *fileURL = [self preprocessLocalFileForWKWebView:[NSURL fileURLWithPath:path]];
+    if (!fileURL)
+        return nil;
     if (self = [super initWithURL:fileURL]) {
         _entryPath = path;
-        if (@available(iOS 9.0, *)) {
-            self.showActionButton = YES;
-        } else {
-            self.showActionButton = NO;
-        }
     }
     return self;
 }
@@ -45,24 +57,29 @@
 - (NSURL *)preprocessLocalFileForWKWebView:(NSURL *)fileURL {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *reachableError = nil;
-    NSURL *tmpDirURL = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:@"www"];
+    NSURL *tmpDirURL = [[NSURL fileURLWithPath:[[self class] cachesPath]] URLByAppendingPathComponent:@"www"];
     BOOL reachable = [fileURL checkResourceIsReachableAndReturnError:&reachableError];
-    if (reachable) {
-        NSError *createTmpError = nil;
-        [fileManager createDirectoryAtURL:tmpDirURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
-        if (createTmpError) { return fileURL; }
-        NSString *randomStr = [[NSUUID UUID] UUIDString];
-        NSURL *dstURL = [tmpDirURL URLByAppendingPathComponent:randomStr];
-        [fileManager createDirectoryAtURL:dstURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
-        if (createTmpError) { return fileURL; }
-        NSURL *newFileURL = [dstURL URLByAppendingPathComponent:fileURL.lastPathComponent];
-        NSError *moveError = nil;
-        BOOL fileMoved = [fileManager copyItemAtURL:fileURL toURL:newFileURL error:&moveError];
-        if (fileMoved) {
-            return dstURL;
-        }
+    if (!reachable) {
+        return nil;
     }
-    return fileURL;
+    NSError *createTmpError = nil;
+    [fileManager createDirectoryAtURL:tmpDirURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
+    if (createTmpError) {
+        return nil;
+    }
+    NSString *randomStr = [[NSUUID UUID] UUIDString];
+    NSURL *dstURL = [tmpDirURL URLByAppendingPathComponent:randomStr];
+    [fileManager createDirectoryAtURL:dstURL withIntermediateDirectories:YES attributes:nil error:&createTmpError];
+    if (createTmpError) {
+        return nil;
+    }
+    NSURL *newFileURL = [dstURL URLByAppendingPathComponent:fileURL.lastPathComponent];
+    NSError *moveError = nil;
+    BOOL fileMoved = [fileManager copyItemAtURL:fileURL toURL:newFileURL error:&moveError];
+    if (!fileMoved) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@caches/www/%@/%@", uAppDefine(@"LOCAL_API"), randomStr, fileURL.lastPathComponent]];
 }
 
 #pragma mark - Life Cycle
@@ -78,9 +95,7 @@
         }
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 }
 
 #pragma mark - Memory
@@ -90,7 +105,5 @@
     NSLog(@"- [%@ dealloc]", NSStringFromClass([self class]));
 #endif
 }
-
-@synthesize awakeFromOutside = _awakeFromOutside;
 
 @end

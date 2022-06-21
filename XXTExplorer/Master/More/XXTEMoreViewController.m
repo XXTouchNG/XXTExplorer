@@ -8,7 +8,7 @@
 
 #import "XXTEMoreViewController.h"
 #import "XXTEMoreUserDefaultsController.h"
-#import "XXTEUIViewController.h"
+#import "XXTEDetailViewController.h"
 #import "XXTENavigationController.h"
 
 #import "XXTExplorerViewController+SharedInstance.h"
@@ -20,12 +20,6 @@
 #import "XXTEMoreRemoteSwitchCell.h"
 #import "XXTEMoreAddressCell.h"
 #import "XXTEMoreLinkCell.h"
-
-#if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
-#import <FLEX/FLEXManager.h>
-#endif
-
-#ifndef APPSTORE
 
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -40,79 +34,51 @@
 #import "XXTEConfirmTextInputObject.h"
 #import "XXTERespringAgent.h"
 
-#else
+typedef enum : NSUInteger {
+    kXXTEMoreSectionIndexRemote = 0,
+    kXXTEMoreSectionIndexDaemon,
+    kXXTEMoreSectionIndexLicense,
+    kXXTEMoreSectionIndexSettings,
+    kXXTEMoreSectionIndexSystem,
+    kXXTEMoreSectionIndexLog,
+    kXXTEMoreSectionIndexHelp,
+    kXXTEMoreSectionIndexMax
+} kXXTEMoreSectionIndex;
 
-#import "XXTEWebDAVClient.h"
+typedef enum : NSUInteger {
+    kXXTEMoreSectionSystemRowIndexApplicationList = 0,
+    kXXTEMoreSectionSystemRowIndexCleanGPSCaches,
+    kXXTEMoreSectionSystemRowIndexCleanUICaches,
+    kXXTEMoreSectionSystemRowIndexCleanAll,
+    kXXTEMoreSectionSystemRowIndexRespringDevice,
+    kXXTEMoreSectionSystemRowIndexRestartDevice
+} kXXTEMoreSectionSystemRowIndex;
 
-#endif
-
-#ifndef APPSTORE
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionIndexRemote = 0,
-        kXXTEMoreSectionIndexDaemon,
-        kXXTEMoreSectionIndexLicense,
-        kXXTEMoreSectionIndexSettings,
-        kXXTEMoreSectionIndexSystem,
-        kXXTEMoreSectionIndexLog,
-        kXXTEMoreSectionIndexHelp,
-        kXXTEMoreSectionIndexMax
-    } kXXTEMoreSectionIndex;
-
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionSystemRowIndexApplicationList = 0,
-        kXXTEMoreSectionSystemRowIndexCleanGPSCaches,
-        kXXTEMoreSectionSystemRowIndexCleanUICaches,
-        kXXTEMoreSectionSystemRowIndexCleanAll,
-        kXXTEMoreSectionSystemRowIndexRespringDevice,
-        kXXTEMoreSectionSystemRowIndexRestartDevice
-    } kXXTEMoreSectionSystemRowIndex;
-
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionSettingsRowIndexActivationConfig = 0,
-        kXXTEMoreSectionSettingsRowIndexBootScript,
-        kXXTEMoreSectionSettingsRowIndexUserDefaults,
-    } kXXTEMoreSectionSettingsRowIndex;
+typedef enum : NSUInteger {
+    kXXTEMoreSectionSettingsRowIndexActivationConfig = 0,
+    kXXTEMoreSectionSettingsRowIndexBootScript,
+    kXXTEMoreSectionSettingsRowIndexUserDefaults,
+} kXXTEMoreSectionSettingsRowIndex;
 
 static NSString * const kXXTEDaemonLogViewerName = @"DAEMON_LOG_VIEWER";
 static NSString * const kXXTEDaemonLogPath = @"DAEMON_LOG_PATH";
 static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionLogRowIndexLog = 0,
-        kXXTEMoreSectionLogRowIndexErrorLog,
-    } kXXTEMoreSectionLogRowIndex;
+typedef enum : NSUInteger {
+    kXXTEMoreSectionLogRowIndexLog = 0,
+    kXXTEMoreSectionLogRowIndexErrorLog,
+} kXXTEMoreSectionLogRowIndex;
 
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionHelpRowIndexDocuments = 0,
-        kXXTEMoreSectionHelpRowIndexAbout,
-    } kXXTEMoreSectionHelpRowIndex;
-#else
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionIndexRemote = 0,
-        kXXTEMoreSectionIndexSettings,
-        kXXTEMoreSectionIndexHelp,
-        kXXTEMoreSectionIndexMax
-    } kXXTEMoreSectionIndex;
-
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionSettingsRowIndexUserDefaults = 0,
-    } kXXTEMoreSectionSettingsRowIndex;
-
-    typedef enum : NSUInteger {
-        kXXTEMoreSectionHelpRowIndexAbout = 0,
-    } kXXTEMoreSectionHelpRowIndex;
-#endif
+typedef enum : NSUInteger {
+    kXXTEMoreSectionHelpRowIndexDocuments = 0,
+    kXXTEMoreSectionHelpRowIndexAbout,
+} kXXTEMoreSectionHelpRowIndex;
 
 @interface XXTEMoreViewController () <LGAlertViewDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *closeItem;
 @property (weak, nonatomic) UISwitch *remoteAccessSwitch;
 @property (weak, nonatomic) UIActivityIndicatorView *remoteAccessIndicator;
-@property (nonatomic, strong) UIBarButtonItem *flexItem;
-
-#ifdef APPSTORE
-@property (weak, nonatomic) UIViewController *blockVC;
-#endif
 
 @end
 
@@ -150,9 +116,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     
     self.title = NSLocalizedString(@"More", nil);
     self.tableView.delegate = self;
@@ -160,27 +124,10 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     self.view.backgroundColor = XXTColorGroupedBackground();
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
-    
-#ifdef APPSTORE
-    if (nil == self.tabBarController && self == [self.navigationController.viewControllers firstObject])
-    {
-        self.navigationItem.rightBarButtonItem = self.closeItem;
-    }
-#endif
-    
-#if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
-    if (@available(iOS 8.0, *)) {
-        self.navigationItem.leftBarButtonItem = self.flexItem;
-    }
-#endif
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewData];
@@ -195,14 +142,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-#ifndef APPSTORE
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationNotification:) name:XXTENotificationEvent object:nil];
-#else
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebDAVNotification:) name:XXTEWebDAVNotificationServerDidStart object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebDAVNotification:) name:XXTEWebDAVNotificationServerDidStop object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebDAVNotification:) name:XXTEWebDAVNotificationServerDidCompleteBonjourRegistration object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebDAVNotification:) name:XXTEWebDAVNotificationServerDidUpdateNATPortMapping object:nil];
-#endif
     [super viewWillAppear:animated];
 }
 
@@ -235,24 +175,14 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     staticCells[0][1] = cellAddress1;
     staticCells[0][2] = cellAddress2;
     
-#ifndef APPSTORE
     if (_webServerUrl.length > 0 || _bonjourWebServerUrl.length > 0)
     {
         staticSectionRowNum = @[ @3, @1, @1, @3, @6, @2, @2 ];
     } else {
         staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
     }
-#else
-    if (_webServerUrl.length > 0 || _bonjourWebServerUrl.length > 0)
-    {
-        staticSectionRowNum = @[ @3, @1, @1 ];
-    } else {
-        staticSectionRowNum = @[ @1, @1, @1 ];
-    }
-#endif
 }
 
-#ifndef APPSTORE
 - (void)reloadDynamicTableViewData {
     if (!isFetchingRemoteStatus) {
         isFetchingRemoteStatus = YES;
@@ -285,15 +215,8 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         });
     }
 }
-#else
-- (void)reloadDynamicTableViewData {
-    XXTEWebDAVClient *davClient = [XXTEWebDAVClient sharedInstance];
-    [self reloadDAVStatusWithDAVClient:davClient];
-}
-#endif
 
 - (void)reloadStaticTableViewData {
-#ifndef APPSTORE
     staticSectionTitles = @[ NSLocalizedString(@"Remote", nil),
                              NSLocalizedString(@"Daemon", nil),
                              NSLocalizedString(@"License", nil),
@@ -303,15 +226,9 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                              NSLocalizedString(@"Help", nil)];
     staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil), @"", @"", @"", @"", @"", @"" ];
     staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
-#else
-    staticSectionTitles = @[ @"", @"", @"" ];
-    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil), @"", @"" ];
-    staticSectionRowNum = @[ @1, @1, @1 ];
-#endif
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     
-#ifndef APPSTORE
     XXTEMoreLinkCell *cell2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
     cell2.accessoryType = UITableViewCellAccessoryNone;
     cell2.iconImage = [UIImage imageNamed:@"XXTEMoreIconRestartDaemon"];
@@ -390,19 +307,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     XXTEMoreAddressCell *cellAddress1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
     
     XXTEMoreAddressCell *cellAddress2 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreAddressCell class]) owner:nil options:nil] lastObject];
-#else
-    XXTEMoreLinkCell *cell7 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
-    cell7.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell7.iconImage = [UIImage imageNamed:@"XXTEMoreIconUserDefaults"];
-    cell7.titleLabel.text = NSLocalizedString(@"User Defaults", nil);
     
-    XXTEMoreLinkCell *cell15 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLinkCell class]) owner:nil options:nil] lastObject];
-    cell15.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell15.iconImage = [UIImage imageNamed:@"XXTEMoreIconAbout"];
-    cell15.titleLabel.text = NSLocalizedString(@"About", nil);
-#endif
-    
-#ifndef APPSTORE
     staticCells = @[
                     [@[ cell1, cellAddress1, cellAddress2 ] mutableCopy],
                     //
@@ -418,15 +323,6 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
                     //
                     [@[ cell14, cell15 ] mutableCopy],
                     ];
-#else
-    staticCells = @[
-                    [@[cell1] mutableCopy],
-                    //
-                    [@[ cell7 ] mutableCopy],
-                    //
-                    [@[ cell15 ] mutableCopy],
-                    ];
-#endif
     [self updateRemoteAccessAddressDisplay];
 }
 
@@ -463,27 +359,13 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
             if (indexPath.row == 0) {
                 return 66.f;
             } else {
-                if (@available(iOS 8.0, *)) {
-                    return UITableViewAutomaticDimension;
-                } else {
-                    UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-                    [cell setNeedsUpdateConstraints];
-                    [cell updateConstraintsIfNeeded];
-                    
-                    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-                    [cell setNeedsLayout];
-                    [cell layoutIfNeeded];
-                    
-                    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                    return (height > 0) ? (height + 1.0) : 44.f;
-                }
+                return UITableViewAutomaticDimension;
             }
         }
     }
     return 44.f;
 }
 
-#ifndef APPSTORE
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == self.tableView) {
@@ -649,99 +531,10 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         }
         else
         if (indexPath.section == kXXTEMoreSectionIndexHelp) {
-            NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"SettingsPro.bundle"];
-            if (indexPath.row == kXXTEMoreSectionHelpRowIndexDocuments) {
-                NSString *settingsUIPath = nil;
-                if (@available(iOS 13.0, *)) {
-                    if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
-                    } else {
-                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents-Dark.plist"];
-                    }
-                } else {
-                    settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"Documents.plist"];
-                }
-                XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
-                xuiController.hidesBottomBarWhenPushed = NO;
-                [self.navigationController pushViewController:xuiController animated:YES];
-            }
-            else if (indexPath.row == kXXTEMoreSectionHelpRowIndexAbout) {
-                NSString *settingsUIPath = nil;
-                if (@available(iOS 13.0, *)) {
-                    if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
-                    } else {
-                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About-Dark.plist"];
-                    }
-                } else {
-                    settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
-                }
-                XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
-                xuiController.hidesBottomBarWhenPushed = NO;
-                [self.navigationController pushViewController:xuiController animated:YES];
-            }
+            NSAssert(NO, @"Not implemented");
         }
     }
 }
-#else
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (tableView == self.tableView) {
-        if (indexPath.section == kXXTEMoreSectionIndexRemote) {
-            if (indexPath.row > 0) {
-                NSString *addressText = @"";
-                if (indexPath.row == 1) {
-                    addressText = _webServerUrl;
-                } else if (indexPath.row == 2) {
-                    addressText = _bonjourWebServerUrl;
-                }
-                if (addressText && addressText.length > 0) {
-                    UIViewController *blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 1.0);
-                    [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                            [[UIPasteboard generalPasteboard] setString:addressText];
-                            fulfill(nil);
-                        });
-                    }].finally(^() {
-                        toastMessage(self, NSLocalizedString(@"Remote address has been copied to the pasteboard.", nil));
-                        blockInteractions(blockVC, NO);
-                    });
-                }
-            }
-        }
-        else if (indexPath.section == kXXTEMoreSectionIndexSettings) {
-            if (indexPath.row == kXXTEMoreSectionSettingsRowIndexUserDefaults) {
-                XXTEMoreUserDefaultsController *userDefaultsController = nil;
-                if (@available(iOS 13.0, *)) {
-                    userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStyleInsetGrouped];
-                } else {
-                    userDefaultsController = [[XXTEMoreUserDefaultsController alloc] initWithStyle:UITableViewStyleGrouped];
-                }
-                [self.navigationController pushViewController:userDefaultsController animated:YES];
-            }
-        }
-        else
-            if (indexPath.section == kXXTEMoreSectionIndexHelp) {
-                NSString *settingsBundlePath = [[[NSBundle bundleForClass:[self classForCoder]] resourcePath] stringByAppendingPathComponent:@"Settings.bundle"];
-                if (indexPath.row == kXXTEMoreSectionHelpRowIndexAbout) {
-                    NSString *settingsUIPath = nil;
-                    if (@available(iOS 13.0, *)) {
-                        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-                            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
-                        } else {
-                            settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About-Dark.plist"];
-                        }
-                    } else {
-                        settingsUIPath = [settingsBundlePath stringByAppendingPathComponent:@"About.plist"];
-                    }
-                    XXTEUIViewController *xuiController = [[XXTEUIViewController alloc] initWithPath:settingsUIPath withBundlePath:settingsBundlePath];
-                    xuiController.hidesBottomBarWhenPushed = NO;
-                    [self.navigationController pushViewController:xuiController animated:YES];
-                }
-            }
-    }
-}
-#endif
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (tableView == self.tableView) {
@@ -766,7 +559,6 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
 #pragma mark - UIControl Actions
 
-#ifndef APPSTORE
 - (void)remoteAccessOptionSwitchChanged:(UISwitch *)sender {
     if (sender == self.remoteAccessSwitch) {
         BOOL changeToStatus = sender.on;
@@ -803,60 +595,6 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         });
     }
 }
-#else
-- (void)remoteAccessOptionSwitchChanged:(UISwitch *)sender {
-    XXTEWebDAVClient *davClient = [XXTEWebDAVClient sharedInstance];
-    if (sender == self.remoteAccessSwitch) {
-        BOOL changeToStatus = sender.on;
-        if (davClient.isRunning == changeToStatus) {
-            [self reloadDAVStatusWithDAVClient:davClient];
-        } else {
-            if (changeToStatus) {
-                NSError *startError = nil;
-                [davClient startWithPort:58422 error:&startError];
-                if (startError)
-                {
-                    toastError(self, startError);
-                    [sender setOn:NO animated:YES];
-                    return;
-                }
-            } else {
-                [davClient stop];
-            }
-            self.blockVC = blockInteractionsWithToastAndDelay(self, YES, YES, 2.0);
-            [self.remoteAccessSwitch setHidden:YES];
-            [self.remoteAccessIndicator startAnimating];
-        }
-    }
-}
-#endif
-
-#pragma mark - WebDAV Notifications
-
-#ifdef APPSTORE
-- (void)handleWebDAVNotification:(NSNotification *)aNotification {
-    XXTEWebDAVClient *davClient = aNotification.object;
-    [self reloadDAVStatusWithDAVClient:davClient];
-    if (self.remoteAccessIndicator.isAnimating)
-        [self.remoteAccessIndicator stopAnimating];
-    if (self.remoteAccessSwitch.isHidden)
-        [self.remoteAccessSwitch setHidden:NO];
-    blockInteractions(self.blockVC, NO);
-}
-#endif
-
-#ifdef APPSTORE
-- (void)reloadDAVStatusWithDAVClient:(XXTEWebDAVClient *)davClient {
-    _webServerUrl = davClient.serverURL.absoluteString;
-    _bonjourWebServerUrl = davClient.bonjourServerURL.absoluteString;
-    if (_webServerUrl.length == 0 && davClient.isRunning)
-        _webServerUrl = [[self class] otherInterfaceIPAddresses];
-    [self updateRemoteAccessAddressDisplay];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kXXTEMoreSectionIndexRemote] withRowAnimation:UITableViewRowAnimationAutomatic];
-    if (self.remoteAccessSwitch.on != davClient.isRunning)
-        [self.remoteAccessSwitch setOn:davClient.isRunning animated:NO];
-}
-#endif
 
 #pragma mark - Get other addresses
 
@@ -883,7 +621,6 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
 
 #pragma mark - LGAlertViewDelegate
 
-#ifndef APPSTORE
 - (void)alertViewDestructed:(LGAlertView *)alertView {
     SEL selectors[] = {
         @selector(alertView:restartDaemon:),
@@ -907,18 +644,14 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
     objc_removeAssociatedObjects(alertView);
 #pragma clang diagnostic pop
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertViewCancelled:(LGAlertView *)alertView {
     [alertView dismissAnimated];
     objc_removeAssociatedObjects(alertView);
 }
-#endif
 
 #pragma mark - LGAlertView Actions
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanGPSCaches:(id)obj {
     [alertView dismissAnimated];
     UIViewController *blockVC = blockInteractions(self, YES);
@@ -934,9 +667,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         blockInteractions(blockVC, NO);
     });
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanUICaches:(id)obj {
     [alertView dismissAnimated];
     UIViewController *blockVC = blockInteractions(self, YES);
@@ -950,9 +681,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         blockInteractions(blockVC, NO);
     });
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView cleanAll:(id)obj {
     [alertView dismissAnimated];
     UIViewController *blockVC = blockInteractions(self, YES);
@@ -966,9 +695,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         blockInteractions(blockVC, NO);
     });
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView respringDevice:(id)obj {
     [alertView dismissAnimated];
     UIViewController *blockVC = blockInteractions(self, YES);
@@ -985,9 +712,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         blockInteractions(blockVC, NO);
     });
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView rebootDevice:(id)obj {
     [alertView dismissAnimated];
     UIViewController *blockVC = blockInteractions(self, YES);
@@ -1001,9 +726,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         blockInteractions(blockVC, NO);
     });
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView restartDaemon:(id)obj {
     LGAlertView *alertView1 = [[LGAlertView alloc] initWithActivityIndicatorAndTitle:NSLocalizedString(@"Restart Daemon", nil)
                                                                              message:NSLocalizedString(@"Restart daemon, please wait...", nil)
@@ -1035,9 +758,7 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         
     });
 }
-#endif
 
-#ifndef APPSTORE
 - (void)alertViewRestartDaemonCheckLaunched:(LGAlertView *)alertView {
     [NSURLConnection POST:uAppDaemonCommandUrl(@"get_selected_script_file") JSON:@{  }].then(convertJsonString).then(^(NSDictionary *jsonDictionary) {
         if ([jsonDictionary[@"code"] isEqualToNumber:@0]) {
@@ -1071,54 +792,15 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         
     });
 }
-#endif
 
 #pragma mark - Notifications
 
-#ifndef APPSTORE
 - (void)handleApplicationNotification:(NSNotification *)aNotification {
     NSDictionary *userInfo = aNotification.userInfo;
     NSString *eventType = userInfo[XXTENotificationEventType];
     if ([eventType isEqualToString:XXTENotificationEventTypeApplicationDidBecomeActive]) {
         [self reloadDynamicTableViewData];
     }
-}
-#endif
-
-#pragma mark - UIView Getters
-
-- (UIBarButtonItem *)flexItem {
-    if (!_flexItem) {
-        UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"FLEX", nil) style:UIBarButtonItemStylePlain target:self action:@selector(flexItemTapped:)];
-        _flexItem = flexItem;
-    }
-    return _flexItem;
-}
-
-#ifdef APPSTORE
-- (UIBarButtonItem *)closeItem {
-    if (!_closeItem) {
-        UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(closeItemTapped:)];
-        _closeItem = closeItem;
-    }
-    return _closeItem;
-}
-#endif
-
-#pragma mark - UIControl Actions
-
-#ifdef APPSTORE
-- (void)closeItemTapped:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-#endif
-
-- (void)flexItemTapped:(UIBarButtonItem *)sender {
-#if defined(DEBUG) && !defined(ARCHIVE) && !defined(APPSTORE)
-    if (@available(iOS 8.0, *)) {
-        [[FLEXManager sharedManager] showExplorer];
-    }
-#endif
 }
 
 #pragma mark - Log Viewer
@@ -1129,10 +811,8 @@ static NSString * const kXXTEDaemonErrorLogPath = @"DAEMON_ERROR_LOG_PATH";
         UIViewController <XXTEDetailViewController> *viewer = (UIViewController <XXTEDetailViewController> *)controller;
         if (XXTE_COLLAPSED) {
             XXTE_START_IGNORE_PARTIAL
-            if (@available(iOS 8.0, *)) {
-                XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
-                [self.splitViewController showDetailViewController:navigationController sender:self];
-            }
+            XXTENavigationController *navigationController = [[XXTENavigationController alloc] initWithRootViewController:viewer];
+            [self.splitViewController showDetailViewController:navigationController sender:self];
             XXTE_END_IGNORE_PARTIAL
         } else {
             [self.navigationController pushViewController:viewer animated:YES];

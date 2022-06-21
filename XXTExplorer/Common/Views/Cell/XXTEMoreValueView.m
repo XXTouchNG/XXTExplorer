@@ -155,11 +155,7 @@
 - (UILabel *)sizeLabel {
     if (!_sizeLabel) {
         UILabel *sizeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        if (@available(iOS 9.0, *)) {
-            sizeLabel.font = [UIFont monospacedDigitSystemFontOfSize:36.f weight:UIFontWeightMedium];
-        } else {
-            sizeLabel.font = [UIFont boldSystemFontOfSize:36.f];
-        }
+        sizeLabel.font = [UIFont monospacedDigitSystemFontOfSize:36.f weight:UIFontWeightMedium];
         sizeLabel.textColor = XXTColorForeground();
         _sizeLabel = sizeLabel;
     }
@@ -186,11 +182,5 @@
         CGContextStrokePath(ctx);
     }
 }
-
-//- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-//    if (@available(iOS 13.0, *)) {
-//        [self setNeedsLayout];
-//    }
-//}
 
 @end

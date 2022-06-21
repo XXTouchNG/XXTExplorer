@@ -125,9 +125,7 @@ typedef enum : NSUInteger {
     }
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"Create Item", nil);
@@ -137,9 +135,7 @@ typedef enum : NSUInteger {
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
     if ([self.navigationController.viewControllers firstObject] == self) {
@@ -147,9 +143,7 @@ typedef enum : NSUInteger {
     }
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
     [self reloadTemplatePathDisplay];
@@ -317,20 +311,7 @@ typedef enum : NSUInteger {
             return 66.f;
         }
         else if (indexPath.section == kXXTExplorerCreateItemViewSectionIndexLocation) {
-            if (@available(iOS 8.0, *)) {
-                return UITableViewAutomaticDimension;
-            } else {
-                UITableViewCell *cell = staticCells[indexPath.section][indexPath.row];
-                [cell setNeedsUpdateConstraints];
-                [cell updateConstraintsIfNeeded];
-                
-                cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-                [cell setNeedsLayout];
-                [cell layoutIfNeeded];
-                
-                CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                return (height > 0) ? (height + 1.0) : 44.f;
-            }
+            return UITableViewAutomaticDimension;
         }
     }
     return 44.f;

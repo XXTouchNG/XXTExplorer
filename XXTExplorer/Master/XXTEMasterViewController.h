@@ -14,24 +14,12 @@
 
 typedef enum : NSUInteger {
     kMasterViewControllerIndexExplorer = 0,
-#ifndef APPSTORE
-#ifdef RMCLOUD_ENABLED
-    kMasterViewControllerIndexCloud,
-#endif
     kMasterViewControllerIndexMore,
-#endif
     kMasterViewControllerIndexMax,
 } kMasterViewControllerIndex;
 
-#ifndef APPSTORE
 @interface XXTEMasterViewController : UITabBarController
-#else
-@interface XXTEMasterViewController : XXTENavigationController
-#endif
-
-#ifndef APPSTORE
 - (void)checkUpdate;
-#endif
 
 #pragma mark - Convenience Getters
 @property (nonatomic, strong, readonly) XXTExplorerViewController *topmostExplorerViewController;

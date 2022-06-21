@@ -7,7 +7,6 @@
 //
 
 #import "XXTExplorerItemPicker.h"
-#import "XXTExplorerSearchResultsViewController.h"
 #import "XXTExplorerDefaults.h"
 
 #import "XXTExplorerToolbar.h"
@@ -61,9 +60,7 @@
     }
     [self.navigationItem setRightBarButtonItems:rightItems];
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self.toolbar updateStatus:XXTExplorerToolbarStatusReadonly];
     [self.footerView setEmptyMode:NO];
@@ -165,18 +162,6 @@
         else if (XXTExplorerViewSectionIndexHome == indexPath.section)
         {
             // impossible
-        }
-    } else if (tableView == self.searchResultsController.tableView) {
-        if (indexPath.section == 0) {
-            XXTExplorerEntry *entryDetail = self.searchResultsController.filteredEntryList[indexPath.row];
-            [self.searchController setActive:NO];
-            UIViewController *blockVC = blockInteractions(self, YES);
-            @weakify(self);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                @strongify(self);
-                blockInteractions(blockVC, NO);
-                [self performPickerActionWithEntry:entryDetail];
-            });
         }
     }
 }

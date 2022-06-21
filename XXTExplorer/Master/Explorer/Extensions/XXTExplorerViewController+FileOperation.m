@@ -19,7 +19,6 @@
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
 
 #import <sys/stat.h>
-#import "xui32.h"
 
 
 @interface XXTExplorerViewController () <LGAlertViewDelegate>
@@ -30,7 +29,6 @@
 
 #pragma mark - File Operations
 
-#ifndef APPSTORE
 - (void)alertView:(LGAlertView *)alertView encryptEntry:(XXTExplorerEntry *)entryDetail {
     NSString *currentPath = self.entryPath;
     XXTExplorerEntryReader *entryReader = entryDetail.entryReader;
@@ -116,37 +114,12 @@
                     
                 });
             } else {
-                xui_32 *xui = XUICreateWithContentsOfFile(entryPath.UTF8String);
-                if (xui) {
-                    int result = XUIWriteToFile(encryptedPath.UTF8String, xui);
-                    XUIRelease(xui);
-                    if (result == 0) {
-                        dispatch_async_on_main_queue(^{
-                            self.busyOperationProgressFlag = NO;
-                            completionBlock(YES, nil);
-                        });
-                    } else {
-                        dispatch_async_on_main_queue(^{
-                            self.busyOperationProgressFlag = NO;
-                            NSString *errorMessage =
-                            [NSString stringWithFormat:NSLocalizedString(@"Cannot open: \"%@\"", nil), encryptedPath];
-                            completionBlock(NO, [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}]);
-                        });
-                    }
-                } else {
-                    dispatch_async_on_main_queue(^{
-                        self.busyOperationProgressFlag = NO;
-                        NSString *errorMessage =
-                        [NSString stringWithFormat:NSLocalizedString(@"Cannot encrypt: %@", nil), NSLocalizedString(@"Invalid RAW Data.", nil)];
-                        completionBlock(NO, [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}]);
-                    });
-                }
+                NSAssert(NO, @"Not implemented");
             }
             
         });
     });
 }
-#endif
 
 - (void)alertView:(LGAlertView *)alertView movePasteboardItemsAtPath:(NSString *)path {
     NSArray <NSString *> *storedPaths = [self.class.explorerPasteboard strings];

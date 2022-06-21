@@ -8,7 +8,6 @@
 
 #import "XXTEEditor.h"
 #import "XXTEEditorTextProperties.h"
-#import "XXTETerminalDelegate.h"
 
 // Encoding
 #import "XXTENavigationController.h"
@@ -18,11 +17,7 @@
 
 @class SKAttributedParser, XXTEEditorTextView, XXTEEditorToolbar, XXTEEditorTheme, XXTEEditorLanguage, XXTPickerFactory, XXTEEditorMaskView;
 
-#ifdef APPSTORE
-@interface XXTEEditorController : UIViewController <XXTEEditor, XXTETerminalViewControllerDelegate, UIPopoverPresentationControllerDelegate, XXTEEncodingControllerDelegate>
-#else
-@interface XXTEEditorController : UIViewController <XXTEEditor, XXTETerminalViewControllerDelegate, UIPopoverPresentationControllerDelegate>
-#endif
+@interface XXTEEditorController : UIViewController <XXTEEditor, UIPopoverPresentationControllerDelegate>
 
 // syntax properties
 @property (nonatomic, strong, readonly) XXTEEditorTheme *theme;

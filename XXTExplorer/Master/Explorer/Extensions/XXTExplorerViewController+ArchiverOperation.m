@@ -16,13 +16,7 @@
 #import <sys/stat.h>
 #import <objc/runtime.h>
 
-#ifdef APPSTORE
-#import <zlib.h>
-#import <UnrarKit/UnrarKit.h>
-#import <SSZipArchive/SSZipArchive.h>
-#else
 #import "zip.h"
-#endif
 
 typedef enum : NSUInteger {
     XXTEArchiveTypeZip = 0,
@@ -59,35 +53,6 @@ typedef enum : NSUInteger {
     NSMutableArray <NSString *> *entryNames = [[NSMutableArray alloc] initWithCapacity:indexPaths.count];
     for (XXTExplorerEntry *entryDetail in entryDetails) {
         [entryNames addObject:entryDetail.entryName];
-    }
-    if (entryNames.count == 1 && entryDetails.count == 1)
-    {
-        XXTExplorerEntry *entryDetail = entryDetails[0];
-        NSString *entryBaseExtension = entryDetail.entryExtension;
-        if (entryDetail.isDirectory &&
-            [entryBaseExtension isEqualToString:@"xpp"])
-        {
-            LGAlertView *alertView1 =
-            [[LGAlertView alloc] initWithTitle:NSLocalizedString(@"Package Operation", nil)
-                                       message:[NSString stringWithFormat:NSLocalizedString(@"Choose an package operation for \"%@\".", nil), entryDetail.localizedDisplayName]
-                                         style:LGAlertViewStyleActionSheet
-                                  buttonTitles:@[ NSLocalizedString(@"Continue as Archive", nil) ]
-                             cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                        destructiveButtonTitle:NSLocalizedString(@"Create Package", nil)
-                                 actionHandler:^(LGAlertView * _Nonnull alertViewA, NSUInteger index, NSString * _Nullable title) {
-                                     if (index == 0) { [self alertView:alertViewA archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"]; } else { [alertViewA dismissAnimated]; }
-                                 } cancelHandler:^(LGAlertView * _Nonnull alertViewA) {
-                                     [alertViewA dismissAnimated];
-                                 } destructiveHandler:^(LGAlertView * _Nonnull alertViewA) {
-                                     [self alertView:alertViewA archiveEntriesAtPaths:entryNames baseDirectory:@"Payload" baseExtension:@"xpa"];
-                                 }];
-            if (alertView && alertView.isShowing) {
-                [alertView transitionToAlertView:alertView1 completionHandler:nil];
-            } else {
-                [alertView1 showAnimated];
-            }
-            return;
-        }
     }
     // Archive directly
     [self alertView:alertView archiveEntriesAtPaths:entryNames baseDirectory:@"" baseExtension:@"zip"];
@@ -127,20 +92,6 @@ typedef enum : NSUInteger {
     void (^callbackBlock)(NSString *) = ^(NSString *filename) {
         alertView1.progressLabelText = filename;
     };
-#ifdef APPSTORE
-    BOOL (^ss_did_add)(NSString *, NSUInteger, NSUInteger) = ^BOOL(NSString *entry, NSUInteger entryNumber, NSUInteger total) {
-        // display
-        dispatch_async_on_main_queue(^{
-            callbackBlock(entry);
-        });
-        // check cancel flag
-        if (!self.busyOperationProgressFlag)
-        {
-            return NO;
-        }
-        return YES;
-    };
-#endif
     @weakify(self);
     void (^completionBlock)(BOOL, NSError *) = ^(BOOL result, NSError *error) {
         @strongify(self);
@@ -182,34 +133,6 @@ typedef enum : NSUInteger {
         return;
     }
     self.busyOperationProgressFlag = YES;
-#ifdef APPSTORE
-    NSMutableArray <NSString *> *entryPaths = [[NSMutableArray alloc] initWithCapacity:entryNames.count];
-    for (NSString *entryName in entryNames) {
-        [entryPaths addObject:[currentPath stringByAppendingPathComponent:entryName]];
-    }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            NSError *error = nil;
-            BOOL result = [SSZipArchive createZipFileAtPath:archivePath withContentsOfItems:entryPaths compressionLevel:Z_DEFAULT_COMPRESSION password:nil AES:YES progressHandler:ss_did_add];
-            if (!result)
-            {
-                if (!self.busyOperationProgressFlag)
-                {
-                    error = [NSError errorWithDomain:kXXTErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Archiving process terminated: user interrupt occurred.", nil)}];
-                }
-                else
-                {
-                    error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Cannot create archive file \"%@\".", nil), archivePath]}];
-                }
-            }
-            // update result in main thread
-            dispatch_async_on_main_queue(^{
-                self.busyOperationProgressFlag = NO;
-                completionBlock(result, error);
-            }); // end updating
-        });
-    });
-#else
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSFileManager *fileManager1 = [[NSFileManager alloc] init];
@@ -270,15 +193,10 @@ typedef enum : NSUInteger {
             });
         });
     });
-#endif
 }
 
 static int32_t const kZipArchiveHeaderLocalDirMagic = 0x04034b50;
 static int32_t const kZipArchiveHeaderCentralDirMagic = 0x02014b50;
-
-#ifdef APPSTORE
-static int32_t const kRarArchiveHeaderMagic = 0x21726152;
-#endif
 
 - (void)alertView:(LGAlertView *)alertView unarchiveEntryPath:(NSString *)entryPath {
     [self alertView:alertView unarchiveEntryPath:entryPath password:nil];
@@ -345,18 +263,10 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
         }
         return 0;
     };
-#ifdef APPSTORE
-    BOOL (^ss_did_extract)(NSString *, unz_file_info, long, long) = ^BOOL(NSString *entry, unz_file_info zipInfo, long entryNumber, long total) {
-        return (did_extract(entry.fileSystemRepresentation, NULL) == 0);
-    };
-    BOOL (^did_extract_rar)(URKFileInfo *, CGFloat) = ^BOOL(URKFileInfo *currentFile, CGFloat percentArchiveDecompressed) {
-        return (did_extract(currentFile.filename.fileSystemRepresentation, NULL) == 0);
-    };
-#else
+    
     int (^will_extract)(const char *, void *) = ^int(const char *filename, void *arg) {
         return zip_extract_override;
     };
-#endif
     
     void (^completionBlock)(BOOL, NSArray <NSString *> *, NSError *) = ^(BOOL result, NSArray <NSString *> *createdEntries, NSError *error) {
         @strongify(self);
@@ -430,12 +340,6 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
     {
         archiveType = XXTEArchiveTypeZip;
     }
-#ifdef APPSTORE
-    else if (header_magic == kRarArchiveHeaderMagic)
-    {
-        archiveType = XXTEArchiveTypeRar;
-    }
-#endif
     else
     {
         fclose(fp);
@@ -444,64 +348,6 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
         return;
     }
     fclose(fp);
-    
-#ifdef APPSTORE
-    if (!password)
-    {
-        // destinationPath UTF-8 representation
-        const char *from = [entryPath fileSystemRepresentation];
-        NSString *fromPath = [[NSString alloc] initWithUTF8String:from];
-        
-        BOOL passwordProtected = NO;
-        if (archiveType == XXTEArchiveTypeZip)
-        {
-            passwordProtected = [SSZipArchive isFilePasswordProtectedAtPath:fromPath];
-        }
-        else if (archiveType == XXTEArchiveTypeRar)
-        {
-            NSError *passwordCheckError = nil;
-            URKArchive *rarArchive = [[URKArchive alloc] initWithPath:fromPath error:&passwordCheckError];
-            if (rarArchive)
-            {
-                passwordProtected = [rarArchive isPasswordProtected];
-            }
-            else
-            {
-                completionBlock(NO, @[], passwordCheckError);
-            }
-        }
-        if (passwordProtected)
-        {
-            LGAlertView *passwordAlert = [LGAlertView alertViewWithTextFieldsAndTitle:NSLocalizedString(@"Password Protected", nil)
-                                                                              message:NSLocalizedString(@"Enter the password of this archive.", nil)
-                                                                   numberOfTextFields:1
-                                                               textFieldsSetupHandler:^(UITextField * _Nonnull textField, NSUInteger index) {
-                                                                   textField.secureTextEntry = YES;
-                                                                   textField.placeholder = NSLocalizedString(@"Password", nil);
-                                                               }
-                                                                         buttonTitles:@[ NSLocalizedString(@"Confirm", nil) ]
-                                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                               destructiveButtonTitle:nil
-                                                                        actionHandler:^(LGAlertView * _Nonnull passwordAlert0, NSUInteger index, NSString * _Nullable title) {
-                                                                            @strongify(self);
-                                                                            NSString *password = ((UITextField *)[passwordAlert0.textFieldsArray lastObject]).text;
-                                                                            [self alertView:passwordAlert0 unarchiveEntryPath:entryPath password:password];
-                                                                        }
-                                                                        cancelHandler:^(LGAlertView * _Nonnull passwordAlert0) {
-                                                                            [passwordAlert0 dismissAnimated];
-                                                                        } destructiveHandler:nil];
-            if (alertView && alertView.isShowing)
-            {
-                [alertView transitionToAlertView:passwordAlert completionHandler:nil];
-            }
-            else
-            {
-                [passwordAlert showAnimated];
-            }
-            return;
-        }
-    }
-#endif
     
     // show procress alert view
     if (alertView && alertView.isShowing)
@@ -526,10 +372,6 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
             // destinationPath UTF-8 representation
             const char *from = [entryPath fileSystemRepresentation];
             const char *to = [destinationPathWithIndex fileSystemRepresentation];
-#ifdef APPSTORE
-            NSString *fromPath = [[NSString alloc] initWithUTF8String:from];
-            NSString *toPath = [[NSString alloc] initWithUTF8String:to];
-#endif
             
             // define error
             NSError *error = nil;
@@ -544,45 +386,10 @@ static int32_t const kRarArchiveHeaderMagic = 0x21726152;
             {
                 if (archiveType == XXTEArchiveTypeZip)
                 {
-#ifdef APPSTORE
-                    result = [SSZipArchive unzipFileAtPath:fromPath toDestination:toPath overwrite:YES password:password progressHandler:ss_did_extract completionHandler:nil];
-#else
                     int arg = 2;
                     int status = zip_extract(from, to, will_extract, did_extract, &arg);
                     result = (status == 0);
-#endif
                 }
-#ifdef APPSTORE
-                else if (archiveType == XXTEArchiveTypeRar)
-                {
-                    URKArchive *rarArchive = [[URKArchive alloc] initWithPath:fromPath error:&error];
-                    if (password)
-                    {
-                        rarArchive.password = password;
-                    }
-                    if (rarArchive)
-                    {
-                        if (
-                            (![rarArchive isPasswordProtected]) || // not protected
-                            (password && [rarArchive isPasswordProtected] && [rarArchive validatePassword]) // protected and valid
-                            )
-                        {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                            result = [rarArchive extractFilesTo:toPath overwrite:YES progress:did_extract_rar error:&error];
-#pragma clang diagnostic pop
-                        }
-                        else
-                        {
-                            result = NO;
-                        }
-                    }
-                    else
-                    {
-                        result = NO;
-                    }
-                }
-#endif
                 
                 // error handling
                 if (!result)

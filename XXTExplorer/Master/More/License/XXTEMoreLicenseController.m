@@ -96,9 +96,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     }
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 8.0, *)) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
-    }
+    self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     XXTE_END_IGNORE_PARTIAL
     
     self.title = NSLocalizedString(@"License & Device", nil);
@@ -112,9 +110,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     XXTE_START_IGNORE_PARTIAL
-    if (@available(iOS 9.0, *)) {
-        self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     XXTE_END_IGNORE_PARTIAL
     
     if ([self.navigationController.viewControllers firstObject] == self) {
@@ -122,9 +118,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     }
     self.navigationItem.rightBarButtonItem = self.doneButtonItem;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
     [self reloadStaticTableViewData];
     [self reloadDynamicTableViewDataWithCompletion:nil];
@@ -457,7 +451,9 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
                         [alertView dismissAnimated];
                         UIApplication *sharedApplication = [UIApplication sharedApplication];
                         if ([sharedApplication canOpenURL:url]) {
+                            XXTE_START_IGNORE_PARTIAL
                             [sharedApplication openURL:url];
+                            XXTE_END_IGNORE_PARTIAL
                         }
                     }];
                     [buyAlert showAnimated];

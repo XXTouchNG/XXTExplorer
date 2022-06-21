@@ -84,11 +84,7 @@
     if (supported)
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
-        if (@available(iOS 13.0, *)) {
-            cell.valueLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.valueLabel.textColor = [UIColor darkGrayColor];
-        }
+        cell.valueLabel.textColor = [UIColor secondaryLabelColor];
         cell.valueLabel.text = [elementValue xui_stringValue];
     }
     else

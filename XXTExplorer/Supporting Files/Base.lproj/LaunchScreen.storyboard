@@ -29,12 +29,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="selectedImageTintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.70980392160000005" green="0.74117647060000003" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" red="0.70980392156862748" green="0.74117647058823533" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="A8E-mk-ZRk" kind="relationship" relationship="viewControllers" id="eNz-vY-or7"/>
-                        <segue destination="mre-Ji-jkd" kind="relationship" relationship="viewControllers" id="7AK-L8-xHP"/>
                         <segue destination="BkR-Qj-wNG" kind="relationship" relationship="viewControllers" id="HEP-p0-8C7"/>
                     </connections>
                 </tabBarController>
@@ -66,25 +65,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BgJ-Iu-chi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-612" y="1178"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="bZE-S5-iU2">
-            <objects>
-                <viewController id="OaK-Ga-20o" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2VG-1K-Yqm"/>
-                        <viewControllerLayoutGuide type="bottom" id="It2-jB-52v"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="JDO-oQ-hjQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Pol-O5-voO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rC4-Yw-CMJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="148" y="-251"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="F3C-xF-v5Z">
@@ -167,30 +147,6 @@
             <point key="canvasLocation" x="-1375" y="-251"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="btE-1t-GQ8">
-            <objects>
-                <navigationController id="mre-Ji-jkd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="RMCloudTabbarIcon" id="63x-gd-UFH"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3Qf-26-cY4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.11372549019607843" green="0.12156862745098039" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="OaK-Ga-20o" kind="relationship" relationship="rootViewController" id="D1p-4d-omD"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rCU-4i-Nu7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-612" y="-251"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="dZd-ZX-8zS">
             <objects>
                 <navigationController id="BkR-Qj-wNG" sceneMemberID="viewController">
@@ -218,7 +174,6 @@
     </scenes>
     <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
     <resources>
-        <image name="RMCloudTabbarIcon" width="23" height="22"/>
         <image name="XXTEMoreTabbarIcon" width="24" height="24"/>
         <image name="XXTExplorerTabbarIcon" width="24" height="23"/>
         <systemColor name="groupTableViewBackgroundColor">

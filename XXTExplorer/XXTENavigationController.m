@@ -33,22 +33,20 @@
     [barAppearance setTintColor:XXTColorTint()];
     [barAppearance setBarTintColor:XXTColorBarTint()];
     [barAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f] }];
-    if (@available(iOS 11.0, *)) {
-        [barAppearance setLargeTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:24.f] }];
-        [barAppearance setPrefersLargeTitles:YES];
-    }
+    [barAppearance setLargeTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:24.f] }];
+    [barAppearance setPrefersLargeTitles:YES];
 
+    XXTE_START_IGNORE_PARTIAL
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[self class], nil];
+    XXTE_END_IGNORE_PARTIAL
     [navigationBarAppearance setTintColor:XXTColorTint()];
     [navigationBarAppearance setBarTintColor:XXTColorBarTint()];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
-    if (@available(iOS 11.0, *)) {
-        [navigationBarAppearance setTranslucent:YES];
-    } else if (@available(iOS 8.0, *)) {
-        [navigationBarAppearance setTranslucent:NO];
-    }
+    [navigationBarAppearance setTranslucent:YES];
 
+    XXTE_START_IGNORE_PARTIAL
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
+    XXTE_END_IGNORE_PARTIAL
     [barButtonItemAppearance setTintColor:XXTColorTint()];
     [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorTint(), NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateNormal];
     [barButtonItemAppearance setTitleTextAttributes:@{ NSForegroundColorAttributeName: [XXTColorTint() colorWithAlphaComponent:0.3], NSFontAttributeName: [UIFont systemFontOfSize:17.0] } forState:UIControlStateDisabled];
@@ -85,11 +83,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationBar.translucent = YES;
-    } else {
-        self.navigationBar.translucent = NO;
-    }
+    self.navigationBar.translucent = YES;
 }
 
 @end

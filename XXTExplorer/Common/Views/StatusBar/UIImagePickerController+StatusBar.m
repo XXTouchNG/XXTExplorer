@@ -11,11 +11,7 @@
 @implementation UIImagePickerController (StatusBar)
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-#ifndef APPSTORE
     return UIStatusBarStyleLightContent;
-#else
-    return UIStatusBarStyleDefault;
-#endif
 }
 
 @end

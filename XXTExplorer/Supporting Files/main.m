@@ -121,7 +121,7 @@ void patch_setuidandplatformize()
 
 #endif
 
-void plugin_i_love_xxtouch() {
+void plugin_i_love_xxtouch(void) {
     
 }
 

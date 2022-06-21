@@ -12,8 +12,6 @@
 #import "XXTEDictionaryObjectViewController.h"
 #import "XXTExplorerEntryObjectReader.h"
 
-#import <XUI/XUITheme.h>
-
 @interface XXTEObjectViewController ()
 
 @end
@@ -130,16 +128,8 @@
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.editing = NO;
         XXTE_START_IGNORE_PARTIAL
-        if (@available(iOS 9.0, *)) {
-            tableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
+        tableView.cellLayoutMarginsFollowReadableWidth = NO;
         XXTE_END_IGNORE_PARTIAL
-        /*
-        if (theme) {
-            tableView.backgroundColor = theme.backgroundColor;
-            tableView.separatorColor = theme.separatorColor;
-        }
-         */
         tableView;
     });
     
@@ -151,9 +141,7 @@
     }
     XXTE_END_IGNORE_PARTIAL
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 }
 
 #pragma mark - UIView Getters
@@ -181,7 +169,5 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-@synthesize awakeFromOutside;
 
 @end

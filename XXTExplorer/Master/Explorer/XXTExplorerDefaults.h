@@ -16,7 +16,7 @@
 #pragma mark - Defaults
 
 static NSString * const XXTExplorerViewBuiltInitialPath = @"EXPLORER_INITIAL_PATH";
-static NSString * const XXTExplorerViewBuiltHistoryPath = @"EXPLORER_HISTORY_PATH";
+static NSString * const XXTExplorerViewBuiltCachesPath = @"EXPLORER_CACHES_PATH";
 static NSString * const XXTExplorerViewBuiltHomeSeries = @"EXPLORER_HOME_SERIES";
 
 static NSString * const XXTExplorerViewEntryHomeEnabledKey = @"XXTExplorerViewEntryHomeEnabledKey";
@@ -30,9 +30,7 @@ static NSString * const XXTExplorerAllowOpenMethodKey = @"XXTExplorerAllowOpenMe
 static NSString * const XXTExplorerAllowEditingFileOwnerKey = @"XXTExplorerAllowEditingFileOwnerKey";
 static NSString * const XXTExplorerViewEntryHideOperationLabelKey = @"XXTExplorerViewEntryHideOperationLabelKey";
 static NSString * const XXTExplorerPasteboardDetectOnActiveKey = @"XXTExplorerPasteboardDetectOnActiveKey";
-static NSString * const XXTExplorerAllowsImportFromAlbum = @"XXTExplorerAllowsImportFromAlbum";
 static NSString * const XXTExplorerFixFileOwnerAutomaticallyKey = @"XXTExplorerFixFileOwnerAutomaticallyKey";
-static NSString * const XXTExplorerHistoryStoreLimit = @"XXTExplorerHistoryStoreLimit";
 
 #pragma mark - Templates
 
@@ -43,19 +41,6 @@ static NSString * const XXTExplorerCreateItemTemplatePathKey = @"XXTExplorerCrea
 static NSString * const XXTExplorerDefaultEncodingKey = @"XXTExplorerDefaultEncodingKey";
 static NSString * const XXTExplorerViewerRegexSearch = @"XXTExplorerViewerRegexSearch";
 static NSString * const XXTExplorerViewerCaseSensitiveSearch = @"XXTExplorerViewerCaseSensitiveSearch";
-static NSString * const XXTExplorerTerminalShowPrompt = @"XXTExplorerTerminalShowPrompt";
-static NSString * const XXTExplorerTerminalSaveLogs = @"XXTExplorerTerminalSaveLogs";
-static NSString * const XXTExplorerTerminalLogStoreLimit = @"XXTExplorerTerminalLogStoreLimit";
-
-#pragma mark - Editor Defaults
-
-static NSString * const XXTExplorerTerminalPresentationStyle = @"XXTExplorerTerminalPresentationStyle";
-
-typedef enum : NSUInteger {
-    XXTETerminalPresentationStylePush = 0,
-    XXTETerminalPresentationStylePresentInModal,
-    XXTETerminalPresentationStylePresentAsPopover,
-} XXTETerminalPresentationStyle;
 
 #pragma mark - Item Picker Defaults
 

@@ -215,19 +215,11 @@ static const CGFloat kColumnMargin = 1;
         for (int i = 0 ; i < cell.labels.count; i++) {
             
             UILabel *label  = cell.labels[i];
-            if (@available(iOS 13.0, *)) {
-                label.textColor = [UIColor labelColor];
-            } else {
-                label.textColor = [UIColor blackColor];
-            }
+            label.textColor = [UIColor labelColor];
             
             NSString *content = [NSString stringWithFormat:@"%@",self.rowData[i]];
             if ([content isEqualToString:@"<null>"]) {
-                if (@available(iOS 13.0, *)) {
-                    label.textColor = [UIColor secondaryLabelColor];
-                } else {
-                    label.textColor = [UIColor darkGrayColor];
-                }
+                label.textColor = [UIColor secondaryLabelColor];
                 content = @"NULL";
             }
             label.text            = content;

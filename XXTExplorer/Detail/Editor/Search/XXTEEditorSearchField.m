@@ -28,11 +28,9 @@
     self.autocorrectionType = UITextAutocorrectionTypeNo;
     self.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.spellCheckingType = UITextSpellCheckingTypeNo;
-    if (@available(iOS 11.0, *)) {
-        self.smartDashesType = UITextSmartDashesTypeNo;
-        self.smartQuotesType = UITextSmartQuotesTypeNo;
-        self.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
-    }
+    self.smartDashesType = UITextSmartDashesTypeNo;
+    self.smartQuotesType = UITextSmartQuotesTypeNo;
+    self.smartInsertDeleteType = UITextSmartInsertDeleteTypeNo;
     self.enablesReturnKeyAutomatically = YES;
     self.keyboardAppearance = UIKeyboardAppearanceDefault;
     self.font = [UIFont systemFontOfSize:14.0];

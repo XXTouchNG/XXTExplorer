@@ -9,8 +9,6 @@
 #import "XXTEMasterViewController.h"
 #import "XXTEScanViewController.h"
 
-#ifndef APPSTORE
-
 @interface XXTEMasterViewController (Notifications) <XXTEScanViewControllerDelegate>
 
 - (void)registerNotifications;
@@ -18,14 +16,3 @@
 - (void)presentWebViewControllerWithURL:(NSURL *)url;
 
 @end
-
-#else
-
-@interface XXTEMasterViewController (Notifications)
-
-- (void)registerNotifications;
-- (void)removeNotifications;
-
-@end
-
-#endif

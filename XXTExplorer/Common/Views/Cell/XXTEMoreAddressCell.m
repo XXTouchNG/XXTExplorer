@@ -34,20 +34,6 @@
     }
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    if (@available(iOS 8.0, *)) {
-        
-    } else {
-        XXTEAutoLabel *label = self.addressLabel;
-        CGFloat boundsWidth = CGRectGetWidth(label.bounds);
-        if (label.preferredMaxLayoutWidth != boundsWidth) {
-            label.preferredMaxLayoutWidth = boundsWidth;
-            [label setNeedsUpdateConstraints];
-        }
-    }
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

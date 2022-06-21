@@ -56,19 +56,11 @@
     _showInvisibleCharacters = NO;
     _indentWrappedLines = YES;
     
-    if (@available(iOS 13.0, *)) {
-        _invisibleColor = [UIColor tertiaryLabelColor];
-        _invisibleFont = [UIFont systemFontOfSize:14.f];
-        _lineNumberColor = [UIColor secondaryLabelColor];
-        _bulletColor = [[UIColor secondaryLabelColor] colorWithAlphaComponent:0.45];
-        _lineNumberFont = [UIFont systemFontOfSize:14.0];
-    } else {
-        _invisibleColor = [UIColor grayColor];
-        _invisibleFont = [UIFont systemFontOfSize:14.f];
-        _lineNumberColor = [UIColor darkGrayColor];
-        _bulletColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.45];
-        _lineNumberFont = [UIFont systemFontOfSize:14.0];
-    }
+    _invisibleColor = [UIColor tertiaryLabelColor];
+    _invisibleFont = [UIFont systemFontOfSize:14.f];
+    _lineNumberColor = [UIColor secondaryLabelColor];
+    _bulletColor = [[UIColor secondaryLabelColor] colorWithAlphaComponent:0.45];
+    _lineNumberFont = [UIFont systemFontOfSize:14.0];
     
     _numberOfDigits = 3;
     _gutterWidth = 0.0;
