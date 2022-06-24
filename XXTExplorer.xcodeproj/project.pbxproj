@@ -560,7 +560,6 @@
 		0F2CD3541F3B5CAB00110772 /* XXTEUpdatePackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdatePackage.m; sourceTree = "<group>"; };
 		0F2CD3551F3B5CAB00110772 /* XXTEUpdateAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEUpdateAgent.h; sourceTree = "<group>"; };
 		0F2CD3561F3B5CAB00110772 /* XXTEUpdateAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEUpdateAgent.m; sourceTree = "<group>"; };
-		0F31D43420EB90850091130D /* _XXTAppEntitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = _XXTAppEntitlements.xml; sourceTree = "<group>"; };
 		0F3508C31F166A7B000403FD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0F35F2071F1068E500B5B327 /* XXTEMoreUserDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEMoreUserDefaultsController.h; sourceTree = "<group>"; };
 		0F35F2081F1068E500B5B327 /* XXTEMoreUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XXTEMoreUserDefaultsController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1644,7 +1643,6 @@
 				D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */,
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
 				0FA1A5021FF13CD10021648B /* Archive-Info.plist */,
-				0F31D43420EB90850091130D /* _XXTAppEntitlements.xml */,
 				0FE1629C1F3C8FFC003064B2 /* InfoPlist.strings */,
 				0F3508C21F166A69000403FD /* Localizable.strings */,
 				0FE1E4361F189A1600055E02 /* Meta.strings */,

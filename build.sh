@@ -54,11 +54,12 @@ fi
 # fi
 
 # 4
+cp ent.xml "${SRC_DIR}/Products/Applications"/ent.xml
 cd "${SRC_DIR}/Products/Applications"
 codesign --remove-signature XXTExplorer.app
 rm -r XXTExplorer.app/_CodeSignature
 rm XXTExplorer.app/embedded.mobileprovision
-ldid -S XXTExplorer.app/XXTExplorer
+ldid -Sent.xml XXTExplorer.app/XXTExplorer
 
 # 5
 echo "Succeed."
