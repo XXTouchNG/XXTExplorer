@@ -430,7 +430,6 @@
 		D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0FB009051F4359FF00097E9C /* SKTheme.plist */; };
 		D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD973FC1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib */; };
 		D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F3508C21F166A69000403FD /* Localizable.strings */; };
-		D60FE7AD1FE2369300954818 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 		D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6DBD48B1F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist */; };
 		D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F707E781FB094110052A4B5 /* XXTESymbolCell.xib */; };
 		D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD692B1F0403B000B2F0EC /* XXTEMoreLinkCell.xib */; };
@@ -2549,7 +2548,6 @@
 				D6F0AD8522FAD94D00970123 /* Plain Text.tmLanguage in Resources */,
 				D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */,
 				D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */,
-				D60FE7AD1FE2369300954818 /* .gitignore in Resources */,
 				D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */,
 				D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */,
 				D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */,
