@@ -17,6 +17,7 @@
 
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>
+#import <spawn.h>
 
 static NSUInteger const kXXTELogViewControllerMaximumBytes = 200 * 1024; // 200k
 
@@ -244,8 +245,17 @@ XXTE_END_IGNORE_PARTIAL
         [alertView dismissAnimated];
     } destructiveHandler:^(LGAlertView * _Nonnull alertView) {
         [alertView dismissAnimated];
-        [[NSData data] writeToFile:entryPath atomically:YES];
-        [self loadTextDataFromEntry];
+        
+        pid_t pid = 0;
+        const char *binary = add1s_binary();
+        const char *args[] = {binary, "/usr/bin/truncate", "-s", "0", [entryPath UTF8String], NULL};
+        posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
+        
+        int status;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status)) {
+            [self loadTextDataFromEntry];
+        }
     }];
     [clearAlert showAnimated];
 }

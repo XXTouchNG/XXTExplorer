@@ -3,11 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ADD1S_PATH</key>
-	<string>/usr/bin/1ferver/add1s</string>
-	<key>ALIYUN_APPKEY</key>
-	<string>23559128</string>
-	<key>ALIYUN_APPSECRERT</key>
-	<string>5f3cadc6a99078eb0ef3b5dccec5fec7</string>
+	<string>/usr/local/xxtouch/bin/add1s</string>
 	<key>APP_CONNECTION_TIMEOUT</key>
 	<real>10</real>
 	<key>AUTH_API</key>
@@ -52,7 +48,7 @@
 		</dict>
 	</array>
 	<key>INSTALLER_PATH</key>
-	<string>/usr/bin/1ferver/1nstaller</string>
+	<string>/usr/local/xxtouch/bin/add1s</string>
 	<key>LICENSE_LOG_PATH</key>
 	<string>log/bind_code.log</string>
 	<key>LOCAL_API</key>
