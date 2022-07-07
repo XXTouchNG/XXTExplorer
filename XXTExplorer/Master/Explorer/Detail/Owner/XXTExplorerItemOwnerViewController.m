@@ -285,7 +285,7 @@ typedef enum : NSUInteger {
         if ([self shouldApplyRecursively]) {
             args = (const char **)malloc(sizeof(const char *) * 6);
             args[0] = binary;
-            args[1] = "chown";
+            args[1] = "/usr/sbin/chown";
             args[2] = "-R";
             args[3] = [ownerName UTF8String];
             args[4] = [self.entryPath fileSystemRepresentation];
@@ -293,7 +293,7 @@ typedef enum : NSUInteger {
         } else {
             args = (const char **)malloc(sizeof(const char *) * 5);
             args[0] = binary;
-            args[1] = "chown";
+            args[1] = "/usr/sbin/chown";
             args[2] = [ownerName UTF8String];
             args[3] = [self.entryPath fileSystemRepresentation];
             args[4] = NULL;

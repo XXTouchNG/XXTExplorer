@@ -174,14 +174,14 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
         if (resursive)
         {
             pid_t pid = 0;
-            const char* args[] = {binary, "chown", "-R", "mobile:mobile", original_path, NULL};
+            const char* args[] = {binary, "/usr/sbin/chown", "-R", "mobile:mobile", original_path, NULL};
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }
         else
         {
             pid_t pid = 0;
-            const char* args[] = {binary, "chown", "mobile:mobile", original_path, NULL};
+            const char* args[] = {binary, "/usr/sbin/chown", "mobile:mobile", original_path, NULL};
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }
