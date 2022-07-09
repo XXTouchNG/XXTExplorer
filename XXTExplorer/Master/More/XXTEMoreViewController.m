@@ -217,6 +217,19 @@ typedef enum : NSUInteger {
 }
 
 - (void)reloadStaticTableViewData {
+    static NSString *binaryModificationDateString = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyyMMddHHmm";
+        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
+        NSDate *_binaryModificationDate = nil;
+        [[[NSBundle mainBundle] executableURL] getResourceValue:&_binaryModificationDate forKey:NSURLContentModificationDateKey error:nil];
+        if (_binaryModificationDate) {
+            binaryModificationDateString = [dateFormatter stringFromDate:_binaryModificationDate];
+        }
+    });
+    
     staticSectionTitles = @[ NSLocalizedString(@"Remote", nil),
                              NSLocalizedString(@"Daemon", nil),
                              NSLocalizedString(@"License", nil),
@@ -224,7 +237,11 @@ typedef enum : NSUInteger {
                              NSLocalizedString(@"System", nil),
                              NSLocalizedString(@"Log", nil),
                              NSLocalizedString(@"Help", nil)];
-    staticSectionFooters = @[ NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil), @"", @"", @"", @"", @"", @"" ];
+    staticSectionFooters = @[
+        NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil),
+        @"", @"", @"", @"", @"",
+        [NSString stringWithFormat:NSLocalizedString(@"Version %@ (Build %@)", nil), uAppDefine(kXXTDaemonVersionKey), binaryModificationDateString],
+    ];
     staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];

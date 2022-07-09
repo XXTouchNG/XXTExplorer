@@ -2182,3 +2182,6 @@
 
 /* No comment provided by engineer. */
 "❗️\"Syntax Highlight\" is skipped for files with long lines for performance reasons." = "❗️由于性能原因, 对包含超长文本行的文件, \"语法高亮\" 已暂时停用.";
+
+/* No comment provided by engineer. */
+"Version %@ (Build %@)" = "版本 %@ (构建于 %@)";
