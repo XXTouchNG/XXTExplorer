@@ -28,8 +28,8 @@ typedef enum : NSUInteger {
 } XXTEMoreActivationSection;
 
 static NSString * const kXXTEActivatorLibraryPath = @"/usr/lib/libactivator.dylib";
-static NSString * const kXXTEActivatorListenerRunOrStop = @"com.1func.xxtouch.run_or_stop";
-static NSString * const kXXTEActivatorListenerRunOrStopWithAlert = @"com.1func.xxtouch.run_or_stop_with_alert";
+static NSString * const kXXTEActivatorListenerRunOrStop = @"ch.xxtou.activator.toggle";
+static NSString * const kXXTEActivatorListenerRunOrStopWithAlert = @"ch.xxtou.activator.ask.both";
 static void * activatorHandler = nil;
 
 @interface XXTEMoreActivationController () <XXTEMoreActivationOperationControllerDelegate>
