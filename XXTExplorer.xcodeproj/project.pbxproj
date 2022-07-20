@@ -512,6 +512,7 @@
 		D6FC2F381F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F361F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.m */; };
 		D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6FC2F371F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib */; };
 		D6FC2F3C1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC2F3B1F0E3A7D000BAB42 /* XXTEMoreActivationOperationController.m */; };
+		F79F26F136447D268282CE8D /* libPods-XXTExplorer-Archive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA796A1954E2CE09E2ACAD8A /* libPods-XXTExplorer-Archive.a */; };
 		FFE619641C9C84963276FD4F /* libPods-XXTExplorer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */; };
 /* End PBXBuildFile section */
 
@@ -875,6 +876,7 @@
 		B03124086D97689351B0522E /* XXTEModeSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEModeSettingsController.h; sourceTree = "<group>"; };
 		B03129E6E50EA4075FA95E9A /* XXTEModeSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEModeSettingsController.m; sourceTree = "<group>"; };
 		B0312C21EE8787B23F70687A /* LASettingsViewController+MyShowsAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LASettingsViewController+MyShowsAd.h"; sourceTree = "<group>"; };
+		BA796A1954E2CE09E2ACAD8A /* libPods-XXTExplorer-Archive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer-Archive.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD42342122FB1A42005C6A39 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BD9351902307CBF100F854FF /* XXTEEditorLineMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineMask.h; sourceTree = "<group>"; };
 		BD9351912307CBF100F854FF /* XXTEEditorLineMask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEEditorLineMask.m; sourceTree = "<group>"; };
@@ -1055,6 +1057,7 @@
 				CC398E4928618626009EBAAA /* SafariServices.framework in Frameworks */,
 				CC2F46F12861ABFB00D9B238 /* SpringBoardServices in Frameworks */,
 				D60FE7741FE2369300954818 /* libactivator.tbd in Frameworks */,
+				F79F26F136447D268282CE8D /* libPods-XXTExplorer-Archive.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2065,6 +2068,7 @@
 				0FAC07B91F848AB200C52225 /* Photos.framework */,
 				D63B58DA1F56684F00D26475 /* WebKit.framework */,
 				CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */,
+				BA796A1954E2CE09E2ACAD8A /* libPods-XXTExplorer-Archive.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

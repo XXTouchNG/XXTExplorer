@@ -137,9 +137,6 @@ static NSUInteger const kXXTETextViewControllerMaximumBytes = 256 * 1024; // 200
     if (!entryPath) {
         return;
     }
-    if (0 != access(entryPath.fileSystemRepresentation, W_OK)) {
-        [[NSData data] writeToFile:entryPath atomically:YES];
-    }
     
     NSUInteger maximumLength = kXXTETextViewControllerMaximumBytes;
     CFStringEncoding tryEncoding = [self currentEncoding];

@@ -168,9 +168,7 @@ XXTE_END_IGNORE_PARTIAL
     if (!entryPath) {
         return;
     }
-    if (0 != access(entryPath.fileSystemRepresentation, W_OK)) {
-        [[NSData data] writeToFile:entryPath atomically:YES];
-    }
+    
     NSURL *fileURL = [NSURL fileURLWithPath:entryPath];
     NSError *readError = nil;
     NSFileHandle *textHandler = [NSFileHandle fileHandleForReadingFromURL:fileURL error:&readError];
