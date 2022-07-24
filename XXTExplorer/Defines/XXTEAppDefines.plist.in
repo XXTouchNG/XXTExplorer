@@ -50,7 +50,7 @@
 	<key>INSTALLER_PATH</key>
 	<string>/usr/local/xxtouch/bin/add1s</string>
 	<key>LICENSE_LOG_PATH</key>
-	<string>log/bind_code.log</string>
+	<string>caches/bind_code.log</string>
 	<key>LOCAL_API</key>
 	<string>http://127.0.0.1:46952/</string>
 	<key>LOCAL_HOST</key>
@@ -58,7 +58,7 @@
 	<key>LOCAL_PORT</key>
 	<string>46952</string>
 	<key>LOG_PATH</key>
-	<string>log</string>
+	<string>caches</string>
 	<key>MAIN_PATH</key>
 	<string>/private/var/mobile/Media/1ferver</string>
 	<key>PRODUCT_NAME</key>

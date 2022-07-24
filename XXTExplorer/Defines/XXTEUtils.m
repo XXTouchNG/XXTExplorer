@@ -15,6 +15,9 @@
 #import "NSString+XQueryComponents.h"
 #import "NSString+SHA1.h"
 
+#import <PromiseKit/PromiseKit.h>
+#import <PromiseKit/NSURLConnection+PromiseKit.h>
+
 #import <pwd.h>
 #import <spawn.h>
 #import <sys/stat.h>
@@ -224,9 +227,9 @@ NSDateFormatter *RFC822DateFormatter(void) {
     return formatter;
 }
 
-id (^sendCloudApiRequest)(NSArray *objs) =
+PMKPromise *(^sendCloudApiRequest)(NSArray *objs) =
 ^(NSArray *objs) {
-    return @{};
+    return [NSURLConnection POST:[objs firstObject] JSON:[objs lastObject]].then(convertJsonString);
 };
 
 NSString *uAppDaemonCommandUrl(NSString *command) {

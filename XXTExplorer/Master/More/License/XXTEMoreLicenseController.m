@@ -147,6 +147,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     XXTEMoreLicenseCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreLicenseCell class]) owner:nil options:nil] lastObject];
     cell1.licenseField.text = @"";
     cell1.licenseField.delegate = self;
+    cell1.licenseField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     self.licenseField = cell1.licenseField;
     self.licenseShaker = [[XUIViewShaker alloc] initWithView:self.licenseField];
     
@@ -252,6 +253,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
             sendDict[@"v"] = dataDictionary[@"zeversion"];
         if (dataDictionary[@"devtype"])
             sendDict[@"dt"] = dataDictionary[@"devtype"];
+        if (dataDictionary[@"devname"])
+            sendDict[@"dn"] = dataDictionary[@"devname"];
         if (dataDictionary[@"devsn"])
             sendDict[@"sn"] = dataDictionary[@"devsn"];
         return @[uAppLicenseServerCommandUrl(@"device_info"), sendDict];
@@ -274,15 +277,16 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 - (void)updateLicenseDictionary:(NSDictionary *)licenseDictionary {
     if ([licenseDictionary isKindOfClass:[NSDictionary class]] &&
-        [licenseDictionary[@"code"] isKindOfClass:[NSNumber class]] &&
-        [licenseDictionary[@"code"] isEqualToNumber:@0]) {
-        NSDictionary *licenseData = licenseDictionary[@"data"];
+        [licenseDictionary[@"status"] isKindOfClass:[NSNumber class]] &&
+        [licenseDictionary[@"status"] intValue] >= 200 && [licenseDictionary[@"status"] intValue] < 300)
+    {
+        NSDictionary *licenseData = licenseDictionary[@"identity"];
         if ([licenseData isKindOfClass:[NSDictionary class]] &&
-            [licenseData[@"expireDate"] isKindOfClass:[NSNumber class]] &&
-            [licenseData[@"nowDate"] isKindOfClass:[NSNumber class]]
-            ) {
-            NSTimeInterval expirationInterval = [licenseData[@"expireDate"] doubleValue];
-            NSTimeInterval nowInterval = [licenseData[@"nowDate"] doubleValue];
+            [licenseData[@"deadline"] isKindOfClass:[NSNumber class]] &&
+            [licenseData[@"timestamp"] isKindOfClass:[NSNumber class]])
+        {
+            NSTimeInterval expirationInterval = [licenseData[@"deadline"] doubleValue];
+            NSTimeInterval nowInterval = [licenseData[@"timestamp"] doubleValue];
             [self updateCellExpirationTime:expirationInterval
                                nowInterval:nowInterval];
         }
@@ -588,29 +592,10 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     if (alertView && alertView.isShowing) {
         [alertView transitionToAlertView:alertView1 completionHandler:nil];
     }
-    [NSURLConnection POST:uAppDaemonCommandUrl(@"deviceinfo") JSON:@{  }]
+    [NSURLConnection POST:uAppDaemonCommandUrl(@"bind") JSON:@{ @"code": licenseCode }]
     .then(convertJsonString)
-    .then(^(NSDictionary *jsonDictionary) {
-        NSDictionary *dataDictionary = jsonDictionary[@"data"];
-        NSMutableDictionary *sendDict = [@{} mutableCopy];
-        sendDict[@"ts"] = [@((int)[[NSDate date] timeIntervalSince1970]) stringValue];
-        if (licenseCode)
-            sendDict[@"code"] = licenseCode;
-        if (dataDictionary[@"deviceid"])
-            sendDict[@"did"] = dataDictionary[@"deviceid"];
-        if (dataDictionary[@"sysversion"])
-            sendDict[@"sv"] = dataDictionary[@"sysversion"];
-        if (dataDictionary[@"zeversion"])
-            sendDict[@"v"] = dataDictionary[@"zeversion"];
-        if (dataDictionary[@"devtype"])
-            sendDict[@"dt"] = dataDictionary[@"devtype"];
-        if (dataDictionary[@"devsn"])
-            sendDict[@"sn"] = dataDictionary[@"devsn"];
-        return @[uAppLicenseServerCommandUrl(@"bind_code"), sendDict];
-    })
-    .then(sendCloudApiRequest)
     .then(^(NSDictionary *licenseDictionary) {
-        if ([licenseDictionary[@"code"] isEqualToNumber:@0]) {
+        if ([licenseDictionary[@"code"] intValue] == 0) {
             return [PMKPromise promiseWithResolver:^(PMKResolver resolve) {
                 UIImage *cardImage = [self generateCardImageWithLicense:licenseDictionary];
                 if (cardImage && NO == batchLicense) {
@@ -633,11 +618,11 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         [licenseImageView setContentMode:UIViewContentModeScaleAspectFit];
         
         NSTimeInterval deviceExpirationInterval = 0;
-        if ([dataDictionary[@"deviceExpireDate"] isKindOfClass:[NSNumber class]])
+        if ([dataDictionary[@"expireDate"] isKindOfClass:[NSNumber class]])
         {
-            deviceExpirationInterval = [dataDictionary[@"deviceExpireDate"] doubleValue];
+            deviceExpirationInterval = [dataDictionary[@"expireDate"] doubleValue];
         }
-        // !!! You cannot use expireDate here !!!
+        
         NSTimeInterval nowInterval = 0;
         if ([dataDictionary[@"nowDate"] isKindOfClass:[NSNumber class]])
         {
@@ -662,6 +647,8 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
         NSString *cancelButtonTitle = nil;
         if (NO == batchLicense) {
             shimmeringView = [[XXTEShimmeringView alloc] init];
+            shimmeringView.backgroundColor = [UIColor whiteColor];
+            shimmeringView.layer.cornerRadius = 12.0;
             buttonTitles = @[ NSLocalizedString(@"Save to Camera Roll", nil) ];
             actionHandler = ^(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
                 shimmeringView.shimmering = NO;
@@ -798,7 +785,7 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
     NSString *logFullPath = [XXTERootPath() stringByAppendingPathComponent:logPath];
     NSString *uuidString = [[NSUUID UUID] UUIDString];
     NSString *cardPath = [[logFullPath stringByAppendingPathComponent:uuidString] stringByAppendingPathExtension:@"pdf"];
-    [self createSignaturedPDFWithLicense:(NSDictionary *)licenseDictionary atPath:cardPath];
+    [self createSignaturedPDFWithLicense:licenseDictionary atPath:cardPath];
     UIImage *cardImage = [self imageFromPDFAtURL:[NSURL fileURLWithPath:cardPath] forPage:1];
     return cardImage;
 }
@@ -871,12 +858,13 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
             [intervalString appendFormat:NSLocalizedString(@"%d Days ", nil), intervalDay];
         } else if (intervalDay == 1) {
             [intervalString appendFormat:NSLocalizedString(@"%d Day ", nil), intervalDay];
-        }
-        int intervalHour = (int)floor((interval - intervalDay * 86400) / 3600);
-        if (intervalHour > 1) {
-            [intervalString appendFormat:NSLocalizedString(@"%d Hours ", nil), intervalHour];
-        } else if (intervalHour == 1) {
-            [intervalString appendFormat:NSLocalizedString(@"%d Hour ", nil), intervalHour];
+        } else {
+            int intervalHour = (int)floor((interval - intervalDay * 86400) / 3600);
+            if (intervalHour > 1) {
+                [intervalString appendFormat:NSLocalizedString(@"%d Hours ", nil), intervalHour];
+            } else if (intervalHour == 1) {
+                [intervalString appendFormat:NSLocalizedString(@"%d Hour ", nil), intervalHour];
+            }
         }
         if (intervalString.length == 0) {
             [intervalString appendString:NSLocalizedString(@"Test", nil)];

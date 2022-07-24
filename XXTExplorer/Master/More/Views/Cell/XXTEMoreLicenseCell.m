@@ -15,6 +15,8 @@
     
     self.licenseField.textColor = XXTColorForeground();
     self.licenseField.tintColor = XXTColorForeground();
+    self.licenseField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    
     self.backgroundColor = XXTColorPlainBackground();
     self.tintColor = XXTColorForeground();
 }
