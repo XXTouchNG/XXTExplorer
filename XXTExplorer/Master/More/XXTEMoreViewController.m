@@ -16,6 +16,7 @@
 #import "UIDevice+IPAddress.h"
 
 #import <LGAlertView/LGAlertView.h>
+#import <SafariServices/SafariServices.h>
 #import "UIView+XXTEToast.h"
 #import "XXTEMoreRemoteSwitchCell.h"
 #import "XXTEMoreAddressCell.h"
@@ -548,7 +549,15 @@ typedef enum : NSUInteger {
         }
         else
         if (indexPath.section == kXXTEMoreSectionIndexHelp) {
-            NSAssert(NO, @"Not implemented");
+            NSString *urlString = nil;
+            if (indexPath.row == kXXTEMoreSectionHelpRowIndexDocuments) {
+                urlString = uAppDefine(@"XXTOUCH_DOCS_URL");
+            } else {
+                urlString = uAppDefine(@"XXTOUCH_ABOUT_URL");
+            }
+            SFSafariViewController *sfCtrl = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString]];
+            sfCtrl.modalPresentationStyle = UIModalPresentationPageSheet;
+            [self.navigationController presentViewController:sfCtrl animated:YES completion:nil];
         }
     }
 }
