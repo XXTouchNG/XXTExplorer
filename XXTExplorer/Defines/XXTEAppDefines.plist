@@ -81,7 +81,7 @@
 		<string>82flex.com</string>
 	</array>
 	<key>UPDATE_API</key>
-	<string>https://api.xxtou.ch/check-update?p=%@</string>
+	<string>https://api.xxtou.ch/api/config/latest?p=%@</string>
 	<key>UPDATE_PRODUCT</key>
 	<string>xxtouch</string>
 	<key>XXTOUCH_APP_PATH</key>

@@ -10,39 +10,35 @@
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:
             @{
-              
-              @"latestVersion": @"latest",
-              @"updateDescription": @"description",
-              @"cydiaURLString": @"cydia-url",
-              
-              @"templateURLString": @"template-url",
-              @"aptURLString": @"apt-url",
-              @"packageID": @"package-id",
-              
-              @"downloadURLString": @"url",
-              @"downloadPath": @"path",
-              @"downloadMD5": @"md5",
-              @"downloadSHA1": @"sha1",
-              @"downloadSHA256": @"sha256",
-              @"downloadSHA512": @"sha512",
-              
-              }];
+        
+        @"latestVersion": @"version_string",
+        @"updateDescription": @"version_description",
+        @"cydiaURLString": @"cydia_url",
+        
+        @"templateURLString": @"template_url",
+        @"aptURLString": @"apt_url",
+        @"packageID": @"package_id",
+        
+        @"downloadURLString": @"download_url",
+        @"downloadPath": @"download_path",
+        @"downloadSHA256": @"version_checksum",
+        
+    }];
 }
 
 + (BOOL)propertyIsOptional:(NSString *)propertyName
 {
     NSArray <NSString *> *optionalKeys =
-  @[
-    @"downloadURLString",
-    @"downloadPath",
-    @"downloadMD5",
-    @"downloadSHA1",
-    @"downloadSHA256",
-    @"downloadSHA512",
-    
-    @"templateURLString",
-    @"aptURLString",
-    @"packageID",
+    @[
+        @"cydiaURLString",
+        
+        @"templateURLString",
+        @"aptURLString",
+        @"packageID",
+        
+        @"downloadURLString",
+        @"downloadPath",
+        @"downloadSHA256",
     ];
     if ([optionalKeys containsObject:propertyName]) {
         return YES;

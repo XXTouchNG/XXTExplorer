@@ -43,6 +43,7 @@ typedef enum : NSUInteger {
     kXXTEMoreSectionIndexSystem,
     kXXTEMoreSectionIndexLog,
     kXXTEMoreSectionIndexHelp,
+    kXXTEMoreSectionIndexFooter,
     kXXTEMoreSectionIndexMax
 } kXXTEMoreSectionIndex;
 
@@ -110,9 +111,7 @@ typedef enum : NSUInteger {
     return self;
 }
 
-- (void)setup {
-    
-}
+- (void)setup { }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -178,10 +177,12 @@ typedef enum : NSUInteger {
     
     if (_webServerUrl.length > 0 || _bonjourWebServerUrl.length > 0)
     {
-        staticSectionRowNum = @[ @3, @1, @1, @3, @6, @2, @2 ];
+        staticSectionRowNum = @[ @3, @1, @1, @3, @6, @2, @2, @0 ];
     } else {
-        staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
+        staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2, @0 ];
     }
+    
+    NSAssert(staticSectionRowNum.count == kXXTEMoreSectionIndexMax, @"row num not matched");
 }
 
 - (void)reloadDynamicTableViewData {
@@ -237,13 +238,14 @@ typedef enum : NSUInteger {
                              NSLocalizedString(@"Settings", nil),
                              NSLocalizedString(@"System", nil),
                              NSLocalizedString(@"Log", nil),
-                             NSLocalizedString(@"Help", nil)];
+                             NSLocalizedString(@"Help", nil), @"" ];
     staticSectionFooters = @[
         NSLocalizedString(@"Turn on the switch: \n- Access the Web/WebDAV Server. \n- Upload file(s) to device via Wi-Fi.", nil),
         @"", @"", @"", @"", @"",
         [NSString stringWithFormat:NSLocalizedString(@"Version %@ (Build %@)", nil), uAppDefine(kXXTDaemonVersionKey), binaryModificationDateString],
+        @"",
     ];
-    staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2 ];
+    staticSectionRowNum = @[ @1, @1, @1, @3, @6, @2, @2, @0 ];
     
     XXTEMoreRemoteSwitchCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreRemoteSwitchCell class]) owner:nil options:nil] lastObject];
     
@@ -340,8 +342,15 @@ typedef enum : NSUInteger {
                     [@[ cellLog, cellErrorLog ] mutableCopy],
                     //
                     [@[ cell14, cell15 ] mutableCopy],
+                    //
+                    [NSMutableArray array],
                     ];
     [self updateRemoteAccessAddressDisplay];
+    
+    NSAssert(staticCells.count == kXXTEMoreSectionIndexMax, @"section num not matched");
+    NSAssert(staticSectionTitles.count == kXXTEMoreSectionIndexMax, @"section title num not matched");
+    NSAssert(staticSectionFooters.count == kXXTEMoreSectionIndexMax, @"section footer num not matched");
+    NSAssert(staticSectionRowNum.count == kXXTEMoreSectionIndexMax, @"row num not matched");
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -382,6 +391,13 @@ typedef enum : NSUInteger {
         }
     }
     return 44.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == kXXTEMoreSectionIndexFooter) {
+        return 66.f;
+    }
+    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
