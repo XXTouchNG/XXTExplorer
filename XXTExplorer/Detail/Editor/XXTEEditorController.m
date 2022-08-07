@@ -75,6 +75,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
 @property (nonatomic, strong) XXTEEditorSearchAccessoryView *searchAccessoryView;
 
 @property (nonatomic, strong) UIBarButtonItem *myBackButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *symbolsButtonItem;
@@ -688,6 +689,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     self.view.backgroundColor = [UIColor systemBackgroundColor];
     
     self.navigationItem.leftBarButtonItems = @[self.myBackButtonItem];
+    self.navigationItem.rightBarButtonItems = @[self.shareButtonItem];
     self.navigationItem.titleView = self.lockedTitleView;
     
     // Subviews
@@ -844,6 +846,14 @@ XXTE_END_IGNORE_PARTIAL
         _myBackButtonItem = myBackButtonItem;
     }
     return _myBackButtonItem;
+}
+
+- (UIBarButtonItem *)shareButtonItem {
+    if (!_shareButtonItem) {
+        UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonItemTapped:)];
+        _shareButtonItem = shareButtonItem;
+    }
+    return _shareButtonItem;
 }
 
 - (UIBarButtonItem *)searchButtonItem {

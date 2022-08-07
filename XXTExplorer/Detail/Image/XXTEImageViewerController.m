@@ -196,10 +196,6 @@
     return [self photoBrowser:photoBrowser photoAtIndex:index];
 }
 
-- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index actionButton:(UIBarButtonItem *)actionButton {
-    toastMessage(self, NSLocalizedString(@"This feature is not supported.", nil));
-}
-
 #pragma mark - Memory
 
 - (void)dealloc {

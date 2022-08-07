@@ -93,15 +93,16 @@
     // Editing Related
     if ([self isEditing]) {
         if (([self.tableView indexPathsForSelectedRows].count) > 0) {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(YES)];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(YES)];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(YES)];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(YES)];
         } else {
+            [toolbar updateButtonType:XXTExplorerToolbarButtonTypeShare toEnabled:@(YES)];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeCompress toEnabled:@(NO)];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypePaste toEnabled:@(NO)];
             [toolbar updateButtonType:XXTExplorerToolbarButtonTypeTrash toEnabled:@(NO)];
         }
-        [toolbar updateButtonType:XXTExplorerToolbarButtonTypeScan toEnabled:@(NO)];
     } else {
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeAddItem toEnabled:@(YES)];
         [toolbar updateButtonType:XXTExplorerToolbarButtonTypeSort toEnabled:@(YES)];
@@ -240,6 +241,39 @@
                                                                delegate:self];
             objc_setAssociatedObject(alertView, @selector(alertView:archiveEntriesAtIndexPaths:), selectedIndexPaths, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             [alertView showAnimated:YES completionHandler:nil];
+        }
+        else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeShare]) {
+            NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+            NSMutableArray <NSURL *> *shareUrls = [[NSMutableArray alloc] init];
+            for (NSIndexPath *indexPath in selectedIndexPaths) {
+                XXTExplorerEntry *entryDetail = self.entryList[indexPath.row];
+                if (entryDetail.isDirectory) {
+                    [shareUrls removeAllObjects];
+                    break;
+                } else {
+                    if (entryDetail.entryPath) {
+                        NSURL *url = [NSURL fileURLWithPath:entryDetail.entryPath];
+                        if (url) {
+                            [shareUrls addObject:url];
+                        }
+                    }
+                }
+            }
+            if (shareUrls.count != 0) {
+                XXTE_START_IGNORE_PARTIAL
+                UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:shareUrls applicationActivities:nil];
+                if (XXTE_IS_IPAD) {
+                    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+                    UIPopoverPresentationController *popoverPresentationController = activityViewController.popoverPresentationController;
+                    popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+                    popoverPresentationController.barButtonItem = buttonItem;
+                }
+                activityViewController.presentationController.delegate = self;
+                [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+                XXTE_END_IGNORE_PARTIAL
+            } else {
+                toastMessage(self, NSLocalizedString(@"You cannot share directory.", nil));
+            }
         }
         else if ([buttonType isEqualToString:XXTExplorerToolbarButtonTypeTrash]) {
             NSArray <NSIndexPath *> *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];

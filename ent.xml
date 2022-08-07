@@ -2,6 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>platform-application</key>
+	<true/>
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.private.security.no-container</key>
+	<true/>
+	<key>com.apple.private.system-keychain</key>
+	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>ch.xxtou.XXTExplorer</string>
+	</array>
+	<key>com.apple.CommCenter.fine-grained</key>
+	<array>
+		<string>spi</string>
+		<string>phone</string>
+		<string>identity</string>
+		<string>data-usage</string>
+		<string>data-allowed</string>
+		<string>data-allowed-write</string>
+	</array>
+	<key>com.apple.security.iokit-user-client-class</key>
+	<array>
+		<string>AGXDeviceUserClient</string>
+		<string>IOHDIXControllerUserClient</string>
+		<string>IOSurfaceRootUserClient</string>
+	</array>
 	<key>com.apple.springboard.iconState</key>
 	<true/>
 	<key>com.apple.springboard.iconState.mutate</key>
