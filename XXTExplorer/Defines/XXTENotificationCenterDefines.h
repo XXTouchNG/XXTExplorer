@@ -40,11 +40,6 @@ static NSString * const XXTENotificationEventTypeSelectedScriptPathChanged = @"X
 
 // XXTENotificationShortcut
 static NSString * const XXTENotificationShortcutInterface = @"XXTENotificationShortcutInterface";
-static NSString * const XXTENotificationShortcutInterfaceScan = @"XXTENotificationShortcutInterfaceScan";
-static NSString * const XXTENotificationShortcutInterfaceLicense = @"XXTENotificationShortcutInterfaceLicense";
-static NSString * const XXTENotificationShortcutInterfaceLauncher = @"XXTENotificationShortcutInterfaceLauncher";
-static NSString * const XXTENotificationShortcutInterfaceDownload = @"XXTENotificationShortcutInterfaceDownload";
-
 static NSString * const XXTENotificationShortcutUserData = @"XXTENotificationShortcutUserData";
 
 #endif /* __OBJC__ */
