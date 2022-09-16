@@ -27,7 +27,7 @@
 	<key>CYDIA_URL</key>
 	<string>cydia://url/%@</string>
 	<key>DAEMON_ERROR_LOG_PATH</key>
-	<string>log/ch.xxtou.supervisord.stderr.log</string>
+	<string>log/script_error.log</string>
 	<key>DAEMON_LOG_PATH</key>
 	<string>log/sys.log</string>
 	<key>DAEMON_LOG_VIEWER</key>
