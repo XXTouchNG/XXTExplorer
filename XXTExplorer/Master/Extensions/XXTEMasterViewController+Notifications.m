@@ -390,7 +390,11 @@
                 return [NSURLConnection POST:uAppDaemonCommandUrl(@"launch_script_file") JSON:@{ }];
             }
         } else {
-            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+            if ([jsonDirectory[@"detail"] isKindOfClass:[NSString class]]) {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"detail"]];
+            } else {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+            }
         }
     })
     .then(convertJsonString)
@@ -405,7 +409,11 @@
                 }
             }
         } else {
-            @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+            if ([jsonDirectory[@"detail"] isKindOfClass:[NSString class]]) {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"detail"]];
+            } else {
+                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot launch script: %@", nil), jsonDirectory[@"message"]];
+            }
         }
         return [PMKPromise promiseWithValue:@{}];
     })
@@ -419,7 +427,11 @@
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:XXTENotificationEvent object:sender userInfo:@{XXTENotificationEventType: XXTENotificationEventTypeSelectedScriptPathChanged}]];
         } else {
             if (selectAfterLaunch) {
-                @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+                if ([jsonDirectory[@"detail"] isKindOfClass:[NSString class]]) {
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"detail"]];
+                } else {
+                    @throw [NSString stringWithFormat:NSLocalizedString(@"Cannot select script: %@", nil), jsonDirectory[@"message"]];
+                }
             }
         }
     })
