@@ -27,7 +27,7 @@
 	<key>CYDIA_URL</key>
 	<string>cydia://url/%@</string>
 	<key>DAEMON_ERROR_LOG_PATH</key>
-	<string>log/script_error.log</string>
+	<string>log/ch.xxtou.supervisord.stderr.log</string>
 	<key>DAEMON_LOG_PATH</key>
 	<string>log/sys.log</string>
 	<key>DAEMON_LOG_VIEWER</key>
@@ -43,7 +43,7 @@
 	<key>INSTALLER_PATH</key>
 	<string>/usr/local/xxtouch/bin/add1s</string>
 	<key>LICENSE_LOG_PATH</key>
-	<string>caches/bind_code.log</string>
+	<string>caches/code-bindings.log</string>
 	<key>LOCAL_API</key>
 	<string>http://127.0.0.1:46952/</string>
 	<key>LOCAL_HOST</key>

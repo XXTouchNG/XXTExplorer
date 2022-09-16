@@ -223,8 +223,9 @@ typedef enum : NSUInteger {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyyMMddHHmm";
+        [dateFormatter setDateFormat:@"yyyyMMddHHmm"];
         [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:XXTE_STANDARD_LOCALE]];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         NSDate *_binaryModificationDate = nil;
         [[[NSBundle mainBundle] executableURL] getResourceValue:&_binaryModificationDate forKey:NSURLContentModificationDateKey error:nil];
         if (_binaryModificationDate) {
