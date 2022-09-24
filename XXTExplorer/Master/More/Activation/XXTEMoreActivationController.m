@@ -76,7 +76,7 @@ static void * activatorHandler = nil;
                          @"hold_volume_down": @(0)} mutableCopy];
     
     activatorHandler = NULL;
-    if (@available(iOS 14.0, *)) {
+    if (@available(iOS 15.0, *)) {
         _activatorExists = YES;
     } else {
         if (0 == access([kXXTEActivatorLibraryPath UTF8String], R_OK)) {
