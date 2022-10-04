@@ -249,6 +249,8 @@
 		CC86C3732861A173003CF184 /* XXTEProcessDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C3712861A173003CF184 /* XXTEProcessDelegateObject.m */; };
 		CC86C3762861A18A003CF184 /* UIColor+HexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C3752861A18A003CF184 /* UIColor+HexValue.m */; };
 		CC86C3772861A18A003CF184 /* UIColor+HexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C3752861A18A003CF184 /* UIColor+HexValue.m */; };
+		CCBBA13828EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */; };
+		CCBBA13928EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D606114B22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
 		D606114C22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
@@ -903,6 +905,8 @@
 		CC86C3712861A173003CF184 /* XXTEProcessDelegateObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTEProcessDelegateObject.m; sourceTree = "<group>"; };
 		CC86C3742861A18A003CF184 /* UIColor+HexValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexValue.h"; sourceTree = "<group>"; };
 		CC86C3752861A18A003CF184 /* UIColor+HexValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexValue.m"; sourceTree = "<group>"; };
+		CCBBA13628EC068200EA4303 /* NSURLSession+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+PromiseKit.h"; sourceTree = "<group>"; };
+		CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+PromiseKit.m"; sourceTree = "<group>"; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		D606114622F53F3800F6F0E6 /* XXTEEditorLineBreakController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineBreakController.h; sourceTree = "<group>"; };
@@ -2215,6 +2219,8 @@
 				CC2F46DF2861A41B00D9B238 /* NSObject+XUIStringValue.m */,
 				CC2F46E82861A96A00D9B238 /* UIColor+XUIDarkColor.h */,
 				CC2F46E92861A96A00D9B238 /* UIColor+XUIDarkColor.m */,
+				CCBBA13628EC068200EA4303 /* NSURLSession+PromiseKit.h */,
+				CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2793,6 +2799,7 @@
 				D6DB971C22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m in Sources */,
 				0FAE18E420806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
 				0FAE0F071ED70E4800798B4B /* XXTEInsetsLabel.m in Sources */,
+				CCBBA13828EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */,
 				0F6AEA9C1F3755C00017BE7C /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
 				0F6679E11F51635C0072C177 /* NSString+HTMLEscape.m in Sources */,
 				0F2CD3571F3B5CAB00110772 /* XXTEUpdateHelper.m in Sources */,
@@ -3009,6 +3016,7 @@
 				D6DB971D22FA61A900C4EA17 /* XXTEEditorSyntaxCache.m in Sources */,
 				0FAE18E520806830005F9B67 /* XXTEDbTableColumnHeader.m in Sources */,
 				D60FE6E41FE2369300954818 /* XXTEInsetsLabel.m in Sources */,
+				CCBBA13928EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */,
 				D60FE6E51FE2369300954818 /* XXTExplorerViewController+XXTExplorerToolbarDelegate.m in Sources */,
 				D60FE6E61FE2369300954818 /* NSString+HTMLEscape.m in Sources */,
 				D60FE6E81FE2369300954818 /* XXTEUpdateHelper.m in Sources */,
@@ -3393,7 +3401,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0D2B1570999C111DB43AA7B8 /* Pods-XXTExplorer-Archive.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
@@ -3496,7 +3503,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A980AD57C5013A483CE165BF /* Pods-XXTExplorer-Archive.release.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";

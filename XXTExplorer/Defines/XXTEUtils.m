@@ -17,6 +17,7 @@
 
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
+#import "NSURLSession+PromiseKit.h"
 
 #import <pwd.h>
 #import <spawn.h>
@@ -229,7 +230,17 @@ NSDateFormatter *RFC822DateFormatter(void) {
 
 PMKPromise *(^sendCloudApiRequest)(NSArray *objs) =
 ^(NSArray *objs) {
-    return [NSURLConnection POST:[objs firstObject] JSON:[objs lastObject]].then(convertJsonString);
+    id url = [NSURL URLWithString:[objs firstObject]];
+    NSCAssert(url, @"invalid url");
+    NSError *error = nil;
+    id JSONData = [NSJSONSerialization dataWithJSONObject:[objs lastObject] options:(NSJSONWritingOptions)0 error:&error];
+    NSCAssert(JSONData, @"invalid data");
+    NSMutableURLRequest *rq = [[NSMutableURLRequest alloc] init];
+    [rq setURL:url];
+    [rq setHTTPMethod:@"POST"];
+    [rq setHTTPBody:JSONData];
+    [rq setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    return [[NSURLSession sharedSession] promiseDataTaskWithRequest:rq].then(convertJsonString);
 };
 
 NSString *uAppDaemonCommandUrl(NSString *command) {
