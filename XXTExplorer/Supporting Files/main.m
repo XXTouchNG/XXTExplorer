@@ -13,19 +13,19 @@
 #import <sys/types.h>
 
 // For debugger_sysctl
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/sysctl.h>
-#include <stdlib.h>
+#import <stdio.h>
+#import <sys/types.h>
+#import <unistd.h>
+#import <sys/sysctl.h>
+#import <stdlib.h>
 
 // For ioctl
-#include <termios.h>
-#include <sys/ioctl.h>
+#import <termios.h>
+#import <sys/ioctl.h>
 
 // For task_get_exception_ports
-#include <mach/task.h>
-#include <mach/mach_init.h>
+#import <mach/task.h>
+#import <mach/mach_init.h>
 
 typedef int (*ptrace_ptr_t)(int _request, pid_t _pid, caddr_t _addr, int _data);
 

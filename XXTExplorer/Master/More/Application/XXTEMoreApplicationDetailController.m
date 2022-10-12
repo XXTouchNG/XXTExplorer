@@ -6,7 +6,6 @@
 //  Copyright © 2017 Zheng. All rights reserved.
 //
 
-#include <objc/runtime.h>
 #import "XXTEMoreApplicationDetailController.h"
 #import <LGAlertView/LGAlertView.h>
 #import <PromiseKit/PromiseKit.h>

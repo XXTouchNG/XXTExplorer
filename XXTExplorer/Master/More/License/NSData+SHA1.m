@@ -7,7 +7,7 @@
 //
 
 #import "NSData+SHA1.h"
-#include <CommonCrypto/CommonCrypto.h>
+#import <CommonCrypto/CommonCrypto.h>
 
 @implementation NSData (SHA1)
 
