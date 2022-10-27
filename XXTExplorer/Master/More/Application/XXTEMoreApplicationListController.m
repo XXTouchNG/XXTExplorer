@@ -3,6 +3,7 @@
 // Copyright (c) 2017 Zheng. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "XXTEMoreApplicationListController.h"
 #import "LSApplicationProxy.h"
 #import "LSApplicationWorkspace.h"

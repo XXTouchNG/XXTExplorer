@@ -277,18 +277,40 @@ typedef void (^ _Nullable XXTERefreshControlHandler)(void);
 
 - (void)updateLicenseDictionary:(NSDictionary *)licenseDictionary {
     if ([licenseDictionary isKindOfClass:[NSDictionary class]] &&
-        [licenseDictionary[@"status"] isKindOfClass:[NSNumber class]] &&
-        [licenseDictionary[@"status"] intValue] >= 200 && [licenseDictionary[@"status"] intValue] < 300)
+        [licenseDictionary[@"status"] isKindOfClass:[NSNumber class]])
     {
-        NSDictionary *licenseData = licenseDictionary[@"identity"];
-        if ([licenseData isKindOfClass:[NSDictionary class]] &&
-            [licenseData[@"deadline"] isKindOfClass:[NSNumber class]] &&
-            [licenseData[@"timestamp"] isKindOfClass:[NSNumber class]])
+        if ([licenseDictionary[@"status"] intValue] >= 200 && [licenseDictionary[@"status"] intValue] < 300)
         {
-            NSTimeInterval expirationInterval = [licenseData[@"deadline"] doubleValue];
-            NSTimeInterval nowInterval = [licenseData[@"timestamp"] doubleValue];
-            [self updateCellExpirationTime:expirationInterval
-                               nowInterval:nowInterval];
+            NSDictionary *licenseData = licenseDictionary[@"identity"];
+            if ([licenseData isKindOfClass:[NSDictionary class]] &&
+                [licenseData[@"deadline"] isKindOfClass:[NSNumber class]] &&
+                [licenseData[@"timestamp"] isKindOfClass:[NSNumber class]])
+            {
+                NSTimeInterval expirationInterval = [licenseData[@"deadline"] doubleValue];
+                NSTimeInterval nowInterval = [licenseData[@"timestamp"] doubleValue];
+                [self updateCellExpirationTime:expirationInterval
+                                   nowInterval:nowInterval];
+            }
+        }
+        else if ([licenseDictionary[@"status"] intValue] >= 400 && [licenseDictionary[@"status"] intValue] < 500)
+        {
+            XXTEMoreTitleValueCell *statusLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][0]);
+            XXTEMoreTitleValueCell *timeLabelCell = ((XXTEMoreTitleValueCell *)staticCells[1][1]);
+            UILabel *dateLabel = timeLabelCell.valueLabel;
+            
+            statusLabelCell.valueLabel.text = NSLocalizedString(@"Not Registered", nil);
+            
+            dateLabel.text = NSLocalizedString(@"N/A", nil);
+            dateLabel.textColor = XXTColorWarning();
+            
+            if ([licenseDictionary[@"message"] isKindOfClass:[NSString class]])
+            {
+                NSMutableArray <NSString *> *sectionFooters = [staticSectionFooters mutableCopy];
+                sectionFooters[1] = licenseDictionary[@"message"];
+                staticSectionFooters = [sectionFooters copy];
+            }
+            
+            [self.tableView reloadData];
         }
     }
 }
