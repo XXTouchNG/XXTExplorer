@@ -5,12 +5,13 @@
 
 #import "XXTEAppDelegate.h"
 
-#ifndef DEBUG
-#import <UIKit/UIKit.h>
-
-// For debugger_ptrace. Ref: https://www.theiphonewiki.com/wiki/Bugging_Debuggers
+// For debugger_ptrace.
+// Ref: https://www.theiphonewiki.com/wiki/Bugging_Debuggers
 #import <dlfcn.h>
 #import <sys/types.h>
+
+#ifndef DEBUG
+#import <UIKit/UIKit.h>
 
 // For debugger_sysctl
 #import <stdio.h>
@@ -32,6 +33,7 @@ typedef int (*ptrace_ptr_t)(int _request, pid_t _pid, caddr_t _addr, int _data);
 #if !defined(PT_DENY_ATTACH)
 #define PT_DENY_ATTACH 31
 #endif  // !defined(PT_DENY_ATTACH)
+
 
 /*!
  @brief This is the basic ptrace functionality.
@@ -83,19 +85,26 @@ static bool debugger_sysctl(void)
     return ((info.kp_proc.p_flag & P_TRACED) != 0);
 }
 
+#endif
+
+
+#pragma mark -
+
 /* Set platform binary flag */
 #define FLAG_PLATFORMIZE (1 << 1)
 
 /**
- * function for jailbroken iOS 11 by Electra
+ * Function for jailbroken iOS 11 by Electra
+ * Function for jailbroken iOS 15 by XinaA12
  *
  * @license GPL-3.0 (cydia) https://github.com/ElectraJailbreak/cydia/blob/master/COPYING
  * @see https://github.com/coolstar/electra/blob/master/docs/getting-started.md
  * @see https://github.com/ElectraJailbreak/cydia/blob/master/cydo.cpp
  */
+NS_INLINE
 void patch_setuidandplatformize()
 {
-    void* handle = dlopen("/usr/lib/libjailbreak.dylib", RTLD_LAZY);
+    void *handle = dlopen(JB_PREFIX "/usr/lib/libjailbreak.dylib", RTLD_LAZY);
     if (!handle) return;
     
     // Reset errors
@@ -108,7 +117,6 @@ void patch_setuidandplatformize()
     fix_entitle_prt_t entitleptr = (fix_entitle_prt_t)dlsym(handle, "jb_oneshot_entitle_now");
     
     setuidptr(getpid());
-    
     setuid(0);
     
     const char *dlsym_error = dlerror();
@@ -119,20 +127,17 @@ void patch_setuidandplatformize()
     entitleptr(getpid(), FLAG_PLATFORMIZE);
 }
 
-#endif
 
-void plugin_i_love_xxtouch(void) {
-    
-}
+#pragma mark -
 
-int main(int argc, char * argv[]) {
-    
-    {
-        setuid(0);
-        setgid(0);
-    }
+void plugin_i_love_xxtouch(void) {}
+
+int main(int argc, char * argv[])
+{
+    patch_setuidandplatformize();
     
 #ifndef DEBUG
+    
     // If enabled the program should exit with code 055 in GDB
     // Program exited with code 055.
     debugger_ptrace();
@@ -186,7 +191,8 @@ int main(int argc, char * argv[]) {
     
 #endif
     
-    @autoreleasepool {
+    @autoreleasepool
+    {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([XXTEAppDelegate class]));
     }
 }

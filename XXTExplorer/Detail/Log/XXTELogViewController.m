@@ -246,7 +246,7 @@ XXTE_END_IGNORE_PARTIAL
         
         pid_t pid = 0;
         const char *binary = add1s_binary();
-        const char *args[] = {binary, "/usr/bin/truncate", "-s", "0", [entryPath UTF8String], NULL};
+        const char *args[] = {binary, JB_PREFIX "/usr/bin/truncate", "-s", "0", [entryPath UTF8String], NULL};
         posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
         
         int status;

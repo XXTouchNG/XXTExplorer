@@ -29,7 +29,10 @@
 #pragma mark - Defaults
 
 const char **XXTESharedEnvp() {
-    static const char *sharedEnvp[] = { "PATH=/bootstrap/usr/local/bin:/bootstrap/usr/sbin:/bootstrap/usr/bin:/bootstrap/sbin:/bootstrap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games:/usr/bin/1ferver", "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL };
+    static const char *sharedEnvp[] = {
+        "PATH=" JB_PREFIX "/usr/local/bin:" JB_PREFIX "/usr/sbin:/" JB_PREFIX "/usr/bin:/" JB_PREFIX "/sbin:/" JB_PREFIX "/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL
+    };
     return sharedEnvp;
 }
 
@@ -121,18 +124,9 @@ const char *add1s_binary() {
     static NSString *add1s_binary = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        add1s_binary = uAppDefine(@"ADD1S_PATH");
+        add1s_binary = [@JB_PREFIX stringByAppendingString:uAppDefine(@"ADD1S_PATH")];
     });
     return [add1s_binary fileSystemRepresentation];
-}
-
-const char *installer_binary() {
-    static NSString *installer_binary = NULL;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        installer_binary = uAppDefine(@"INSTALLER_PATH");
-    });
-    return [installer_binary fileSystemRepresentation];
 }
 
 int promiseFixPermission(NSString *path, BOOL resursive) {
@@ -178,14 +172,14 @@ int promiseFixPermission(NSString *path, BOOL resursive) {
         if (resursive)
         {
             pid_t pid = 0;
-            const char* args[] = {binary, "/usr/sbin/chown", "-R", "mobile:mobile", original_path, NULL};
+            const char* args[] = {binary, JB_PREFIX "/usr/sbin/chown", "-R", "mobile:mobile", original_path, NULL};
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }
         else
         {
             pid_t pid = 0;
-            const char* args[] = {binary, "/usr/sbin/chown", "mobile:mobile", original_path, NULL};
+            const char* args[] = {binary, JB_PREFIX "/usr/sbin/chown", "mobile:mobile", original_path, NULL};
             posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
             waitpid(pid, &status, 0);
         }

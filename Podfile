@@ -5,8 +5,8 @@ def shared_pods
     pod 'OMGHTTPURLRQ', :inhibit_warnings => true
     pod 'SOZOChromoplast', :inhibit_warnings => true
     pod 'PromiseKit', '~> 1.7', :inhibit_warnings => true
-    pod 'LGAlertView', :path => '../LGAlertView', :inhibit_warnings => true
-    pod 'MWPhotoBrowser', :path => '../MWPhotoBrowser', :inhibit_warnings => true
+    pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
+    pod 'MWPhotoBrowser', :git => 'https://github.com/Lessica/MWPhotoBrowser.git', :branch => 'master', :inhibit_warnings => true
     pod 'YYCache', :inhibit_warnings => true
     pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true
     pod 'JSONModel', :inhibit_warnings => true

@@ -78,7 +78,7 @@ typedef enum : NSUInteger {
     
     pid_t pid = 0;
     const char *binary = add1s_binary();
-    const char *args[] = { binary, "/bin/cat", "/etc/group", NULL };
+    const char *args[] = { binary, JB_PREFIX "/bin/cat", "/etc/group", NULL };
     
     XXTEProcessDelegateObject *processObj = [[XXTEProcessDelegateObject alloc] init];
     NSArray <NSValue *> *fps = [processObj processOpen:args pidPointer:&pid];
@@ -285,7 +285,7 @@ typedef enum : NSUInteger {
         if ([self shouldApplyRecursively]) {
             args = (const char **)malloc(sizeof(const char *) * 6);
             args[0] = binary;
-            args[1] = "/bin/chgrp";
+            args[1] = JB_PREFIX "/bin/chgrp";
             args[2] = "-R";
             args[3] = [grpName UTF8String];
             args[4] = [self.entryPath fileSystemRepresentation];
@@ -293,7 +293,7 @@ typedef enum : NSUInteger {
         } else {
             args = (const char **)malloc(sizeof(const char *) * 5);
             args[0] = binary;
-            args[1] = "/bin/chgrp";
+            args[1] = JB_PREFIX "/bin/chgrp";
             args[2] = [grpName UTF8String];
             args[3] = [self.entryPath fileSystemRepresentation];
             args[4] = NULL;

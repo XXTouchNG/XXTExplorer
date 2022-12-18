@@ -292,7 +292,7 @@ typedef enum : NSUInteger {
         if ([self shouldApplyRecursively]) {
             args = (const char **)malloc(sizeof(const char *) * 6);
             args[0] = binary;
-            args[1] = "/bin/chmod";
+            args[1] = JB_PREFIX "/bin/chmod";
             args[2] = "-R";
             args[3] = [bbitString UTF8String];
             args[4] = [self.entryPath fileSystemRepresentation];
@@ -300,7 +300,7 @@ typedef enum : NSUInteger {
         } else {
             args = (const char **)malloc(sizeof(const char *) * 5);
             args[0] = binary;
-            args[1] = "/bin/chmod";
+            args[1] = JB_PREFIX "/bin/chmod";
             args[2] = [bbitString UTF8String];
             args[3] = [self.entryPath fileSystemRepresentation];
             args[4] = NULL;

@@ -51,8 +51,8 @@ PODS:
 
 DEPENDENCIES:
   - JSONModel
-  - LGAlertView (from `../LGAlertView`)
-  - MWPhotoBrowser (from `../MWPhotoBrowser`)
+  - LGAlertView (from `https://github.com/Lessica/LGAlertView.git`, branch `old-device`)
+  - MWPhotoBrowser (from `https://github.com/Lessica/MWPhotoBrowser.git`, branch `master`)
   - OMGHTTPURLRQ
   - PromiseKit (~> 1.7)
   - SOZOChromoplast
@@ -70,9 +70,19 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   LGAlertView:
-    :path: "../LGAlertView"
+    :branch: old-device
+    :git: https://github.com/Lessica/LGAlertView.git
   MWPhotoBrowser:
-    :path: "../MWPhotoBrowser"
+    :branch: master
+    :git: https://github.com/Lessica/MWPhotoBrowser.git
+
+CHECKOUT OPTIONS:
+  LGAlertView:
+    :commit: 903170b290ec727b8a083dde406c870f2496ed6c
+    :git: https://github.com/Lessica/LGAlertView.git
+  MWPhotoBrowser:
+    :commit: 9918458005bfd13d6b0b6d2473f22392b85a29f2
+    :git: https://github.com/Lessica/MWPhotoBrowser.git
 
 SPEC CHECKSUMS:
   JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
@@ -84,6 +94,6 @@ SPEC CHECKSUMS:
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: 57231d30afedc3487dcfece46e4634cb59e54f0a
+PODFILE CHECKSUM: 7509771e436a89cacbff6ea6c9c4606e3cb8555c
 
 COCOAPODS: 1.11.3

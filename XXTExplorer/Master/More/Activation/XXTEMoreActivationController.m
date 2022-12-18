@@ -27,7 +27,7 @@ typedef enum : NSUInteger {
     XXTEMoreActivationSectionActivator,
 } XXTEMoreActivationSection;
 
-static NSString * const kXXTEActivatorLibraryPath = @"/usr/lib/libactivator.dylib";
+static NSString * const kXXTEActivatorLibraryPath = @JB_PREFIX "/usr/lib/libactivator.dylib";
 static NSString * const kXXTEActivatorListenerRunOrStop = @"ch.xxtou.activator.toggle";
 static NSString * const kXXTEActivatorListenerRunOrStopWithAlert = @"ch.xxtou.activator.ask.both";
 static void * activatorHandler = nil;

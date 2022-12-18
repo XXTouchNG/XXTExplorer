@@ -25,7 +25,7 @@
     dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^() {
         pid_t pid = 0;
         const char *binary = add1s_binary();
-        const char *args[] = {binary, "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
+        const char *args[] = {binary, JB_PREFIX "/usr/bin/killall", "-9", "SpringBoard", "backboardd", NULL};
         posix_spawn(&pid, binary, NULL, NULL, (char* const*)args, (char* const*)XXTESharedEnvp());
         waitpid(pid, &status, 0);
         if (WIFEXITED(status)) {
