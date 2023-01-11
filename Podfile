@@ -25,7 +25,7 @@ end
 def fix_config(config)
     # https://github.com/CocoaPods/CocoaPods/issues/8891
     if config.build_settings['DEVELOPMENT_TEAM'].nil?
-        config.build_settings['DEVELOPMENT_TEAM'] = 'GXZ23M5TP2'
+        config.build_settings['DEVELOPMENT_TEAM'] = ''
     end
 end
 
