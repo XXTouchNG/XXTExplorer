@@ -14,6 +14,8 @@
 #import "UIView+XXTEToast.h"
 #import "NSString+XQueryComponents.h"
 #import "NSString+SHA1.h"
+#import "NSData+SHA256.h"
+#import "license.h"
 
 #import <PromiseKit/PromiseKit.h>
 #import <PromiseKit/NSURLConnection+PromiseKit.h>
@@ -222,6 +224,41 @@ NSDateFormatter *RFC822DateFormatter(void) {
     return formatter;
 }
 
+@interface XXTURLSessionProxy : NSObject <NSURLSessionDelegate>
+@end
+
+@implementation XXTURLSessionProxy
+
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
+{
+    SecTrustRef serverTrust = [[challenge protectionSpace] serverTrust];
+    if (serverTrust && SecTrustGetCertificateCount(serverTrust) > 0)
+    {
+        SecCertificateRef certRef = SecTrustGetCertificateAtIndex(serverTrust, 0);
+        CFDataRef certData = SecCertificateCopyData(certRef);
+        if (certData)
+        {
+            NSData *certDataNS = (NSData *)CFBridgingRelease(certData);
+            NSData *certHashData = [certDataNS sha256Data];
+            NSString *certHashString = [certHashData base64EncodedStringWithOptions:kNilOptions];
+            certHashString = [@"sha256//" stringByAppendingString:certHashString];
+
+            if ([certHashString isEqualToString:@XXT_SSL_HASH])
+            {
+                NSURLCredential *cred = [[NSURLCredential alloc] initWithTrust:[[challenge protectionSpace] serverTrust]];
+                completionHandler(NSURLSessionAuthChallengeUseCredential, cred);
+                return;
+            }
+        }
+    }
+    
+    NSURLCredential *cred = [[NSURLCredential alloc] initWithTrust:[[challenge protectionSpace] serverTrust]];
+    completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, cred);
+    return;
+}
+
+@end
+
 PMKPromise *(^sendCloudApiRequest)(NSArray *objs) =
 ^(NSArray *objs) {
     id url = [NSURL URLWithString:[objs firstObject]];
@@ -234,7 +271,17 @@ PMKPromise *(^sendCloudApiRequest)(NSArray *objs) =
     [rq setHTTPMethod:@"POST"];
     [rq setHTTPBody:JSONData];
     [rq setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    return [[NSURLSession sharedSession] promiseDataTaskWithRequest:rq].then(convertJsonString);
+    [rq setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+    static NSURLSession *sharedSession = nil;
+    static XXTURLSessionProxy *sharedSessionProxy = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedSessionProxy = [[XXTURLSessionProxy alloc] init];
+        sharedSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                      delegate:sharedSessionProxy
+                                                 delegateQueue:nil];
+    });
+    return [sharedSession promiseDataTaskWithRequest:rq].then(convertJsonString);
 };
 
 NSString *uAppDaemonCommandUrl(NSString *command) {

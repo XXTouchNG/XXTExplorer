@@ -243,6 +243,8 @@
 		CC396F872861BDCC0079097A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		CC398E482861861E009EBAAA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC398E472861861E009EBAAA /* SafariServices.framework */; };
 		CC398E4928618626009EBAAA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC398E472861861E009EBAAA /* SafariServices.framework */; };
+		CC82784D29F025D800BC6EF7 /* NSData+SHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = CC82784B29F025A900BC6EF7 /* NSData+SHA256.m */; };
+		CC82784E29F025D900BC6EF7 /* NSData+SHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = CC82784B29F025A900BC6EF7 /* NSData+SHA256.m */; };
 		CC86C36E2861A089003CF184 /* UINavigationController+RestoreWorkspace.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C36D2861A089003CF184 /* UINavigationController+RestoreWorkspace.m */; };
 		CC86C36F2861A089003CF184 /* UINavigationController+RestoreWorkspace.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C36D2861A089003CF184 /* UINavigationController+RestoreWorkspace.m */; };
 		CC86C3722861A173003CF184 /* XXTEProcessDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C3712861A173003CF184 /* XXTEProcessDelegateObject.m */; };
@@ -899,6 +901,9 @@
 		CC2F46E92861A96A00D9B238 /* UIColor+XUIDarkColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XUIDarkColor.m"; sourceTree = "<group>"; };
 		CC2F46EF2861ABFB00D9B238 /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
 		CC398E472861861E009EBAAA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		CC82784B29F025A900BC6EF7 /* NSData+SHA256.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA256.m"; sourceTree = "<group>"; };
+		CC82784C29F025A900BC6EF7 /* NSData+SHA256.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA256.h"; sourceTree = "<group>"; };
+		CC82784F29F0286700BC6EF7 /* license.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = license.h; path = ../../../xxtouchng/shared/include/license.h; sourceTree = "<group>"; };
 		CC86C36C2861A089003CF184 /* UINavigationController+RestoreWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RestoreWorkspace.h"; sourceTree = "<group>"; };
 		CC86C36D2861A089003CF184 /* UINavigationController+RestoreWorkspace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RestoreWorkspace.m"; sourceTree = "<group>"; };
 		CC86C3702861A173003CF184 /* XXTEProcessDelegateObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTEProcessDelegateObject.h; sourceTree = "<group>"; };
@@ -1114,6 +1119,8 @@
 			children = (
 				0F5EB5111F08DE070016016A /* NSData+SHA1.h */,
 				0F5EB5121F08DE070016016A /* NSData+SHA1.m */,
+				CC82784C29F025A900BC6EF7 /* NSData+SHA256.h */,
+				CC82784B29F025A900BC6EF7 /* NSData+SHA256.m */,
 				0F5EB50E1F08DDE40016016A /* NSString+SHA1.h */,
 				0F5EB50F1F08DDE40016016A /* NSString+SHA1.m */,
 				0F5EB50B1F08DD9C0016016A /* NSString+XQueryComponents.h */,
@@ -2048,6 +2055,7 @@
 		0FEFFFFC1EE0A2EA0098D4BB /* Defines */ = {
 			isa = PBXGroup;
 			children = (
+				CC82784F29F0286700BC6EF7 /* license.h */,
 				0FE65E231F528EF1005F81FB /* Resources */,
 				0F8455D01F0D3C390055F98B /* XXTEAppDefines.h */,
 				0FEFFFFB1EE0A2C40098D4BB /* XXTEDispatchDefines.h */,
@@ -2878,6 +2886,7 @@
 				D63340631FD6529200B08B4E /* XXTEImageViewerController.m in Sources */,
 				0FC0E5AB20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */,
 				0F6682FC20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */,
+				CC82784D29F025D800BC6EF7 /* NSData+SHA256.m in Sources */,
 				BD9351922307CBF100F854FF /* XXTEEditorLineMask.m in Sources */,
 				D677E21E230E27B000127B7B /* ICTextHighlight.m in Sources */,
 				D6CB81BD1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */,
@@ -3095,6 +3104,7 @@
 				D60FE7561FE2369300954818 /* XXTEImageViewerController.m in Sources */,
 				0FC0E5AC20BC4205000FEDFE /* UIDevice+IPAddress.m in Sources */,
 				0F6682FD20A9995100960436 /* XXTExplorerViewController+UITableViewDropDelegate.m in Sources */,
+				CC82784E29F025D900BC6EF7 /* NSData+SHA256.m in Sources */,
 				BD9351932307CBF100F854FF /* XXTEEditorLineMask.m in Sources */,
 				D677E21F230E27B000127B7B /* ICTextHighlight.m in Sources */,
 				D6CB81BF1FE26F700033EA2F /* XXTEEditorSearchAccessoryView.m in Sources */,
