@@ -3322,7 +3322,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.2;
+				MARKETING_VERSION = 3.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3404,7 +3404,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.2;
+				MARKETING_VERSION = 3.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3465,7 +3465,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.2;
+				MARKETING_VERSION = 3.0.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3566,7 +3566,7 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.2;
+				MARKETING_VERSION = 3.0.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
