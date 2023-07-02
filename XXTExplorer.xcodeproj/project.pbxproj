@@ -3365,6 +3365,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
@@ -3407,6 +3410,9 @@
 				MARKETING_VERSION = 3.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
@@ -3508,6 +3514,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ch.xxtou.XXTExplorer;
 				PRODUCT_NAME = XXTExplorer;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = arm64;
 				WARNING_CFLAGS = "-Wpartial-availability";
@@ -3609,6 +3618,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ch.xxtou.XXTExplorer;
 				PRODUCT_NAME = XXTExplorer;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = arm64;
 				WARNING_CFLAGS = "-Wpartial-availability";
