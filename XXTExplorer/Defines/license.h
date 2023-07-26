@@ -1,1 +1,1 @@
-/Users/rachel/Projects/xxtouchng/shared/include/license.h
+/Users/rachel/Projects/XXTouchNG/shared/include/license.h
