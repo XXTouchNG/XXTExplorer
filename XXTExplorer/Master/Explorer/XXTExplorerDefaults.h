@@ -67,7 +67,7 @@ typedef enum : NSUInteger {
     XXTExplorerViewEntryListSortFieldItemSize
 } XXTExplorerViewEntryListSortField;
 
-NS_INLINE NSArray <NSString *> * const XXTELocalizedNamesForAllSortFields()
+NS_INLINE NSArray <NSString *> * const XXTELocalizedNamesForAllSortFields(void)
 {
     return @[
         NSLocalizedString(@"Created At", nil),

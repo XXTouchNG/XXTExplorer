@@ -48,7 +48,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.3-202307262242</string>
+	<string>3.0.3</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -246,11 +246,11 @@
 				<array>
 					<dict>
 						<key>SPKI-SHA256-BASE64</key>
-						<string>@ROOT_CA_SPKI@</string>
+						<string>JPiXHE+eyyVMoZZ+03Su5wmW24Ru4yC0hqds+ZvgOKk=</string>
 					</dict>
 					<dict>
 						<key>SPKI-SHA256-BASE64</key>
-						<string>@WEBSITE_CA_SPKI@</string>
+						<string>cAFsvShLJSYmAZ6cdueE27GMiqUQEBmAuz7POmG7IQ0=</string>
 					</dict>
 				</array>
 			</dict>
@@ -262,18 +262,18 @@
 				<array>
 					<dict>
 						<key>SPKI-SHA256-BASE64</key>
-						<string>@ROOT_CA_SPKI@</string>
+						<string>JPiXHE+eyyVMoZZ+03Su5wmW24Ru4yC0hqds+ZvgOKk=</string>
 					</dict>
 					<dict>
 						<key>SPKI-SHA256-BASE64</key>
-						<string>@WEBSITE_CA_SPKI@</string>
+						<string>cAFsvShLJSYmAZ6cdueE27GMiqUQEBmAuz7POmG7IQ0=</string>
 					</dict>
 				</array>
 				<key>NSPinnedLeafIdentities</key>
 				<array>
 					<dict>
 						<key>SPKI-SHA256-BASE64</key>
-						<string>@API_LEAF_SPKI@</string>
+						<string>F92mRkEEPMPhpgkImUoCEJoJFGID5aZc0lejWA1AqGc=</string>
 					</dict>
 				</array>
 			</dict>

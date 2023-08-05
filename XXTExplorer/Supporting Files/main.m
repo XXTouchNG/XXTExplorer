@@ -39,7 +39,7 @@ typedef int (*ptrace_ptr_t)(int _request, pid_t _pid, caddr_t _addr, int _data);
  @brief This is the basic ptrace functionality.
  @link http://www.coredump.gr/articles/ios-anti-debugging-protections-part-1/
  */
-void debugger_ptrace()
+void debugger_ptrace(void)
 {
     void* handle = dlopen(0, RTLD_GLOBAL | RTLD_NOW);
     ptrace_ptr_t ptrace_ptr = dlsym(handle, "ptrace");
@@ -102,7 +102,7 @@ static bool debugger_sysctl(void)
  * @see https://github.com/ElectraJailbreak/cydia/blob/master/cydo.cpp
  */
 NS_INLINE
-void patch_setuidandplatformize()
+void patch_setuidandplatformize(void)
 {
     void *handle = dlopen(JB_PREFIX "/usr/lib/libjailbreak.dylib", RTLD_LAZY);
     if (!handle) return;

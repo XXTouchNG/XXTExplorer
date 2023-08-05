@@ -30,7 +30,7 @@
 
 #pragma mark - Defaults
 
-const char **XXTESharedEnvp() {
+const char **XXTESharedEnvp(void) {
     static const char *sharedEnvp[] = {
         "PATH=" JB_PREFIX "/usr/local/bin:" JB_PREFIX "/usr/sbin:/" JB_PREFIX "/usr/bin:/" JB_PREFIX "/sbin:/" JB_PREFIX "/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         "HOME=/var/mobile", "USER=mobile", "LOGNAME=mobile", NULL
@@ -99,7 +99,7 @@ void XXTEDefaultsSetObject(NSString *key, id obj) {
     [XXTEAppDelegate.userDefaults setObject:obj forKey:key];
 }
 
-NSString *XXTERootPath() {
+NSString *XXTERootPath(void) {
     return [XXTEAppDelegate sharedRootPath];
 }
 
@@ -122,7 +122,7 @@ NSString *XXTTiledPath(NSString *fullPath) {
 
 #pragma mark - Permissions
 
-const char *add1s_binary() {
+const char *add1s_binary(void) {
     static NSString *add1s_binary = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -355,7 +355,7 @@ UIViewController *blockInteractions(UIViewController *viewController, BOOL shoul
     return blockInteractionsWithToast(viewController, shouldBlock, YES);
 }
 
-BOOL isiPhoneX() {
+BOOL isiPhoneX(void) {
     static BOOL checkiPhoneX = NO;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -392,7 +392,7 @@ void toastError(UIViewController *viewController, NSError *error) {
     toastMessageWithDelay(viewController, [error localizedDescription], 2.0);
 }
 
-UIColor *XXTColorFixed() { // rgb(52, 152, 219), #3498DB
+UIColor *XXTColorFixed(void) { // rgb(52, 152, 219), #3498DB
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -401,7 +401,7 @@ UIColor *XXTColorFixed() { // rgb(52, 152, 219), #3498DB
     return xxtColor;
 }
 
-UIColor *XXTColorPlainBackground() { // #FEFDFE/#131618
+UIColor *XXTColorPlainBackground(void) { // #FEFDFE/#131618
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -416,7 +416,7 @@ UIColor *XXTColorPlainBackground() { // #FEFDFE/#131618
     return xxtColor;
 }
 
-UIColor *XXTColorGroupedBackground() { // #F6F5F6/#1D1F21
+UIColor *XXTColorGroupedBackground(void) { // #F6F5F6/#1D1F21
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -431,7 +431,7 @@ UIColor *XXTColorGroupedBackground() { // #F6F5F6/#1D1F21
     return xxtColor;
 }
 
-UIColor *XXTColorPlainSectionHeader() { // #F8F8FA/#242B2E
+UIColor *XXTColorPlainSectionHeader(void) { // #F8F8FA/#242B2E
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -446,7 +446,7 @@ UIColor *XXTColorPlainSectionHeader() { // #F8F8FA/#242B2E
     return xxtColor;
 }
 
-UIColor *XXTColorPlainSectionHeaderText() { // #4A4B4D/#D7D7D9
+UIColor *XXTColorPlainSectionHeaderText(void) { // #4A4B4D/#D7D7D9
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -461,7 +461,7 @@ UIColor *XXTColorPlainSectionHeaderText() { // #4A4B4D/#D7D7D9
     return xxtColor;
 }
 
-UIColor *XXTColorPlainTitleText() { // #323234/#CBCBCD
+UIColor *XXTColorPlainTitleText(void) { // #323234/#CBCBCD
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -476,7 +476,7 @@ UIColor *XXTColorPlainTitleText() { // #323234/#CBCBCD
     return xxtColor;
 }
 
-UIColor *XXTColorPlainSubtitleText() { // #7E7E80/#98989A
+UIColor *XXTColorPlainSubtitleText(void) { // #7E7E80/#98989A
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -491,7 +491,7 @@ UIColor *XXTColorPlainSubtitleText() { // #7E7E80/#98989A
     return xxtColor;
 }
 
-UIColor *XXTColorForeground() {  // fixed/#B5BD68
+UIColor *XXTColorForeground(void) {  // fixed/#B5BD68
     static UIColor *xxtColorF = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -506,7 +506,7 @@ UIColor *XXTColorForeground() {  // fixed/#B5BD68
     return xxtColorF;
 }
 
-UIColor *XXTColorTint() {  // fixed/#DBDBDD
+UIColor *XXTColorTint(void) {  // fixed/#DBDBDD
     static UIColor *xxtColorT = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -521,7 +521,7 @@ UIColor *XXTColorTint() {  // fixed/#DBDBDD
     return xxtColorT;
 }
 
-UIColor *XXTColorToolbarBarTint() {  // #F1F1F3/#1D1F21
+UIColor *XXTColorToolbarBarTint(void) {  // #F1F1F3/#1D1F21
     static UIColor *xxtColorBT = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -536,7 +536,7 @@ UIColor *XXTColorToolbarBarTint() {  // #F1F1F3/#1D1F21
     return xxtColorBT;
 }
 
-UIColor *XXTColorBarTint() { // #F1F1F3/#1D1F21
+UIColor *XXTColorBarTint(void) { // #F1F1F3/#1D1F21
     static UIColor *xxtColorBT = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -551,7 +551,7 @@ UIColor *XXTColorBarTint() { // #F1F1F3/#1D1F21
     return xxtColorBT;
 }
 
-UIColor *XXTColorBarText() {  // #58585A/#C5C8C6
+UIColor *XXTColorBarText(void) {  // #58585A/#C5C8C6
     static UIColor *xxtColorBT1 = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -566,7 +566,7 @@ UIColor *XXTColorBarText() {  // #58585A/#C5C8C6
     return xxtColorBT1;
 }
 
-UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)/#373b4190
+UIColor *XXTColorCellSelected(void) { // rgba(52, 152, 219, 0.1)/#373b4190
     static UIColor *xxtColorCS = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -581,7 +581,7 @@ UIColor *XXTColorCellSelected() { // rgba(52, 152, 219, 0.1)/#373b4190
     return xxtColorCS;
 }
 
-UIColor *XXTColorSearchHighlight() {
+UIColor *XXTColorSearchHighlight(void) {
     static UIColor *xxtColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -596,7 +596,7 @@ UIColor *XXTColorSearchHighlight() {
     return xxtColor;
 }
 
-UIColor *XXTColorWarning() { // rgb(241, 196, 15)
+UIColor *XXTColorWarning(void) { // rgb(241, 196, 15)
     static UIColor *xxtWarningColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -605,7 +605,7 @@ UIColor *XXTColorWarning() { // rgb(241, 196, 15)
     return xxtWarningColor;
 }
 
-UIColor *XXTColorDanger() { // rgb(231, 76, 60)
+UIColor *XXTColorDanger(void) { // rgb(231, 76, 60)
     static UIColor *xxtDangerColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -614,7 +614,7 @@ UIColor *XXTColorDanger() { // rgb(231, 76, 60)
     return xxtDangerColor;
 }
 
-UIColor *XXTColorSuccess() { // rgb(26, 188, 134)
+UIColor *XXTColorSuccess(void) { // rgb(26, 188, 134)
     static UIColor *xxtSuccessColor = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -623,7 +623,7 @@ UIColor *XXTColorSuccess() { // rgb(26, 188, 134)
     return xxtSuccessColor;
 }
 
-NSString *uAppUserAgent() {
+NSString *uAppUserAgent(void) {
     return [NSString stringWithFormat:@"XXTExplorer/%@", [uAppDefine(kXXTDaemonVersionKey) stringByReplacingOccurrencesOfString:@"-" withString:@"."]];
 }
 

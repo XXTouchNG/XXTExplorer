@@ -33,7 +33,7 @@
 	<key>DAEMON_LOG_VIEWER</key>
 	<string>XXTELogViewController</string>
 	<key>DAEMON_VERSION</key>
-	<string>3.0.3-202307262242</string>
+	<string>3.0.3</string>
 	<key>EXPLORER_CACHES_PATH</key>
 	<string>caches</string>
 	<key>EXPLORER_INITIAL_PATH</key>
