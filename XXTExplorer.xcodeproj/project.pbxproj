@@ -232,14 +232,18 @@
 		BDFE72522304538800F56482 /* UITextView+TextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFE72502304538800F56482 /* UITextView+TextRange.m */; };
 		CC246DF42861A2A8007FCFC5 /* XUIViewShaker.m in Sources */ = {isa = PBXBuildFile; fileRef = CC246DF32861A2A8007FCFC5 /* XUIViewShaker.m */; };
 		CC246DF52861A2A8007FCFC5 /* XUIViewShaker.m in Sources */ = {isa = PBXBuildFile; fileRef = CC246DF32861A2A8007FCFC5 /* XUIViewShaker.m */; };
+		CC2BD9592A7E1AE300290345 /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2BD9572A7E1AE200290345 /* icon-small.png */; };
+		CC2BD95A2A7E1AE300290345 /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2BD9582A7E1AE300290345 /* icon-small@2x.png */; };
+		CC2BD95B2A7E1AE500290345 /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2BD9572A7E1AE200290345 /* icon-small.png */; };
+		CC2BD95C2A7E1AE500290345 /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2BD9582A7E1AE300290345 /* icon-small@2x.png */; };
+		CC2BD95E2A7E1B1500290345 /* SpringBoardServices.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2BD95D2A7E1B1500290345 /* SpringBoardServices.tbd */; };
+		CC2BD95F2A7E1B1500290345 /* SpringBoardServices.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2BD95D2A7E1B1500290345 /* SpringBoardServices.tbd */; };
 		CC2F46E02861A41B00D9B238 /* NSObject+XUIStringValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2F46DF2861A41B00D9B238 /* NSObject+XUIStringValue.m */; };
 		CC2F46E12861A41B00D9B238 /* NSObject+XUIStringValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2F46DF2861A41B00D9B238 /* NSObject+XUIStringValue.m */; };
 		CC2F46E42861A4E800D9B238 /* XXTECommonWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2F46E22861A4E800D9B238 /* XXTECommonWebViewController.m */; };
 		CC2F46E52861A4E800D9B238 /* XXTECommonWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2F46E22861A4E800D9B238 /* XXTECommonWebViewController.m */; };
 		CC2F46EA2861A96A00D9B238 /* UIColor+XUIDarkColor.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2F46E92861A96A00D9B238 /* UIColor+XUIDarkColor.m */; };
 		CC2F46EB2861A96D00D9B238 /* UIColor+XUIDarkColor.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2F46E92861A96A00D9B238 /* UIColor+XUIDarkColor.m */; };
-		CC2F46F02861ABFB00D9B238 /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2F46EF2861ABFB00D9B238 /* SpringBoardServices */; };
-		CC2F46F12861ABFB00D9B238 /* SpringBoardServices in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2F46EF2861ABFB00D9B238 /* SpringBoardServices */; };
 		CC396F872861BDCC0079097A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DBD48E1F3C5B5C002D5561 /* libz.tbd */; };
 		CC398E482861861E009EBAAA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC398E472861861E009EBAAA /* SafariServices.framework */; };
 		CC398E4928618626009EBAAA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC398E472861861E009EBAAA /* SafariServices.framework */; };
@@ -891,6 +895,9 @@
 		CC056AE47EF39EA864C0CBE8 /* libPods-XXTExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTExplorer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC246DF22861A2A8007FCFC5 /* XUIViewShaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XUIViewShaker.h; sourceTree = "<group>"; };
 		CC246DF32861A2A8007FCFC5 /* XUIViewShaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XUIViewShaker.m; sourceTree = "<group>"; };
+		CC2BD9572A7E1AE200290345 /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
+		CC2BD9582A7E1AE300290345 /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		CC2BD95D2A7E1B1500290345 /* SpringBoardServices.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = SpringBoardServices.tbd; sourceTree = "<group>"; };
 		CC2F46DE2861A41B00D9B238 /* NSObject+XUIStringValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XUIStringValue.h"; sourceTree = "<group>"; };
 		CC2F46DF2861A41B00D9B238 /* NSObject+XUIStringValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+XUIStringValue.m"; sourceTree = "<group>"; };
 		CC2F46E22861A4E800D9B238 /* XXTECommonWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTECommonWebViewController.m; sourceTree = "<group>"; };
@@ -899,7 +906,6 @@
 		CC2F46E72861A8B100D9B238 /* LSApplicationWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationWorkspace.h; sourceTree = "<group>"; };
 		CC2F46E82861A96A00D9B238 /* UIColor+XUIDarkColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+XUIDarkColor.h"; sourceTree = "<group>"; };
 		CC2F46E92861A96A00D9B238 /* UIColor+XUIDarkColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XUIDarkColor.m"; sourceTree = "<group>"; };
-		CC2F46EF2861ABFB00D9B238 /* SpringBoardServices */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = SpringBoardServices; sourceTree = "<group>"; };
 		CC398E472861861E009EBAAA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		CC82784B29F025A900BC6EF7 /* NSData+SHA256.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA256.m"; sourceTree = "<group>"; };
 		CC82784C29F025A900BC6EF7 /* NSData+SHA256.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA256.h"; sourceTree = "<group>"; };
@@ -1049,9 +1055,9 @@
 				0FAE190020809135005F9B67 /* libsqlite3.tbd in Frameworks */,
 				0FAC07BA1F848AB200C52225 /* Photos.framework in Frameworks */,
 				CC398E482861861E009EBAAA /* SafariServices.framework in Frameworks */,
-				CC2F46F02861ABFB00D9B238 /* SpringBoardServices in Frameworks */,
 				D6A5484B1F8B1B4F006B6DAA /* libactivator.tbd in Frameworks */,
 				FFE619641C9C84963276FD4F /* libPods-XXTExplorer.a in Frameworks */,
+				CC2BD95E2A7E1B1500290345 /* SpringBoardServices.tbd in Frameworks */,
 				CC396F872861BDCC0079097A /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1064,8 +1070,8 @@
 				D60FE7661FE2369300954818 /* Photos.framework in Frameworks */,
 				D60FE7721FE2369300954818 /* libz.tbd in Frameworks */,
 				CC398E4928618626009EBAAA /* SafariServices.framework in Frameworks */,
-				CC2F46F12861ABFB00D9B238 /* SpringBoardServices in Frameworks */,
 				D60FE7741FE2369300954818 /* libactivator.tbd in Frameworks */,
+				CC2BD95F2A7E1B1500290345 /* SpringBoardServices.tbd in Frameworks */,
 				F79F26F136447D268282CE8D /* libPods-XXTExplorer-Archive.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1653,7 +1659,9 @@
 		0FA7ABED1ED641A3003EAD7D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CC2F46EF2861ABFB00D9B238 /* SpringBoardServices */,
+				CC2BD9572A7E1AE200290345 /* icon-small.png */,
+				CC2BD9582A7E1AE300290345 /* icon-small@2x.png */,
+				CC2BD95D2A7E1B1500290345 /* SpringBoardServices.tbd */,
 				D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */,
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
 				0FA1A5021FF13CD10021648B /* Archive-Info.plist */,
@@ -2504,6 +2512,7 @@
 				0F5D6C052010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
 				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
 				D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
+				CC2BD95A2A7E1AE300290345 /* icon-small@2x.png in Resources */,
 				0F8147CB2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
 				D6F0AD8322FAD94C00970123 /* Plain Text.tmLanguage in Resources */,
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
@@ -2515,6 +2524,7 @@
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
 				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
+				CC2BD9592A7E1AE300290345 /* icon-small.png in Resources */,
 				0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */,
 				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
 				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
@@ -2553,7 +2563,9 @@
 				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
 				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
+				CC2BD95C2A7E1AE500290345 /* icon-small@2x.png in Resources */,
 				BD00B6422309A25D0026AF27 /* Tomorrow Night.tmTheme in Resources */,
+				CC2BD95B2A7E1AE500290345 /* icon-small.png in Resources */,
 				0F5D6C062010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
 				D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */,
 				D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */,
