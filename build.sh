@@ -15,7 +15,7 @@ cp ent.xml "$SRC_DIR/Products/Applications"/ent.xml
 cd "$SRC_DIR/Products/Applications"
 codesign --remove-signature XXTExplorer.app
 
-if [ "$TARGET_CODESIGN" = "ldid" ]; then
+if [ -z "$TARGET_CODESIGN_CERT" ] || [ "$TARGET_CODESIGN_CERT" = "-n" ]; then
     ldid -Sent.xml XXTExplorer.app/XXTExplorer
 else
     codesign --entitlements ent.xml --deep --force --sign "$TARGET_CODESIGN_CERT" XXTExplorer.app
