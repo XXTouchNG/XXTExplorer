@@ -211,7 +211,6 @@
 		52512440558639F0CA2A63C6 /* SKInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512D31FC610E7D9963A8EA /* SKInclude.m */; };
 		5251245BC6DE1565215C8607 /* SKScopedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 525129847C45779842CAFB08 /* SKScopedString.m */; };
 		525124ED4DD307ABED338786 /* SKAttributedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5251295186DD6CE6F8FB43D2 /* SKAttributedParser.m */; };
-		525126058D5D618680DA5644 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 525124A3753CAD3DB3A0D077 /* .gitignore */; };
 		525126C64B02D2C2C8A1A643 /* SKResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512024B32016196224ED51 /* SKResultSet.m */; };
 		5251277D53E3D9B7B04B0497 /* SKCaptureCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 525121AA050C36B577A99998 /* SKCaptureCollection.m */; };
 		52512B1B59665FA95C0D8879 /* SKReferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52512CB52A8E3433BDF9E3CE /* SKReferenceManager.m */; };
@@ -2424,7 +2423,6 @@
 				0FA7ABE71ED641A3003EAD7D /* Frameworks */,
 				0FA7ABE81ED641A3003EAD7D /* Resources */,
 				C9CE2604809A5A6D830EDD99 /* [CP] Copy Pods Resources */,
-				D60FE7D61FE23B5800954818 /* Integrate Reveal Server */,
 			);
 			buildRules = (
 			);
@@ -2507,46 +2505,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
-				0F8ECD9E1FE81C1700A5457C /* Tomorrow Night.png in Resources */,
-				0F5D6C052010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
-				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
-				D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
+				CC2BD9592A7E1AE300290345 /* icon-small.png in Resources */,
 				CC2BD95A2A7E1AE300290345 /* icon-small@2x.png in Resources */,
-				0F8147CB2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
+				0F8ECD9E1FE81C1700A5457C /* Tomorrow Night.png in Resources */,
+				0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */,
+				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
+				0FE1629E1F3C8FFC003064B2 /* InfoPlist.strings in Resources */,
+				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
+				D6F0AD8222FAD94C00970123 /* Lua.tmLanguage in Resources */,
 				D6F0AD8322FAD94C00970123 /* Plain Text.tmLanguage in Resources */,
+				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
+				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
+				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
+				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
+				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
+				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
+				0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */,
+				D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */,
+				D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
+				D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
+				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
+				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
+				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
+				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
+				D6CDFECE22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
+				0F8147CB2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
+				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
+				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
+				0F97F1D11FB2A7FB007CA883 /* XXTEMoreApplicationCell.xib in Resources */,
+				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
+				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
+				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
+				0FFBC12D1F5BD85F00690C8F /* XXTEMoreTextFieldCell.xib in Resources */,
+				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				D629C22D1F063B830030C6DA /* XXTEMoreTitleValueCell.xib in Resources */,
 				0FAD691E1F04037100B2F0EC /* XXTEMoreRemoteSwitchCell.xib in Resources */,
-				0FE1E4341F189A1600055E02 /* Meta.strings in Resources */,
-				D629C2321F063E270030C6DA /* XXTEMoreActionCell.xib in Resources */,
-				D6CDFECE22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
-				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
-				0FD973F11F4B1D3700133162 /* Tomorrow Night.tmTheme in Resources */,
-				0F10A9251F07FC32008BA792 /* XXTEMoreLicenseCell.xib in Resources */,
-				CC2BD9592A7E1AE300290345 /* icon-small.png in Resources */,
-				0FE65E2D1F533043005F81FB /* XXTEPremiumPreview.pdf in Resources */,
-				0FAD69231F04038600B2F0EC /* XXTEMoreAddressCell.xib in Resources */,
-				D629C20B1F05E8060030C6DA /* XXTEAppDefines.plist in Resources */,
-				D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */,
-				0F0ADDF21F134163000D48FC /* XXTEItemTemplate.lua in Resources */,
-				0FFBC12D1F5BD85F00690C8F /* XXTEMoreTextFieldCell.xib in Resources */,
-				0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */,
-				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
-				0F3508C01F166A69000403FD /* Localizable.strings in Resources */,
-				525126058D5D618680DA5644 /* .gitignore in Resources */,
-				D6DBD4891F3C4CA1002D5561 /* XXTEBuiltInDefaults.plist in Resources */,
-				0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */,
-				0FAD692D1F0403B000B2F0EC /* XXTEMoreLinkCell.xib in Resources */,
-				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
-				0FAD69281F04039D00B2F0EC /* XXTEMoreSwitchCell.xib in Resources */,
-				D6F0AD8222FAD94C00970123 /* Lua.tmLanguage in Resources */,
-				0FE1629E1F3C8FFC003064B2 /* InfoPlist.strings in Resources */,
-				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
-				D6FC2F391F0E368F000BAB42 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
-				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				D6686F331F4ACEB6004403D0 /* XXTEMoreValueViewCell.xib in Resources */,
-				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
+				0F5D6C052010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
+				0F707E7A1FB094110052A4B5 /* XXTESymbolCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2554,45 +2551,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */,
+				CC2BD95B2A7E1AE500290345 /* icon-small.png in Resources */,
+				CC2BD95C2A7E1AE500290345 /* icon-small@2x.png in Resources */,
+				BD00B6432309A25D0026AF27 /* Tomorrow Night.png in Resources */,
+				D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */,
+				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
+				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
+				D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */,
+				D6F0AD8422FAD94D00970123 /* Lua.tmLanguage in Resources */,
+				D6F0AD8522FAD94D00970123 /* Plain Text.tmLanguage in Resources */,
+				BD00B6422309A25D0026AF27 /* Tomorrow Night.tmTheme in Resources */,
+				D60FE7A61FE2369300954818 /* XXTEItemTemplate.lua in Resources */,
+				D60FE7A31FE2369300954818 /* XXTEAppDefines.plist in Resources */,
+				D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */,
+				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
+				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
+				D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */,
+				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
+				D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
 				D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
+				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
 				D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */,
+				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
+				D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */,
+				D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */,
+				D6CDFECF22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
+				0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
+				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
+				D60FE79F1FE2369300954818 /* XXTEMoreAddressCell.xib in Resources */,
+				D60FE7781FE2369300954818 /* XXTEMoreApplicationCell.xib in Resources */,
+				D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */,
+				D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */,
+				D60FE7B61FE2369300954818 /* XXTEMoreSwitchCell.xib in Resources */,
+				D60FE7A71FE2369300954818 /* XXTEMoreTextFieldCell.xib in Resources */,
+				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
 				D60FE7881FE2369300954818 /* XXTEMoreTitleValueCell.xib in Resources */,
 				D60FE78A1FE2369300954818 /* XXTEMoreRemoteSwitchCell.xib in Resources */,
-				D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
-				D60FE78B1FE2369300954818 /* Meta.strings in Resources */,
-				D60FE78E1FE2369300954818 /* XXTEMoreActionCell.xib in Resources */,
-				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
-				CC2BD95C2A7E1AE500290345 /* icon-small@2x.png in Resources */,
-				BD00B6422309A25D0026AF27 /* Tomorrow Night.tmTheme in Resources */,
-				CC2BD95B2A7E1AE500290345 /* icon-small.png in Resources */,
-				0F5D6C062010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
-				D60FE7991FE2369300954818 /* XXTEMoreLicenseCell.xib in Resources */,
-				D60FE79E1FE2369300954818 /* XXTEPremiumPreview.pdf in Resources */,
-				D60FE79F1FE2369300954818 /* XXTEMoreAddressCell.xib in Resources */,
-				D60FE7A31FE2369300954818 /* XXTEAppDefines.plist in Resources */,
-				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
-				D6CDFECF22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
-				D60FE7A61FE2369300954818 /* XXTEItemTemplate.lua in Resources */,
-				D60FE7A71FE2369300954818 /* XXTEMoreTextFieldCell.xib in Resources */,
-				D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */,
-				D6F0AD8522FAD94D00970123 /* Plain Text.tmLanguage in Resources */,
-				D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */,
-				D60FE7AC1FE2369300954818 /* Localizable.strings in Resources */,
-				D60FE7B01FE2369300954818 /* XXTEBuiltInDefaults.plist in Resources */,
-				D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */,
-				D60FE7B41FE2369300954818 /* XXTEMoreLinkCell.xib in Resources */,
-				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
-				D60FE7B61FE2369300954818 /* XXTEMoreSwitchCell.xib in Resources */,
-				D60FE7B91FE2369300954818 /* InfoPlist.strings in Resources */,
-				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
-				BD00B6432309A25D0026AF27 /* Tomorrow Night.png in Resources */,
-				D60FE7BF1FE2369300954818 /* XXTEMoreTitleDescriptionCell.xib in Resources */,
-				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
-				0F8147CC2081CD49009C6B6D /* XXTELogCell.xib in Resources */,
 				D60FE7C71FE2369300954818 /* XXTEMoreValueViewCell.xib in Resources */,
-				D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */,
-				D6F0AD8422FAD94D00970123 /* Lua.tmLanguage in Resources */,
+				0F5D6C062010E3A600BD1DDC /* XXTESingleActionView.xib in Resources */,
+				D60FE7B31FE2369300954818 /* XXTESymbolCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2670,20 +2667,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XXTExplorer-Archive/Pods-XXTExplorer-Archive-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		D60FE7D61FE23B5800954818 /* Integrate Reveal Server */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Integrate Reveal Server";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export REVEAL_SERVER_FILENAME=\"RevealServer.framework\"\n\n# Update this path to point to the location of RevealServer.framework in your project.\nexport REVEAL_SERVER_PATH=\"${SRCROOT}/Frameworks/${REVEAL_SERVER_FILENAME}\"\n\n# If configuration is not Debug, skip this script.\n[ \"${CONFIGURATION}\" != \"Debug\" ] && exit 0\n\n# If RevealServer.framework exists at the specified path, run code signing script.\nif [ -d \"${REVEAL_SERVER_PATH}\" ]; then\n\"${REVEAL_SERVER_PATH}/Scripts/copy_and_codesign_revealserver.sh\"\nelse\necho \"Reveal Server not loaded: RevealServer.framework could not be found.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
