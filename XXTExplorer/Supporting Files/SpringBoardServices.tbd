@@ -520,5 +520,4 @@ undefineds:
                             _NSPropertyListSerialization, _NSRecursiveLock, _NSSet,
                             _NSString, _NSThread, _NSUUID, _NSValue, _NSXPCConnection,
                             _NSXPCInterface ]
-    weak-def-symbols:     [ _voucher_mach_msg_set ]
 ...

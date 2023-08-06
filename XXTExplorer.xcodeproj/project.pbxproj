@@ -3317,7 +3317,6 @@
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 301;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3336,7 +3335,6 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3383,6 +3381,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Debug;
@@ -3397,7 +3396,6 @@
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 301;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3422,13 +3420,13 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.darwindev.XXTExplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Release;
@@ -3443,7 +3441,6 @@
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 301;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3487,7 +3484,6 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3535,6 +3531,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = arm64;
+				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Debug;
@@ -3549,7 +3546,6 @@
 				CODE_SIGN_ENTITLEMENTS = "XXTExplorer/Supporting Files/XXTExplorer.entitlements";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 301;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3592,7 +3588,6 @@
 					"$(PROJECT_DIR)/XXTExplorer/Master/More/Activation/Activator",
 					"$(PROJECT_DIR)/XXTExplorer/Supporting\\ Files",
 				);
-				MARKETING_VERSION = 3.0.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3640,6 +3635,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = arm64;
+				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = "-Wpartial-availability";
 			};
 			name = Release;
