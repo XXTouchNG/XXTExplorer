@@ -23,8 +23,8 @@
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     [navigationBarAppearance configureWithOpaqueBackground];
     [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
-    [navigation.navigationBar setScrollEdgeAppearance:navigation.navigationBar.standardAppearance];
-    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor}];
+    [navigation.navigationBar setScrollEdgeAppearance:navigationBarAppearance];
+    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor, NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     navigation.navigationBar.tintColor = tintColor;
     navigation.navigationItem.leftBarButtonItem.tintColor = tintColor;
     navigation.navigationItem.rightBarButtonItem.tintColor = tintColor;

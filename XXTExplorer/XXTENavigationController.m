@@ -44,6 +44,13 @@
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     [navigationBarAppearance setTranslucent:YES];
 
+    UINavigationBarAppearance *latestNavigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+    [latestNavigationBarAppearance configureWithOpaqueBackground];
+    [latestNavigationBarAppearance setBackgroundColor:XXTColorBarTint()];
+    [latestNavigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName : XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
+    [self.navigationBar setStandardAppearance:latestNavigationBarAppearance];
+    [self.navigationBar setScrollEdgeAppearance:latestNavigationBarAppearance];
+
     XXTE_START_IGNORE_PARTIAL
     UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     XXTE_END_IGNORE_PARTIAL

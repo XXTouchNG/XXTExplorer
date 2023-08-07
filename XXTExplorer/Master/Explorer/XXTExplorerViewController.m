@@ -267,10 +267,10 @@ XXTE_END_IGNORE_PARTIAL
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     [navigationBarAppearance configureWithOpaqueBackground];
     [navigationBarAppearance setBackgroundColor:barTintColor];
-    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText()}];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     [navigationBar setStandardAppearance:navigationBarAppearance];
-    [navigationBar setScrollEdgeAppearance:navigationBar.standardAppearance];
-    [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText()}];
+    [navigationBar setScrollEdgeAppearance:navigationBarAppearance];
+    [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: XXTColorBarText(), NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     navigationBar.tintColor = XXTColorTint();
     navigationBar.barTintColor = barTintColor;
     [self setNeedsStatusBarAppearanceUpdate];

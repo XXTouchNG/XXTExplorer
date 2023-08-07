@@ -180,10 +180,10 @@ XXTE_END_IGNORE_PARTIAL
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     [navigationBarAppearance configureWithOpaqueBackground];
     [navigationBarAppearance setBackgroundColor:barTintColor];
-    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor, NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
-    [navigation.navigationBar setScrollEdgeAppearance:navigation.navigationBar.standardAppearance];
-    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
+    [navigation.navigationBar setScrollEdgeAppearance:navigationBarAppearance];
+    [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor, NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     navigation.navigationBar.tintColor = tintColor;
     navigation.navigationBar.barTintColor = barTintColor;
     navigation.navigationItem.leftBarButtonItem.tintColor = tintColor;
