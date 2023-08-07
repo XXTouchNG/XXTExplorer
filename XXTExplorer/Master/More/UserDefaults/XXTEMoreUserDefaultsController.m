@@ -118,6 +118,8 @@ XXTE_END_IGNORE_PARTIAL
     searchBar.scopeButtonTitles = @[ NSLocalizedString(@"Title", nil),
                                      NSLocalizedString(@"Description", nil)
                                      ];
+    [searchBar setScopeBarButtonTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor labelColor] } forState:UIControlStateSelected];
+    [searchBar setScopeBarButtonTitleTextAttributes:@{ NSForegroundColorAttributeName: XXTColorBarText() } forState:UIControlStateNormal];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
