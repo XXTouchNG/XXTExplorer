@@ -506,19 +506,8 @@ UIColor *XXTColorForeground(void) {  // fixed/#B5BD68
     return xxtColorF;
 }
 
-UIColor *XXTColorTint(void) {  // fixed/#DBDBDD
-    static UIColor *xxtColorT = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        xxtColorT = [[UIColor alloc] initWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
-            if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-                return [UIColor colorWithRed:0xDB/255.f green:0xDB/255.f blue:0xDD/255.f alpha:1.f];
-            } else {
-                return [UIColor labelColor];
-            }
-        }];
-    });
-    return xxtColorT;
+UIColor *XXTColorTint(void) {
+    return XXTColorBarText();
 }
 
 UIColor *XXTColorToolbarBarTint(void) {  // #F1F1F3/#1D1F21
