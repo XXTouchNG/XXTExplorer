@@ -11,11 +11,11 @@
 #import "XXTEEditorDefaults.h"
 
 // Parent
-#import "XXTEEditorController.h"
-#import "XXTEEditorController+NavigationBar.h"
 #import "XXTEEditorTheme.h"
 #import "XXTEEditorLanguage.h"
-#import "UIColor+SKColor.h"
+#import "XXTEEditorController.h"
+#import "XXTESearchController.h"
+#import "XXTEEditorController+NavigationBar.h"
 
 // Views
 #import "XXTESymbolCell.h"
@@ -25,6 +25,7 @@
 
 // Helpers
 #import "SKParser.h"
+#import "UIColor+SKColor.h"
 
 
 @interface XXTESymbolViewController ()
@@ -86,7 +87,7 @@ XXTE_END_IGNORE_PARTIAL
     UISearchBar *searchBar = nil;
     XXTE_START_IGNORE_PARTIAL
     _searchController = ({
-        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        UISearchController *searchController = [[XXTESearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.dimsBackgroundDuringPresentation = NO;
         searchController.hidesNavigationBarDuringPresentation = YES;

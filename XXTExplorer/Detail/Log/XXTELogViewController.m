@@ -13,6 +13,7 @@
 
 #import "XXTEAppDefines.h"
 #import "XXTExplorerDefaults.h"
+#import "XXTESearchController.h"
 #import "XXTEEditorTextProperties.h"
 
 #import <LGAlertView/LGAlertView.h>
@@ -104,7 +105,7 @@ XXTE_END_IGNORE_PARTIAL
     UISearchBar *searchBar = nil;
     XXTE_START_IGNORE_PARTIAL
     _searchController = ({
-        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        UISearchController *searchController = [[XXTESearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.dimsBackgroundDuringPresentation = NO;
         searchController.hidesNavigationBarDuringPresentation = YES;

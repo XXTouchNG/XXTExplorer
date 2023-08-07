@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -256,6 +256,8 @@
 		CC86C3772861A18A003CF184 /* UIColor+HexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CC86C3752861A18A003CF184 /* UIColor+HexValue.m */; };
 		CCBBA13828EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */; };
 		CCBBA13928EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */; };
+		CCD79C492A80803100856E8D /* XXTESearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD79C482A80803100856E8D /* XXTESearchController.m */; };
+		CCD79C4A2A80803100856E8D /* XXTESearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD79C482A80803100856E8D /* XXTESearchController.m */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D606114B22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
 		D606114C22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
@@ -917,6 +919,8 @@
 		CC86C3752861A18A003CF184 /* UIColor+HexValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexValue.m"; sourceTree = "<group>"; };
 		CCBBA13628EC068200EA4303 /* NSURLSession+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+PromiseKit.h"; sourceTree = "<group>"; };
 		CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+PromiseKit.m"; sourceTree = "<group>"; };
+		CCD79C472A80803100856E8D /* XXTESearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESearchController.h; sourceTree = "<group>"; };
+		CCD79C482A80803100856E8D /* XXTESearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESearchController.m; sourceTree = "<group>"; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		D606114622F53F3800F6F0E6 /* XXTEEditorLineBreakController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineBreakController.h; sourceTree = "<group>"; };
@@ -1644,13 +1648,13 @@
 				0FEFFFFC1EE0A2EA0098D4BB /* Defines */,
 				0F61E1611ED7871F003DCC78 /* Detail */,
 				0F61E1601ED78712003DCC78 /* Master */,
-				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
 				0FA7ABF01ED641A3003EAD7D /* XXTEAppDelegate.h */,
 				0FA7ABF11ED641A3003EAD7D /* XXTEAppDelegate.m */,
 				0FAE0EFD1ED6FBDA00798B4B /* XXTENavigationController.h */,
 				0FAE0EFE1ED6FBDA00798B4B /* XXTENavigationController.m */,
 				0F61E15A1ED78432003DCC78 /* XXTESplitViewController.h */,
 				0F61E15B1ED78432003DCC78 /* XXTESplitViewController.m */,
+				0FA7ABED1ED641A3003EAD7D /* Supporting Files */,
 			);
 			path = XXTExplorer;
 			sourceTree = "<group>";
@@ -2208,6 +2212,8 @@
 			children = (
 				0F072D8C1FB6B15300597EE2 /* ItemPicker */,
 				0F072D8D1FB6B16000597EE2 /* Segment */,
+				CCD79C472A80803100856E8D /* XXTESearchController.h */,
+				CCD79C482A80803100856E8D /* XXTESearchController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2458,8 +2464,9 @@
 		0FA7ABE21ED641A3003EAD7D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = XXTE;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = Zheng;
 				TargetAttributes = {
 					0FA7ABE91ED641A3003EAD7D = {
@@ -2787,6 +2794,7 @@
 				D689F5A61F42AA3D002BB59E /* XXTEEditorLayoutManager.m in Sources */,
 				0F2916151F10CC3B00A446BA /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				0F6AEA871F374D8B0017BE7C /* XXTExplorerViewController+Notification.m in Sources */,
+				CCD79C492A80803100856E8D /* XXTESearchController.m in Sources */,
 				0F4F670C1F1268E70042C449 /* XXTExplorerEntryService.m in Sources */,
 				0F1C3EBA1FA8376200B5146C /* ICRangeUtils.m in Sources */,
 				0F1DD1C31F11B6A700F1A66A /* XXTEScanViewController.m in Sources */,
@@ -3005,6 +3013,7 @@
 				D60FE6D21FE2369300954818 /* XXTEEditorLayoutManager.m in Sources */,
 				D60FE6D31FE2369300954818 /* XXTEMoreUserDefaultsOperationController.m in Sources */,
 				D60FE6D41FE2369300954818 /* XXTExplorerViewController+Notification.m in Sources */,
+				CCD79C4A2A80803100856E8D /* XXTESearchController.m in Sources */,
 				D60FE6D51FE2369300954818 /* XXTExplorerEntryService.m in Sources */,
 				D60FE6D61FE2369300954818 /* ICRangeUtils.m in Sources */,
 				D60FE6D71FE2369300954818 /* XXTEScanViewController.m in Sources */,
@@ -3284,7 +3293,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3311,7 +3321,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = X.X.T.;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
@@ -3389,7 +3402,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = X.X.T.;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/LGAlertView-iOS8.0\"",
@@ -3460,7 +3476,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = X.X.T.;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",
@@ -3564,7 +3583,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = X.X.T.;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XXTExplorer",

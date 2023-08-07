@@ -10,6 +10,7 @@
 #import "XXTEMoreTitleDescriptionCell.h"
 
 #import "UIView+XXTEToast.h"
+#import "XXTESearchController.h"
 #import "XXTEMoreUserDefaultsOperationController.h"
 
 #import <PromiseKit/PromiseKit.h>
@@ -83,7 +84,7 @@ XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
     _searchController = ({
-        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        UISearchController *searchController = [[XXTESearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.dimsBackgroundDuringPresentation = NO;
         searchController.hidesNavigationBarDuringPresentation = YES;

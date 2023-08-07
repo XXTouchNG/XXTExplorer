@@ -5,8 +5,11 @@
 
 #import <objc/runtime.h>
 #import "XXTEMoreApplicationListController.h"
+
 #import "LSApplicationProxy.h"
 #import "LSApplicationWorkspace.h"
+
+#import "XXTESearchController.h"
 #import "XXTEMoreApplicationCell.h"
 #import "XXTEMoreApplicationDetailController.h"
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
@@ -117,7 +120,7 @@ XXTE_END_IGNORE_PARTIAL
     
     XXTE_START_IGNORE_PARTIAL
     _searchController = ({
-        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        UISearchController *searchController = [[XXTESearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.delegate = self;
         searchController.dimsBackgroundDuringPresentation = NO;
