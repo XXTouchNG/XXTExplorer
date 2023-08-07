@@ -18,6 +18,10 @@
 
 @interface XXTEEditorFontSettingsViewController : UITableViewController
 
++ (NSArray <NSDictionary *> *)fontMetas;
++ (NSArray <UIFont *> *)availableFonts;
++ (NSDictionary <NSString *, UIFont *> *)availableFontsMappings;
+
 @property (nonatomic, weak) id <XXTEEditorFontSettingsViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *selectedFontName;
 

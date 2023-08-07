@@ -108,10 +108,10 @@
     NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, @"Courier");
     double fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
     
-    UIFont *font = [UIFont fontWithName:fontName size:fontSize];
+    UIFont *font = [[XXTEEditorFontSettingsViewController availableFontsMappings][fontName] fontWithSize:fontSize];
     XXTEMoreTitleValueCell *cell1 = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XXTEMoreTitleValueCell class]) owner:nil options:nil] lastObject];
     cell1.titleLabel.text = NSLocalizedString(@"Font Family", nil);
-    cell1.valueLabel.text = font.familyName;
+    cell1.valueLabel.text = fontName;
     cell1.valueLabel.font = [font fontWithSize:17.f];
     cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -546,10 +546,11 @@
 #pragma mark - XXTEEditorFontSettingsViewControllerDelegate
 
 - (void)fontSettingsViewControllerSettingsDidChanged:(XXTEEditorFontSettingsViewController *)controller {
-    XXTEDefaultsSetObject(XXTEEditorFontName, [controller.selectedFontName copy]);
-    UIFont *font = [UIFont fontWithName:controller.selectedFontName size:17.f];
+    NSString *fontName = controller.selectedFontName;
+    XXTEDefaultsSetObject(XXTEEditorFontName, [fontName copy]);
+    UIFont *font = [[XXTEEditorFontSettingsViewController availableFontsMappings][fontName] fontWithSize:17.f];
     if (font) {
-        ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.text = [font familyName];
+        ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.text = fontName;
         ((XXTEMoreTitleValueCell *)staticCells[0][0]).valueLabel.font = font;
     }
     [self.editor setNeedsReload:XXTEEditorFontName];

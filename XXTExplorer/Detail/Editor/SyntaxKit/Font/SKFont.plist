@@ -17,19 +17,6 @@
 	</dict>
 	<dict>
 		<key>family</key>
-		<string>Courier New</string>
-		<key>location</key>
-		<string></string>
-		<key>fonts</key>
-		<array>
-			<string>CourierNewPSMT</string>
-			<string>CourierNewPS-BoldMT</string>
-			<string>CourierNewPS-ItalicMT</string>
-			<string>CourierNewPS-BoldItalicMT</string>
-		</array>
-	</dict>
-	<dict>
-		<key>family</key>
 		<string>Menlo</string>
 		<key>location</key>
 		<string></string>
@@ -39,6 +26,19 @@
 			<string>Menlo-Bold</string>
 			<string>Menlo-Italic</string>
 			<string>Menlo-BoldItalic</string>
+		</array>
+	</dict>
+	<dict>
+		<key>family</key>
+		<string>SF Mono</string>
+		<key>location</key>
+		<string></string>
+		<key>fonts</key>
+		<array>
+			<string>.AppleSystemUIFontMonospaced-Medium</string>
+			<string>.AppleSystemUIFontMonospaced-Bold</string>
+			<string>.AppleSystemUIFontMonospaced-MediumItalic</string>
+			<string>.AppleSystemUIFontMonospaced-BoldItalic</string>
 		</array>
 	</dict>
 </array>

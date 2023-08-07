@@ -47,6 +47,22 @@
     return fonts;
 }
 
++ (NSDictionary <NSString *, UIFont *> *)availableFontsMappings {
+    static NSMutableDictionary <NSString *, UIFont *> *fonts = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fonts = [[NSMutableDictionary alloc] init];
+        NSArray <NSDictionary *> *fontMetas = [self fontMetas];
+        NSArray <UIFont *> *availableFonts = [self availableFonts];
+        NSUInteger fontIdx = 0;
+        for (NSDictionary *fontDict in fontMetas) {
+            [fonts setObject:availableFonts[fontIdx] forKey:fontDict[@"family"]];
+            fontIdx++;
+        }
+    });
+    return fonts;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         [self setup];
@@ -107,10 +123,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         XXTEMoreLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:XXTEMoreLinkCellReuseIdentifier forIndexPath:indexPath];
+        NSString *fontName = [[self class] fontMetas][indexPath.row][@"family"];
         UIFont *font = [[self class] availableFonts][indexPath.row];
-        cell.titleLabel.text = font.familyName;
+        cell.titleLabel.text = fontName;
         cell.titleLabel.font = font;
-        if ([[font fontName] isEqualToString:self.selectedFontName]) {
+        if ([fontName isEqualToString:self.selectedFontName]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -123,8 +140,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        UIFont *font = [[self class] availableFonts][indexPath.row];
-        NSString *fontName = [font fontName];
+        NSString *fontName = [[self class] fontMetas][indexPath.row][@"family"];
         if (![self.selectedFontName isEqualToString:fontName]) {
             self.selectedFontName = fontName;
             

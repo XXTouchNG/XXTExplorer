@@ -28,21 +28,21 @@
 #import "UITextView+VisibleRange.h"
 
 // SyntaxKit
-#import "SKAttributedParser.h"
 #import "SKRange.h"
+#import "SKAttributedParser.h"
 #import "XXTEEditorSyntaxCache.h"
 
 // Keyboard
 #import "XXTEKeyboardToolbarRow.h"
-
 #import "UINavigationController+XXTEFullscreenPopGesture.h"
 
 // Extensions
+#import "XXTEEditorController+Menu.h"
 #import "XXTEEditorController+State.h"
 #import "XXTEEditorController+Keyboard.h"
 #import "XXTEEditorController+Settings.h"
-#import "XXTEEditorController+Menu.h"
 #import "XXTEEditorController+NavigationBar.h"
+#import "XXTEEditorFontSettingsViewController.h"
 
 // Toolbar
 #import "XXTEEditorToolbar.h"
@@ -208,7 +208,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
         NSString *fontName = XXTEDefaultsObject(XXTEEditorFontName, XXTEDefaultFontName);
         CGFloat fontSize = XXTEDefaultsDouble(XXTEEditorFontSize, 14.0);
         if (fontName) {
-            themeFont = [UIFont fontWithName:fontName size:fontSize];
+            themeFont = [[XXTEEditorFontSettingsViewController availableFontsMappings][fontName] fontWithSize:fontSize];
             if (!themeFont) { // not exists, new version?
                 XXTEDefaultsSetObject(XXTEEditorFontName, nil); // reset font
                 themeFont = [UIFont fontWithName:XXTEDefaultFontName size:fontSize];
