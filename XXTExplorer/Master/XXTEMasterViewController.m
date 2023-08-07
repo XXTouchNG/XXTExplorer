@@ -94,6 +94,8 @@
     CGFloat bottomOffset = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;
     XXTE_END_IGNORE_PARTIAL
     alertAppearance.cancelButtonOffsetY = bottomOffset;
+    alertAppearance.layerBorderWidth = 0;
+    alertAppearance.layerBorderColor = nil;
 }
 
 + (void)setupAlertDarkAppearance:(LGAlertView *)alertAppearance {
