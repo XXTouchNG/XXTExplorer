@@ -61,7 +61,7 @@
 
 #ifdef __OBJC__
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
-#import "UIColor+systemColors.h"
+#import "UIColor+SystemColors.h"
 #endif
 #endif
 

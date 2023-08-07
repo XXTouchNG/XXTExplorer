@@ -1,5 +1,5 @@
 //
-//  UIColor+systemColors.h
+//  UIColor+SystemColors.h
 //  XXTExplorer
 //
 //  Created by Darwin on 8/12/19.
@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
 
-@interface UIColor (systemColors)
+@interface UIColor (SystemColors)
 
 + (UIColor *)systemBackgroundColor;
 + (UIColor *)labelColor;

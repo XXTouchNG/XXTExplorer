@@ -1,14 +1,14 @@
 //
-//  UIViewController+topMostViewController.m
+//  UIViewController+TopMostViewController.m
 //  XXTExplorer
 //
 //  Created by Zheng on 06/01/2018.
 //  Copyright © 2018 Zheng. All rights reserved.
 //
 
-#import "UIViewController+topMostViewController.h"
+#import "UIViewController+TopMostViewController.h"
 
-@implementation UIViewController (topMostViewController)
+@implementation UIViewController (TopMostViewController)
 
 - (UIViewController *)topMostViewController {
     if (self.presentedViewController == nil) {

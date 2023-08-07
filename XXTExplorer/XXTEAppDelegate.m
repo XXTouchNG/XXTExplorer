@@ -27,7 +27,7 @@
 
 #import "zip.h"
 
-#import "UIViewController+topMostViewController.h"
+#import "UIViewController+TopMostViewController.h"
 
 static NSString * const kXXTEShortcutAction = @"XXTEShortcutAction";
 static NSString * const kXXTELaunchedVersion = @"XXTELaunchedVersion-%@";

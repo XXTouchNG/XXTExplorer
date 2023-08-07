@@ -1,14 +1,14 @@
 //
-//  UIColor+systemColors.m
+//  UIColor+SystemColors.m
 //  XXTExplorer
 //
 //  Created by Darwin on 8/12/19.
 //  Copyright © 2019 Zheng. All rights reserved.
 //
 
-#import "UIColor+systemColors.h"
+#import "UIColor+SystemColors.h"
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
-@implementation UIColor (systemColors)
+@implementation UIColor (SystemColors)
 
 + (UIColor *)systemBackgroundColor {
     return [UIColor whiteColor];

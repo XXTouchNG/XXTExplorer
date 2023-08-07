@@ -22,7 +22,7 @@
 #import "XXTExplorerViewController+SharedInstance.h"
 
 #import "NSString+QueryItems.h"
-#import "UIViewController+topMostViewController.h"
+#import "UIViewController+TopMostViewController.h"
 
 #import "XXTExplorerDefaults.h"
 
