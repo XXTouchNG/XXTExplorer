@@ -4,6 +4,22 @@
 <array>
 	<dict>
 		<key>dominantColor</key>
+		<string>ffffff</string>
+		<key>firstHighlight</key>
+		<string>000000</string>
+		<key>isDark</key>
+		<false/>
+		<key>location</key>
+		<string></string>
+		<key>name</key>
+		<string>Tomorrow</string>
+		<key>preview</key>
+		<string>Tomorrow.png</string>
+		<key>secondHighlight</key>
+		<string>2f2f2f</string>
+	</dict>
+	<dict>
+		<key>dominantColor</key>
 		<string>1c1e20</string>
 		<key>firstHighlight</key>
 		<string>b9c6d3</string>

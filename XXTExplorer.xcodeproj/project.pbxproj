@@ -258,6 +258,10 @@
 		CCBBA13928EC068200EA4303 /* NSURLSession+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */; };
 		CCD79C492A80803100856E8D /* XXTESearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD79C482A80803100856E8D /* XXTESearchController.m */; };
 		CCD79C4A2A80803100856E8D /* XXTESearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD79C482A80803100856E8D /* XXTESearchController.m */; };
+		CCD79C4D2A80D97800856E8D /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4B2A80D97800856E8D /* Tomorrow.png */; };
+		CCD79C4E2A80D97800856E8D /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4B2A80D97800856E8D /* Tomorrow.png */; };
+		CCD79C4F2A80D97800856E8D /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */; };
+		CCD79C502A80D97800856E8D /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D606114B22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
 		D606114C22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
@@ -921,6 +925,8 @@
 		CCBBA13728EC068200EA4303 /* NSURLSession+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+PromiseKit.m"; sourceTree = "<group>"; };
 		CCD79C472A80803100856E8D /* XXTESearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTESearchController.h; sourceTree = "<group>"; };
 		CCD79C482A80803100856E8D /* XXTESearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESearchController.m; sourceTree = "<group>"; };
+		CCD79C4B2A80D97800856E8D /* Tomorrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tomorrow.png; sourceTree = "<group>"; };
+		CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tomorrow.tmTheme; sourceTree = "<group>"; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		D606114622F53F3800F6F0E6 /* XXTEEditorLineBreakController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineBreakController.h; sourceTree = "<group>"; };
@@ -2180,9 +2186,11 @@
 		D62DD6241F3D52E900A34850 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				0FB009051F4359FF00097E9C /* SKTheme.plist */,
-				0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */,
+				CCD79C4B2A80D97800856E8D /* Tomorrow.png */,
+				CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */,
 				0F8ECD391FE802A700A5457C /* Tomorrow Night.png */,
+				0FD973EC1F4B1D3700133162 /* Tomorrow Night.tmTheme */,
+				0FB009051F4359FF00097E9C /* SKTheme.plist */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2528,7 +2536,9 @@
 				D6686F441F4AE74E004403D0 /* SKFont.plist in Resources */,
 				0FD974031F4B3C3200133162 /* SKLanguage.plist in Resources */,
 				0FB009061F4359FF00097E9C /* SKTheme.plist in Resources */,
+				CCD79C4D2A80D97800856E8D /* Tomorrow.png in Resources */,
 				D6C802B61F8B31E8003CFD1F /* XXTEAssets.xcassets in Resources */,
+				CCD79C4F2A80D97800856E8D /* Tomorrow.tmTheme in Resources */,
 				D6CCD418204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
 				D6A850792043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
@@ -2574,7 +2584,9 @@
 				D60FE7C31FE2369300954818 /* SKFont.plist in Resources */,
 				D60FE7BB1FE2369300954818 /* SKLanguage.plist in Resources */,
 				D60FE7A81FE2369300954818 /* SKTheme.plist in Resources */,
+				CCD79C4E2A80D97800856E8D /* Tomorrow.png in Resources */,
 				D60FE7A41FE2369300954818 /* XXTEAssets.xcassets in Resources */,
+				CCD79C502A80D97800856E8D /* Tomorrow.tmTheme in Resources */,
 				D6CCD419204CDE69009C2072 /* LaunchScreen.storyboard in Resources */,
 				D6A8507A2043DED5008745EB /* XXTExplorerItemPreviewController.xib in Resources */,
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,

@@ -220,7 +220,7 @@ static NSUInteger const kXXTEEditorCachedRangeLengthCompact = 1024 * 30;  // 30k
     
     // Theme
     if (!self.theme || [keysToReload containsObject:XXTEEditorThemeName]) {
-        static NSString * const XXTEDefaultThemeName = @"Tomorrow Night";
+        static NSString * const XXTEDefaultThemeName = @"Tomorrow";
         NSString *themeName = XXTEDefaultsObject(XXTEEditorThemeName, XXTEDefaultThemeName);
         if (themeName && themeFont)
         {
