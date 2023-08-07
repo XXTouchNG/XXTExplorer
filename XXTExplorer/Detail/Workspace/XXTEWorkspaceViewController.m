@@ -180,6 +180,7 @@ XXTE_END_IGNORE_PARTIAL
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     [navigationBarAppearance configureWithOpaqueBackground];
     [navigationBarAppearance setBackgroundColor:barTintColor];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
     [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
     [navigation.navigationBar setScrollEdgeAppearance:navigation.navigationBar.standardAppearance];
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : barTitleColor}];
