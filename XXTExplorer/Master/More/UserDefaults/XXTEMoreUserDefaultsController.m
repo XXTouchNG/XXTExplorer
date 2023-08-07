@@ -106,10 +106,18 @@ XXTE_END_IGNORE_PARTIAL
     
     UISearchBar *searchBar = self.searchController.searchBar;
     searchBar.placeholder = NSLocalizedString(@"Search User Defaults", nil);
-    searchBar.scopeButtonTitles = @[
-                                    NSLocalizedString(@"Title", nil),
-                                    NSLocalizedString(@"Description", nil)
-                                    ];
+    searchBar.searchTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Search User Defaults", nil) attributes:@{ NSForegroundColorAttributeName: [XXTColorBarText() colorWithAlphaComponent:0.5] }];
+    if ([searchBar.searchTextField.leftView isKindOfClass:[UIImageView class]])
+        [(UIImageView *)searchBar.searchTextField.leftView setTintColor:XXTColorTint()];
+    {
+        UIButton *clearButton = [searchBar.searchTextField valueForKey:@"_clearButton"];
+        UIImage *clearImage = [clearButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [clearButton setImage:clearImage forState:UIControlStateNormal];
+        [clearButton setTintColor:[XXTColorTint() colorWithAlphaComponent:0.5]];
+    }
+    searchBar.scopeButtonTitles = @[ NSLocalizedString(@"Title", nil),
+                                     NSLocalizedString(@"Description", nil)
+                                     ];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -120,10 +128,13 @@ XXTE_END_IGNORE_PARTIAL
     textField.tintColor = XXTColorForeground();
     searchBar.barTintColor = XXTColorBarTint();
     searchBar.tintColor = XXTColorTint();
+
     self.navigationItem.hidesSearchBarWhenScrolling = YES;
     self.navigationItem.searchController = self.searchController;
-    
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+
+    // Only after the assignment it works
+    searchBar.searchTextField.textColor = XXTColorBarText();
     
     [self loadStaticUserDefaults];
     [self loadDynamicUserDefaults];

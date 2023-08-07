@@ -119,6 +119,15 @@ XXTE_END_IGNORE_PARTIAL
         textField.textColor = XXTColorPlainTitleText();
         textField.tintColor = XXTColorForeground();
         searchBar.placeholder = NSLocalizedString(@"Search Log", nil);
+        searchBar.searchTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Search Log", nil) attributes:@{ NSForegroundColorAttributeName: [XXTColorBarText() colorWithAlphaComponent:0.5] }];
+        if ([searchBar.searchTextField.leftView isKindOfClass:[UIImageView class]])
+            [(UIImageView *)searchBar.searchTextField.leftView setTintColor:XXTColorTint()];
+        {
+            UIButton *clearButton = [searchBar.searchTextField valueForKey:@"_clearButton"];
+            UIImage *clearImage = [clearButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [clearButton setImage:clearImage forState:UIControlStateNormal];
+            [clearButton setTintColor:[XXTColorTint() colorWithAlphaComponent:0.5]];
+        }
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -139,8 +148,12 @@ XXTE_END_IGNORE_PARTIAL
         [self.view addSubview:tableView];
         tableView;
     });
+
     self.navigationItem.hidesSearchBarWhenScrolling = YES;
     self.navigationItem.searchController = self.searchController;
+
+    // Only after the assignment it works
+    searchBar.searchTextField.textColor = XXTColorBarText();
     
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.logTableView;

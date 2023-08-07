@@ -134,10 +134,18 @@ XXTE_END_IGNORE_PARTIAL
 
     UISearchBar *searchBar = self.searchController.searchBar;
     searchBar.placeholder = NSLocalizedString(@"Search Application", nil);
-    searchBar.scopeButtonTitles = @[
-                                    NSLocalizedString(@"Name", nil),
-                                    NSLocalizedString(@"Bundle ID", nil)
-                                    ];
+    searchBar.searchTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Search Application", nil) attributes:@{ NSForegroundColorAttributeName: [XXTColorBarText() colorWithAlphaComponent:0.5] }];
+    if ([searchBar.searchTextField.leftView isKindOfClass:[UIImageView class]])
+        [(UIImageView *)searchBar.searchTextField.leftView setTintColor:XXTColorTint()];
+    {
+        UIButton *clearButton = [searchBar.searchTextField valueForKey:@"_clearButton"];
+        UIImage *clearImage = [clearButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [clearButton setImage:clearImage forState:UIControlStateNormal];
+        [clearButton setTintColor:[XXTColorTint() colorWithAlphaComponent:0.5]];
+    }
+    searchBar.scopeButtonTitles = @[ NSLocalizedString(@"Name", nil),
+                                     NSLocalizedString(@"Bundle ID", nil)
+                                     ];
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -148,10 +156,13 @@ XXTE_END_IGNORE_PARTIAL
     textField.tintColor = XXTColorForeground();
     searchBar.barTintColor = XXTColorPlainBackground();
     searchBar.tintColor = XXTColorPlainBackground();
+
     self.navigationItem.hidesSearchBarWhenScrolling = YES;
     self.navigationItem.searchController = self.searchController;
-    
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+
+    // Only after the assignment it works
+    searchBar.searchTextField.textColor = XXTColorBarText();
     
     [self asyncApplicationList:self.refreshControl];
 }
