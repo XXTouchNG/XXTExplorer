@@ -159,6 +159,7 @@ XXTE_END_IGNORE_PARTIAL
     tableViewController.tableView = self.logTableView;
     _refreshControl = ({
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(reloadTextDataFromEntry:) forControlEvents:UIControlEventValueChanged];
         [tableViewController setRefreshControl:refreshControl];
         refreshControl;
