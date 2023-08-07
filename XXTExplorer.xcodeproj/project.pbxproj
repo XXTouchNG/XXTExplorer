@@ -262,6 +262,8 @@
 		CCD79C4E2A80D97800856E8D /* Tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4B2A80D97800856E8D /* Tomorrow.png */; };
 		CCD79C4F2A80D97800856E8D /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */; };
 		CCD79C502A80D97800856E8D /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */; };
+		CCD79C522A80DCFF00856E8D /* icon-small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C512A80DCFF00856E8D /* icon-small@3x.png */; };
+		CCD79C532A80DCFF00856E8D /* icon-small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCD79C512A80DCFF00856E8D /* icon-small@3x.png */; };
 		D600C3261FD7B92500FDED9F /* XXTEMediaPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */; };
 		D606114B22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
 		D606114C22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D606114A22F542A200F6F0E6 /* XXTEEditorLineBreakHelper.m */; };
@@ -927,6 +929,7 @@
 		CCD79C482A80803100856E8D /* XXTESearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTESearchController.m; sourceTree = "<group>"; };
 		CCD79C4B2A80D97800856E8D /* Tomorrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tomorrow.png; sourceTree = "<group>"; };
 		CCD79C4C2A80D97800856E8D /* Tomorrow.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tomorrow.tmTheme; sourceTree = "<group>"; };
+		CCD79C512A80DCFF00856E8D /* icon-small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@3x.png"; sourceTree = "<group>"; };
 		D600C3231FD7B8AA00FDED9F /* XXTEMediaPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEMediaPlayerController.h; sourceTree = "<group>"; };
 		D600C3241FD7B8AA00FDED9F /* XXTEMediaPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTEMediaPlayerController.m; sourceTree = "<group>"; };
 		D606114622F53F3800F6F0E6 /* XXTEEditorLineBreakController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTEEditorLineBreakController.h; sourceTree = "<group>"; };
@@ -1670,6 +1673,7 @@
 			children = (
 				CC2BD9572A7E1AE200290345 /* icon-small.png */,
 				CC2BD9582A7E1AE300290345 /* icon-small@2x.png */,
+				CCD79C512A80DCFF00856E8D /* icon-small@3x.png */,
 				CC2BD95D2A7E1B1500290345 /* SpringBoardServices.tbd */,
 				D6C802B51F8B31E7003CFD1F /* XXTEAssets.xcassets */,
 				0FE1629B1F3C8FA9003064B2 /* Info.plist */,
@@ -2544,6 +2548,7 @@
 				0FCC2AC81F130BE600C50A48 /* XXTExplorerItemNameCell.xib in Resources */,
 				0FAE0F141ED7204E00798B4B /* XXTExplorerViewCell.xib in Resources */,
 				0FECB2281EE01E2400E3B6F0 /* XXTExplorerViewHomeCell.xib in Resources */,
+				CCD79C522A80DCFF00856E8D /* icon-small@3x.png in Resources */,
 				0FD973FE1F4B2EC400133162 /* XXTEEditorTabWidthCell.xib in Resources */,
 				0FD973E81F4B122D00133162 /* XXTEEditorThemeCell.xib in Resources */,
 				D6CDFECE22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,
@@ -2592,6 +2597,7 @@
 				D60FE7901FE2369300954818 /* XXTExplorerItemNameCell.xib in Resources */,
 				D60FE7841FE2369300954818 /* XXTExplorerViewCell.xib in Resources */,
 				D60FE7B51FE2369300954818 /* XXTExplorerViewHomeCell.xib in Resources */,
+				CCD79C532A80DCFF00856E8D /* icon-small@3x.png in Resources */,
 				D60FE7AA1FE2369300954818 /* XXTEEditorTabWidthCell.xib in Resources */,
 				D60FE7C91FE2369300954818 /* XXTEEditorThemeCell.xib in Resources */,
 				D6CDFECF22F0AEC700522CFE /* XXTELockedTitleView.xib in Resources */,

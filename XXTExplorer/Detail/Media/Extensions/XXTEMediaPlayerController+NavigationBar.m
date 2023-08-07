@@ -13,15 +13,19 @@
 #pragma mark - Navigation Bar Color
 
 - (void)renderNavigationBarTheme:(BOOL)restore {
+    UIColor *barTintColor = XXTColorBarTint();
     UIColor *barTitleColor = XXTColorBarText();
     UIColor *tintColor = XXTColorTint();
     UINavigationController *navigation = self.navigationController;
-    if (restore == NO) {
+    if (!restore) {
+        barTintColor = [UIColor colorWithRed:0x1D/255.0 green:0x1F/255.0 blue:0x21/255.0 alpha:1.0];
         barTitleColor = [UIColor whiteColor];
         tintColor = [UIColor whiteColor];
     }
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     [navigationBarAppearance configureWithOpaqueBackground];
+    [navigationBarAppearance setBackgroundColor:barTintColor];
+    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor, NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
     [navigation.navigationBar setStandardAppearance:navigationBarAppearance];
     [navigation.navigationBar setScrollEdgeAppearance:navigationBarAppearance];
     [navigation.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: barTitleColor, NSFontAttributeName: [UIFont boldSystemFontOfSize:18.f]}];
