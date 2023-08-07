@@ -83,8 +83,6 @@ static NSString * const kXXTEExtractedResourceName = @"XXTEExtractedResourceName
     }
     
     UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    mainWindow.tintColor = XXTColorForeground();
-    mainWindow.backgroundColor = XXTColorPlainBackground();
     [mainWindow makeKeyAndVisible];
     self.window = mainWindow;
     
