@@ -43,7 +43,9 @@ void debugger_ptrace(void)
 {
     void* handle = dlopen(0, RTLD_GLOBAL | RTLD_NOW);
     ptrace_ptr_t ptrace_ptr = dlsym(handle, "ptrace");
-    ptrace_ptr(PT_DENY_ATTACH, 0, 0, 0);
+    if (ptrace_ptr) {
+        ptrace_ptr(PT_DENY_ATTACH, 0, 0, 0);
+    }
     dlclose(handle);
 }
 
@@ -115,16 +117,21 @@ void patch_setuidandplatformize(void)
     
     typedef void (*fix_entitle_prt_t)(pid_t pid, uint32_t what);
     fix_entitle_prt_t entitleptr = (fix_entitle_prt_t)dlsym(handle, "jb_oneshot_entitle_now");
-    
-    setuidptr(getpid());
+
+    if (setuidptr) {
+        setuidptr(getpid());
+    }
+
     setuid(0);
     
     const char *dlsym_error = dlerror();
     if (dlsym_error) {
         return;
     }
-    
-    entitleptr(getpid(), FLAG_PLATFORMIZE);
+
+    if (entitleptr) {
+        entitleptr(getpid(), FLAG_PLATFORMIZE);
+    }
 }
 
 
