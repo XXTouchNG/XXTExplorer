@@ -1163,13 +1163,15 @@ XXTE_END_IGNORE_PARTIAL
     for (NSUInteger idx = 0; idx < self.homeEntryList.count; idx++) {
         [homeIndexes addObject:[NSIndexPath indexPathForRow:idx inSection:XXTExplorerViewSectionIndexHome]];
     }
-    XXTEDefaultsSetBasic(XXTExplorerViewEntryHomeEnabledKey, YES);
+    XXTEDefaultsSetBasic(XXTExplorerViewEntryHomeEnabledKey, NO);
     [self loadEntryListData];
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView reloadData];
-    [self.tableView endUpdates];
-    toastMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+    if (!self.homeEntryList.count) {
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:[homeIndexes copy] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView reloadData];
+        [self.tableView endUpdates];
+        toastMessage(self, NSLocalizedString(@"\"Home Entries\" has been disabled, you can make it display again in \"More > User Defaults\".", nil));
+    }
 }
 
 #pragma mark - Gesture Attachments
