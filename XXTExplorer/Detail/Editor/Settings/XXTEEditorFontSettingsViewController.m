@@ -41,6 +41,8 @@
             UIFont *font = [UIFont fontWithName:fontName size:17.f];
             if (font) {
                 [fonts addObject:font];
+            } else {
+                break;
             }
         }
     });
@@ -56,6 +58,9 @@
         NSArray <UIFont *> *availableFonts = [self availableFonts];
         NSUInteger fontIdx = 0;
         for (NSDictionary *fontDict in fontMetas) {
+            if (fontIdx >= availableFonts.count) {
+                break;
+            }
             [fonts setObject:availableFonts[fontIdx] forKey:fontDict[@"family"]];
             fontIdx++;
         }
