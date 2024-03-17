@@ -7,8 +7,9 @@ def shared_pods
     pod 'PromiseKit', '~> 1.7', :inhibit_warnings => true
     pod 'LGAlertView', :git => 'https://github.com/Lessica/LGAlertView.git', :branch => 'old-device', :inhibit_warnings => true
     pod 'MWPhotoBrowser', :git => 'https://github.com/Lessica/MWPhotoBrowser.git', :branch => 'master', :inhibit_warnings => true
-    pod 'YYCache', :inhibit_warnings => true
-    pod 'YYImage', '~> 1.0.4', :inhibit_warnings => true
+    pod 'YYCache', :git => 'https://github.com/XXTouchNG/YYCache.git', :branch => 'master', :inhibit_warnings => true
+    pod 'YYImage', :git => 'https://github.com/XXTouchNG/YYImage.git', :branch => 'master', :inhibit_warnings => true
+    pod 'YYWebImage', :git => 'https://github.com/XXTouchNG/YYWebImage.git', :branch => 'master', :inhibit_warnings => true
     pod 'JSONModel', :inhibit_warnings => true
 end
 
